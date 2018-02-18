@@ -4,8 +4,8 @@ import "reflect-metadata";
 export class MqttRequisitionFile {
     brokerAddress: string = "";
 
-    @Type(() => Subscriptions)
-    subscriptions: Subscriptions[] = [];
+    @Type(() => Subscription)
+    subscriptions: Subscription[] = [];
 
     @Type(() => Publish)
     publish: Publish | null = null;
@@ -16,13 +16,13 @@ export class Publish {
     payload: string = "";
 }
 
-export class Subscriptions {
+export class Subscription {
     timeout: number | null = null;
     topic: string = "";
 
     private testFunctionBody: string | null = null;
 
-    testFunction: Function | null = () =>  {
+    createTestFunction(): Function | null {
         if (this.testFunctionBody == null)
             return null;
 

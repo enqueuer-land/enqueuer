@@ -9,7 +9,11 @@ client.on('message', function (topic, message) {
   // message is Buffer
   console.log("Iei");
   console.log(message.toString())
-  client.publish('service-to-be-tested/output/1', 'payload1')
+
   client.publish('service-to-be-tested/output/2', 'payload2')
+  const payload1 = {
+    value: false
+  }
+  client.publish('service-to-be-tested/output/1', JSON.stringify(payload1));
   // client.end()
 })

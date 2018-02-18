@@ -1,7 +1,7 @@
 import { MqttRequisitionFileParser } from './mqtt-requisition-file-parser';
 import { expect } from 'chai';
 import 'mocha';
-import { Subscriptions } from './mqtt-requisition-file';
+import { Subscription } from './mqtt-requisition-file';
 
 describe('MqttRequisitionFile test', function() {
     describe('Constructor', function() {
@@ -40,7 +40,7 @@ describe('MqttRequisitionFile test', function() {
             
             for (let index: number = 0; index < mqttRequisitionFile.subscriptions.length; ++index) {
                 let subscription = mqttRequisitionFile.subscriptions[index];
-                let func = subscription.testFunction();
+                let func = subscription.createTestFunction();
                 if (func) {
                     const test = {
                         value: false

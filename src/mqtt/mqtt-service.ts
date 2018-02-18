@@ -1,4 +1,5 @@
-import { MqttRequisitionFile, Subscriptions } from "./mqtt-requisition-file";
+import {classToClass} from "class-transformer";
+import { MqttRequisitionFile, Subscription } from "./mqtt-requisition-file";
 import { ReportGenerator } from "../report/report-generator";
 import { Report } from "../report/report";
 const mqtt = require('mqtt')
@@ -8,14 +9,13 @@ export type MqttServiceCallback = (report: Report) => void;
 export class MqttService {
     private client: any;
     private mqttRequisitionFile: MqttRequisitionFile;
-    private subscribedTopics: string[] = [];
     private onFinishCallback: MqttServiceCallback;
     private startTime: number = 0;
     private timer: NodeJS.Timer | null = null;
     private reportGenerator: ReportGenerator = new ReportGenerator();
 
     constructor(propertyFile: MqttRequisitionFile, onFinishCallback: MqttServiceCallback) {
-        this.mqttRequisitionFile = propertyFile;
+        this.mqttRequisitionFile = classToClass(propertyFile); //clone
         this.onFinishCallback = onFinishCallback;
         this.client = mqtt.connect(propertyFile.brokerAddress);
         this.client.on('message', 
@@ -69,24 +69,39 @@ export class MqttService {
         const elapsedTime = Date.now() - this.startTime;
 
         console.log("Received message at: " + topic);
-        this.reportGenerator.addInfo(`After: ${elapsedTime}s, topic: ${topic} received: ${message}`);
+        this.reportGenerator.addInfo(`After: ${elapsedTime}ms, topic: ${topic} received: ${message}`);
 
-        var index = this.subscribedTopics.indexOf(topic, 0);
+        var index = this.mqttRequisitionFile.subscriptions.findIndex((subscription: Subscription) => {
+            return subscription.topic == topic;
+        });
+
         if (index > -1) {
-            this.subscribedTopics.splice(index, 1);
-        }
-        if (this.subscribedTopics.length === 0) {
-            this.reportGenerator.addInfo("All subscriptions received messages");
-            this.onFinish();
+            let subscription: Subscription = this.mqttRequisitionFile.subscriptions[index];
+            this.mqttRequisitionFile.subscriptions.splice(index, 1);
+
+            const testFunction: Function | null = subscription.createTestFunction();
+            if (testFunction) {
+                const functionResponse = testFunction(message);
+                for (const test in functionResponse) {
+                    if (!functionResponse[test]) {
+                        const log: string = `${subscription.topic}: ${test}`;
+                        this.reportGenerator.addError(log);
+                    }
+                }
+            }
+
+            if (this.mqttRequisitionFile.subscriptions.length === 0) {
+                this.reportGenerator.addInfo("All subscriptions received messages");
+                this.onFinish();
+            }
         }
     }
     
     private subscribeToTopics(): void {
         this.mqttRequisitionFile.subscriptions
-                .forEach((subscription: Subscriptions) => {
+                .forEach((subscription: Subscription) => {
                     console.log("Subscribing to: " + subscription.topic);
                     this.client.subscribe(subscription.topic)
-                    this.subscribedTopics.push(subscription.topic);
                 });
     }
 
@@ -94,10 +109,10 @@ export class MqttService {
         const totalTime = Date.now() - this.startTime;
         if (this.timer)
             clearTimeout(this.timer);
-        this.subscribedTopics
-            .forEach((topic: string) => {
-                this.reportGenerator.addError("Topic: '" + topic + "' did not receive any message");
-            });
+            this.mqttRequisitionFile.subscriptions
+                .forEach((subscription: Subscription) => {
+                    this.reportGenerator.addError("Topic: '" + subscription.topic + "' did not receive any message");
+                });
 
         this.reportGenerator.addInfo("Total time: " + totalTime);
         this.client.end();
