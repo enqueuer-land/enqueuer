@@ -19,36 +19,20 @@ describe('MqttRequisitionFile test', function() {
             const expectedSubscriptions = [
                 {
                     timeout: 2000,
-                    topic: "1"
+                    topic: "1",
+                    testFunctionBody: "console.log(\"body:\" + JSON.stringify(response)); test['value'] = false;"                    
                 },
                 {
-                    timeout: 3000,
+                    timeout: null,
+                    testFunctionBody: null, 
                     topic: "2/#"
                 }];
 
             const actualSubscriptions = mqttRequisitionFile.subscriptions;
             for (let index: number = 0; index < actualSubscriptions.length; ++index) {
-                expect(actualSubscriptions[index].topic).to.be.equal(expectedSubscriptions[index].topic);
+                expect(actualSubscriptions[index]).to.be.deep.equal(expectedSubscriptions[index]);
             }
             expect(actualSubscriptions.length).to.be.equal(expectedSubscriptions.length);
-        });
-
-        it('should parse all subscriptions test functions', function() {
-            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
-            const response = {attribute:"attribute"};
-            
-            
-            for (let index: number = 0; index < mqttRequisitionFile.subscriptions.length; ++index) {
-                let subscription = mqttRequisitionFile.subscriptions[index];
-                let func = subscription.createTestFunction();
-                if (func) {
-                    const test = {
-                        value: false
-                    }
-                    const functionResponse = func(response);
-                    expect(functionResponse).to.deep.equal(test);
-                }
-            }
         });
 
         it('should parse topicToPublish', function() {

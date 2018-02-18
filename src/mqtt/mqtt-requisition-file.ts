@@ -1,4 +1,4 @@
-import {Type, plainToClass, Exclude, Expose} from "class-transformer";
+import {Type, plainToClass} from "class-transformer";
 import "reflect-metadata";
 
 export class MqttRequisitionFile {
@@ -20,13 +20,13 @@ export class Subscription {
     timeout: number | null = null;
     topic: string = "";
 
-    private testFunctionBody: string | null = null;
+    testFunctionBody: string | null = null;
 
     createTestFunction(): Function | null {
         if (this.testFunctionBody == null)
             return null;
 
         const fullBody: string = `let test = {}; ${this.testFunctionBody}; return test`;
-        return new Function('response', fullBody);
+        return new Function('payload', fullBody);
     }
 }

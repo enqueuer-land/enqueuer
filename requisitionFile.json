@@ -3,7 +3,7 @@
     "subscriptions": [
         {
             "topic": "service-to-be-tested/output/1",
-            "testFunctionBody": "test['payload value has to be true'] = response.value == true; test['false value'] = false; test['should not appear'] = true;"
+            "testFunctionBody": "test['payload value has to be true'] = payload.value == true; test['false value'] = false; test['should not appear'] = true;"
         },
         {
             "timeout": 100,

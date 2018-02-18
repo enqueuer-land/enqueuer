@@ -1,5 +1,4 @@
 const chalk = require('chalk');
-const fs = require('fs');
 
 export class Report {
 
@@ -25,10 +24,10 @@ export class Report {
         return this.errorMessages.length > 0;
     }
 
-    public writeToFile(filename: string): void {
+    public toString(): string {
         let clone = (JSON.parse(JSON.stringify(this)));
         clone.hasErrors = this.hasErrors();
-        fs.writeFileSync(filename, JSON.stringify(clone, null, 4), 'utf8');
+        return JSON.stringify(clone, null, 4);
     }
 
     private printInfo(): void {
