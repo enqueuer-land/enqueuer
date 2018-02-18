@@ -1,26 +1,25 @@
-// var mqtt = require('mqtt')
-// var client  = mqtt.connect('mqtt://test.mosquitto.org')
- 
-// client.on('connect', function () {
-//   client.subscribe('presence')
-//   client.publish('presence', 'Hello mqtt')
-// })
- 
-// client.on('message', function (topic, message) {
-//   // message is Buffer
-//   console.log(message.toString())
-//   client.end()
-// })
 import { PropertyFileParser } from "./mqtt/property-file-parser";
+import { MqttService, MqttServiceCallback } from "./mqtt/mqtt-service";
 
 class Startup {
-  public static main(): number {
-    console.log("Running");
+
+  private mqttService: MqttService;
+
+  constructor() {
     const propertyFile = new PropertyFileParser().parse("conf/conf.json");
-    // const propertyFile = new PropertyFileParser().parse("resources/test/conf-test.json");
-    console.log(propertyFile.publish.topic);
-    return 0;
+    this.mqttService = new MqttService(propertyFile, this.onFinish);
   }
+
+  public start(): number {
+    console.log("start");
+    this.mqttService.start();
+    return 0;
+  } 
+
+  private onFinish(): void {
+    console.log("over");
+  }
+  
 }
 
-Startup.main();
+new Startup().start();
