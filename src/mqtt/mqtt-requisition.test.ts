@@ -1,23 +1,23 @@
-import { PropertyFileParser } from './property-file-parser';
+import { MqttRequisitionFileParser } from './mqtt-requisition-file-parser';
 import { expect } from 'chai';
 import 'mocha';
 
-describe('PropertyFileParser test', function() {
+describe('MqttRequisitionFile test', function() {
     describe('Constructor', function() {
-        const propertyFileParser = new PropertyFileParser();
+        const mqttRequisitionFileParser = new MqttRequisitionFileParser();
         const filename = "resources/test/conf-test.json";
 
         it('should raise exception if file does not exist', function() {
             const nonExistentFile = "nonExistentFile";
 
-            expect(() => propertyFileParser.parse(nonExistentFile)).to.throw();
+            expect(() => mqttRequisitionFileParser.parse(nonExistentFile)).to.throw();
         });
 
         it('should parse all subscriptionTopicsList', function() {
             const expectedTopics = ["1", "2/#"];
-            const propertyFile = propertyFileParser.parse(filename);
+            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
 
-            const actualTopics = propertyFile.subscribe;
+            const actualTopics = mqttRequisitionFile.subscribe;
             
             for (let index: number = 0; index < actualTopics.length; ++index) {
                 expect(actualTopics[index]).to.be.equal(expectedTopics[index]);
@@ -26,9 +26,9 @@ describe('PropertyFileParser test', function() {
         });
 
         it('should parse topicToPublish', function() {
-            const propertyFile = propertyFileParser.parse(filename);
+            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
 
-            const actualTopic = propertyFile.publish.topic;
+            const actualTopic = mqttRequisitionFile.publish.topic;
             const expectedTopic = "topicToPublish";
             expect(actualTopic).to.be.equal(expectedTopic);
         });

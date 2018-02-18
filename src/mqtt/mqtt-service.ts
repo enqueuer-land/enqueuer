@@ -1,4 +1,4 @@
-import { PropertyFile } from "./property-file";
+import { MqttRequisitionFile } from "./mqtt-requisition-file";
 const Stream = require("ts-stream").Stream; // CommonJS style
 const mqtt = require('mqtt')
 
@@ -6,13 +6,13 @@ export type MqttServiceCallback = () => void;
 
 export class MqttService {
     private client: any;
-    private propertyFile: PropertyFile;
+    private mqttRequisitionFile: MqttRequisitionFile;
     private subscribedTopics: string[] = [];
     private onFinish: MqttServiceCallback;
 
 
-    constructor(propertyFile: PropertyFile, onFinish: MqttServiceCallback) {
-        this.propertyFile = propertyFile;
+    constructor(propertyFile: MqttRequisitionFile, onFinish: MqttServiceCallback) {
+        this.mqttRequisitionFile = propertyFile;
         this.onFinish = onFinish;
         this.client = mqtt.connect("mqtt://localhost");
         this.client.on('message', 
@@ -26,9 +26,9 @@ export class MqttService {
     }
     
     private onConnect(): void {
-        console.log("Publishing at: " + this.propertyFile.publish.topic);
-        this.client.publish(this.propertyFile.publish.topic,
-                            this.propertyFile.publish.payload);
+        console.log("Publishing at: " + this.mqttRequisitionFile.publish.topic);
+        this.client.publish(this.mqttRequisitionFile.publish.topic,
+                            this.mqttRequisitionFile.publish.payload);
         setTimeout(() => this.onTimeout(), 5000);
     }
     
@@ -50,7 +50,7 @@ export class MqttService {
     }
     
     private subscribeToTopics(): void {
-        Stream.from(this.propertyFile.subscribe)
+        Stream.from(this.mqttRequisitionFile.subscribe)
                 .forEach((topic: string) => {
                     console.log("Subscribing to: " + topic);
                     this.client.subscribe(topic)

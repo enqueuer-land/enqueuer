@@ -1,4 +1,4 @@
-import { PropertyFileParser } from "./mqtt/property-file-parser";
+import { MqttRequisitionFileParser } from "./mqtt/mqtt-requisition-file-parser";
 import { MqttService, MqttServiceCallback } from "./mqtt/mqtt-service";
 
 class Startup {
@@ -6,8 +6,8 @@ class Startup {
   private mqttService: MqttService;
 
   constructor() {
-    const propertyFile = new PropertyFileParser().parse("conf/conf.json");
-    this.mqttService = new MqttService(propertyFile, this.onFinish);
+    const mqttRequisitionFileParser = new MqttRequisitionFileParser().parse("requisition");
+    this.mqttService = new MqttService(mqttRequisitionFileParser, () => this.onFinish);
   }
 
   public start(): number {

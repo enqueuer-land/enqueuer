@@ -1,7 +1,7 @@
 import {Type, plainToClass} from "class-transformer";
 import "reflect-metadata";
 
-export class PropertyFile {
+export class MqttRequisitionFile {
     subscribe: string[] | null = [];
 
     @Type(() => Publish)
