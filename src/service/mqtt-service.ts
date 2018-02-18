@@ -1,29 +1,28 @@
 import {classToClass} from "class-transformer";
-import { MqttRequisitionFile, Subscription } from "./mqtt-requisition-file";
+import { MqttRequisitionFile, Subscription } from "../mqtt/mqtt-requisition-file";
 import { ReportGenerator } from "../report/report-generator";
 import { Report } from "../report/report";
+import { MessengerService, MessengerServiceCallback } from "../service/MessengerService";
 const mqtt = require('mqtt')
 
-export type MqttServiceCallback = (report: Report) => void;
-
-export class MqttService {
+export class MqttService implements MessengerService {
     private client: any;
     private mqttRequisitionFile: MqttRequisitionFile;
-    private onFinishCallback: MqttServiceCallback;
+    private onFinishCallback: MessengerServiceCallback | null = null;
     private startTime: number = 0;
     private timer: NodeJS.Timer | null = null;
     private reportGenerator: ReportGenerator = new ReportGenerator();
 
-    constructor(propertyFile: MqttRequisitionFile, onFinishCallback: MqttServiceCallback) {
-        this.mqttRequisitionFile = classToClass(propertyFile); //clone
-        this.onFinishCallback = onFinishCallback;
-        this.client = mqtt.connect(propertyFile.brokerAddress);
+    constructor(mqttRequisitionFile: MqttRequisitionFile) {
+        this.mqttRequisitionFile = classToClass(mqttRequisitionFile); //clone
+        this.client = mqtt.connect(mqttRequisitionFile.brokerAddress);
         this.client.on('message', 
-                (topic: string, message: string) => this.onMessageReceived(topic, message));
+        (topic: string, message: string) => this.onMessageReceived(topic, message));
         this.subscribeToTopics();
     }
     
-    public start(): void {
+    public start(onFinishCallback: MessengerServiceCallback): void {
+        this.onFinishCallback = onFinishCallback;
         this.client.on('connect', () => this.onConnect());
     }
 
@@ -35,7 +34,6 @@ export class MqttService {
 
     private publish(): void {
         if (this.mqttRequisitionFile.publish) {
-            console.log("Publishing at: " + this.mqttRequisitionFile.publish.topic);
             this.client.publish(this.mqttRequisitionFile.publish.topic,
                                 this.mqttRequisitionFile.publish.payload);
         }
@@ -44,32 +42,27 @@ export class MqttService {
     private setTimeout(): void {
         let totalTimeout = -1;
         this.mqttRequisitionFile.subscriptions.forEach(
-            subscription => {
+            (subscription: Subscription) => {
                 const subscriptionTimeout = subscription.timeout;
                 if (subscriptionTimeout && subscriptionTimeout > totalTimeout)
                     totalTimeout = subscriptionTimeout;
             });
 
         if (totalTimeout != -1) {
-            console.log("Total timeout: " + totalTimeout);
             this.timer = setTimeout(() => this.onTimeout(), totalTimeout);
-        } else {
-            console.log("There is no total timeout");
         }
     }
     
     private onTimeout(): void {
-        console.log("onTimeout");
         this.reportGenerator.addInfo("Service has timed out");
         this.client.end();
         this.onFinish();
     }
     
     private onMessageReceived(topic: string, message: string): void {
-        const elapsedTime = Date.now() - this.startTime;
+        const ellapsedTime = Date.now() - this.startTime;
 
-        console.log("Received message at: " + topic);
-        this.reportGenerator.addInfo(`After: ${elapsedTime}ms, topic: ${topic} received: ${message}`);
+        this.reportGenerator.addInfo(`After: ${ellapsedTime}ms, topic: ${topic} received: ${message}`);
 
         var index = this.mqttRequisitionFile.subscriptions.findIndex((subscription: Subscription) => {
             return subscription.topic == topic;
@@ -78,6 +71,7 @@ export class MqttService {
         if (index > -1) {
             let subscription: Subscription = this.mqttRequisitionFile.subscriptions[index];
             this.mqttRequisitionFile.subscriptions.splice(index, 1);
+
 
             const testFunction: Function | null = subscription.createTestFunction();
             if (testFunction) {
@@ -90,6 +84,11 @@ export class MqttService {
                 }
             }
 
+            if (subscription.timeout && subscription.timeout < ellapsedTime) {
+                const log: string = `${subscription.topic}: ellapsed time (${ellapsedTime}ms) is greater than timeout (${subscription.timeout}ms)`;
+                this.reportGenerator.addError(log);
+            }
+
             if (this.mqttRequisitionFile.subscriptions.length === 0) {
                 this.reportGenerator.addInfo("All subscriptions received messages");
                 this.onFinish();
@@ -100,7 +99,6 @@ export class MqttService {
     private subscribeToTopics(): void {
         this.mqttRequisitionFile.subscriptions
                 .forEach((subscription: Subscription) => {
-                    console.log("Subscribing to: " + subscription.topic);
                     this.client.subscribe(subscription.topic)
                 });
     }
@@ -114,8 +112,9 @@ export class MqttService {
                     this.reportGenerator.addError("Topic: '" + subscription.topic + "' did not receive any message");
                 });
 
-        this.reportGenerator.addInfo("Total time: " + totalTime);
+        this.reportGenerator.addInfo(`Total time:  + ${totalTime}ms`);
         this.client.end();
-        this.onFinishCallback(this.reportGenerator.generate());
+        if (this.onFinishCallback)
+            this.onFinishCallback(this.reportGenerator.generate());
     }
 }

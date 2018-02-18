@@ -2,11 +2,12 @@
     "brokerAddress": "mqtt://localhost",
     "subscriptions": [
         {
-            "timeout": 2000,
             "topic": "service-to-be-tested/output/1",
-            "testFunctionBody": "response=JSON.parse(response);console.log(\"response:\" + JSON.stringify(response)); test['payload value has to be true'] = response.value == true; test['false value'] = false; test['should not appear'] = true;"
+            "testFunctionBody": "test['payload value has to be true'] = response.value == true; test['false value'] = false; test['should not appear'] = true;"
         },
         {
+            "timeout": 100,
+            "testFunctionBody": "console.log(\"requisition file log testing\")",
             "topic": "service-to-be-tested/output/2"
         },
         {
