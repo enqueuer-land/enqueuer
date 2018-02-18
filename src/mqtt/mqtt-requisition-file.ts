@@ -3,11 +3,10 @@ import "reflect-metadata";
 
 export class MqttRequisitionFile {
     brokerAddress: string = "";
-    totalTimeout: number = 0;
 
     subscriptions: Subscriptions[] = [];
 
-    publish: Publish = new Publish();
+    publish: Publish | null = null;
 }
 
 export class Publish {
@@ -16,5 +15,6 @@ export class Publish {
 }
 
 export class Subscriptions {
+    timeout: number | null = null;
     topic: string = "";
 }

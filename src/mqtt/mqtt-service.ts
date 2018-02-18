@@ -1,8 +1,9 @@
 import { MqttRequisitionFile, Subscriptions } from "./mqtt-requisition-file";
-const Stream = require("ts-stream").Stream; // CommonJS style
+import { ReportGenerator } from "../report/report-generator";
+import { Report } from "../report/report";
 const mqtt = require('mqtt')
 
-export type MqttServiceCallback = () => void;
+export type MqttServiceCallback = (report: Report) => void;
 
 export class MqttService {
     private client: any;
@@ -10,8 +11,8 @@ export class MqttService {
     private subscribedTopics: string[] = [];
     private onFinishCallback: MqttServiceCallback;
     private startTime: number = 0;
-    private totalTime: number = 0;
     private timer: NodeJS.Timer | null = null;
+    private reportGenerator: ReportGenerator = new ReportGenerator();
 
     constructor(propertyFile: MqttRequisitionFile, onFinishCallback: MqttServiceCallback) {
         this.mqttRequisitionFile = propertyFile;
@@ -20,45 +21,68 @@ export class MqttService {
         this.client.on('message', 
                 (topic: string, message: string) => this.onMessageReceived(topic, message));
         this.subscribeToTopics();
-        console.log("Service built");
     }
     
     public start(): void {
         this.client.on('connect', () => this.onConnect());
     }
 
-    public getTotalTime(): number {
-        return this.totalTime;
-    }
-    
     private onConnect(): void {
         this.startTime = Date.now();
-        console.log("Publishing at: " + this.mqttRequisitionFile.publish.topic);
-        this.client.publish(this.mqttRequisitionFile.publish.topic,
-                            this.mqttRequisitionFile.publish.payload);
-        this.timer = setTimeout(() => this.onTimeout(), this.mqttRequisitionFile.totalTimeout);
+        this.setTimeout();
+        this.publish();
+    }
+
+    private publish(): void {
+        if (this.mqttRequisitionFile.publish) {
+            console.log("Publishing at: " + this.mqttRequisitionFile.publish.topic);
+            this.client.publish(this.mqttRequisitionFile.publish.topic,
+                                this.mqttRequisitionFile.publish.payload);
+        }
+    }
+    
+    private setTimeout(): void {
+        let totalTimeout = -1;
+        this.mqttRequisitionFile.subscriptions.forEach(
+            subscription => {
+                const subscriptionTimeout = subscription.timeout;
+                if (subscriptionTimeout && subscriptionTimeout > totalTimeout)
+                    totalTimeout = subscriptionTimeout;
+            });
+
+        if (totalTimeout != -1) {
+            console.log("Total timeout: " + totalTimeout);
+            this.timer = setTimeout(() => this.onTimeout(), totalTimeout);
+        } else {
+            console.log("There is no total timeout");
+        }
     }
     
     private onTimeout(): void {
         console.log("onTimeout");
+        this.reportGenerator.addInfo("Service has timed out");
         this.client.end();
         this.onFinish();
     }
     
     private onMessageReceived(topic: string, message: string): void {
+        const elapsedTime = Date.now() - this.startTime;
+
         console.log("Received message at: " + topic);
+        this.reportGenerator.addInfo(`After: ${elapsedTime}s, topic: ${topic} received: ${message}`);
+
         var index = this.subscribedTopics.indexOf(topic, 0);
         if (index > -1) {
             this.subscribedTopics.splice(index, 1);
         }
         if (this.subscribedTopics.length === 0) {
-            console.log("No more topics to receive message");
+            this.reportGenerator.addInfo("All subscriptions received messages");
             this.onFinish();
         }
     }
     
     private subscribeToTopics(): void {
-        Stream.from(this.mqttRequisitionFile.subscriptions)
+        this.mqttRequisitionFile.subscriptions
                 .forEach((subscription: Subscriptions) => {
                     console.log("Subscribing to: " + subscription.topic);
                     this.client.subscribe(subscription.topic)
@@ -67,16 +91,16 @@ export class MqttService {
     }
 
     private onFinish(): void {
-        this.totalTime = Date.now() - this.startTime;
+        const totalTime = Date.now() - this.startTime;
         if (this.timer)
             clearTimeout(this.timer);
-        console.log("Service finished its job");
-        Stream.from(this.subscribedTopics)
+        this.subscribedTopics
             .forEach((topic: string) => {
-                console.log("Topic: " + topic + " did not receive any message");
+                this.reportGenerator.addError("Topic: '" + topic + "' did not receive any message");
             });
 
+        this.reportGenerator.addInfo("Total time: " + totalTime);
         this.client.end();
-        this.onFinishCallback();
+        this.onFinishCallback(this.reportGenerator.generate());
     }
 }

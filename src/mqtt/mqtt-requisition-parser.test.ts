@@ -41,20 +41,18 @@ describe('MqttRequisitionFile test', function() {
             expect(actualTopic).to.be.equal(expectedTopic);
         });
 
+        it('should parse topicToPublish', function() {
+            const mqttRequisitionFile = mqttRequisitionFileParser.parse("resources/test/mqtt-no-publish.json");
+
+            expect(mqttRequisitionFile.publish).to.be.null;
+        });
+
         it('should parse brokerAddress', function() {
             const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
 
             const actualBrokerAddress = mqttRequisitionFile.brokerAddress;
             const expectedBrokerAddress = "brokerAddress";
             expect(actualBrokerAddress).to.be.equal(expectedBrokerAddress);
-        });
-
-        it('should parse totalTimeout', function() {
-            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
-
-            const actualTotalTimeout = mqttRequisitionFile.totalTimeout;
-            const expectedTotalTimeout = 5000;
-            expect(actualTotalTimeout).to.be.equal(expectedTotalTimeout);
         });
 
     });

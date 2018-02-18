@@ -1,22 +1,24 @@
 import { MqttRequisitionFileParser } from "./mqtt/mqtt-requisition-file-parser";
 import { MqttService, MqttServiceCallback } from "./mqtt/mqtt-service";
+import { Report } from "./report/report";
 
 class Startup {
 
   private mqttService: MqttService;
 
   constructor() {
-    const mqttRequisitionFileParser = new MqttRequisitionFileParser().parse("requisition");
-    this.mqttService = new MqttService(mqttRequisitionFileParser, () => this.onFinish());
+    const mqttRequisitionFileParser = new MqttRequisitionFileParser().parse("requisitionFile.json");
+    this.mqttService = new MqttService(mqttRequisitionFileParser, 
+          (report: Report) => this.onFinish(report));
   }
 
-  public start(): number {
+  public start(): void {
     this.mqttService.start();
-    return 0;
   } 
 
-  private onFinish(): void {
-    console.log("Total time: " + this.mqttService.getTotalTime());
+  private onFinish(report: Report): void {
+    report.print();
+    report.writeToFile("executionReport");
   }
   
 }

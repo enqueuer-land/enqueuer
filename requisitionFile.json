@@ -1,14 +1,15 @@
 {
     "brokerAddress": "mqtt://localhost",
-    "totalTimeout": 5000,
     "subscriptions": [
         {
+            "timeout": 2000,
             "topic": "service-to-be-tested/output/1"
         },
         {
             "topic": "service-to-be-tested/output/2"
         },
         {
+            "timeout": 5000,
             "topic": "service-to-be-tested/output/3"
         }],
     "publish": 
