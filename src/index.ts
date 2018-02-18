@@ -11,11 +11,15 @@
 //   console.log(message.toString())
 //   client.end()
 // })
+import { PropertyFileParser } from "./mqtt/property-file-parser";
 
 class Startup {
   public static main(): number {
-      console.log('Hello World');
-      return 0;
+    console.log("Running");
+    const propertyFile = new PropertyFileParser().parse("conf/conf.json");
+    // const propertyFile = new PropertyFileParser().parse("resources/test/conf-test.json");
+    console.log(propertyFile.publish.topic);
+    return 0;
   }
 }
 

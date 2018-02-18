@@ -1,16 +1,19 @@
 {
-  "name": "messagequeueclient",
+  "name": "enqueuer",
   "version": "1.0.0",
   "description": "Desktop client to send and receive messages from queue systems",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node js/index.js",
+    "start": "node js/index.js",
     "test": "mocha -r ts-node/register src/**/*.test.ts"
   },
-  "author": "",
+  "author": "Virgs",
   "license": "ISC",
   "dependencies": {
-    "@types/mqtt": "^2.5.0"
+    "@types/mqtt": "^2.5.0",
+    "class-transformer": "^0.1.9",
+    "es6-shim": "^0.35.3",
+    "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "@types/chai": "^4.1.2",
