@@ -7,17 +7,16 @@ class Startup {
 
   constructor() {
     const mqttRequisitionFileParser = new MqttRequisitionFileParser().parse("requisition");
-    this.mqttService = new MqttService(mqttRequisitionFileParser, () => this.onFinish);
+    this.mqttService = new MqttService(mqttRequisitionFileParser, () => this.onFinish());
   }
 
   public start(): number {
-    console.log("start");
     this.mqttService.start();
     return 0;
   } 
 
   private onFinish(): void {
-    console.log("over");
+    console.log("Total time: " + this.mqttService.getTotalTime());
   }
   
 }

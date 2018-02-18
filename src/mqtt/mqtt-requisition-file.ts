@@ -2,13 +2,19 @@ import {Type, plainToClass} from "class-transformer";
 import "reflect-metadata";
 
 export class MqttRequisitionFile {
-    subscribe: string[] | null = [];
+    brokerAddress: string = "";
+    totalTimeout: number = 0;
 
-    @Type(() => Publish)
+    subscriptions: Subscriptions[] = [];
+
     publish: Publish = new Publish();
 }
 
 export class Publish {
     topic: string = "";
     payload: string = "";
+}
+
+export class Subscriptions {
+    topic: string = "";
 }

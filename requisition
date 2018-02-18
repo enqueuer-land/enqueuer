@@ -1,8 +1,19 @@
 {
-    "subscribe": ["topicTo/publish", "2/#"],
+    "brokerAddress": "mqtt://localhost",
+    "totalTimeout": 5000,
+    "subscriptions": [
+        {
+            "topic": "service-to-be-tested/output/1"
+        },
+        {
+            "topic": "service-to-be-tested/output/2"
+        },
+        {
+            "topic": "service-to-be-tested/output/3"
+        }],
     "publish": 
     {
-        "topic": "topicTo/Gui",
+        "topic": "service-to-be-tested/input",
         "payload": "payload"
     }
 }
