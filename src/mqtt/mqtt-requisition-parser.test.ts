@@ -33,6 +33,24 @@ describe('MqttRequisitionFile test', function() {
             expect(actualSubscriptions.length).to.be.equal(expectedSubscriptions.length);
         });
 
+        it('should parse all subscriptions test functions', function() {
+            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
+            const response = {attribute:"attribute"};
+            
+            
+            for (let index: number = 0; index < mqttRequisitionFile.subscriptions.length; ++index) {
+                let subscription = mqttRequisitionFile.subscriptions[index];
+                let func = subscription.testFunction();
+                if (func) {
+                    const test = {
+                        value: false
+                    }
+                    const functionResponse = func(response);
+                    expect(functionResponse).to.deep.equal(test);
+                }
+            }
+        });
+
         it('should parse topicToPublish', function() {
             const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
 

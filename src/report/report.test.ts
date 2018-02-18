@@ -10,7 +10,7 @@ describe('Report test', function() {
 
         const report = new Report(["info"], ["warning"], ["error"]);
         
-        report.writeToFile(filename);
+        // report.writeToFile(filename);
     });
 
 

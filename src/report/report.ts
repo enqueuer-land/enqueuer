@@ -26,7 +26,6 @@ export class Report {
     }
 
     public writeToFile(filename: string): void {
-        console.log("passou");
         let clone = (JSON.parse(JSON.stringify(this)));
         clone.hasErrors = this.hasErrors();
         fs.writeFileSync(filename, JSON.stringify(clone, null, 4), 'utf8');
