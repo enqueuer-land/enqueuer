@@ -8,12 +8,12 @@ const ipc = require('node-ipc');
 ipc.config.id = 'enqueuer';
 ipc.config.retry = 1500;
 ipc.config.silent = true;
-export class IpcUdp implements IpcCommunicator {
+export class IpcUds implements IpcCommunicator {
  
     private messengerService: MessengerService | null = null;
     
     start(): void {
-        console.log("starting ipc-udp");
+        console.log("starting ipc-uds");
 
         ipc.serve(() => this.onConnect());
         ipc.server.start();

@@ -2,7 +2,7 @@ import {IpcFactory} from './ipc-factory';
 import { expect } from 'chai';
 import 'mocha';
 import { IpcMqtt } from './ipc-mqtt';
-import { IpcUdp } from './ipc-udp';
+import { IpcUds } from './ipc-uds';
 
 describe('IpcFactory test', function() {
     describe('IpcFactory test', function() {
@@ -16,14 +16,14 @@ describe('IpcFactory test', function() {
             expect(created).to.be.instanceOf(IpcMqtt);
         });
 
-        it('udp protocol', function() {
+        it('uds protocol', function() {
             const ipcFactory: IpcFactory = new IpcFactory();
             const configurationFile = {
-                protocol: "udp"
+                protocol: "uds"
             }
 
             const created = ipcFactory.create(configurationFile);
-            expect(created).to.be.instanceOf(IpcUdp);
+            expect(created).to.be.instanceOf(IpcUds);
         });
 
         it('undefined protocol', function() {
