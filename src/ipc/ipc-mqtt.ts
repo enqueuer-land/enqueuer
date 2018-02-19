@@ -33,7 +33,7 @@ export class IpcMqtt implements IpcCommunicator {
         this.client.subscribe(this.configurations.input);
     }
     
-    private onMessageReceived(message: string, socket: any): void {
+    private onMessageReceived(topic: string, message: string): void {
         this.messengerService = new RequisitionParserFactory().createService(message);
         if (this.messengerService) {
             this.messengerService.start((report: Report) => this.onFinish(report));
@@ -41,7 +41,6 @@ export class IpcMqtt implements IpcCommunicator {
     }
 
     private onFinish(report: Report): void {
-        report.print();
         this.client.publish(this.configurations.output, report.toString());
       }
     

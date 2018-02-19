@@ -6,6 +6,7 @@ class Startup {
 
   public start(): void {
     const configurations = JSON.parse(fs.readFileSync("conf/udp.json"));
+    // const configurations = JSON.parse(fs.readFileSync("conf/enqueuer.json"));
 
     const communicator: IpcCommunicator = new IpcFactory().create(configurations);
     if (communicator)

@@ -13,7 +13,7 @@ export class IpcUdp implements IpcCommunicator {
     private messengerService: MessengerService | null = null;
     
     start(): void {
-        console.log("starting ipc-mqtt");
+        console.log("starting ipc-udp");
 
         ipc.serve(() => this.onConnect());
         ipc.server.start();
@@ -34,7 +34,6 @@ export class IpcUdp implements IpcCommunicator {
     }
 
     private onFinish(socket: any, report: Report): void {
-        report.print();
         ipc.server.emit(socket, 'message', report.toString());
       }
 
