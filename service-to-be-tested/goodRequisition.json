@@ -1,0 +1,18 @@
+{
+    "protocol": "mqtt",
+    "brokerAddress": "mqtt://localhost",
+    "subscriptions": [
+        {
+            "topic": "service-to-be-tested/output/1",
+            "testFunctionBody": "test['payload value has to be true'] = true;"
+        },
+        {
+            "timeout": 1000,
+            "topic": "service-to-be-tested/output/2"
+        }],
+        "publish": 
+        {
+      "topic": "service-to-be-tested/input",
+      "payload": "payload"
+    }
+}

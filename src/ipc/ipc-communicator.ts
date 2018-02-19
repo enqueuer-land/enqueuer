@@ -1,4 +1,4 @@
 export interface IpcCommunicator {
     start(): void;
-    stop(): void;
+    stop(): number;
 }

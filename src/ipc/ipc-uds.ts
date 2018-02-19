@@ -18,8 +18,9 @@ export class IpcUds implements IpcCommunicator {
         ipc.serve(() => this.onConnect());
         ipc.server.start();
     }
-    stop(): void {
+    stop(): number {
         ipc.server.end();
+        return 0;
     }
     
     private onConnect(): void {
