@@ -112,7 +112,7 @@ export class MqttService implements MessengerService {
                     this.reportGenerator.addError("Topic: '" + subscription.topic + "' did not receive any message");
                 });
 
-        this.reportGenerator.addInfo(`Total time:  + ${totalTime}ms`);
+        this.reportGenerator.addInfo(`Total time: ${totalTime}ms`);
         this.client.end();
         if (this.onFinishCallback)
             this.onFinishCallback(this.reportGenerator.generate());
