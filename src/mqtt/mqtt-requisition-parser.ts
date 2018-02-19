@@ -1,9 +1,12 @@
 import { MqttRequisition } from './model/mqtt-requisition';
 import {plainToClass, deserialize} from "class-transformer";
+import { RequisitionParser } from '../service/requisition/requisition-parser';
+import { MqttService } from '../service/mqtt-service';
+import { MessengerService } from '../service/MessengerService';
 
-export class MqttRequisitionParser {
+export class MqttRequisitionParser implements RequisitionParser {
 
-    parse(mqttRequisition: string): MqttRequisition {
+    parse(mqttRequisition: string): any {
         try {
             return deserialize(MqttRequisition, mqttRequisition);
         } catch (e) {

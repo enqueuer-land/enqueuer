@@ -2,6 +2,7 @@ import {Type, plainToClass} from "class-transformer";
 import "reflect-metadata";
 
 export class MqttRequisition {
+    protocol: string = "";
     brokerAddress: string = "";
 
     @Type(() => Subscription)

@@ -1,8 +1,8 @@
 var mqtt = require('mqtt')
-var fs = require('fs')
 var client  = mqtt.connect('mqtt://localhost')
 
 const goodRequisition = {
+  "protocol": "mqtt", 
   "brokerAddress": "mqtt://localhost",
   "subscriptions": [
       {
@@ -21,6 +21,7 @@ const goodRequisition = {
 }
 
 const badRequisition = {
+  "protocol": "mqtt",
   "brokerAddress": "mqtt://localhost",
   "subscriptions": [
       {
@@ -46,7 +47,7 @@ const badRequisition = {
 
 client.on('connect', function () {
   client.subscribe("enqueuer/output")
-  const requisition  = JSON.stringify(goodRequisition, null, 2);
+  const requisition  = JSON.stringify(badRequisition, null, 2);
 
   console.log("requisition: " + requisition);
   client.publish('enqueuer/input', requisition);

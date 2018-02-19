@@ -5,13 +5,12 @@ import { IpcCommunicator } from "./ipc/ipc-communicator";
 class Startup {
 
   public start(): void {
-    const configurations = JSON.parse(fs.readFileSync("conf/enqueuer.json"));
+    const configurations = JSON.parse(fs.readFileSync("conf/udp.json"));
 
-    const communicator: IpcCommunicator | null = new IpcFactory().create(configurations);
+    const communicator: IpcCommunicator = new IpcFactory().create(configurations);
     if (communicator)
       communicator.start();
   } 
-
   
 }
 

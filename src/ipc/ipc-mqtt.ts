@@ -4,6 +4,8 @@ import { MqttRequisitionParser } from "../mqtt/mqtt-requisition-parser";
 import { MqttRequisition } from "../mqtt/model/mqtt-requisition";
 import { MqttService } from "../service/mqtt-service";
 import { Report } from "../report/report";
+import { RequisitionParser } from "../service/requisition/requisition-parser";
+import { RequisitionParserFactory } from "../service/requisition/requisition-parser-factory";
 const mqtt = require('mqtt')
 
 export class IpcMqtt implements IpcCommunicator {
@@ -26,15 +28,16 @@ export class IpcMqtt implements IpcCommunicator {
         this.client.end();
     }
 
-    onConnect(): void {
+    private onConnect(): void {
         this.client.on('message', (topic: string, message: string) => this.onMessageReceived(topic, message));
         this.client.subscribe(this.configurations.input);
     }
-
-    private onMessageReceived(topic: string, message: string): void {
-        const mqttRequisition: MqttRequisition = new MqttRequisitionParser().parse(message);
-        this.messengerService = new MqttService(mqttRequisition);
-        this.messengerService.start((report: Report) => this.onFinish(report));
+    
+    private onMessageReceived(message: string, socket: any): void {
+        this.messengerService = new RequisitionParserFactory().createService(message);
+        if (this.messengerService) {
+            this.messengerService.start((report: Report) => this.onFinish(report));
+        }
     }
 
     private onFinish(report: Report): void {

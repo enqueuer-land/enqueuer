@@ -1,7 +1,7 @@
 import { MqttRequisitionParser } from './mqtt-requisition-parser';
 import { expect } from 'chai';
 import 'mocha';
-import { Subscription } from './model/mqtt-requisition';
+import { Subscription, MqttRequisition } from './model/mqtt-requisition';
 const fs = require("fs");
 
 describe('mqttRequisitionParser test', function() {
@@ -12,14 +12,15 @@ describe('mqttRequisitionParser test', function() {
         const fileContent = fs.readFileSync(filename);
         const fileContentNoPublish = fs.readFileSync(filenameNoPublish);
 
-        it('should raise exception if file does not exist', function() {
-            const nonExistentFile = "nonExistentFile";
+        it('should raise exception if parse fails', function() {
+            const invalidRequisition = "invalidRequisition";
 
-            expect(() => mqttRequisitionParser.parse(nonExistentFile)).to.throw();
+            expect(() => mqttRequisitionParser.parse(invalidRequisition)).to.throw();
         });
 
         it('should parse all subscriptions', function() {
             const mqttRequisition = mqttRequisitionParser.parse(fileContent);
+            
             const expectedSubscriptions = [
                 {
                     timeout: 2000,
@@ -59,6 +60,14 @@ describe('mqttRequisitionParser test', function() {
             const actualBrokerAddress = mqttRequisition.brokerAddress;
             const expectedBrokerAddress = "brokerAddress";
             expect(actualBrokerAddress).to.be.equal(expectedBrokerAddress);
+        });
+
+        it('should parse protocol', function() {
+            const mqttRequisition = mqttRequisitionParser.parse(fileContent);
+
+            const actualProtocol = mqttRequisition.protocol;
+            const expectedProtocol = "mqtt";
+            expect(actualProtocol).to.be.equal(expectedProtocol);
         });
 
     });
