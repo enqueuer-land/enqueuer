@@ -1,7 +1,7 @@
 import {Type, plainToClass} from "class-transformer";
 import "reflect-metadata";
 
-export class MqttRequisitionFile {
+export class MqttRequisition {
     brokerAddress: string = "";
 
     @Type(() => Subscription)

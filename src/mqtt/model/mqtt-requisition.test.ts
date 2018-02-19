@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import 'mocha';
-import { Subscription } from './mqtt-requisition-file';
+import { Subscription } from './mqtt-requisition';
 
-describe('MqttRequisitionFile test', function() {
+describe('MqttRequisition test', function() {
     describe('Subscription test', function() {
 
         it('should createTestFunction', function() {

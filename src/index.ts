@@ -1,26 +1,17 @@
-import { MqttRequisitionFileParser } from "./mqtt/mqtt-requisition-file-parser";
-import { MqttService } from "./service/mqtt-service";
-import { Report } from "./report/report";
-import { MessengerService } from "./service/MessengerService";
 const fs = require('fs');
+import { IpcFactory } from "./ipc/ipc-factory";
+import { IpcCommunicator } from "./ipc/ipc-communicator";
 
 class Startup {
 
-  private messengerService: MessengerService;
-
-  constructor() {
-    const mqttRequisitionFileParser = new MqttRequisitionFileParser().parse("requisitionFile.json");
-    this.messengerService = new MqttService(mqttRequisitionFileParser);
-  }
-
   public start(): void {
-    this.messengerService.start((report: Report) => this.onFinish(report));
+    const configurations = JSON.parse(fs.readFileSync("conf/enqueuer.json"));
+
+    const communicator: IpcCommunicator | null = new IpcFactory().create(configurations);
+    if (communicator)
+      communicator.start();
   } 
 
-  private onFinish(report: Report): void {
-    report.print();
-    fs.writeFileSync("executionReport", report.toString(), 'utf8');
-  }
   
 }
 

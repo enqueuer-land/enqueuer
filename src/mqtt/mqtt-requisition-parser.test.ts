@@ -1,21 +1,25 @@
-import { MqttRequisitionFileParser } from './mqtt-requisition-file-parser';
+import { MqttRequisitionParser } from './mqtt-requisition-parser';
 import { expect } from 'chai';
 import 'mocha';
-import { Subscription } from './mqtt-requisition-file';
+import { Subscription } from './model/mqtt-requisition';
+const fs = require("fs");
 
-describe('MqttRequisitionFile test', function() {
+describe('mqttRequisitionParser test', function() {
     describe('Constructor', function() {
-        const mqttRequisitionFileParser = new MqttRequisitionFileParser();
-        const filename = "resources/test/mqtt-test.json";
+        const mqttRequisitionParser = new MqttRequisitionParser();
+        const filename = "resources/test/mqtt-requisition-test.json";
+        const filenameNoPublish: string = "resources/test/mqtt-requisition-no-publish-test.json";
+        const fileContent = fs.readFileSync(filename);
+        const fileContentNoPublish = fs.readFileSync(filenameNoPublish);
 
         it('should raise exception if file does not exist', function() {
             const nonExistentFile = "nonExistentFile";
 
-            expect(() => mqttRequisitionFileParser.parse(nonExistentFile)).to.throw();
+            expect(() => mqttRequisitionParser.parse(nonExistentFile)).to.throw();
         });
 
         it('should parse all subscriptions', function() {
-            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
+            const mqttRequisition = mqttRequisitionParser.parse(fileContent);
             const expectedSubscriptions = [
                 {
                     timeout: 2000,
@@ -28,7 +32,7 @@ describe('MqttRequisitionFile test', function() {
                     topic: "2/#"
                 }];
 
-            const actualSubscriptions = mqttRequisitionFile.subscriptions;
+            const actualSubscriptions = mqttRequisition.subscriptions;
             for (let index: number = 0; index < actualSubscriptions.length; ++index) {
                 expect(actualSubscriptions[index]).to.be.deep.equal(expectedSubscriptions[index]);
             }
@@ -36,23 +40,23 @@ describe('MqttRequisitionFile test', function() {
         });
 
         it('should parse topicToPublish', function() {
-            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
+            const mqttRequisition = mqttRequisitionParser.parse(fileContent);
 
-            const actualTopic = mqttRequisitionFile.publish.topic;
+            const actualTopic = mqttRequisition.publish.topic;
             const expectedTopic = "topicToPublish";
             expect(actualTopic).to.be.equal(expectedTopic);
         });
 
-        it('should parse topicToPublish', function() {
-            const mqttRequisitionFile = mqttRequisitionFileParser.parse("resources/test/mqtt-no-publish.json");
+        it('should parse topicToPublish even if its null', function() {
+            const mqttRequisition = mqttRequisitionParser.parse(fileContentNoPublish);
 
-            expect(mqttRequisitionFile.publish).to.be.null;
+            expect(mqttRequisition.publish).to.be.null;
         });
 
         it('should parse brokerAddress', function() {
-            const mqttRequisitionFile = mqttRequisitionFileParser.parse(filename);
+            const mqttRequisition = mqttRequisitionParser.parse(fileContent);
 
-            const actualBrokerAddress = mqttRequisitionFile.brokerAddress;
+            const actualBrokerAddress = mqttRequisition.brokerAddress;
             const expectedBrokerAddress = "brokerAddress";
             expect(actualBrokerAddress).to.be.equal(expectedBrokerAddress);
         });
