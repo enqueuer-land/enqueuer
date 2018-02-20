@@ -2,14 +2,13 @@ import { IpcCommunicator } from "./ipc-communicator";
 import { InputRequisitionFile } from "./input-requisition-file";
 import { IpcUds } from "./ipc-uds";
 import { IpcStandardInput } from "./ipc-standard-input";
+import { ConfigurationFile } from "../conf/configuration-file";
 
 export class IpcFactory {
 
-    private configurations: any;
     private commandLine: any;
 
-    constructor(configurations: any, commandLine: any = {}) {
-        this.configurations = configurations;
+    constructor(commandLine: any = {}) {
         this.commandLine = commandLine;
     }
 
@@ -18,8 +17,8 @@ export class IpcFactory {
             return new IpcStandardInput();
         if (this.commandLine.inputRequisitionFile)
             return new InputRequisitionFile(this.commandLine.inputRequisitionFile, this.commandLine.outputFileResult);
-        if (this.configurations.protocol == "uds")
+        if (ConfigurationFile.getConfigurations().protocol == "uds")
             return new IpcUds();
-        throw new Error(`Undefined ipc protocol: ${this.configurations.protocol}`);
+        throw new Error(`Undefined ipc protocol: ${ConfigurationFile.getConfigurations().protocol}`);
     }
 }

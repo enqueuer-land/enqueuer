@@ -1,4 +1,3 @@
-const readYaml = require('read-yaml');
 import { IpcFactory } from "./ipc/ipc-factory";
 import { IpcCommunicator } from "./ipc/ipc-communicator";
 const commandLine = require('commander');
@@ -13,9 +12,8 @@ commandLine
 class Startup {
 
   public start(): void {
-    var configurations = readYaml.sync("conf/uds.yml");
 
-    const communicator: IpcCommunicator = new IpcFactory(configurations, commandLine).create();
+    const communicator: IpcCommunicator = new IpcFactory(commandLine).create();
     if (communicator)
       communicator.start((number: number) => this.onFinish(number));
   } 
