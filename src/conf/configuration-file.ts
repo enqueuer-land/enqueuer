@@ -8,13 +8,9 @@ export class ConfigurationFile {
         this.configurations = readYaml.sync("conf/uds.yml");
     }
 
-    private static getInstance(): ConfigurationFile {
-        return this.singleton;
-    }
-
     public static getConfigurations(): any {
         return JSON.parse(JSON.stringify(
-            ConfigurationFile.getInstance().configurations));
+            ConfigurationFile.singleton.configurations));
     }
 
 }

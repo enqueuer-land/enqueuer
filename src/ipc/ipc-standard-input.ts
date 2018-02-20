@@ -34,7 +34,6 @@ export class IpcStandardInput implements IpcCommunicator {
     }
 
     private onFinish(report: Report): any {
-        report.print();
         if (this.ipcCommunicatorCallback)
             this.ipcCommunicatorCallback(report.hasErrors()? 1: 0);
     }
