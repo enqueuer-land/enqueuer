@@ -4,15 +4,21 @@
     "subscriptions": [
         {
             "topic": "service-to-be-tested/output/1",
-            "testFunctionBody": "test['payload value has to be false'] = !message.payload.value"
+            "testFunctionBody": "test[{{keyStr}}] = false; console.log('valVar: ' + {{keyStr}})"
         },
         {
-            "timeout": "10",
+            "timeout": "{{keyNum}}",
             "topic": "service-to-be-tested/output/2"
-        }],
+        }
+    ],
     "publish": 
     {
       "topic": "service-to-be-tested/input",
-      "payload": "payload"
+      "payload": "{{keyVar}}"
+    },
+    "variables":
+    {
+        "keyStr": "valStr",
+        "keyNum": 100
     }
 }
