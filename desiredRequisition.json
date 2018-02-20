@@ -1,0 +1,33 @@
+{
+    "subscriptions": [
+        {
+            "brokerAddress": "mqtt://localhost",
+            "protocol": "mqtt",
+            "topic": "service-to-be-tested/output/1",
+            "onMessageReceived": "test[keyStr}}] = false; console.log('valVar: ' + 'keyStr')"
+        },
+        {
+            "brokerAddress": "mqtt://localhost",
+            "protocol": "amqp",
+            "queue": "someQueue",
+            "timeout": "keyNum",
+            "topic": "service-to-be-tested/output/2"
+        }
+    ],
+    "publish": 
+    {
+        "protocol": "rest",
+        "endpoint": "http://blablaservice-to-be-tested:8080/input",
+        "method": "POST",
+        "header": {
+            
+        },
+        "payload": "keyStr",
+        "prePublishing": "console.log('valVar: ' + 'keyStr');"
+    },
+    "variables":
+    {
+        "keyStr": "valStr",
+        "keyNum": 100
+    }
+}

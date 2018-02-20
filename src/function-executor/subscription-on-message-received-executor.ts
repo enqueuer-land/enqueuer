@@ -1,6 +1,6 @@
 import { Subscription } from "../mqtt/model/mqtt-requisition";
 
-export class SubscriptionTestsExecutor {
+export class SubscriptionOnMessageReceivedExecutor {
     private passingTests: string[] = [];
     private failingTests: string[] = [];
 

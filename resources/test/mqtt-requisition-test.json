@@ -5,7 +5,7 @@
         {
             "timeout": 2000,
             "topic": "1",
-            "testFunctionBody": "console.log(\"body:\" + JSON.stringify(response)); test['value'] = false;"
+            "onMessageReceived": "console.log(\"body:\" + JSON.stringify(response)); test['value'] = false;"
         },
         {
             "topic": "2/#"

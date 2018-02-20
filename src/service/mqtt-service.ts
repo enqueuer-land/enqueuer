@@ -3,7 +3,8 @@ import { MqttRequisition, Subscription } from "../mqtt/model/mqtt-requisition";
 import { ReportGenerator } from "../report/report-generator";
 import { Report } from "../report/report";
 import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
-import { SubscriptionTestsExecutor } from "../function-executor/subscription-tests-executor";
+import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subscription-on-message-received-executor";
+
 const mqtt = require('mqtt')
 
 export class MqttService implements MessengerService {
@@ -74,8 +75,8 @@ export class MqttService implements MessengerService {
             let subscription: Subscription = this.mqttRequisition.subscriptions[index];
             this.mqttRequisition.subscriptions.splice(index, 1);
 
-            let subscriptionTestExecutor: SubscriptionTestsExecutor
-                     = new SubscriptionTestsExecutor(subscription, {payload: payload, topic: topic});
+            let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
+                     = new SubscriptionOnMessageReceivedExecutor(subscription, {payload: payload, topic: topic});
             
             for (const passingTest of subscriptionTestExecutor.getPassingTests()) {
                 this.reportGenerator.addInfo(`${subscription.topic}: ${passingTest}`);

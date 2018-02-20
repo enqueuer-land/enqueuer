@@ -8,7 +8,7 @@ describe('MqttRequisition test', function() {
         it('should createTestFunction', function() {
             const subscription: Subscription = new Subscription();
             const payload = 0;
-            subscription.testFunctionBody = "test['description'] = 'test'; test['payload'] = ++payload";
+            subscription.onMessageReceived = "test['description'] = 'test'; test['payload'] = ++payload";
 
             const testFunction: Function | null = subscription.createTestFunction();
             if (testFunction) {

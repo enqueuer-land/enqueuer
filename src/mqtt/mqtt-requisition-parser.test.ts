@@ -25,11 +25,11 @@ describe('mqttRequisitionParser test', function() {
                 {
                     timeout: 2000,
                     topic: "1",
-                    testFunctionBody: "console.log(\"body:\" + JSON.stringify(response)); test['value'] = false;"                    
+                    onMessageReceived: "console.log(\"body:\" + JSON.stringify(response)); test['value'] = false;"                    
                 },
                 {
                     timeout: null,
-                    testFunctionBody: null, 
+                    onMessageReceived: null, 
                     topic: "2/#"
                 }];
 
