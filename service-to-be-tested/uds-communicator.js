@@ -15,6 +15,7 @@ ipc.connectTo('enqueuer', (client) => {
 
         client.of['enqueuer'].on('message', message => {
             const parsedMessage = JSON.parse(message);
+            console.log(parsedMessage);
             printInfo(parsedMessage.infoMessages);
             printErrors(parsedMessage.errorMessages);
 

@@ -2,7 +2,8 @@ import {classToClass} from "class-transformer";
 import { MqttRequisition, Subscription } from "../mqtt/model/mqtt-requisition";
 import { ReportGenerator } from "../report/report-generator";
 import { Report } from "../report/report";
-import { MessengerService, MessengerServiceCallback } from "../service/MessengerService";
+import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
+import { SubscriptionTestsExecutor } from "../function-executor/subscription-tests-executor";
 const mqtt = require('mqtt')
 
 export class MqttService implements MessengerService {
@@ -59,10 +60,11 @@ export class MqttService implements MessengerService {
         this.onFinish();
     }
     
-    private onMessageReceived(topic: string, message: string): void {
+    private onMessageReceived(topic: string, payloadBuffer: string): void {
+        const payload: string = payloadBuffer.toString();
         const ellapsedTime = Date.now() - this.startTime;
 
-        this.reportGenerator.addInfo(`After: ${ellapsedTime}ms, topic: ${topic} received: ${message}`);
+        this.reportGenerator.addInfo(`${topic} (${ellapsedTime}ms): ${payload}`);
 
         var index = this.mqttRequisition.subscriptions.findIndex((subscription: Subscription) => {
             return subscription.topic == topic;
@@ -72,20 +74,17 @@ export class MqttService implements MessengerService {
             let subscription: Subscription = this.mqttRequisition.subscriptions[index];
             this.mqttRequisition.subscriptions.splice(index, 1);
 
-
-            const testFunction: Function | null = subscription.createTestFunction();
-            if (testFunction) {
-                const functionResponse = testFunction(message);
-                for (const test in functionResponse) {
-                    if (!functionResponse[test]) {
-                        const log: string = `${subscription.topic}: ${test}`;
-                        this.reportGenerator.addError(log);
-                    }
-                }
-            }
-
+            let subscriptionTestExecutor: SubscriptionTestsExecutor
+                     = new SubscriptionTestsExecutor(subscription, {payload: payload, topic: topic});
+            
+            for (const passingTest in subscriptionTestExecutor.getPassingTests())
+                this.reportGenerator.addInfo(`${subscription.topic}: ${passingTest}`);
+     
+            for (const failingTest in subscriptionTestExecutor.getPassingTests())
+                this.reportGenerator.addError(`${subscription.topic}: ${failingTest}`);
+     
             if (subscription.timeout && subscription.timeout < ellapsedTime) {
-                const log: string = `${subscription.topic}: ellapsed time (${ellapsedTime}ms) is greater than timeout (${subscription.timeout}ms)`;
+                const log: string = `${subscription.topic} (${ellapsedTime}ms): is greater than timeout (${subscription.timeout}ms)`;
                 this.reportGenerator.addError(log);
             }
 
@@ -109,7 +108,7 @@ export class MqttService implements MessengerService {
             clearTimeout(this.timer);
             this.mqttRequisition.subscriptions
                 .forEach((subscription: Subscription) => {
-                    this.reportGenerator.addError("Topic: '" + subscription.topic + "' did not receive any message");
+                    this.reportGenerator.addError(subscription.topic + ": did not receive any message");
                 });
 
         this.reportGenerator.addInfo(`Total time: ${totalTime}ms`);

@@ -4,7 +4,7 @@
   "description": "Desktop client to send and receive messages from queue systems",
   "main": "index.js",
   "scripts": {
-    "start": "node js/index.js",
+    "start": "tsc && node js/index.js",
     "test": "mocha -r ts-node/register src/**/*.test.ts"
   },
   "author": "Virgs",
@@ -14,6 +14,7 @@
     "chalk": "^2.3.1",
     "class-transformer": "^0.1.9",
     "node-ipc": "^9.1.1",
+    "read-yaml": "^1.1.0",
     "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {

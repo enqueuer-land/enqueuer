@@ -1,5 +1,5 @@
 import { MqttRequisitionParser } from "../../mqtt/mqtt-requisition-parser";
-import { MessengerService } from "../MessengerService";
+import { MessengerService } from "../messenger-service";
 import { MqttService } from "../mqtt-service";
 
 export class RequisitionParserFactory {

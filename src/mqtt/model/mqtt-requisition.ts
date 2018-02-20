@@ -27,7 +27,7 @@ export class Subscription {
         if (this.testFunctionBody == null)
             return null;
 
-        const fullBody: string = `let test = {}; ${this.testFunctionBody}; return test`;
-        return new Function('payload', fullBody);
+        const fullBody: string = `let test = {}; ${this.testFunctionBody};return test;`;
+        return new Function('message', fullBody);
     }
 }

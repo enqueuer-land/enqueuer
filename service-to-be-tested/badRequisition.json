@@ -4,11 +4,11 @@
     "subscriptions": [
         {
             "topic": "service-to-be-tested/output/1",
-            "testFunctionBody": "test['payload value has to be true'] = payload.value == true; test['false value'] = false; test['should not appear'] = true;"
+            "testFunctionBody": "test['message.payload value has to be true'] = message.payload == true; test['false value'] = false; test['should appear'] = false;"
         },
         {
             "timeout": 100,
-            "testFunctionBody": "console.log(\"requisition file log testing\")",
+            "testFunctionBody": "console.log(message.payload)",
             "topic": "service-to-be-tested/output/2"
         },
         {
