@@ -15,6 +15,15 @@ export class MqttRequisition {
 export class Publish {
     topic: string = "";
     payload: string = "";
+    prePublishing: string | null = null;
+
+    createPrePublishingFunction(): Function | null {
+        if (this.prePublishing == null)
+            return null;
+
+        const fullBody: string = `${this.prePublishing};`;
+        return new Function('message', fullBody);
+    }
 }
 
 export class Subscription {

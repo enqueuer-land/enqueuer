@@ -14,6 +14,7 @@
     "publish": 
     {
         "topic": "service-to-be-tested/input",
+        "prePublishing": "c;onsole.log('Prepublishing hook');",        
         "payload": "keyStr"
     },
     "variables":

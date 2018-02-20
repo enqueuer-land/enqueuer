@@ -4,6 +4,7 @@ import { ReportGenerator } from "../report/report-generator";
 import { Report } from "../report/report";
 import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
 import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subscription-on-message-received-executor";
+import { PublishPrePublishingExecutor } from "../function-executor/publish-pre-publishing-executor";
 
 const mqtt = require('mqtt')
 
@@ -38,6 +39,15 @@ export class MqttService implements MessengerService {
         if (this.mqttRequisition.publish) {
             this.client.publish(this.mqttRequisition.publish.topic,
                                 this.mqttRequisition.publish.payload);
+
+            try {
+                new PublishPrePublishingExecutor(this.mqttRequisition.publish, {payload: this.mqttRequisition.publish.payload,
+                         topic: this.mqttRequisition.publish.topic});                                           
+            }
+            catch (exception) {
+                this.reportGenerator.addWarning(exception);
+            }
+                        
         }
     }
     
