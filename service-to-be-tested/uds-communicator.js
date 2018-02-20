@@ -1,5 +1,5 @@
-const goodRequisition = require("./goodRequisition");
-const badRequisition = require("./badRequisition");
+const goodRequisition = require("../goodRequisition");
+const badRequisition = require("../badRequisition");
 
 var ipc = require('node-ipc');
 var chalk = require('chalk');

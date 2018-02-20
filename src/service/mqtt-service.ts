@@ -77,11 +77,13 @@ export class MqttService implements MessengerService {
             let subscriptionTestExecutor: SubscriptionTestsExecutor
                      = new SubscriptionTestsExecutor(subscription, {payload: payload, topic: topic});
             
-            for (const passingTest in subscriptionTestExecutor.getPassingTests())
+            for (const passingTest of subscriptionTestExecutor.getPassingTests()) {
                 this.reportGenerator.addInfo(`${subscription.topic}: ${passingTest}`);
+            }
      
-            for (const failingTest in subscriptionTestExecutor.getPassingTests())
+            for (const failingTest of subscriptionTestExecutor.getFailingTests()) {
                 this.reportGenerator.addError(`${subscription.topic}: ${failingTest}`);
+            }
      
             if (subscription.timeout && subscription.timeout < ellapsedTime) {
                 const log: string = `${subscription.topic} (${ellapsedTime}ms): is greater than timeout (${subscription.timeout}ms)`;
