@@ -85,17 +85,23 @@ export class MqttService implements MessengerService {
             let subscription: Subscription = this.mqttRequisition.subscriptions[index];
             this.mqttRequisition.subscriptions.splice(index, 1);
 
-            let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                     = new SubscriptionOnMessageReceivedExecutor(subscription, {payload: payload, topic: topic});
-            
-            for (const passingTest of subscriptionTestExecutor.getPassingTests()) {
-                this.reportGenerator.addInfo(`${subscription.topic}: ${passingTest}`);
+            try {
+                let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
+                         = new SubscriptionOnMessageReceivedExecutor(subscription, {payload: payload, topic: topic});
+                
+                for (const passingTest of subscriptionTestExecutor.getPassingTests()) {
+                    this.reportGenerator.addInfo(`${subscription.topic}: ${passingTest}`);
+                }
+         
+                for (const failingTest of subscriptionTestExecutor.getFailingTests()) {
+                    this.reportGenerator.addError(`${subscription.topic}: ${failingTest}`);
+                }
+         
             }
-     
-            for (const failingTest of subscriptionTestExecutor.getFailingTests()) {
-                this.reportGenerator.addError(`${subscription.topic}: ${failingTest}`);
+            catch (exception) {
+                this.reportGenerator.addWarning(exception);
             }
-     
+
             if (subscription.timeout && subscription.timeout < ellapsedTime) {
                 const log: string = `${subscription.topic} (${ellapsedTime}ms): is greater than timeout (${subscription.timeout}ms)`;
                 this.reportGenerator.addError(log);

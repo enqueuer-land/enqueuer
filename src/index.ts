@@ -5,7 +5,8 @@ const commandLine = require('commander');
  
 commandLine
   .version('0.1.0', '-v, --version')
-  .option('-i, --input-requisition-file <pathToFile>', 'Specify an input requisition file')
+  .option('-i, --standard-input', 'Reads requisition from standard input')
+  .option('-f, --input-requisition-file <pathToFile>', 'Specify an input requisition file')
   .option('-o, --output-file-result <pathToFile>', 'Specify an output file')
   .parse(process.argv);
 
