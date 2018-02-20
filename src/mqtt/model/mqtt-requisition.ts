@@ -23,7 +23,7 @@ export class Subscription {
 
     onMessageReceived: string | null = null;
 
-    createTestFunction(): Function | null {
+    createOnMessageReceivedFunction(): Function | null {
         if (this.onMessageReceived == null)
             return null;
 

@@ -5,7 +5,7 @@ export class SubscriptionOnMessageReceivedExecutor {
     private failingTests: string[] = [];
 
     constructor(subscription: Subscription, message: any) {
-        let subscriptionFunction = subscription.createTestFunction();
+        let subscriptionFunction = subscription.createOnMessageReceivedFunction();
         if (subscriptionFunction == null)
             return;
         this.execute(subscriptionFunction, message);
