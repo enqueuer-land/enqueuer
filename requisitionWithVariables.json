@@ -4,17 +4,17 @@
     "subscriptions": [
         {
             "topic": "service-to-be-tested/output/1",
-            "testFunctionBody": "test[{{keyStr}}] = false; console.log('valVar: ' + {{keyStr}})"
+            "testFunctionBody": "test[keyStr}}] = false; console.log('valVar: ' + 'keyStr')"
         },
         {
-            "timeout": "{{keyNum}}",
+            "timeout": "keyNum",
             "topic": "service-to-be-tested/output/2"
         }
     ],
     "publish": 
     {
-      "topic": "service-to-be-tested/input",
-      "payload": "{{keyVar}}"
+        "topic": "service-to-be-tested/input",
+        "payload": "keyStr"
     },
     "variables":
     {
