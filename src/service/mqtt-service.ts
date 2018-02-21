@@ -25,6 +25,7 @@ export class MqttService implements MessengerService {
     }
     
     public start(onFinishCallback: MessengerServiceCallback): void {
+        this.reportGenerator.addInfo({startTime: new Date().toString()})
         this.onFinishCallback = onFinishCallback;
         this.client.on('connect', () => this.onConnect());
     }
@@ -47,7 +48,6 @@ export class MqttService implements MessengerService {
                     topic: this.mqttRequisition.publish.topic});
             }
             catch (exception) {
-                this.reportGenerator.addError(exception);
                 warning = exception;
             }
 
@@ -69,11 +69,9 @@ export class MqttService implements MessengerService {
                     totalTimeout = subscriptionTimeout;
             });
 
+        this.reportGenerator.addInfo({totalTimeout: totalTimeout});
         if (totalTimeout != -1) {
-            this.reportGenerator.addInfo(`Max timeout: ${totalTimeout}ms`);
             this.timer = setTimeout(() => this.onTimeout(), totalTimeout);
-        } else {
-            this.reportGenerator.addInfo(`The service will wait untill all topics are hit`);            
         }
     }
     
@@ -93,16 +91,15 @@ export class MqttService implements MessengerService {
         if (index > -1) {
             let subscription: Subscription = this.mqttRequisition.subscriptions[index];
             this.mqttRequisition.subscriptions.splice(index, 1);
-            this.generateSubscriptionReport(subscription, {payload: payload, topic: topic});
+            this.generateSubscriptionReceivedMessageReport(subscription, {payload: payload, topic: topic});
 
             if (this.mqttRequisition.subscriptions.length === 0) {
-                this.reportGenerator.addInfo("All subscriptions received messages");
                 this.onFinish();
             }
         }
     }
 
-    private generateSubscriptionReport(subscription: Subscription, message: any) {
+    private generateSubscriptionReceivedMessageReport(subscription: Subscription, message: any) {
         const ellapsedTime = Date.now() - this.startTime;
 
         let tests = {};
@@ -129,6 +126,18 @@ export class MqttService implements MessengerService {
         this.reportGenerator.addSubscriptionReport(subscriptionReport);
     }
     
+    private generateSubscriptionDidNotReceivedMessageReport(subscription: Subscription) {
+        const ellapsedTime = Date.now() - this.startTime;
+
+        var subscriptionReport = {
+            subscription: subscription.topic,
+            timeout: subscription.timeout,
+            ellapsedTime: ellapsedTime,
+            hasTimedOut: true
+        };
+        this.reportGenerator.addSubscriptionReport(subscriptionReport);
+    }
+    
     private subscribeToTopics(): void {
         this.mqttRequisition.subscriptions
                 .forEach((subscription: Subscription) => {
@@ -142,10 +151,10 @@ export class MqttService implements MessengerService {
             clearTimeout(this.timer);
             this.mqttRequisition.subscriptions
                 .forEach((subscription: Subscription) => {
-                    this.generateSubscriptionReport(subscription, null);
+                    this.generateSubscriptionDidNotReceivedMessageReport(subscription);
                 });
 
-        this.reportGenerator.addInfo(`Total time: ${totalTime}ms`);
+        this.reportGenerator.addInfo({endTime: new Date().toString()})
         this.client.end();
         if (this.onFinishCallback)
             this.onFinishCallback(this.reportGenerator.generate());

@@ -14,17 +14,41 @@
             "topic": "service-to-be-tested/output/2"
         }
     ],
-    "publish": 
-    {
-        "protocol": "rest",
-        "endpoint": "http://blablaservice-to-be-tested:8080/input",
-        "method": "POST",
-        "header": {
-            
+    "startEvent": {
+        "publish": 
+        {
+            "protocol": "rest",
+            "endpoint": "http://blablaservice-to-be-tested:8080/input",
+            "method": "POST",
+            "header": {
+                
+            },
+            "payload": "keyStr",
+            "prePublishing": "console.log('valVar: ' + 'keyStr');"
         },
-        "payload": "keyStr",
-        "prePublishing": "console.log('valVar: ' + 'keyStr');"
+        /*one or another*/"listen": {
+            "brokerAddress": "mqtt://localhost",
+            "protocol": "mqtt",
+            "topic": "service-to-be-tested/output/1",
+            "validateMessage": "return true; //it has to return true!!"
+        }
     },
+    "report": [
+        {
+            "protocol": "outputFile",
+            "filename": "outputFilename"
+        },
+        {
+            "protocol": "mqtt",
+            "brokerAddress": "mqtt://localhost",
+            "topic": "mqtt/topic"
+        },
+        {
+            "protocol": "rest",
+            "endPoint": "https://localhost:8080/endpoint"
+            //Streaming?
+        }
+    ],
     "variables":
     {
         "keyStr": "valStr",

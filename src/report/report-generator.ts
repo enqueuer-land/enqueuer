@@ -2,13 +2,14 @@ import { Report } from "./report";
 
 export class ReportGenerator {
 
-    private infoMessages: string[] = [];
+    private info: any = {};
     private publishReports: any[] = [];
     private subscriptionReports: any[] = [];
-    private errors: string[] = [];
     
-    public addInfo(infoMessage: string): void {
-        this.infoMessages.push(infoMessage);
+    public addInfo(infoMessage: any): void {
+        for (const key in infoMessage) {
+            this.info[key] = infoMessage[key];
+        }
     }
     
     public addPublishReport(publishReports: any): any {
@@ -19,13 +20,8 @@ export class ReportGenerator {
         this.subscriptionReports.push(subscriptionReport);
     }
 
-    public addError(error: string): void {
-        this.errors.push(error);
-    }
-
     public generate(): Report {
-        return new Report(this.infoMessages,
-                            this.errors,
+        return new Report(this.info,
                             this.publishReports,
                             this.subscriptionReports);
     }

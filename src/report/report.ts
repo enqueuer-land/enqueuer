@@ -2,19 +2,16 @@ var prettyjson = require('prettyjson');
 
 export class Report {
 
-    private infoMessages: string[] = [];
-    private publishReports: any[] = [];
-    private subscriptionReports: any[] = [];
-    private errors: string[] = [];
+    private infoMessages: any;
+    private publishReports: any;
+    private subscriptionReports: any;
     
-    constructor(infoMessages: string[],
-        errors: string[],
-        publishReports: any[],
-        subscriptionReports: any[]) {
+    constructor(infoMessages: any = {},
+        publishReports: any = {},
+        subscriptionReports: any = {}) {
             this.infoMessages = infoMessages;
             this.publishReports = publishReports;
             this.subscriptionReports = subscriptionReports;
-            this.errors = errors;
         }
         
     public print(): any {
