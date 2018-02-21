@@ -1,4 +1,4 @@
-// const chalk = require('chalk');
+var prettyjson = require('prettyjson');
 
 export class Report {
 
@@ -18,7 +18,12 @@ export class Report {
         }
         
     public print(): any {
-        throw new Error("Method not implemented.");
+        var options = {
+            indent: 6,
+            keysColor: "white",
+            dashColor: "white"
+          };
+        console.log(prettyjson.render(this, options));
     }
 
     public toString(): string {

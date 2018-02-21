@@ -70,12 +70,14 @@ export class MqttService implements MessengerService {
             });
 
         if (totalTimeout != -1) {
+            this.reportGenerator.addInfo(`Max timeout: ${totalTimeout}ms`);
             this.timer = setTimeout(() => this.onTimeout(), totalTimeout);
+        } else {
+            this.reportGenerator.addInfo(`The service will wait untill all topics are hit`);            
         }
     }
     
     private onTimeout(): void {
-        this.reportGenerator.addInfo(`Service has timed out ${Date.now() - this.startTime}ms`);
         this.client.end();
         this.onFinish();
     }
@@ -83,8 +85,6 @@ export class MqttService implements MessengerService {
     private onMessageReceived(topic: string, payloadBuffer: string): void {
         const payload: string = payloadBuffer.toString();
         const ellapsedTime = Date.now() - this.startTime;
-
-        this.reportGenerator.addInfo(`${topic} (${ellapsedTime}ms): ${payload}`);
 
         var index = this.mqttRequisition.subscriptions.findIndex((subscription: Subscription) => {
             return subscription.topic == topic;
