@@ -10,7 +10,6 @@ ipc.config.retry = 1500;
 ipc.config.silent = true;
 export class IpcUds implements IpcCommunicator {
  
-    private ipcCommunicatorCallback: IpcCommunicatorCallback = () => {};
     private messengerService: MessengerService | null = null;
     
     start(ipcCommunicatorCallback: IpcCommunicatorCallback): void {
@@ -18,12 +17,10 @@ export class IpcUds implements IpcCommunicator {
 
         ipc.serve(() => this.onConnect());
         ipc.server.start();
-        this.ipcCommunicatorCallback = ipcCommunicatorCallback;
     }
 
     stop(): void {
         ipc.server.end();
-        this.ipcCommunicatorCallback(0);
     }
     
     private onConnect(): void {

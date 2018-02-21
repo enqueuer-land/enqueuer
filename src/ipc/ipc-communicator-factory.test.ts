@@ -1,4 +1,4 @@
-import {IpcFactory} from './ipc-factory';
+import {IpcCommunicatorFactory} from './ipc-communicator-factory';
 import { expect } from 'chai';
 import 'mocha';
 import { IpcUds } from './ipc-uds';
@@ -10,7 +10,7 @@ describe('IpcFactory test', function() {
             const configurationFile = {
                 protocol: "uds"
             }
-            const ipcFactory: IpcFactory = new IpcFactory(configurationFile);
+            const ipcFactory: IpcCommunicatorFactory = new IpcCommunicatorFactory();
 
             const created = ipcFactory.create();
             expect(created).to.be.instanceOf(IpcUds);
@@ -23,7 +23,7 @@ describe('IpcFactory test', function() {
         const commandLine = {
             inputRequisitionFile: "filename"
         }
-        const ipcFactory: IpcFactory = new IpcFactory(configurationFile, commandLine);
+        const ipcFactory: IpcCommunicatorFactory = new IpcCommunicatorFactory();
 
         const created = ipcFactory.create();
         expect(created).to.be.instanceOf(InputRequisitionFile);
@@ -33,7 +33,7 @@ describe('IpcFactory test', function() {
             const configurationFile = {
                 protocol: "unknown"
             }
-            const ipcFactory: IpcFactory = new IpcFactory(configurationFile);
+            const ipcFactory: IpcCommunicatorFactory = new IpcCommunicatorFactory();
 
             expect(() => ipcFactory.create()).to.throw;
         });

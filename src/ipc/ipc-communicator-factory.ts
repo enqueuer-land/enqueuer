@@ -5,13 +5,13 @@ import { IpcStandardInput } from "./ipc-standard-input";
 import { ConfigurationFile } from "../conf/configuration-file";
 import { CommandLineParser } from "../command-line/command-line-parser";
 
-export class IpcFactory {
+export class IpcCommunicatorFactory {
 
     create(): IpcCommunicator {
-        if (CommandLineParser.getOptions().standardInput)
-            return new IpcStandardInput();
-        if (CommandLineParser.getOptions().inputRequisitionFile)
+        if (CommandLineParser.getInstance().getOptions().inputRequisitionFile)
             return new InputRequisitionFile();
+        if (CommandLineParser.getInstance().getOptions().standardInput)
+            return new IpcStandardInput();
         if (ConfigurationFile.getConfigurations().protocol == "uds")
             return new IpcUds();
         throw new Error(`Undefined ipc protocol: ${ConfigurationFile.getConfigurations().protocol}`);

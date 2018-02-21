@@ -40,14 +40,23 @@ export class MqttService implements MessengerService {
             this.client.publish(this.mqttRequisition.publish.topic,
                                 this.mqttRequisition.publish.payload);
 
+            const ellapsedTime = Date.now() - this.startTime;
+            let warning = {};
             try {
                 new PublishPrePublishingExecutor(this.mqttRequisition.publish, {payload: this.mqttRequisition.publish.payload,
-                         topic: this.mqttRequisition.publish.topic});                                           
+                    topic: this.mqttRequisition.publish.topic});
             }
             catch (exception) {
-                this.reportGenerator.addWarning(exception);
+                this.reportGenerator.addError(exception);
+                warning = exception;
             }
-                        
+
+            this.reportGenerator.addPublishReport({
+                                                    payload: this.mqttRequisition.publish.payload,
+                                                    topic: this.mqttRequisition.publish.topic,
+                                                    ellapsedTime: ellapsedTime,
+                                                    warning: warning
+                                                });                        
         }
     }
     
@@ -66,7 +75,7 @@ export class MqttService implements MessengerService {
     }
     
     private onTimeout(): void {
-        this.reportGenerator.addInfo("Service has timed out");
+        this.reportGenerator.addInfo(`Service has timed out ${Date.now() - this.startTime}ms`);
         this.client.end();
         this.onFinish();
     }
@@ -84,34 +93,40 @@ export class MqttService implements MessengerService {
         if (index > -1) {
             let subscription: Subscription = this.mqttRequisition.subscriptions[index];
             this.mqttRequisition.subscriptions.splice(index, 1);
-
-            try {
-                let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                         = new SubscriptionOnMessageReceivedExecutor(subscription, {payload: payload, topic: topic});
-                
-                for (const passingTest of subscriptionTestExecutor.getPassingTests()) {
-                    this.reportGenerator.addInfo(`${subscription.topic}: ${passingTest}`);
-                }
-         
-                for (const failingTest of subscriptionTestExecutor.getFailingTests()) {
-                    this.reportGenerator.addError(`${subscription.topic}: ${failingTest}`);
-                }
-         
-            }
-            catch (exception) {
-                this.reportGenerator.addWarning(exception);
-            }
-
-            if (subscription.timeout && subscription.timeout < ellapsedTime) {
-                const log: string = `${subscription.topic} (${ellapsedTime}ms): is greater than timeout (${subscription.timeout}ms)`;
-                this.reportGenerator.addError(log);
-            }
+            this.generateSubscriptionReport(subscription, {payload: payload, topic: topic});
 
             if (this.mqttRequisition.subscriptions.length === 0) {
                 this.reportGenerator.addInfo("All subscriptions received messages");
                 this.onFinish();
             }
         }
+    }
+
+    private generateSubscriptionReport(subscription: Subscription, message: any) {
+        const ellapsedTime = Date.now() - this.startTime;
+
+        let tests = {};
+        if (message) {
+            let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
+                        = new SubscriptionOnMessageReceivedExecutor(subscription, message);
+            
+            subscriptionTestExecutor.execute();
+
+            tests = {
+                failing: subscriptionTestExecutor.getFailingTests(),
+                passing: subscriptionTestExecutor.getPassingTests(),
+                warning: subscriptionTestExecutor.getWarning()
+            }
+        }
+
+        var subscriptionReport = {
+            subscription: subscription.topic,
+            timeout: subscription.timeout,
+            ellapsedTime: ellapsedTime,
+            tests: tests,
+            message: message
+        };
+        this.reportGenerator.addSubscriptionReport(subscriptionReport);
     }
     
     private subscribeToTopics(): void {
@@ -127,7 +142,7 @@ export class MqttService implements MessengerService {
             clearTimeout(this.timer);
             this.mqttRequisition.subscriptions
                 .forEach((subscription: Subscription) => {
-                    this.reportGenerator.addError(subscription.topic + ": did not receive any message");
+                    this.generateSubscriptionReport(subscription, null);
                 });
 
         this.reportGenerator.addInfo(`Total time: ${totalTime}ms`);

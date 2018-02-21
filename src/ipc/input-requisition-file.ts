@@ -11,9 +11,9 @@ export class InputRequisitionFile implements IpcCommunicator {
     private ipcCommunicatorCallback: IpcCommunicatorCallback | null = null;
 
     start(ipcCommunicatorCallback: IpcCommunicatorCallback): void {
-        console.log("starting ipc-input-file-requisition");
         this.ipcCommunicatorCallback = ipcCommunicatorCallback;
-        const fileContent: string = fs.readFileSync(CommandLineParser.getOptions().inputFilename);
+        
+        const fileContent: string = fs.readFileSync(CommandLineParser.getInstance().getOptions().inputRequisitionFile);
 
         this.messengerService = new RequisitionParserFactory().createService(fileContent);
         if (this.messengerService) {
@@ -22,10 +22,8 @@ export class InputRequisitionFile implements IpcCommunicator {
     }
 
     private onFinish(report: Report): any {
-        if (CommandLineParser.getOptions().outputFilename)
-            fs.writeFileSync(CommandLineParser.getOptions(), report.toString());
         if (this.ipcCommunicatorCallback)
-            this.ipcCommunicatorCallback(report.hasErrors()? 1: 0);
+            this.ipcCommunicatorCallback(report);
     }
 
 }

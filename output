@@ -1,12 +1,56 @@
 {
-    "errorMessages": [],
     "infoMessages": [
-        "service-to-be-tested/output/2 (513ms): payload2",
-        "service-to-be-tested/output/1 (514ms): {\"value\":false}",
-        "service-to-be-tested/output/1: payload value has to be false",
-        "All subscriptions received messages",
-        "Total time: 515ms"
+        "service-to-be-tested/output/2 (517ms): payload2",
+        "service-to-be-tested/output/1 (519ms): {\"value\":false}",
+        "Service has timed out 2005ms",
+        "Total time: 2005ms"
     ],
-    "warningMessages": [],
-    "hasErrors": false
+    "publishReports": {
+        "payload": "payload",
+        "topic": "service-to-be-tested/input",
+        "ellapsedTime": 0,
+        "warning": {}
+    },
+    "subscriptionReports": [
+        {
+            "subscription": "service-to-be-tested/output/2",
+            "timeout": 100,
+            "ellapsedTime": 518,
+            "tests": {
+                "failing": [],
+                "passing": [],
+                "warning": ""
+            },
+            "message": {
+                "payload": "payload2",
+                "topic": "service-to-be-tested/output/2"
+            }
+        },
+        {
+            "subscription": "service-to-be-tested/output/1",
+            "timeout": null,
+            "ellapsedTime": 519,
+            "tests": {
+                "failing": [
+                    "message.payload value has to be true",
+                    "false value",
+                    "should appear"
+                ],
+                "passing": [],
+                "warning": ""
+            },
+            "message": {
+                "payload": "{\"value\":false}",
+                "topic": "service-to-be-tested/output/1"
+            }
+        },
+        {
+            "subscription": "service-to-be-tested/output/3",
+            "timeout": 2000,
+            "ellapsedTime": 2005,
+            "tests": {},
+            "message": null
+        }
+    ],
+    "errors": []
 }

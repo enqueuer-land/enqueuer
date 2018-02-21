@@ -3,22 +3,31 @@ import { Subscription } from "../mqtt/model/mqtt-requisition";
 export class SubscriptionOnMessageReceivedExecutor {
     private passingTests: string[] = [];
     private failingTests: string[] = [];
+    private warning: string = "";
+
+    private subscriptionFunction: Function | null = null;
+    private message: any;
 
     constructor(subscription: Subscription, message: any) {
-        let subscriptionFunction = subscription.createOnMessageReceivedFunction();
-        if (subscriptionFunction == null)
-            return;
-        this.execute(subscriptionFunction, message);
+        this.subscriptionFunction = subscription.createOnMessageReceivedFunction();
+        this.message = message;
     }
-
-    private execute(subscriptionFunction: Function, message: any) {
-        const functionResponse = subscriptionFunction(message);
-        for (const test in functionResponse) {
-            if (functionResponse[test]) {
-                this.passingTests.push(test);
-            } else {
-                this.failingTests.push(test);
+    
+    public execute() {
+        if (this.subscriptionFunction == null)
+            return;
+        
+        try {
+            const functionResponse = this.subscriptionFunction(this.message);
+            for (const test in functionResponse) {
+                if (functionResponse[test]) {
+                    this.passingTests.push(test);
+                } else {
+                    this.failingTests.push(test);
+                }
             }
+        } catch (exc) {
+            this.warning = exc;
         }
     }
 
@@ -28,5 +37,9 @@ export class SubscriptionOnMessageReceivedExecutor {
 
     public getFailingTests(): string[] {
         return this.failingTests;
+    }
+
+    public getWarning(): string {
+        return this.warning;
     }
 }

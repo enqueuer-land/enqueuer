@@ -1,18 +1,26 @@
-import { IpcFactory } from "./ipc/ipc-factory";
 import { IpcCommunicator } from "./ipc/ipc-communicator";
+import { Report } from "./report/report";
+import { CommandLineParser } from "./command-line/command-line-parser";
+import { IpcCommunicatorFactory } from "./ipc/ipc-communicator-factory";
+const fs = require("fs");
 
 class Startup {
 
   public start(): void {
 
-    const communicator: IpcCommunicator = new IpcFactory().create();
+    const communicator: IpcCommunicator = new IpcCommunicatorFactory().create();
     if (communicator)
-      communicator.start((number: number) => this.onFinish(number));
+      communicator.start((report: Report) => this.onFinish(report));
   } 
 
-  public onFinish(number: number): void {
-    console.log(`Execution result: ${number}`);
-    process.exit(number);
+  public onFinish(report: Report): void {
+    if (!CommandLineParser.getInstance().getOptions().silentMode)
+      report.print();
+
+    if (CommandLineParser.getInstance().getOptions().outputFileResult)
+      fs.writeFileSync(CommandLineParser.getInstance().getOptions().outputFileResult, report.toString());
+    
+    process.exit(0);
   }
   
 }

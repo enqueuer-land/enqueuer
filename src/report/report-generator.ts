@@ -1,27 +1,33 @@
 import { Report } from "./report";
 
 export class ReportGenerator {
+
     private infoMessages: string[] = [];
-    private warningMessages: string[] = [];
-    private errorMessages: string[] = [];
+    private publishReports: any[] = [];
+    private subscriptionReports: any[] = [];
+    private errors: string[] = [];
     
     public addInfo(infoMessage: string): void {
         this.infoMessages.push(infoMessage);
     }
     
-    public addWarning(warningMessage: string): void {
-        this.warningMessages.push(warningMessage);
+    public addPublishReport(publishReports: any): any {
+        this.publishReports = publishReports;
     }
-    
-    public addError(errorMessage: string): void {
-        
-        this.errorMessages.push(errorMessage);
+
+    public addSubscriptionReport(subscriptionReport: any): void {
+        this.subscriptionReports.push(subscriptionReport);
+    }
+
+    public addError(error: string): void {
+        this.errors.push(error);
     }
 
     public generate(): Report {
         return new Report(this.infoMessages,
-                            this.warningMessages, 
-                            this.errorMessages);
+                            this.errors,
+                            this.publishReports,
+                            this.subscriptionReports);
     }
 
 }
