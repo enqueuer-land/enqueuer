@@ -36,7 +36,7 @@ export class Subscription {
         if (this.onMessageReceived == null)
             return null;
 
-        const fullBody: string = `let test = {}; ${this.onMessageReceived};return test;`;
+        const fullBody: string = `let test = {}; let report = {}; ${this.onMessageReceived};return {test: test, report: report};`;
         return new Function('message', fullBody);
     }
 }

@@ -4,11 +4,11 @@
     "subscriptions": [
         {
             "topic": "service-to-be-tested/output/1",
-            "onMessageReceived": "test['message.payload value has to be true'] = message.payload == true; test['false value'] = false; test['should appear'] = false;"
+            "onMessageReceived": "test['message.payload true'] = message.payload == true; test['should appear'] = false; report['any Stuff'] = '1'; report['any other Stuff'] = '2'"
         },
         {
             "timeout": 100,
-            "onMessageReceived": "console.log(message.payload)",
+            "onMessageReceived": "'",
             "topic": "service-to-be-tested/output/2"
         },
         {

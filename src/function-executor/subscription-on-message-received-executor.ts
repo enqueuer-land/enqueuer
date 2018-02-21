@@ -3,6 +3,7 @@ import { Subscription } from "../mqtt/model/mqtt-requisition";
 export class SubscriptionOnMessageReceivedExecutor {
     private passingTests: string[] = [];
     private failingTests: string[] = [];
+    private reports: any = {};
     private warning: string = "";
 
     private subscriptionFunction: Function | null = null;
@@ -19,12 +20,15 @@ export class SubscriptionOnMessageReceivedExecutor {
         
         try {
             const functionResponse = this.subscriptionFunction(this.message);
-            for (const test in functionResponse) {
+            for (const test in functionResponse.test) {
                 if (functionResponse[test]) {
                     this.passingTests.push(test);
                 } else {
                     this.failingTests.push(test);
                 }
+            }
+            for (const report in functionResponse.report) {
+                this.reports[report] = functionResponse.report[report];
             }
         } catch (exc) {
             this.warning = exc;
@@ -37,6 +41,10 @@ export class SubscriptionOnMessageReceivedExecutor {
 
     public getFailingTests(): string[] {
         return this.failingTests;
+    }
+
+    public getReports(): string[] {
+        return this.reports;
     }
 
     public getWarning(): string {

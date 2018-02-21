@@ -102,17 +102,26 @@ export class MqttService implements MessengerService {
     private generateSubscriptionReceivedMessageReport(subscription: Subscription, message: any) {
         const ellapsedTime = Date.now() - this.startTime;
 
-        let tests = {};
+        let onMessageReceived = {};
         if (message) {
-            let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                        = new SubscriptionOnMessageReceivedExecutor(subscription, message);
-            
-            subscriptionTestExecutor.execute();
+            try {
+                let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
+                                = new SubscriptionOnMessageReceivedExecutor(subscription, message);
+    
+                subscriptionTestExecutor.execute();
 
-            tests = {
-                failing: subscriptionTestExecutor.getFailingTests(),
-                passing: subscriptionTestExecutor.getPassingTests(),
-                warning: subscriptionTestExecutor.getWarning()
+                onMessageReceived = {
+                    tests: {
+                        failing: subscriptionTestExecutor.getFailingTests(),
+                        passing: subscriptionTestExecutor.getPassingTests(),
+                        onMessageReceivedExecutionException: subscriptionTestExecutor.getWarning()
+                    },
+                    reports: subscriptionTestExecutor.getReports()
+                }
+            } catch (exc) {
+                onMessageReceived = {
+                    onMessageReceivedFunctionCreationException: exc
+                }
             }
         }
 
@@ -120,7 +129,7 @@ export class MqttService implements MessengerService {
             subscription: subscription.topic,
             timeout: subscription.timeout,
             ellapsedTime: ellapsedTime,
-            tests: tests,
+            onMessageReceived: onMessageReceived,
             message: message
         };
         this.reportGenerator.addSubscriptionReport(subscriptionReport);
