@@ -1,4 +1,4 @@
-import {Type, plainToClass} from "class-transformer";
+import {Type, plainToClass, Exclude} from "class-transformer";
 import "reflect-metadata";
 
 export class MqttRequisition {
@@ -15,6 +15,7 @@ export class MqttRequisition {
 export class Publish {
     topic: string = "";
     payload: string = "";
+
     prePublishing: string | null = null;
 
     createPrePublishingFunction(): Function | null {
@@ -37,6 +38,6 @@ export class Subscription {
             return null;
 
         const fullBody: string = `let test = {}; let report = {}; ${this.onMessageReceived};return {test: test, report: report};`;
-        return new Function('message', fullBody);
+        return new Function('message', 'startEvent', fullBody);
     }
 }

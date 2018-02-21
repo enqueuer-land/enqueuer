@@ -3,8 +3,8 @@ import { Report } from "./report";
 export class ReportGenerator {
 
     private info: any = {};
-    private publishReports: any[] = [];
-    private subscriptionReports: any[] = [];
+    private publishReports: any = [];
+    private subscriptionReports: any = {};
     
     public addInfo(infoMessage: any): void {
         for (const key in infoMessage) {
@@ -16,8 +16,8 @@ export class ReportGenerator {
         this.publishReports = publishReports;
     }
 
-    public addSubscriptionReport(subscriptionReport: any): void {
-        this.subscriptionReports.push(subscriptionReport);
+    public addSubscriptionReport(title: string, subscriptionReport: any): void {
+        this.subscriptionReports[title] = subscriptionReport;
     }
 
     public generate(): Report {

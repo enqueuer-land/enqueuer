@@ -106,7 +106,7 @@ export class MqttService implements MessengerService {
         if (message) {
             try {
                 let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                                = new SubscriptionOnMessageReceivedExecutor(subscription, message);
+                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.mqttRequisition.publish, message);
     
                 subscriptionTestExecutor.execute();
 
@@ -126,13 +126,12 @@ export class MqttService implements MessengerService {
         }
 
         var subscriptionReport = {
-            subscription: subscription.topic,
             timeout: subscription.timeout,
             ellapsedTime: ellapsedTime,
             onMessageReceived: onMessageReceived,
             message: message
         };
-        this.reportGenerator.addSubscriptionReport(subscriptionReport);
+        this.reportGenerator.addSubscriptionReport(subscription.topic, subscriptionReport);
     }
     
     private generateSubscriptionDidNotReceivedMessageReport(subscription: Subscription) {
@@ -144,7 +143,7 @@ export class MqttService implements MessengerService {
             ellapsedTime: ellapsedTime,
             hasTimedOut: true
         };
-        this.reportGenerator.addSubscriptionReport(subscriptionReport);
+        this.reportGenerator.addSubscriptionReport(subscription.topic, subscriptionReport);
     }
     
     private subscribeToTopics(): void {

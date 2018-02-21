@@ -4,10 +4,10 @@
     "subscriptions": [
         {
             "topic": "service-to-be-tested/output/1",
-            "onMessageReceived": "test['payload value has to be false'] = !message.payload.value"
+            "onMessageReceived": "report['startEvent'] = startEvent.topic"
         },
         {
-            "timeout": "10",
+            "timeout": "5000",
             "topic": "service-to-be-tested/output/2"
         }],
     "publish": 
