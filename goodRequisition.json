@@ -10,9 +10,17 @@
             "timeout": "5000",
             "topic": "service-to-be-tested/output/2"
         }],
-    "publish": 
-    {
-      "topic": "service-to-be-tested/input",
-      "payload": "payload"
+    "startEvent": {
+        "publish": 
+        {
+          "topic": "service-to-be-tested/input",
+          "payload": "payload"
+        }
+    },
+    "report" : {
+        "standardOutput": {},
+        "file": {
+            "filename": "outputFileNameReportBack"
+        }
     }
 }

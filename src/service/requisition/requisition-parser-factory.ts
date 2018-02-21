@@ -8,8 +8,9 @@ export class RequisitionParserFactory {
     createService(requisitionMessage: string): MessengerService {
         const parsedRequisition = JSON.parse(requisitionMessage);
         const variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
-        if (parsedRequisition.protocol == "mqtt")
+        if (parsedRequisition.protocol == "mqtt") {
             return new MqttService(new MqttRequisitionParser().parse(variablesReplacedRequisition));
+        }
         throw new Error(`Undefined requisition protocol: ${parsedRequisition.protocol}`);
     }
     

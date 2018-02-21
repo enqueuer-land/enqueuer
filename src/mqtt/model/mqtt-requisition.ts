@@ -8,6 +8,13 @@ export class MqttRequisition {
     @Type(() => Subscription)
     subscriptions: Subscription[] = [];
 
+    @Type(() => StartEvent)
+    startEvent: StartEvent | any = null;
+
+    report: any;
+}
+
+export class StartEvent {
     @Type(() => Publish)
     publish: Publish | null = null;
 }

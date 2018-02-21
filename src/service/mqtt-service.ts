@@ -37,23 +37,23 @@ export class MqttService implements MessengerService {
     }
 
     private publish(): void {
-        if (this.mqttRequisition.publish) {
-            this.client.publish(this.mqttRequisition.publish.topic,
-                                this.mqttRequisition.publish.payload);
+        if (this.mqttRequisition.startEvent.publish) {
+            this.client.publish(this.mqttRequisition.startEvent.publish.topic,
+                                this.mqttRequisition.startEvent.publish.payload);
 
             const ellapsedTime = Date.now() - this.startTime;
             let warning = {};
             try {
-                new PublishPrePublishingExecutor(this.mqttRequisition.publish, {payload: this.mqttRequisition.publish.payload,
-                    topic: this.mqttRequisition.publish.topic});
+                new PublishPrePublishingExecutor(this.mqttRequisition.startEvent.publish, {payload: this.mqttRequisition.startEvent.publish.payload,
+                    topic: this.mqttRequisition.startEvent.publish.topic});
             }
             catch (exception) {
                 warning = exception;
             }
 
             this.reportGenerator.addPublishReport({
-                                                    payload: this.mqttRequisition.publish.payload,
-                                                    topic: this.mqttRequisition.publish.topic,
+                                                    payload: this.mqttRequisition.startEvent.publish.payload,
+                                                    topic: this.mqttRequisition.startEvent.publish.topic,
                                                     ellapsedTime: ellapsedTime,
                                                     warning: warning
                                                 });                        
@@ -106,7 +106,7 @@ export class MqttService implements MessengerService {
         if (message) {
             try {
                 let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.mqttRequisition.publish, message);
+                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.mqttRequisition.startEvent.publish, message);
     
                 subscriptionTestExecutor.execute();
 
@@ -128,6 +128,7 @@ export class MqttService implements MessengerService {
         var subscriptionReport = {
             timeout: subscription.timeout,
             ellapsedTime: ellapsedTime,
+            timestamp: new Date(),
             onMessageReceived: onMessageReceived,
             message: message
         };
