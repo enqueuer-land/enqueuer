@@ -4,6 +4,7 @@ import { RequisitionParserFactory } from "../service/requisition/requisition-par
 import { MessengerService } from "../service/messenger-service";
 import { Report } from "../report/report";
 import { CommandLineParser } from "../command-line/command-line-parser";
+import { ReportReplierFactory } from "../report/report-replier-factory";
 
 export class InputRequisitionFile implements IpcCommunicator {
 
@@ -17,11 +18,13 @@ export class InputRequisitionFile implements IpcCommunicator {
 
         this.messengerService = new RequisitionParserFactory().createService(fileContent);
         if (this.messengerService) {
-            this.messengerService.start((report: Report) => this.onFinish(report));
+            this.messengerService.start((report: Report) => this.onFinish(report, fileContent));
         }
     }
 
-    private onFinish(report: Report): any {
+    private onFinish(report: Report, fileContent: string): any {
+        new ReportReplierFactory().createReplierFactory(fileContent)
+                    .forEach( reportReplier => reportReplier.report(report));        
         if (this.ipcCommunicatorCallback)
             this.ipcCommunicatorCallback(report);
     }

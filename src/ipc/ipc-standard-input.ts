@@ -3,6 +3,7 @@ import { IpcCommunicator, IpcCommunicatorCallback } from "./ipc-communicator";
 import { RequisitionParserFactory } from "../service/requisition/requisition-parser-factory";
 import { MessengerService } from "../service/messenger-service";
 import { Report } from "../report/report";
+import { ReportReplierFactory } from "../report/report-replier-factory";
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
@@ -32,8 +33,10 @@ export class IpcStandardInput implements IpcCommunicator {
             this.messengerService.start((report: Report) => this.onFinish(report));
         }
     }
-
+    
     private onFinish(report: Report): any {
+        new ReportReplierFactory().createReplierFactory(this.requisition)
+                    .forEach( reportReplier => reportReplier.report(report));
         if (this.ipcCommunicatorCallback)
             this.ipcCommunicatorCallback(report);
     }

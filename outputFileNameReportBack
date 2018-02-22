@@ -1,0 +1,51 @@
+{
+    "infoMessages": {
+        "startTime": "Wed Feb 21 2018 21:08:01 GMT-0300 (-03)",
+        "totalTimeout": "5000",
+        "endTime": "Wed Feb 21 2018 21:08:01 GMT-0300 (-03)"
+    },
+    "publishReports": {
+        "payload": "payload",
+        "topic": "service-to-be-tested/input",
+        "ellapsedTime": 1,
+        "warning": {}
+    },
+    "subscriptionReports": {
+        "service-to-be-tested/output/2": {
+            "timeout": "5000",
+            "ellapsedTime": 509,
+            "timestamp": "2018-02-22T00:08:01.736Z",
+            "onMessageReceived": {
+                "tests": {
+                    "failing": [],
+                    "passing": [],
+                    "onMessageReceivedExecutionException": ""
+                },
+                "reports": {}
+            },
+            "message": {
+                "payload": "payload2",
+                "topic": "service-to-be-tested/output/2"
+            }
+        },
+        "service-to-be-tested/output/1": {
+            "timeout": null,
+            "ellapsedTime": 510,
+            "timestamp": "2018-02-22T00:08:01.736Z",
+            "onMessageReceived": {
+                "tests": {
+                    "failing": [],
+                    "passing": [],
+                    "onMessageReceivedExecutionException": ""
+                },
+                "reports": {
+                    "startEvent": "service-to-be-tested/input"
+                }
+            },
+            "message": {
+                "payload": "{\"value\":false}",
+                "topic": "service-to-be-tested/output/1"
+            }
+        }
+    }
+}
