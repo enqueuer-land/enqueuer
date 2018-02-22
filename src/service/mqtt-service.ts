@@ -6,7 +6,7 @@ import { MessengerService, MessengerServiceCallback } from "../service/messenger
 import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subscription-on-message-received-executor";
 import { PublishPrePublishingExecutor } from "../function-executor/publish-pre-publishing-executor";
 
-const mqtt = require('mqtt')
+var mqtt = require('mqtt');
 
 export class MqttService implements MessengerService {
     private client: any;
@@ -18,7 +18,7 @@ export class MqttService implements MessengerService {
 
     constructor(mqttRequisition: MqttRequisition) {
         this.mqttRequisition = classToClass(mqttRequisition); //clone
-        this.client = mqtt.connect(mqttRequisition.brokerAddress);
+        this.client = mqtt.connect(mqttRequisition.brokerAddress);//, {connectTimeout:1000});
         this.client.on('message', 
                     (topic: string, message: string) => this.onMessageReceived(topic, message));
         this.subscribeToTopics();
@@ -71,13 +71,8 @@ export class MqttService implements MessengerService {
 
         this.reportGenerator.addInfo({totalTimeout: totalTimeout});
         if (totalTimeout != -1) {
-            this.timer = setTimeout(() => this.onTimeout(), totalTimeout);
+            this.timer = global.setTimeout(() => this.onFinish(), totalTimeout);
         }
-    }
-    
-    private onTimeout(): void {
-        this.client.end();
-        this.onFinish();
     }
     
     private onMessageReceived(topic: string, payloadBuffer: string): void {
@@ -155,16 +150,20 @@ export class MqttService implements MessengerService {
     }
 
     private onFinish(): void {
+        if (this.timer) 
+            global.clearTimeout(this.timer);
+
+        console.log("gui");
+        this.client.end(true);
         const totalTime = Date.now() - this.startTime;
-        if (this.timer)
-            clearTimeout(this.timer);
-            this.mqttRequisition.subscriptions
+
+        this.mqttRequisition.subscriptions
                 .forEach((subscription: Subscription) => {
                     this.generateSubscriptionDidNotReceivedMessageReport(subscription);
                 });
 
         this.reportGenerator.addInfo({endTime: new Date().toString()})
-        this.client.end();
+        
         if (this.onFinishCallback)
             this.onFinishCallback(this.reportGenerator.generate());
     }

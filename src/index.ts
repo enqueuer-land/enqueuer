@@ -1,3 +1,4 @@
+var log = require('why-is-node-running') // should be your first require
 import { IpcCommunicator } from "./ipc/ipc-communicator";
 import { Report } from "./report/report";
 import { CommandLineParser } from "./command-line/command-line-parser";
@@ -13,7 +14,7 @@ class Startup {
   } 
 
   public onFinish(report: Report): void {
-    process.exit(0);
+    log();
   }
   
 }
