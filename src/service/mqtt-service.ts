@@ -153,7 +153,6 @@ export class MqttService implements MessengerService {
         if (this.timer) 
             global.clearTimeout(this.timer);
 
-        console.log("gui");
         this.client.end(true);
         const totalTime = Date.now() - this.startTime;
 

@@ -4,7 +4,7 @@ export class CommandLineParser {
                             .version('0.0.1', '-v, --version')
                             .option('-i, --standard-input', 'Reads requisition from standard input')
                             .option('-f, --input-requisition-file <pathToFile>', 'Specifies an input requisition file')
-                            .option('-s, --silent-mode', 'Deactivates verbose mode')
+                            .option('--silent-mode', 'Activates silent mode')
                                 .parse(process.argv);;
     private static singleton: CommandLineParser | null = null;
     
