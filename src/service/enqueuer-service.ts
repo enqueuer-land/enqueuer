@@ -34,9 +34,16 @@ export class EnqueuerService implements MessengerService {
     private onConnect(): void {
         console.log("onConnect");
         if (this.timer == null) {
-            this.publish();
-            this.setTimeout();
+            this.setTimeout(this.requisition.startEvent.timeout);
+            if (this.requisition.startEvent && this.requisition.startEvent.publish)
+                this.publish();
+            if (this.requisition.startEvent && this.requisition.startEvent.subscription)
+                this.requisition.startEvent.subscription.subscribe((message: any) => this.onStartEventReceived(message));
         }
+    }
+
+    private onStartEventReceived(message: any) {
+        console.log("Subscription valid");
     }
 
     private publish(): void {
@@ -66,17 +73,10 @@ export class EnqueuerService implements MessengerService {
         }
     }
     
-    private setTimeout(): void {
-        let totalTimeout = -1;
-        this.requisition.subscriptions.forEach(
-            (subscription: Subscription) => {
-                const subscriptionTimeout = subscription.timeout;
-                if (subscriptionTimeout && subscriptionTimeout > totalTimeout)
-                    totalTimeout = subscriptionTimeout;
-            });
-
-        this.reportGenerator.addInfo({totalTimeout: totalTimeout});
+    private setTimeout(totalTimeout: number): void {
+        console.log("timeout: " + totalTimeout)
         if (totalTimeout != -1) {
+            this.reportGenerator.addInfo({totalTimeout: totalTimeout});
             this.timer = global.setTimeout(() => this.onFinish(), totalTimeout);
         }
     }

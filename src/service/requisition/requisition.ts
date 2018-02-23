@@ -1,6 +1,17 @@
 import {Type, plainToClass, Exclude} from "class-transformer";
 import "reflect-metadata";
 
+export class StartEvent {
+
+    timeout: number = -1;
+
+    @Type(() => Publish)
+    publish: Publish | null = null;
+
+    @Type(() => Subscription)
+    subscription: Subscription | null = null;
+}
+
 export class Requisition {
     protocol: string = "";
     brokerAddress: string = "";
@@ -9,15 +20,11 @@ export class Requisition {
     subscriptions: Subscription[] = [];
 
     @Type(() => StartEvent)
-    startEvent: StartEvent | null = null;
+    startEvent: StartEvent = new StartEvent();
 
-    report: any;
+    reports: any;
 }
 
-export class StartEvent {
-    @Type(() => Publish)
-    publish: Publish | null = null;
-}
 
 export class Publish {
 
@@ -34,7 +41,9 @@ export class Publish {
         console.log(`I should publish in this: ${JSON.stringify(this, null, 2)}`)
         if (this.mqtt)
             return this.mqtt.publish();
-        console.log("No publish method was found");
+        if (this.rest)
+            return this.rest.publish();
+        console.log("No publish method valid was found");
         return false;
     }
 
@@ -76,7 +85,7 @@ export class Subscription {
     @Type(() => SubscribeMqtt)
     mqtt: SubscribeMqtt | null = null;
 
-    timeout: number | null = null;
+    timeout: number = -1;
 
     onMessageReceived: string | null = null;
 
@@ -104,4 +113,3 @@ export class SubscribeMqtt {
     }
     
 }
-

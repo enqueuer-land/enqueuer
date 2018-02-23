@@ -6,7 +6,7 @@ import { HttpReportReplier } from "./http-report-replier";
 
 export class ReportReplierFactory {
     createReplierFactory(requisition: any): ReportReplier[] {
-        const parsedRequisition = JSON.parse(requisition).report;
+        const parsedRequisition = JSON.parse(requisition).reports;
         let reportRepliers: ReportReplier[] = [];
         if (parsedRequisition.standardOutput)
             reportRepliers.push(new StandardOutputReporterReplier());
