@@ -1,10 +1,10 @@
 import { IpcCommunicator, IpcCommunicatorCallback } from "./ipc-communicator";
-import { RequisitionParserFactory } from "../service/requisition/requisition-parser-factory";
 import { MessengerService } from "../service/messenger-service";
 import { Report } from "../report/report";
 import { CommandLineParser } from "../command-line/command-line-parser";
 import { ReportReplierFactory } from "../report/report-replier-factory";
 import { ReportReplier } from "../report/report-replier";
+import { RequisitionParser } from "../service/requisition/requisition-parser";
 const fs = require("fs");
 
 export class InputRequisitionFile implements IpcCommunicator {
@@ -20,7 +20,7 @@ export class InputRequisitionFile implements IpcCommunicator {
             .readFileSync(CommandLineParser.getInstance().getOptions().inputRequisitionFile);
         this.reportRepliers = new ReportReplierFactory().createReplierFactory(fileContent.toString());
 
-        this.messengerService = new RequisitionParserFactory().createService(fileContent);
+        this.messengerService = new RequisitionParser().createService(fileContent);
         if (this.messengerService) {
             this.messengerService.start((report: Report) => this.onFinish(report, fileContent));
         }

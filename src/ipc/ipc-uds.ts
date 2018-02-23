@@ -1,6 +1,5 @@
 import { IpcCommunicator, IpcCommunicatorCallback } from "./ipc-communicator";
 import { MessengerService } from "../service/messenger-service";
-import { RequisitionParserFactory } from "../service/requisition/requisition-parser-factory";
 import { RequisitionParser } from "../service/requisition/requisition-parser";
 import { Report } from "../report/report";
 import { ReportReplierFactory } from "../report/report-replier-factory";
@@ -31,7 +30,7 @@ export class IpcUds implements IpcCommunicator {
     }
 
     private onMessageReceived(message: string, socket: any): void {
-        this.messengerService = new RequisitionParserFactory().createService(message);
+        this.messengerService = new RequisitionParser().createService(message);
         this.reportRepliers = new ReportReplierFactory().createReplierFactory(message);                
         if (this.messengerService) {
             this.messengerService.start((report: Report) => this.onFinish(socket, report, message));
