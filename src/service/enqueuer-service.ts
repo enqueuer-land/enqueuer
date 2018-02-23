@@ -1,5 +1,5 @@
 import {classToClass} from "class-transformer";
-import { Requisition, Subscription } from "./requisition/requisition"
+import { Requisition, Subscription, SubscriptionCallback } from "./requisition/requisition"
 import { ReportGenerator } from "../report/report-generator";
 import { Report } from "../report/report";
 import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
@@ -41,8 +41,10 @@ export class EnqueuerService implements MessengerService {
 
     private publish(): void {
         console.log("onPublish");
-        if (this.requisition.startEvent && this.requisition.startEvent.publish  && this.requisition.startEvent.publish.mqtt) {
+        if (this.requisition.startEvent && this.requisition.startEvent.publish)
             this.requisition.startEvent.publish.execute();
+
+        if (this.requisition.startEvent && this.requisition.startEvent.publish  && this.requisition.startEvent.publish.mqtt) {
             this.client.publish(this.requisition.startEvent.publish.mqtt.topic,
                                 this.requisition.startEvent.publish.mqtt.payload);
 
@@ -84,7 +86,7 @@ export class EnqueuerService implements MessengerService {
         const ellapsedTime = Date.now() - this.startTime;
 
         var index = this.requisition.subscriptions.findIndex((subscription: Subscription) => {
-            return subscription.topic == topic;
+            return subscription.mqtt != null && subscription.mqtt.topic == topic;
         });
 
         if (index > -1) {
@@ -143,11 +145,17 @@ export class EnqueuerService implements MessengerService {
         };
         this.reportGenerator.addSubscriptionReport(subscriptionReport);
     }
+
+    private onSubscriptionMessage(subscriptionMessage: any) {
+        console.log("Subscription valid");
+    }
     
     private subscribeToTopics(): void {
         this.requisition.subscriptions
                 .forEach((subscription: Subscription) => {
-                    this.client.subscribe(subscription.topic)
+                    subscription.subscribe((subscriptionMessage: any) => this.onSubscriptionMessage(subscriptionMessage));
+                    if (subscription.mqtt)
+                        this.client.subscribe(subscription.mqtt.topic)
                 });
     }
 

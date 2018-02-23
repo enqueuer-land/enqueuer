@@ -1,34 +1,25 @@
 {
     "infoMessages": {
-        "startTime": "Thu Feb 22 2018 23:10:40 GMT-0300 (-03)",
+        "startTime": "Thu Feb 22 2018 23:37:18 GMT-0300 (-03)",
         "totalTimeout": "5000",
-        "endTime": "Thu Feb 22 2018 23:10:45 GMT-0300 (-03)"
+        "endTime": "Thu Feb 22 2018 23:37:23 GMT-0300 (-03)"
     },
-    "publishReports": {
-        "publish": {
-            "mqtt": {
-                "brokerAddress": "mqtt://localhost",
-                "topic": "service-to-be-tested/input",
-                "payload": "payload"
-            },
-            "prePublishing": null
-        },
-        "ellapsedTime": 34,
-        "warning": {}
-    },
+    "publishReports": [],
     "subscriptionReports": [
         {
+            "mqtt": null,
             "timeout": null,
-            "topic": "service-to-be-tested/output/1",
             "onMessageReceived": "report['startEvent'] = startEvent.topic",
-            "ellapsedTime": 5042,
+            "topic": "service-to-be-tested/output/1",
+            "ellapsedTime": 5032,
             "hasTimedOut": true
         },
         {
+            "mqtt": null,
             "timeout": "5000",
-            "topic": "service-to-be-tested/output/2",
             "onMessageReceived": null,
-            "ellapsedTime": 5043,
+            "topic": "service-to-be-tested/output/2",
+            "ellapsedTime": 5033,
             "hasTimedOut": true
         }
     ]

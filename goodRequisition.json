@@ -13,10 +13,14 @@
     "startEvent": {
         "publish": 
         {
-            "mqtt": {
-                "topic": "service-to-be-tested/input",
-                "payload": "payload",
-                "brokerAddress": "mqtt://localhost"                
+            "rest": {
+                "endpoint": "http://blablaservice-to-be-tested:8080/input",
+                "method": "POST",
+                "header": {
+                    
+                },
+                "payload": "keyStr",
+                "prePublishing": "console.log('valVar: ' + 'keyStr');"
             }
         }
     },
