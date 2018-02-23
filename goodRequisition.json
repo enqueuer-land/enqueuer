@@ -13,8 +13,11 @@
     "startEvent": {
         "publish": 
         {
-          "topic": "service-to-be-tested/input",
-          "payload": "payload"
+            "mqtt": {
+                "topic": "service-to-be-tested/input",
+                "payload": "payload",
+                "brokerAddress": "mqtt://localhost"                
+            }
         }
     },
     "report" : {

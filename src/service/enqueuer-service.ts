@@ -25,35 +25,39 @@ export class EnqueuerService implements MessengerService {
     }
     
     public start(onFinishCallback: MessengerServiceCallback): void {
+        this.startTime = Date.now();
         this.reportGenerator.addInfo({startTime: new Date().toString()})
         this.onFinishCallback = onFinishCallback;
         this.client.on('connect', () => this.onConnect());
     }
-
+    
     private onConnect(): void {
-        this.startTime = Date.now();
-        this.setTimeout();
-        this.publish();
+        console.log("onConnect");
+        if (this.timer == null) {
+            this.publish();
+            this.setTimeout();
+        }
     }
 
     private publish(): void {
-        if (this.requisition.startEvent.publish) {
-            this.client.publish(this.requisition.startEvent.publish.topic,
-                                this.requisition.startEvent.publish.payload);
+        console.log("onPublish");
+        if (this.requisition.startEvent && this.requisition.startEvent.publish  && this.requisition.startEvent.publish.mqtt) {
+            this.requisition.startEvent.publish.execute();
+            this.client.publish(this.requisition.startEvent.publish.mqtt.topic,
+                                this.requisition.startEvent.publish.mqtt.payload);
 
             const ellapsedTime = Date.now() - this.startTime;
             let warning = {};
             try {
-                new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.payload,
-                    topic: this.requisition.startEvent.publish.topic});
+                new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.mqtt.payload,
+                    topic: this.requisition.startEvent.publish.mqtt.topic});
             }
             catch (exception) {
                 warning = exception;
             }
 
             this.reportGenerator.addPublishReport({
-                                                    payload: this.requisition.startEvent.publish.payload,
-                                                    topic: this.requisition.startEvent.publish.topic,
+                                                    publish: this.requisition.startEvent.publish,
                                                     ellapsedTime: ellapsedTime,
                                                     warning: warning
                                                 });                        
@@ -101,7 +105,7 @@ export class EnqueuerService implements MessengerService {
         if (message) {
             try {
                 let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.requisition.startEvent.publish, message);
+                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.requisition.startEvent && this.requisition.startEvent.publish, message);
     
                 subscriptionTestExecutor.execute();
 

@@ -9,7 +9,7 @@ export class Requisition {
     subscriptions: Subscription[] = [];
 
     @Type(() => StartEvent)
-    startEvent: StartEvent | any = null;
+    startEvent: StartEvent | null = null;
 
     report: any;
 }
@@ -20,10 +20,19 @@ export class StartEvent {
 }
 
 export class Publish {
-    topic: string = "";
-    payload: string = "";
+
+    @Type(() => PublishMqtt)
+    mqtt: PublishMqtt | null = null;
 
     prePublishing: string | null = null;
+
+    execute(): boolean {
+        console.log(`I shoud publish on this: ${JSON.stringify(this, null, 2)}`)
+        if (this.mqtt)
+            return this.mqtt.publish();
+        console.log("No publish method was found");
+        return false;
+    }
 
     createPrePublishingFunction(): Function | null {
         if (this.prePublishing == null)
@@ -32,6 +41,17 @@ export class Publish {
         const fullBody: string = `${this.prePublishing};`;
         return new Function('message', fullBody);
     }
+}
+
+export class PublishMqtt {
+    brokerAddress: string = "";
+    topic: string = "";
+    payload: string = "";
+
+    publish(): boolean {
+        return true;
+    }
+    
 }
 
 export class Subscription {
