@@ -121,25 +121,23 @@ export class MqttService implements MessengerService {
         }
 
         var subscriptionReport = {
-            timeout: subscription.timeout,
+            ...subscription,
             ellapsedTime: ellapsedTime,
             timestamp: new Date(),
-            onMessageReceived: onMessageReceived,
             message: message
         };
-        this.reportGenerator.addSubscriptionReport(subscription.topic, subscriptionReport);
+        this.reportGenerator.addSubscriptionReport(subscriptionReport);
     }
     
     private generateSubscriptionDidNotReceivedMessageReport(subscription: Subscription) {
         const ellapsedTime = Date.now() - this.startTime;
 
         var subscriptionReport = {
-            subscription: subscription.topic,
-            timeout: subscription.timeout,
+            ...subscription,
             ellapsedTime: ellapsedTime,
             hasTimedOut: true
         };
-        this.reportGenerator.addSubscriptionReport(subscription.topic, subscriptionReport);
+        this.reportGenerator.addSubscriptionReport(subscriptionReport);
     }
     
     private subscribeToTopics(): void {

@@ -5,7 +5,7 @@ export class ReportGenerator {
 
     private info: any = {};
     private publishReports: any = [];
-    private subscriptionReports: any = {};
+    private subscriptionReports: any = [];
     private verboseMode: boolean = true;
 
     constructor() {
@@ -26,10 +26,10 @@ export class ReportGenerator {
         this.publishReports = publishReports;
     }
 
-    public addSubscriptionReport(title: string, subscriptionReport: any): void {
+    public addSubscriptionReport(subscriptionReport: any): void {
         if (this.verboseMode)
             console.log(subscriptionReport);
-        this.subscriptionReports[title] = subscriptionReport;
+        this.subscriptionReports.push(subscriptionReport);
     }
 
     public generate(): Report {
