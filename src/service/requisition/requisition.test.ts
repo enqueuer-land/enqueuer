@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import 'mocha';
-import { Subscription } from './mqtt-requisition';
+import { Subscription } from './requisition';
 
-describe('MqttRequisition test', function() {
+describe('Requisition test', function() {
     describe('Subscription test', function() {
 
         it('should createTestFunction', function() {
@@ -10,7 +10,7 @@ describe('MqttRequisition test', function() {
             const payload = 0;
             subscription.onMessageReceived = "test['description'] = 'test'; test['payload'] = ++payload";
 
-            const testFunction: Function | null = subscription.createTestFunction();
+            const testFunction: Function | null = subscription.createOnMessageReceivedFunction();
             if (testFunction) {
                 const testResult = testFunction(payload);
                 expect(testResult.description).to.be.equal('test');

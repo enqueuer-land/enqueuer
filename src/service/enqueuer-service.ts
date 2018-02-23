@@ -1,5 +1,5 @@
 import {classToClass} from "class-transformer";
-import { MqttRequisition, Subscription } from "../mqtt/model/mqtt-requisition";
+import { Requisition, Subscription } from "./requisition/requisition"
 import { ReportGenerator } from "../report/report-generator";
 import { Report } from "../report/report";
 import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
@@ -8,17 +8,17 @@ import { PublishPrePublishingExecutor } from "../function-executor/publish-pre-p
 
 var mqtt = require('mqtt');
 
-export class MqttService implements MessengerService {
+export class EnqueuerService implements MessengerService {
     private client: any;
-    private mqttRequisition: MqttRequisition;
+    private requisition: Requisition;
     private onFinishCallback: MessengerServiceCallback | null = null;
     private startTime: number = 0;
     private timer: NodeJS.Timer | null = null;
     private reportGenerator: ReportGenerator = new ReportGenerator();
 
-    constructor(mqttRequisition: MqttRequisition) {
-        this.mqttRequisition = classToClass(mqttRequisition); //clone
-        this.client = mqtt.connect(mqttRequisition.brokerAddress);//, {connectTimeout:1000});
+    constructor(requisition: Requisition) {
+        this.requisition = classToClass(requisition); //clone
+        this.client = mqtt.connect(requisition.brokerAddress);//, {connectTimeout:1000});
         this.client.on('message', 
                     (topic: string, message: string) => this.onMessageReceived(topic, message));
         this.subscribeToTopics();
@@ -37,23 +37,23 @@ export class MqttService implements MessengerService {
     }
 
     private publish(): void {
-        if (this.mqttRequisition.startEvent.publish) {
-            this.client.publish(this.mqttRequisition.startEvent.publish.topic,
-                                this.mqttRequisition.startEvent.publish.payload);
+        if (this.requisition.startEvent.publish) {
+            this.client.publish(this.requisition.startEvent.publish.topic,
+                                this.requisition.startEvent.publish.payload);
 
             const ellapsedTime = Date.now() - this.startTime;
             let warning = {};
             try {
-                new PublishPrePublishingExecutor(this.mqttRequisition.startEvent.publish, {payload: this.mqttRequisition.startEvent.publish.payload,
-                    topic: this.mqttRequisition.startEvent.publish.topic});
+                new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.payload,
+                    topic: this.requisition.startEvent.publish.topic});
             }
             catch (exception) {
                 warning = exception;
             }
 
             this.reportGenerator.addPublishReport({
-                                                    payload: this.mqttRequisition.startEvent.publish.payload,
-                                                    topic: this.mqttRequisition.startEvent.publish.topic,
+                                                    payload: this.requisition.startEvent.publish.payload,
+                                                    topic: this.requisition.startEvent.publish.topic,
                                                     ellapsedTime: ellapsedTime,
                                                     warning: warning
                                                 });                        
@@ -62,7 +62,7 @@ export class MqttService implements MessengerService {
     
     private setTimeout(): void {
         let totalTimeout = -1;
-        this.mqttRequisition.subscriptions.forEach(
+        this.requisition.subscriptions.forEach(
             (subscription: Subscription) => {
                 const subscriptionTimeout = subscription.timeout;
                 if (subscriptionTimeout && subscriptionTimeout > totalTimeout)
@@ -79,16 +79,16 @@ export class MqttService implements MessengerService {
         const payload: string = payloadBuffer.toString();
         const ellapsedTime = Date.now() - this.startTime;
 
-        var index = this.mqttRequisition.subscriptions.findIndex((subscription: Subscription) => {
+        var index = this.requisition.subscriptions.findIndex((subscription: Subscription) => {
             return subscription.topic == topic;
         });
 
         if (index > -1) {
-            let subscription: Subscription = this.mqttRequisition.subscriptions[index];
-            this.mqttRequisition.subscriptions.splice(index, 1);
+            let subscription: Subscription = this.requisition.subscriptions[index];
+            this.requisition.subscriptions.splice(index, 1);
             this.generateSubscriptionReceivedMessageReport(subscription, {payload: payload, topic: topic});
 
-            if (this.mqttRequisition.subscriptions.length === 0) {
+            if (this.requisition.subscriptions.length === 0) {
                 this.onFinish();
             }
         }
@@ -101,7 +101,7 @@ export class MqttService implements MessengerService {
         if (message) {
             try {
                 let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.mqttRequisition.startEvent.publish, message);
+                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.requisition.startEvent.publish, message);
     
                 subscriptionTestExecutor.execute();
 
@@ -141,7 +141,7 @@ export class MqttService implements MessengerService {
     }
     
     private subscribeToTopics(): void {
-        this.mqttRequisition.subscriptions
+        this.requisition.subscriptions
                 .forEach((subscription: Subscription) => {
                     this.client.subscribe(subscription.topic)
                 });
@@ -154,7 +154,7 @@ export class MqttService implements MessengerService {
         this.client.end(true);
         const totalTime = Date.now() - this.startTime;
 
-        this.mqttRequisition.subscriptions
+        this.requisition.subscriptions
                 .forEach((subscription: Subscription) => {
                     this.generateSubscriptionDidNotReceivedMessageReport(subscription);
                 });

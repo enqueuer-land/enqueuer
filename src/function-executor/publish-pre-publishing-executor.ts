@@ -1,4 +1,4 @@
-import { Publish } from "../mqtt/model/mqtt-requisition";
+import { Publish } from "../service/requisition/requisition";
 
 export class PublishPrePublishingExecutor {
 

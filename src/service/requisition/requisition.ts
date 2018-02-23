@@ -1,7 +1,7 @@
 import {Type, plainToClass, Exclude} from "class-transformer";
 import "reflect-metadata";
 
-export class MqttRequisition {
+export class Requisition {
     protocol: string = "";
     brokerAddress: string = "";
 

@@ -1,4 +1,4 @@
-import { Subscription } from "../mqtt/model/mqtt-requisition";
+import { Subscription } from "../service/requisition/requisition";
 
 export class SubscriptionOnMessageReceivedExecutor {
     private passingTests: string[] = [];
