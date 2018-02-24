@@ -1,4 +1,4 @@
-import { Subscription } from "../service/requisition/requisition";
+import {Subscription} from "../service/requisition/subscription/subscription";
 
 export class SubscriptionOnMessageReceivedExecutor {
     private passingTests: string[] = [];

@@ -1,9 +1,10 @@
 import {classToClass} from "class-transformer";
-import { Requisition, Subscription } from "./requisition/requisition"
 import { ReportGenerator } from "../report/report-generator";
 import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
 import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subscription-on-message-received-executor";
 import { PublishPrePublishingExecutor } from "../function-executor/publish-pre-publishing-executor";
+import {Requisition} from "./requisition/requisition";
+import {Subscription} from "./requisition/subscription/subscription";
 
 var mqtt = require('mqtt');
 
@@ -55,12 +56,12 @@ export class EnqueuerService implements MessengerService {
 
         if (this.requisition.startEvent && this.requisition.startEvent.publish  && this.requisition.startEvent.publish.mqtt) {
             this.client.publish(this.requisition.startEvent.publish.mqtt.topic,
-                                this.requisition.startEvent.publish.payload);
+                                this.requisition.startEvent.publish.mqtt.payload);
 
             const elapsedTime = Date.now() - this.startTime;
             let warning = {};
             try {
-                new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.payload,
+                new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.mqtt.payload,
                     topic: this.requisition.startEvent.publish.mqtt.topic});
             }
             catch (exception) {
@@ -142,7 +143,7 @@ export class EnqueuerService implements MessengerService {
 
         var subscriptionReport = {
             ...subscription,
-            ellapselapsedTimeedTime: elapsedTime,
+            elapsedTime: elapsedTime,
             hasTimedOut: true
         };
         this.reportGenerator.addSubscriptionReport(subscriptionReport);
@@ -173,7 +174,7 @@ export class EnqueuerService implements MessengerService {
                     this.generateSubscriptionDidNotReceivedMessageReport(subscription);
                 });
 
-        this.reportGenerator.addInfo({endTime: new Date().toString()})
+        this.reportGenerator.addInfo({endTime: new Date().toString(), totalTime: totalTime})
         
         if (this.onFinishCallback)
             this.onFinishCallback(this.reportGenerator.generate());
