@@ -1,7 +1,6 @@
 import {classToClass} from "class-transformer";
-import { Requisition, Subscription, SubscriptionCallback } from "./requisition/requisition"
+import { Requisition, Subscription } from "./requisition/requisition"
 import { ReportGenerator } from "../report/report-generator";
-import { Report } from "../report/report";
 import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
 import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subscription-on-message-received-executor";
 import { PublishPrePublishingExecutor } from "../function-executor/publish-pre-publishing-executor";
@@ -34,31 +33,34 @@ export class EnqueuerService implements MessengerService {
     private onConnect(): void {
         console.log("onConnect");
         if (this.timer == null) {
-            this.setTimeout(this.requisition.startEvent.timeout);
-            if (this.requisition.startEvent && this.requisition.startEvent.publish)
-                this.publish();
-            if (this.requisition.startEvent && this.requisition.startEvent.subscription)
-                this.requisition.startEvent.subscription.subscribe((message: any) => this.onStartEventReceived(message));
+            this.requisition.startEvent.execute((message: any) => this.onStartEventReceived(message));
         }
     }
 
-    private onStartEventReceived(message: any) {
-        console.log("Subscription valid");
+    private onStartEventReceived(startEvent: any) {
+        console.log("Start event was fired");
+
+        this.setTimeout(this.requisition.startEvent.timeout);
+        // if (this.requisition.startEvent && this.requisition.startEvent.publish)
+            this.publish();
+        // if (this.requisition.startEvent && this.requisition.startEvent.subscription)
+        //     this.requisition.startEvent.subscription.subscribe((message: any) => this.onStartEventReceived(message));
+
     }
 
     private publish(): void {
         console.log("onPublish");
-        if (this.requisition.startEvent && this.requisition.startEvent.publish)
-            this.requisition.startEvent.publish.execute();
+        // if (this.requisition.startEvent && this.requisition.startEvent.publish)
+        //     this.requisition.startEvent.publish.execute();
 
         if (this.requisition.startEvent && this.requisition.startEvent.publish  && this.requisition.startEvent.publish.mqtt) {
             this.client.publish(this.requisition.startEvent.publish.mqtt.topic,
-                                this.requisition.startEvent.publish.mqtt.payload);
+                                this.requisition.startEvent.publish.payload);
 
-            const ellapsedTime = Date.now() - this.startTime;
+            const elapsedTime = Date.now() - this.startTime;
             let warning = {};
             try {
-                new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.mqtt.payload,
+                new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.payload,
                     topic: this.requisition.startEvent.publish.mqtt.topic});
             }
             catch (exception) {
@@ -67,7 +69,7 @@ export class EnqueuerService implements MessengerService {
 
             this.reportGenerator.addPublishReport({
                                                     publish: this.requisition.startEvent.publish,
-                                                    ellapsedTime: ellapsedTime,
+                                                    elapsedTime: elapsedTime,
                                                     warning: warning
                                                 });                        
         }
@@ -83,7 +85,6 @@ export class EnqueuerService implements MessengerService {
     
     private onMessageReceived(topic: string, payloadBuffer: string): void {
         const payload: string = payloadBuffer.toString();
-        const ellapsedTime = Date.now() - this.startTime;
 
         var index = this.requisition.subscriptions.findIndex((subscription: Subscription) => {
             return subscription.mqtt != null && subscription.mqtt.topic == topic;
@@ -101,7 +102,7 @@ export class EnqueuerService implements MessengerService {
     }
 
     private generateSubscriptionReceivedMessageReport(subscription: Subscription, message: any) {
-        const ellapsedTime = Date.now() - this.startTime;
+        const elapsedTime = Date.now() - this.startTime;
 
         let onMessageReceived = {};
         if (message) {
@@ -128,19 +129,20 @@ export class EnqueuerService implements MessengerService {
 
         var subscriptionReport = {
             ...subscription,
-            ellapsedTime: ellapsedTime,
+            elapsedTime: elapsedTime,
             timestamp: new Date(),
-            message: message
+            message: message,
+            onMessageReceived: onMessageReceived
         };
         this.reportGenerator.addSubscriptionReport(subscriptionReport);
     }
     
     private generateSubscriptionDidNotReceivedMessageReport(subscription: Subscription) {
-        const ellapsedTime = Date.now() - this.startTime;
+        const elapsedTime = Date.now() - this.startTime;
 
         var subscriptionReport = {
             ...subscription,
-            ellapsedTime: ellapsedTime,
+            ellapselapsedTimeedTime: elapsedTime,
             hasTimedOut: true
         };
         this.reportGenerator.addSubscriptionReport(subscriptionReport);

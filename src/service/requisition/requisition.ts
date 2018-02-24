@@ -1,6 +1,8 @@
 import {Type, plainToClass, Exclude} from "class-transformer";
 import "reflect-metadata";
 
+
+export type EventCallback = (message: any) => void;
 export class StartEvent {
 
     timeout: number = -1;
@@ -10,6 +12,15 @@ export class StartEvent {
 
     @Type(() => Subscription)
     subscription: Subscription | null = null;
+
+    execute(eventCallback: EventCallback): void {
+        if (this.publish) {
+            this.publish.eventCallback = eventCallback;
+            this.publish.execute();
+        }
+        if (this.subscription)
+            this.subscription.subscribe(eventCallback);
+    }
 }
 
 export class Requisition {
@@ -28,9 +39,12 @@ export class Requisition {
 
 export class Publish {
 
+    eventCallback: EventCallback = () => {};
+
+    payload: string = "";
+
     @Type(() => PublishMqtt)
     mqtt: PublishMqtt | null = null;
-    
     
     @Type(() => PublishRest)
     rest: PublishRest | null = null;
@@ -39,6 +53,7 @@ export class Publish {
 
     execute(): boolean {
         console.log(`I should publish in this: ${JSON.stringify(this, null, 2)}`)
+        this.eventCallback(this.payload);
         if (this.mqtt)
             return this.mqtt.publish();
         if (this.rest)
@@ -59,7 +74,6 @@ export class Publish {
 export class PublishMqtt {
     brokerAddress: string = "";
     topic: string = "";
-    payload: string = "";
 
     publish(): boolean {
         return true;
@@ -71,7 +85,6 @@ export class PublishRest {
     endPoint: string = "";
     method: string = "";
     header: any = {};
-    payload: string = "";
 
     publish(): boolean {
         return true;
@@ -79,7 +92,6 @@ export class PublishRest {
     
 }
 
-export type SubscriptionCallback = (message: any) => void;
 export class Subscription {
 
     @Type(() => SubscribeMqtt)
@@ -89,7 +101,7 @@ export class Subscription {
 
     onMessageReceived: string | null = null;
 
-    public subscribe(callback: SubscriptionCallback): boolean {
+    public subscribe(callback: EventCallback): boolean {
         console.log(`I should subscribe in this: ${JSON.stringify(this, null, 2)}`)
         callback(this);      
         return true;

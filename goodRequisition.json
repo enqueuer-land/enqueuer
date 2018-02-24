@@ -13,13 +13,13 @@
     "startEvent": {
         "publish": 
         {
+            "payload": "keyStr",
             "rest": {
                 "endpoint": "http://blablaservice-to-be-tested:8080/input",
                 "method": "POST",
                 "header": {
-                    
+
                 },
-                "payload": "keyStr",
                 "prePublishing": "console.log('valVar: ' + 'keyStr');"
             }
         },
