@@ -18,7 +18,8 @@ export class EnqueuerService implements MessengerService {
 
     constructor(requisition: Requisition) {
         this.requisition = classToClass(requisition); //clone
-        this.client = mqtt.connect(requisition.brokerAddress);//, {connectTimeout:1000});
+        this.client = mqtt.connect(requisition.brokerAddress,
+            {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});//, {connectTimeout:1000});
         this.client.on('message', 
                     (topic: string, message: string) => this.onMessageReceived(topic, message));
         this.subscribeToTopics();

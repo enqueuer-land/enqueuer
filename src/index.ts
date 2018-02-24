@@ -20,3 +20,7 @@ class Startup {
 }
 
 new Startup().start();
+var mqtt = require('mqtt');
+var client = mqtt.connect("mqtt://test.mosquitto.org");
+
+client.on('connect', () => client.end());
