@@ -1,3 +1,5 @@
+import {Requisition} from "../service/requisition/requisition";
+
 const fs = require("fs");
 import { IpcCommunicator, IpcCommunicatorCallback } from "./ipc-communicator";
 import { MessengerService } from "../service/messenger-service";
@@ -5,6 +7,7 @@ import { Report } from "../report/report";
 import { ReportReplierFactory } from "../report/report-replier-factory";
 import { ReportReplier } from "../report/report-replier";
 import { RequisitionParser } from "../service/requisition/requisition-parser";
+import {EnqueuerService} from "../service/enqueuer-service";
 
 export class IpcStandardInput implements IpcCommunicator {
     
@@ -27,8 +30,9 @@ export class IpcStandardInput implements IpcCommunicator {
     
     private startService(): void {
         process.stdin.pause();
-        this.messengerService = new RequisitionParser().createService(this.requisition);
-        this.reportRepliers = new ReportReplierFactory().createReplierFactory(this.requisition);        
+        const parsedRequisition: Requisition = new RequisitionParser().parse(this.requisition);
+        this.messengerService = new EnqueuerService(parsedRequisition);
+        this.reportRepliers = new ReportReplierFactory().createReplierFactory(parsedRequisition);
         if (this.messengerService) {
             this.messengerService.start((report: Report) => this.onFinish(report));
         }

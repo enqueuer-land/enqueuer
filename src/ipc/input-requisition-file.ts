@@ -5,6 +5,8 @@ import { CommandLineParser } from "../command-line/command-line-parser";
 import { ReportReplierFactory } from "../report/report-replier-factory";
 import { ReportReplier } from "../report/report-replier";
 import { RequisitionParser } from "../service/requisition/requisition-parser";
+import {Requisition} from "../service/requisition/requisition";
+import {EnqueuerService} from "../service/enqueuer-service";
 const fs = require("fs");
 
 export class InputRequisitionFile implements IpcCommunicator {
@@ -18,9 +20,10 @@ export class InputRequisitionFile implements IpcCommunicator {
         
         const fileContent: string = fs
             .readFileSync(CommandLineParser.getInstance().getOptions().inputRequisitionFile);
-        this.reportRepliers = new ReportReplierFactory().createReplierFactory(fileContent.toString());
 
-        this.messengerService = new RequisitionParser().createService(fileContent);
+        const parsedRequisition: Requisition = new RequisitionParser().parse(fileContent);
+        this.messengerService = new EnqueuerService(parsedRequisition);
+        this.reportRepliers = new ReportReplierFactory().createReplierFactory(parsedRequisition);
         if (this.messengerService) {
             this.messengerService.start((report: Report) => this.onFinish(report, fileContent));
         }

@@ -1,6 +1,6 @@
 {
     "protocol": "mqtt",
-    "brokerAddress": "mqtt://localhost",
+    "brokerAddress": "brokerAddress",
     "subscriptions": [
         {
             "topic": "service-to-be-tested/output/1",
@@ -35,8 +35,12 @@
         },
         "mqtt": 
         {
-            "brokerAddress": "mqtt://localhost",
+            "brokerAddress": "brokerAddress",
             "topic": "service-to-be-tested/report"
         }
+    },
+    "variables":
+    {
+        "brokerAddress": "mqtt://localhost"
     }
 }

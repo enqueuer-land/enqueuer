@@ -1,17 +1,13 @@
-import { MessengerService } from "../messenger-service";
+import {deserialize} from "class-transformer";
+import {Requisition} from "./requisition";
+
 const jsonSub = require('json-sub')();
-import {plainToClass, deserialize} from "class-transformer";
-import { EnqueuerService } from "../enqueuer-service";
-import { Requisition } from "./requisition";
 
 export class RequisitionParser {
-    createService(requisitionMessage: string): MessengerService {
+    parse(requisitionMessage: string): Requisition {
         const parsedRequisition = JSON.parse(requisitionMessage);
         const variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
-        if (parsedRequisition.protocol == "mqtt") {
-            return new EnqueuerService(this.parse(variablesReplacedRequisition));
-        }
-        throw new Error(`Undefined requisition protocol: ${parsedRequisition.protocol}`);
+        return this.deserialize(variablesReplacedRequisition);
     }
     
     private replaceVariables(parsedRequisition: any): string {
@@ -25,7 +21,7 @@ export class RequisitionParser {
         return JSON.stringify(add);
     }
     
-    private parse(requisition: string): any {
+    private deserialize(requisition: string): any {
         try {
             return deserialize(Requisition, requisition);
         } catch (e) {

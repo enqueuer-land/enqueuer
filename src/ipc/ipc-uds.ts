@@ -4,6 +4,9 @@ import { RequisitionParser } from "../service/requisition/requisition-parser";
 import { Report } from "../report/report";
 import { ReportReplierFactory } from "../report/report-replier-factory";
 import { ReportReplier } from "../report/report-replier";
+import {EnqueuerService} from "../service/enqueuer-service";
+import {Requisition} from "../service/requisition/requisition";
+
 const ipc = require('node-ipc');
 
 ipc.config.id = 'enqueuer';
@@ -30,8 +33,9 @@ export class IpcUds implements IpcCommunicator {
     }
 
     private onMessageReceived(message: string, socket: any): void {
-        this.messengerService = new RequisitionParser().createService(message);
-        this.reportRepliers = new ReportReplierFactory().createReplierFactory(message);                
+        const parsedRequisition: Requisition = new RequisitionParser().parse(message);
+        this.messengerService = new EnqueuerService(parsedRequisition);
+        this.reportRepliers = new ReportReplierFactory().createReplierFactory(parsedRequisition);
         if (this.messengerService) {
             this.messengerService.start((report: Report) => this.onFinish(socket, report, message));
         }
