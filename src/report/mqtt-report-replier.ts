@@ -9,7 +9,6 @@ export class MqttReportReplier implements ReportReplier {
 
     constructor(mqttProperties: any) {
         this.mqttProperties = mqttProperties;
-        console.log("MqttReportReplier: " + mqttProperties.brokerAddress);
         this.client = mqtt.connect(mqttProperties.brokerAddress,
             {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
     }

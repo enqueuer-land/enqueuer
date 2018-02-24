@@ -151,7 +151,7 @@ export class EnqueuerService implements MessengerService {
     }
 
     private onSubscriptionMessage(subscriptionMessage: any) {
-        console.log("Subscription valid");
+        console.log("Subscription valid: " + subscriptionMessage);
     }
     
     private subscribeToTopics(): void {
@@ -172,6 +172,7 @@ export class EnqueuerService implements MessengerService {
 
         this.requisition.subscriptions
                 .forEach((subscription: Subscription) => {
+                    subscription.unsubscribe();
                     this.generateSubscriptionDidNotReceivedMessageReport(subscription);
                 });
 

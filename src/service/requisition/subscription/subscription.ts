@@ -11,9 +11,14 @@ export class Subscription {
 
     onMessageReceived: string | null = null;
 
+    public unsubscribe(): void {
+        if (this.mqtt)
+            return this.mqtt.unsubscribe();
+    }
+
     public subscribe(callback: EventCallback): boolean {
-        console.log(`I should subscribe in this: ${JSON.stringify(this, null, 2)}`)
-        callback(this);
+        if (this.mqtt)
+            return this.mqtt.subscribe((event: EventCallback) => callback(this));
         return true;
     }
 

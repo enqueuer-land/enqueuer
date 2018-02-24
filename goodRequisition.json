@@ -3,12 +3,20 @@
     "brokerAddress": "brokerAddress",
     "subscriptions": [
         {
+          "mqtt": {
+            "brokerAddress": "brokerAddress",
+            "topic": "agoraVai",
+            "onMessageReceived": "report['startEvent'] = startEvent.topic"
+          }
+        },
+        {
             "topic": "service-to-be-tested/output/1",
             "onMessageReceived": "report['startEvent'] = startEvent.topic"
         },
         {
             "timeout": "5000",
             "topic": "service-to-be-tested/output/2"
+
         }],
     "startEvent": {
         "publish": 
