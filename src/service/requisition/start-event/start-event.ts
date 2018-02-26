@@ -5,6 +5,8 @@ export class StartEvent {
 
     timeout: number = -1;
 
+    payload: string = "";
+
     @Type(() => Publish)
     publish: Publish | null = null;
 

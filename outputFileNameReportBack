@@ -1,10 +1,32 @@
 {
     "infoMessages": {
-        "startTime": "Sun Feb 25 2018 23:03:43 GMT-0300 (-03)",
+        "startTime": "Sun Feb 25 2018 23:37:58 GMT-0300 (-03)",
         "totalTimeout": "5000",
-        "endTime": "Sun Feb 25 2018 23:03:48 GMT-0300 (-03)",
-        "totalTime": 5043
+        "endTime": "Sun Feb 25 2018 23:38:03 GMT-0300 (-03)",
+        "totalTime": 5039
     },
     "publishReports": [],
-    "subscriptionReports": []
+    "subscriptionReports": [
+        {
+            "message": "What do you mean?",
+            "timeout": "5000",
+            "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+            "brokerAddress": "mqtt://localhost",
+            "topic": "#",
+            "elapsedTime": 55,
+            "timestamp": "2018-02-26T02:37:58.365Z",
+            "onMessageReceived": {
+                "tests": {
+                    "failing": [
+                        "false"
+                    ],
+                    "passing": [
+                        "true"
+                    ],
+                    "onMessageReceivedExecutionException": ""
+                },
+                "reports": {}
+            }
+        }
+    ]
 }

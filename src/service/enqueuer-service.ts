@@ -3,7 +3,7 @@ import { ReportGenerator } from "../report/report-generator";
 import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
 import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subscription-on-message-received-executor";
 import { Requisition } from "./requisition/requisition";
-import { Subscription } from "./requisition/subscription/subscription";
+import {SubscriptionSuperClass} from "./requisition/subscription/subscription-super-class";
 
 export class EnqueuerService implements MessengerService {
     private requisition: Requisition;
@@ -21,16 +21,16 @@ export class EnqueuerService implements MessengerService {
         this.reportGenerator.addInfo({startTime: new Date().toString()})
         this.onFinishCallback = onFinishCallback;
         this.subscribeSubscriptions();
-        // this.onStartEventReceived(null); //remove this
     }
 
-    private onSubscriptionCompleted(subscription: Subscription) {
+    private onSubscriptionCompleted(subscription: SubscriptionSuperClass) {
         console.log("I have to count how many subscriptions are completed");
         this.requisition.startEvent.execute((message: any) => this.onStartEventReceived(message));
     }
 
     private onStartEventReceived(startEvent: any) {
         console.log("Start event was fired");
+        this.requisition.startEvent.payload = startEvent.payload;
 
         this.setTimeout(this.requisition.startEvent.timeout);
     }
@@ -88,41 +88,38 @@ export class EnqueuerService implements MessengerService {
     //     }
     // }
 
-    // private generateSubscriptionReceivedMessageReport(subscription: Subscription, message: any) {
-    //     const elapsedTime = Date.now() - this.startTime;
-    //
-    //     let onMessageReceived = {};
-    //     if (message) {
-    //         try {
-    //             let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-    //                             = new SubscriptionOnMessageReceivedExecutor(subscription, this.requisition.startEvent && this.requisition.startEvent.publish, message);
-    //
-    //             subscriptionTestExecutor.execute();
-    //
-    //             onMessageReceived = {
-    //                 tests: {
-    //                     failing: subscriptionTestExecutor.getFailingTests(),
-    //                     passing: subscriptionTestExecutor.getPassingTests(),
-    //                     onMessageReceivedExecutionException: subscriptionTestExecutor.getWarning()
-    //                 },
-    //                 reports: subscriptionTestExecutor.getReports()
-    //             }
-    //         } catch (exc) {
-    //             onMessageReceived = {
-    //                 onMessageReceivedFunctionCreationException: exc
-    //             }
-    //         }
-    //     }
-    //
-    //     var subscriptionReport = {
-    //         ...subscription,
-    //         elapsedTime: elapsedTime,
-    //         timestamp: new Date(),
-    //         message: message,
-    //         onMessageReceived: onMessageReceived
-    //     };
-    //     this.reportGenerator.addSubscriptionReport(subscriptionReport);
-    // }
+    private generateSubscriptionReceivedMessageReport(subscription: SubscriptionSuperClass) {
+        const elapsedTime = Date.now() - this.startTime;
+
+        let onMessageReceived = {};
+            try {
+                let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
+                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.requisition.startEvent.publish);
+
+                subscriptionTestExecutor.execute();
+
+                onMessageReceived = {
+                    tests: {
+                        failing: subscriptionTestExecutor.getFailingTests(),
+                        passing: subscriptionTestExecutor.getPassingTests(),
+                        onMessageReceivedExecutionException: subscriptionTestExecutor.getWarning()
+                    },
+                    reports: subscriptionTestExecutor.getReports()
+                }
+            } catch (exc) {
+                onMessageReceived = {
+                    onMessageReceivedFunctionCreationException: exc
+                }
+            }
+
+        var subscriptionReport = {
+            ...subscription,
+            elapsedTime: elapsedTime,
+            timestamp: new Date(),
+            onMessageReceived: onMessageReceived
+        };
+        this.reportGenerator.addSubscriptionReport(subscriptionReport);
+    }
     //
     // private generateSubscriptionDidNotReceivedMessageReport(subscription: Subscription) {
     //     const elapsedTime = Date.now() - this.startTime;
@@ -135,10 +132,8 @@ export class EnqueuerService implements MessengerService {
     //     this.reportGenerator.addSubscriptionReport(subscriptionReport);
     // }
 
-    private onSubscriptionMessage(subscription: Subscription) {
-        console.log("Subscription valid: " + subscription);
-
-            // this.generateSubscriptionReceivedMessageReport(subscription);
+    private onSubscriptionMessage(subscription: SubscriptionSuperClass) {
+            this.generateSubscriptionReceivedMessageReport(subscription);
 
             // if (this.requisition.subscriptions.length === 0) {
             //     this.onFinish();
@@ -149,28 +144,18 @@ export class EnqueuerService implements MessengerService {
     private subscribeSubscriptions(): void {
         this.requisition.subscriptions
                 .forEach(subscription =>
-                    subscription.subscribe((subscription: Subscription) => this.onSubscriptionMessage(subscription),
-                        (subscription: Subscription) => this.onSubscriptionCompleted(subscription)));
-                // .forEach((subscription: Subscription) => {
-                //     subscription.subscribe((subscription: Subscription) => this.onSubscriptionMessage(subscription));
-                //     if (subscription.mqtt)
-                //         this.client.subscribe(subscription.mqtt.topic)
-                // });
+                    subscription.subscribe((subscription: SubscriptionSuperClass) => this.onSubscriptionMessage(subscription),
+                        (subscription: SubscriptionSuperClass) => this.onSubscriptionCompleted(subscription)));
     }
 
     private onFinish(): void {
         if (this.timer)
             global.clearTimeout(this.timer);
 
-        // this.client.end(true);
         const totalTime = Date.now() - this.startTime;
 
         this.requisition.subscriptions.forEach(subscription =>
             subscription.unsubscribe());
-                // .forEach((subscription: Subscription) => {
-                //     subscription.unsubscribe();
-                //     this.generateSubscriptionDidNotReceivedMessageReport(subscription);
-                // });
 
         this.reportGenerator.addInfo({endTime: new Date().toString(), totalTime: totalTime})
         

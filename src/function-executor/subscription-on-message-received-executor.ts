@@ -1,4 +1,5 @@
-import {Subscription} from "../service/requisition/subscription/subscription";
+import {SubscriptionSuperClass} from "../service/requisition/subscription/subscription-super-class";
+import {StartEvent} from "../service/requisition/start-event/start-event";
 
 export class SubscriptionOnMessageReceivedExecutor {
     private passingTests: string[] = [];
@@ -6,14 +7,14 @@ export class SubscriptionOnMessageReceivedExecutor {
     private reports: any = {};
     private warning: string = "";
     
-    private startEvent: any;
+    private startEvent: StartEvent;
     private subscriptionFunction: Function | null = null;
     private message: any;
 
-    constructor(subscription: Subscription, startEvent: any, message: any) {
+    constructor(subscription: SubscriptionSuperClass, startEvent: any) {
         this.subscriptionFunction = subscription.createOnMessageReceivedFunction();
         this.startEvent = startEvent;
-        this.message = message;
+        this.message = subscription.message;
     }
     
     public execute() {
@@ -21,9 +22,10 @@ export class SubscriptionOnMessageReceivedExecutor {
             return;
         
         try {
-            const functionResponse = this.subscriptionFunction(this.message, this.startEvent);
+            console.log("Start event: " + JSON.stringify(this.startEvent.payload));
+            const functionResponse = this.subscriptionFunction(this.message, this.startEvent.payload);
             for (const test in functionResponse.test) {
-                if (functionResponse[test]) {
+                if (functionResponse.test[test]) {
                     this.passingTests.push(test);
                 } else {
                     this.failingTests.push(test);

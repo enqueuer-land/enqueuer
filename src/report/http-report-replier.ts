@@ -15,7 +15,7 @@ export class HttpReportReplier implements ReportReplier {
                         url: this.endpoint,
                         body: report.toString()
                     },
-                    (error: any, response: any, body: any) => 
+                    (error: any, response: any, body: any) =>
                         {
                             if (error) {
                                 if (!CommandLineParser.getInstance().getOptions().silentMode)

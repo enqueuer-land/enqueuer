@@ -17,7 +17,7 @@ export class MqttSubscription extends SubscriptionSuperClass {
                 this.client.on('message', (topic: string, message: string) =>
                     {
                         console.log("Message received:" + message.toString());
-                        this.message = message;
+                        this.message = message.toString();
                         this.client.end();
                         delete this.client;
                         onMessageReceived(this);
@@ -30,7 +30,7 @@ export class MqttSubscription extends SubscriptionSuperClass {
             this.client.on('message',
                 (topic: string, message: string) => {
                     console.log("Message received:" + message);
-                    this.message = message;
+                    this.message = message.toString();
                     this.client.end(true);
                     delete this.client;
                     onMessageReceived(this);
