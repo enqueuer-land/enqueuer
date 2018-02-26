@@ -34,7 +34,7 @@ export class Publish {
     prePublishing: string | null = null;
 
     execute(): boolean {
-        console.log(`I should publish in this: ${JSON.stringify(this, null, 2)}`)
+        console.log(`Publishing`)
         this.eventCallback(this);
         // if (this.mqtt)
         //     return this.mqtt.publish();
