@@ -5,33 +5,24 @@
         {
           "mqtt": {
             "brokerAddress": "brokerAddress",
-            "topic": "agoraVai",
-            "onMessageReceived": "report['startEvent'] = startEvent.topic"
+            "topic": "#",
+            "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent.topic",
+            "timeout": "5000"
           }
-        },
-        {
-            "topic": "service-to-be-tested/output/1",
-            "onMessageReceived": "report['startEvent'] = startEvent.topic"
-        },
-        {
-            "timeout": "5000",
-            "topic": "service-to-be-tested/output/2"
-
         }],
     "startEvent": {
         "publish": 
         {
-            "payload": "keyStr",
             "rest": {
-                "endpoint": "http://blablaservice-to-be-tested:8080/input",
+                "endpoint": "http://localhost:1880/input",
                 "method": "POST",
+                "payload": "Whad do you mean?",
                 "header": {
-
                 },
-                "prePublishing": "console.log('valVar: ' + 'keyStr');"
+                "prePublishing": "console.log('brokerAddress: ' + 'brokerAddress');"
             }
         },
-        "timeout": "2000"
+        "timeout": "5000"
     },
     "reports" : {
         "standardOutput": {},
