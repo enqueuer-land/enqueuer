@@ -4,6 +4,7 @@ import { MessengerService, MessengerServiceCallback } from "../service/messenger
 import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subscription-on-message-received-executor";
 import { Requisition } from "./requisition/requisition";
 import {SubscriptionSuperClass} from "./requisition/subscription/subscription-super-class";
+import {PublishPrePublishingExecutor} from "../function-executor/publish-pre-publishing-executor";
 
 export class EnqueuerService implements MessengerService {
     private requisition: Requisition;
@@ -33,6 +34,22 @@ export class EnqueuerService implements MessengerService {
         this.requisition.startEvent.payload = startEvent.payload;
 
         this.setTimeout(this.requisition.startEvent.timeout);
+
+        const elapsedTime = Date.now() - this.startTime;
+        // let warning = {};
+        // try {
+        //     new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.mqtt.payload,
+        //         topic: this.requisition.startEvent.publish.mqtt.topic});
+        // }
+        // catch (exception) {
+        //     warning = exception;
+        // }
+
+        this.reportGenerator.addPublishReport({
+                                                publish: this.requisition.startEvent.publish,
+                                                elapsedTime: elapsedTime
+                                            });
+
     }
 
     // private publish(): void {

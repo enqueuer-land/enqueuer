@@ -31,6 +31,7 @@ export class SubscriptionOnMessageReceivedExecutor {
                     this.failingTests.push(test);
                 }
             }
+            console.log("Reports: "  + JSON.stringify(functionResponse));
             for (const report in functionResponse.report) {
                 this.reports[report] = functionResponse.report[report];
             }
