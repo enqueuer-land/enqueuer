@@ -12,7 +12,7 @@ export abstract class Subscription {
             this.mqtt.unsubscribe();
     }
 
-    public subscribe(callback: EventCallback, onSubscriptionCompleted: EventCallback): void{
+    public subscribe(callback: EventCallback, onSubscriptionCompleted: EventCallback = () => {}): void{
         if (this.mqtt)
             this.mqtt.subscribe(callback, onSubscriptionCompleted);
     }

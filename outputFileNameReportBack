@@ -1,41 +1,28 @@
 {
     "infoMessages": {
-        "startTime": "Sun Feb 25 2018 23:55:26 GMT-0300 (-03)",
+        "startTime": "Mon Feb 26 2018 22:34:00 GMT-0600 (CST)",
         "totalTimeout": "5000",
-        "endTime": "Sun Feb 25 2018 23:55:31 GMT-0300 (-03)",
-        "totalTime": 5047
+        "endTime": "Mon Feb 26 2018 22:35:46 GMT-0600 (CST)",
+        "totalTime": 106661
     },
     "publishReports": {
-        "publish": {
-            "rest": {
-                "endpoint": "http://localhost:1880/input",
-                "method": "POST",
-                "header": {},
-                "payload": "What do you mean?",
-                "prePublishing": "console.log('brokerAddress: ' + 'brokerAddress');"
-            },
-            "prePublishing": null
-        },
-        "elapsedTime": 39
+        "publish": null,
+        "elapsedTime": 101660
     },
     "subscriptionReports": [
         {
-            "message": "What do you mean?",
+            "message": "It's working",
             "timeout": "5000",
-            "onMessageReceivedFunctionBody": ";report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+            "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
             "brokerAddress": "mqtt://localhost",
             "topic": "#",
-            "elapsedTime": 62,
-            "timestamp": "2018-02-26T02:55:26.684Z",
+            "elapsedTime": 101651,
+            "timestamp": "2018-02-27T04:35:41.738Z",
             "onMessageReceived": {
                 "tests": {
-                    "failing": [
-                        "false"
-                    ],
-                    "passing": [
-                        "true"
-                    ],
-                    "onMessageReceivedExecutionException": ""
+                    "failing": [],
+                    "passing": [],
+                    "onMessageReceivedExecutionException": {}
                 },
                 "reports": {}
             }

@@ -14,12 +14,13 @@ export class StartEvent {
     subscription: Subscription | null = null;
 
     execute(eventCallback: EventCallback): void {
+        console.log(`Start event ${this}`);
         if (this.publish) {
             this.publish.eventCallback = eventCallback;
             this.publish.execute();
         }
-        // if (this.subscription)
-        //     this.subscription.subscribe(eventCallback);
+        if (this.subscription)
+            this.subscription.subscribe(eventCallback);
     }
 }
 
