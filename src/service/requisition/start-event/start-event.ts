@@ -28,8 +28,8 @@ export class Publish {
 
     eventCallback: EventCallback = () => {};
 
-    // @Type(() => PublishMqtt)
-    // mqtt: PublishMqtt | null = null;
+    @Type(() => PublishMqtt)
+    mqtt: PublishMqtt | null = null;
 
     @Type(() => PublishRest)
     rest: PublishRest | null = null;
@@ -39,11 +39,11 @@ export class Publish {
     execute(): boolean {
         console.log(`Publishing`)
         this.eventCallback(this);
-        // if (this.mqtt)
-        //     return this.mqtt.publish();
+        if (this.mqtt)
+            return this.mqtt.publish();
         if (this.rest)
             return this.rest.publish();
-        console.log("No publish method valid was found");
+        console.log("No valid publish method was found");
         return false;
     }
 
@@ -56,19 +56,37 @@ export class Publish {
     }
 }
 
+const mqtt = require("mqtt")
 export class PublishMqtt {
     brokerAddress: string = "";
     topic: string = "";
     payload: string = "";
 
     publish(): boolean {
-        return true;
+
+        const client = mqtt.connect(this.brokerAddress,
+            {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
+        if (client.connected) {
+            console.log("It's connected publish mqtt")
+            client.publish(this.topic, this.payload);
+            client.end();
+            return true;
+        }
+        else {
+            client.on("connect", () =>  {
+                console.log("Now It's connected publish mqtt")
+                client.publish(this.topic, this.payload);
+                client.end();
+                return true;
+            });
+        }
+        return false;
     }
 
 }
 
 const request = require("request");
-    export class PublishRest {
+export class PublishRest {
     endpoint: string = "";
     method: string = "";
     header: any = {};

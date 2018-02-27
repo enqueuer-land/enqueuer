@@ -1,28 +1,42 @@
 {
     "infoMessages": {
-        "startTime": "Mon Feb 26 2018 22:34:00 GMT-0600 (CST)",
+        "startTime": "Mon Feb 26 2018 22:44:35 GMT-0600 (CST)",
         "totalTimeout": "5000",
-        "endTime": "Mon Feb 26 2018 22:35:46 GMT-0600 (CST)",
-        "totalTime": 106661
+        "endTime": "Mon Feb 26 2018 22:44:40 GMT-0600 (CST)",
+        "totalTime": 5035
     },
     "publishReports": {
-        "publish": null,
-        "elapsedTime": 101660
+        "publish": {
+            "mqtt": {
+                "brokerAddress": "mqtt://localhost",
+                "topic": "startEvent",
+                "payload": "PublishMqtt",
+                "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+                "timeout": "5000"
+            },
+            "rest": null,
+            "prePublishing": null
+        },
+        "elapsedTime": 32
     },
     "subscriptionReports": [
         {
-            "message": "It's working",
+            "message": "PublishMqtt",
             "timeout": "5000",
             "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
             "brokerAddress": "mqtt://localhost",
             "topic": "#",
-            "elapsedTime": 101651,
-            "timestamp": "2018-02-27T04:35:41.738Z",
+            "elapsedTime": 45,
+            "timestamp": "2018-02-27T04:44:35.063Z",
             "onMessageReceived": {
                 "tests": {
-                    "failing": [],
-                    "passing": [],
-                    "onMessageReceivedExecutionException": {}
+                    "failing": [
+                        "false"
+                    ],
+                    "passing": [
+                        "true"
+                    ],
+                    "onMessageReceivedExecutionException": ""
                 },
                 "reports": {}
             }

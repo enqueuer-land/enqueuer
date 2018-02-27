@@ -1,0 +1,44 @@
+{
+  "protocol": "mqtt",
+  "brokerAddress": "brokerAddress",
+  "subscriptions": [
+    {
+      "mqtt": {
+        "brokerAddress": "brokerAddress",
+        "topic": "#",
+        "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+        "timeout": "5000"
+      }
+    }],
+  "startEvent": {
+    "publish":
+    {
+      "mqtt": {
+        "brokerAddress": "brokerAddress",
+        "topic": "startEvent",
+        "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+        "payload": "PublishMqtt",
+        "timeout": "5000"
+      }
+    },
+    "timeout": "5000"
+  },
+  "reports" : {
+    "standardOutput":"",
+    "file": {
+      "name": "outputFileNameReportBack"
+    },
+    "http": {
+      "endpoint": "http://localhost:1880/reports"
+    },
+    "mqtt":
+    {
+      "brokerAddress": "brokerAddress",
+      "topic": "service-to-be-tested/report"
+    }
+  },
+  "variables":
+  {
+    "brokerAddress": "mqtt://localhost"
+  }
+}
