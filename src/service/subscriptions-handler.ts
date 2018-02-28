@@ -1,6 +1,7 @@
-import {Subscription} from "./requisition/subscription/subscription";
 import {EventCallback} from "./requisition/event-callback";
 import {SubscriptionReport} from "./subscription-report";
+import {SubscriptionAttributes} from "./requisition/subscription/subscription-attributes";
+import {SubscriptionFactory} from "./requisition/subscription/subscription-factory";
 
 export class SubscriptionsHandler {
     private subscriptionsReport: SubscriptionReport[] = [];
@@ -10,14 +11,13 @@ export class SubscriptionsHandler {
     private onAllSubscriptionsReceivedMessagesCallback: EventCallback;
 
 
-    constructor(subscriptions: Subscription[]) {
+    constructor(subscriptionsAttributes: SubscriptionAttributes[]) {
+        const subscriptionFactory: SubscriptionFactory = new SubscriptionFactory();
 
-        console.log(`SubscriptionHandler handles ${subscriptions} things`);
-        console.log("SubscriptionsHandler: " + JSON.stringify(subscriptions, null, 2));
-
-
-        for (let id: number = 0; id < subscriptions.length; ++id) {
-            this.subscriptionsReport.push(new SubscriptionReport(subscriptions[id], id));
+        for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
+            const subscription = subscriptionFactory.createSubscription(subscriptionsAttributes[id]);
+            if (subscription)
+                this.subscriptionsReport.push(new SubscriptionReport(subscription, id));
         }
         this.onSubscriptionsCompletedCallback = () => {};
         this.onAllSubscriptionsReceivedMessagesCallback = () => {};
@@ -42,15 +42,15 @@ export class SubscriptionsHandler {
         return reports;
     }
 
+    //TODO: verify id
     private onSubscriptionCompleted(subscriptionId: number) {
-        console.log(`Subscription ${subscriptionId} is subscribed`);
         ++this.subscriptionsCompletedCounter;
         if (this.subscriptionsCompletedCounter == this.subscriptionsReport.length)
             this.onSubscriptionsCompletedCallback(null);
     }
 
+    //TODO: verify id
     private onMessageReceived(subscriptionId: number) {
-        console.log(`Subscription ${subscriptionId} has received messages`);
         ++this.subscriptionsReceivedMessagesCounter;
         if (this.subscriptionsReceivedMessagesCounter == this.subscriptionsReport.length)
             this.onAllSubscriptionsReceivedMessagesCallback(null);

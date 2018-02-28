@@ -1,7 +1,6 @@
-import {Subscription} from "./requisition/subscription/subscription";
-import {SubscriptionSuperClass} from "./requisition/subscription/subscription-super-class";
 import {EventCallback} from "./requisition/event-callback";
 import {SubscriptionOnMessageReceivedExecutor} from "../function-executor/subscription-on-message-received-executor";
+import {Subscription} from "./requisition/subscription/subscription";
 
 export class SubscriptionReport {
 
@@ -14,19 +13,22 @@ export class SubscriptionReport {
         this.subscription = subscription;
         this.onMessageReceivedCallback = () => {};
         this.id = id;
+        this.subscriptionReport = {
+            ...subscription,
+        };
     }
 
     public start(onSubscriptionCompleted: EventCallback, onMessageReceivedCallback: EventCallback) {
         this.onMessageReceivedCallback = onMessageReceivedCallback;
-        this.subscription.subscribe((subscription: SubscriptionSuperClass) => this.onMessageReceived(subscription),
-            (subscription: SubscriptionSuperClass) => onSubscriptionCompleted(this.id));
+        this.subscription.subscribe((subscription: Subscription) => this.onMessageReceived(subscription),
+            (subscription: Subscription) => onSubscriptionCompleted(this.id));
     }
 
     public unsubscribe(): any {
         this.subscription.unsubscribe();
     }
 
-    private onMessageReceived(subscription: SubscriptionSuperClass) {
+    private onMessageReceived(subscription: Subscription) {
         let onMessageReceived = {};
         try {
             let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor

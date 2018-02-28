@@ -1,4 +1,4 @@
-import {SubscriptionSuperClass} from "../service/requisition/subscription/subscription-super-class";
+import {Subscription} from "../service/requisition/subscription/subscription";
 
 export class SubscriptionOnMessageReceivedExecutor {
     private passingTests: string[] = [];
@@ -9,7 +9,7 @@ export class SubscriptionOnMessageReceivedExecutor {
     private subscriptionFunction: Function | null = null;
     private message: any;
 
-    constructor(subscription: SubscriptionSuperClass) {
+    constructor(subscription: Subscription) {
         this.subscriptionFunction = subscription.createOnMessageReceivedFunction();
         this.message = subscription.message;
     }

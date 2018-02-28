@@ -7,16 +7,19 @@ import {Requisition} from "../service/requisition/requisition";
 
 export class ReportReplierFactory {
     createReplierFactory(requisition: Requisition): ReportReplier[] {
-        const reports = requisition.reports;
+        const reports: any[] = requisition.reports;
         let reportRepliers: ReportReplier[] = [];
-        if (reports.standardOutput)
-            reportRepliers.push(new StandardOutputReporterReplier());
-        if (reports.file)
-            reportRepliers.push(new FileReportReplier(reports.file));
-        if (reports.http)
-            reportRepliers.push(new HttpReportReplier(reports.http));
-        if (reports.mqtt)
-            reportRepliers.push(new MqttReportReplier(reports.mqtt));
+        reports.forEach(report => {
+            const protocol: string = report.protocol;
+            if (protocol === "standardOutput")
+                reportRepliers.push(new StandardOutputReporterReplier());
+            if (protocol === "file")
+                reportRepliers.push(new FileReportReplier(report));
+            if (protocol === "http")
+                reportRepliers.push(new HttpReportReplier(report));
+            if (protocol === "mqtt")
+                reportRepliers.push(new MqttReportReplier(report));
+        });
         return reportRepliers;
     }
 }

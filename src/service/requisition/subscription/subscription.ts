@@ -1,26 +1,38 @@
 import {EventCallback} from "../event-callback";
-import {Type} from "class-transformer";
-import {MqttSubscription} from "./mqtt-subscription";
+import {SubscriptionAttributes} from "./subscription-attributes";
 
-export abstract class Subscription {
+export class Subscription {
 
-    @Type(() => MqttSubscription)
-    mqtt: MqttSubscription | null = null;
+    message: string | null = null;
+    timeout: number = -1;
+    onMessageReceivedFunctionBody: string | null = null;
 
-    public unsubscribe(): void {
-        if (this.mqtt)
-            this.mqtt.unsubscribe();
-    }
-
-    public subscribe(callback: EventCallback, onSubscriptionCompleted: EventCallback = () => {}): void{
-        if (this.mqtt)
-            this.mqtt.subscribe(callback, onSubscriptionCompleted);
+    protected constructor(subscriptionAttributes: SubscriptionAttributes) {
+        this.message = subscriptionAttributes.message;
+        this.timeout = subscriptionAttributes.timeout;
+        this.onMessageReceivedFunctionBody = subscriptionAttributes.onMessageReceivedFunctionBody;
     }
 
     createOnMessageReceivedFunction(): Function | null {
-        if (this.mqtt)
-            return this.mqtt.createOnMessageReceivedFunction();
-        return null;
+        if (this.onMessageReceivedFunctionBody == null)
+            return null;
+
+        const fullBody: string =    `let test = {};
+                                    let report = {};
+                                    let valid = true;
+                                    ${this.onMessageReceivedFunctionBody};
+                                    return {
+                                                test: test,
+                                                report: report,
+                                                 valid: valid
+                                     };`;
+        return new Function('message', 'startEvent', fullBody);
+    }
+
+    public unsubscribe(): void {};
+
+    public subscribe(onMessageReceived: EventCallback, onSubscriptionCompleted: EventCallback): boolean {
+        return true;
     }
 
 }

@@ -1,11 +1,18 @@
 import {EventCallback} from "../event-callback";
-import {SubscriptionSuperClass} from "./subscription-super-class";
+import {Subscription} from "./subscription";
+import {SubscriptionAttributes} from "./subscription-attributes";
 const mqtt = require("mqtt")
 
-export class MqttSubscription extends SubscriptionSuperClass {
+export class MqttSubscription extends Subscription {
     brokerAddress: string = "";
     topic: string = "";
     private client: any = null;
+
+    constructor(subscriptionAttributes: SubscriptionAttributes) {
+        super(subscriptionAttributes);
+        this.brokerAddress = subscriptionAttributes.brokerAddress;
+        this.topic = subscriptionAttributes.topic;
+    }
 
     public subscribe(onMessageReceived: EventCallback, onSubscriptionCompleted: EventCallback): boolean {
         this.client = mqtt.connect(this.brokerAddress,

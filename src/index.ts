@@ -14,7 +14,7 @@ class Startup {
   } 
 
   public onFinish(report: Report): void {
-    log();
+    // log();
   }
   
 }

@@ -1,25 +1,27 @@
 {
   "subscriptions": [
-    {
-      "mqtt": {
+      {
+        "protocol": "mqtt",
         "brokerAddress": "brokerAddress",
         "topic": "#",
         "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
         "timeout": "5000"
       },
-      "mqtt": {
+      {
+        "protocol": "mqtt",
         "brokerAddress": "brokerAddress",
         "topic": "startEvent",
         "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
         "timeout": "5000"
       },
-      "mqtta": {
+      {
+        "protocol": "mqtt",
         "brokerAddress": "brokerAddress",
         "topic": "anotherTopic",
         "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
         "timeout": "5000"
       }
-    }],
+  ],
   "startEvent": {
     "publish":
     {
@@ -33,20 +35,24 @@
     },
     "timeout": "5000"
   },
-  "reports" : {
-    "standardOutput":"",
-    "file": {
+  "reports" : [
+    {
+      "protocol": "standardOutput"
+    },
+    {
+      "protocol": "file",
       "name": "outputFileNameReportBack"
     },
-    "http": {
+    {
+      "protocol": "http",
       "endpoint": "http://localhost:1880/reports"
     },
-    "mqtt":
     {
+      "protocol": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "service-to-be-tested/report"
     }
-  },
+  ],
   "variables":
   {
     "brokerAddress": "mqtt://localhost"
