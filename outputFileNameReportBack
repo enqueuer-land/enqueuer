@@ -1,9 +1,9 @@
 {
     "infoMessages": {
-        "startTime": "Tue Feb 27 2018 20:02:17 GMT-0600 (CST)",
+        "startTime": "Tue Feb 27 2018 21:07:34 GMT-0600 (CST)",
         "totalTimeout": "5000",
-        "endTime": "Tue Feb 27 2018 20:02:22 GMT-0600 (CST)",
-        "totalTime": 5036
+        "endTime": "Tue Feb 27 2018 21:07:34 GMT-0600 (CST)",
+        "totalTime": 60
     },
     "publishReports": {
         "publish": {
@@ -17,29 +17,30 @@
             "rest": null,
             "prePublishing": null
         },
-        "elapsedTime": 36
+        "elapsedTime": 47
     },
     "subscriptionReports": [
-        {
-            "message": "PublishMqtt",
-            "timeout": "5000",
-            "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
-            "brokerAddress": "mqtt://localhost",
-            "topic": "#",
-            "elapsedTime": 48,
-            "timestamp": "2018-02-28T02:02:17.517Z",
-            "onMessageReceived": {
-                "tests": {
-                    "failing": [
-                        "false"
-                    ],
-                    "passing": [
-                        "true"
-                    ],
-                    "onMessageReceivedExecutionException": ""
-                },
-                "reports": {}
+        [
+            {
+                "message": "PublishMqtt",
+                "timeout": "5000",
+                "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+                "brokerAddress": "mqtt://localhost",
+                "topic": "startEvent",
+                "timestamp": "2018-02-28T03:07:34.945Z",
+                "onMessageReceived": {
+                    "tests": {
+                        "failing": [
+                            "false"
+                        ],
+                        "passing": [
+                            "true"
+                        ],
+                        "onMessageReceivedExecutionException": ""
+                    },
+                    "reports": {}
+                }
             }
-        }
+        ]
     ]
 }

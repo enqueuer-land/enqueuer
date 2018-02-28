@@ -3,39 +3,30 @@ import {SubscriptionSuperClass} from "./requisition/subscription/subscription-su
 import {EventCallback} from "./requisition/event-callback";
 import {SubscriptionOnMessageReceivedExecutor} from "../function-executor/subscription-on-message-received-executor";
 
-export class SubscriptionHandler {
-    private subscriptions: Subscription[] = [];
+export class SubscriptionReport {
 
-    constructor(subscriptions: Subscription[]) {
-        this.subscriptions = subscriptions;
+    private subscription: Subscription;
+    private subscriptionReport: any = null;
+    private onMessageReceivedCallback: EventCallback;
+    private id: number;
+
+    constructor(subscription: Subscription, id: number) {
+        this.subscription = subscription;
+        this.onMessageReceivedCallback = () => {};
+        this.id = id;
     }
 
-    public start(onSubscriptionsCompleted: EventCallback) {
-        this.subscribeSubscriptions();
+    public start(onSubscriptionCompleted: EventCallback, onMessageReceivedCallback: EventCallback) {
+        this.onMessageReceivedCallback = onMessageReceivedCallback;
+        this.subscription.subscribe((subscription: SubscriptionSuperClass) => this.onMessageReceived(subscription),
+            (subscription: SubscriptionSuperClass) => onSubscriptionCompleted(this.id));
+    }
+
+    public unsubscribe(): any {
+        this.subscription.unsubscribe();
     }
 
     private onMessageReceived(subscription: SubscriptionSuperClass) {
-        this.generateSubscriptionReceivedMessageReport(subscription);
-
-        // if (this.requisition.subscriptions.length === 0) {
-        //     this.onFinish();
-        // }
-
-    }
-
-    private onSubscriptionCompleted(subscription: SubscriptionSuperClass) {
-        console.log("I have to count how many subscriptions are completed");
-    }
-
-    private subscribeSubscriptions(): void {
-        this.subscriptions
-            .forEach(subscription =>
-                subscription.subscribe((subscription: SubscriptionSuperClass) => this.onMessageReceived(subscription),
-                    (subscription: SubscriptionSuperClass) => this.onSubscriptionCompleted(subscription)));
-    }
-
-    private generateSubscriptionReceivedMessageReport(subscription: SubscriptionSuperClass) {
-
         let onMessageReceived = {};
         try {
             let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
@@ -57,13 +48,16 @@ export class SubscriptionHandler {
             }
         }
 
-        var subscriptionReport = {
+        this.subscriptionReport = {
             ...subscription,
             timestamp: new Date(),
             onMessageReceived: onMessageReceived
         };
-        this.reportGenerator.addSubscriptionReport(subscriptionReport);
+        this.onMessageReceivedCallback(this.id);
     }
 
+    public getReport() {
+        return this.subscriptionReport;
+    }
 
 }

@@ -1,4 +1,4 @@
-import {Publish} from "../service/requisition/start-event/start-event";
+import {Publish} from "../service/requisition/start-event/publish";
 
 export class PublishPrePublishingExecutor {
 

@@ -1,11 +1,21 @@
 {
-  "protocol": "mqtt",
-  "brokerAddress": "brokerAddress",
   "subscriptions": [
     {
       "mqtt": {
         "brokerAddress": "brokerAddress",
         "topic": "#",
+        "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+        "timeout": "5000"
+      },
+      "mqtt": {
+        "brokerAddress": "brokerAddress",
+        "topic": "startEvent",
+        "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+        "timeout": "5000"
+      },
+      "mqtta": {
+        "brokerAddress": "brokerAddress",
+        "topic": "anotherTopic",
         "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
         "timeout": "5000"
       }

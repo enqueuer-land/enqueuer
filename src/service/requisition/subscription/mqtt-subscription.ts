@@ -8,7 +8,6 @@ export class MqttSubscription extends SubscriptionSuperClass {
     private client: any = null;
 
     public subscribe(onMessageReceived: EventCallback, onSubscriptionCompleted: EventCallback): boolean {
-        console.log("Subscribed on topic:" + this.topic);
         this.client = mqtt.connect(this.brokerAddress,
             {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
         this.client.subscribe(this.topic);
@@ -25,7 +24,6 @@ export class MqttSubscription extends SubscriptionSuperClass {
             });
         }
         else {
-            console.log("client connected:" + this.client.connected);
             this.client.on('message',
                 (topic: string, message: string) => {
                     this.message = message.toString();
@@ -39,7 +37,6 @@ export class MqttSubscription extends SubscriptionSuperClass {
     }
 
     public unsubscribe(): void {
-        console.log("END");
         if (this.client)
             this.client.end();
         delete this.client;

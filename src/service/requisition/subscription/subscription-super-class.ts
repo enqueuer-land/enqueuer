@@ -1,7 +1,8 @@
 import {EventCallback} from "../event-callback";
 
 export class SubscriptionSuperClass {
-    message: string = "";
+
+    message: string | null = null;
 
     timeout: number = -1;
 
@@ -13,8 +14,13 @@ export class SubscriptionSuperClass {
 
         const fullBody: string =    `let test = {};
                                     let report = {};
+                                    let valid = true;
                                     ${this.onMessageReceivedFunctionBody};
-                                    return {test: test, report: report};`;
+                                    return {
+                                                test: test,
+                                                report: report,
+                                                 valid: valid
+                                     };`;
         return new Function('message', 'startEvent', fullBody);
     }
 

@@ -1,7 +1,7 @@
 import {EventCallback} from "../event-callback";
 import {Type} from "class-transformer";
-import {PublishMqtt} from "./start-event";
 import {PublishRest} from "./publish-rest";
+import {PublishMqtt} from "./publish-mqtt";
 
 export class Publish {
 
