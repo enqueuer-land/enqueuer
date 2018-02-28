@@ -67,14 +67,12 @@ export class PublishMqtt {
         const client = mqtt.connect(this.brokerAddress,
             {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
         if (client.connected) {
-            console.log("It's connected publish mqtt")
             client.publish(this.topic, this.payload);
             client.end();
             return true;
         }
         else {
             client.on("connect", () =>  {
-                console.log("Now It's connected publish mqtt")
                 client.publish(this.topic, this.payload);
                 client.end();
                 return true;

@@ -5,16 +5,20 @@ import { SubscriptionOnMessageReceivedExecutor } from "../function-executor/subs
 import { Requisition } from "./requisition/requisition";
 import {SubscriptionSuperClass} from "./requisition/subscription/subscription-super-class";
 import {PublishPrePublishingExecutor} from "../function-executor/publish-pre-publishing-executor";
+import {StartEvent} from "./requisition/start-event/start-event";
+import {Subscription} from "./requisition/subscription/subscription";
 
 export class EnqueuerService implements MessengerService {
-    private requisition: Requisition;
+    private startEvent: StartEvent;
+    private subscriptions: Subscription[] = [];
     private onFinishCallback: MessengerServiceCallback | null = null;
     private startTime: number = 0;
     private timer: NodeJS.Timer | null = null;
     private reportGenerator: ReportGenerator = new ReportGenerator();
 
     constructor(requisition: Requisition) {
-        this.requisition = classToClass(requisition); //clone
+        this.startEvent = requisition.startEvent;
+        this.subscriptions = requisition.subscriptions;
     }
 
     public start(onFinishCallback: MessengerServiceCallback): void {
@@ -26,14 +30,14 @@ export class EnqueuerService implements MessengerService {
 
     private onSubscriptionCompleted(subscription: SubscriptionSuperClass) {
         console.log("I have to count how many subscriptions are completed");
-        this.requisition.startEvent.execute((message: any) => this.onStartEventReceived(message));
+        this.startEvent.execute((message: any) => this.onStartEventReceived(message));
     }
 
     private onStartEventReceived(startEvent: any) {
         console.log("Start event was fired");
-        this.requisition.startEvent.payload = startEvent.payload;
+        this.startEvent.payload = startEvent.payload;
 
-        this.setTimeout(this.requisition.startEvent.timeout);
+        this.setTimeout(this.startEvent.timeout);
 
         const elapsedTime = Date.now() - this.startTime;
         // let warning = {};
@@ -46,7 +50,7 @@ export class EnqueuerService implements MessengerService {
         // }
 
         this.reportGenerator.addPublishReport({
-                                                publish: this.requisition.startEvent.publish,
+                                                publish: this.startEvent.publish,
                                                 elapsedTime: elapsedTime
                                             });
 
@@ -111,7 +115,7 @@ export class EnqueuerService implements MessengerService {
         let onMessageReceived = {};
             try {
                 let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.requisition.startEvent.publish);
+                                = new SubscriptionOnMessageReceivedExecutor(subscription, this.startEvent.publish);
 
                 subscriptionTestExecutor.execute();
 
@@ -159,7 +163,7 @@ export class EnqueuerService implements MessengerService {
     }
 
     private subscribeSubscriptions(): void {
-        this.requisition.subscriptions
+        this.subscriptions
                 .forEach(subscription =>
                     subscription.subscribe((subscription: SubscriptionSuperClass) => this.onSubscriptionMessage(subscription),
                         (subscription: SubscriptionSuperClass) => this.onSubscriptionCompleted(subscription)));
@@ -171,7 +175,7 @@ export class EnqueuerService implements MessengerService {
 
         const totalTime = Date.now() - this.startTime;
 
-        this.requisition.subscriptions.forEach(subscription =>
+        this.subscriptions.forEach(subscription =>
             subscription.unsubscribe());
 
         this.reportGenerator.addInfo({endTime: new Date().toString(), totalTime: totalTime})
