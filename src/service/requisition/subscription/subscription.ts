@@ -1,5 +1,4 @@
 import {EventCallback} from "../event-callback";
-import {SubscriptionAttributes} from "./subscription-attributes";
 
 export class Subscription {
 
@@ -7,7 +6,7 @@ export class Subscription {
     timeout: number = -1;
     onMessageReceivedFunctionBody: string | null = null;
 
-    protected constructor(subscriptionAttributes: SubscriptionAttributes) {
+    protected constructor(subscriptionAttributes: any) {
         this.message = subscriptionAttributes.message;
         this.timeout = subscriptionAttributes.timeout;
         this.onMessageReceivedFunctionBody = subscriptionAttributes.onMessageReceivedFunctionBody;

@@ -1,7 +1,6 @@
 import {EventCallback} from "../event-callback";
 import {Type} from "class-transformer";
 import {Publish} from "./publish";
-import {SubscriptionAttributes} from "../subscription/subscription-attributes";
 import {SubscriptionFactory} from "../subscription/subscription-factory";
 
 export class StartEvent {
@@ -13,8 +12,7 @@ export class StartEvent {
     @Type(() => Publish)
     publish: Publish | null = null;
 
-    @Type(() => SubscriptionAttributes)
-    subscription: SubscriptionAttributes | null = null;
+    subscription: any;
 
     execute(eventCallback: EventCallback): void {
         console.log(`Start event ${this}`);

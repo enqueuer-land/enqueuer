@@ -1,6 +1,5 @@
 import {EventCallback} from "../event-callback";
 import {Subscription} from "./subscription";
-import {SubscriptionAttributes} from "./subscription-attributes";
 const mqtt = require("mqtt")
 
 export class MqttSubscription extends Subscription {
@@ -8,7 +7,7 @@ export class MqttSubscription extends Subscription {
     topic: string = "";
     private client: any = null;
 
-    constructor(subscriptionAttributes: SubscriptionAttributes) {
+    constructor(subscriptionAttributes: any) {
         super(subscriptionAttributes);
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
