@@ -21,7 +21,6 @@ export class StartEventHandler {
     }
 
     public start(): Promise<void | {}> {
-        console.log("start()")
         return new Promise((resolve, reject) => {
 
             if (this.publisherHandler) {

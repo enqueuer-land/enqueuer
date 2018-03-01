@@ -14,7 +14,6 @@ export class MqttReportReplier implements ReportReplier {
     }
 
     public report(report: Report): boolean {
-        console.log("Report client connected:" + this.client.connected);
         if (this.client.connected) {
             this.client.publish(this.mqttProperties.topic, report.toString());
             this.client.end();

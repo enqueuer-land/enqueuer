@@ -1,5 +1,5 @@
 import {EventCallback} from "./requisition/event-callback";
-import {SubscriptionOnMessageReceivedExecutor} from "../function-executor/subscription-on-message-received-executor";
+import {FunctionExecutor} from "../function-executor/function-executor";
 import {Subscription} from "./requisition/subscription/subscription";
 
 export class SubscriptionReport {
@@ -30,23 +30,25 @@ export class SubscriptionReport {
 
     private onMessageReceived(subscription: Subscription) {
         let onMessageReceived = {};
-        try {
-            let subscriptionTestExecutor: SubscriptionOnMessageReceivedExecutor
-                = new SubscriptionOnMessageReceivedExecutor(subscription);
+        const functionToExecute: Function | null = subscription.createOnMessageReceivedFunction();
+        if (functionToExecute) {
+            try {
+                let subscriptionTestExecutor: FunctionExecutor
+                    = new FunctionExecutor(functionToExecute, subscription.message);
+                subscriptionTestExecutor.execute();
 
-            subscriptionTestExecutor.execute();
-
-            onMessageReceived = {
-                tests: {
-                    failing: subscriptionTestExecutor.getFailingTests(),
-                    passing: subscriptionTestExecutor.getPassingTests(),
-                    onMessageReceivedExecutionException: subscriptionTestExecutor.getWarning()
-                },
-                reports: subscriptionTestExecutor.getReports()
-            }
-        } catch (exc) {
-            onMessageReceived = {
-                onMessageReceivedFunctionCreationException: exc
+                onMessageReceived = {
+                    tests: {
+                        failing: subscriptionTestExecutor.getFailingTests(),
+                        passing: subscriptionTestExecutor.getPassingTests(),
+                        onMessageReceivedExecutionException: subscriptionTestExecutor.getException()
+                    },
+                    reports: subscriptionTestExecutor.getReports()
+                }
+            } catch (exc) {
+                onMessageReceived = {
+                    exception: exc
+                }
             }
         }
 

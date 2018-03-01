@@ -57,7 +57,7 @@ export class EnqueuerService {
     private setTimeout(totalTimeout: number): void {
         console.log("timeout: " + totalTimeout)
         if (totalTimeout != -1) {
-            this.reportGenerator.addInfo({totalTimeout: totalTimeout});
+            this.reportGenerator.addInfo({timeout: totalTimeout});
             this.timer = global.setTimeout(() => this.onFinish(), totalTimeout);
         }
     }

@@ -14,11 +14,19 @@ export abstract class Publish {
 
     abstract execute(): Promise<Publish>;
 
-    createPrePublishingFunction(): Function | null {
-        if (this.prePublishing == null)
-            return null;
+    createPrePublishingFunction(): Function {
 
-        const fullBody: string = `${this.prePublishing};`;
-        return new Function('message', fullBody);
+
+
+        const fullBody: string =    `let test = {};
+                                    let report = {};
+                                    let payload = '${this.payload}';
+                                    ${this.prePublishing};
+                                    return {
+                                            test: test,
+                                            report: report,
+                                            payload: payload
+                                     };`;
+        return new Function(fullBody);
     }
 }

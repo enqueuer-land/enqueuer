@@ -28,7 +28,7 @@
         "protocol": "mqtt",
         "brokerAddress": "brokerAddress",
         "topic": "startEvent",
-        "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+        "prePublishing": "report['startEvent'] = 'gui'; payload = 'novo'",
         "payload": "PublishMqtt"
     },
     "timeout": "5000"
