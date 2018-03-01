@@ -9,6 +9,9 @@ export class StartEventHandler {
     private publisherHandler: PublisherHandler | null = null;
     private subscriptionHandler: SubscriptionsHandler | null = null;
     private report: any = {};
+    private timer: NodeJS.Timer | null = null;
+    private timeout: number = -1;
+    private onTimeoutCallback: () => void = () => {};
 
     constructor(startEvent: StartEvent) {
         if (startEvent.publish) {
@@ -18,9 +21,13 @@ export class StartEventHandler {
         }
         else if (startEvent.subscription)
             this.subscriptionHandler = new SubscriptionsHandler([startEvent.subscription]);
+        this.timeout = startEvent.timeout;
     }
 
     public start(): Promise<void | {}> {
+        if (!this.timer)
+            this.setTimeout();
+
         return new Promise((resolve, reject) => {
 
             if (this.publisherHandler) {
@@ -55,9 +62,32 @@ export class StartEventHandler {
         return this.report;
     }
 
+    public cancelTimeout() {
+        if (this.timer)
+            global.clearTimeout(this.timer);
+        this.timer = null;
+    }
+
+    public setTimeoutCallback(timeoutCalback: () => void) {
+        this.onTimeoutCallback = timeoutCalback;
+    }
+
+    private onTimeout(): any {
+        this.cancelTimeout();
+        this.onTimeoutCallback();
+    }
+
+    private setTimeout(): void {
+        console.log("timeout: " + this.timeout)
+        if (this.timeout != -1) {
+            this.timer = global.setTimeout(() => this.onTimeout(), this.timeout);
+        }
+    }
+
     private generatePublishSuccessfulReport() {
         if (this.publisherHandler)
             this.report = this.publisherHandler.getReport();
+        this.report.timeout = this.timeout;
     }
 
     private generatePublishErrorReport(error: String): void {
@@ -65,6 +95,7 @@ export class StartEventHandler {
             error,
             timestamp: new Date()
         }
+        this.report.timeout = this.timeout;
     }
 
     private checkSubscriptionMessageReceived(): Promise<void> {
@@ -79,6 +110,7 @@ export class StartEventHandler {
                 }
                 else {
                     this.report.success = this.subscriptionHandler.getReports();
+                    this.report.success.timeout = this.timeout;
                     this.subscriptionHandler.unsubscribe();
                     resolve();
                 }
@@ -86,6 +118,5 @@ export class StartEventHandler {
             reject();
         });
     }
-
 
 }
