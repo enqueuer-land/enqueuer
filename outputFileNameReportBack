@@ -1,29 +1,30 @@
 {
     "infoMessages": {
-        "startTime": "Wed Feb 28 2018 19:42:18 GMT-0600 (CST)",
+        "startTime": "Wed Feb 28 2018 19:50:37 GMT-0600 (CST)",
         "totalTimeout": "5000",
-        "endTime": "Wed Feb 28 2018 19:42:23 GMT-0600 (CST)",
-        "totalTime": 5050
+        "endTime": "Wed Feb 28 2018 19:50:42 GMT-0600 (CST)",
+        "totalTime": 5060
     },
     "publishReports": {
         "publish": {
-            "protocol": "mqtt",
-            "brokerAddress": "mqtt://localhost",
-            "topic": "startEvent",
+            "protocol": "rest",
             "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
-            "payload": "PublishMqtt"
+            "endpoint": "http://localhost:1880/input",
+            "header": {},
+            "method": "post",
+            "payload": "PublishRest"
         },
-        "elapsedTime": 49
+        "elapsedTime": 58
     },
     "subscriptionReports": [
         [
             {
-                "message": "PublishMqtt",
+                "message": "PublishRest",
                 "timeout": "5000",
                 "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
                 "brokerAddress": "mqtt://localhost",
                 "topic": "#",
-                "timestamp": "2018-03-01T01:42:18.688Z",
+                "timestamp": "2018-03-01T01:50:37.997Z",
                 "onMessageReceived": {
                     "tests": {
                         "failing": [
@@ -38,24 +39,12 @@
                 }
             },
             {
-                "message": "PublishMqtt",
+                "message": null,
                 "timeout": "5000",
                 "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
                 "brokerAddress": "mqtt://localhost",
                 "topic": "startEvent",
-                "timestamp": "2018-03-01T01:42:18.689Z",
-                "onMessageReceived": {
-                    "tests": {
-                        "failing": [
-                            "false"
-                        ],
-                        "passing": [
-                            "true"
-                        ],
-                        "onMessageReceivedExecutionException": ""
-                    },
-                    "reports": {}
-                }
+                "client": null
             },
             {
                 "message": null,

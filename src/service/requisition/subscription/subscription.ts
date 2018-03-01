@@ -20,12 +20,10 @@ export class Subscription {
 
         const fullBody: string =    `let test = {};
                                     let report = {};
-                                    let valid = true;
                                     ${this.onMessageReceivedFunctionBody};
                                     return {
-                                                test: test,
-                                                report: report,
-                                                 valid: valid
+                                            test: test,
+                                            report: report
                                      };`;
         return new Function('message', 'startEvent', fullBody);
     }
