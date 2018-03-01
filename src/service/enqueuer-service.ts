@@ -32,7 +32,6 @@ export class EnqueuerService implements MessengerService {
 
     private onStartEventReceived(startEvent: any) {
         console.log("Start event was fired");
-        this.startEvent.payload = startEvent.payload;
 
         this.setTimeout(this.startEvent.timeout);
 

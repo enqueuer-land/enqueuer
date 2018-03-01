@@ -8,7 +8,7 @@ export class RequisitionParser {
         const parsedRequisition = JSON.parse(requisitionMessage);
         const variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
         const requisitionReturn: Requisition = this.deserialize(variablesReplacedRequisition);
-        console.log("Requisition: " + JSON.stringify(requisitionReturn, null, 2));
+        // console.log("Requisition: " + JSON.stringify(requisitionReturn, null, 2));
         return requisitionReturn;
     }
     

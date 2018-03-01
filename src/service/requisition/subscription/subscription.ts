@@ -1,11 +1,8 @@
 import {EventCallback} from "../event-callback";
-import {Exclude} from "class-transformer";
 
 export class Subscription {
 
-    @Exclude()
     message: string | null = null;
-
     timeout: number = -1;
     onMessageReceivedFunctionBody: string | null = null;
 

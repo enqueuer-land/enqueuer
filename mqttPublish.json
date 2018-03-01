@@ -25,13 +25,11 @@
   "startEvent": {
     "publish":
     {
-      "mqtt": {
+        "protocol": "mqtt",
         "brokerAddress": "brokerAddress",
         "topic": "startEvent",
         "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
-        "payload": "PublishMqtt",
-        "timeout": "5000"
-      }
+        "payload": "PublishMqtt"
     },
     "timeout": "5000"
   },

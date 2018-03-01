@@ -1,23 +1,19 @@
 {
     "infoMessages": {
-        "startTime": "Wed Feb 28 2018 19:19:06 GMT-0600 (CST)",
+        "startTime": "Wed Feb 28 2018 19:42:18 GMT-0600 (CST)",
         "totalTimeout": "5000",
-        "endTime": "Wed Feb 28 2018 19:19:11 GMT-0600 (CST)",
-        "totalTime": 5056
+        "endTime": "Wed Feb 28 2018 19:42:23 GMT-0600 (CST)",
+        "totalTime": 5050
     },
     "publishReports": {
         "publish": {
-            "mqtt": {
-                "brokerAddress": "mqtt://localhost",
-                "topic": "startEvent",
-                "payload": "PublishMqtt",
-                "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
-                "timeout": "5000"
-            },
-            "rest": null,
-            "prePublishing": null
+            "protocol": "mqtt",
+            "brokerAddress": "mqtt://localhost",
+            "topic": "startEvent",
+            "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+            "payload": "PublishMqtt"
         },
-        "elapsedTime": 51
+        "elapsedTime": 49
     },
     "subscriptionReports": [
         [
@@ -27,7 +23,7 @@
                 "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
                 "brokerAddress": "mqtt://localhost",
                 "topic": "#",
-                "timestamp": "2018-03-01T01:19:06.139Z",
+                "timestamp": "2018-03-01T01:42:18.688Z",
                 "onMessageReceived": {
                     "tests": {
                         "failing": [
@@ -47,7 +43,7 @@
                 "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
                 "brokerAddress": "mqtt://localhost",
                 "topic": "startEvent",
-                "timestamp": "2018-03-01T01:19:06.136Z",
+                "timestamp": "2018-03-01T01:42:18.689Z",
                 "onMessageReceived": {
                     "tests": {
                         "failing": [

@@ -1,24 +1,22 @@
 import {EventCallback} from "../event-callback";
-import {Type} from "class-transformer";
-import {Publish} from "./publish";
+import {Publish} from "./publish/publish";
 import {SubscriptionFactory} from "../subscription/subscription-factory";
+import {Subscription} from "../subscription/subscription";
+import {PublishFactory} from "./publish/publish-factory";
 
 export class StartEvent {
 
     timeout: number = -1;
 
-    payload: string = "";
-
-    @Type(() => Publish)
     publish: Publish | null = null;
 
-    subscription: any;
+    subscription: Subscription | null = null;
 
     execute(eventCallback: EventCallback): void {
-        console.log(`Start event ${this}`);
         if (this.publish) {
-            this.publish.eventCallback = eventCallback;
-            this.publish.execute();
+            const publish = new PublishFactory().createPublisher(this.publish);
+            if (publish)
+                publish.execute(eventCallback);
         }
         if (this.subscription) {
             const subscription = new SubscriptionFactory().createSubscription(this.subscription)
