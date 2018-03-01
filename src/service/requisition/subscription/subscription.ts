@@ -1,15 +1,20 @@
 import {EventCallback} from "../event-callback";
+import {Exclude} from "class-transformer";
 
 export class Subscription {
 
+    @Exclude()
     message: string | null = null;
+
     timeout: number = -1;
     onMessageReceivedFunctionBody: string | null = null;
 
     protected constructor(subscriptionAttributes: any) {
-        this.message = subscriptionAttributes.message;
-        this.timeout = subscriptionAttributes.timeout;
-        this.onMessageReceivedFunctionBody = subscriptionAttributes.onMessageReceivedFunctionBody;
+        if (subscriptionAttributes) {
+            this.message = subscriptionAttributes.message;
+            this.timeout = subscriptionAttributes.timeout;
+            this.onMessageReceivedFunctionBody = subscriptionAttributes.onMessageReceivedFunctionBody;
+        }
     }
 
     createOnMessageReceivedFunction(): Function | null {

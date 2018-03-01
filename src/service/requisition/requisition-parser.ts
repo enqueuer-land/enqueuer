@@ -23,9 +23,9 @@ export class RequisitionParser {
         return JSON.stringify(add);
     }
     
-    private deserialize(requisition: string): any {
+    private deserialize(requisitionJson: string): any {
         try {
-            return deserialize(Requisition, requisition);
+            return deserialize(Requisition, requisitionJson);
         } catch (e) {
             throw new Error("Error parsing requisition: " + e);
         }

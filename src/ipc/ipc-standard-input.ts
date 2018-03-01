@@ -1,6 +1,5 @@
 import {Requisition} from "../service/requisition/requisition";
 
-const fs = require("fs");
 import { IpcCommunicator, IpcCommunicatorCallback } from "./ipc-communicator";
 import { MessengerService } from "../service/messenger-service";
 import { Report } from "../report/report";
