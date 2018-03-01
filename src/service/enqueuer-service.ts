@@ -1,24 +1,24 @@
 import { ReportGenerator } from "../report/report-generator";
-import { MessengerService, MessengerServiceCallback } from "../service/messenger-service";
 import { Requisition } from "./requisition/requisition";
-import {PublishPrePublishingExecutor} from "../function-executor/publish-pre-publishing-executor";
-import {StartEvent} from "./requisition/start-event/start-event";
-import {SubscriptionsHandler} from "./subscriptions-handler";
+import {SubscriptionsHandler} from "./handler/subscriptions-handler";
+import {Report} from "../report/report";
+import {StartEventHandler} from "./handler/start-event-handler";
 
-export class EnqueuerService implements MessengerService {
-    private startEvent: StartEvent;
+export type EnqueuerServiceCallback = (report: Report) => void;
+export class EnqueuerService {
+    private startEventHandler: StartEventHandler;
     private subscriptionsHandler: SubscriptionsHandler;
-    private onFinishCallback: MessengerServiceCallback | null = null;
+    private onFinishCallback: EnqueuerServiceCallback | null = null;
     private startTime: number = 0;
     private timer: NodeJS.Timer | null = null;
     private reportGenerator: ReportGenerator = new ReportGenerator();
 
     constructor(requisition: Requisition) {
-        this.startEvent = requisition.startEvent;
+        this.startEventHandler = new StartEventHandler(requisition.startEvent);
         this.subscriptionsHandler = new SubscriptionsHandler(requisition.subscriptions);
     }
 
-    public start(onFinishCallback: MessengerServiceCallback): void {
+    public start(onFinishCallback: EnqueuerServiceCallback): void {
         this.startTime = Date.now();
         this.reportGenerator.addInfo({startTime: new Date().toString()})
         this.onFinishCallback = onFinishCallback;
@@ -27,13 +27,19 @@ export class EnqueuerService implements MessengerService {
     }
 
     private onSubscriptionCompleted() {
-        this.startEvent.execute((message: any) => this.onStartEventReceived(message));
+        this.startEventHandler.start()
+            .then(() => this.onStartEventReceived())
+            .catch(err => {
+                console.log(err);
+                this.onFinish();
+            })
+        // this.startEvent.execute((message: any) => this.onStartEventReceived(message));
     }
 
-    private onStartEventReceived(startEvent: any) {
+    private onStartEventReceived() {
         console.log("Start event was fired");
 
-        this.setTimeout(this.startEvent.timeout);
+        this.setTimeout(5000);//this.startEvent.timeout);
 
         const elapsedTime = Date.now() - this.startTime;
         // let warning = {};
@@ -45,39 +51,8 @@ export class EnqueuerService implements MessengerService {
         //     warning = exception;
         // }
 
-        this.reportGenerator.addPublishReport({
-                                                publish: this.startEvent.publish,
-                                                elapsedTime: elapsedTime
-                                            });
 
     }
-
-    // private publish(): void {
-    //     console.log("onPublish");
-    //     if (this.requisition.startEvent && this.requisition.startEvent.publish)
-    //         this.requisition.startEvent.publish.execute();
-    //
-    //     if (this.requisition.startEvent && this.requisition.startEvent.publish  && this.requisition.startEvent.publish.mqtt) {
-    //         this.client.publish(this.requisition.startEvent.publish.mqtt.topic,
-    //                             this.requisition.startEvent.publish.mqtt.payload);
-    //
-    //         const elapsedTime = Date.now() - this.startTime;
-    //         let warning = {};
-    //         try {
-    //             new PublishPrePublishingExecutor(this.requisition.startEvent.publish, {payload: this.requisition.startEvent.publish.mqtt.payload,
-    //                 topic: this.requisition.startEvent.publish.mqtt.topic});
-    //         }
-    //         catch (exception) {
-    //             warning = exception;
-    //         }
-    //
-    //         this.reportGenerator.addPublishReport({
-    //                                                 publish: this.requisition.startEvent.publish,
-    //                                                 elapsedTime: elapsedTime,
-    //                                                 warning: warning
-    //                                             });
-    //     }
-    // }
 
     private setTimeout(totalTimeout: number): void {
         console.log("timeout: " + totalTimeout)
@@ -94,6 +69,7 @@ export class EnqueuerService implements MessengerService {
         const totalTime = Date.now() - this.startTime;
 
         this.reportGenerator.addSubscriptionReport(this.subscriptionsHandler.getReports());
+        this.reportGenerator.addStartEventReport(this.startEventHandler.getReport());
 
 
         this.subscriptionsHandler.unsubscribe();

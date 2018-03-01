@@ -1,14 +1,14 @@
 export class Report {
 
     private infoMessages: any;
-    private publishReports: any;
+    private startEventReports: any;
     private subscriptionReports: any;
     
     constructor(infoMessages: any = {},
-        publishReports: any = {},
-        subscriptionReports: any = {}) {
+                startEventReports: any = {},
+                subscriptionReports: any = {}) {
             this.infoMessages = infoMessages;
-            this.publishReports = publishReports;
+            this.startEventReports = startEventReports;
             this.subscriptionReports = subscriptionReports;
         }
 

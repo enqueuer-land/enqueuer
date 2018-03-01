@@ -1,6 +1,6 @@
 import {EventCallback} from "../event-callback";
 
-export class Subscription {
+export abstract class Subscription {
 
     message: string | null = null;
     timeout: number = -1;
@@ -25,13 +25,11 @@ export class Subscription {
                                             test: test,
                                             report: report
                                      };`;
-        return new Function('message', 'startEvent', fullBody);
+        return new Function('message', fullBody);
     }
 
     public unsubscribe(): void {};
 
-    public subscribe(onMessageReceived: EventCallback, onSubscriptionCompleted: EventCallback): boolean {
-        return true;
-    }
+    public abstract subscribe(onMessageReceived: EventCallback, onSubscriptionCompleted: EventCallback): boolean;
 
 }

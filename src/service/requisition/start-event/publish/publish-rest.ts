@@ -1,5 +1,4 @@
 import {Publish} from "./publish";
-import {EventCallback} from "../../event-callback";
 
 const request = require("request");
 
@@ -17,20 +16,22 @@ export class PublishRest extends  Publish{
         }
     }
 
-    execute(eventCallback: EventCallback): void {
-        request.post({
-                url: this.endpoint,
-                body: this.payload
-            },
-            (error: any, response: any, body: any) =>
-            {
-                if (error) {
-                    console.log("Error to publish http: "  + error)
-                }
-                else {
-                    eventCallback(this);
-                }
-            });
+    execute(): Promise<Publish> {
+        return new Promise((resolve, reject) => {
+            request.post({
+                    url: this.endpoint,
+                    body: this.payload
+                },
+                (error: any, response: any, body: any) =>
+                {
+                    if (error) {
+                        reject("Error to publish http: "  + error);
+                    }
+                    else {
+                        resolve(this);
+                    }
+                });
+        })
 
     }
 

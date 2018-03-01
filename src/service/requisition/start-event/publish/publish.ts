@@ -1,6 +1,4 @@
-import {EventCallback} from "../../event-callback";
-
-export class Publish {
+export abstract class Publish {
 
     protocol: string | null = null;
     payload: string | null = null;
@@ -14,7 +12,7 @@ export class Publish {
         }
     }
 
-    execute(eventCallback: EventCallback): void {}
+    abstract execute(): Promise<Publish>;
 
     createPrePublishingFunction(): Function | null {
         if (this.prePublishing == null)

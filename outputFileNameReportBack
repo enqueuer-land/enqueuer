@@ -1,50 +1,142 @@
 {
     "infoMessages": {
-        "startTime": "Wed Feb 28 2018 19:50:37 GMT-0600 (CST)",
-        "totalTimeout": "5000",
-        "endTime": "Wed Feb 28 2018 19:50:42 GMT-0600 (CST)",
-        "totalTime": 5060
+        "startTime": "Wed Feb 28 2018 21:36:53 GMT-0600 (CST)",
+        "totalTimeout": 5000,
+        "endTime": "Wed Feb 28 2018 21:37:35 GMT-0600 (CST)",
+        "totalTime": 42078
     },
     "publishReports": {
-        "publish": {
-            "protocol": "rest",
-            "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
-            "endpoint": "http://localhost:1880/input",
-            "header": {},
-            "method": "post",
-            "payload": "PublishRest"
-        },
-        "elapsedTime": 58
-    },
-    "subscriptionReports": [
-        [
+        "failures": [
+            [
+                {
+                    "message": "Invalid",
+                    "onMessageReceivedFunctionBody": "test['validates'] = message === 'Valid'",
+                    "brokerAddress": "mqtt://localhost",
+                    "topic": "startEvent",
+                    "timestamp": "2018-03-01T03:37:21.244Z",
+                    "onMessageReceived": {
+                        "tests": {
+                            "failing": [
+                                "validates"
+                            ],
+                            "passing": [],
+                            "onMessageReceivedExecutionException": ""
+                        },
+                        "reports": {}
+                    }
+                }
+            ],
+            [
+                {
+                    "message": "Invalid",
+                    "onMessageReceivedFunctionBody": "test['validates'] = message === 'Valid'",
+                    "brokerAddress": "mqtt://localhost",
+                    "topic": "startEvent",
+                    "timestamp": "2018-03-01T03:37:23.711Z",
+                    "onMessageReceived": {
+                        "tests": {
+                            "failing": [
+                                "validates"
+                            ],
+                            "passing": [],
+                            "onMessageReceivedExecutionException": ""
+                        },
+                        "reports": {}
+                    }
+                }
+            ],
+            [
+                {
+                    "message": "Invalid",
+                    "onMessageReceivedFunctionBody": "test['validates'] = message === 'Valid'",
+                    "brokerAddress": "mqtt://localhost",
+                    "topic": "startEvent",
+                    "timestamp": "2018-03-01T03:37:26.730Z",
+                    "onMessageReceived": {
+                        "tests": {
+                            "failing": [
+                                "validates"
+                            ],
+                            "passing": [],
+                            "onMessageReceivedExecutionException": ""
+                        },
+                        "reports": {}
+                    }
+                }
+            ],
+            [
+                {
+                    "message": "Invalid",
+                    "onMessageReceivedFunctionBody": "test['validates'] = message === 'Valid'",
+                    "brokerAddress": "mqtt://localhost",
+                    "topic": "startEvent",
+                    "timestamp": "2018-03-01T03:37:26.896Z",
+                    "onMessageReceived": {
+                        "tests": {
+                            "failing": [
+                                "validates"
+                            ],
+                            "passing": [],
+                            "onMessageReceivedExecutionException": ""
+                        },
+                        "reports": {}
+                    }
+                }
+            ]
+        ],
+        "success": [
             {
-                "message": "PublishRest",
-                "timeout": "5000",
-                "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+                "message": "Valid",
+                "onMessageReceivedFunctionBody": "test['validates'] = message === 'Valid'",
                 "brokerAddress": "mqtt://localhost",
-                "topic": "#",
-                "timestamp": "2018-03-01T01:50:37.997Z",
+                "topic": "startEvent",
+                "timestamp": "2018-03-01T03:37:30.167Z",
                 "onMessageReceived": {
                     "tests": {
-                        "failing": [
-                            "false"
-                        ],
+                        "failing": [],
                         "passing": [
-                            "true"
+                            "validates"
                         ],
                         "onMessageReceivedExecutionException": ""
                     },
                     "reports": {}
                 }
+            }
+        ]
+    },
+    "subscriptionReports": [
+        [
+            {
+                "message": "Invalid",
+                "timeout": "5000",
+                "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+                "brokerAddress": "mqtt://localhost",
+                "topic": "#",
+                "timestamp": "2018-03-01T03:37:21.251Z",
+                "onMessageReceived": {
+                    "tests": {
+                        "failing": [],
+                        "passing": [],
+                        "onMessageReceivedExecutionException": {}
+                    },
+                    "reports": {}
+                }
             },
             {
-                "message": null,
+                "message": "Invalid",
                 "timeout": "5000",
                 "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
                 "brokerAddress": "mqtt://localhost",
                 "topic": "startEvent",
-                "client": null
+                "timestamp": "2018-03-01T03:37:21.252Z",
+                "onMessageReceived": {
+                    "tests": {
+                        "failing": [],
+                        "passing": [],
+                        "onMessageReceivedExecutionException": {}
+                    },
+                    "reports": {}
+                }
             },
             {
                 "message": null,

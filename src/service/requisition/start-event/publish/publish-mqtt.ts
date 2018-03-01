@@ -1,5 +1,4 @@
 import {Publish} from "./publish";
-import {EventCallback} from "../../event-callback";
 
 const mqtt = require("mqtt")
 
@@ -15,21 +14,25 @@ export class PublishMqtt extends Publish {
         }
     }
 
-    execute(eventCallback: EventCallback): void {
-        const client = mqtt.connect(this.brokerAddress,
-            {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
-        if (client.connected) {
-            client.publish(this.topic, this.payload);
-            client.end();
-            eventCallback(this);
-        }
-        else {
-            client.on("connect", () =>  {
+    execute(): Promise<Publish> {
+        return new Promise((resolve, reject) => {
+            const client = mqtt.connect(this.brokerAddress,
+                {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
+            if (client.connected) {
                 client.publish(this.topic, this.payload);
                 client.end();
-                eventCallback(this);
-            });
-        }
+                resolve(this);
+
+            }
+            else {
+                client.on("connect", () =>  {
+                    client.publish(this.topic, this.payload);
+                    client.end();
+                    resolve(this);
+                });
+            }
+            client.on("error", (err: any) =>  reject(err));
+        });
     }
 
 }

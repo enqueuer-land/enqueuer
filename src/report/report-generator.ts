@@ -4,7 +4,7 @@ import { CommandLineParser } from "../command-line/command-line-parser";
 export class ReportGenerator {
 
     private info: any = {};
-    private publishReports: any = [];
+    private startEventReports: any = [];
     private subscriptionReports: any = [];
     private verboseMode: boolean = true;
 
@@ -20,10 +20,10 @@ export class ReportGenerator {
         }
     }
     
-    public addPublishReport(publishReports: any): any {
+    public addStartEventReport(publishReports: any): any {
         if (this.verboseMode)
             console.log(publishReports);
-        this.publishReports = publishReports;
+        this.startEventReports = publishReports;
     }
 
     public addSubscriptionReport(subscriptionReport: any): void {
@@ -34,7 +34,7 @@ export class ReportGenerator {
 
     public generate(): Report {
         return new Report(this.info,
-                            this.publishReports,
+                            this.startEventReports,
                             this.subscriptionReports);
     }
 

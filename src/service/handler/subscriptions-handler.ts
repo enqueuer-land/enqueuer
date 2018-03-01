@@ -1,6 +1,6 @@
-import {EventCallback} from "./requisition/event-callback";
-import {SubscriptionReport} from "./subscription-report";
-import {SubscriptionFactory} from "./requisition/subscription/subscription-factory";
+import {EventCallback} from "../requisition/event-callback";
+import {SubscriptionReport} from "../subscription-report";
+import {SubscriptionFactory} from "../requisition/subscription/subscription-factory";
 
 export class SubscriptionsHandler {
     private subscriptionsReport: SubscriptionReport[] = [];
@@ -10,7 +10,7 @@ export class SubscriptionsHandler {
     private onAllSubscriptionsReceivedMessagesCallback: EventCallback;
 
 
-    constructor(subscriptionsAttributes: any) {
+    constructor(subscriptionsAttributes: any[]) {
         const subscriptionFactory: SubscriptionFactory = new SubscriptionFactory();
 
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
@@ -51,7 +51,8 @@ export class SubscriptionsHandler {
     //TODO: verify id
     private onMessageReceived(subscriptionId: number) {
         ++this.subscriptionsReceivedMessagesCounter;
-        if (this.subscriptionsReceivedMessagesCounter == this.subscriptionsReport.length)
+        //Pay attention, at least one message received per subscription
+        if (this.subscriptionsReceivedMessagesCounter >= this.subscriptionsReport.length)
             this.onAllSubscriptionsReceivedMessagesCallback(null);
     }
 
