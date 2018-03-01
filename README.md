@@ -7,10 +7,11 @@ By "acts as expected" we mean, the component:
   - publishes faster than the timeout limit.
   
 ## how it works?
-  - receives a requisition from some mechanism (i.e.. mqtt, standard input, file, rest http);
-  - publishes as the requisition says (executing hooks scripts);
-  - waits for events subscribed in requisition (queues messages, in general);
+  - receives a requisition from some IPC mechanism (i.e. standard input, file, UDS etc.);
+      - publishes as the requisition says (executing hooks scripts); or
+      - waits on an event described by the requisition (validating the event);
+  - waits for events subscribed in requisition;
   - executes validations upon these received events;
-  - reply a report back through some mechanism (i.e. saves file, standard output, mqtt) mechanism.
+  - reports back through some mechanism (i.e. saves file, standard output, mqtt, http post).
   
 By doing this, we intend to make sure that the event-driven-component behaves properly when triggered by some sort of event.
