@@ -1,8 +1,8 @@
 import {StartEvent} from "../requisition/start-event/start-event";
 import {SubscriptionsHandler} from "./subscriptions-handler";
 import {PublisherHandler} from "./publisher-handler";
-import {Publish} from "../requisition/start-event/publish/publish";
-import {PublishFactory} from "../requisition/start-event/publish/publish-factory";
+import {Publisher} from "../requisition/start-event/publish/publisher";
+import {PublisherFactory} from "../requisition/start-event/publish/publisher-factory";
 
 export class StartEventHandler {
 
@@ -14,8 +14,8 @@ export class StartEventHandler {
     private onTimeoutCallback: () => void = () => {};
 
     constructor(startEvent: StartEvent) {
-        if (startEvent.publish) {
-            const publisher: Publish | null = new PublishFactory().createPublisher(startEvent.publish);
+        if (startEvent.publisher) {
+            const publisher: Publisher | null = new PublisherFactory().createPublisher(startEvent.publisher);
             if (publisher)
                 this.publisherHandler = new PublisherHandler(publisher);
         }
@@ -32,7 +32,7 @@ export class StartEventHandler {
 
             if (this.publisherHandler) {
                 this.publisherHandler.publish()
-                    .then((publisher: Publish) => {
+                    .then((publisher: Publisher) => {
                         this.generatePublishSuccessfulReport();
                         resolve();
                     })

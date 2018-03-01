@@ -1,11 +1,11 @@
-import {Publish} from "./publish/publish";
+import {Publisher} from "./publish/publisher";
 import {Subscription} from "../subscription/subscription";
 
 export class StartEvent {
 
     timeout: number = -1;
 
-    publish: Publish | null = null;
+    publisher: Publisher | null = null;
 
     subscription: Subscription | null = null;
 }

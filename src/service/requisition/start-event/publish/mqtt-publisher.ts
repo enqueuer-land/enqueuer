@@ -1,8 +1,8 @@
-import {Publish} from "./publish";
+import {Publisher} from "./publisher";
 
 const mqtt = require("mqtt")
 
-export class PublishMqtt extends Publish {
+export class MqttPublisher extends Publisher {
     brokerAddress: string = "";
     topic: string = "";
 
@@ -14,7 +14,7 @@ export class PublishMqtt extends Publish {
         }
     }
 
-    execute(): Promise<Publish> {
+    execute(): Promise<Publisher> {
         return new Promise((resolve, reject) => {
             const client = mqtt.connect(this.brokerAddress,
                 {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});

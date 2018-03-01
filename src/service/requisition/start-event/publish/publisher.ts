@@ -1,4 +1,4 @@
-export abstract class Publish {
+export abstract class Publisher {
 
     protocol: string | null = null;
     payload: string | null = null;
@@ -12,7 +12,7 @@ export abstract class Publish {
         }
     }
 
-    abstract execute(): Promise<Publish>;
+    abstract execute(): Promise<Publisher>;
 
     createPrePublishingFunction(): Function {
 

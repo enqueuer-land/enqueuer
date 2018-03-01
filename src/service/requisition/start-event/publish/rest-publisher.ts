@@ -1,8 +1,8 @@
-import {Publish} from "./publish";
+import {Publisher} from "./publisher";
 
 const request = require("request");
 
-export class PublishRest extends  Publish{
+export class RestPublisher extends Publisher {
     endpoint: string = "";
     method: string = "";
     header: any = {};
@@ -16,7 +16,7 @@ export class PublishRest extends  Publish{
         }
     }
 
-    execute(): Promise<Publish> {
+    execute(): Promise<Publisher> {
         return new Promise((resolve, reject) => {
             request.post({
                     url: this.endpoint,

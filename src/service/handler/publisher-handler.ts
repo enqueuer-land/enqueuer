@@ -1,22 +1,22 @@
-import {Publish} from "../requisition/start-event/publish/publish";
+import {Publisher} from "../requisition/start-event/publish/publisher";
 import {FunctionExecutor} from "../../function-executor/function-executor";
 
 export class PublisherHandler {
-    private publisher: Publish;
+    private publisher: Publisher;
     private report: any = {};
     private prePublishingReport: any = {};
     private previousPayload: string | any;
 
-    constructor(publisher: Publish) {
+    constructor(publisher: Publisher) {
         this.publisher = publisher;
         this.previousPayload = publisher.payload;
     }
 
-    public publish(): Promise<Publish> {
+    public publish(): Promise<Publisher> {
         return new Promise((resolve, reject) => {
             this.generatePayload();
             this.publisher.execute()
-                .then((publisher: Publish) => {
+                .then((publisher: Publisher) => {
                     this.generateSuccessfulReport(publisher);
                     resolve();
                 })
@@ -31,7 +31,7 @@ export class PublisherHandler {
         return this.report;
     }
 
-    private generateSuccessfulReport(publisher: Publish): void {
+    private generateSuccessfulReport(publisher: Publisher): void {
         this.report = {
             ...publisher,
             prePublishFunction: this.prePublishingReport,
