@@ -105,18 +105,21 @@ export class StartEventHandler {
         return new Promise((resolve, reject) => {
             if (this.subscriptionHandler) {
                 const subscriptionReport = this.subscriptionHandler.getReports();
+                this.report = subscriptionReport;
+                this.report.valid = subscriptionReport[0].onMessageReceived.tests.failing.length > 0;
+                this.report.timeout = this.timeout;
+                this.subscriptionHandler.unsubscribe();
+
                 if (subscriptionReport[0].onMessageReceived.tests.failing.length > 0) {
-                    if (!this.report.failures)
-                        this.report.failures = [];
-                    this.report.failures.push(this.subscriptionHandler.getReports());
+                    console.log(`Subscription as started event received an invalid message`);
+                    // if (!this.report.failures)
+                    //     this.report.failures = [];
+                    // this.report.failures.push(this.subscriptionHandler.getReports());
                     reject();
                 }
                 else {
                     console.log(`Subscription as started event received a valid message`);
 
-                    this.report.success = this.subscriptionHandler.getReports();
-                    this.report.success.timeout = this.timeout;
-                    this.subscriptionHandler.unsubscribe();
                     resolve();
                 }
             }

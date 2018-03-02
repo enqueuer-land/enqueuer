@@ -15,7 +15,7 @@ export class StandardInputReader implements RequisitionReader {
             process.stdin.on('data', (chunk) => this.requisition += chunk);
             process.stdin.on('end', () => {
                 console.log("StandardInputReader got a requisition");
-                resolve(this.requisition)
+                resolve(this.requisition);
             });
 
             //process.stdin.pause();

@@ -2,7 +2,7 @@ import {EnqueuerStarter} from './enqueuer-starter';
 import { expect } from 'chai';
 import 'mocha';
 import { UdsReader } from './uds-reader';
-import { InputRequisitionFile } from './file-requisition-reader';
+import { InputRequisitionFile } from './folder-requisition-reader';
 
 describe('IpcFactory test', function() {
     describe('IpcFactory test', function() {
