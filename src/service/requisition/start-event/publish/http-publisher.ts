@@ -2,7 +2,7 @@ import {Publisher} from "./publisher";
 
 const request = require("request");
 
-export class RestPublisher extends Publisher {
+export class HttpPublisher extends Publisher {
     endpoint: string = "";
     method: string = "";
     header: any = {};
