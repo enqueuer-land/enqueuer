@@ -1,6 +1,6 @@
 import { ReportReplier } from "./report-replier";
 import { Report } from "./report";
-import { CommandLineParser } from "../command-line/command-line-parser";
+import {Configuration} from "../conf/configuration";
 const request = require("request");
 
 export class HttpReportReplier implements ReportReplier {
@@ -18,7 +18,7 @@ export class HttpReportReplier implements ReportReplier {
                     (error: any, response: any, body: any) =>
                         {
                             if (error) {
-                                if (!CommandLineParser.getInstance().getOptions().silentMode)
+                                if (Configuration.isVerboseMode())
                                     console.log("Error to reply http report : "  + error)
                             }
                         });

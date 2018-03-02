@@ -1,5 +1,5 @@
 import { Report } from "./report";
-import { CommandLineParser } from "../command-line/command-line-parser";
+import {Configuration} from "../conf/configuration";
 
 export class ReportGenerator {
 
@@ -9,7 +9,7 @@ export class ReportGenerator {
     private verboseMode: boolean = true;
 
     constructor() {
-        this.verboseMode = !CommandLineParser.getInstance().getOptions().silentMode;
+        this.verboseMode = Configuration.isVerboseMode();
     }
     
     public addInfo(infoMessage: any): void {
@@ -20,10 +20,10 @@ export class ReportGenerator {
         }
     }
     
-    public addStartEventReport(publishReports: any): any {
+    public addStartEventReport(startEventReports: any): any {
         if (this.verboseMode)
-            console.log(publishReports);
-        this.startEventReports = publishReports;
+            console.log(startEventReports);
+        this.startEventReports = startEventReports;
     }
 
     public addSubscriptionReport(subscriptionReport: any): void {

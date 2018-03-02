@@ -1,7 +1,6 @@
 var log = require('why-is-node-running') // should be your first require
 import { IpcCommunicator } from "./ipc/ipc-communicator";
 import { Report } from "./report/report";
-import { CommandLineParser } from "./command-line/command-line-parser";
 import { IpcCommunicatorFactory } from "./ipc/ipc-communicator-factory";
 
 class Startup {
