@@ -29,13 +29,11 @@ export class EnqueuerService {
     private onSubscriptionCompleted() {
         this.startEventHandler.start()
             .catch(err => {
-                console.log(err);
                 this.onFinish();
             })
     }
 
     private onFinish(): void {
-
         const totalTime = Date.now() - this.startTime;
 
         this.startEventHandler.cancelTimeout();

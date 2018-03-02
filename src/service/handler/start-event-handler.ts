@@ -25,12 +25,12 @@ export class StartEventHandler {
     }
 
     public start(): Promise<void | {}> {
-        if (!this.timer)
-            this.setTimeout();
 
         return new Promise((resolve, reject) => {
 
             if (this.publisherHandler) {
+                if (!this.timer)
+                    this.setTimeout();
                 this.publisherHandler.publish()
                     .then((publisher: Publisher) => {
                         this.generatePublishSuccessfulReport();
@@ -46,6 +46,8 @@ export class StartEventHandler {
                         () => {
                             this.checkSubscriptionMessageReceived()
                                 .then(() => {
+                                    if (!this.timer)
+                                        this.setTimeout();
                                     resolve();
                                 })
                                 .catch(() => reject());
@@ -68,18 +70,19 @@ export class StartEventHandler {
         this.timer = null;
     }
 
-    public setTimeoutCallback(timeoutCalback: () => void) {
-        this.onTimeoutCallback = timeoutCalback;
+    public setTimeoutCallback(timeoutCallback: () => void) {
+        this.onTimeoutCallback = timeoutCallback;
     }
 
     private onTimeout(): any {
+        console.log("StartEvent TIMEOUT")
         this.cancelTimeout();
         this.onTimeoutCallback();
     }
 
     private setTimeout(): void {
-        console.log("timeout: " + this.timeout)
         if (this.timeout != -1) {
+            console.log("StartEvent setting timeout: " + this.timeout)
             this.timer = global.setTimeout(() => this.onTimeout(), this.timeout);
         }
     }
@@ -109,6 +112,8 @@ export class StartEventHandler {
                     reject();
                 }
                 else {
+                    console.log(`Subscription as started event received a valid message`);
+
                     this.report.success = this.subscriptionHandler.getReports();
                     this.report.success.timeout = this.timeout;
                     this.subscriptionHandler.unsubscribe();

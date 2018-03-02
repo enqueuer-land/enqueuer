@@ -41,7 +41,7 @@ export class SubscriptionReport {
                     tests: {
                         failing: subscriptionTestExecutor.getFailingTests(),
                         passing: subscriptionTestExecutor.getPassingTests(),
-                        onMessageReceivedExecutionException: subscriptionTestExecutor.getException()
+                        exception: subscriptionTestExecutor.getException()
                     },
                     reports: subscriptionTestExecutor.getReports()
                 }

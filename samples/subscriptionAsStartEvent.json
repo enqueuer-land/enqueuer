@@ -3,22 +3,8 @@
     {
       "protocol": "mqtt",
       "brokerAddress": "brokerAddress",
-      "topic": "#",
-      "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
-      "timeout": "5000"
-    },
-    {
-      "protocol": "mqtt",
-      "brokerAddress": "brokerAddress",
-      "topic": "startEvent",
-      "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
-      "timeout": "5000"
-    },
-    {
-      "protocol": "mqtt",
-      "brokerAddress": "brokerAddress",
-      "topic": "anotherTopic",
-      "onMessageReceivedFunctionBody": "report['startEvent'] = startEvent; test['true'] = true; test['false'] = false",
+      "topic": "subscription",
+      "onMessageReceivedFunctionBody": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
       "timeout": "5000"
     }
   ],
@@ -28,7 +14,7 @@
       "protocol": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "startEvent",
-      "onMessageReceivedFunctionBody": "test['validates'] = message === 'Valid'"
+      "onMessageReceivedFunctionBody": "test['validates'] = message == 'Valid'; report['message'] = message;"
     },
     "timeout": "5000"
   },

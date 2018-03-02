@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var report_1 = require("./report");
-var command_line_parser_1 = require("../command-line/command-line-parser");
+var configuration_1 = require("../conf/configuration");
 var ReportGenerator = /** @class */ (function () {
     function ReportGenerator() {
         this.info = {};
-        this.publishReports = [];
+        this.startEventReports = [];
         this.subscriptionReports = [];
         this.verboseMode = true;
-        this.verboseMode = !command_line_parser_1.CommandLineParser.getInstance().getOptions().silentMode;
+        this.verboseMode = configuration_1.Configuration.isVerboseMode();
     }
     ReportGenerator.prototype.addInfo = function (infoMessage) {
         if (this.verboseMode)
@@ -17,10 +17,10 @@ var ReportGenerator = /** @class */ (function () {
             this.info[key] = infoMessage[key];
         }
     };
-    ReportGenerator.prototype.addPublishReport = function (publishReports) {
+    ReportGenerator.prototype.addStartEventReport = function (startEventReports) {
         if (this.verboseMode)
-            console.log(publishReports);
-        this.publishReports = publishReports;
+            console.log(startEventReports);
+        this.startEventReports = startEventReports;
     };
     ReportGenerator.prototype.addSubscriptionReport = function (subscriptionReport) {
         if (this.verboseMode)
@@ -28,7 +28,7 @@ var ReportGenerator = /** @class */ (function () {
         this.subscriptionReports.push(subscriptionReport);
     };
     ReportGenerator.prototype.generate = function () {
-        return new report_1.Report(this.info, this.publishReports, this.subscriptionReports);
+        return new report_1.Report(this.info, this.startEventReports, this.subscriptionReports);
     };
     return ReportGenerator;
 }());

@@ -9,53 +9,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var class_transformer_1 = require("class-transformer");
 require("reflect-metadata");
 var start_event_1 = require("./start-event/start-event");
+var report_1 = require("../../report/report");
+var subscription_1 = require("./subscription/subscription");
 var Requisition = /** @class */ (function () {
     function Requisition() {
-        this.protocol = "";
-        this.brokerAddress = "";
         this.subscriptions = [];
         this.startEvent = new start_event_1.StartEvent();
+        this.reports = [];
     }
     __decorate([
-        class_transformer_1.Type(function () { return Subscription; })
+        class_transformer_1.Type(function () { return subscription_1.Subscription; })
     ], Requisition.prototype, "subscriptions", void 0);
     __decorate([
         class_transformer_1.Type(function () { return start_event_1.StartEvent; })
     ], Requisition.prototype, "startEvent", void 0);
+    __decorate([
+        class_transformer_1.Type(function () { return report_1.Report; })
+    ], Requisition.prototype, "reports", void 0);
     return Requisition;
 }());
 exports.Requisition = Requisition;
-var Subscription = /** @class */ (function () {
-    function Subscription() {
-        this.mqtt = null;
-        this.timeout = -1;
-        this.onMessageReceived = null;
-    }
-    Subscription.prototype.subscribe = function (callback) {
-        console.log("I should subscribe in this: " + JSON.stringify(this, null, 2));
-        callback(this);
-        return true;
-    };
-    Subscription.prototype.createOnMessageReceivedFunction = function () {
-        if (this.onMessageReceived == null)
-            return null;
-        var fullBody = "let test = {}; let report = {}; " + this.onMessageReceived + ";return {test: test, report: report};";
-        return new Function('message', 'startEvent', fullBody);
-    };
-    __decorate([
-        class_transformer_1.Type(function () { return SubscribeMqtt; })
-    ], Subscription.prototype, "mqtt", void 0);
-    return Subscription;
-}());
-exports.Subscription = Subscription;
-var SubscribeMqtt = /** @class */ (function () {
-    function SubscribeMqtt() {
-        this.brokerAddress = "";
-        this.topic = "";
-    }
-    SubscribeMqtt.prototype.publish = function () {
-        return true;
-    };
-    return SubscribeMqtt;
-}());
-exports.SubscribeMqtt = SubscribeMqtt;

@@ -1,49 +1,52 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var SubscriptionOnMessageReceivedExecutor = /** @class */ (function () {
-    function SubscriptionOnMessageReceivedExecutor(subscription, startEvent, message) {
+var FunctionExecutor = /** @class */ (function () {
+    function FunctionExecutor(functionToExecute) {
+        var parameters = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            parameters[_i - 1] = arguments[_i];
+        }
         this.passingTests = [];
         this.failingTests = [];
         this.reports = {};
-        this.warning = "";
-        this.subscriptionFunction = null;
-        this.subscriptionFunction = subscription.createOnMessageReceivedFunction();
-        this.startEvent = startEvent;
-        this.message = message;
+        this.exception = "";
+        this.parameters = parameters;
+        this.functionToExecute = functionToExecute;
     }
-    SubscriptionOnMessageReceivedExecutor.prototype.execute = function () {
-        if (this.subscriptionFunction == null)
-            return;
+    FunctionExecutor.prototype.execute = function () {
         try {
-            var functionResponse = this.subscriptionFunction(this.message, this.startEvent);
-            for (var test_1 in functionResponse.test) {
-                if (functionResponse[test_1]) {
+            this.functionResponse = this.functionToExecute(this.parameters);
+            for (var test_1 in this.functionResponse.test) {
+                if (this.functionResponse.test[test_1]) {
                     this.passingTests.push(test_1);
                 }
                 else {
                     this.failingTests.push(test_1);
                 }
             }
-            for (var report in functionResponse.report) {
-                this.reports[report] = functionResponse.report[report];
+            for (var report in this.functionResponse.report) {
+                this.reports[report] = this.functionResponse.report[report];
             }
         }
         catch (exc) {
-            this.warning = exc;
+            this.exception = exc;
         }
     };
-    SubscriptionOnMessageReceivedExecutor.prototype.getPassingTests = function () {
+    FunctionExecutor.prototype.getFunctionResponse = function () {
+        return this.functionResponse;
+    };
+    FunctionExecutor.prototype.getPassingTests = function () {
         return this.passingTests;
     };
-    SubscriptionOnMessageReceivedExecutor.prototype.getFailingTests = function () {
+    FunctionExecutor.prototype.getFailingTests = function () {
         return this.failingTests;
     };
-    SubscriptionOnMessageReceivedExecutor.prototype.getReports = function () {
+    FunctionExecutor.prototype.getReports = function () {
         return this.reports;
     };
-    SubscriptionOnMessageReceivedExecutor.prototype.getWarning = function () {
-        return this.warning;
+    FunctionExecutor.prototype.getException = function () {
+        return this.exception;
     };
-    return SubscriptionOnMessageReceivedExecutor;
+    return FunctionExecutor;
 }());
-exports.SubscriptionOnMessageReceivedExecutor = SubscriptionOnMessageReceivedExecutor;
+exports.FunctionExecutor = FunctionExecutor;

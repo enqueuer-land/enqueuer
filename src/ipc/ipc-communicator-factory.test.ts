@@ -1,8 +1,8 @@
-import {IpcCommunicatorFactory} from './ipc-communicator-factory';
+import {EnqueuerStarter} from './enqueuer-starter';
 import { expect } from 'chai';
 import 'mocha';
-import { IpcUds } from './ipc-uds';
-import { InputRequisitionFile } from './input-requisition-file';
+import { UdsReader } from './uds-reader';
+import { InputRequisitionFile } from './file-requisition-reader';
 
 describe('IpcFactory test', function() {
     describe('IpcFactory test', function() {
@@ -10,10 +10,10 @@ describe('IpcFactory test', function() {
             const configurationFile = {
                 protocol: "uds"
             }
-            const ipcFactory: IpcCommunicatorFactory = new IpcCommunicatorFactory();
+            const ipcFactory: EnqueuerStarter = new EnqueuerStarter();
 
             const created = ipcFactory.create();
-            expect(created).to.be.instanceOf(IpcUds);
+            expect(created).to.be.instanceOf(UdsReader);
         });
 
     it('Configuration file', function() {
@@ -23,7 +23,7 @@ describe('IpcFactory test', function() {
         const commandLine = {
             inputRequisitionFile: "filename"
         }
-        const ipcFactory: IpcCommunicatorFactory = new IpcCommunicatorFactory();
+        const ipcFactory: EnqueuerStarter = new EnqueuerStarter();
 
         const created = ipcFactory.create();
         expect(created).to.be.instanceOf(InputRequisitionFile);
@@ -33,7 +33,7 @@ describe('IpcFactory test', function() {
             const configurationFile = {
                 protocol: "unknown"
             }
-            const ipcFactory: IpcCommunicatorFactory = new IpcCommunicatorFactory();
+            const ipcFactory: EnqueuerStarter = new EnqueuerStarter();
 
             expect(() => ipcFactory.create()).to.throw;
         });

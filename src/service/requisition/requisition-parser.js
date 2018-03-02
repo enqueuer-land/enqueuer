@@ -1,19 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var jsonSub = require('json-sub')();
 var class_transformer_1 = require("class-transformer");
-var enqueuer_service_1 = require("../enqueuer-service");
 var requisition_1 = require("./requisition");
+var jsonSub = require('json-sub')();
 var RequisitionParser = /** @class */ (function () {
     function RequisitionParser() {
     }
-    RequisitionParser.prototype.createService = function (requisitionMessage) {
+    RequisitionParser.prototype.parse = function (requisitionMessage) {
         var parsedRequisition = JSON.parse(requisitionMessage);
         var variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
-        if (parsedRequisition.protocol == "mqtt") {
-            return new enqueuer_service_1.EnqueuerService(this.parse(variablesReplacedRequisition));
-        }
-        throw new Error("Undefined requisition protocol: " + parsedRequisition.protocol);
+        var requisitionReturn = this.deserialize(variablesReplacedRequisition);
+        // console.log("Requisition: " + JSON.stringify(requisitionReturn, null, 2));
+        return requisitionReturn;
     };
     RequisitionParser.prototype.replaceVariables = function (parsedRequisition) {
         var requisitionWithNoVariables = Object.assign({}, parsedRequisition);
@@ -22,9 +20,9 @@ var RequisitionParser = /** @class */ (function () {
         var add = jsonSub.addresser(requisitionWithNoVariables, variables);
         return JSON.stringify(add);
     };
-    RequisitionParser.prototype.parse = function (requisition) {
+    RequisitionParser.prototype.deserialize = function (requisitionJson) {
         try {
-            return class_transformer_1.deserialize(requisition_1.Requisition, requisition);
+            return class_transformer_1.deserialize(requisition_1.Requisition, requisitionJson);
         }
         catch (e) {
             throw new Error("Error parsing requisition: " + e);
