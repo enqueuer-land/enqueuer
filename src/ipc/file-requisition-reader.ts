@@ -12,8 +12,10 @@ export class FileRequisitionReader implements RequisitionReader {
             fs.readFile(filename, (error: any, data: string) => {
                 if (error)
                     reject(error);
-                else
+                else {
+                    console.log("FileRequisitionReader got a requisition");
                     resolve(data);
+                }
             });
         });
 

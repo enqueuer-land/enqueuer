@@ -43,7 +43,7 @@ export class EnqueuerStarter {
         const enqueuerService: EnqueuerService = new EnqueuerService(parsedRequisition);
         enqueuerService.start((report: Report) => {
             reportRepliers.forEach( reportReplier => reportReplier.report(report));
-            whyIsNodeRunning();
+            // whyIsNodeRunning();
         });
     }
 }

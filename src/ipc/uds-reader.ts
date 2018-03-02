@@ -15,6 +15,7 @@ export class UdsReader implements RequisitionReader {
         console.log("Starting UdsReader");
         return new Promise((resolve, reject) => {
             ipc.server.on('enqueuer-client', (message: string, socket: any) => {
+                console.log("UdsReader got a requisition");
                 resolve(message);
             });
             ipc.server.on('error', (error: any) => {

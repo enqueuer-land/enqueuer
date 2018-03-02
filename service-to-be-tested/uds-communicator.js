@@ -1,10 +1,9 @@
-const goodRequisition = require("../goodRequisition");
-const badRequisition = require("../badRequisition");
+const requisitionFile = require("../samples/httpPublish.json");
 
 var ipc = require('node-ipc');
 var chalk = require('chalk');
 
-const requisition  = JSON.stringify(badRequisition, null, 2);
+const requisition  = JSON.stringify(requisitionFile, null, 2);
 
 ipc.config.id = 'enqueuer-client';
 // ipc.config.retry = 1500;
@@ -22,7 +21,8 @@ ipc.connectTo('enqueuer', (client) => {
             process.exit(0);
         });
 
-        client.of['enqueuer'].emit('enqueuer-client', requisition);        
+        client.of['enqueuer'].emit('enqueuer-client', requisition);
+        process.exit(0);
   });
 });
 
