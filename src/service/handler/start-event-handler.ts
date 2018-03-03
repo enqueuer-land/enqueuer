@@ -54,7 +54,6 @@ export class StartEventHandler {
                         });
             }
         }).catch( () => {
-            console.log("reject")
             if (this.subscriptionHandler)
                 return this.start();
         });
@@ -75,14 +74,12 @@ export class StartEventHandler {
     }
 
     private onTimeout(): any {
-        console.log("StartEvent TIMEOUT")
         this.cancelTimeout();
         this.onTimeoutCallback();
     }
 
     private setTimeout(): void {
         if (this.timeout != -1) {
-            console.log("StartEvent setting timeout: " + this.timeout)
             this.timer = global.setTimeout(() => this.onTimeout(), this.timeout);
         }
     }
@@ -109,19 +106,7 @@ export class StartEventHandler {
                 this.report.valid = subscriptionReport[0].onMessageReceived.tests.failing.length > 0;
                 this.report.timeout = this.timeout;
                 this.subscriptionHandler.unsubscribe();
-
-                if (subscriptionReport[0].onMessageReceived.tests.failing.length > 0) {
-                    console.log(`Subscription as started event received an invalid message`);
-                    // if (!this.report.failures)
-                    //     this.report.failures = [];
-                    // this.report.failures.push(this.subscriptionHandler.getReports());
-                    reject();
-                }
-                else {
-                    console.log(`Subscription as started event received a valid message`);
-
-                    resolve();
-                }
+                resolve();
             }
             reject();
         });
