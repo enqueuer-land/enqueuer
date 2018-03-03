@@ -5,7 +5,7 @@ import {UdsReader} from "./reader/uds-reader";
 import {EnqueuerStarter} from "./reader/enqueuer-starter";
 
 
-//Multi-injection from inversify
+//Multi-injection from inversify?
 let requisitionReaders: RequisitionReader[] = [];
 
 requisitionReaders.push(new FolderRequisitionReader());

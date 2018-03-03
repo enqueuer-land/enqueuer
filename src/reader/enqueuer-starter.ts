@@ -17,7 +17,7 @@ export class EnqueuerStarter {
         reader.start()
             .then((requisitions: string) => {
                 this.startService(requisitions);
-                this.startReader(reader);
+                return this.startReader(reader); //runs again
             })
             .catch((err) => {
                 console.error(err);
@@ -31,7 +31,7 @@ export class EnqueuerStarter {
             const enqueuerService: EnqueuerService = new EnqueuerService(parsedRequisition);
             enqueuerService.start((report: Report) => {
                 reportRepliers.forEach( reportReplier => reportReplier.report(report));
-                return this.startService(requisition); //Do it again
+                // return this.startService(requisition); //Do it again
                 // whyIsNodeRunning();
             });
         } catch (err) {

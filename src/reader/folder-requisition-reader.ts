@@ -2,60 +2,51 @@ import { RequisitionReader } from "./requisition-reader";
 import {Configuration} from "../conf/configuration";
 import {FSWatcher} from "fs";
 const fs = require("fs");
-const hound = require('hound');
-var dir = require('node-dir');
-
+const chokidar = require('chokidar');
 
 export class FolderRequisitionReader implements RequisitionReader {
-    private watcher: FSWatcher;
+
     private files: string[] = [];
+    private watcher: FSWatcher;
+    private INTERVAL_CHECK: number = 1000;
 
     constructor() {
-        const folderName = Configuration.getRequisitionFolder();
+        let folderName = Configuration.getRequisitionFolder();
+        if (!folderName.endsWith("/"))
+            folderName = folderName.concat("/");
+
+        folderName = folderName.concat("*.enq");
         console.log(`Folder to watch: ${folderName}`);
-        this.watcher = hound.watch(folderName);
 
-
-        this.files = dir.files(folderName, {sync:true});
-        // console.log(`${this.files} found`)
+        this.watcher = chokidar.watch(folderName, {ignored: /(^|[\/\\])\../});
+        this.watcher.on('add', path => this.files.push(path));
     }
 
     public start(): Promise<string> {
         console.log("Starting FolderRequisitionReader");
         return new Promise((resolve, reject) => {
-            if (this.files.length > 0) {
-                console.log(`FolderRequisitionReader got a requisition ${this.files}`);
-                this.readFiles(this.files)
-                    .then(fileContents => resolve(fileContents))
-                    .catch(err => reject(err));
-                this.files = [];
-            }
-
-            this.watcher.on('create', (fileName) => {
-                console.log(`${fileName} created`)
-                this.readFiles([fileName])
-                    .then(fileContents => resolve(fileContents))
-                    .catch(err => reject(err));
+            this.popFile()
+                .then( fileContent => resolve(fileContent))
+                .catch( err => reject(err));
             });
-
-            this.watcher.on('change', (fileName) => {
-                console.log(`${fileName} changed`)
-                this.readFiles([fileName])
-                    .then(fileContents => resolve(fileContents))
-                    .catch(err => reject(err));
-            });
-
-            this.watcher.on('error', (error) => reject(error));
-        });
     }
 
-    // function processQ() {
-    //     // ... this will be called on each .push
-    // }
-    //
-    // var myEventsQ = [];
-    // myEventsQ.push = function() { Array.prototype.push.apply(this, arguments);  processQ();};
+    private popFile(): Promise<string> {
+        return new Promise((resolve, reject) => {
 
+            var timer = setInterval(() => {
+                const file: string | undefined = this.files.pop();
+                if (file) {
+                    console.log(`Detected: ${file}`);
+
+                    clearInterval(timer);
+                    this.readFile(file)
+                        .then(fileContent => resolve(fileContent))
+                        .catch(err => reject(err));
+                }
+            }, this.INTERVAL_CHECK);
+        });
+    }
 
     private readFile(filename: string): Promise<string> {
         return new Promise((resolve, reject) => {
