@@ -1,8 +1,8 @@
-import {StartEvent} from "../requisition/start-event/start-event";
+import {StartEvent} from "../../requisition/start-event/start-event";
 import {SubscriptionsHandler} from "./subscriptions-handler";
 import {PublisherHandler} from "./publisher-handler";
-import {Publisher} from "../requisition/start-event/publish/publisher";
-import {PublisherFactory} from "../requisition/start-event/publish/publisher-factory";
+import {Publisher} from "../../requisition/start-event/publish/publisher";
+import {PublisherFactory} from "../../requisition/start-event/publish/publisher-factory";
 
 export class StartEventHandler {
 

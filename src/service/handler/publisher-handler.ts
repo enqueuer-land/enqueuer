@@ -1,4 +1,4 @@
-import {Publisher} from "../requisition/start-event/publish/publisher";
+import {Publisher} from "../../requisition/start-event/publish/publisher";
 import {FunctionExecutor} from "../../function-executor/function-executor";
 
 export class PublisherHandler {

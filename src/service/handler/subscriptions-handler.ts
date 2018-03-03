@@ -1,6 +1,6 @@
-import {EventCallback} from "../requisition/event-callback";
-import {SubscriptionReport} from "../subscription-report";
-import {SubscriptionFactory} from "../requisition/subscription/subscription-factory";
+import {EventCallback} from "../../requisition/event-callback";
+import {SubscriptionReport} from "./subscription-report";
+import {SubscriptionFactory} from "../../requisition/subscription/subscription-factory";
 
 export class SubscriptionsHandler {
     private subscriptionsReport: SubscriptionReport[] = [];

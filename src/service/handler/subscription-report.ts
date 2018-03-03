@@ -1,6 +1,6 @@
-import {EventCallback} from "./requisition/event-callback";
-import {FunctionExecutor} from "../function-executor/function-executor";
-import {Subscription} from "./requisition/subscription/subscription";
+import {Subscription} from "../../requisition/subscription/subscription";
+import {EventCallback} from "../../requisition/event-callback";
+import {FunctionExecutor} from "../../function-executor/function-executor";
 
 export class SubscriptionReport {
 

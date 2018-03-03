@@ -2,7 +2,7 @@ import {RequisitionReader} from "./reader/requisition-reader";
 import {FolderRequisitionReader} from "./reader/folder-requisition-reader";
 import {StandardInputReader} from "./reader/standard-input-reader";
 import {UdsReader} from "./reader/uds-reader";
-import {EnqueuerStarter} from "./reader/enqueuer-starter";
+import {EnqueuerStarter} from "./service/enqueuer-starter";
 
 
 //Multi-injection from inversify?

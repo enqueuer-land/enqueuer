@@ -1,4 +1,4 @@
-import {EnqueuerStarter} from './enqueuer-starter';
+import {EnqueuerStarter} from '../service/enqueuer-starter';
 import { expect } from 'chai';
 import 'mocha';
 import { UdsReader } from './uds-reader';
