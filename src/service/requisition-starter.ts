@@ -4,11 +4,11 @@ import {SubscriptionsHandler} from "./handler/subscriptions-handler";
 import {Report} from "../report/report";
 import {StartEventHandler} from "./handler/start-event-handler";
 
-export type EnqueuerServiceCallback = (report: Report) => void;
-export class EnqueuerService {
+export type RequisitionStarterCallback = (report: Report) => void;
+export class RequisitionStarter {
     private startEventHandler: StartEventHandler;
     private subscriptionsHandler: SubscriptionsHandler;
-    private onFinishCallback: EnqueuerServiceCallback | null = null;
+    private onFinishCallback: RequisitionStarterCallback | null = null;
     private startTime: number = 0;
     private reportGenerator: ReportGenerator = new ReportGenerator();
 
@@ -18,7 +18,7 @@ export class EnqueuerService {
         this.subscriptionsHandler = new SubscriptionsHandler(requisition.subscriptions);
     }
 
-    public start(onFinishCallback: EnqueuerServiceCallback): void {
+    public start(onFinishCallback: RequisitionStarterCallback): void {
         this.startTime = Date.now();
         this.reportGenerator.addInfo({startTime: new Date().toString()})
         this.onFinishCallback = onFinishCallback;
@@ -29,6 +29,7 @@ export class EnqueuerService {
     private onSubscriptionCompleted() {
         this.startEventHandler.start()
             .catch(err => {
+                this.reportGenerator.addInfo({error: err})
                 this.onFinish();
             })
     }

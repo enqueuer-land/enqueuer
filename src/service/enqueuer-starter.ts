@@ -4,7 +4,7 @@ import {Requisition} from "../requisition/requisition";
 import {RequisitionParser} from "../requisition/requisition-parser";
 import {ReportReplier} from "../report/report-replier";
 import {ReportReplierFactory} from "../report/report-replier-factory";
-import {EnqueuerService} from "./enqueuer-service";
+import {RequisitionStarter} from "./requisition-starter";
 import {Report} from "../report/report";
 
 export class EnqueuerStarter {
@@ -28,7 +28,7 @@ export class EnqueuerStarter {
         try {
             const parsedRequisition: Requisition = new RequisitionParser().parse(requisition);
             const reportRepliers: ReportReplier[] = new ReportReplierFactory().createReplierFactory(parsedRequisition);
-            const enqueuerService: EnqueuerService = new EnqueuerService(parsedRequisition);
+            const enqueuerService: RequisitionStarter = new RequisitionStarter(parsedRequisition);
             enqueuerService.start((report: Report) => {
                 reportRepliers.forEach( reportReplier => reportReplier.report(report));
                 // return this.startService(requisition); //Do it again
