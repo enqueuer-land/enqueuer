@@ -11,11 +11,7 @@ export class FolderRequisitionReader implements RequisitionReader {
     private INTERVAL_CHECK: number = 1000;
 
     constructor() {
-        let folderName = Configuration.getRequisitionFolder();
-        if (!folderName.endsWith("/"))
-            folderName = folderName.concat("/");
-
-        folderName = folderName.concat("*.enq");
+        let folderName = Configuration.getWatchFolder();
         console.log(`Folder to watch: ${folderName}`);
 
         this.watcher = chokidar.watch(folderName, {ignored: /(^|[\/\\])\../});
