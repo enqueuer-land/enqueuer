@@ -1,31 +1,34 @@
-import {Publisher} from "../../requisition/start-event/publish/publisher";
-import {FunctionExecutor} from "../../function-executor/function-executor";
+import {Publisher} from "../../publish/publisher";
 import {StartEventType} from "./start-event-type";
-import {PublisherFactory} from "../../requisition/start-event/publish/publisher-factory";
+import {PublisherFactory} from "../../publish/publisher-factory";
+import {PrePublishFunctionExecutor} from "../../executor/pre-publish-function-executor";
 
 export class StartEventPublisherHandler implements StartEventType{
-    private originalPublisher: Publisher;
-    private publisherAfterFunction: Publisher;
+    private publisherOriginalAttributes: any;
+    private publisher: Publisher | null = null;
     private report: any = {};
     private prePublishingReport: any = {};
 
-    constructor(publisher: Publisher) {
-        this.originalPublisher = new PublisherFactory().createPublisher(publisher);
-        this.publisherAfterFunction = this.originalPublisher;
+    constructor(publisher: any) {
+        this.publisherOriginalAttributes = publisher;
+        this.publisher = null;
     }
 
     public start(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
-            this.originalPublisher.publish(this.publisherAfterFunction)
-                .then(() => {
-                    this.generateReport();
-                    resolve();
-                })
-                .catch((err: any) => {
-                    this.generateReport(err);
-                    reject(err)
-                });
+            if (this.publisher) {
+                this.publisher.publish()
+                    .then(() => {
+                        this.generateReport();
+                        resolve();
+                    })
+                    .catch((err: any) => {
+                        this.generateReport(err);
+                        reject(err)
+                    });
+            }
+            else reject(`Impossible to define Publisher after prePublish function execution`);
         });
     }
 
@@ -35,34 +38,18 @@ export class StartEventPublisherHandler implements StartEventType{
 
     private generateReport(error: any = null): void {
         this.report = {
-            ...this.originalPublisher,
+            ...this.publisherOriginalAttributes,
             prePublishFunction: this.prePublishingReport,
+            publisher: this.publisher,
             timestamp: new Date()
         }
         if (error)
             this.report.error = error;
-        if (this.originalPublisher != this.publisherAfterFunction)
-             this.report.publisherAfterFunction = this.publisherAfterFunction;
     }
 
     private executePrePublishingFunction() {
-        const functionToExecute: Function = this.originalPublisher.createPrePublishingFunction();
-        try {
-            let publisherExecutor: FunctionExecutor = new FunctionExecutor(functionToExecute);
-            publisherExecutor.execute();
-            this.prePublishingReport = {
-                tests: {
-                    failing: publisherExecutor.getFailingTests(),
-                    passing: publisherExecutor.getPassingTests(),
-                    exception: publisherExecutor.getException()
-                },
-                reports: publisherExecutor.getReports()
-            }
-            this.publisherAfterFunction = publisherExecutor.getFunctionResponse().originalPublisher;
-        } catch (exc) {
-            this.prePublishingReport = {
-                onMessageReceivedFunctionCreationException: exc
-            }
-        }
+        this.prePublishingReport = new PrePublishFunctionExecutor(this.publisherOriginalAttributes).execute();
+        this.publisher = new PublisherFactory()
+                                        .createPublisher(this.prePublishingReport.publisher);
     }
 }

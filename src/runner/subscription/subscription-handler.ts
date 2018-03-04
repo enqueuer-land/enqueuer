@@ -1,5 +1,5 @@
 import {Subscription} from "../../requisition/subscription/subscription";
-import {FunctionExecutor} from "../../function-executor/function-executor";
+import {FunctionExecutor} from "../../executor/function-executor";
 
 export class SubscriptionHandler {
 

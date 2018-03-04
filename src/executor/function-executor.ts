@@ -13,7 +13,7 @@ export class FunctionExecutor {
         this.functionToExecute = functionToExecute;
     }
     
-    public execute() {
+    public execute(): any {
         try {
             this.functionResponse = this.functionToExecute(this.parameters);
             for (const test in this.functionResponse.test) {
@@ -29,6 +29,7 @@ export class FunctionExecutor {
         } catch (exc) {
             this.exception = exc;
         }
+        return this.functionResponse;
     }
 
     public getFunctionResponse(): any {
