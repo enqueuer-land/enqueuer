@@ -1,9 +1,9 @@
-import {StartEventType} from "./start-event-type";
+import {StartEvent} from "./start-event";
 import {Report} from "../../report/report";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
-import {SubscriptionFactory} from "../../requisition/subscription/subscription-factory";
+import {SubscriptionFactory} from "../../subscription/subscription-factory";
 
-export class StartEventSubscriptionHandler implements StartEventType {
+export class StartEventSubscriptionHandler implements StartEvent {
 
     private subscriptionHandler: SubscriptionHandler;
     private report: any = {};

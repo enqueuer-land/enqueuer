@@ -36,7 +36,7 @@ export class MqttSubscription extends Subscription {
             }
             else {
                 resolve();
-             }
+            }
             this.client.on("error", (error: any) => {
                 this.removeClient();
                 reject(error);

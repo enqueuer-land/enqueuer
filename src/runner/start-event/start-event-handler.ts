@@ -1,18 +1,12 @@
-import {StartEvent} from "../../requisition/start-event/start-event";
-import {MultiSubscriptionsHandler} from "../subscription/multi-subscriptions-handler";
-import {StartEventPublisherHandler} from "./start-event-publisher-handler";
-import {Publisher} from "../../publish/publisher";
-import {PublisherFactory} from "../../publish/publisher-factory";
-import {StartEventType} from "./start-event-type";
-import {StartEventTypeFactory} from "./start-event-type-factory";
-import {Report} from "../../report/report";
+import {StartEvent} from "./start-event";
+import {StartEventFactory} from "./start-event-factory";
 
 export class StartEventHandler {
 
-    private startEventType: StartEventType;
+    private startEventType: StartEvent;
 
     constructor(startEvent: StartEvent) {
-        this.startEventType = new StartEventTypeFactory().createStartEventType(startEvent);
+        this.startEventType = new StartEventFactory().createStartEvent(startEvent);
     }
 
     public start(): Promise<any> {

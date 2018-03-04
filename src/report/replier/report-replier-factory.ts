@@ -3,13 +3,11 @@ import { StandardOutputReporterReplier } from "./standard-output-report-replier"
 import { FileReportReplier } from "./file-report-replier";
 import { HttpReportReplier } from "./http-report-replier";
 import { MqttReportReplier } from "./mqtt-report-replier";
-import {Requisition} from "../../requisition/requisition";
 
 export class ReportReplierFactory {
-    createReplierFactory(requisition: Requisition): ReportReplier[] {
-        const reports: any[] = requisition.reports;
+    createReplierFactory(reportsAttributes: any): ReportReplier[] {
         let reportRepliers: ReportReplier[] = [];
-        reports.forEach(report => {
+        reportsAttributes.forEach((report: any) => {
             const protocol: string = report.protocol;
             if (protocol === "standardOutput")
                 reportRepliers.push(new StandardOutputReporterReplier(report));

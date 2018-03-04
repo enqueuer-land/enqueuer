@@ -1,19 +1,18 @@
 import {FunctionCreator} from "./function-creator";
-import {Subscription} from "../requisition/subscription/subscription";
 
 export class OnMessageReceivedSubscriptionFunction implements FunctionCreator {
 
-    private subscription: Subscription;
+    private subscriptionAttributed: any;
 
-    public constructor(subscription: Subscription) {
-        this.subscription = subscription;
+    public constructor(subscriptionAttributed: any) {
+        this.subscriptionAttributed = subscriptionAttributed;
     }
 
     public createFunction(): Function {
         const fullBody: string =    `let test = {};
                                     let report = {};
-                                    let message = ${this.subscription.messageReceived};
-                                    ${this.subscription.onMessageReceivedFunctionBody};
+                                    let message = ${this.subscriptionAttributed.messageReceived};
+                                    ${this.subscriptionAttributed.onMessageReceivedFunctionBody};
                                     return {
                                             test: test,
                                             report: report

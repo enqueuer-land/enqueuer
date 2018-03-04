@@ -1,5 +1,4 @@
 import { ReportGenerator } from "../report/report-generator";
-import { Requisition } from "../requisition/requisition";
 import {MultiSubscriptionsHandler} from "./subscription/multi-subscriptions-handler";
 import {StartEventHandler} from "./start-event/start-event-handler";
 
@@ -11,10 +10,10 @@ export class RequisitionRunner {
     private startTime: Date | null = null;
     private timeout: number | null;
 
-    constructor(requisition: Requisition) {
-        this.startEventHandler = new StartEventHandler(requisition.startEvent);
-        this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisition.subscriptions);
-        this.timeout = requisition.timeout;
+    constructor(requisitionAttributes: any) {
+        this.startEventHandler = new StartEventHandler(requisitionAttributes.startEvent);
+        this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
+        this.timeout = requisitionAttributes.timeout;
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {

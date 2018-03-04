@@ -1,6 +1,5 @@
 const whyIsNodeRunning = require('why-is-node-running') // should be your first require
 import { RequisitionReader } from "../reader/requisition-reader";
-import {Requisition} from "../requisition/requisition";
 import {RequisitionParser} from "../requisition/requisition-parser";
 import {ReportReplier} from "../report/replier/report-replier";
 import {ReportReplierFactory} from "../report/replier/report-replier-factory";
@@ -25,8 +24,8 @@ export class Enqueuer {
 
     private startService(requisition: string): void {
         try {
-            const parsedRequisition: Requisition = new RequisitionParser().parse(requisition);
-            const reportRepliers: ReportReplier[] = new ReportReplierFactory().createReplierFactory(parsedRequisition);
+            const parsedRequisition: any = new RequisitionParser().parse(requisition);
+            const reportRepliers: ReportReplier[] = new ReportReplierFactory().createReplierFactory(parsedRequisition.reports);
             const requisitionRunner: RequisitionRunner = new RequisitionRunner(parsedRequisition);
             requisitionRunner.start((report: string) => {
                 reportRepliers.forEach( reportReplier => reportReplier.report(report));

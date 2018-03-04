@@ -1,10 +1,10 @@
 import {Publisher} from "../../publish/publisher";
-import {StartEventType} from "./start-event-type";
+import {StartEvent} from "./start-event";
 import {PublisherFactory} from "../../publish/publisher-factory";
 import {PrePublishFunction} from "../../executor/pre-publish-function-body-creator";
 import {FunctionExecutor} from "../../executor/function-executor";
 
-export class StartEventPublisherHandler implements StartEventType{
+export class StartEventPublisherHandler implements StartEvent{
     private publisherOriginalAttributes: any;
     private publisher: Publisher | null = null;
     private report: any = {};

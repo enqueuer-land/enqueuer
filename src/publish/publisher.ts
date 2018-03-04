@@ -1,5 +1,4 @@
 export abstract class Publisher {
-
     public protocol: string;
     public payload: string;
     public prePublishing: string | null = null;

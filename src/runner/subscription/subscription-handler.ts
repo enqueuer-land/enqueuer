@@ -1,6 +1,6 @@
-import {Subscription} from "../../requisition/subscription/subscription";
 import {FunctionExecutor} from "../../executor/function-executor";
 import {OnMessageReceivedSubscriptionFunction} from "../../executor/on-message-received-subscription-function";
+import {Subscription} from "../../subscription/subscription";
 
 export class SubscriptionHandler {
 
