@@ -1,7 +1,6 @@
 import {Subscription} from "./subscription";
 
 export class NullSubscription extends Subscription {
-
     constructor(subscriptionAttributes: any) {
         super(subscriptionAttributes);
     }
@@ -12,6 +11,9 @@ export class NullSubscription extends Subscription {
 
     public receiveMessage(): Promise<void> {
         return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
+    }
+
+    public unsubscribe(): void {
     }
 
 }

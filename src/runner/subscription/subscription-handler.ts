@@ -44,10 +44,14 @@ export class SubscriptionHandler {
                     if (!this.hasTimedOut) {
                         console.log("Subscription stop waiting because it has already received its message");
                         global.clearTimeout(this.timer);
+                        this.subscription.unsubscribe();
                         resolve();
                     }
                 })
-                .catch((err) => reject(err));
+                .catch((err) => {
+                    this.subscription.unsubscribe();
+                    reject(err);
+                });
         });
     }
 

@@ -22,7 +22,6 @@ export class MqttSubscription extends Subscription {
             this.client.on('message', (topic: string, message: string) =>
             {
                 this.messageReceived = message.toString();
-                this.removeClient();
                 resolve();
             });
         });
@@ -39,17 +38,12 @@ export class MqttSubscription extends Subscription {
                 resolve();
             }
             this.client.on("error", (error: any) => {
-                this.removeClient();
                 reject(error);
             });
         });
     }
 
     public unsubscribe(): void {
-        this.removeClient();
-    }
-
-    private removeClient() {
         if (this.client) {
             this.client.unsubscribe(this.topic);
             this.client.end();
