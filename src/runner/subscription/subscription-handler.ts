@@ -1,5 +1,6 @@
 import {Subscription} from "../../requisition/subscription/subscription";
 import {FunctionExecutor} from "../../executor/function-executor";
+import {OnMessageReceivedSubscriptionFunction} from "../../executor/on-message-received-subscription-function";
 
 export class SubscriptionHandler {
 
@@ -72,35 +73,13 @@ export class SubscriptionHandler {
     }
 
     private executeSubscriptionFunction() {
-        const functionToExecute: Function | null = this.subscription.createOnMessageReceivedFunction();
-        if (functionToExecute) {
-            let functionReport = null;
-            try {
-                let subscriptionTestExecutor: FunctionExecutor
-                    = new FunctionExecutor(functionToExecute, this.subscription.messageReceived);
-                subscriptionTestExecutor.execute();
-
-                functionReport = {
-                    tests: {
-                        failing: subscriptionTestExecutor.getFailingTests(),
-                        passing: subscriptionTestExecutor.getPassingTests(),
-                    },
-                    exception: subscriptionTestExecutor.getException(),
-                    reports: subscriptionTestExecutor.getReports(),
-                }
-            } catch (exc) {
-                functionReport = {
-                    exception: exc
-                }
-            }
-            this.report = {
-                ...this.report,
-                functionReport: functionReport
-            }
-
-            this.report.messageReceivedTimestamp = new Date().toString();
+        const onMessageReceivedSubscription  = new OnMessageReceivedSubscriptionFunction(this.subscription);
+        const functionResponse = new FunctionExecutor(onMessageReceivedSubscription).execute();
+        this.report = {
+            ...this.report,
+            functionReport: functionResponse.report,
+            messageReceivedTimestamp: new Date().toString()
         }
-
     }
 
 }

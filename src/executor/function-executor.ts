@@ -1,54 +1,35 @@
+import {FunctionCreator} from "./function-creator";
+
 export class FunctionExecutor {
-    private passingTests: string[] = [];
-    private failingTests: string[] = [];
-    private reports: any = {};
-    private exception: string = "";
-    
     private functionToExecute: Function;
     private parameters: string[];
-    private functionResponse: any;
 
-    constructor(functionToExecute: Function, ...parameters: any[]) {
+    constructor(functionBodyCreator: FunctionCreator, ...parameters: any[]) {
         this.parameters = parameters;
-        this.functionToExecute = functionToExecute;
+        this.functionToExecute = functionBodyCreator.createFunction();
     }
-    
+
     public execute(): any {
         try {
-            this.functionResponse = this.functionToExecute(this.parameters);
-            for (const test in this.functionResponse.test) {
-                if (this.functionResponse.test[test]) {
-                    this.passingTests.push(test);
+            let functionResponse = this.functionToExecute(this.parameters);
+            functionResponse.report = {
+                passingTests: [],
+                failingTests: [],
+                reports: []
+            }
+            for (const test in functionResponse.test) {
+                if (functionResponse.test[test]) {
+                    functionResponse.report.passingTests.push(test);
                 } else {
-                    this.failingTests.push(test);
+                    functionResponse.report.failingTests.push(test);
                 }
             }
-            for (const report in this.functionResponse.report) {
-                this.reports[report] = this.functionResponse.report[report];
+            for (const report in functionResponse.report) {
+                functionResponse.report.reports[report] = functionResponse.report[report];
             }
+            return functionResponse;
         } catch (exc) {
-            this.exception = exc;
+            return exc;
         }
-        return this.functionResponse;
-    }
-
-    public getFunctionResponse(): any {
-        return this.functionResponse;
-    }
-
-    public getPassingTests(): string[] {
-        return this.passingTests;
-    }
-
-    public getFailingTests(): string[] {
-        return this.failingTests;
-    }
-
-    public getReports(): string[] {
-        return this.reports;
-    }
-
-    public getException(): string {
-        return this.exception;
     }
 }

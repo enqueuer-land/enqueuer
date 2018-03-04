@@ -13,20 +13,6 @@ export abstract class Subscription {
         }
     }
 
-    public createOnMessageReceivedFunction(): Function | null {
-        if (this.onMessageReceivedFunctionBody == null)
-            return null;
-
-        const fullBody: string =    `let test = {};
-                                    let report = {};
-                                    ${this.onMessageReceivedFunctionBody};
-                                    return {
-                                            test: test,
-                                            report: report
-                                     };`;
-        return new Function('message', fullBody);
-    }
-
     public abstract connect(): Promise<void>;
     public abstract receiveMessage(): Promise<void>;
     public unsubscribe(): void {};

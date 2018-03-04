@@ -1,7 +1,8 @@
 import {Publisher} from "../../publish/publisher";
 import {StartEventType} from "./start-event-type";
 import {PublisherFactory} from "../../publish/publisher-factory";
-import {PrePublishFunctionExecutor} from "../../executor/pre-publish-function-executor";
+import {PrePublishFunction} from "../../executor/pre-publish-function-body-creator";
+import {FunctionExecutor} from "../../executor/function-executor";
 
 export class StartEventPublisherHandler implements StartEventType{
     private publisherOriginalAttributes: any;
@@ -48,8 +49,10 @@ export class StartEventPublisherHandler implements StartEventType{
     }
 
     private executePrePublishingFunction() {
-        this.prePublishingReport = new PrePublishFunctionExecutor(this.publisherOriginalAttributes).execute();
+        const prePublishFunction = new PrePublishFunction(this.publisherOriginalAttributes);
+        const functionResponse = new FunctionExecutor(prePublishFunction).execute();
         this.publisher = new PublisherFactory()
-                                        .createPublisher(this.prePublishingReport.publisher);
+                                        .createPublisher(functionResponse.publisher);
+        this.prePublishingReport = functionResponse.report;
     }
 }
