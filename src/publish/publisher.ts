@@ -3,10 +3,10 @@ export abstract class Publisher {
     public payload: string;
     public prePublishing: string | null = null;
 
-    constructor(publish: any) {
-        this.protocol = publish.protocol;
-        this.payload = publish.payload;
-        this.prePublishing = publish.prePublishing;
+    constructor(publisherAttributes: any) {
+        this.protocol = publisherAttributes.protocol;
+        this.payload = publisherAttributes.payload;
+        this.prePublishing = publisherAttributes.prePublishing;
     }
 
     public abstract publish(): Promise<void>;
