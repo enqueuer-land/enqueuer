@@ -31,7 +31,7 @@ export class SubscriptionsHandler {
                         (subscription) => this.onMessageReceived(subscription)));
     }
 
-    public getReports(): any {
+    public getReport(): any {
         var reports: any = [];
         this.subscriptionsReport.forEach(subscriptionsReport => reports.push(subscriptionsReport.getReport()));
         return reports;

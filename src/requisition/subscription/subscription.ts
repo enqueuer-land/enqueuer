@@ -2,9 +2,9 @@ import {EventCallback} from "../event-callback";
 
 export abstract class Subscription {
 
-    message: string | null = null;
-    timeout: number = -1;
-    onMessageReceivedFunctionBody: string | null = null;
+    public message: string | null = null;
+    public timeout: number = -1;
+    public onMessageReceivedFunctionBody: string | null = null;
 
     protected constructor(subscriptionAttributes: any) {
         if (subscriptionAttributes) {
@@ -14,7 +14,7 @@ export abstract class Subscription {
         }
     }
 
-    createOnMessageReceivedFunction(): Function | null {
+    public createOnMessageReceivedFunction(): Function | null {
         if (this.onMessageReceivedFunctionBody == null)
             return null;
 

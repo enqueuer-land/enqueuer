@@ -1,8 +1,8 @@
 export abstract class Publisher {
 
-    protocol: string | null = null;
-    payload: string | null = null;
-    prePublishing: string | null = null;
+    public protocol: string | null = null;
+    public payload: string | null = null;
+    public prePublishing: string | null = null;
 
     constructor(publish: any) {
         if (publish) {
@@ -15,9 +15,6 @@ export abstract class Publisher {
     public abstract execute(): Promise<void>;
 
     public createPrePublishingFunction(): Function {
-
-
-
         const fullBody: string =    `let test = {};
                                     let report = {};
                                     let payload = '${this.payload}';

@@ -4,11 +4,11 @@ import {Type} from "class-transformer";
 
 export class StartEvent {
 
-    timeout: number = -1;
+    public timeout: number = -1;
 
     @Type(() => Publisher)
-    publisher: Publisher | null = null;
+    public publisher: Publisher | null = null;
 
     @Type(() => Subscription)
-    subscription: Subscription | null = null;
+    public subscription: Subscription | null = null;
 }

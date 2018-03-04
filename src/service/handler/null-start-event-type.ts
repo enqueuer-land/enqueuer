@@ -6,16 +6,16 @@ export class NullStartEventType implements StartEventType {
 
     private startEvent: StartEvent;
 
-    constructor(startEvent: StartEvent)
+    public constructor(startEvent: StartEvent)
     {
         this.startEvent = startEvent;
     }
 
-    start(): Promise<void> {
+    public start(): Promise<void> {
         return Promise.reject(`No StartEvent type was found: ${JSON.stringify(this, null, 2)}`);
     }
 
-    generateReport(): Report {
+    public getReport(): Report {
         return new Report();
     }
 }

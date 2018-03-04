@@ -29,7 +29,7 @@ export class StartEventPublisherHandler implements StartEventType{
         });
     }
 
-    public generateReport(): any {
+    public getReport(): any {
         return this.report;
     }
 
