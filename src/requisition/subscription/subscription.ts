@@ -1,14 +1,13 @@
-import {EventCallback} from "../event-callback";
 
 export abstract class Subscription {
 
-    public message: string | null = null;
+    public messageReceived: string | null = null;
     public timeout: number = -1;
     public onMessageReceivedFunctionBody: string | null = null;
 
     protected constructor(subscriptionAttributes: any) {
         if (subscriptionAttributes) {
-            this.message = subscriptionAttributes.message;
+            this.messageReceived = subscriptionAttributes.message;
             this.timeout = subscriptionAttributes.timeout;
             this.onMessageReceivedFunctionBody = subscriptionAttributes.onMessageReceivedFunctionBody;
         }
@@ -30,6 +29,6 @@ export abstract class Subscription {
 
     public unsubscribe(): void {};
 
-    public abstract subscribe(onMessageReceived: EventCallback, onSubscriptionCompleted: EventCallback): boolean;
+    public abstract subscribe(onMessageReceived: Function, onSubscriptionCompleted: Function): boolean;
 
 }

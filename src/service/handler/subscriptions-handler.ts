@@ -1,13 +1,12 @@
-import {EventCallback} from "../../requisition/event-callback";
-import {SubscriptionReport} from "./subscription-report";
+import {SubscriptionHandler} from "./subscription-handler";
 import {SubscriptionFactory} from "../../requisition/subscription/subscription-factory";
 
 export class SubscriptionsHandler {
-    private subscriptionsReport: SubscriptionReport[] = [];
+    private subscriptionHandlers: SubscriptionHandler[] = [];
     private subscriptionsCompletedCounter: number = 0;
     private subscriptionsReceivedMessagesCounter: number = 0;
-    private onSubscriptionsCompletedCallback: EventCallback;
-    private onAllSubscriptionsReceivedMessagesCallback: EventCallback;
+    private onSubscriptionsCompletedCallback: Function;
+    private onAllSubscriptionsStopWaitingCallback: Function;
 
 
     constructor(subscriptionsAttributes: any[]) {
@@ -16,40 +15,39 @@ export class SubscriptionsHandler {
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
             const subscription = subscriptionFactory.createSubscription(subscriptionsAttributes[id]);
             if (subscription)
-                this.subscriptionsReport.push(new SubscriptionReport(subscription, id));
+                this.subscriptionHandlers.push(new SubscriptionHandler(subscription));
         }
         this.onSubscriptionsCompletedCallback = () => {};
-        this.onAllSubscriptionsReceivedMessagesCallback = () => {};
+        this.onAllSubscriptionsStopWaitingCallback = () => {};
     }
 
-    public start(onSubscriptionsCompleted: EventCallback, onAllSubscriptionsReceivedMessagesCallback: EventCallback) {
+    public start(onSubscriptionsCompleted: Function, onAllSubscriptionsStopWaitingCallback: Function) {
         this.onSubscriptionsCompletedCallback = onSubscriptionsCompleted;
-        this.onAllSubscriptionsReceivedMessagesCallback = onAllSubscriptionsReceivedMessagesCallback;
-        this.subscriptionsReport.forEach(subscriptionsReport =>
+        this.onAllSubscriptionsStopWaitingCallback = onAllSubscriptionsStopWaitingCallback;
+        this.subscriptionHandlers.forEach(subscriptionsReport =>
                 subscriptionsReport
-                    .start((subscription) => this.onSubscriptionCompleted(subscription),
-                        (subscription) => this.onMessageReceived(subscription)));
+                    .start((subscriptionHandler: SubscriptionsHandler) =>
+                            this.onSubscriptionCompleted(),
+                        (subscriptionHandler: SubscriptionsHandler) =>
+                            this.onAllSubscriptionsStopWaiting()));
     }
 
     public getReport(): any {
         var reports: any = [];
-        this.subscriptionsReport.forEach(subscriptionsReport => reports.push(subscriptionsReport.getReport()));
+        this.subscriptionHandlers.forEach(subscriptionsReport => reports.push(subscriptionsReport.getReport()));
         return reports;
     }
 
-    //TODO: verify id
-    private onSubscriptionCompleted(subscriptionId: number) {
+    private onSubscriptionCompleted() {
         ++this.subscriptionsCompletedCounter;
-        if (this.subscriptionsCompletedCounter == this.subscriptionsReport.length)
-            this.onSubscriptionsCompletedCallback(null);
+        if (this.subscriptionsCompletedCounter == this.subscriptionHandlers.length)
+            this.onSubscriptionsCompletedCallback();
     }
 
-    //TODO: verify id
-    private onMessageReceived(subscriptionId: number) {
+    private onAllSubscriptionsStopWaiting() {
         ++this.subscriptionsReceivedMessagesCounter;
-        //Pay attention, at least one message received per subscription
-        if (this.subscriptionsReceivedMessagesCounter >= this.subscriptionsReport.length)
-            this.onAllSubscriptionsReceivedMessagesCallback(null);
+        if (this.subscriptionsReceivedMessagesCounter >= this.subscriptionHandlers.length)
+            this.onAllSubscriptionsStopWaitingCallback();
     }
 
 }

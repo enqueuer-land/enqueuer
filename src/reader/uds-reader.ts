@@ -27,6 +27,6 @@ export class UdsReader implements RequisitionReader {
 
     public stop(): void {
         // ipc.server.end();
-        // ipc.server.emit(socket, 'message', report.toString());
+        // ipc.server.emit(socket, 'messageReceived', report.toString());
     }
 }

@@ -20,7 +20,7 @@ export class RequisitionStarter {
         this.startTime = Date.now();
         this.onFinishCallback = onFinishCallback;
         this.subscriptionsHandler.start(() => this.onSubscriptionsCompleted(),
-                                         () => this.onAllSubscriptionsReceivedMessage());
+                                         () => this.onAllSubscriptionsStopWaiting());
     }
 
     private onSubscriptionsCompleted() {
@@ -36,8 +36,7 @@ export class RequisitionStarter {
             this.onFinish(additionalInfo);
     }
 
-    private onAllSubscriptionsReceivedMessage(): void {
-        console.log("All received messages")
+    private onAllSubscriptionsStopWaiting(): void {
         if (this.startTime != 0)
             this.onFinish();
     }

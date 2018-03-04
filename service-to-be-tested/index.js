@@ -24,7 +24,7 @@ client.on('message', function (topic, message) {
     });
   } else {
     console.log("-----REPORT-----")
-    // message is Buffer
+    // messageReceived is Buffer
     console.log(topic)
     console.log(message.toString())
   }

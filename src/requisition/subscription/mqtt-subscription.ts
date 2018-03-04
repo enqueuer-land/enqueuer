@@ -1,4 +1,3 @@
-import {EventCallback} from "../event-callback";
 import {Subscription} from "./subscription";
 const mqtt = require("mqtt")
 
@@ -13,7 +12,7 @@ export class MqttSubscription extends Subscription {
         this.topic = subscriptionAttributes.topic;
     }
 
-    public subscribe(onMessageReceived: EventCallback, onSubscriptionCompleted: EventCallback): boolean {
+    public subscribe(onMessageReceived: Function, onSubscriptionCompleted: Function): boolean {
         this.client = mqtt.connect(this.brokerAddress,
             {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
         this.client.subscribe(this.topic);
@@ -21,7 +20,7 @@ export class MqttSubscription extends Subscription {
             this.client.on("connect", () =>  {
                 this.client.on('message', (topic: string, message: string) =>
                     {
-                        this.message = message.toString();
+                        this.messageReceived = message.toString();
                         if (this.client)
                             this.client.end(true);
                         delete this.client;
@@ -33,7 +32,7 @@ export class MqttSubscription extends Subscription {
         else {
             this.client.on('message',
                 (topic: string, message: string) => {
-                    this.message = message.toString();
+                    this.messageReceived = message.toString();
                     if (this.client)
                         this.client.end(true);
                     delete this.client;
