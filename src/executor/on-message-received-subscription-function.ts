@@ -11,7 +11,7 @@ export class OnMessageReceivedSubscriptionFunction implements FunctionCreator {
     public createFunction(): Function {
         const fullBody: string =    `let test = {};
                                     let report = {};
-                                    let message = ${this.subscriptionAttributed.messageReceived};
+                                    let message = ${JSON.stringify(this.subscriptionAttributed.messageReceived)};
                                     ${this.subscriptionAttributed.onMessageReceivedFunctionBody};
                                     return {
                                             test: test,

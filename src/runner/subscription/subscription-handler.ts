@@ -73,7 +73,7 @@ export class SubscriptionHandler {
     }
 
     private executeSubscriptionFunction() {
-        const onMessageReceivedSubscription  = new OnMessageReceivedSubscriptionFunction(this.subscription);
+        const onMessageReceivedSubscription = new OnMessageReceivedSubscriptionFunction(this.subscription);
         const functionResponse = new FunctionExecutor(onMessageReceivedSubscription).execute();
         this.report = {
             ...this.report,

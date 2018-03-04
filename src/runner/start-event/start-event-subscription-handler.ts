@@ -38,7 +38,7 @@ export class StartEventSubscriptionHandler implements StartEvent {
         }
         this.report.valid = subscriptionReport &&
                             subscriptionReport.functionReport &&
-                            subscriptionReport.functionReport.tests.failing.length <= 0;
+                            subscriptionReport.functionReport.failingTests.length <= 0;
     }
 
 

@@ -29,7 +29,7 @@ export class FunctionExecutor {
             }
             return functionResponse;
         } catch (exc) {
-            return exc;
+            return { report: exc };
         }
     }
 }
