@@ -21,19 +21,11 @@ export class SubscriptionHandler {
             ...this.report,
             startTime: this.startTime.toString(),
         };
-
+        this.initializeTimeout();
         this.onSubscriptionCompletedCallback = onSubscriptionCompletedCallback;
         this.onStopWaitingCallback = onStopWaitingCallback;
         this.subscription.subscribe((subscription: Subscription) => this.onMessageReceived(),
             (subscription: Subscription) => this.onSubscriptionCompleted());
-    }
-
-    private onSubscriptionCompleted(): any {
-        this.report = {
-            ...this.report,
-            subscriptionTime: new Date().toString()
-        };
-        this.onSubscriptionCompletedCallback();
     }
 
     public getReport() {
@@ -43,14 +35,40 @@ export class SubscriptionHandler {
             timestamp: new Date().toString(),
             hasReceivedMessage: this.subscription.messageReceived != null
         };
+        if (this.subscription.timeout && this.subscription.messageReceived)
+            this.report.hasTimedOut = (new Date().getTime() - this.startTime.getTime()) > this.subscription.timeout;
         this.subscription.unsubscribe();
         return this.report;
+    }
+
+    private initializeTimeout() {
+        if (this.subscription.timeout) {
+            let timer = global.setTimeout(() => {
+                global.clearTimeout(timer);
+                console.log("Subscription Timeout");
+                this.stopWaiting();
+            }, this.subscription.timeout);
+        }
     }
 
     private onMessageReceived() {
         this.executeSubscriptionFunction();
         this.subscription.unsubscribe();
+        this.stopWaiting();
+    }
+
+    private stopWaiting() {
+        console.log("Subscription stop waitting")
         this.onStopWaitingCallback();
+        this.onStopWaitingCallback = () => {};
+    }
+
+    private onSubscriptionCompleted(): any {
+        this.report = {
+            ...this.report,
+            subscriptionTime: new Date().toString()
+        };
+        this.onSubscriptionCompletedCallback();
     }
 
     private executeSubscriptionFunction() {
@@ -69,7 +87,6 @@ export class SubscriptionHandler {
                     },
                     exception: subscriptionTestExecutor.getException(),
                     reports: subscriptionTestExecutor.getReports(),
-                    hasTimedOut: (new Date().getTime() - this.startTime.getTime()) > this.subscription.timeout
                 }
             } catch (exc) {
                 functionReport = {

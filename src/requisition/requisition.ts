@@ -5,12 +5,15 @@ import {Report} from "../report/report";
 import {Subscription} from "./subscription/subscription";
 
 export class Requisition {
+
+    public timeout: number | null = null;
+
     @Type(() => Subscription)
-    subscriptions: Subscription[] = [];
+    public subscriptions: Subscription[] = [];
 
     @Type(() => StartEvent)
-    startEvent: StartEvent = new StartEvent();
+    public startEvent: StartEvent = new StartEvent();
 
     @Type(() => Report)
-    reports: Report[] = [];
+    public reports: Report[] = [];
 }

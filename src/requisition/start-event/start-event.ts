@@ -4,8 +4,6 @@ import {Type} from "class-transformer";
 
 export class StartEvent {
 
-    public timeout: number = -1;
-
     @Type(() => Publisher)
     public publisher: Publisher | null = null;
 

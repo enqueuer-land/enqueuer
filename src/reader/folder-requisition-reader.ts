@@ -6,20 +6,20 @@ const chokidar = require('chokidar');
 
 export class FolderRequisitionReader implements RequisitionReader {
 
+    private INTERVAL_CHECK: number = 1000;
     private files: string[] = [];
     private watcher: FSWatcher;
-    private INTERVAL_CHECK: number = 1000;
+    private folderName: string;
 
     constructor() {
-        let folderName = Configuration.getWatchFolder();
-        console.log(`Files to watch: ${folderName}`);
-
-        this.watcher = chokidar.watch(folderName, {ignored: /(^|[\/\\])\../});
+        this.folderName = Configuration.getWatchFolder();
+        this.watcher = chokidar.watch(this.folderName, {ignored: /(^|[\/\\])\../});
         this.watcher.on('add', path => this.files.push(path));
     }
 
     public start(): Promise<string> {
-        console.log("Starting FolderRequisitionReader");
+        console.log(`Starting FolderRequisitionReader:\t${this.folderName}`);
+
         return new Promise((resolve, reject) => {
             this.popFile()
                 .then( fileContent => resolve(fileContent))

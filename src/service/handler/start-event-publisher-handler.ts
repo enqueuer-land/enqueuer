@@ -16,14 +16,14 @@ export class StartEventPublisherHandler implements StartEventType{
 
     public start(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.generatePayload();
+            this.executePrePublishingFunction();
             this.publisher.execute()
                 .then(() => {
-                    this.generateSuccessfulReport();
+                    this.generateReport();
                     resolve();
                 })
                 .catch((err: any) => {
-                    this.generateErrorReport(err);
+                    this.generateReport(err);
                     reject(err)
                 });
         });
@@ -33,27 +33,19 @@ export class StartEventPublisherHandler implements StartEventType{
         return this.report;
     }
 
-    private generateSuccessfulReport(): void {
+    private generateReport(error: any = null): void {
         this.report = {
             ...this.publisher,
             prePublishFunction: this.prePublishingReport,
             timestamp: new Date()
         }
+        if (error)
+            this.report.error = error;
         if (this.previousPayload != this.publisher.payload)
              this.report.previousPayload = this.previousPayload;
     }
 
-    private generateErrorReport(error: any): void {
-        this.report = {
-            prePublishFunction: this.prePublishingReport,
-            errorMessage: error,
-            timestamp: new Date()
-        }
-        if (this.previousPayload != this.publisher.payload)
-            this.report.previousPayload = this.previousPayload;
-    }
-
-    private generatePayload() {
+    private executePrePublishingFunction() {
         const functionToExecute: Function = this.publisher.createPrePublishingFunction();
         try {
             let publisherExecutor: FunctionExecutor = new FunctionExecutor(functionToExecute);

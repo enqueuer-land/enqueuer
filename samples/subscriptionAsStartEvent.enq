@@ -1,11 +1,12 @@
 {
+  "timeout": "5000",
   "subscriptions": [
     {
       "protocol": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "subscription",
       "onMessageReceivedFunctionBody": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
-      "timeout": "5000"
+      "timeout": "1000"
     }
   ],
   "startEvent": {
@@ -15,7 +16,7 @@
       "brokerAddress": "brokerAddress",
       "topic": "startEvent",
       "onMessageReceivedFunctionBody": "test['validates'] = message == 'Valid'; report['message'] = message;",
-      "timeout": "5000"
+      "timeout": "2000"
     }
   },
   "reports" : [

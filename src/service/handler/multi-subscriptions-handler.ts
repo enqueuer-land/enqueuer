@@ -1,7 +1,7 @@
 import {SubscriptionHandler} from "./subscription-handler";
 import {SubscriptionFactory} from "../../requisition/subscription/subscription-factory";
 
-export class SubscriptionsHandler {
+export class MultiSubscriptionsHandler {
     private subscriptionHandlers: SubscriptionHandler[] = [];
     private subscriptionsCompletedCounter: number = 0;
     private subscriptionsReceivedMessagesCounter: number = 0;
@@ -14,8 +14,7 @@ export class SubscriptionsHandler {
 
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
             const subscription = subscriptionFactory.createSubscription(subscriptionsAttributes[id]);
-            if (subscription)
-                this.subscriptionHandlers.push(new SubscriptionHandler(subscription));
+            this.subscriptionHandlers.push(new SubscriptionHandler(subscription));
         }
         this.onSubscriptionsCompletedCallback = () => {};
         this.onAllSubscriptionsStopWaitingCallback = () => {};
@@ -24,11 +23,11 @@ export class SubscriptionsHandler {
     public start(onSubscriptionsCompleted: Function, onAllSubscriptionsStopWaitingCallback: Function) {
         this.onSubscriptionsCompletedCallback = onSubscriptionsCompleted;
         this.onAllSubscriptionsStopWaitingCallback = onAllSubscriptionsStopWaitingCallback;
-        this.subscriptionHandlers.forEach(subscriptionsReport =>
-                subscriptionsReport
-                    .start((subscriptionHandler: SubscriptionsHandler) =>
+        this.subscriptionHandlers.forEach(subscriptionHandler =>
+                subscriptionHandler
+                    .start((subscriptionHandler: MultiSubscriptionsHandler) =>
                             this.onSubscriptionCompleted(),
-                        (subscriptionHandler: SubscriptionsHandler) =>
+                        (subscriptionHandler: MultiSubscriptionsHandler) =>
                             this.onAllSubscriptionsStopWaiting()));
     }
 
