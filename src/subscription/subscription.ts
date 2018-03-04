@@ -1,4 +1,3 @@
-
 export abstract class Subscription {
 
     public messageReceived: string | null = null;

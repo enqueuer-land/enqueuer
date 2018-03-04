@@ -1,6 +1,7 @@
 import {FunctionExecutor} from "../../executor/function-executor";
 import {OnMessageReceivedSubscriptionFunction} from "../../executor/on-message-received-subscription-function";
 import {Subscription} from "../../subscription/subscription";
+import {SubscriptionFactory} from "../../subscription/subscription-factory";
 
 export class SubscriptionHandler {
 
@@ -11,8 +12,8 @@ export class SubscriptionHandler {
     private onTimeOutCallback: Function = () => {};
     private hasTimedOut: boolean = false;
 
-    constructor(subscription: Subscription) {
-        this.subscription = subscription;
+    constructor(subscriptionAttributes: any) {
+        this.subscription = new SubscriptionFactory().createSubscription(subscriptionAttributes);
         this.startTime = new Date();
     }
 
@@ -41,7 +42,7 @@ export class SubscriptionHandler {
                 .then(() => {
                     this.executeSubscriptionFunction();
                     if (!this.hasTimedOut) {
-                        console.log("Subscription stop waiting because has already received its message");
+                        console.log("Subscription stop waiting because it has already received its message");
                         global.clearTimeout(this.timer);
                         resolve();
                     }
@@ -64,7 +65,7 @@ export class SubscriptionHandler {
     private initializeTimeout() {
         if (this.subscription.timeout) {
             this.timer = global.setTimeout(() => {
-                console.log("Subscription stop waiting because has timed out");
+                console.log("Subscription stop waiting because it has timed out");
                 this.subscription.unsubscribe();
                 this.hasTimedOut = true;
                 this.onTimeOutCallback();

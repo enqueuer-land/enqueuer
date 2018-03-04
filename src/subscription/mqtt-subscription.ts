@@ -3,8 +3,8 @@ const mqtt = require("mqtt")
 
 export class MqttSubscription extends Subscription {
 
-    brokerAddress: string = "";
-    topic: string = "";
+    private brokerAddress: string = "";
+    private topic: string = "";
     private client: any = null;
 
     constructor(subscriptionAttributes: any) {
@@ -12,6 +12,7 @@ export class MqttSubscription extends Subscription {
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
     }
+
     public receiveMessage(): Promise<void> {
         this.client.subscribe(this.topic);
         return new Promise((resolve, reject) => {

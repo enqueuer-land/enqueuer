@@ -1,7 +1,6 @@
 import {StartEvent} from "./start-event";
 import {Report} from "../../report/report";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
-import {SubscriptionFactory} from "../../subscription/subscription-factory";
 
 export class StartEventSubscriptionHandler implements StartEvent {
 
@@ -9,8 +8,7 @@ export class StartEventSubscriptionHandler implements StartEvent {
     private report: any = {};
 
     public constructor(subscriptionAttributes: any) {
-        const subscriptionFactory: SubscriptionFactory = new SubscriptionFactory();
-        this.subscriptionHandler = new SubscriptionHandler(subscriptionFactory.createSubscription(subscriptionAttributes));
+        this.subscriptionHandler = new SubscriptionHandler(subscriptionAttributes);
     }
 
     public start(): Promise<void> {

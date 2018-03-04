@@ -1,5 +1,4 @@
 import {SubscriptionHandler} from "./subscription-handler";
-import {SubscriptionFactory} from "../../subscription/subscription-factory";
 
 export class MultiSubscriptionsHandler {
     private subscriptionHandlers: SubscriptionHandler[] = [];
@@ -7,11 +6,8 @@ export class MultiSubscriptionsHandler {
     private subscriptionsStoppedWaitingCounter: number = 0;
 
     constructor(subscriptionsAttributes: any[]) {
-        const subscriptionFactory: SubscriptionFactory = new SubscriptionFactory();
-
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
-            const subscription = subscriptionFactory.createSubscription(subscriptionsAttributes[id]);
-            this.subscriptionHandlers.push(new SubscriptionHandler(subscription));
+            this.subscriptionHandlers.push(new SubscriptionHandler(subscriptionsAttributes[id]));
         }
     }
 
@@ -49,7 +45,7 @@ export class MultiSubscriptionsHandler {
 
     public getReport(): any {
         var reports: any = [];
-        this.subscriptionHandlers.forEach(subscriptionsReport => reports.push(subscriptionsReport.getReport()));
+        this.subscriptionHandlers.forEach(subscriptionHandler => reports.push(subscriptionHandler.getReport()));
         return reports;
     }
 
