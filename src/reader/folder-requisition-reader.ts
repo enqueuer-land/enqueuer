@@ -12,7 +12,7 @@ export class FolderRequisitionReader implements RequisitionReader {
 
     constructor() {
         let folderName = Configuration.getWatchFolder();
-        console.log(`Folder to watch: ${folderName}`);
+        console.log(`Files to watch: ${folderName}`);
 
         this.watcher = chokidar.watch(folderName, {ignored: /(^|[\/\\])\../});
         this.watcher.on('add', path => this.files.push(path));

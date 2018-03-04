@@ -12,9 +12,9 @@ export abstract class Publisher {
         }
     }
 
-    abstract execute(): Promise<Publisher>;
+    public abstract execute(): Promise<void>;
 
-    createPrePublishingFunction(): Function {
+    public createPrePublishingFunction(): Function {
 
 
 

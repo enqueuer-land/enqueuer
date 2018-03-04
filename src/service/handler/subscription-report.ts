@@ -24,10 +24,6 @@ export class SubscriptionReport {
             (subscription: Subscription) => onSubscriptionCompleted(this.id));
     }
 
-    public unsubscribe(): any {
-        this.subscription.unsubscribe();
-    }
-
     private onMessageReceived(subscription: Subscription) {
         let onMessageReceived = {};
         const functionToExecute: Function | null = subscription.createOnMessageReceivedFunction();
@@ -57,10 +53,12 @@ export class SubscriptionReport {
             timestamp: new Date(),
             onMessageReceived: onMessageReceived
         };
+        subscription.unsubscribe();
         this.onMessageReceivedCallback(this.id);
     }
 
     public getReport() {
+        this.subscription.unsubscribe();
         return this.subscriptionReport;
     }
 

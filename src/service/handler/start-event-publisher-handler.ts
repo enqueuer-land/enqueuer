@@ -1,39 +1,41 @@
 import {Publisher} from "../../requisition/start-event/publish/publisher";
 import {FunctionExecutor} from "../../function-executor/function-executor";
+import {StartEventType} from "./start-event-type";
+import {PublisherFactory} from "../../requisition/start-event/publish/publisher-factory";
 
-export class PublisherHandler {
+export class StartEventPublisherHandler implements StartEventType{
     private publisher: Publisher;
     private report: any = {};
     private prePublishingReport: any = {};
     private previousPayload: string | any;
 
     constructor(publisher: Publisher) {
-        this.publisher = publisher;
+        this.publisher = new PublisherFactory().createPublisher(publisher);
         this.previousPayload = publisher.payload;
     }
 
-    public publish(): Promise<Publisher> {
+    public start(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.generatePayload();
             this.publisher.execute()
-                .then((publisher: Publisher) => {
-                    this.generateSuccessfulReport(publisher);
+                .then(() => {
+                    this.generateSuccessfulReport();
                     resolve();
                 })
                 .catch((err: any) => {
-                this.generateErrorReport(err);
+                    this.generateErrorReport(err);
                     reject(err)
                 });
         });
     }
 
-    public getReport(): any {
+    public generateReport(): any {
         return this.report;
     }
 
-    private generateSuccessfulReport(publisher: Publisher): void {
+    private generateSuccessfulReport(): void {
         this.report = {
-            ...publisher,
+            ...this.publisher,
             prePublishFunction: this.prePublishingReport,
             timestamp: new Date()
         }

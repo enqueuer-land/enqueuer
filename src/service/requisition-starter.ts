@@ -2,51 +2,46 @@ import { ReportGenerator } from "../report/report-generator";
 import { Requisition } from "../requisition/requisition";
 import {SubscriptionsHandler} from "./handler/subscriptions-handler";
 import {Report} from "../report/report";
-import {StartEventHandler} from "./handler/start-event-handler";
+import {StartEventTypeHandler} from "./handler/start-event-type-handler";
 
 export type RequisitionStarterCallback = (report: Report) => void;
 export class RequisitionStarter {
-    private startEventHandler: StartEventHandler;
+    private startEventTypeHandler: StartEventTypeHandler;
     private subscriptionsHandler: SubscriptionsHandler;
     private onFinishCallback: RequisitionStarterCallback | null = null;
     private startTime: number = 0;
-    private reportGenerator: ReportGenerator = new ReportGenerator();
 
     constructor(requisition: Requisition) {
-        this.startEventHandler = new StartEventHandler(requisition.startEvent);
-        this.startEventHandler.setTimeoutCallback(() => this.onFinish());
+        this.startEventTypeHandler = new StartEventTypeHandler(requisition.startEvent);
         this.subscriptionsHandler = new SubscriptionsHandler(requisition.subscriptions);
     }
 
     public start(onFinishCallback: RequisitionStarterCallback): void {
         this.startTime = Date.now();
-        this.reportGenerator.addInfo({startTime: new Date().toString()})
         this.onFinishCallback = onFinishCallback;
         this.subscriptionsHandler.start(() => this.onSubscriptionCompleted(),
                                          () => this.onFinish());
     }
 
     private onSubscriptionCompleted() {
-        this.startEventHandler.start()
+        this.startEventTypeHandler.start()
+            .then(() => this.onFinish())
             .catch(err => {
-                this.reportGenerator.addInfo({error: err})
-                this.onFinish();
+                this.onFinish(err);
             })
     }
 
-    private onFinish(): void {
+    private onFinish(additionalInfo: any = null): void {
         const totalTime = Date.now() - this.startTime;
 
-        this.startEventHandler.cancelTimeout();
-        this.reportGenerator.addSubscriptionReport(this.subscriptionsHandler.getReports());
-        this.reportGenerator.addStartEventReport(this.startEventHandler.getReport());
+        let reportGenerator: ReportGenerator = new ReportGenerator();
+        if (additionalInfo)
+            reportGenerator.addInfo({additionalInfo});
+        reportGenerator.addSubscriptionReport(this.subscriptionsHandler.getReports());
+        reportGenerator.addStartEventReport(this.startEventTypeHandler.getReport());
+        reportGenerator.addInfo({startTime: new Date().toString(), endTime: new Date().toString(), totalTime: totalTime})
 
-
-        this.subscriptionsHandler.unsubscribe();
-
-        this.reportGenerator.addInfo({endTime: new Date().toString(), totalTime: totalTime})
-        
         if (this.onFinishCallback)
-            this.onFinishCallback(this.reportGenerator.generate());
+            this.onFinishCallback(reportGenerator.generate());
     }
 }

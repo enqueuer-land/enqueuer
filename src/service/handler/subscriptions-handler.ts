@@ -31,10 +31,6 @@ export class SubscriptionsHandler {
                         (subscription) => this.onMessageReceived(subscription)));
     }
 
-    public unsubscribe(): any {
-        this.subscriptionsReport.forEach(subscriptionsReport => subscriptionsReport.unsubscribe());
-    }
-
     public getReports(): any {
         var reports: any = [];
         this.subscriptionsReport.forEach(subscriptionsReport => reports.push(subscriptionsReport.getReport()));

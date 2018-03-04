@@ -9,6 +9,10 @@ const options = {
   };
 
 export class StandardOutputReporterReplier implements ReportReplier {
+
+    constructor(mqttProperties: any) {
+    }
+
     report(report: Report): boolean {
         console.log(prettyjson.render(report, options));
         return true;

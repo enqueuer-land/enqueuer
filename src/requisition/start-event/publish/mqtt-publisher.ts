@@ -14,21 +14,21 @@ export class MqttPublisher extends Publisher {
         }
     }
 
-    execute(): Promise<Publisher> {
+    public execute(): Promise<void> {
         return new Promise((resolve, reject) => {
             const client = mqtt.connect(this.brokerAddress,
                 {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
             if (client.connected) {
                 client.publish(this.topic, this.payload);
                 client.end();
-                resolve(this);
+                resolve();
 
             }
             else {
                 client.on("connect", () =>  {
                     client.publish(this.topic, this.payload);
                     client.end();
-                    resolve(this);
+                    resolve();
                 });
             }
             client.on("error", (err: any) =>  reject(err));

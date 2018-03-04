@@ -16,7 +16,7 @@ export class HttpPublisher extends Publisher {
         }
     }
 
-    execute(): Promise<Publisher> {
+    execute(): Promise<void> {
         return new Promise((resolve, reject) => {
             request.post({
                     url: this.endpoint,
@@ -28,7 +28,7 @@ export class HttpPublisher extends Publisher {
                         reject("Error to publish http: "  + error);
                     }
                     else {
-                        resolve(this);
+                        resolve();
                     }
                 });
         })

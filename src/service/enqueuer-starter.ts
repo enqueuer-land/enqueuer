@@ -28,9 +28,10 @@ export class EnqueuerStarter {
         try {
             const parsedRequisition: Requisition = new RequisitionParser().parse(requisition);
             const reportRepliers: ReportReplier[] = new ReportReplierFactory().createReplierFactory(parsedRequisition);
-            const enqueuerService: RequisitionStarter = new RequisitionStarter(parsedRequisition);
-            enqueuerService.start((report: Report) => {
+            const requisitionStarter: RequisitionStarter = new RequisitionStarter(parsedRequisition);
+            requisitionStarter.start((report: Report) => {
                 reportRepliers.forEach( reportReplier => reportReplier.report(report));
+                console.log("Requisition is over");
                 // return this.startService(requisition); //Do it again
                 // whyIsNodeRunning();
             });

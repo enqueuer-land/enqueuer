@@ -12,7 +12,7 @@ export class ReportReplierFactory {
         reports.forEach(report => {
             const protocol: string = report.protocol;
             if (protocol === "standardOutput")
-                reportRepliers.push(new StandardOutputReporterReplier());
+                reportRepliers.push(new StandardOutputReporterReplier(report));
             if (protocol === "file")
                 reportRepliers.push(new FileReportReplier(report));
             if (protocol === "http")

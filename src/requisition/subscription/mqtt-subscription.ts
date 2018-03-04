@@ -22,7 +22,8 @@ export class MqttSubscription extends Subscription {
                 this.client.on('message', (topic: string, message: string) =>
                     {
                         this.message = message.toString();
-                        this.client.end();
+                        if (this.client)
+                            this.client.end(true);
                         delete this.client;
                         onMessageReceived(this);
                     });
@@ -33,7 +34,8 @@ export class MqttSubscription extends Subscription {
             this.client.on('message',
                 (topic: string, message: string) => {
                     this.message = message.toString();
-                    this.client.end(true);
+                    if (this.client)
+                        this.client.end(true);
                     delete this.client;
                     onMessageReceived(this);
                 });

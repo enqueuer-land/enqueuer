@@ -1,14 +1,15 @@
 import {Publisher} from "./publisher";
 import {MqttPublisher} from "./mqtt-publisher";
 import {HttpPublisher} from "./http-publisher";
+import {NullPublisher} from "./null-publisher";
 
 export class PublisherFactory {
-    public createPublisher(publishRequisition: any): Publisher | null {
+    public createPublisher(publishRequisition: Publisher): Publisher {
         if (publishRequisition.protocol === "mqtt")
             return new MqttPublisher(publishRequisition);
         if (publishRequisition.protocol === "http")
             return new HttpPublisher(publishRequisition);
-        return null;
+        return new NullPublisher(publishRequisition)
 
     }
 }
