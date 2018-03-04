@@ -1,4 +1,4 @@
-import {EnqueuerStarter} from '../runner/enqueuer-starter';
+import {Enqueuer} from '../runner/enqueuer';
 import { expect } from 'chai';
 import 'mocha';
 import { UdsReader } from './uds-reader';
@@ -10,7 +10,7 @@ describe('IpcFactory test', function() {
             const configurationFile = {
                 protocol: "uds"
             }
-            const ipcFactory: EnqueuerStarter = new EnqueuerStarter();
+            const ipcFactory: Enqueuer = new Enqueuer();
 
             const created = ipcFactory.create();
             expect(created).to.be.instanceOf(UdsReader);
@@ -23,7 +23,7 @@ describe('IpcFactory test', function() {
         const commandLine = {
             inputRequisitionFile: "filename"
         }
-        const ipcFactory: EnqueuerStarter = new EnqueuerStarter();
+        const ipcFactory: Enqueuer = new Enqueuer();
 
         const created = ipcFactory.create();
         expect(created).to.be.instanceOf(InputRequisitionFile);
@@ -33,7 +33,7 @@ describe('IpcFactory test', function() {
             const configurationFile = {
                 protocol: "unknown"
             }
-            const ipcFactory: EnqueuerStarter = new EnqueuerStarter();
+            const ipcFactory: Enqueuer = new Enqueuer();
 
             expect(() => ipcFactory.create()).to.throw;
         });

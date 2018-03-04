@@ -7,9 +7,9 @@ import {ReportReplierFactory} from "../report/replier/report-replier-factory";
 import {RequisitionRunner} from "./requisition-runner";
 import {Report} from "../report/report";
 
-export class EnqueuerStarter {
+export class Enqueuer {
 
-    public start(requisitionReaders: RequisitionReader[]): void {
+    public execute(requisitionReaders: RequisitionReader[]): void {
         requisitionReaders.forEach((reader: RequisitionReader) => this.startReader(reader));
     }
 

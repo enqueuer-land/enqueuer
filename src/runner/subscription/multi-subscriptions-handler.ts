@@ -1,5 +1,5 @@
 import {SubscriptionHandler} from "./subscription-handler";
-import {SubscriptionFactory} from "../../../requisition/subscription/subscription-factory";
+import {SubscriptionFactory} from "../../requisition/subscription/subscription-factory";
 
 export class MultiSubscriptionsHandler {
     private subscriptionHandlers: SubscriptionHandler[] = [];

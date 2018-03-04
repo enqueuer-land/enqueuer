@@ -2,7 +2,7 @@ import {RequisitionReader} from "./reader/requisition-reader";
 import {FolderRequisitionReader} from "./reader/folder-requisition-reader";
 import {StandardInputReader} from "./reader/standard-input-reader";
 import {UdsReader} from "./reader/uds-reader";
-import {EnqueuerStarter} from "./runner/enqueuer-starter";
+import {Enqueuer} from "./runner/enqueuer";
 
 let requisitionReaders: RequisitionReader[] = [];
 
@@ -11,7 +11,7 @@ requisitionReaders.push(new FolderRequisitionReader());
 requisitionReaders.push(new StandardInputReader());
 requisitionReaders.push(new UdsReader());
 
-new EnqueuerStarter().start(requisitionReaders);
+new Enqueuer().execute(requisitionReaders);
 
 
 // const myFunction = (resolve: Function, reject: Function) => {
