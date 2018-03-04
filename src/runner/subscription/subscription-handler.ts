@@ -6,42 +6,56 @@ export class SubscriptionHandler {
     private timer: any;
     private subscription: Subscription;
     private report: any = {};
-    private onStopWaitingCallback: Function;
-    private onSubscriptionCompletedCallback: Function;
-    private messageReceivedTime: Date | null = null;
     private startTime: Date;
+    private onTimeOutCallback: Function = () => {};
+    private hasTimedOut: boolean = false;
 
     constructor(subscription: Subscription) {
         this.subscription = subscription;
-        this.onSubscriptionCompletedCallback = () => {};
-        this.onStopWaitingCallback = () => {};
         this.startTime = new Date();
     }
 
-    public start(onSubscriptionCompletedCallback: Function, onStopWaitingCallback: Function) {
-        this.report = {
-            ...this.report,
-            startTime: this.startTime.toString(),
-        };
-        this.startTime = new Date();
-        this.initializeTimeout();
-        this.onSubscriptionCompletedCallback = onSubscriptionCompletedCallback;
-        this.onStopWaitingCallback = onStopWaitingCallback;
-        this.subscription.subscribe((subscription: Subscription) => this.onMessageReceived(),
-            (subscription: Subscription) => this.onSubscriptionCompleted());
+    public onTimeout(onTimeOutCallback: Function) {
+        this.onTimeOutCallback = onTimeOutCallback;
+    }
+
+    public connect(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.subscription.connect()
+                .then(() => {
+                    this.report = {
+                        ...this.report,
+                        connectionTime: new Date().toString()
+                    };
+                    this.initializeTimeout();
+                    resolve();
+                })
+                .catch((err) => reject(err));
+        });
+    }
+
+    public receiveMessage(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.subscription.receiveMessage()
+                .then(() => {
+                    this.executeSubscriptionFunction();
+                    if (!this.hasTimedOut) {
+                        console.log("Subscription stop waiting because has already received its message");
+                        global.clearTimeout(this.timer);
+                        resolve();
+                    }
+                })
+                .catch((err) => reject(err));
+        });
     }
 
     public getReport() {
         this.report = {
             ...this.report,
             subscription: this.subscription,
-            hasReceivedMessage: this.subscription.messageReceived != null
+            hasReceivedMessage: this.subscription.messageReceived != null,
+            hasTimedOut: this.hasTimedOut
         };
-        if (this.subscription.timeout && this.subscription.messageReceived && this.messageReceivedTime) {
-            const executionTime = this.messageReceivedTime.getTime() - this.startTime.getTime();
-            this.report.hasTimedOut = executionTime > this.subscription.timeout;
-        }
-
         this.subscription.unsubscribe();
         return this.report;
     }
@@ -50,30 +64,11 @@ export class SubscriptionHandler {
         if (this.subscription.timeout) {
             this.timer = global.setTimeout(() => {
                 console.log("Subscription stop waiting because has timed out");
-                this.stopWaiting();
+                this.subscription.unsubscribe();
+                this.hasTimedOut = true;
+                this.onTimeOutCallback();
             }, this.subscription.timeout);
         }
-    }
-
-    private onMessageReceived() {
-        this.executeSubscriptionFunction();
-        console.log("Subscription stop waiting because has already received its message");
-        this.subscription.unsubscribe();
-        this.stopWaiting();
-    }
-
-    private stopWaiting() {
-        global.clearTimeout(this.timer);
-        this.onStopWaitingCallback();
-        this.onStopWaitingCallback = () => {};
-    }
-
-    private onSubscriptionCompleted(): any {
-        this.report = {
-            ...this.report,
-            subscriptionTime: new Date().toString()
-        };
-        this.onSubscriptionCompletedCallback();
     }
 
     private executeSubscriptionFunction() {
@@ -103,8 +98,7 @@ export class SubscriptionHandler {
                 functionReport: functionReport
             }
 
-            this.messageReceivedTime = new Date();
-            this.report.messageReceivedTimestamp = this.messageReceivedTime.toString();
+            this.report.messageReceivedTimestamp = new Date().toString();
         }
 
     }

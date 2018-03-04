@@ -2,6 +2,7 @@ import {Subscription} from "./subscription";
 const mqtt = require("mqtt")
 
 export class MqttSubscription extends Subscription {
+
     brokerAddress: string = "";
     topic: string = "";
     private client: any = null;
@@ -11,41 +12,47 @@ export class MqttSubscription extends Subscription {
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
     }
-
-    public subscribe(onMessageReceived: Function, onSubscriptionCompleted: Function): boolean {
-        this.client = mqtt.connect(this.brokerAddress,
-            {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
+    public receiveMessage(): Promise<void> {
         this.client.subscribe(this.topic);
-        if (!this.client.connected) {
-            this.client.on("connect", () =>  {
-                this.client.on('message', (topic: string, message: string) =>
-                    {
-                        this.messageReceived = message.toString();
-                        if (this.client)
-                            this.client.end(true);
-                        delete this.client;
-                        onMessageReceived(this);
-                    });
-                onSubscriptionCompleted(this);
+        return new Promise((resolve, reject) => {
+            if (!this.client.connected)
+                reject(`Error trying to receive message. Subscription is not connected yet: ${this.topic}`);
+
+            this.client.on('message', (topic: string, message: string) =>
+            {
+                this.messageReceived = message.toString();
+                this.removeClient();
+                resolve();
             });
-        }
-        else {
-            this.client.on('message',
-                (topic: string, message: string) => {
-                    this.messageReceived = message.toString();
-                    if (this.client)
-                        this.client.end(true);
-                    delete this.client;
-                    onMessageReceived(this);
-                });
-            onSubscriptionCompleted(this);
-         }
-        return true;
+        });
+    }
+
+    public connect(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.client = mqtt.connect(this.brokerAddress,
+                {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
+            if (!this.client.connected) {
+                this.client.on("connect", () =>  resolve());
+            }
+            else {
+                resolve();
+             }
+            this.client.on("error", (error: any) => {
+                this.removeClient();
+                reject(error);
+            });
+        });
     }
 
     public unsubscribe(): void {
-        if (this.client)
+        this.removeClient();
+    }
+
+    private removeClient() {
+        if (this.client) {
+            this.client.unsubscribe(this.topic);
             this.client.end();
+        }
         delete this.client;
     }
 

@@ -22,9 +22,22 @@ export class RequisitionRunner {
         console.log("Starting requisition");
         this.startTime = new Date();
         this.onFinishCallback = onFinishCallback;
-        this.multiSubscriptionsHandler.start(() => this.onSubscriptionsCompleted(),
-                                         () => this.onAllSubscriptionsStopWaiting());
         this.initializeTimeout();
+        this.multiSubscriptionsHandler.connect()
+            .then(() => this.onSubscriptionsCompleted())
+            .catch(err => this.onFinish(err));
+    }
+
+    private onSubscriptionsCompleted() {
+        this.multiSubscriptionsHandler.receiveMessage()
+            .then(() => this.onAllSubscriptionsStopWaiting())
+            .catch(err => this.onFinish(err));
+
+        this.startEventHandler.start()
+            .then(() => {
+                console.log("Start event has done its job");
+            })
+            .catch(err => this.onFinish(err));
     }
 
     private initializeTimeout() {
@@ -36,16 +49,6 @@ export class RequisitionRunner {
                     this.onFinish({requisitionTimedOut: true});
             }, this.timeout);
         }
-    }
-
-    private onSubscriptionsCompleted() {
-        this.startEventHandler.start()
-            .then(() => {
-                console.log("Start event has done its job");
-            })
-            .catch(err => {
-                this.onFinish(err);
-            })
     }
 
     private onAllSubscriptionsStopWaiting(): void {

@@ -3,11 +3,8 @@ import {SubscriptionFactory} from "../../requisition/subscription/subscription-f
 
 export class MultiSubscriptionsHandler {
     private subscriptionHandlers: SubscriptionHandler[] = [];
-    private subscriptionsCompletedCounter: number = 0;
-    private subscriptionsReceivedMessagesCounter: number = 0;
-    private onSubscriptionsCompletedCallback: Function;
-    private onAllSubscriptionsStopWaitingCallback: Function;
-
+    private subscriptionsConnectionCompletedCounter: number = 0;
+    private subscriptionsStoppedWaitingCounter: number = 0;
 
     constructor(subscriptionsAttributes: any[]) {
         const subscriptionFactory: SubscriptionFactory = new SubscriptionFactory();
@@ -16,19 +13,34 @@ export class MultiSubscriptionsHandler {
             const subscription = subscriptionFactory.createSubscription(subscriptionsAttributes[id]);
             this.subscriptionHandlers.push(new SubscriptionHandler(subscription));
         }
-        this.onSubscriptionsCompletedCallback = () => {};
-        this.onAllSubscriptionsStopWaitingCallback = () => {};
     }
 
-    public start(onSubscriptionsCompleted: Function, onAllSubscriptionsStopWaitingCallback: Function) {
-        this.onSubscriptionsCompletedCallback = onSubscriptionsCompleted;
-        this.onAllSubscriptionsStopWaitingCallback = onAllSubscriptionsStopWaitingCallback;
-        this.subscriptionHandlers.forEach(subscriptionHandler =>
-                subscriptionHandler
-                    .start((subscriptionHandler: MultiSubscriptionsHandler) =>
-                            this.onSubscriptionCompleted(),
-                        (subscriptionHandler: MultiSubscriptionsHandler) =>
-                            this.onAllSubscriptionsStopWaiting()));
+    public connect(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.subscriptionHandlers.forEach(subscriptionHandler => {
+                subscriptionHandler.onTimeout(() => this.haveAllSubscriptionsStoppedWaiting());
+                subscriptionHandler.connect()
+                    .then(() => {
+                        if (this.areAllSubscriptionsConnected())
+                            resolve();
+                    })
+                    .catch(err => reject(err));
+                }
+            );
+        });
+    }
+
+    public receiveMessage(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.subscriptionHandlers.forEach(subscriptionHandler =>
+                subscriptionHandler.receiveMessage()
+                    .then(() => {
+                        if (this.haveAllSubscriptionsStoppedWaiting())
+                            resolve();
+                    })
+                    .catch(err => reject(err))
+            );
+        });
     }
 
     public getReport(): any {
@@ -37,17 +49,14 @@ export class MultiSubscriptionsHandler {
         return reports;
     }
 
-    private onSubscriptionCompleted() {
-        ++this.subscriptionsCompletedCounter;
-        if (this.subscriptionsCompletedCounter == this.subscriptionHandlers.length)
-            this.onSubscriptionsCompletedCallback();
+    private areAllSubscriptionsConnected(): boolean {
+        ++this.subscriptionsConnectionCompletedCounter;
+        return (this.subscriptionsConnectionCompletedCounter == this.subscriptionHandlers.length)
     }
 
-    private onAllSubscriptionsStopWaiting() {
-        console.log("MultiSubscriptionsHandler.onAllSubscriptionsStopWaiting")
-        ++this.subscriptionsReceivedMessagesCounter;
-        if (this.subscriptionsReceivedMessagesCounter >= this.subscriptionHandlers.length)
-            this.onAllSubscriptionsStopWaitingCallback();
+    private haveAllSubscriptionsStoppedWaiting() {
+        ++this.subscriptionsStoppedWaitingCounter;
+        return (this.subscriptionsStoppedWaitingCounter >= this.subscriptionHandlers.length);
     }
 
 }

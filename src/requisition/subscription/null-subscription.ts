@@ -6,10 +6,12 @@ export class NullSubscription extends Subscription {
         super(subscriptionAttributes);
     }
 
-    public subscribe(onMessageReceived: Function, onSubscriptionCompleted: Function): boolean {
-            onSubscriptionCompleted(`Undefined subscription: ${JSON.stringify(this)}`);
-            onMessageReceived(this);
-        return false;
+    public connect(): Promise<void> {
+        return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
+    }
+
+    public receiveMessage(): Promise<void> {
+        return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
     }
 
 }

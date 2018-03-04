@@ -27,8 +27,7 @@ export abstract class Subscription {
         return new Function('message', fullBody);
     }
 
+    public abstract connect(): Promise<void>;
+    public abstract receiveMessage(): Promise<void>;
     public unsubscribe(): void {};
-
-    public abstract subscribe(onMessageReceived: Function, onSubscriptionCompleted: Function): boolean;
-
 }
