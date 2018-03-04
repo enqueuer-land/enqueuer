@@ -2,17 +2,17 @@ import {FunctionCreator} from "./function-creator";
 
 export class PrePublishFunction implements FunctionCreator {
 
-    private publisher: any;
+    private publisherAttributes: any;
 
-    public constructor(publisher: any) {
-        this.publisher = publisher;
+    public constructor(publisherAttributes: any) {
+        this.publisherAttributes = publisherAttributes;
     }
 
     public createFunction(): Function {
         const fullBody: string =    `let test = {};
                                     let report = {};
-                                    let publisher = '${this.publisher}';
-                                    ${this.publisher.prePublishing};
+                                    let publisher = '${JSON.stringify(this.publisherAttributes)}';
+                                    ${this.publisherAttributes.prePublishing};
                                     return {
                                             test: test,
                                             report: report,

@@ -1,7 +1,7 @@
 import {Publisher} from "../../publish/publisher";
 import {StartEvent} from "./start-event";
 import {PublisherFactory} from "../../publish/publisher-factory";
-import {PrePublishFunction} from "../../executor/pre-publish-function-body-creator";
+import {PrePublishFunction} from "../../executor/pre-publish-function";
 import {FunctionExecutor} from "../../executor/function-executor";
 
 export class StartEventPublisherHandler implements StartEvent{
