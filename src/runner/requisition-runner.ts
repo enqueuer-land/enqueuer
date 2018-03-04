@@ -1,15 +1,14 @@
 import { ReportGenerator } from "../report/report-generator";
 import { Requisition } from "../requisition/requisition";
-import {MultiSubscriptionsHandler} from "./handler/multi-subscriptions-handler";
+import {MultiSubscriptionsHandler} from "./handler/subscription/multi-subscriptions-handler";
 import {Report} from "../report/report";
-import {StartEventHandler} from "./handler/start-event-handler";
-import Timer = NodeJS.Timer;
+import {StartEventHandler} from "./handler/start-event/start-event-handler";
 
-export type RequisitionStarterCallback = (report: Report) => void;
-export class RequisitionStarter {
+export type RequisitionRunnerCallback = (report: Report) => void;
+export class RequisitionRunner {
     private startEventHandler: StartEventHandler;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
-    private onFinishCallback: RequisitionStarterCallback | null = null;
+    private onFinishCallback: RequisitionRunnerCallback | null = null;
     private startTime: number = 0;
     private timeout: number | null;
 
@@ -19,7 +18,7 @@ export class RequisitionStarter {
         this.timeout = requisition.timeout;
     }
 
-    public start(onFinishCallback: RequisitionStarterCallback): void {
+    public start(onFinishCallback: RequisitionRunnerCallback): void {
         this.startTime = Date.now();
         this.onFinishCallback = onFinishCallback;
         this.multiSubscriptionsHandler.start(() => this.onSubscriptionsCompleted(),

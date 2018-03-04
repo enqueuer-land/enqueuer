@@ -1,6 +1,6 @@
 import {StartEventType} from "./start-event-type";
-import {Report} from "../../report/report";
-import {StartEvent} from "../../requisition/start-event/start-event";
+import {Report} from "../../../report/report";
+import {StartEvent} from "../../../requisition/start-event/start-event";
 
 export class NullStartEventType implements StartEventType {
 

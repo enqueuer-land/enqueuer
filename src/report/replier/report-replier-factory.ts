@@ -3,7 +3,7 @@ import { StandardOutputReporterReplier } from "./standard-output-report-replier"
 import { FileReportReplier } from "./file-report-replier";
 import { HttpReportReplier } from "./http-report-replier";
 import { MqttReportReplier } from "./mqtt-report-replier";
-import {Requisition} from "../requisition/requisition";
+import {Requisition} from "../../requisition/requisition";
 
 export class ReportReplierFactory {
     createReplierFactory(requisition: Requisition): ReportReplier[] {

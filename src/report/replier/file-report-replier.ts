@@ -1,5 +1,5 @@
 import { ReportReplier } from "./report-replier";
-import { Report } from "./report";
+import { Report } from "../report";
 const fs = require("fs");
 
 export class FileReportReplier implements ReportReplier {

@@ -2,9 +2,9 @@ const whyIsNodeRunning = require('why-is-node-running') // should be your first 
 import { RequisitionReader } from "../reader/requisition-reader";
 import {Requisition} from "../requisition/requisition";
 import {RequisitionParser} from "../requisition/requisition-parser";
-import {ReportReplier} from "../report/report-replier";
-import {ReportReplierFactory} from "../report/report-replier-factory";
-import {RequisitionStarter} from "./requisition-starter";
+import {ReportReplier} from "../report/replier/report-replier";
+import {ReportReplierFactory} from "../report/replier/report-replier-factory";
+import {RequisitionRunner} from "./requisition-runner";
 import {Report} from "../report/report";
 
 export class EnqueuerStarter {
@@ -28,8 +28,8 @@ export class EnqueuerStarter {
         try {
             const parsedRequisition: Requisition = new RequisitionParser().parse(requisition);
             const reportRepliers: ReportReplier[] = new ReportReplierFactory().createReplierFactory(parsedRequisition);
-            const requisitionStarter: RequisitionStarter = new RequisitionStarter(parsedRequisition);
-            requisitionStarter.start((report: Report) => {
+            const requisitionRunner: RequisitionRunner = new RequisitionRunner(parsedRequisition);
+            requisitionRunner.start((report: Report) => {
                 reportRepliers.forEach( reportReplier => reportReplier.report(report));
                 console.log("Requisition is over");
                 // return this.startService(requisition); //Do it again

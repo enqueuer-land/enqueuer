@@ -1,8 +1,8 @@
 import {StartEventType} from "./start-event-type";
-import {Report} from "../../report/report";
-import {Subscription} from "../../requisition/subscription/subscription";
-import {SubscriptionHandler} from "./subscription-handler";
-import {SubscriptionFactory} from "../../requisition/subscription/subscription-factory";
+import {Report} from "../../../report/report";
+import {Subscription} from "../../../requisition/subscription/subscription";
+import {SubscriptionHandler} from "../subscription/subscription-handler";
+import {SubscriptionFactory} from "../../../requisition/subscription/subscription-factory";
 
 export class StartEventSubscriptionHandler implements StartEventType {
 
