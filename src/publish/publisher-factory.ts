@@ -2,6 +2,8 @@ import {Publisher} from "./publisher";
 import {MqttPublisher} from "./mqtt-publisher";
 import {HttpPublisher} from "./http-publisher";
 import {NullPublisher} from "./null-publisher";
+import {FilePublisher} from "./file-publisher";
+import {StandardOutputPublisher} from "./standard-output-publisher";
 
 export class PublisherFactory {
     public createPublisher(publishRequisition: any): Publisher {
@@ -9,6 +11,10 @@ export class PublisherFactory {
             return new MqttPublisher(publishRequisition);
         if (publishRequisition.protocol === "http")
             return new HttpPublisher(publishRequisition);
+        if (publishRequisition.protocol === "file")
+            return new FilePublisher(publishRequisition);
+        if (publishRequisition.protocol === "standardOutput")
+            return new StandardOutputPublisher(publishRequisition);
         return new NullPublisher(publishRequisition);
     }
 }
