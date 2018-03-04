@@ -1,5 +1,4 @@
 import { ReportReplier } from "./report-replier";
-import { Report } from "../report";
 const prettyjson = require('prettyjson');
 
 const options = {
@@ -10,10 +9,10 @@ const options = {
 
 export class StandardOutputReporterReplier implements ReportReplier {
 
-    constructor(mqttProperties: any) {
+    constructor(properties: any) {
     }
 
-    report(report: Report): boolean {
+    report(report: string): boolean {
         console.log(prettyjson.render(report, options));
         return true;
     }

@@ -1,10 +1,9 @@
 import { ReportGenerator } from "../report/report-generator";
 import { Requisition } from "../requisition/requisition";
 import {MultiSubscriptionsHandler} from "./subscription/multi-subscriptions-handler";
-import {Report} from "../report/report";
 import {StartEventHandler} from "./start-event/start-event-handler";
 
-export type RequisitionRunnerCallback = (report: Report) => void;
+export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
     private startEventHandler: StartEventHandler;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
@@ -76,7 +75,7 @@ export class RequisitionRunner {
         }
 
         if (this.onFinishCallback)
-            this.onFinishCallback(reportGenerator.generate());
+            this.onFinishCallback(reportGenerator.generate().toString());
         this.startTime = null;
     }
 }

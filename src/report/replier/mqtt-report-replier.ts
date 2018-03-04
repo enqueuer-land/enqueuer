@@ -1,5 +1,4 @@
 import { ReportReplier } from "./report-replier";
-import { Report } from "../report";
 const mqtt = require("mqtt")
 
 export class MqttReportReplier implements ReportReplier {
@@ -13,9 +12,9 @@ export class MqttReportReplier implements ReportReplier {
             {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
     }
 
-    public report(report: Report): boolean {
+    public report(report: string): boolean {
         if (this.client.connected) {
-            this.client.publish(this.mqttProperties.topic, report.toString());
+            this.client.publish(this.mqttProperties.topic, report);
             this.client.end();
             return true;
         }

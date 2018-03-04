@@ -5,7 +5,6 @@ import {RequisitionParser} from "../requisition/requisition-parser";
 import {ReportReplier} from "../report/replier/report-replier";
 import {ReportReplierFactory} from "../report/replier/report-replier-factory";
 import {RequisitionRunner} from "./requisition-runner";
-import {Report} from "../report/report";
 
 export class Enqueuer {
 
@@ -29,7 +28,7 @@ export class Enqueuer {
             const parsedRequisition: Requisition = new RequisitionParser().parse(requisition);
             const reportRepliers: ReportReplier[] = new ReportReplierFactory().createReplierFactory(parsedRequisition);
             const requisitionRunner: RequisitionRunner = new RequisitionRunner(parsedRequisition);
-            requisitionRunner.start((report: Report) => {
+            requisitionRunner.start((report: string) => {
                 reportRepliers.forEach( reportReplier => reportReplier.report(report));
                 console.log("Requisition is over");
                 // return this.startService(requisition); //Do it again
