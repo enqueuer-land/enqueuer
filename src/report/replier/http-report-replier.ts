@@ -1,5 +1,5 @@
-import { ReportReplier } from "./report-replier";
 import {Configuration} from "../../conf/configuration";
+import {ReportReplier} from "./report-replier";
 const request = require("request");
 
 export class HttpReportReplier implements ReportReplier {

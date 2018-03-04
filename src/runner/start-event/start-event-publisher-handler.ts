@@ -4,20 +4,20 @@ import {StartEventType} from "./start-event-type";
 import {PublisherFactory} from "../../requisition/start-event/publish/publisher-factory";
 
 export class StartEventPublisherHandler implements StartEventType{
-    private publisher: Publisher;
+    private originalPublisher: Publisher;
+    private publisherAfterFunction: Publisher;
     private report: any = {};
     private prePublishingReport: any = {};
-    private previousPayload: string | any;
 
     constructor(publisher: Publisher) {
-        this.publisher = new PublisherFactory().createPublisher(publisher);
-        this.previousPayload = publisher.payload;
+        this.originalPublisher = new PublisherFactory().createPublisher(publisher);
+        this.publisherAfterFunction = this.originalPublisher;
     }
 
     public start(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
-            this.publisher.execute()
+            this.originalPublisher.publish(this.publisherAfterFunction)
                 .then(() => {
                     this.generateReport();
                     resolve();
@@ -35,18 +35,18 @@ export class StartEventPublisherHandler implements StartEventType{
 
     private generateReport(error: any = null): void {
         this.report = {
-            ...this.publisher,
+            ...this.originalPublisher,
             prePublishFunction: this.prePublishingReport,
             timestamp: new Date()
         }
         if (error)
             this.report.error = error;
-        if (this.previousPayload != this.publisher.payload)
-             this.report.previousPayload = this.previousPayload;
+        if (this.originalPublisher != this.publisherAfterFunction)
+             this.report.publisherAfterFunction = this.publisherAfterFunction;
     }
 
     private executePrePublishingFunction() {
-        const functionToExecute: Function = this.publisher.createPrePublishingFunction();
+        const functionToExecute: Function = this.originalPublisher.createPrePublishingFunction();
         try {
             let publisherExecutor: FunctionExecutor = new FunctionExecutor(functionToExecute);
             publisherExecutor.execute();
@@ -58,8 +58,7 @@ export class StartEventPublisherHandler implements StartEventType{
                 },
                 reports: publisherExecutor.getReports()
             }
-            this.previousPayload = this.publisher.payload;
-            this.publisher.payload = publisherExecutor.getFunctionResponse().payload;
+            this.publisherAfterFunction = publisherExecutor.getFunctionResponse().originalPublisher;
         } catch (exc) {
             this.prePublishingReport = {
                 onMessageReceivedFunctionCreationException: exc

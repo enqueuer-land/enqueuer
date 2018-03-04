@@ -13,7 +13,7 @@ export class StandardOutputReporterReplier implements ReportReplier {
     }
 
     report(report: string): boolean {
-        console.log(prettyjson.render(report, options));
+        console.log(prettyjson.render(JSON.parse(report), options));
         return true;
     }
 }

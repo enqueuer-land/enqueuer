@@ -1,4 +1,4 @@
-import { ReportReplier } from "./report-replier";
+import {ReportReplier} from "./report-replier";
 const mqtt = require("mqtt")
 
 export class MqttReportReplier implements ReportReplier {

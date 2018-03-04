@@ -16,7 +16,7 @@ export class HttpPublisher extends Publisher {
         }
     }
 
-    execute(): Promise<void> {
+    publish(): Promise<void> {
         return new Promise((resolve, reject) => {
             request.post({
                     url: this.endpoint,

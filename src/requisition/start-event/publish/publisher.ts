@@ -1,28 +1,26 @@
 export abstract class Publisher {
 
-    public protocol: string | null = null;
-    public payload: string | null = null;
+    public protocol: string;
+    public payload: string;
     public prePublishing: string | null = null;
 
     constructor(publish: any) {
-        if (publish) {
-            this.protocol = publish.protocol;
-            this.payload = publish.payload;
-            this.prePublishing = publish.prePublishing;
-        }
+        this.protocol = publish.protocol;
+        this.payload = publish.payload;
+        this.prePublishing = publish.prePublishing;
     }
 
-    public abstract execute(): Promise<void>;
+    public abstract publish(publisher: Publisher): Promise<void>;
 
     public createPrePublishingFunction(): Function {
         const fullBody: string =    `let test = {};
                                     let report = {};
-                                    let payload = '${this.payload}';
+                                    let publisher = '${this}';
                                     ${this.prePublishing};
                                     return {
                                             test: test,
                                             report: report,
-                                            payload: payload
+                                            publisher: publisher
                                      };`;
         return new Function(fullBody);
     }

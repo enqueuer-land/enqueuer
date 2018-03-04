@@ -6,7 +6,7 @@ export class NullPublisher extends Publisher {
         super(publish);
     }
 
-    public execute(): Promise<void> {
+    public publish(): Promise<void> {
         return Promise.reject(`Undefined publishing protocol to start event: ${this.protocol}`);
     }
 

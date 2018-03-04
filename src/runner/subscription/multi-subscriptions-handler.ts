@@ -18,7 +18,6 @@ export class MultiSubscriptionsHandler {
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.subscriptionHandlers.forEach(subscriptionHandler => {
-                subscriptionHandler.onTimeout(() => this.haveAllSubscriptionsStoppedWaiting());
                 subscriptionHandler.connect()
                     .then(() => {
                         if (this.areAllSubscriptionsConnected())
@@ -32,13 +31,18 @@ export class MultiSubscriptionsHandler {
 
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.subscriptionHandlers.forEach(subscriptionHandler =>
+            this.subscriptionHandlers.forEach(subscriptionHandler => {
+                subscriptionHandler.onTimeout(() => {
+                    if (this.haveAllSubscriptionsStoppedWaiting())
+                        resolve();
+                });
                 subscriptionHandler.receiveMessage()
                     .then(() => {
                         if (this.haveAllSubscriptionsStoppedWaiting())
                             resolve();
                     })
                     .catch(err => reject(err))
+            }
             );
         });
     }
@@ -51,7 +55,7 @@ export class MultiSubscriptionsHandler {
 
     private areAllSubscriptionsConnected(): boolean {
         ++this.subscriptionsConnectionCompletedCounter;
-        return (this.subscriptionsConnectionCompletedCounter == this.subscriptionHandlers.length)
+        return (this.subscriptionsConnectionCompletedCounter >= this.subscriptionHandlers.length)
     }
 
     private haveAllSubscriptionsStoppedWaiting() {
