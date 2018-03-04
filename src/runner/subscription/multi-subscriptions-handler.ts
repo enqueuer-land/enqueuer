@@ -44,6 +44,7 @@ export class MultiSubscriptionsHandler {
     }
 
     private onAllSubscriptionsStopWaiting() {
+        console.log("MultiSubscriptionsHandler.onAllSubscriptionsStopWaiting")
         ++this.subscriptionsReceivedMessagesCounter;
         if (this.subscriptionsReceivedMessagesCounter >= this.subscriptionHandlers.length)
             this.onAllSubscriptionsStopWaitingCallback();

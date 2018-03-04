@@ -9,7 +9,7 @@ export class RequisitionRunner {
     private startEventHandler: StartEventHandler;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback | null = null;
-    private startTime: number = 0;
+    private startTime: Date | null = null;
     private timeout: number | null;
 
     constructor(requisition: Requisition) {
@@ -19,7 +19,8 @@ export class RequisitionRunner {
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
-        this.startTime = Date.now();
+        console.log("Starting requisition");
+        this.startTime = new Date();
         this.onFinishCallback = onFinishCallback;
         this.multiSubscriptionsHandler.start(() => this.onSubscriptionsCompleted(),
                                          () => this.onAllSubscriptionsStopWaiting());
@@ -31,7 +32,7 @@ export class RequisitionRunner {
             let timer = global.setTimeout(() => {
                 global.clearTimeout(timer);
                 console.log("Requisition Timeout");
-                if (this.startTime != 0)
+                if (this.startTime)
                     this.onFinish({requisitionTimedOut: true});
             }, this.timeout);
         }
@@ -39,28 +40,40 @@ export class RequisitionRunner {
 
     private onSubscriptionsCompleted() {
         this.startEventHandler.start()
+            .then(() => {
+                console.log("Start event has done its job");
+            })
             .catch(err => {
                 this.onFinish(err);
             })
     }
 
     private onAllSubscriptionsStopWaiting(): void {
-        if (this.startTime != 0)
+        console.log("All subscriptions stopped waiting");
+        if (this.startTime)
             this.onFinish();
     }
 
     private onFinish(additionalInfo: any = null): void {
-        const totalTime = Date.now() - this.startTime;
 
         let reportGenerator: ReportGenerator = new ReportGenerator();
         if (additionalInfo)
             reportGenerator.addInfo({additionalInfo});
         reportGenerator.addSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         reportGenerator.addStartEventReport(this.startEventHandler.getReport());
-        reportGenerator.addInfo({startTime: new Date().toString(), endTime: new Date().toString(), totalTime: totalTime})
+        if (this.startTime) {
+            const endDate = new Date();
+            const totalTime = endDate.getTime() - this.startTime.getTime();
+            reportGenerator.addInfo({
+                times: {
+                    startTime: this.startTime.toString(),
+                    endTime: endDate.toString(),
+                    totalTime: totalTime}
+                });
+        }
 
         if (this.onFinishCallback)
             this.onFinishCallback(reportGenerator.generate());
-        this.startTime = 0;
+        this.startTime = null;
     }
 }

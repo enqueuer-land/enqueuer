@@ -3,10 +3,12 @@ import {FunctionExecutor} from "../../function-executor/function-executor";
 
 export class SubscriptionHandler {
 
+    private timer: any;
     private subscription: Subscription;
     private report: any = {};
     private onStopWaitingCallback: Function;
     private onSubscriptionCompletedCallback: Function;
+    private messageReceivedTime: Date | null = null;
     private startTime: Date;
 
     constructor(subscription: Subscription) {
@@ -21,6 +23,7 @@ export class SubscriptionHandler {
             ...this.report,
             startTime: this.startTime.toString(),
         };
+        this.startTime = new Date();
         this.initializeTimeout();
         this.onSubscriptionCompletedCallback = onSubscriptionCompletedCallback;
         this.onStopWaitingCallback = onStopWaitingCallback;
@@ -32,20 +35,21 @@ export class SubscriptionHandler {
         this.report = {
             ...this.report,
             subscription: this.subscription,
-            timestamp: new Date().toString(),
             hasReceivedMessage: this.subscription.messageReceived != null
         };
-        if (this.subscription.timeout && this.subscription.messageReceived)
-            this.report.hasTimedOut = (new Date().getTime() - this.startTime.getTime()) > this.subscription.timeout;
+        if (this.subscription.timeout && this.subscription.messageReceived && this.messageReceivedTime) {
+            const executionTime = this.messageReceivedTime.getTime() - this.startTime.getTime();
+            this.report.hasTimedOut = executionTime > this.subscription.timeout;
+        }
+
         this.subscription.unsubscribe();
         return this.report;
     }
 
     private initializeTimeout() {
         if (this.subscription.timeout) {
-            let timer = global.setTimeout(() => {
-                global.clearTimeout(timer);
-                console.log("Subscription Timeout");
+            this.timer = global.setTimeout(() => {
+                console.log("Subscription stop waiting because has timed out");
                 this.stopWaiting();
             }, this.subscription.timeout);
         }
@@ -53,12 +57,13 @@ export class SubscriptionHandler {
 
     private onMessageReceived() {
         this.executeSubscriptionFunction();
+        console.log("Subscription stop waiting because has already received its message");
         this.subscription.unsubscribe();
         this.stopWaiting();
     }
 
     private stopWaiting() {
-        console.log("Subscription stop waitting")
+        global.clearTimeout(this.timer);
         this.onStopWaitingCallback();
         this.onStopWaitingCallback = () => {};
     }
@@ -98,6 +103,8 @@ export class SubscriptionHandler {
                 functionReport: functionReport
             }
 
+            this.messageReceivedTime = new Date();
+            this.report.messageReceivedTimestamp = this.messageReceivedTime.toString();
         }
 
     }
