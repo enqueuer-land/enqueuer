@@ -1,5 +1,4 @@
 import {StartEvent} from "./start-event";
-import {Report} from "../../report/report";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
 
 export class StartEventSubscriptionHandler implements StartEvent {
@@ -24,7 +23,7 @@ export class StartEventSubscriptionHandler implements StartEvent {
         });
     }
 
-    public getReport(): Report {
+    public getReport(): any {
         this.generateReport();
         return this.report;
     }

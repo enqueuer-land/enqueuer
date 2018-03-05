@@ -1,35 +1,41 @@
-import { RequisitionReader } from "./requisition-reader";
-import {Configuration} from "../conf/configuration";
+import {Subscription} from "./subscription";
 import {FSWatcher} from "fs";
 const fs = require("fs");
 const chokidar = require('chokidar');
 
-export class FolderRequisitionReader implements RequisitionReader {
+export class FolderSubscription extends Subscription {
 
-    private INTERVAL_CHECK: number = 1000;
+    private checkIntervalMs: number;
     private files: string[] = [];
     private watcher: FSWatcher;
     private folderName: string;
 
-    constructor() {
-        this.folderName = Configuration.getWatchFolder();
+    constructor(subscriptionAttributes: any) {
+        super(subscriptionAttributes);
+
+        this.folderName = subscriptionAttributes.folderName;
+        this.checkIntervalMs = subscriptionAttributes.checkIntervalMs;
         this.watcher = chokidar.watch(this.folderName, {ignored: /(^|[\/\\])\../});
-        this.watcher.on('add', path => this.files.push(path));
     }
 
-    public start(): Promise<string> {
+    public connect(): Promise<void> {
+        this.watcher.on('add', path => this.files.push(path));
+        this.watcher.on('change', path => this.files.push(path));
+        return Promise.resolve();
+    }
+
+    public receiveMessage(): Promise<string> {
         console.log(`Starting FolderRequisitionReader:\t${this.folderName}`);
 
         return new Promise((resolve, reject) => {
-            this.popFile()
+            this.popFileContent()
                 .then( fileContent => resolve(fileContent))
                 .catch( err => reject(err));
             });
     }
 
-    private popFile(): Promise<string> {
+    private popFileContent(): Promise<string> {
         return new Promise((resolve, reject) => {
-
             var timer = setInterval(() => {
                 const file: string | undefined = this.files.pop();
                 if (file) {
@@ -40,7 +46,7 @@ export class FolderRequisitionReader implements RequisitionReader {
                         .then(fileContent => resolve(fileContent))
                         .catch(err => reject(err));
                 }
-            }, this.INTERVAL_CHECK);
+            }, this.checkIntervalMs);
         });
     }
 

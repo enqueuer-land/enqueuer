@@ -13,18 +13,13 @@ export class MqttSubscription extends Subscription {
         this.topic = subscriptionAttributes.topic;
     }
 
-    public receiveMessage(): Promise<void> {
+    public receiveMessage(): Promise<string> {
         this.client.subscribe(this.topic);
         return new Promise((resolve, reject) => {
             if (!this.client.connected)
                 reject(`Error trying to receive message. Subscription is not connected yet: ${this.topic}`);
-
-            this.client.on('message', (topic: string, message: string) =>
-            {
-                this.messageReceived = message.toString();
-                resolve();
+                this.client.on('message', (topic: string, message: string) => resolve(message.toString()));
             });
-        });
     }
 
     public connect(): Promise<void> {

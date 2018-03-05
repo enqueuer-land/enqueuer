@@ -1,9 +1,8 @@
-import { Report } from "./report";
 import {Configuration} from "../conf/configuration";
 
 export class ReportGenerator {
 
-    private info: any = {};
+    private requisitionReports: any = [];
     private startEventReports: any = [];
     private subscriptionReports: any = [];
     private verboseMode: boolean = true;
@@ -12,11 +11,11 @@ export class ReportGenerator {
         this.verboseMode = Configuration.isVerboseMode();
     }
     
-    public addInfo(infoMessage: any): void {
+    public addRequisitionReports(requisitionReports: any): void {
         if (this.verboseMode)
-            console.log(infoMessage);
-        for (const key in infoMessage) {
-            this.info[key] = infoMessage[key];
+            console.log(requisitionReports);
+        for (const key in requisitionReports) {
+            this.requisitionReports[key] = requisitionReports[key];
         }
     }
     
@@ -32,10 +31,10 @@ export class ReportGenerator {
         this.subscriptionReports.push(subscriptionReport);
     }
 
-    public generate(): Report {
-        return new Report(this.info,
-                            this.startEventReports,
-                            this.subscriptionReports);
+    public generate(): string {
+        let clone = JSON.parse(JSON.stringify(this));
+        delete clone.verboseMode;
+        return JSON.stringify(clone);
     }
 
 }

@@ -39,9 +39,10 @@ export class SubscriptionHandler {
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
-                .then(() => {
+                .then((message) => {
                     this.executeSubscriptionFunction();
                     if (!this.hasTimedOut) {
+                        this.subscription.messageReceived = message;
                         console.log("Subscription stop waiting because it has already received its message");
                         global.clearTimeout(this.timer);
                         this.subscription.unsubscribe();

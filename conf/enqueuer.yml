@@ -1,1 +1,18 @@
-watchFolder: samples/*.enq
+readers:
+  -
+    protocol: watchFolder
+    folderName: samples/*.enq
+    checkIntervalMs: 1000
+
+  -
+    protocol: mqtt
+    brokerAddress: mqtt://localhost
+    topic: enqueuer/requisition
+
+  -
+    protocol: uds
+    id: enqueuer
+    path: enqueuer-client
+
+  -
+    protocol: standardInput

@@ -1,4 +1,3 @@
-import {Report} from "../../report/report";
 import {StartEvent} from "./start-event";
 
 export class NullStartEvent implements StartEvent {

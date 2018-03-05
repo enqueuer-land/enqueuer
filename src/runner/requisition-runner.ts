@@ -59,13 +59,13 @@ export class RequisitionRunner {
 
         let reportGenerator: ReportGenerator = new ReportGenerator();
         if (additionalInfo)
-            reportGenerator.addInfo({additionalInfo});
+            reportGenerator.addRequisitionReports({additionalInfo});
         reportGenerator.addSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         reportGenerator.addStartEventReport(this.startEventHandler.getReport());
         if (this.startTime) {
             const endDate = new Date();
             const totalTime = endDate.getTime() - this.startTime.getTime();
-            reportGenerator.addInfo({
+            reportGenerator.addRequisitionReports({
                 times: {
                     startTime: this.startTime.toString(),
                     endTime: endDate.toString(),
