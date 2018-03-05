@@ -14,7 +14,7 @@ export class StandardOutputPublisher extends Publisher {
     }
 
     public publish(): Promise<void> {
-        console.log(prettyjson.render(JSON.parse(JSON.stringify(this.payload)), options));
+        console.log(prettyjson.render(JSON.parse(this.payload), options));
         return Promise.resolve();
     }
 

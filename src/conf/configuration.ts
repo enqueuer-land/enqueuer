@@ -19,7 +19,7 @@ export class Configuration {
                                                 "conf/enqueuer.yml";
 
         this.fileParameters = readYml.sync(configFilename);
-        new StandardOutputPublisher({payload: this.fileParameters}).publish();
+        new StandardOutputPublisher({payload: JSON.stringify(this.fileParameters)}).publish();
     }
 
     static isVerboseMode(): boolean {

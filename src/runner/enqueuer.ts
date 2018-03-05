@@ -17,7 +17,10 @@ export class Enqueuer {
                 console.log(`Connecting ${configReader.protocol}`);
                 reader.connect()
                         .then(() => this.startReader(reader))
-                        .catch( err => console.error(err))
+                        .catch( err => {
+                            console.error(err);
+                            reader.unsubscribe();
+                        })
             });
     }
 
@@ -28,9 +31,10 @@ export class Enqueuer {
                 this.processRequisition(messageReceived);
                 return this.startReader(reader); //runs again
             })
-            .catch((err) => {
+            .catch( err => {
                 console.error(err);
-            });
+                reader.unsubscribe();
+            })
     }
 
     private processRequisition(messageReceived: string): void {
