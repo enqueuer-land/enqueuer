@@ -3,6 +3,7 @@ import {StartEvent} from "./start-event";
 import {PublisherFactory} from "../../publish/publisher-factory";
 import {PrePublishFunction} from "../../executor/pre-publish-function";
 import {FunctionExecutor} from "../../executor/function-executor";
+import {DateController} from "../../date/date-controller";
 
 export class StartEventPublisherHandler implements StartEvent{
     private publisherOriginalAttributes: any;
@@ -42,7 +43,7 @@ export class StartEventPublisherHandler implements StartEvent{
             ...this.publisherOriginalAttributes,
             prePublishFunction: this.prePublishingReport,
             publisher: this.publisher,
-            timestamp: new Date()
+            timestamp: new DateController().toString()
         }
         if (error)
             this.report.error = error;

@@ -3,19 +3,20 @@ import {OnMessageReceivedSubscriptionFunction} from "../../executor/on-message-r
 import {Subscription} from "../../subscription/subscription";
 import {SubscriptionFactory} from "../../subscription/subscription-factory";
 import {Logger} from "../../log/logger";
+import {DateController} from "../../date/date-controller";
 
 export class SubscriptionHandler {
 
     private timer: any;
     private subscription: Subscription;
     private report: any = {};
-    private startTime: Date;
+    private startTime: DateController;
     private onTimeOutCallback: Function = () => {};
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: any) {
         this.subscription = new SubscriptionFactory().createSubscription(subscriptionAttributes);
-        this.startTime = new Date();
+        this.startTime = new DateController();
     }
 
     public onTimeout(onTimeOutCallback: Function) {
@@ -28,7 +29,7 @@ export class SubscriptionHandler {
                 .then(() => {
                     this.report = {
                         ...this.report,
-                        connectionTime: new Date().toString()
+                        connectionTime: new DateController().toString()
                     };
                     this.initializeTimeout();
                     resolve();
@@ -85,7 +86,7 @@ export class SubscriptionHandler {
         this.report = {
             ...this.report,
             functionReport: functionResponse.report,
-            messageReceivedTimestamp: new Date().toString()
+            messageReceivedTimestamp: new DateController().toString()
         }
     }
 

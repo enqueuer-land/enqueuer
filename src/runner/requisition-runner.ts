@@ -2,13 +2,14 @@ import { ReportGenerator } from "../report/report-generator";
 import {MultiSubscriptionsHandler} from "./subscription/multi-subscriptions-handler";
 import {StartEventHandler} from "./start-event/start-event-handler";
 import {Logger} from "../log/logger";
+import {DateController} from "../date/date-controller";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
     private startEventHandler: StartEventHandler;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback | null = null;
-    private startTime: Date | null = null;
+    private startTime: DateController | null = null;
     private timeout: number | null;
 
     constructor(requisitionAttributes: any) {
@@ -19,7 +20,7 @@ export class RequisitionRunner {
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
         Logger.info("Starting requisition");
-        this.startTime = new Date();
+        this.startTime = new DateController();
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();
         this.multiSubscriptionsHandler.connect()
@@ -64,7 +65,7 @@ export class RequisitionRunner {
         reportGenerator.addSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         reportGenerator.addStartEventReport(this.startEventHandler.getReport());
         if (this.startTime) {
-            const endDate = new Date();
+            const endDate = new DateController();
             const totalTime = endDate.getTime() - this.startTime.getTime();
             reportGenerator.addRequisitionReports({
                 times: {
