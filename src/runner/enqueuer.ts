@@ -3,6 +3,7 @@ import {RequisitionReader} from "./requisition-reader";
 import {RequisitionParser} from "../requisition/requisition-parser";
 import {MultiPublisherFactory} from "../publish/multi-publisher-factory";
 import {RequisitionRunner} from "./requisition-runner";
+import {Logger} from "../log/logger";
 
 export class Enqueuer {
 
@@ -14,11 +15,11 @@ export class Enqueuer {
             .forEach((configReader: any) => {
                 let reader = new RequisitionReader(configReader)
 
-                console.log(`Connecting ${configReader.protocol}`);
+                Logger.info(`Connecting ${configReader.protocol}`);
                 reader.connect()
                         .then(() => this.startReader(reader))
                         .catch( err => {
-                            console.error(err);
+                            Logger.error(err);
                             reader.unsubscribe();
                         })
             });
@@ -27,12 +28,12 @@ export class Enqueuer {
     private startReader(reader: RequisitionReader) {
         reader.receiveMessage()
             .then((messageReceived: string) => {
-                console.log(`${reader.getSubscriptionProtocol()} got a message`);
+                Logger.debug(`${reader.getSubscriptionProtocol()} got a message`);
                 this.processRequisition(messageReceived);
                 return this.startReader(reader); //runs again
             })
             .catch( err => {
-                console.error(err);
+                Logger.error(err);
                 reader.unsubscribe();
             })
     }
@@ -46,13 +47,13 @@ export class Enqueuer {
                 new MultiPublisherFactory(report)
                     .createReportPublishers(parsedRequisition.reports)
                     .forEach( publisher => publisher.publish());
-                console.log("Requisition is over");
+                Logger.info("Requisition is over");
 
                 // return this.processRequisition(requisition); //Do it again
                 // whyIsNodeRunning();
             });
         } catch (err) {
-            console.error(err);
+            Logger.error(err);
         }
     }
 }

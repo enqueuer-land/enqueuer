@@ -1,5 +1,6 @@
 import {Subscription} from "./subscription";
 import {FSWatcher} from "fs";
+import {Logger} from "../log/logger";
 const fs = require("fs");
 const chokidar = require('chokidar');
 
@@ -25,7 +26,7 @@ export class FolderSubscription extends Subscription {
     }
 
     public receiveMessage(): Promise<string> {
-        console.log(`Starting FolderRequisitionReader:\t${this.folderName}`);
+        Logger.info(`Starting FolderRequisitionReader:\t${this.folderName}`);
 
         return new Promise((resolve, reject) => {
             this.popFileContent()
@@ -39,7 +40,7 @@ export class FolderSubscription extends Subscription {
             var timer = setInterval(() => {
                 const file: string | undefined = this.files.pop();
                 if (file) {
-                    console.log(`Detected: ${file}`);
+                    Logger.debug(`Folder subscription detected file: ${file}`);
 
                     clearInterval(timer);
                     this.readFile(file)

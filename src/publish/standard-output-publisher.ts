@@ -2,7 +2,7 @@ import {Publisher} from "./publisher";
 const prettyjson = require('prettyjson');
 
 const options = {
-    indent: 6,
+    indent: 8,
     keysColor: "white",
     dashColor: "white"
   };

@@ -1,6 +1,7 @@
 import { ReportGenerator } from "../report/report-generator";
 import {MultiSubscriptionsHandler} from "./subscription/multi-subscriptions-handler";
 import {StartEventHandler} from "./start-event/start-event-handler";
+import {Logger} from "../log/logger";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
@@ -17,7 +18,7 @@ export class RequisitionRunner {
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
-        console.log("Starting requisition");
+        Logger.info("Starting requisition");
         this.startTime = new Date();
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();
@@ -33,7 +34,7 @@ export class RequisitionRunner {
 
         this.startEventHandler.start()
             .then(() => {
-                console.log("Start event has done its job");
+                Logger.debug("Start event has done its job");
             })
             .catch(err => this.onFinish(err));
     }
@@ -42,7 +43,7 @@ export class RequisitionRunner {
         if (this.timeout) {
             let timer = global.setTimeout(() => {
                 global.clearTimeout(timer);
-                console.log("Requisition Timeout");
+                Logger.info("Requisition Timeout");
                 if (this.startTime)
                     this.onFinish({requisitionTimedOut: true});
             }, this.timeout);
@@ -50,7 +51,7 @@ export class RequisitionRunner {
     }
 
     private onAllSubscriptionsStopWaiting(): void {
-        console.log("All subscriptions stopped waiting");
+        Logger.info("All subscriptions stopped waiting");
         if (this.startTime)
             this.onFinish();
     }

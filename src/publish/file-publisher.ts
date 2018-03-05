@@ -3,7 +3,7 @@ const fs = require("fs");
 
 export class FilePublisher extends Publisher {
 
-    private filename: string = "";
+    private filename: string;
 
     constructor(publisherAttributes: any) {
         super(publisherAttributes);

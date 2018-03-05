@@ -2,6 +2,7 @@ import {FunctionExecutor} from "../../executor/function-executor";
 import {OnMessageReceivedSubscriptionFunction} from "../../executor/on-message-received-subscription-function";
 import {Subscription} from "../../subscription/subscription";
 import {SubscriptionFactory} from "../../subscription/subscription-factory";
+import {Logger} from "../../log/logger";
 
 export class SubscriptionHandler {
 
@@ -43,7 +44,7 @@ export class SubscriptionHandler {
                     this.executeSubscriptionFunction();
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
-                        console.log("Subscription stop waiting because it has already received its message");
+                        Logger.info("Subscription stop waiting because it has already received its message");
                         global.clearTimeout(this.timer);
                         this.subscription.unsubscribe();
                         resolve();
@@ -70,7 +71,7 @@ export class SubscriptionHandler {
     private initializeTimeout() {
         if (this.subscription.timeout) {
             this.timer = global.setTimeout(() => {
-                console.log("Subscription stop waiting because it has timed out");
+                Logger.info("Subscription stop waiting because it has timed out");
                 this.subscription.unsubscribe();
                 this.hasTimedOut = true;
                 this.onTimeOutCallback();

@@ -1,10 +1,11 @@
 import {Subscription} from "./subscription";
+import {Logger} from "../log/logger";
 
 export class NullSubscription extends Subscription {
     constructor(subscriptionAttributes: any) {
         super(subscriptionAttributes);
 
-        console.log(`NullSubscription: ${JSON.stringify(subscriptionAttributes, null, 3)}`)
+        Logger.error(`NullSubscription: ${JSON.stringify(subscriptionAttributes, null, 3)}`)
     }
 
     public connect(): Promise<void> {
