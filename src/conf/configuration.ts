@@ -19,15 +19,24 @@ export class Configuration {
                                                 "conf/enqueuer.yml";
 
         this.fileParameters = readYml.sync(configFilename);
-        new StandardOutputPublisher({payload: JSON.stringify(this.fileParameters)}).publish();
+        this.printConfiguration()
     }
 
-    static isVerboseMode(): boolean {
+    private printConfiguration(): any {
+        if (this.commandLine.verbose || this.fileParameters.verbose) {
+            const payload = {payload: JSON.stringify(this.fileParameters)};
+            new StandardOutputPublisher(payload)
+                .publish();
+        }
+    }
+
+
+    public static isVerboseMode(): boolean {
         return (Configuration.singleton.commandLine.verbose != null) ||
             (Configuration.singleton.fileParameters.verbose != null);
     }
 
-    static getReaders(): any[] {
+    public static getReaders(): any[] {
         return Configuration.singleton.fileParameters.readers;
     }
 }

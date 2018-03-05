@@ -4,6 +4,7 @@ import {HttpPublisher} from "./http-publisher";
 import {NullPublisher} from "./null-publisher";
 import {FilePublisher} from "./file-publisher";
 import {StandardOutputPublisher} from "./standard-output-publisher";
+import {UdsPublisher} from "./uds-publisher";
 
 export class PublisherFactory {
     public createPublisher(publishRequisition: any): Publisher {
@@ -15,6 +16,8 @@ export class PublisherFactory {
             return new FilePublisher(publishRequisition);
         if (publishRequisition.protocol === "standardOutput")
             return new StandardOutputPublisher(publishRequisition);
+        if (publishRequisition.protocol === "uds")
+            return new UdsPublisher(publishRequisition);
         return new NullPublisher(publishRequisition);
     }
 }
