@@ -1,7 +1,7 @@
 const whyIsNodeRunning = require('why-is-node-running') // should be your first require
 import {RequisitionReader} from "./requisition-reader";
 import {RequisitionParser} from "../requisition/requisition-parser";
-import {MultiPublisherFactory} from "../publish/multi-publisher-factory";
+import {ReportersFactory} from "../report/reporters-factory";
 import {RequisitionRunner} from "./requisition-runner";
 import {Logger} from "../log/logger";
 
@@ -44,8 +44,8 @@ export class Enqueuer {
             const requisitionRunner: RequisitionRunner = new RequisitionRunner(parsedRequisition);
 
             requisitionRunner.start((report: string) => {
-                new MultiPublisherFactory(report)
-                    .createReportPublishers(parsedRequisition.reports)
+                new ReportersFactory(report)
+                    .createReporters(parsedRequisition.reports)
                     .forEach( publisher => publisher.publish()
                         .catch( (err: any) => {
                             Logger.error(err);

@@ -1,8 +1,8 @@
-import {Publisher} from "./publisher";
-import {PublisherFactory} from "./publisher-factory";
+import {Publisher} from "../publish/publisher";
+import {PublisherFactory} from "../publish/publisher-factory";
 import {Logger} from "../log/logger";
 
-export class MultiPublisherFactory {
+export class ReportersFactory {
 
     private payload: string;
 
@@ -10,11 +10,11 @@ export class MultiPublisherFactory {
         this.payload = payload;
     }
 
-    public createReportPublishers(reportsAttributes: any): Publisher[] {
+    public createReporters(reportersAttributes: any): Publisher[] {
         const publisherFactory: PublisherFactory = new PublisherFactory();
 
         let reportRepliers: Publisher[] = [];
-        reportsAttributes.forEach((report: any) => {
+        reportersAttributes.forEach((report: any) => {
             report.payload = this.payload;
             const publisher = publisherFactory.createPublisher(report);
             Logger.debug(`Instantiating publisher: ${publisher.constructor.name}`);
