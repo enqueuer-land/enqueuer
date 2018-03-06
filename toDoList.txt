@@ -1,3 +1,15 @@
-Use eventEmitter rather than promises: https://gist.github.com/oscarrenalias/3692870
-Test it all. For god sakes
-Validate requisition
+AMQP publisher
+Http proxy for http subscription
+Use eventEmitter rather than promises: https://gist.github.com/oscarrenalias/3692870 (?) For subscription timeouts..
+Test it all. For god sakes. Component tests with subscription and publish of the same type...
+Validate requisition (?) Json schema...
+
+
+Handle signals to unsubscribe?
+    import Signals = NodeJS.Signals;
+    // Using a single function to handle multiple signals
+    public handle = (signal: Signals): void => {
+        console.log(`Received ${signal}`);
+    }
+    process.on('SIGINT', handle);
+    process.on('SIGTERM', handle);

@@ -28,6 +28,11 @@
       "filename": "outputFileNameReportBack"
     },
     {
+      "protocol": "amqp",
+      "url": "amqp://localhost:5672",
+      "queue": "ENQUEUER.REPORT"
+    },
+    {
       "protocol": "http",
       "endpoint": "http://localhost:1880/reports"
     },

@@ -46,12 +46,16 @@ export class Enqueuer {
             requisitionRunner.start((report: string) => {
                 new MultiPublisherFactory(report)
                     .createReportPublishers(parsedRequisition.reports)
-                    .forEach( publisher => publisher.publish());
-                Logger.info("Requisition is over");
+                    .forEach( publisher => publisher.publish()
+                        .catch( (err: any) => {
+                            Logger.error(err);
+                        }));
 
-                // return this.processRequisition(requisition); //Do it again
-                // whyIsNodeRunning();
-            });
+        });
+            Logger.info("Requisition is over");
+
+            // return this.processRequisition(requisition); //Do it again
+            // whyIsNodeRunning();
         } catch (err) {
             Logger.error(err);
         }

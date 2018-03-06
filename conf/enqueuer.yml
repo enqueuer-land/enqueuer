@@ -16,3 +16,10 @@ readers:
 
   -
     protocol: standardInput
+
+  -
+    protocol: amqp
+    brokerUrl: amqp://localhost:5672
+    exchangeName: ENQUEUER.E
+    routingKey: "#"
+    queueName: ENQUEUER.INPUT

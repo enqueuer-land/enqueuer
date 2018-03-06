@@ -18,7 +18,6 @@ export class SubscriptionFactory {
             return new StandardInputSubscription();
         if (subscriptionAttributes.protocol === "watchFolder")
             return new FolderSubscription(subscriptionAttributes);
-
         return new NullSubscription(subscriptionAttributes);
     }
 }

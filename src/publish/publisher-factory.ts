@@ -19,8 +19,8 @@ export class PublisherFactory {
             return new StandardOutputPublisher(publishRequisition);
         if (publishRequisition.protocol === "uds")
             return new UdsPublisher(publishRequisition);
-        // if (publishRequisition.protocol === "amqp")
-        //     return new AmqpPublisher(publishRequisition);
+        if (publishRequisition.protocol === "amqp")
+            return new AmqpPublisher(publishRequisition);
         return new NullPublisher(publishRequisition);
     }
 }
