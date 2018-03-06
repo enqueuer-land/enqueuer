@@ -5,6 +5,7 @@ import {NullPublisher} from "./null-publisher";
 import {FilePublisher} from "./file-publisher";
 import {StandardOutputPublisher} from "./standard-output-publisher";
 import {UdsPublisher} from "./uds-publisher";
+import {AmqpPublisher} from "./amqp-publisher";
 
 export class PublisherFactory {
     public createPublisher(publishRequisition: any): Publisher {
@@ -18,6 +19,8 @@ export class PublisherFactory {
             return new StandardOutputPublisher(publishRequisition);
         if (publishRequisition.protocol === "uds")
             return new UdsPublisher(publishRequisition);
+        // if (publishRequisition.protocol === "amqp")
+        //     return new AmqpPublisher(publishRequisition);
         return new NullPublisher(publishRequisition);
     }
 }

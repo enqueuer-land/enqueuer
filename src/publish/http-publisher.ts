@@ -3,17 +3,15 @@ import {Publisher} from "./publisher";
 const request = require("request");
 
 export class HttpPublisher extends Publisher {
-    endpoint: string = "";
-    method: string = "";
-    header: any = {};
+    private endpoint: string;
+    private method: string;
+    private header: any;
 
     constructor(publish: any) {
         super(publish);
-        if (publish) {
-            this.endpoint = publish.endpoint;
-            this.method = publish.method;
-            this.header = publish.header;
-        }
+        this.endpoint = publish.endpoint;
+        this.method = publish.method;
+        this.header = publish.header;
     }
 
     public publish(): Promise<void> {

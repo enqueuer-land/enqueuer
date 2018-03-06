@@ -3,15 +3,13 @@ import {Publisher} from "./publisher";
 const mqtt = require("mqtt")
 
 export class MqttPublisher extends Publisher {
-    brokerAddress: string = "";
-    topic: string = "";
+    private brokerAddress: string;
+    private topic: string;
 
     constructor(publish: any) {
         super(publish);
-        if (publish) {
-            this.brokerAddress = publish.brokerAddress;
-            this.topic = publish.topic;
-        }
+        this.brokerAddress = publish.brokerAddress;
+        this.topic = publish.topic;
     }
 
     public publish(): Promise<void> {

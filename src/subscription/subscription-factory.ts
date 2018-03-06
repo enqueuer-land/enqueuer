@@ -4,11 +4,14 @@ import {NullSubscription} from "./null-subscription";
 import {UdsSubscription} from "./uds-subscription";
 import {StandardInputSubscription} from "./standard-input-subscription";
 import {FolderSubscription} from "./folder-subscription";
+import {AmqpSubscription} from "./amqp-subscription";
 
 export class SubscriptionFactory {
     public createSubscription(subscriptionAttributes: any): Subscription {
         if (subscriptionAttributes.protocol === "mqtt")
             return new MqttSubscription(subscriptionAttributes);
+        if (subscriptionAttributes.protocol === "amqp")
+            return new AmqpSubscription(subscriptionAttributes);
         if (subscriptionAttributes.protocol === "uds")
             return new UdsSubscription(subscriptionAttributes)
         if (subscriptionAttributes.protocol === "standardInput")

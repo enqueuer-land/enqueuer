@@ -45,38 +45,44 @@ export class RequisitionRunner {
             let timer = global.setTimeout(() => {
                 global.clearTimeout(timer);
                 Logger.info("Requisition Timeout");
-                if (this.startTime)
-                    this.onFinish({requisitionTimedOut: true});
+                this.onFinish({requisitionTimedOut: true});
             }, this.timeout);
         }
     }
 
     private onAllSubscriptionsStopWaiting(): void {
         Logger.info("All subscriptions stopped waiting");
-        if (this.startTime)
-            this.onFinish();
+        this.onFinish();
     }
 
     private onFinish(additionalInfo: any = null): void {
+        this.onFinish = () => {};
 
         let reportGenerator: ReportGenerator = new ReportGenerator();
         if (additionalInfo)
             reportGenerator.addRequisitionReports({additionalInfo});
         reportGenerator.addSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         reportGenerator.addStartEventReport(this.startEventHandler.getReport());
-        if (this.startTime) {
-            const endDate = new DateController();
-            const totalTime = endDate.getTime() - this.startTime.getTime();
-            reportGenerator.addRequisitionReports({
-                times: {
-                    startTime: this.startTime.toString(),
-                    endTime: endDate.toString(),
-                    totalTime: totalTime}
-                });
-        }
-
+        const timesReport = this.generateTimesReport();
+        if (timesReport)
+            reportGenerator.addRequisitionReports({times:timesReport});
         if (this.onFinishCallback)
             this.onFinishCallback(reportGenerator.generate().toString());
-        this.startTime = null;
+    }
+
+    private generateTimesReport(): {} | null{
+        if (this.startTime) {
+            let timesReport: any = {};
+            const endDate = new DateController();
+            timesReport.totalTime = endDate.getTime() - this.startTime.getTime();
+            timesReport.startTime = this.startTime.toString();
+            timesReport.endTime = endDate.toString();
+            if (this.timeout) {
+                timesReport.timeout = this.timeout;
+                timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
+            }
+            return timesReport;
+        }
+        return null;
     }
 }

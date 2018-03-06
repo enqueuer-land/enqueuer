@@ -1,22 +1,22 @@
 {
-  "timeout": "30000",
+  "timeout": "10000",
   "subscriptions": [
     {
       "protocol": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "subscription",
       "onMessageReceivedFunctionBody": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
-      "timeout": "20000"
+      "timeout": "8000"
     }
   ],
   "startEvent": {
     "subscription":
     {
-      "protocol": "mqtt",
-      "brokerAddress": "brokerAddress",
-      "topic": "startEvent",
-      "onMessageReceivedFunctionBody": "test['validates'] = message == 'Valid'; report['message'] = message;",
-      "timeout": "10000"
+      "protocol": "amqp",
+      "brokerUrl": "amqp://localhost:5672",
+      "exchangeName": "ENQUEUER.E",
+      "routingKey": "#",
+      "queueName": "ENQUEUER.SUBS"
     }
   },
   "reports" : [
@@ -26,6 +26,12 @@
     {
       "protocol": "file",
       "filename": "outputFileNameReportBack"
+    },
+    {
+      "protocol": "amqp",
+      "url": "amqp://localhost:5672",
+      "routingKey": "routingKey",
+      "exchangeName": "ENQUEUER"
     },
     {
       "protocol": "http",

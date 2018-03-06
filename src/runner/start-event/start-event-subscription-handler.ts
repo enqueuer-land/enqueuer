@@ -4,7 +4,6 @@ import {SubscriptionHandler} from "../subscription/subscription-handler";
 export class StartEventSubscriptionHandler implements StartEvent {
 
     private subscriptionHandler: SubscriptionHandler;
-    private report: any = {};
 
     public constructor(subscriptionAttributes: any) {
         this.subscriptionHandler = new SubscriptionHandler(subscriptionAttributes);
@@ -14,7 +13,8 @@ export class StartEventSubscriptionHandler implements StartEvent {
         return new Promise((resolve, reject) => {
             this.subscriptionHandler.connect()
                 .then(() => {
-                    this.subscriptionHandler.onTimeout(() => resolve());
+                    this.subscriptionHandler
+                        .onTimeout(() => resolve());
                     this.subscriptionHandler.receiveMessage()
                         .then(() => resolve())
                         .catch(err => reject(err));
@@ -24,18 +24,15 @@ export class StartEventSubscriptionHandler implements StartEvent {
     }
 
     public getReport(): any {
-        this.generateReport();
-        return this.report;
+        return this.generateReport();
     }
 
     private generateReport(): any {
         const subscriptionReport = this.subscriptionHandler.getReport();
-        if (subscriptionReport) {
-            this.report = subscriptionReport;
-        }
-        this.report.valid = subscriptionReport &&
-                            subscriptionReport.functionReport &&
-                            subscriptionReport.functionReport.failingTests.length <= 0;
+        subscriptionReport.valid = subscriptionReport &&
+                                    subscriptionReport.functionReport &&
+                                    subscriptionReport.functionReport.failingTests.length <= 0;
+        return subscriptionReport;
     }
 
 

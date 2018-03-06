@@ -46,10 +46,9 @@ export class SubscriptionHandler {
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
                         Logger.info("Subscription stop waiting because it has already received its message");
-                        global.clearTimeout(this.timer);
-                        this.subscription.unsubscribe();
-                        resolve();
                     }
+                    this.cleanUp();
+                    resolve();
                 })
                 .catch((err) => {
                     this.subscription.unsubscribe();
@@ -58,22 +57,33 @@ export class SubscriptionHandler {
         });
     }
 
-    public getReport() {
+    public getReport(): any {
+        this.cleanUp();
         this.report = {
             ...this.report,
             subscription: this.subscription,
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };
-        this.subscription.unsubscribe();
+        for (let key in this.subscription) {
+
+            console.log(`subscription report key: "${key}`)
+        }
+
         return this.report;
+    }
+
+    private cleanUp(): void {
+        Logger.debug(`Unsubscribing subscription: ${this.subscription.protocol}`);
+        this.subscription.unsubscribe();
+        global.clearTimeout(this.timer);
     }
 
     private initializeTimeout() {
         if (this.subscription.timeout) {
             this.timer = global.setTimeout(() => {
                 Logger.info("Subscription stop waiting because it has timed out");
-                this.subscription.unsubscribe();
+                this.cleanUp();
                 this.hasTimedOut = true;
                 this.onTimeOutCallback();
             }, this.subscription.timeout);

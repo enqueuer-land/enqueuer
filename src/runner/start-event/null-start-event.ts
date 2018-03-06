@@ -2,9 +2,9 @@ import {StartEvent} from "./start-event";
 
 export class NullStartEvent implements StartEvent {
 
-    private startEvent: StartEvent;
+    private startEvent: any;
 
-    public constructor(startEvent: StartEvent)
+    public constructor(startEvent: any)
     {
         this.startEvent = startEvent;
     }

@@ -3,17 +3,17 @@ import {StartEventFactory} from "./start-event-factory";
 
 export class StartEventHandler {
 
-    private startEventType: StartEvent;
+    private startEvent: StartEvent;
 
-    constructor(startEvent: StartEvent) {
-        this.startEventType = new StartEventFactory().createStartEvent(startEvent);
+    constructor(startEvent: any) {
+        this.startEvent = new StartEventFactory().createStartEvent(startEvent);
     }
 
     public start(): Promise<any> {
-        return this.startEventType.start();
+        return this.startEvent.start();
     }
 
     public getReport(): any {
-        return this.startEventType.getReport();
+        return this.startEvent.getReport();
     }
 }
