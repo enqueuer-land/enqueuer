@@ -1,4 +1,4 @@
-import {StandardOutputPublisher} from "../publish/standard-output-publisher";
+import {StandardOutputPublisher} from "../publishers/standard-output-publisher";
 const readYml  = require('read-yaml');
 
 export class Configuration {

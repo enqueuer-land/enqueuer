@@ -1,5 +1,5 @@
 import {Subscription} from "./subscription";
-import {Logger} from "../log/logger";
+import {Logger} from "../loggers/logger";
 
 export class NullSubscription extends Subscription {
     constructor(subscriptionAttributes: any) {

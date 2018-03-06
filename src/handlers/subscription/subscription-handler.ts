@@ -1,9 +1,9 @@
-import {FunctionExecutor} from "../../executor/function-executor";
-import {OnMessageReceivedSubscriptionFunction} from "../../executor/on-message-received-subscription-function";
-import {Subscription} from "../../subscription/subscription";
-import {SubscriptionFactory} from "../../subscription/subscription-factory";
-import {Logger} from "../../log/logger";
-import {DateController} from "../../date/date-controller";
+import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
+import {OnMessageReceivedMetaFunction} from "../../meta-functions/on-message-received-meta-function";
+import {Subscription} from "../../subscriptions/subscription";
+import {SubscriptionFactory} from "../../subscriptions/subscription-factory";
+import {Logger} from "../../loggers/logger";
+import {DateController} from "../../dates/date-controller";
 
 export class SubscriptionHandler {
 
@@ -91,8 +91,8 @@ export class SubscriptionHandler {
     }
 
     private executeSubscriptionFunction() {
-        const onMessageReceivedSubscription = new OnMessageReceivedSubscriptionFunction(this.subscription);
-        const functionResponse = new FunctionExecutor(onMessageReceivedSubscription).execute();
+        const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
+        const functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         this.report = {
             ...this.report,
             functionReport: functionResponse.report,

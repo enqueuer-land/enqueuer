@@ -1,6 +1,6 @@
-import {NullStartEvent} from "../handler/start-event/null-start-event";
-import {StartEventPublisherHandler} from "../handler/start-event/start-event-publisher-handler";
-import {StartEventSubscriptionHandler} from "../handler/start-event/start-event-subscription-handler";
+import {NullStartEvent} from "../handlers/start-event/null-start-event";
+import {StartEventPublisherHandler} from "../handlers/start-event/start-event-publisher-handler";
+import {StartEventSubscriptionHandler} from "../handlers/start-event/start-event-subscription-handler";
 import {StartEvent} from "./start-event";
 
 export class StartEventFactory {

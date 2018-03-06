@@ -1,5 +1,5 @@
 import { getLogger } from 'log4js';
-import {Configuration} from "../conf/configuration";
+import {Configuration} from "../configurations/configuration";
 
 const logger: any = getLogger();
 if (Configuration.isVerboseMode())

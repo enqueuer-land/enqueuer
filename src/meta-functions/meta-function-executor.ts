@@ -1,10 +1,10 @@
-import {FunctionCreator} from "./function-creator";
+import {MetaFunctionCreator} from "./meta-function-creator";
 
-export class FunctionExecutor {
+export class MetaFunctionExecutor {
     private functionToExecute: Function;
     private parameters: string[];
 
-    constructor(functionBodyCreator: FunctionCreator, ...parameters: any[]) {
+    constructor(functionBodyCreator: MetaFunctionCreator, ...parameters: any[]) {
         this.parameters = parameters;
         this.functionToExecute = functionBodyCreator.createFunction();
     }

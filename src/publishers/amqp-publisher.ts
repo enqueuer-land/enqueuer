@@ -1,5 +1,5 @@
 import {Publisher} from "./publisher";
-import {Logger} from "../log/logger";
+import {Logger} from "../loggers/logger";
 var amqp = require('amqp');
 
 export class AmqpPublisher extends Publisher {

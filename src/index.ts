@@ -1,5 +1,5 @@
-import {Enqueuer} from "./runner/enqueuer";
-import {Configuration} from "./conf/configuration";
+import {Enqueuer} from "./enqueuer";
+import {Configuration} from "./configurations/configuration";
 
 new Enqueuer().execute(Configuration.getReaders());
 //

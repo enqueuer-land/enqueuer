@@ -1,6 +1,6 @@
-import {Publisher} from "../publish/publisher";
-import {PublisherFactory} from "../publish/publisher-factory";
-import {Logger} from "../log/logger";
+import {Publisher} from "../publishers/publisher";
+import {PublisherFactory} from "../publishers/publisher-factory";
+import {Logger} from "../loggers/logger";
 
 export class ReportersFactory {
 

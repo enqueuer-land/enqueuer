@@ -1,9 +1,9 @@
 const whyIsNodeRunning = require('why-is-node-running') // should be your first require
-import {RequisitionReader} from "../requisition/requisition-reader";
-import {RequisitionParser} from "../requisition/requisition-parser";
-import {ReportersFactory} from "../report/reporters-factory";
-import {RequisitionRunner} from "../requisition/requisition-runner";
-import {Logger} from "../log/logger";
+import {RequisitionReader} from "./requisitions/requisition-reader";
+import {RequisitionParser} from "./requisitions/requisition-parser";
+import {ReportersFactory} from "./reporters/reporters-factory";
+import {RequisitionRunner} from "./requisitions/requisition-runner";
+import {Logger} from "./loggers/logger";
 
 export class Enqueuer {
 

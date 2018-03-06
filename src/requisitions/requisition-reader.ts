@@ -1,5 +1,5 @@
-import {Subscription} from "../subscription/subscription";
-import {SubscriptionFactory} from "../subscription/subscription-factory";
+import {Subscription} from "../subscriptions/subscription";
+import {SubscriptionFactory} from "../subscriptions/subscription-factory";
 
 export class RequisitionReader {
 

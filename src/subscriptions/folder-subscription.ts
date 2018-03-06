@@ -1,6 +1,6 @@
 import {Subscription} from "./subscription";
 import {FSWatcher} from "fs";
-import {Logger} from "../log/logger";
+import {Logger} from "../loggers/logger";
 const fs = require("fs");
 const chokidar = require('chokidar');
 

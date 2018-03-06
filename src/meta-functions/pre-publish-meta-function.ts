@@ -1,6 +1,6 @@
-import {FunctionCreator} from "./function-creator";
+import {MetaFunctionCreator} from "./meta-function-creator";
 
-export class PrePublishFunction implements FunctionCreator {
+export class PrePublishFunction implements MetaFunctionCreator {
 
     private publisherAttributes: any;
 
