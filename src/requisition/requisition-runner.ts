@@ -1,6 +1,6 @@
 import { ReportGenerator } from "../report/report-generator";
-import {MultiSubscriptionsHandler} from "./subscription/multi-subscriptions-handler";
-import {StartEventHandler} from "./start-event/start-event-handler";
+import {MultiSubscriptionsHandler} from "../handler/subscription/multi-subscriptions-handler";
+import {StartEventHandler} from "../handler/start-event/start-event-handler";
 import {Logger} from "../log/logger";
 import {DateController} from "../date/date-controller";
 

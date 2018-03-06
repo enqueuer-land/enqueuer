@@ -1,4 +1,4 @@
-import {StartEvent} from "./start-event";
+import {StartEvent} from "../../start-event/start-event";
 
 export class NullStartEvent implements StartEvent {
 

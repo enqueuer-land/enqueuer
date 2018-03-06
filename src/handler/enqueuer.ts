@@ -1,8 +1,8 @@
 const whyIsNodeRunning = require('why-is-node-running') // should be your first require
-import {RequisitionReader} from "./requisition-reader";
+import {RequisitionReader} from "../requisition/requisition-reader";
 import {RequisitionParser} from "../requisition/requisition-parser";
 import {ReportersFactory} from "../report/reporters-factory";
-import {RequisitionRunner} from "./requisition-runner";
+import {RequisitionRunner} from "../requisition/requisition-runner";
 import {Logger} from "../log/logger";
 
 export class Enqueuer {
@@ -18,7 +18,7 @@ export class Enqueuer {
                 Logger.info(`Starting reader ${configReader.protocol}`);
                 reader.connect()
                         .then(() => this.startReader(reader))
-                        .catch( err => {
+                        .catch( (err: string) => {
                             Logger.error(err);
                             reader.unsubscribe();
                         })
@@ -32,7 +32,7 @@ export class Enqueuer {
                 this.processRequisition(messageReceived);
                 return this.startReader(reader); //runs again
             })
-            .catch( err => {
+            .catch( (err: string) => {
                 Logger.error(err);
                 reader.unsubscribe();
             })

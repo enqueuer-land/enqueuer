@@ -1,4 +1,4 @@
-import {StartEvent} from "./start-event";
+import {StartEvent} from "../../start-event/start-event";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
 
 export class StartEventSubscriptionHandler implements StartEvent {

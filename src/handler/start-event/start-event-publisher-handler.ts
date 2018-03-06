@@ -1,5 +1,5 @@
 import {Publisher} from "../../publish/publisher";
-import {StartEvent} from "./start-event";
+import {StartEvent} from "../../start-event/start-event";
 import {PublisherFactory} from "../../publish/publisher-factory";
 import {PrePublishFunction} from "../../executor/pre-publish-function";
 import {FunctionExecutor} from "../../executor/function-executor";

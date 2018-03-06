@@ -1,5 +1,5 @@
-import {StartEvent} from "./start-event";
-import {StartEventFactory} from "./start-event-factory";
+import {StartEvent} from "../../start-event/start-event";
+import {StartEventFactory} from "../../start-event/start-event-factory";
 
 export class StartEventHandler {
 
