@@ -15,7 +15,7 @@ export class Enqueuer {
             .forEach((configReader: any) => {
                 let reader = new RequisitionReader(configReader)
 
-                Logger.info(`Starting reader ${configReader.protocol}`);
+                Logger.info(`Starting reader ${configReader.type}`);
                 reader.connect()
                         .then(() => this.startReader(reader))
                         .catch( (err: string) => {
@@ -28,7 +28,7 @@ export class Enqueuer {
     private startReader(reader: RequisitionReader) {
         reader.receiveMessage()
             .then((messageReceived: string) => {
-                Logger.info(`${reader.getSubscriptionProtocol()} got a message`);
+                Logger.info(`${reader.getSubscriptionType()} got a message`);
                 this.processRequisition(messageReceived);
                 return this.startReader(reader); //runs again
             })

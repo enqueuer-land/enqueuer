@@ -9,17 +9,17 @@ import {HttpSubscription} from "./http-subscription";
 
 export class SubscriptionFactory {
     public createSubscription(subscriptionAttributes: any): Subscription {
-        if (subscriptionAttributes.protocol === "mqtt")
+        if (subscriptionAttributes.type === "mqtt")
             return new MqttSubscription(subscriptionAttributes);
-        if (subscriptionAttributes.protocol === "amqp")
+        if (subscriptionAttributes.type === "amqp")
             return new AmqpSubscription(subscriptionAttributes);
-        if (subscriptionAttributes.protocol === "uds")
+        if (subscriptionAttributes.type === "uds")
             return new UdsSubscription(subscriptionAttributes)
-        if (subscriptionAttributes.protocol === "standardInput")
+        if (subscriptionAttributes.type === "standardInput")
             return new StandardInputSubscription();
-        if (subscriptionAttributes.protocol === "watchFolder")
+        if (subscriptionAttributes.type === "watchFolder")
             return new FolderSubscription(subscriptionAttributes);
-        if (subscriptionAttributes.protocol === "http")
+        if (subscriptionAttributes.type === "http")
             return new HttpSubscription(subscriptionAttributes);
         return new NullSubscription(subscriptionAttributes);
     }

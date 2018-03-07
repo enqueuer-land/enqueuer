@@ -19,7 +19,6 @@ export class AmqpPublisher extends Publisher {
         return new Promise((resolve, reject) => {
             this.connection = amqp.createConnection({url: this.url});
             this.connection.on('ready', () => {
-                Logger.debug("Connected");
                 const exchange = this.connection.exchange();
                 exchange.on('open', () => {
                     exchange.publish(this.queue, this.payload, this.messageOptions, (errored: any, err: any) => {

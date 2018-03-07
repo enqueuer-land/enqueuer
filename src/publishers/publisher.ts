@@ -1,10 +1,10 @@
 export abstract class Publisher {
-    public protocol: string;
+    public type: string;
     public payload: string;
     public prePublishing: string | null = null;
 
     constructor(publisherAttributes: any) {
-        this.protocol = publisherAttributes.protocol;
+        this.type = publisherAttributes.type;
         this.payload = publisherAttributes.payload;
         this.prePublishing = publisherAttributes.prePublishing;
     }

@@ -65,16 +65,11 @@ export class SubscriptionHandler {
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };
-        for (let key in this.subscription) {
-
-            console.log(`subscription report key: "${key}`)
-        }
-
         return this.report;
     }
 
     private cleanUp(): void {
-        Logger.debug(`Unsubscribing subscription: ${this.subscription.protocol}`);
+        Logger.debug(`Unsubscribing subscription: ${this.subscription.type}`);
         this.subscription.unsubscribe();
         global.clearTimeout(this.timer);
     }

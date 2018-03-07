@@ -2,7 +2,7 @@
   "timeout": "10000",
   "subscriptions": [
     {
-      "protocol": "mqtt",
+      "type": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "subscription",
       "onMessageReceivedFunctionBody": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
@@ -12,7 +12,7 @@
   "startEvent": {
     "subscription":
     {
-      "protocol": "amqp",
+      "type": "amqp",
       "brokerUrl": "amqp://localhost:5672",
       "exchangeName": "ENQUEUER.E",
       "routingKey": "#",
@@ -21,23 +21,23 @@
   },
   "reports" : [
     {
-      "protocol": "standardOutput"
+      "type": "standardOutput"
     },
     {
-      "protocol": "file",
+      "type": "file",
       "filename": "outputFileNameReportBack"
     },
     {
-      "protocol": "amqp",
+      "type": "amqp",
       "url": "amqp://localhost:5672",
       "queue": "ENQUEUER.REPORT"
     },
     {
-      "protocol": "http",
+      "type": "http",
       "endpoint": "http://localhost:1880/reports"
     },
     {
-      "protocol": "mqtt",
+      "type": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "service-to-be-tested/report"
     }

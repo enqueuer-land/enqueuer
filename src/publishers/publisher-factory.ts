@@ -9,17 +9,17 @@ import {AmqpPublisher} from "./amqp-publisher";
 
 export class PublisherFactory {
     public createPublisher(publishRequisition: any): Publisher {
-        if (publishRequisition.protocol === "mqtt")
+        if (publishRequisition.type === "mqtt")
             return new MqttPublisher(publishRequisition);
-        if (publishRequisition.protocol === "http")
+        if (publishRequisition.type === "http")
             return new HttpPublisher(publishRequisition);
-        if (publishRequisition.protocol === "file")
+        if (publishRequisition.type === "file")
             return new FilePublisher(publishRequisition);
-        if (publishRequisition.protocol === "standardOutput")
+        if (publishRequisition.type === "standardOutput")
             return new StandardOutputPublisher(publishRequisition);
-        if (publishRequisition.protocol === "uds")
+        if (publishRequisition.type === "uds")
             return new UdsPublisher(publishRequisition);
-        if (publishRequisition.protocol === "amqp")
+        if (publishRequisition.type === "amqp")
             return new AmqpPublisher(publishRequisition);
         return new NullPublisher(publishRequisition);
     }

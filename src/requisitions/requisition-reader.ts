@@ -3,11 +3,11 @@ import {SubscriptionFactory} from "../subscriptions/subscription-factory";
 
 export class RequisitionReader {
 
-    private protocol: string;
+    private type: string;
     private subscription: Subscription;
 
     constructor(configReader: any) {
-        this.protocol = configReader.protocol;
+        this.type = configReader.type;
         this.subscription = new SubscriptionFactory().createSubscription(configReader);
     }
 
@@ -27,8 +27,8 @@ export class RequisitionReader {
         this.subscription.unsubscribe();
     }
 
-    public getSubscriptionProtocol(): string {
-        return this.protocol;
+    public getSubscriptionType(): string {
+        return this.type;
     }
 
 }
