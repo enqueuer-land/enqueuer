@@ -33,7 +33,7 @@ export class Configuration {
 
     public static isVerboseMode(): boolean {
         return (Configuration.singleton.commandLine.verbose != null) ||
-            (Configuration.singleton.fileParameters.verbose != null);
+            (Configuration.singleton.fileParameters.verbose);
     }
 
     public static getReaders(): any[] {
