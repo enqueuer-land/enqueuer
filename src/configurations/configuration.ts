@@ -7,7 +7,7 @@ export class Configuration {
 
     private fileParameters: any;
     private commandLine = require('commander')
-        .version('0.0.1', '-V, --version')
+        .version(process.env.npm_package_version, '-V, --version')
         .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
         .option('-v, --verbose', 'Activates verbose mode', false)
         .option('-c, --config-file <path>', 'Set configurationFile')

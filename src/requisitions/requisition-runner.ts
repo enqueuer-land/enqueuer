@@ -61,6 +61,14 @@ export class RequisitionRunner {
         let reportGenerator: ReportGenerator = new ReportGenerator();
         if (additionalInfo)
             reportGenerator.addRequisitionReports({additionalInfo});
+        reportGenerator.addRequisitionReports({
+                    enqueuer: {
+                        version: process.env.npm_package_version
+                    },
+                    report: {
+                        version: process.env.npm_package_version
+                    }
+                });
         reportGenerator.addSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         reportGenerator.addStartEventReport(this.startEventHandler.getReport());
         const timesReport = this.generateTimesReport();
