@@ -40,19 +40,23 @@ export class Enqueuer {
 
     private processRequisition(messageReceived: string): void {
         try {
-            const parsedRequisition: any = this.requisitionParser.parse(messageReceived);
-            const requisitionRunner: RequisitionRunner = new RequisitionRunner(parsedRequisition);
+            this.requisitionParser.parse(messageReceived)
+                .then((parsedRequisition: any) => {
+                    const requisitionRunner: RequisitionRunner = new RequisitionRunner(parsedRequisition);
 
-            requisitionRunner.start((report: string) => {
-                new ReportersFactory(report)
-                    .createReporters(parsedRequisition.reports)
-                    .forEach( publisher => publisher.publish()
-                        .catch( (err: any) => {
-                            Logger.error(err);
-                        }));
-
-        });
-            Logger.info("Requisition is over");
+                    requisitionRunner.start((report: string) => {
+                        Logger.info("Requisition is over");
+                        new ReportersFactory(report)
+                            .createReporters(parsedRequisition.reports)
+                            .forEach(publisher => publisher.publish()
+                                .catch((err: any) => {
+                                    Logger.error(err);
+                                }));
+                      })
+                })
+                .catch((error: any) => {
+                    Logger.error(error);
+                });
 
             // return this.processRequisition(requisition); //Do it again
             // whyIsNodeRunning();

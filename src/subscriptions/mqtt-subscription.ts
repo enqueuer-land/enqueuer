@@ -3,9 +3,9 @@ const mqtt = require("mqtt")
 
 export class MqttSubscription extends Subscription {
 
-    private brokerAddress: string = "";
-    private topic: string = "";
-    private client: any = null;
+    private brokerAddress: string;
+    private topic: string;
+    private client: any;
 
     constructor(subscriptionAttributes: any) {
         super(subscriptionAttributes);

@@ -5,6 +5,7 @@ import {UdsSubscription} from "./uds-subscription";
 import {StandardInputSubscription} from "./standard-input-subscription";
 import {FolderSubscription} from "./folder-subscription";
 import {AmqpSubscription} from "./amqp-subscription";
+import {HttpSubscription} from "./http-subscription";
 
 export class SubscriptionFactory {
     public createSubscription(subscriptionAttributes: any): Subscription {
@@ -18,6 +19,8 @@ export class SubscriptionFactory {
             return new StandardInputSubscription();
         if (subscriptionAttributes.protocol === "watchFolder")
             return new FolderSubscription(subscriptionAttributes);
+        if (subscriptionAttributes.protocol === "http")
+            return new HttpSubscription(subscriptionAttributes);
         return new NullSubscription(subscriptionAttributes);
     }
 }

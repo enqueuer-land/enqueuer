@@ -1,11 +1,17 @@
 const jsonSub = require('json-sub')();
 
 export class RequisitionParser {
-    parse(requisitionMessage: string): any {
-        const parsedRequisition = JSON.parse(requisitionMessage);
-        //TODO: validate requisition
-        const variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
-        return variablesReplacedRequisition;
+    parse(requisitionMessage: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            try {
+                const parsedRequisition = JSON.parse(requisitionMessage);
+                //TODO: validate requisition
+                const variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
+                resolve(variablesReplacedRequisition);
+            } catch (err) {
+                reject(err);
+            }
+        });
     }
     
     private replaceVariables(parsedRequisition: any): any {
