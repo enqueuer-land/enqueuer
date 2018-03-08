@@ -69,8 +69,16 @@ export class RequisitionRunner {
                         version: process.env.npm_package_version
                     }
                 });
-        reportGenerator.addSubscriptionReport(this.multiSubscriptionsHandler.getReport());
-        reportGenerator.addStartEventReport(this.startEventHandler.getReport());
+
+        const multiSubscriptionReport = this.multiSubscriptionsHandler.getReport();
+        reportGenerator.addSubscriptionReport(multiSubscriptionReport);
+        const startEventReport = this.startEventHandler.getReport();
+        reportGenerator.addStartEventReport(startEventReport);
+        let valid = startEventReport.valid && multiSubscriptionReport.valid;
+        if (this.timeout && valid && this.startTime)
+            valid = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
+        reportGenerator.addRequisitionReports({valid: valid});
+
         const timesReport = this.generateTimesReport();
         if (timesReport)
             reportGenerator.addRequisitionReports({times:timesReport});
@@ -78,7 +86,7 @@ export class RequisitionRunner {
             this.onFinishCallback(reportGenerator.generate().toString());
     }
 
-    private generateTimesReport(): {} | null{
+    private generateTimesReport(): {} | null {
         if (this.startTime) {
             let timesReport: any = {};
             const endDate = new DateController();

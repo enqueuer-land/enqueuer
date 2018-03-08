@@ -65,6 +65,10 @@ export class SubscriptionHandler {
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };
+        this.report.valid = this.report.hasReceivedMessage &&
+                            this.hasTimedOut &&
+                            this.report.functionReport.failingTests.length <= 0;
+
         return this.report;
     }
 

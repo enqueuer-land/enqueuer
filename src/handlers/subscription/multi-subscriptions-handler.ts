@@ -44,9 +44,17 @@ export class MultiSubscriptionsHandler {
     }
 
     public getReport(): any {
-        var reports: any = [];
-        this.subscriptionHandlers.forEach(subscriptionHandler => reports.push(subscriptionHandler.getReport()));
-        return reports;
+        var subscriptionReports: any = [];
+        var valid = true;
+        this.subscriptionHandlers.forEach(subscriptionHandler => {
+            const subscriptionReport = subscriptionHandler.getReport();
+            subscriptionReports.push(subscriptionReport);
+            valid = valid && subscriptionReport.valid;
+        });
+        return {
+            subscriptionReports: subscriptionReports,
+            valid: valid
+        };
     }
 
     private areAllSubscriptionsConnected(): boolean {

@@ -24,16 +24,6 @@ export class StartEventSubscriptionHandler implements StartEvent {
     }
 
     public getReport(): any {
-        return this.generateReport();
+        return this.subscriptionHandler.getReport();
     }
-
-    private generateReport(): any {
-        const subscriptionReport = this.subscriptionHandler.getReport();
-        subscriptionReport.valid = subscriptionReport &&
-                                    subscriptionReport.functionReport &&
-                                    subscriptionReport.functionReport.failingTests.length <= 0;
-        return subscriptionReport;
-    }
-
-
 }
