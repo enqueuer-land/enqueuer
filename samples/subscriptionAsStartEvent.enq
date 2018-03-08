@@ -1,12 +1,13 @@
 {
-  "timeout": "10000",
+  "requisitionVersion": "01.00.00",
+  "timeout": 10000,
   "subscriptions": [
     {
       "type": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "subscription",
-      "onMessageReceivedFunctionBody": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
-      "timeout": "8000"
+      "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
+      "timeout": 8000
     }
   ],
   "startEvent": {

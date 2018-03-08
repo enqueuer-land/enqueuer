@@ -2,7 +2,7 @@ export abstract class Subscription {
 
     public messageReceived: string | null = null;
     public timeout: number | null = null;
-    public onMessageReceivedFunctionBody: string | null = null;
+    public onMessageReceived: string | null = null;
     public type: string | null = null;
 
     protected constructor(subscriptionAttributes: any) {
@@ -10,7 +10,7 @@ export abstract class Subscription {
             this.messageReceived = subscriptionAttributes.message;
             this.timeout = subscriptionAttributes.timeout;
             this.type = subscriptionAttributes.type;
-            this.onMessageReceivedFunctionBody = subscriptionAttributes.onMessageReceivedFunctionBody;
+            this.onMessageReceived = subscriptionAttributes.onMessageReceived;
         }
     }
 

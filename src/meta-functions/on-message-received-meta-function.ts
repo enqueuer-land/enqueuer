@@ -12,7 +12,7 @@ export class OnMessageReceivedMetaFunction implements MetaFunctionCreator {
         const fullBody: string =    `let test = {};
                                     let report = {};
                                     let message = ${JSON.stringify(this.subscriptionAttributes.messageReceived)};
-                                    ${this.subscriptionAttributes.onMessageReceivedFunctionBody};
+                                    ${this.subscriptionAttributes.onMessageReceived};
                                     return {
                                             test: test,
                                             report: report
