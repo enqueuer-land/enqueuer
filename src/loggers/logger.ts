@@ -2,8 +2,7 @@ import { getLogger } from 'log4js';
 import {Configuration} from "../configurations/configuration";
 
 const logger: any = getLogger();
-if (Configuration.isVerboseMode())
-    logger.level = 'debug';
+logger.level = Configuration.getLogLevel();
 
 export class Logger {
 

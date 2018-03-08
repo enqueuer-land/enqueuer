@@ -10,6 +10,7 @@ export class Configuration {
         .version(process.env.npm_package_version, '-V, --version')
         .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
         .option('-v, --verbose', 'Activates verbose mode', false)
+        .option('-l, --logLevel <level>', 'Set log level')
         .option('-c, --config-file <path>', 'Set configurationFile')
         .parse(process.argv);
 
@@ -31,9 +32,11 @@ export class Configuration {
     }
 
 
-    public static isVerboseMode(): boolean {
-        return (Configuration.singleton.commandLine.verbose != null) ||
-            (Configuration.singleton.fileParameters.verbose);
+    public static getLogLevel(): string {
+        if (Configuration.singleton.commandLine.verbose)
+            return 'debug';
+        return (Configuration.singleton.commandLine.logLevel) ||
+            (Configuration.singleton.fileParameters.logLevel);
     }
 
     public static getReaders(): any[] {
