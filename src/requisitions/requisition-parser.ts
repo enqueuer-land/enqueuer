@@ -28,7 +28,7 @@ export class RequisitionParser {
     }
 
     private replaceVariables(parsedRequisition: any): any {
-        var requisitionWithNoVariables = Object.assign({}, parsedRequisition);
+        let requisitionWithNoVariables = Object.assign({}, parsedRequisition);
         let variables = parsedRequisition.variables;
 
         delete requisitionWithNoVariables.variables;

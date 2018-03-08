@@ -2,24 +2,25 @@ import {Publisher} from "../publishers/publisher";
 import {PublisherFactory} from "../publishers/publisher-factory";
 import {Logger} from "../loggers/logger";
 
-export class ReportersFactory {
+export class ReportReplier {
 
-    private payload: string;
+    private reportRepliers: Publisher[] = [];
 
-    constructor(payload: string) {
-        this.payload = payload;
-    }
-
-    public createReporters(reportersAttributes: any): Publisher[] {
+    constructor(reportersAttributes: any) {
         const publisherFactory: PublisherFactory = new PublisherFactory();
 
-        let reportRepliers: Publisher[] = [];
         reportersAttributes.forEach((report: any) => {
-            report.payload = this.payload;
             const publisher = publisherFactory.createPublisher(report);
             Logger.debug(`Instantiating publisher: ${publisher.constructor.name}`);
-            reportRepliers.push(publisher);
+            this.reportRepliers.push(publisher);
         });
-        return reportRepliers;
+    }
+
+    publish(resultReport: string): any {
+        this.reportRepliers.forEach( reporter => {
+            reporter.payload = resultReport;
+            reporter.publish()
+                .catch(err=> Logger.error(err));
+        })
     }
 }

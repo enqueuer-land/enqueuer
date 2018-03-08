@@ -5,7 +5,7 @@ import {PrePublishFunction} from "../../meta-functions/pre-publish-meta-function
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../dates/date-controller";
 
-export class StartEventPublisherHandler implements StartEvent{
+export class StartEventPublisherHandler implements StartEvent {
     private publisherOriginalAttributes: any;
     private publisher: Publisher | null = null;
     private report: any = {};

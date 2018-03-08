@@ -1,7 +1,7 @@
 const whyIsNodeRunning = require('why-is-node-running') // should be your first require
 import {RequisitionReader} from "./requisitions/requisition-reader";
 import {RequisitionParser} from "./requisitions/requisition-parser";
-import {ReportersFactory} from "./reporters/reporters-factory";
+import {ReportReplier} from "./reporters/reporters-factory";
 import {RequisitionRunner} from "./requisitions/requisition-runner";
 import {Logger} from "./loggers/logger";
 
@@ -10,7 +10,6 @@ export class Enqueuer {
     private requisitionParser: RequisitionParser = new RequisitionParser();
 
     public execute(configReaders: any): void {
-
         configReaders
             .forEach((configReader: any) => {
                 let reader = new RequisitionReader(configReader)
@@ -41,17 +40,12 @@ export class Enqueuer {
     private processRequisition(messageReceived: string): void {
         try {
             this.requisitionParser.parse(messageReceived)
-                .then((parsedRequisition: any) => {
-                    const requisitionRunner: RequisitionRunner = new RequisitionRunner(parsedRequisition);
-
-                    requisitionRunner.start((report: string) => {
+                .then((requisition: any) => {
+                    const requisitionRunner: RequisitionRunner = new RequisitionRunner(requisition);
+                    requisitionRunner.start((requisitionResultReport: string) => {
                         Logger.info("Requisition is over");
-                        new ReportersFactory(report)
-                            .createReporters(parsedRequisition.reports)
-                            .forEach(publisher => publisher.publish()
-                                .catch((err: any) => {
-                                    Logger.error(err);
-                                }));
+                        new ReportReplier(requisition.reports)
+                            .publish(requisitionResultReport);
                       })
                 })
                 .catch((error: any) => {

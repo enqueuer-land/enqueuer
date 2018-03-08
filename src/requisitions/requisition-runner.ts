@@ -1,19 +1,20 @@
 import { ReportGenerator } from "../reporters/report-generator";
 import {MultiSubscriptionsHandler} from "../handlers/subscription/multi-subscriptions-handler";
-import {StartEventHandler} from "../handlers/start-event/start-event-handler";
 import {Logger} from "../loggers/logger";
 import {DateController} from "../dates/date-controller";
+import {StartEventFactory} from "../start-events/start-event-factory";
+import {StartEvent} from "../start-events/start-event";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
-    private startEventHandler: StartEventHandler;
+    private startEvent: StartEvent;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback | null = null;
     private startTime: DateController | null = null;
     private timeout: number | null;
 
     constructor(requisitionAttributes: any) {
-        this.startEventHandler = new StartEventHandler(requisitionAttributes.startEvent);
+        this.startEvent = new StartEventFactory().createStartEvent(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
         this.timeout = requisitionAttributes.timeout;
     }
@@ -33,7 +34,7 @@ export class RequisitionRunner {
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => this.onFinish(err));
 
-        this.startEventHandler.start()
+        this.startEvent.start()
             .then(() => {
                 Logger.debug("Start event has done its job");
             })
@@ -72,7 +73,7 @@ export class RequisitionRunner {
 
         const multiSubscriptionReport = this.multiSubscriptionsHandler.getReport();
         reportGenerator.addSubscriptionReport(multiSubscriptionReport);
-        const startEventReport = this.startEventHandler.getReport();
+        const startEventReport = this.startEvent.getReport();
         reportGenerator.addStartEventReport(startEventReport);
         let valid = startEventReport.valid && multiSubscriptionReport.valid;
         if (this.timeout && valid && this.startTime)
