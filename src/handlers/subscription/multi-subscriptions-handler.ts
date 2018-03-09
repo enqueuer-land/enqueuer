@@ -52,7 +52,7 @@ export class MultiSubscriptionsHandler {
             valid = valid && subscriptionReport.valid;
         });
         return {
-            subscriptionReports: subscriptionReports,
+            subscriptions: subscriptionReports,
             valid: valid
         };
     }

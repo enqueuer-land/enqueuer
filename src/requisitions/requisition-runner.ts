@@ -47,7 +47,7 @@ export class RequisitionRunner {
             let timer = global.setTimeout(() => {
                 global.clearTimeout(timer);
                 Logger.info("Requisition Timeout");
-                this.onFinish({requisitionTimedOut: true});
+                this.onFinish();
             }, this.timeout);
         }
     }
@@ -57,11 +57,10 @@ export class RequisitionRunner {
         this.onFinish();
     }
 
-    private onFinish(additionalInfo: any = null): void {
+    private onFinish(error: any = null): void {
         this.onFinish = () => {};
 
-        if (additionalInfo)
-            this.reportGenerator.addRequisitionReports({additionalInfo});
+        this.reportGenerator.addError(error);
 
         const multiSubscriptionReport = this.multiSubscriptionsHandler.getReport();
         this.reportGenerator.setSubscriptionReport(multiSubscriptionReport);

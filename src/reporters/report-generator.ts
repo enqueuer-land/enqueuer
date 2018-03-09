@@ -9,6 +9,8 @@ export class ReportGenerator {
     private startEventReports: any;
     private subscriptionReports: any;
 
+    private error: any = undefined;
+
     public constructor(requisitionId: string) {
         this.addInitialInformation(requisitionId);
     }
@@ -18,7 +20,7 @@ export class ReportGenerator {
         this.timeout = timeout;
     }
 
-    public addRequisitionReports(requisitionReports: any): void {
+    private addRequisitionReports(requisitionReports: any): void {
         for (const key in requisitionReports) {
             this.requisitionReports[key] = requisitionReports[key];
         }
@@ -33,17 +35,30 @@ export class ReportGenerator {
     }
 
     public generate(): string {
-        return JSON.stringify(this);
+        let report = JSON.parse(JSON.stringify(this));
+        delete report.startTime;
+        delete report.timeout;
+        if (this.error === null)
+            delete report.error;
+
+        return JSON.stringify(report);
     }
 
     public finish(): any {
-        let valid = (this.startEventReports && this.startEventReports.valid) &&
-                    (this.subscriptionReports && this.subscriptionReports.valid);
+        this.addValidResult();
+        this.addTimesReport();
+    }
 
+    public addError(error: any): any {
+        this.error = error;
+    }
+
+    private addValidResult() {
+        let valid = (this.startEventReports && this.startEventReports.valid) &&
+            (this.subscriptionReports && this.subscriptionReports.valid);
         if (valid && this.timeout && this.startTime)
             valid = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
         this.addRequisitionReports({valid: valid});
-        this.addTimesReport();
     }
 
     private addInitialInformation(requisitionId: string) {
@@ -69,7 +84,7 @@ export class ReportGenerator {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
             }
-            this.addRequisitionReports({times:timesReport});
+            this.addRequisitionReports({ times:timesReport});
         }
         return null;
     }

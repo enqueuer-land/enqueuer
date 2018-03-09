@@ -26,8 +26,6 @@ export class FolderSubscription extends Subscription {
     }
 
     public receiveMessage(): Promise<string> {
-        Logger.info(`Starting FolderRequisitionReader:\t${this.folderName}`);
-
         return new Promise((resolve, reject) => {
             this.popFileContent()
                 .then( fileContent => resolve(fileContent))
