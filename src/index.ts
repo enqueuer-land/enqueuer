@@ -1,8 +1,8 @@
 let Container: any = {};
 
 export type FactoryFunction = (argument: any) => boolean;
-
-function Injectable(factoryFunction: FactoryFunction | null) {
+const NullInjectable: FactoryFunction = (): boolean => {return false};
+function Injectable(factoryFunction: FactoryFunction) {
     interface Injectable {
         name: string;
         factoryFunction: FactoryFunction;
@@ -22,10 +22,10 @@ function Injectable(factoryFunction: FactoryFunction | null) {
         }
 
         public addInjectable = (injectable: Injectable): void => {
-            if (injectable.factoryFunction)
-                this.injectables[injectable.name] = injectable;
-            else
+            if (injectable.factoryFunction == NullInjectable)
                 this.default = injectable;
+            else
+                this.injectables[injectable.name] = injectable;
             console.log(`SuperClassContainer  "${JSON.stringify(this)}"`);
         }
     }
@@ -110,7 +110,7 @@ class Calamari extends Animal {
 
 }
 
-@Injectable(null)
+@Injectable(NullInjectable)
 class NullAnimal extends Animal {
 
     public constructor () {
