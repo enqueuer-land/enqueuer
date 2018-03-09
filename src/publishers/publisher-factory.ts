@@ -21,6 +21,7 @@ export class PublisherFactory {
             return new UdsPublisher(publishRequisition);
         if (publishRequisition.type === "amqp")
             return new AmqpPublisher(publishRequisition);
+
         return new NullPublisher(publishRequisition);
     }
 }

@@ -1,61 +1,50 @@
-const whyIsNodeRunning = require('why-is-node-running') // should be your first require
-import {RequisitionReader} from "./requisitions/requisition-reader";
-import {RequisitionParser} from "./requisitions/requisition-parser";
-import {ReportReplier} from "./reporters/reporters-factory";
-import {RequisitionRunner} from "./requisitions/requisition-runner";
+import {RequisitionStarter} from "./requisitions/requisition-starter";
+import {RequisitionInput} from "./requisitions/requisition-input";
 import {Logger} from "./loggers/logger";
+import {RequisitionOutput} from "./requisitions/requisition-output";
 
 export class Enqueuer {
 
-    private requisitionParser: RequisitionParser = new RequisitionParser();
+    private requisitionInputs: RequisitionInput[];
+    private requisitionOutputs: RequisitionOutput[];
 
-    public execute(configReaders: any): void {
-        configReaders
-            .forEach((configReader: any) => {
-                let reader = new RequisitionReader(configReader)
 
-                Logger.info(`Starting reader ${configReader.type}`);
-                reader.connect()
-                        .then(() => this.startReader(reader))
-                        .catch( (err: string) => {
-                            Logger.error(err);
-                            reader.unsubscribe();
-                        })
+    public constructor(requisitionInputs: RequisitionInput[], requisitionOutputs: RequisitionOutput[]) {
+        this.requisitionInputs = requisitionInputs;
+        this.requisitionOutputs = requisitionOutputs;
+    }
+
+    public execute(): void {
+        this.requisitionInputs
+            .forEach((input: RequisitionInput) => {
+                input.connect()
+                    .then(() =>
+                        this.startReader(input))
+                    .catch( (err: string) => {
+                        Logger.error(err);
+                        input.unsubscribe();
+                    });
             });
     }
 
-    private startReader(reader: RequisitionReader) {
-        reader.receiveMessage()
-            .then((messageReceived: string) => {
-                Logger.info(`${reader.getSubscriptionType()} got a message`);
-                this.processRequisition(messageReceived);
-                return this.startReader(reader); //runs again
+    private startReader(requisitionInput: RequisitionInput) {
+        requisitionInput.receiveMessage()
+            .then((requisition: any) => {
+                new RequisitionStarter(requisition).start();
+                this.reportRequisitionReceived(requisition);
+                return this.startReader(requisitionInput); //runs again
             })
-            .catch( (err: string) => {
+            .catch( (err) => {
                 Logger.error(err);
-                reader.unsubscribe();
+                this.reportRequisitionReceived(err);
+                return this.startReader(requisitionInput); //runs again
             })
     }
 
-    private processRequisition(messageReceived: string): void {
-        try {
-            this.requisitionParser.parse(messageReceived)
-                .then((requisition: any) => {
-                    const requisitionRunner: RequisitionRunner = new RequisitionRunner(requisition);
-                    requisitionRunner.start((requisitionResultReport: string) => {
-                        Logger.info("Requisition is over");
-                        new ReportReplier(requisition.reports)
-                            .publish(requisitionResultReport);
-                      })
-                })
-                .catch((error: any) => {
-                    Logger.error(error);
-                });
-
-            // return this.processRequisition(requisition); //Do it again
-            // whyIsNodeRunning();
-        } catch (err) {
-            Logger.error(err);
-        }
+    private reportRequisitionReceived(message: any): any {
+        this.requisitionOutputs.forEach(output => {
+            output.publish(message.toString());
+        })
     }
+
 }

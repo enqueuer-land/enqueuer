@@ -21,13 +21,10 @@ export class HttpSubscription extends Subscription {
     public receiveMessage(): Promise<string> {
         return new Promise((resolve, reject) => {
             app.post(this.url, (request: any, response: any) => {
-
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key])
 
                 }
-
-
                 response.status(this.response.status).send('Requisition read');
                 resolve();
             })

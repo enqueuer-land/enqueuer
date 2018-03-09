@@ -1,15 +1,17 @@
 const jsonSub = require('json-sub')();
-const subscriptionSchema = require("../../schemas/subscription");
-const publisherSchema = require("../../schemas/publisher");
-const requisitionSchema = require("../../schemas/requisition");
+const subscriptionSchema = require("../../schemas/subscriptionSchema");
+const publisherSchema = require("../../schemas/publisherSchema");
+const requisitionSchema = require("../../schemas/requisitionSchema");
+import {RequisitionIdGenerator} from "./requisition-id-generator";
 const Ajv = require('ajv');
-const ajv = new Ajv();
 
 export class RequisitionParser {
 
     private validator: any;
     public constructor() {
-        this.validator = ajv.addSchema(subscriptionSchema).addSchema(publisherSchema).compile(requisitionSchema);
+        this.validator = new Ajv().addSchema(subscriptionSchema)
+                            .addSchema(publisherSchema)
+                            .compile(requisitionSchema);
     }
 
     public parse(requisitionMessage: string): Promise<any> {
@@ -20,7 +22,8 @@ export class RequisitionParser {
                     reject(this.validator.errors);
                 }
                 const variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
-                resolve(variablesReplacedRequisition);
+                const requisitionWithId = new RequisitionIdGenerator(variablesReplacedRequisition).insertId();
+                resolve(requisitionWithId);
             } catch (err) {
                 reject(err);
             }

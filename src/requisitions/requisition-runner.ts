@@ -7,6 +7,7 @@ import {StartEvent} from "../start-events/start-event";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
+    private requisitionId: string;
     private startEvent: StartEvent;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback | null = null;
@@ -14,6 +15,7 @@ export class RequisitionRunner {
     private timeout: number | null;
 
     constructor(requisitionAttributes: any) {
+        this.requisitionId = requisitionAttributes.id;
         this.startEvent = new StartEventFactory().createStartEvent(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
         this.timeout = requisitionAttributes.timeout;
@@ -70,7 +72,7 @@ export class RequisitionRunner {
                         version: process.env.npm_package_version
                     }
                 });
-
+        reportGenerator.addRequisitionReports({id: this.requisitionId});
         const multiSubscriptionReport = this.multiSubscriptionsHandler.getReport();
         reportGenerator.addSubscriptionReport(multiSubscriptionReport);
         const startEventReport = this.startEvent.getReport();

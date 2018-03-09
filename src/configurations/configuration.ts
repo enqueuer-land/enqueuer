@@ -39,7 +39,11 @@ export class Configuration {
             (Configuration.singleton.fileParameters.logLevel);
     }
 
-    public static getReaders(): any[] {
-        return Configuration.singleton.fileParameters.readers;
+    public static getInputs(): any[] {
+        return Configuration.singleton.fileParameters.requisition.inputs;
+    }
+
+    public static getOutputs(): any[] {
+        return Configuration.singleton.fileParameters.requisition.outputs;
     }
 }

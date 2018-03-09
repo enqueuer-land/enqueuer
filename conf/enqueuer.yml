@@ -1,36 +1,42 @@
-readers:
-  -
-    type: watchFolder
-    folderName: samples/*.enq
-    checkIntervalMs: 1000
+requisition:
+  inputs:
+    -
+      type: watchFolder
+      folderName: samples/*.enq
+      checkIntervalMs: 1000
 
-  -
-    type: mqtt
-    brokerAddress: mqtt://localhost
-    topic: enqueuer/requisition
+    -
+      type: mqtt
+      brokerAddress: mqtt://localhost
+      topic: enqueuer/input
 
-  -
-    type: uds
-    id: enqueuer
-    path: enqueuer-client
+    -
+      type: uds
+      id: enqueuer
+      path: enqueuer-client
 
-  -
-    type: standardInput
+    -
+      type: standardInput
 
-  -
-    type: amqp
-    brokerUrl: amqp://localhost:5672
-    exchangeName: ENQUEUER.E
-    routingKey: "#"
-    queueName: ENQUEUER.INPUT
+    -
+      type: amqp
+      brokerUrl: amqp://localhost:5672
+      exchangeName: ENQUEUER.E
+      routingKey: "#"
+      queueName: ENQUEUER.INPUT
 
-  -
-    type: http
-    port: 3000
-    url: /requisitions
-    response:
-        payload: 'payload'
-        header:
-          key: 'value'
+    -
+      type: http
+      port: 3000
+      url: /requisitions
+      response:
+          payload: 'payload'
+          header:
+            key: 'value'
+  outputs:
+    -
+      type: mqtt
+      brokerAddress: mqtt://localhost
+      topic: enqueuer/output
 
 logLevel: debug
