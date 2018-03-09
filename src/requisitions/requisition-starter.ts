@@ -1,14 +1,14 @@
 import {Logger} from "../loggers/logger";
-import {ReportReplier} from "../reporters/reporters-factory";
+import {ReportResultReplier} from "../reporters/report-result-replier";
 import {RequisitionRunner} from "./requisition-runner";
 
 export class RequisitionStarter {
     
-    private reportReplier: ReportReplier;
+    private reportReplier: ReportResultReplier;
     private requisitionRunner: RequisitionRunner;
 
     public constructor(requisition: any) {
-        this.reportReplier = new ReportReplier(requisition.reports);
+        this.reportReplier = new ReportResultReplier(requisition.reports);
         this.requisitionRunner = new RequisitionRunner(requisition);
     }
     

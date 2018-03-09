@@ -2,22 +2,22 @@ import {Publisher} from "../publishers/publisher";
 import {PublisherFactory} from "../publishers/publisher-factory";
 import {Logger} from "../loggers/logger";
 
-export class ReportReplier {
+export class ReportResultReplier {
 
-    private reportRepliers: Publisher[] = [];
+    private repliers: Publisher[] = [];
 
-    constructor(reportersAttributes: any) {
+    public constructor(reportersAttributes: any) {
         const publisherFactory: PublisherFactory = new PublisherFactory();
 
         reportersAttributes.forEach((report: any) => {
+            Logger.debug(`Instantiating replier: ${report.type}`);
             const publisher = publisherFactory.createPublisher(report);
-            Logger.debug(`Instantiating publisher: ${publisher.constructor.name}`);
-            this.reportRepliers.push(publisher);
+            this.repliers.push(publisher);
         });
     }
 
-    publish(resultReport: string): any {
-        this.reportRepliers.forEach( reporter => {
+    public publish(resultReport: string): any {
+        this.repliers.forEach( reporter => {
             reporter.payload = resultReport;
             reporter.publish()
                 .catch(err=> Logger.error(err));

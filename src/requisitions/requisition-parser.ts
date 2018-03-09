@@ -1,3 +1,5 @@
+import {Logger} from "../loggers/logger";
+
 const jsonSub = require('json-sub')();
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
@@ -23,8 +25,10 @@ export class RequisitionParser {
                 }
                 const variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
                 const requisitionWithId = new RequisitionIdGenerator(variablesReplacedRequisition).insertId();
+                Logger.info(`Message associated with id ${requisitionWithId.id}`)
                 resolve(requisitionWithId);
             } catch (err) {
+                Logger.info(`Message is not a JSON`);
                 reject(err);
             }
         });

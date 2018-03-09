@@ -8,7 +8,6 @@ export class Enqueuer {
     private requisitionInputs: RequisitionInput[];
     private requisitionOutputs: RequisitionOutput[];
 
-
     public constructor(requisitionInputs: RequisitionInput[], requisitionOutputs: RequisitionOutput[]) {
         this.requisitionInputs = requisitionInputs;
         this.requisitionOutputs = requisitionOutputs;
@@ -43,7 +42,8 @@ export class Enqueuer {
 
     private reportRequisitionReceived(message: any): any {
         this.requisitionOutputs.forEach(output => {
-            output.publish(message.toString());
+            Logger.debug("Reporting that requisition has started");
+            output.publish(JSON.stringify(message, null, 2));
         })
     }
 

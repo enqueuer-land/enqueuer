@@ -7,15 +7,14 @@ import {StartEvent} from "../start-events/start-event";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
-    private requisitionId: string;
+    private reportGenerator: ReportGenerator;
     private startEvent: StartEvent;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback | null = null;
-    private startTime: DateController | null = null;
     private timeout: number | null;
 
     constructor(requisitionAttributes: any) {
-        this.requisitionId = requisitionAttributes.id;
+        this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
         this.startEvent = new StartEventFactory().createStartEvent(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
         this.timeout = requisitionAttributes.timeout;
@@ -23,7 +22,7 @@ export class RequisitionRunner {
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
         Logger.info("Starting requisition");
-        this.startTime = new DateController();
+        this.reportGenerator.start(this.timeout);
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();
         this.multiSubscriptionsHandler.connect()
@@ -61,47 +60,15 @@ export class RequisitionRunner {
     private onFinish(additionalInfo: any = null): void {
         this.onFinish = () => {};
 
-        let reportGenerator: ReportGenerator = new ReportGenerator();
         if (additionalInfo)
-            reportGenerator.addRequisitionReports({additionalInfo});
-        reportGenerator.addRequisitionReports({
-                    enqueuer: {
-                        version: process.env.npm_package_version
-                    },
-                    report: {
-                        version: process.env.npm_package_version
-                    }
-                });
-        reportGenerator.addRequisitionReports({id: this.requisitionId});
+            this.reportGenerator.addRequisitionReports({additionalInfo});
+
         const multiSubscriptionReport = this.multiSubscriptionsHandler.getReport();
-        reportGenerator.addSubscriptionReport(multiSubscriptionReport);
+        this.reportGenerator.setSubscriptionReport(multiSubscriptionReport);
         const startEventReport = this.startEvent.getReport();
-        reportGenerator.addStartEventReport(startEventReport);
-        let valid = startEventReport.valid && multiSubscriptionReport.valid;
-        if (this.timeout && valid && this.startTime)
-            valid = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
-        reportGenerator.addRequisitionReports({valid: valid});
-
-        const timesReport = this.generateTimesReport();
-        if (timesReport)
-            reportGenerator.addRequisitionReports({times:timesReport});
+        this.reportGenerator.setStartEventReport(startEventReport);
+        this.reportGenerator.finish();
         if (this.onFinishCallback)
-            this.onFinishCallback(reportGenerator.generate().toString());
-    }
-
-    private generateTimesReport(): {} | null {
-        if (this.startTime) {
-            let timesReport: any = {};
-            const endDate = new DateController();
-            timesReport.totalTime = endDate.getTime() - this.startTime.getTime();
-            timesReport.startTime = this.startTime.toString();
-            timesReport.endTime = endDate.toString();
-            if (this.timeout) {
-                timesReport.timeout = this.timeout;
-                timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
-            }
-            return timesReport;
-        }
-        return null;
+            this.onFinishCallback(this.reportGenerator.generate().toString());
     }
 }

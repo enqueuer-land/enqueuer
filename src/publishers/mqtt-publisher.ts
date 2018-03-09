@@ -1,4 +1,5 @@
 import {Publisher} from "./publisher";
+import {Logger} from "../loggers/logger";
 
 const mqtt = require("mqtt")
 
