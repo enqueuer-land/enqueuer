@@ -2,6 +2,7 @@ import {RequisitionStarter} from "./requisitions/requisition-starter";
 import {RequisitionInput} from "./requisitions/requisition-input";
 import {Logger} from "./loggers/logger";
 import {RequisitionOutput} from "./requisitions/requisition-output";
+import {RequisitionModel} from "./requisitions/model/requisition-model";
 
 export class Enqueuer {
 
@@ -26,21 +27,21 @@ export class Enqueuer {
             });
     }
 
-    private startReader(requisitionInput: RequisitionInput) {
-        requisitionInput.receiveMessage()
-            .then((requisition: any) => {
+    private startReader(input: RequisitionInput) {
+        input.receiveMessage()
+            .then((requisition: RequisitionModel) => {
                 this.reportRequisitionReceived(requisition);
                 new RequisitionStarter(requisition).start();
-                return this.startReader(requisitionInput); //runs again
+                return this.startReader(input); //runs again
             })
             .catch( (err) => {
                 Logger.error(err);
                 this.reportRequisitionReceived(err);
-                return this.startReader(requisitionInput); //runs again
+                return this.startReader(input); //runs again
             })
     }
 
-    private reportRequisitionReceived(requisition: any): any {
+    private reportRequisitionReceived(requisition: RequisitionModel): void {
         this.requisitionOutputs.forEach(output => {
             output.publish(JSON.stringify(requisition, null, 2));
         })

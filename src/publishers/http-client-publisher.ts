@@ -1,5 +1,6 @@
 import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
+import {PublisherModel} from "../requisitions/model/publisher-model";
 const request = require("request");
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "http-client")
@@ -8,7 +9,7 @@ export class HttpClientPublisher extends Publisher {
     private method: string;
     private headers: any;
 
-    constructor(publish: any) {
+    constructor(publish: PublisherModel) {
         super(publish);
         this.url = publish.url;
         this.method = publish.method;

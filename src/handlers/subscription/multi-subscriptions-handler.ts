@@ -1,11 +1,12 @@
 import {SubscriptionHandler} from "./subscription-handler";
+import {SubscriptionModel} from "../../requisitions/model/subscription-model";
 
 export class MultiSubscriptionsHandler {
     private subscriptionHandlers: SubscriptionHandler[] = [];
     private subscriptionsConnectionCompletedCounter: number = 0;
     private subscriptionsStoppedWaitingCounter: number = 0;
 
-    constructor(subscriptionsAttributes: any[]) {
+    constructor(subscriptionsAttributes: SubscriptionModel[]) {
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
             this.subscriptionHandlers.push(new SubscriptionHandler(subscriptionsAttributes[id]));
         }

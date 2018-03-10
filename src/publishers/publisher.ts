@@ -1,9 +1,11 @@
+import {PublisherModel} from "../requisitions/model/publisher-model";
+
 export abstract class Publisher {
     public type: string;
     public payload: string;
-    public prePublishing: string | null = null;
+    public prePublishing: string | undefined;
 
-    constructor(publisherAttributes: any) {
+    constructor(publisherAttributes: PublisherModel) {
         this.type = publisherAttributes.type;
         this.payload = publisherAttributes.payload;
         this.prePublishing = publisherAttributes.prePublishing;

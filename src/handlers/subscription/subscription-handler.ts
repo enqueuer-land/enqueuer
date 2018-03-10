@@ -1,20 +1,20 @@
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {OnMessageReceivedMetaFunction} from "../../meta-functions/on-message-received-meta-function";
-import {Subscription} from "../../subscriptions/subscription";
 import {Logger} from "../../loggers/logger";
 import {DateController} from "../../dates/date-controller";
 import {Container} from "../../injector/injector";
+import {SubscriptionModel} from "../../requisitions/model/subscription-model";
 
 export class SubscriptionHandler {
 
     private timer: any;
-    private subscription: Subscription;
+    private subscription: SubscriptionModel;
     private report: any = {};
     private startTime: DateController;
     private onTimeOutCallback: Function = () => {};
     private hasTimedOut: boolean = false;
 
-    constructor(subscriptionAttributes: any) {
+    constructor(subscriptionAttributes: SubscriptionModel) {
         this.subscription = Container().Subscription.create(subscriptionAttributes);
         this.startTime = new DateController();
     }
@@ -34,14 +34,14 @@ export class SubscriptionHandler {
                     this.initializeTimeout();
                     resolve();
                 })
-                .catch((err) => reject(err));
+                .catch((err: any) => reject(err));
         });
     }
 
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
-                .then((message) => {
+                .then((message: any) => {
                     this.executeSubscriptionFunction();
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
@@ -50,7 +50,7 @@ export class SubscriptionHandler {
                     this.cleanUp();
                     resolve();
                 })
-                .catch((err) => {
+                .catch((err: any) => {
                     this.subscription.unsubscribe();
                     reject(err);
                 });

@@ -1,5 +1,6 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
+import {SubscriptionModel} from "../requisitions/model/Subscription-model";
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "uds")
 export class UdsSubscription extends Subscription {
@@ -7,7 +8,7 @@ export class UdsSubscription extends Subscription {
     private ipc = require('node-ipc');
     private path: string;
 
-    constructor(subscriptionAttributes: any) {
+    constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
 
         this.ipc.config.id = subscriptionAttributes.id;

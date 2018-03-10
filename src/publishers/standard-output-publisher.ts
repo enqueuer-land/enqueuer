@@ -1,5 +1,6 @@
 import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
+import {PublisherModel} from "../requisitions/model/publisher-model";
 const prettyjson = require('prettyjson');
 
 const options = {
@@ -11,7 +12,7 @@ const options = {
 @Injectable((publishRequisition: any) => publishRequisition.type === "standard-output")
 export class StandardOutputPublisher extends Publisher {
 
-    constructor(publisherProperties: any) {
+    constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);
     }
 

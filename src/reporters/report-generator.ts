@@ -3,7 +3,7 @@ import {DateController} from "../dates/date-controller";
 export class ReportGenerator {
 
     private startTime: DateController | null = null;
-    private timeout: number | null = null;
+    private timeout: number | undefined;
 
     private requisitionReports: any = {};
     private startEventReports: any;
@@ -15,7 +15,7 @@ export class ReportGenerator {
         this.addInitialInformation(requisitionId);
     }
 
-    public start(timeout: number | null) {
+    public start(timeout: number | undefined) {
         this.startTime = new DateController();
         this.timeout = timeout;
     }

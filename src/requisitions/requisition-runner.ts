@@ -3,6 +3,7 @@ import {MultiSubscriptionsHandler} from "../handlers/subscription/multi-subscrip
 import {Logger} from "../loggers/logger";
 import {StartEvent} from "../start-events/start-event";
 import {Container} from "../injector/injector";
+import {RequisitionModel} from "./model/requisition-model";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
@@ -10,9 +11,9 @@ export class RequisitionRunner {
     private startEvent: StartEvent;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback;
-    private timeout: number | null;
+    private timeout: number | undefined;
 
-    constructor(requisitionAttributes: any) {
+    constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
         this.startEvent = Container().StartEvent.create(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);

@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
-import {Logger} from "../loggers/logger";
 import {Injectable} from "../injector/injector";
+import {PublisherModel} from "../requisitions/model/publisher-model";
 const mqtt = require("mqtt")
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "mqtt")
@@ -8,7 +8,7 @@ export class MqttPublisher extends Publisher {
     private brokerAddress: string;
     private topic: string;
 
-    constructor(publish: any) {
+    constructor(publish: PublisherModel) {
         super(publish);
         this.brokerAddress = publish.brokerAddress;
         this.topic = publish.topic;

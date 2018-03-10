@@ -1,5 +1,6 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
+import {SubscriptionModel} from "../requisitions/model/subscription-model";
 
 const express = require('express')
 const app: any = express();
@@ -13,7 +14,7 @@ export class HttpServerSubscription extends Subscription {
     private response: any = {};
     private method: string;
 
-    constructor(subscriptionAttributes: any) {
+    constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;

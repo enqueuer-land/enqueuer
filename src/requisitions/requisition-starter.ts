@@ -1,13 +1,15 @@
 import {Logger} from "../loggers/logger";
 import {ReportResultReplier} from "../reporters/report-result-replier";
 import {RequisitionRunner} from "./requisition-runner";
+import {RequisitionModel} from "./model/requisition-model";
+import {PublisherModel} from "./model/publisher-model";
 
 export class RequisitionStarter {
 
-    private requisitionReports: any;
+    private requisitionReports: PublisherModel[];
     private requisitionRunner: RequisitionRunner;
 
-    public constructor(requisition: any) {
+    public constructor(requisition: RequisitionModel) {
         Logger.info(`Starting requisition ${requisition.id}`);
         this.requisitionRunner = new RequisitionRunner(requisition);
         this.requisitionReports = requisition.reports;

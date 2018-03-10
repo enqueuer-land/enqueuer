@@ -1,10 +1,11 @@
 import {MetaFunctionCreator} from "./meta-function-creator";
+import {PublisherModel} from "../requisitions/model/publisher-model";
 
 export class PrePublishFunction implements MetaFunctionCreator {
 
-    private publisherAttributes: any;
+    private publisherAttributes: PublisherModel;
 
-    public constructor(publisherAttributes: any) {
+    public constructor(publisherAttributes: PublisherModel) {
         this.publisherAttributes = publisherAttributes;
     }
 

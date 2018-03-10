@@ -1,5 +1,6 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
+import {SubscriptionModel} from "../requisitions/model/subscription-model";
 const amqp = require('amqp');
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "amqp")
@@ -11,7 +12,7 @@ export class AmqpSubscription extends Subscription {
     private routingKey: string;
     private queueName: string;
 
-    constructor(subscriptionAttributes: any) {
+    constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.brokerUrl = subscriptionAttributes.brokerUrl;
         this.exchangeName = subscriptionAttributes.exchangeName;

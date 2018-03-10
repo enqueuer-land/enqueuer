@@ -1,7 +1,7 @@
 import {SubscriptionModel} from "./subscription-model";
 import {PublisherModel} from "./publisher-model";
 
-export type StartEventModel = {
+export interface StartEventModel {
     subscription?: SubscriptionModel;
     publisher?: PublisherModel;
 }

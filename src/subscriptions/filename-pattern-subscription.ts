@@ -2,6 +2,7 @@ import {Subscription} from "./subscription";
 import {FSWatcher} from "fs";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "../injector/injector";
+import {SubscriptionModel} from "../requisitions/model/subscription-model";
 const fs = require("fs");
 const chokidar = require('chokidar');
 
@@ -13,7 +14,7 @@ export class FileNamePatternSubscription extends Subscription {
     private watcher: FSWatcher;
     private fileNamePattern: string;
 
-    constructor(subscriptionAttributes: any) {
+    constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
 
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;

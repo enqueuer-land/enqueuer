@@ -1,10 +1,11 @@
 import {MetaFunctionCreator} from "./meta-function-creator";
+import {SubscriptionModel} from "../requisitions/model/subscription-model";
 
 export class OnMessageReceivedMetaFunction implements MetaFunctionCreator {
 
-    private subscriptionAttributes: any;
+    private subscriptionAttributes: SubscriptionModel;
 
-    public constructor(subscriptionAttributes: any) {
+    public constructor(subscriptionAttributes: SubscriptionModel) {
         this.subscriptionAttributes = subscriptionAttributes;
     }
 

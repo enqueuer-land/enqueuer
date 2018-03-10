@@ -25,7 +25,10 @@ export class Configuration {
 
     private printConfiguration(): any {
         if (this.commandLine.verbose || this.fileParameters.verbose) {
-            const payload = {payload: JSON.stringify(this.fileParameters)};
+            const payload = {
+                payload: JSON.stringify(this.fileParameters),
+                type: "standard-output"
+            };
             new StandardOutputPublisher(payload)
                 .publish();
         }

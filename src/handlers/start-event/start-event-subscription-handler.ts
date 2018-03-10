@@ -1,6 +1,7 @@
 import {StartEvent} from "../../start-events/start-event";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
 import {Injectable} from "../../injector/injector";
+import {SubscriptionModel} from "../../requisitions/model/subscription-model";
 
 @Injectable((startEvent: any) => {
     return startEvent.subscription != null;
@@ -9,7 +10,7 @@ export class StartEventSubscriptionHandler extends StartEvent {
 
     private subscriptionHandler: SubscriptionHandler;
 
-    public constructor(startEvent: any) {
+    public constructor(startEvent: SubscriptionModel) {
         super();
         this.subscriptionHandler = new SubscriptionHandler(startEvent.subscription);
     }

@@ -2,6 +2,7 @@ import {Subscription} from "../subscriptions/subscription";
 import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
 import {Container} from "../injector/injector";
+import {RequisitionModel} from "./model/requisition-model";
 
 export class RequisitionInput {
 
@@ -25,13 +26,13 @@ export class RequisitionInput {
         });
     }
 
-    public receiveMessage(): Promise<any> {
+    public receiveMessage(): Promise<RequisitionModel> {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message: string) => {
                     Logger.info(`${this.type} got a message`);
                     this.requisitionParser.parse(message)
-                        .then((validRequisition: any) => {
+                        .then((validRequisition: RequisitionModel) => {
                             resolve(validRequisition);
                         })
                         .catch(err => {

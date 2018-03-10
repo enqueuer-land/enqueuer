@@ -1,5 +1,6 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
+import {SubscriptionModel} from "../requisitions/model/subscription-model";
 const mqtt = require("mqtt")
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "mqtt")
@@ -9,7 +10,7 @@ export class MqttSubscription extends Subscription {
     private topic: string;
     private client: any;
 
-    constructor(subscriptionAttributes: any) {
+    constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
