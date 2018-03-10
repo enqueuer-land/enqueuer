@@ -35,12 +35,10 @@ export class ReportGenerator {
     }
 
     public generate(): string {
-        let report = JSON.parse(JSON.stringify(this));
-        delete report.startTime;
-        delete report.timeout;
-        if (this.error === null)
-            delete report.error;
-
+        let report = JSON.parse(JSON.stringify(this.requisitionReports));
+        report.error = this.error;
+        report.subscriptionReports = this.subscriptionReports;
+        report.startEventReports = this.startEventReports;
         return JSON.stringify(report);
     }
 
@@ -84,7 +82,7 @@ export class ReportGenerator {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
             }
-            this.addRequisitionReports({ time:timesReport});
+            this.addRequisitionReports({ time: timesReport});
         }
         return null;
     }

@@ -23,7 +23,7 @@ Although there are other ways of using it, the two main ways are:
 	3. starts the requisition (publishing or waiting on an event);
 	4. waits for events published by the event-driven-component;
     5. executes hook script upon these received events;
-    6. reports back the [result](/output/outputReportExample).
+    6. reports back the [result](/output/outputReportExample.json).
 
 ###### Examples of IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp; and mqtt.
