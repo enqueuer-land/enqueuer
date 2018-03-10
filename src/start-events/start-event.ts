@@ -1,4 +1,4 @@
-export interface StartEvent {
-    start(): Promise<void>;
-    getReport(): any;
+export abstract class StartEvent {
+    abstract start(): Promise<void>;
+    abstract getReport(): any;
 }

@@ -1,12 +1,17 @@
 import {StartEvent} from "../../start-events/start-event";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
+import {Injectable} from "../../injector/injector";
 
-export class StartEventSubscriptionHandler implements StartEvent {
+@Injectable((startEvent: any) => {
+    return startEvent.subscription != null;
+})
+export class StartEventSubscriptionHandler extends StartEvent {
 
     private subscriptionHandler: SubscriptionHandler;
 
-    public constructor(subscriptionAttributes: any) {
-        this.subscriptionHandler = new SubscriptionHandler(subscriptionAttributes);
+    public constructor(startEvent: any) {
+        super();
+        this.subscriptionHandler = new SubscriptionHandler(startEvent.subscription);
     }
 
     public start(): Promise<void> {

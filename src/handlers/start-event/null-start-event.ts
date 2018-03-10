@@ -1,11 +1,15 @@
+import {Injectable} from "../../injector/injector";
+import {NullFactoryFunction} from "../../injector/factory-function";
 import {StartEvent} from "../../start-events/start-event";
 
-export class NullStartEvent implements StartEvent {
+@Injectable(NullFactoryFunction)
+export class NullStartEvent extends StartEvent {
 
     private startEvent: any;
 
     public constructor(startEvent: any)
     {
+        super();
         this.startEvent = startEvent;
     }
 
