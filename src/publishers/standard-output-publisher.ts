@@ -4,9 +4,9 @@ import {PublisherModel} from "../requisitions/model/publisher-model";
 const prettyjson = require('prettyjson');
 
 const options = {
-    indent: 8,
+    defaultIndentation: 4,
     keysColor: "white",
-    dashColor: "white"
+    dashColor: "grey"
   };
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "standard-output")
