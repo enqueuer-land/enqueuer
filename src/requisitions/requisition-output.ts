@@ -1,6 +1,6 @@
 import {Logger} from "../loggers/logger";
-import {PublisherFactory} from "../publishers/publisher-factory";
 import {Publisher} from "../publishers/publisher";
+import {Container} from "../injector/injector";
 
 export class RequisitionOutput {
 
@@ -9,11 +9,10 @@ export class RequisitionOutput {
 
     constructor(output: any) {
         this.type = output.type;
-        this.publisher = new PublisherFactory().createPublisher(output);
+        this.publisher = Container().Publisher.create(output);
     }
 
     public publish(message: string): void {
-        Logger.info(`Publish ${this.type}`);
         this.publisher.payload = message;
         this.publisher.publish()
             .catch(err => {

@@ -1,17 +1,16 @@
 import {Publisher} from "../publishers/publisher";
-import {PublisherFactory} from "../publishers/publisher-factory";
 import {Logger} from "../loggers/logger";
+import {Container} from "../injector/injector";
 
 export class ReportResultReplier {
 
     private repliers: Publisher[] = [];
 
     public constructor(reportersAttributes: any) {
-        const publisherFactory: PublisherFactory = new PublisherFactory();
 
         reportersAttributes.forEach((report: any) => {
             Logger.debug(`Instantiating replier: ${report.type}`);
-            const publisher = publisherFactory.createPublisher(report);
+            const publisher = Container().Publisher.create(report);
             this.repliers.push(publisher);
         });
     }

@@ -1,7 +1,8 @@
 import {Publisher} from "./publisher";
-
+import {Injectable} from "../injector/injector";
 const request = require("request");
 
+@Injectable((publishRequisition: any) => publishRequisition.type === "http")
 export class HttpPublisher extends Publisher {
     private endpoint: string;
     private method: string;

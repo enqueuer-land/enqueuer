@@ -1,7 +1,9 @@
 import {Publisher} from "./publisher";
 import {Logger} from "../loggers/logger";
+import {Injectable} from "../injector/injector";
 var amqp = require('amqp');
 
+@Injectable((publishRequisition: any) => publishRequisition.type === "amqp")
 export class AmqpPublisher extends Publisher {
     private connection: any;
     private url: string;

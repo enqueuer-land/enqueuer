@@ -1,5 +1,7 @@
 import {Publisher} from "./publisher";
+import {Injectable} from "../injector/injector";
 
+@Injectable((publishRequisition: any) => publishRequisition.type === "uds")
 export class UdsPublisher extends Publisher {
 
     private path: string;

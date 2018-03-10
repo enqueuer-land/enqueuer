@@ -1,10 +1,9 @@
 import {Publisher} from "../../publishers/publisher";
 import {StartEvent} from "../../start-events/start-event";
-import {PublisherFactory} from "../../publishers/publisher-factory";
 import {PrePublishFunction} from "../../meta-functions/pre-publish-meta-function";
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../dates/date-controller";
-import {Injectable} from "../../injector/injector";
+import {Container, Injectable} from "../../injector/injector";
 
 @Injectable((startEvent: any) => startEvent.publisher)
 export class StartEventPublisherHandler extends StartEvent {
@@ -55,8 +54,7 @@ export class StartEventPublisherHandler extends StartEvent {
     private executePrePublishingFunction() {
         const prePublishFunction = new PrePublishFunction(this.publisherOriginalAttributes);
         const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
-        this.publisher = new PublisherFactory()
-                                        .createPublisher(functionResponse.publisher);
+        this.publisher = Container().Publisher.create(functionResponse.publisher);
         this.prePublishingReport = functionResponse.report;
     }
 }

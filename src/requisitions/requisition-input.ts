@@ -2,8 +2,6 @@ import {Subscription} from "../subscriptions/subscription";
 import {SubscriptionFactory} from "../subscriptions/subscription-factory";
 import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
-import {PublisherFactory} from "../publishers/publisher-factory";
-import {Publisher} from "../publishers/publisher";
 
 export class RequisitionInput {
 

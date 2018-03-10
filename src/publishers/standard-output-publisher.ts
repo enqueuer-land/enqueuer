@@ -1,4 +1,5 @@
 import {Publisher} from "./publisher";
+import {Injectable} from "../injector/injector";
 const prettyjson = require('prettyjson');
 
 const options = {
@@ -7,6 +8,7 @@ const options = {
     dashColor: "white"
   };
 
+@Injectable((publishRequisition: any) => publishRequisition.type === "standardOutput")
 export class StandardOutputPublisher extends Publisher {
 
     constructor(publisherProperties: any) {
