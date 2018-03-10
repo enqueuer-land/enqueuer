@@ -34,6 +34,9 @@ export class RequisitionInput {
                         .then((validRequisition: any) => {
                             resolve(validRequisition);
                         })
+                        .catch(err => {
+                            Logger.warning(`Error parsing requisition ${err}`)
+                        })
                 })
         });
     }

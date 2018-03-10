@@ -36,7 +36,10 @@
     {
       "type": "http-client",
       "url": "http://localhost:1880/reports",
-      "method": "POST"
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      }
     },
     {
       "type": "mqtt",

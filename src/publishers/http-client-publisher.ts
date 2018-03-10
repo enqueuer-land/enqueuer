@@ -6,13 +6,13 @@ const request = require("request");
 export class HttpClientPublisher extends Publisher {
     private url: string;
     private method: string;
-    private header: any;
+    private headers: any;
 
     constructor(publish: any) {
         super(publish);
         this.url = publish.url;
         this.method = publish.method;
-        this.header = publish.header;
+        this.headers = publish.headers;
     }
 
     public publish(): Promise<void> {
@@ -20,6 +20,7 @@ export class HttpClientPublisher extends Publisher {
             request({
                     url: this.url,
                     method: this.method,
+                    headers: this.headers,
                     body: this.payload
                 },
                 (error: any, response: any, body: any) =>

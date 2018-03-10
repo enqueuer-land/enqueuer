@@ -19,7 +19,7 @@ Although there are other ways of using it, the two main ways are:
 
 ## how it works?
 
-1. receives a [requisition](/examples/subscriptionAsStartEvent.enq "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
+1. receives a [requisition](/examples/subscriptionAsStartEvent.enq.json "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
 2. confirms the requisition reception;
 	3. starts the requisition (publishing or waiting on an event);
 	4. waits for events published by the event-driven-component;
