@@ -3,7 +3,7 @@ import {Injectable} from "../injector/injector";
 
 process.stdin.setEncoding('utf8');
 process.stdin.resume();
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "standardInput")
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "standard-input")
 export class StandardInputSubscription extends Subscription{
 
     constructor() {

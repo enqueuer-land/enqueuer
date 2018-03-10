@@ -8,7 +8,7 @@ const options = {
     dashColor: "white"
   };
 
-@Injectable((publishRequisition: any) => publishRequisition.type === "standardOutput")
+@Injectable((publishRequisition: any) => publishRequisition.type === "standard-output")
 export class StandardOutputPublisher extends Publisher {
 
     constructor(publisherProperties: any) {

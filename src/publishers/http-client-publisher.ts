@@ -2,15 +2,15 @@ import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
 const request = require("request");
 
-@Injectable((publishRequisition: any) => publishRequisition.type === "http")
-export class HttpPublisher extends Publisher {
-    private endpoint: string;
+@Injectable((publishRequisition: any) => publishRequisition.type === "http-client")
+export class HttpClientPublisher extends Publisher {
+    private url: string;
     private method: string;
     private header: any;
 
     constructor(publish: any) {
         super(publish);
-        this.endpoint = publish.endpoint;
+        this.url = publish.url;
         this.method = publish.method;
         this.header = publish.header;
     }
@@ -18,7 +18,7 @@ export class HttpPublisher extends Publisher {
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
             request.post({
-                    url: this.endpoint,
+                    url: this.url,
                     body: this.payload
                 },
                 (error: any, response: any, body: any) =>

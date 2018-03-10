@@ -1,7 +1,7 @@
 requisition:
   inputs:
     -
-      type: watchFolder
+      type: watch-folder
       folderName: samples/*.enq
       checkIntervalMs: 1000
 
@@ -16,7 +16,7 @@ requisition:
       path: enqueuer-client
 
     -
-      type: standardInput
+      type: standard-input
 
     -
       type: amqp
@@ -26,9 +26,9 @@ requisition:
       queueName: ENQUEUER.INPUT
 
     -
-      type: http
+      type: http-server
       port: 3000
-      url: /requisitions
+      endpoint: /requisitions
       response:
           payload: 'payload'
           header:

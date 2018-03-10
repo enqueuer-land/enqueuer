@@ -22,7 +22,7 @@
   },
   "reports" : [
     {
-      "type": "standardOutput"
+      "type": "standard-output"
     },
     {
       "type": "file",
@@ -34,8 +34,8 @@
       "queue": "ENQUEUER.REPORT"
     },
     {
-      "type": "http",
-      "endpoint": "http://localhost:1880/reports"
+      "type": "http-client",
+      "url": "http://localhost:1880/reports"
     },
     {
       "type": "mqtt",
