@@ -1,6 +1,8 @@
 import {Subscription} from "./subscription";
+import {Injectable} from "../injector/injector";
 const amqp = require('amqp');
 
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "amqp")
 export class AmqpSubscription extends Subscription {
 
     private connection: any;

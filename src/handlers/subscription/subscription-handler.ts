@@ -1,9 +1,9 @@
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {OnMessageReceivedMetaFunction} from "../../meta-functions/on-message-received-meta-function";
 import {Subscription} from "../../subscriptions/subscription";
-import {SubscriptionFactory} from "../../subscriptions/subscription-factory";
 import {Logger} from "../../loggers/logger";
 import {DateController} from "../../dates/date-controller";
+import {Container} from "../../injector/injector";
 
 export class SubscriptionHandler {
 
@@ -15,7 +15,7 @@ export class SubscriptionHandler {
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: any) {
-        this.subscription = new SubscriptionFactory().createSubscription(subscriptionAttributes);
+        this.subscription = Container().Subscription.create(subscriptionAttributes);
         this.startTime = new DateController();
     }
 

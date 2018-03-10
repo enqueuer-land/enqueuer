@@ -1,7 +1,7 @@
 import {Subscription} from "../subscriptions/subscription";
-import {SubscriptionFactory} from "../subscriptions/subscription-factory";
 import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
+import {Container} from "../injector/injector";
 
 export class RequisitionInput {
 
@@ -12,7 +12,7 @@ export class RequisitionInput {
     constructor(input: any) {
         this.type = input.type;
         this.requisitionParser = new RequisitionParser();;
-        this.subscription = new SubscriptionFactory().createSubscription(input);
+        this.subscription = Container().Subscription.create(input);
     }
 
     public connect(): Promise<void> {

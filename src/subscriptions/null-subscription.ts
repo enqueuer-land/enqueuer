@@ -1,5 +1,8 @@
 import {Subscription} from "./subscription";
+import {Injectable} from "../injector/injector";
+import {NullFactoryFunction} from "../injector/factory-function";
 
+@Injectable(NullFactoryFunction)
 export class NullSubscription extends Subscription {
     constructor(subscriptionAttributes: any) {
         super(subscriptionAttributes);

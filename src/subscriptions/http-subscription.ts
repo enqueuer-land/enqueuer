@@ -1,8 +1,11 @@
 import {Subscription} from "./subscription";
 import {Logger} from "../loggers/logger";
+import {Injectable} from "../injector/injector";
+
 const express = require('express')
 const app: any = express();
 
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "http")
 export class HttpSubscription extends Subscription {
 
     private port: string;

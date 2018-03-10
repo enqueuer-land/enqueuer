@@ -1,5 +1,7 @@
 import {Subscription} from "./subscription";
+import {Injectable} from "../injector/injector";
 
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "uds")
 export class UdsSubscription extends Subscription {
 
     private ipc = require('node-ipc');

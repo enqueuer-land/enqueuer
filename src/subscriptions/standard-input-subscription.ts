@@ -1,7 +1,9 @@
 import {Subscription} from "./subscription";
+import {Injectable} from "../injector/injector";
 
 process.stdin.setEncoding('utf8');
 process.stdin.resume();
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "standardInput")
 export class StandardInputSubscription extends Subscription{
 
     constructor() {

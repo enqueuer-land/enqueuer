@@ -1,9 +1,11 @@
 import {Subscription} from "./subscription";
 import {FSWatcher} from "fs";
 import {Logger} from "../loggers/logger";
+import {Injectable} from "../injector/injector";
 const fs = require("fs");
 const chokidar = require('chokidar');
 
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "watchFolder")
 export class FolderSubscription extends Subscription {
 
     private checkIntervalMs: number;
