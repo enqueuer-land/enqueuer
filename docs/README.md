@@ -1,5 +1,8 @@
 # enqueuer
-Event-Driven-Component testing tool
+Event-Driven-Component testing tool.\
+When developing an event-driven-architecture, it gets hard to keep track of how every component should exchange messages with each other.\
+Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
+What *enqueuer* proposes to do is to give you confidence that every component of your architecture acts like it should act when it was designed.
   
 ## what it does?
 Checks whether an event-driven-component acts as expected.
@@ -16,16 +19,14 @@ Although there are other ways of using it, the two main ways are:
 
 ## how it works?
 
-- receives a [requisition](/examples/subscriptionAsStartEvent.enq "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
-- confirms the requisition reception;
-	- starts the requisition, by:
-    > publishing as it says; or
-    > waiting on an event described.
-	- waits for events published by the event-driven-component;
-  - executes hook script upon these received events;
-  - reports back the [result](/output/outputReportExample).
+1. receives a [requisition](/examples/subscriptionAsStartEvent.enq "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
+2. confirms the requisition reception;
+	3. starts the requisition (publishing or waiting on an event);
+	4. waits for events published by the event-driven-component;
+    5. executes hook script upon these received events;
+    6. reports back the [result](/output/outputReportExample).
 
-## Examples of IPC mechanisms currently supported are:
+###### Examples of IPC mechanisms currently supported are:
   - standard input;
   - file system;
   - UDS;
