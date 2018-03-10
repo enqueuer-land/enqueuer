@@ -29,8 +29,8 @@ export class Enqueuer {
     private startReader(requisitionInput: RequisitionInput) {
         requisitionInput.receiveMessage()
             .then((requisition: any) => {
-                new RequisitionStarter(requisition).start();
                 this.reportRequisitionReceived(requisition);
+                new RequisitionStarter(requisition).start();
                 return this.startReader(requisitionInput); //runs again
             })
             .catch( (err) => {
@@ -40,10 +40,9 @@ export class Enqueuer {
             })
     }
 
-    private reportRequisitionReceived(message: any): any {
+    private reportRequisitionReceived(requisition: any): any {
         this.requisitionOutputs.forEach(output => {
-            Logger.debug("Reporting that requisition has started");
-            output.publish(JSON.stringify(message, null, 2));
+            output.publish(JSON.stringify(requisition, null, 2));
         })
     }
 

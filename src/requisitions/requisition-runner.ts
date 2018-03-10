@@ -21,7 +21,6 @@ export class RequisitionRunner {
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
-        Logger.info("Starting requisition");
         this.reportGenerator.start(this.timeout);
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();

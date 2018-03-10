@@ -4,7 +4,7 @@ import {SuperClassContainer} from "./super-class-container";
 
 let container: any = {};
 export function Container(): any {
-    return container;
+    return Object.assign({}, container);
 }
 
 export function Injectable(factoryFunction: FactoryFunction) {
