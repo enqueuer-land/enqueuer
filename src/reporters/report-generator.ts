@@ -84,7 +84,7 @@ export class ReportGenerator {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
             }
-            this.addRequisitionReports({ times:timesReport});
+            this.addRequisitionReports({ time:timesReport});
         }
         return null;
     }
