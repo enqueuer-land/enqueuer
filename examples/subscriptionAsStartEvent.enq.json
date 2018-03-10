@@ -13,11 +13,10 @@
   "startEvent": {
     "subscription":
     {
-      "type": "amqp",
-      "brokerUrl": "amqp://localhost:5672",
-      "exchangeName": "ENQUEUER.E",
-      "routingKey": "#",
-      "queueName": "ENQUEUER.SUBS"
+      "type": "http-server",
+      "endpoint": "/start",
+      "response": {},
+      "method": "POST"
     }
   },
   "reports" : [
