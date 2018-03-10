@@ -17,8 +17,9 @@ export class HttpClientPublisher extends Publisher {
 
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
-            request.post({
+            request({
                     url: this.url,
+                    method: this.method,
                     body: this.payload
                 },
                 (error: any, response: any, body: any) =>
@@ -33,5 +34,4 @@ export class HttpClientPublisher extends Publisher {
         })
 
     }
-
 }
