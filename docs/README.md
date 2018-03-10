@@ -11,14 +11,24 @@ By "acts as expected" we mean, the event-driven-component, when triggered by an 
 ## why is it useful?
 It is meant to help your development process.
 Although there are other ways of using it, the two main ways are:
-  - using it while you are developing a new feature of your component, in some kind of TDDish kind of way; and
-  - adding it to your testing pipeline, so you'll be asserting that the event-driven-component behaves properly.
+  - using it while you are developing a new feature of your component, in some kind of TDDish way; and
+  - adding it to your testing pipeline, so you'll be asserting that the event-driven-component still behaves properly in every commit.
 
 ## how it works?
-  - receives a [requisition](https://github.com/lopidio/enqueuer/blob/developer/examples/subscriptionAsStartEvent.enq "example") from some IPC mechanism (i.e. standard input, file, UDS, http, amqp, files etc.) defined in its [configuration](https://github.com/lopidio/enqueuer/blob/developer/conf/enqueuer.yml);
-  - starts the requisition, by:
-      - publishing as it says; or
-      - waiting on an event described.
-  - waits for events defined;
+
+- receives a [requisition](/examples/subscriptionAsStartEvent.enq "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
+- confirms the requisition reception;
+	- starts the requisition, by:
+    > publishing as it says; or
+    > waiting on an event described.
+	- waits for events published by the event-driven-component;
   - executes hook script upon these received events;
-  - reports back the [result](https://github.com/lopidio/enqueuer/blob/developer/output/outputReportExample) through some IPC mechanism.
+  - reports back the [result](/output/outputReportExample).
+
+## Examples of IPC mechanisms currently supported are:
+  - standard input;
+  - file system;
+  - UDS;
+  - http;
+  - amqp; and
+  - mqtt.
