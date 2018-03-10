@@ -36,7 +36,7 @@ export class Configuration {
         if (Configuration.singleton.commandLine.verbose)
             return 'debug';
         return (Configuration.singleton.commandLine.logLevel) ||
-            (Configuration.singleton.fileParameters.logLevel);
+            (Configuration.singleton.fileParameters["log-level"]);
     }
 
     public static getInputs(): any[] {

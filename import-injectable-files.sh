@@ -5,7 +5,7 @@ currentDirectory=$(pwd)
 
 #Finds injector directory
 injectorDir=$(find . -type f -regex ".*injector.ts" | sed 's|injector\.ts||')
-echo ${injectorDir} "is the injector.ts directory"
+#echo ${injectorDir} "is the injector.ts directory"
 
 #Enter into injector directory
 cd ${injectorDir}
@@ -18,7 +18,7 @@ injectableFiles=()
 for file in ${typescriptFiles}
 do
     if grep -q "@Injectable" ${file} ; then
-        echo ${file} "is injectable"
+        #echo ${file} "is injectable"
         injectableFiles+=";"${file}
     fi
 done

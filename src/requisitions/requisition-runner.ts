@@ -9,7 +9,7 @@ export class RequisitionRunner {
     private reportGenerator: ReportGenerator;
     private startEvent: StartEvent;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
-    private onFinishCallback: RequisitionRunnerCallback | null = null;
+    private onFinishCallback: RequisitionRunnerCallback;
     private timeout: number | null;
 
     constructor(requisitionAttributes: any) {
@@ -17,6 +17,7 @@ export class RequisitionRunner {
         this.startEvent = Container().StartEvent.create(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
         this.timeout = requisitionAttributes.timeout;
+        this.onFinishCallback = () => {};
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
@@ -60,13 +61,9 @@ export class RequisitionRunner {
         this.onFinish = () => {};
 
         this.reportGenerator.addError(error);
-
-        const multiSubscriptionReport = this.multiSubscriptionsHandler.getReport();
-        this.reportGenerator.setSubscriptionReport(multiSubscriptionReport);
-        const startEventReport = this.startEvent.getReport();
-        this.reportGenerator.setStartEventReport(startEventReport);
+        this.reportGenerator.setStartEventReport(this.startEvent.getReport());
+        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         this.reportGenerator.finish();
-        if (this.onFinishCallback)
-            this.onFinishCallback(this.reportGenerator.generate().toString());
+        this.onFinishCallback(this.reportGenerator.generate().toString());
     }
 }

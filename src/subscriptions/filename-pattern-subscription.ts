@@ -5,20 +5,20 @@ import {Injectable} from "../injector/injector";
 const fs = require("fs");
 const chokidar = require('chokidar');
 
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "watch-folder")
-export class FolderSubscription extends Subscription {
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-pattern")
+export class FileNamePatternSubscription extends Subscription {
 
     private checkIntervalMs: number;
     private files: string[] = [];
     private watcher: FSWatcher;
-    private folderName: string;
+    private fileNamePattern: string;
 
     constructor(subscriptionAttributes: any) {
         super(subscriptionAttributes);
 
-        this.folderName = subscriptionAttributes.folderName;
+        this.fileNamePattern = subscriptionAttributes.fileNamePattern;
         this.checkIntervalMs = subscriptionAttributes.checkIntervalMs;
-        this.watcher = chokidar.watch(this.folderName, {ignored: /(^|[\/\\])\../});
+        this.watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
     }
 
     public connect(): Promise<void> {
@@ -40,7 +40,7 @@ export class FolderSubscription extends Subscription {
             var timer = setInterval(() => {
                 const file: string | undefined = this.files.pop();
                 if (file) {
-                    Logger.debug(`Folder subscription detected file: ${file}`);
+                    Logger.debug(`FileNamePattern subscription detected file: ${file}`);
 
                     clearInterval(timer);
                     this.readFile(file)

@@ -1,8 +1,8 @@
 requisition:
   inputs:
     -
-      type: watch-folder
-      folderName: samples/*.enq
+      type: file-name-pattern
+      fileNamePattern: examples/*.enq
       checkIntervalMs: 1000
 
     -
@@ -39,4 +39,4 @@ requisition:
       brokerAddress: mqtt://localhost:1883
       topic: enqueuer/output
 
-logLevel: debug
+log-level: debug
