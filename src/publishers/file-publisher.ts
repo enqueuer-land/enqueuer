@@ -15,7 +15,7 @@ export class FilePublisher extends Publisher {
     }
 
     public publish(): Promise<void> {
-        fs.writeFileSync(this.filenamePrefix + new DateController().getDateOnlyNumbers(), this.payload);
+        fs.writeFileSync(this.filenamePrefix + new DateController().getStringOnlyNumbers(), this.payload);
         return Promise.resolve();
     }
 }
