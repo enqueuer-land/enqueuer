@@ -10,7 +10,7 @@ const commander = require('commander')
     .option('-c, --config-file <path>', 'Set configurationFile')
     .parse(process.argv);
 const configFilename = commander.configFile || "conf/enqueuer.yml";
-
+const ymlFile = readYml.sync(configFilename);
 
 export class Configuration {
 
@@ -27,7 +27,8 @@ export class Configuration {
             Logger.setLoggerLevel(this.getLogLevel());
     }
 
-    public static getInstance(commandLine: any = commander, configurationFile: any = readYml.sync(configFilename)): Configuration {
+    public static getInstance(commandLine: any = commander,
+                              configurationFile: any = ymlFile): Configuration {
         if (!Configuration.singleton) {
             Configuration.singleton = new Configuration(commandLine, configurationFile);
         }
@@ -35,7 +36,6 @@ export class Configuration {
 }
 
     public getLogLevel(): string {
-        console.log("logLevel:" + JSON.stringify(this.commandLine))
         if (this.commandLine.verbose)
             return 'debug';
         return (this.commandLine.logLevel) ||

@@ -2,11 +2,6 @@ import {Configuration} from "./configuration";
 import { expect } from 'chai';
 import 'mocha';
 
-const chai = require('chai');
-const spies = require('chai-spies');
-
-chai.use(spies);
-
 describe('Configuration', function() {
 
     class ConfigurationReset extends Configuration {
@@ -56,4 +51,29 @@ describe('Configuration', function() {
         });
 
     });
+
+    it('get requisition inputs from file', function () {
+        const fileInput = ['input'];
+        const configurationFile = {
+            requisition: {
+                inputs: fileInput
+            }
+        }
+        const actualInput = Configuration.getInstance({}, configurationFile).getInputs();
+
+        expect(actualInput).to.equal(fileInput);
+    });
+
+    it('get requisition outputs from file', function () {
+        const expectedOutput = ['someOutput'];
+        const configurationFile = {
+            requisition: {
+                outputs: expectedOutput
+            }
+        }
+        const actualOutput = Configuration.getInstance({}, configurationFile).getOutputs();
+
+        expect(actualOutput).to.equal(expectedOutput);
+    });
+
 });
