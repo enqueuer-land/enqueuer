@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {Enqueuer} from "./enqueuer";
 import {Configuration} from "./configurations/configuration";
 import {RequisitionInput} from "./requisitions/requisition-input";

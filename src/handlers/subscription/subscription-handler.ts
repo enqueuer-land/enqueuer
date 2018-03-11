@@ -107,6 +107,11 @@ export class SubscriptionHandler {
     private handleKillSignal = (signal: Signals): void => {
         Logger.fatal(`Handling kill signal ${signal}`);
         this.cleanUp();
+        global.setTimeout(() => {
+            Logger.fatal("Adios muchachos");
+            process.exit(1);
+        }, 2000);
+
     }
 
 

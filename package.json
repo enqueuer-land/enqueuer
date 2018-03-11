@@ -5,11 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "prestart": "./import-injectable-files.sh && tsc",
+    "build": "tsc && ./import-injectable-files.sh",
     "test": "mocha -r ts-node/register src/**/*.test.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lopidio/enqueuer"
+  },
   "author": "Virgs",
-  "license": "ISC",
+  "license": "MIT",
+  "bin": {
+    "enqueuer": "js/index.js"
+  },
   "dependencies": {
     "@types/mqtt": "^2.5.0",
     "ajv": "^6.2.1",
