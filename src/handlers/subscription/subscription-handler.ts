@@ -4,6 +4,7 @@ import {Logger} from "../../loggers/logger";
 import {DateController} from "../../dates/date-controller";
 import {Container} from "../../injector/injector";
 import {SubscriptionModel} from "../../requisitions/model/subscription-model";
+import Signals = NodeJS.Signals;
 
 export class SubscriptionHandler {
 
@@ -33,6 +34,10 @@ export class SubscriptionHandler {
                     };
                     this.initializeTimeout();
                     resolve();
+
+                    process.on('SIGINT', this.handleKillSignal);
+                    process.on('SIGTERM', this.handleKillSignal);
+
                 })
                 .catch((err: any) => reject(err));
         });
@@ -73,7 +78,7 @@ export class SubscriptionHandler {
     }
 
     private cleanUp(): void {
-        Logger.debug(`Unsubscribing subscription: ${this.subscription.type}`);
+        Logger.info(`Unsubscribing subscription ${this.subscription.type}`);
         this.subscription.unsubscribe();
         global.clearTimeout(this.timer);
     }
@@ -98,5 +103,11 @@ export class SubscriptionHandler {
             messageReceivedTimestamp: new DateController().toString()
         }
     }
+
+    private handleKillSignal = (signal: Signals): void => {
+        Logger.fatal(`Handling kill signal ${signal}`);
+        this.cleanUp();
+    }
+
 
 }

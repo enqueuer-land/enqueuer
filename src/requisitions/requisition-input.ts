@@ -17,7 +17,7 @@ export class RequisitionInput {
     }
 
     public connect(): Promise<void> {
-        Logger.debug(`Connecting to input ${this.type}`);
+        Logger.info(`Connecting to input ${this.type}`);
 
         return new Promise((resolve, reject) => {
             this.subscription.connect()

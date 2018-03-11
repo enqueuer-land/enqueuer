@@ -4,6 +4,7 @@ import {SubscriptionModel} from "../requisitions/model/subscription-model";
 
 process.stdin.setEncoding('utf8');
 process.stdin.resume();
+
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "standard-input")
 export class StandardInputSubscription extends Subscription{
 
@@ -21,6 +22,10 @@ export class StandardInputSubscription extends Subscription{
 
     public connect(): Promise<void> {
         return Promise.resolve();
+    }
+
+    public unsubscribe(): void {
+        process.stdin.pause();
     }
 
 }
