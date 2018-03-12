@@ -27,7 +27,7 @@ Although there are other ways of using it, the two main ways are:
     
 ### let me draw it for you
 This is how your event-driven-conponent should act when triggerd by an *Input*:\
-![2018-03-11 19_20_00](<iframe src='https://gfycat.com/ifr/CostlyLeanImperatorangel' frameborder='0' scrolling='no' allowfullscreen width='640' height='378'></iframe>)
+![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Event-driven-component expected behavior")
 
 ###### Examples of IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
