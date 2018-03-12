@@ -27,7 +27,7 @@ Although there are other ways of using it, the two main ways are:
     
 ### let me draw it for you
 This is how your event-driven-conponent should act when triggerd by an *Input*:\
-![2018-03-11 19_20_00](https://gfycat.com/CostlyLeanImperatorangel)
+![2018-03-11 19_20_00](https://gfycat.com/CostlyLeanImperatorangel.gif)
 
 ###### Examples of IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
