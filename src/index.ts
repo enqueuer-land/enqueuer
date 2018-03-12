@@ -1,18 +1,14 @@
-const fs = require('fs');
-import { IpcFactory } from "./ipc/ipc-factory";
-import { IpcCommunicator } from "./ipc/ipc-communicator";
+#!/usr/bin/env node
+import {Enqueuer} from "./enqueuer";
+import {Configuration} from "./configurations/configuration";
+import {RequisitionInput} from "./requisitions/requisition-input";
+import {RequisitionOutput} from "./requisitions/requisition-output";
 
-class Startup {
 
-  public start(): void {
-    const configurations = JSON.parse(fs.readFileSync("conf/uds.json"));
-    // const configurations = JSON.parse(fs.readFileSync("conf/enqueuer.json"));
+var requisitionInputs: RequisitionInput[] =
+    Configuration.getInstance().getInputs().map(input => new RequisitionInput(input));
 
-    const communicator: IpcCommunicator = new IpcFactory().create(configurations);
-    if (communicator)
-      communicator.start();
-  } 
-  
-}
+var requisitionOutputs: RequisitionOutput[] =
+    Configuration.getInstance().getOutputs().map(output => new RequisitionOutput(output));
 
-new Startup().start();
+new Enqueuer(requisitionInputs, requisitionOutputs).execute();

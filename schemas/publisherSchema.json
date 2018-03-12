@@ -1,0 +1,25 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/publisher",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "title": "The publisher Type",
+      "default": "",
+      "examples": [
+        "file", "mqtt", "amqp"
+      ]
+    },
+    "prePublishing": {
+      "type": "string",
+      "title": "The PrePublishing function body",
+      "default": "",
+      "examples": [
+        "someCode = new Date();"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "title": "The Type Schema ",
+      "default": "",
+      "examples": [
+        "mqtt", "amqp", "http"
+      ]
+    },
+    "onMessageReceived": {
+      "type": "string",
+      "title": "The OnMessageReceived Schema ",
+      "default": "",
+      "examples": [
+        "someCode = new Date();"
+      ]
+    },
+    "timeout": {
+      "type": "integer",
+      "title": "The Timeout Schema ",
+      "examples": [
+        8000
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

@@ -5,16 +5,31 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "test": "mocha -r ts-node/register src/**/*.test.ts"
+    "build": "tsc && ./import-injectable-files.sh",
+    "test": "find ./src -name '*.js' -type f -delete && tsc && ./import-injectable-files.sh && mocha -r ts-node/register src/**/*.test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lopidio/enqueuer"
   },
   "author": "Virgs",
-  "license": "ISC",
+  "license": "MIT",
+  "bin": {
+    "enqueuer": "js/index.js"
+  },
   "dependencies": {
     "@types/mqtt": "^2.5.0",
-    "chalk": "^2.3.1",
-    "class-transformer": "^0.1.9",
+    "ajv": "^6.2.1",
+    "amqp": "^0.2.6",
+    "chokidar": "^2.0.2",
+    "commander": "^2.14.1",
+    "express": "^4.16.2",
+    "json-sub": "^1.3.0",
+    "log4js": "^2.5.3",
     "node-ipc": "^9.1.1",
-    "reflect-metadata": "^0.1.12"
+    "npm": "^5.7.1",
+    "prettyjson": "^1.2.1",
+    "read-yaml": "^1.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.2",
@@ -22,6 +37,7 @@
     "@types/mocha": "^2.2.48",
     "@types/node": "^9.4.6",
     "chai": "^4.1.2",
+    "chai-spies": "^1.0.0",
     "mocha": "^5.0.1",
     "ts-node": "^4.1.0",
     "tsd": "^0.6.5",
