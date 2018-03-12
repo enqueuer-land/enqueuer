@@ -24,6 +24,10 @@ Although there are other ways of using it, the two main ways are:
 	4. waits for events published by the event-driven-component;
     5. executes hook script upon these received events;
     6. reports back the [result](/output/outputReportExample.json).
+    
+### let me draw it for you
+This is how your event-driven-conponent should act when triggerd by an *Input*:\
+![2018-03-11 19_20_00](https://gfycat.com/CostlyLeanImperatorangel)
 
 ###### Examples of IPC mechanisms currently supported are:
-        standard input; standard output; files; UDS; http; amqp; and mqtt.
+        standard input; standard output; files; UDS; http; amqp and mqtt.
