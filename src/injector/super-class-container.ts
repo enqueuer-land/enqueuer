@@ -19,7 +19,7 @@ export class SuperClassContainer {
         return null;
     }
 
-    private addInjectable = (injectable: Injectable): any => {
+    public addInjectable = (injectable: Injectable): any => {
         if (injectable.factoryFunction == NullFactoryFunction) {
             this.default = injectable;
         }
