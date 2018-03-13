@@ -5,7 +5,7 @@ import {Container} from "./container";
 describe('Injector', function() {
 
     const argumentValue = "value";
-    class ParentClass {};
+    class ParentClass {}
 
     @Injectable((argument: string) => argument == argumentValue)
     class SubClass extends ParentClass {
