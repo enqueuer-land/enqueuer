@@ -22,9 +22,10 @@ export class Configuration {
     protected constructor(commandLine: any, configurationFile: any) {
         this.commandLine = commandLine;
         this.configurationFile = configurationFile;
-        // this.printConfiguration();
-        // if (Logger)
-        //     Logger.setLoggerLevel(this.getLogLevel());
+        if (this.getLogLevel())
+            this.printConfiguration();
+        if (Logger)
+            Logger.setLoggerLevel(this.getLogLevel());
     }
 
     public static getInstance(commandLine: any = commander,
@@ -35,7 +36,7 @@ export class Configuration {
         return Configuration.singleton;
 }
 
-    public getLogLevel(): string {
+    public getLogLevel(): string | undefined {
         if (this.commandLine.verbose)
             return 'debug';
         return (this.commandLine.logLevel) ||
@@ -51,14 +52,12 @@ export class Configuration {
     }
 
     private printConfiguration(): any {
-        if (this.commandLine.verbose || this.configurationFile.verbose) {
-            const payload = {
-                payload: JSON.stringify(this.configurationFile),
-                type: "standard-output"
-            };
-            new StandardOutputPublisher(payload)
-                .publish()
-                .catch (err => {})
-        }
+        const payload = {
+            payload: JSON.stringify(this.configurationFile),
+            type: "standard-output"
+        };
+        new StandardOutputPublisher(payload)
+            .publish()
+            .catch (err => {})
     }
 }
