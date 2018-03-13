@@ -2,9 +2,9 @@ import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor"
 import {OnMessageReceivedMetaFunction} from "../../meta-functions/on-message-received-meta-function";
 import {Logger} from "../../loggers/logger";
 import {DateController} from "../../dates/date-controller";
-import {Container} from "../../injector/injector";
 import {SubscriptionModel} from "../../requisitions/model/subscription-model";
 import Signals = NodeJS.Signals;
+import {Container} from "../../injector/container";
 
 export class SubscriptionHandler {
 

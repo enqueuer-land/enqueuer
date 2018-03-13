@@ -22,9 +22,9 @@ export class Configuration {
     protected constructor(commandLine: any, configurationFile: any) {
         this.commandLine = commandLine;
         this.configurationFile = configurationFile;
-        this.printConfiguration();
-        if (Logger)
-            Logger.setLoggerLevel(this.getLogLevel());
+        // this.printConfiguration();
+        // if (Logger)
+        //     Logger.setLoggerLevel(this.getLogLevel());
     }
 
     public static getInstance(commandLine: any = commander,

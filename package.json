@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "build": "find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc",
-    "test": "mocha -r ts-node/register src/**/*.test.ts"
+    "test": "jest",
+    "build": "find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc"
   },
   "repository": {
     "type": "git",
@@ -32,15 +32,25 @@
     "read-yaml": "^1.1.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.2",
-    "@types/chai-arrays": "^1.0.2",
-    "@types/mocha": "^2.2.48",
+    "@types/jest": "^22.2.0",
     "@types/node": "^9.4.6",
-    "chai": "^4.1.2",
-    "chai-spies": "^1.0.0",
-    "mocha": "^5.0.1",
+    "jest": "^22.4.2",
+    "ts-jest": "^22.4.1",
     "ts-node": "^4.1.0",
     "tsd": "^0.6.5",
     "typescript": "^2.7.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": ".*\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   }
 }

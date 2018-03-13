@@ -2,8 +2,8 @@ import { ReportGenerator } from "../reporters/report-generator";
 import {MultiSubscriptionsHandler} from "../handlers/subscription/multi-subscriptions-handler";
 import {Logger} from "../loggers/logger";
 import {StartEvent} from "../start-events/start-event";
-import {Container} from "../injector/injector";
 import {RequisitionModel} from "./model/requisition-model";
+import {Container} from "../injector/container";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {

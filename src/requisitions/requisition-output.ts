@@ -1,6 +1,6 @@
 import {Logger} from "../loggers/logger";
 import {Publisher} from "../publishers/publisher";
-import {Container} from "../injector/injector";
+import {Container} from "../injector/container";
 
 export class RequisitionOutput {
 

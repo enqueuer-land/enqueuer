@@ -1,7 +1,7 @@
 import {Enqueuer} from "./enqueuer";
-import {Configuration} from "./configurations/configuration";
 import {RequisitionInput} from "./requisitions/requisition-input";
 import {RequisitionOutput} from "./requisitions/requisition-output";
+import {Configuration} from "./configurations/configuration";
 
 export class Starter {
 

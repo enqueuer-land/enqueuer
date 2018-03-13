@@ -9,8 +9,8 @@ export class Logger {
 
     private constructor() {
         this.logger = getLogger();
-        if (Configuration)
-            this.logger.level = Configuration.getInstance().getLogLevel();
+        // if (Configuration.getInstance())
+        //     this.logger.level = Configuration.getInstance().getLogLevel();
     }
 
     public static setLoggerLevel(level: string): void {
