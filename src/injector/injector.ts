@@ -1,16 +1,16 @@
 import {FactoryFunction} from "./factory-function";
 import {Logger} from "../loggers/logger";
 import {SuperClassContainer} from "./super-class-container";
-import {Container} from "./container";
+import {injectableContainer} from "./container";
 
 export function Injectable(factoryFunction: FactoryFunction) {
     return function(constructor: any) {
         var superClassName = Object.getPrototypeOf(constructor.prototype).constructor.name;
         const className = constructor.prototype.constructor.name;
-        if (!Container()[superClassName])
-            Container()[superClassName] = new SuperClassContainer();
+        if (!injectableContainer[superClassName])
+            injectableContainer[superClassName] = new SuperClassContainer();
 
-        const injected = Container()[superClassName].addInjectable({
+        const injected = injectableContainer[superClassName].addInjectable({
             name: className,
             constructor: constructor,
             factoryFunction: factoryFunction
@@ -25,6 +25,7 @@ export function Injectable(factoryFunction: FactoryFunction) {
 import "../handlers/start-event/null-start-event"
 import "../handlers/start-event/start-event-publisher-handler"
 import "../handlers/start-event/start-event-subscription-handler"
+import "../injector/injector.test"
 import "../publishers/amqp-publisher"
 import "../publishers/file-publisher"
 import "../publishers/http-client-publisher"

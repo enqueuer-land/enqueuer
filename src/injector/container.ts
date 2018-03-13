@@ -1,5 +1,4 @@
-let container: any = {};
+export let injectableContainer: any = {};
 export function Container(): any {
-    // return Object.assign({}, container);
-    return container;
+    return Object.assign({}, injectableContainer);
 }
