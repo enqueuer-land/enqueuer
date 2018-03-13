@@ -3,7 +3,6 @@ import 'mocha';
 import {Container, Injectable} from "./injector";
 import {NullFactoryFunction} from "./factory-function";
 
-
 describe('Injector', function() {
 
     const argumentValue = "value";
@@ -15,9 +14,6 @@ describe('Injector', function() {
             super();
         }
     }
-
-
-
 
     it('should inject object correctly', function() {
         const injected = Container().ParentClass.create(argumentValue);

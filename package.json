@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "build": "tsc && ./import-injectable-files.sh",
-    "test": "find ./src -name '*.js' -type f -delete && tsc && ./import-injectable-files.sh && mocha -r ts-node/register src/**/*.test.ts"
+    "build": "find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc",
+    "test": "mocha -r ts-node/register src/**/*.test.ts"
   },
   "repository": {
     "type": "git",
