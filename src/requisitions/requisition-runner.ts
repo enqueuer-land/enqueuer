@@ -15,7 +15,7 @@ export class RequisitionRunner {
 
     constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
-        this.startEvent = Container.get(StartEvent).create(requisitionAttributes.startEvent);
+        this.startEvent = Container.get(StartEvent).createFromPredicate(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
         this.timeout = requisitionAttributes.timeout;
         this.onFinishCallback = () => {};

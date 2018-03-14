@@ -13,7 +13,7 @@ export class RequisitionInput {
     constructor(input: any) {
         this.type = input.type;
         this.requisitionParser = new RequisitionParser();;
-        this.subscription = Container.get(Subscription).create(input);
+        this.subscription = Container.get(Subscription).createFromPredicate(input);
     }
 
     public connect(): Promise<void> {

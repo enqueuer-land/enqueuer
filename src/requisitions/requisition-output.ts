@@ -9,7 +9,7 @@ export class RequisitionOutput {
 
     constructor(output: any) {
         this.type = output.type;
-        this.publisher = Container.get(Publisher).create(output);
+        this.publisher = Container.get(Publisher).createFromPredicate(output);
     }
 
     public publish(message: string): void {

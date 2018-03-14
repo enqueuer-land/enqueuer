@@ -21,7 +21,7 @@ class FakeMetaFunction implements MetaFunctionCreator {
 
 describe('MetaFunctionExecutor', () => {
 
-    it('should create meta function', function () {
+    it('should createFromPredicate meta function', function () {
         const fakeMetaFunction = new FakeMetaFunction();
         new MetaFunctionExecutor(fakeMetaFunction);
 

@@ -10,7 +10,7 @@ export class ReportResultReplier {
     public constructor(reportersAttributes: PublisherModel[]) {
         reportersAttributes.forEach((report: PublisherModel) => {
             Logger.debug(`Instantiating replier ${report.type}`);
-            const publisher = Container.get(Publisher).create(report);
+            const publisher = Container.get(Publisher).createFromPredicate(report);
             this.repliers.push(publisher);
         });
     }

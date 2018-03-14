@@ -1,8 +1,8 @@
-import {FactoryFunction, NullFactoryFunction} from "./factory-function";
+import {FactoryPredicate, NullFactoryPredicate} from "./factory-predicate";
 
 interface Injectable {
     name: string;
-    factoryFunction: FactoryFunction;
+    factoryPredicate?: FactoryPredicate;
     constructor: Function;
 }
 
@@ -11,17 +11,27 @@ export class SuperClassContainer {
     private injectables: any = {};
     private default: any = null;
 
-    public create = (argument: any): any => {
-        for (const injectable in this.injectables)
-            if (this.injectables[injectable].factoryFunction(argument))
+    public createFromPredicate = (argument: any): any => {
+        for (const injectable in this.injectables) {
+            const factoryPredicate = this.injectables[injectable].factoryPredicate;
+            if (factoryPredicate && factoryPredicate(argument))
                 return new this.injectables[injectable].constructor(argument);
+        }
         if (this.default)
             return new this.default.constructor(argument);
         return null;
     }
 
+    public createAll = (argument: any): any[] => {
+        let returnList = [];
+        for (const injectable in this.injectables) {
+            returnList.push(new this.injectables[injectable].constructor(argument));
+        }
+        return returnList;
+    }
+
     public addInjectable = (injectable: Injectable): any => {
-        if (injectable.factoryFunction == NullFactoryFunction) {
+        if (injectable.factoryPredicate == NullFactoryPredicate) {
             this.default = injectable;
         }
         else {

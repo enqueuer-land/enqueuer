@@ -17,7 +17,7 @@ export class SubscriptionHandler {
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
-        this.subscription = Container.get(Subscription).create(subscriptionAttributes);
+        this.subscription = Container.get(Subscription).createFromPredicate(subscriptionAttributes);
         this.startTime = new DateController();
     }
 
