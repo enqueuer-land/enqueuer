@@ -5,8 +5,8 @@ export class MetaFunctionExecutor {
     private parameters: string[];
 
     constructor(functionBodyCreator: MetaFunctionCreator, ...parameters: any[]) {
-        this.parameters = parameters;
         this.functionToExecute = functionBodyCreator.createFunction();
+        this.parameters = parameters;
     }
 
     public execute(): any {
@@ -29,7 +29,9 @@ export class MetaFunctionExecutor {
             }
             return functionResponse;
         } catch (exc) {
-            return { report: exc };
+            return { report: {
+                exc: exc
+            } };
         }
     }
 }

@@ -1,7 +1,7 @@
 import {MetaFunctionCreator} from "./meta-function-creator";
 import {PublisherModel} from "../requisitions/model/publisher-model";
 
-export class PrePublishFunction implements MetaFunctionCreator {
+export class PrePublishMetaFunction implements MetaFunctionCreator {
 
     private publisherAttributes: PublisherModel;
 
@@ -21,7 +21,7 @@ export class PrePublishFunction implements MetaFunctionCreator {
                                             variables: variables,
                                             publisher: publisher
                                      };`;
-        return new Function(fullBody);
+        return new Function("args", fullBody);
     }
 
 }

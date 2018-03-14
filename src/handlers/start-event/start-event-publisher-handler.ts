@@ -1,6 +1,6 @@
 import {Publisher} from "../../publishers/publisher";
 import {StartEvent} from "../../start-events/start-event";
-import {PrePublishFunction} from "../../meta-functions/pre-publish-meta-function";
+import {PrePublishMetaFunction} from "../../meta-functions/pre-publish-meta-function";
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../dates/date-controller";
 import {PublisherModel} from "../../requisitions/model/publisher-model";
@@ -54,7 +54,7 @@ export class StartEventPublisherHandler extends StartEvent {
     }
 
     private executePrePublishingFunction() {
-        const prePublishFunction = new PrePublishFunction(this.publisherOriginalAttributes);
+        const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
         const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
         this.publisher = Container().Publisher.create(functionResponse.publisher);
         this.prePublishingReport = functionResponse.report;

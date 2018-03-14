@@ -20,7 +20,7 @@ export class OnMessageReceivedMetaFunction implements MetaFunctionCreator {
                                             test: test,
                                             report: report
                                      };`;
-        return new Function(fullBody);
+        return new Function("args", fullBody);
     }
 
 }
