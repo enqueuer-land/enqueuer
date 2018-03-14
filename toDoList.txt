@@ -1,8 +1,13 @@
-Extract Container from Injectable file
+Extract Container from Injectable file (smartInjector)
+    Create a multi injector (injects every instance of class)
     Extract to its own lib
     Create a js script, put it inside bin, to replace .sh file
     Include this bin in 'npm prestart' phase of the lib's client
     Publish to npm
+        Note: you will need to enable the TypeScript flags experimentalDecorators
+         and emitDecoratorMetadata to make this work.
+
+
 
 Create class timeout
 Replace | null for ?:

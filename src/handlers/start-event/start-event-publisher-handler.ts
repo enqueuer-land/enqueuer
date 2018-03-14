@@ -56,7 +56,7 @@ export class StartEventPublisherHandler extends StartEvent {
     private executePrePublishingFunction() {
         const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
         const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
-        this.publisher = Container().Publisher.create(functionResponse.publisher);
+        this.publisher = Container.get(Publisher).create(functionResponse.publisher);
         this.prePublishingReport = functionResponse.report;
     }
 }

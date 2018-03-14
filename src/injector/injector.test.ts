@@ -15,13 +15,13 @@ describe('Injector', function() {
     }
 
     it('should inject object correctly', function() {
-        const injected = Container().ParentClass.create(argumentValue);
+        const injected = Container.get(ParentClass).create(argumentValue);
 
         expect(injected).toBeInstanceOf(SubClass);
     });
 
-    it('should inject null', function() {
-        const injected = Container().ParentClass.create("wrong");
+    it('should inject null if no Null is given and no factory function returns true', function() {
+        const injected = Container.get(ParentClass).create("wrong");
 
         expect(injected).toBeNull();
     });
@@ -34,11 +34,8 @@ describe('Injector', function() {
             }
         }
 
-        const injected = Container().ParentClass.create("wrong");
-
+        const injected = Container.get(ParentClass).create("wrong");
         expect(injected).toBeInstanceOf(NullClass);
     });
-
-
 
 });

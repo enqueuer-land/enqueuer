@@ -1,22 +1,23 @@
 import {FactoryFunction} from "./factory-function";
 import {Logger} from "../loggers/logger";
 import {SuperClassContainer} from "./super-class-container";
-import {injectableContainer} from "./container";
+import {Container} from "./container";
 
 export function Injectable(factoryFunction: FactoryFunction) {
     return function(constructor: any) {
         var superClassName = Object.getPrototypeOf(constructor.prototype).constructor.name;
         const className = constructor.prototype.constructor.name;
-        if (!injectableContainer[superClassName])
-            injectableContainer[superClassName] = new SuperClassContainer();
+        const injectableContainer: SuperClassContainer = Container.getSuperClassContainer(superClassName);
 
-        const injected = injectableContainer[superClassName].addInjectable({
-            name: className,
-            constructor: constructor,
-            factoryFunction: factoryFunction
-        });
+        const injected = injectableContainer
+            .addInjectable(
+                {
+                    name: className,
+                    constructor: constructor,
+                    factoryFunction: factoryFunction
+                });
         if (!injected)
-            Logger.warning(`Class '${className}' is already added to the Container`);
+            Logger.warning(`Class '${className}' is already added to the '${superClassName}' container`);
     };
 }
 

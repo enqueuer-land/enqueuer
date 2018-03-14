@@ -5,6 +5,7 @@ import {DateController} from "../../dates/date-controller";
 import {SubscriptionModel} from "../../requisitions/model/subscription-model";
 import Signals = NodeJS.Signals;
 import {Container} from "../../injector/container";
+import {Subscription} from "../../subscriptions/subscription";
 
 export class SubscriptionHandler {
 
@@ -16,7 +17,7 @@ export class SubscriptionHandler {
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
-        this.subscription = Container().Subscription.create(subscriptionAttributes);
+        this.subscription = Container.get(Subscription).create(subscriptionAttributes);
         this.startTime = new DateController();
     }
 

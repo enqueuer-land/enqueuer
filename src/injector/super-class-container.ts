@@ -7,6 +7,7 @@ interface Injectable {
 }
 
 export class SuperClassContainer {
+
     private injectables: any = {};
     private default: any = null;
 
