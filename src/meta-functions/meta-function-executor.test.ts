@@ -1,9 +1,5 @@
 import {MetaFunctionExecutor} from "./meta-function-executor";
 import {MetaFunctionCreator} from "./meta-function-creator";
-import arrayContaining = jasmine.arrayContaining;
-import stringMatching = jasmine.stringMatching;
-import arrayContaining = jasmine.arrayContaining;
-
 
 let mockExecuteFunction = jest.fn(() => {
     return {
@@ -48,7 +44,7 @@ describe('MetaFunctionExecutor', () => {
 
         const executionReturn = executor.execute();
 
-        expect(mockExecuteFunction).toBeCalledWith(arrayContaining([parameters]));
+        expect(mockExecuteFunction).toBeCalledWith(expect.arrayContaining([parameters]));
         expect(JSON.stringify(executionReturn.report)).toBe(JSON.stringify(expectedReport));
         expect(executionReturn.report.exc).not.toBeDefined();
     });
