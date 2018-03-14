@@ -22,10 +22,9 @@ export function Injectable(factoryFunction: FactoryFunction) {
 
 
 //#Auto-Generated Code
-import "../handlers/start-event/null-start-event"
+import "../handlers/start-event/start-event-null-handler"
 import "../handlers/start-event/start-event-publisher-handler"
 import "../handlers/start-event/start-event-subscription-handler"
-import "../injector/injector.test"
 import "../publishers/amqp-publisher"
 import "../publishers/file-publisher"
 import "../publishers/http-client-publisher"

@@ -3,7 +3,7 @@ import {NullFactoryFunction} from "../../injector/factory-function";
 import {StartEvent} from "../../start-events/start-event";
 
 @Injectable(NullFactoryFunction)
-export class NullStartEvent extends StartEvent {
+export class StartEventNullHandler extends StartEvent {
 
     private startEvent: any;
 

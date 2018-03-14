@@ -1,36 +1,35 @@
 import { getLogger } from 'log4js';
 
 export class Logger {
-    private static singleton: Logger = new Logger();
 
-    private logger: any;
-
-    private constructor() {
-        this.logger = getLogger();
-    }
+    private static logger: any = undefined;
 
     public static setLoggerLevel(level: string | undefined): void {
         if (level)
-            Logger.singleton.logger.level = level;
+            Logger.getLogger().level = level;
     }
-
     public static trace(message: string) {
-        Logger.singleton.logger.trace(message);
+        Logger.getLogger().trace(message);
     }
     public static debug(message: string) {
-        Logger.singleton.logger.debug(message);
+        Logger.getLogger().debug(message);
     }
     public static info(message: string) {
-        Logger.singleton.logger.info(message);
+        Logger.getLogger().info(message);
     }
     public static warning(message: string) {
-        Logger.singleton.logger.warn(message);
+        Logger.getLogger().warn(message);
     }
     public static error(message: string) {
-        Logger.singleton.logger.error(message);
+        Logger.getLogger().error(message);
     }
     public static fatal(message: string) {
-        Logger.singleton.logger.fatal(message);
+        Logger.getLogger().fatal(message);
     }
-
+    private static getLogger(): any {
+        if (!Logger.logger) {
+            Logger.logger = getLogger();
+        }
+        return Logger.logger;
+    }
 }

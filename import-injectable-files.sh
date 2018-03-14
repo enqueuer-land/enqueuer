@@ -11,7 +11,7 @@ injectorDir=$(find . -type f -regex ".*injector.ts" | sed 's|injector\.ts||')
 cd ${injectorDir}
 
 #Finds every .ts file
-typescriptFiles=$(find .. -type f -regex ".*\.ts" )
+typescriptFiles=$(find .. -type f -regex ".*\.ts" | grep -v "\.test\." )
 
 #Checks if file has "@Injectable" decorator
 injectableFiles=()
