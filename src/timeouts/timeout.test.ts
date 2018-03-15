@@ -30,7 +30,7 @@ describe('Timeout', function() {
 
     });
 
-    test('should not call callback if reseted in time', () => {
+    test('should not call callback if clean in time', () => {
         const period: number = 2;
 
         let timeoutCallback = jest.fn();
