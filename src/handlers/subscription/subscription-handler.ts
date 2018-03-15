@@ -23,7 +23,6 @@ export class SubscriptionHandler {
     }
 
     public onTimeout(onTimeOutCallback: Function) {
-            Logger.info("Handler timeout");
         this.timeOut = new Timeout(() => {
             Logger.info("Subscription stop waiting because it has timed out");
             this.cleanUp();

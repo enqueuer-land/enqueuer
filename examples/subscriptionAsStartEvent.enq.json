@@ -1,20 +1,20 @@
 {
   "requisitionVersion": "01.00.00",
-  "timeout": 5000,
+  "timeout": 2000,
   "subscriptions": [
     {
       "type": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "subscription",
       "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
-      "timeout": 8000
+      "timeout": 5000
     },
     {
       "type": "mqtt",
       "brokerAddress": "brokerAddress",
       "topic": "anotherSubscriptionTopic",
       "onMessageReceived": "test['someLabel'] = false",
-      "timeout": 2000
+      "timeout": 1000
     }
 
   ],

@@ -12,18 +12,18 @@ export class RequisitionRunner {
     private startEvent: StartEventHandler;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback;
-    private timeout?: number;
+    private requisitionTimeout?: number;
 
     constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
         this.startEvent = Container.get(StartEventHandler).createFromPredicate(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
-        this.timeout = requisitionAttributes.timeout;
+        this.requisitionTimeout = requisitionAttributes.timeout;
         this.onFinishCallback = () => {};
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
-        this.reportGenerator.start(this.timeout);
+        this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();
         this.multiSubscriptionsHandler.connect()
@@ -44,12 +44,11 @@ export class RequisitionRunner {
     }
 
     private initializeTimeout() {
-        if (this.timeout) {
-            let timer = global.setTimeout(() => {
-                global.clearTimeout(timer);
+        if (this.requisitionTimeout) {
+            new Timeout(() => {
                 Logger.info("Requisition Timeout");
                 this.onFinish();
-            }, this.timeout);
+            }).start(this.requisitionTimeout);
         }
     }
 
