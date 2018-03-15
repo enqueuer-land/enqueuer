@@ -3,8 +3,8 @@ import {SubscriptionModel} from "../requisitions/model/subscription-model";
 export abstract class Subscription {
 
     public messageReceived?: string;
-    public timeout: number | undefined;
-    public onMessageReceived: string | undefined;
+    public timeout?: number;
+    public onMessageReceived?: string;
     public type?: string;
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {

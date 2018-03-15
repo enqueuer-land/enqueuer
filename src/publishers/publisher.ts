@@ -3,7 +3,7 @@ import {PublisherModel} from "../requisitions/model/publisher-model";
 export abstract class Publisher {
     public type: string;
     public payload: string;
-    public prePublishing: string | undefined;
+    public prePublishing?: string;
 
     constructor(publisherAttributes: PublisherModel) {
         this.type = publisherAttributes.type;

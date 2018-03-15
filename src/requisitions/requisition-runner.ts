@@ -4,6 +4,7 @@ import {Logger} from "../loggers/logger";
 import {StartEventHandler} from "../handlers/start-event/start-event-handler";
 import {RequisitionModel} from "./model/requisition-model";
 import {Container} from "../injector/container";
+import {Timeout} from "../timeouts/timeout";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
@@ -11,7 +12,7 @@ export class RequisitionRunner {
     private startEvent: StartEventHandler;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback;
-    private timeout: number | undefined;
+    private timeout?: number;
 
     constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes.id);

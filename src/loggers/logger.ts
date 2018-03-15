@@ -1,10 +1,10 @@
-import { getLogger } from 'log4js';
+import * as log4js from 'log4js';
 
 export class Logger {
 
-    private static logger: any = undefined;
+    private static logger?: log4js.Logger;
 
-    public static setLoggerLevel(level: string | undefined): void {
+    public static setLoggerLevel(level?: string): void {
         if (level)
             Logger.getLogger().level = level;
     }
@@ -28,7 +28,7 @@ export class Logger {
     }
     private static getLogger(): any {
         if (!Logger.logger) {
-            Logger.logger = getLogger();
+            Logger.logger = log4js.getLogger();
         }
         return Logger.logger;
     }

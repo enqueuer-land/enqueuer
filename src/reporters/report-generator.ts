@@ -4,13 +4,13 @@ import {Report} from "./report";
 export class ReportGenerator {
 
     private startTime?: DateController;
-    private timeout: number | undefined;
+    private timeout?: number;
 
     private requisitionReports: Report;
     private startEventReports?: Report;
     private subscriptionReports?: Report;
 
-    private error: any = undefined;
+    private error?: any;
 
     public constructor(requisitionId: string) {
         this.requisitionReports = {
@@ -25,7 +25,7 @@ export class ReportGenerator {
         };
     }
 
-    public start(timeout: number | undefined) {
+    public start(timeout?: number) {
         this.startTime = new DateController();
         this.timeout = timeout;
     }

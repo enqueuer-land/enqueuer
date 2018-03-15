@@ -14,7 +14,7 @@ const ymlFile = readYml.sync(configFilename);
 
 export class Configuration {
 
-    protected static singleton: Configuration | undefined;
+    protected static singleton?: Configuration;
 
     private configurationFile: any;
     private commandLine: any;

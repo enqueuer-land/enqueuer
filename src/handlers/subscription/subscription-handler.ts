@@ -7,14 +7,14 @@ import Signals = NodeJS.Signals;
 import {Container} from "../../injector/container";
 import {Subscription} from "../../subscriptions/subscription";
 import {Report} from "../../reporters/report";
+import {Timeout} from "../../timeouts/timeout";
 
 export class SubscriptionHandler {
 
-    private timer: any;
     private subscription: SubscriptionModel;
     private report: any = {};
     private startTime: DateController;
-    private onTimeOutCallback: Function = () => {};
+    private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
@@ -23,7 +23,12 @@ export class SubscriptionHandler {
     }
 
     public onTimeout(onTimeOutCallback: Function) {
-        this.onTimeOutCallback = onTimeOutCallback;
+        this.timeOut = new Timeout(() => {
+            Logger.info("Subscription stop waiting because it has timed out");
+            this.cleanUp();
+            this.hasTimedOut = true;
+            onTimeOutCallback();
+        });
     }
 
     public connect(): Promise<void> {
@@ -82,18 +87,13 @@ export class SubscriptionHandler {
     private cleanUp(): void {
         Logger.info(`Unsubscribing subscription ${this.subscription.type}`);
         this.subscription.unsubscribe();
-        global.clearTimeout(this.timer);
+        if (this.timeOut)
+            this.timeOut.clear();
     }
 
     private initializeTimeout() {
-        if (this.subscription.timeout) {
-            this.timer = global.setTimeout(() => {
-                Logger.info("Subscription stop waiting because it has timed out");
-                this.cleanUp();
-                this.hasTimedOut = true;
-                this.onTimeOutCallback();
-            }, this.subscription.timeout);
-        }
+        if (this.timeOut && this.subscription.timeout)
+            this.timeOut.start(this.subscription.timeout);
     }
 
     private executeSubscriptionFunction() {
@@ -109,12 +109,10 @@ export class SubscriptionHandler {
     private handleKillSignal = (signal: Signals): void => {
         Logger.fatal(`Handling kill signal ${signal}`);
         this.cleanUp();
-        global.setTimeout(() => {
+        new Timeout(() => {
             Logger.fatal("Adios muchachos");
             process.exit(1);
-        }, 2000);
-
+        }).start(2000);
     }
-
 
 }
