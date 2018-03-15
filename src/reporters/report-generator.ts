@@ -1,18 +1,28 @@
 import {DateController} from "../dates/date-controller";
+import {Report} from "./report";
 
 export class ReportGenerator {
 
     private startTime: DateController | null = null;
     private timeout: number | undefined;
 
-    private requisitionReports: any = {};
-    private startEventReports: any;
-    private subscriptionReports: any;
+    private requisitionReports: Report;
+    private startEventReports?: Report;
+    private subscriptionReports?: Report;
 
     private error: any = undefined;
 
     public constructor(requisitionId: string) {
-        this.addInitialInformation(requisitionId);
+        this.requisitionReports = {
+            id: requisitionId,
+            enqueuer: {
+                version: process.env.npm_package_version
+            },
+            report: {
+                version: process.env.npm_package_version
+            },
+            valid: false
+        };
     }
 
     public start(timeout: number | undefined) {
@@ -20,17 +30,11 @@ export class ReportGenerator {
         this.timeout = timeout;
     }
 
-    private addRequisitionReports(requisitionReports: any): void {
-        for (const key in requisitionReports) {
-            this.requisitionReports[key] = requisitionReports[key];
-        }
-    }
-
-    public setStartEventReport(startEventReports: any): any {
+    public setStartEventReport(startEventReports: Report): void {
         this.startEventReports = startEventReports;
     }
 
-    public setSubscriptionReport(subscriptionReport: any): void {
+    public setSubscriptionReport(subscriptionReport: Report): void {
         this.subscriptionReports = subscriptionReport;
     }
 
@@ -42,7 +46,7 @@ export class ReportGenerator {
         return JSON.stringify(report);
     }
 
-    public finish(): any {
+    public finish(): void {
         this.addValidResult();
         this.addTimesReport();
     }
@@ -52,23 +56,13 @@ export class ReportGenerator {
     }
 
     private addValidResult() {
-        let valid = (this.startEventReports && this.startEventReports.valid) &&
-            (this.subscriptionReports && this.subscriptionReports.valid);
+        let valid: boolean  = false;
+        valid = (this.startEventReports && this.startEventReports.valid) &&
+                    (this.subscriptionReports && this.subscriptionReports.valid) || valid;
         if (valid && this.timeout && this.startTime)
             valid = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
-        this.addRequisitionReports({valid: valid});
-    }
 
-    private addInitialInformation(requisitionId: string) {
-        this.addRequisitionReports({
-            id: requisitionId,
-            enqueuer: {
-                version: process.env.npm_package_version
-            },
-            report: {
-                version: process.env.npm_package_version
-            }
-        })
+        this.requisitionReports.valid = valid;
     }
 
     private addTimesReport(): {} | null {
@@ -82,7 +76,8 @@ export class ReportGenerator {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
             }
-            this.addRequisitionReports({ time: timesReport});
+
+            this.requisitionReports.time = timesReport;
         }
         return null;
     }

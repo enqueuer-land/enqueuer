@@ -6,18 +6,20 @@ import {DateController} from "../../dates/date-controller";
 import {PublisherModel} from "../../requisitions/model/publisher-model";
 import {Injectable} from "../../injector/injector";
 import {Container} from "../../injector/container";
+import {Report} from "../../reporters/report";
 
 @Injectable((startEvent: any) => startEvent.publisher)
 export class StartEventPublisherHandler extends StartEvent {
     private publisherOriginalAttributes: any;
     private publisher: Publisher | null = null;
-    private report: any = {};
+    private report: Report;
     private prePublishingReport: any = {};
 
     constructor(startEvent: PublisherModel) {
         super();
         this.publisherOriginalAttributes = startEvent.publisher;
         this.publisher = null;
+        this.report = {valid: false};
     }
 
     public start(): Promise<void> {
@@ -38,7 +40,7 @@ export class StartEventPublisherHandler extends StartEvent {
         });
     }
 
-    public getReport(): any {
+    public getReport(): Report {
         return this.report;
     }
 
@@ -47,10 +49,14 @@ export class StartEventPublisherHandler extends StartEvent {
             ...this.publisherOriginalAttributes,
             prePublishFunction: this.prePublishingReport,
             publisher: this.publisher,
-            timestamp: new DateController().toString()
+            timestamp: new DateController().toString(),
+            valid: true
         }
         if (error)
-            this.report.error = error;
+            this.report = {
+                error: error,
+                valid: false
+            };
     }
 
     private executePrePublishingFunction() {

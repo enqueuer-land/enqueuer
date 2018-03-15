@@ -6,6 +6,7 @@ import {SubscriptionModel} from "../../requisitions/model/subscription-model";
 import Signals = NodeJS.Signals;
 import {Container} from "../../injector/container";
 import {Subscription} from "../../subscriptions/subscription";
+import {Report} from "../../reporters/report";
 
 export class SubscriptionHandler {
 
@@ -63,7 +64,7 @@ export class SubscriptionHandler {
         });
     }
 
-    public getReport(): any {
+    public getReport(): Report {
         this.cleanUp();
         this.report = {
             ...this.report,

@@ -55,7 +55,7 @@ describe('Injector', function() {
                     }
                     if (!instanceOfSome)
                         return {
-                            message: () => (`${this.utils.printReceived(instance)} is not an instance of any of the list ${this.utils.printExpected(classList)}`),
+                            message: () => (`${this.utils.printReceived(instance)} is not an instance of any class of the list ${this.utils.printExpected(classList)}`),
                             pass: false
                         }
                 }

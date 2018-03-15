@@ -1,5 +1,6 @@
 import {SubscriptionHandler} from "./subscription-handler";
 import {SubscriptionModel} from "../../requisitions/model/subscription-model";
+import {Report} from "../../reporters/report";
 
 export class MultiSubscriptionsHandler {
     private subscriptionHandlers: SubscriptionHandler[] = [];
@@ -44,7 +45,7 @@ export class MultiSubscriptionsHandler {
         });
     }
 
-    public getReport(): any {
+    public getReport(): Report {
         var subscriptionReports: any = [];
         var valid = true;
         this.subscriptionHandlers.forEach(subscriptionHandler => {

@@ -2,6 +2,7 @@ import {StartEvent} from "../../start-events/start-event";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
 import {Injectable} from "../../injector/injector";
 import {SubscriptionModel} from "../../requisitions/model/subscription-model";
+import {Report} from "../../reporters/report";
 
 @Injectable((startEvent: any) => {
     return startEvent.subscription != null;
@@ -29,7 +30,7 @@ export class StartEventSubscriptionHandler extends StartEvent {
         });
     }
 
-    public getReport(): any {
+    public getReport(): Report {
         return this.subscriptionHandler.getReport();
     }
 }
