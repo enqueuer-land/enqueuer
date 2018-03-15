@@ -11,14 +11,13 @@ import {Report} from "../../reporters/report";
 @Injectable((startEvent: any) => startEvent.publisher)
 export class StartEventPublisherHandler extends StartEventHandler {
     private publisherOriginalAttributes: any;
-    private publisher: Publisher | null = null;
+    private publisher?: Publisher;
     private report: Report;
     private prePublishingReport: any = {};
 
     constructor(startEvent: PublisherModel) {
         super();
         this.publisherOriginalAttributes = startEvent.publisher;
-        this.publisher = null;
         this.report = {valid: false};
     }
 

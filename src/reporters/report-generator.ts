@@ -3,7 +3,7 @@ import {Report} from "./report";
 
 export class ReportGenerator {
 
-    private startTime: DateController | null = null;
+    private startTime?: DateController;
     private timeout: number | undefined;
 
     private requisitionReports: Report;

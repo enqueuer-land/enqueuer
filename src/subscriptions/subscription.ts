@@ -2,10 +2,10 @@ import {SubscriptionModel} from "../requisitions/model/subscription-model";
 
 export abstract class Subscription {
 
-    public messageReceived: string | null = null;
+    public messageReceived?: string;
     public timeout: number | undefined;
     public onMessageReceived: string | undefined;
-    public type: string | null = null;
+    public type?: string;
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {
         this.messageReceived = subscriptionAttributes.message;
