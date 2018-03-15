@@ -1,5 +1,12 @@
 Extract Container from Injectable file (smartInjector)
-    Create a multi injector (injects every instance of class)
+    Crete injectable Properties
+        Scope
+            Singleton
+            Request
+        Creation
+            Multi
+            Default (NullPattern)
+            Predicate
     Extract to its own lib
     Create a js script, put it inside bin, to replace .sh file
     Include this bin in 'npm prestart' phase of the lib's client
@@ -8,11 +15,14 @@ Extract Container from Injectable file (smartInjector)
          and emitDecoratorMetadata to make this work.
 
 Extract TimeoutClass
+    Subscriptions timeout are not being fired
 
-Create class timeout
-Replace | null for ?:
+Why is Jest call not finishing?
 
-Test it all. For god sakes. Component tests with subscription and publish of the same type...
+Test it all. For god sakes.
+    Component tests with subscription and publish of the same type... (Needs to run amqp, mqtt brokers)
+    Test coverage framework
+
 
 npm install enqueuer// How to do this? UI is gonna need it
     https://codeburst.io/https-chidume-nnamdi-com-npm-module-in-typescript-12b3b22f0724

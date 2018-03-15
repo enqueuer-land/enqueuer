@@ -3,32 +3,34 @@ import {Logger} from "../loggers/logger";
 const readYml  = require('read-yaml');
 
 //TODO: Why does't it work in tests?
-// const commander = require('commander')
-//     .version(process.env.npm_package_version, '-V, --version')
-//     .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
-//     .option('-v, --verbose', 'Activates verbose mode', false)
-//     .option('-l, --logLevel <level>', 'Set log level')
-//     .option('-c, --config-file <path>', 'Set configurationFile')
-//     .parse(process.argv);
-// const configFilename = commander.configFile || "conf/enqueuer.yml";
-const ymlFile = readYml.sync("conf/enqueuer.yml");
+// const loaded = require('commander')
+
+let configFileName = "conf/enqueuer.yml";
+
+let commander: any = {};
+if (!process.argv[1].toString().match("jest")) {
+    commander = require('commander')
+    .version(process.env.npm_package_version, '-V, --version')
+    .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
+    .option('-v, --verbose', 'Activates verbose mode', false)
+    .option('-l, --logLevel <level>', 'Set log level')
+    .option('-c, --config-file <path>', 'Set configurationFile')
+    .parse(process.argv);
+
+    configFileName = commander.configFile || configFileName;
+}
+
+
+const ymlFile = readYml.sync(configFileName);
 
 export class Configuration {
 
     private configurationFile: any;
     private commandLine: any;
 
-    public constructor(configurationFile: any = ymlFile) {
-        // this.commandLine = commandLine;
-        this.commandLine = {};
+    public constructor(commandLine: any = commander, configurationFile: any = ymlFile) {
+        this.commandLine = commandLine;
         this.configurationFile = configurationFile;
-
-        const logLevel = this.getLogLevel();
-        if (logLevel) {
-            this.printConfiguration();
-            if (Logger)
-                Logger.setLoggerLevel(logLevel);
-        }
     }
 
     public getLogLevel(): string | undefined {
@@ -39,7 +41,6 @@ export class Configuration {
     }
 
     public getInputs(): any[] {
-        console.log("Calling the right one")
         return this.configurationFile.requisition.inputs;
     }
 
@@ -47,13 +48,7 @@ export class Configuration {
         return this.configurationFile.requisition.outputs;
     }
 
-    private printConfiguration(): any {
-        const payload = {
-            payload: JSON.stringify(this.configurationFile),
-            type: "standard-output"
-        };
-        new StandardOutputPublisher(payload)
-            .publish()
-            .catch (err => {})
+    public getFile(): any {
+        return this.configurationFile;
     }
 }
