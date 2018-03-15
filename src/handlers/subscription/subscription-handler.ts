@@ -23,6 +23,7 @@ export class SubscriptionHandler {
     }
 
     public onTimeout(onTimeOutCallback: Function) {
+            Logger.info("Handler timeout");
         this.timeOut = new Timeout(() => {
             Logger.info("Subscription stop waiting because it has timed out");
             this.cleanUp();
@@ -39,7 +40,6 @@ export class SubscriptionHandler {
                         ...this.report,
                         connectionTime: new DateController().toString()
                     };
-                    this.initializeTimeout();
                     resolve();
 
                     process.on('SIGINT', this.handleKillSignal);
@@ -52,6 +52,8 @@ export class SubscriptionHandler {
 
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
+            this.initializeTimeout();
+
             this.subscription.receiveMessage()
                 .then((message: any) => {
                     this.executeSubscriptionFunction();
@@ -92,8 +94,9 @@ export class SubscriptionHandler {
     }
 
     private initializeTimeout() {
-        if (this.timeOut && this.subscription.timeout)
+        if (this.timeOut && this.subscription.timeout) {
             this.timeOut.start(this.subscription.timeout);
+        }
     }
 
     private executeSubscriptionFunction() {
