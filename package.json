@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "test": "jest",
+    "test": "jest --forceExit",
     "build": "find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc"
   },
   "repository": {

@@ -8,11 +8,13 @@ export class Starter {
     private enqueuer: Enqueuer;
 
     constructor() {
+        const configuration = new Configuration();
+
         const requisitionInputs: RequisitionInput[] =
-            Configuration.getInstance().getInputs().map(input => new RequisitionInput(input));
+            configuration.getInputs().map(input => new RequisitionInput(input));
 
         const requisitionOutputs: RequisitionOutput[] =
-            Configuration.getInstance().getOutputs().map(output => new RequisitionOutput(output));
+            configuration.getOutputs().map(output => new RequisitionOutput(output));
 
         this.enqueuer = new Enqueuer(requisitionInputs, requisitionOutputs);
     }

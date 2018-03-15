@@ -4,20 +4,21 @@ import {RequisitionOutput} from "./requisitions/requisition-output";
 import {Enqueuer} from "./enqueuer";
 import {RequisitionInput} from "./requisitions/requisition-input";
 
+jest.mock("./configurations/configuration");
+Configuration.mockImplementation(() => {
+        return {
+                    getInputs: () => {
+                        return ["input"];
+                    },
+                    getOutputs: () => {
+                        return ["output"];
+                    }
+        };
+});
+
 jest.mock("./enqueuer");
 jest.mock("./requisitions/requisition-input");
 jest.mock("./requisitions/requisition-output");
-
-Configuration.getInstance = () => {
-    return {
-        getInputs: function (): any {
-            return ["input"];
-        },
-        getOutputs: function (): any {
-            return ["output"];
-        }
-    }
-}
 
 let startReturn = jest.fn();
 Enqueuer.mockImplementation(() => {
@@ -26,15 +27,17 @@ Enqueuer.mockImplementation(() => {
     };
 });
 
-describe('Starter', function() {
+describe('Starter', () => {
     it('should instantiate enqueuer correctly', () => {
 
         new Starter();
 
+        expect(Configuration).toHaveBeenCalledTimes(1);
+
         expect(RequisitionOutput).toHaveBeenCalledWith("output");
         expect(RequisitionInput).toHaveBeenCalledWith("input");
 
-        expect(Enqueuer).toHaveBeenCalled();
+        expect(Enqueuer).toHaveBeenCalledTimes(1);
     });
 
     it('should starts the enqueuer', () => {

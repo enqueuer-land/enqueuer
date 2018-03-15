@@ -2,39 +2,34 @@ import {StandardOutputPublisher} from "../publishers/standard-output-publisher";
 import {Logger} from "../loggers/logger";
 const readYml  = require('read-yaml');
 
-const commander = require('commander')
-    .version(process.env.npm_package_version, '-V, --version')
-    .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
-    .option('-v, --verbose', 'Activates verbose mode', false)
-    .option('-l, --logLevel <level>', 'Set log level')
-    .option('-c, --config-file <path>', 'Set configurationFile')
-    .parse(process.argv);
-const configFilename = commander.configFile || "conf/enqueuer.yml";
-const ymlFile = readYml.sync(configFilename);
+//TODO: Why does't it work in tests?
+// const commander = require('commander')
+//     .version(process.env.npm_package_version, '-V, --version')
+//     .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
+//     .option('-v, --verbose', 'Activates verbose mode', false)
+//     .option('-l, --logLevel <level>', 'Set log level')
+//     .option('-c, --config-file <path>', 'Set configurationFile')
+//     .parse(process.argv);
+// const configFilename = commander.configFile || "conf/enqueuer.yml";
+const ymlFile = readYml.sync("conf/enqueuer.yml");
 
 export class Configuration {
-
-    protected static singleton?: Configuration;
 
     private configurationFile: any;
     private commandLine: any;
 
-    protected constructor(commandLine: any, configurationFile: any) {
-        this.commandLine = commandLine;
+    public constructor(configurationFile: any = ymlFile) {
+        // this.commandLine = commandLine;
+        this.commandLine = {};
         this.configurationFile = configurationFile;
-        if (this.getLogLevel())
-            this.printConfiguration();
-        if (Logger)
-            Logger.setLoggerLevel(this.getLogLevel());
-    }
 
-    public static getInstance(commandLine: any = commander,
-                              configurationFile: any = ymlFile): Configuration {
-        if (!Configuration.singleton) {
-            Configuration.singleton = new Configuration(commandLine, configurationFile);
+        const logLevel = this.getLogLevel();
+        if (logLevel) {
+            this.printConfiguration();
+            if (Logger)
+                Logger.setLoggerLevel(logLevel);
         }
-        return Configuration.singleton;
-}
+    }
 
     public getLogLevel(): string | undefined {
         if (this.commandLine.verbose)
@@ -44,6 +39,7 @@ export class Configuration {
     }
 
     public getInputs(): any[] {
+        console.log("Calling the right one")
         return this.configurationFile.requisition.inputs;
     }
 
