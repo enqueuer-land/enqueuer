@@ -1,5 +1,5 @@
 import {SubscriptionHandler} from "./subscription-handler";
-import {SubscriptionModel} from "../../requisitions/model/subscription-model";
+import {SubscriptionModel} from "../../requisitions/models/subscription-model";
 import {Report} from "../../reporters/report";
 
 export class MultiSubscriptionsHandler {

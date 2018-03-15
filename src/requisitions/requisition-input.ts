@@ -1,7 +1,7 @@
 import {Subscription} from "../subscriptions/subscription";
 import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
-import {RequisitionModel} from "./model/requisition-model";
+import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
 
 export class RequisitionInput {

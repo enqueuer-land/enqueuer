@@ -1,5 +1,5 @@
 import {PrePublishMetaFunction} from "./pre-publish-meta-function";
-import {PublisherModel} from "../requisitions/model/publisher-model";
+import {PublisherModel} from "../requisitions/models/publisher-model";
 
 describe('PrePublishMetaFunction', () => {
 

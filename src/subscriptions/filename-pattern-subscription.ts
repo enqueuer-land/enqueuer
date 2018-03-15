@@ -2,7 +2,7 @@ import {Subscription} from "./subscription";
 import {FSWatcher} from "fs";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "../injector/injector";
-import {SubscriptionModel} from "../requisitions/model/subscription-model";
+import {SubscriptionModel} from "../requisitions/models/subscription-model";
 const fs = require("fs");
 const chokidar = require('chokidar');
 

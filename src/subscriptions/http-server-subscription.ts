@@ -1,6 +1,6 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
-import {SubscriptionModel} from "../requisitions/model/subscription-model";
+import {SubscriptionModel} from "../requisitions/models/subscription-model";
 
 const express = require('express')
 const app: any = express();

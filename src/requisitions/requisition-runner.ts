@@ -2,7 +2,7 @@ import { ReportGenerator } from "../reporters/report-generator";
 import {MultiSubscriptionsHandler} from "../handlers/subscription/multi-subscriptions-handler";
 import {Logger} from "../loggers/logger";
 import {StartEventHandler} from "../handlers/start-event/start-event-handler";
-import {RequisitionModel} from "./model/requisition-model";
+import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
 import {Timeout} from "../timeouts/timeout";
 

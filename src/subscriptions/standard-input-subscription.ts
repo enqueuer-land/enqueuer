@@ -1,6 +1,6 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
-import {SubscriptionModel} from "../requisitions/model/subscription-model";
+import {SubscriptionModel} from "../requisitions/models/subscription-model";
 
 process.stdin.setEncoding('utf8');
 process.stdin.resume();

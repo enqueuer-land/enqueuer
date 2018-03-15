@@ -2,7 +2,7 @@ import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor"
 import {OnMessageReceivedMetaFunction} from "../../meta-functions/on-message-received-meta-function";
 import {Logger} from "../../loggers/logger";
 import {DateController} from "../../dates/date-controller";
-import {SubscriptionModel} from "../../requisitions/model/subscription-model";
+import {SubscriptionModel} from "../../requisitions/models/subscription-model";
 import Signals = NodeJS.Signals;
 import {Container} from "../../injector/container";
 import {Subscription} from "../../subscriptions/subscription";

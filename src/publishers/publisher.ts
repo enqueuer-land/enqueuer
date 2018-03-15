@@ -1,4 +1,4 @@
-import {PublisherModel} from "../requisitions/model/publisher-model";
+import {PublisherModel} from "../requisitions/models/publisher-model";
 
 export abstract class Publisher {
     public type: string;

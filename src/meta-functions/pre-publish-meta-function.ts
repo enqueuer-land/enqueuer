@@ -1,5 +1,5 @@
 import {MetaFunctionCreator} from "./meta-function-creator";
-import {PublisherModel} from "../requisitions/model/publisher-model";
+import {PublisherModel} from "../requisitions/models/publisher-model";
 
 export class PrePublishMetaFunction implements MetaFunctionCreator {
 

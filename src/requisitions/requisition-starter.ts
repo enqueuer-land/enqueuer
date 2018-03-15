@@ -1,8 +1,8 @@
 import {Logger} from "../loggers/logger";
 import {ReportResultReplier} from "../reporters/report-result-replier";
 import {RequisitionRunner} from "./requisition-runner";
-import {RequisitionModel} from "./model/requisition-model";
-import {PublisherModel} from "./model/publisher-model";
+import {RequisitionModel} from "./models/requisition-model";
+import {PublisherModel} from "./models/publisher-model";
 
 export class RequisitionStarter {
 

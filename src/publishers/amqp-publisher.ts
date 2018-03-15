@@ -1,7 +1,7 @@
 import {Publisher} from "./publisher";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "../injector/injector";
-import {PublisherModel} from "../requisitions/model/publisher-model";
+import {PublisherModel} from "../requisitions/models/publisher-model";
 var amqp = require('amqp');
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "amqp")

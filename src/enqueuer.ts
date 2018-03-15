@@ -2,7 +2,7 @@ import {RequisitionStarter} from "./requisitions/requisition-starter";
 import {RequisitionInput} from "./requisitions/requisition-input";
 import {Logger} from "./loggers/logger";
 import {RequisitionOutput} from "./requisitions/requisition-output";
-import {RequisitionModel} from "./requisitions/model/requisition-model";
+import {RequisitionModel} from "./requisitions/models/requisition-model";
 
 export class Enqueuer {
 

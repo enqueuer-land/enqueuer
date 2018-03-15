@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
-import {PublisherModel} from "../requisitions/model/publisher-model";
+import {PublisherModel} from "../requisitions/models/publisher-model";
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "uds")
 export class UdsPublisher extends Publisher {

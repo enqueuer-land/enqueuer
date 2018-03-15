@@ -1,6 +1,6 @@
 import {Publisher} from "../publishers/publisher";
 import {Logger} from "../loggers/logger";
-import {PublisherModel} from "../requisitions/model/publisher-model";
+import {PublisherModel} from "../requisitions/models/publisher-model";
 import {Container} from "../injector/container";
 
 export class ReportResultReplier {

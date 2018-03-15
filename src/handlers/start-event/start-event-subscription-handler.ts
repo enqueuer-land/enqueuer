@@ -1,7 +1,7 @@
 import {StartEventHandler} from "./start-event-handler";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
 import {Injectable} from "../../injector/injector";
-import {SubscriptionModel} from "../../requisitions/model/subscription-model";
+import {SubscriptionModel} from "../../requisitions/models/subscription-model";
 import {Report} from "../../reporters/report";
 
 @Injectable((startEvent: any) => {
