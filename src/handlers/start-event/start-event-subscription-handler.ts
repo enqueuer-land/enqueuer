@@ -1,4 +1,4 @@
-import {StartEvent} from "../../start-events/start-event";
+import {StartEventHandler} from "./start-event-handler";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
 import {Injectable} from "../../injector/injector";
 import {SubscriptionModel} from "../../requisitions/model/subscription-model";
@@ -7,7 +7,7 @@ import {Report} from "../../reporters/report";
 @Injectable((startEvent: any) => {
     return startEvent.subscription != null;
 })
-export class StartEventSubscriptionHandler extends StartEvent {
+export class StartEventSubscriptionHandler extends StartEventHandler {
 
     private subscriptionHandler: SubscriptionHandler;
 
