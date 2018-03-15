@@ -9,18 +9,15 @@ export class RequisitionIdGenerator {
     }
 
     public generateId(): string {
-        return "enqueuer_" + this.calculateHash() + new DateController().getStringOnlyNumbers();
+        return "enqueuer_" + this.calculateHash() + "_"+ new DateController().getStringOnlyNumbers();
     }
     
-    private calculateHash() {
-        var hash = 0;
-        if (this.requisition.length == 0) return hash;
-        for (let i = 0; i < this.requisition.length; ++i) {
-            const char: number = this.requisition.charCodeAt(i);
-            hash = ((hash<<5)-hash)+char;
-            hash = hash & hash; // Convert to 32bit integer
-        }
-        return hash;
+    private calculateHash(): number {
+        return Math.abs((this.requisition + '').split("")
+            .reduce((a, b) => {
+                a = ((a << 5) - a) + b.charCodeAt(0);
+                return a & a
+            }, 0));
     }
 
 }
