@@ -1,7 +1,6 @@
 import {RequisitionIdGenerator} from "./requisition-id-generator";
 import {DateController} from "../dates/date-controller";
 
-
 jest.mock("../dates/date-controller");
 DateController.mockImplementation(() => {
     return {
@@ -10,7 +9,6 @@ DateController.mockImplementation(() => {
         }
     };
 });
-
 
 describe('RequisitionIdGenerator', () => {
 

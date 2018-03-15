@@ -1,11 +1,11 @@
 import {Logger} from "../loggers/logger";
+import {RequisitionIdGenerator} from "./requisition-id-generator";
+import {RequisitionModel} from "./models/requisition-model";
+import {ValidateFunction} from "ajv";
 const jsonSub = require('json-sub')();
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");
-import {RequisitionIdGenerator} from "./requisition-id-generator";
-import {RequisitionModel} from "./models/requisition-model";
-import {ValidateFunction} from "ajv";
 const Ajv = require('ajv');
 
 export class RequisitionParser {
@@ -31,7 +31,7 @@ export class RequisitionParser {
                 resolve(requisitionWithId);
             } catch (err) {
                 Logger.info(`Message is not a JSON`);
-                reject(err);
+                reject(err.toString());
             }
         });
     }
