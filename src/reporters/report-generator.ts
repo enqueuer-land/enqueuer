@@ -40,7 +40,8 @@ export class ReportGenerator {
 
     public generate(): string {
         let report = JSON.parse(JSON.stringify(this.requisitionReports));
-        report.error = this.error;
+        if (this.error)
+            report.error = this.error;
         report.subscriptionReports = this.subscriptionReports;
         report.startEventReports = this.startEventReports;
         return JSON.stringify(report);

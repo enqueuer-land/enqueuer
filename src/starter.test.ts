@@ -6,14 +6,14 @@ import {RequisitionInput} from "./requisitions/requisition-input";
 
 jest.mock("./configurations/configuration");
 Configuration.mockImplementation(() => {
-        return {
-                    getInputs: () => {
-                        return ["input"];
-                    },
-                    getOutputs: () => {
-                        return ["output"];
-                    }
-        };
+    return {
+        getInputs: () => {
+            return ["input"];
+        },
+        getOutputs: () => {
+            return ["output"];
+        }
+    };
 });
 
 jest.mock("./enqueuer");

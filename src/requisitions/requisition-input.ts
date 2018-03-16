@@ -3,6 +3,7 @@ import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
 import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
+import {SubscriptionModel} from "./models/subscription-model";
 
 export class RequisitionInput {
 
@@ -10,7 +11,7 @@ export class RequisitionInput {
     private subscription: Subscription;
     private requisitionParser: RequisitionParser;
 
-    constructor(input: any) {
+    constructor(input: SubscriptionModel) {
         this.type = input.type;
         this.requisitionParser = new RequisitionParser();
         this.subscription = Container.get(Subscription).createFromPredicate(input);

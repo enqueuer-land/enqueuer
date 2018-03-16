@@ -1,13 +1,14 @@
 import {Logger} from "../loggers/logger";
 import {Publisher} from "../publishers/publisher";
 import {Container} from "../injector/container";
+import {PublisherModel} from "./models/publisher-model";
 
 export class RequisitionOutput {
 
     private type: string;
     private publisher: Publisher;
 
-    constructor(output: any) {
+    constructor(output: PublisherModel) {
         this.type = output.type;
         this.publisher = Container.get(Publisher).createFromPredicate(output);
     }
