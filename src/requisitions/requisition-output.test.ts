@@ -1,6 +1,5 @@
 import {RequisitionOutput} from "./requisition-output";
 import {Container} from "../injector/container";
-import {SuperClassContainer} from "../injector/super-class-container";
 import {PublisherModel} from "./models/publisher-model";
 import {Publisher} from "../publishers/publisher";
 
@@ -9,7 +8,7 @@ const getMock = Container.get.mockImplementation(() => {
     return { createFromPredicate: createMock };
 });
 
-const createMock = jest.fn((type: any) => {
+const createMock = jest.fn(() => {
     return {
         publish: publishMock
     }
@@ -23,12 +22,13 @@ const publishMock = jest.fn(() => {
 
 describe('RequisitionOutput', () => {
 
-    it('Publishes to every output', () => {
-        const outputType: PublisherModel = {type: "enqueuer"};
+    it('Publishes to output', () => {
+        const outputType: PublisherModel = {type: "enqueuerTest"};
         var message = "someMessage";
         const requisitionOutput = new RequisitionOutput(outputType);
 
         requisitionOutput.publish(message);
+
 
         expect(getMock).toHaveBeenCalledTimes(1);
         expect(getMock).toBeCalledWith(Publisher);

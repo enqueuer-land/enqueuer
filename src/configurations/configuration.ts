@@ -1,9 +1,4 @@
-import {StandardOutputPublisher} from "../publishers/standard-output-publisher";
-import {Logger} from "../loggers/logger";
 const readYml  = require('read-yaml');
-
-//TODO: Why does't it work in tests?
-// const loaded = require('commander')
 
 let configFileName = "conf/enqueuer.yml";
 

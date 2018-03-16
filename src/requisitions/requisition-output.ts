@@ -17,7 +17,7 @@ export class RequisitionOutput {
         this.publisher.payload = message;
         this.publisher.publish()
             .catch(err => {
-                Logger.warning(`Couldn't publish in ${this.type}: ${err}`);
+                Logger.warning(`Couldn't report requisition output in ${this.type}: ${err}`);
             });
     }
 }
