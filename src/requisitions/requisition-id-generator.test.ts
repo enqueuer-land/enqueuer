@@ -1,7 +1,7 @@
 import {RequisitionIdGenerator} from "./requisition-id-generator";
-import {DateController} from "../dates/date-controller";
+import {DateController} from "../timers/date-controller";
 
-jest.mock("../dates/date-controller");
+jest.mock("../timers/date-controller");
 DateController.mockImplementation(() => {
     return {
         getStringOnlyNumbers: () => {

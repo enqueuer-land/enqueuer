@@ -4,7 +4,7 @@ import {Logger} from "../loggers/logger";
 import {StartEventHandler} from "../handlers/start-event/start-event-handler";
 import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
-import {Timeout} from "../timeouts/timeout";
+import {Timeout} from "../timers/timeout";
 
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {

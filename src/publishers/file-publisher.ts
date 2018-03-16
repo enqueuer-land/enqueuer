@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
-import {DateController} from "../dates/date-controller";
+import {DateController} from "../timers/date-controller";
 import {PublisherModel} from "../requisitions/models/publisher-model";
 const fs = require("fs");
 

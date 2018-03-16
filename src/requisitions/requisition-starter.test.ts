@@ -36,7 +36,7 @@ describe("RequisitionStarter",() => {
     it("Should initialize properly", () => {
         const model: RequisitionModel = createModel();
 
-        
+
         new RequisitionStarter(model);
 
 

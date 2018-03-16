@@ -1,4 +1,4 @@
-import {DateController} from "../dates/date-controller";
+import {DateController} from "../timers/date-controller";
 import {Report} from "./report";
 
 export class ReportGenerator {

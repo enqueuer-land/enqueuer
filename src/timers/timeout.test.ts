@@ -1,5 +1,5 @@
 import {Timeout} from "./timeout";
-import {DateController} from "../dates/date-controller";
+import {DateController} from "./date-controller";
 
 jest.useFakeTimers();
 

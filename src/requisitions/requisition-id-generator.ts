@@ -1,4 +1,4 @@
-import {DateController} from "../dates/date-controller";
+import {DateController} from "../timers/date-controller";
 
 export class RequisitionIdGenerator {
 

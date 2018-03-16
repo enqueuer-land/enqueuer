@@ -2,7 +2,7 @@ import {Publisher} from "../../publishers/publisher";
 import {StartEventHandler} from "./start-event-handler";
 import {PrePublishMetaFunction} from "../../meta-functions/pre-publish-meta-function";
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
-import {DateController} from "../../dates/date-controller";
+import {DateController} from "../../timers/date-controller";
 import {PublisherModel} from "../../requisitions/models/publisher-model";
 import {Injectable} from "../../injector/injector";
 import {Container} from "../../injector/container";
