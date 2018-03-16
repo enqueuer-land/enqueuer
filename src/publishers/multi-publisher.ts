@@ -15,9 +15,9 @@ export class MultiPublisher {
         });
     }
 
-    public publish(resultReport: string): void {
+    public publish(payload: string): void {
         this.repliers.forEach( reporter => {
-            reporter.payload = resultReport;
+            reporter.payload = payload;
             reporter.publish()
                 .catch(err => {
                     Logger.error(`Error publishing to ${err}`)
