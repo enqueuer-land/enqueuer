@@ -1,8 +1,8 @@
 import {Starter} from "./starter";
 import {Configuration} from "./configurations/configuration";
-import {RequisitionOutput} from "./requisitions/requisition-output";
 import {Enqueuer} from "./enqueuer";
 import {RequisitionInput} from "./requisitions/requisition-input";
+import {MultiPublisher} from "./publishers/multi-publisher";
 
 jest.mock("./configurations/configuration");
 Configuration.mockImplementation(() => {
@@ -11,14 +11,14 @@ Configuration.mockImplementation(() => {
             return ["input"];
         },
         getOutputs: () => {
-            return ["output"];
+            return ["output", "anotherOutPut"];
         }
     };
 });
 
 jest.mock("./enqueuer");
 jest.mock("./requisitions/requisition-input");
-jest.mock("./requisitions/requisition-output");
+jest.mock("./publishers/multi-publisher");
 
 let startReturn = jest.fn();
 Enqueuer.mockImplementation(() => {
@@ -34,7 +34,8 @@ describe('Starter', () => {
 
         expect(Configuration).toHaveBeenCalledTimes(1);
 
-        expect(RequisitionOutput).toHaveBeenCalledWith("output");
+        expect(MultiPublisher).toHaveBeenCalledTimes(1)
+        expect(MultiPublisher).toHaveBeenCalledWith(["output", "anotherOutPut"]);
         expect(RequisitionInput).toHaveBeenCalledWith("input");
 
         expect(Enqueuer).toHaveBeenCalledTimes(1);

@@ -1,7 +1,7 @@
 import {Container} from "../injector/container";
-import {Publisher} from "../publishers/publisher";
+import {Publisher} from "./publisher";
 import {PublisherModel} from "../requisitions/models/publisher-model";
-import {ReportResultReplier} from "./report-result-replier";
+import {MultiPublisher} from "./multi-publisher";
 
 jest.mock("../injector/container");
 const getMock = Container.get.mockImplementation(() => {
@@ -19,7 +19,7 @@ const publishMock = jest.fn(() => {
     return Promise.reject("error")
 });
 
-describe("ReportResultReplier", () => {
+describe("MultiPublisher", () => {
 
 
     it("Publishes to every output", () => {
@@ -27,10 +27,10 @@ describe("ReportResultReplier", () => {
                                                 {type: "enqueuerAnotherTest"},
                                                 {type: "enqueuerAnotherTestJustOneMore"}];
         var message = "someMessage";
-        const reportResultReplier = new ReportResultReplier(outputType);
+        const multiPublisher = new MultiPublisher(outputType);
 
 
-        reportResultReplier.publish(message);
+        multiPublisher.publish(message);
 
 
         expect(getMock).toHaveBeenCalledTimes(outputType.length);

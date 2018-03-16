@@ -1,17 +1,17 @@
 import {RequisitionStarter} from "./requisitions/requisition-starter";
 import {RequisitionInput} from "./requisitions/requisition-input";
 import {Logger} from "./loggers/logger";
-import {RequisitionOutput} from "./requisitions/requisition-output";
 import {RequisitionModel} from "./requisitions/models/requisition-model";
+import {MultiPublisher} from "./publishers/multi-publisher";
 
 export class Enqueuer {
 
     private requisitionInputs: RequisitionInput[];
-    private requisitionOutputs: RequisitionOutput[];
+    private multiPublisher: MultiPublisher;
 
-    public constructor(requisitionInputs: RequisitionInput[], requisitionOutputs: RequisitionOutput[]) {
+    public constructor(requisitionInputs: RequisitionInput[], multiPublisher: MultiPublisher) {
         this.requisitionInputs = requisitionInputs;
-        this.requisitionOutputs = requisitionOutputs;
+        this.multiPublisher = multiPublisher;
     }
 
     public execute(): void {
@@ -42,9 +42,7 @@ export class Enqueuer {
     }
 
     private reportRequisitionReceived(requisition: RequisitionModel): void {
-        this.requisitionOutputs.forEach(output => {
-            output.publish(JSON.stringify(requisition, null, 2));
-        })
+        this.multiPublisher.publish(JSON.stringify(requisition));
     }
 
 }

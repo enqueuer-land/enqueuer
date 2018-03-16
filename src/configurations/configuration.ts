@@ -1,3 +1,6 @@
+import {PublisherModel} from "../requisitions/models/publisher-model";
+import {SubscriptionModel} from "../requisitions/models/subscription-model";
+
 const readYml  = require('read-yaml');
 
 let configFileName = "conf/enqueuer.yml";
@@ -35,11 +38,11 @@ export class Configuration {
             (this.configurationFile["log-level"]);
     }
 
-    public getInputs(): any[] {
+    public getInputs(): SubscriptionModel[] {
         return this.configurationFile.requisition.inputs;
     }
 
-    public getOutputs(): any[] {
+    public getOutputs(): PublisherModel[] {
         return this.configurationFile.requisition.outputs;
     }
 

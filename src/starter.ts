@@ -1,7 +1,7 @@
 import {Enqueuer} from "./enqueuer";
 import {RequisitionInput} from "./requisitions/requisition-input";
-import {RequisitionOutput} from "./requisitions/requisition-output";
 import {Configuration} from "./configurations/configuration";
+import {MultiPublisher} from "./publishers/multi-publisher";
 
 export class Starter {
 
@@ -13,10 +13,9 @@ export class Starter {
         const requisitionInputs: RequisitionInput[] =
             configuration.getInputs().map(input => new RequisitionInput(input));
 
-        const requisitionOutputs: RequisitionOutput[] =
-            configuration.getOutputs().map(output => new RequisitionOutput(output));
+        const multiPublisher: MultiPublisher = new MultiPublisher(configuration.getOutputs());
 
-        this.enqueuer = new Enqueuer(requisitionInputs, requisitionOutputs);
+        this.enqueuer = new Enqueuer(requisitionInputs, multiPublisher);
     }
 
     public start(): void {
