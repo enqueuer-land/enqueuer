@@ -1,8 +1,8 @@
 # enqueuer
-Event-Driven-Component testing tool.\
-When developing an event-driven-architecture, it gets hard to keep track of how every component should exchange messages with each other.\
-Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
-What **enqueuer** proposes to do is to give you confidence that every component of your architecture acts like it should act when it was designed.
+Event-driven-component testing tool.\
+```There are many reasons why you should care about events; they drive autonomy, increase stability, help you move faster and allow for time travel, Jonas Bonér.```\
+There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
+In an event-driven world everything all events move asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component of your architecture acts like it should act when it was designed. It makes you be sure that, at least on the boundaries of this service, everything works as expected.
   
 ## what it does?
 Checks whether an event-driven-component acts as expected.
@@ -27,12 +27,12 @@ Although there are other ways of using it, the two main ways are:
     
 ### let me draw it for you
 This is how your event-driven-conponent should act when triggered by an *Input*:\
-![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Event-driven-component expected behavior")\
+![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Event-driven-component expected behavior")
 
 What **enqueuer** does is to trigger *Input*, by itself, so the component-to-be-tested acts like it should. And then, **enqueuer** collects component-to-be-tested outputs and checks if they are what they are supposed to be.
 Quite simple, don't you think?
 
 When **enqueuer** receives a requisition, it starts an event described in the requisition and awaits untill all expecteds outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the requisition.
 
-###### Examples of IPC mechanisms currently supported are:
+###### IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
