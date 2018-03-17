@@ -23,7 +23,7 @@ RequisitionRunner.mockImplementation(() => {
 });
 
 describe("RequisitionStarter",() => {
-    let createModel = function () {
+    let createRequisitionModel = function () {
         return {
             id: "anyStuff",
             requisitionVersion: "any",
@@ -34,7 +34,7 @@ describe("RequisitionStarter",() => {
     };
 
     it("Should initialize properly", () => {
-        const model: RequisitionModel = createModel();
+        const model: RequisitionModel = createRequisitionModel();
 
 
         new RequisitionStarter(model);
@@ -47,7 +47,7 @@ describe("RequisitionStarter",() => {
     })
 
     it("Should start requisitionRunner", () => {
-        const model: RequisitionModel = createModel();
+        const model: RequisitionModel = createRequisitionModel();
         const requisitionStarter: RequisitionStarter = new RequisitionStarter(model);
 
 

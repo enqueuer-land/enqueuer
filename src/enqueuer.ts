@@ -18,8 +18,9 @@ export class Enqueuer {
         this.requisitionInputs
             .forEach((input: RequisitionInput) => {
                 input.connect()
-                    .then(() =>
-                        this.startReader(input))
+                    .then(() => {
+                        return this.startReader(input)
+                    })
                     .catch( (err: string) => {
                         Logger.error(err);
                         input.unsubscribe();
