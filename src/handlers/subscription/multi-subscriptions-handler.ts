@@ -1,8 +1,9 @@
 import {SubscriptionHandler} from "./subscription-handler";
 import {SubscriptionModel} from "../../requisitions/models/subscription-model";
 import {Report} from "../../reporters/report";
+import {Reporter} from "../../reporters/reporter";
 
-export class MultiSubscriptionsHandler {
+export class MultiSubscriptionsHandler implements Reporter{
     private subscriptionHandlers: SubscriptionHandler[] = [];
     private subscriptionsConnectionCompletedCounter: number = 0;
     private subscriptionsStoppedWaitingCounter: number = 0;

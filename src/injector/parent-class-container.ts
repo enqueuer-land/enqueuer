@@ -6,7 +6,7 @@ interface Injectable {
     constructor: Function;
 }
 
-export class SuperClassContainer {
+export class ParentClassContainer {
 
     private injectables: any = {};
     private default: any = null;

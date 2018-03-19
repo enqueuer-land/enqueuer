@@ -1,4 +1,4 @@
-import {SuperClassContainer} from "./super-class-container";
+import {ParentClassContainer} from "./parent-class-container";
 
 export class Container {
 
@@ -6,12 +6,12 @@ export class Container {
 
     public static getSuperClassContainer(superClassName: string): any {
         if (!Container.injectableContainer[superClassName])
-            Container.injectableContainer[superClassName] = new SuperClassContainer();
+            Container.injectableContainer[superClassName] = new ParentClassContainer();
 
         return Container.injectableContainer[superClassName];
     }
 
-    public static get(superClass: any): SuperClassContainer {
+    public static get(superClass: any): ParentClassContainer {
         const superClassName: string = superClass.prototype.constructor.name;
         return Container.injectableContainer[superClassName];
     }

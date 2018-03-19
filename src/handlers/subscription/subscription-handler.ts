@@ -8,8 +8,9 @@ import {Container} from "../../injector/container";
 import {Subscription} from "../../subscriptions/subscription";
 import {Report} from "../../reporters/report";
 import {Timeout} from "../../timers/timeout";
+import {Reporter} from "../../reporters/reporter";
 
-export class SubscriptionHandler {
+export class SubscriptionHandler implements Reporter {
 
     private subscription: SubscriptionModel;
     private report: any = {};

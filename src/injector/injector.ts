@@ -1,13 +1,13 @@
 import {FactoryPredicate} from "./factory-predicate";
 import {Logger} from "../loggers/logger";
-import {SuperClassContainer} from "./super-class-container";
+import {ParentClassContainer} from "./parent-class-container";
 import {Container} from "./container";
 
 export function Injectable(factoryPredicate?: FactoryPredicate) {
     return function(constructor: any) {
         var superClassName = Object.getPrototypeOf(constructor.prototype).constructor.name;
         const className = constructor.prototype.constructor.name;
-        const injectableContainer: SuperClassContainer = Container.getSuperClassContainer(superClassName);
+        const injectableContainer: ParentClassContainer = Container.getSuperClassContainer(superClassName);
 
         const injected = injectableContainer
             .addInjectable(

@@ -28,7 +28,7 @@ export class RequisitionInput {
     }
 
     public receiveMessage(): Promise<RequisitionModel> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.subscription.receiveMessage()
                 .then((message: string) => {
                     Logger.info(`${this.type} got a message`);
