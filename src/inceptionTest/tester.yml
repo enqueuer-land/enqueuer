@@ -1,0 +1,12 @@
+requisition:
+  inputs:
+    -
+      type: file-name-pattern
+      fileNamePattern: src/inceptionTest/*.enq
+      checkIntervalMs: 1000
+  outputs:
+    -
+      type: file
+      filenamePrefix: src/inceptionTest/testerRequisitionOutput
+
+log-level: debug

@@ -1,0 +1,61 @@
+{
+  "requisitionVersion": "01.00.00",
+  "timeout": 2000,
+  "subscriptions": [
+    {
+      "type": "mqtt",
+      "brokerAddress": "brokerAddress",
+      "topic": "subscription",
+      "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
+      "timeout": 5000
+    },
+    {
+      "type": "mqtt",
+      "brokerAddress": "brokerAddress",
+      "topic": "anotherSubscriptionTopic",
+      "onMessageReceived": "test['someLabel'] = false",
+      "timeout": 1000
+    }
+
+  ],
+  "startEvent": {
+    "subscription":
+    {
+      "type": "http-server",
+      "endpoint": "/start",
+      "response": {},
+      "method": "POST"
+    }
+  },
+  "reports" : [
+    {
+      "type": "standard-output"
+    },
+    {
+      "type": "file",
+      "filenamePrefix": "output/outputFileNameReportBack"
+    },
+    {
+      "type": "amqp",
+      "url": "amqp://localhost:5672",
+      "queue": "ENQUEUER.REPORT"
+    },
+    {
+      "type": "http-client",
+      "url": "http://localhost:1880/reports",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "type": "mqtt",
+      "brokerAddress": "brokerAddress",
+      "topic": "service-to-be-tested/report"
+    }
+  ],
+  "variables":
+  {
+    "brokerAddress": "mqtt://localhost"
+  }
+}
