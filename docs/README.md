@@ -34,5 +34,9 @@ Quite simple, don't you think?
 
 When **enqueuer** receives a requisition, it starts an event described in the requisition and awaits untill all expecteds outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the requisition.
 
+### frequently asked question
+Given that **enqueuer** it's a tool to test event-driven-components and it is, itself an event-driven-component, does it test itself?
+- As a matter of fact, yes, it does, absolutely. [Check it out:](/src/inceptionTest/inception.test.ts "Inception Test")
+
 ###### IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
