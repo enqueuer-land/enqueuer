@@ -1,6 +1,7 @@
 import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
 import {PublisherModel} from "../requisitions/models/publisher-model";
+import {Logger} from "../loggers/logger";
 const mqtt = require("mqtt")
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "mqtt")
@@ -18,7 +19,13 @@ export class MqttPublisher extends Publisher {
         return new Promise((resolve, reject) => {
             this.connectClient()
                 .then(client => {
-                    client.publish(this.topic, this.payload);
+                    Logger.debug(`Mqtt publishing in ${this.brokerAddress} - ${this.topic}: ${this.payload}`);
+                    client.publish(this.topic, this.payload, (err: any) => {
+                        if (err) {
+                            Logger.error(`Error publishing in ${this.brokerAddress} - ${this.topic}: ${err}`)
+                            reject(err);
+                        }
+                    });
                     client.end();
                     resolve()
                 })

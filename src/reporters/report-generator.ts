@@ -1,5 +1,6 @@
 import {DateController} from "../timers/date-controller";
 import {Report} from "./report";
+import {Logger} from "../loggers/logger";
 
 export class ReportGenerator {
 
@@ -16,10 +17,10 @@ export class ReportGenerator {
         this.requisitionReports = {
             id: requisitionId,
             enqueuer: {
-                version: process.env.npm_package_version
+                version: process.env.npm_package_version || "1.0.0"
             },
             report: {
-                version: process.env.npm_package_version
+                version: process.env.npm_package_version || "1.0.0"
             },
             valid: false
         };
@@ -57,11 +58,14 @@ export class ReportGenerator {
     }
 
     private addValidResult() {
-        let valid: boolean  = false;
-        valid = (this.startEventReports && this.startEventReports.valid) &&
-                    (this.subscriptionReports && this.subscriptionReports.valid) || valid;
+        const validStartEvent = this.startEventReports && this.startEventReports.valid;
+        const validMultiSubscription = this.subscriptionReports && this.subscriptionReports.valid;
+        let valid: boolean = (validStartEvent && validMultiSubscription) || false;
         if (valid && this.timeout && this.startTime)
-            valid = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
+        {
+            const hasTimedOut = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
+            valid = !hasTimedOut;
+        }
 
         this.requisitionReports.valid = valid;
     }

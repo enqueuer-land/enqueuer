@@ -56,9 +56,11 @@ export class SubscriptionHandler implements Reporter {
 
             this.subscription.receiveMessage()
                 .then((message: any) => {
-                    this.executeSubscriptionFunction();
+                    Logger.debug(`Subscription ${this.subscription.type} received its message: ${message}`);
+
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
+                        this.executeSubscriptionFunction();
                         Logger.info("Subscription stop waiting because it has already received its message");
                     }
                     this.cleanUp();
@@ -80,7 +82,7 @@ export class SubscriptionHandler implements Reporter {
             hasTimedOut: this.hasTimedOut
         };
         this.report.valid = this.report.hasReceivedMessage &&
-                            this.hasTimedOut &&
+                            !this.hasTimedOut &&
                             this.report.functionReport.failingTests.length <= 0;
 
         return this.report;
@@ -95,6 +97,7 @@ export class SubscriptionHandler implements Reporter {
 
     private initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
+            Logger.debug(`Setting ${this.subscription.type} subscription timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);
         }
     }
@@ -102,6 +105,7 @@ export class SubscriptionHandler implements Reporter {
     private executeSubscriptionFunction() {
         const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
         const functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
+        Logger.debug(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
         this.report = {
             ...this.report,
             functionReport: functionResponse.report,

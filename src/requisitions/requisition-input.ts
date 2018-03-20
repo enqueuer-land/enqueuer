@@ -37,7 +37,7 @@ export class RequisitionInput {
                             resolve(validRequisition);
                         })
                         .catch(err => {
-                            Logger.warning(`Error parsing requisition ${err}`)
+                            Logger.warning(`Error parsing requisition ${JSON.stringify(err)}`)
                         })
                 })
         });

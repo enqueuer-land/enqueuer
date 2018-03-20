@@ -7,6 +7,7 @@ import {PublisherModel} from "../../requisitions/models/publisher-model";
 import {Injectable} from "../../injector/injector";
 import {Container} from "../../injector/container";
 import {Report} from "../../reporters/report";
+import {Logger} from "../../loggers/logger";
 
 @Injectable((startEvent: any) => startEvent.publisher)
 export class StartEventPublisherHandler extends StartEventHandler {
@@ -61,6 +62,8 @@ export class StartEventPublisherHandler extends StartEventHandler {
     private executePrePublishingFunction() {
         const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
         const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
+        if (functionResponse.publisher.payload)
+            functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
         this.publisher = Container.get(Publisher).createFromPredicate(functionResponse.publisher);
         this.prePublishingReport = functionResponse.report;
     }

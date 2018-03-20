@@ -28,19 +28,28 @@ export class RequisitionRunner {
         this.initializeTimeout();
         this.multiSubscriptionsHandler.connect()
             .then(() => this.onSubscriptionsCompleted())
-            .catch(err => this.onFinish(err));
+            .catch(err => {
+                Logger.error(`Error connecting multiSubscription: ${err}`)
+                this.onFinish(err)
+            });
     }
 
     private onSubscriptionsCompleted() {
         this.multiSubscriptionsHandler.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
-            .catch(err => this.onFinish(err));
+            .catch(err => {
+                Logger.error(`Error receiving message in multiSubscription: ${err}`)
+                this.onFinish(err)
+            });
 
         this.startEvent.start()
             .then(() => {
                 Logger.debug("Start event has done its job");
             })
-            .catch(err => this.onFinish(err));
+            .catch(err => {
+                Logger.error(`Error triggering startingEvent: ${err}`)
+                this.onFinish(err)
+            });
     }
 
     private initializeTimeout() {
@@ -59,8 +68,12 @@ export class RequisitionRunner {
 
     private onFinish(error: any = null): void {
         this.onFinish = () => {};
+        Logger.info(`Start gathering reports`);
 
-        this.reportGenerator.addError(error);
+        if (error) {
+            Logger.warning(`Errors collected: ${error}`);
+            this.reportGenerator.addError(error);
+        }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         this.reportGenerator.finish();

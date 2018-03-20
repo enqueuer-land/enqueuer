@@ -8,7 +8,7 @@ export abstract class Subscription {
     public type?: string;
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {
-        this.messageReceived = subscriptionAttributes.message;
+        this.messageReceived = subscriptionAttributes.messageReceived;
         this.timeout = subscriptionAttributes.timeout;
         this.type = subscriptionAttributes.type;
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;
