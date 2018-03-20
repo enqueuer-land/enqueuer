@@ -5,19 +5,19 @@ describe('PrePublishMetaFunction', () => {
 
     it('should pass constructor argument as object in function', function () {
         const constructorArgument: PublisherModel = {
-            type: "test"
+            type: 'test'
         };
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
 
         const functionResponse: any = prePublishMeta.createFunction()();
 
-        expect(JSON.parse(functionResponse.publisher)).toMatchObject(constructorArgument);
+        expect(JSON.stringify(functionResponse.publisher)).toBe(JSON.stringify(constructorArgument));
     });
 
     it('should insert tests', function () {
         const constructorArgument: PublisherModel = {
             type: "test",
-            prePublishing: "test[\"valid\"] = true;"
+            prePublishing: "test['valid'] = true;"
         };
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
 
@@ -29,7 +29,7 @@ describe('PrePublishMetaFunction', () => {
     it('should insert reports', function () {
         const constructorArgument: PublisherModel = {
             type: "test",
-            prePublishing: "report[\"first\"] = \"someValue\";"
+            prePublishing: "report['first'] = 'someValue';"
         };
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
 
@@ -41,7 +41,7 @@ describe('PrePublishMetaFunction', () => {
     it('should receive args', function () {
         const constructorArgument: PublisherModel = {
             type: "test",
-            prePublishing: "report[\"args\"] = args;"
+            prePublishing: "report['args'] = args;"
         };
         const expected = "Yayayaya";
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
