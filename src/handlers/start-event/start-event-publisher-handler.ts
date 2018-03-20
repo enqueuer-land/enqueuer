@@ -7,7 +7,6 @@ import {PublisherModel} from "../../requisitions/models/publisher-model";
 import {Injectable} from "../../injector/injector";
 import {Container} from "../../injector/container";
 import {Report} from "../../reporters/report";
-import {Logger} from "../../loggers/logger";
 
 @Injectable((startEvent: any) => startEvent.publisher)
 export class StartEventPublisherHandler extends StartEventHandler {
@@ -19,7 +18,10 @@ export class StartEventPublisherHandler extends StartEventHandler {
     constructor(startEvent: PublisherModel) {
         super();
         this.publisherOriginalAttributes = startEvent.publisher;
-        this.report = {valid: false};
+        this.report = {
+            valid: false,
+            errorsDescription: []
+        };
     }
 
     public start(): Promise<void> {
@@ -28,35 +30,31 @@ export class StartEventPublisherHandler extends StartEventHandler {
             if (this.publisher) {
                 this.publisher.publish()
                     .then(() => {
-                        this.generateReport();
                         resolve();
                     })
                     .catch((err: any) => {
-                        this.generateReport(err);
+                        this.report.errorsDescription.push(`[StartEvent] Error publishing start event '${this.publisher}'`)
                         reject(err)
                     });
             }
-            else reject(`Impossible to define Publisher after prePublish function execution`);
+            else {
+                const message = `[StartEvent] Impossible to define Publisher after prePublish function execution '${this.publisher}'`;
+                this.report.errorsDescription.push(message)
+                reject(message);
+            }
         });
     }
 
     public getReport(): Report {
-        return this.report;
-    }
-
-    private generateReport(error: any = null): void {
         this.report = {
             ...this.publisherOriginalAttributes,
             prePublishFunction: this.prePublishingReport,
             publisher: this.publisher,
             timestamp: new DateController().toString(),
-            valid: true
+            valid: this.report.errorsDescription.length <= 0,
+            errorsDescription: this.report.errorsDescription
         }
-        if (error)
-            this.report = {
-                error: error,
-                valid: false
-            };
+        return this.report;
     }
 
     private executePrePublishingFunction() {

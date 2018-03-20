@@ -11,8 +11,6 @@ export class ReportGenerator {
     private startEventReports?: Report;
     private subscriptionReports?: Report;
 
-    private error?: any;
-
     public constructor(requisitionId: string) {
         this.requisitionReports = {
             id: requisitionId,
@@ -22,7 +20,8 @@ export class ReportGenerator {
             report: {
                 version: process.env.npm_package_version || "1.0.0"
             },
-            valid: false
+            valid: false,
+            errorsDescription: []
         };
     }
 
@@ -41,8 +40,6 @@ export class ReportGenerator {
 
     public generate(): string {
         let report = JSON.parse(JSON.stringify(this.requisitionReports));
-        if (this.error)
-            report.error = this.error;
         report.subscriptionReports = this.subscriptionReports;
         report.startEventReports = this.startEventReports;
         return JSON.stringify(report);
@@ -50,11 +47,12 @@ export class ReportGenerator {
 
     public finish(): void {
         this.addValidResult();
+        this.addErrorsResult();
         this.addTimesReport();
     }
 
     public addError(error: any): any {
-        this.error = error;
+        this.requisitionReports.errorsDescription.push(error);
     }
 
     private addValidResult() {
@@ -68,6 +66,13 @@ export class ReportGenerator {
         }
 
         this.requisitionReports.valid = valid;
+    }
+
+    private addErrorsResult() {
+        if (this.startEventReports)
+            this.requisitionReports.errorsDescription = this.requisitionReports.errorsDescription.concat(this.startEventReports.errorsDescription)
+        if (this.subscriptionReports)
+            this.requisitionReports.errorsDescription = this.requisitionReports.errorsDescription.concat(this.subscriptionReports.errorsDescription)
     }
 
     private addTimesReport(): {} | null {

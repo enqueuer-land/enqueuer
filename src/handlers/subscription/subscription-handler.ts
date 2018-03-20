@@ -13,7 +13,7 @@ import {Reporter} from "../../reporters/reporter";
 export class SubscriptionHandler implements Reporter {
 
     private subscription: SubscriptionModel;
-    private report: any = {};
+    private report: Report;
     private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
@@ -21,13 +21,19 @@ export class SubscriptionHandler implements Reporter {
     constructor(subscriptionAttributes: SubscriptionModel) {
         this.subscription = Container.get(Subscription).createFromPredicate(subscriptionAttributes);
         this.startTime = new DateController();
+        this.report = {
+            valid: false,
+            errorsDescription: []
+        };
     }
 
     public onTimeout(onTimeOutCallback: Function) {
         this.timeOut = new Timeout(() => {
-            Logger.info("Subscription stop waiting because it has timed out");
+            const message = `Subscription '${this.subscription.type}' stop waiting because it has timed out`;
+            Logger.info(message);
             this.cleanUp();
             this.hasTimedOut = true;
+            this.report.errorsDescription.push(message);
             onTimeOutCallback();
         });
     }
@@ -46,7 +52,11 @@ export class SubscriptionHandler implements Reporter {
                     process.on('SIGTERM', this.handleKillSignal);
 
                 })
-                .catch((err: any) => reject(err));
+                .catch((err: any) => {
+                    const message = `Subscription '${this.subscription.type}' is unable to connect: ${err}`;
+                    this.report.errorsDescription.push(message)
+                    reject(err);
+                });
         });
     }
 
@@ -67,6 +77,8 @@ export class SubscriptionHandler implements Reporter {
                     resolve();
                 })
                 .catch((err: any) => {
+                    const message = `Subscription '${this.subscription.type}' is unable to receive message: ${err}`;
+                    this.report.errorsDescription.push(message)
                     this.subscription.unsubscribe();
                     reject(err);
                 });
@@ -81,7 +93,11 @@ export class SubscriptionHandler implements Reporter {
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };
-        this.report.valid = this.report.hasReceivedMessage &&
+        const hasReceivedMessage = this.report.hasReceivedMessage;
+        if (!hasReceivedMessage)
+            this.report.errorsDescription.push(`Subscription '${this.subscription.type}' didn't receive any message`);
+
+        this.report.valid = hasReceivedMessage &&
                             !this.hasTimedOut &&
                             this.report.functionReport.failingTests.length <= 0;
 

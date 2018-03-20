@@ -31,6 +31,10 @@ export class StartEventSubscriptionHandler extends StartEventHandler {
     }
 
     public getReport(): Report {
-        return this.subscriptionHandler.getReport();
+        const report = this.subscriptionHandler.getReport();
+        for (let j = 0; j < report.errorsDescription.length; ++j) {
+            report.errorsDescription[j] = `[Start Event] ` + report.errorsDescription[j];
+        }
+        return report;
     }
 }
