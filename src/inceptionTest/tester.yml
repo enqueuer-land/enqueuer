@@ -6,7 +6,8 @@ requisition:
       checkIntervalMs: 1000
   outputs:
     -
-      type: file
-      filenamePrefix: src/inceptionTest/testerRequisitionOutput
+      type: mqtt
+      brokerAddress: mqtt://localhost:1883
+      topic: enqueuer/inception/tester/output/doesNotMatter
 
 log-level: debug
