@@ -6,9 +6,9 @@ import {SubscriptionModel} from "../../requisitions/models/subscription-model";
 import Signals = NodeJS.Signals;
 import {Container} from "../../injector/container";
 import {Subscription} from "../../subscriptions/subscription";
-import {Report} from "../../reporters/report";
+import {Report} from "../report";
 import {Timeout} from "../../timers/timeout";
-import {Reporter} from "../../reporters/reporter";
+import {Reporter} from "../reporter";
 
 export class SubscriptionHandler implements Reporter {
 

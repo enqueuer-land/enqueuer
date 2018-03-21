@@ -1,9 +1,9 @@
 import {Injectable} from "../../injector/injector";
 import {NullFactoryPredicate} from "../../injector/factory-predicate";
-import {StartEventHandler} from "./start-event-handler";
+import {StartEventReporter} from "./start-event-reporter";
 
 @Injectable(NullFactoryPredicate)
-export class StartEventNullHandler extends StartEventHandler {
+export class StartEventNullReporter extends StartEventReporter {
 
     private startEvent: any;
 

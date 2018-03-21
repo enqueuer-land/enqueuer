@@ -1,7 +1,7 @@
 import { ReportGenerator } from "../reporters/report-generator";
-import {MultiSubscriptionsHandler} from "../handlers/subscription/multi-subscriptions-handler";
+import {MultiSubscriptionsHandler} from "../reporters/subscription/multi-subscriptions-handler";
 import {Logger} from "../loggers/logger";
-import {StartEventHandler} from "../handlers/start-event/start-event-handler";
+import {StartEventReporter} from "../reporters/start-event/start-event-reporter";
 import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
 import {Timeout} from "../timers/timeout";
@@ -9,14 +9,14 @@ import {Timeout} from "../timers/timeout";
 export type RequisitionRunnerCallback = (report: string) => void;
 export class RequisitionRunner {
     private reportGenerator: ReportGenerator;
-    private startEvent: StartEventHandler;
+    private startEvent: StartEventReporter;
     private multiSubscriptionsHandler: MultiSubscriptionsHandler;
     private onFinishCallback: RequisitionRunnerCallback;
     private requisitionTimeout?: number;
 
     constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
-        this.startEvent = Container.get(StartEventHandler).createFromPredicate(requisitionAttributes.startEvent);
+        this.startEvent = Container.get(StartEventReporter).createFromPredicate(requisitionAttributes.startEvent);
         this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
         this.onFinishCallback = () => {};
@@ -56,7 +56,7 @@ export class RequisitionRunner {
         if (this.requisitionTimeout) {
             new Timeout(() => {
                 Logger.info("Requisition Timeout");
-                this.onFinish();
+                this.onFinish("Requisition has timed out");
             }).start(this.requisitionTimeout);
         }
     }
@@ -66,7 +66,7 @@ export class RequisitionRunner {
         this.onFinish();
     }
 
-    private onFinish(error: any = null): void {
+    private onFinish(error?: string): void {
         this.onFinish = () => {};
         Logger.info(`Start gathering reports`);
 

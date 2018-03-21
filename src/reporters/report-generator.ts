@@ -51,8 +51,8 @@ export class ReportGenerator {
         this.addTimesReport();
     }
 
-    public addError(error: any): any {
-        this.requisitionReports.errorsDescription.push(error);
+    public addError(error: string): any {
+        this.requisitionReports.errorsDescription.push(`[Requisition] ${error}`);
     }
 
     private addValidResult() {
@@ -69,10 +69,16 @@ export class ReportGenerator {
     }
 
     private addErrorsResult() {
-        if (this.startEventReports)
-            this.requisitionReports.errorsDescription = this.requisitionReports.errorsDescription.concat(this.startEventReports.errorsDescription)
-        if (this.subscriptionReports)
-            this.requisitionReports.errorsDescription = this.requisitionReports.errorsDescription.concat(this.subscriptionReports.errorsDescription)
+        if (this.startEventReports) {
+            this.startEventReports.errorsDescription.forEach(error => {
+                this.requisitionReports.errorsDescription.push(`[Start Event] ${error}`);
+            })
+        }
+        if (this.subscriptionReports) {
+            this.subscriptionReports.errorsDescription.forEach(error => {
+                this.requisitionReports.errorsDescription.push(`[Subscription]${error}`);
+            })
+        }
     }
 
     private addTimesReport(): {} | null {

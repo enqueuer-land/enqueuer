@@ -23,9 +23,6 @@ export function Injectable(factoryPredicate?: FactoryPredicate) {
 
 
 //#Auto-Generated Code
-import "../handlers/start-event/start-event-null-handler"
-import "../handlers/start-event/start-event-publisher-handler"
-import "../handlers/start-event/start-event-subscription-handler"
 import "../publishers/amqp-publisher"
 import "../publishers/file-publisher"
 import "../publishers/http-client-publisher"
@@ -33,6 +30,9 @@ import "../publishers/mqtt-publisher"
 import "../publishers/null-publisher"
 import "../publishers/standard-output-publisher"
 import "../publishers/uds-publisher"
+import "../reporters/start-event/start-event-null-reporter"
+import "../reporters/start-event/start-event-publisher-reporter"
+import "../reporters/start-event/start-event-subscription-reporter"
 import "../subscriptions/amqp-subscription"
 import "../subscriptions/filename-pattern-subscription"
 import "../subscriptions/http-server-subscription"

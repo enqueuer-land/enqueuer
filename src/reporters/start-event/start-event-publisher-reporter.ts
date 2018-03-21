@@ -1,15 +1,15 @@
 import {Publisher} from "../../publishers/publisher";
-import {StartEventHandler} from "./start-event-handler";
+import {StartEventReporter} from "./start-event-reporter";
 import {PrePublishMetaFunction} from "../../meta-functions/pre-publish-meta-function";
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../timers/date-controller";
 import {PublisherModel} from "../../requisitions/models/publisher-model";
 import {Injectable} from "../../injector/injector";
 import {Container} from "../../injector/container";
-import {Report} from "../../reporters/report";
+import {Report} from "../report";
 
 @Injectable((startEvent: any) => startEvent.publisher)
-export class StartEventPublisherHandler extends StartEventHandler {
+export class StartEventPublisherReporter extends StartEventReporter {
     private publisherOriginalAttributes: PublisherModel;
     private publisher?: Publisher;
     private report: Report;
@@ -33,12 +33,12 @@ export class StartEventPublisherHandler extends StartEventHandler {
                         resolve();
                     })
                     .catch((err: any) => {
-                        this.report.errorsDescription.push(`[StartEvent] Error publishing start event '${this.publisher}'`)
+                        this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`)
                         reject(err)
                     });
             }
             else {
-                const message = `[StartEvent] Impossible to define Publisher after prePublish function execution '${this.publisher}'`;
+                const message = `Impossible to define Publisher after prePublish function execution '${this.publisher}'`;
                 this.report.errorsDescription.push(message)
                 reject(message);
             }

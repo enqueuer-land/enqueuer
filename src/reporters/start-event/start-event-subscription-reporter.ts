@@ -1,13 +1,13 @@
-import {StartEventHandler} from "./start-event-handler";
+import {StartEventReporter} from "./start-event-reporter";
 import {SubscriptionHandler} from "../subscription/subscription-handler";
 import {Injectable} from "../../injector/injector";
 import {SubscriptionModel} from "../../requisitions/models/subscription-model";
-import {Report} from "../../reporters/report";
+import {Report} from "../report";
 
 @Injectable((startEvent: any) => {
     return startEvent.subscription != null;
 })
-export class StartEventSubscriptionHandler extends StartEventHandler {
+export class StartEventSubscriptionReporter extends StartEventReporter {
 
     private subscriptionHandler: SubscriptionHandler;
 
@@ -31,10 +31,6 @@ export class StartEventSubscriptionHandler extends StartEventHandler {
     }
 
     public getReport(): Report {
-        const report = this.subscriptionHandler.getReport();
-        for (let j = 0; j < report.errorsDescription.length; ++j) {
-            report.errorsDescription[j] = `[Start Event] ` + report.errorsDescription[j];
-        }
-        return report;
+        return this.subscriptionHandler.getReport();
     }
 }

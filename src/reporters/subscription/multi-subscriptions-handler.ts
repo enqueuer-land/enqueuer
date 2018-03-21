@@ -1,9 +1,7 @@
 import {SubscriptionHandler} from "./subscription-handler";
 import {SubscriptionModel} from "../../requisitions/models/subscription-model";
-import {Report} from "../../reporters/report";
-import {Reporter} from "../../reporters/reporter";
-import {error} from "util";
-import {Logger} from "../../loggers/logger";
+import {Report} from "../report";
+import {Reporter} from "../reporter";
 
 export class MultiSubscriptionsHandler implements Reporter{
     private subscriptionHandlers: SubscriptionHandler[] = [];
@@ -58,7 +56,7 @@ export class MultiSubscriptionsHandler implements Reporter{
             const subscriptionReport = subscriptionHandler.getReport();
             subscriptionReports.push(subscriptionReport);
             for (let j = 0; j < subscriptionReport.errorsDescription.length; ++j) {
-                errorsDescription.push(`[Subscription ${j}] ` + subscriptionReport.errorsDescription[j]);
+                errorsDescription.push(`[${j}] ` + subscriptionReport.errorsDescription[j]);
             }
             valid = valid && subscriptionReport.valid;
         };
