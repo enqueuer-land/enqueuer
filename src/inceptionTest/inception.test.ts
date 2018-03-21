@@ -45,9 +45,14 @@ describe("Inception test", () => {
 
             tester = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/tester.yml']);
 
+            tester.stdout.on('data', (data) => {
+                console.log(`tester stdout:\n${data}`);
+            });
+
             sleep(5);
 
-            findEveryJsonFile().forEach(file => console.log(file));
+            findEveryJsonFile().forEach(file => console.log("end: " + file));
+            killThemAll()
 
         } catch (err) {
             console.error(err)
