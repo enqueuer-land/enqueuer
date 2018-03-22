@@ -1,62 +1,84 @@
-{  
-   "id":"enqueuer_0201803101713160420",
-   "enqueuer":{  
-      "version":"1.0.0"
+{
+   "id": "enqueuer_1074417128_201803202238350711",
+   "enqueuer": {
+      "version": "1.0.0"
    },
-   "report":{  
-      "version":"1.0.0"
+   "report": {
+      "version": "1.0.0"
    },
-   "valid":false,
-   "time":{  
-      "totalTime":8050,
-      "startTime":"2018-03-10T23:13:16.438Z",
-      "endTime":"2018-03-10T23:13:24.488Z",
-      "timeout":10000,
-      "hasTimedOut":false
+   "valid": false,
+   "errorsDescription": [
+      "[Requisition] Requisition has timed out",
+      "[Start Event] Subscription 'http-server' didn't receive any message",
+      "[Subscription][0] Subscription 'mqtt' didn't receive any message",
+      "[Subscription][0] Subscription 'mqtt' stop waiting because it has timed out",
+      "[Subscription][1] Subscription 'mqtt' didn't receive any message"
+   ],
+   "time": {
+      "totalTime": 2006,
+      "startTime": "2018-03-21T03:38:35.715Z",
+      "endTime": "2018-03-21T03:38:37.721Z",
+      "timeout": 2000,
+      "hasTimedOut": true
    },
-   "error":null,
-   "subscriptionReports":{  
-      "subscriptions":[  
-         {  
-            "connectionTime":"2018-03-10T23:13:16.466Z",
-            "subscription":{  
-               "type":"mqtt",
-               "timeout":8000,
-               "onMessageReceived":"report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
-               "brokerAddress":"mqtt://localhost",
-               "topic":"subscription"
+   "subscriptionReports": {
+      "subscriptions": [
+         {
+            "valid": false,
+            "errorsDescription": [
+               "Subscription 'mqtt' didn't receive any message"
+            ],
+            "connectionTime": "2018-03-21T03:38:35.721Z",
+            "subscription": {
+               "timeout": 5000,
+               "type": "mqtt",
+               "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true; test['false'] = false",
+               "brokerAddress": "mqtt://localhost",
+               "topic": "subscription"
             },
-            "hasReceivedMessage":false,
-            "hasTimedOut":true,
-            "valid":false
+            "hasReceivedMessage": false,
+            "hasTimedOut": false
+         },
+         {
+            "valid": false,
+            "errorsDescription": [
+               "Subscription 'mqtt' stop waiting because it has timed out",
+               "Subscription 'mqtt' didn't receive any message"
+            ],
+            "connectionTime": "2018-03-21T03:38:35.723Z",
+            "subscription": {
+               "timeout": 1000,
+               "type": "mqtt",
+               "onMessageReceived": "test['someLabel'] = false",
+               "brokerAddress": "mqtt://localhost",
+               "topic": "anotherSubscriptionTopic"
+            },
+            "hasReceivedMessage": false,
+            "hasTimedOut": true
          }
       ],
-      "valid":false
+      "valid": false,
+      "errorsDescription": [
+         "[0] Subscription 'mqtt' didn't receive any message",
+         "[0] Subscription 'mqtt' stop waiting because it has timed out",
+         "[1] Subscription 'mqtt' didn't receive any message"
+      ]
    },
-   "startEventReports":{  
-      "connectionTime":"2018-03-10T23:13:16.468Z",
-      "functionReport":{  
-         "passingTests":[  
-
-         ],
-         "failingTests":[  
-
-         ],
-         "reports":[  
-
-         ]
-      },
-      "messageReceivedTimestamp":"2018-03-10T23:13:20.046Z",
-      "subscription":{  
-         "type":"http-server",
-         "response":{  
-            "status":200
+   "startEventReports": {
+      "valid": false,
+      "errorsDescription": [
+         "Subscription 'http-server' didn't receive any message"
+      ],
+      "connectionTime": "2018-03-21T03:38:35.725Z",
+      "subscription": {
+         "type": "http-server",
+         "response": {
+            "status": 200
          },
-         "endpoint":"/start",
-         "method":"POST"
+         "endpoint": "/start",
+         "method": "POST"
       },
-      "hasReceivedMessage":false,
-      "hasTimedOut":false,
-      "valid":false
+      "hasReceivedMessage": false,
+      "hasTimedOut": false
    }
 }

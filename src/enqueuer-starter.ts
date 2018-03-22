@@ -5,7 +5,7 @@ import {MultiPublisher} from "./publishers/multi-publisher";
 
 export class Starter {
 
-    private enqueuer: Enqueuer;
+    private enqueuer?: Enqueuer;
 
     constructor() {
         const configuration = new Configuration();
@@ -16,10 +16,12 @@ export class Starter {
         const multiPublisher: MultiPublisher = new MultiPublisher(configuration.getOutputs());
 
         this.enqueuer = new Enqueuer(requisitionInputs, multiPublisher);
+        this.enqueuer.setSingleRunMode(configuration.isSingleRunMode());
     }
 
     public start(): void {
-        this.enqueuer.execute();
+        if (this.enqueuer)
+            this.enqueuer.execute();
     }
 
 }
