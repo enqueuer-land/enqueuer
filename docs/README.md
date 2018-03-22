@@ -32,7 +32,27 @@ This is how your event-driven-conponent should act when triggered by an *Input*:
 What **enqueuer** does is to trigger *Input*, by itself, so the component-to-be-tested acts like it should. And then, **enqueuer** collects component-to-be-tested outputs and checks if they are what they are supposed to be.
 Quite simple, don't you think?
 
-When **enqueuer** receives a requisition, it starts an event described in the requisition and awaits untill all expecteds outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the requisition.
+When **enqueuer** receives a requisition, it starts an event described in the requisition and awaits until all expected outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the requisition.
+
+### how to use
+```$ enqueuer --help
+  Usage: enqueuer [options]
+  Options:
+
+    -V, --version                      output the version number
+    -w, --watch-folder <path>          Specifies a folder to watch requisition files
+    -v, --verbose                      Activates verbose mode
+    -l, --logLevel <level>             Set log level
+    -s, --singleRunMode <file-name-pattern>  Run in singleRun mode
+    -c, --config-file <path>           Set configurationFile
+    -h, --help                         output usage information
+```
+
+Unless you explicitly set to run in singleRun mode, **enqueuer** will run in daemon mode, which means that it will run indefinitely. Endlessly. As a service.
+- When running in daemon mode, it will be waiting for requisitions through those mechanisms defined in *configFile.requisition.input*.\
+- If running in singleRunMode, **enqueuer** will run only the files that match _file-name-pattern_ value. Once all of the matching files are ran, **enqueuer** ends its execution and returns, as status code:
+    - 0, if all requisitions are valid; or
+    - 1, if there is any error. In such case, it compiles an errors list description and saves it in a file defined in *configFile.errorsDescriptionFile*
 
 ### frequently asked question
 Given that **enqueuer** is a tool that tests event-driven-components and it is an event-driven-component as well, does it test itself?
