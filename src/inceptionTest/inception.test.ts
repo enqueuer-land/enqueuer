@@ -65,7 +65,7 @@ describe("Inception test", () => {
 
                 //TODO: remove this when it starts ending gracefully
                 tester.on('exit', (statusCode) => {
-                    console.log(`Exist status ${statusCode}`)
+                    console.log(`Exit status ${statusCode}`)
                     expect(statusCode).toBe(0);
                     // done();
                 })

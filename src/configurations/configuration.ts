@@ -10,10 +10,8 @@ let commander: any = {};
 if (!process.argv[1].toString().match("jest")) {
     commander = require('commander')
     .version(process.env.npm_package_version, '-V, --version')
-    .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
     .option('-v, --verbose', 'Activates verbose mode', false)
     .option('-l, --log-level <level>', 'Set log level')
-    .option('-s, --single-run-mode <requisition>', 'Run in singleRun mode')
     .option('-c, --config-file <path>', 'Set configurationFile')
     .parse(process.argv);
 

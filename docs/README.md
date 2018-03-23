@@ -35,25 +35,46 @@ Quite simple, don't you think?
 When **enqueuer** receives a requisition, it starts an event described in the requisition and awaits until all expected outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the requisition.
 
 ### how to use
-```$ enqueuer --help
-  Usage: enqueuer [options]
-  Options:
-
-    -V, --version                      output the version number
-    -w, --watch-folder <path>          Specifies a folder to watch requisition files
-    -v, --verbose                      Activates verbose mode
-    -l, --logLevel <level>             Set log level
-    -s, --singleRunMode <file-name-pattern>  Run in singleRun mode
-    -c, --config-file <path>           Set configurationFile
-    -h, --help                         output usage information
+```
+$ enqueuer --help
+     Usage: enqueuer [options]
+     Options:
+       -V, --version             output the version number
+       -v, --verbose             Activates verbose mode
+       -l, --log-level <level>   Set log level
+       -c, --config-file <path>  Set configurationFile
+       -h, --help                output usage information
 ```
 
-Unless you explicitly set to run in singleRun mode, **enqueuer** will run in daemon mode, which means that it will run indefinitely. Endlessly. As a service.
-- When running in daemon mode, it will be waiting for requisitions through those mechanisms defined in *configFile.requisition.input*.\
-- If running in singleRunMode, **enqueuer** will run only the files that match _file-name-pattern_ value. Once all of the matching files are ran, **enqueuer** ends its execution and returns, as status code:
-    - 0, if all requisitions are valid; or
-    - 1, if there is any error. In such case, it compiles an errors list description and saves it in a file defined in *configFile.errorsDescriptionFile*
+### configuration file
+So, by default, **enqueuer** reads [conf/enqueuer.yml](/conf/enqueuer.yml) file to configure its execution options.
+Above, there is an explanation of each field of a configuration file.\
 
+      run-mode:
+Specifies in which execution mode **enqueueuer** will run. To options are mutually exclusive allowed:
+- *daemon* (default): it will run indefinitely. Endlessly. As a service. When running in daemon mode, it will be waiting for requisitions through those mechanisms listed in *configFile.run-mode.daemon*.
+
+- *single-run*:  running in single run mode, **enqueuer** will run only the files that match fileNamePattern value. Once all of the matching files are ran, **enqueuer** ends its execution and returns, as status code:
+     - 0, if all requisitions are valid; or
+     - 1, if there is any error. In that scenario, it compiles an errors list description and saves it in a file defined in *configFile.run-mode.single-run.output-file*.
+    
+```
+outputs:
+```
+
+Accepts a list of publishing mechanisms. So, every time a new requisition is received, **enqueuer** publishes through this its validation, its id or its errors list, if it' an invalid requisition.
+
+    log-level:
+
+And last, but not least, log-level defines how execution information are logged in the standard output file descriptor. Accepted values are:
+- trace; 
+- debug;
+- info;
+- warning; 
+- error; and
+- fatal.
+
+ 
 ### frequently asked question
 Given that **enqueuer** is a tool that tests event-driven-components and it is an event-driven-component as well, does it test itself?
 - I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely. [Check it out:](/src/inceptionTest/inception.test.ts "Inception Test")
