@@ -40,7 +40,7 @@ describe("Inception test", () => {
             sleep(1);
 
             tester = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/tester.yml']);
-            sleep(3);
+            sleep(2);
 
             const testerReport = findEveryJsonFile().filter(file => file.indexOf("tester") > 0)[0];
 

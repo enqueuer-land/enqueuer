@@ -20,19 +20,19 @@ export class SingleRunRequisitionInput {
     }
 
     public receiveRequisition(): Promise<RequisitionModel> {
-            Logger.info("Pop file")
         return new Promise((resolve, reject) => {
             var timer = setInterval(() => {
-                Logger.info("popping")
                 if (this.ready) {
                     clearInterval(timer);
-                    Logger.info("ready")
-
                     const content = this.requisitions.pop();
                     if (content)
                         return resolve(content);
                     else
-                        return reject("There is no more requisition files to be read");
+                        {
+                            const message = "There is no more requisition files to be read";
+                            Logger.info(message);
+                            return reject();
+                        }
                 }
             }, 100);
         })

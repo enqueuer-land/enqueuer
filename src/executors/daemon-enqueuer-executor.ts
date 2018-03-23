@@ -1,12 +1,12 @@
-import {RequisitionStarter} from "./requisitions/requisition-starter";
-import {DaemonRequisitionInput} from "./requisitions/daemon-requisition-input";
-import {Logger} from "./loggers/logger";
-import {RequisitionModel} from "./requisitions/models/requisition-model";
-import {MultiPublisher} from "./publishers/multi-publisher";
+import {RequisitionStarter} from "../requisitions/requisition-starter";
+import {DaemonRequisitionInput} from "../requisitions/daemon-requisition-input";
+import {Logger} from "../loggers/logger";
+import {RequisitionModel} from "../requisitions/models/requisition-model";
+import {MultiPublisher} from "../publishers/multi-publisher";
 import {EnqueuerExecutor} from "./enqueuer-executor";
-import {Report} from "./reporters/report";
-import {Configuration} from "./configurations/configuration";
-import {Injectable} from "./injector/injector";
+import {Report} from "../reporters/report";
+import {Configuration} from "../configurations/configuration";
+import {Injectable} from "../injector/injector";
 
 @Injectable(enqueuerConfiguration => enqueuerConfiguration["daemon"])
 export class DaemonEnqueuerExecutor extends EnqueuerExecutor{

@@ -17,7 +17,7 @@ export class DateController {
                 ("0" + this.date.getHours()).slice(-2) +
                 ("0" + this.date.getMinutes()).slice(-2) +
                 ("0" + this.date.getSeconds()).slice(-2) +
-                ("0" + this.date.getMilliseconds()).slice(-4);
+                ("0" + this.date.getMilliseconds()).slice(-6);
     }
 
     public getTime(): number {
