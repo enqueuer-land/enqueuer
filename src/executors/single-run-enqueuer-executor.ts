@@ -47,7 +47,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
     private mergeNewReport(newReport: Report, id: string): void {
         this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
         newReport.errorsDescription.forEach(newError => {
-            this.reportMerge.errorsDescription.push(`[Requisition][${id}] ${newError}`)
+            this.reportMerge.errorsDescription.push(`[Requisition][${id}]${newError}`)
         })
     }
 

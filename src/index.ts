@@ -31,4 +31,5 @@ if (logLevel) {
 
 new EnqueuerStarter()
     .start()
-    .then(statusCode => process.exitCode = statusCode);
+    // .then(statusCode => process.exitCode = statusCode);
+    .then(statusCode => process.exit(0));
