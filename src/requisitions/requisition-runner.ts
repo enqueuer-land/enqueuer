@@ -5,8 +5,9 @@ import {StartEventReporter} from "../reporters/start-event/start-event-reporter"
 import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
 import {Timeout} from "../timers/timeout";
+import {Report} from "../reporters/report";
 
-export type RequisitionRunnerCallback = (report: string) => void;
+export type RequisitionRunnerCallback = (report: Report) => void;
 export class RequisitionRunner {
     private reportGenerator: ReportGenerator;
     private startEvent: StartEventReporter;
@@ -71,12 +72,12 @@ export class RequisitionRunner {
         Logger.info(`Start gathering reports`);
 
         if (error) {
-            Logger.warning(`Errors collected: ${error}`);
+            Logger.debug(`Error collected: ${error}`);
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsHandler.getReport());
         this.reportGenerator.finish();
-        this.onFinishCallback(this.reportGenerator.generate().toString());
+        this.onFinishCallback(this.reportGenerator.getReport());
     }
 }

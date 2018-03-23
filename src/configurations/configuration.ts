@@ -1,5 +1,6 @@
 import {PublisherModel} from "../requisitions/models/publisher-model";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Logger} from "../loggers/logger";
 
 const readYml  = require('read-yaml');
 
@@ -11,7 +12,8 @@ if (!process.argv[1].toString().match("jest")) {
     .version(process.env.npm_package_version, '-V, --version')
     .option('-w, --watch-folder <path>', 'Specifies a folder to watch requisition files')
     .option('-v, --verbose', 'Activates verbose mode', false)
-    .option('-l, --logLevel <level>', 'Set log level')
+    .option('-l, --log-level <level>', 'Set log level')
+    .option('-s, --single-run-mode <requisition>', 'Run in singleRun mode')
     .option('-c, --config-file <path>', 'Set configurationFile')
     .parse(process.argv);
 
@@ -19,7 +21,13 @@ if (!process.argv[1].toString().match("jest")) {
 }
 
 
-const ymlFile = readYml.sync(configFileName);
+let ymlFile = {};
+try {
+    ymlFile = readYml.sync(configFileName);
+} catch (err) {
+    Logger.error(`Impossible to read ${configFileName} file: ${err}`);
+    ymlFile = {};
+}
 
 export class Configuration {
 
@@ -38,12 +46,16 @@ export class Configuration {
             (this.configurationFile["log-level"]);
     }
 
-    public getInputs(): SubscriptionModel[] {
-        return this.configurationFile.requisition.inputs;
+    public getRequisitionRunMode(): any {
+        if (this.configurationFile.requisitions)
+            return this.configurationFile.requisitions["run-mode"];
+        else return undefined;
     }
 
     public getOutputs(): PublisherModel[] {
-        return this.configurationFile.requisition.outputs;
+        if (!this.configurationFile.outputs)
+            return [];
+        return this.configurationFile.outputs;
     }
 
     public getFile(): any {

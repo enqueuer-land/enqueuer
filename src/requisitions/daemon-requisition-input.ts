@@ -5,7 +5,7 @@ import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
 import {SubscriptionModel} from "./models/subscription-model";
 
-export class RequisitionInput {
+export class DaemonRequisitionInput {
 
     private type: string;
     private subscription: Subscription;

@@ -1,8 +1,9 @@
 import {DateController} from "../timers/date-controller";
 import {Report} from "./report";
 import {Logger} from "../loggers/logger";
+import {Reporter} from "./reporter";
 
-export class ReportGenerator {
+export class ReportGenerator implements Reporter {
 
     private startTime?: DateController;
     private timeout?: number;
@@ -38,11 +39,11 @@ export class ReportGenerator {
         this.subscriptionReports = subscriptionReport;
     }
 
-    public generate(): string {
+    public getReport(): Report {
         let report = JSON.parse(JSON.stringify(this.requisitionReports));
         report.subscriptionReports = this.subscriptionReports;
         report.startEventReports = this.startEventReports;
-        return JSON.stringify(report);
+        return report;
     }
 
     public finish(): void {

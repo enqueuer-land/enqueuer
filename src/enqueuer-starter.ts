@@ -1,27 +1,23 @@
-import {Enqueuer} from "./enqueuer";
-import {RequisitionInput} from "./requisitions/requisition-input";
 import {Configuration} from "./configurations/configuration";
-import {MultiPublisher} from "./publishers/multi-publisher";
+import {Container} from "./injector/container";
+import {EnqueuerExecutor} from "./enqueuer-executor";
+import {Report} from "./reporters/report";
 
-export class Starter {
+export class EnqueuerStarter {
 
-    private enqueuer?: Enqueuer;
+    private executor: EnqueuerExecutor;
 
     constructor() {
         const configuration = new Configuration();
-
-        const requisitionInputs: RequisitionInput[] =
-            configuration.getInputs().map(input => new RequisitionInput(input));
-
-        const multiPublisher: MultiPublisher = new MultiPublisher(configuration.getOutputs());
-
-        this.enqueuer = new Enqueuer(requisitionInputs, multiPublisher);
-        this.enqueuer.setSingleRunMode(configuration.isSingleRunMode());
+        this.executor = Container.get(EnqueuerExecutor).createFromPredicate(configuration.getRequisitionRunMode());
     }
 
-    public start(): void {
-        if (this.enqueuer)
-            this.enqueuer.execute();
+    public start(): Promise<number> {
+        return new Promise(resolve => {
+            this.executor.execute().then((report: Report) => {
+                report.valid ? resolve(0): resolve(1);
+            })
+        });
     }
 
 }

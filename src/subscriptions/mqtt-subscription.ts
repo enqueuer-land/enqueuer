@@ -44,7 +44,7 @@ export class MqttSubscription extends Subscription {
     public unsubscribe(): void {
         if (this.client) {
             this.client.unsubscribe(this.topic);
-            this.client.end();
+            this.client.end(true);
         }
         delete this.client;
     }

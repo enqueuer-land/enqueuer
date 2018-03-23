@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {Starter} from "./starter";
+import {EnqueuerStarter} from "./enqueuer-starter";
 import {Configuration} from "./configurations/configuration";
 import {Logger} from "./loggers/logger";
 const prettyjson = require('prettyjson');
@@ -29,4 +29,6 @@ if (logLevel) {
     setLogLevel();
 }
 
-new Starter().start();
+new EnqueuerStarter()
+    .start()
+    .then(statusCode => process.exitCode = statusCode);

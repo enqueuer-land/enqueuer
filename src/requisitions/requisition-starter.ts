@@ -2,6 +2,7 @@ import {Logger} from "../loggers/logger";
 import {MultiPublisher} from "../publishers/multi-publisher";
 import {RequisitionRunner} from "./requisition-runner";
 import {RequisitionModel} from "./models/requisition-model";
+import {Report} from "../reporters/report";
 
 export class RequisitionStarter {
 
@@ -14,15 +15,15 @@ export class RequisitionStarter {
         this.multiPublisher = new MultiPublisher(requisition.reports);
     }
 
-    public start(): void {
-        this.requisitionRunner.start(
-            (requisitionResultReport: string) => this.onFinish(requisitionResultReport));
-    }
-
-    private onFinish(requisitionResultReport: string) {
-        Logger.info("Requisition is over");
-        this.multiPublisher.publish(requisitionResultReport);
-
+    public start(): Promise<Report> {
+        return new Promise((resolve) => {
+            this.requisitionRunner.start(
+                (requisitionResultReport: Report) => {
+                    Logger.info("Requisition is over");
+                    this.multiPublisher.publish(JSON.stringify(requisitionResultReport));
+                    resolve(requisitionResultReport);
+                });
+        });
     }
 }
 

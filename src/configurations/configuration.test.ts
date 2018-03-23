@@ -35,24 +35,36 @@ describe('Configuration', function() {
 
     });
 
-    it('get requisition inputs from file', function () {
-        const fileInput = ['input'];
+    it('daemon run mode', function () {
         const configurationFile = {
-            requisition: {
-                inputs: fileInput
+            requisitions: {
+                "run-mode": {
+                    "daemon": ["bla"]
+                }
             }
         }
-        const actualInput = new Configuration({}, configurationFile).getInputs();
+        const actualInput = new Configuration({}, configurationFile).getRequisitionRunMode()["daemon"];
 
-        expect(actualInput).toBe(fileInput);
+        expect(actualInput).toEqual(["bla"]);
+    });
+
+    it('single run mode', function () {
+        const configurationFile = {
+            requisitions: {
+                "run-mode": {
+                    "single-run": "bla"
+                }
+            }
+        }
+        const actualInput = new Configuration({}, configurationFile).getRequisitionRunMode()["single-run"];
+
+        expect(actualInput).toBe("bla");
     });
 
     it('get requisition outputs from file', function () {
         const expectedOutput = ['someOutput'];
         const configurationFile = {
-            requisition: {
-                outputs: expectedOutput
-            }
+            outputs: expectedOutput
         }
 
         const actualOutput = new Configuration({}, configurationFile).getOutputs();

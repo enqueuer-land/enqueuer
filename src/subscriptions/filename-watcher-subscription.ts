@@ -6,8 +6,8 @@ import {SubscriptionModel} from "../requisitions/models/subscription-model";
 const fs = require("fs");
 const chokidar = require('chokidar');
 
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-pattern")
-export class FileNamePatternSubscription extends Subscription {
+@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-watcher")
+export class FileNameWatcherSubscription extends Subscription {
 
     private checkIntervalMs: number;
     private files: string[] = [];
@@ -41,7 +41,7 @@ export class FileNamePatternSubscription extends Subscription {
             var timer = setInterval(() => {
                 const file: string | undefined = this.files.pop();
                 if (file) {
-                    Logger.debug(`FileNamePattern subscription detected file: ${file}`);
+                    Logger.debug(`FileNameWatcher subscription detected file: ${file}`);
 
                     clearInterval(timer);
                     this.readFile(file)

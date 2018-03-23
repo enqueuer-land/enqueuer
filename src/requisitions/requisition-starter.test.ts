@@ -55,6 +55,6 @@ describe("RequisitionStarter",() => {
 
 
         expect(startMock).toHaveBeenCalledTimes(1);
-        expect(publishMock).toHaveBeenCalledWith("report");
+        expect(publishMock).toHaveBeenCalledWith("\"report\"");
     })
 })

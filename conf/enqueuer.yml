@@ -1,43 +1,54 @@
-requisition:
-  inputs:
-    -
-      type: file-name-pattern
+requisitions:
+
+  run-mode:
+
+    single-run: #default
       fileNamePattern: examples/*.enq.json
-      checkIntervalMs: 1000
+      output-file: singleRunOutput.json
 
-    -
-      type: mqtt
-      brokerAddress: mqtt://localhost
-      topic: enqueuer/input
+#    daemon:
+#      -
+#        type: file-name-watcher
+#        fileNamePattern: examples/*.enq.json
+#        checkIntervalMs: 1000
+#
+#      -
+#        type: mqtt
+#        brokerAddress: mqtt://localhost
+#        topic: enqueuer/input
+#
+#      -
+#        type: uds
+#        id: enqueuer
+#        path: enqueuer-client
+#
+#      -
+#        type: standard-input
+#
+#      -
+#        type: amqp
+#        brokerUrl: amqp://localhost:5672
+#        exchangeName: ENQUEUER.E
+#        routingKey: "#"
+#        queueName: ENQUEUER.INPUT
+#
+#      -
+#        type: http-server
+#        port: 3000
+#        endpoint: /requisitions
+#        method: POST
+#        response:
+#            payload: 'payload'
+#            header:
+#              key: 'value'
+#
+  multi-execution: serial
 
-    -
-      type: uds
-      id: enqueuer
-      path: enqueuer-client
+outputs:
+  -
+    type: mqtt
+    brokerAddress: mqtt://localhost:1883
+    topic: enqueuer/output
 
-    -
-      type: standard-input
-
-    -
-      type: amqp
-      brokerUrl: amqp://localhost:5672
-      exchangeName: ENQUEUER.E
-      routingKey: "#"
-      queueName: ENQUEUER.INPUT
-
-    -
-      type: http-server
-      port: 3000
-      endpoint: /requisitions
-      method: POST
-      response:
-          payload: 'payload'
-          header:
-            key: 'value'
-  outputs:
-    -
-      type: mqtt
-      brokerAddress: mqtt://localhost:1883
-      topic: enqueuer/output
 
 log-level: debug

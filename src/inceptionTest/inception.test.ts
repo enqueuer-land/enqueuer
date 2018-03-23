@@ -61,7 +61,12 @@ describe("Inception test", () => {
                 expect(fileContent.startEventReports.valid).toBeTruthy();
                 expect(fileContent.startEventReports.errorsDescription.length).toBe(0);
                 expect(fileContent.startEventReports.publisher.type).toBe("mqtt");
-                done();
+
+                //TODO: remove this when it starts ending gracefully
+                // tester.on('exit', (statusCode) => {
+                //     expect(statusCode).toBe(0);
+                    done();
+                // })
             });
         } catch (err) {
             console.error(err)
