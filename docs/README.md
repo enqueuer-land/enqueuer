@@ -46,17 +46,19 @@ $ enqueuer --help
        -h, --help                output usage information
 ```
 
+No big surprises, hum? No mistery, as simple as $enqueuer.
+
 ### configuration file
 So, by default, **enqueuer** reads [conf/enqueuer.yml](/conf/enqueuer.yml) file to configure its execution options.
-Above, there is an explanation of each field of a configuration file.\
+Below, there is an explanation of each field of a configuration file.
 
       run-mode:
-Specifies in which execution mode **enqueueuer** will run. To options are mutually exclusive allowed:
+Specifies in which execution mode **enqueueuer** will run. There are two options, mutually exclusive:
 - *daemon* (default): it will run indefinitely. Endlessly. As a service. When running in daemon mode, it will be waiting for requisitions through those mechanisms listed in *configFile.run-mode.daemon*.
 
 - *single-run*:  running in single run mode, **enqueuer** will run only the files that match fileNamePattern value. Once all of the matching files are ran, **enqueuer** ends its execution and returns, as status code:
      - 0, if all requisitions are valid; or
-     - 1, if there is any error. In that scenario, it compiles an errors list description and saves it in a file defined in *configFile.run-mode.single-run.output-file*.
+     - 1, if there is at least one error. In that scenario, it compiles an errors list description and saves it in a file defined in *configFile.run-mode.single-run.output-file*.
     
 ```
 outputs:
@@ -76,8 +78,8 @@ And last, but not least, log-level defines how execution information are logged 
 
  
 ### frequently asked question
-Given that **enqueuer** is a tool that tests event-driven-components and it is an event-driven-component as well, does it test itself?
-- I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely. [Check it out:](/src/inceptionTest/inception.test.ts "Inception Test")
+Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?
+- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely.](/src/inceptionTest/inception.test.ts "Inception Test")
 
 ###### IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
