@@ -34,13 +34,14 @@ describe("Inception test", () => {
     });
 
     it("should run enqueuer to test another enqueuer process", done => {
+        jest.setTimeout(10000); // 10 second timeout
 
         try {
             beingTested = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/beingTested.yml']);
             sleep(1);
 
             tester = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/tester.yml']);
-            sleep(2);
+            sleep(3);
 
             const testerReport = findEveryJsonFile().filter(file => file.indexOf("tester") > 0)[0];
 
@@ -63,10 +64,12 @@ describe("Inception test", () => {
                 expect(fileContent.startEventReports.publisher.type).toBe("mqtt");
 
                 //TODO: remove this when it starts ending gracefully
-                // tester.on('exit', (statusCode) => {
-                //     expect(statusCode).toBe(0);
-                    done();
-                // })
+                tester.on('exit', (statusCode) => {
+                    console.log(`Exist status ${statusCode}`)
+                    expect(statusCode).toBe(0);
+                    // done();
+                })
+                done();
             });
         } catch (err) {
             console.error(err)
