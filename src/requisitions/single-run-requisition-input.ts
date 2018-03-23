@@ -1,7 +1,7 @@
 import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
 import {RequisitionModel} from "./models/requisition-model";
-import {FSWatcher} from "fs";
+
 const chokidar = require('chokidar');
 const fs = require("fs");
 

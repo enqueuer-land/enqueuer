@@ -4,6 +4,7 @@ requisitions:
     single-run:
       fileNamePattern: examples/*.enq.json
       output-file: singleRunOutput.json
+      multi-execution: parallel
 
 #    daemon: #default
 #      -
@@ -41,7 +42,6 @@ requisitions:
 #            header:
 #              key: 'value'
 #
-  multi-execution: serial
 
 outputs:
   -

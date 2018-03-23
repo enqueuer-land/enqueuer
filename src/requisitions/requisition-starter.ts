@@ -17,11 +17,15 @@ export class RequisitionStarter {
 
     public start(): Promise<Report> {
         return new Promise((resolve) => {
-            this.requisitionRunner.start(
+            return this.requisitionRunner.start(
                 (requisitionResultReport: Report) => {
                     Logger.info("Requisition is over");
-                    this.multiPublisher.publish(JSON.stringify(requisitionResultReport));
-                    resolve(requisitionResultReport);
+                    this.multiPublisher.publish(JSON.stringify(requisitionResultReport))
+                        .then(() => {
+                            delete this.requisitionRunner;
+                            delete this.multiPublisher;
+                            return resolve(requisitionResultReport);
+                        });
                 });
         });
     }

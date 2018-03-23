@@ -9,7 +9,7 @@ export class RequisitionIdGenerator {
     }
 
     public generateId(): string {
-        return "enqueuer_" + this.calculateHash() + "_"+ new DateController().getStringOnlyNumbers();
+        return "enqueuer_" + this.calculateHash() + "_"+ new DateController().getStringOnlyNumbers() + Math.trunc(Math.random()*100);
     }
     
     private calculateHash(): number {

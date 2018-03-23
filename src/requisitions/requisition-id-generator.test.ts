@@ -27,7 +27,7 @@ describe('RequisitionIdGenerator', () => {
 
         let generatedId = idGenerator.generateId();
 
-        expect(generatedId).toBe(expected);
+        expect(generatedId.substr(0, generatedId.length - 2)).toBe(expected);
     });
 
 });

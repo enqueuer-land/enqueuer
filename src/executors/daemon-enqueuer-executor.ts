@@ -43,19 +43,13 @@ export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
     private startReader(input: DaemonRequisitionInput) {
         input.receiveMessage()
             .then((requisition: RequisitionModel) => {
-                this.reportRequisitionReceived(requisition);
-                new RequisitionStarter(requisition).start();
-                this.startReader(input); //runs again
+                this.multiPublisher.publish(JSON.stringify(requisition)).then(() => this.startReader(input));
+                new RequisitionStarter(requisition).start().then();
             })
             .catch( (err) => {
-                this.reportRequisitionReceived(err);
                 Logger.error(err);
-                this.startReader(input); //runs again
+                this.multiPublisher.publish(JSON.stringify(err)).then(() => this.startReader(input));
             })
-    }
-
-    private reportRequisitionReceived(requisition: RequisitionModel): void {
-        this.multiPublisher.publish(JSON.stringify(requisition));
     }
 
 }
