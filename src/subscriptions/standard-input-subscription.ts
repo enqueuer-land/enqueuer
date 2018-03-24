@@ -13,7 +13,7 @@ export class StandardInputSubscription extends Subscription{
     }
 
     public receiveMessage(): Promise<string> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             let requisition: string = "";
             process.stdin.on('data', (chunk) => requisition += chunk);
             process.stdin.on('end', () => resolve(requisition));

@@ -3,8 +3,9 @@
 import {EnqueuerStarter} from "./enqueuer-starter";
 import {Configuration} from "./configurations/configuration";
 import {Logger} from "./loggers/logger";
-const prettyjson = require('prettyjson');
 import "./injector/injector";
+
+const prettyjson = require('prettyjson');
 
 
 let configuration = new Configuration();
@@ -32,4 +33,5 @@ if (logLevel) {
 new EnqueuerStarter()
     .start()
     // .then(statusCode => process.exitCode = statusCode);
-    .then(statusCode => process.exit(0));
+    .then(statusCode => process.exit(0))
+    .catch(console.log.bind(console));

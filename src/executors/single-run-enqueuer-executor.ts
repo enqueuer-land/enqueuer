@@ -61,7 +61,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
         return new Promise((resolve) => {
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
-                    this.multiPublisher.publish(JSON.stringify(requisition)).then().catch(console.log.bind(console));;
+                    this.multiPublisher.publish(JSON.stringify(requisition)).then().catch(console.log.bind(console));
 
                     if (this.multiExecution == MultiExecutionType.Parallel)
                         resolve(this.execute()); //Run the next one

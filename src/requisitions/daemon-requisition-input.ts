@@ -32,13 +32,12 @@ export class DaemonRequisitionInput {
             this.subscription.receiveMessage()
                 .then((message: string) => {
                     Logger.info(`${this.type} got a message`);
-                    this.requisitionParser.parse(message)
-                        .then((validRequisition: RequisitionModel) => {
-                            resolve(validRequisition);
-                        })
-                        .catch(err => {
-                            Logger.warning(`Error parsing requisition ${JSON.stringify(err)}`)
-                        })
+                    try {
+                        resolve(this.requisitionParser.parse(message));
+                    }
+                    catch(err) {
+                        Logger.error(`Error parsing requisition ${JSON.stringify(err)}`)
+                    }
                 })
         });
     }

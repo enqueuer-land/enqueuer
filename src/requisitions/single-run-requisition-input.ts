@@ -45,10 +45,12 @@ export class SingleRunRequisitionInput {
             if (error)
                 Logger.warning(`Error reading file ${JSON.stringify(error)}`)
             else {
-                this.requisitionParser.parse(data)
-                    .then((validRequisition: RequisitionModel) => {
-                        this.requisitions.push(validRequisition);
-                    })
+                try {
+                    this.requisitions.push(this.requisitionParser.parse(data));
+                }
+                catch(err) {
+                    Logger.error(`Error parsing requisition ${JSON.stringify(err)}`)
+                }
             }
         });
     }

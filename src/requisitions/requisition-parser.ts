@@ -17,23 +17,16 @@ export class RequisitionParser {
                             .compile(requisitionSchema);
     }
 
-    public parse(requisitionMessage: string): Promise<RequisitionModel> {
-        return new Promise((resolve, reject) => {
-            try {
-                const parsedRequisition = JSON.parse(requisitionMessage);
-                if (!this.validator(parsedRequisition)) {
-                    reject(this.validator.errors);
-                }
-                let variablesReplacedRequisition: any = this.replaceVariables(parsedRequisition);
-                variablesReplacedRequisition.id = new RequisitionIdGenerator(variablesReplacedRequisition).generateId();
-                const requisitionWithId: RequisitionModel = variablesReplacedRequisition as RequisitionModel;
-                Logger.info(`Message associated with id ${requisitionWithId.id}`)
-                resolve(requisitionWithId);
-            } catch (err) {
-                Logger.info(`Message is not a JSON`);
-                reject(err.toString());
-            }
-        });
+    public parse(requisitionMessage: string): RequisitionModel {
+        const parsedRequisition = JSON.parse(requisitionMessage);
+        if (!this.validator(parsedRequisition) && this.validator.errors) {
+            throw new Error(JSON.stringify(this.validator.errors));
+        }
+        let variablesReplacedRequisition: any = this.replaceVariables(parsedRequisition);
+        variablesReplacedRequisition.id = new RequisitionIdGenerator(variablesReplacedRequisition).generateId();
+        const requisitionWithId: RequisitionModel = variablesReplacedRequisition as RequisitionModel;
+        Logger.info(`Message associated with id ${requisitionWithId.id}`)
+        return requisitionWithId;
     }
 
     private replaceVariables(parsedRequisition: any): RequisitionModel {
