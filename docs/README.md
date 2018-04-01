@@ -18,12 +18,12 @@ Although there are other ways of using it, the two main ways are:
   - adding it to your testing pipeline, so you'll be asserting that the event-driven-component still behaves properly in every commit.
 
 ## how it works?
-1. receives a [requisition](/examples/subscriptionAsStartEvent.enq.json "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
-2. confirms the requisition reception;
-	3. starts the requisition (publishing or waiting on an event);
-	4. waits for events published by the event-driven-component;
-    5. executes hook script upon these received events;
-    6. reports back the [result](/output/outputReportExample.json).
+-	receives a [requisition](/examples/subscriptionAsStartEvent.enq.json "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
+-	confirms the requisition reception;
+	-	starts the requisition (publishing or waiting on an event);
+	-	waits for events published by the event-driven-component;
+-	executes hook script upon these received events;
+-	reports back the [result](/output/outputReportExample.json).
     
 ### let me draw it for you
 This is how your event-driven-conponent should act when triggered by an *Input*:\
