@@ -18,7 +18,7 @@ Although there are other ways of using it, the two main ways are:
   - adding it to your testing pipeline, so you'll be asserting that the event-driven-component still behaves properly in every commit.
 
 ## how it works?
--	receives a [requisition](/examples/subscriptionAsStartEvent.enq.json "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
+-	receives a [requisition](/examples/publishAsStartEvent.enq.json "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
 -	confirms the requisition reception;
 	-	starts the requisition (publishing or waiting on an event);
 	-	waits for events published by the event-driven-component;
