@@ -3,14 +3,48 @@ Event-driven-component testing tool.\
 ```There are many reasons why you should care about events; they drive autonomy, increase stability, help you move faster and allow for time travel, Jonas Bonér.```\
 There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
 In an event-driven world everything all events move asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component of your architecture acts like it should act when it was designed. It makes you be sure that, at least on the boundaries of this service, everything works as expected.
-  
+
 ## what it does?
 Checks whether an event-driven-component acts as expected.
 By "acts as expected" we mean, the event-driven-component, when triggered by an event:
   - publishes where it is suppose to publish;
   - publishes what it is suppose to publish; and
   - publishes faster than the its timeout.
-  
+
+## how to use
+```
+$ enqueuer --help
+     Usage: enqueuer [options]
+     Options:
+       -V, --version             output the version number
+       -v, --verbose             Activates verbose mode
+       -l, --log-level <level>   Set log level
+       -c, --config-file <path>  Set configurationFile
+       -h, --help                output usage information
+```
+
+No big surprises, hum? No mistery, as simple as $enqueuer.
+
+## requisition
+Generally, a requisition looks like [this](/examples/publishAsStartEvent.enq.json "Requisition example").
+Let me explain what each value means:
+
+-	**requisitionVersion**: string, it tells you which version of requisition should be ran. Ex.: "01.00.00".
+-	**timeout**: optional number in milliseconds, it tells you how long the requisition has to wait before being considered as an invalid one. Ex.: 2000.
+-	**subscriptions**: subscription array
+	-	**subscription**, object
+		-	**type**: string, it tells how to identify and instantiate the proper subscription. Ex.: "mqtt".
+		-	**timeout**: optional number in milliseconds, how long the subscription has to wait to be considered as an invalid one. Ex.: 1000.
+		-	**onMessageReceived**: js code, script executed when a message is received. That's where you would make assertions on the received payload. Ex.: "test['assertion'] = true;"
+-	**startEvent**: object
+	-	**publisher**: object
+		-	**type**: string, it tells how to identify and instantiate the proper publisher. Ex.: "mqtt".
+		-	**payload**: object, what's is gonna be published. It may be whatever you want: string, number or even another json.
+-	**reports**: reports array
+	-	**report**: object
+		-	**type**: string, it tells how to identify and instantiate the proper report. Ex.: "mqtt".
+-	**variables**: object, key-values that replaces values in the entired requisition. Ex.: ```{ brokerAddress: "mqtt://localhost"}```
+
 ## why is it useful?
 It is meant to help your development process.
 Although there are other ways of using it, the two main ways are:
@@ -33,20 +67,6 @@ What **enqueuer** does is to trigger *Input*, by itself, so the component-to-be-
 Quite simple, don't you think?
 
 When **enqueuer** receives a requisition, it starts an event described in the requisition and awaits until all expected outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the requisition.
-
-### how to use
-```
-$ enqueuer --help
-     Usage: enqueuer [options]
-     Options:
-       -V, --version             output the version number
-       -v, --verbose             Activates verbose mode
-       -l, --log-level <level>   Set log level
-       -c, --config-file <path>  Set configurationFile
-       -h, --help                output usage information
-```
-
-No big surprises, hum? No mistery, as simple as $enqueuer.
 
 ### configuration file
 So, by default, **enqueuer** reads [conf/enqueuer.yml](/conf/enqueuer.yml) file to configure its execution options.
