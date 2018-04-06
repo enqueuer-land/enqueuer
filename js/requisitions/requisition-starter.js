@@ -18,6 +18,9 @@ class RequisitionStarter {
                     delete this.requisitionRunner;
                     delete this.multiPublisher;
                     return resolve(requisitionResultReport);
+                })
+                    .catch((err) => {
+                    logger_1.Logger.error(err);
                 });
             });
         });

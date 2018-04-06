@@ -26,16 +26,6 @@ let printReportSummary = function (report) {
     logger_1.Logger.info(`Reports summary:`);
     console.log(prettyjson.render(report, options));
 };
-var MultiExecutionType;
-(function (MultiExecutionType) {
-    MultiExecutionType["Serial"] = "serial";
-    MultiExecutionType["Parallel"] = "parallel";
-})(MultiExecutionType || (MultiExecutionType = {}));
-const multiTypeFromString = (stringType) => {
-    if (stringType && stringType.toLowerCase() === MultiExecutionType.Parallel.toString().toLowerCase())
-        return MultiExecutionType.Parallel;
-    return MultiExecutionType.Serial;
-};
 let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();

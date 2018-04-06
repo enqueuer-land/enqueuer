@@ -32,7 +32,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
             if (this.publisher) {
                 this.publisher.publish()
                     .then(() => {
-                    resolve();
+                    return resolve();
                 })
                     .catch((err) => {
                     this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`);

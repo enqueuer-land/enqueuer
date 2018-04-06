@@ -30,7 +30,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
             if (this.publisher) {
                 this.publisher.publish()
                     .then(() => {
-                        resolve();
+                        return resolve();
                     })
                     .catch((err: any) => {
                         this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`)

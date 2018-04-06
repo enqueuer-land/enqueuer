@@ -13,6 +13,7 @@ class EnqueuerStarter {
         return new Promise(resolve => {
             this.executor.execute()
                 .then((report) => {
+                logger_1.Logger.info("Enqueuer execution is over");
                 report.valid ? resolve(0) : resolve(1);
             })
                 .catch((error) => {

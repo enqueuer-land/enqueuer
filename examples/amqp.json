@@ -1,0 +1,30 @@
+{
+  "requisitionVersion": "01.00.00",
+  "timeout": 3000,
+  "subscriptions": [
+    {
+      "type": "amqp",
+      "brokerUrl": "brokerUrl",
+      "queueName": "enqueuerQueue",
+      "onMessageReceived": "test['works'] = JSON.parse(message).works ;",
+      "timeout": 1000
+    }
+  ],
+  "startEvent": {
+    "publisher": {
+      "type": "amqp",
+      "brokerUrl": "brokerUrl",
+      "queueName": "enqueuerQueue",
+      "payload": {"works":true}
+    }
+  },
+  "reports": [
+    {
+      "type": "standard-output"
+    }
+  ],
+  "variables":
+  {
+    "brokerUrl": "localhost"
+  }
+}

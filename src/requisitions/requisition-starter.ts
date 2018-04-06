@@ -25,7 +25,10 @@ export class RequisitionStarter {
                             delete this.requisitionRunner;
                             delete this.multiPublisher;
                             return resolve(requisitionResultReport);
-                        });
+                        })
+                        .catch((err: any) => {
+                            Logger.error(err);
+                        })
                 });
         });
     }

@@ -19,17 +19,6 @@ let printReportSummary = function (report: Report) {
     console.log(prettyjson.render(report, options));
 };
 
-enum MultiExecutionType {
-    Serial = "serial",
-    Parallel = "parallel"
-}
-
-const multiTypeFromString = (stringType: string): MultiExecutionType => {
-    if (stringType && stringType.toLowerCase() === MultiExecutionType.Parallel.toString().toLowerCase())
-        return MultiExecutionType.Parallel;
-    return MultiExecutionType.Serial;
-}
-
 @Injectable(enqueuerConfiguration => enqueuerConfiguration["single-run"])
 export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
 
