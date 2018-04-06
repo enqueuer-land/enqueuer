@@ -1,21 +1,17 @@
 #!/usr/bin/env node
-
-import {EnqueuerStarter} from "./enqueuer-starter";
-import {Configuration} from "./configurations/configuration";
-import {Logger} from "./loggers/logger";
-import "./injector/injector";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const enqueuer_starter_1 = require("./enqueuer-starter");
+const configuration_1 = require("./configurations/configuration");
+const logger_1 = require("./loggers/logger");
+require("./injector/injector");
 const prettyjson = require('prettyjson');
-
-
-let configuration = new Configuration();
+let configuration = new configuration_1.Configuration();
 const logLevel = configuration.getLogLevel();
-
 const setLogLevel = function () {
-    if (Logger)
-        Logger.setLoggerLevel(logLevel);
+    if (logger_1.Logger)
+        logger_1.Logger.setLoggerLevel(logLevel);
 };
-
 let printConfigurationFile = function () {
     const options = {
         defaultIndentation: 4,
@@ -24,14 +20,11 @@ let printConfigurationFile = function () {
     };
     console.log(prettyjson.render(configuration.getFile(), options));
 };
-
 if (logLevel) {
     printConfigurationFile();
     setLogLevel();
 }
-
-new EnqueuerStarter()
+new enqueuer_starter_1.EnqueuerStarter()
     .start()
-    // .then(statusCode => process.exitCode = statusCode);
     .then(statusCode => process.exit(statusCode))
     .catch(console.log.bind(console));
