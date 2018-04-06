@@ -1,24 +1,25 @@
 import { ReportGenerator } from "../reporters/report-generator";
-import {MultiSubscriptionsHandler} from "../reporters/subscription/multi-subscriptions-handler";
 import {Logger} from "../loggers/logger";
 import {StartEventReporter} from "../reporters/start-event/start-event-reporter";
 import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
 import {Timeout} from "../timers/timeout";
 import {Report} from "../reporters/report";
+import {MultiSubscriptionsReporter} from "../reporters/subscription/multi-subscriptions-reporter";
 
 export type RequisitionRunnerCallback = (report: Report) => void;
+
 export class RequisitionRunner {
     private reportGenerator: ReportGenerator;
     private startEvent: StartEventReporter;
-    private multiSubscriptionsHandler: MultiSubscriptionsHandler;
+    private multiSubscriptionsReporter: MultiSubscriptionsReporter;
     private onFinishCallback: RequisitionRunnerCallback;
     private requisitionTimeout?: number;
 
     constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
         this.startEvent = Container.get(StartEventReporter).createFromPredicate(requisitionAttributes.startEvent);
-        this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
+        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
         this.onFinishCallback = () => {};
     }
@@ -27,7 +28,7 @@ export class RequisitionRunner {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();
-        this.multiSubscriptionsHandler.connect()
+        this.multiSubscriptionsReporter.connect()
             .then(() => this.onSubscriptionsCompleted())
             .catch(err => {
                 Logger.error(`Error connecting multiSubscription: ${err}`)
@@ -36,7 +37,7 @@ export class RequisitionRunner {
     }
 
     private onSubscriptionsCompleted() {
-        this.multiSubscriptionsHandler.receiveMessage()
+        this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
                 Logger.error(`Error receiving message in multiSubscription: ${err}`)
@@ -76,7 +77,7 @@ export class RequisitionRunner {
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
-        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsHandler.getReport());
+        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
         this.onFinishCallback(this.reportGenerator.getReport());
     }

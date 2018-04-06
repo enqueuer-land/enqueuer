@@ -1,16 +1,16 @@
-import {SubscriptionHandler} from "./subscription-handler";
 import {SubscriptionModel} from "../../requisitions/models/subscription-model";
 import {Report} from "../report";
 import {Reporter} from "../reporter";
+import {SubscriptionReporter} from "./subscription-reporter";
 
-export class MultiSubscriptionsHandler implements Reporter{
-    private subscriptionHandlers: SubscriptionHandler[] = [];
+export class MultiSubscriptionsReporter implements Reporter{
+    private subscriptionHandlers: SubscriptionReporter[] = [];
     private subscriptionsConnectionCompletedCounter: number = 0;
     private subscriptionsStoppedWaitingCounter: number = 0;
 
     constructor(subscriptionsAttributes: SubscriptionModel[]) {
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
-            this.subscriptionHandlers.push(new SubscriptionHandler(subscriptionsAttributes[id]));
+            this.subscriptionHandlers.push(new SubscriptionReporter(subscriptionsAttributes[id]));
         }
     }
 
@@ -55,7 +55,7 @@ export class MultiSubscriptionsHandler implements Reporter{
             const subscriptionHandler = this.subscriptionHandlers[i];
             const subscriptionReport = subscriptionHandler.getReport();
             subscriptionReports.push(subscriptionReport);
-            for (let j = 0; j < subscriptionReport.errorsDescription.length; ++j) {
+            for (let j = 0; subscriptionReport.errorsDescription && j < subscriptionReport.errorsDescription.length; ++j) {
                 errorsDescription.push(`[${j}] ` + subscriptionReport.errorsDescription[j]);
             }
             valid = valid && subscriptionReport.valid;

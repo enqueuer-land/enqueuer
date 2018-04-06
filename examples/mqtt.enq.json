@@ -1,0 +1,35 @@
+{
+  "requisitionVersion": "01.00.00",
+  "timeout": 3000,
+  "subscriptions": [
+    {
+      "type": "mqtt",
+      "brokerAddress": "brokerAddress",
+      "topic": "enqueuer",
+      "onMessageReceived": "test['works'] = message = 'message';",
+      "timeout": 1000
+    }
+  ],
+  "startEvent": {
+    "publisher": {
+      "type": "mqtt",
+      "brokerAddress": "brokerAddress",
+      "payload": "enqueuer",
+      "topic": "enqueuer"
+    }
+  },
+  "reports": [
+    {
+      "type": "mqtt",
+      "brokerAddress": "mqtt://localhost",
+      "topic": "enqueuer/report"
+    },
+    {
+      "type": "standard-output"
+    }
+  ],
+  "variables":
+  {
+    "brokerAddress": "mqtt://localhost"
+  }
+}

@@ -10,7 +10,7 @@ import {Report} from "../report";
 import {Timeout} from "../../timers/timeout";
 import {Reporter} from "../reporter";
 
-export class SubscriptionHandler implements Reporter {
+export class SubscriptionReporter implements Reporter {
 
     private subscription: SubscriptionModel;
     private report: Report;
@@ -89,7 +89,6 @@ export class SubscriptionHandler implements Reporter {
         this.cleanUp();
         this.report = {
             ...this.report,
-            subscription: this.subscription,
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };
@@ -122,6 +121,8 @@ export class SubscriptionHandler implements Reporter {
         const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
         const functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         Logger.debug(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
+        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.report.failingTests);
+
         this.report = {
             ...this.report,
             functionReport: functionResponse.report,

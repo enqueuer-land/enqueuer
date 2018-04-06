@@ -47,7 +47,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         });
     }
     getReport() {
-        this.report = Object.assign({}, this.publisherOriginalAttributes, { prePublishFunction: this.prePublishingReport, publisher: this.publisher, timestamp: new date_controller_1.DateController().toString(), valid: this.report.errorsDescription.length <= 0, errorsDescription: this.report.errorsDescription });
+        this.report = Object.assign({}, this.publisherOriginalAttributes, { prePublishFunction: this.prePublishingReport, timestamp: new date_controller_1.DateController().toString(), valid: this.report.errorsDescription.length <= 0, errorsDescription: this.report.errorsDescription });
         return this.report;
     }
     executePrePublishingFunction() {

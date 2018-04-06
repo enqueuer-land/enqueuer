@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const report_generator_1 = require("../reporters/report-generator");
-const multi_subscriptions_handler_1 = require("../reporters/subscription/multi-subscriptions-handler");
 const logger_1 = require("../loggers/logger");
 const start_event_reporter_1 = require("../reporters/start-event/start-event-reporter");
 const container_1 = require("../injector/container");
 const timeout_1 = require("../timers/timeout");
+const multi_subscriptions_reporter_1 = require("../reporters/subscription/multi-subscriptions-reporter");
 class RequisitionRunner {
     constructor(requisitionAttributes) {
         this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes.id);
         this.startEvent = container_1.Container.get(start_event_reporter_1.StartEventReporter).createFromPredicate(requisitionAttributes.startEvent);
-        this.multiSubscriptionsHandler = new multi_subscriptions_handler_1.MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
+        this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
         this.onFinishCallback = () => { };
     }
@@ -18,7 +18,7 @@ class RequisitionRunner {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();
-        this.multiSubscriptionsHandler.connect()
+        this.multiSubscriptionsReporter.connect()
             .then(() => this.onSubscriptionsCompleted())
             .catch(err => {
             logger_1.Logger.error(`Error connecting multiSubscription: ${err}`);
@@ -26,7 +26,7 @@ class RequisitionRunner {
         });
     }
     onSubscriptionsCompleted() {
-        this.multiSubscriptionsHandler.receiveMessage()
+        this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
             logger_1.Logger.error(`Error receiving message in multiSubscription: ${err}`);
@@ -61,7 +61,7 @@ class RequisitionRunner {
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
-        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsHandler.getReport());
+        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
         this.onFinishCallback(this.reportGenerator.getReport());
     }

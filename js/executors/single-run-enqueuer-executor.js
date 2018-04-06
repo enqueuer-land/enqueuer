@@ -42,8 +42,6 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         this.runningRequisitionsCounter = 0;
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
         this.outputFilename = singleRunConfiguration["output-file"];
-        this.multiExecution = multiTypeFromString(singleRunConfiguration["multi-execution"]);
-        logger_1.Logger.info(`Executing in SingleRun, mode: ${this.multiExecution}`);
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunRequisitionInput =
             new single_run_requisition_input_1.SingleRunRequisitionInput(singleRunConfiguration.fileNamePattern);
@@ -57,29 +55,20 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
                 this.multiPublisher.publish(JSON.stringify(requisition)).then().catch(console.log.bind(console));
-                if (this.multiExecution == MultiExecutionType.Parallel)
-                    resolve(this.execute()); //Run the next one
                 ++this.runningRequisitionsCounter;
                 new requisition_starter_1.RequisitionStarter(requisition).start()
                     .then(report => {
                     --this.runningRequisitionsCounter;
                     logger_1.Logger.info(`Remaining requisitions to receive report: ${this.runningRequisitionsCounter}`);
                     this.mergeNewReport(report, requisition.id);
-                    if (this.multiExecution == MultiExecutionType.Serial)
-                        resolve(this.execute()); //Run the next one
-                    else if (this.runningRequisitionsCounter <= 0) {
-                        printReportSummary(this.reportMerge);
-                        resolve(this.reportMerge); //It's over
-                    }
+                    resolve(this.execute()); //Run the next one
                 }).catch(console.log.bind(console));
                 ;
             })
                 .catch(() => {
                 logger_1.Logger.info("There is no more requisitions to be ran");
-                if (this.multiExecution == MultiExecutionType.Serial) {
-                    printReportSummary(this.reportMerge);
-                    resolve(this.reportMerge);
-                }
+                printReportSummary(this.reportMerge);
+                resolve(this.reportMerge);
             });
         });
     }

@@ -10,20 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const start_event_reporter_1 = require("./start-event-reporter");
-const subscription_handler_1 = require("../subscription/subscription-handler");
+const subscription_reporter_1 = require("../subscription/subscription-reporter");
 const injector_1 = require("../../injector/injector");
 let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
-        this.subscriptionHandler = new subscription_handler_1.SubscriptionHandler(startEvent.subscription);
+        this.subscriptionReporter = new subscription_reporter_1.SubscriptionReporter(startEvent.subscription);
     }
     start() {
         return new Promise((resolve, reject) => {
-            this.subscriptionHandler.connect()
+            this.subscriptionReporter.connect()
                 .then(() => {
-                this.subscriptionHandler
+                this.subscriptionReporter
                     .onTimeout(() => resolve());
-                this.subscriptionHandler.receiveMessage()
+                this.subscriptionReporter.receiveMessage()
                     .then(() => resolve())
                     .catch(err => reject(err));
             })
@@ -31,7 +31,7 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
         });
     }
     getReport() {
-        return this.subscriptionHandler.getReport();
+        return this.subscriptionReporter.getReport();
     }
 };
 StartEventSubscriptionReporter = __decorate([
