@@ -14,12 +14,14 @@ export class SubscriptionReporter implements Reporter {
 
     private subscription: SubscriptionModel;
     private report: Report;
+    private subscriptionAttributes: SubscriptionModel;
     private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         this.subscription = Container.get(Subscription).createFromPredicate(subscriptionAttributes);
+        this.subscriptionAttributes = subscriptionAttributes;
         this.startTime = new DateController();
         this.report = {
             valid: false,
@@ -66,7 +68,7 @@ export class SubscriptionReporter implements Reporter {
 
             this.subscription.receiveMessage()
                 .then((message: any) => {
-                    Logger.debug(`Subscription ${this.subscription.type} received its message: ${message}`);
+                    Logger.debug(`Subscription ${this.subscription.type} received its message: ${JSON.stringify(message)}`);
 
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
@@ -89,6 +91,7 @@ export class SubscriptionReporter implements Reporter {
         this.cleanUp();
         this.report = {
             ...this.report,
+            ...this.subscriptionAttributes,
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };

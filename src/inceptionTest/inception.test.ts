@@ -61,13 +61,11 @@ describe("Inception test", () => {
 
                 expect(fileContent.startEventReports.valid).toBeTruthy();
                 expect(fileContent.startEventReports.errorsDescription.length).toBe(0);
-                expect(fileContent.startEventReports.publisher.type).toBe("mqtt");
 
-                //TODO: remove this when it starts ending gracefully
                 tester.on('exit', (statusCode) => {
                     console.log(`Exit status ${statusCode}`)
                     expect(statusCode).toBe(0);
-                    // done();
+                    done();
                 })
                 done();
             });
@@ -79,7 +77,7 @@ describe("Inception test", () => {
 
     afterAll(() => {
         killThemAll();
-        // removeEveryReportFile();
+        removeEveryReportFile();
     })
 
     let killThemAll = () => {

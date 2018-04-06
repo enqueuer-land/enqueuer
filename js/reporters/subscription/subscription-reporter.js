@@ -19,6 +19,7 @@ class SubscriptionReporter {
             }).start(2000);
         };
         this.subscription = container_1.Container.get(subscription_1.Subscription).createFromPredicate(subscriptionAttributes);
+        this.subscriptionAttributes = subscriptionAttributes;
         this.startTime = new date_controller_1.DateController();
         this.report = {
             valid: false,
@@ -56,7 +57,7 @@ class SubscriptionReporter {
             this.initializeTimeout();
             this.subscription.receiveMessage()
                 .then((message) => {
-                logger_1.Logger.debug(`Subscription ${this.subscription.type} received its message: ${message}`);
+                logger_1.Logger.debug(`Subscription ${this.subscription.type} received its message: ${JSON.stringify(message)}`);
                 if (!this.hasTimedOut) {
                     this.subscription.messageReceived = message;
                     this.executeSubscriptionFunction();
@@ -75,7 +76,7 @@ class SubscriptionReporter {
     }
     getReport() {
         this.cleanUp();
-        this.report = Object.assign({}, this.report, { hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
+        this.report = Object.assign({}, this.report, this.subscriptionAttributes, { hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
         const hasReceivedMessage = this.report.hasReceivedMessage;
         if (!hasReceivedMessage)
             this.report.errorsDescription.push(`Subscription '${this.subscription.type}' didn't receive any message`);

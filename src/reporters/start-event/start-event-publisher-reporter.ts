@@ -47,7 +47,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
     public getReport(): Report {
         this.report = {
-            ...this.publisherOriginalAttributes,
+            publisher: this.publisherOriginalAttributes,
             prePublishFunction: this.prePublishingReport,
             timestamp: new DateController().toString(),
             valid: this.report.errorsDescription.length <= 0,

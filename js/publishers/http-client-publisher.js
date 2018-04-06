@@ -11,28 +11,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const injector_1 = require("../injector/injector");
+const logger_1 = require("../loggers/logger");
 const request = require("request");
 let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
         this.url = publish.url;
         this.method = publish.method;
+        this.payload = JSON.stringify(publish.payload);
         this.headers = publish.headers;
+        if (this.headers['Content-Length'] == null) {
+            if (Buffer.isBuffer(this.payload)) {
+                this.headers["Content-Length"] = this.payload.length;
+            }
+            else {
+                this.headers["Content-Length"] = Buffer.byteLength(this.payload);
+            }
+        }
     }
     publish() {
         return new Promise((resolve, reject) => {
+            logger_1.Logger.debug(`Http in ${this.url}(${this.method}) - ${this.payload}`
+                .substr(0, 100).concat("..."));
             request({
                 url: this.url,
                 method: this.method,
                 headers: this.headers,
+                data: this.payload,
                 body: this.payload
             }, (error, response, body) => {
+                response.setEncoding(null);
                 if (error) {
                     reject("Error to publish http: " + error);
                 }
                 else {
                     resolve();
                 }
+                logger_1.Logger.debug(`Http response ${JSON.stringify(response)}`);
+                logger_1.Logger.debug(`Http body ${JSON.stringify(body)}`);
             });
         });
     }

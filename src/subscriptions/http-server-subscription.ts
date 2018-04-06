@@ -1,12 +1,13 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+const bodyParser = require('body-parser');
+const express = require('express');
 
-const express = require('express')
-const app: any = express();
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "http-server")
 export class HttpServerSubscription extends Subscription {
+    private app: any;
 
     private port: string;
     private endpoint: string;
@@ -16,6 +17,11 @@ export class HttpServerSubscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
+
+        this.app = express();
+        this.app.use(bodyParser.json()); // for parsing application/json
+
+
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method;
@@ -25,7 +31,8 @@ export class HttpServerSubscription extends Subscription {
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve, reject) => {
-            app.all(this.endpoint, (request: any, response: any) => {
+            this.app.all(this.endpoint, (request: any, response: any) => {
+                console.log(request.body)
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key])
                 }
@@ -33,7 +40,7 @@ export class HttpServerSubscription extends Subscription {
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
                 else {
                     response.status(this.response.status).send('Requisition read');
-                    resolve();
+                    resolve(request.body);
                 }
             })
         });
@@ -41,7 +48,7 @@ export class HttpServerSubscription extends Subscription {
 
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.server = app.listen(this.port, (err: any) => {
+            this.server = this.app.listen(this.port, (err: any) => {
                 if (err) {
                     reject(err);
                 }

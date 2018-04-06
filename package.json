@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "test": "jest --forceExit",
+    "test": "jest --forceExit && npm start -- -c integrationTest/enqueuer.yml",
     "build": "find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc"
   },
   "repository": {
@@ -21,6 +21,7 @@
     "@types/mqtt": "^2.5.0",
     "ajv": "^6.2.1",
     "amqp": "^0.2.6",
+    "body-parser": "^1.18.2",
     "chokidar": "^2.0.2",
     "commander": "^2.14.1",
     "express": "^4.16.2",

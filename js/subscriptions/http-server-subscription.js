@@ -11,12 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const injector_1 = require("../injector/injector");
+const bodyParser = require('body-parser');
 const express = require('express');
-const app = express();
 let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.response = {};
+        this.app = express();
+        this.app.use(bodyParser.json()); // for parsing application/json
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method;
@@ -25,7 +27,8 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            app.all(this.endpoint, (request, response) => {
+            this.app.all(this.endpoint, (request, response) => {
+                console.log(request.body);
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key]);
                 }
@@ -33,14 +36,14 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
                 else {
                     response.status(this.response.status).send('Requisition read');
-                    resolve();
+                    resolve(request.body);
                 }
             });
         });
     }
     connect() {
         return new Promise((resolve, reject) => {
-            this.server = app.listen(this.port, (err) => {
+            this.server = this.app.listen(this.port, (err) => {
                 if (err) {
                     reject(err);
                 }
