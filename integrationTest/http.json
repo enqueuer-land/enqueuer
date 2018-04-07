@@ -1,6 +1,6 @@
 {
   "requisitionVersion": "01.00.00",
-  "timeout": 3000,
+  "timeout": 30000,
   "subscriptions": [
     {
       "type": "http-server",
@@ -10,8 +10,8 @@
       "response": {
         "status": 200
       },
-      "onMessageReceived": "test['works'] = JSON.parse(message);",
-      "timeout": 1000
+      "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === 'virgs';",
+      "timeout": 10000
     }
   ],
   "startEvent": {

@@ -49,8 +49,6 @@ export class HttpClientPublisher extends Publisher {
                     else {
                         resolve();
                     }
-                    Logger.debug(`Http response ${JSON.stringify(response)}`)
-                    Logger.debug(`Http body ${JSON.stringify(body)}`)
                 });
         })
 

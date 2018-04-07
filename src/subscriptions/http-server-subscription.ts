@@ -1,9 +1,7 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
-const bodyParser = require('body-parser');
 const express = require('express');
-
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "http-server")
 export class HttpServerSubscription extends Subscription {
@@ -19,8 +17,16 @@ export class HttpServerSubscription extends Subscription {
         super(subscriptionAttributes);
 
         this.app = express();
-        this.app.use(bodyParser.json()); // for parsing application/json
-
+        this.app.use((req: any, res: any, next: any) => {
+            req.setEncoding('utf8');
+            req.rawBody = '';
+            req.on('data', function(chunk: any) {
+                req.rawBody += chunk;
+            });
+            req.on('end', function(){
+                next();
+            });
+        });
 
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
@@ -32,15 +38,15 @@ export class HttpServerSubscription extends Subscription {
     public receiveMessage(): Promise<string> {
         return new Promise((resolve, reject) => {
             this.app.all(this.endpoint, (request: any, response: any) => {
-                console.log(request.body)
+                const payload = JSON.parse(request.rawBody).toString();
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key])
                 }
                 if (request.method != this.method)
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
                 else {
-                    response.status(this.response.status).send('Requisition read');
-                    resolve(request.body);
+                    response.status(this.response.status).send(`Requisition read: ${payload}`);
+                    resolve(payload);
                 }
             })
         });

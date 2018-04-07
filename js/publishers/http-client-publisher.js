@@ -47,8 +47,6 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
                 else {
                     resolve();
                 }
-                logger_1.Logger.debug(`Http response ${JSON.stringify(response)}`);
-                logger_1.Logger.debug(`Http body ${JSON.stringify(body)}`);
             });
         });
     }

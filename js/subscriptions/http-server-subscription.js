@@ -11,14 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const injector_1 = require("../injector/injector");
-const bodyParser = require('body-parser');
 const express = require('express');
 let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.response = {};
         this.app = express();
-        this.app.use(bodyParser.json()); // for parsing application/json
+        this.app.use((req, res, next) => {
+            req.setEncoding('utf8');
+            req.rawBody = '';
+            req.on('data', function (chunk) {
+                req.rawBody += chunk;
+            });
+            req.on('end', function () {
+                next();
+            });
+        });
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method;
@@ -28,15 +36,15 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.app.all(this.endpoint, (request, response) => {
-                console.log(request.body);
+                const payload = JSON.parse(request.rawBody).toString();
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key]);
                 }
                 if (request.method != this.method)
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
                 else {
-                    response.status(this.response.status).send('Requisition read');
-                    resolve(request.body);
+                    response.status(this.response.status).send(`Requisition read: ${payload}`);
+                    resolve(payload);
                 }
             });
         });
