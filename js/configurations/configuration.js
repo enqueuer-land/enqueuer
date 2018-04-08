@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
+const version = require('../../package.json').version;
 const readYml = require('read-yaml');
 let configFileName = "conf/enqueuer.yml";
 let commander = {};
 if (!process.argv[1].toString().match("jest")) {
     commander = require('commander')
-        .version(process.env.npm_package_version, '-V, --version')
+        .version(process.env.npm_package_version || version, '-V, --version')
         .option('-v, --verbose', 'Activates verbose mode', false)
         .option('-l, --log-level <level>', 'Set log level')
         .option('-c, --config-file <path>', 'Set configurationFile')

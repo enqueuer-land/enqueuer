@@ -1,6 +1,6 @@
 import {PublisherModel} from "../requisitions/models/publisher-model";
-import {SubscriptionModel} from "../requisitions/models/subscription-model";
 import {Logger} from "../loggers/logger";
+const version = require('../../package.json').version;
 
 const readYml  = require('read-yaml');
 
@@ -9,7 +9,7 @@ let configFileName = "conf/enqueuer.yml";
 let commander: any = {};
 if (!process.argv[1].toString().match("jest")) {
     commander = require('commander')
-    .version(process.env.npm_package_version, '-V, --version')
+    .version(process.env.npm_package_version || version, '-V, --version')
     .option('-v, --verbose', 'Activates verbose mode', false)
     .option('-l, --log-level <level>', 'Set log level')
     .option('-c, --config-file <path>', 'Set configurationFile')
