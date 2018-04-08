@@ -16,16 +16,8 @@ const injector_1 = require("../injector/injector");
 const configuration_1 = require("../configurations/configuration");
 const requisition_starter_1 = require("../requisitions/requisition-starter");
 const logger_1 = require("../loggers/logger");
+const fs = require("fs");
 const prettyjson = require('prettyjson');
-let printReportSummary = function (report) {
-    const options = {
-        defaultIndentation: 4,
-        keysColor: "white",
-        dashColor: "grey"
-    };
-    logger_1.Logger.info(`Reports summary:`);
-    console.log(prettyjson.render(report, options));
-};
 let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
@@ -37,7 +29,8 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             new single_run_requisition_input_1.SingleRunRequisitionInput(singleRunConfiguration.fileNamePattern);
         this.reportMerge = {
             valid: true,
-            errorsDescription: []
+            errorsDescription: [],
+            requisitions: {}
         };
     }
     execute() {
@@ -57,17 +50,29 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             })
                 .catch(() => {
                 logger_1.Logger.info("There is no more requisition to be ran");
-                printReportSummary(this.reportMerge);
+                this.summary(this.reportMerge);
                 resolve(this.reportMerge);
             });
         });
     }
     mergeNewReport(newReport, id) {
+        this.reportMerge.requisitions[id] = newReport.valid;
         this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
         newReport.errorsDescription.forEach(newError => {
             this.reportMerge.errorsDescription.push(`[Requisition][${id}]${newError}`);
         });
     }
+    summary(report) {
+        const options = {
+            defaultIndentation: 4,
+            keysColor: "white",
+            dashColor: "grey"
+        };
+        logger_1.Logger.info(`Reports summary:`);
+        console.log(prettyjson.render(report, options));
+        fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 3));
+    }
+    ;
 };
 SingleRunEnqueuerExecutor = __decorate([
     injector_1.Injectable(enqueuerConfiguration => enqueuerConfiguration["single-run"]),

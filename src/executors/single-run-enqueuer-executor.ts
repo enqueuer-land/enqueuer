@@ -6,18 +6,8 @@ import {Injectable} from "../injector/injector";
 import {Configuration} from "../configurations/configuration";
 import {RequisitionStarter} from "../requisitions/requisition-starter";
 import {Logger} from "../loggers/logger";
+const fs = require("fs");
 const prettyjson = require('prettyjson');
-
-
-let printReportSummary = function (report: Report) {
-    const options = {
-        defaultIndentation: 4,
-        keysColor: "white",
-        dashColor: "grey"
-    };
-    Logger.info(`Reports summary:`)
-    console.log(prettyjson.render(report, options));
-};
 
 @Injectable(enqueuerConfiguration => enqueuerConfiguration["single-run"])
 export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
@@ -39,7 +29,8 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
 
         this.reportMerge = {
             valid: true,
-            errorsDescription: []
+            errorsDescription: [],
+            requisitions: {}
         }
     }
 
@@ -62,19 +53,29 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
                 })
                 .catch(() => {
                     Logger.info("There is no more requisition to be ran");
-                    printReportSummary(this.reportMerge);
+                    this.summary(this.reportMerge);
                     resolve(this.reportMerge)
                 })
         });
     }
 
     private mergeNewReport(newReport: Report, id: string): void {
+        this.reportMerge.requisitions[id] = newReport.valid;
         this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
         newReport.errorsDescription.forEach(newError => {
             this.reportMerge.errorsDescription.push(`[Requisition][${id}]${newError}`)
         })
     }
 
-
+    private summary(report: Report) {
+        const options = {
+            defaultIndentation: 4,
+            keysColor: "white",
+            dashColor: "grey"
+        };
+        Logger.info(`Reports summary:`)
+        console.log(prettyjson.render(report, options));
+        fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 3));
+    };
 
 }
