@@ -29,7 +29,7 @@ export class SingleRunRequisitionInput {
                         return resolve(content);
                     else
                         {
-                            const message = "There is no more requisition files to be read";
+                            const message = "There is no more requisition file to be read";
                             Logger.info(message);
                             return reject();
                         }

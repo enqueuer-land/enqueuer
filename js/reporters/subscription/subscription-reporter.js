@@ -86,8 +86,14 @@ class SubscriptionReporter {
         return this.report;
     }
     cleanUp() {
+        this.cleanUp = () => { };
         logger_1.Logger.info(`Unsubscribing subscription ${this.subscription.type}`);
-        this.subscription.unsubscribe();
+        try {
+            this.subscription.unsubscribe();
+        }
+        catch (err) {
+            logger_1.Logger.error(err);
+        }
         if (this.timeOut)
             this.timeOut.clear();
     }

@@ -11,27 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const injector_1 = require("../injector/injector");
+const net = require('net');
 let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
-        this.ipc = require('node-ipc');
-        this.serverId = publisherAttributes.serverId;
         this.path = publisherAttributes.path;
-        this.ipc.config.silent = true;
     }
     publish() {
         return new Promise((resolve, reject) => {
-            this.ipc.connectTo(this.serverId, (client) => {
-                client.of[this.serverId].on('connect', () => {
-                    client.of[this.serverId].emit(this.path, this.payload);
-                    client.of[this.serverId].disconnect();
-                    this.ipc.disconnect(this.serverId);
-                    resolve();
-                });
-                client.of[this.serverId].on('error', (error) => {
-                    this.ipc.disconnect(this.serverId);
-                    reject(error);
-                });
+            const client = net.createConnection(this.path)
+                .on('connect', () => {
+                client.write(this.payload);
+                resolve();
+            })
+                .on('error', function (data) {
+                reject(data);
             });
         });
     }

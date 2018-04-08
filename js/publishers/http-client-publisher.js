@@ -31,7 +31,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
     }
     publish() {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.debug(`Http in ${this.url}(${this.method}) - ${this.payload}`
+            logger_1.Logger.debug(`Http-client-publisher ${this.url}(${this.method}) - ${this.payload}`
                 .substr(0, 100).concat("..."));
             request({
                 url: this.url,

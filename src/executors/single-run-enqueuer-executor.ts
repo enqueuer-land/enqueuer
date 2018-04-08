@@ -61,7 +61,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
                         }).catch(console.log.bind(console));;
                 })
                 .catch(() => {
-                    Logger.info("There is no more requisitions to be ran");
+                    Logger.info("There is no more requisition to be ran");
                     printReportSummary(this.reportMerge);
                     resolve(this.reportMerge)
                 })

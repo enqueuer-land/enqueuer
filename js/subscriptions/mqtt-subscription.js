@@ -17,6 +17,8 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
         super(subscriptionAttributes);
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
+        this.options = subscriptionAttributes.options || {};
+        this.options.clientId = this.options.clientId || 'mqtt_' + (1 + Math.random() * 4294967295).toString(16);
     }
     receiveMessage() {
         this.client.subscribe(this.topic);
@@ -28,7 +30,7 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
     }
     connect() {
         return new Promise((resolve, reject) => {
-            this.client = mqtt.connect(this.brokerAddress, { clientId: 'mqtt_' + (1 + Math.random() * 4294967295).toString(16) });
+            this.client = mqtt.connect(this.brokerAddress, this.options);
             if (!this.client.connected) {
                 this.client.on("connect", () => resolve());
             }

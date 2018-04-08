@@ -9,11 +9,14 @@ export class MqttSubscription extends Subscription {
     private brokerAddress: string;
     private topic: string;
     private client: any;
+    private options: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
+        this.options = subscriptionAttributes.options || {};
+        this.options.clientId = this.options.clientId || 'mqtt_' + (1+Math.random()*4294967295).toString(16);
     }
 
     public receiveMessage(): Promise<string> {
@@ -27,8 +30,7 @@ export class MqttSubscription extends Subscription {
 
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.client = mqtt.connect(this.brokerAddress,
-                {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
+            this.client = mqtt.connect(this.brokerAddress, this.options);
             if (!this.client.connected) {
                 this.client.on("connect", () =>  resolve());
             }

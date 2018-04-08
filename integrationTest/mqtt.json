@@ -15,7 +15,10 @@
       "type": "mqtt",
       "brokerAddress": "brokerAddress",
       "payload": "enqueuer",
-      "topic": "enqueuer"
+      "topic": "enqueuer",
+      "options": {
+        "clientId": "enqueuerPublishOptionsExampleId"
+      }
     }
   },
   "reports": [
@@ -23,9 +26,6 @@
       "type": "mqtt",
       "brokerAddress": "mqtt://localhost",
       "topic": "enqueuer/report"
-    },
-    {
-      "type": "standard-output"
     }
   ],
   "variables":

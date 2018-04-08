@@ -107,8 +107,13 @@ export class SubscriptionReporter implements Reporter {
     }
 
     private cleanUp(): void {
+        this.cleanUp = () => {};
         Logger.info(`Unsubscribing subscription ${this.subscription.type}`);
-        this.subscription.unsubscribe();
+        try {
+            this.subscription.unsubscribe();
+        } catch (err) {
+            Logger.error(err);
+        }
         if (this.timeOut)
             this.timeOut.clear();
     }

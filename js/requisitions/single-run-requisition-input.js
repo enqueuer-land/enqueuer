@@ -39,7 +39,7 @@ class SingleRunRequisitionInput {
                     if (content)
                         return resolve(content);
                     else {
-                        const message = "There is no more requisition files to be read";
+                        const message = "There is no more requisition file to be read";
                         logger_1.Logger.info(message);
                         return reject();
                     }

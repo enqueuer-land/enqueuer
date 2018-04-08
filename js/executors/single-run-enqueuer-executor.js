@@ -56,7 +56,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
                 ;
             })
                 .catch(() => {
-                logger_1.Logger.info("There is no more requisitions to be ran");
+                logger_1.Logger.info("There is no more requisition to be ran");
                 printReportSummary(this.reportMerge);
                 resolve(this.reportMerge);
             });

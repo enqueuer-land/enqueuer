@@ -11,34 +11,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const injector_1 = require("../injector/injector");
+const net = require('net');
+const fs = require('fs');
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.ipc = require('node-ipc');
-        this.ipc.config.id = subscriptionAttributes.id;
         this.path = subscriptionAttributes.path;
-        this.ipc.config.retry = 1500;
-        this.ipc.config.silent = true;
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            this.ipc.server.on(this.path, (message, socket) => {
-                resolve(message);
-            });
-            this.ipc.server.on('error', (error) => {
-                reject(error);
+            this.server.on('connection', (stream) => {
+                stream.on('end', () => {
+                    stream.end();
+                    reject();
+                });
+                stream.on('data', (msg) => {
+                    msg = msg.toString();
+                    resolve(msg);
+                    stream.end();
+                });
             });
         });
     }
     connect() {
-        return new Promise((resolve, reject) => {
-            this.ipc.serve();
-            this.ipc.server.start();
-            resolve();
+        return new Promise((resolve) => {
+            fs.unlink(this.path, () => {
+                this.server = net.createServer()
+                    .listen(this.path, () => {
+                    resolve();
+                });
+            });
         });
     }
     unsubscribe() {
-        this.ipc.server.end();
+        this.server.close();
     }
 };
 UdsSubscription = __decorate([

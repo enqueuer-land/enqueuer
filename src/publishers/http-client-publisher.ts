@@ -2,7 +2,6 @@ import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
 import {PublisherModel} from "../requisitions/models/publisher-model";
 import {Logger} from "../loggers/logger";
-
 const request = require("request");
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "http-client")
@@ -29,7 +28,7 @@ export class HttpClientPublisher extends Publisher {
 
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.debug(`Http in ${this.url}(${this.method}) - ${this.payload}`
+            Logger.debug(`Http-client-publisher ${this.url}(${this.method}) - ${this.payload}`
                 .substr(0, 100).concat("..."));
 
             request({

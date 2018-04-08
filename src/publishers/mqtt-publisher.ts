@@ -8,11 +8,14 @@ const mqtt = require("mqtt")
 export class MqttPublisher extends Publisher {
     private brokerAddress: string;
     private topic: string;
+    private options: any;
 
     constructor(publish: PublisherModel) {
         super(publish);
         this.brokerAddress = publish.brokerAddress;
         this.topic = publish.topic;
+        this.options = publish.options || {};
+        this.options.clientId = this.options.clientId || 'mqtt_' + (1+Math.random()*4294967295).toString(16);
     }
 
     public publish(): Promise<void> {
@@ -35,8 +38,7 @@ export class MqttPublisher extends Publisher {
 
     private connectClient(): Promise<any> {
         return new Promise((resolve, reject) => {
-            const client = mqtt.connect(this.brokerAddress,
-                {clientId: 'mqtt_' + (1+Math.random()*4294967295).toString(16)});
+            const client = mqtt.connect(this.brokerAddress, this.options);
             if (client.connected)
                 resolve(client);
             else {
