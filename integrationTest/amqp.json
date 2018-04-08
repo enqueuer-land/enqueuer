@@ -4,7 +4,10 @@
   "subscriptions": [
     {
       "type": "amqp",
-      "brokerUrl": "brokerUrl",
+      "options": {
+        "host": "brokerUrl",
+        "port": 5672
+      },
       "queueName": "enqueuerQueue",
       "onMessageReceived": "test['works'] = JSON.parse(message).works ;",
       "timeout": 1000
@@ -13,7 +16,10 @@
   "startEvent": {
     "publisher": {
       "type": "amqp",
-      "brokerUrl": "brokerUrl",
+      "options": {
+        "host": "brokerUrl",
+        "port": 5672
+      },
       "queueName": "enqueuerQueue",
       "payload": {"works":true}
     }

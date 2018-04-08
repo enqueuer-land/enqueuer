@@ -15,7 +15,7 @@ const amqp = require('amqp');
 let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.brokerUrl = subscriptionAttributes.brokerUrl;
+        this.options = subscriptionAttributes.options;
         this.queueName = subscriptionAttributes.queueName;
     }
     receiveMessage() {
@@ -28,7 +28,7 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
         });
     }
     connect() {
-        this.connection = amqp.createConnection({ host: this.brokerUrl });
+        this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
             this.connection.on('ready', () => resolve());
             this.connection.on('error', (err) => reject(err));

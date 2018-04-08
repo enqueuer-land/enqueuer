@@ -15,13 +15,13 @@ var amqp = require('amqp');
 let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
-        this.brokerUrl = publish.brokerUrl;
+        this.options = publish.options;
         this.queueName = publish.queueName;
         this.messageOptions = publish.messageOptions || {};
     }
     publish() {
         return new Promise((resolve, reject) => {
-            this.connection = amqp.createConnection({ host: this.brokerUrl });
+            this.connection = amqp.createConnection(this.options);
             this.connection.on('ready', () => {
                 const exchange = this.connection.exchange();
                 exchange.on('open', () => {

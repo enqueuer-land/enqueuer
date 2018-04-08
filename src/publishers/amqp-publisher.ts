@@ -7,20 +7,20 @@ var amqp = require('amqp');
 @Injectable((publishRequisition: any) => publishRequisition.type === "amqp")
 export class AmqpPublisher extends Publisher {
     private connection: any;
-    private brokerUrl: string;
+    private options: string;
     private queueName: string;
     private messageOptions: any;
 
     constructor(publish: PublisherModel) {
         super(publish);
-        this.brokerUrl = publish.brokerUrl;
+        this.options = publish.options;
         this.queueName = publish.queueName;
         this.messageOptions = publish.messageOptions || {};
     }
 
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.connection = amqp.createConnection({host: this.brokerUrl});
+            this.connection = amqp.createConnection(this.options);
             this.connection.on('ready', () => {
                 const exchange = this.connection.exchange();
                 exchange.on('open', () => {
