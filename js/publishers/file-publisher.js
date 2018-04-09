@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const injector_1 = require("../injector/injector");
-const date_controller_1 = require("../timers/date-controller");
+const requisition_id_generator_1 = require("../requisitions/requisition-id-generator");
 const fs = require("fs");
 let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
@@ -19,8 +19,8 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
         this.filenamePrefix = publisherAttributes.filenamePrefix;
     }
     publish() {
-        const filename = this.filenamePrefix + new date_controller_1.DateController().getStringOnlyNumbers() + ".json";
-        fs.writeFileSync(filename, this.payload);
+        const filename = this.filenamePrefix + new requisition_id_generator_1.RequisitionIdGenerator(this.payload).generateId() + ".json";
+        fs.writeFileSync(filename, JSON.stringify(JSON.parse(this.payload), null, 2));
         return Promise.resolve();
     }
 };

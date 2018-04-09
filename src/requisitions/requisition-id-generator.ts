@@ -1,4 +1,5 @@
 import {DateController} from "../timers/date-controller";
+var hash = require('object-hash');
 
 export class RequisitionIdGenerator {
 
@@ -9,15 +10,9 @@ export class RequisitionIdGenerator {
     }
 
     public generateId(): string {
-        return "enqueuer_" + this.calculateHash() + "_"+ new DateController().getStringOnlyNumbers() + Math.trunc(Math.random()*100);
-    }
-    
-    private calculateHash(): number {
-        return Math.abs((this.requisition + '').split("")
-            .reduce((a, b) => {
-                a = ((a << 5) - a) + b.charCodeAt(0);
-                return a & a
-            }, 0));
+        return new DateController().getStringOnlyNumbers() +
+                "_" +
+                hash(this.requisition).substr(0, 8);
     }
 
 }

@@ -34,4 +34,14 @@ describe('RequisitionParser', () => {
         expect(() => parser.parse(requisition)).toThrow()
     });
 
+    it('Should accept valid json', () => {
+        const requisition = validRequisition();
+        const requisitionStringified: string = JSON.stringify(requisition);
+        const parser: RequisitionParser = new RequisitionParser();
+
+        const parsed = parser.parse(requisitionStringified);
+
+        expect(parsed.startEvent.subscription.brokerAddress).toBe("brokerAddress");
+    });
+
 });

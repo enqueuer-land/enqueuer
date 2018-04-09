@@ -30,17 +30,18 @@ describe('DateController', function() {
         const currentDate = new Date();
 
         const expectedToString = leftPad(currentDate.getFullYear(), 4) +
-                leftPad(currentDate.getMonth() + 1, 4) +
+                leftPad(currentDate.getMonth() + 1, 2) +
                 leftPad(currentDate.getDate(), 2) +
                 leftPad(currentDate.getHours(), 2) +
                 leftPad(currentDate.getMinutes(), 2) +
                 leftPad(currentDate.getSeconds(), 2) +
-                leftPad(currentDate.getMilliseconds(), 6);
+                leftPad(currentDate.getMilliseconds(), 4);
+
 
 
         const actualToString = new DateController(currentDate).getStringOnlyNumbers()
 
-        expect(actualToString).toBe(expectedToString);
+        expect(actualToString.substr(0, actualToString.length - 2)).toBe(expectedToString);
     });
 
     it('should get time', function() {
