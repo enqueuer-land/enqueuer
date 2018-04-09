@@ -39,12 +39,7 @@ Let me explain what each value means:
 -	**startEvent**: object
 	-	**publisher**: object
 		-	**type**: string, it tells how to identify and instantiate the proper publisher. Ex.: "mqtt".
-		-	**payload**: object, what's is gonna be published. It may be whatever you want: string, number or even another json.
--	**reports**: reports array
-	-	**report**: object
-		-	**type**: string, it tells how to identify and instantiate the proper report. Ex.: "mqtt".
--	**variables**: object, key-values that replaces values in the entired requisition. Ex.: ```{ brokerAddress: "mqtt://localhost"}```
-
+		-	**payload**: object, what's is gonna be published. It may be whatever you want: string, number or even another [requisition](/src/inceptionTest/inceptionRequisition.enq).
 ## why is it useful?
 It is meant to help your development process.
 Although there are other ways of using it, the two main ways are:
@@ -84,7 +79,7 @@ Specifies in which execution mode **enqueueuer** will run. There are two options
 outputs:
 ```
 
-Accepts a list of publishing mechanisms. So, every time a new requisition is received, **enqueuer** publishes through this its validation, its id or its errors list, if it' an invalid requisition.
+Accepts a list of publishing mechanisms. So, every time a new requisition is executed, **enqueuer** publishes through this its result with values like: schema validation, id, its errors list etc. I think this [example](/output/outputReportExample.json) may give you an idea.
 
     log-level:
 
@@ -99,7 +94,7 @@ And last, but not least, log-level defines how execution information are logged 
  
 ### frequently asked question
 Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?
-- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely.](/src/inceptionTest/inception.test.ts "Inception Test")
+- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely check it out](/src/inceptionTest/inception.test.ts "Inception Test")
 
 ###### IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
