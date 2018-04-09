@@ -26,7 +26,7 @@ $ enqueuer --help
 No big surprises, hum? No mistery, as simple as $enqueuer.
 
 ## requisition
-Generally, a requisition looks like [this](/examples/publishAsStartEvent.enq.json "Requisition example").
+Generally, a requisition looks like [this](/examples/publishAsStartEvent.enq.json "Requisition example") and [these](/integrationTest "Others examples").
 Let me explain what each value means:
 
 -	**requisitionVersion**: string, it tells you which version of requisition should be ran. Ex.: "01.00.00".
