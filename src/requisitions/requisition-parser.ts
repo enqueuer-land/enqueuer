@@ -2,7 +2,7 @@ import {Logger} from "../loggers/logger";
 import {RequisitionIdGenerator} from "./requisition-id-generator";
 import {RequisitionModel} from "./models/requisition-model";
 import {ValidateFunction} from "ajv";
-const jsonSub = require('json-sub')();
+// const jsonSub = require('json-sub')();
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");
@@ -31,10 +31,11 @@ export class RequisitionParser {
 
     private replaceVariables(parsedRequisition: any): RequisitionModel {
         let requisitionWithNoVariables = Object.assign({}, parsedRequisition);
-        let variables = parsedRequisition.variables;
+        // let variables = parsedRequisition.variables;
 
         delete requisitionWithNoVariables.variables;
-        return jsonSub.addresser(requisitionWithNoVariables, variables);
+        // return jsonSub.addresser(requisitionWithNoVariables, variables);
+        return requisitionWithNoVariables;
     }
 
 }

@@ -37,7 +37,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         return new Promise((resolve) => {
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
-                this.multiPublisher.publish(JSON.stringify(requisition)).then().catch(console.log.bind(console));
+                // this.multiPublisher.publish(JSON.stringify(requisition)).then().catch(console.log.bind(console));
                 ++this.runningRequisitionsCounter;
                 new requisition_starter_1.RequisitionStarter(requisition).start()
                     .then(report => {

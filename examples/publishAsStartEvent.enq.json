@@ -4,7 +4,7 @@
   "subscriptions": [
     {
       "type": "mqtt",
-      "brokerAddress": "brokerAddress",
+      "brokerAddress": "mqtt://localhost",
       "topic": "enqueuer/output",
       "onMessageReceived": "test['works'] = message == 100;",
       "timeout": 1000
@@ -13,24 +13,9 @@
   "startEvent": {
     "publisher": {
       "type": "mqtt",
-      "brokerAddress": "brokerAddress",
+      "brokerAddress": "mqtt://localhost",
       "payload": 100,
       "topic": "enqueuer/input"
     }
-  },
-  "reports": [
-    {
-      "type": "mqtt",
-      "brokerAddress": "mqtt://localhost",
-      "topic": "enqueuer/report"
-    },
-    {
-      "type": "file",
-      "filenamePrefix": "report"
-    }
-  ],
-  "variables":
-  {
-    "brokerAddress": "mqtt://localhost"
   }
 }

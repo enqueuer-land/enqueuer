@@ -1,5 +1,14 @@
 import {DateController} from "./date-controller";
 
+let leftPad = (number: number, targetLength: number): string => {
+    var output = number + '';
+    while (output.length < targetLength) {
+        output = '0' + output;
+    }
+    return output;
+}
+
+
 describe('DateController', function() {
 
     it('should be protected against wrong initialization', function() {
@@ -20,13 +29,13 @@ describe('DateController', function() {
     it('should parse to string with only number properly', function() {
         const currentDate = new Date();
 
-        const expectedToString = currentDate.getFullYear() +
-            ("0"+(currentDate.getMonth()+1)).slice(-2) +
-            ("0" + currentDate.getDate()).slice(-2)+
-            ("0" + currentDate.getHours()).slice(-2) +
-            ("0" + currentDate.getMinutes()).slice(-2) +
-            ("0" + currentDate.getSeconds()).slice(-2) +
-            ("0" + currentDate.getMilliseconds()).slice(-4);
+        const expectedToString = leftPad(currentDate.getFullYear(), 4) +
+                leftPad(currentDate.getMonth() + 1, 4) +
+                leftPad(currentDate.getDate(), 2) +
+                leftPad(currentDate.getHours(), 2) +
+                leftPad(currentDate.getMinutes(), 2) +
+                leftPad(currentDate.getSeconds(), 2) +
+                leftPad(currentDate.getMilliseconds(), 6);
 
 
         const actualToString = new DateController(currentDate).getStringOnlyNumbers()

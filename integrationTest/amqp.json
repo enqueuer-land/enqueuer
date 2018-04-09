@@ -5,11 +5,11 @@
     {
       "type": "amqp",
       "options": {
-        "host": "brokerUrl",
+        "host": "localhost",
         "port": 5672
       },
       "queueName": "enqueuerQueue",
-      "onMessageReceived": "test['works'] = JSON.parse(message).works ;",
+      "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message ",
       "timeout": 1000
     }
   ],
@@ -17,16 +17,11 @@
     "publisher": {
       "type": "amqp",
       "options": {
-        "host": "brokerUrl",
+        "host": "localhost",
         "port": 5672
       },
       "queueName": "enqueuerQueue",
-      "payload": {"works":true}
+      "prePublishing": "publisher.payload=new Date().getTime();"
     }
-  },
-  "reports": [],
-  "variables":
-  {
-    "brokerUrl": "localhost"
   }
 }

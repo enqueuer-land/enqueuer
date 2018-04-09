@@ -37,22 +37,12 @@
         { "required": [ "subscription" ] },
         { "required": [ "publisher" ] }
       ]
-    },
-    "reports": {
-      "type": "array",
-      "items": { "$ref": "https://github.com/lopidio/enqueuer/publisher" }
-    },
-    "variables": {
-      "type": "object",
-      "properties": {
-      }
     }
   },
   "additionalProperties": false,
   "required": [
     "requisitionVersion",
     "subscriptions",
-    "startEvent",
-    "reports"
+    "startEvent"
   ]
 }

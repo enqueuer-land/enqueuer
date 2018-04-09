@@ -3,6 +3,7 @@ import {MultiPublisher} from "../publishers/multi-publisher";
 import {RequisitionRunner} from "./requisition-runner";
 import {RequisitionModel} from "./models/requisition-model";
 import {Report} from "../reporters/report";
+import {Configuration} from "../configurations/configuration";
 
 export class RequisitionStarter {
 
@@ -12,7 +13,7 @@ export class RequisitionStarter {
     public constructor(requisition: RequisitionModel) {
         Logger.info(`Starting requisition ${requisition.id}`);
         this.requisitionRunner = new RequisitionRunner(requisition);
-        this.multiPublisher = new MultiPublisher(requisition.reports);
+        this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
     }
 
     public start(): Promise<Report> {

@@ -33,28 +33,10 @@
             "payload": 100,
             "topic": "enqueuer/inception/beingTested/publish"
           }
-        },
-        "reports": [
-          {
-            "type": "mqtt",
-            "brokerAddress": "mqtt://localhost",
-            "topic": "enqueuer/inception/requisitionOutput"
-          },
-          {
-            "type": "file",
-            "filenamePrefix": "src/inceptionTest/beingTested"
-          }
-        ],
-        "variables": {}
+        }
       },
       "topic": "enqueuer/inception/beingTested/requisitionInput",
       "prePublishing": "publisher.type='mqtt';report['type'] = publisher.type;"
     }
-  },
-  "reports": [
-    {
-      "type": "file",
-      "filenamePrefix": "src/inceptionTest/tester"
-    }
-  ]
+  }
 }

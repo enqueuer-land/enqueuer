@@ -2,10 +2,10 @@ requisitions:
   run-mode:
     single-run:
       fileNamePattern: src/inceptionTest/*.enq
+      output-file: src/inceptionTest/inception.json
 outputs:
   -
-    type: mqtt
-    brokerAddress: mqtt://localhost:1883
-    topic: enqueuer/inception/tester/output/doesNotMatter
+    type: file
+    filenamePrefix: src/inceptionTest/tester
 
 log-level: debug

@@ -28,8 +28,7 @@ describe("RequisitionStarter",() => {
             id: "anyStuff",
             requisitionVersion: "any",
             subscriptions: [],
-            startEvent: {},
-            reports: [{type: "ahoy"}]
+            startEvent: {}
         };
     };
 
@@ -41,7 +40,9 @@ describe("RequisitionStarter",() => {
 
 
         expect(MultiPublisher).toHaveBeenCalledTimes(1);
-        expect(MultiPublisher).toHaveBeenCalledWith(model.reports);
+        expect(MultiPublisher).toHaveBeenCalledWith([{"brokerAddress": "mqtt://localhost:1883",
+                                                                "topic": "enqueuer/output",
+                                                                "type": "mqtt"}]);
         expect(RequisitionRunner).toHaveBeenCalledTimes(1);
         expect(RequisitionRunner).toHaveBeenCalledWith(model);
     })

@@ -10,14 +10,22 @@ export class DateController {
         return this.date.toISOString();
     }
 
+    private leftPad(number: number, targetLength: number): string {
+        var output = number + '';
+        while (output.length < targetLength) {
+            output = '0' + output;
+        }
+        return output;
+    }
+
     public getStringOnlyNumbers(): string {
-        return  this.date.getFullYear() +
-                ("0"+(this.date.getMonth()+1)).slice(-2) +
-                ("0" + this.date.getDate()).slice(-2)+
-                ("0" + this.date.getHours()).slice(-2) +
-                ("0" + this.date.getMinutes()).slice(-2) +
-                ("0" + this.date.getSeconds()).slice(-2) +
-                ("0" + this.date.getMilliseconds()).slice(-6);
+        return  this.leftPad(this.date.getFullYear(), 4) +
+                this.leftPad(this.date.getMonth() + 1, 4) +
+                this.leftPad(this.date.getDate(), 2) +
+                this.leftPad(this.date.getHours(), 2) +
+                this.leftPad(this.date.getMinutes(), 2) +
+                this.leftPad(this.date.getSeconds(), 2) +
+                this.leftPad(this.date.getMilliseconds(), 6);
     }
 
     public getTime(): number {

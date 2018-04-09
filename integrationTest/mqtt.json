@@ -4,7 +4,7 @@
   "subscriptions": [
     {
       "type": "mqtt",
-      "brokerAddress": "brokerAddress",
+      "brokerAddress": "mqtt://localhost",
       "topic": "enqueuer",
       "onMessageReceived": "test['works'] = message = 'message';",
       "timeout": 1000
@@ -13,17 +13,12 @@
   "startEvent": {
     "publisher": {
       "type": "mqtt",
-      "brokerAddress": "brokerAddress",
+      "brokerAddress": "mqtt://localhost",
       "payload": "enqueuer",
       "topic": "enqueuer",
       "options": {
         "clientId": "enqueuerPublishOptionsExampleId"
       }
     }
-  },
-  "reports": [],
-  "variables":
-  {
-    "brokerAddress": "mqtt://localhost"
   }
 }

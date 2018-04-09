@@ -5,7 +5,7 @@ jest.mock("../timers/date-controller");
 DateController.mockImplementation(() => {
     return {
         getStringOnlyNumbers: () => {
-            return "20180315202020"
+            return "2018000409113740000576"
         }
     };
 });

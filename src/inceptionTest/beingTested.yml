@@ -8,8 +8,11 @@ requisitions:
         topic: enqueuer/inception/beingTested/requisitionInput
 outputs:
   -
+    type: file
+    filenamePrefix: src/inceptionTest/beingTested
+  -
     type: mqtt
     brokerAddress: mqtt://localhost:1883
-    topic: enqueuer/inception/beingTested/output/doesNotMatter
+    topic: enqueuer/inception/requisitionOutput
 
 log-level: debug

@@ -43,8 +43,7 @@ describe("Inception test", () => {
             tester = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/tester.yml']);
             sleep(3);
 
-            const testerReport = findEveryJsonFile().filter(file => file.indexOf("tester") > 0)[0];
-
+            const testerReport = findEveryJsonFile().filter(filename => filename.indexOf("tester") > 0)[0];
             fs.readFile(testerReport, (error: any, data: string) => {
                 const fileContent = JSON.parse(data)
 
@@ -65,7 +64,7 @@ describe("Inception test", () => {
                 tester.on('exit', (statusCode) => {
                     console.log(`Exit status ${statusCode}`)
                     expect(statusCode).toBe(0);
-                    done();
+                    // done();
                 })
                 done();
             });

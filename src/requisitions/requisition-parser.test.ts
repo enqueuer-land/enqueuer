@@ -15,10 +15,6 @@ let validRequisition = function () {
                     "onMessageReceived": "test['someLabel'] = false",
                     "timeout": 1000
                 }
-        },
-        "reports": [],
-        "variables": {
-            "brokerAddress": "mqtt://localhost"
         }
     };
 };
@@ -36,16 +32,6 @@ describe('RequisitionParser', () => {
         const parser: RequisitionParser = new RequisitionParser();
 
         expect(() => parser.parse(requisition)).toThrow()
-    });
-
-    it('Should replace variables', () => {
-        const requisition = validRequisition();
-        const requisitionStringified: string = JSON.stringify(requisition);
-        const parser: RequisitionParser = new RequisitionParser();
-
-        const parsed = parser.parse(requisitionStringified);
-
-        expect(parsed.startEvent.subscription.brokerAddress).toBe("mqtt://localhost");
     });
 
 });

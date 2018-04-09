@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const requisition_id_generator_1 = require("./requisition-id-generator");
-const jsonSub = require('json-sub')();
+// const jsonSub = require('json-sub')();
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");
@@ -26,9 +26,10 @@ class RequisitionParser {
     }
     replaceVariables(parsedRequisition) {
         let requisitionWithNoVariables = Object.assign({}, parsedRequisition);
-        let variables = parsedRequisition.variables;
+        // let variables = parsedRequisition.variables;
         delete requisitionWithNoVariables.variables;
-        return jsonSub.addresser(requisitionWithNoVariables, variables);
+        // return jsonSub.addresser(requisitionWithNoVariables, variables);
+        return requisitionWithNoVariables;
     }
 }
 exports.RequisitionParser = RequisitionParser;
