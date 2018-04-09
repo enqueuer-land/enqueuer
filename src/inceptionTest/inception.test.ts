@@ -70,9 +70,8 @@ describe("Inception test", () => {
             tester.on('exit', (statusCode) => {
                 console.log(`Exit status ${statusCode}`)
                 expect(statusCode).toBe(0);
-                // done();
+                done();
             })
-            done();
         } catch (err) {
             console.error(err)
         }
@@ -81,7 +80,7 @@ describe("Inception test", () => {
 
     afterAll(() => {
         killThemAll();
-        // removeEveryReportFile();
+        removeEveryReportFile();
     })
 
     let killThemAll = () => {
