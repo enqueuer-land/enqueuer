@@ -20,7 +20,7 @@ const logger_1 = require("../../loggers/logger");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
-        this.prePublishingReport = {};
+        this.prePublishingFunctionReport = {};
         this.publisherOriginalAttributes = startEvent.publisher;
         this.report = {
             valid: false,
@@ -43,7 +43,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
                 });
             }
             else {
-                const message = `Impossible to define Publisher after prePublish function execution '${this.publisher}'`;
+                const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
                 this.report.errorsDescription.push(message);
                 reject(message);
             }
@@ -52,7 +52,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     getReport() {
         this.report = {
             publisher: this.publisherOriginalAttributes,
-            prePublishFunction: this.prePublishingReport,
+            prePublishingFunctionReport: this.prePublishingFunctionReport,
             timestamp: new date_controller_1.DateController().toString(),
             valid: this.report.errorsDescription.length <= 0,
             errorsDescription: this.report.errorsDescription
@@ -60,13 +60,21 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         return this.report;
     }
     executePrePublishingFunction() {
-        const prePublishFunction = new pre_publish_meta_function_1.PrePublishMetaFunction(this.publisherOriginalAttributes);
-        const functionResponse = new meta_function_executor_1.MetaFunctionExecutor(prePublishFunction).execute();
-        if (functionResponse.publisher.payload)
-            functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
-        logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
-        this.publisher = container_1.Container.get(publisher_1.Publisher).createFromPredicate(functionResponse.publisher);
-        this.prePublishingReport = functionResponse.report;
+        try {
+            const prePublishFunction = new pre_publish_meta_function_1.PrePublishMetaFunction(this.publisherOriginalAttributes);
+            const functionResponse = new meta_function_executor_1.MetaFunctionExecutor(prePublishFunction).execute();
+            if (functionResponse.publisher.payload)
+                functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
+            logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
+            this.publisher = container_1.Container.get(publisher_1.Publisher).createFromPredicate(functionResponse.publisher);
+            this.prePublishingFunctionReport = functionResponse;
+        }
+        catch (err) {
+            this.prePublishingFunctionReport.exception = {
+                "Function Compilation Error": err
+            };
+            this.report.errorsDescription.concat(err);
+        }
     }
 };
 StartEventPublisherReporter = __decorate([

@@ -5,7 +5,7 @@
     {
       "type": "file-name-watcher",
       "fileNamePattern": "temp/fileTest*file",
-      "onMessageReceived": "test['some time has passed'] = new Date().getTime() + '' >= message;",
+      "onMessageReceived": "const now = new Date().getTime(); test['some time has passed'] = now + '' >= message; report['something'] = now;",
       "timeout": 1000
     }
   ],

@@ -51,5 +51,15 @@ describe('PrePublishMetaFunction', () => {
         expect(functionResponse.report.args).toBe(expected);
     });
 
+    it('should throw exception bad function', function () {
+        const constructorArgument: PublisherModel = {
+            type: "test",
+            prePublishing: "'args'] = args;"
+        };
+        const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
+
+        expect(() => prePublishMeta.createFunction()).toThrow();
+    });
+
 });
 

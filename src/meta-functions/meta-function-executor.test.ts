@@ -21,7 +21,7 @@ class FakeMetaFunction implements MetaFunctionCreator {
 
 describe('MetaFunctionExecutor', () => {
 
-    it('should createFromPredicate meta function', function () {
+    it('should call meta function', function () {
         const fakeMetaFunction = new FakeMetaFunction();
         new MetaFunctionExecutor(fakeMetaFunction);
 
@@ -39,20 +39,23 @@ describe('MetaFunctionExecutor', () => {
             "failingTests": [
                 "failing"
             ],
-            "reports": []
+            "reports":
+            {
+                hello: "world"
+            }
         };
 
         const executionReturn = executor.execute();
 
         expect(mockExecuteFunction).toBeCalledWith(expect.arrayContaining([parameters]));
-        expect(JSON.stringify(executionReturn.report)).toBe(JSON.stringify(expectedReport));
-        expect(executionReturn.report.exc).not.toBeDefined();
+        expect(JSON.stringify(executionReturn)).toBe(JSON.stringify(expectedReport));
+        expect(executionReturn.exc).not.toBeDefined();
     });
 
-    it('should handle exception', function () {
+    it('should handle function exception', function () {
 
         class ExceptionMetaFunction implements MetaFunctionCreator {
-            createFunction = () => jest.fn(() => {throw new Error("Error executing function")});
+            createFunction = () => () => {throw "Virgs"};
         }
 
         const exceptionFunction = new ExceptionMetaFunction();
@@ -60,7 +63,7 @@ describe('MetaFunctionExecutor', () => {
 
         const executionReturn = executor.execute();
 
-        expect(executionReturn.report.exc).toBeDefined();
+        expect(executionReturn.exception["Function runtime error"]).toBe("Virgs");
     });
 
 });

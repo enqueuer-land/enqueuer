@@ -12,11 +12,9 @@ export class OnMessageReceivedMetaFunction implements MetaFunctionCreator {
     public createFunction(): Function {
         const fullBody: string =    `let test = {};
                                     let report = {};
-                                    let variables = {};
                                     let message = ${JSON.stringify(this.subscriptionAttributes.messageReceived)};
                                     ${this.subscriptionAttributes.onMessageReceived};
                                     return {
-                                            variables: variables,
                                             test: test,
                                             report: report
                                      };`;

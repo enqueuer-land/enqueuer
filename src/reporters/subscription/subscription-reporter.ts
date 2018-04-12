@@ -106,7 +106,7 @@ export class SubscriptionReporter implements Reporter {
 
         this.report.valid = hasReceivedMessage &&
                             !this.hasTimedOut &&
-                            this.report.functionReport.failingTests.length <= 0;
+                            this.report.onMessageFunctionReport.failingTests.length <= 0;
 
         this.cleanUp();
         return this.report;
@@ -133,13 +133,21 @@ export class SubscriptionReporter implements Reporter {
 
     private executeSubscriptionFunction() {
         const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
-        const functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
-        Logger.debug(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.report.failingTests);
+        let functionResponse = null;
+        try {
+            functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
+            Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
+            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        } catch (err) {
+            functionResponse = {
+                exception: {"Function Compilation Error": err}
+            }
+            this.report.errorsDescription.concat(err);
+        }
 
         this.report = {
             ...this.report,
-            functionReport: functionResponse.report,
+            onMessageFunctionReport: functionResponse,
             messageReceivedTimestamp: new DateController().toString()
         }
     }

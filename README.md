@@ -52,7 +52,7 @@ Although there are other ways of using it, the two main ways are:
 	-	starts the requisition (publishing or waiting on an event);
 	-	waits for events published by the event-driven-component;
 -	executes hook script upon these received events;
--	reports back the [result](/output/outputReportExample.json).
+-	reports back the [result](/outputExamples/).
     
 ### let me draw it for you
 This is how your event-driven-conponent should act when triggered by an *Input*:\
@@ -79,7 +79,7 @@ Specifies in which execution mode **enqueueuer** will run. There are two options
 outputs:
 ```
 
-Accepts a list of publishing mechanisms. So, every time a new requisition is executed, **enqueuer** publishes through this its result with values like: schema validation, id, its errors list etc. I think this [example](/output/outputReportExample.json) may give you an idea.
+Accepts a list of publishing mechanisms. So, every time a new requisition is executed, **enqueuer** publishes through this its result with values like: schema validation, id, its errors list etc. I think some of these [examples](/outputExamples/) may give you an idea.
 
     log-level:
 

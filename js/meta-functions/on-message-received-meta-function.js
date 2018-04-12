@@ -7,11 +7,9 @@ class OnMessageReceivedMetaFunction {
     createFunction() {
         const fullBody = `let test = {};
                                     let report = {};
-                                    let variables = {};
                                     let message = ${JSON.stringify(this.subscriptionAttributes.messageReceived)};
                                     ${this.subscriptionAttributes.onMessageReceived};
                                     return {
-                                            variables: variables,
                                             test: test,
                                             report: report
                                      };`;

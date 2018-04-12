@@ -9,7 +9,7 @@
         "port": 5672
       },
       "queueName": "enqueuerQueue",
-      "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message ",
+      "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';",
       "timeout": 1000
     }
   ],

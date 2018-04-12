@@ -1,0 +1,72 @@
+{
+  "id": "20180412201645063852_feca5f48",
+  "enqueuer": {
+    "version": "1.0.1"
+  },
+  "report": {
+    "version": "1.0.1"
+  },
+  "valid": true,
+  "errorsDescription": [],
+  "time": {
+    "totalTime": 44,
+    "startTime": "2018-04-12T23:16:45.639Z",
+    "endTime": "2018-04-12T23:16:45.683Z",
+    "timeout": 3000,
+    "hasTimedOut": false
+  },
+  "subscriptionReports": {
+    "subscriptions": [
+      {
+        "valid": true,
+        "errorsDescription": [],
+        "connectionTime": "2018-04-12T23:16:45.671Z",
+        "onMessageFunctionReport": {
+          "passingTests": [
+            "works"
+          ],
+          "failingTests": [],
+          "reports": {}
+        },
+        "messageReceivedTimestamp": "2018-04-12T23:16:45.682Z",
+        "type": "mqtt",
+        "brokerAddress": "mqtt://localhost",
+        "topic": "enqueuer",
+        "onMessageReceived": "test['works'] = message = 'message';",
+        "timeout": 1000,
+        "hasReceivedMessage": true,
+        "hasTimedOut": false
+      }
+    ],
+    "valid": true,
+    "errorsDescription": []
+  },
+  "startEventReports": {
+    "publisher": {
+      "type": "mqtt",
+      "brokerAddress": "mqtt://localhost",
+      "payload": "enqueuer",
+      "topic": "enqueuer",
+      "options": {
+        "clientId": "enqueuerPublishOptionsExampleId"
+      }
+    },
+    "prePublishingFunctionReport": {
+      "publisher": {
+        "type": "mqtt",
+        "brokerAddress": "mqtt://localhost",
+        "payload": "\"enqueuer\"",
+        "topic": "enqueuer",
+        "options": {
+          "clientId": "enqueuerPublishOptionsExampleId"
+        }
+      },
+      "passingTests": [],
+      "failingTests": [],
+      "reports": {}
+    },
+    "timestamp": "2018-04-12T23:16:45.683Z",
+    "valid": true,
+    "errorsDescription": []
+  }
+}

@@ -62,7 +62,7 @@ describe("Inception test", () => {
 
             expect(finalReport.subscriptionReports.subscriptions[0].valid).toBeTruthy();
             expect(finalReport.subscriptionReports.subscriptions[0].errorsDescription.length).toBe(0);
-            expect(finalReport.subscriptionReports.subscriptions[0].functionReport.passingTests[0]).toBe("true");
+            expect(finalReport.subscriptionReports.subscriptions[0].onMessageFunctionReport.passingTests[0]).toBe("true");
 
             expect(finalReport.startEventReports.valid).toBeTruthy();
             expect(finalReport.startEventReports.errorsDescription.length).toBe(0);
@@ -80,7 +80,7 @@ describe("Inception test", () => {
 
     afterAll(() => {
         killThemAll();
-       removeEveryReportFile();
+        removeEveryReportFile();
     })
 
     let killThemAll = () => {

@@ -12,25 +12,28 @@ export class MetaFunctionExecutor {
     public execute(): any {
         try {
             let functionResponse = this.functionToExecute(this.parameters);
-            functionResponse.report = {
-                passingTests: [],
-                failingTests: [],
-                reports: []
-            }
+            let result: any = Object.assign({}, functionResponse);
+            delete result.test;
+            delete result.report;
+
+            result.passingTests = [];
+            result.failingTests = [];
+            result.reports = {};
+
             for (const test in functionResponse.test) {
                 if (functionResponse.test[test]) {
-                    functionResponse.report.passingTests.push(test);
+                    result.passingTests.push(test);
                 } else {
-                    functionResponse.report.failingTests.push(test);
+                    result.failingTests.push(test);
                 }
             }
             for (const report in functionResponse.report) {
-                functionResponse.report.reports[report] = functionResponse.report[report];
+                result.reports[report] = functionResponse.report[report];
             }
-            return functionResponse;
+            return result;
         } catch (exc) {
-            return { report: {
-                exc: exc
+            return { exception: {
+                "Function runtime error": exc
             } };
         }
     }

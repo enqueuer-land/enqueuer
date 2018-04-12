@@ -88,7 +88,7 @@ class SubscriptionReporter {
             this.report.errorsDescription.push(`Subscription '${this.subscription.type}' didn't receive any message`);
         this.report.valid = hasReceivedMessage &&
             !this.hasTimedOut &&
-            this.report.functionReport.failingTests.length <= 0;
+            this.report.onMessageFunctionReport.failingTests.length <= 0;
         this.cleanUp();
         return this.report;
     }
@@ -112,10 +112,19 @@ class SubscriptionReporter {
     }
     executeSubscriptionFunction() {
         const onMessageReceivedSubscription = new on_message_received_meta_function_1.OnMessageReceivedMetaFunction(this.subscription);
-        const functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
-        logger_1.Logger.debug(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.report.failingTests);
-        this.report = Object.assign({}, this.report, { functionReport: functionResponse.report, messageReceivedTimestamp: new date_controller_1.DateController().toString() });
+        let functionResponse = null;
+        try {
+            functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
+            logger_1.Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
+            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        }
+        catch (err) {
+            functionResponse = {
+                exception: { "Function Compilation Error": err }
+            };
+            this.report.errorsDescription.concat(err);
+        }
+        this.report = Object.assign({}, this.report, { onMessageFunctionReport: functionResponse, messageReceivedTimestamp: new date_controller_1.DateController().toString() });
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;

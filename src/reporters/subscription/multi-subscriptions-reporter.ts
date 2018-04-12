@@ -43,8 +43,7 @@ export class MultiSubscriptionsReporter implements Reporter {
         let valid = true;
 
         for (let i = 0; i < this.subscriptionHandlers.length; ++i) {
-            const subscriptionHandler = this.subscriptionHandlers[i];
-            const subscriptionReport = subscriptionHandler.getReport();
+            const subscriptionReport = this.subscriptionHandlers[i].getReport();
             subscriptionReports.push(subscriptionReport);
             for (let j = 0; subscriptionReport.errorsDescription && j < subscriptionReport.errorsDescription.length; ++j) {
                 errorsDescription.push(`[${j}] ` + subscriptionReport.errorsDescription[j]);
