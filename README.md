@@ -1,5 +1,6 @@
 # enqueuer
-Event-driven-component testing tool.\
+**Enqueuer** is an event-driven-component testing tool.
+
 ```There are many reasons why you should care about events; they drive autonomy, increase stability, help you move faster and allow for time travel, Jonas Bonér.```\
 There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
 In an event-driven world everything all events move asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component of your architecture acts like it should act when it was designed. It makes you be sure that, at least on the boundaries of this service, everything works as expected.
@@ -94,11 +95,8 @@ And last, but not least, log-level defines how execution information are logged 
 
  
 ### frequently asked question
-1.	Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?
-	- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely, check it out](/src/inceptionTest/inception.test.ts "Inception Test")
-\
-\
-\
+1.	**Q**: Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?\
+	**A**: I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely, [check it out.](/src/inceptionTest/inception.test.ts "Inception Test")
 
 ###### IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
