@@ -73,7 +73,8 @@ Specifies in which execution mode **enqueueuer** will run. There are two options
 
 - *single-run*:  running in single run mode, **enqueuer** will run only the files that match fileNamePattern value. Once all of the matching files are ran, **enqueuer** ends its execution and returns, as status code:
      - 0, if all requisitions are valid; or
-     - 1, if there is at least one error. In that scenario, it compiles an errors list description and saves it in a file defined in *configFile.run-mode.single-run.output-file*.
+     - 1, if there is at least one error. \
+In both cases, it compiles summary and saves it in a file defined in *configFile.run-mode.single-run.output-file*.
     
 ```
 outputs:
@@ -94,7 +95,7 @@ And last, but not least, log-level defines how execution information are logged 
  
 ### frequently asked question
 Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?
-- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely check it out](/src/inceptionTest/inception.test.ts "Inception Test")
+- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely, check it out](/src/inceptionTest/inception.test.ts "Inception Test")
 
 ###### IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
