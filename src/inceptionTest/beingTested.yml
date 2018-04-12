@@ -6,6 +6,7 @@ requisitions:
         type: mqtt
         brokerAddress: mqtt://localhost
         topic: enqueuer/inception/beingTested/requisitionInput
+
 outputs:
   -
     type: file
@@ -15,5 +16,3 @@ outputs:
     type: mqtt
     brokerAddress: mqtt://localhost:1883
     topic: enqueuer/inception/requisitionOutput
-
-log-level: debug

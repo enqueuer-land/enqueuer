@@ -17,21 +17,20 @@ class RequisitionRunner {
     start(onFinishCallback) {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
-        this.initializeTimeout();
+        logger_1.Logger.trace("Multisubscribing");
         this.multiSubscriptionsReporter.connect()
-            .then(() => this.onSubscriptionsCompleted())
+            .then(() => {
+            logger_1.Logger.trace("Multisubscriptions are ready");
+            this.initializeTimeout();
+            this.onSubscriptionsCompleted();
+        })
             .catch(err => {
             logger_1.Logger.error(`Error connecting multiSubscription: ${err}`);
             this.onFinish(err);
         });
     }
     onSubscriptionsCompleted() {
-        this.multiSubscriptionsReporter.receiveMessage()
-            .then(() => this.onAllSubscriptionsStopWaiting())
-            .catch(err => {
-            logger_1.Logger.error(`Error receiving message in multiSubscription: ${err}`);
-            this.onFinish(err);
-        });
+        logger_1.Logger.debug("Triggering start event");
         this.startEvent.start()
             .then(() => {
             logger_1.Logger.debug("Start event has done its job");
@@ -40,11 +39,16 @@ class RequisitionRunner {
             logger_1.Logger.error(`Error triggering startingEvent: ${err}`);
             this.onFinish(err);
         });
+        this.multiSubscriptionsReporter.receiveMessage()
+            .then(() => this.onAllSubscriptionsStopWaiting())
+            .catch(err => {
+            logger_1.Logger.error(`Error receiving message in multiSubscription: ${err}`);
+            this.onFinish(err);
+        });
     }
     initializeTimeout() {
         if (this.requisitionTimeout) {
             new timeout_1.Timeout(() => {
-                logger_1.Logger.info("Requisition Timeout");
                 this.onFinish("Requisition has timed out");
             }).start(this.requisitionTimeout);
         }

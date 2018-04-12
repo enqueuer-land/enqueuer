@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const requisition_id_generator_1 = require("./requisition-id-generator");
-// const jsonSub = require('json-sub')();
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");

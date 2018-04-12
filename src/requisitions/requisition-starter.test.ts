@@ -1,16 +1,7 @@
 import {RequisitionStarter} from "./requisition-starter";
-import {MultiPublisher} from "../publishers/multi-publisher";
 import {RequisitionRunner} from "./requisition-runner";
 import {RequisitionModel} from "./models/requisition-model";
 
-
-const publishMock = jest.fn();
-jest.mock("../publishers/multi-publisher");
-MultiPublisher.mockImplementation(() => {
-    return {
-        publish: publishMock
-    };
-});
 
 const startMock = jest.fn((onFinish: Function) => {
     return onFinish("report");
@@ -39,10 +30,6 @@ describe("RequisitionStarter",() => {
         new RequisitionStarter(model);
 
 
-        expect(MultiPublisher).toHaveBeenCalledTimes(1);
-        expect(MultiPublisher).toHaveBeenCalledWith([{"brokerAddress": "mqtt://localhost:1883",
-                                                                "topic": "enqueuer/output",
-                                                                "type": "mqtt"}]);
         expect(RequisitionRunner).toHaveBeenCalledTimes(1);
         expect(RequisitionRunner).toHaveBeenCalledWith(model);
     })
@@ -56,6 +43,5 @@ describe("RequisitionStarter",() => {
 
 
         expect(startMock).toHaveBeenCalledTimes(1);
-        expect(publishMock).toHaveBeenCalledWith("\"report\"");
     })
 })

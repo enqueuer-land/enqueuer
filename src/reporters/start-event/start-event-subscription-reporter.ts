@@ -21,7 +21,7 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
             this.subscriptionReporter.connect()
                 .then(() => {
                     this.subscriptionReporter
-                        .onTimeout(() => resolve());
+                        .startTimeout(() => resolve());
                     this.subscriptionReporter.receiveMessage()
                         .then(() => resolve())
                         .catch(err => reject(err));

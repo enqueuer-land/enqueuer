@@ -13,19 +13,17 @@ export class EnqueuerStarter {
         this.executor = Container.get(EnqueuerExecutor).createFromPredicate(configuration.getRequisitionRunMode());
     }
 
-    public start(): Promise<number> {
-        return new Promise(resolve => {
-            this.executor.execute()
-                .then((report: Report) => {
-                    Logger.info("Enqueuer execution is over");
-                    report.valid ? resolve(0): resolve(1);
-                })
-                .catch((error: any) => {
-                    Logger.fatal(`Execution error: ${error}`)
-                    resolve(-1);
-                })
-        });
+    public async start(): Promise<number> {
+        return this.executor.init()
+            .then(() => this.executor.execute())
+            .then((report: Report) => {
+                Logger.info("Enqueuer execution is over");
+                return report.valid ? 0: 1;
+            })
+            .catch((error: any) => {
+                Logger.fatal(`Execution error: ${error}`)
+                return -1;
+            })
     }
-
 }
 

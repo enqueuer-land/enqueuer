@@ -27,23 +27,21 @@ export class RequisitionRunner {
     public start(onFinishCallback: RequisitionRunnerCallback): void {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
-        this.initializeTimeout();
+        Logger.trace("Multisubscribing");
         this.multiSubscriptionsReporter.connect()
-            .then(() => this.onSubscriptionsCompleted())
+            .then(() => {
+                Logger.trace("Multisubscriptions are ready");
+                this.initializeTimeout();
+                this.onSubscriptionsCompleted()
+            })
             .catch(err => {
-                Logger.error(`Error connecting multiSubscription: ${err}`)
+                Logger.error(`Error connecting multiSubscription: ${err}`);
                 this.onFinish(err)
             });
     }
 
     private onSubscriptionsCompleted() {
-        this.multiSubscriptionsReporter.receiveMessage()
-            .then(() => this.onAllSubscriptionsStopWaiting())
-            .catch(err => {
-                Logger.error(`Error receiving message in multiSubscription: ${err}`)
-                this.onFinish(err)
-            });
-
+        Logger.debug("Triggering start event");
         this.startEvent.start()
             .then(() => {
                 Logger.debug("Start event has done its job");
@@ -52,12 +50,18 @@ export class RequisitionRunner {
                 Logger.error(`Error triggering startingEvent: ${err}`)
                 this.onFinish(err)
             });
+
+        this.multiSubscriptionsReporter.receiveMessage()
+            .then(() => this.onAllSubscriptionsStopWaiting())
+            .catch(err => {
+                Logger.error(`Error receiving message in multiSubscription: ${err}`)
+                this.onFinish(err)
+            });
     }
 
     private initializeTimeout() {
         if (this.requisitionTimeout) {
             new Timeout(() => {
-                Logger.info("Requisition Timeout");
                 this.onFinish("Requisition has timed out");
             }).start(this.requisitionTimeout);
         }

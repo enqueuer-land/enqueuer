@@ -8,6 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const multi_publisher_1 = require("../publishers/multi-publisher");
@@ -21,7 +29,6 @@ const prettyjson = require('prettyjson');
 let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
-        this.runningRequisitionsCounter = 0;
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
         this.outputFilename = singleRunConfiguration["output-file"];
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
@@ -33,25 +40,32 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             requisitions: {}
         };
     }
+    init() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.singleRunRequisitionInput.syncDir();
+        });
+    }
     execute() {
         return new Promise((resolve) => {
+            this.singleRunRequisitionInput.onNoMoreFilesToBeRead(() => {
+                logger_1.Logger.info("There is no more requisition to be ran");
+                this.persistSummary(this.reportMerge);
+                return resolve(this.reportMerge);
+            });
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
+                logger_1.Logger.info(`Starting requisition ${requisition.id}`);
                 this.multiPublisher.publish(JSON.stringify(requisition, null, 2)).then().catch(console.log.bind(console));
-                ++this.runningRequisitionsCounter;
-                new requisition_starter_1.RequisitionStarter(requisition).start()
+                new requisition_starter_1.RequisitionStarter(requisition)
+                    .start()
                     .then(report => {
-                    --this.runningRequisitionsCounter;
-                    logger_1.Logger.info(`Remaining requisitions to receive report: ${this.runningRequisitionsCounter}`);
+                    this.multiPublisher.publish(JSON.stringify(report, null, 2)).then().catch(console.log.bind(console));
                     this.mergeNewReport(report, requisition.id);
                     resolve(this.execute()); //Run the next one
                 }).catch(console.log.bind(console));
-                ;
             })
-                .catch(() => {
-                logger_1.Logger.info("There is no more requisition to be ran");
-                this.summary(this.reportMerge);
-                resolve(this.reportMerge);
+                .catch((err) => {
+                logger_1.Logger.error(err);
             });
         });
     }
@@ -62,7 +76,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             this.reportMerge.errorsDescription.push(`[Requisition][${id}]${newError}`);
         });
     }
-    summary(report) {
+    persistSummary(report) {
         const options = {
             defaultIndentation: 4,
             keysColor: "white",

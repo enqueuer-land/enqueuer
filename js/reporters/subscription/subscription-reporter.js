@@ -26,14 +26,19 @@ class SubscriptionReporter {
             errorsDescription: []
         };
     }
-    onTimeout(onTimeOutCallback) {
+    startTimeout(onTimeOutCallback) {
+        this.subscription.messageReceived = null;
+        if (this.timeOut)
+            this.timeOut.clear();
         this.timeOut = new timeout_1.Timeout(() => {
-            const message = `Subscription '${this.subscription.type}' stop waiting because it has timed out`;
-            logger_1.Logger.info(message);
+            if (!this.subscription.messageReceived) {
+                const message = `Subscription '${this.subscription.type}' stop waiting because it has timed out`;
+                logger_1.Logger.info(message);
+                this.hasTimedOut = true;
+                this.report.errorsDescription.push(message);
+                onTimeOutCallback();
+            }
             this.cleanUp();
-            this.hasTimedOut = true;
-            this.report.errorsDescription.push(message);
-            onTimeOutCallback();
         });
     }
     connect() {
@@ -53,18 +58,20 @@ class SubscriptionReporter {
         });
     }
     receiveMessage() {
+        this.initializeTimeout();
         return new Promise((resolve, reject) => {
-            this.initializeTimeout();
             this.subscription.receiveMessage()
                 .then((message) => {
-                logger_1.Logger.debug(`Subscription ${this.subscription.type} received its message: ${JSON.stringify(message)}`);
-                if (!this.hasTimedOut) {
-                    this.subscription.messageReceived = message;
-                    this.executeSubscriptionFunction();
-                    logger_1.Logger.info("Subscription stop waiting because it has already received its message");
+                if (message) {
+                    logger_1.Logger.debug(`Subscription ${this.subscription.type} received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
+                    if (!this.hasTimedOut) {
+                        this.subscription.messageReceived = message;
+                        this.executeSubscriptionFunction();
+                        logger_1.Logger.info("Subscription stop waiting because it has already received its message");
+                    }
+                    this.cleanUp();
+                    resolve(message);
                 }
-                this.cleanUp();
-                resolve();
             })
                 .catch((err) => {
                 const message = `Subscription '${this.subscription.type}' is unable to receive message: ${err}`;
@@ -75,7 +82,6 @@ class SubscriptionReporter {
         });
     }
     getReport() {
-        this.cleanUp();
         this.report = Object.assign({}, this.report, this.subscriptionAttributes, { hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
         const hasReceivedMessage = this.report.hasReceivedMessage;
         if (!hasReceivedMessage)
@@ -83,6 +89,7 @@ class SubscriptionReporter {
         this.report.valid = hasReceivedMessage &&
             !this.hasTimedOut &&
             this.report.functionReport.failingTests.length <= 0;
+        this.cleanUp();
         return this.report;
     }
     cleanUp() {

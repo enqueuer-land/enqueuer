@@ -4,28 +4,18 @@ const subscription_reporter_1 = require("./subscription-reporter");
 class MultiSubscriptionsReporter {
     constructor(subscriptionsAttributes) {
         this.subscriptionHandlers = [];
-        this.subscriptionsConnectionCompletedCounter = 0;
         this.subscriptionsStoppedWaitingCounter = 0;
         for (let id = 0; id < subscriptionsAttributes.length; ++id) {
             this.subscriptionHandlers.push(new subscription_reporter_1.SubscriptionReporter(subscriptionsAttributes[id]));
         }
     }
     connect() {
-        return new Promise((resolve, reject) => {
-            this.subscriptionHandlers.forEach(subscriptionHandler => {
-                subscriptionHandler.connect()
-                    .then(() => {
-                    if (this.areAllSubscriptionsConnected())
-                        resolve();
-                })
-                    .catch(err => reject(err));
-            });
-        });
+        return Promise.all(this.subscriptionHandlers.map(subscriptionHandler => subscriptionHandler.connect()));
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.subscriptionHandlers.forEach(subscriptionHandler => {
-                subscriptionHandler.onTimeout(() => {
+                subscriptionHandler.startTimeout(() => {
                     if (this.haveAllSubscriptionsStoppedWaiting())
                         resolve();
                 });
@@ -57,10 +47,6 @@ class MultiSubscriptionsReporter {
             valid: valid,
             errorsDescription: errorsDescription
         };
-    }
-    areAllSubscriptionsConnected() {
-        ++this.subscriptionsConnectionCompletedCounter;
-        return (this.subscriptionsConnectionCompletedCounter >= this.subscriptionHandlers.length);
     }
     haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;

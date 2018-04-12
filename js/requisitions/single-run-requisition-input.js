@@ -2,49 +2,36 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const requisition_parser_1 = require("./requisition-parser");
-const chokidar = require('chokidar');
-const fs = require("fs");
+const subscription_reporter_1 = require("../reporters/subscription/subscription-reporter");
 class SingleRunRequisitionInput {
     constructor(fileNamePattern) {
-        this.requisitions = [];
-        this.ready = false;
-        this.pushRequisitionFile = (fileName) => {
-            this.ready = true;
-            logger_1.Logger.info(`Found requisition file: ${fileName}`);
-            fs.readFile(fileName, (error, data) => {
-                if (error)
-                    logger_1.Logger.warning(`Error reading file ${JSON.stringify(error)}`);
-                else {
-                    try {
-                        this.requisitions.push(this.requisitionParser.parse(data));
-                    }
-                    catch (err) {
-                        logger_1.Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
-                    }
-                }
-            });
-        };
-        this.requisitionParser = new requisition_parser_1.RequisitionParser();
-        const watcher = chokidar.watch(fileNamePattern, { ignored: /(^|[\/\\])\../ });
-        watcher.on("add", (path) => {
-            this.pushRequisitionFile(path);
+        this.executorTimeout = null;
+        this.subscriptionReporter = new subscription_reporter_1.SubscriptionReporter({
+            type: 'file-name-watcher',
+            fileNamePattern: fileNamePattern,
+            timeout: 1000
         });
+        this.requisitionParser = new requisition_parser_1.RequisitionParser();
+    }
+    syncDir() {
+        return this.subscriptionReporter.connect();
+    }
+    onNoMoreFilesToBeRead(executorTimeout) {
+        this.executorTimeout = executorTimeout;
     }
     receiveRequisition() {
-        return new Promise((resolve, reject) => {
-            var timer = setInterval(() => {
-                if (this.ready) {
-                    clearInterval(timer);
-                    const content = this.requisitions.pop();
-                    if (content)
-                        return resolve(content);
-                    else {
-                        const message = "There is no more requisition file to be read";
-                        logger_1.Logger.info(message);
-                        return reject();
-                    }
-                }
-            }, 100);
+        if (this.executorTimeout)
+            this.subscriptionReporter.startTimeout(this.executorTimeout);
+        return this.subscriptionReporter
+            .receiveMessage()
+            .then((unparsed) => {
+            try {
+                return Promise.resolve(this.requisitionParser.parse(unparsed));
+            }
+            catch (err) {
+                logger_1.Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
+                return Promise.reject(err);
+            }
         });
     }
 }

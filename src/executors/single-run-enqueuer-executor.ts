@@ -12,7 +12,6 @@ const prettyjson = require('prettyjson');
 @Injectable(enqueuerConfiguration => enqueuerConfiguration["single-run"])
 export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
 
-    private runningRequisitionsCounter = 0;
     private outputFilename: string;
     private multiPublisher: MultiPublisher;
     private singleRunRequisitionInput: SingleRunRequisitionInput;
@@ -34,27 +33,33 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
         }
     }
 
+    public async init(): Promise<void> {
+        return this.singleRunRequisitionInput.syncDir();
+    }
+
     public execute(): Promise<Report> {
         return new Promise((resolve) => {
+            this.singleRunRequisitionInput.onNoMoreFilesToBeRead(() => {
+                Logger.info("There is no more requisition to be ran");
+                this.persistSummary(this.reportMerge);
+                return resolve(this.reportMerge);
+            })
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
+                    Logger.info(`Starting requisition ${requisition.id}`);
                     this.multiPublisher.publish(JSON.stringify(requisition, null, 2)).then().catch(console.log.bind(console));
 
-                    ++this.runningRequisitionsCounter;
-                    new RequisitionStarter(requisition).start()
+                    new RequisitionStarter(requisition)
+                        .start()
                         .then(report => {
-                            --this.runningRequisitionsCounter;
-                            Logger.info(`Remaining requisitions to receive report: ${this.runningRequisitionsCounter}`);
-
+                            this.multiPublisher.publish(JSON.stringify(report, null, 2)).then().catch(console.log.bind(console));
                             this.mergeNewReport(report, requisition.id);
 
                             resolve(this.execute()); //Run the next one
-                        }).catch(console.log.bind(console));;
+                        }).catch(console.log.bind(console));
                 })
-                .catch(() => {
-                    Logger.info("There is no more requisition to be ran");
-                    this.summary(this.reportMerge);
-                    resolve(this.reportMerge)
+                .catch((err) => {
+                    Logger.error(err);
                 })
         });
     }
@@ -67,7 +72,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
         })
     }
 
-    private summary(report: Report) {
+    private persistSummary(report: Report) {
         const options = {
             defaultIndentation: 4,
             keysColor: "white",

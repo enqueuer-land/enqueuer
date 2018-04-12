@@ -34,7 +34,7 @@ describe("Inception test", () => {
     });
 
     it("should run enqueuer to test another enqueuer process", done => {
-        jest.setTimeout(10000); // 10 second timeout
+        jest.setTimeout(10000);
 
         try {
             beingTested = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/beingTested.yml']);
@@ -80,7 +80,7 @@ describe("Inception test", () => {
 
     afterAll(() => {
         killThemAll();
-        removeEveryReportFile();
+       removeEveryReportFile();
     })
 
     let killThemAll = () => {
@@ -88,4 +88,4 @@ describe("Inception test", () => {
         tester.kill('SIGINT');
     };
 
-})
+});

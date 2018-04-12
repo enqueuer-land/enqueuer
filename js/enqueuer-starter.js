@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_1 = require("./configurations/configuration");
 const container_1 = require("./injector/container");
@@ -10,15 +18,16 @@ class EnqueuerStarter {
         this.executor = container_1.Container.get(enqueuer_executor_1.EnqueuerExecutor).createFromPredicate(configuration.getRequisitionRunMode());
     }
     start() {
-        return new Promise(resolve => {
-            this.executor.execute()
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.executor.init()
+                .then(() => this.executor.execute())
                 .then((report) => {
                 logger_1.Logger.info("Enqueuer execution is over");
-                report.valid ? resolve(0) : resolve(1);
+                return report.valid ? 0 : 1;
             })
                 .catch((error) => {
                 logger_1.Logger.fatal(`Execution error: ${error}`);
-                resolve(-1);
+                return -1;
             });
         });
     }

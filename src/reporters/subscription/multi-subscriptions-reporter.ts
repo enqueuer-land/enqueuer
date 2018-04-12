@@ -3,9 +3,8 @@ import {Report} from "../report";
 import {Reporter} from "../reporter";
 import {SubscriptionReporter} from "./subscription-reporter";
 
-export class MultiSubscriptionsReporter implements Reporter{
+export class MultiSubscriptionsReporter implements Reporter {
     private subscriptionHandlers: SubscriptionReporter[] = [];
-    private subscriptionsConnectionCompletedCounter: number = 0;
     private subscriptionsStoppedWaitingCounter: number = 0;
 
     constructor(subscriptionsAttributes: SubscriptionModel[]) {
@@ -14,24 +13,16 @@ export class MultiSubscriptionsReporter implements Reporter{
         }
     }
 
-    public connect(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.subscriptionHandlers.forEach(subscriptionHandler => {
-                subscriptionHandler.connect()
-                    .then(() => {
-                        if (this.areAllSubscriptionsConnected())
-                            resolve();
-                    })
-                    .catch(err => reject(err));
-                }
-            );
-        });
+    public connect(): Promise<void[]> {
+        return Promise.all(this.subscriptionHandlers.map(
+            subscriptionHandler => subscriptionHandler.connect()
+            ));
     }
 
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.subscriptionHandlers.forEach(subscriptionHandler => {
-                subscriptionHandler.onTimeout(() => {
+                subscriptionHandler.startTimeout(() => {
                     if (this.haveAllSubscriptionsStoppedWaiting())
                         resolve();
                 });
@@ -65,11 +56,6 @@ export class MultiSubscriptionsReporter implements Reporter{
             valid: valid,
             errorsDescription: errorsDescription
         };
-    }
-
-    private areAllSubscriptionsConnected(): boolean {
-        ++this.subscriptionsConnectionCompletedCounter;
-        return (this.subscriptionsConnectionCompletedCounter >= this.subscriptionHandlers.length)
     }
 
     private haveAllSubscriptionsStoppedWaiting() {

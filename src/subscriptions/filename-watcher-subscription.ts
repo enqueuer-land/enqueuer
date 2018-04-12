@@ -8,54 +8,49 @@ const chokidar = require('chokidar');
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-watcher")
 export class FileNameWatcherSubscription extends Subscription {
 
-    private error: any = null;
-    private checkIntervalMs: number;
-    private watchedFileContent: string[] = [];
+    private watcher: any;
     private fileNamePattern: string;
+    private filesName: string[] = [];
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
-        this.checkIntervalMs = subscriptionAttributes.checkIntervalMs || 50;
     }
 
     public connect(): Promise<void> {
-        const watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
-        watcher.on('add', (path: string) => this.pushFileContent(path));
-        watcher.on('change', (path: string) => this.pushFileContent(path));
-        return Promise.resolve();
-    }
-
-    public receiveMessage(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            var timer = setInterval(() => {
-                if (this.error)
-                    return reject(this.error);
-                if (this.watchedFileContent.length > 0) {
-                    clearInterval(timer);
-                    const content = this.watchedFileContent.pop();
-                    if (content)
-                        return resolve(content);
-                    else
-                    {
-                        return reject();
-                    }
-                }
-            }, this.checkIntervalMs);
+        this.watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
+        return new Promise((resolve) => {
+            this.watcher.on('add', (fileName: string) => {
+                Logger.trace(`${this.type} found file: ${fileName}`);
+                this.filesName.push(fileName);
+            });
+            this.watcher.on('ready', () => {
+                Logger.trace(`${this.type} is ready`);
+                resolve()
+            });
         })
     }
 
-    private pushFileContent = (fileName: string): void => {
-        Logger.info(`${this.type} found: ${fileName}`)
-        fs.readFile(fileName, (error: any, data: Buffer) => {
-            if (error) {
-                this.error = error;
-                Logger.warning(`Error reading file ${JSON.stringify(error)}`)
-            }
-            else {
-                    this.watchedFileContent.push(data.toString());
-            }
+    public async receiveMessage(): Promise<string> {
+        return this.popFileContent();
+    }
+
+    private popFileContent(): Promise<string> {
+        return new Promise((resolve, reject) => {
+            let interval = setInterval(() => {
+                const pop = this.filesName.pop();
+                if (pop)
+                {
+                    try {
+                        resolve(fs.readFileSync(pop).toString());
+                    }
+                    catch (error) {
+                        Logger.warning(`Error reading file ${JSON.stringify(error)}`)
+                        reject(error);
+                    }
+                    clearInterval(interval);
+                }
+            }, 100);
         });
     }
 }

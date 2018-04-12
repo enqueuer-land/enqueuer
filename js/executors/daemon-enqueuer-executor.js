@@ -8,6 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const requisition_starter_1 = require("../requisitions/requisition-starter");
 const daemon_requisition_input_1 = require("../requisitions/daemon-requisition-input");
@@ -27,6 +35,11 @@ let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_execu
             .map((input) => new daemon_requisition_input_1.DaemonRequisitionInput(input));
         ;
     }
+    init() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return;
+        });
+    }
     execute() {
         return new Promise(() => {
             this.requisitionInputs
@@ -45,9 +58,12 @@ let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_execu
     startReader(input) {
         input.receiveMessage()
             .then((requisition) => {
-            this.multiPublisher.publish(JSON.stringify(requisition)).then(() => this.startReader(input));
-            new requisition_starter_1.RequisitionStarter(requisition).start().then();
+            this.multiPublisher.publish(JSON.stringify(requisition)).then();
+            return requisition;
         })
+            .then((requisition) => new requisition_starter_1.RequisitionStarter(requisition).start())
+            .then((report) => this.multiPublisher.publish(JSON.stringify(report)))
+            .then(() => this.startReader(input))
             .catch((err) => {
             logger_1.Logger.error(err);
             this.multiPublisher.publish(JSON.stringify(err)).then(() => this.startReader(input));

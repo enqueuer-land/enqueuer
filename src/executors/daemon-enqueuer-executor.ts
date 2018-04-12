@@ -24,6 +24,10 @@ export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
                 .map((input: any) => new DaemonRequisitionInput(input));;
     }
 
+    public async init(): Promise<void> {
+        return;
+    }
+
     public execute(): Promise<Report> {
         return new Promise(() => {
             this.requisitionInputs
@@ -43,9 +47,12 @@ export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
     private startReader(input: DaemonRequisitionInput) {
         input.receiveMessage()
             .then((requisition: RequisitionModel) => {
-                this.multiPublisher.publish(JSON.stringify(requisition)).then(() => this.startReader(input));
-                new RequisitionStarter(requisition).start().then();
+                this.multiPublisher.publish(JSON.stringify(requisition)).then();
+                return requisition;
             })
+            .then( (requisition: RequisitionModel) => new RequisitionStarter(requisition).start())
+            .then( (report: Report) => this.multiPublisher.publish(JSON.stringify(report)))
+            .then(() => this.startReader(input))
             .catch( (err) => {
                 Logger.error(err);
                 this.multiPublisher.publish(JSON.stringify(err)).then(() => this.startReader(input));

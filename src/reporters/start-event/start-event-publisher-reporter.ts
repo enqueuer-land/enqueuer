@@ -7,8 +7,9 @@ import {PublisherModel} from "../../requisitions/models/publisher-model";
 import {Injectable} from "../../injector/injector";
 import {Container} from "../../injector/container";
 import {Report} from "../report";
+import {Logger} from "../../loggers/logger";
 
-@Injectable((startEvent: any) => startEvent.publisher)
+@Injectable((startEvent: any) => startEvent.publisher != null)
 export class StartEventPublisherReporter extends StartEventReporter {
     private publisherOriginalAttributes: PublisherModel;
     private publisher?: Publisher;
@@ -25,6 +26,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     public start(): Promise<void> {
+        Logger.trace(`Firing publication as startEvent`);
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
             if (this.publisher) {
@@ -33,6 +35,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
                         return resolve();
                     })
                     .catch((err: any) => {
+                        Logger.error(err);
                         this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`)
                         reject(err)
                     });
@@ -59,8 +62,11 @@ export class StartEventPublisherReporter extends StartEventReporter {
     private executePrePublishingFunction() {
         const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
         const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
+
         if (functionResponse.publisher.payload)
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
+
+        Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = Container.get(Publisher).createFromPredicate(functionResponse.publisher);
         this.prePublishingReport = functionResponse.report;
     }

@@ -4,7 +4,7 @@
   "subscriptions": [
     {
       "type": "file-name-watcher",
-      "fileNamePattern": "integrationTest/fileTest*file",
+      "fileNamePattern": "temp/fileTest*file",
       "onMessageReceived": "test['some time has passed'] = new Date().getTime() + '' >= message;",
       "timeout": 1000
     }
@@ -12,7 +12,7 @@
   "startEvent": {
     "publisher": {
       "type": "file",
-      "filenamePrefix": "integrationTest/fileTest",
+      "filenamePrefix": "temp/fileTest",
       "filenameExtension": "file",
       "prePublishing": "publisher.payload=new Date().getTime();"
     }

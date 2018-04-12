@@ -1,58 +1,46 @@
 import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
 import {RequisitionModel} from "./models/requisition-model";
-
-const chokidar = require('chokidar');
-const fs = require("fs");
+import {SubscriptionReporter} from "../reporters/subscription/subscription-reporter";
 
 export class SingleRunRequisitionInput {
 
-    private requisitions: RequisitionModel[] = [];
     private requisitionParser: RequisitionParser;
-    private ready: boolean = false;
+    private subscriptionReporter: SubscriptionReporter;
+    private executorTimeout: Function | null = null;
 
     constructor(fileNamePattern: string) {
+        this.subscriptionReporter = new SubscriptionReporter(
+            {
+                type: 'file-name-watcher',
+                fileNamePattern: fileNamePattern,
+                timeout: 1000
+            });
         this.requisitionParser = new RequisitionParser();
-        const watcher = chokidar.watch(fileNamePattern, {ignored: /(^|[\/\\])\../});
-        watcher.on("add", (path: string) => {
-            this.pushRequisitionFile(path);
-        })
+    }
+
+    public syncDir(): Promise<void> {
+        return this.subscriptionReporter.connect();
+    }
+
+    public onNoMoreFilesToBeRead(executorTimeout: Function): void {
+        this.executorTimeout = executorTimeout;
     }
 
     public receiveRequisition(): Promise<RequisitionModel> {
-        return new Promise((resolve, reject) => {
-            var timer = setInterval(() => {
-                if (this.ready) {
-                    clearInterval(timer);
-                    const content = this.requisitions.pop();
-                    if (content)
-                        return resolve(content);
-                    else
-                        {
-                            const message = "There is no more requisition file to be read";
-                            Logger.info(message);
-                            return reject();
-                        }
-                }
-            }, 100);
-        })
-    }
-
-    private pushRequisitionFile = (fileName: string): void => {
-        this.ready = true;
-        Logger.info(`Found requisition file: ${fileName}`)
-        fs.readFile(fileName, (error: any, data: string) => {
-            if (error)
-                Logger.warning(`Error reading file ${JSON.stringify(error)}`)
-            else {
+        if (this.executorTimeout)
+            this.subscriptionReporter.startTimeout(this.executorTimeout);
+        return this.subscriptionReporter
+            .receiveMessage()
+            .then((unparsed: string) => {
                 try {
-                    this.requisitions.push(this.requisitionParser.parse(data));
+                    return Promise.resolve(this.requisitionParser.parse(unparsed));
                 }
-                catch(err) {
-                    Logger.error(`Error parsing requisition ${JSON.stringify(err)}`)
+                catch (err) {
+                    Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
+                    return Promise.reject(err);
                 }
-            }
-        });
+            })
     }
 
 }

@@ -22,7 +22,7 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
             this.subscriptionReporter.connect()
                 .then(() => {
                 this.subscriptionReporter
-                    .onTimeout(() => resolve());
+                    .startTimeout(() => resolve());
                 this.subscriptionReporter.receiveMessage()
                     .then(() => resolve())
                     .catch(err => reject(err));
