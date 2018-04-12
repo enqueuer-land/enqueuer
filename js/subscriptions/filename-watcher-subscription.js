@@ -17,46 +17,44 @@ const chokidar = require('chokidar');
 let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.files = [];
+        this.error = null;
+        this.watchedFileContent = [];
+        this.pushFileContent = (fileName) => {
+            logger_1.Logger.info(`${this.type} found: ${fileName}`);
+            fs.readFile(fileName, (error, data) => {
+                if (error) {
+                    this.error = error;
+                    logger_1.Logger.warning(`Error reading file ${JSON.stringify(error)}`);
+                }
+                else {
+                    this.watchedFileContent.push(data.toString());
+                }
+            });
+        };
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
-        this.checkIntervalMs = subscriptionAttributes.checkIntervalMs;
-        this.watcher = chokidar.watch(this.fileNamePattern, { ignored: /(^|[\/\\])\../ });
+        this.checkIntervalMs = subscriptionAttributes.checkIntervalMs || 50;
     }
     connect() {
-        this.watcher.on('add', path => this.files.push(path));
-        this.watcher.on('change', path => this.files.push(path));
+        const watcher = chokidar.watch(this.fileNamePattern, { ignored: /(^|[\/\\])\../ });
+        watcher.on('add', (path) => this.pushFileContent(path));
+        watcher.on('change', (path) => this.pushFileContent(path));
         return Promise.resolve();
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            this.popFileContent()
-                .then(fileContent => resolve(fileContent))
-                .catch(err => reject(err));
-        });
-    }
-    popFileContent() {
-        return new Promise((resolve, reject) => {
             var timer = setInterval(() => {
-                const file = this.files.pop();
-                if (file) {
-                    logger_1.Logger.debug(`FileNameWatcher subscription detected file: ${file}`);
+                if (this.error)
+                    return reject(this.error);
+                if (this.watchedFileContent.length > 0) {
                     clearInterval(timer);
-                    this.readFile(file)
-                        .then(fileContent => resolve(fileContent))
-                        .catch(err => reject(err));
+                    const content = this.watchedFileContent.pop();
+                    if (content)
+                        return resolve(content);
+                    else {
+                        return reject();
+                    }
                 }
             }, this.checkIntervalMs);
-        });
-    }
-    readFile(filename) {
-        return new Promise((resolve, reject) => {
-            fs.readFile(filename, (error, data) => {
-                if (error)
-                    reject(error);
-                else {
-                    resolve(data);
-                }
-            });
         });
     }
 };

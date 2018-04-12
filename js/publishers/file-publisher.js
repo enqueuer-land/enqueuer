@@ -17,10 +17,19 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.filenamePrefix = publisherAttributes.filenamePrefix;
+        this.filenameExtension = publisherAttributes.filenameExtension;
     }
     publish() {
-        const filename = this.filenamePrefix + new requisition_id_generator_1.RequisitionIdGenerator(this.payload).generateId() + ".json";
-        fs.writeFileSync(filename, JSON.stringify(JSON.parse(this.payload), null, 2));
+        const filename = this.filenamePrefix +
+            new requisition_id_generator_1.RequisitionIdGenerator(this.payload).generateId() +
+            "." +
+            this.filenameExtension;
+        let value = this.payload;
+        try {
+            value = JSON.stringify(JSON.parse(this.payload), null, 2);
+        }
+        catch (exc) { }
+        fs.writeFileSync(filename, value);
         return Promise.resolve();
     }
 };

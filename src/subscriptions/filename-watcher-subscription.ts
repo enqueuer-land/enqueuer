@@ -1,5 +1,4 @@
 import {Subscription} from "./subscription";
-import {FSWatcher} from "fs";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
@@ -9,58 +8,54 @@ const chokidar = require('chokidar');
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-watcher")
 export class FileNameWatcherSubscription extends Subscription {
 
+    private error: any = null;
     private checkIntervalMs: number;
-    private files: string[] = [];
-    private watcher: FSWatcher;
+    private watchedFileContent: string[] = [];
     private fileNamePattern: string;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
 
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
-        this.checkIntervalMs = subscriptionAttributes.checkIntervalMs;
-        this.watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
+        this.checkIntervalMs = subscriptionAttributes.checkIntervalMs || 50;
     }
 
     public connect(): Promise<void> {
-        this.watcher.on('add', path => this.files.push(path));
-        this.watcher.on('change', path => this.files.push(path));
+        const watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
+        watcher.on('add', (path: string) => this.pushFileContent(path));
+        watcher.on('change', (path: string) => this.pushFileContent(path));
         return Promise.resolve();
     }
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve, reject) => {
-            this.popFileContent()
-                .then( fileContent => resolve(fileContent))
-                .catch( err => reject(err));
-            });
-    }
-
-    private popFileContent(): Promise<string> {
-        return new Promise((resolve, reject) => {
             var timer = setInterval(() => {
-                const file: string | undefined = this.files.pop();
-                if (file) {
-                    Logger.debug(`FileNameWatcher subscription detected file: ${file}`);
-
+                if (this.error)
+                    return reject(this.error);
+                if (this.watchedFileContent.length > 0) {
                     clearInterval(timer);
-                    this.readFile(file)
-                        .then(fileContent => resolve(fileContent))
-                        .catch(err => reject(err));
+                    const content = this.watchedFileContent.pop();
+                    if (content)
+                        return resolve(content);
+                    else
+                    {
+                        return reject();
+                    }
                 }
             }, this.checkIntervalMs);
-        });
+        })
     }
 
-    private readFile(filename: string): Promise<string> {
-        return new Promise((resolve, reject) => {
-           fs.readFile(filename, (error: any, data: string) => {
-               if (error)
-                   reject(error);
-               else {
-                   resolve(data);
-               }
-           });
+    private pushFileContent = (fileName: string): void => {
+        Logger.info(`${this.type} found: ${fileName}`)
+        fs.readFile(fileName, (error: any, data: Buffer) => {
+            if (error) {
+                this.error = error;
+                Logger.warning(`Error reading file ${JSON.stringify(error)}`)
+            }
+            else {
+                    this.watchedFileContent.push(data.toString());
+            }
         });
     }
 }

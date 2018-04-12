@@ -8,15 +8,25 @@ const fs = require("fs");
 export class FilePublisher extends Publisher {
 
     private filenamePrefix: string;
+    private filenameExtension: string;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
         this.filenamePrefix = publisherAttributes.filenamePrefix;
+        this.filenameExtension = publisherAttributes.filenameExtension;
     }
 
     public publish(): Promise<void> {
-        const filename = this.filenamePrefix + new RequisitionIdGenerator(this.payload).generateId() + ".json";
-        fs.writeFileSync(filename, JSON.stringify(JSON.parse(this.payload), null, 2));
+        const filename = this.filenamePrefix +
+                            new RequisitionIdGenerator(this.payload).generateId() +
+                            "." +
+                            this.filenameExtension;
+        let value = this.payload;
+        try {
+            value = JSON.stringify(JSON.parse(this.payload), null, 2);
+        } catch (exc){}
+
+        fs.writeFileSync(filename, value);
         return Promise.resolve();
     }
 }
