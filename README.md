@@ -94,8 +94,11 @@ And last, but not least, log-level defines how execution information are logged 
 
  
 ### frequently asked question
-Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?
-- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely, check it out](/src/inceptionTest/inception.test.ts "Inception Test")
+1.	Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?
+	- I'm glad that you asked. As a matter of fact, yes, it does test itself, [absolutely, check it out](/src/inceptionTest/inception.test.ts "Inception Test")
+\
+\
+\
 
 ###### IPC mechanisms currently supported are:
         standard input; standard output; files; UDS; http; amqp and mqtt.
