@@ -41,16 +41,14 @@ describe("Inception test", () => {
             sleep(500);
 
             tester = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/tester.yml']);
-            sleep(3500);
+            sleep(2500);
 
             const testerReports = findEveryJsonFile()
-                .filter(filename => filename.indexOf("tester") > 0)
+                .filter(filename => filename.indexOf("_test_") >= 0)
                 .map(filename => fs.readFileSync(filename))
                 .map(fileContent => JSON.parse(fileContent))
 
-            expect(testerReports[0].id).toBe(testerReports[1].id);
             expect(testerReports.length).toBe(2);
-
             const finalReport = testerReports[1];
 
             expect(finalReport.valid).toBeTruthy();
@@ -73,7 +71,7 @@ describe("Inception test", () => {
                 done();
             })
         } catch (err) {
-            console.error(err)
+            // console.error(err)
         }
 
     })

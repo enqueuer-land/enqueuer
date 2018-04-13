@@ -57,10 +57,6 @@ let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_execu
     }
     startReader(input) {
         input.receiveMessage()
-            .then((requisition) => {
-            this.multiPublisher.publish(JSON.stringify(requisition)).then();
-            return requisition;
-        })
             .then((requisition) => new requisition_starter_1.RequisitionStarter(requisition).start())
             .then((report) => this.multiPublisher.publish(JSON.stringify(report)))
             .then(() => this.startReader(input))

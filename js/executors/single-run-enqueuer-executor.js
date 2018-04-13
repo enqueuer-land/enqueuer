@@ -54,7 +54,6 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             });
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
-                this.multiPublisher.publish(JSON.stringify(requisition, null, 2)).then().catch(console.log.bind(console));
                 new requisition_starter_1.RequisitionStarter(requisition)
                     .start()
                     .then(report => {
@@ -65,6 +64,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
                 }).catch(console.log.bind(console));
             })
                 .catch((err) => {
+                this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                 logger_1.Logger.error(err);
             });
         });

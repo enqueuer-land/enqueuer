@@ -43,11 +43,9 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
                 Logger.info("There is no more requisition to be ran");
                 this.persistSummary(this.reportMerge);
                 return resolve(this.reportMerge);
-            })
+            });
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
-                    this.multiPublisher.publish(JSON.stringify(requisition, null, 2)).then().catch(console.log.bind(console));
-
                     new RequisitionStarter(requisition)
                         .start()
                         .then(report => {
@@ -59,6 +57,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
                         }).catch(console.log.bind(console));
                 })
                 .catch((err) => {
+                    this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                     Logger.error(err);
                 })
         });
