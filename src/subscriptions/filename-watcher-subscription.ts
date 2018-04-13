@@ -38,7 +38,7 @@ export class FileNameWatcherSubscription extends Subscription {
     private popFileContent(): Promise<string> {
         return new Promise((resolve, reject) => {
             let interval = setInterval(() => {
-                const pop = this.filesName.pop();
+                const pop = this.filesName.shift();
                 if (pop)
                 {
                     try {

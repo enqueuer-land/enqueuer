@@ -49,7 +49,7 @@ let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subs
     popFileContent() {
         return new Promise((resolve, reject) => {
             let interval = setInterval(() => {
-                const pop = this.filesName.pop();
+                const pop = this.filesName.shift();
                 if (pop) {
                     try {
                         resolve(fs.readFileSync(pop).toString());

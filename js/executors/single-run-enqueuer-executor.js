@@ -54,11 +54,11 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             });
             this.singleRunRequisitionInput.receiveRequisition()
                 .then(requisition => {
-                logger_1.Logger.info(`Starting requisition ${requisition.id}`);
                 this.multiPublisher.publish(JSON.stringify(requisition, null, 2)).then().catch(console.log.bind(console));
                 new requisition_starter_1.RequisitionStarter(requisition)
                     .start()
                     .then(report => {
+                    logger_1.Logger.info(`Requisition ${requisition.id} is over`);
                     this.multiPublisher.publish(JSON.stringify(report, null, 2)).then().catch(console.log.bind(console));
                     this.mergeNewReport(report, requisition.id);
                     resolve(this.execute()); //Run the next one
@@ -84,7 +84,8 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         };
         logger_1.Logger.info(`Reports summary:`);
         console.log(prettyjson.render(report, options));
-        fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 3));
+        if (this.outputFilename)
+            fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 3));
     }
     ;
 };
