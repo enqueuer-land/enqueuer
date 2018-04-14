@@ -3,12 +3,11 @@ import {RequisitionIdGenerator} from "./requisition-id-generator";
 import {RequisitionModel} from "./models/requisition-model";
 import {ValidateFunction} from "ajv";
 import {VariablesController} from "../variables/variables-controller";
+import {PlaceHolderReplacer} from "../variables/place-holder-replacer";
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");
 const Ajv = require('ajv');
-var traverse 		= require('traverse');
-
 
 export class RequisitionParser {
 
@@ -31,33 +30,12 @@ export class RequisitionParser {
         return requisitionWithId;
     }
 
-    private replaceVariables(parsedRequisition: any): RequisitionModel {
-        const enqueuerReplace = substituteSync(parsedRequisition, VariablesController.persistedVariables());
-        const sessionReplace = substituteSync(enqueuerReplace, VariablesController.sessionVariables());
-        return sessionReplace;
+    private replaceVariables(parsedRequisition: {}): any {
+        const placeHolderReplacer = new PlaceHolderReplacer();
+        placeHolderReplacer
+            .addVariableMap(VariablesController.persistedVariables())
+            .addVariableMap(VariablesController.sessionVariables());
+        return placeHolderReplacer.replace(parsedRequisition) as RequisitionModel;
     }
 
-}
-
-var substituteSync = function (json: any, variablesMap: any) {
-    var str = JSON.stringify(json);
-    var output = str.replace(/{{\w+}}/g, (placeHolder: string): string => {
-        const key = placeHolder.substr(2, placeHolder.length - 4);
-        const variableValue = variablesMap[key];
-
-        if (variableValue) {
-                if (typeof variableValue == 'object') {
-                    // Stringify if not string yet
-                    return JSON.stringify(variableValue);
-                }
-                return variableValue;
-            }
-        return placeHolder;
-    });
-
-    // Array must have the first and last " stripped
-    // otherwise the JSON object won't be valid on parse
-    output = output.replace(/"\[(.*)\]"/, '[$1]');
-
-    return JSON.parse(output);
 }
