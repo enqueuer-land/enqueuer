@@ -11,7 +11,7 @@ In an event-driven world everything all events move asynchronously. As soon as w
     $ git clone https://github.com/lopidio/enqueuer.git
     $ cd enqueuer
     $ npm install
-    $ npm start
+    $ npm start -- --config-file conf/enqueuer.yml
 
 ### what it does?
 Checks whether an event-driven-component acts as expected.

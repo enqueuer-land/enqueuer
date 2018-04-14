@@ -5,22 +5,22 @@
     {
       "type": "http-server",
       "endpoint": "/enqueuer",
-      "port": "23075",
+      "port": "{{httpPort}}",
       "method": "POST",
       "response": {
         "status": 200
       },
-      "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === 'virgs';",
+      "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === '{{httpPayload}}';",
       "timeout": 10000
     }
   ],
   "startEvent": {
     "publisher": {
       "type": "http-client",
-      "url": "http://localhost:23075/enqueuer",
+      "url": "http://localhost:{{httpPort}}/enqueuer",
       "method": "POST",
       "payload": {
-        "enqueuer": "virgs"
+        "enqueuer": "{{httpPayload}}"
       },
       "headers": {
         "content-type": "application/json"

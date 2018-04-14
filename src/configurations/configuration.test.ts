@@ -71,5 +71,27 @@ describe('Configuration', function() {
 
         expect(actualOutput).toBe(expectedOutput);
     });
-    
+
+    it('get variables from file', function () {
+        const expectedVariable = {key: "value"};
+        const configurationFile = {
+            variables: expectedVariable
+        }
+
+        const actualOutput = new Configuration({}, configurationFile).getFileVariables();
+
+        expect(actualOutput).toBe(expectedVariable);
+    });
+
+    it('get variables from command line', function () {
+        const expectedVariable = {key: "value"};
+        const configurationFile = {
+            variables: expectedVariable
+        }
+
+        const actualOutput = new Configuration({}, configurationFile).getFileVariables();
+
+        expect(actualOutput).toBe(expectedVariable);
+    });
+
 });
