@@ -7,7 +7,7 @@
 There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
 In an event-driven world everything all events move asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component of your architecture acts like it should act when it was designed. It makes you be sure that, at least on the boundaries of this service, everything works as expected.
 
-######Go ahead and try it:
+###### Go ahead and try it:
     $ git clone https://github.com/lopidio/enqueuer.git
     $ cd enqueuer
     $ npm install
@@ -107,7 +107,7 @@ Accepted values are: **trace**; **debug**; **info**; **warning**; **error**; and
 ## testing stuff
 ### writing tests
 As mentioned previously in requisition chapter of this README file. 
-While writing a meta function body field (*onMessageReceived, prePublishing) you have a special variable called **test**.
+While writing a meta function body field (*onMessageReceived, prePublishing*) you have a special variable called **test**.
     
     "onMessageReceived": "test['failed'] = false;",
     ...
