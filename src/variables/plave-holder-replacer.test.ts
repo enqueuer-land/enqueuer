@@ -43,4 +43,18 @@ describe('PlaceHolderReplacer', function() {
         expect(afterReplace.replaceble).toBe("{{key}}");
     });
 
+    it('should not replace key placeHolder', function() {
+        const placeHolderReplacer = new PlaceHolderReplacer();
+
+        placeHolderReplacer.addVariableMap({
+            key: "someValue"
+        });
+        const afterReplace: any = placeHolderReplacer.replace({
+            "{{key}}": "value"
+        })
+
+        expect(afterReplace.someValue).not.toBeDefined();
+        expect(afterReplace["{{key}}"]).toBe("value");
+    });
+
 });

@@ -7,7 +7,24 @@ export class PlaceHolderReplacer {
     }
 
     public replace(json: {}): {} {
-        var str = JSON.stringify(json);
+        return this.replaceInSubChildren(json);
+    }
+
+    private replaceInSubChildren = (node: any): any => {
+        for (const key in node) {
+            const attribute = node[key];
+            if (typeof attribute == 'object') {
+                node[key] = this.replaceInSubChildren(attribute);
+            }
+            else {
+                node[key] = this.replaceValue(attribute);
+            }
+        }
+        return node;
+    }
+
+    public replaceValue(node: {}): {} {
+        var str = JSON.stringify(node);
         var output = str.replace(/{{\w+}}/g, (placeHolder: string): string => {
             const key: string = placeHolder.substr(2, placeHolder.length - 4);
             return this.checkInEveryMap(key) || placeHolder;

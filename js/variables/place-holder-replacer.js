@@ -3,13 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class PlaceHolderReplacer {
     constructor() {
         this.variablesMap = [];
+        this.replaceInSubChildren = (node) => {
+            for (const key in node) {
+                const attribute = node[key];
+                if (typeof attribute == 'object') {
+                    node[key] = this.replaceInSubChildren(attribute);
+                }
+                else {
+                    node[key] = this.replaceValue(attribute);
+                }
+            }
+            return node;
+        };
     }
     addVariableMap(variableMap) {
         this.variablesMap.unshift(variableMap);
         return this;
     }
     replace(json) {
-        var str = JSON.stringify(json);
+        return this.replaceInSubChildren(json);
+    }
+    replaceValue(node) {
+        var str = JSON.stringify(node);
         var output = str.replace(/{{\w+}}/g, (placeHolder) => {
             const key = placeHolder.substr(2, placeHolder.length - 4);
             return this.checkInEveryMap(key) || placeHolder;
