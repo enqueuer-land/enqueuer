@@ -94,4 +94,33 @@ describe('PlaceHolderReplacer', function() {
         expect(afterReplace["{{key}}"]).toBe("value");
     });
 
+    it('should handle array substitution', function() {
+        const placeHolderReplacer = new PlaceHolderReplacer();
+
+        placeHolderReplacer.addVariableMap({
+            key: "someValue"
+        });
+        const afterReplace: any = placeHolderReplacer.replace({
+            key: ["string", "{{key}}", 0]
+        })
+
+        expect(afterReplace.key).toEqual( ["string", "someValue", 0]);
+    });
+
+    it('should handle array object substitution', function() {
+        const placeHolderReplacer = new PlaceHolderReplacer();
+
+        placeHolderReplacer.addVariableMap({
+            key: {
+                nested: "value"
+            }
+        });
+        const afterReplace: any = placeHolderReplacer.replace({
+            key: ["string", "{{key}}", 0]
+        })
+
+        expect(afterReplace.key).toEqual( [ "string", {"nested": "value"}, 0]);
+        expect(afterReplace.key[1].nested).toEqual("value");
+    });
+
 });

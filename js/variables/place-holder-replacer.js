@@ -28,17 +28,12 @@ class PlaceHolderReplacer {
             const key = placeHolder.substr(2, placeHolder.length - 4);
             return this.checkInEveryMap(key) || placeHolder;
         });
-        // Array must have the first and last " stripped
-        // otherwise the JSON object won't be valid on parse
-        const arrayAdapted = output.replace(/"\[(.*)\]"/, '[$1]');
         try {
-            return JSON.parse(arrayAdapted);
+            return JSON.parse(output);
         }
         catch (exc) {
+            return output;
         }
-        // Array must have the first and last " stripped
-        // otherwise the JSON object won't be valid on parse
-        return arrayAdapted;
     }
     checkInEveryMap(key) {
         let map = {};

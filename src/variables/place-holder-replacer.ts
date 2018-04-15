@@ -30,20 +30,12 @@ export class PlaceHolderReplacer {
                             return this.checkInEveryMap(key) || placeHolder;
                     });
 
-        // Array must have the first and last " stripped
-        // otherwise the JSON object won't be valid on parse
-        const arrayAdapted = output.replace(/"\[(.*)\]"/, '[$1]');
-
         try {
-            return JSON.parse(arrayAdapted);
+            return JSON.parse(output);
         }
         catch (exc) {
-
+            return output;
         }
-
-        // Array must have the first and last " stripped
-        // otherwise the JSON object won't be valid on parse
-        return arrayAdapted;
     }
 
     private checkInEveryMap(key: string): string | null {
