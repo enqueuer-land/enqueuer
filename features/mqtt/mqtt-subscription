@@ -1,6 +1,7 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Logger} from "../loggers/logger";
 const mqtt = require("mqtt")
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "mqtt")
@@ -20,6 +21,7 @@ export class MqttSubscription extends Subscription {
     }
 
     public receiveMessage(): Promise<string> {
+        Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
         this.client.subscribe(this.topic);
         return new Promise((resolve, reject) => {
             if (!this.client.connected)
