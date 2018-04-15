@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-if [ $#  -eq 0 ]; then
+if [ "$1"  == "list" ]; then
     cd features
     ls -1d */
     exit 0;
