@@ -16,8 +16,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var subscription_1 = require("../../src/subscriptions/subscription");
-var injector_1 = require("../../src/injector/injector");
+var subscription_1 = require("./subscription");
+var injector_1 = require("../injector/injector");
 var amqp = require('amqp');
 var AmqpSubscription = /** @class */ (function (_super) {
     __extends(AmqpSubscription, _super);

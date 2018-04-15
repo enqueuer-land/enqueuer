@@ -7,7 +7,7 @@
     "start": "node js/index.js",
     "test": "jest --forceExit && npm start -- -c integrationTest/enqueuer.yml",
     "enable-feature": "./enable-feature.sh",
-    "build": "rm -rf js/ && find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc"
+    "build": "rm -rf js/ && find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc && npm link"
   },
   "repository": {
     "type": "git",

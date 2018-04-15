@@ -16,8 +16,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var publisher_1 = require("../../src/publishers/publisher");
-var injector_1 = require("../../src/injector/injector");
+var publisher_1 = require("./publisher");
+var injector_1 = require("../injector/injector");
 var amqp = require('amqp');
 var AmqpPublisher = /** @class */ (function (_super) {
     __extends(AmqpPublisher, _super);
