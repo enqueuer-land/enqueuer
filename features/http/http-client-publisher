@@ -1,7 +1,7 @@
 import {Publisher} from "./publisher";
 import {Injectable} from "../injector/injector";
 import {PublisherModel} from "../requisitions/models/publisher-model";
-import {Logger} from "..src/loggers/logger";
+import {Logger} from "../loggers/logger";
 const request = require("request");
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "http-client")
