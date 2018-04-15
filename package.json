@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node js/index.js",
     "test": "jest --forceExit && npm start -- -c integrationTest/enqueuer.yml",
+    "enable-feature": "./enable-feature.sh",
     "build": "find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc"
   },
   "repository": {
@@ -18,7 +19,6 @@
     "enqueuer": "js/index.js"
   },
   "dependencies": {
-    "@types/mqtt": "^2.5.0",
     "ajv": "^6.2.1",
     "amqp": "^0.2.6",
     "chokidar": "^2.0.2",

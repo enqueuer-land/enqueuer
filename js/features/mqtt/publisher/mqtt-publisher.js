@@ -9,9 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const publisher_1 = require("../../src/publishers/publisher");
-const injector_1 = require("../../src/injector/injector");
-const logger_1 = require("../../src/loggers/logger");
+const publisher_1 = require("../../../src/publishers/publisher");
+const injector_1 = require("../../../src/injector/injector");
+const logger_1 = require("../../../src/loggers/logger");
 const mqtt = require("mqtt");
 let MqttPublisher = class MqttPublisher extends publisher_1.Publisher {
     constructor(publish) {

@@ -1,6 +1,6 @@
-import {Subscription} from "./subscription";
-import {Injectable} from "../injector/injector";
-import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Subscription} from "../../src/subscriptions/subscription";
+import {Injectable} from "../../src/injector/injector";
+import {SubscriptionModel} from "../../src/requisitions/models/subscription-model";
 const mqtt = require("mqtt")
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "mqtt")

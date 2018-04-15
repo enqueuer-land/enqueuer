@@ -1,7 +1,7 @@
-import {Publisher} from "./publisher";
-import {Injectable} from "../injector/injector";
-import {PublisherModel} from "../requisitions/models/publisher-model";
-import {Logger} from "../loggers/logger";
+import {Publisher} from "../../src/publishers/publisher";
+import {Injectable} from "../../src/injector/injector";
+import {PublisherModel} from "../../src/requisitions/models/publisher-model";
+import {Logger} from "../../src/loggers/logger";
 const mqtt = require("mqtt")
 
 @Injectable((publishRequisition: any) => publishRequisition.type === "mqtt")
