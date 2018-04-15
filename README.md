@@ -7,11 +7,11 @@
 There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
 In an event-driven world everything all events move asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component of your architecture acts like it should act when it was designed. It makes you be sure that, at least on the boundaries of this service, everything works as expected.
 
-###### Go ahead and try it:
+##### Go ahead and try it:
     $ git clone https://github.com/lopidio/enqueuer.git
     $ cd enqueuer
     $ npm install
-    $ npm start -- --config-file conf/enqueuer.yml --session-variables httpPayload=virgs
+    $ enqueuer --config-file conf/enqueuer.yml --session-variables httpPayload=virgs
 
 ### what it does?
 Checks whether an event-driven-component acts as expected.
@@ -43,19 +43,21 @@ Let me explain what each value means:
 		-	**type**: string, it tells how to identify and instantiate the proper subscription. Ex.: "mqtt".
 		-	**timeout**: optional number in milliseconds, how long the subscription has to wait to be considered as an invalid one. Ex.: 1000.
 		-	**onMessageReceived**: js code, script executed when a message is received.
-		        Here, you have a special variable called **message** and it will have the value received in the subscription.
-		        That's where you would make assertions on the received payload. 
-		        Ex.: ```"test['test label'] = true;"``` or ```"test['some time has passed'] = new Date().getTime() + '' >= message"```.
+		        Here, there is a special variable called **message** and it will have the value received in the 
+			subscription and you can make assertions on the received payload. 
+			Ex.: ```"test['some time has passed'] = new Date().getTime() + '' >= message"```.
+			You can read more about meta-function code in the **meta-function** session.
 -	**startEvent**: object
 	-	**publisher**: object
 		-	**type**: string, it tells how to identify and instantiate the proper publisher. Ex.: "mqtt".
 		-	**payload**: object, what's is gonna be published. It may be whatever you want: string, number or even another [requisition](/src/inceptionTest/inceptionRequisition.enq).
-		-	**prePublishing**: js code, script executed when a message is received. 
-		        That's where you would make assertions on the received payload. 
-		        Ex.: ```"test['test label'] = true;"```.
-                Here, you have a special variable called **publisher** and it will publisher attributes.
+		-	**prePublishing**: js code, script executed just before message publication. 
+                	There is a special variable called **publisher** and it will be the publisher attributes themselves.
 		        You can even redefine a new value for *publisher* attributes in run tume. 
 		        Like this: ```"publisher.payload=new Date().getTime();"``` or ```"publisher.type='mqtt'"```.
+		        You can make assertions if you want to. 
+		        Ex.: ```"test['typeMqtt'] = publisher.type=='mqtt';"```.
+			You can read more about meta-function code in the **meta-function** session.			
 
 ### why is it useful?
 It is meant to help your development process.
@@ -104,17 +106,24 @@ Accepts a list of publishing mechanisms. So, every time a new requisition is exe
 And last, but not least, log-level defines how execution information are logged in the standard output file descriptor.
 Accepted values are: **trace**; **debug**; **info**; **warning**; **error**; and **fatal**.
 
-## testing stuff
-### writing tests
+### meta-functions
 As mentioned previously in requisition chapter of this README file. 
-While writing a meta function body field (*onMessageReceived, prePublishing*) you have a special variable called **test**.
-    
-    "onMessageReceived": "test['failed'] = false;",
-    ...
-    "prePublishing": "test['failing test label'] = 1 == 2;"
+While writing a meta function body field (*onMessageReceived, prePublishing*) you have special values like a variable called **test** and three special functions **persistEnqueuerVariable(name, value)**, **persistSessionVariable(name, value)** and **deleteEnqueuerVariable(name)**;
+-	special variables
+	-	**test**:
+		To test something you can write: "test['label'] = booleanValue;".
+		The boolean value will be evaluated in runtime and every test assertion will be taken in consideration in order to determine whether a requisition is valid.
+		Ex.: ```"test['test label'] = true;"```.
+	-	**special functions**:
+	There are three special functions that can be called inside this code: *persistEnqueuerVariable(name, value)*, *persistSessionVariable(name, value)* and *deleteEnqueuerVariable(name)*.
+	In order to retrieve an *enqueuerVariable* or a *sessionVariable* use double curly-brackets: "{{variableName}}". Ex.: ```console.log({{httpPort}});```
+		-	**persistEnqueuerVariable**:
+		*EnqueuerVariables* are persisted in the [configuration File](/conf/enqueuer.yml), therefore they are persisted through every **enqueuer** execution. You can persist a *enqueuerVariable* through this code like this: ```persistEnqueuerVariable("httpPort", 23076);```
+		-	**deleteEnqueuerVariable**:
+		To delete the a *enqueuerVariable* do this: ```deleteEnqueuerVariable("httpPort");```.
+		-	**persistSessionVariable**:
+		In the other hand, *sessionVariables* are kept in memmory, which means that they will be persisted just while the current **enqueuer** process is executed. To persist a *sessionVariable*, your code has to have: ```persistSessionVariable("sessionVar", 100)```;
 
-Every test assertion will be taken in consideration in order to determine whether a requisition is valid.
-   
 ### when is a requisition result invalid?
 A requisition is invalid when:
 - Requisition has timed out; or
