@@ -60,20 +60,16 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         return this.report;
     }
     executePrePublishingFunction() {
-        try {
-            const prePublishFunction = new pre_publish_meta_function_1.PrePublishMetaFunction(this.publisherOriginalAttributes);
-            const functionResponse = new meta_function_executor_1.MetaFunctionExecutor(prePublishFunction).execute();
-            if (functionResponse.publisher.payload)
-                functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
-            logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
-            this.publisher = container_1.Container.get(publisher_1.Publisher).createFromPredicate(functionResponse.publisher);
-            this.prePublishingFunctionReport = functionResponse;
-        }
-        catch (err) {
-            this.prePublishingFunctionReport.exception = {
-                "Function Compilation Error": err
-            };
-            this.report.errorsDescription.concat(err);
+        const prePublishFunction = new pre_publish_meta_function_1.PrePublishMetaFunction(this.publisherOriginalAttributes);
+        const functionResponse = new meta_function_executor_1.MetaFunctionExecutor(prePublishFunction).execute();
+        if (functionResponse.publisher.payload)
+            functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
+        logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
+        this.publisher = container_1.Container.get(publisher_1.Publisher).createFromPredicate(functionResponse.publisher);
+        this.prePublishingFunctionReport = functionResponse;
+        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (functionResponse.exception) {
+            this.report.errorsDescription.concat(functionResponse.exception);
         }
     }
 };

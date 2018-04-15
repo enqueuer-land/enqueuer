@@ -4,18 +4,17 @@ class PrePublishMetaFunction {
     constructor(publisherAttributes) {
         this.publisherAttributes = publisherAttributes;
     }
-    createFunction() {
-        const fullBody = `let test = {};
-                                    let report = {};
-                                    let publisher = \`${JSON.stringify(this.publisherAttributes)}\`;
-                                    publisher = JSON.parse(publisher);
-                                    ${this.publisherAttributes.prePublishing};
-                                    return {
-                                            test: test,
-                                            report: report,
-                                            publisher: publisher
-                                     };`;
-        return new Function("args", fullBody);
+    createBody() {
+        return `let test = {};
+                    let report = {};
+                    let publisher = \`${JSON.stringify(this.publisherAttributes)}\`;
+                    publisher = JSON.parse(publisher);
+                    ${this.publisherAttributes.prePublishing};
+                    return {
+                            test: test,
+                            report: report,
+                            publisher: publisher
+                     };`;
     }
 }
 exports.PrePublishMetaFunction = PrePublishMetaFunction;

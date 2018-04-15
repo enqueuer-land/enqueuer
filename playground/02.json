@@ -5,7 +5,7 @@
     {
       "type": "uds",
       "path": "/tmp/unix.sock",
-      "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
+      "onMessageReceived": "test['session variable retrieved'] = message.indexOf('someValue') >= 0; console.log('Message: ' + message); persistEnqueuerVariable('enqueuerKey', 10);",
       "timeout": 500
     }
   ],
@@ -13,7 +13,7 @@
     "publisher": {
       "type": "uds",
       "path": "/tmp/unix.sock",
-      "payload": "enqueuer"
+      "payload": "{{sessionKey}}"
     }
   }
 }

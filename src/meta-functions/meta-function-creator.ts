@@ -1,3 +1,3 @@
 export interface MetaFunctionCreator {
-    createFunction(): Function;
+    createBody(): string;
 }

@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const version = require('../../package.json').version;
-const readYml = require('read-yaml');
+const yaml = require('yamljs');
 let configFileName = "conf/enqueuer.yml";
+const fs = require("fs");
 let commandLineVariables = {};
 let commander = {};
 if (!process.argv[1].toString().match("jest")) {
@@ -25,7 +26,7 @@ if (!process.argv[1].toString().match("jest")) {
 }
 let ymlFile = {};
 try {
-    ymlFile = readYml.sync(configFileName);
+    ymlFile = yaml.load(configFileName);
 }
 catch (err) {
     logger_1.Logger.error(`Impossible to read ${configFileName} file: ${err}`);
@@ -55,6 +56,14 @@ class Configuration {
     }
     getFileVariables() {
         return this.configurationFile.variables || {};
+    }
+    setFileVariable(name, value) {
+        this.configurationFile.variables[name] = value;
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
+    }
+    deleteFileVariable(name) {
+        delete this.configurationFile.variables[name];
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
     }
     getSessionVariables() {
         return commandLineVariables;

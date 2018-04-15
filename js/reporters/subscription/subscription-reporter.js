@@ -112,17 +112,11 @@ class SubscriptionReporter {
     }
     executeSubscriptionFunction() {
         const onMessageReceivedSubscription = new on_message_received_meta_function_1.OnMessageReceivedMetaFunction(this.subscription);
-        let functionResponse = null;
-        try {
-            functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
-            logger_1.Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
-        }
-        catch (err) {
-            functionResponse = {
-                exception: { "Function Compilation Error": err }
-            };
-            this.report.errorsDescription.concat(err);
+        let functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
+        logger_1.Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
+        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (functionResponse.exception) {
+            this.report.errorsDescription.concat(functionResponse.exception);
         }
         this.report = Object.assign({}, this.report, { onMessageFunctionReport: functionResponse, messageReceivedTimestamp: new date_controller_1.DateController().toString() });
     }

@@ -1,10 +1,11 @@
 import {PublisherModel} from "../requisitions/models/publisher-model";
 import {Logger} from "../loggers/logger";
 const version = require('../../package.json').version;
-
-const readYml  = require('read-yaml');
-
+const yaml = require('yamljs');
 let configFileName = "conf/enqueuer.yml";
+const fs = require("fs");
+
+
 
 let commandLineVariables: any = {};
 let commander: any = {};
@@ -33,7 +34,7 @@ if (!process.argv[1].toString().match("jest")) {
 
 let ymlFile = {};
 try {
-    ymlFile = readYml.sync(configFileName);
+    ymlFile = yaml.load(configFileName);
 } catch (err) {
     Logger.error(`Impossible to read ${configFileName} file: ${err}`);
     ymlFile = {};
@@ -70,6 +71,16 @@ export class Configuration {
 
     public getFileVariables(): any {
         return this.configurationFile.variables || {};
+    }
+
+    public setFileVariable(name: string, value: any) {
+        this.configurationFile.variables[name] = value;
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
+    }
+
+    public deleteFileVariable(name: string) {
+        delete this.configurationFile.variables[name];
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
     }
 
     public getSessionVariables(): any {

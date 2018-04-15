@@ -10,7 +10,7 @@
       "response": {
         "status": 200
       },
-      "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === '{{httpPayload}}';",
+      "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === '{{httpPayload}}'; persistSessionVariable('sessionKey', JSON.parse(message).sessionVar);",
       "timeout": 10000
     }
   ],
@@ -20,7 +20,8 @@
       "url": "http://localhost:{{httpPort}}/enqueuer",
       "method": "POST",
       "payload": {
-        "enqueuer": "{{httpPayload}}"
+        "enqueuer": "{{httpPayload}}",
+        "sessionVar": "someValue"
       },
       "headers": {
         "content-type": "application/json"

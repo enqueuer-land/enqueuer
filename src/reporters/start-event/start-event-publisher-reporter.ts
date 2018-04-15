@@ -60,21 +60,20 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     private executePrePublishingFunction() {
-        try {
-            const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
-            const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
+        const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
+        const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
 
-            if (functionResponse.publisher.payload)
-                functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
+        if (functionResponse.publisher.payload)
+            functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
 
-            Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
-            this.publisher = Container.get(Publisher).createFromPredicate(functionResponse.publisher);
-            this.prePublishingFunctionReport = functionResponse;
-        } catch (err) {
-            this.prePublishingFunctionReport.exception = {
-                "Function Compilation Error": err
-            }
-            this.report.errorsDescription.concat(err);
+        Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
+        this.publisher = Container.get(Publisher).createFromPredicate(functionResponse.publisher);
+        this.prePublishingFunctionReport = functionResponse;
+
+        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (functionResponse.exception) {
+            this.report.errorsDescription.concat(functionResponse.exception);
         }
+
     }
 }

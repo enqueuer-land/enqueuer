@@ -133,16 +133,11 @@ export class SubscriptionReporter implements Reporter {
 
     private executeSubscriptionFunction() {
         const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
-        let functionResponse = null;
-        try {
-            functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
-            Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
-        } catch (err) {
-            functionResponse = {
-                exception: {"Function Compilation Error": err}
-            }
-            this.report.errorsDescription.concat(err);
+        let functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
+        Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
+        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (functionResponse.exception) {
+            this.report.errorsDescription.concat(functionResponse.exception);
         }
 
         this.report = {
