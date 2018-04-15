@@ -6,7 +6,7 @@ if [ "$1"  == "list" ]; then
     ls -1d */
     exit 0;
 fi
-enablerPath="./features/$1/enable.sh"
+enablerPath="../features/$1/enable.sh"
 if [ -f $enablerPath ]; then
     source $enablerPath;
     npm run build;
