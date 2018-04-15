@@ -4,12 +4,16 @@ const logger_1 = require("../loggers/logger");
 const requisition_runner_1 = require("./requisition-runner");
 class RequisitionStarter {
     constructor(requisition) {
-        logger_1.Logger.info(`Starting requisition ${requisition.id}`);
+        this.requisitionId = requisition.id;
+        logger_1.Logger.info(`Starting requisition ${this.requisitionId}`);
         this.requisitionRunner = new requisition_runner_1.RequisitionRunner(requisition);
     }
     start() {
         return new Promise((resolve) => {
-            return this.requisitionRunner.start((requisitionResultReport) => resolve(requisitionResultReport));
+            return this.requisitionRunner.start((requisitionResultReport) => {
+                logger_1.Logger.info(`Requisition ${this.requisitionId} is over`);
+                resolve(requisitionResultReport);
+            });
         });
     }
 }

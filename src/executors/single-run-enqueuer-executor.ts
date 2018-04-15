@@ -45,17 +45,10 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
                 return resolve(this.reportMerge);
             });
             this.singleRunRequisitionInput.receiveRequisition()
-                .then(requisition => {
-                    new RequisitionStarter(requisition)
-                        .start()
-                        .then(report => {
-                            Logger.info(`Requisition ${requisition.id} is over`);
-                            this.multiPublisher.publish(JSON.stringify(report, null, 2)).then().catch(console.log.bind(console));
-                            this.mergeNewReport(report, requisition.id);
-
-                            resolve(this.execute()); //Run the next one
-                        }).catch(console.log.bind(console));
-                })
+                .then(requisition => new RequisitionStarter(requisition).start())
+                .then(report => this.mergeNewReport(report))
+                .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
+                .then( () => resolve(this.execute())) //Run the next one
                 .catch((err) => {
                     this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                     Logger.error(err);
@@ -63,12 +56,13 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
         });
     }
 
-    private mergeNewReport(newReport: Report, id: string): void {
-        this.reportMerge.requisitions[id] = newReport.valid;
+    private mergeNewReport(newReport: Report): Report {
+        this.reportMerge.requisitions[newReport.id] = newReport.valid;
         this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
         newReport.errorsDescription.forEach(newError => {
-            this.reportMerge.errorsDescription.push(`[Requisition][${id}]${newError}`)
+            this.reportMerge.errorsDescription.push(`[Requisition][${newReport.id}]${newError}`)
         })
+    return newReport;
     }
 
     private persistSummary(report: Report) {

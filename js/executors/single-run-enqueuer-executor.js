@@ -53,28 +53,23 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
                 return resolve(this.reportMerge);
             });
             this.singleRunRequisitionInput.receiveRequisition()
-                .then(requisition => {
-                new requisition_starter_1.RequisitionStarter(requisition)
-                    .start()
-                    .then(report => {
-                    logger_1.Logger.info(`Requisition ${requisition.id} is over`);
-                    this.multiPublisher.publish(JSON.stringify(report, null, 2)).then().catch(console.log.bind(console));
-                    this.mergeNewReport(report, requisition.id);
-                    resolve(this.execute()); //Run the next one
-                }).catch(console.log.bind(console));
-            })
+                .then(requisition => new requisition_starter_1.RequisitionStarter(requisition).start())
+                .then(report => this.mergeNewReport(report))
+                .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
+                .then(() => resolve(this.execute())) //Run the next one
                 .catch((err) => {
                 this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                 logger_1.Logger.error(err);
             });
         });
     }
-    mergeNewReport(newReport, id) {
-        this.reportMerge.requisitions[id] = newReport.valid;
+    mergeNewReport(newReport) {
+        this.reportMerge.requisitions[newReport.id] = newReport.valid;
         this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
         newReport.errorsDescription.forEach(newError => {
-            this.reportMerge.errorsDescription.push(`[Requisition][${id}]${newError}`);
+            this.reportMerge.errorsDescription.push(`[Requisition][${newReport.id}]${newError}`);
         });
+        return newReport;
     }
     persistSummary(report) {
         const options = {
