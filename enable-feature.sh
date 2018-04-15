@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+
+if [ $#  -eq 0 ]; then
+    cd features
+    ls -1d */
+    exit 0;
+fi
 enablerPath="./features/$1/enable.sh"
 if [ -f $enablerPath ]; then
     source $enablerPath;
