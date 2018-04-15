@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class PlaceHolderReplacer {
     constructor() {
         this.variablesMap = [];
-        this.replaceInSubChildren = (node) => {
+        this.replaceChildren = (node) => {
             for (const key in node) {
                 const attribute = node[key];
                 if (typeof attribute == 'object') {
-                    node[key] = this.replaceInSubChildren(attribute);
+                    node[key] = this.replaceChildren(attribute);
                 }
                 else {
-                    node[key] = this.replaceValue(attribute);
+                    node[key] = this.replaceValue(attribute.toString());
                 }
             }
             return node;
@@ -21,18 +21,24 @@ class PlaceHolderReplacer {
         return this;
     }
     replace(json) {
-        return this.replaceInSubChildren(json);
+        return this.replaceChildren(json);
     }
     replaceValue(node) {
-        var str = JSON.stringify(node);
-        var output = str.replace(/{{\w+}}/g, (placeHolder) => {
+        const output = node.replace(/{{\w+}}/g, (placeHolder) => {
             const key = placeHolder.substr(2, placeHolder.length - 4);
             return this.checkInEveryMap(key) || placeHolder;
         });
         // Array must have the first and last " stripped
         // otherwise the JSON object won't be valid on parse
-        output = output.replace(/"\[(.*)\]"/, '[$1]');
-        return JSON.parse(output);
+        const arrayAdapted = output.replace(/"\[(.*)\]"/, '[$1]');
+        try {
+            return JSON.parse(arrayAdapted);
+        }
+        catch (exc) {
+        }
+        // Array must have the first and last " stripped
+        // otherwise the JSON object won't be valid on parse
+        return arrayAdapted;
     }
     checkInEveryMap(key) {
         let map = {};
@@ -40,7 +46,6 @@ class PlaceHolderReplacer {
             const variableValue = map[key];
             if (variableValue) {
                 if (typeof variableValue == 'object') {
-                    // Stringify if not string yet
                     return JSON.stringify(variableValue);
                 }
                 return variableValue;
