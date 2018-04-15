@@ -66,7 +66,6 @@ describe("Inception test", () => {
             expect(finalReport.startEventReports.errorsDescription.length).toBe(0);
 
             tester.on('exit', (statusCode) => {
-                console.log(`Exit status ${statusCode}`)
                 expect(statusCode).toBe(0);
                 done();
             })

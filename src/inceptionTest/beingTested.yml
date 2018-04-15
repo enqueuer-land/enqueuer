@@ -3,16 +3,13 @@ requisitions:
   run-mode:
     daemon:
       -
-        type: mqtt
-        brokerAddress: mqtt://localhost
-        topic: enqueuer/inception/beingTested/requisitionInput
-
+        type: uds
+        path: /tmp/inUnix.sock
 outputs:
   -
     type: file
     filenamePrefix: src/inceptionTest/inner_test_
     filenameExtension: json
   -
-    type: mqtt
-    brokerAddress: mqtt://localhost:1883
-    topic: enqueuer/inception/requisitionOutput
+    type: uds
+    path: /tmp/outUnix.sock
