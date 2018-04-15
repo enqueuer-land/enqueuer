@@ -21,7 +21,6 @@ exports.Injectable = Injectable;
 //#Auto-Generated Code
 require("../executors/daemon-enqueuer-executor");
 require("../executors/single-run-enqueuer-executor");
-require("../publishers/amqp-publisher");
 require("../publishers/file-publisher");
 require("../publishers/http-client-publisher");
 require("../publishers/null-publisher");
@@ -30,7 +29,6 @@ require("../publishers/uds-publisher");
 require("../reporters/start-event/start-event-null-reporter");
 require("../reporters/start-event/start-event-publisher-reporter");
 require("../reporters/start-event/start-event-subscription-reporter");
-require("../subscriptions/amqp-subscription");
 require("../subscriptions/filename-watcher-subscription");
 require("../subscriptions/http-server-subscription");
 require("../subscriptions/null-subscription");
