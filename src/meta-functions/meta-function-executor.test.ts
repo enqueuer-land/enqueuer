@@ -60,7 +60,7 @@ describe('MetaFunctionExecutor', () => {
 
         const executionReturn = executor.execute();
 
-        expect(executionReturn.exception["Function runtime error"]).toBeDefined();
+        expect(executionReturn.exception).toMatch("runtime")
     });
 
     it('should handle function compile time exception', function () {
@@ -73,7 +73,7 @@ describe('MetaFunctionExecutor', () => {
         const executor = new MetaFunctionExecutor(new ExceptionMetaFunction());
         const executionReturn = executor.execute();
 
-        expect(executionReturn.exception["Function compile time error"]).toBeDefined();
+        expect(executionReturn.exception).toMatch("compile")
     });
 
 });

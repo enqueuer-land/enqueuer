@@ -108,6 +108,7 @@ export class SubscriptionReporter implements Reporter {
 
         this.report.valid = hasReceivedMessage &&
                             !this.hasTimedOut &&
+                            this.report.onMessageFunctionReport.failingTests &&
                             this.report.onMessageFunctionReport.failingTests.length <= 0;
 
         this.cleanUp();
@@ -139,7 +140,7 @@ export class SubscriptionReporter implements Reporter {
         Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
         this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
         if (functionResponse.exception) {
-            this.report.errorsDescription.concat(functionResponse.exception);
+            this.report.errorsDescription.push(functionResponse.exception);
         }
 
         this.report = {

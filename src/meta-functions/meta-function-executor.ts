@@ -2,6 +2,7 @@ import {MetaFunctionCreator} from "./meta-function-creator";
 import {VariablesController} from "../variables/variables-controller";
 import {Configuration} from "../configurations/configuration";
 import {Logger} from "../loggers/logger";
+import {error} from "util";
 
 
 let persistEnqueuerVariable = (name: string, value: any): void => {
@@ -41,15 +42,11 @@ export class MetaFunctionExecutor {
                 return result;
             } catch (exc) {
                 Logger.error(`Error running function: ${JSON.stringify(exc, null, 2)}`);
-                return { exception: {
-                    "Function runtime error": exc
-                } };
+                return { exception: `Function runtime error ${exc}`};
             }
         } catch (exc) {
             Logger.error(`Error creating function: ${JSON.stringify(exc, null, 2)}`);
-            return { exception: {
-                "Function compile time error": exc
-            } };
+            return { exception: `Function compile time error ${exc}`};
         }
     }
 

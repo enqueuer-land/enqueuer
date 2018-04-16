@@ -29,16 +29,12 @@ class MetaFunctionExecutor {
             }
             catch (exc) {
                 logger_1.Logger.error(`Error running function: ${JSON.stringify(exc, null, 2)}`);
-                return { exception: {
-                        "Function runtime error": exc
-                    } };
+                return { exception: `Function runtime error ${exc}` };
             }
         }
         catch (exc) {
             logger_1.Logger.error(`Error creating function: ${JSON.stringify(exc, null, 2)}`);
-            return { exception: {
-                    "Function compile time error": exc
-                } };
+            return { exception: `Function compile time error ${exc}` };
         }
     }
     fillResponseAttributes(functionResponse) {
