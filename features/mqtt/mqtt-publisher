@@ -24,7 +24,7 @@ export class MqttPublisher extends Publisher {
                 .then(client => {
                     Logger.debug(`Mqtt publishing in ${this.brokerAddress} - ${this.topic}: ${this.payload}`
                         .substr(0, 100).concat("..."));
-                    client.publish(this.topic, this.payload, (err: any) => {
+                    client.publish(this.topic, JSON.stringify(this.payload, null, 3), (err: any) => {
                         if (err) {
                             Logger.error(`Error publishing in ${this.brokerAddress} - ${this.topic}: ${err}`)
                             reject(err);
