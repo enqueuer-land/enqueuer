@@ -36,10 +36,11 @@ class Configuration {
     constructor(commandLine = commander, configurationFile = ymlFile) {
         this.commandLine = commandLine;
         this.configurationFile = configurationFile;
+        this.configurationFile.variables = this.configurationFile.variables || {};
     }
     getLogLevel() {
         if (this.commandLine.verbose)
-            return 'debug';
+            return 'trace';
         return (this.commandLine.logLevel) ||
             (this.configurationFile["log-level"]);
     }

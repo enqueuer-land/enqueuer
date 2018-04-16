@@ -48,11 +48,12 @@ export class Configuration {
     public constructor(commandLine: any = commander, configurationFile: any = ymlFile) {
         this.commandLine = commandLine;
         this.configurationFile = configurationFile;
+        this.configurationFile.variables = this.configurationFile.variables || {};
     }
 
     public getLogLevel(): string | undefined {
         if (this.commandLine.verbose)
-            return 'debug';
+            return 'trace';
         return (this.commandLine.logLevel) ||
             (this.configurationFile["log-level"]);
     }

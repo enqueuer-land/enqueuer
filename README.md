@@ -11,6 +11,8 @@ In an event-driven world everything all events move asynchronously. As soon as w
     $ git clone https://github.com/lopidio/enqueuer.git
     $ cd enqueuer
     $ npm install
+    $ npm run build
+    $ npm tst #if you want to test it
     $ enqueuer --config-file conf/enqueuer.yml --session-variables httpPayload=virgs
 
 ### what it does?

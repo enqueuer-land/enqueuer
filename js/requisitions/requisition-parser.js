@@ -22,6 +22,7 @@ class RequisitionParser {
         let variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
         variablesReplacedRequisition.id = new requisition_id_generator_1.RequisitionIdGenerator(variablesReplacedRequisition).generateId();
         const requisitionWithId = variablesReplacedRequisition;
+        logger_1.Logger.trace(`Parsed requisition: ${JSON.stringify(requisitionWithId, null, 2)}`);
         logger_1.Logger.info(`Message associated with id ${requisitionWithId.id}`);
         return requisitionWithId;
     }

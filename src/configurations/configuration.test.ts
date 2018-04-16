@@ -4,7 +4,7 @@ describe('Configuration', function() {
 
     describe('getLogLevel', function() {
         it('should check \'Verbose\' mode in command line', function() {
-            const expectedLevel = 'debug';
+            const expectedLevel = 'trace';
             const commandLine = {
                 verbose: expectedLevel
             }
