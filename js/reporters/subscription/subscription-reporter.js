@@ -18,6 +18,7 @@ class SubscriptionReporter {
                 process.exit(1);
             }).start(2000);
         };
+        logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = container_1.Container.get(subscription_1.Subscription).createFromPredicate(subscriptionAttributes);
         this.subscriptionAttributes = subscriptionAttributes;
         this.startTime = new date_controller_1.DateController();
@@ -43,6 +44,7 @@ class SubscriptionReporter {
     }
     connect() {
         return new Promise((resolve, reject) => {
+            logger_1.Logger.trace(`Subscription '${this.subscription.type}' is connecting`);
             this.subscription.connect()
                 .then(() => {
                 this.report = Object.assign({}, this.report, { connectionTime: new date_controller_1.DateController().toString() });
@@ -63,11 +65,11 @@ class SubscriptionReporter {
             this.subscription.receiveMessage()
                 .then((message) => {
                 if (message) {
-                    logger_1.Logger.debug(`Subscription ${this.subscription.type} received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
+                    logger_1.Logger.debug(`Subscription '${this.subscription.type}' received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
                         this.executeSubscriptionFunction();
-                        logger_1.Logger.info("Subscription stop waiting because it has already received its message");
+                        logger_1.Logger.info(`Subscription '${this.subscription.type}' stop waiting because it has already received its message`);
                     }
                     this.cleanUp();
                     resolve(message);

@@ -1,6 +1,7 @@
 import {Subscription} from "./subscription";
 import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Logger} from "../loggers/logger";
 const express = require('express');
 
 @Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "http-server")
@@ -24,6 +25,7 @@ export class HttpServerSubscription extends Subscription {
                 req.rawBody += chunk;
             });
             req.on('end', function(){
+                Logger.trace(`Http subscription read ${req.rawBody}`);
                 next();
             });
         });

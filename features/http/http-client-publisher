@@ -13,40 +13,30 @@ export class HttpClientPublisher extends Publisher {
     constructor(publish: PublisherModel) {
         super(publish);
         this.url = publish.url;
-        this.method = publish.method;
-        this.payload = JSON.stringify(publish.payload) || "";
+        this.method = publish.method.toUpperCase();
+        this.payload = publish.payload || "";
         this.headers = publish.headers || {};
-
-        if (this.headers['Content-Length'] == null) {
-            if (Buffer.isBuffer(this.payload)) {
-                this.headers["Content-Length"] = this.payload.length;
-            } else {
-                this.headers["Content-Length"] = Buffer.byteLength(this.payload);
-            }
-        }
     }
 
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.debug(`Http-client-publisher (${this.method})${this.url} - ${this.payload}`
-                .substr(0, 100).concat("..."));
 
-            let requisition: any = {
+            let options: any = {
                 url: this.url,
                 method: this.method,
                 headers: this.headers
             };
-            if (this.method.toUpperCase() != "GET") {
-                requisition.data = this.payload;
-                requisition.body = this.payload;
-            }
-            request(requisition,
+            options.data = options.body = this.handleObjectPayload(options);
+            if (this.method.toUpperCase() != "GET")
+                options.headers['Content-Length'] = options.headers["Content-Length"] || this.setContentLength(options.data);
+            Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
+            request(options,
                 (error: any, response: any, body: any) =>
                 {
                     Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 250)}`)
 
                     if (error) {
-                        reject("Error to publish http: "  + error);
+                        reject("Error firing http request: "  + error);
                     }
                     else {
                         resolve();
@@ -54,5 +44,29 @@ export class HttpClientPublisher extends Publisher {
                 });
         })
 
+    }
+
+    private setContentLength(value: string): number {
+        if (Buffer.isBuffer(value)) {
+            return value.length;
+        } else {
+            return Buffer.from(value, "utf8").byteLength;
+        }
+    }
+
+    private handleObjectPayload(options: any): string
+    {
+        let result: any = Object.assign({}, options);
+        if (this.method.toUpperCase() != "GET") {
+            try {
+                const isObject = typeof JSON.parse(this.payload) === 'object';
+                if (isObject) {
+                    Logger.trace(`Http payload is an object: ${this.payload}`)
+                    result.json = true;
+                }
+            }
+            catch (exc) {}
+        }
+        return JSON.stringify(this.payload);
     }
 }

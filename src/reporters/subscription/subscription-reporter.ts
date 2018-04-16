@@ -20,6 +20,7 @@ export class SubscriptionReporter implements Reporter {
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
+        Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.get(Subscription).createFromPredicate(subscriptionAttributes);
         this.subscriptionAttributes = subscriptionAttributes;
         this.startTime = new DateController();
@@ -47,6 +48,7 @@ export class SubscriptionReporter implements Reporter {
 
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
+            Logger.trace(`Subscription '${this.subscription.type}' is connecting`);
             this.subscription.connect()
                 .then(() => {
                     this.report = {
@@ -73,12 +75,12 @@ export class SubscriptionReporter implements Reporter {
             this.subscription.receiveMessage()
                 .then((message: any) => {
                     if (message) {
-                        Logger.debug(`Subscription ${this.subscription.type} received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
+                        Logger.debug(`Subscription '${this.subscription.type}' received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
 
                         if (!this.hasTimedOut) {
                             this.subscription.messageReceived = message;
                             this.executeSubscriptionFunction();
-                            Logger.info("Subscription stop waiting because it has already received its message");
+                            Logger.info(`Subscription '${this.subscription.type}' stop waiting because it has already received its message`);
                         }
                         this.cleanUp();
                         resolve(message);

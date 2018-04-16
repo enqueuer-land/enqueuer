@@ -30,20 +30,21 @@ class RequisitionRunner {
         });
     }
     onSubscriptionsCompleted() {
+        this.multiSubscriptionsReporter.receiveMessage()
+            .then(() => this.onAllSubscriptionsStopWaiting())
+            .catch(err => {
+            logger_1.Logger.error(`Error receiving message in multiSubscription: ${err}`);
+            this.onFinish(err);
+        });
         logger_1.Logger.debug("Triggering start event");
         this.startEvent.start()
             .then(() => {
             logger_1.Logger.debug("Start event has done its job");
         })
             .catch(err => {
-            logger_1.Logger.error(`Error triggering startingEvent: ${err}`);
-            this.onFinish(err);
-        });
-        this.multiSubscriptionsReporter.receiveMessage()
-            .then(() => this.onAllSubscriptionsStopWaiting())
-            .catch(err => {
-            logger_1.Logger.error(`Error receiving message in multiSubscription: ${err}`);
-            this.onFinish(err);
+            const message = `Error triggering startingEvent: ${err}`;
+            logger_1.Logger.error(message);
+            this.onFinish(message);
         });
     }
     initializeTimeout() {

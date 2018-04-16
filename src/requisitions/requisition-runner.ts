@@ -41,22 +41,23 @@ export class RequisitionRunner {
     }
 
     private onSubscriptionsCompleted() {
-        Logger.debug("Triggering start event");
-        this.startEvent.start()
-            .then(() => {
-                Logger.debug("Start event has done its job");
-            })
-            .catch(err => {
-                Logger.error(`Error triggering startingEvent: ${err}`)
-                this.onFinish(err)
-            });
-
         this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
                 Logger.error(`Error receiving message in multiSubscription: ${err}`)
                 this.onFinish(err)
             });
+        Logger.debug("Triggering start event");
+        this.startEvent.start()
+            .then(() => {
+                Logger.debug("Start event has done its job");
+            })
+            .catch(err => {
+                const message = `Error triggering startingEvent: ${err}`;
+                Logger.error(message)
+                this.onFinish(message);
+            });
+
     }
 
     private initializeTimeout() {
