@@ -9,7 +9,7 @@ describe('PrePublishMetaFunction', () => {
         };
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
 
-        const functionResponse: any = prePublishMeta.createFunction()();
+        const functionResponse: any = new Function(prePublishMeta.createBody())();
 
         expect(JSON.stringify(functionResponse.publisher)).toBe(JSON.stringify(constructorArgument));
     });
@@ -21,7 +21,7 @@ describe('PrePublishMetaFunction', () => {
         };
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
 
-        const functionResponse: any = prePublishMeta.createFunction()();
+        const functionResponse: any = new Function(prePublishMeta.createBody())();
 
         expect(functionResponse.test.valid).toBeTruthy();
     });
@@ -33,22 +33,19 @@ describe('PrePublishMetaFunction', () => {
         };
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
 
-        const functionResponse: any = prePublishMeta.createFunction()();
+        const functionResponse: any = new Function(prePublishMeta.createBody())();
 
         expect(functionResponse.report.first).toBe("someValue");
     });
 
-    it('should receive args', function () {
+    it('should throw exception bad function', function () {
         const constructorArgument: PublisherModel = {
             type: "test",
-            prePublishing: "report['args'] = args;"
+            prePublishing: "'args'] = args;"
         };
-        const expected = "Yayayaya";
         const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
 
-        const functionResponse: any = prePublishMeta.createFunction()(expected);
-
-        expect(functionResponse.report.args).toBe(expected);
+        expect(() => new Function(prePublishMeta.createBody())()).toThrow();
     });
 
 });

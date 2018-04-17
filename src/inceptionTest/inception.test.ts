@@ -20,8 +20,8 @@ let removeEveryReportFile = (): void => {
     findEveryJsonFile().forEach(file => fs.unlinkSync(file));
 };
 
-let sleep = (secondsToWait: number): void => {
-    var waitTill = new Date(new Date().getTime() + secondsToWait * 1000);
+let sleep = (millisecondsToWait: number): void => {
+    var waitTill = new Date(new Date().getTime() + millisecondsToWait);
     while (waitTill > new Date()) {}
 };
 
@@ -34,44 +34,50 @@ describe("Inception test", () => {
     });
 
     it("should run enqueuer to test another enqueuer process", done => {
+        jest.setTimeout(10000);
 
         try {
             beingTested = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/beingTested.yml']);
-            sleep(1);
+            sleep(500);
 
             tester = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/tester.yml']);
-            sleep(3);
+            sleep(2500);
 
-            const testerReport = findEveryJsonFile().filter(file => file.indexOf("tester") > 0)[0];
+            const testerReports = findEveryJsonFile()
+                .filter(filename => filename.indexOf("_test_") >= 0)
+                .map(filename => fs.readFileSync(filename))
+                .map(fileContent => JSON.parse(fileContent))
 
-            fs.readFile(testerReport, (error: any, data: string) => {
-                const fileContent = JSON.parse(data)
+            expect(testerReports.length).toBe(2);
+            const finalReport = testerReports[1];
 
-                expect(fileContent.valid).toBeTruthy();
-                expect(fileContent.errorsDescription.length).toBe(0);
-                expect(fileContent.time.hasTimedOut).toBeFalsy();
+            expect(finalReport.valid).toBeTruthy();
+            expect(finalReport.errorsDescription.length).toBe(0);
+            expect(finalReport.time.hasTimedOut).toBeFalsy();
 
-                expect(fileContent.subscriptionReports.valid).toBeTruthy();
-                expect(fileContent.subscriptionReports.errorsDescription.length).toBe(0);
+            expect(finalReport.subscriptionReports.valid).toBeTruthy();
+            expect(finalReport.subscriptionReports.errorsDescription.length).toBe(0);
 
-                expect(fileContent.subscriptionReports.subscriptions[0].valid).toBeTruthy();
-                expect(fileContent.subscriptionReports.subscriptions[0].errorsDescription.length).toBe(0);
-                expect(fileContent.subscriptionReports.subscriptions[0].functionReport.passingTests[0]).toBe("true");
+            expect(finalReport.subscriptionReports.subscriptions[0].valid).toBeTruthy();
+            expect(finalReport.subscriptionReports.subscriptions[0].errorsDescription.length).toBe(0);
+            expect(finalReport.subscriptionReports.subscriptions[0].onMessageFunctionReport.passingTests[0]).toBe("true");
 
-                expect(fileContent.startEventReports.valid).toBeTruthy();
-                expect(fileContent.startEventReports.errorsDescription.length).toBe(0);
-                expect(fileContent.startEventReports.publisher.type).toBe("mqtt");
+            expect(finalReport.startEventReports.valid).toBeTruthy();
+            expect(finalReport.startEventReports.errorsDescription.length).toBe(0);
+
+            tester.on('exit', (statusCode) => {
+                expect(statusCode).toBe(0);
                 done();
-            });
+            })
         } catch (err) {
-            console.error(err)
+            // console.error(err)
         }
 
     })
 
     afterAll(() => {
         killThemAll();
-        // removeEveryReportFile();
+        removeEveryReportFile();
     })
 
     let killThemAll = () => {
@@ -79,4 +85,4 @@ describe("Inception test", () => {
         tester.kill('SIGINT');
     };
 
-})
+});

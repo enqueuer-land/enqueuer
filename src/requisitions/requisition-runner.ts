@@ -1,23 +1,25 @@
 import { ReportGenerator } from "../reporters/report-generator";
-import {MultiSubscriptionsHandler} from "../reporters/subscription/multi-subscriptions-handler";
 import {Logger} from "../loggers/logger";
 import {StartEventReporter} from "../reporters/start-event/start-event-reporter";
 import {RequisitionModel} from "./models/requisition-model";
 import {Container} from "../injector/container";
 import {Timeout} from "../timers/timeout";
+import {Report} from "../reporters/report";
+import {MultiSubscriptionsReporter} from "../reporters/subscription/multi-subscriptions-reporter";
 
-export type RequisitionRunnerCallback = (report: string) => void;
+export type RequisitionRunnerCallback = (report: Report) => void;
+
 export class RequisitionRunner {
     private reportGenerator: ReportGenerator;
     private startEvent: StartEventReporter;
-    private multiSubscriptionsHandler: MultiSubscriptionsHandler;
+    private multiSubscriptionsReporter: MultiSubscriptionsReporter;
     private onFinishCallback: RequisitionRunnerCallback;
     private requisitionTimeout?: number;
 
     constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
         this.startEvent = Container.get(StartEventReporter).createFromPredicate(requisitionAttributes.startEvent);
-        this.multiSubscriptionsHandler = new MultiSubscriptionsHandler(requisitionAttributes.subscriptions);
+        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
         this.onFinishCallback = () => {};
     }
@@ -25,37 +27,42 @@ export class RequisitionRunner {
     public start(onFinishCallback: RequisitionRunnerCallback): void {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
-        this.initializeTimeout();
-        this.multiSubscriptionsHandler.connect()
-            .then(() => this.onSubscriptionsCompleted())
+        Logger.trace("Multisubscribing");
+        this.multiSubscriptionsReporter.connect()
+            .then(() => {
+                Logger.trace("Multisubscriptions are ready");
+                this.initializeTimeout();
+                this.onSubscriptionsCompleted()
+            })
             .catch(err => {
-                Logger.error(`Error connecting multiSubscription: ${err}`)
+                Logger.error(`Error connecting multiSubscription: ${err}`);
                 this.onFinish(err)
             });
     }
 
     private onSubscriptionsCompleted() {
-        this.multiSubscriptionsHandler.receiveMessage()
+        this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
                 Logger.error(`Error receiving message in multiSubscription: ${err}`)
                 this.onFinish(err)
             });
-
+        Logger.debug("Triggering start event");
         this.startEvent.start()
             .then(() => {
                 Logger.debug("Start event has done its job");
             })
             .catch(err => {
-                Logger.error(`Error triggering startingEvent: ${err}`)
-                this.onFinish(err)
+                const message = `Error triggering startingEvent: ${err}`;
+                Logger.error(message)
+                this.onFinish(message);
             });
+
     }
 
     private initializeTimeout() {
         if (this.requisitionTimeout) {
             new Timeout(() => {
-                Logger.info("Requisition Timeout");
                 this.onFinish("Requisition has timed out");
             }).start(this.requisitionTimeout);
         }
@@ -71,12 +78,12 @@ export class RequisitionRunner {
         Logger.info(`Start gathering reports`);
 
         if (error) {
-            Logger.warning(`Errors collected: ${error}`);
+            Logger.debug(`Error collected: ${error}`);
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
-        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsHandler.getReport());
+        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
-        this.onFinishCallback(this.reportGenerator.generate().toString());
+        this.onFinishCallback(this.reportGenerator.getReport());
     }
 }

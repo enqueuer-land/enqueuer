@@ -15,13 +15,12 @@ export class MultiPublisher {
         });
     }
 
-    public publish(payload: string): void {
-        this.repliers.forEach( reporter => {
-            reporter.payload = payload;
-            reporter.publish()
-                .catch(err => {
-                    Logger.error(`Error publishing to ${err}`)
-                });
-        })
+    public publish(payload: string): Promise<void[]> {
+        return Promise.all(this.repliers.map(
+            reporter => {
+                        reporter.payload = payload;
+                        return reporter.publish()
+                    }));
+
     }
 }

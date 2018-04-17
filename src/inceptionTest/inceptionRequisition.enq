@@ -3,9 +3,8 @@
   "timeout": 10000,
   "subscriptions": [
     {
-      "type": "mqtt",
-      "brokerAddress": "mqtt://localhost",
-      "topic": "enqueuer/inception/requisitionOutput",
+      "type": "uds",
+      "path": "/tmp/outUnix.sock",
       "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true;",
       "timeout": 10000
     }
@@ -13,48 +12,30 @@
   "startEvent": {
     "publisher": {
       "type": "toBeDefined",
-      "brokerAddress": "mqtt://localhost",
+      "path": "/tmp/inUnix.sock",
       "payload": {
+
         "requisitionVersion": "01.00.00",
         "timeout": 3000,
         "subscriptions": [
           {
-            "type": "mqtt",
-            "brokerAddress": "mqtt://localhost",
-            "topic": "enqueuer/inception/beingTested/publish",
+            "type": "uds",
+            "path": "/tmp/loopUnix.sock",
             "onMessageReceived": "test['works'] = message == 100;",
             "timeout": 1000
           }
         ],
         "startEvent": {
           "publisher": {
-            "type": "mqtt",
-            "brokerAddress": "mqtt://localhost",
-            "payload": 100,
-            "topic": "enqueuer/inception/beingTested/publish"
+            "type": "uds",
+            "path": "/tmp/loopUnix.sock",
+            "payload": 100
           }
-        },
-        "reports": [
-          {
-            "type": "mqtt",
-            "brokerAddress": "mqtt://localhost",
-            "topic": "enqueuer/inception/requisitionOutput"
-          },
-          {
-            "type": "file",
-            "filenamePrefix": "src/inceptionTest/beingTested"
-          }
-        ],
-        "variables": {}
+        }
       },
+
       "topic": "enqueuer/inception/beingTested/requisitionInput",
-      "prePublishing": "publisher.type='mqtt';report['type'] = publisher.type;"
+      "prePublishing": "publisher.type='uds';report['type'] = publisher.type;"
     }
-  },
-  "reports": [
-    {
-      "type": "file",
-      "filenamePrefix": "src/inceptionTest/tester"
-    }
-  ]
+  }
 }

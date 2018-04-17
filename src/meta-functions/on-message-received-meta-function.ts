@@ -9,18 +9,15 @@ export class OnMessageReceivedMetaFunction implements MetaFunctionCreator {
         this.subscriptionAttributes = subscriptionAttributes;
     }
 
-    public createFunction(): Function {
-        const fullBody: string =    `let test = {};
-                                    let report = {};
-                                    let variables = {};
-                                    let message = ${JSON.stringify(this.subscriptionAttributes.messageReceived)};
-                                    ${this.subscriptionAttributes.onMessageReceived};
-                                    return {
-                                            variables: variables,
-                                            test: test,
-                                            report: report
-                                     };`;
-        return new Function("args", fullBody);
+    public createBody(): string {
+        return    `let test = {};
+                    let report = {};
+                    let message = ${JSON.stringify(this.subscriptionAttributes.messageReceived)};
+                    ${this.subscriptionAttributes.onMessageReceived};
+                    return {
+                            test: test,
+                            report: report
+                     };`;
     }
 
 }

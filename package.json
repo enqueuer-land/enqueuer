@@ -1,12 +1,13 @@
 {
   "name": "enqueuer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Desktop client to send and receive messages from queue systems",
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "test": "jest --forceExit",
-    "build": "find ./src -name '*.js' -type f -delete && ./import-injectable-files.sh && tsc"
+    "test": "jest --forceExit && npm start -- -c integrationTest/enqueuer.yml",
+    "enable-feature": "./scripts/enable-feature.sh",
+    "build": "rm -rf js/ && find ./src -name '*.js' -type f -delete && ./scripts/import-injectable-files.sh && tsc && npm link"
   },
   "repository": {
     "type": "git",
@@ -18,18 +19,14 @@
     "enqueuer": "js/index.js"
   },
   "dependencies": {
-    "@types/mqtt": "^2.5.0",
     "ajv": "^6.2.1",
-    "amqp": "^0.2.6",
     "chokidar": "^2.0.2",
     "commander": "^2.14.1",
-    "express": "^4.16.2",
-    "json-sub": "^1.3.0",
     "log4js": "^2.5.3",
-    "node-ipc": "^9.1.1",
-    "npm": "^5.7.1",
+    "npm": "^5.8.0",
+    "object-hash": "^1.3.0",
     "prettyjson": "^1.2.1",
-    "read-yaml": "^1.1.0"
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",

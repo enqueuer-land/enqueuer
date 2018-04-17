@@ -7,13 +7,14 @@ import {PublisherModel} from "../../requisitions/models/publisher-model";
 import {Injectable} from "../../injector/injector";
 import {Container} from "../../injector/container";
 import {Report} from "../report";
+import {Logger} from "../../loggers/logger";
 
-@Injectable((startEvent: any) => startEvent.publisher)
+@Injectable((startEvent: any) => startEvent.publisher != null)
 export class StartEventPublisherReporter extends StartEventReporter {
     private publisherOriginalAttributes: PublisherModel;
     private publisher?: Publisher;
     private report: Report;
-    private prePublishingReport: any = {};
+    private prePublishingFunctionReport: any = {};
 
     constructor(startEvent: PublisherModel) {
         super();
@@ -25,20 +26,22 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     public start(): Promise<void> {
+        Logger.trace(`Firing publication as startEvent`);
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
             if (this.publisher) {
                 this.publisher.publish()
                     .then(() => {
-                        resolve();
+                        return resolve();
                     })
                     .catch((err: any) => {
+                        Logger.error(err);
                         this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`)
                         reject(err)
                     });
             }
             else {
-                const message = `Impossible to define Publisher after prePublish function execution '${this.publisher}'`;
+                const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
                 this.report.errorsDescription.push(message)
                 reject(message);
             }
@@ -47,9 +50,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
     public getReport(): Report {
         this.report = {
-            ...this.publisherOriginalAttributes,
-            prePublishFunction: this.prePublishingReport,
-            publisher: this.publisher,
+            publisher: this.publisherOriginalAttributes,
+            prePublishingFunctionReport: this.prePublishingFunctionReport,
             timestamp: new DateController().toString(),
             valid: this.report.errorsDescription.length <= 0,
             errorsDescription: this.report.errorsDescription
@@ -60,9 +62,18 @@ export class StartEventPublisherReporter extends StartEventReporter {
     private executePrePublishingFunction() {
         const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
         const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
+
         if (functionResponse.publisher.payload)
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
+
+        Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = Container.get(Publisher).createFromPredicate(functionResponse.publisher);
-        this.prePublishingReport = functionResponse.report;
+        this.prePublishingFunctionReport = functionResponse;
+
+        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (functionResponse.exception) {
+            this.report.errorsDescription.concat(functionResponse.exception);
+        }
+
     }
 }

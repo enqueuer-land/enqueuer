@@ -1,13 +1,10 @@
-requisition:
-  inputs:
-    -
-      type: file-name-pattern
+requisitions:
+  run-mode:
+    single-run:
       fileNamePattern: src/inceptionTest/*.enq
-      checkIntervalMs: 1000
-  outputs:
-    -
-      type: mqtt
-      brokerAddress: mqtt://localhost:1883
-      topic: enqueuer/inception/tester/output/doesNotMatter
-
-log-level: debug
+      output-file: src/inceptionTest/singleRunInception.json
+outputs:
+  -
+    type: file
+    filenamePrefix: src/inceptionTest/outter_test_
+    filenameExtension: json

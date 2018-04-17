@@ -1,13 +1,15 @@
-requisition:
-  inputs:
-    -
-      type: mqtt
-      brokerAddress: mqtt://localhost
-      topic: enqueuer/inception/beingTested/requisitionInput
-  outputs:
-    -
-      type: mqtt
-      brokerAddress: mqtt://localhost:1883
-      topic: enqueuer/inception/beingTested/output/doesNotMatter
+requisitions:
 
-log-level: debug
+  run-mode:
+    daemon:
+      -
+        type: uds
+        path: /tmp/inUnix.sock
+outputs:
+  -
+    type: file
+    filenamePrefix: src/inceptionTest/inner_test_
+    filenameExtension: json
+  -
+    type: uds
+    path: /tmp/outUnix.sock

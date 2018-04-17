@@ -1,0 +1,19 @@
+{
+  "requisitionVersion": "01.00.00",
+  "timeout": 3000,
+  "subscriptions": [
+    {
+      "type": "uds",
+      "path": "/tmp/unix.sock",
+      "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
+      "timeout": 500
+    }
+  ],
+  "startEvent": {
+    "publisher": {
+      "type": "uds",
+      "path": "/tmp/unix.sock",
+      "payload": "enqueuer"
+    }
+  }
+}

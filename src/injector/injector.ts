@@ -23,20 +23,16 @@ export function Injectable(factoryPredicate?: FactoryPredicate) {
 
 
 //#Auto-Generated Code
-import "../publishers/amqp-publisher"
+import "../executors/daemon-enqueuer-executor"
+import "../executors/single-run-enqueuer-executor"
 import "../publishers/file-publisher"
-import "../publishers/http-client-publisher"
-import "../publishers/mqtt-publisher"
 import "../publishers/null-publisher"
 import "../publishers/standard-output-publisher"
 import "../publishers/uds-publisher"
 import "../reporters/start-event/start-event-null-reporter"
 import "../reporters/start-event/start-event-publisher-reporter"
 import "../reporters/start-event/start-event-subscription-reporter"
-import "../subscriptions/amqp-subscription"
-import "../subscriptions/filename-pattern-subscription"
-import "../subscriptions/http-server-subscription"
-import "../subscriptions/mqtt-subscription"
+import "../subscriptions/filename-watcher-subscription"
 import "../subscriptions/null-subscription"
 import "../subscriptions/standard-input-subscription"
 import "../subscriptions/uds-subscription"

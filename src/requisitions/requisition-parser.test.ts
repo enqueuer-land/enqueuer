@@ -15,10 +15,6 @@ let validRequisition = function () {
                     "onMessageReceived": "test['someLabel'] = false",
                     "timeout": 1000
                 }
-        },
-        "reports": [],
-        "variables": {
-            "brokerAddress": "mqtt://localhost"
         }
     };
 };
@@ -28,32 +24,24 @@ describe('RequisitionParser', () => {
         const requisition = "invalidJson";
         const parser: RequisitionParser = new RequisitionParser();
 
-        return expect(parser.parse(requisition)).rejects.toBe("SyntaxError: Unexpected token i in JSON at position 0");
+        expect(() => parser.parse(requisition)).toThrow()
     });
 
     it('Should not parse invalid requisition', () => {
         const requisition = "{\"invalid\": \"requisition\"}";
         const parser: RequisitionParser = new RequisitionParser();
 
-        return expect(parser.parse(requisition)).rejects.toEqual([{
-            "dataPath": "",
-            "keyword": "additionalProperties",
-            "message": "should NOT have additional properties",
-            "params": {"additionalProperty": "invalid"},
-            "schemaPath": "#/additionalProperties"
-        }]);
+        expect(() => parser.parse(requisition)).toThrow()
     });
 
-    it('Should replace variables', () => {
-
+    it('Should accept valid json', () => {
         const requisition = validRequisition();
         const requisitionStringified: string = JSON.stringify(requisition);
         const parser: RequisitionParser = new RequisitionParser();
 
-        return parser.parse(requisitionStringified).then( parsed => {
-            expect(parsed.variables).toBeUndefined();
-            expect(parsed.startEvent.subscription.brokerAddress).toBe("mqtt://localhost");
-        });
+        const parsed = parser.parse(requisitionStringified);
+
+        expect(parsed.startEvent.subscription.brokerAddress).toBe("brokerAddress");
     });
 
 });

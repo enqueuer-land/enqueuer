@@ -9,20 +9,17 @@ export class PrePublishMetaFunction implements MetaFunctionCreator {
         this.publisherAttributes = publisherAttributes;
     }
 
-    public createFunction(): Function {
-        const fullBody: string =    `let test = {};
-                                    let report = {};
-                                    let variables = {};
-                                    let publisher = \`${JSON.stringify(this.publisherAttributes)}\`;
-                                    publisher = JSON.parse(publisher);
-                                    ${this.publisherAttributes.prePublishing};
-                                    return {
-                                            test: test,
-                                            report: report,
-                                            variables: variables,
-                                            publisher: publisher
-                                     };`;
-        return new Function("args", fullBody);
+    public createBody(): string {
+        return    `let test = {};
+                    let report = {};
+                    let publisher = \`${JSON.stringify(this.publisherAttributes)}\`;
+                    publisher = JSON.parse(publisher);
+                    ${this.publisherAttributes.prePublishing};
+                    return {
+                            test: test,
+                            report: report,
+                            publisher: publisher
+                     };`;
     }
 
 }

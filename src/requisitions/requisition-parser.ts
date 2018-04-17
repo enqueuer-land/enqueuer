@@ -2,7 +2,8 @@ import {Logger} from "../loggers/logger";
 import {RequisitionIdGenerator} from "./requisition-id-generator";
 import {RequisitionModel} from "./models/requisition-model";
 import {ValidateFunction} from "ajv";
-const jsonSub = require('json-sub')();
+import {VariablesController} from "../variables/variables-controller";
+import {PlaceHolderReplacer} from "../variables/place-holder-replacer";
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");
@@ -17,31 +18,25 @@ export class RequisitionParser {
                             .compile(requisitionSchema);
     }
 
-    public parse(requisitionMessage: string): Promise<RequisitionModel> {
-        return new Promise((resolve, reject) => {
-            try {
-                const parsedRequisition = JSON.parse(requisitionMessage);
-                if (!this.validator(parsedRequisition)) {
-                    reject(this.validator.errors);
-                }
-                let variablesReplacedRequisition: any = this.replaceVariables(parsedRequisition);
-                variablesReplacedRequisition.id = new RequisitionIdGenerator(variablesReplacedRequisition).generateId();
-                const requisitionWithId: RequisitionModel = variablesReplacedRequisition as RequisitionModel;
-                Logger.info(`Message associated with id ${requisitionWithId.id}`)
-                resolve(requisitionWithId);
-            } catch (err) {
-                Logger.info(`Message is not a JSON`);
-                reject(err.toString());
-            }
-        });
+    public parse(requisitionMessage: string): RequisitionModel {
+        const parsedRequisition = JSON.parse(requisitionMessage);
+        if (!this.validator(parsedRequisition) && this.validator.errors) {
+            throw new Error(JSON.stringify(this.validator.errors));
+        }
+        let variablesReplacedRequisition: any = this.replaceVariables(parsedRequisition);
+        variablesReplacedRequisition.id = new RequisitionIdGenerator(variablesReplacedRequisition).generateId();
+        const requisitionWithId: RequisitionModel = variablesReplacedRequisition as RequisitionModel;
+        Logger.trace(`Parsed requisition: ${JSON.stringify(requisitionWithId, null, 2)}`);
+        Logger.info(`Message associated with id ${requisitionWithId.id}`)
+        return requisitionWithId;
     }
 
-    private replaceVariables(parsedRequisition: any): RequisitionModel {
-        let requisitionWithNoVariables = Object.assign({}, parsedRequisition);
-        let variables = parsedRequisition.variables;
-
-        delete requisitionWithNoVariables.variables;
-        return jsonSub.addresser(requisitionWithNoVariables, variables);
+    private replaceVariables(parsedRequisition: {}): any {
+        const placeHolderReplacer = new PlaceHolderReplacer();
+        placeHolderReplacer
+            .addVariableMap(VariablesController.persistedVariables())
+            .addVariableMap(VariablesController.sessionVariables());
+        return placeHolderReplacer.replace(parsedRequisition) as RequisitionModel;
     }
 
 }

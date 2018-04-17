@@ -1,0 +1,78 @@
+{
+  "id": "20180412201646013128_854b3a08",
+  "enqueuer": {
+    "version": "1.0.1"
+  },
+  "report": {
+    "version": "1.0.1"
+  },
+  "valid": true,
+  "errorsDescription": [],
+  "time": {
+    "totalTime": 22,
+    "startTime": "2018-04-12T23:16:46.132Z",
+    "endTime": "2018-04-12T23:16:46.154Z",
+    "timeout": 3000,
+    "hasTimedOut": false
+  },
+  "subscriptionReports": {
+    "subscriptions": [
+      {
+        "valid": true,
+        "errorsDescription": [],
+        "connectionTime": "2018-04-12T23:16:46.144Z",
+        "onMessageFunctionReport": {
+          "passingTests": [
+            "works"
+          ],
+          "failingTests": [],
+          "reports": {
+            "virgs": "lopídio"
+          }
+        },
+        "messageReceivedTimestamp": "2018-04-12T23:16:46.154Z",
+        "type": "amqp",
+        "options": {
+          "host": "localhost",
+          "port": 5672
+        },
+        "queueName": "enqueuerQueue",
+        "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';",
+        "timeout": 1000,
+        "hasReceivedMessage": true,
+        "hasTimedOut": false
+      }
+    ],
+    "valid": true,
+    "errorsDescription": []
+  },
+  "startEventReports": {
+    "publisher": {
+      "type": "amqp",
+      "options": {
+        "host": "localhost",
+        "port": 5672
+      },
+      "queueName": "enqueuerQueue",
+      "prePublishing": "publisher.payload=new Date().getTime();"
+    },
+    "prePublishingFunctionReport": {
+      "publisher": {
+        "type": "amqp",
+        "options": {
+          "host": "localhost",
+          "port": 5672
+        },
+        "queueName": "enqueuerQueue",
+        "prePublishing": "publisher.payload=new Date().getTime();",
+        "payload": "1523575006144"
+      },
+      "passingTests": [],
+      "failingTests": [],
+      "reports": {}
+    },
+    "timestamp": "2018-04-12T23:16:46.154Z",
+    "valid": true,
+    "errorsDescription": []
+  }
+}

@@ -2,27 +2,29 @@ import {Logger} from "../loggers/logger";
 import {MultiPublisher} from "../publishers/multi-publisher";
 import {RequisitionRunner} from "./requisition-runner";
 import {RequisitionModel} from "./models/requisition-model";
+import {Report} from "../reporters/report";
+import {Configuration} from "../configurations/configuration";
 
 export class RequisitionStarter {
 
-    private multiPublisher: MultiPublisher;
     private requisitionRunner: RequisitionRunner;
 
+    private requisitionId: string;
+
     public constructor(requisition: RequisitionModel) {
-        Logger.info(`Starting requisition ${requisition.id}`);
+        this.requisitionId = requisition.id;
+        Logger.info(`Starting requisition ${this.requisitionId}`);
         this.requisitionRunner = new RequisitionRunner(requisition);
-        this.multiPublisher = new MultiPublisher(requisition.reports);
     }
 
-    public start(): void {
-        this.requisitionRunner.start(
-            (requisitionResultReport: string) => this.onFinish(requisitionResultReport));
-    }
-
-    private onFinish(requisitionResultReport: string) {
-        Logger.info("Requisition is over");
-        this.multiPublisher.publish(requisitionResultReport);
-
+    public start(): Promise<Report> {
+        return new Promise((resolve) => {
+            return this.requisitionRunner.start(
+                (requisitionResultReport: Report) => {
+                    Logger.info(`Requisition ${this.requisitionId} is over`);
+                    resolve(requisitionResultReport)
+                });
+        });
     }
 }
 

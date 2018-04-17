@@ -1,0 +1,63 @@
+{
+  "id": "20180412201645051822_bdbbc669",
+  "enqueuer": {
+    "version": "1.0.1"
+  },
+  "report": {
+    "version": "1.0.1"
+  },
+  "valid": true,
+  "errorsDescription": [],
+  "time": {
+    "totalTime": 10,
+    "startTime": "2018-04-12T23:16:45.524Z",
+    "endTime": "2018-04-12T23:16:45.534Z",
+    "timeout": 3000,
+    "hasTimedOut": false
+  },
+  "subscriptionReports": {
+    "subscriptions": [
+      {
+        "valid": true,
+        "errorsDescription": [],
+        "connectionTime": "2018-04-12T23:16:45.527Z",
+        "onMessageFunctionReport": {
+          "passingTests": [
+            "first letter"
+          ],
+          "failingTests": [],
+          "reports": {}
+        },
+        "messageReceivedTimestamp": "2018-04-12T23:16:45.532Z",
+        "type": "uds",
+        "path": "/tmp/unix.sock",
+        "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
+        "timeout": 500,
+        "hasReceivedMessage": true,
+        "hasTimedOut": false
+      }
+    ],
+    "valid": true,
+    "errorsDescription": []
+  },
+  "startEventReports": {
+    "publisher": {
+      "type": "uds",
+      "path": "/tmp/unix.sock",
+      "payload": "enqueuer"
+    },
+    "prePublishingFunctionReport": {
+      "publisher": {
+        "type": "uds",
+        "path": "/tmp/unix.sock",
+        "payload": "\"enqueuer\""
+      },
+      "passingTests": [],
+      "failingTests": [],
+      "reports": {}
+    },
+    "timestamp": "2018-04-12T23:16:45.533Z",
+    "valid": true,
+    "errorsDescription": []
+  }
+}

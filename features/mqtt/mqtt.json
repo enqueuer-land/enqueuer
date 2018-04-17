@@ -1,0 +1,24 @@
+{
+  "requisitionVersion": "01.00.00",
+  "timeout": 3000,
+  "subscriptions": [
+    {
+      "type": "mqtt",
+      "brokerAddress": "mqtt://localhost",
+      "topic": "enqueuer",
+      "onMessageReceived": "test['works'] = message = 'message';",
+      "timeout": 1000
+    }
+  ],
+  "startEvent": {
+    "publisher": {
+      "type": "mqtt",
+      "brokerAddress": "mqtt://localhost",
+      "payload": "enqueuer",
+      "topic": "enqueuer",
+      "options": {
+        "clientId": "enqueuerPublishOptionsExampleId"
+      }
+    }
+  }
+}

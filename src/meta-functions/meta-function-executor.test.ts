@@ -1,27 +1,13 @@
 import {MetaFunctionExecutor} from "./meta-function-executor";
 import {MetaFunctionCreator} from "./meta-function-creator";
 
-let mockExecuteFunction = jest.fn(() => {
-    return {
-        test: {
-            passing: true,
-            failing: false
-        },
-        report: {
-            hello: 'world'
-        }
-    }
-})
-
-let mockCreateFunction = jest.fn(() => mockExecuteFunction);
-
-class FakeMetaFunction implements MetaFunctionCreator {
-    createFunction = mockCreateFunction;
-}
-
 describe('MetaFunctionExecutor', () => {
 
-    it('should createFromPredicate meta function', function () {
+    it('should call meta function', function () {
+        let mockCreateFunction = jest.fn();
+        class FakeMetaFunction implements MetaFunctionCreator {
+            createBody = mockCreateFunction;
+        }
         const fakeMetaFunction = new FakeMetaFunction();
         new MetaFunctionExecutor(fakeMetaFunction);
 
@@ -29,9 +15,21 @@ describe('MetaFunctionExecutor', () => {
     });
 
     it('should insert data', function () {
-        const fakeMetaFunction = new FakeMetaFunction();
-        const parameters = "functionExtraParams";
-        const executor = new MetaFunctionExecutor(fakeMetaFunction, parameters);
+        class FakeMetaFunction implements MetaFunctionCreator {
+            createBody = () => {
+                return    `let test = {};
+                    let report = {};
+                    test['passing'] = true;
+                    test['failing'] = false;
+                    report['hello'] = 'world';
+                    return {
+                            test: test,
+                            report: report
+                     };`;
+
+            };
+        }
+        const executor = new MetaFunctionExecutor(new FakeMetaFunction());
         const expectedReport =  {
             "passingTests": [
                 "passing"
@@ -39,20 +37,22 @@ describe('MetaFunctionExecutor', () => {
             "failingTests": [
                 "failing"
             ],
-            "reports": []
+            "report":
+            {
+                hello: "world"
+            }
         };
 
         const executionReturn = executor.execute();
 
-        expect(mockExecuteFunction).toBeCalledWith(expect.arrayContaining([parameters]));
-        expect(JSON.stringify(executionReturn.report)).toBe(JSON.stringify(expectedReport));
-        expect(executionReturn.report.exc).not.toBeDefined();
+        expect(JSON.stringify(executionReturn)).toBe(JSON.stringify(expectedReport));
+        expect(executionReturn.exc).not.toBeDefined();
     });
 
-    it('should handle exception', function () {
+    it('should handle function runtime exception', function () {
 
         class ExceptionMetaFunction implements MetaFunctionCreator {
-            createFunction = () => jest.fn(() => {throw new Error("Error executing function")});
+            createBody = () => {"let oi;"};
         }
 
         const exceptionFunction = new ExceptionMetaFunction();
@@ -60,7 +60,20 @@ describe('MetaFunctionExecutor', () => {
 
         const executionReturn = executor.execute();
 
-        expect(executionReturn.report.exc).toBeDefined();
+        expect(executionReturn.exception).toMatch("runtime")
+    });
+
+    it('should handle function compile time exception', function () {
+        class ExceptionMetaFunction implements MetaFunctionCreator {
+            createBody = () => { return {
+                                    test: 'useless'
+                                }}
+        }
+
+        const executor = new MetaFunctionExecutor(new ExceptionMetaFunction());
+        const executionReturn = executor.execute();
+
+        expect(executionReturn.exception).toMatch("compile")
     });
 
 });
