@@ -3,7 +3,7 @@ import {RequisitionIdGenerator} from "./requisition-id-generator";
 import {RequisitionModel} from "./models/requisition-model";
 import {ValidateFunction} from "ajv";
 import {VariablesController} from "../variables/variables-controller";
-import {PlaceHolderReplacer} from "../variables/place-holder-replacer";
+import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");
@@ -32,7 +32,7 @@ export class RequisitionParser {
     }
 
     private replaceVariables(parsedRequisition: {}): any {
-        const placeHolderReplacer = new PlaceHolderReplacer();
+        const placeHolderReplacer = new JsonPlaceholderReplacer();
         placeHolderReplacer
             .addVariableMap(VariablesController.persistedVariables())
             .addVariableMap(VariablesController.sessionVariables());

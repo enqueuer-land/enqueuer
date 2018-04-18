@@ -1,8 +1,7 @@
 import {RequisitionParser} from "./requisition-parser";
 
 
-let validRequisition = function () {
-    return {
+let validRequisition = {
         "requisitionVersion": "01.00.00",
         "timeout": 2000,
         "subscriptions": [],
@@ -16,8 +15,8 @@ let validRequisition = function () {
                     "timeout": 1000
                 }
         }
-    };
 };
+
 describe('RequisitionParser', () => {
 
     it('Should not parse invalid json', () => {
@@ -35,8 +34,7 @@ describe('RequisitionParser', () => {
     });
 
     it('Should accept valid json', () => {
-        const requisition = validRequisition();
-        const requisitionStringified: string = JSON.stringify(requisition);
+        const requisitionStringified: string = JSON.stringify(validRequisition);
         const parser: RequisitionParser = new RequisitionParser();
 
         const parsed = parser.parse(requisitionStringified);
