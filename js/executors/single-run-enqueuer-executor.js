@@ -64,10 +64,11 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         });
     }
     mergeNewReport(newReport) {
-        this.reportMerge.requisitions[newReport.id] = newReport.valid;
+        const requisitionIdentifier = newReport.name || newReport.id;
+        this.reportMerge.requisitions[requisitionIdentifier] = newReport.valid;
         this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
         newReport.errorsDescription.forEach(newError => {
-            this.reportMerge.errorsDescription.push(`[Requisition][${newReport.id}]${newError}`);
+            this.reportMerge.errorsDescription.push(`[Requisition][${newReport.name || newReport.id}]${newError}`);
         });
         return newReport;
     }

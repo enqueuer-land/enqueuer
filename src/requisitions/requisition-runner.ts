@@ -17,7 +17,7 @@ export class RequisitionRunner {
     private requisitionTimeout?: number;
 
     constructor(requisitionAttributes: RequisitionModel) {
-        this.reportGenerator = new ReportGenerator(requisitionAttributes.id);
+        this.reportGenerator = new ReportGenerator(requisitionAttributes);
         this.startEvent = Container.get(StartEventReporter).createFromPredicate(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;

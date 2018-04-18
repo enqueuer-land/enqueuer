@@ -1,6 +1,14 @@
 requisitions:
-  run-mode:
-    single-run:
-      fileNamePattern: playground/*.json
+    run-mode:
+      single-run:
+        fileNamePattern: 'playground/*.json'
+        output-file: playground/singleRunOutput
+outputs:
+    -
+      type: standard-output
+
 variables:
-  httpPort: 23076
+    httpPort: 23076
+    enqueuerKey: 10
+
+log-level: trace

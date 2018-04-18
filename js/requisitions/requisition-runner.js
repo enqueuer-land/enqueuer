@@ -8,7 +8,7 @@ const timeout_1 = require("../timers/timeout");
 const multi_subscriptions_reporter_1 = require("../reporters/subscription/multi-subscriptions-reporter");
 class RequisitionRunner {
     constructor(requisitionAttributes) {
-        this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes.id);
+        this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes);
         this.startEvent = container_1.Container.get(start_event_reporter_1.StartEventReporter).createFromPredicate(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;

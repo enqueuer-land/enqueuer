@@ -1,9 +1,11 @@
 {
   "requisitionVersion": "01.00.00",
   "timeout": 3000,
+  "name": "anyNameToIdentifyThisRequisitionImAmqpReq",
   "subscriptions": [
     {
       "type": "amqp",
+      "name": "anyNameToIdentifyThisSubscriptionIamAmqpSubs",
       "options": {
         "host": "localhost",
         "port": 5672
@@ -16,6 +18,7 @@
   "startEvent": {
     "publisher": {
       "type": "amqp",
+      "name": "anyNameToIdentifyWhateverYouWantToIAmAmqpPub",
       "options": {
         "host": "localhost",
         "port": 5672

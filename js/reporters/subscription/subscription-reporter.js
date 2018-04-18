@@ -84,10 +84,12 @@ class SubscriptionReporter {
         });
     }
     getReport() {
-        this.report = Object.assign({}, this.report, this.subscriptionAttributes, { hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
+        this.report = Object.assign({}, this.report, { type: this.subscriptionAttributes.type, hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
         const hasReceivedMessage = this.report.hasReceivedMessage;
         if (!hasReceivedMessage)
             this.report.errorsDescription.push(`Subscription '${this.subscription.type}' didn't receive any message`);
+        if (this.subscriptionAttributes.name)
+            this.report.name = this.subscriptionAttributes.name;
         this.report.valid = hasReceivedMessage &&
             !this.hasTimedOut &&
             this.report.onMessageFunctionReport.failingTests &&

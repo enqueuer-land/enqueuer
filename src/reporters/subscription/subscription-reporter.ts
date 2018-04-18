@@ -98,13 +98,17 @@ export class SubscriptionReporter implements Reporter {
     public getReport(): Report {
         this.report = {
             ...this.report,
-            ...this.subscriptionAttributes,
+            type: this.subscriptionAttributes.type,
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };
         const hasReceivedMessage = this.report.hasReceivedMessage;
         if (!hasReceivedMessage)
             this.report.errorsDescription.push(`Subscription '${this.subscription.type}' didn't receive any message`);
+
+        if (this.subscriptionAttributes.name)
+            this.report.name = this.subscriptionAttributes.name;
+
 
         this.report.valid = hasReceivedMessage &&
                             !this.hasTimedOut &&
