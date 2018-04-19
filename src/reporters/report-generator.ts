@@ -1,6 +1,5 @@
 import {DateController} from "../timers/date-controller";
 import {Report} from "./report";
-import {Logger} from "../loggers/logger";
 import {Reporter} from "./reporter";
 import {RequisitionModel} from "../requisitions/models/requisition-model";
 

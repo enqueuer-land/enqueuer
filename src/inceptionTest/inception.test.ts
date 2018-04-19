@@ -37,10 +37,12 @@ describe("Inception test", () => {
         jest.setTimeout(10000);
 
         try {
-            beingTested = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/beingTested.yml']);
+            beingTested = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/beingTested.yml']);
+            // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
             sleep(500);
 
-            tester = spawn('node',  ['js/index', '--config-file', 'src/inceptionTest/tester.yml']);
+            tester = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/tester.yml']);
+            // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
             sleep(2500);
 
             const testerReports = findEveryJsonFile()
@@ -67,10 +69,10 @@ describe("Inception test", () => {
 
             tester.on('exit', (statusCode) => {
                 expect(statusCode).toBe(0);
-                done();
             })
+                done();
         } catch (err) {
-            // console.error(err)
+            console.error(err)
         }
 
     })

@@ -17,13 +17,20 @@ class RequisitionParser {
     parse(requisitionMessage) {
         const parsedRequisition = JSON.parse(requisitionMessage);
         if (!this.validator(parsedRequisition) && this.validator.errors) {
+            logger_1.Logger.error(`Invalid requisition: ${JSON.stringify(parsedRequisition, null, 2)}`);
+            this.validator.errors.map(error => {
+                logger_1.Logger.error(JSON.stringify(error));
+            });
             throw new Error(JSON.stringify(this.validator.errors));
         }
         let variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
         variablesReplacedRequisition.id = new requisition_id_generator_1.RequisitionIdGenerator(variablesReplacedRequisition).generateId();
         const requisitionWithId = variablesReplacedRequisition;
         logger_1.Logger.trace(`Parsed requisition: ${JSON.stringify(requisitionWithId, null, 2)}`);
-        logger_1.Logger.info(`Message associated with id ${requisitionWithId.id}`);
+        if (requisitionWithId.name)
+            logger_1.Logger.info(`Message '${requisitionWithId.name}' associated with id ${requisitionWithId.id}`);
+        else
+            logger_1.Logger.info(`Message associated with id ${requisitionWithId.id}`);
         return requisitionWithId;
     }
     replaceVariables(parsedRequisition) {

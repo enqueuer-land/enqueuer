@@ -21,13 +21,20 @@ export class RequisitionParser {
     public parse(requisitionMessage: string): RequisitionModel {
         const parsedRequisition = JSON.parse(requisitionMessage);
         if (!this.validator(parsedRequisition) && this.validator.errors) {
+            Logger.error(`Invalid requisition: ${JSON.stringify(parsedRequisition, null, 2)}`);
+            this.validator.errors.map(error => {
+                Logger.error(JSON.stringify(error));
+            })
             throw new Error(JSON.stringify(this.validator.errors));
         }
         let variablesReplacedRequisition: any = this.replaceVariables(parsedRequisition);
         variablesReplacedRequisition.id = new RequisitionIdGenerator(variablesReplacedRequisition).generateId();
         const requisitionWithId: RequisitionModel = variablesReplacedRequisition as RequisitionModel;
         Logger.trace(`Parsed requisition: ${JSON.stringify(requisitionWithId, null, 2)}`);
-        Logger.info(`Message associated with id ${requisitionWithId.id}`)
+        if (requisitionWithId.name)
+            Logger.info(`Message '${requisitionWithId.name}' associated with id ${requisitionWithId.id}`)
+        else
+            Logger.info(`Message associated with id ${requisitionWithId.id}`)
         return requisitionWithId;
     }
 
@@ -36,7 +43,7 @@ export class RequisitionParser {
         placeHolderReplacer
             .addVariableMap(VariablesController.persistedVariables())
             .addVariableMap(VariablesController.sessionVariables());
-        return placeHolderReplacer.replace(parsedRequisition) as RequisitionModel;
+        return placeHolderReplacer.replace(parsedRequisition);
     }
 
 }
