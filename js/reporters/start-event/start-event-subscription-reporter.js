@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const start_event_reporter_1 = require("./start-event-reporter");
 const subscription_reporter_1 = require("../subscription/subscription-reporter");
-const injector_1 = require("../../injector/injector");
+const conditional_injector_1 = require("conditional-injector");
 let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -35,9 +35,7 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
     }
 };
 StartEventSubscriptionReporter = __decorate([
-    injector_1.Injectable((startEvent) => {
-        return startEvent.subscription != null;
-    }),
+    conditional_injector_1.Injectable({ predicate: (startEvent) => startEvent.subscription != null }),
     __metadata("design:paramtypes", [Object])
 ], StartEventSubscriptionReporter);
 exports.StartEventSubscriptionReporter = StartEventSubscriptionReporter;

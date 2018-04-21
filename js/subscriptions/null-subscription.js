@@ -10,8 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
-const injector_1 = require("../injector/injector");
-const factory_predicate_1 = require("../injector/factory-predicate");
+const conditional_injector_1 = require("conditional-injector");
 let NullSubscription = class NullSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -24,7 +23,7 @@ let NullSubscription = class NullSubscription extends subscription_1.Subscriptio
     }
 };
 NullSubscription = __decorate([
-    injector_1.Injectable(factory_predicate_1.NullFactoryPredicate),
+    conditional_injector_1.Injectable(),
     __metadata("design:paramtypes", [Object])
 ], NullSubscription);
 exports.NullSubscription = NullSubscription;

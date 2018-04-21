@@ -4,8 +4,8 @@
 currentDirectory=$(pwd)
 
 #Finds injector directory
-injectorDir=$(find ../ -type f -regex ".*injector.ts" | sed 's|injector\.ts||')
-#echo ${injectorDir} "is the injector.ts directory"
+injectorDir=$(find ../ -type f -regex ".*injectable-files-list.ts" | sed 's|injectable-files-list\.ts||')
+#echo ${injectorDir} "is the injectable-files-list.ts directory"
 
 #Enter into injector directory
 cd ${injectorDir}
@@ -24,13 +24,13 @@ do
 done
 
 #Remove existent injectable string
-sed -i '' '/\/\/\#Auto-Generated Code/,$d' injector.ts
+sed -i '' '/\/\/\#Auto-Generated Code/,$d' injectable-files-list.ts
 
 #Creates injectable string
 injectableString=$(echo ${injectableFiles} | sed 's/;/import "/g' | sed 's/\.ts/"\\\n/g')
 
-#inserts in injector.ts
-echo -e "//#Auto-Generated Code\n"${injectableString} >> injector.ts
+#inserts in injectable-files-list.ts
+echo -e "//#Auto-Generated Code\n"${injectableString} >> injectable-files-list.ts
 
 #gets back to first directory
 cd ${currentDirectory}

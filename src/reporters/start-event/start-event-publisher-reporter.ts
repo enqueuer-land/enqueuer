@@ -4,12 +4,11 @@ import {PrePublishMetaFunction} from "../../meta-functions/pre-publish-meta-func
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../timers/date-controller";
 import {PublisherModel} from "../../requisitions/models/publisher-model";
-import {Injectable} from "../../injector/injector";
-import {Container} from "../../injector/container";
 import {Report} from "../report";
 import {Logger} from "../../loggers/logger";
+import {Injectable, Container} from "conditional-injector";
 
-@Injectable((startEvent: any) => startEvent.publisher != null)
+@Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
     private publisherOriginalAttributes: PublisherModel;
     private publisher?: Publisher;
@@ -71,7 +70,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
 
         Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
-        this.publisher = Container.get(Publisher).createFromPredicate(functionResponse.publisher);
+        this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
 
         this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);

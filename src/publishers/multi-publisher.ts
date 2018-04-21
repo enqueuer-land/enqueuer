@@ -1,7 +1,7 @@
 import {Publisher} from "./publisher";
 import {Logger} from "../loggers/logger";
 import {PublisherModel} from "../requisitions/models/publisher-model";
-import {Container} from "../injector/container";
+import {Container} from "conditional-injector";
 
 export class MultiPublisher {
 
@@ -10,7 +10,7 @@ export class MultiPublisher {
     public constructor(reportersAttributes: PublisherModel[]) {
         reportersAttributes.forEach((report: PublisherModel) => {
             Logger.debug(`Instantiating publisher ${report.type}`);
-            const publisher = Container.get(Publisher).createFromPredicate(report);
+            const publisher = Container.subclassesOf(Publisher).create(report);
             this.repliers.push(publisher);
         });
     }

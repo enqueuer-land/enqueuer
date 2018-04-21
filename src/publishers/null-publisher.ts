@@ -1,8 +1,7 @@
 import {Publisher} from "./publisher";
-import {Injectable} from "../injector/injector";
-import {NullFactoryPredicate} from "../injector/factory-predicate";
+import {Injectable} from "conditional-injector";
 
-@Injectable(NullFactoryPredicate)
+@Injectable()
 export class NullPublisher extends Publisher {
 
     public publish(): Promise<void> {

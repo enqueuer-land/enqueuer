@@ -6,9 +6,9 @@ import {MultiPublisher} from "../publishers/multi-publisher";
 import {EnqueuerExecutor} from "./enqueuer-executor";
 import {Report} from "../reporters/report";
 import {Configuration} from "../configurations/configuration";
-import {Injectable} from "../injector/injector";
+import {Injectable} from "conditional-injector";
 
-@Injectable(enqueuerConfiguration => enqueuerConfiguration["daemon"])
+@Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"]})
 export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
 
     private requisitionInputs: DaemonRequisitionInput[];

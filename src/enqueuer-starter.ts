@@ -1,8 +1,8 @@
 import {Configuration} from "./configurations/configuration";
-import {Container} from "./injector/container";
 import {EnqueuerExecutor} from "./executors/enqueuer-executor";
 import {Report} from "./reporters/report";
 import {Logger} from "./loggers/logger";
+import {Container} from "conditional-injector";
 
 export class EnqueuerStarter {
 
@@ -10,7 +10,7 @@ export class EnqueuerStarter {
 
     constructor() {
         const configuration = new Configuration();
-        this.executor = Container.get(EnqueuerExecutor).createFromPredicate(configuration.getRequisitionRunMode());
+        this.executor = Container.subclassesOf(EnqueuerExecutor).create(configuration.getRequisitionRunMode());
     }
 
     public async start(): Promise<number> {

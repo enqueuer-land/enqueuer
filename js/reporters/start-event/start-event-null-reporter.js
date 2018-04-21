@@ -9,9 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const injector_1 = require("../../injector/injector");
-const factory_predicate_1 = require("../../injector/factory-predicate");
 const start_event_reporter_1 = require("./start-event-reporter");
+const conditional_injector_1 = require("conditional-injector");
 let StartEventNullReporter = class StartEventNullReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -25,7 +24,7 @@ let StartEventNullReporter = class StartEventNullReporter extends start_event_re
     }
 };
 StartEventNullReporter = __decorate([
-    injector_1.Injectable(factory_predicate_1.NullFactoryPredicate),
+    conditional_injector_1.Injectable(),
     __metadata("design:paramtypes", [Object])
 ], StartEventNullReporter);
 exports.StartEventNullReporter = StartEventNullReporter;

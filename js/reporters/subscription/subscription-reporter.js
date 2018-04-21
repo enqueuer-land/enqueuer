@@ -4,9 +4,9 @@ const meta_function_executor_1 = require("../../meta-functions/meta-function-exe
 const on_message_received_meta_function_1 = require("../../meta-functions/on-message-received-meta-function");
 const logger_1 = require("../../loggers/logger");
 const date_controller_1 = require("../../timers/date-controller");
-const container_1 = require("../../injector/container");
 const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
+const conditional_injector_1 = require("conditional-injector");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -19,7 +19,7 @@ class SubscriptionReporter {
             }).start(2000);
         };
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscription = container_1.Container.get(subscription_1.Subscription).createFromPredicate(subscriptionAttributes);
+        this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         this.subscriptionAttributes = subscriptionAttributes;
         this.startTime = new date_controller_1.DateController();
         this.report = {

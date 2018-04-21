@@ -1,11 +1,11 @@
-import {Container} from "../injector/container";
 import {Publisher} from "./publisher";
 import {PublisherModel} from "../requisitions/models/publisher-model";
 import {MultiPublisher} from "./multi-publisher";
+import {Container} from "conditional-injector";
 
-jest.mock("../injector/container");
-const getMock = Container.get.mockImplementation(() => {
-    return { createFromPredicate: createMock };
+jest.mock("conditional-injector");
+const getMock = Container.subclassesOf.mockImplementation(() => {
+    return { create: createMock };
 });
 
 const createMock = jest.fn(() => {

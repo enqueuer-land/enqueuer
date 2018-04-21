@@ -19,7 +19,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const logger_1 = require("../loggers/logger");
-const injector_1 = require("../injector/injector");
+const conditional_injector_1 = require("conditional-injector");
 const fs = require("fs");
 const chokidar = require('chokidar');
 let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subscription_1.Subscription {
@@ -65,7 +65,7 @@ let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subs
     }
 };
 FileNameWatcherSubscription = __decorate([
-    injector_1.Injectable((subscriptionAttributes) => subscriptionAttributes.type === "file-name-watcher"),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === "file-name-watcher" }),
     __metadata("design:paramtypes", [Object])
 ], FileNameWatcherSubscription);
 exports.FileNameWatcherSubscription = FileNameWatcherSubscription;

@@ -1,9 +1,8 @@
 import {Subscription} from "./subscription";
-import {Injectable} from "../injector/injector";
-import {NullFactoryPredicate} from "../injector/factory-predicate";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Injectable} from "conditional-injector";
 
-@Injectable(NullFactoryPredicate)
+@Injectable()
 export class NullSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);

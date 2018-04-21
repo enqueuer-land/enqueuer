@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
-import {Injectable} from "../injector/injector";
 import {PublisherModel} from "../requisitions/models/publisher-model";
+import {Injectable} from "conditional-injector";
 const prettyjson = require('prettyjson');
 
 const options = {
@@ -9,7 +9,7 @@ const options = {
     dashColor: "grey"
   };
 
-@Injectable((publishRequisition: any) => publishRequisition.type === "standard-output")
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "standard-output"})
 export class StandardOutputPublisher extends Publisher {
 
     constructor(publisherProperties: PublisherModel) {

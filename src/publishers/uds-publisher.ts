@@ -1,9 +1,9 @@
 import {Publisher} from "./publisher";
-import {Injectable} from "../injector/injector";
 import {PublisherModel} from "../requisitions/models/publisher-model";
+import {Injectable} from "conditional-injector";
 const net = require('net')
 
-@Injectable((publishRequisition: any) => publishRequisition.type === "uds")
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "uds"})
 export class UdsPublisher extends Publisher {
 
     private path: string;

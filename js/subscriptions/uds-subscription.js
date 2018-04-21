@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
-const injector_1 = require("../injector/injector");
+const conditional_injector_1 = require("conditional-injector");
 const net = require('net');
 const fs = require('fs');
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
@@ -48,7 +48,7 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
     }
 };
 UdsSubscription = __decorate([
-    injector_1.Injectable((subscriptionAttributes) => subscriptionAttributes.type === "uds"),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === "uds" }),
     __metadata("design:paramtypes", [Object])
 ], UdsSubscription);
 exports.UdsSubscription = UdsSubscription;

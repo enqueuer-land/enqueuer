@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
-const injector_1 = require("../injector/injector");
+const conditional_injector_1 = require("conditional-injector");
 const prettyjson = require('prettyjson');
 const options = {
     defaultIndentation: 4,
@@ -27,7 +27,7 @@ let StandardOutputPublisher = class StandardOutputPublisher extends publisher_1.
     }
 };
 StandardOutputPublisher = __decorate([
-    injector_1.Injectable((publishRequisition) => publishRequisition.type === "standard-output"),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === "standard-output" }),
     __metadata("design:paramtypes", [Object])
 ], StandardOutputPublisher);
 exports.StandardOutputPublisher = StandardOutputPublisher;

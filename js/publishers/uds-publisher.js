@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
-const injector_1 = require("../injector/injector");
+const conditional_injector_1 = require("conditional-injector");
 const net = require('net');
 let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
@@ -31,7 +31,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     }
 };
 UdsPublisher = __decorate([
-    injector_1.Injectable((publishRequisition) => publishRequisition.type === "uds"),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === "uds" }),
     __metadata("design:paramtypes", [Object])
 ], UdsPublisher);
 exports.UdsPublisher = UdsPublisher;

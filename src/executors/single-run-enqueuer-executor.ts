@@ -2,14 +2,14 @@ import {EnqueuerExecutor} from "./enqueuer-executor";
 import {Report} from "../reporters/report";
 import {MultiPublisher} from "../publishers/multi-publisher";
 import {SingleRunRequisitionInput} from "../requisitions/single-run-requisition-input";
-import {Injectable} from "../injector/injector";
 import {Configuration} from "../configurations/configuration";
 import {RequisitionStarter} from "../requisitions/requisition-starter";
 import {Logger} from "../loggers/logger";
+import {Injectable} from "conditional-injector";
 const fs = require("fs");
 const prettyjson = require('prettyjson');
 
-@Injectable(enqueuerConfiguration => enqueuerConfiguration["single-run"])
+@Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"]})
 export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
 
     private outputFilename: string;

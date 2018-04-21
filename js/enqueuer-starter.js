@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_1 = require("./configurations/configuration");
-const container_1 = require("./injector/container");
 const enqueuer_executor_1 = require("./executors/enqueuer-executor");
 const logger_1 = require("./loggers/logger");
+const conditional_injector_1 = require("conditional-injector");
 class EnqueuerStarter {
     constructor() {
         const configuration = new configuration_1.Configuration();
-        this.executor = container_1.Container.get(enqueuer_executor_1.EnqueuerExecutor).createFromPredicate(configuration.getRequisitionRunMode());
+        this.executor = conditional_injector_1.Container.subclassesOf(enqueuer_executor_1.EnqueuerExecutor).create(configuration.getRequisitionRunMode());
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {

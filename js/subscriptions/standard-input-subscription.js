@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
-const injector_1 = require("../injector/injector");
+const conditional_injector_1 = require("conditional-injector");
 process.stdin.setEncoding('utf8');
 process.stdin.resume();
 let StandardInputSubscription = class StandardInputSubscription extends subscription_1.Subscription {
@@ -32,7 +32,7 @@ let StandardInputSubscription = class StandardInputSubscription extends subscrip
     }
 };
 StandardInputSubscription = __decorate([
-    injector_1.Injectable((subscriptionAttributes) => subscriptionAttributes.type === "standard-input"),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === "standard-input" }),
     __metadata("design:paramtypes", [Object])
 ], StandardInputSubscription);
 exports.StandardInputSubscription = StandardInputSubscription;

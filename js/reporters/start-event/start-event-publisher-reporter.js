@@ -14,9 +14,8 @@ const start_event_reporter_1 = require("./start-event-reporter");
 const pre_publish_meta_function_1 = require("../../meta-functions/pre-publish-meta-function");
 const meta_function_executor_1 = require("../../meta-functions/meta-function-executor");
 const date_controller_1 = require("../../timers/date-controller");
-const injector_1 = require("../../injector/injector");
-const container_1 = require("../../injector/container");
 const logger_1 = require("../../loggers/logger");
+const conditional_injector_1 = require("conditional-injector");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -68,7 +67,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         if (functionResponse.publisher.payload)
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
         logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
-        this.publisher = container_1.Container.get(publisher_1.Publisher).createFromPredicate(functionResponse.publisher);
+        this.publisher = conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
         this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
         if (functionResponse.exception) {
@@ -77,7 +76,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
 };
 StartEventPublisherReporter = __decorate([
-    injector_1.Injectable((startEvent) => startEvent.publisher != null),
+    conditional_injector_1.Injectable({ predicate: (startEvent) => startEvent.publisher != null }),
     __metadata("design:paramtypes", [Object])
 ], StartEventPublisherReporter);
 exports.StartEventPublisherReporter = StartEventPublisherReporter;

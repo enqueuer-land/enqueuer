@@ -23,7 +23,7 @@ const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const configuration_1 = require("../configurations/configuration");
-const injector_1 = require("../injector/injector");
+const conditional_injector_1 = require("conditional-injector");
 let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
@@ -67,7 +67,7 @@ let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_execu
     }
 };
 DaemonEnqueuerExecutor = __decorate([
-    injector_1.Injectable(enqueuerConfiguration => enqueuerConfiguration["daemon"]),
+    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"] }),
     __metadata("design:paramtypes", [Object])
 ], DaemonEnqueuerExecutor);
 exports.DaemonEnqueuerExecutor = DaemonEnqueuerExecutor;
