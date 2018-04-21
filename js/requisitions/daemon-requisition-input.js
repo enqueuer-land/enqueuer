@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("../subscriptions/subscription");
 const logger_1 = require("../loggers/logger");
 const requisition_parser_1 = require("./requisition-parser");
-const container_1 = require("../injector/container");
+const conditional_injector_1 = require("conditional-injector");
 class DaemonRequisitionInput {
     constructor(input) {
         this.type = input.type;
         this.requisitionParser = new requisition_parser_1.RequisitionParser();
-        this.subscription = container_1.Container.get(subscription_1.Subscription).createFromPredicate(input);
+        this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(input);
     }
     connect() {
         logger_1.Logger.info(`Connecting to input ${this.type}`);

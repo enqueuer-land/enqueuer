@@ -2,16 +2,17 @@
 
 #Stores current directory
 currentDirectory=$(pwd)
+injectableFileName=$1
+srcFolder=$2
 
 #Finds injector directory
-injectorDir=$(find ../ -type f -regex ".*injector.ts" | sed 's|injector\.ts||')
-#echo ${injectorDir} "is the injector.ts directory"
+injectorDir=$(dirname "${injectableFileName}")
 
 #Enter into injector directory
-cd ${injectorDir}
+cd ${srcFolder}
 
 #Finds every .ts file
-typescriptFiles=$(find .. -type f -regex ".*\.ts" | grep -v "\.test\." )
+typescriptFiles=$(find . -type f -regex ".*\.ts" )
 
 #Checks if file has "@Injectable" decorator
 injectableFiles=()
@@ -23,15 +24,13 @@ do
     fi
 done
 
-#Remove existent injectable string
-sed -i '' '/\/\/\#Auto-Generated Code/,$d' injector.ts
-
 #Creates injectable string
 injectableString=$(echo ${injectableFiles} | sed 's/;/import "/g' | sed 's/\.ts/"\\\n/g')
 
-#inserts in injector.ts
-echo -e "//#Auto-Generated Code\n"${injectableString} >> injector.ts
-
 #gets back to first directory
 cd ${currentDirectory}
+
+#inserts in injectable-files-list.ts
+echo -e "//#Auto-Generated Code\n"${injectableString}  > $1
+
 

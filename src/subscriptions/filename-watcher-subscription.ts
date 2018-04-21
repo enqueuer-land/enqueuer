@@ -1,11 +1,11 @@
 import {Subscription} from "./subscription";
 import {Logger} from "../loggers/logger";
-import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Injectable} from "conditional-injector";
 const fs = require("fs");
 const chokidar = require('chokidar');
 
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-watcher")
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-watcher"})
 export class FileNameWatcherSubscription extends Subscription {
 
     private watcher: any;

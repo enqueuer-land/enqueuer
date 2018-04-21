@@ -1,11 +1,11 @@
 import {Subscription} from "./subscription";
-import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Injectable} from "conditional-injector";
 
 process.stdin.setEncoding('utf8');
 process.stdin.resume();
 
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "standard-input")
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "standard-input"})
 export class StandardInputSubscription extends Subscription{
 
     constructor(subscriptionModel: SubscriptionModel) {

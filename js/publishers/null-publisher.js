@@ -7,14 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
-const injector_1 = require("../injector/injector");
-const factory_predicate_1 = require("../injector/factory-predicate");
+const conditional_injector_1 = require("conditional-injector");
 let NullPublisher = class NullPublisher extends publisher_1.Publisher {
     publish() {
         return Promise.reject(`Undefined publishing type to publish event: ${this.type}`);
     }
 };
 NullPublisher = __decorate([
-    injector_1.Injectable(factory_predicate_1.NullFactoryPredicate)
+    conditional_injector_1.Injectable()
 ], NullPublisher);
 exports.NullPublisher = NullPublisher;

@@ -3,7 +3,7 @@
 import {EnqueuerStarter} from "./enqueuer-starter";
 import {Configuration} from "./configurations/configuration";
 import {Logger} from "./loggers/logger";
-import "./injector/injector";
+import "./injectable-files-list";
 
 const prettyjson = require('prettyjson');
 

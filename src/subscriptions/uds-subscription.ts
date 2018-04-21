@@ -1,10 +1,10 @@
 import {Subscription} from "./subscription";
-import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/Subscription-model";
+import {Injectable} from "conditional-injector";
 const net = require('net')
 const fs = require('fs');
 
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "uds")
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "uds"})
 export class UdsSubscription extends Subscription {
 
     private server: any;

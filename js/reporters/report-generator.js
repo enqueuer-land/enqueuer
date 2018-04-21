@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const date_controller_1 = require("../timers/date-controller");
 class ReportGenerator {
-    constructor(requisitionId) {
+    constructor(requisitionAttributes) {
         this.requisitionReports = {
-            id: requisitionId,
+            id: requisitionAttributes.id,
             enqueuer: {
                 version: process.env.npm_package_version || "1.0.0"
             },
@@ -14,6 +14,8 @@ class ReportGenerator {
             valid: false,
             errorsDescription: []
         };
+        if (requisitionAttributes.name)
+            this.requisitionReports.name = requisitionAttributes.name;
     }
     start(timeout) {
         this.startTime = new date_controller_1.DateController();

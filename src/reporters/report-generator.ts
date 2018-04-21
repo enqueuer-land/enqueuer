@@ -1,7 +1,7 @@
 import {DateController} from "../timers/date-controller";
 import {Report} from "./report";
-import {Logger} from "../loggers/logger";
 import {Reporter} from "./reporter";
+import {RequisitionModel} from "../requisitions/models/requisition-model";
 
 export class ReportGenerator implements Reporter {
 
@@ -12,9 +12,9 @@ export class ReportGenerator implements Reporter {
     private startEventReports?: Report;
     private subscriptionReports?: Report;
 
-    public constructor(requisitionId: string) {
+    public constructor(requisitionAttributes: RequisitionModel) {
         this.requisitionReports = {
-            id: requisitionId,
+            id: requisitionAttributes.id,
             enqueuer: {
                 version: process.env.npm_package_version || "1.0.0"
             },
@@ -24,6 +24,8 @@ export class ReportGenerator implements Reporter {
             valid: false,
             errorsDescription: []
         };
+        if (requisitionAttributes.name)
+            this.requisitionReports.name = requisitionAttributes.name;
     }
 
     public start(timeout?: number) {

@@ -1,12 +1,10 @@
 import {StartEventReporter} from "./start-event-reporter";
 import {SubscriptionReporter} from "../subscription/subscription-reporter";
-import {Injectable} from "../../injector/injector";
 import {SubscriptionModel} from "../../requisitions/models/subscription-model";
 import {Report} from "../report";
+import {Injectable} from "conditional-injector";
 
-@Injectable((startEvent: any) => {
-    return startEvent.subscription != null;
-})
+@Injectable({predicate: (startEvent: any) => startEvent.subscription != null})
 export class StartEventSubscriptionReporter extends StartEventReporter {
 
     private subscriptionReporter: SubscriptionReporter;

@@ -1,9 +1,9 @@
 import {Subscription} from "./subscription";
-import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {Injectable} from "conditional-injector";
 const amqp = require('amqp');
 
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "amqp")
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "amqp"})
 export class AmqpSubscription extends Subscription {
 
     private connection: any;

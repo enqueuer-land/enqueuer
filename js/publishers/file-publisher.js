@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
-const injector_1 = require("../injector/injector");
 const requisition_id_generator_1 = require("../requisitions/requisition-id-generator");
+const conditional_injector_1 = require("conditional-injector");
 const fs = require("fs");
 let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
@@ -34,7 +34,7 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     }
 };
 FilePublisher = __decorate([
-    injector_1.Injectable((publishRequisition) => publishRequisition.type === "file"),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === "file" }),
     __metadata("design:paramtypes", [Object])
 ], FilePublisher);
 exports.FilePublisher = FilePublisher;

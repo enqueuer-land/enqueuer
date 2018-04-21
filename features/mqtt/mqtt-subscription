@@ -1,10 +1,11 @@
 import {Subscription} from "./subscription";
-import {Injectable} from "../injector/injector";
 import {SubscriptionModel} from "../requisitions/models/subscription-model";
 import {Logger} from "../loggers/logger";
+import {Injectable} from "conditional-injector";
+
 const mqtt = require("mqtt")
 
-@Injectable((subscriptionAttributes: any) => subscriptionAttributes.type === "mqtt")
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "mqtt"})
 export class MqttSubscription extends Subscription {
 
     private brokerAddress: string;

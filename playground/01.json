@@ -1,9 +1,11 @@
 {
   "requisitionVersion": "01.00.00",
   "timeout": 30000,
+  "name": "requisitionName",
   "subscriptions": [
     {
       "type": "http-server",
+      "name": "subscriptionTitle",
       "endpoint": "/enqueuer",
       "port": "{{httpPort}}",
       "method": "POST",
@@ -16,6 +18,7 @@
   ],
   "startEvent": {
     "publisher": {
+      "name": "startEventName",
       "type": "http-client",
       "url": "http://localhost:{{httpPort}}/enqueuer",
       "method": "POST",

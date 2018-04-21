@@ -2,8 +2,8 @@ import {Subscription} from "../subscriptions/subscription";
 import {Logger} from "../loggers/logger";
 import {RequisitionParser} from "./requisition-parser";
 import {RequisitionModel} from "./models/requisition-model";
-import {Container} from "../injector/container";
 import {SubscriptionModel} from "./models/subscription-model";
+import {Container} from "conditional-injector";
 
 export class DaemonRequisitionInput {
 
@@ -14,7 +14,7 @@ export class DaemonRequisitionInput {
     constructor(input: SubscriptionModel) {
         this.type = input.type;
         this.requisitionParser = new RequisitionParser();
-        this.subscription = Container.get(Subscription).createFromPredicate(input);
+        this.subscription = Container.subclassesOf(Subscription).create(input);
     }
 
     public connect(): Promise<void> {

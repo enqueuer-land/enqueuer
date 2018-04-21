@@ -20,10 +20,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const single_run_requisition_input_1 = require("../requisitions/single-run-requisition-input");
-const injector_1 = require("../injector/injector");
 const configuration_1 = require("../configurations/configuration");
 const requisition_starter_1 = require("../requisitions/requisition-starter");
 const logger_1 = require("../loggers/logger");
+const conditional_injector_1 = require("conditional-injector");
 const fs = require("fs");
 const prettyjson = require('prettyjson');
 let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
@@ -64,10 +64,11 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         });
     }
     mergeNewReport(newReport) {
-        this.reportMerge.requisitions[newReport.id] = newReport.valid;
+        const requisitionIdentifier = newReport.name || newReport.id;
+        this.reportMerge.requisitions[requisitionIdentifier] = newReport.valid;
         this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
         newReport.errorsDescription.forEach(newError => {
-            this.reportMerge.errorsDescription.push(`[Requisition][${newReport.id}]${newError}`);
+            this.reportMerge.errorsDescription.push(`[Requisition][${newReport.name || newReport.id}]${newError}`);
         });
         return newReport;
     }
@@ -85,7 +86,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
     ;
 };
 SingleRunEnqueuerExecutor = __decorate([
-    injector_1.Injectable(enqueuerConfiguration => enqueuerConfiguration["single-run"]),
+    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"] }),
     __metadata("design:paramtypes", [Object])
 ], SingleRunEnqueuerExecutor);
 exports.SingleRunEnqueuerExecutor = SingleRunEnqueuerExecutor;

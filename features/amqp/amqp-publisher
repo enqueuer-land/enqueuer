@@ -1,10 +1,10 @@
 import {Publisher} from "./publisher";
-import {Injectable} from "../injector/injector";
 import {PublisherModel} from "../requisitions/models/publisher-model";
+import {Injectable} from "conditional-injector";
 
 var amqp = require('amqp');
 
-@Injectable((publishRequisition: any) => publishRequisition.type === "amqp")
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "amqp"})
 export class AmqpPublisher extends Publisher {
     private connection: any;
     private options: string;
