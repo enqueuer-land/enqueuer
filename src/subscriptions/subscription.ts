@@ -2,6 +2,7 @@ import {SubscriptionModel} from "../models/subscription-model";
 
 export abstract class Subscription {
 
+    public name: string;
     public messageReceived?: string;
     public timeout?: number;
     public onMessageReceived?: string;
@@ -9,6 +10,7 @@ export abstract class Subscription {
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {
         this.messageReceived = subscriptionAttributes.messageReceived;
+        this.name = subscriptionAttributes.name;
         this.timeout = subscriptionAttributes.timeout;
         this.type = subscriptionAttributes.type;
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;

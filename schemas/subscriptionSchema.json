@@ -10,6 +10,14 @@
         "mqtt", "amqp", "http"
       ]
     },
+    "name": {
+      "type": "string",
+      "title": "The Type Schema ",
+      "default": "",
+      "examples": [
+        "mqtt", "amqp", "http"
+      ]
+    },
     "onMessageReceived": {
       "type": "string",
       "title": "The OnMessageReceived Schema ",
@@ -27,6 +35,7 @@
     }
   },
   "required": [
-    "type"
+    "type",
+    "name"
   ]
 }

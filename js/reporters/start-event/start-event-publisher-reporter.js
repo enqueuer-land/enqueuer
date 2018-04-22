@@ -23,6 +23,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         this.publisherOriginalAttributes = startEvent.publisher;
         this.report = {
             valid: false,
+            name: this.publisherOriginalAttributes.name,
             errorsDescription: []
         };
     }
@@ -37,22 +38,28 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
                 })
                     .catch((err) => {
                     logger_1.Logger.error(err);
-                    this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`);
+                    if (this.report.errorsDescription)
+                        this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`);
                     reject(err);
                 });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
-                this.report.errorsDescription.push(message);
+                if (this.report.errorsDescription)
+                    this.report.errorsDescription.push(message);
                 reject(message);
             }
         });
     }
     getReport() {
+        let publisherName = this.publisherOriginalAttributes.name;
+        if (this.publisher && this.publisher.name)
+            publisherName = this.publisher.name;
         this.report = {
             prePublishingFunctionReport: this.prePublishingFunctionReport,
+            name: publisherName,
             timestamp: new date_controller_1.DateController().toString(),
-            valid: this.report.errorsDescription.length <= 0,
+            valid: (this.report.errorsDescription && this.report.errorsDescription.length <= 0) || false,
             errorsDescription: this.report.errorsDescription
         };
         if (this.publisher)
@@ -69,9 +76,11 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
-        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (this.report.errorsDescription)
+            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
         if (functionResponse.exception) {
-            this.report.errorsDescription.concat(functionResponse.exception);
+            if (this.report.errorsDescription)
+                this.report.errorsDescription.concat(functionResponse.exception);
         }
     }
 };

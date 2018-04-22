@@ -1,12 +1,12 @@
-import {RequisitionStarter} from "../requisitions/requisition-starter";
 import {DaemonRunInput} from "./daemon-run-input";
 import {Logger} from "../loggers/logger";
-import {RequisitionModel} from "../models/requisition-model";
 import {MultiPublisher} from "../publishers/multi-publisher";
 import {EnqueuerExecutor} from "./enqueuer-executor";
-import {Report} from "../reporters/report";
+import {Report} from "../reports/report";
 import {Configuration} from "../configurations/configuration";
 import {Injectable} from "conditional-injector";
+import {RunnableModel} from "../models/runnable-model";
+import {RunnableRunner} from "../runnables/runnable-runner";
 
 @Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"]})
 export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
@@ -46,7 +46,7 @@ export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
 
     private startReader(input: DaemonRunInput) {
         input.receiveMessage()
-            .then( (requisition: RequisitionModel) => new RequisitionStarter(requisition).start())
+            .then( (runnable: RunnableModel) => new RunnableRunner(runnable).run())
             .then( (report: Report) => this.multiPublisher.publish(JSON.stringify(report)))
             .then(() => this.startReader(input))
             .catch( (err) => {

@@ -21,9 +21,10 @@ const enqueuer_executor_1 = require("./enqueuer-executor");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const single_run_input_1 = require("./single-run-input");
 const configuration_1 = require("../configurations/configuration");
-const requisition_starter_1 = require("../requisitions/requisition-starter");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
+const runnable_runner_1 = require("../runnables/runnable-runner");
+const report_merger_1 = require("../reports/report-merger");
 const fs = require("fs");
 const prettyjson = require('prettyjson');
 let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
@@ -32,29 +33,25 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
         this.outputFilename = singleRunConfiguration["output-file"];
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
-        this.singleRunRequisitionInput =
+        this.singleRunInput =
             new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
-        this.reportMerge = {
-            valid: true,
-            errorsDescription: [],
-            requisitions: {}
-        };
+        this.reportMerger = new report_merger_1.ReportMerger("SingleRun");
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.singleRunRequisitionInput.syncDir();
+            return this.singleRunInput.syncDir();
         });
     }
     execute() {
         return new Promise((resolve) => {
-            this.singleRunRequisitionInput.onNoMoreFilesToBeRead(() => {
+            this.singleRunInput.onNoMoreFilesToBeRead(() => {
                 logger_1.Logger.info("There is no more requisition to be ran");
-                this.persistSummary(this.reportMerge);
-                return resolve(this.reportMerge);
+                this.persistSummary(this.reportMerger.getReport());
+                return resolve(this.reportMerger.getReport());
             });
-            this.singleRunRequisitionInput.receiveRequisition()
-                .then(requisition => new requisition_starter_1.RequisitionStarter(requisition).start())
-                .then(report => this.mergeNewReport(report))
+            this.singleRunInput.receiveRequisition()
+                .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
+                .then(report => this.reportMerger.addReport(report))
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then(() => resolve(this.execute())) //Run the next one
                 .catch((err) => {
@@ -63,15 +60,6 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             });
         });
     }
-    mergeNewReport(newReport) {
-        const requisitionIdentifier = newReport.name || newReport.id;
-        this.reportMerge.requisitions[requisitionIdentifier] = newReport.valid;
-        this.reportMerge.valid = this.reportMerge.valid && newReport.valid;
-        newReport.errorsDescription.forEach(newError => {
-            this.reportMerge.errorsDescription.push(`[Requisition][${newReport.name || newReport.id}]${newError}`);
-        });
-        return newReport;
-    }
     persistSummary(report) {
         const options = {
             defaultIndentation: 4,
@@ -79,9 +67,13 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             dashColor: "grey"
         };
         logger_1.Logger.info(`Reports summary:`);
-        console.log(prettyjson.render(report, options));
+        const toBePersisted = {
+            valid: report.valid,
+            errorsDescription: report.errorsDescription
+        };
+        console.log(prettyjson.render(toBePersisted, options));
         if (this.outputFilename)
-            fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 3));
+            fs.writeFileSync(this.outputFilename, JSON.stringify(toBePersisted, null, 4));
     }
     ;
 };

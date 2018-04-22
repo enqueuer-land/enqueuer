@@ -1,35 +1,30 @@
 {
-  "requisitionVersion": "01.00.00",
-  "timeout": 30000,
-  "name": "requisitionName",
-  "subscriptions": [
+  "runnableVersion": "01.00.00",
+  "iterations": 1,
+  "name": "runnableFile",
+  "initialDelay": 0,
+  "runnables": [
     {
-      "type": "http-server",
-      "name": "subscriptionTitle",
-      "endpoint": "/enqueuer",
-      "port": "{{httpPort}}",
-      "method": "POST",
-      "response": {
-        "status": 200
-      },
-      "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === '{{httpPayload}}'; persistSessionVariable('sessionKey', JSON.parse(message).sessionVar);",
-      "timeout": 10000
-    }
-  ],
-  "startEvent": {
-    "publisher": {
-      "name": "startEventName",
-      "type": "http-client",
-      "url": "http://localhost:{{httpPort}}/enqueuer",
-      "method": "POST",
-      "payload": {
-        "enqueuer": "{{httpPayload}}",
-        "sessionVar": "someValue"
-      },
-      "headers": {
-        "content-type": "application/json"
+      "timeout": 3000,
+      "name": "file",
+      "subscriptions": [
+        {
+          "type": "file-name-watcher",
+          "name": "fileSubscription",
+          "fileNamePattern": "temp/fileTest*file",
+          "onMessageReceived": "const now = new Date().getTime(); test['some time has passed'] = now + '' >= message; report['something'] = now;",
+          "timeout": 1000
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "file",
+          "name": "filePublisher",
+          "filenamePrefix": "temp/fileTest",
+          "filenameExtension": "file",
+          "prePublishing": "publisher.payload=new Date().getTime();"
+        }
       }
-
     }
-  }
+  ]
 }

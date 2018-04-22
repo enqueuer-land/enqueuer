@@ -4,9 +4,7 @@ import {EnqueuerStarter} from "./enqueuer-starter";
 import {Configuration} from "./configurations/configuration";
 import {Logger} from "./loggers/logger";
 import "./injectable-files-list";
-
 const prettyjson = require('prettyjson');
-
 
 let configuration = new Configuration();
 const logLevel = configuration.getLogLevel();

@@ -1,6 +1,7 @@
 export interface Report {
     valid: boolean;
-    errorsDescription: string[];
+    name: string;
+    errorsDescription?: string[];
 
     [propName: string]: any;
 }

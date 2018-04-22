@@ -1,15 +1,16 @@
-import { ReportGenerator } from "../reporters/report-generator";
+import { ReportGenerator } from "./report-generator";
 import {Logger} from "../loggers/logger";
-import {StartEventReporter} from "../reporters/start-event/start-event-reporter";
+import {StartEventReporter} from "./start-event/start-event-reporter";
 import {RequisitionModel} from "../models/requisition-model";
 import {Timeout} from "../timers/timeout";
-import {Report} from "../reporters/report";
-import {MultiSubscriptionsReporter} from "../reporters/subscription/multi-subscriptions-reporter";
+import {Report} from "../reports/report";
+import {MultiSubscriptionsReporter} from "./subscription/multi-subscriptions-reporter";
 import {Container} from "conditional-injector";
+import {Reporter} from "./reporter";
 
-export type RequisitionRunnerCallback = (report: Report) => void;
+export type RequisitionRunnerCallback = () => void;
 
-export class RequisitionRunner {
+export class RequisitionReporter implements Reporter {
     private reportGenerator: ReportGenerator;
     private startEvent: StartEventReporter;
     private multiSubscriptionsReporter: MultiSubscriptionsReporter;
@@ -38,6 +39,10 @@ export class RequisitionRunner {
                 Logger.error(`Error connecting multiSubscription: ${err}`);
                 this.onFinish(err)
             });
+    }
+
+    public getReport(): Report {
+        return this.reportGenerator.getReport();
     }
 
     private onSubscriptionsCompleted() {
@@ -84,6 +89,6 @@ export class RequisitionRunner {
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
-        this.onFinishCallback(this.reportGenerator.getReport());
+        this.onFinishCallback();
     }
 }

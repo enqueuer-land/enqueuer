@@ -1,4 +1,4 @@
-import {Report} from "../report";
+import {Report} from "../../reports/report";
 import {Reporter} from "../reporter";
 
 export abstract class StartEventReporter implements Reporter {

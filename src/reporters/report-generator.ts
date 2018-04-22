@@ -1,7 +1,8 @@
 import {DateController} from "../timers/date-controller";
-import {Report} from "./report";
+import {Report} from "../reports/report";
 import {Reporter} from "./reporter";
 import {RequisitionModel} from "../models/requisition-model";
+import * as util from "util";
 
 export class ReportGenerator implements Reporter {
 
@@ -14,13 +15,7 @@ export class ReportGenerator implements Reporter {
 
     public constructor(requisitionAttributes: RequisitionModel) {
         this.requisitionReports = {
-            id: requisitionAttributes.id,
-            enqueuer: {
-                version: process.env.npm_package_version || "1.0.0"
-            },
-            report: {
-                version: process.env.npm_package_version || "1.0.0"
-            },
+            name: requisitionAttributes.name,
             valid: false,
             errorsDescription: []
         };
@@ -55,7 +50,8 @@ export class ReportGenerator implements Reporter {
     }
 
     public addError(error: string): any {
-        this.requisitionReports.errorsDescription.push(`[Requisition] ${error}`);
+        if (this.requisitionReports.errorsDescription)
+            this.requisitionReports.errorsDescription.push(`[Requisition] ${error}`);
     }
 
     private addValidResult() {
@@ -72,14 +68,16 @@ export class ReportGenerator implements Reporter {
     }
 
     private addErrorsResult() {
-        if (this.startEventReports) {
+        if (this.startEventReports && this.startEventReports.errorsDescription) {
             this.startEventReports.errorsDescription.forEach(error => {
-                this.requisitionReports.errorsDescription.push(`[Start Event] ${error}`);
+                if (this.requisitionReports.errorsDescription)
+                    this.requisitionReports.errorsDescription.push(`[Start Event] ${error}`);
             })
         }
-        if (this.subscriptionReports) {
+        if (this.subscriptionReports && this.subscriptionReports.errorsDescription) {
             this.subscriptionReports.errorsDescription.forEach(error => {
-                this.requisitionReports.errorsDescription.push(`[Subscription]${error}`);
+                if (this.requisitionReports.errorsDescription)
+                    this.requisitionReports.errorsDescription.push(`[Subscription]${error}`);
             })
         }
     }

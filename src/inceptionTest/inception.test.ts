@@ -1,7 +1,6 @@
 const { spawn } = require('child_process');
 const fs = require("fs");
 
-
 let findEveryJsonFile = (): string[] => {
     let files = [];
     const path = "src/inceptionTest/";
@@ -51,7 +50,7 @@ describe("Inception test", () => {
                 .map(fileContent => JSON.parse(fileContent))
 
             expect(testerReports.length).toBe(2);
-            const finalReport = testerReports[1];
+            const finalReport = testerReports[1].runnableFile;
 
             expect(finalReport.valid).toBeTruthy();
             expect(finalReport.errorsDescription.length).toBe(0);
@@ -60,9 +59,9 @@ describe("Inception test", () => {
             expect(finalReport.subscriptionReports.valid).toBeTruthy();
             expect(finalReport.subscriptionReports.errorsDescription.length).toBe(0);
 
-            expect(finalReport.subscriptionReports.subscriptions[0].valid).toBeTruthy();
-            expect(finalReport.subscriptionReports.subscriptions[0].errorsDescription.length).toBe(0);
-            expect(finalReport.subscriptionReports.subscriptions[0].onMessageFunctionReport.passingTests[0]).toBe("true");
+            expect(finalReport.subscriptionReports.runnableFile.valid).toBeTruthy();
+            expect(finalReport.subscriptionReports.runnableFile.errorsDescription.length).toBe(0);
+            expect(finalReport.subscriptionReports.runnableFile.onMessageFunctionReport.passingTests[0]).toBe("true");
 
             expect(finalReport.startEventReports.valid).toBeTruthy();
             expect(finalReport.startEventReports.errorsDescription.length).toBe(0);

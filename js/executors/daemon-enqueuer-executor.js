@@ -17,13 +17,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const requisition_starter_1 = require("../requisitions/requisition-starter");
 const daemon_run_input_1 = require("./daemon-run-input");
 const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const configuration_1 = require("../configurations/configuration");
 const conditional_injector_1 = require("conditional-injector");
+const runnable_runner_1 = require("../runnables/runnable-runner");
 let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
@@ -57,7 +57,7 @@ let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_execu
     }
     startReader(input) {
         input.receiveMessage()
-            .then((requisition) => new requisition_starter_1.RequisitionStarter(requisition).start())
+            .then((runnable) => new runnable_runner_1.RunnableRunner(runnable).run())
             .then((report) => this.multiPublisher.publish(JSON.stringify(report)))
             .then(() => this.startReader(input))
             .catch((err) => {

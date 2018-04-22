@@ -34,32 +34,41 @@ By "acts as expected" we mean, the event-driven-component, when triggered by an 
 
 No big surprises, hum? No mistery, as simple as $enqueuer.
 
-### requisition
-Generally, a requisition looks like [this](/examples/publishAsStartEvent.enq.json "Requisition example") and [these](/integrationTest "Others examples").
-Let me explain what each value means:
+### runnable
+Generally, a runnable looks like [this](/playground "Requisition examples") and [these](/integrationTest "Others examples").
+Bellow there is a definition of a **runnable** and a **requisition**:
+####**runnable**:
+-	**runnableVersion**: string, it tells you which version of runnable should be ran. Ex.: "01.00.00".
+-	**name**: string, identifies the runnable throughout its execution.
+-	**initialDelay**: optional number in milliseconds, it tells you how long the requisition has to wait before running a runnable. Ex.: 2000.
+-	**iterations**: optional number, it tells you how many time this runnable should be ran. Ex.: 1.
+-	**runnables**: array of other **runnables** or **requisitions**. Yes, it can get recursive.
 
--	**requisitionVersion**: string, it tells you which version of requisition should be ran. Ex.: "01.00.00".
+####**requisition**:
 -	**timeout**: optional number in milliseconds, it tells you how long the requisition has to wait before being considered as an invalid one. Ex.: 2000.
+-	**name**: string, identifies the requisition throughout its execution.
 -	**subscriptions**: subscription array
-	-	**subscription**, object
-		-	**type**: string, it tells how to identify and instantiate the proper subscription. Ex.: "mqtt".
-		-	**timeout**: optional number in milliseconds, how long the subscription has to wait to be considered as an invalid one. Ex.: 1000.
-		-	**onMessageReceived**: js code, script executed when a message is received.
-		        Here, there is a special variable called **message** and it will have the value received in the 
-			subscription and you can make assertions on the received payload. 
-			Ex.: ```"test['some time has passed'] = new Date().getTime() + '' >= message"```.
-			You can read more about meta-function code in the **meta-function** session.
+    -	**subscription**, object
+        -	**type**: string, it tells how to identify and instantiate the proper subscription. Ex.: "mqtt".
+        -	**name**: string, identifies the subscription throughout its execution.
+        -	**timeout**: optional number in milliseconds, how long the subscription has to wait to be considered as an invalid one. Ex.: 1000.
+        -	**onMessageReceived**: js code, script executed when a message is received.
+                Here, there is a special variable called **message** and it will have the value received in the 
+            subscription and you can make assertions on the received payload. 
+            Ex.: ```"test['some time has passed'] = new Date().getTime() + '' >= message"```.
+            You can read more about meta-function code in the **meta-function** session.
 -	**startEvent**: object
-	-	**publisher**: object
-		-	**type**: string, it tells how to identify and instantiate the proper publisher. Ex.: "mqtt".
-		-	**payload**: object, what's is gonna be published. It may be whatever you want: string, number or even another [requisition](/src/inceptionTest/inceptionRequisition.enq).
-		-	**prePublishing**: js code, script executed just before message publication. 
-                	There is a special variable called **publisher** and it will be the publisher attributes themselves.
-		        You can even redefine a new value for *publisher* attributes in run tume. 
-		        Like this: ```"publisher.payload=new Date().getTime();"``` or ```"publisher.type='mqtt'"```.
-		        You can make assertions if you want to. 
-		        Ex.: ```"test['typeMqtt'] = publisher.type=='mqtt';"```.
-			You can read more about meta-function code in the **meta-function** session.			
+    -	**publisher**: object
+        -	**type**: string, it tells how to identify and instantiate the proper publisher. Ex.: "mqtt".
+        -	**name**: string, identifies the publisher throughout its execution.
+        -	**payload**: object, what's is gonna be published. It may be whatever you want: string, number or even another [runnable](/src/inceptionTest/inceptionRequisition.json).
+        -	**prePublishing**: js code, script executed just before message publication. 
+                    There is a special variable called **publisher** and it will be the publisher attributes themselves.
+                You can even redefine a new value for *publisher* attributes in run tume. 
+                Like this: ```"publisher.payload=new Date().getTime();"``` or ```"publisher.type='mqtt'"```.
+                You can make assertions if you want to. 
+                Ex.: ```"test['typeMqtt'] = publisher.type=='mqtt';"```.
+            You can read more about meta-function code in the **meta-function** session.			
 
 ### why is it useful?
 It is meant to help your development process.
@@ -68,9 +77,9 @@ Although there are other ways of using it, the two main ways are:
   - adding it to your testing pipeline, so you'll be asserting that the event-driven-component still behaves properly in every commit.
 
 ### how it works?
--	receives a [requisition](/examples/publishAsStartEvent.enq.json "Requisition example") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
--	confirms the requisition reception;
-	-	starts the requisition (publishing or waiting on an event);
+-	receives a [runnable](/playground "Runnable examples") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
+-	confirms the runnable reception;
+	-	starts the runnable (publishing or waiting on an event);
 	-	waits for events published by the event-driven-component;
 -	executes hook script upon these received events;
 -	reports back the [result](/outputExamples/).
@@ -82,7 +91,7 @@ This is how your event-driven-conponent should act when triggered by an *Input*:
 What **enqueuer** does is to trigger *Input*, by itself, so the component-to-be-tested acts like it should. And then, **enqueuer** collects component-to-be-tested outputs and checks if they are what they are supposed to be.
 Quite simple, don't you think?
 
-When **enqueuer** receives a requisition, it starts an event described in the requisition and awaits until all expected outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the requisition.
+When **enqueuer** receives a runnable, it starts an event described in the requisitions inside it and awaits until all expected outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the configuration file.
 
 ### configuration file
 So, by default, **enqueuer** reads [conf/enqueuer.yml](/conf/enqueuer.yml) file to configure its execution options.
@@ -90,18 +99,18 @@ Below, there is an explanation of each field of a configuration file.
 
       run-mode:
 Specifies in which execution mode **enqueueuer** will run. There are two options, mutually exclusive:
-- *daemon* (default): it will run indefinitely. Endlessly. As a service. When running in daemon mode, it will be waiting for requisitions through those mechanisms listed in *configFile.run-mode.daemon*.
+- *daemon* (default): it will run indefinitely. Endlessly. As a service. When running in daemon mode, it will be waiting for runnables through those mechanisms listed in *configFile.run-mode.daemon*.
 
 - *single-run*:  this is the one that has to be used when your goal is to integrate your pipeline. It runs every file that matches the fileNamePattern value sorted in a lexicographical order.
 Once all of the matching files are ran, **enqueuer** ends its execution, compiles a summary and saves it in a file defined in *configFile.run-mode.single-run.output-file* and returns, as status code:
-     - 0, if all requisitions are valid; or
-     - 1, if there is at least one invalid requisition.
+     - 0, if all runnables are valid; or
+     - 1, if there is at least one invalid runnable.
     
 ```
 outputs:
 ```
 
-Accepts a list of publishing mechanisms. So, every time a new requisition is executed, **enqueuer** publishes through this its result with values like: schema validation, id, its errors list etc. I think some of these [examples](/outputExamples/) may give you an idea.
+Accepts a list of publishing mechanisms. So, every time a new runnable is executed, **enqueuer** publishes through this its result with values like: schema validation, id, its errors list etc. I think some of these [examples](/outputExamples/) may give you an idea.
 
     log-level:
 
@@ -109,12 +118,12 @@ And last, but not least, log-level defines how execution information are logged 
 Accepted values are: **trace**; **debug**; **info**; **warning**; **error**; and **fatal**.
 
 ### meta-functions
-As mentioned previously in requisition chapter of this README file. 
+As mentioned previously in runnable chapter of this README file. 
 While writing a meta function body field (*onMessageReceived, prePublishing*) you have special values like a variable called **test** and three special functions **persistEnqueuerVariable(name, value)**, **persistSessionVariable(name, value)** and **deleteEnqueuerVariable(name)**;
 -	special variables
 	-	**test**:
 		To test something you can write: "test['label'] = booleanValue;".
-		The boolean value will be evaluated in runtime and every test assertion will be taken in consideration in order to determine whether a requisition is valid.
+		The boolean value will be evaluated in runtime and every test assertion will be taken in consideration in order to determine whether a runnable is valid.
 		Ex.: ```"test['test label'] = true;"```.
 	-	**special functions**:
 	There are three special functions that can be called inside this code: *persistEnqueuerVariable(name, value)*, *persistSessionVariable(name, value)* and *deleteEnqueuerVariable(name)*.
@@ -126,17 +135,19 @@ While writing a meta function body field (*onMessageReceived, prePublishing*) yo
 		-	**persistSessionVariable**:
 		In the other hand, *sessionVariables* are kept in memmory, which means that they will be persisted just while the current **enqueuer** process is executed. To persist a *sessionVariable*, your code has to have: ```persistSessionVariable("sessionVar", 100)```;
 
-### when is a requisition result invalid?
-A requisition is invalid when:
-- Requisition has timed out; or
-- Start event has failed; or
-    - has been unable to connect; or
-    - at least one test has been failed.
-- At least one subscription has failed:
-    - has been unable to connect; or
-    - has timed out; or
-    - has not received any message; or
-    - at least one test has been failed.
+### when is a runnable result invalid?
+A runnable is invalid when:
+- At least one inner runnable is invalid; or
+- At least one inner requisition is invalid:
+    - It has timed out; or
+    - Start event has failed; or
+        - has been unable to connect; or
+        - at least one test has been failed.
+    - At least one subscription has failed:
+        - has been unable to connect; or
+        - has timed out; or
+        - has not received any message; or
+        - at least one test has failed.
 
 The value '**valid**' in the root of report json file will be shown as false and there will be an error description justifying it.
 

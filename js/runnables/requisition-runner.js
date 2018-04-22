@@ -9,25 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const publisher_1 = require("./publisher");
+const logger_1 = require("../loggers/logger");
+const requisition_reporter_1 = require("../reporters/requisition-reporter");
+const runner_1 = require("./runner");
 const conditional_injector_1 = require("conditional-injector");
-const prettyjson = require('prettyjson');
-const options = {
-    defaultIndentation: 4,
-    keysColor: "white",
-    dashColor: "grey"
-};
-let StandardOutputPublisher = class StandardOutputPublisher extends publisher_1.Publisher {
-    constructor(publisherProperties) {
-        super(publisherProperties);
+let RequisitionRunner = class RequisitionRunner extends runner_1.Runner {
+    constructor(requisition) {
+        super();
+        this.requisitionName = requisition.name;
+        logger_1.Logger.info(`Starting requisition '${requisition.name}'`);
+        this.requisitionReporter = new requisition_reporter_1.RequisitionReporter(requisition);
     }
-    publish() {
-        console.log(prettyjson.render(this.payload, options));
-        return Promise.resolve();
+    run() {
+        return new Promise((resolve) => {
+            return this.requisitionReporter.start(() => {
+                logger_1.Logger.info(`Requisition '${this.requisitionName}' is over`);
+                resolve(this.requisitionReporter.getReport());
+            });
+        });
     }
 };
-StandardOutputPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === "standard-output" }),
+RequisitionRunner = __decorate([
+    conditional_injector_1.Injectable(),
     __metadata("design:paramtypes", [Object])
-], StandardOutputPublisher);
-exports.StandardOutputPublisher = StandardOutputPublisher;
+], RequisitionRunner);
+exports.RequisitionRunner = RequisitionRunner;

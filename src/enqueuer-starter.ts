@@ -1,6 +1,6 @@
 import {Configuration} from "./configurations/configuration";
 import {EnqueuerExecutor} from "./executors/enqueuer-executor";
-import {Report} from "./reporters/report";
+import {Report} from "./reports/report";
 import {Logger} from "./loggers/logger";
 import {Container} from "conditional-injector";
 

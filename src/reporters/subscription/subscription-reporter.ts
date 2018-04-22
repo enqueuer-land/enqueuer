@@ -5,16 +5,15 @@ import {DateController} from "../../timers/date-controller";
 import {SubscriptionModel} from "../../models/subscription-model";
 import Signals = NodeJS.Signals;
 import {Subscription} from "../../subscriptions/subscription";
-import {Report} from "../report";
+import {Report} from "../../reports/report";
 import {Timeout} from "../../timers/timeout";
 import {Reporter} from "../reporter";
 import {Container} from "conditional-injector";
 
 export class SubscriptionReporter implements Reporter {
 
-    private subscription: SubscriptionModel;
+    private subscription: Subscription;
     private report: Report;
-    private subscriptionAttributes: SubscriptionModel;
     private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
@@ -22,24 +21,25 @@ export class SubscriptionReporter implements Reporter {
     constructor(subscriptionAttributes: SubscriptionModel) {
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
-        this.subscriptionAttributes = subscriptionAttributes;
         this.startTime = new DateController();
         this.report = {
             valid: false,
+            name: this.subscription.name,
             errorsDescription: []
         };
     }
 
     public startTimeout(onTimeOutCallback: Function) {
-        this.subscription.messageReceived = null;
+        this.subscription.messageReceived = undefined;
         if (this.timeOut)
             this.timeOut.clear();
         this.timeOut = new Timeout(() => {
             if (!this.subscription.messageReceived) {
-                const message = `Subscription '${this.subscription.type}' stop waiting because it has timed out`;
+                const message = `[${this.subscription.name}] stop waiting because it has timed out`;
                 Logger.info(message);
                 this.hasTimedOut = true;
-                this.report.errorsDescription.push(message);
+                if (this.report.errorsDescription)
+                    this.report.errorsDescription.push("Timeout");
                 onTimeOutCallback();
             }
             this.cleanUp();
@@ -48,7 +48,7 @@ export class SubscriptionReporter implements Reporter {
 
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.trace(`Subscription '${this.subscription.type}' is connecting`);
+            Logger.trace(`[${this.subscription.name}] is connecting`);
             this.subscription.connect()
                 .then(() => {
                     this.report = {
@@ -62,8 +62,9 @@ export class SubscriptionReporter implements Reporter {
 
                 })
                 .catch((err: any) => {
-                    const message = `Subscription '${this.subscription.type}' is unable to connect: ${err}`;
-                    this.report.errorsDescription.push(message)
+                    Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
+                    if (this.report.errorsDescription)
+                        this.report.errorsDescription.push("Unable to connect")
                     reject(err);
                 });
         });
@@ -75,20 +76,21 @@ export class SubscriptionReporter implements Reporter {
             this.subscription.receiveMessage()
                 .then((message: any) => {
                     if (message) {
-                        Logger.debug(`Subscription '${this.subscription.type}' received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
+                        Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
 
                         if (!this.hasTimedOut) {
                             this.subscription.messageReceived = message;
                             this.executeSubscriptionFunction();
-                            Logger.info(`Subscription '${this.subscription.type}' stop waiting because it has already received its message`);
+                            Logger.info(`[${this.subscription.name}] stop waiting because it has already received its message`);
                         }
                         this.cleanUp();
                         resolve(message);
                     }
                 })
                 .catch((err: any) => {
-                    const message = `Subscription '${this.subscription.type}' is unable to receive message: ${err}`;
-                    this.report.errorsDescription.push(message)
+                    Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
+                    if (this.report.errorsDescription)
+                        this.report.errorsDescription.push("Unable to receive message")
                     this.subscription.unsubscribe();
                     reject(err);
                 });
@@ -98,23 +100,23 @@ export class SubscriptionReporter implements Reporter {
     public getReport(): Report {
         this.report = {
             ...this.report,
-            type: this.subscriptionAttributes.type,
+            name: this.subscription.name,
+            type: this.subscription.type,
             hasReceivedMessage: this.subscription.messageReceived != null,
             hasTimedOut: this.hasTimedOut
         };
         const hasReceivedMessage = this.report.hasReceivedMessage;
         if (!hasReceivedMessage)
-            this.report.errorsDescription.push(`Subscription '${this.subscription.type}' didn't receive any message`);
+            if (this.report.errorsDescription)
+                this.report.errorsDescription.push(`No message received`);
 
-        if (this.subscriptionAttributes.name)
-            this.report.name = this.subscriptionAttributes.name;
-
+        if (this.subscription.name)
+            this.report.name = this.subscription.name;
 
         this.report.valid = hasReceivedMessage &&
                             !this.hasTimedOut &&
                             this.report.onMessageFunctionReport.failingTests &&
                             this.report.onMessageFunctionReport.failingTests.length <= 0;
-
         this.cleanUp();
         return this.report;
     }
@@ -133,7 +135,7 @@ export class SubscriptionReporter implements Reporter {
 
     private initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
-            Logger.debug(`Setting ${this.subscription.type} subscription timeout to ${this.subscription.timeout}ms`);
+            Logger.debug(`[${this.subscription.name}] setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);
         }
     }
@@ -142,9 +144,11 @@ export class SubscriptionReporter implements Reporter {
         const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
         let functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (this.report.errorsDescription)
+            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
         if (functionResponse.exception) {
-            this.report.errorsDescription.push(functionResponse.exception);
+            if (this.report.errorsDescription)
+                this.report.errorsDescription.push(functionResponse.exception);
         }
 
         this.report = {

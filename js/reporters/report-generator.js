@@ -4,13 +4,7 @@ const date_controller_1 = require("../timers/date-controller");
 class ReportGenerator {
     constructor(requisitionAttributes) {
         this.requisitionReports = {
-            id: requisitionAttributes.id,
-            enqueuer: {
-                version: process.env.npm_package_version || "1.0.0"
-            },
-            report: {
-                version: process.env.npm_package_version || "1.0.0"
-            },
+            name: requisitionAttributes.name,
             valid: false,
             errorsDescription: []
         };
@@ -39,7 +33,8 @@ class ReportGenerator {
         this.addTimesReport();
     }
     addError(error) {
-        this.requisitionReports.errorsDescription.push(`[Requisition] ${error}`);
+        if (this.requisitionReports.errorsDescription)
+            this.requisitionReports.errorsDescription.push(`[Requisition] ${error}`);
     }
     addValidResult() {
         const validStartEvent = this.startEventReports && this.startEventReports.valid;
@@ -52,14 +47,16 @@ class ReportGenerator {
         this.requisitionReports.valid = valid;
     }
     addErrorsResult() {
-        if (this.startEventReports) {
+        if (this.startEventReports && this.startEventReports.errorsDescription) {
             this.startEventReports.errorsDescription.forEach(error => {
-                this.requisitionReports.errorsDescription.push(`[Start Event] ${error}`);
+                if (this.requisitionReports.errorsDescription)
+                    this.requisitionReports.errorsDescription.push(`[Start Event] ${error}`);
             });
         }
-        if (this.subscriptionReports) {
+        if (this.subscriptionReports && this.subscriptionReports.errorsDescription) {
             this.subscriptionReports.errorsDescription.forEach(error => {
-                this.requisitionReports.errorsDescription.push(`[Subscription]${error}`);
+                if (this.requisitionReports.errorsDescription)
+                    this.requisitionReports.errorsDescription.push(`[Subscription]${error}`);
             });
         }
     }

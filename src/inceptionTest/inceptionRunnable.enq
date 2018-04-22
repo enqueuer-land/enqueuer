@@ -1,0 +1,59 @@
+{
+  "runnableVersion": "01.00.00",
+  "iterations": 1,
+  "name": "runnableFile",
+  "initialDelay": 0,
+  "runnables": [
+    {
+      "timeout": 10000,
+      "name": "runnableFile",
+      "subscriptions": [
+        {
+          "type": "uds",
+          "name": "runnableFile",
+          "path": "/tmp/outUnix.sock",
+          "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true;",
+          "timeout": 10000
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "toBeDefined",
+          "name": "runnableFile",
+          "path": "/tmp/inUnix.sock",
+          "payload": {
+            "runnableVersion": "01.00.00",
+            "iterations": 1,
+            "name": "runnableFile",
+            "initialDelay": 0,
+            "runnables": [
+              {
+                "name": "runnableFile",
+                "timeout": 3000,
+                "subscriptions": [
+                  {
+                    "type": "uds",
+                    "name": "runnableFile",
+                    "path": "/tmp/loopUnix.sock",
+                    "onMessageReceived": "test['works'] = message == 100;",
+                    "timeout": 1000
+                  }
+                ],
+                "startEvent": {
+                  "publisher": {
+                    "name": "runnableFile",
+                    "type": "uds",
+                    "path": "/tmp/loopUnix.sock",
+                    "payload": 100
+                  }
+                }
+              }
+            ]
+          },
+          "topic": "enqueuer/inception/beingTested/requisitionInput",
+          "prePublishing": "publisher.type='uds';report['type'] = publisher.type;"
+        }
+      }
+    }
+  ]
+}

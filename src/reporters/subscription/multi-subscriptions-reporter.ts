@@ -1,27 +1,28 @@
 import {SubscriptionModel} from "../../models/subscription-model";
-import {Report} from "../report";
+import {Report} from "../../reports/report";
 import {Reporter} from "../reporter";
 import {SubscriptionReporter} from "./subscription-reporter";
+import {ReportMerger} from "../../reports/report-merger";
 
 export class MultiSubscriptionsReporter implements Reporter {
-    private subscriptionHandlers: SubscriptionReporter[] = [];
+    private subscriptionReporters: SubscriptionReporter[] = [];
     private subscriptionsStoppedWaitingCounter: number = 0;
 
     constructor(subscriptionsAttributes: SubscriptionModel[]) {
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
-            this.subscriptionHandlers.push(new SubscriptionReporter(subscriptionsAttributes[id]));
+            this.subscriptionReporters.push(new SubscriptionReporter(subscriptionsAttributes[id]));
         }
     }
 
     public connect(): Promise<void[]> {
-        return Promise.all(this.subscriptionHandlers.map(
+        return Promise.all(this.subscriptionReporters.map(
             subscriptionHandler => subscriptionHandler.connect()
             ));
     }
 
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.subscriptionHandlers.forEach(subscriptionHandler => {
+            this.subscriptionReporters.forEach(subscriptionHandler => {
                 subscriptionHandler.startTimeout(() => {
                     if (this.haveAllSubscriptionsStoppedWaiting())
                         resolve();
@@ -39,27 +40,21 @@ export class MultiSubscriptionsReporter implements Reporter {
 
     public getReport(): Report {
         let subscriptionReports: any = [];
-        let errorsDescription: string[] = [];
-        let valid = true;
+        const reportMerger = new ReportMerger("Subscriptions");
 
-        for (let i = 0; i < this.subscriptionHandlers.length; ++i) {
-            const subscriptionReport = this.subscriptionHandlers[i].getReport();
-            subscriptionReports.push(subscriptionReport);
-            for (let j = 0; subscriptionReport.errorsDescription && j < subscriptionReport.errorsDescription.length; ++j) {
-                errorsDescription.push(`[${subscriptionReport.name || j}] ` + subscriptionReport.errorsDescription[j]);
-            }
-            valid = valid && subscriptionReport.valid;
+        for (let i = 0; i < this.subscriptionReporters.length; ++i) {
+            const subscriptionReport = this.subscriptionReporters[i].getReport();
+            subscriptionReports.push(subscriptionReports);
+            reportMerger.addReport(subscriptionReport);
         };
         return {
-            subscriptions: subscriptionReports,
-            valid: valid,
-            errorsDescription: errorsDescription
+            ...reportMerger.getReport()
         };
     }
 
     private haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;
-        return (this.subscriptionsStoppedWaitingCounter >= this.subscriptionHandlers.length);
+        return (this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length);
     }
 
 }

@@ -1,11 +1,11 @@
 import {Logger} from "../loggers/logger";
-import {RequisitionParser} from "../requisitions/requisition-parser";
-import {RequisitionModel} from "../models/requisition-model";
 import {SubscriptionReporter} from "../reporters/subscription/subscription-reporter";
+import {RunnableParser} from "../runnables/runnable-parser";
+import {RunnableModel} from "../models/runnable-model";
 
 export class SingleRunInput {
 
-    private requisitionParser: RequisitionParser;
+    private runnableParser: RunnableParser;
     private subscriptionReporter: SubscriptionReporter;
     private executorTimeout: Function | null = null;
 
@@ -13,10 +13,11 @@ export class SingleRunInput {
         this.subscriptionReporter = new SubscriptionReporter(
             {
                 type: 'file-name-watcher',
+                name: 'SingleRunInput',
                 fileNamePattern: fileNamePattern,
                 timeout: 1000
             });
-        this.requisitionParser = new RequisitionParser();
+        this.runnableParser = new RunnableParser();
     }
 
     public syncDir(): Promise<void> {
@@ -27,17 +28,17 @@ export class SingleRunInput {
         this.executorTimeout = executorTimeout;
     }
 
-    public receiveRequisition(): Promise<RequisitionModel> {
+    public receiveRequisition(): Promise<RunnableModel> {
         if (this.executorTimeout)
             this.subscriptionReporter.startTimeout(this.executorTimeout);
         return this.subscriptionReporter
             .receiveMessage()
             .then((unparsed: string) => {
                 try {
-                    return Promise.resolve(this.requisitionParser.parse(unparsed));
+                    return Promise.resolve(this.runnableParser.parse(unparsed));
                 }
                 catch (err) {
-                    Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
+                    Logger.error(`Error parsing runnable ${JSON.stringify(err)}`);
                     return Promise.reject(err);
                 }
             })

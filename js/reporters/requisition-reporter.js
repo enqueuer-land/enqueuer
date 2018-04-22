@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const report_generator_1 = require("../reporters/report-generator");
+const report_generator_1 = require("./report-generator");
 const logger_1 = require("../loggers/logger");
-const start_event_reporter_1 = require("../reporters/start-event/start-event-reporter");
+const start_event_reporter_1 = require("./start-event/start-event-reporter");
 const timeout_1 = require("../timers/timeout");
-const multi_subscriptions_reporter_1 = require("../reporters/subscription/multi-subscriptions-reporter");
+const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptions-reporter");
 const conditional_injector_1 = require("conditional-injector");
-class RequisitionRunner {
+class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes);
         this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(requisitionAttributes.startEvent);
@@ -28,6 +28,9 @@ class RequisitionRunner {
             logger_1.Logger.error(`Error connecting multiSubscription: ${err}`);
             this.onFinish(err);
         });
+    }
+    getReport() {
+        return this.reportGenerator.getReport();
     }
     onSubscriptionsCompleted() {
         this.multiSubscriptionsReporter.receiveMessage()
@@ -68,7 +71,7 @@ class RequisitionRunner {
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
-        this.onFinishCallback(this.reportGenerator.getReport());
+        this.onFinishCallback();
     }
 }
-exports.RequisitionRunner = RequisitionRunner;
+exports.RequisitionReporter = RequisitionReporter;

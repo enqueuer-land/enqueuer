@@ -20,23 +20,24 @@ class SubscriptionReporter {
         };
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
-        this.subscriptionAttributes = subscriptionAttributes;
         this.startTime = new date_controller_1.DateController();
         this.report = {
             valid: false,
+            name: this.subscription.name,
             errorsDescription: []
         };
     }
     startTimeout(onTimeOutCallback) {
-        this.subscription.messageReceived = null;
+        this.subscription.messageReceived = undefined;
         if (this.timeOut)
             this.timeOut.clear();
         this.timeOut = new timeout_1.Timeout(() => {
             if (!this.subscription.messageReceived) {
-                const message = `Subscription '${this.subscription.type}' stop waiting because it has timed out`;
+                const message = `[${this.subscription.name}] stop waiting because it has timed out`;
                 logger_1.Logger.info(message);
                 this.hasTimedOut = true;
-                this.report.errorsDescription.push(message);
+                if (this.report.errorsDescription)
+                    this.report.errorsDescription.push("Timeout");
                 onTimeOutCallback();
             }
             this.cleanUp();
@@ -44,7 +45,7 @@ class SubscriptionReporter {
     }
     connect() {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.trace(`Subscription '${this.subscription.type}' is connecting`);
+            logger_1.Logger.trace(`[${this.subscription.name}] is connecting`);
             this.subscription.connect()
                 .then(() => {
                 this.report = Object.assign({}, this.report, { connectionTime: new date_controller_1.DateController().toString() });
@@ -53,8 +54,9 @@ class SubscriptionReporter {
                 process.on('SIGTERM', this.handleKillSignal);
             })
                 .catch((err) => {
-                const message = `Subscription '${this.subscription.type}' is unable to connect: ${err}`;
-                this.report.errorsDescription.push(message);
+                logger_1.Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
+                if (this.report.errorsDescription)
+                    this.report.errorsDescription.push("Unable to connect");
                 reject(err);
             });
         });
@@ -65,31 +67,33 @@ class SubscriptionReporter {
             this.subscription.receiveMessage()
                 .then((message) => {
                 if (message) {
-                    logger_1.Logger.debug(`Subscription '${this.subscription.type}' received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
+                    logger_1.Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
                         this.executeSubscriptionFunction();
-                        logger_1.Logger.info(`Subscription '${this.subscription.type}' stop waiting because it has already received its message`);
+                        logger_1.Logger.info(`[${this.subscription.name}] stop waiting because it has already received its message`);
                     }
                     this.cleanUp();
                     resolve(message);
                 }
             })
                 .catch((err) => {
-                const message = `Subscription '${this.subscription.type}' is unable to receive message: ${err}`;
-                this.report.errorsDescription.push(message);
+                logger_1.Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
+                if (this.report.errorsDescription)
+                    this.report.errorsDescription.push("Unable to receive message");
                 this.subscription.unsubscribe();
                 reject(err);
             });
         });
     }
     getReport() {
-        this.report = Object.assign({}, this.report, { type: this.subscriptionAttributes.type, hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
+        this.report = Object.assign({}, this.report, { name: this.subscription.name, type: this.subscription.type, hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
         const hasReceivedMessage = this.report.hasReceivedMessage;
         if (!hasReceivedMessage)
-            this.report.errorsDescription.push(`Subscription '${this.subscription.type}' didn't receive any message`);
-        if (this.subscriptionAttributes.name)
-            this.report.name = this.subscriptionAttributes.name;
+            if (this.report.errorsDescription)
+                this.report.errorsDescription.push(`No message received`);
+        if (this.subscription.name)
+            this.report.name = this.subscription.name;
         this.report.valid = hasReceivedMessage &&
             !this.hasTimedOut &&
             this.report.onMessageFunctionReport.failingTests &&
@@ -111,7 +115,7 @@ class SubscriptionReporter {
     }
     initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
-            logger_1.Logger.debug(`Setting ${this.subscription.type} subscription timeout to ${this.subscription.timeout}ms`);
+            logger_1.Logger.debug(`[${this.subscription.name}] setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);
         }
     }
@@ -119,9 +123,11 @@ class SubscriptionReporter {
         const onMessageReceivedSubscription = new on_message_received_meta_function_1.OnMessageReceivedMetaFunction(this.subscription);
         let functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         logger_1.Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        if (this.report.errorsDescription)
+            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
         if (functionResponse.exception) {
-            this.report.errorsDescription.push(functionResponse.exception);
+            if (this.report.errorsDescription)
+                this.report.errorsDescription.push(functionResponse.exception);
         }
         this.report = Object.assign({}, this.report, { onMessageFunctionReport: functionResponse, messageReceivedTimestamp: new date_controller_1.DateController().toString() });
     }

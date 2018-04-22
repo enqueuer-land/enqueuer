@@ -10,6 +10,8 @@ require("./publishers/uds-publisher");
 require("./reporters/start-event/start-event-null-reporter");
 require("./reporters/start-event/start-event-publisher-reporter");
 require("./reporters/start-event/start-event-subscription-reporter");
+require("./runnables/requisition-runner");
+require("./runnables/runnable-runner");
 require("./subscriptions/filename-watcher-subscription");
 require("./subscriptions/null-subscription");
 require("./subscriptions/standard-input-subscription");

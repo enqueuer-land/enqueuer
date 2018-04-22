@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class OnMessageReceivedMetaFunction {
     constructor(subscriptionAttributes) {
-        this.subscriptionAttributes = subscriptionAttributes;
+        this.subscription = subscriptionAttributes;
     }
     createBody() {
         return `let test = {};
                     let report = {};
-                    let message = ${JSON.stringify(this.subscriptionAttributes.messageReceived)};
-                    ${this.subscriptionAttributes.onMessageReceived};
+                    let message = ${JSON.stringify(this.subscription.messageReceived)};
+                    ${this.subscription.onMessageReceived};
                     return {
                             test: test,
                             report: report

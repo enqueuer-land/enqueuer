@@ -7,38 +7,40 @@ const json_placeholder_replacer_1 = require("json-placeholder-replacer");
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
 const publisherSchema = require("../../schemas/publisherSchema");
 const requisitionSchema = require("../../schemas/requisitionSchema");
+const runnableSchema = require("../../schemas/runnableSchema");
 const Ajv = require('ajv');
-class RequisitionParser {
+class RunnableParser {
     constructor() {
         this.validator = new Ajv().addSchema(subscriptionSchema)
             .addSchema(publisherSchema)
-            .compile(requisitionSchema);
+            .addSchema(requisitionSchema)
+            .compile(runnableSchema);
     }
-    parse(requisitionMessage) {
-        const parsedRequisition = JSON.parse(requisitionMessage);
-        if (!this.validator(parsedRequisition) && this.validator.errors) {
-            logger_1.Logger.error(`Invalid requisition: ${JSON.stringify(parsedRequisition, null, 2)}`);
+    parse(runnableMessage) {
+        const parsedRunnable = JSON.parse(runnableMessage);
+        if (!this.validator(parsedRunnable) && this.validator.errors) {
+            logger_1.Logger.error(`Invalid runnable: ${JSON.stringify(parsedRunnable, null, 2)}`);
             this.validator.errors.map(error => {
                 logger_1.Logger.error(JSON.stringify(error));
             });
             throw new Error(JSON.stringify(this.validator.errors));
         }
-        let variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
-        variablesReplacedRequisition.id = new id_generator_1.IdGenerator(variablesReplacedRequisition).generateId();
-        const requisitionWithId = variablesReplacedRequisition;
-        logger_1.Logger.trace(`Parsed requisition: ${JSON.stringify(requisitionWithId, null, 2)}`);
-        if (requisitionWithId.name)
-            logger_1.Logger.info(`Message '${requisitionWithId.name}' associated with id ${requisitionWithId.id}`);
+        let variablesReplaced = this.replaceVariables(parsedRunnable);
+        variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
+        const runnableWithId = variablesReplaced;
+        logger_1.Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
+        if (runnableWithId.name)
+            logger_1.Logger.info(`Message '${runnableWithId.name}' associated with id ${runnableWithId.id}`);
         else
-            logger_1.Logger.info(`Message associated with id ${requisitionWithId.id}`);
-        return requisitionWithId;
+            logger_1.Logger.info(`Message associated with id ${runnableWithId.id}`);
+        return runnableWithId;
     }
-    replaceVariables(parsedRequisition) {
+    replaceVariables(parsedRunnable) {
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
         placeHolderReplacer
             .addVariableMap(variables_controller_1.VariablesController.persistedVariables())
             .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
-        return placeHolderReplacer.replace(parsedRequisition);
+        return placeHolderReplacer.replace(parsedRunnable);
     }
 }
-exports.RequisitionParser = RequisitionParser;
+exports.RunnableParser = RunnableParser;

@@ -2,7 +2,9 @@ import {RequisitionModel} from "./requisition-model";
 
 export interface RunnableModel {
     id: string;
-    name?: string;
+    name: string;
     runnableVersion: string;
+    initialDelay?: number;
+    iterations?: number;
     runnables: (RunnableModel | RequisitionModel)[];
 }

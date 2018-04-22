@@ -1,6 +1,7 @@
 import {Publisher} from "./publisher";
 import {PublisherModel} from "../models/publisher-model";
 import {Injectable} from "conditional-injector";
+
 const prettyjson = require('prettyjson');
 
 const options = {
@@ -17,7 +18,7 @@ export class StandardOutputPublisher extends Publisher {
     }
 
     public publish(): Promise<void> {
-        console.log(prettyjson.render(JSON.parse(this.payload), options));
+        console.log(prettyjson.render(this.payload, options));
         return Promise.resolve();
     }
 

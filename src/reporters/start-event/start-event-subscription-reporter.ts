@@ -1,7 +1,7 @@
 import {StartEventReporter} from "./start-event-reporter";
 import {SubscriptionReporter} from "../subscription/subscription-reporter";
 import {SubscriptionModel} from "../../models/subscription-model";
-import {Report} from "../report";
+import {Report} from "../../reports/report";
 import {Injectable} from "conditional-injector";
 
 @Injectable({predicate: (startEvent: any) => startEvent.subscription != null})

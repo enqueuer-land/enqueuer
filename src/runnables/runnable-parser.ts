@@ -1,6 +1,5 @@
 import {Logger} from "../loggers/logger";
 import {IdGenerator} from "../id-generator/id-generator";
-import {RequisitionModel} from "../models/requisition-model";
 import {ValidateFunction} from "ajv";
 import {VariablesController} from "../variables/variables-controller";
 import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
@@ -41,12 +40,12 @@ export class RunnableParser {
         return runnableWithId;
     }
 
-    private replaceVariables(parsedRequisition: {}): any {
+    private replaceVariables(parsedRunnable: {}): any {
         const placeHolderReplacer = new JsonPlaceholderReplacer();
         placeHolderReplacer
             .addVariableMap(VariablesController.persistedVariables())
             .addVariableMap(VariablesController.sessionVariables());
-        return placeHolderReplacer.replace(parsedRequisition);
+        return placeHolderReplacer.replace(parsedRunnable);
     }
 
 }

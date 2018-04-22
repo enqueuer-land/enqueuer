@@ -2,12 +2,17 @@ import {RunnableParser} from "./runnable-parser";
 
 let validRunnable =
     {
-        "collectionVersion": "01.00.00",
+        "runnableVersion": "01.00.00",
+        name: "name",
+        initialDelay: 10,
+        iterations: 6,
         "runnables": [
             {
                 "timeout": 3000,
+                name: "name",
                 "subscriptions": [
                     {
+                        name: "name",
                         "type": "uds",
                         "path": "/tmp/unix.sock",
                         "timeout": 500
@@ -15,6 +20,7 @@ let validRunnable =
                 ],
                 "startEvent": {
                     "publisher": {
+                        name: "name",
                         "type": "uds",
                         "path": "/tmp/unix.sock",
                         "payload": "{{sessionKey}}"
@@ -22,8 +28,9 @@ let validRunnable =
                 }
             },
             {
-                "collectionVersion": "01.00.00",
-                "initialDelay": 3000,
+                runnableVersion: "01.00.00",
+                name: "name",
+                initialDelay: 3000,
                 iterations: 2,
                 runnables: []
             }
