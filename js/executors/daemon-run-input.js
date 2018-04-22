@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("../subscriptions/subscription");
 const logger_1 = require("../loggers/logger");
-const requisition_parser_1 = require("./requisition-parser");
 const conditional_injector_1 = require("conditional-injector");
-class DaemonRequisitionInput {
+const requisition_parser_1 = require("../requisitions/requisition-parser");
+class DaemonRunInput {
     constructor(input) {
         this.type = input.type;
         this.requisitionParser = new requisition_parser_1.RequisitionParser();
@@ -36,4 +36,4 @@ class DaemonRequisitionInput {
         this.subscription.unsubscribe();
     }
 }
-exports.DaemonRequisitionInput = DaemonRequisitionInput;
+exports.DaemonRunInput = DaemonRunInput;

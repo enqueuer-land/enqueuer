@@ -1,5 +1,5 @@
 import {Publisher} from "./publisher";
-import {PublisherModel} from "../requisitions/models/publisher-model";
+import {PublisherModel} from "../models/publisher-model";
 import {Injectable} from "conditional-injector";
 const prettyjson = require('prettyjson');
 

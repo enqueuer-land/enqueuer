@@ -1,6 +1,6 @@
 import {StartEventReporter} from "./start-event-reporter";
 import {SubscriptionReporter} from "../subscription/subscription-reporter";
-import {SubscriptionModel} from "../../requisitions/models/subscription-model";
+import {SubscriptionModel} from "../../models/subscription-model";
 import {Report} from "../report";
 import {Injectable} from "conditional-injector";
 

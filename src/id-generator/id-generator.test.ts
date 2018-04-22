@@ -1,4 +1,4 @@
-import {RequisitionIdGenerator} from "./requisition-id-generator";
+import {IdGenerator} from "./id-generator";
 import {DateController} from "../timers/date-controller";
 var hash = require('object-hash');
 
@@ -11,11 +11,11 @@ DateController.mockImplementation(() => {
     };
 });
 
-describe('RequisitionIdGenerator', () => {
+describe('IdGenerator', () => {
 
     it('generateId', () => {
         const text: string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-        const idGenerator: RequisitionIdGenerator = new RequisitionIdGenerator(text);
+        const idGenerator: IdGenerator = new IdGenerator(text);
         const expected =  new DateController().getStringOnlyNumbers() + "_" +
             hash(text).substr(0, 8);
 

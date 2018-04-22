@@ -1,5 +1,5 @@
 import {Publisher} from "./publisher";
-import {PublisherModel} from "../requisitions/models/publisher-model";
+import {PublisherModel} from "../models/publisher-model";
 const net = require('net')
 import {Injectable} from "conditional-injector";
 

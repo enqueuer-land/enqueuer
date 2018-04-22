@@ -1,7 +1,7 @@
 import {RequisitionStarter} from "../requisitions/requisition-starter";
-import {DaemonRequisitionInput} from "../requisitions/daemon-requisition-input";
+import {DaemonRunInput} from "./daemon-run-input";
 import {Logger} from "../loggers/logger";
-import {RequisitionModel} from "../requisitions/models/requisition-model";
+import {RequisitionModel} from "../models/requisition-model";
 import {MultiPublisher} from "../publishers/multi-publisher";
 import {EnqueuerExecutor} from "./enqueuer-executor";
 import {Report} from "../reporters/report";
@@ -11,7 +11,7 @@ import {Injectable} from "conditional-injector";
 @Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"]})
 export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
 
-    private requisitionInputs: DaemonRequisitionInput[];
+    private requisitionInputs: DaemonRunInput[];
     private multiPublisher: MultiPublisher;
 
     public constructor(enqueuerConfiguration: any) {
@@ -21,7 +21,7 @@ export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
 
         this.multiPublisher = new MultiPublisher(configuration.getOutputs());;
         this.requisitionInputs = enqueuerConfiguration["daemon"]
-                .map((input: any) => new DaemonRequisitionInput(input));;
+                .map((input: any) => new DaemonRunInput(input));;
     }
 
     public async init(): Promise<void> {
@@ -31,7 +31,7 @@ export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
     public execute(): Promise<Report> {
         return new Promise(() => {
             this.requisitionInputs
-                .forEach((input: DaemonRequisitionInput) => {
+                .forEach((input: DaemonRunInput) => {
                     input.connect()
                         .then(() => {
                             return this.startReader(input)
@@ -44,7 +44,7 @@ export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
         })
     }
 
-    private startReader(input: DaemonRequisitionInput) {
+    private startReader(input: DaemonRunInput) {
         input.receiveMessage()
             .then( (requisition: RequisitionModel) => new RequisitionStarter(requisition).start())
             .then( (report: Report) => this.multiPublisher.publish(JSON.stringify(report)))

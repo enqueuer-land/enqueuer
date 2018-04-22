@@ -1,9 +1,9 @@
 import {Logger} from "../loggers/logger";
-import {RequisitionParser} from "./requisition-parser";
-import {RequisitionModel} from "./models/requisition-model";
+import {RequisitionParser} from "../requisitions/requisition-parser";
+import {RequisitionModel} from "../models/requisition-model";
 import {SubscriptionReporter} from "../reporters/subscription/subscription-reporter";
 
-export class SingleRunRequisitionInput {
+export class SingleRunInput {
 
     private requisitionParser: RequisitionParser;
     private subscriptionReporter: SubscriptionReporter;

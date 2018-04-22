@@ -1,6 +1,6 @@
 import {RequisitionStarter} from "./requisition-starter";
 import {RequisitionRunner} from "./requisition-runner";
-import {RequisitionModel} from "./models/requisition-model";
+import {RequisitionModel} from "../models/requisition-model";
 
 
 const startMock = jest.fn((onFinish: Function) => {

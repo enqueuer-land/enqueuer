@@ -1,5 +1,5 @@
 import {MetaFunctionCreator} from "./meta-function-creator";
-import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {SubscriptionModel} from "../models/subscription-model";
 
 export class OnMessageReceivedMetaFunction implements MetaFunctionCreator {
 

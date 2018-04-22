@@ -1,4 +1,4 @@
-import {PublisherModel} from "../requisitions/models/publisher-model";
+import {PublisherModel} from "../models/publisher-model";
 import {Logger} from "../loggers/logger";
 const version = require('../../package.json').version;
 const yaml = require('yamljs');

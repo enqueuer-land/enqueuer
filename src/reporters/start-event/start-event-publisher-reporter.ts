@@ -3,7 +3,7 @@ import {StartEventReporter} from "./start-event-reporter";
 import {PrePublishMetaFunction} from "../../meta-functions/pre-publish-meta-function";
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../timers/date-controller";
-import {PublisherModel} from "../../requisitions/models/publisher-model";
+import {PublisherModel} from "../../models/publisher-model";
 import {Report} from "../report";
 import {Logger} from "../../loggers/logger";
 import {Injectable, Container} from "conditional-injector";

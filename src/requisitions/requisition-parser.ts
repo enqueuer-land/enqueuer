@@ -1,6 +1,6 @@
 import {Logger} from "../loggers/logger";
-import {RequisitionIdGenerator} from "./requisition-id-generator";
-import {RequisitionModel} from "./models/requisition-model";
+import {IdGenerator} from "../id-generator/id-generator";
+import {RequisitionModel} from "../models/requisition-model";
 import {ValidateFunction} from "ajv";
 import {VariablesController} from "../variables/variables-controller";
 import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
@@ -28,7 +28,7 @@ export class RequisitionParser {
             throw new Error(JSON.stringify(this.validator.errors));
         }
         let variablesReplacedRequisition: any = this.replaceVariables(parsedRequisition);
-        variablesReplacedRequisition.id = new RequisitionIdGenerator(variablesReplacedRequisition).generateId();
+        variablesReplacedRequisition.id = new IdGenerator(variablesReplacedRequisition).generateId();
         const requisitionWithId: RequisitionModel = variablesReplacedRequisition as RequisitionModel;
         Logger.trace(`Parsed requisition: ${JSON.stringify(requisitionWithId, null, 2)}`);
         if (requisitionWithId.name)

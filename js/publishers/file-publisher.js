@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
-const requisition_id_generator_1 = require("../requisitions/requisition-id-generator");
+const id_generator_1 = require("../id-generator/id-generator");
 const conditional_injector_1 = require("conditional-injector");
 const fs = require("fs");
 let FilePublisher = class FilePublisher extends publisher_1.Publisher {
@@ -21,7 +21,7 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     }
     publish() {
         const filename = this.filenamePrefix +
-            new requisition_id_generator_1.RequisitionIdGenerator(this.payload).generateId() +
+            new id_generator_1.IdGenerator(this.payload).generateId() +
             "." +
             this.filenameExtension;
         let value = this.payload;

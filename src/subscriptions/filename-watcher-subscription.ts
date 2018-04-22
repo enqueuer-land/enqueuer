@@ -1,6 +1,6 @@
 import {Subscription} from "./subscription";
 import {Logger} from "../loggers/logger";
-import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {SubscriptionModel} from "../models/subscription-model";
 import {Injectable} from "conditional-injector";
 const fs = require("fs");
 const chokidar = require('chokidar');

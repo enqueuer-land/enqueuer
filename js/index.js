@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_starter_1 = require("./enqueuer-starter");
 const configuration_1 = require("./configurations/configuration");
 const logger_1 = require("./loggers/logger");
-require("./injector/injectable-files-list");
+require("./injectable-files-list");
 const prettyjson = require('prettyjson');
 let configuration = new configuration_1.Configuration();
 const logLevel = configuration.getLogLevel();

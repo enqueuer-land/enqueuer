@@ -1,18 +1,18 @@
 import {DateController} from "../timers/date-controller";
 var hash = require('object-hash');
 
-export class RequisitionIdGenerator {
+export class IdGenerator {
 
-    private requisition: string;
+    private value: string;
 
-    public constructor(requisition: any) {
-        this.requisition = requisition as string;
+    public constructor(value: any) {
+        this.value = value as string;
     }
 
     public generateId(): string {
         return new DateController().getStringOnlyNumbers() +
                 "_" +
-                hash(this.requisition).substr(0, 8);
+                hash(this.value).substr(0, 8);
     }
 
 }

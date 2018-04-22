@@ -1,4 +1,4 @@
-import {SubscriptionModel} from "../../requisitions/models/subscription-model";
+import {SubscriptionModel} from "../../models/subscription-model";
 import {Report} from "../report";
 import {Reporter} from "../reporter";
 import {SubscriptionReporter} from "./subscription-reporter";

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
-const requisition_parser_1 = require("./requisition-parser");
+const requisition_parser_1 = require("../requisitions/requisition-parser");
 const subscription_reporter_1 = require("../reporters/subscription/subscription-reporter");
-class SingleRunRequisitionInput {
+class SingleRunInput {
     constructor(fileNamePattern) {
         this.executorTimeout = null;
         this.subscriptionReporter = new subscription_reporter_1.SubscriptionReporter({
@@ -35,4 +35,4 @@ class SingleRunRequisitionInput {
         });
     }
 }
-exports.SingleRunRequisitionInput = SingleRunRequisitionInput;
+exports.SingleRunInput = SingleRunInput;

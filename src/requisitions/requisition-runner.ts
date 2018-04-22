@@ -1,7 +1,7 @@
 import { ReportGenerator } from "../reporters/report-generator";
 import {Logger} from "../loggers/logger";
 import {StartEventReporter} from "../reporters/start-event/start-event-reporter";
-import {RequisitionModel} from "./models/requisition-model";
+import {RequisitionModel} from "../models/requisition-model";
 import {Timeout} from "../timers/timeout";
 import {Report} from "../reporters/report";
 import {MultiSubscriptionsReporter} from "../reporters/subscription/multi-subscriptions-reporter";

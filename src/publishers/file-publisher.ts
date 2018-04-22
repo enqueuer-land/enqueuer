@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
-import {PublisherModel} from "../requisitions/models/publisher-model";
-import {RequisitionIdGenerator} from "../requisitions/requisition-id-generator";
+import {PublisherModel} from "../models/publisher-model";
+import {IdGenerator} from "../id-generator/id-generator";
 import {Injectable} from "conditional-injector";
 const fs = require("fs");
 
@@ -18,7 +18,7 @@ export class FilePublisher extends Publisher {
 
     public publish(): Promise<void> {
         const filename = this.filenamePrefix +
-                            new RequisitionIdGenerator(this.payload).generateId() +
+                            new IdGenerator(this.payload).generateId() +
                             "." +
                             this.filenameExtension;
         let value = this.payload;

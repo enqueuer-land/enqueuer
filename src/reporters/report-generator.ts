@@ -1,7 +1,7 @@
 import {DateController} from "../timers/date-controller";
 import {Report} from "./report";
 import {Reporter} from "./reporter";
-import {RequisitionModel} from "../requisitions/models/requisition-model";
+import {RequisitionModel} from "../models/requisition-model";
 
 export class ReportGenerator implements Reporter {
 

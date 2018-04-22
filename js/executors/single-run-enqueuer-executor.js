@@ -19,7 +19,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const multi_publisher_1 = require("../publishers/multi-publisher");
-const single_run_requisition_input_1 = require("../requisitions/single-run-requisition-input");
+const single_run_input_1 = require("./single-run-input");
 const configuration_1 = require("../configurations/configuration");
 const requisition_starter_1 = require("../requisitions/requisition-starter");
 const logger_1 = require("../loggers/logger");
@@ -33,7 +33,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         this.outputFilename = singleRunConfiguration["output-file"];
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunRequisitionInput =
-            new single_run_requisition_input_1.SingleRunRequisitionInput(singleRunConfiguration.fileNamePattern);
+            new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
         this.reportMerge = {
             valid: true,
             errorsDescription: [],

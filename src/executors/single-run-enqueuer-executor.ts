@@ -1,7 +1,7 @@
 import {EnqueuerExecutor} from "./enqueuer-executor";
 import {Report} from "../reporters/report";
 import {MultiPublisher} from "../publishers/multi-publisher";
-import {SingleRunRequisitionInput} from "../requisitions/single-run-requisition-input";
+import {SingleRunInput} from "./single-run-input";
 import {Configuration} from "../configurations/configuration";
 import {RequisitionStarter} from "../requisitions/requisition-starter";
 import {Logger} from "../loggers/logger";
@@ -14,7 +14,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
 
     private outputFilename: string;
     private multiPublisher: MultiPublisher;
-    private singleRunRequisitionInput: SingleRunRequisitionInput;
+    private singleRunRequisitionInput: SingleRunInput;
     private reportMerge: Report;
 
     constructor(enqueuerConfiguration: any) {
@@ -24,7 +24,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
 
         this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
         this.singleRunRequisitionInput =
-            new SingleRunRequisitionInput(singleRunConfiguration.fileNamePattern);
+            new SingleRunInput(singleRunConfiguration.fileNamePattern);
 
         this.reportMerge = {
             valid: true,

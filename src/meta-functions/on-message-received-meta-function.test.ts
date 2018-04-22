@@ -1,5 +1,5 @@
 import {OnMessageReceivedMetaFunction} from "./on-message-received-meta-function";
-import {SubscriptionModel} from "../requisitions/models/subscription-model";
+import {SubscriptionModel} from "../models/subscription-model";
 
 describe('OnMessageReceivedMetaFunction', () => {
 

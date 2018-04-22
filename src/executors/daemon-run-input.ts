@@ -1,11 +1,11 @@
 import {Subscription} from "../subscriptions/subscription";
 import {Logger} from "../loggers/logger";
-import {RequisitionParser} from "./requisition-parser";
-import {RequisitionModel} from "./models/requisition-model";
-import {SubscriptionModel} from "./models/subscription-model";
 import {Container} from "conditional-injector";
+import {RequisitionParser} from "../requisitions/requisition-parser";
+import {SubscriptionModel} from "../models/subscription-model";
+import {RequisitionModel} from "../models/requisition-model";
 
-export class DaemonRequisitionInput {
+export class DaemonRunInput {
 
     private type: string;
     private subscription: Subscription;

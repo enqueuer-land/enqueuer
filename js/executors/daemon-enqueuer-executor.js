@@ -18,7 +18,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const requisition_starter_1 = require("../requisitions/requisition-starter");
-const daemon_requisition_input_1 = require("../requisitions/daemon-requisition-input");
+const daemon_run_input_1 = require("./daemon-run-input");
 const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
@@ -32,7 +32,7 @@ let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_execu
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.getOutputs());
         ;
         this.requisitionInputs = enqueuerConfiguration["daemon"]
-            .map((input) => new daemon_requisition_input_1.DaemonRequisitionInput(input));
+            .map((input) => new daemon_run_input_1.DaemonRunInput(input));
         ;
     }
     init() {

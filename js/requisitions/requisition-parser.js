@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
-const requisition_id_generator_1 = require("./requisition-id-generator");
+const id_generator_1 = require("../id-generator/id-generator");
 const variables_controller_1 = require("../variables/variables-controller");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
 const subscriptionSchema = require("../../schemas/subscriptionSchema");
@@ -24,7 +24,7 @@ class RequisitionParser {
             throw new Error(JSON.stringify(this.validator.errors));
         }
         let variablesReplacedRequisition = this.replaceVariables(parsedRequisition);
-        variablesReplacedRequisition.id = new requisition_id_generator_1.RequisitionIdGenerator(variablesReplacedRequisition).generateId();
+        variablesReplacedRequisition.id = new id_generator_1.IdGenerator(variablesReplacedRequisition).generateId();
         const requisitionWithId = variablesReplacedRequisition;
         logger_1.Logger.trace(`Parsed requisition: ${JSON.stringify(requisitionWithId, null, 2)}`);
         if (requisitionWithId.name)
