@@ -41,7 +41,6 @@ Bellow there is a definition of a **runnable** and a **requisition**:
 -	**runnableVersion**: string, it tells you which version of runnable should be ran. Ex.: "01.00.00".
 -	**name**: string, identifies the runnable throughout its execution.
 -	**initialDelay**: optional number in milliseconds, it tells you how long the requisition has to wait before running a runnable. Ex.: 2000.
--	**iterations**: optional number, it tells you how many time this runnable should be ran. Ex.: 1.
 -	**runnables**: array of other **runnables** or **requisitions**. Yes, it can get recursive.
 
 ####**requisition**:

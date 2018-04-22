@@ -5,6 +5,5 @@ export interface RunnableModel {
     name: string;
     runnableVersion: string;
     initialDelay?: number;
-    iterations?: number;
     runnables: (RunnableModel | RequisitionModel)[];
 }

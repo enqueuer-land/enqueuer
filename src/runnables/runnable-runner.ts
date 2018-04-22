@@ -20,12 +20,12 @@ export class RunnableRunner extends Runner {
         return new Promise((resolve) => {
             new Timeout(() => {
                 const promise = Promise.all(this.runnableModel.runnables
-                                    .map(runnable =>
-                                        Container.subclassesOf(Runner)
-                                            .create(runnable)
-                                            .run()
-                                            .then((report: Report) => reportMerger.addReport(report))))
-                                    .then(() => reportMerger.getReport());
+                    .map(runnable =>
+                        Container.subclassesOf(Runner)
+                            .create(runnable)
+                            .run()
+                            .then((report: Report) => reportMerger.addReport(report))))
+                    .then(() => reportMerger.getReport());
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);
 
