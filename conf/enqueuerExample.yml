@@ -1,22 +1,12 @@
 requisitions:
   run-mode:
-    single-run:
-      fileNamePattern: playground/*.json
-#      output-file: playground.json
+    daemon:
+      -
+        type: uds
+        path: /tmp/inUnix.sock
+outputs:
+  -
+    type: uds
+    path: /tmp/outUnix.sock
 
-#outputs:
-#  -
-#    type: standard-output
-#  -
-#    type: file
-#    filenamePrefix: src/inceptionTest/inner_test_
-#    filenameExtension: json
-#  -
-#    type: mqtt
-#    brokerAddress: mqtt://localhost:1883
-#    topic: enqueuer/inception/requisitionOutput
-
-#log-level: trace #debug #info #warning
-
-variables:
-  httpPort: 23076
+log-level: trace

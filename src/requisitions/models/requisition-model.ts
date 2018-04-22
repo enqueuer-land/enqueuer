@@ -1,4 +1,4 @@
-import {SubscriptionModel} from "./Subscription-model";
+import {SubscriptionModel} from "./subscription-model";
 import {StartEventModel} from "./start-event-model";
 
 export interface RequisitionModel {

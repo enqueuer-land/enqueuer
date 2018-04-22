@@ -30,7 +30,7 @@ injectableString=$(echo ${injectableFiles} | sed 's/;/import "/g' | sed 's/\.ts/
 #gets back to first directory
 cd ${currentDirectory}
 
-#inserts in injectable-files-list.ts
-echo -e "//#Auto-Generated Code\n"${injectableString}  > $1
+#inserts in $injectableFileName
+echo -e "//#Auto-Generated Code\n"${injectableString} | tr "\\" "\n" > ${injectableFileName}
 
 

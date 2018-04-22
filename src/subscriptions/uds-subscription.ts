@@ -1,5 +1,5 @@
 import {Subscription} from "./subscription";
-import {SubscriptionModel} from "../requisitions/models/Subscription-model";
+import {SubscriptionModel} from "../requisitions/models/subscription-model";
 import {Injectable} from "conditional-injector";
 const net = require('net')
 const fs = require('fs');
