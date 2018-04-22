@@ -1,27 +1,34 @@
 {
-  "requisitionVersion": "01.00.00",
-  "timeout": 3000,
-  "name": "anyNameToIdentifyThisRequisitionMqtt",
-  "subscriptions": [
+  "runnableVersion": "01.00.00",
+  "name": "runnableMqtt",
+  "initialDelay": 0,
+  "runnables": [
     {
-      "type": "mqtt",
-      "brokerAddress": "mqtt://localhost",
-      "name": "anyNameToIdentifyThisSubscriptionIAmMqttSub",
-      "topic": "enqueuer",
-      "onMessageReceived": "test['works'] = message = 'message';",
-      "timeout": 1000
-    }
-  ],
-  "startEvent": {
-    "publisher": {
-      "type": "mqtt",
-      "name": "anyNameToIdentifyWhateverYouWantToIAmMqtt",
-      "brokerAddress": "mqtt://localhost",
-      "payload": "enqueuer",
-      "topic": "enqueuer",
-      "options": {
-        "clientId": "enqueuerPublishOptionsExampleId"
+      "requisitionVersion": "01.00.00",
+      "timeout": 3000,
+      "name": "RequisitionMqtt",
+      "subscriptions": [
+        {
+          "type": "mqtt",
+          "brokerAddress": "mqtt://localhost",
+          "name": "MqttSub",
+          "topic": "enqueuer",
+          "onMessageReceived": "test['works'] = message = 'message';",
+          "timeout": 1000
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "mqtt",
+          "name": "MqttPub",
+          "brokerAddress": "mqtt://localhost",
+          "payload": "enqueuer",
+          "topic": "enqueuer",
+          "options": {
+            "clientId": "enqueuerPublishOptionsExampleId"
+          }
+        }
       }
     }
-  }
+  ]
 }

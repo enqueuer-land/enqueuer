@@ -1,30 +1,37 @@
 {
-  "requisitionVersion": "01.00.00",
-  "timeout": 3000,
-  "name": "anyNameToIdentifyThisRequisitionImAmqpReq",
-  "subscriptions": [
+  "runnableVersion": "01.00.00",
+  "name": "runnableAmqp",
+  "initialDelay": 0,
+  "runnables": [
     {
-      "type": "amqp",
-      "name": "anyNameToIdentifyThisSubscriptionIamAmqpSubs",
-      "options": {
-        "host": "localhost",
-        "port": 5672
-      },
-      "queueName": "enqueuerQueue",
-      "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';",
-      "timeout": 1000
+      "requisitionVersion": "01.00.00",
+      "timeout": 3000,
+      "name": "AmqpReq",
+      "subscriptions": [
+        {
+          "type": "amqp",
+          "name": "AmqpSubs",
+          "options": {
+            "host": "localhost",
+            "port": 5672
+          },
+          "queueName": "enqueuerQueue",
+          "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';",
+          "timeout": 1000
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "amqp",
+          "name": "AmqpPub",
+          "options": {
+            "host": "localhost",
+            "port": 5672
+          },
+          "queueName": "enqueuerQueue",
+          "prePublishing": "publisher.payload=new Date().getTime();"
+        }
+      }
     }
-  ],
-  "startEvent": {
-    "publisher": {
-      "type": "amqp",
-      "name": "anyNameToIdentifyWhateverYouWantToIAmAmqpPub",
-      "options": {
-        "host": "localhost",
-        "port": 5672
-      },
-      "queueName": "enqueuerQueue",
-      "prePublishing": "publisher.payload=new Date().getTime();"
-    }
-  }
+  ]
 }
