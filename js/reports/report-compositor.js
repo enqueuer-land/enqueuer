@@ -43,9 +43,7 @@ class ReportCompositor {
         return this;
     }
     snapshot() {
-        const assign = Object.assign(this.report, this.subReports, this.additionalInfo);
-        // console.log(`Snapshot: ${JSON.stringify(assign, null, 2)}`);
-        return assign;
+        return Object.assign(this.report, this.subReports, this.additionalInfo);
     }
 }
 exports.ReportCompositor = ReportCompositor;

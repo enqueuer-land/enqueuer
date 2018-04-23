@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //#Auto-Generated Code
-require("./executors/daemon-enqueuer-executor");
-require("./executors/single-run-enqueuer-executor");
+require("./executors/daemon-executor");
+require("./executors/single-run-executor");
 require("./publishers/file-publisher");
 require("./publishers/null-publisher");
 require("./publishers/standard-output-publisher");

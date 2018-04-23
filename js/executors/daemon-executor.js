@@ -24,7 +24,7 @@ const enqueuer_executor_1 = require("./enqueuer-executor");
 const configuration_1 = require("../configurations/configuration");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
-let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
+let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
         logger_1.Logger.info("Executing in Daemon mode");
@@ -66,8 +66,8 @@ let DaemonEnqueuerExecutor = class DaemonEnqueuerExecutor extends enqueuer_execu
         });
     }
 };
-DaemonEnqueuerExecutor = __decorate([
+DaemonExecutor = __decorate([
     conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"] }),
     __metadata("design:paramtypes", [Object])
-], DaemonEnqueuerExecutor);
-exports.DaemonEnqueuerExecutor = DaemonEnqueuerExecutor;
+], DaemonExecutor);
+exports.DaemonExecutor = DaemonExecutor;

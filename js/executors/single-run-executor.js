@@ -27,7 +27,7 @@ const runnable_runner_1 = require("../runnables/runnable-runner");
 const report_compositor_1 = require("../reports/report-compositor");
 const fs = require("fs");
 const prettyjson = require('prettyjson');
-let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
+let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
@@ -35,7 +35,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunInput =
             new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
-        this.reportCompositor = new report_compositor_1.ReportCompositor("SingleRun");
+        this.reportCompositor = new report_compositor_1.ReportCompositor(singleRunConfiguration["name"] || "single-run-title");
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -71,14 +71,14 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
             valid: report.valid,
             errorsDescription: report.errorsDescription
         };
-        console.log(prettyjson.render(toBePersisted, options));
+        console.log(prettyjson.render(report, options));
         if (this.outputFilename)
-            fs.writeFileSync(this.outputFilename, JSON.stringify(toBePersisted, null, 4));
+            fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 4));
     }
     ;
 };
-SingleRunEnqueuerExecutor = __decorate([
+SingleRunExecutor = __decorate([
     conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"] }),
     __metadata("design:paramtypes", [Object])
-], SingleRunEnqueuerExecutor);
-exports.SingleRunEnqueuerExecutor = SingleRunEnqueuerExecutor;
+], SingleRunExecutor);
+exports.SingleRunExecutor = SingleRunExecutor;

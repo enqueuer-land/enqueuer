@@ -9,7 +9,7 @@ import {RunnableModel} from "../models/runnable-model";
 import {RunnableRunner} from "../runnables/runnable-runner";
 
 @Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"]})
-export class DaemonEnqueuerExecutor extends EnqueuerExecutor{
+export class DaemonExecutor extends EnqueuerExecutor{
 
     private requisitionInputs: DaemonRunInput[];
     private multiPublisher: MultiPublisher;

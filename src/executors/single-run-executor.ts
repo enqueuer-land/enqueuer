@@ -12,7 +12,7 @@ const fs = require("fs");
 const prettyjson = require('prettyjson');
 
 @Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"]})
-export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
+export class SingleRunExecutor extends EnqueuerExecutor {
 
     private outputFilename: string;
     private multiPublisher: MultiPublisher;
@@ -28,7 +28,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
         this.singleRunInput =
             new SingleRunInput(singleRunConfiguration.fileNamePattern);
 
-        this.reportCompositor = new ReportCompositor("SingleRun");
+        this.reportCompositor = new ReportCompositor(singleRunConfiguration["name"] || "single-run-title");
     }
 
     public async init(): Promise<void> {
@@ -44,7 +44,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new RunnableRunner(runnable).run())
-                .then(report => { this.reportCompositor.addSubReport(report); return report})
+                .then(report => {this.reportCompositor.addSubReport(report); return report})
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then( () => resolve(this.execute())) //Run the next one
                 .catch((err) => {
@@ -55,20 +55,15 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
     }
 
     private persistSummary(report: Report) {
-        const options = {
-            defaultIndentation: 4,
-            keysColor: "white",
-            dashColor: "grey"
-        };
+        // const options = {
+        //     defaultIndentation: 4,
+        //     keysColor: "white",
+        //     dashColor: "grey"
+        // };
         Logger.info(`Reports summary:`)
-        const toBePersisted = {
-            valid: report.valid,
-            errorsDescription: report.errorsDescription
-        }
-        console.log(prettyjson.render(toBePersisted, options));
-
+        // console.log(prettyjson.render(report, options));
         if (this.outputFilename)
-            fs.writeFileSync(this.outputFilename, JSON.stringify(toBePersisted, null, 4));
+            fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 4));
     };
 
 }
