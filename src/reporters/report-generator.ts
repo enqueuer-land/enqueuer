@@ -2,25 +2,17 @@ import {DateController} from "../timers/date-controller";
 import {Report} from "../reports/report";
 import {Reporter} from "./reporter";
 import {RequisitionModel} from "../models/requisition-model";
-import * as util from "util";
+import {ReportCompositor} from "../reports/report-compositor";
 
 export class ReportGenerator implements Reporter {
 
     private startTime?: DateController;
     private timeout?: number;
 
-    private requisitionReports: Report;
-    private startEventReports?: Report;
-    private subscriptionReports?: Report;
+    private requisitionReports: ReportCompositor;
 
     public constructor(requisitionAttributes: RequisitionModel) {
-        this.requisitionReports = {
-            name: requisitionAttributes.name,
-            valid: false,
-            errorsDescription: []
-        };
-        if (requisitionAttributes.name)
-            this.requisitionReports.name = requisitionAttributes.name;
+        this.requisitionReports = new ReportCompositor(requisitionAttributes.name);
     }
 
     public start(timeout?: number) {
@@ -29,60 +21,36 @@ export class ReportGenerator implements Reporter {
     }
 
     public setStartEventReport(startEventReports: Report): void {
-        this.startEventReports = startEventReports;
+        this.requisitionReports.addSubReport(startEventReports);
     }
 
     public setSubscriptionReport(subscriptionReport: Report): void {
-        this.subscriptionReports = subscriptionReport;
+        this.requisitionReports.addSubReport(subscriptionReport);
     }
 
     public getReport(): Report {
-        let report = JSON.parse(JSON.stringify(this.requisitionReports));
-        report.subscriptionReports = this.subscriptionReports;
-        report.startEventReports = this.startEventReports;
-        return report;
+        return this.requisitionReports.snapshot();
     }
 
     public finish(): void {
         this.addValidResult();
-        this.addErrorsResult();
         this.addTimesReport();
     }
 
     public addError(error: string): any {
-        if (this.requisitionReports.errorsDescription)
-            this.requisitionReports.errorsDescription.push(`[Requisition] ${error}`);
+        this.requisitionReports.addErrorsDescription(`${error}`);
     }
 
     private addValidResult() {
-        const validStartEvent = this.startEventReports && this.startEventReports.valid;
-        const validMultiSubscription = this.subscriptionReports && this.subscriptionReports.valid;
-        let valid: boolean = (validStartEvent && validMultiSubscription) || false;
-        if (valid && this.timeout && this.startTime)
+        if (this.timeout && this.startTime)
         {
             const hasTimedOut = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
-            valid = !hasTimedOut;
+            this.requisitionReports.addValidationCondition(!hasTimedOut);
         }
 
-        this.requisitionReports.valid = valid;
     }
 
-    private addErrorsResult() {
-        if (this.startEventReports && this.startEventReports.errorsDescription) {
-            this.startEventReports.errorsDescription.forEach(error => {
-                if (this.requisitionReports.errorsDescription)
-                    this.requisitionReports.errorsDescription.push(`[Start Event] ${error}`);
-            })
-        }
-        if (this.subscriptionReports && this.subscriptionReports.errorsDescription) {
-            this.subscriptionReports.errorsDescription.forEach(error => {
-                if (this.requisitionReports.errorsDescription)
-                    this.requisitionReports.errorsDescription.push(`[Subscription]${error}`);
-            })
-        }
-    }
-
-    private addTimesReport(): {} | null {
+    private addTimesReport(): void{
         if (this.startTime) {
             let timesReport: any = {};
             const endDate = new DateController();
@@ -94,9 +62,8 @@ export class ReportGenerator implements Reporter {
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
             }
 
-            this.requisitionReports.time = timesReport;
+            this.requisitionReports.addInfo({time: timesReport});
         }
-        return null;
     }
 
 }

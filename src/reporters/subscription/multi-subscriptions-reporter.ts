@@ -2,7 +2,7 @@ import {SubscriptionModel} from "../../models/subscription-model";
 import {Report} from "../../reports/report";
 import {Reporter} from "../reporter";
 import {SubscriptionReporter} from "./subscription-reporter";
-import {ReportMerger} from "../../reports/report-merger";
+import {ReportCompositor} from "../../reports/report-compositor";
 
 export class MultiSubscriptionsReporter implements Reporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
@@ -39,16 +39,16 @@ export class MultiSubscriptionsReporter implements Reporter {
     }
 
     public getReport(): Report {
-        let subscriptionReports: any = [];
-        const reportMerger = new ReportMerger("Subscriptions");
+        // let subscriptionReports: any = [];
+        const reportMerger = new ReportCompositor("subscriptions");
 
         for (let i = 0; i < this.subscriptionReporters.length; ++i) {
             const subscriptionReport = this.subscriptionReporters[i].getReport();
-            subscriptionReports.push(subscriptionReports);
-            reportMerger.addReport(subscriptionReport);
+            // subscriptionReports.push(subscriptionReports);
+            reportMerger.addSubReport(subscriptionReport);
         };
         return {
-            ...reportMerger.getReport()
+            ...reportMerger.snapshot()
         };
     }
 

@@ -16,16 +16,13 @@ const meta_function_executor_1 = require("../../meta-functions/meta-function-exe
 const date_controller_1 = require("../../timers/date-controller");
 const logger_1 = require("../../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
+const report_compositor_1 = require("../../reports/report-compositor");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
         this.prePublishingFunctionReport = {};
         this.publisherOriginalAttributes = startEvent.publisher;
-        this.report = {
-            valid: false,
-            name: this.publisherOriginalAttributes.name,
-            errorsDescription: []
-        };
+        this.reportCompositor = new report_compositor_1.ReportCompositor(this.publisherOriginalAttributes.name);
     }
     start() {
         logger_1.Logger.trace(`Firing publication as startEvent`);
@@ -38,35 +35,25 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
                 })
                     .catch((err) => {
                     logger_1.Logger.error(err);
-                    if (this.report.errorsDescription)
-                        this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`);
+                    this.reportCompositor.addErrorsDescription(`Error publishing start event '${this.publisher}'`);
                     reject(err);
                 });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
-                if (this.report.errorsDescription)
-                    this.report.errorsDescription.push(message);
+                this.reportCompositor.addErrorsDescription(message);
                 reject(message);
             }
         });
     }
     getReport() {
-        let publisherName = this.publisherOriginalAttributes.name;
-        if (this.publisher && this.publisher.name)
-            publisherName = this.publisher.name;
-        this.report = {
+        this.reportCompositor.addInfo({
             prePublishingFunctionReport: this.prePublishingFunctionReport,
-            name: publisherName,
             timestamp: new date_controller_1.DateController().toString(),
-            valid: (this.report.errorsDescription && this.report.errorsDescription.length <= 0) || false,
-            errorsDescription: this.report.errorsDescription
-        };
+        });
         if (this.publisher)
-            this.report.type = this.publisher.type;
-        if (this.publisherOriginalAttributes.name)
-            this.report.name = this.publisherOriginalAttributes.name;
-        return this.report;
+            this.reportCompositor.addInfo({ type: this.publisher.type });
+        return this.reportCompositor.snapshot();
     }
     executePrePublishingFunction() {
         const prePublishFunction = new pre_publish_meta_function_1.PrePublishMetaFunction(this.publisherOriginalAttributes);
@@ -76,11 +63,10 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
-        if (this.report.errorsDescription)
-            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        for (const failingTest of functionResponse.failingTests)
+            this.reportCompositor.addErrorsDescription(failingTest);
         if (functionResponse.exception) {
-            if (this.report.errorsDescription)
-                this.report.errorsDescription.concat(functionResponse.exception);
+            this.reportCompositor.addErrorsDescription(functionResponse.exception);
         }
     }
 };

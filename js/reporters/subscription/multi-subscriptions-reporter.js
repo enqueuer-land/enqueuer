@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_reporter_1 = require("./subscription-reporter");
-const report_merger_1 = require("../../reports/report-merger");
+const report_compositor_1 = require("../../reports/report-compositor");
 class MultiSubscriptionsReporter {
     constructor(subscriptionsAttributes) {
         this.subscriptionReporters = [];
@@ -30,15 +30,15 @@ class MultiSubscriptionsReporter {
         });
     }
     getReport() {
-        let subscriptionReports = [];
-        const reportMerger = new report_merger_1.ReportMerger("Subscriptions");
+        // let subscriptionReports: any = [];
+        const reportMerger = new report_compositor_1.ReportCompositor("subscriptions");
         for (let i = 0; i < this.subscriptionReporters.length; ++i) {
             const subscriptionReport = this.subscriptionReporters[i].getReport();
-            subscriptionReports.push(subscriptionReports);
-            reportMerger.addReport(subscriptionReport);
+            // subscriptionReports.push(subscriptionReports);
+            reportMerger.addSubReport(subscriptionReport);
         }
         ;
-        return Object.assign({}, reportMerger.getReport());
+        return Object.assign({}, reportMerger.snapshot());
     }
     haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;

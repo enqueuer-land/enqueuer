@@ -50,21 +50,21 @@ describe("Inception test", () => {
                 .map(fileContent => JSON.parse(fileContent))
 
             expect(testerReports.length).toBe(2);
-            const finalReport = testerReports[1].runnableFile;
+            const finalReport = testerReports[1];
 
             expect(finalReport.valid).toBeTruthy();
             expect(finalReport.errorsDescription.length).toBe(0);
             expect(finalReport.time.hasTimedOut).toBeFalsy();
 
-            expect(finalReport.subscriptionReports.valid).toBeTruthy();
-            expect(finalReport.subscriptionReports.errorsDescription.length).toBe(0);
+            expect(finalReport.subscriptions.valid).toBeTruthy();
+            expect(finalReport.subscriptions.errorsDescription.length).toBe(0);
 
-            expect(finalReport.subscriptionReports.runnableFile.valid).toBeTruthy();
-            expect(finalReport.subscriptionReports.runnableFile.errorsDescription.length).toBe(0);
-            expect(finalReport.subscriptionReports.runnableFile.onMessageFunctionReport.passingTests[0]).toBe("true");
+            expect(finalReport.subscriptions.subscriptionFile.valid).toBeTruthy();
+            expect(finalReport.subscriptions.subscriptionFile.errorsDescription.length).toBe(0);
+            expect(finalReport.subscriptions.subscriptionFile.onMessageFunctionReport.passingTests[0]).toBe("true");
 
-            expect(finalReport.startEventReports.valid).toBeTruthy();
-            expect(finalReport.startEventReports.errorsDescription.length).toBe(0);
+            expect(finalReport.runnableFilePublisher.valid).toBeTruthy();
+            expect(finalReport.runnableFilePublisher.errorsDescription.length).toBe(0);
 
             tester.on('exit', (statusCode) => {
                 expect(statusCode).toBe(0);

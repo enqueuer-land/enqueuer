@@ -12,22 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const runner_1 = require("./runner");
 const timeout_1 = require("../timers/timeout");
-const report_merger_1 = require("../reports/report-merger");
+const report_compositor_1 = require("../reports/report-compositor");
 let RunnableRunner = class RunnableRunner extends runner_1.Runner {
     constructor(runnableModel) {
         super();
         this.runnableModel = runnableModel;
     }
     run() {
-        const reportMerger = new report_merger_1.ReportMerger(this.runnableModel.name);
+        const reportMerger = new report_compositor_1.ReportCompositor(this.runnableModel.name);
         return new Promise((resolve) => {
             new timeout_1.Timeout(() => {
                 const promise = Promise.all(this.runnableModel.runnables
                     .map(runnable => conditional_injector_1.Container.subclassesOf(runner_1.Runner)
                     .create(runnable)
                     .run()
-                    .then((report) => reportMerger.addReport(report))))
-                    .then(() => reportMerger.getReport());
+                    .then((report) => reportMerger.mergeReport(report))))
+                    .then(() => reportMerger.snapshot());
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);
         });

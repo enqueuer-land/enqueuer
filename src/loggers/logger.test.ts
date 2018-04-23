@@ -3,12 +3,6 @@ import {Logger} from "./logger";
 
 jest.mock("log4js");
 
-
-// const getLogger = jest.fn();
-// log4js.getLogger = () => {
-//     console.log("Arrielza Calisto")
-// };
-
 let trace = jest.fn();
 let debug = jest.fn();
 let info = jest.fn();

@@ -9,11 +9,12 @@ import {Report} from "../../reports/report";
 import {Timeout} from "../../timers/timeout";
 import {Reporter} from "../reporter";
 import {Container} from "conditional-injector";
+import {ReportCompositor} from "../../reports/report-compositor";
 
 export class SubscriptionReporter implements Reporter {
 
     private subscription: Subscription;
-    private report: Report;
+    private reportCompositor: ReportCompositor;
     private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
@@ -22,11 +23,7 @@ export class SubscriptionReporter implements Reporter {
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         this.startTime = new DateController();
-        this.report = {
-            valid: false,
-            name: this.subscription.name,
-            errorsDescription: []
-        };
+        this.reportCompositor = new ReportCompositor(this.subscription.name);
     }
 
     public startTimeout(onTimeOutCallback: Function) {
@@ -38,8 +35,7 @@ export class SubscriptionReporter implements Reporter {
                 const message = `[${this.subscription.name}] stop waiting because it has timed out`;
                 Logger.info(message);
                 this.hasTimedOut = true;
-                if (this.report.errorsDescription)
-                    this.report.errorsDescription.push("Timeout");
+                this.reportCompositor.addErrorsDescription("Timeout");
                 onTimeOutCallback();
             }
             this.cleanUp();
@@ -51,10 +47,9 @@ export class SubscriptionReporter implements Reporter {
             Logger.trace(`[${this.subscription.name}] is connecting`);
             this.subscription.connect()
                 .then(() => {
-                    this.report = {
-                        ...this.report,
+                    this.reportCompositor.addInfo({
                         connectionTime: new DateController().toString()
-                    };
+                    })
                     resolve();
 
                     process.on('SIGINT', this.handleKillSignal);
@@ -63,8 +58,7 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                    if (this.report.errorsDescription)
-                        this.report.errorsDescription.push("Unable to connect")
+                    this.reportCompositor.addErrorsDescription("Unable to connect")
                     reject(err);
                 });
         });
@@ -89,8 +83,7 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                    if (this.report.errorsDescription)
-                        this.report.errorsDescription.push("Unable to receive message")
+                    this.reportCompositor.addErrorsDescription("Unable to receive message")
                     this.subscription.unsubscribe();
                     reject(err);
                 });
@@ -98,27 +91,19 @@ export class SubscriptionReporter implements Reporter {
     }
 
     public getReport(): Report {
-        this.report = {
-            ...this.report,
-            name: this.subscription.name,
-            type: this.subscription.type,
-            hasReceivedMessage: this.subscription.messageReceived != null,
-            hasTimedOut: this.hasTimedOut
-        };
-        const hasReceivedMessage = this.report.hasReceivedMessage;
+        const hasReceivedMessage = this.subscription.messageReceived != null;
         if (!hasReceivedMessage)
-            if (this.report.errorsDescription)
-                this.report.errorsDescription.push(`No message received`);
+                this.reportCompositor.addErrorsDescription(`No message received`);
+        this.reportCompositor.addValidationCondition(hasReceivedMessage);
+        this.reportCompositor.addValidationCondition(!this.hasTimedOut);
 
-        if (this.subscription.name)
-            this.report.name = this.subscription.name;
-
-        this.report.valid = hasReceivedMessage &&
-                            !this.hasTimedOut &&
-                            this.report.onMessageFunctionReport.failingTests &&
-                            this.report.onMessageFunctionReport.failingTests.length <= 0;
+        this.reportCompositor.addInfo({
+            type: this.subscription.type,
+            hasReceivedMessage: hasReceivedMessage,
+            hasTimedOut: this.hasTimedOut
+        });
         this.cleanUp();
-        return this.report;
+        return this.reportCompositor.snapshot();
     }
 
     private cleanUp(): void {
@@ -144,18 +129,16 @@ export class SubscriptionReporter implements Reporter {
         const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
         let functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        if (this.report.errorsDescription)
-            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        for (const failingTest of functionResponse.failingTests)
+            this.reportCompositor.addErrorsDescription(failingTest);
         if (functionResponse.exception) {
-            if (this.report.errorsDescription)
-                this.report.errorsDescription.push(functionResponse.exception);
+            this.reportCompositor.addErrorsDescription(functionResponse.exception);
         }
 
-        this.report = {
-            ...this.report,
+        this.reportCompositor.addInfo({
             onMessageFunctionReport: functionResponse,
             messageReceivedTimestamp: new DateController().toString()
-        }
+        });
     }
 
     private handleKillSignal = (signal: Signals): void => {

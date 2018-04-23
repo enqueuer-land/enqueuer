@@ -7,22 +7,19 @@ import {PublisherModel} from "../../models/publisher-model";
 import {Report} from "../../reports/report";
 import {Logger} from "../../loggers/logger";
 import {Injectable, Container} from "conditional-injector";
+import {ReportCompositor} from "../../reports/report-compositor";
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
     private publisherOriginalAttributes: PublisherModel;
     private publisher?: Publisher;
-    private report: Report;
+    private reportCompositor: ReportCompositor;
     private prePublishingFunctionReport: any = {};
 
     constructor(startEvent: PublisherModel) {
         super();
         this.publisherOriginalAttributes = startEvent.publisher;
-        this.report = {
-            valid: false,
-            name: this.publisherOriginalAttributes.name,
-            errorsDescription: []
-        };
+        this.reportCompositor = new ReportCompositor(this.publisherOriginalAttributes.name);
     }
 
     public start(): Promise<void> {
@@ -36,38 +33,26 @@ export class StartEventPublisherReporter extends StartEventReporter {
                     })
                     .catch((err: any) => {
                         Logger.error(err);
-                        if (this.report.errorsDescription)
-                            this.report.errorsDescription.push(`Error publishing start event '${this.publisher}'`)
+                        this.reportCompositor.addErrorsDescription(`Error publishing start event '${this.publisher}'`);
                         reject(err)
                     });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
-                if (this.report.errorsDescription)
-                    this.report.errorsDescription.push(message)
+                this.reportCompositor.addErrorsDescription(message)
                 reject(message);
             }
         });
     }
 
     public getReport(): Report {
-        let publisherName = this.publisherOriginalAttributes.name;
-
-        if (this.publisher && this.publisher.name)
-            publisherName = this.publisher.name;
-
-        this.report = {
+        this.reportCompositor.addInfo({
             prePublishingFunctionReport: this.prePublishingFunctionReport,
-            name:  publisherName,
             timestamp: new DateController().toString(),
-            valid: (this.report.errorsDescription && this.report.errorsDescription.length <= 0) || false,
-            errorsDescription: this.report.errorsDescription
-        }
+        });
         if (this.publisher)
-            this.report.type = this.publisher.type;
-        if (this.publisherOriginalAttributes.name)
-            this.report.name = this.publisherOriginalAttributes.name;
-        return this.report;
+            this.reportCompositor.addInfo({type: this.publisher.type});
+        return this.reportCompositor.snapshot();
     }
 
     private executePrePublishingFunction() {
@@ -81,11 +66,10 @@ export class StartEventPublisherReporter extends StartEventReporter {
         this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
 
-        if (this.report.errorsDescription)
-            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        for (const failingTest of functionResponse.failingTests)
+            this.reportCompositor.addErrorsDescription(failingTest);
         if (functionResponse.exception) {
-            if (this.report.errorsDescription)
-                this.report.errorsDescription.concat(functionResponse.exception);
+            this.reportCompositor.addErrorsDescription(functionResponse.exception);
         }
 
     }

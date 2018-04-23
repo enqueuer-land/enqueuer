@@ -24,7 +24,7 @@ const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
-const report_merger_1 = require("../reports/report-merger");
+const report_compositor_1 = require("../reports/report-compositor");
 const fs = require("fs");
 const prettyjson = require('prettyjson');
 let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer_executor_1.EnqueuerExecutor {
@@ -35,7 +35,7 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunInput =
             new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
-        this.reportMerger = new report_merger_1.ReportMerger("SingleRun");
+        this.reportCompositor = new report_compositor_1.ReportCompositor("SingleRun");
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -46,12 +46,12 @@ let SingleRunEnqueuerExecutor = class SingleRunEnqueuerExecutor extends enqueuer
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
                 logger_1.Logger.info("There is no more requisition to be ran");
-                this.persistSummary(this.reportMerger.getReport());
-                return resolve(this.reportMerger.getReport());
+                this.persistSummary(this.reportCompositor.snapshot());
+                return resolve(this.reportCompositor.snapshot());
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
-                .then(report => this.reportMerger.addReport(report))
+                .then(report => { this.reportCompositor.addSubReport(report); return report; })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then(() => resolve(this.execute())) //Run the next one
                 .catch((err) => {

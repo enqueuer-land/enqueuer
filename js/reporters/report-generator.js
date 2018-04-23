@@ -1,63 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const date_controller_1 = require("../timers/date-controller");
+const report_compositor_1 = require("../reports/report-compositor");
 class ReportGenerator {
     constructor(requisitionAttributes) {
-        this.requisitionReports = {
-            name: requisitionAttributes.name,
-            valid: false,
-            errorsDescription: []
-        };
-        if (requisitionAttributes.name)
-            this.requisitionReports.name = requisitionAttributes.name;
+        this.requisitionReports = new report_compositor_1.ReportCompositor(requisitionAttributes.name);
     }
     start(timeout) {
         this.startTime = new date_controller_1.DateController();
         this.timeout = timeout;
     }
     setStartEventReport(startEventReports) {
-        this.startEventReports = startEventReports;
+        this.requisitionReports.addSubReport(startEventReports);
     }
     setSubscriptionReport(subscriptionReport) {
-        this.subscriptionReports = subscriptionReport;
+        this.requisitionReports.addSubReport(subscriptionReport);
     }
     getReport() {
-        let report = JSON.parse(JSON.stringify(this.requisitionReports));
-        report.subscriptionReports = this.subscriptionReports;
-        report.startEventReports = this.startEventReports;
-        return report;
+        return this.requisitionReports.snapshot();
     }
     finish() {
         this.addValidResult();
-        this.addErrorsResult();
         this.addTimesReport();
     }
     addError(error) {
-        if (this.requisitionReports.errorsDescription)
-            this.requisitionReports.errorsDescription.push(`[Requisition] ${error}`);
+        this.requisitionReports.addErrorsDescription(`${error}`);
     }
     addValidResult() {
-        const validStartEvent = this.startEventReports && this.startEventReports.valid;
-        const validMultiSubscription = this.subscriptionReports && this.subscriptionReports.valid;
-        let valid = (validStartEvent && validMultiSubscription) || false;
-        if (valid && this.timeout && this.startTime) {
+        if (this.timeout && this.startTime) {
             const hasTimedOut = (new date_controller_1.DateController().getTime() - this.startTime.getTime()) > this.timeout;
-            valid = !hasTimedOut;
-        }
-        this.requisitionReports.valid = valid;
-    }
-    addErrorsResult() {
-        if (this.startEventReports && this.startEventReports.errorsDescription) {
-            this.startEventReports.errorsDescription.forEach(error => {
-                if (this.requisitionReports.errorsDescription)
-                    this.requisitionReports.errorsDescription.push(`[Start Event] ${error}`);
-            });
-        }
-        if (this.subscriptionReports && this.subscriptionReports.errorsDescription) {
-            this.subscriptionReports.errorsDescription.forEach(error => {
-                if (this.requisitionReports.errorsDescription)
-                    this.requisitionReports.errorsDescription.push(`[Subscription]${error}`);
-            });
+            this.requisitionReports.addValidationCondition(!hasTimedOut);
         }
     }
     addTimesReport() {
@@ -71,9 +43,8 @@ class ReportGenerator {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
             }
-            this.requisitionReports.time = timesReport;
+            this.requisitionReports.addInfo({ time: timesReport });
         }
-        return null;
     }
 }
 exports.ReportGenerator = ReportGenerator;

@@ -6,7 +6,7 @@ import {Configuration} from "../configurations/configuration";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "conditional-injector";
 import {RunnableRunner} from "../runnables/runnable-runner";
-import {ReportMerger} from "../reports/report-merger";
+import {ReportCompositor} from "../reports/report-compositor";
 
 const fs = require("fs");
 const prettyjson = require('prettyjson');
@@ -17,7 +17,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
     private outputFilename: string;
     private multiPublisher: MultiPublisher;
     private singleRunInput: SingleRunInput;
-    private reportMerger: ReportMerger;
+    private reportCompositor: ReportCompositor;
 
     constructor(enqueuerConfiguration: any) {
         super();
@@ -28,7 +28,7 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
         this.singleRunInput =
             new SingleRunInput(singleRunConfiguration.fileNamePattern);
 
-        this.reportMerger = new ReportMerger("SingleRun");
+        this.reportCompositor = new ReportCompositor("SingleRun");
     }
 
     public async init(): Promise<void> {
@@ -39,12 +39,12 @@ export class SingleRunEnqueuerExecutor extends EnqueuerExecutor {
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
                 Logger.info("There is no more requisition to be ran");
-                this.persistSummary(this.reportMerger.getReport());
-                return resolve(this.reportMerger.getReport());
+                this.persistSummary(this.reportCompositor.snapshot());
+                return resolve(this.reportCompositor.snapshot());
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new RunnableRunner(runnable).run())
-                .then(report => this.reportMerger.addReport(report))
+                .then(report => { this.reportCompositor.addSubReport(report); return report})
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then( () => resolve(this.execute())) //Run the next one
                 .catch((err) => {

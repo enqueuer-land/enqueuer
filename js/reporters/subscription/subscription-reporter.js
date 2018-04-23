@@ -7,6 +7,7 @@ const date_controller_1 = require("../../timers/date-controller");
 const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
+const report_compositor_1 = require("../../reports/report-compositor");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -21,11 +22,7 @@ class SubscriptionReporter {
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         this.startTime = new date_controller_1.DateController();
-        this.report = {
-            valid: false,
-            name: this.subscription.name,
-            errorsDescription: []
-        };
+        this.reportCompositor = new report_compositor_1.ReportCompositor(this.subscription.name);
     }
     startTimeout(onTimeOutCallback) {
         this.subscription.messageReceived = undefined;
@@ -36,8 +33,7 @@ class SubscriptionReporter {
                 const message = `[${this.subscription.name}] stop waiting because it has timed out`;
                 logger_1.Logger.info(message);
                 this.hasTimedOut = true;
-                if (this.report.errorsDescription)
-                    this.report.errorsDescription.push("Timeout");
+                this.reportCompositor.addErrorsDescription("Timeout");
                 onTimeOutCallback();
             }
             this.cleanUp();
@@ -48,15 +44,16 @@ class SubscriptionReporter {
             logger_1.Logger.trace(`[${this.subscription.name}] is connecting`);
             this.subscription.connect()
                 .then(() => {
-                this.report = Object.assign({}, this.report, { connectionTime: new date_controller_1.DateController().toString() });
+                this.reportCompositor.addInfo({
+                    connectionTime: new date_controller_1.DateController().toString()
+                });
                 resolve();
                 process.on('SIGINT', this.handleKillSignal);
                 process.on('SIGTERM', this.handleKillSignal);
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                if (this.report.errorsDescription)
-                    this.report.errorsDescription.push("Unable to connect");
+                this.reportCompositor.addErrorsDescription("Unable to connect");
                 reject(err);
             });
         });
@@ -79,27 +76,25 @@ class SubscriptionReporter {
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                if (this.report.errorsDescription)
-                    this.report.errorsDescription.push("Unable to receive message");
+                this.reportCompositor.addErrorsDescription("Unable to receive message");
                 this.subscription.unsubscribe();
                 reject(err);
             });
         });
     }
     getReport() {
-        this.report = Object.assign({}, this.report, { name: this.subscription.name, type: this.subscription.type, hasReceivedMessage: this.subscription.messageReceived != null, hasTimedOut: this.hasTimedOut });
-        const hasReceivedMessage = this.report.hasReceivedMessage;
+        const hasReceivedMessage = this.subscription.messageReceived != null;
         if (!hasReceivedMessage)
-            if (this.report.errorsDescription)
-                this.report.errorsDescription.push(`No message received`);
-        if (this.subscription.name)
-            this.report.name = this.subscription.name;
-        this.report.valid = hasReceivedMessage &&
-            !this.hasTimedOut &&
-            this.report.onMessageFunctionReport.failingTests &&
-            this.report.onMessageFunctionReport.failingTests.length <= 0;
+            this.reportCompositor.addErrorsDescription(`No message received`);
+        this.reportCompositor.addValidationCondition(hasReceivedMessage);
+        this.reportCompositor.addValidationCondition(!this.hasTimedOut);
+        this.reportCompositor.addInfo({
+            type: this.subscription.type,
+            hasReceivedMessage: hasReceivedMessage,
+            hasTimedOut: this.hasTimedOut
+        });
         this.cleanUp();
-        return this.report;
+        return this.reportCompositor.snapshot();
     }
     cleanUp() {
         this.cleanUp = () => { };
@@ -123,13 +118,15 @@ class SubscriptionReporter {
         const onMessageReceivedSubscription = new on_message_received_meta_function_1.OnMessageReceivedMetaFunction(this.subscription);
         let functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         logger_1.Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        if (this.report.errorsDescription)
-            this.report.errorsDescription = this.report.errorsDescription.concat(functionResponse.failingTests);
+        for (const failingTest of functionResponse.failingTests)
+            this.reportCompositor.addErrorsDescription(failingTest);
         if (functionResponse.exception) {
-            if (this.report.errorsDescription)
-                this.report.errorsDescription.push(functionResponse.exception);
+            this.reportCompositor.addErrorsDescription(functionResponse.exception);
         }
-        this.report = Object.assign({}, this.report, { onMessageFunctionReport: functionResponse, messageReceivedTimestamp: new date_controller_1.DateController().toString() });
+        this.reportCompositor.addInfo({
+            onMessageFunctionReport: functionResponse,
+            messageReceivedTimestamp: new date_controller_1.DateController().toString()
+        });
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;

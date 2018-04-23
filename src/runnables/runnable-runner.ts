@@ -3,7 +3,7 @@ import {RunnableModel} from "../models/runnable-model";
 import {Runner} from "./runner";
 import {Report} from "../reports/report";
 import {Timeout} from "../timers/timeout";
-import {ReportMerger} from "../reports/report-merger";
+import {ReportCompositor} from "../reports/report-compositor";
 
 @Injectable({predicate: runnable => runnable.runnables})
 export class RunnableRunner extends Runner {
@@ -16,7 +16,7 @@ export class RunnableRunner extends Runner {
     }
 
     public run(): Promise<Report> {
-        const reportMerger = new ReportMerger(this.runnableModel.name);
+        const reportMerger = new ReportCompositor(this.runnableModel.name);
         return new Promise((resolve) => {
             new Timeout(() => {
                 const promise = Promise.all(this.runnableModel.runnables
@@ -24,8 +24,8 @@ export class RunnableRunner extends Runner {
                         Container.subclassesOf(Runner)
                             .create(runnable)
                             .run()
-                            .then((report: Report) => reportMerger.addReport(report))))
-                    .then(() => reportMerger.getReport());
+                            .then((report: Report) => reportMerger.mergeReport(report))))
+                    .then(() => reportMerger.snapshot());
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);
 

@@ -22,7 +22,7 @@ let StandardOutputPublisher = class StandardOutputPublisher extends publisher_1.
         super(publisherProperties);
     }
     publish() {
-        console.log(prettyjson.render(this.payload, options));
+        console.log(prettyjson.render(JSON.parse(this.payload), options));
         return Promise.resolve();
     }
 };
