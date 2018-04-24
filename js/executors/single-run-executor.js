@@ -61,17 +61,13 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         });
     }
     persistSummary(report) {
-        const options = {
-            defaultIndentation: 4,
-            keysColor: "white",
-            dashColor: "grey"
-        };
-        logger_1.Logger.info(`Reports summary:`);
-        const toBePersisted = {
-            valid: report.valid,
-            errorsDescription: report.errorsDescription
-        };
-        console.log(prettyjson.render(report, options));
+        // const options = {
+        //     defaultIndentation: 4,
+        //     keysColor: "white",
+        //     dashColor: "grey"
+        // };
+        // Logger.info(`Reports summary:`)
+        // console.log(prettyjson.render(report, options));
         if (this.outputFilename)
             fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 4));
     }

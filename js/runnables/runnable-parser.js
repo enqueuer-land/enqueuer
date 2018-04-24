@@ -4,21 +4,35 @@ const logger_1 = require("../loggers/logger");
 const id_generator_1 = require("../id-generator/id-generator");
 const variables_controller_1 = require("../variables/variables-controller");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const subscriptionSchema = require("../../schemas/subscriptionSchema");
-const publisherSchema = require("../../schemas/publisherSchema");
-const requisitionSchema = require("../../schemas/requisitionSchema");
-const runnableSchema = require("../../schemas/runnableSchema");
-const Ajv = require('ajv');
+const fs = require("fs");
+const Ajv = require("ajv");
 class RunnableParser {
     constructor() {
-        this.validator = new Ajv().addSchema(subscriptionSchema)
-            .addSchema(publisherSchema)
-            .addSchema(requisitionSchema)
-            .compile(runnableSchema);
+        this.schemaObjects = () => {
+            let files = [];
+            const path = "schemas/";
+            var dirContent = fs.readdirSync(path);
+            for (var i = 0; i < dirContent.length; i++) {
+                var filename = path + dirContent[i];
+                var stat = fs.lstatSync(filename);
+                if (!stat.isDirectory()) {
+                    const fileContent = fs.readFileSync(filename).toString();
+                    files.push(JSON.parse(fileContent));
+                }
+            }
+            return files;
+        };
+        this.schemaObjects()
+            .reduce((ajv, schemaObject, index, array) => {
+            return (index == array.length - 1) ?
+                this.validator = ajv.compile(schemaObject)
+                :
+                    ajv.addSchema(schemaObject);
+        }, new Ajv({ allErrors: true, verbose: true }));
     }
     parse(runnableMessage) {
         const parsedRunnable = JSON.parse(runnableMessage);
-        if (!this.validator(parsedRunnable) && this.validator.errors) {
+        if (this.validator && !this.validator(parsedRunnable) && this.validator.errors) {
             logger_1.Logger.error(`Invalid runnable: ${JSON.stringify(parsedRunnable, null, 2)}`);
             this.validator.errors.map(error => {
                 logger_1.Logger.error(JSON.stringify(error));

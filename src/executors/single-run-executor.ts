@@ -60,7 +60,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         //     keysColor: "white",
         //     dashColor: "grey"
         // };
-        Logger.info(`Reports summary:`)
+        // Logger.info(`Reports summary:`)
         // console.log(prettyjson.render(report, options));
         if (this.outputFilename)
             fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 4));
