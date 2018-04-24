@@ -1,7 +1,7 @@
 import {Publisher} from "./publisher";
-import {PublisherModel} from "../requisitions/models/publisher-model";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "conditional-injector";
+import {PublisherModel} from "../models/publisher-model";
 
 const request = require("request");
 
@@ -34,7 +34,11 @@ export class HttpClientPublisher extends Publisher {
             request(options,
                 (error: any, response: any, body: any) =>
                 {
-                    Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 250)}`)
+                    if (response)
+                        Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}`)
+                    else
+                        Logger.warning(`No http requisition response`)
+
 
                     if (error) {
                         reject("Error firing http request: "  + error);

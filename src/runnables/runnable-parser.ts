@@ -33,10 +33,7 @@ export class RunnableParser {
         variablesReplaced.id = new IdGenerator(variablesReplaced).generateId();
         const runnableWithId: RunnableModel = variablesReplaced as RunnableModel;
         Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
-        if (runnableWithId.name)
-            Logger.info(`Message '${runnableWithId.name}' associated with id ${runnableWithId.id}`)
-        else
-            Logger.info(`Message associated with id ${runnableWithId.id}`)
+        Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`)
         return runnableWithId;
     }
 

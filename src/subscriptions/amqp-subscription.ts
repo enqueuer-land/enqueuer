@@ -1,6 +1,6 @@
 import {Subscription} from "./subscription";
-import {SubscriptionModel} from "../requisitions/models/subscription-model";
 import {Injectable} from "conditional-injector";
+import {SubscriptionModel} from "../models/subscription-model";
 const amqp = require('amqp');
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "amqp"})

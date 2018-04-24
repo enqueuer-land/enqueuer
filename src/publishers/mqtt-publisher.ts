@@ -1,7 +1,7 @@
 import {Publisher} from "./publisher";
-import {PublisherModel} from "../requisitions/models/publisher-model";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "conditional-injector";
+import {PublisherModel} from "../models/publisher-model";
 
 const mqtt = require("mqtt")
 

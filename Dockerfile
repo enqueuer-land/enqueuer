@@ -15,9 +15,6 @@ COPY conf/enqueuerExample.yml /home/enqueuer/conf/enqueuer.yml
 
 RUN npm install typescript -g
 RUN npm install
-#RUN npm enable-feature mqtt
-#RUN npm enable-feature amqp
-#RUN npm enable-feature http
 RUN ./scripts/generate-injectables-list.sh src/injectable-files-list.ts src
 RUN tsc
 RUN npm link

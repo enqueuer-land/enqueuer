@@ -154,8 +154,3 @@ The value '**valid**' in the root of report json file will be shown as false and
 ### frequently asked question
 1.	**Q**: Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?\
 	**A**: I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely, [check it out.](/src/inceptionTest/inception.test.ts "Inception Test")
-
-
-### optional features
-Since that every project has its own dependencies, its own IPC protocols and this kind of things. It does not make any sense to distribute **enqueuer** full of IPC protocols, adding every dependency possible even  if you don't need that. In order to enable a feature, type this in terminal: ```$ npm run enable-feature featue```. So, let's say you want to enable *mqtt* feature, type this: ```$ npm run enable-feature mqtt```.
-To retrieve the list of every enableable feature: ```$ npm run enable-feature list```.

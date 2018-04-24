@@ -1,7 +1,7 @@
 import {Subscription} from "./subscription";
-import {SubscriptionModel} from "../requisitions/models/subscription-model";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "conditional-injector";
+import {SubscriptionModel} from "../models/subscription-model";
 const express = require('express');
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "http-server"})
