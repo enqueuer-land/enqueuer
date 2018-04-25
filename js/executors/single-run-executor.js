@@ -57,6 +57,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 .catch((err) => {
                 this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                 logger_1.Logger.error(err);
+                resolve(this.execute());
             });
         });
     }

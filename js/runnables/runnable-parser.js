@@ -24,9 +24,9 @@ class RunnableParser {
         };
         this.validator = this.schemaObjects("publishers/")
             .concat(this.schemaObjects("subscribers/"))
-            .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new Ajv({ allErrors: true, verbose: true }))
-            .addSchema(this.readJsonFile("schemas/requisitionSchema.json"))
-            .compile(this.readJsonFile("schemas/runnableSchema.json"));
+            .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new Ajv({ allErrors: true, verbose: false }))
+            .addSchema(this.readJsonFile("schemas/requisition-schema.json"))
+            .compile(this.readJsonFile("schemas/runnable-schema.json"));
     }
     parse(runnableMessage) {
         const parsedRunnable = JSON.parse(runnableMessage);

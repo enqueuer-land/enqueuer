@@ -1,0 +1,108 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/publisher/amqp",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "amqp"
+    },
+    "queue": {
+      "type": "string",
+      "title": "The queue name that will be created bound to the default exchange and listening to the routing key with the same value",
+      "default": "",
+      "examples": [
+        "queueName"
+      ]
+    },
+    "options": {
+      "type": "object",
+      "title": "Options object defined here: https://github.com/postwait/node-amqp#connection-options-and-url",
+      "properties": {
+        "host": {
+          "type": "string",
+          "title": "server address",
+          "default": "localhost",
+          "examples": [
+            "localhost",
+            "github.com/lopidio"
+          ]
+        },
+        "port": {
+          "type": "number",
+          "title": "server port",
+          "default": 5672,
+          "examples": [
+            5672,
+            23075
+          ]
+        },
+        "login": {
+          "type": "string",
+          "title": "",
+          "default": "guest"
+        },
+        "password": {
+          "type": "string",
+          "title": "",
+          "default": "guest"
+        },
+        "connectionTimeout": {
+          "type": "number",
+          "title": "",
+          "default": 1000
+        },
+        "authMechanism": {
+          "type": "string",
+          "title": "",
+          "default": "AMQPLAIN"
+        },
+        "vhost": {
+          "type": "string",
+          "title": "",
+          "default": "/"
+        },
+        "noDelay": {
+          "type": "boolean",
+          "title": "",
+          "default": true
+        },
+        "ssl": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "keyFile": {
+              "type": "string",
+              "default": "/path/to/key/file/in/pem"
+            },
+            "certFile": {
+              "type": "string",
+              "default": "/path/to/cert/file/in/pem"
+            },
+            "caFile": {
+              "type": "string",
+              "default": "/path/to/cacert/file/in/pem"
+            },
+            "rejectUnauthorized": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        }
+      },
+      "required": [
+        "host",
+        "port"
+      ]
+    },
+    "messageOptions": {
+      "type": "object",
+      "title": "is an object with any of the following https://github.com/postwait/node-amqp#exchangepublishroutingkey-message-options-callback"
+    }
+  },
+  "required": [
+    "queueName",
+    "options"
+  ]
+}

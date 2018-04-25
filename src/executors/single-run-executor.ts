@@ -50,6 +50,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 .catch((err) => {
                     this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                     Logger.error(err);
+                    resolve(this.execute());
                 })
         });
     }

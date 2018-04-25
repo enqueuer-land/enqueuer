@@ -90,6 +90,7 @@ const validFileRunnable = {
                 "publisher": {
                     "type": "file",
                     "name": "filePublisher",
+                    "payload": "filePublisher",
                     "filenamePrefix": "temp/fileTest",
                     "filenameExtension": "file",
                     "prePublishing": "publisher.payload=new Date().getTime();"
@@ -127,6 +128,7 @@ const validAmqpRunnable = {
                         "host": "localhost",
                         "port": 5672
                     },
+                    "payload": "enqueuerQueue",
                     "queueName": "enqueuerQueue",
                     "prePublishing": "publisher.payload=new Date().getTime();"
                 }

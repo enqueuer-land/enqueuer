@@ -18,6 +18,10 @@
         "file", "mqtt", "amqp"
       ]
     },
+    "payload": {
+      "type": ["string", "object", "number"],
+      "title": "payload to be sent"
+    },
     "prePublishing": {
       "type": "string",
       "title": "The PrePublishing function body",
@@ -29,6 +33,7 @@
   },
   "required": [
     "type",
+    "payload",
     "name"
   ]
 }

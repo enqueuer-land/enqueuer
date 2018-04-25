@@ -33,15 +33,7 @@ export class SingleRunInput {
             this.subscriptionReporter.startTimeout(this.executorTimeout);
         return this.subscriptionReporter
             .receiveMessage()
-            .then((unparsed: string) => {
-                try {
-                    return Promise.resolve(this.runnableParser.parse(unparsed));
-                }
-                catch (err) {
-                    Logger.error(`Error parsing runnable ${JSON.stringify(err)}`);
-                    return Promise.reject(err);
-                }
-            })
+            .then((unparsed: string) => this.runnableParser.parse(unparsed));
     }
 
 }

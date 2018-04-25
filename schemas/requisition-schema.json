@@ -47,11 +47,19 @@
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
 
             ]}
-          ],
-          "additionalProperties": false
+          ]
         },
         "publisher": {
-          "$ref": "https://github.com/lopidio/enqueuer/publisher"
+          "allOf": [
+            {"$ref": "https://github.com/lopidio/enqueuer/publisher"},
+            {"oneOf": [
+              {"$ref": "https://github.com/lopidio/enqueuer/publisher/mqtt"},
+              {"$ref": "https://github.com/lopidio/enqueuer/publisher/amqp"},
+              {"$ref": "https://github.com/lopidio/enqueuer/publisher/uds"},
+              {"$ref": "https://github.com/lopidio/enqueuer/publisher/http"},
+              {"$ref": "https://github.com/lopidio/enqueuer/publisher/file"}
+            ]}
+          ]
         }
       },
       "additionalProperties": false,

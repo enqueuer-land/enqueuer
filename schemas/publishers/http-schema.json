@@ -1,0 +1,29 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/publisher/http",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "http-client"
+    },
+    "url": {
+      "type": "string",
+      "title": "Full url to be hit",
+      "default": "",
+      "examples": ["http://localhost:23075/enqueuer"]
+    },
+    "method": {
+      "type": "string",
+      "title": "Http Method",
+      "default": "",
+      "examples": ["POST", "GET", "PUT", "DELETE"]
+    },
+    "header": {
+        "type": "object",
+        "title": "header to be sent"
+    }
+  },
+  "required": [
+    "url",
+    "method"
+  ]
+}

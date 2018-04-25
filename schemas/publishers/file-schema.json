@@ -1,0 +1,25 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/publisher/file",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "file"
+    },
+    "filenamePrefix": {
+      "type": "string",
+      "title": "The file name prefix",
+      "default": "",
+      "examples": ["folder/pre"]
+    },
+    "filenameExtension": {
+      "type": "string",
+      "title": "The file name extension",
+      "default": "",
+      "examples": [".json"]
+    }
+  },
+  "required": [
+    "filenamePrefix",
+    "filenameExtension"
+  ]
+}
