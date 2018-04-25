@@ -1,0 +1,20 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription/uds",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "uds"
+    },
+    "path": {
+      "type": "string",
+      "title": "The server file path",
+      "default": "",
+      "examples": [
+        "fileRegex"
+      ]
+    }
+  },
+  "required": [
+    "path"
+  ]
+}

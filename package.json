@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node js/index.js",
     "test": "jest --forceExit && npm start -- -c integrationTest/enqueuer.yml",
-    "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete ",
+    "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "all": "npm run clean && npm run build && npm link && npm tst",
     "build": "./scripts/generate-injectables-list.sh src/injectable-files-list.ts src && tsc"
   },

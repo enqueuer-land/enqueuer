@@ -1,0 +1,47 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription/http",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "http-server"
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "endpoint to be hit",
+      "default": "",
+      "examples": ["/someEndPoint"]
+    },
+    "method": {
+      "type": "string",
+      "title": "Http Method",
+      "default": "",
+      "examples": ["POST", "GET", "PUT", "DELETE"]
+    },
+    "port": {
+      "type": "number",
+      "title": "exposed server port to be hit",
+      "default": "",
+      "examples": [80, 8080]
+    },
+    "response": {
+        "type": "object",
+        "title": "Response",
+        "properties": {
+          "header": {
+            "type": "object"
+          },
+          "status": {
+            "type": "number",
+            "title": "response status http code",
+            "default": 200,
+            "examples": [200, 201, 404]
+          }
+        }
+    }
+  },
+  "required": [
+    "endpoint",
+    "method",
+    "port"
+  ]
+}

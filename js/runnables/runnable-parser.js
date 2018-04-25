@@ -8,36 +8,34 @@ const fs = require("fs");
 const Ajv = require("ajv");
 class RunnableParser {
     constructor() {
-        this.schemaObjects = () => {
+        this.schemaObjects = (subfolderName) => {
             let files = [];
-            const path = "schemas/";
+            const path = "schemas/".concat(subfolderName);
             var dirContent = fs.readdirSync(path);
             for (var i = 0; i < dirContent.length; i++) {
                 var filename = path + dirContent[i];
                 var stat = fs.lstatSync(filename);
                 if (!stat.isDirectory()) {
-                    const fileContent = fs.readFileSync(filename).toString();
-                    files.push(JSON.parse(fileContent));
+                    const fileContent = this.readJsonFile(filename);
+                    files.push(fileContent);
                 }
             }
             return files;
         };
-        this.schemaObjects()
-            .reduce((ajv, schemaObject, index, array) => {
-            return (index == array.length - 1) ?
-                this.validator = ajv.compile(schemaObject)
-                :
-                    ajv.addSchema(schemaObject);
-        }, new Ajv({ allErrors: true, verbose: true }));
+        this.validator = this.schemaObjects("publishers/")
+            .concat(this.schemaObjects("subscribers/"))
+            .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new Ajv({ allErrors: true, verbose: true }))
+            .addSchema(this.readJsonFile("schemas/requisitionSchema.json"))
+            .compile(this.readJsonFile("schemas/runnableSchema.json"));
     }
     parse(runnableMessage) {
         const parsedRunnable = JSON.parse(runnableMessage);
-        if (this.validator && !this.validator(parsedRunnable) && this.validator.errors) {
+        if (!this.validator(parsedRunnable) && this.validator.errors) {
             logger_1.Logger.error(`Invalid runnable: ${JSON.stringify(parsedRunnable, null, 2)}`);
             this.validator.errors.map(error => {
                 logger_1.Logger.error(JSON.stringify(error));
             });
-            throw new Error(JSON.stringify(this.validator.errors));
+            throw new Error(JSON.stringify(this.validator.errors, null, 2));
         }
         let variablesReplaced = this.replaceVariables(parsedRunnable);
         variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
@@ -45,6 +43,9 @@ class RunnableParser {
         logger_1.Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
         logger_1.Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
         return runnableWithId;
+    }
+    readJsonFile(filename) {
+        return JSON.parse(fs.readFileSync(filename).toString());
     }
     replaceVariables(parsedRunnable) {
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();

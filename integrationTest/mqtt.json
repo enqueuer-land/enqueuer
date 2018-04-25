@@ -11,8 +11,11 @@
           "type": "mqtt",
           "brokerAddress": "mqtt://localhost",
           "name": "MqttSub",
-          "topic": "enqueuer",
+          "topic": "#",
           "onMessageReceived": "test['works'] = message = 'message';",
+          "options": {
+            "clientId": "enqueuerSubscriptionOptionsExampleId"
+          },
           "timeout": 1000
         }
       ],

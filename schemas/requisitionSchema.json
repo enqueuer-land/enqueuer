@@ -1,0 +1,70 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/requisition",
+  "type": "object",
+  "properties": {
+    "timeout": {
+      "type": "number",
+      "title": "The requisition timeout",
+      "default": "",
+      "examples": [
+        5000, 60000
+      ]
+    },
+    "name": {
+      "type": "string",
+      "title": "The requisition name",
+      "default": "",
+      "examples": [
+        "anyNameOrTitle"
+      ]
+    },
+    "subscriptions": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {"$ref": "https://github.com/lopidio/enqueuer/subscription"},
+          {"oneOf": [
+            {"$ref": "https://github.com/lopidio/enqueuer/subscription/mqtt"},
+            {"$ref": "https://github.com/lopidio/enqueuer/subscription/amqp"},
+            {"$ref": "https://github.com/lopidio/enqueuer/subscription/uds"},
+            {"$ref": "https://github.com/lopidio/enqueuer/subscription/http"},
+            {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
+          ]}
+        ]
+      }
+    },
+    "startEvent": {
+      "type": "object",
+      "properties": {
+        "subscription": {
+          "allOf": [
+            {"$ref": "https://github.com/lopidio/enqueuer/subscription"},
+            {"oneOf": [
+              {"$ref": "https://github.com/lopidio/enqueuer/subscription/mqtt"},
+              {"$ref": "https://github.com/lopidio/enqueuer/subscription/amqp"},
+              {"$ref": "https://github.com/lopidio/enqueuer/subscription/uds"},
+              {"$ref": "https://github.com/lopidio/enqueuer/subscription/http"},
+              {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
+
+            ]}
+          ],
+          "additionalProperties": false
+        },
+        "publisher": {
+          "$ref": "https://github.com/lopidio/enqueuer/publisher"
+        }
+      },
+      "additionalProperties": false,
+      "oneOf": [
+        { "required": [ "subscription" ] },
+        { "required": [ "publisher" ] }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "subscriptions",
+    "name",
+    "startEvent"
+  ]
+}
