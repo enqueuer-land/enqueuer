@@ -18,6 +18,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private multiPublisher: MultiPublisher;
     private singleRunInput: SingleRunInput;
     private reportCompositor: ReportCompositor;
+    private summary: any = {summary: {}};
 
     constructor(enqueuerConfiguration: any) {
         super();
@@ -39,12 +40,12 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
                 Logger.info("There is no more requisition to be ran");
-                this.persistSummary(this.reportCompositor.snapshot());
+                this.persistSummary();
                 return resolve(this.reportCompositor.snapshot());
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new RunnableRunner(runnable).run())
-                .then(report => {this.reportCompositor.addSubReport(report); return report})
+                .then(report => {this.reportCompositor.addSubReport(report); return this.addToSummary(report)})
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then( () => resolve(this.execute())) //Run the next one
                 .catch((err) => {
@@ -55,16 +56,25 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private persistSummary(report: Report) {
-        // const options = {
-        //     defaultIndentation: 4,
-        //     keysColor: "white",
-        //     dashColor: "grey"
-        // };
-        // Logger.info(`Reports summary:`)
-        // console.log(prettyjson.render(report, options));
+    private addToSummary(report: Report): Report {
+        this.summary.summary[report.name] = report.valid;
+        return report;
+    }
+
+    private persistSummary() {
+        const options = {
+            defaultIndentation: 4,
+            keysColor: "white",
+            dashColor: "grey"
+        };
+        const snapshot = this.reportCompositor.snapshot();
+        Logger.info(`Reports summary:`)
+        this.summary.valid = snapshot.valid;
+        if (snapshot.errorsDescription)
+            this.summary.errorsDescription = snapshot.errorsDescription;
+        console.log(prettyjson.render(this.summary, options));
         if (this.outputFilename)
-            fs.writeFileSync(this.outputFilename, JSON.stringify(report, null, 4));
+            fs.writeFileSync(this.outputFilename, JSON.stringify(snapshot, null, 4));
     };
 
 }

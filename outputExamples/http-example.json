@@ -1,0 +1,57 @@
+{
+  "valid": true,
+  "errorsDescription": [],
+  "name": "runnableHttp",
+  "HttpPublisherClientTitle": {
+    "valid": true,
+    "errorsDescription": [],
+    "name": "HttpPublisherClientTitle",
+    "prePublishingFunctionReport": {
+      "publisher": {
+        "type": "http-client",
+        "name": "HttpPublisherClientTitle",
+        "url": "http://localhost:23075/enqueuer",
+        "method": "POST",
+        "payload": "{\"enqueuer\":\"virgs\"}",
+        "headers": {
+          "content-type": "application/json",
+          "Content-Length": 26
+        }
+      },
+      "passingTests": [],
+      "failingTests": [],
+      "report": {}
+    },
+    "timestamp": "2018-04-25T13:20:36.202Z",
+    "type": "http-client"
+  },
+  "subscriptions": {
+    "valid": true,
+    "errorsDescription": [],
+    "name": "subscriptions",
+    "HttpSubscriptionTitle": {
+      "valid": true,
+      "errorsDescription": [],
+      "name": "HttpSubscriptionTitle",
+      "connectionTime": "2018-04-25T13:20:36.188Z",
+      "onMessageFunctionReport": {
+        "passingTests": [
+          "works"
+        ],
+        "failingTests": [],
+        "report": {}
+      },
+      "messageReceivedTimestamp": "2018-04-25T13:20:36.202Z",
+      "type": "http-server",
+      "hasReceivedMessage": true,
+      "hasTimedOut": false
+    }
+  },
+  "time": {
+    "totalTime": 16,
+    "startTime": "2018-04-25T13:20:36.187Z",
+    "endTime": "2018-04-25T13:20:36.203Z",
+    "timeout": 30000,
+    "hasTimedOut": false
+  }
+}
