@@ -76,12 +76,12 @@ export class Configuration {
 
     public setFileVariable(name: string, value: any) {
         this.configurationFile.variables[name] = value;
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
     }
 
     public deleteFileVariable(name: string) {
         delete this.configurationFile.variables[name];
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
     }
 
     public getSessionVariables(): any {

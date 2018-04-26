@@ -1,0 +1,143 @@
+{
+    "valid": true,
+    "runnableAmqp": {
+        "valid": true,
+        "AmqpReq": {
+            "valid": true,
+            "tests": [
+                {
+                    "No time out": true
+                }
+            ],
+            "subscriptions": {
+                "valid": true,
+                "AmqpSubs": {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "works": true
+                        },
+                        {
+                            "Message received": true
+                        },
+                        {
+                            "No time out": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "runnableFile": {
+        "valid": true,
+        "file": {
+            "valid": true,
+            "tests": [
+                {
+                    "No time out": true
+                }
+            ],
+            "subscriptions": {
+                "valid": true,
+                "fileSubscription": {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "some time has passed": true
+                        },
+                        {
+                            "Message received": true
+                        },
+                        {
+                            "No time out": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "runnableHttp": {
+        "valid": true,
+        "HttpTitle": {
+            "valid": true,
+            "tests": [
+                {
+                    "No time out": true
+                }
+            ],
+            "subscriptions": {
+                "valid": true,
+                "HttpSubscriptionTitle": {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "works": true
+                        },
+                        {
+                            "Message received": true
+                        },
+                        {
+                            "No time out": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "runnableMqtt": {
+        "valid": true,
+        "RequisitionMqtt": {
+            "valid": true,
+            "tests": [
+                {
+                    "No time out": true
+                }
+            ],
+            "subscriptions": {
+                "valid": true,
+                "MqttSub": {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "works": true
+                        },
+                        {
+                            "Message received": true
+                        },
+                        {
+                            "No time out": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "runnableUDSName": {
+        "valid": true,
+        "uds": {
+            "valid": true,
+            "tests": [
+                {
+                    "No time out": true
+                }
+            ],
+            "subscriptions": {
+                "valid": true,
+                "udsSubscription": {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "first letter": true
+                        },
+                        {
+                            "Message received": true
+                        },
+                        {
+                            "No time out": true
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
