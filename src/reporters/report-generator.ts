@@ -37,7 +37,7 @@ export class ReportGenerator implements Reporter {
     }
 
     public addError(error: string): any {
-        this.requisitionReports.addError(`${error}`);
+        this.requisitionReports.addTest(`${error}`, false);
     }
 
     private addTimesReport(): void{
@@ -50,10 +50,7 @@ export class ReportGenerator implements Reporter {
             if (this.timeout) {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
-                if (timesReport.hasTimedOut)
-                    this.requisitionReports.addError(`Timed out`);
-                else
-                    this.requisitionReports.addSuccess(`No timeout`);
+                this.requisitionReports.addTest(`No time out`, !timesReport.hasTimedOut);
             }
 
             this.requisitionReports.addInfo({time: timesReport});

@@ -57,7 +57,7 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                    this.reportCompositor.addError("Unable to connect")
+                    this.reportCompositor.addTest("Unable to connect", false);
                     reject(err);
                 });
         });
@@ -82,7 +82,7 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                    this.reportCompositor.addError("Unable to receive message")
+                    this.reportCompositor.addTest("Unable to receive message", false)
                     this.subscription.unsubscribe();
                     reject(err);
                 });

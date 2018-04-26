@@ -22,14 +22,6 @@ export class ReportCompositor {
         return this;
     }
 
-    public addError(error: string): ReportCompositor {
-        return this.addTest(error, false);
-    }
-
-    public addSuccess(success: string): ReportCompositor {
-        return this.addTest(success, true);
-    }
-
     public addTest(title: string, success: boolean): ReportCompositor {
         this.report.addTest(title, success);
         return this;
