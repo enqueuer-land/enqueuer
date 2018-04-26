@@ -1,4 +1,5 @@
 # enqueuer
+[![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer)
 
 ### summary
 **Enqueuer** is an event-driven-component asynchronous messages testing tool.
