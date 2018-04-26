@@ -37,11 +37,11 @@ describe("Inception test", () => {
 
         try {
             beingTested = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/beingTested.yml']);
-            // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
+            beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
             sleep(500);
 
             tester = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/tester.yml']);
-            // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
+            tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
             sleep(2500);
 
             const testerReports = findEveryJsonFile()
@@ -53,18 +53,14 @@ describe("Inception test", () => {
             const finalReport = testerReports[1];
 
             expect(finalReport.valid).toBeTruthy();
-            expect(finalReport.errorsDescription.length).toBe(0);
             expect(finalReport.time.hasTimedOut).toBeFalsy();
 
             expect(finalReport.subscriptions.valid).toBeTruthy();
-            expect(finalReport.subscriptions.errorsDescription.length).toBe(0);
 
             expect(finalReport.subscriptions.subscriptionFile.valid).toBeTruthy();
-            expect(finalReport.subscriptions.subscriptionFile.errorsDescription.length).toBe(0);
-            expect(finalReport.subscriptions.subscriptionFile.onMessageFunctionReport.passingTests[0]).toBe("true");
+            expect(finalReport.subscriptions.subscriptionFile.onMessageFunctionReport.tests[0].name).toBe("true");
 
             expect(finalReport.runnableFilePublisher.valid).toBeTruthy();
-            expect(finalReport.runnableFilePublisher.errorsDescription.length).toBe(0);
 
             tester.on('exit', (statusCode) => {
                 expect(statusCode).toBe(0);

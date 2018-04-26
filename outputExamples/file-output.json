@@ -1,0 +1,70 @@
+{
+  "valid": true,
+  "tests": [
+    {
+      "name": "No timeout",
+      "valid": true
+    }
+  ],
+  "name": "runnableFile",
+  "filePublisher": {
+    "valid": true,
+    "prePublishingFunctionReport": {
+      "publisher": {
+        "type": "file",
+        "name": "filePublisher",
+        "payload": "1524694233762",
+        "filenamePrefix": "temp/fileTest",
+        "filenameExtension": "file",
+        "prePublishing": "publisher.payload=new Date().getTime();"
+      },
+      "tests": [],
+      "report": {}
+    },
+    "timestamp": "2018-04-25T22:10:33.867Z",
+    "type": "file"
+  },
+  "subscriptions": {
+    "valid": true,
+    "fileSubscription": {
+      "valid": true,
+      "tests": [
+        {
+          "name": "some time has passed",
+          "valid": true
+        },
+        {
+          "name": "Message received",
+          "valid": true
+        },
+        {
+          "name": "No timeout",
+          "valid": true
+        }
+      ],
+      "connectionTime": "2018-04-25T22:10:33.762Z",
+      "onMessageFunctionReport": {
+        "tests": [
+          {
+            "name": "some time has passed",
+            "valid": true
+          }
+        ],
+        "report": {
+          "something": 1524694233867
+        }
+      },
+      "messageReceivedTimestamp": "2018-04-25T22:10:33.867Z",
+      "type": "file-name-watcher",
+      "hasReceivedMessage": true,
+      "hasTimedOut": false
+    }
+  },
+  "time": {
+    "totalTime": 112,
+    "startTime": "2018-04-25T22:10:33.756Z",
+    "endTime": "2018-04-25T22:10:33.868Z",
+    "timeout": 3000,
+    "hasTimedOut": false
+  }
+}

@@ -33,7 +33,6 @@ class SubscriptionReporter {
                 const message = `[${this.subscription.name}] stop waiting because it has timed out`;
                 logger_1.Logger.info(message);
                 this.hasTimedOut = true;
-                this.reportCompositor.addErrorsDescription("Timeout");
                 onTimeOutCallback();
             }
             this.cleanUp();
@@ -53,7 +52,7 @@ class SubscriptionReporter {
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                this.reportCompositor.addErrorsDescription("Unable to connect");
+                this.reportCompositor.addError("Unable to connect");
                 reject(err);
             });
         });
@@ -76,7 +75,7 @@ class SubscriptionReporter {
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                this.reportCompositor.addErrorsDescription("Unable to receive message");
+                this.reportCompositor.addError("Unable to receive message");
                 this.subscription.unsubscribe();
                 reject(err);
             });
@@ -84,10 +83,9 @@ class SubscriptionReporter {
     }
     getReport() {
         const hasReceivedMessage = this.subscription.messageReceived != null;
-        if (!hasReceivedMessage)
-            this.reportCompositor.addErrorsDescription(`No message received`);
-        this.reportCompositor.addValidationCondition(hasReceivedMessage);
-        this.reportCompositor.addValidationCondition(!this.hasTimedOut);
+        this.reportCompositor.addTest("Message received", hasReceivedMessage);
+        if (hasReceivedMessage)
+            this.reportCompositor.addTest("No time out", !this.hasTimedOut);
         this.reportCompositor.addInfo({
             type: this.subscription.type,
             hasReceivedMessage: hasReceivedMessage,
@@ -118,11 +116,7 @@ class SubscriptionReporter {
         const onMessageReceivedSubscription = new on_message_received_meta_function_1.OnMessageReceivedMetaFunction(this.subscription);
         let functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         logger_1.Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        for (const failingTest of functionResponse.failingTests)
-            this.reportCompositor.addErrorsDescription(failingTest);
-        if (functionResponse.exception) {
-            this.reportCompositor.addErrorsDescription(functionResponse.exception);
-        }
+        functionResponse.tests.map((passing) => this.reportCompositor.addTest(passing.name, passing.valid));
         this.reportCompositor.addInfo({
             onMessageFunctionReport: functionResponse,
             messageReceivedTimestamp: new date_controller_1.DateController().toString()

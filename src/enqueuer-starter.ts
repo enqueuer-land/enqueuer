@@ -17,7 +17,7 @@ export class EnqueuerStarter {
         return this.executor.init()
             .then(() => this.executor.execute())
             .then((report: Report) => {
-                Logger.info("Enqueuer execution is over");
+                Logger.info("Enqueuer execution is over (" + report.valid + ")");
                 return report.valid ? 0: 1;
             })
             .catch((error: any) => {

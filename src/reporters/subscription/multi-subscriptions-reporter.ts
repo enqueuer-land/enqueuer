@@ -39,17 +39,12 @@ export class MultiSubscriptionsReporter implements Reporter {
     }
 
     public getReport(): Report {
-        // let subscriptionReports: any = [];
         const reportMerger = new ReportCompositor("subscriptions");
-
         for (let i = 0; i < this.subscriptionReporters.length; ++i) {
             const subscriptionReport = this.subscriptionReporters[i].getReport();
-            // subscriptionReports.push(subscriptionReports);
             reportMerger.addSubReport(subscriptionReport);
         };
-        return {
-            ...reportMerger.snapshot()
-        };
+        return reportMerger.snapshot();
     }
 
     private haveAllSubscriptionsStoppedWaiting() {

@@ -30,15 +30,13 @@ class MultiSubscriptionsReporter {
         });
     }
     getReport() {
-        // let subscriptionReports: any = [];
         const reportMerger = new report_compositor_1.ReportCompositor("subscriptions");
         for (let i = 0; i < this.subscriptionReporters.length; ++i) {
             const subscriptionReport = this.subscriptionReporters[i].getReport();
-            // subscriptionReports.push(subscriptionReports);
             reportMerger.addSubReport(subscriptionReport);
         }
         ;
-        return Object.assign({}, reportMerger.snapshot());
+        return reportMerger.snapshot();
     }
     haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;

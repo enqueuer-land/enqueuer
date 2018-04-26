@@ -11,7 +11,7 @@
           "type": "uds",
           "path": "/tmp/unix.sock",
           "name": "udsSubscription",
-          "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
+          "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('UDS message: ' + message)",
           "timeout": 500
         }
       ],

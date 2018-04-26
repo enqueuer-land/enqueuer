@@ -12,7 +12,7 @@
           "brokerAddress": "mqtt://localhost",
           "name": "MqttSub",
           "topic": "#",
-          "onMessageReceived": "test['works'] = message = 'message';",
+          "onMessageReceived": "let enqueuer = 'enqueuer'; test['works'] = JSON.parse(message) === enqueuer;",
           "options": {
             "clientId": "enqueuerSubscriptionOptionsExampleId9900223"
           },
@@ -27,7 +27,7 @@
           "payload": "enqueuer",
           "topic": "enqueuer",
           "options": {
-            "clientId": "enqueuerPublishOptionsExampleIdDifferent"
+            "clientId": "enqueuerPublishOptionsExampleIdDifferent2313"
           }
         }
       }

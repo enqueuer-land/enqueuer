@@ -9,19 +9,22 @@ class ReportCompositor {
         this.report = new report_1.Report(name);
     }
     addSubReport(newReport) {
-        logger_1.Logger.debug(`Adding to '${this.report.name}' subreport '${newReport.name}'`);
-        this.subReports[newReport.name] = newReport;
-        this.addValidationCondition(newReport.valid);
-        for (const newError of newReport.errorsDescription) {
-            this.report.errorsDescription.push(`[${newReport.name}]${newError}`);
-            this.addValidationCondition(false);
-        }
-        ;
+        newReport = this.removeUselessFields(newReport);
+        const newReportName = newReport.name;
+        logger_1.Logger.trace(`Adding to '${this.report.name}' subreport '${newReportName}'`);
+        delete newReport.name;
+        this.subReports[newReportName] = newReport;
+        this.report.valid = this.report.valid && newReport.valid;
         return this;
     }
-    addErrorsDescription(error) {
-        this.report.errorsDescription.push(error);
-        this.report.valid = false;
+    addError(error) {
+        return this.addTest(error, false);
+    }
+    addSuccess(success) {
+        return this.addTest(success, true);
+    }
+    addTest(title, success) {
+        this.report.addTest(title, success);
         return this;
     }
     addInfo(info) {
@@ -30,20 +33,29 @@ class ReportCompositor {
     }
     mergeReport(reportToMerge) {
         logger_1.Logger.debug(`Merging '${this.report.name}' with new one '${reportToMerge.name}'`);
-        this.report.errorsDescription = this.report.errorsDescription.concat(reportToMerge.errorsDescription);
+        if (reportToMerge.tests)
+            reportToMerge.tests.forEach((test) => this.report.addTest(test.name, test.valid));
         this.report.valid = this.report.valid && reportToMerge.valid;
-        delete reportToMerge.errorsDescription;
+        delete reportToMerge.tests;
         delete reportToMerge.valid;
         delete reportToMerge.name;
         this.additionalInfo = Object.assign({}, this.additionalInfo, reportToMerge);
         return this;
     }
-    addValidationCondition(valid) {
-        this.report.valid = this.report.valid && valid;
-        return this;
+    removeUselessFields(value) {
+        let clone = {};
+        Object.keys(value)
+            .filter(k => value[k] !== null && value[k] !== undefined) // Remove undef. and null.
+            .filter(k => Array.isArray(value[k]) ? value[k].length > 0 : true) // Remove undef. and null.
+            .map((key) => clone[key] = value[key]);
+        if (clone.success && clone.success.length == 0)
+            delete clone.success;
+        if (clone.errors && clone.errors.length == 0)
+            delete clone.errors;
+        return clone;
     }
     snapshot() {
-        return Object.assign(this.report, this.subReports, this.additionalInfo);
+        return this.removeUselessFields(Object.assign(this.report, this.subReports, this.additionalInfo));
     }
 }
 exports.ReportCompositor = ReportCompositor;

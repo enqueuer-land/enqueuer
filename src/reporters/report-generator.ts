@@ -33,21 +33,11 @@ export class ReportGenerator implements Reporter {
     }
 
     public finish(): void {
-        this.addValidResult();
         this.addTimesReport();
     }
 
     public addError(error: string): any {
-        this.requisitionReports.addErrorsDescription(`${error}`);
-    }
-
-    private addValidResult() {
-        if (this.timeout && this.startTime)
-        {
-            const hasTimedOut = (new DateController().getTime() - this.startTime.getTime()) > this.timeout;
-            this.requisitionReports.addValidationCondition(!hasTimedOut);
-        }
-
+        this.requisitionReports.addError(`${error}`);
     }
 
     private addTimesReport(): void{
@@ -60,6 +50,10 @@ export class ReportGenerator implements Reporter {
             if (this.timeout) {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
+                if (timesReport.hasTimedOut)
+                    this.requisitionReports.addError(`Timed out`);
+                else
+                    this.requisitionReports.addSuccess(`No timeout`);
             }
 
             this.requisitionReports.addInfo({time: timesReport});

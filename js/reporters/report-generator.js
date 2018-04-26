@@ -20,17 +20,10 @@ class ReportGenerator {
         return this.requisitionReports.snapshot();
     }
     finish() {
-        this.addValidResult();
         this.addTimesReport();
     }
     addError(error) {
-        this.requisitionReports.addErrorsDescription(`${error}`);
-    }
-    addValidResult() {
-        if (this.timeout && this.startTime) {
-            const hasTimedOut = (new date_controller_1.DateController().getTime() - this.startTime.getTime()) > this.timeout;
-            this.requisitionReports.addValidationCondition(!hasTimedOut);
-        }
+        this.requisitionReports.addError(`${error}`);
     }
     addTimesReport() {
         if (this.startTime) {
@@ -42,6 +35,10 @@ class ReportGenerator {
             if (this.timeout) {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
+                if (timesReport.hasTimedOut)
+                    this.requisitionReports.addError(`Timed out`);
+                else
+                    this.requisitionReports.addSuccess(`No timeout`);
             }
             this.requisitionReports.addInfo({ time: timesReport });
         }

@@ -41,15 +41,9 @@ class MetaFunctionExecutor {
         let result = Object.assign({}, functionResponse);
         delete result.test;
         delete result.report;
-        result.passingTests = [];
-        result.failingTests = [];
-        for (const test in functionResponse.test) {
-            if (functionResponse.test[test]) {
-                result.passingTests.push(test);
-            }
-            else {
-                result.failingTests.push(test);
-            }
+        result.tests = [];
+        for (const title in functionResponse.test) {
+            result.tests.push({ name: title, valid: functionResponse.test[title] });
         }
         result.report = this.fillReportAttribute(functionResponse);
         return result;

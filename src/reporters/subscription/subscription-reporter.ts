@@ -5,7 +5,7 @@ import {DateController} from "../../timers/date-controller";
 import {SubscriptionModel} from "../../models/subscription-model";
 import Signals = NodeJS.Signals;
 import {Subscription} from "../../subscriptions/subscription";
-import {Report} from "../../reports/report";
+import {Report, Test} from "../../reports/report";
 import {Timeout} from "../../timers/timeout";
 import {Reporter} from "../reporter";
 import {Container} from "conditional-injector";
@@ -35,7 +35,6 @@ export class SubscriptionReporter implements Reporter {
                 const message = `[${this.subscription.name}] stop waiting because it has timed out`;
                 Logger.info(message);
                 this.hasTimedOut = true;
-                this.reportCompositor.addErrorsDescription("Timeout");
                 onTimeOutCallback();
             }
             this.cleanUp();
@@ -58,7 +57,7 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                    this.reportCompositor.addErrorsDescription("Unable to connect")
+                    this.reportCompositor.addError("Unable to connect")
                     reject(err);
                 });
         });
@@ -83,7 +82,7 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                    this.reportCompositor.addErrorsDescription("Unable to receive message")
+                    this.reportCompositor.addError("Unable to receive message")
                     this.subscription.unsubscribe();
                     reject(err);
                 });
@@ -92,11 +91,9 @@ export class SubscriptionReporter implements Reporter {
 
     public getReport(): Report {
         const hasReceivedMessage = this.subscription.messageReceived != null;
-        if (!hasReceivedMessage)
-                this.reportCompositor.addErrorsDescription(`No message received`);
-        this.reportCompositor.addValidationCondition(hasReceivedMessage);
-        this.reportCompositor.addValidationCondition(!this.hasTimedOut);
-
+        this.reportCompositor.addTest("Message received", hasReceivedMessage);
+        if (hasReceivedMessage)
+            this.reportCompositor.addTest("No time out", !this.hasTimedOut);
         this.reportCompositor.addInfo({
             type: this.subscription.type,
             hasReceivedMessage: hasReceivedMessage,
@@ -129,12 +126,8 @@ export class SubscriptionReporter implements Reporter {
         const onMessageReceivedSubscription = new OnMessageReceivedMetaFunction(this.subscription);
         let functionResponse = new MetaFunctionExecutor(onMessageReceivedSubscription).execute();
         Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        for (const failingTest of functionResponse.failingTests)
-            this.reportCompositor.addErrorsDescription(failingTest);
-        if (functionResponse.exception) {
-            this.reportCompositor.addErrorsDescription(functionResponse.exception);
-        }
-
+        functionResponse.tests.map((passing: Test) =>
+            this.reportCompositor.addTest(passing.name, passing.valid));
         this.reportCompositor.addInfo({
             onMessageFunctionReport: functionResponse,
             messageReceivedTimestamp: new DateController().toString()

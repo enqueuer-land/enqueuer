@@ -35,13 +35,13 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
                 })
                     .catch((err) => {
                     logger_1.Logger.error(err);
-                    this.reportCompositor.addErrorsDescription(`Error publishing start event '${this.publisher}'`);
+                    this.reportCompositor.addError(`Error publishing start event '${this.publisher}'`);
                     reject(err);
                 });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
-                this.reportCompositor.addErrorsDescription(message);
+                this.reportCompositor.addError(message);
                 reject(message);
             }
         });
@@ -63,10 +63,9 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
-        for (const failingTest of functionResponse.failingTests)
-            this.reportCompositor.addErrorsDescription(failingTest);
+        functionResponse.tests.map((passing) => this.reportCompositor.addTest(passing.name, passing.valid));
         if (functionResponse.exception) {
-            this.reportCompositor.addErrorsDescription(functionResponse.exception);
+            this.reportCompositor.addError(functionResponse.exception);
         }
     }
 };

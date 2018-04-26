@@ -1,0 +1,66 @@
+{
+  "valid": true,
+  "tests": [
+    {
+      "name": "No timeout",
+      "valid": true
+    }
+  ],
+  "name": "runnableUDSName",
+  "udsPublisher": {
+    "valid": true,
+    "prePublishingFunctionReport": {
+      "publisher": {
+        "type": "uds",
+        "name": "udsPublisher",
+        "path": "/tmp/unix.sock",
+        "payload": "\"enqueuer\""
+      },
+      "tests": [],
+      "report": {}
+    },
+    "timestamp": "2018-04-25T22:10:34.246Z",
+    "type": "uds"
+  },
+  "subscriptions": {
+    "valid": true,
+    "udsSubscription": {
+      "valid": true,
+      "tests": [
+        {
+          "name": "first letter",
+          "valid": true
+        },
+        {
+          "name": "Message received",
+          "valid": true
+        },
+        {
+          "name": "No timeout",
+          "valid": true
+        }
+      ],
+      "connectionTime": "2018-04-25T22:10:34.244Z",
+      "onMessageFunctionReport": {
+        "tests": [
+          {
+            "name": "first letter",
+            "valid": true
+          }
+        ],
+        "report": {}
+      },
+      "messageReceivedTimestamp": "2018-04-25T22:10:34.246Z",
+      "type": "uds",
+      "hasReceivedMessage": true,
+      "hasTimedOut": false
+    }
+  },
+  "time": {
+    "totalTime": 3,
+    "startTime": "2018-04-25T22:10:34.243Z",
+    "endTime": "2018-04-25T22:10:34.246Z",
+    "timeout": 3000,
+    "hasTimedOut": false
+  }
+}

@@ -25,12 +25,12 @@ const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
 const report_compositor_1 = require("../reports/report-compositor");
+const report_valid_fields_filter_1 = require("../reports/report-valid-fields-filter");
 const fs = require("fs");
 const prettyjson = require('prettyjson');
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
-        this.summary = { summary: {} };
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
         this.outputFilename = singleRunConfiguration["output-file"];
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
@@ -52,7 +52,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
-                .then(report => { this.reportCompositor.addSubReport(report); return this.addToSummary(report); })
+                .then(report => { this.reportCompositor.addSubReport(report); return report; })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then(() => resolve(this.execute())) //Run the next one
                 .catch((err) => {
@@ -62,24 +62,19 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             });
         });
     }
-    addToSummary(report) {
-        this.summary.summary[report.name] = report.valid;
-        return report;
-    }
     persistSummary() {
         const options = {
             defaultIndentation: 4,
             keysColor: "white",
-            dashColor: "grey"
+            dashColor: "grey",
+            inlineArrays: true
         };
         const snapshot = this.reportCompositor.snapshot();
         logger_1.Logger.info(`Reports summary:`);
-        this.summary.valid = snapshot.valid;
-        if (snapshot.errorsDescription)
-            this.summary.errorsDescription = snapshot.errorsDescription;
-        console.log(prettyjson.render(this.summary, options));
+        const filterReport = new report_valid_fields_filter_1.ReportValidFieldsFilter().filterReport(snapshot);
+        console.log(prettyjson.render(filterReport, options));
         if (this.outputFilename)
-            fs.writeFileSync(this.outputFilename, JSON.stringify(snapshot, null, 4));
+            fs.writeFileSync(this.outputFilename, JSON.stringify(filterReport, null, 4));
     }
     ;
 };

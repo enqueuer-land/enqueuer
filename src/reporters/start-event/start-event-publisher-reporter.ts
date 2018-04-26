@@ -4,7 +4,7 @@ import {PrePublishMetaFunction} from "../../meta-functions/pre-publish-meta-func
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../timers/date-controller";
 import {PublisherModel} from "../../models/publisher-model";
-import {Report} from "../../reports/report";
+import {Report, Test} from "../../reports/report";
 import {Logger} from "../../loggers/logger";
 import {Injectable, Container} from "conditional-injector";
 import {ReportCompositor} from "../../reports/report-compositor";
@@ -33,13 +33,13 @@ export class StartEventPublisherReporter extends StartEventReporter {
                     })
                     .catch((err: any) => {
                         Logger.error(err);
-                        this.reportCompositor.addErrorsDescription(`Error publishing start event '${this.publisher}'`);
+                        this.reportCompositor.addError(`Error publishing start event '${this.publisher}'`);
                         reject(err)
                     });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
-                this.reportCompositor.addErrorsDescription(message)
+                this.reportCompositor.addError(message)
                 reject(message);
             }
         });
@@ -66,10 +66,10 @@ export class StartEventPublisherReporter extends StartEventReporter {
         this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
 
-        for (const failingTest of functionResponse.failingTests)
-            this.reportCompositor.addErrorsDescription(failingTest);
+        functionResponse.tests.map((passing: Test) =>
+            this.reportCompositor.addTest(passing.name, passing.valid));
         if (functionResponse.exception) {
-            this.reportCompositor.addErrorsDescription(functionResponse.exception);
+            this.reportCompositor.addError(functionResponse.exception);
         }
 
     }

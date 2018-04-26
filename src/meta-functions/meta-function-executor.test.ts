@@ -31,11 +31,9 @@ describe('MetaFunctionExecutor', () => {
         }
         const executor = new MetaFunctionExecutor(new FakeMetaFunction());
         const expectedReport =  {
-            "passingTests": [
-                "passing"
-            ],
-            "failingTests": [
-                "failing"
+            "tests": [
+                {name: "passing", valid: true},
+                {name: "failing", valid: false}
             ],
             "report":
             {

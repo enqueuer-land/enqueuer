@@ -1,16 +1,19 @@
 {
   "valid": true,
-  "errorsDescription": [],
+  "tests": [
+    {
+      "name": "No timeout",
+      "valid": true
+    }
+  ],
   "name": "runnableAmqp",
   "AmqpPub": {
     "valid": true,
-    "errorsDescription": [],
-    "name": "AmqpPub",
     "prePublishingFunctionReport": {
       "publisher": {
         "type": "amqp",
         "name": "AmqpPub",
-        "payload": "1524662435850",
+        "payload": "1524694233639",
         "options": {
           "host": "localhost",
           "port": 5672
@@ -18,41 +21,52 @@
         "queueName": "enqueuerQueue",
         "prePublishing": "publisher.payload=new Date().getTime();"
       },
-      "passingTests": [],
-      "failingTests": [],
+      "tests": [],
       "report": {}
     },
-    "timestamp": "2018-04-25T13:20:35.857Z",
+    "timestamp": "2018-04-25T22:10:33.647Z",
     "type": "amqp"
   },
   "subscriptions": {
     "valid": true,
-    "errorsDescription": [],
-    "name": "subscriptions",
     "AmqpSubs": {
       "valid": true,
-      "errorsDescription": [],
-      "name": "AmqpSubs",
-      "connectionTime": "2018-04-25T13:20:35.849Z",
+      "tests": [
+        {
+          "name": "works",
+          "valid": true
+        },
+        {
+          "name": "Message received",
+          "valid": true
+        },
+        {
+          "name": "No timeout",
+          "valid": true
+        }
+      ],
+      "connectionTime": "2018-04-25T22:10:33.638Z",
       "onMessageFunctionReport": {
-        "passingTests": [
-          "works"
+        "tests": [
+          {
+            "name": "works",
+            "valid": true
+          }
         ],
-        "failingTests": [],
         "report": {
           "virgs": "lopídio"
         }
       },
-      "messageReceivedTimestamp": "2018-04-25T13:20:35.857Z",
+      "messageReceivedTimestamp": "2018-04-25T22:10:33.647Z",
       "type": "amqp",
       "hasReceivedMessage": true,
       "hasTimedOut": false
     }
   },
   "time": {
-    "totalTime": 17,
-    "startTime": "2018-04-25T13:20:35.841Z",
-    "endTime": "2018-04-25T13:20:35.858Z",
+    "totalTime": 20,
+    "startTime": "2018-04-25T22:10:33.628Z",
+    "endTime": "2018-04-25T22:10:33.648Z",
     "timeout": 3000,
     "hasTimedOut": false
   }

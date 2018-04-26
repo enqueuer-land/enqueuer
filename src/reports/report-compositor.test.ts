@@ -1,88 +1,91 @@
 import {ReportCompositor} from "./report-compositor";
+import {Report} from "./report";
 
 describe('ReportCompositor', () => {
     it('Should be true by default', () => {
         const reportCompositor: ReportCompositor = new ReportCompositor("name");
-        expect(reportCompositor.snapshot().valid).toBeTruthy();
-        expect(reportCompositor.snapshot().name).toBe("name");
-        expect(reportCompositor.snapshot().errorsDescription.length).toBe(0);
+        const snapshot = reportCompositor.snapshot();
+        expect(snapshot.valid).toBeTruthy();
+        expect(snapshot.name).toBe("name");
+        expect(snapshot.errors).toBeUndefined();
+        expect(snapshot.success).toBeUndefined();
     });
 
     it('Should detect one error', () => {
         const reportCompositor: ReportCompositor = new ReportCompositor("name");
-        reportCompositor.addSubReport({name: "someName", valid:false, errorsDescription: []});
-        expect(reportCompositor.snapshot().valid).toBeFalsy();
-        expect(reportCompositor.snapshot().errorsDescription.length).toBe(0);
+        reportCompositor.addSubReport(Report.create("someName", {valid:false}));
+        const snapshot = reportCompositor.snapshot();
+        expect(snapshot.valid).toBeFalsy();
+        expect(snapshot.errors).toBeUndefined();
+        expect(snapshot.success).toBeUndefined();
     });
 
     it('Should keep report additional info', () => {
         const reportCompositor: ReportCompositor = new ReportCompositor("name");
         reportCompositor.addInfo({additionalInfo: "added"});
-        expect(reportCompositor.snapshot().valid).toBeTruthy();
-        expect(reportCompositor.snapshot().additionalInfo).toBeDefined();
-    })
+        const snapshot = reportCompositor.snapshot();
+        expect(snapshot.valid).toBeTruthy();
+        expect(snapshot.additionalInfo).toBeDefined();
+    });
 
     it('Should merge reports', () => {
-        const reportCompositor: ReportCompositor = new ReportCompositor("name").addInfo({extra: "extra"});
+        const reportCompositor: ReportCompositor = new ReportCompositor("name").addInfo({extra: "extra"}).addTest("valid", true);
         reportCompositor.mergeReport(
-            {
-                            valid: false,
-                            errorsDescription: ["oneError"],
-                            name: "ignored",
-                            additionalInfo: "add"
-                        });
-        expect(reportCompositor.snapshot().valid).toBeFalsy();
-        expect(reportCompositor.snapshot().errorsDescription).toEqual(["oneError"]);
-        expect(reportCompositor.snapshot().name).toBe("name");
-        expect(reportCompositor.snapshot().extra).toBe("extra");
-        expect(reportCompositor.snapshot().additionalInfo).toBe("add");
-    })
+                            Report.create("ignored",
+                        {
+                                valid: false,
+                                tests: [{name: "oneError", valid: false}, {name: "oneSuccess", valid: true}],
+                                additionalInfo: "add"
+                                }));
+        const snapshot = reportCompositor.snapshot();
+
+        expect(snapshot.valid).toBeFalsy();
+        expect(snapshot.name).toBe("name");
+        expect(snapshot.extra).toBe("extra");
+        expect(snapshot.tests).toEqual([{name: "valid", valid: true},
+                                                {name: "oneError", valid: false},
+                                                {name: "oneSuccess", valid: true}]);
+        expect(snapshot.additionalInfo).toBe("add");
+    });
 
     it('Should compose reports', () => {
         const reportCompositor: ReportCompositor = new ReportCompositor("name");
         reportCompositor
             .addInfo({additionalInfo: "added"})
-            .addSubReport({
-                valid: true,
-                name: "someName",
-                errorsDescription: ["firstError", "secondError"]})
-            .addSubReport({
-                valid: true,
-                name: "someOther",
-                errorsDescription: ["firstMethod"]})
-            .addSubReport({
-                valid: true,
-                name: "someId",
-                value: "random",
-                errorsDescription: ["secondMethod"]});
+            .addSubReport(Report.create("someId",
+                {
+                        tests: [{name: "oneSuccess", valid: true}]
+                }))
+            .addSubReport(Report.create("someOther",
+                {
+                        tests: [{name: "twoSuccess", valid: true}]
+                }))
+            .addSubReport(Report.create("someName",
+                {
+                        valid: false,
+                        tests: [{name: "threeSuccess", valid: true}, {name: "failure", valid: false}],
+                        value: "random"
+                }));
 
         const expected = {
-            additionalInfo: "added",
-            errorsDescription: [
-                "[someName]firstError",
-                "[someName]secondError",
-                "[someOther]firstMethod",
-                "[someId]secondMethod"
-            ],
-            name: "name",
-            someId: {
-                errorsDescription: ["secondMethod"],
-                name: "someId",
-                value: "random",
-                valid: true
+            "additionalInfo": "added",
+            "name": "name",
+            "someId": {
+                tests: [{name: "oneSuccess", valid: true}],
+                "valid": true,
             },
-            someName: {
-                errorsDescription: ["firstError", "secondError"],
-                name: "someName",
-                valid: true
+            "someName": {
+                valid: false,
+                tests: [{name: "threeSuccess", valid: true}, {name: "failure", valid: false}],
+                value: "random"
             },
-            someOther: {
-                errorsDescription: ["firstMethod"],
-                name: "someOther",
-                valid: true
+            "someOther": {
+                tests: [{name: "twoSuccess", valid: true}],
+                "valid": true
             },
-            valid: false
+            "valid": false
         }
+
         expect(reportCompositor.snapshot()).toEqual(expected);
     });
 });

@@ -1,11 +1,14 @@
 {
   "valid": true,
-  "errorsDescription": [],
+  "tests": [
+    {
+      "name": "No timeout",
+      "valid": true
+    }
+  ],
   "name": "runnableMqtt",
   "MqttPub": {
     "valid": true,
-    "errorsDescription": [],
-    "name": "MqttPub",
     "prePublishingFunctionReport": {
       "publisher": {
         "type": "mqtt",
@@ -17,39 +20,50 @@
           "clientId": "enqueuerPublishOptionsExampleIdDifferent"
         }
       },
-      "passingTests": [],
-      "failingTests": [],
+      "tests": [],
       "report": {}
     },
-    "timestamp": "2018-04-25T13:20:36.345Z",
+    "timestamp": "2018-04-25T22:10:34.136Z",
     "type": "mqtt"
   },
   "subscriptions": {
     "valid": true,
-    "errorsDescription": [],
-    "name": "subscriptions",
     "MqttSub": {
       "valid": true,
-      "errorsDescription": [],
-      "name": "MqttSub",
-      "connectionTime": "2018-04-25T13:20:36.336Z",
+      "tests": [
+        {
+          "name": "works",
+          "valid": "message"
+        },
+        {
+          "name": "Message received",
+          "valid": true
+        },
+        {
+          "name": "No timeout",
+          "valid": true
+        }
+      ],
+      "connectionTime": "2018-04-25T22:10:34.129Z",
       "onMessageFunctionReport": {
-        "passingTests": [
-          "works"
+        "tests": [
+          {
+            "name": "works",
+            "valid": "message"
+          }
         ],
-        "failingTests": [],
         "report": {}
       },
-      "messageReceivedTimestamp": "2018-04-25T13:20:36.344Z",
+      "messageReceivedTimestamp": "2018-04-25T22:10:34.136Z",
       "type": "mqtt",
       "hasReceivedMessage": true,
       "hasTimedOut": false
     }
   },
   "time": {
-    "totalTime": 36,
-    "startTime": "2018-04-25T13:20:36.309Z",
-    "endTime": "2018-04-25T13:20:36.345Z",
+    "totalTime": 34,
+    "startTime": "2018-04-25T22:10:34.102Z",
+    "endTime": "2018-04-25T22:10:34.136Z",
     "timeout": 3000,
     "hasTimedOut": false
   }

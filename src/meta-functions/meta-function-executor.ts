@@ -3,6 +3,7 @@ import {VariablesController} from "../variables/variables-controller";
 import {Configuration} from "../configurations/configuration";
 import {Logger} from "../loggers/logger";
 import {error} from "util";
+import {Test} from "../reports/report";
 
 
 let persistEnqueuerVariable = (name: string, value: any): void => {
@@ -55,16 +56,11 @@ export class MetaFunctionExecutor {
         delete result.test;
         delete result.report;
 
-        result.passingTests = [];
-        result.failingTests = [];
-
-        for (const test in functionResponse.test) {
-            if (functionResponse.test[test]) {
-                result.passingTests.push(test);
-            } else {
-                result.failingTests.push(test);
-            }
+        result.tests = [];
+        for (const title in functionResponse.test) {
+            result.tests.push({name: title, valid: functionResponse.test[title]});
         }
+
         result.report = this.fillReportAttribute(functionResponse);
         return result;
     }
