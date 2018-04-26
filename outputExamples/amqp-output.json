@@ -1,73 +1,72 @@
 {
   "valid": true,
-  "tests": [
-    {
-      "name": "No timeout",
-      "valid": true
-    }
-  ],
   "name": "runnableAmqp",
-  "AmqpPub": {
+  "AmqpReq": {
     "valid": true,
-    "prePublishingFunctionReport": {
-      "publisher": {
-        "type": "amqp",
-        "name": "AmqpPub",
-        "payload": "1524694233639",
-        "options": {
-          "host": "localhost",
-          "port": 5672
-        },
-        "queueName": "enqueuerQueue",
-        "prePublishing": "publisher.payload=new Date().getTime();"
-      },
-      "tests": [],
-      "report": {}
-    },
-    "timestamp": "2018-04-25T22:10:33.647Z",
-    "type": "amqp"
-  },
-  "subscriptions": {
-    "valid": true,
-    "AmqpSubs": {
+    "tests": [
+      {
+        "No time out": true
+      }
+    ],
+    "AmqpPub": {
       "valid": true,
-      "tests": [
-        {
-          "name": "works",
-          "valid": true
+      "prePublishingFunctionReport": {
+        "publisher": {
+          "type": "amqp",
+          "name": "AmqpPub",
+          "payload": "1524753073951",
+          "options": {
+            "host": "localhost",
+            "port": 5672
+          },
+          "queueName": "enqueuerQueue",
+          "prePublishing": "publisher.payload=new Date().getTime();"
         },
-        {
-          "name": "Message received",
-          "valid": true
-        },
-        {
-          "name": "No timeout",
-          "valid": true
-        }
-      ],
-      "connectionTime": "2018-04-25T22:10:33.638Z",
-      "onMessageFunctionReport": {
+        "tests": [],
+        "report": {}
+      },
+      "timestamp": "2018-04-26T14:31:13.958Z",
+      "type": "amqp"
+    },
+    "subscriptions": {
+      "valid": true,
+      "AmqpSubs": {
+        "valid": true,
         "tests": [
           {
-            "name": "works",
-            "valid": true
+            "works": true
+          },
+          {
+            "Message received": true
+          },
+          {
+            "No time out": true
           }
         ],
-        "report": {
-          "virgs": "lopídio"
-        }
-      },
-      "messageReceivedTimestamp": "2018-04-25T22:10:33.647Z",
-      "type": "amqp",
-      "hasReceivedMessage": true,
+        "connectionTime": "2018-04-26T14:31:13.950Z",
+        "onMessageFunctionReport": {
+          "tests": [
+            {
+              "name": "works",
+              "valid": true
+            }
+          ],
+          "report": {
+            "virgs": "lopídio"
+          }
+        },
+        "messageReceivedTimestamp": "2018-04-26T14:31:13.958Z",
+        "type": "amqp",
+        "hasReceivedMessage": true,
+        "hasTimedOut": false
+      }
+    },
+    "time": {
+      "totalTime": 18,
+      "startTime": "2018-04-26T14:31:13.941Z",
+      "endTime": "2018-04-26T14:31:13.959Z",
+      "timeout": 3000,
       "hasTimedOut": false
     }
-  },
-  "time": {
-    "totalTime": 20,
-    "startTime": "2018-04-25T22:10:33.628Z",
-    "endTime": "2018-04-25T22:10:33.648Z",
-    "timeout": 3000,
-    "hasTimedOut": false
   }
 }

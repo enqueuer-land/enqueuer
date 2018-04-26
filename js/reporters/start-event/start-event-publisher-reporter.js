@@ -35,13 +35,13 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
                 })
                     .catch((err) => {
                     logger_1.Logger.error(err);
-                    this.reportCompositor.addError(`Error publishing start event '${this.publisher}'`);
+                    this.reportCompositor.addTest(`Error publishing start event '${this.publisher}'`, false);
                     reject(err);
                 });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
-                this.reportCompositor.addError(message);
+                this.reportCompositor.addTest(message, false);
                 reject(message);
             }
         });
@@ -65,7 +65,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         this.prePublishingFunctionReport = functionResponse;
         functionResponse.tests.map((passing) => this.reportCompositor.addTest(passing.name, passing.valid));
         if (functionResponse.exception) {
-            this.reportCompositor.addError(functionResponse.exception);
+            this.reportCompositor.addTest(functionResponse.exception, false);
         }
     }
 };

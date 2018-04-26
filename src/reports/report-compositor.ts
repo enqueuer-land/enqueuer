@@ -35,33 +35,27 @@ export class ReportCompositor {
         return this;
     }
 
-    public mergeReport(reportToMerge: Report): ReportCompositor {
-        Logger.debug(`Merging '${this.report.name}' with new one '${reportToMerge.name}'`);
-
-        if (reportToMerge.tests)
-            reportToMerge.tests.forEach((test: Test) => this.report.addTest(test.name, test.valid));
-        this.report.valid = this.report.valid && reportToMerge.valid;
-        delete reportToMerge.tests;
-        delete reportToMerge.valid;
-        delete reportToMerge.name;
-        this.additionalInfo = Object.assign({}, this.additionalInfo, reportToMerge);
-        return this;
-    }
-
     private removeUselessFields(value: any) {
         let clone: any = {};
         Object.keys(value)
             .filter(k => value[k] !== null && value[k] !== undefined )  // Remove undef. and null.
+            .filter(k => typeof value[k] == 'object'? Object.keys(value[k]).length > 0: true )  // Remove undef. and null.
             .filter(k => Array.isArray(value[k]) ? value[k].length > 0: true)  // Remove undef. and null.
             .map((key) => clone[key] = value[key]);
-        if (clone.success && clone.success.length == 0)
-            delete clone.success;
-        if (clone.errors && clone.errors.length == 0)
-            delete clone.errors;
         return clone;
     }
 
     public snapshot(): any {
-        return this.removeUselessFields(Object.assign(this.report, this.subReports, this.additionalInfo));
+        const fields = this.removeUselessFields(Object.assign(this.report, this.subReports, this.additionalInfo));
+        const tests = fields.tests;
+        if (tests && tests.length > 0) {
+            fields.tests = tests.map((test: Test) => {
+                let testSummary: any = {};
+                testSummary[test.name] = test.valid;
+                return testSummary;
+            })
+        }
+
+        return fields;
     }
 }

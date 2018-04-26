@@ -9,14 +9,15 @@ import {ReportCompositor} from "../reports/report-compositor";
 export class RunnableRunner extends Runner {
 
     private runnableModel: RunnableModel;
+    private reportCompositor: ReportCompositor;
 
     constructor(runnableModel: RunnableModel) {
         super();
         this.runnableModel = runnableModel;
+        this.reportCompositor = new ReportCompositor(this.runnableModel.name);
     }
 
     public run(): Promise<Report> {
-        const reportMerger = new ReportCompositor(this.runnableModel.name);
         return new Promise((resolve) => {
             new Timeout(() => {
                 const promise = Promise.all(this.runnableModel.runnables
@@ -24,8 +25,8 @@ export class RunnableRunner extends Runner {
                         Container.subclassesOf(Runner)
                             .create(runnable)
                             .run()
-                            .then((report: Report) => reportMerger.mergeReport(report))))
-                    .then(() => reportMerger.snapshot());
+                            .then((report: Report) => this.reportCompositor.addSubReport(report))))
+                    .then(() => this.reportCompositor.snapshot());
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);
 

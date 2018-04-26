@@ -17,17 +17,17 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
     constructor(runnableModel) {
         super();
         this.runnableModel = runnableModel;
+        this.reportCompositor = new report_compositor_1.ReportCompositor(this.runnableModel.name);
     }
     run() {
-        const reportMerger = new report_compositor_1.ReportCompositor(this.runnableModel.name);
         return new Promise((resolve) => {
             new timeout_1.Timeout(() => {
                 const promise = Promise.all(this.runnableModel.runnables
                     .map(runnable => conditional_injector_1.Container.subclassesOf(runner_1.Runner)
                     .create(runnable)
                     .run()
-                    .then((report) => reportMerger.mergeReport(report))))
-                    .then(() => reportMerger.snapshot());
+                    .then((report) => this.reportCompositor.addSubReport(report))))
+                    .then(() => this.reportCompositor.snapshot());
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);
         });

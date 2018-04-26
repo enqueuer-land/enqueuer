@@ -20,11 +20,7 @@ export class ReportValidFieldsFilter {
                 clone[key] = value.valid;
             }
             else if (key == 'tests' && value.tests.length > 0) {
-                clone.tests = value.tests.map((test: Test) => {
-                    let testSummary: any = {};
-                    testSummary[test.name] = test.valid;
-                    return testSummary;
-                })
+                clone[key] = value.tests;
             }
             else if (typeof value[key] == 'object') {
                 const newObject = this.removeNotValidableField(value[key])

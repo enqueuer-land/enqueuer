@@ -7,8 +7,7 @@ const unfilteredReport: Report = Report.create("name",{
         "valid": true,
         "tests": [
             {
-                "name": "No timeout",
-                "valid": true
+                "No timeout": true
             }
         ],
         "AmqpPub": {
@@ -37,24 +36,20 @@ const unfilteredReport: Report = Report.create("name",{
                 "valid": true,
                 "tests": [
                     {
-                        "name": "works",
-                        "valid": true
+                        "works": true
                     },
                     {
-                        "name": "Message received",
-                        "valid": true
+                        "Message received": true
                     },
                     {
-                        "name": "No timeout",
-                        "valid": true
+                        "No timeout": true
                     }
                 ],
                 "connectionTime": "2018-04-25T22:10:33.638Z",
                 "onMessageFunctionReport": {
                     "tests": [
                         {
-                            "name": "works",
-                            "valid": true
+                            "works": true
                         }
                     ],
                     "report": {
@@ -79,8 +74,7 @@ const unfilteredReport: Report = Report.create("name",{
         "valid": true,
         "tests": [
             {
-                "name": "No timeout",
-                "valid": true
+                "No timeout": true
             }
         ],
         "filePublisher": {
@@ -106,16 +100,13 @@ const unfilteredReport: Report = Report.create("name",{
                 "valid": true,
                 "tests": [
                     {
-                        "name": "some time has passed",
-                        "valid": true
+                        "some time has passed": true
                     },
                     {
-                        "name": "Message received",
-                        "valid": true
+                        "Message received": true
                     },
                     {
-                        "name": "No timeout",
-                        "valid": true
+                        "No timeout": true
                     }
                 ],
                 "connectionTime": "2018-04-25T22:10:33.762Z",

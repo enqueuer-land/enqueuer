@@ -1,71 +1,70 @@
 {
   "valid": true,
-  "tests": [
-    {
-      "name": "No timeout",
-      "valid": true
-    }
-  ],
   "name": "runnableHttp",
-  "HttpPublisherClientTitle": {
+  "HttpTitle": {
     "valid": true,
-    "prePublishingFunctionReport": {
-      "publisher": {
-        "type": "http-client",
-        "name": "HttpPublisherClientTitle",
-        "url": "http://localhost:23075/enqueuer",
-        "method": "POST",
-        "payload": "{\"enqueuer\":\"virgs\"}",
-        "headers": {
-          "content-type": "application/json",
-          "Content-Length": 26
-        }
-      },
-      "tests": [],
-      "report": {}
-    },
-    "timestamp": "2018-04-25T22:10:33.995Z",
-    "type": "http-client"
-  },
-  "subscriptions": {
-    "valid": true,
-    "HttpSubscriptionTitle": {
+    "tests": [
+      {
+        "No time out": true
+      }
+    ],
+    "HttpPublisherClientTitle": {
       "valid": true,
-      "tests": [
-        {
-          "name": "works",
-          "valid": true
-        },
-        {
-          "name": "Message received",
-          "valid": true
-        },
-        {
-          "name": "No timeout",
-          "valid": true
-        }
-      ],
-      "connectionTime": "2018-04-25T22:10:33.981Z",
-      "onMessageFunctionReport": {
-        "tests": [
-          {
-            "name": "works",
-            "valid": true
+      "prePublishingFunctionReport": {
+        "publisher": {
+          "type": "http-client",
+          "name": "HttpPublisherClientTitle",
+          "url": "http://localhost:23075/enqueuer",
+          "method": "POST",
+          "payload": "{\"enqueuer\":\"virgs\"}",
+          "headers": {
+            "content-type": "application/json",
+            "Content-Length": 26
           }
-        ],
+        },
+        "tests": [],
         "report": {}
       },
-      "messageReceivedTimestamp": "2018-04-25T22:10:33.995Z",
-      "type": "http-server",
-      "hasReceivedMessage": true,
+      "timestamp": "2018-04-26T14:31:14.409Z",
+      "type": "http-client"
+    },
+    "subscriptions": {
+      "valid": true,
+      "HttpSubscriptionTitle": {
+        "valid": true,
+        "tests": [
+          {
+            "works": true
+          },
+          {
+            "Message received": true
+          },
+          {
+            "No time out": true
+          }
+        ],
+        "connectionTime": "2018-04-26T14:31:14.393Z",
+        "onMessageFunctionReport": {
+          "tests": [
+            {
+              "name": "works",
+              "valid": true
+            }
+          ],
+          "report": {}
+        },
+        "messageReceivedTimestamp": "2018-04-26T14:31:14.409Z",
+        "type": "http-server",
+        "hasReceivedMessage": true,
+        "hasTimedOut": false
+      }
+    },
+    "time": {
+      "totalTime": 19,
+      "startTime": "2018-04-26T14:31:14.391Z",
+      "endTime": "2018-04-26T14:31:14.410Z",
+      "timeout": 30000,
       "hasTimedOut": false
     }
-  },
-  "time": {
-    "totalTime": 16,
-    "startTime": "2018-04-25T22:10:33.979Z",
-    "endTime": "2018-04-25T22:10:33.995Z",
-    "timeout": 30000,
-    "hasTimedOut": false
   }
 }

@@ -70,7 +70,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             inlineArrays: true
         };
         const snapshot = this.reportCompositor.snapshot();
-        logger_1.Logger.info(`Reports summary:`);
+        logger_1.Logger.info(`Reports summary: ${JSON.stringify(snapshot, null, 4)}`);
         const filterReport = new report_valid_fields_filter_1.ReportValidFieldsFilter().filterReport(snapshot);
         console.log(prettyjson.render(filterReport, options));
         if (this.outputFilename)

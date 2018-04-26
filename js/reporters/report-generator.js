@@ -23,7 +23,7 @@ class ReportGenerator {
         this.addTimesReport();
     }
     addError(error) {
-        this.requisitionReports.addError(`${error}`);
+        this.requisitionReports.addTest(`${error}`, false);
     }
     addTimesReport() {
         if (this.startTime) {
@@ -35,10 +35,7 @@ class ReportGenerator {
             if (this.timeout) {
                 timesReport.timeout = this.timeout;
                 timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
-                if (timesReport.hasTimedOut)
-                    this.requisitionReports.addError(`Timed out`);
-                else
-                    this.requisitionReports.addSuccess(`No timeout`);
+                this.requisitionReports.addTest(`No time out`, !timesReport.hasTimedOut);
             }
             this.requisitionReports.addInfo({ time: timesReport });
         }
