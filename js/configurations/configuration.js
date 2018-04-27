@@ -60,11 +60,11 @@ class Configuration {
     }
     setFileVariable(name, value) {
         this.configurationFile.variables[name] = value;
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
     }
     deleteFileVariable(name) {
         delete this.configurationFile.variables[name];
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 2));
+        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
     }
     getSessionVariables() {
         return commandLineVariables;

@@ -60,7 +60,28 @@ const validRunnable =
                                 runnableVersion: "01.00.00",
                                 name: "name",
                                 initialDelay: 3000,
-                                runnables: []
+                                runnables: [
+                                    {
+                                        timeout: 3000,
+                                        name: "name",
+                                        subscriptions: [
+                                            {
+                                                name: "name",
+                                                type: "uds",
+                                                path: "/tmp/unix.sock",
+                                                timeout: 500
+                                            }
+                                        ],
+                                        startEvent: {
+                                            publisher: {
+                                                name: "name",
+                                                type: "uds",
+                                                path: "/tmp/unix.sock",
+                                                payload: "{{sessionKey}}"
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     }
