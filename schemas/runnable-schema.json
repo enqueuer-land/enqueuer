@@ -2,21 +2,19 @@
   "$id": "https://github.com/lopidio/enqueuer/runnable",
   "type": "object",
   "properties": {
-    "initialDelay": {
-      "type": "number",
-      "title": "The requisition initialDelay",
-      "default": "",
-      "examples": [
-        5000,
-        60000
-      ]
-    },
     "name": {
       "type": "string",
       "title": "The requisition name",
       "default": "",
       "examples": [
         "anyNameOrTitle"
+      ]
+    },
+    "initialDelay": {
+      "type": "integer",
+      "title": "Initial delay",
+      "examples": [
+        100
       ]
     },
     "runnableVersion": {
@@ -44,5 +42,6 @@
     "runnableVersion",
     "name",
     "runnables"
-  ]
+  ],
+  "additionalProperties": false
 }
