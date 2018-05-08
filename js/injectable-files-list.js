@@ -12,6 +12,7 @@ require("./subscriptions/mqtt-subscription");
 require("./subscriptions/null-subscription");
 require("./executors/single-run-executor");
 require("./executors/daemon-executor");
+require("./executors/null-run-executor");
 require("./publishers/http-client-publisher");
 require("./publishers/uds-publisher");
 require("./publishers/mqtt-publisher");
