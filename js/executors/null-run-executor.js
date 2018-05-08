@@ -22,7 +22,7 @@ const conditional_injector_1 = require("conditional-injector");
 let NullRunExecutor = class NullRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
-        this.enqueuerConfiguration = enqueuerConfiguration;
+        this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {

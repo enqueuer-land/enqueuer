@@ -4,11 +4,11 @@ import {Injectable} from "conditional-injector";
 
 @Injectable()
 export class NullRunExecutor extends EnqueuerExecutor {
-    private enqueuerConfiguration: any;
+    private enqueuerConfiguration: string;
 
     constructor(enqueuerConfiguration: any) {
         super();
-        this.enqueuerConfiguration = enqueuerConfiguration;
+        this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
     }
 
     public async init(): Promise<void> {
