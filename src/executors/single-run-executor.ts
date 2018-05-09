@@ -22,6 +22,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     constructor(enqueuerConfiguration: any) {
         super();
+        Logger.info("Executing in Single-Run mode");
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
         this.outputFilename = singleRunConfiguration["output-file"];
 
@@ -33,6 +34,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     }
 
     public async init(): Promise<void> {
+        Logger.info("Initializing Single-Run mode");
         return this.singleRunInput.syncDir();
     }
 

@@ -1,6 +1,7 @@
 import {EnqueuerExecutor} from "./enqueuer-executor";
 import {Report} from "../reports/report";
 import {Injectable} from "conditional-injector";
+import {Logger} from "../loggers/logger";
 
 @Injectable()
 export class NullRunExecutor extends EnqueuerExecutor {
@@ -8,14 +9,15 @@ export class NullRunExecutor extends EnqueuerExecutor {
 
     constructor(enqueuerConfiguration: any) {
         super();
+        Logger.info("Executing in Not-Identified mode");
         this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
     }
 
     public async init(): Promise<void> {
-        throw new Error(`Impossible to instantiate new executor from: ${this.enqueuerConfiguration}`);
+        throw new Error(`Impossible to initialize new executor from: ${this.enqueuerConfiguration}`);
     }
 
     public execute(): Promise<Report> {
-        return Promise.reject(new Error(`Impossible to instantiate new executor from: ${this.enqueuerConfiguration}`));
+        return Promise.reject(new Error(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`));
     }
 }

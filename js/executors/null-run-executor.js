@@ -19,18 +19,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
+const logger_1 = require("../loggers/logger");
 let NullRunExecutor = class NullRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
+        logger_1.Logger.info("Executing in Not-Identified mode");
         this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
-            throw new Error(`Impossible to instantiate new executor from: ${this.enqueuerConfiguration}`);
+            throw new Error(`Impossible to initialize new executor from: ${this.enqueuerConfiguration}`);
         });
     }
     execute() {
-        return Promise.reject(new Error(`Impossible to instantiate new executor from: ${this.enqueuerConfiguration}`));
+        return Promise.reject(new Error(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`));
     }
 };
 NullRunExecutor = __decorate([

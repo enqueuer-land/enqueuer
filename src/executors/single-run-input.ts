@@ -1,4 +1,3 @@
-import {Logger} from "../loggers/logger";
 import {SubscriptionReporter} from "../reporters/subscription/subscription-reporter";
 import {RunnableParser} from "../runnables/runnable-parser";
 import {RunnableModel} from "../models/runnable-model";

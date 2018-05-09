@@ -31,6 +31,7 @@ const prettyjson = require('prettyjson');
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
+        logger_1.Logger.info("Executing in Single-Run mode");
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
         this.outputFilename = singleRunConfiguration["output-file"];
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
@@ -40,6 +41,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
+            logger_1.Logger.info("Initializing Single-Run mode");
             return this.singleRunInput.syncDir();
         });
     }
