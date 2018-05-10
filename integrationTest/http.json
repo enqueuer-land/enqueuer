@@ -14,7 +14,7 @@
           "port": 23075,
           "method": "POST",
           "response": {
-            "status": 200
+            "status": 321
           },
           "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === 'virgs';",
           "timeout": 10000
@@ -26,6 +26,8 @@
           "name": "HttpPublisherClientTitle",
           "url": "http://localhost:23075/enqueuer",
           "method": "POST",
+          "prePublishing": "test['prePublishingTest'] = true",
+          "onMessageReceived": "test['publisherOnMessageReceivedTest'] = JSON.parse(message).statusCode == 321",
           "payload": {
             "enqueuer": "virgs"
           },

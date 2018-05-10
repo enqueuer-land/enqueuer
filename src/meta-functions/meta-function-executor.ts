@@ -1,10 +1,7 @@
-import {MetaFunctionCreator} from "./meta-function-creator";
+import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
 import {VariablesController} from "../variables/variables-controller";
 import {Configuration} from "../configurations/configuration";
 import {Logger} from "../loggers/logger";
-import {error} from "util";
-import {Test} from "../reports/report";
-
 
 let persistEnqueuerVariable = (name: string, value: any): void => {
     const configuration = new Configuration();
@@ -23,7 +20,7 @@ let deleteEnqueuerVariable = (name: string): void => {
 export class MetaFunctionExecutor {
     private functionBody: string;
 
-    constructor(functionBodyCreator: MetaFunctionCreator) {
+    constructor(functionBodyCreator: MetaFunctionBodyCreator) {
         this.functionBody = functionBodyCreator.createBody();
     }
 

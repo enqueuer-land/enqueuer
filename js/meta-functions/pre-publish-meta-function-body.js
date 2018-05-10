@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class PrePublishMetaFunction {
+class PrePublishMetaFunctionBody {
     constructor(publisherAttributes) {
         this.publisherAttributes = publisherAttributes;
     }
@@ -17,4 +17,4 @@ class PrePublishMetaFunction {
                      };`;
     }
 }
-exports.PrePublishMetaFunction = PrePublishMetaFunction;
+exports.PrePublishMetaFunctionBody = PrePublishMetaFunctionBody;

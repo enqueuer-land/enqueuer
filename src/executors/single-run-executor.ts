@@ -66,7 +66,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
             inlineArrays: true
         };
         const snapshot = this.reportCompositor.snapshot();
-        Logger.info(`Reports summary: ${JSON.stringify(snapshot, null, 4)}`)
+        Logger.debug(`Reports summary: ${JSON.stringify(snapshot, null, 4)}`)
         const filterReport = new ReportValidFieldsFilter().filterReport(snapshot);
         console.log(prettyjson.render(filterReport, options));
         if (this.outputFilename)

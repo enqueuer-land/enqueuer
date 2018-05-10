@@ -1,13 +1,13 @@
-import {PrePublishMetaFunction} from "./pre-publish-meta-function";
+import {PrePublishMetaFunctionBody} from "./pre-publish-meta-function-body";
 import {PublisherModel} from "../models/publisher-model";
 
-describe('PrePublishMetaFunction', () => {
+describe('PrePublishMetaFunctionBody', () => {
 
     it('should pass constructor argument as object in function', function () {
         const constructorArgument: PublisherModel = {
             type: 'test'
         };
-        const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
+        const prePublishMeta: PrePublishMetaFunctionBody = new PrePublishMetaFunctionBody(constructorArgument);
 
         const functionResponse: any = new Function(prePublishMeta.createBody())();
 
@@ -19,7 +19,7 @@ describe('PrePublishMetaFunction', () => {
             type: "test",
             prePublishing: "test['valid'] = true;"
         };
-        const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
+        const prePublishMeta: PrePublishMetaFunctionBody = new PrePublishMetaFunctionBody(constructorArgument);
 
         const functionResponse: any = new Function(prePublishMeta.createBody())();
 
@@ -31,7 +31,7 @@ describe('PrePublishMetaFunction', () => {
             type: "test",
             prePublishing: "report['first'] = 'someValue';"
         };
-        const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
+        const prePublishMeta: PrePublishMetaFunctionBody = new PrePublishMetaFunctionBody(constructorArgument);
 
         const functionResponse: any = new Function(prePublishMeta.createBody())();
 
@@ -43,7 +43,7 @@ describe('PrePublishMetaFunction', () => {
             type: "test",
             prePublishing: "'args'] = args;"
         };
-        const prePublishMeta: PrePublishMetaFunction = new PrePublishMetaFunction(constructorArgument);
+        const prePublishMeta: PrePublishMetaFunctionBody = new PrePublishMetaFunctionBody(constructorArgument);
 
         expect(() => new Function(prePublishMeta.createBody())()).toThrow();
     });

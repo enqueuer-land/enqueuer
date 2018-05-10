@@ -34,8 +34,10 @@ export class HttpClientPublisher extends Publisher {
             request(options,
                 (error: any, response: any, body: any) =>
                 {
-                    if (response)
-                        Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}`)
+                    if (response) {
+                        this.messageReceived = JSON.stringify(response);
+                        Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}...`)
+                    }
                     else
                         Logger.warning(`No http requisition response`)
 

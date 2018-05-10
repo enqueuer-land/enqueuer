@@ -33,8 +33,10 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
                 options.headers['Content-Length'] = options.headers["Content-Length"] || this.setContentLength(options.data);
             logger_1.Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
             request(options, (error, response, body) => {
-                if (response)
+                if (response) {
+                    this.messageReceived = JSON.stringify(response);
                     logger_1.Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}`);
+                }
                 else
                     logger_1.Logger.warning(`No http requisition response`);
                 if (error) {

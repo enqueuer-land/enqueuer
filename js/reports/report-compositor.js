@@ -11,7 +11,7 @@ class ReportCompositor {
     addSubReport(newReport) {
         newReport = this.removeUselessFields(newReport);
         const newReportName = newReport.name;
-        logger_1.Logger.trace(`Adding to '${this.report.name}' subreport '${newReportName}'`);
+        logger_1.Logger.debug(`Adding to '${this.report.name}' subReport '${newReportName}'`);
         delete newReport.name;
         this.subReports[newReportName] = newReport;
         this.report.valid = this.report.valid && newReport.valid;

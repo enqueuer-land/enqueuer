@@ -1,7 +1,7 @@
-import {MetaFunctionCreator} from "./meta-function-creator";
+import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
 import {PublisherModel} from "../models/publisher-model";
 
-export class PrePublishMetaFunction implements MetaFunctionCreator {
+export class PrePublishMetaFunctionBody implements MetaFunctionBodyCreator {
 
     private publisherAttributes: PublisherModel;
 

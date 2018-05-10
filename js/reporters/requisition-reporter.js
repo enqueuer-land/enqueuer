@@ -8,6 +8,8 @@ const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptio
 const conditional_injector_1 = require("conditional-injector");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
+        this.startEventDoneItsJob = false;
+        this.allSubscriptionsStoppedWaiting = false;
         this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes);
         this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
@@ -42,7 +44,8 @@ class RequisitionReporter {
         logger_1.Logger.debug("Triggering start event");
         this.startEvent.start()
             .then(() => {
-            logger_1.Logger.debug("Start event has done its job");
+            this.startEventDoneItsJob = true;
+            this.tryToFinishExecution();
         })
             .catch(err => {
             const message = `Error triggering startingEvent: ${err}`;
@@ -59,7 +62,12 @@ class RequisitionReporter {
     }
     onAllSubscriptionsStopWaiting() {
         logger_1.Logger.info("All subscriptions stopped waiting");
-        this.onFinish();
+        this.allSubscriptionsStoppedWaiting = true;
+        this.tryToFinishExecution();
+    }
+    tryToFinishExecution() {
+        if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting)
+            this.onFinish();
     }
     onFinish(error) {
         this.onFinish = () => { };

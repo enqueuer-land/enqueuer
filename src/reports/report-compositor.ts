@@ -14,11 +14,10 @@ export class ReportCompositor {
     public addSubReport(newReport: Report): ReportCompositor {
         newReport = this.removeUselessFields(newReport);
         const newReportName = newReport.name;
-        Logger.trace(`Adding to '${this.report.name}' subreport '${newReportName}'`);
+        Logger.debug(`Adding to '${this.report.name}' subReport '${newReportName}'`);
         delete newReport.name;
         this.subReports[newReportName] = newReport;
         this.report.valid = this.report.valid && newReport.valid;
-
         return this;
     }
 

@@ -1,11 +1,11 @@
 import {MetaFunctionExecutor} from "./meta-function-executor";
-import {MetaFunctionCreator} from "./meta-function-creator";
+import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
 
 describe('MetaFunctionExecutor', () => {
 
     it('should call meta function', function () {
         let mockCreateFunction = jest.fn();
-        class FakeMetaFunction implements MetaFunctionCreator {
+        class FakeMetaFunction implements MetaFunctionBodyCreator {
             createBody = mockCreateFunction;
         }
         const fakeMetaFunction = new FakeMetaFunction();
@@ -15,7 +15,7 @@ describe('MetaFunctionExecutor', () => {
     });
 
     it('should insert data', function () {
-        class FakeMetaFunction implements MetaFunctionCreator {
+        class FakeMetaFunction implements MetaFunctionBodyCreator {
             createBody = () => {
                 return    `let test = {};
                     let report = {};
@@ -49,7 +49,7 @@ describe('MetaFunctionExecutor', () => {
 
     it('should handle function runtime exception', function () {
 
-        class ExceptionMetaFunction implements MetaFunctionCreator {
+        class ExceptionMetaFunction implements MetaFunctionBodyCreator {
             createBody = () => {"let oi;"};
         }
 
@@ -62,7 +62,7 @@ describe('MetaFunctionExecutor', () => {
     });
 
     it('should handle function compile time exception', function () {
-        class ExceptionMetaFunction implements MetaFunctionCreator {
+        class ExceptionMetaFunction implements MetaFunctionBodyCreator {
             createBody = () => { return {
                                     test: 'useless'
                                 }}

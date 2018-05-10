@@ -6,6 +6,7 @@ class Publisher {
         this.payload = publisherAttributes.payload;
         this.name = publisherAttributes.name;
         this.prePublishing = publisherAttributes.prePublishing;
+        this.onMessageReceived = publisherAttributes.onMessageReceived;
     }
 }
 exports.Publisher = Publisher;

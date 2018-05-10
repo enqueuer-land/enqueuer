@@ -1,6 +1,6 @@
 import {Publisher} from "../../publishers/publisher";
 import {StartEventReporter} from "./start-event-reporter";
-import {PrePublishMetaFunction} from "../../meta-functions/pre-publish-meta-function";
+import {PrePublishMetaFunctionBody} from "../../meta-functions/pre-publish-meta-function-body";
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../timers/date-controller";
 import {PublisherModel} from "../../models/publisher-model";
@@ -8,6 +8,7 @@ import {Report, Test} from "../../reports/report";
 import {Logger} from "../../loggers/logger";
 import {Injectable, Container} from "conditional-injector";
 import {ReportCompositor} from "../../reports/report-compositor";
+import {OnMessageReceivedReporter} from "../../meta-functions/on-message-received-reporter";
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
@@ -29,6 +30,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
             if (this.publisher) {
                 this.publisher.publish()
                     .then(() => {
+                        this.executeOnMessageReceivedFunction();
                         return resolve();
                     })
                     .catch((err: any) => {
@@ -55,8 +57,21 @@ export class StartEventPublisherReporter extends StartEventReporter {
         return this.reportCompositor.snapshot();
     }
 
+    private executeOnMessageReceivedFunction() {
+        if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived)
+            return;
+        const onMessageReceivedReporter = new OnMessageReceivedReporter(this.publisher.messageReceived, this.publisher.onMessageReceived);
+        const functionResponse = onMessageReceivedReporter.execute();
+        functionResponse.tests
+            .map((test: Test) => this.reportCompositor.addTest(test.name, test.valid));
+        this.reportCompositor.addInfo({
+            onMessageFunctionReport: functionResponse,
+            messageReceivedTimestamp: new DateController().toString()
+        });
+    }
+
     private executePrePublishingFunction() {
-        const prePublishFunction = new PrePublishMetaFunction(this.publisherOriginalAttributes);
+        const prePublishFunction = new PrePublishMetaFunctionBody(this.publisherOriginalAttributes);
         const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
 
         if (functionResponse.publisher.payload)
@@ -66,8 +81,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
         this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);
         this.prePublishingFunctionReport = functionResponse;
 
-        functionResponse.tests.map((passing: Test) =>
-            this.reportCompositor.addTest(passing.name, passing.valid));
+        functionResponse.tests.map((test: Test) =>
+            this.reportCompositor.addTest(test.name, test.valid));
         if (functionResponse.exception) {
             this.reportCompositor.addTest(functionResponse.exception, false);
         }

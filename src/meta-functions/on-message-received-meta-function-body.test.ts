@@ -1,14 +1,14 @@
-import {OnMessageReceivedMetaFunction} from "./on-message-received-meta-function";
+import {OnMessageReceivedMetaFunctionBody} from "./on-message-received-meta-function-body";
 import {SubscriptionModel} from "../models/subscription-model";
 
-describe('OnMessageReceivedMetaFunction', () => {
+describe('OnMessageReceivedMetaFunctionBody', () => {
 
     it('should insert tests', function () {
         const constructorArgument: SubscriptionModel = {
             type: "test",
             onMessageReceived: "test[\"valid\"] = true;"
         };
-        const onMessage: OnMessageReceivedMetaFunction = new OnMessageReceivedMetaFunction(constructorArgument);
+        const onMessage: OnMessageReceivedMetaFunctionBody = new OnMessageReceivedMetaFunctionBody("", constructorArgument.onMessageReceived);
 
         const functionResponse: any = new Function(onMessage.createBody())();
 
@@ -20,7 +20,7 @@ describe('OnMessageReceivedMetaFunction', () => {
             type: "test",
             onMessageReceived: "report[\"first\"] = \"someValue\";"
         };
-        const onMessage: OnMessageReceivedMetaFunction = new OnMessageReceivedMetaFunction(constructorArgument);
+        const onMessage: OnMessageReceivedMetaFunctionBody = new OnMessageReceivedMetaFunctionBody("", constructorArgument.onMessageReceived);
 
         const functionResponse: any = new Function(onMessage.createBody())();
 

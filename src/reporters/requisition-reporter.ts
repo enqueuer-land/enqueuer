@@ -16,6 +16,8 @@ export class RequisitionReporter implements Reporter {
     private multiSubscriptionsReporter: MultiSubscriptionsReporter;
     private onFinishCallback: RequisitionRunnerCallback;
     private requisitionTimeout?: number;
+    private startEventDoneItsJob = false;
+    private allSubscriptionsStoppedWaiting = false;
 
     constructor(requisitionAttributes: RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes);
@@ -55,7 +57,8 @@ export class RequisitionReporter implements Reporter {
         Logger.debug("Triggering start event");
         this.startEvent.start()
             .then(() => {
-                Logger.debug("Start event has done its job");
+                this.startEventDoneItsJob = true;
+                this.tryToFinishExecution();
             })
             .catch(err => {
                 const message = `Error triggering startingEvent: ${err}`;
@@ -75,7 +78,13 @@ export class RequisitionReporter implements Reporter {
 
     private onAllSubscriptionsStopWaiting(): void {
         Logger.info("All subscriptions stopped waiting");
-        this.onFinish();
+        this.allSubscriptionsStoppedWaiting = true;
+        this.tryToFinishExecution();
+    }
+
+    private tryToFinishExecution() {
+        if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting)
+            this.onFinish();
     }
 
     private onFinish(error?: string): void {

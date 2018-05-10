@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const meta_function_executor_1 = require("../../meta-functions/meta-function-executor");
-const on_message_received_meta_function_1 = require("../../meta-functions/on-message-received-meta-function");
 const logger_1 = require("../../loggers/logger");
 const date_controller_1 = require("../../timers/date-controller");
 const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
 const report_compositor_1 = require("../../reports/report-compositor");
+const on_message_received_reporter_1 = require("../../meta-functions/on-message-received-reporter");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -67,7 +66,7 @@ class SubscriptionReporter {
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
                         this.executeSubscriptionFunction();
-                        logger_1.Logger.info(`[${this.subscription.name}] stop waiting because it has already received its message`);
+                        logger_1.Logger.info(`[${this.subscription.name}] stop waiting because it has received its message`);
                     }
                     this.cleanUp();
                     resolve(message);
@@ -113,10 +112,12 @@ class SubscriptionReporter {
         }
     }
     executeSubscriptionFunction() {
-        const onMessageReceivedSubscription = new on_message_received_meta_function_1.OnMessageReceivedMetaFunction(this.subscription);
-        let functionResponse = new meta_function_executor_1.MetaFunctionExecutor(onMessageReceivedSubscription).execute();
-        logger_1.Logger.trace(`Response of subscription onMessageReceived function: ${JSON.stringify(functionResponse)}`);
-        functionResponse.tests.map((passing) => this.reportCompositor.addTest(passing.name, passing.valid));
+        if (!this.subscription.messageReceived || !this.subscription.onMessageReceived)
+            return;
+        const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.subscription.messageReceived, this.subscription.onMessageReceived);
+        const functionResponse = onMessageReceivedReporter.execute();
+        functionResponse.tests
+            .map((passing) => this.reportCompositor.addTest(passing.name, passing.valid));
         this.reportCompositor.addInfo({
             onMessageFunctionReport: functionResponse,
             messageReceivedTimestamp: new date_controller_1.DateController().toString()
