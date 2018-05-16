@@ -35,7 +35,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
             request(options, (error, response, body) => {
                 if (response) {
                     this.messageReceived = JSON.stringify(response);
-                    logger_1.Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}`);
+                    logger_1.Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}...`);
                 }
                 else
                     logger_1.Logger.warning(`No http requisition response`);

@@ -8,12 +8,11 @@ const fs = require("fs");
 const Ajv = require("ajv");
 class RunnableParser {
     constructor() {
-        this.schemaObjects = (subfolderName) => {
+        this.readFilesFromSchemaFolders = (subfolderName) => {
             let files = [];
-            const path = "schemas/".concat(subfolderName);
-            var dirContent = fs.readdirSync(path);
+            var dirContent = fs.readdirSync(subfolderName);
             for (var i = 0; i < dirContent.length; i++) {
-                var filename = path + dirContent[i];
+                var filename = subfolderName + dirContent[i];
                 var stat = fs.lstatSync(filename);
                 if (!stat.isDirectory()) {
                     const fileContent = this.readJsonFile(filename);
@@ -22,11 +21,23 @@ class RunnableParser {
             }
             return files;
         };
-        this.validator = this.schemaObjects("publishers/")
-            .concat(this.schemaObjects("subscribers/"))
+        const schemasPath = this.discoverSchemasFolder();
+        this.validator = this.readFilesFromSchemaFolders(schemasPath.concat("publishers/"))
+            .concat(this.readFilesFromSchemaFolders(schemasPath.concat("subscribers/")))
             .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new Ajv({ allErrors: true, verbose: false }))
-            .addSchema(this.readJsonFile("schemas/requisition-schema.json"))
-            .compile(this.readJsonFile("schemas/runnable-schema.json"));
+            .addSchema(this.readJsonFile(schemasPath.concat("requisition-schema.json")))
+            .compile(this.readJsonFile(schemasPath.concat("runnable-schema.json")));
+    }
+    discoverSchemasFolder() {
+        let realPath = process.argv[1];
+        try {
+            realPath = fs.realpathSync(process.argv[1]);
+        }
+        catch (_a) {
+        }
+        const prefix = realPath.split("enqueuer")[0];
+        const schemasPath = prefix.concat("enqueuer/schemas/");
+        return schemasPath;
     }
     parse(runnableMessage) {
         const parsedRunnable = JSON.parse(runnableMessage);

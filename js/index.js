@@ -6,10 +6,6 @@ const configuration_1 = require("./configurations/configuration");
 const logger_1 = require("./loggers/logger");
 require("./injectable-files-list");
 const prettyjson = require('prettyjson');
-// var currentPath = require('path').dirname(process.argv[1]);
-//
-// process.chdir(currentPath);
-// process.chdir('../');
 let configuration = new configuration_1.Configuration();
 const logLevel = configuration.getLogLevel();
 const setLogLevel = function () {
