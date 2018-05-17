@@ -15,6 +15,7 @@ export class RunnableRunner extends Runner {
         super();
         this.runnableModel = runnableModel;
         this.reportCompositor = new ReportCompositor(this.runnableModel.name);
+        this.reportCompositor.addInfo({id: runnableModel.id});
     }
 
     public run(): Promise<Report> {

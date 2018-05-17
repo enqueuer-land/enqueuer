@@ -18,6 +18,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
         super();
         this.runnableModel = runnableModel;
         this.reportCompositor = new report_compositor_1.ReportCompositor(this.runnableModel.name);
+        this.reportCompositor.addInfo({ id: runnableModel.id });
     }
     run() {
         return new Promise((resolve) => {
