@@ -14,7 +14,8 @@
           "port": 23075,
           "method": "POST",
           "response": {
-            "status": 321
+            "status": 321,
+            "payload": "responsePayload"
           },
           "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === 'virgs';",
           "timeout": 10000
@@ -27,7 +28,7 @@
           "url": "http://localhost:23075/enqueuer",
           "method": "POST",
           "prePublishing": "test['prePublishingTest'] = true",
-          "onMessageReceived": "test['publisherOnMessageReceivedTest'] = JSON.parse(message).statusCode == 321",
+          "onMessageReceived": "test['publisherOnMessageReceivedTest'] = JSON.parse(message).statusCode == 321; test['publisherOnMessageReceivedPayloadTest'] = JSON.parse(message).body == 'responsePayload'",
           "payload": {
             "enqueuer": "virgs"
           },

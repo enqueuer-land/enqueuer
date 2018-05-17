@@ -73,12 +73,43 @@
                     },
                     {
                         "publisherOnMessageReceivedTest": true
+                    },
+                    {
+                        "publisherOnMessageReceivedPayloadTest": true
                     }
                 ]
             },
             "subscriptions": {
                 "valid": true,
                 "HttpSubscriptionTitle": {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "works": true
+                        },
+                        {
+                            "Message received": true
+                        },
+                        {
+                            "No time out": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "runnableMqtt": {
+        "valid": true,
+        "RequisitionMqtt": {
+            "valid": true,
+            "tests": [
+                {
+                    "No time out": true
+                }
+            ],
+            "subscriptions": {
+                "valid": true,
+                "MqttSub": {
                     "valid": true,
                     "tests": [
                         {
@@ -111,34 +142,6 @@
                     "tests": [
                         {
                             "first letter": true
-                        },
-                        {
-                            "Message received": true
-                        },
-                        {
-                            "No time out": true
-                        }
-                    ]
-                }
-            }
-        }
-    },
-    "runnableMqtt": {
-        "valid": true,
-        "RequisitionMqtt": {
-            "valid": true,
-            "tests": [
-                {
-                    "No time out": true
-                }
-            ],
-            "subscriptions": {
-                "valid": true,
-                "MqttSub": {
-                    "valid": true,
-                    "tests": [
-                        {
-                            "works": true
                         },
                         {
                             "Message received": true
