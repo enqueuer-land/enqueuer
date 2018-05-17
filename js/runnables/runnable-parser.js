@@ -4,6 +4,7 @@ const logger_1 = require("../loggers/logger");
 const id_generator_1 = require("../id-generator/id-generator");
 const variables_controller_1 = require("../variables/variables-controller");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
+const util_1 = require("util");
 const fs = require("fs");
 const Ajv = require("ajv");
 class RunnableParser {
@@ -49,7 +50,8 @@ class RunnableParser {
             throw new Error(JSON.stringify(this.validator.errors, null, 2));
         }
         let variablesReplaced = this.replaceVariables(parsedRunnable);
-        variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
+        if (util_1.isNullOrUndefined(variablesReplaced.id))
+            variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
         const runnableWithId = variablesReplaced;
         logger_1.Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
         logger_1.Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);

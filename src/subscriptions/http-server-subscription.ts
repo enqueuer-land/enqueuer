@@ -2,6 +2,7 @@ import {Subscription} from "./subscription";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "conditional-injector";
 import {SubscriptionModel} from "../models/subscription-model";
+import {isNullOrUndefined} from "util";
 const express = require('express');
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "http-server"})
@@ -41,13 +42,15 @@ export class HttpServerSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             this.app.all(this.endpoint, (request: any, response: any) => {
                 const payload = JSON.parse(request.rawBody).toString();
+                if (isNullOrUndefined(this.response.payload))
+                    this.response.payload = `Requisition read: ${payload}`;
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key])
                 }
                 if (request.method != this.method)
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
                 else {
-                    response.status(this.response.status).send(`Requisition read: ${payload}`);
+                    response.status(this.response.status).send(this.response.payload);
                     resolve(payload);
                 }
             })

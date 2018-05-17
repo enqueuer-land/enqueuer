@@ -4,6 +4,7 @@ import {ValidateFunction} from "ajv";
 import {VariablesController} from "../variables/variables-controller";
 import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
 import {RunnableModel} from "../models/runnable-model";
+import {isNullOrUndefined} from "util";
 const fs = require("fs");
 const Ajv = require("ajv");
 
@@ -43,7 +44,8 @@ export class RunnableParser {
             throw new Error(JSON.stringify(this.validator.errors, null, 2));
         }
         let variablesReplaced: any = this.replaceVariables(parsedRunnable);
-        variablesReplaced.id = new IdGenerator(variablesReplaced).generateId();
+        if (isNullOrUndefined(variablesReplaced.id))
+            variablesReplaced.id = new IdGenerator(variablesReplaced).generateId();
         const runnableWithId: RunnableModel = variablesReplaced as RunnableModel;
         Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
         Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`)

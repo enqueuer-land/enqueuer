@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
+const util_1 = require("util");
 const express = require('express');
 let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
@@ -39,13 +40,15 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         return new Promise((resolve, reject) => {
             this.app.all(this.endpoint, (request, response) => {
                 const payload = JSON.parse(request.rawBody).toString();
+                if (util_1.isNullOrUndefined(this.response.payload))
+                    this.response.payload = `Requisition read: ${payload}`;
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key]);
                 }
                 if (request.method != this.method)
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
                 else {
-                    response.status(this.response.status).send(`Requisition read: ${payload}`);
+                    response.status(this.response.status).send(this.response.payload);
                     resolve(payload);
                 }
             });

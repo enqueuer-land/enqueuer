@@ -261,6 +261,38 @@ const validMqttRunnable = {
     ]
 }
 
+const validRunnableWithId = {
+    "runnableVersion": "01.00.00",
+    "name": "runnableFile",
+    "id": "virgulation",
+    "initialDelay": 0,
+    "runnables": [
+        {
+            "timeout": 3000,
+            "name": "file",
+            "subscriptions": [
+                {
+                    "type": "file-name-watcher",
+                    "name": "fileSubscription",
+                    "fileNamePattern": "temp/fileTest*file",
+                    "onMessageReceived": "const now = new Date().getTime(); test['some time has passed'] = now + '' >= message; report['something'] = now;",
+                    "timeout": 1000
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "file",
+                    "name": "filePublisher",
+                    "payload": "filePublisher",
+                    "filenamePrefix": "temp/fileTest",
+                    "filenameExtension": "file",
+                    "prePublishing": "publisher.payload=new Date().getTime();"
+                }
+            }
+        }
+    ]
+}
+
 
 describe('RunnableParser', () => {
 
@@ -276,6 +308,21 @@ describe('RunnableParser', () => {
         const parser: RunnableParser = new RunnableParser();
 
         expect(() => parser.parse(runnable)).toThrow()
+    });
+
+    it('Should keep initial id', () => {
+        const runnableStringified: string = JSON.stringify(validRunnableWithId);
+        const parser: RunnableParser = new RunnableParser();
+
+        expect(parser.parse(runnableStringified).id).toBe(validRunnableWithId.id);
+    });
+
+    it('Should insert id if no one is given', () => {
+        const runnableStringified: string = JSON.stringify(validRunnable);
+        const parser: RunnableParser = new RunnableParser();
+
+        expect(validRunnable.id).toBeUndefined();
+        expect(parser.parse(runnableStringified).id).toBeDefined();
     });
 
     it('Should accept valid stringified json', () => {
