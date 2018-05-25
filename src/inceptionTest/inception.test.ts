@@ -45,7 +45,7 @@ describe("Inception test", () => {
             sleep(2500);
 
             const testerReports = findEveryJsonFile()
-                .filter(filename => filename.indexOf("_test_") >= 0)
+                .filter(filename => filename.indexOf("_test.") >= 0)
                 .map(filename => fs.readFileSync(filename))
                 .map(fileContent => JSON.parse(fileContent))
 

@@ -12,13 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const id_generator_1 = require("../id-generator/id-generator");
 const conditional_injector_1 = require("conditional-injector");
+const util_1 = require("util");
 const fs = require("fs");
 let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
-        this.filenameExtension = publisherAttributes.filenameExtension;
+        this.filenameExtension = publisherAttributes.filenameExtension || ".enqRun";
     }
     publish() {
         let filename = this.createFilename();
@@ -33,13 +34,20 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     createFilename() {
         let filename = this.filename;
         if (!filename) {
-            filename = this.filenamePrefix + new id_generator_1.IdGenerator(this.payload).generateId() + ".";
-            if (this.filenameExtension)
-                filename += this.filenameExtension;
-            else
-                filename += "enqRun";
+            filename = this.filenamePrefix;
+            filename += this.generateId();
+            filename += "." + this.filenameExtension;
         }
         return filename;
+    }
+    generateId() {
+        try {
+            const id = JSON.parse(this.payload).id;
+            if (!util_1.isNullOrUndefined(id))
+                return id;
+        }
+        catch (exc) { }
+        return new id_generator_1.IdGenerator(this.payload).generateId() + ".";
     }
 };
 FilePublisher = __decorate([
