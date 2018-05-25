@@ -7,20 +7,19 @@ const fs = require("fs");
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "file"})
 export class FilePublisher extends Publisher {
 
+    private filename: string;
     private filenamePrefix: string;
     private filenameExtension: string;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
+        this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
         this.filenameExtension = publisherAttributes.filenameExtension;
     }
 
     public publish(): Promise<void> {
-        const filename = this.filenamePrefix +
-                            new IdGenerator(this.payload).generateId() +
-                            "." +
-                            this.filenameExtension;
+        let filename = this.createFilename();
         let value = this.payload;
         try {
             value = JSON.stringify(JSON.parse(this.payload), null, 2);
@@ -28,5 +27,17 @@ export class FilePublisher extends Publisher {
 
         fs.writeFileSync(filename, value);
         return Promise.resolve();
+    }
+
+    private createFilename() {
+        let filename = this.filename;
+        if (!filename) {
+            filename = this.filenamePrefix + new IdGenerator(this.payload).generateId() + ".";
+            if (this.filenameExtension)
+                filename += this.filenameExtension;
+            else
+                filename += "enqRun";
+        }
+        return filename;
     }
 }

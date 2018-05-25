@@ -16,14 +16,12 @@ const fs = require("fs");
 let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
+        this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
         this.filenameExtension = publisherAttributes.filenameExtension;
     }
     publish() {
-        const filename = this.filenamePrefix +
-            new id_generator_1.IdGenerator(this.payload).generateId() +
-            "." +
-            this.filenameExtension;
+        let filename = this.createFilename();
         let value = this.payload;
         try {
             value = JSON.stringify(JSON.parse(this.payload), null, 2);
@@ -31,6 +29,17 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
         catch (exc) { }
         fs.writeFileSync(filename, value);
         return Promise.resolve();
+    }
+    createFilename() {
+        let filename = this.filename;
+        if (!filename) {
+            filename = this.filenamePrefix + new id_generator_1.IdGenerator(this.payload).generateId() + ".";
+            if (this.filenameExtension)
+                filename += this.filenameExtension;
+            else
+                filename += "enqRun";
+        }
+        return filename;
     }
 };
 FilePublisher = __decorate([
