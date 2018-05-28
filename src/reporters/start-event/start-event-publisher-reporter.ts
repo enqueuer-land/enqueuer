@@ -28,6 +28,9 @@ export class StartEventPublisherReporter extends StartEventReporter {
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
             if (this.publisher) {
+                this.reportCompositor.addInfo({
+                    publishTime: new DateController().toString(),
+                });
                 this.publisher.publish()
                     .then(() => {
                         this.executeOnMessageReceivedFunction();
@@ -49,8 +52,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
     public getReport(): Report {
         this.reportCompositor.addInfo({
-            prePublishingFunctionReport: this.prePublishingFunctionReport,
-            timestamp: new DateController().toString(),
+            prePublishingFunctionReport: this.prePublishingFunctionReport
         });
         if (this.publisher)
             this.reportCompositor.addInfo({type: this.publisher.type});

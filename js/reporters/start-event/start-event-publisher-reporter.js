@@ -30,6 +30,9 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
             if (this.publisher) {
+                this.reportCompositor.addInfo({
+                    publishTime: new date_controller_1.DateController().toString(),
+                });
                 this.publisher.publish()
                     .then(() => {
                     this.executeOnMessageReceivedFunction();
@@ -50,8 +53,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
     getReport() {
         this.reportCompositor.addInfo({
-            prePublishingFunctionReport: this.prePublishingFunctionReport,
-            timestamp: new date_controller_1.DateController().toString(),
+            prePublishingFunctionReport: this.prePublishingFunctionReport
         });
         if (this.publisher)
             this.reportCompositor.addInfo({ type: this.publisher.type });

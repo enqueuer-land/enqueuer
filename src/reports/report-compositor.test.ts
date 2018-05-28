@@ -31,16 +31,16 @@ describe('ReportCompositor', () => {
             .addInfo({additionalInfo: "added"})
             .addSubReport(Report.create("someId",
                 {
-                        tests: [{"oneSuccess": true}]
+                        tests: {"oneSuccess": true}
                 }))
             .addSubReport(Report.create("someOther",
                 {
-                        tests: [{"twoSuccess": true}]
+                        tests: {"twoSuccess": true}
                 }))
             .addSubReport(Report.create("someName",
                 {
                         valid: false,
-                        tests: [{"threeSuccess": true}, {"failure": false}],
+                        tests: {"threeSuccess": true, "failure": false},
                         value: "random"
                 }));
 
@@ -48,16 +48,16 @@ describe('ReportCompositor', () => {
             "additionalInfo": "added",
             "name": "name",
             "someId": {
-                tests: [{"oneSuccess": true}],
+                tests: {"oneSuccess": true},
                 "valid": true,
             },
             "someName": {
                 valid: false,
-                tests: [{"threeSuccess": true}, {"failure": false}],
+                tests: {"threeSuccess": true, "failure": false},
                 value: "random"
             },
             "someOther": {
-                tests: [{"twoSuccess": true}],
+                tests: {"twoSuccess": true},
                 "valid": true
             },
             "valid": false

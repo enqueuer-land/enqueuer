@@ -132,7 +132,7 @@ export class SubscriptionReporter implements Reporter {
             .map((passing: Test) => this.reportCompositor.addTest(passing.name, passing.valid));
         this.reportCompositor.addInfo({
             onMessageFunctionReport: functionResponse,
-            messageReceivedTimestamp: new DateController().toString()
+            messageReceivedTime: new DateController().toString()
         });
     }
 

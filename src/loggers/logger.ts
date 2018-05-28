@@ -28,7 +28,40 @@ export class Logger {
     }
     private static getLogger(): any {
         if (!Logger.logger) {
+
+            // log4js.configure({
+            //     appenders: { cheese: { type: 'file', filename: 'cheese.log' } },
+            //     categories: { default: { appenders: ['cheese'], level: 'error' } }
+            // });
+            //
+            //
+            log4js.configure({
+                appenders: {
+                    regularOutput: {
+                        level: 'TRACE',
+                        maxLevel: 'INFO',
+                        type: 'console'
+                    },
+                    errorOutput: {
+                        level: 'WARN',
+                        type: "stderr",
+                    }
+                    // ,
+                    // errors: {
+                    //     type: "logLevelFilter",
+                    //     level: "WARNING",
+                    //     appender: 'stderr'
+                    // }
+                },
+                categories: {
+                    default: {
+                        appenders: ['regularOutput', 'errorOutput'],
+                        level: 'WARN'
+                    }
+                }
+            });
             Logger.logger = log4js.getLogger();
+
         }
         return Logger.logger;
     }
