@@ -1,4 +1,4 @@
-import {RequisitionModel} from "./requisition-model";
+import {RequisitionModel} from './requisition-model';
 
 export interface RunnableModel {
     id: string;

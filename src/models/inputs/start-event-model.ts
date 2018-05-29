@@ -1,5 +1,5 @@
-import {SubscriptionModel} from "./subscription-model";
-import {PublisherModel} from "./publisher-model";
+import {SubscriptionModel} from './subscription-model';
+import {PublisherModel} from './publisher-model';
 
 export interface StartEventModel {
     subscription?: SubscriptionModel;
