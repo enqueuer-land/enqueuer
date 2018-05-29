@@ -1,0 +1,52 @@
+{
+  "type": "runnable",
+  "valid": true,
+  "tests": {},
+  "name": "runnableHttp",
+  "id": "20180528200008009839_30741a0b",
+  "runnables": [
+    {
+      "type": "requisition",
+      "valid": true,
+      "tests": {
+        "No time out": true
+      },
+      "name": "HttpTitle",
+      "time": {
+        "totalTime": 20,
+        "startTime": "2018-05-28T23:00:08.104Z",
+        "endTime": "2018-05-28T23:00:08.124Z",
+        "timeout": 30000,
+        "hasTimedOut": false
+      },
+      "subscriptions": [
+        {
+          "name": "HttpSubscriptionTitle",
+          "type": "http-server",
+          "tests": {
+            "Able to connect": true,
+            "works": true,
+            "Message received": true,
+            "No time out": true
+          },
+          "valid": true,
+          "connectionTime": "2018-05-28T23:00:08.105Z",
+          "messageReceivedTime": "2018-05-28T23:00:08.121Z"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "name": "HttpPublisherClientTitle",
+          "valid": true,
+          "type": "http-client",
+          "tests": {
+            "prePublishingTest": true,
+            "publisherOnMessageReceivedTest": true,
+            "publisherOnMessageReceivedPayloadTest": true
+          },
+          "publishTime": "2018-05-28T23:00:08.106Z"
+        }
+      }
+    }
+  ]
+}

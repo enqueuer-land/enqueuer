@@ -1,0 +1,48 @@
+{
+  "type": "runnable",
+  "valid": true,
+  "tests": {},
+  "name": "runnableFile",
+  "id": "20180528200007061353_8bf67a9a",
+  "runnables": [
+    {
+      "type": "requisition",
+      "valid": true,
+      "tests": {
+        "No time out": true
+      },
+      "name": "file",
+      "time": {
+        "totalTime": 111,
+        "startTime": "2018-05-28T23:00:07.618Z",
+        "endTime": "2018-05-28T23:00:07.729Z",
+        "timeout": 3000,
+        "hasTimedOut": false
+      },
+      "subscriptions": [
+        {
+          "name": "fileSubscription",
+          "type": "file-name-watcher",
+          "tests": {
+            "Able to connect": true,
+            "some time has passed": true,
+            "Message received": true,
+            "No time out": true
+          },
+          "valid": true,
+          "connectionTime": "2018-05-28T23:00:07.624Z",
+          "messageReceivedTime": "2018-05-28T23:00:07.729Z"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "name": "filePublisher",
+          "valid": true,
+          "type": "file",
+          "tests": {},
+          "publishTime": "2018-05-28T23:00:07.624Z"
+        }
+      }
+    }
+  ]
+}

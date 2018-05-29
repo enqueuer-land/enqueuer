@@ -1,0 +1,48 @@
+{
+  "type": "runnable",
+  "valid": true,
+  "tests": {},
+  "name": "runnableUDSName",
+  "id": "20180528200007083626_c5a4248f",
+  "runnables": [
+    {
+      "type": "requisition",
+      "valid": true,
+      "tests": {
+        "No time out": true
+      },
+      "name": "uds",
+      "time": {
+        "totalTime": 5,
+        "startTime": "2018-05-28T23:00:07.839Z",
+        "endTime": "2018-05-28T23:00:07.844Z",
+        "timeout": 3000,
+        "hasTimedOut": false
+      },
+      "subscriptions": [
+        {
+          "name": "udsSubscription",
+          "type": "uds",
+          "tests": {
+            "Able to connect": true,
+            "first letter": true,
+            "Message received": true,
+            "No time out": true
+          },
+          "valid": true,
+          "connectionTime": "2018-05-28T23:00:07.841Z",
+          "messageReceivedTime": "2018-05-28T23:00:07.843Z"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "name": "udsPublisher",
+          "valid": true,
+          "type": "uds",
+          "tests": {},
+          "publishTime": "2018-05-28T23:00:07.841Z"
+        }
+      }
+    }
+  ]
+}
