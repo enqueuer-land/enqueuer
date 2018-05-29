@@ -1,5 +1,5 @@
 import {Publisher} from "./publisher";
-import {PublisherModel} from "../models/publisher-model";
+import {PublisherModel} from "../models/inputs/publisher-model";
 import {IdGenerator} from "../id-generator/id-generator";
 import {Injectable} from "conditional-injector";
 import {isNullOrUndefined} from "util";

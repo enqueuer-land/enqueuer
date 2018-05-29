@@ -1,30 +1,32 @@
-import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
-import {OnMessageReceivedMetaFunctionBody} from "../../meta-functions/on-message-received-meta-function-body";
 import {Logger} from "../../loggers/logger";
 import {DateController} from "../../timers/date-controller";
-import {SubscriptionModel} from "../../models/subscription-model";
 import Signals = NodeJS.Signals;
 import {Subscription} from "../../subscriptions/subscription";
-import {Report, Test} from "../../reports/report";
 import {Timeout} from "../../timers/timeout";
-import {Reporter} from "../reporter";
 import {Container} from "conditional-injector";
-import {ReportCompositor} from "../../reports/report-compositor";
 import {OnMessageReceivedReporter} from "../../meta-functions/on-message-received-reporter";
+import * as input from "../../models/inputs/subscription-model";
+import * as output from "../../models/outputs/subscription-model";
+import {checkValidation} from "../../models/outputs/report-model";
 
-export class SubscriptionReporter implements Reporter {
+export class SubscriptionReporter {
 
-    private subscription: Subscription;
-    private reportCompositor: ReportCompositor;
+    private subscription: input.SubscriptionModel;
+    private report: output.SubscriptionModel;
     private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
 
-    constructor(subscriptionAttributes: SubscriptionModel) {
+    constructor(subscriptionAttributes: input.SubscriptionModel) {
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         this.startTime = new DateController();
-        this.reportCompositor = new ReportCompositor(this.subscription.name);
+        this.report = {
+            name: this.subscription.name,
+            type: this.subscription.type,
+            tests: {},
+            valid: true
+        }
     }
 
     public startTimeout(onTimeOutCallback: Function) {
@@ -47,9 +49,8 @@ export class SubscriptionReporter implements Reporter {
             Logger.trace(`[${this.subscription.name}] is connecting`);
             this.subscription.connect()
                 .then(() => {
-                    this.reportCompositor.addInfo({
-                        connectionTime: new DateController().toString()
-                    })
+                    this.report.connectionTime = new DateController().toString()
+                    this.report.tests["Able to connect"] = true;
                     resolve();
 
                     process.on('SIGINT', this.handleKillSignal);
@@ -58,7 +59,7 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                    this.reportCompositor.addTest("Unable to connect", false);
+                    this.report.tests["Able to connect"] = false;
                     reject(err);
                 });
         });
@@ -83,25 +84,21 @@ export class SubscriptionReporter implements Reporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                    this.reportCompositor.addTest("Unable to receive message", false)
                     this.subscription.unsubscribe();
                     reject(err);
                 });
         });
     }
 
-    public getReport(): Report {
+    public getReport(): output.SubscriptionModel {
         const hasReceivedMessage = this.subscription.messageReceived != null;
-        this.reportCompositor.addTest("Message received", hasReceivedMessage);
+        this.report.tests["Message received"] = hasReceivedMessage;
         if (hasReceivedMessage)
-            this.reportCompositor.addTest("No time out", !this.hasTimedOut);
-        this.reportCompositor.addInfo({
-            type: this.subscription.type,
-            hasReceivedMessage: hasReceivedMessage,
-            hasTimedOut: this.hasTimedOut
-        });
+            this.report.tests["No time out"] = !this.hasTimedOut;
+
         this.cleanUp();
-        return this.reportCompositor.snapshot();
+        this.report.valid = checkValidation(this.report);
+        return this.report;
     }
 
     private cleanUp(): void {
@@ -129,11 +126,9 @@ export class SubscriptionReporter implements Reporter {
         const onMessageReceivedReporter = new OnMessageReceivedReporter(this.subscription.messageReceived, this.subscription.onMessageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
-            .map((passing: Test) => this.reportCompositor.addTest(passing.name, passing.valid));
-        this.reportCompositor.addInfo({
-            onMessageFunctionReport: functionResponse,
-            messageReceivedTime: new DateController().toString()
-        });
+            .map((test: any) => this.report.tests[test.name] = test.valid);
+        this.report.messageReceivedTime = new DateController().toString();
+        Logger.debug(`onMessageFunctionReport: ${functionResponse}`);
     }
 
     private handleKillSignal = (signal: Signals): void => {

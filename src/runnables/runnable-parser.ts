@@ -3,7 +3,7 @@ import {IdGenerator} from "../id-generator/id-generator";
 import {ValidateFunction} from "ajv";
 import {VariablesController} from "../variables/variables-controller";
 import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
-import {RunnableModel} from "../models/runnable-model";
+import {RunnableModel} from "../models/inputs/runnable-model";
 import {isNullOrUndefined} from "util";
 const fs = require("fs");
 const Ajv = require("ajv");

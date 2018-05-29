@@ -2,11 +2,12 @@ import {DaemonRunInput} from "./daemon-run-input";
 import {Logger} from "../loggers/logger";
 import {MultiPublisher} from "../publishers/multi-publisher";
 import {EnqueuerExecutor} from "./enqueuer-executor";
-import {Report} from "../reports/report";
 import {Configuration} from "../configurations/configuration";
 import {Injectable} from "conditional-injector";
-import {RunnableModel} from "../models/runnable-model";
+import {RunnableModel} from "../models/inputs/runnable-model";
 import {RunnableRunner} from "../runnables/runnable-runner";
+import {ResultModel} from "../models/outputs/result-model";
+import {SingleRunResultModel} from "../models/outputs/single-run-result-model";
 
 @Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"]})
 export class DaemonExecutor extends EnqueuerExecutor{
@@ -28,7 +29,7 @@ export class DaemonExecutor extends EnqueuerExecutor{
         return;
     }
 
-    public execute(): Promise<Report> {
+    public execute(): Promise<SingleRunResultModel> {
         return new Promise(() => {
             this.requisitionInputs
                 .forEach((input: DaemonRunInput) => {
@@ -47,7 +48,7 @@ export class DaemonExecutor extends EnqueuerExecutor{
     private startReader(input: DaemonRunInput) {
         input.receiveMessage()
             .then( (runnable: RunnableModel) => new RunnableRunner(runnable).run())
-            .then( (report: Report) => this.multiPublisher.publish(JSON.stringify(report)))
+            .then( (report: ResultModel) => this.multiPublisher.publish(JSON.stringify(report)))
             .then(() => this.startReader(input))
             .catch( (err) => {
                 Logger.error(err);

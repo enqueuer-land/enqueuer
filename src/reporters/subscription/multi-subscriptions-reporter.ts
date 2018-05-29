@@ -1,14 +1,12 @@
-import {SubscriptionModel} from "../../models/subscription-model";
-import {Report} from "../../reports/report";
-import {Reporter} from "../reporter";
+import * as input from "../../models/inputs/subscription-model";
+import * as output from "../../models/outputs/subscription-model";
 import {SubscriptionReporter} from "./subscription-reporter";
-import {ReportCompositor} from "../../reports/report-compositor";
 
-export class MultiSubscriptionsReporter implements Reporter {
+export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
     private subscriptionsStoppedWaitingCounter: number = 0;
 
-    constructor(subscriptionsAttributes: SubscriptionModel[]) {
+    constructor(subscriptionsAttributes: input.SubscriptionModel[]) {
         for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
             this.subscriptionReporters.push(new SubscriptionReporter(subscriptionsAttributes[id]));
         }
@@ -38,13 +36,8 @@ export class MultiSubscriptionsReporter implements Reporter {
         });
     }
 
-    public getReport(): Report {
-        const reportMerger = new ReportCompositor("subscriptions");
-        for (let i = 0; i < this.subscriptionReporters.length; ++i) {
-            const subscriptionReport = this.subscriptionReporters[i].getReport();
-            reportMerger.addSubReport(subscriptionReport);
-        };
-        return reportMerger.snapshot();
+    public getReport(): output.SubscriptionModel[] {
+        return this.subscriptionReporters.map(subscription => subscription.getReport());
     }
 
     private haveAllSubscriptionsStoppedWaiting() {

@@ -1,8 +1,9 @@
 import {StartEventReporter} from "./start-event-reporter";
 import {SubscriptionReporter} from "../subscription/subscription-reporter";
-import {SubscriptionModel} from "../../models/subscription-model";
-import {Report} from "../../reports/report";
+import {SubscriptionModel} from "../../models/inputs/subscription-model";
 import {Injectable} from "conditional-injector";
+import {StartEventModel} from "../../models/outputs/start-event-model";
+import {checkValidation} from "../../models/outputs/report-model";
 
 @Injectable({predicate: (startEvent: any) => startEvent.subscription != null})
 export class StartEventSubscriptionReporter extends StartEventReporter {
@@ -28,7 +29,11 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
         });
     }
 
-    public getReport(): Report {
-        return this.subscriptionReporter.getReport();
+    public getReport(): StartEventModel {
+        let report = this.subscriptionReporter.getReport();
+        report.valid = checkValidation(report);
+        return {
+            subscription: report
+        };
     }
 }

@@ -24,8 +24,7 @@ const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
-const report_compositor_1 = require("../reports/report-compositor");
-const report_valid_fields_filter_1 = require("../reports/report-valid-fields-filter");
+const report_model_1 = require("../models/outputs/report-model");
 const fs = require("fs");
 const prettyjson = require('prettyjson');
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
@@ -37,7 +36,12 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunInput =
             new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
-        this.reportCompositor = new report_compositor_1.ReportCompositor(singleRunConfiguration["name"] || "single-run-title");
+        this.report = {
+            name: singleRunConfiguration["name"] || "single-run-title",
+            tests: {},
+            valid: true,
+            runnables: {}
+        };
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -50,11 +54,15 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
                 logger_1.Logger.info("There is no more requisition to be ran");
                 this.persistSummary();
-                return resolve(this.reportCompositor.snapshot());
+                return resolve(this.report);
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
-                .then(report => { this.reportCompositor.addSubReport(report); return report; })
+                .then(report => {
+                this.report.runnables[report.name] = report;
+                this.report.valid = this.report.valid && report_model_1.checkValidation(report);
+                return report;
+            })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then(() => resolve(this.execute())) //Run the next one
                 .catch((err) => {
@@ -71,12 +79,10 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             dashColor: "grey",
             inlineArrays: true
         };
-        const snapshot = this.reportCompositor.snapshot();
-        logger_1.Logger.debug(`Reports summary: ${JSON.stringify(snapshot, null, 4)}`);
-        const filterReport = new report_valid_fields_filter_1.ReportValidFieldsFilter().filterReport(snapshot);
-        console.log(prettyjson.render(filterReport, options));
+        logger_1.Logger.debug(`Reports summary: ${JSON.stringify(this.report, null, 4)}`);
+        console.log(prettyjson.render(this.report, options));
         if (this.outputFilename)
-            fs.writeFileSync(this.outputFilename, JSON.stringify(filterReport, null, 4));
+            fs.writeFileSync(this.outputFilename, JSON.stringify(this.report, null, 4));
     }
     ;
 };

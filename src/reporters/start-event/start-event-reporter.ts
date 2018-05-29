@@ -1,7 +1,6 @@
-import {Report} from "../../reports/report";
-import {Reporter} from "../reporter";
+import {StartEventModel} from "../../models/outputs/start-event-model";
 
-export abstract class StartEventReporter implements Reporter {
+export abstract class StartEventReporter {
     abstract start(): Promise<void>;
-    abstract getReport(): Report;
+    abstract getReport(): StartEventModel;
 }

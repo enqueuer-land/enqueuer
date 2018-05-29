@@ -1,5 +1,5 @@
 import {Publisher} from "./publisher";
-import {PublisherModel} from "../models/publisher-model";
+import {PublisherModel} from "../models/inputs/publisher-model";
 import {MultiPublisher} from "./multi-publisher";
 import {Container} from "conditional-injector";
 

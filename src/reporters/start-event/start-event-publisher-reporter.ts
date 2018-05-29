@@ -3,24 +3,29 @@ import {StartEventReporter} from "./start-event-reporter";
 import {PrePublishMetaFunctionBody} from "../../meta-functions/pre-publish-meta-function-body";
 import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
 import {DateController} from "../../timers/date-controller";
-import {PublisherModel} from "../../models/publisher-model";
-import {Report, Test} from "../../reports/report";
+import * as output from "../../models/outputs/publisher-model";
+import * as input from "../../models/inputs/publisher-model";
 import {Logger} from "../../loggers/logger";
 import {Injectable, Container} from "conditional-injector";
-import {ReportCompositor} from "../../reports/report-compositor";
 import {OnMessageReceivedReporter} from "../../meta-functions/on-message-received-reporter";
+import {StartEventModel} from "../../models/outputs/start-event-model";
+import {checkValidation} from "../../models/outputs/report-model";
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
-    private publisherOriginalAttributes: PublisherModel;
+    private publisherOriginalAttributes: input.PublisherModel;
     private publisher?: Publisher;
-    private reportCompositor: ReportCompositor;
-    private prePublishingFunctionReport: any = {};
+    private report: output.PublisherModel;
 
-    constructor(startEvent: PublisherModel) {
+    constructor(startEvent: input.PublisherModel) {
         super();
         this.publisherOriginalAttributes = startEvent.publisher;
-        this.reportCompositor = new ReportCompositor(this.publisherOriginalAttributes.name);
+        this.report = {
+            name: this.publisherOriginalAttributes.name,
+            valid: true,
+            type: this.publisherOriginalAttributes.type,
+            tests: {}
+        }
     }
 
     public start(): Promise<void> {
@@ -28,9 +33,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
             if (this.publisher) {
-                this.reportCompositor.addInfo({
-                    publishTime: new DateController().toString(),
-                });
+                this.report.publishTime = new DateController().toString();
+
                 this.publisher.publish()
                     .then(() => {
                         this.executeOnMessageReceivedFunction();
@@ -38,25 +42,23 @@ export class StartEventPublisherReporter extends StartEventReporter {
                     })
                     .catch((err: any) => {
                         Logger.error(err);
-                        this.reportCompositor.addTest(`Error publishing start event '${this.publisher}'`, false);
+                        this.report.tests[`Error publishing start event '${this.publisher}'`] = false;
                         reject(err)
                     });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
-                this.reportCompositor.addTest(message, false);
+                this.report.tests[message] = false;
                 reject(message);
             }
         });
     }
 
-    public getReport(): Report {
-        this.reportCompositor.addInfo({
-            prePublishingFunctionReport: this.prePublishingFunctionReport
-        });
-        if (this.publisher)
-            this.reportCompositor.addInfo({type: this.publisher.type});
-        return this.reportCompositor.snapshot();
+    public getReport(): StartEventModel {
+        this.report.valid = checkValidation(this.report);
+        return {
+            publisher: this.report
+        };
     }
 
     private executeOnMessageReceivedFunction() {
@@ -65,11 +67,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
         const onMessageReceivedReporter = new OnMessageReceivedReporter(this.publisher.messageReceived, this.publisher.onMessageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
-            .map((test: Test) => this.reportCompositor.addTest(test.name, test.valid));
-        this.reportCompositor.addInfo({
-            onMessageFunctionReport: functionResponse,
-            messageReceivedTimestamp: new DateController().toString()
-        });
+            .map((test: any) => this.report.tests[test.name] = test.valid);
+        Logger.debug(`onMessageFunctionReport: ${functionResponse}`);
     }
 
     private executePrePublishingFunction() {
@@ -81,12 +80,12 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
         Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);
-        this.prePublishingFunctionReport = functionResponse;
+        Logger.debug(`PrePublishingFunctionReport: ${functionResponse}`);
 
-        functionResponse.tests.map((test: Test) =>
-            this.reportCompositor.addTest(test.name, test.valid));
+        functionResponse.tests
+            .map((test: any) => this.report.tests[test.name] = test.valid);
         if (functionResponse.exception) {
-            this.reportCompositor.addTest(functionResponse.exception, false);
+            this.report.tests[functionResponse.exception] = false;
         }
 
     }

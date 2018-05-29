@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const start_event_reporter_1 = require("./start-event-reporter");
 const subscription_reporter_1 = require("../subscription/subscription-reporter");
 const conditional_injector_1 = require("conditional-injector");
+const report_model_1 = require("../../models/outputs/report-model");
 let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -31,7 +32,11 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
         });
     }
     getReport() {
-        return this.subscriptionReporter.getReport();
+        let report = this.subscriptionReporter.getReport();
+        report.valid = report_model_1.checkValidation(report);
+        return {
+            subscription: report
+        };
     }
 };
 StartEventSubscriptionReporter = __decorate([

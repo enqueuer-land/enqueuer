@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
 import {Injectable} from "conditional-injector";
-import {PublisherModel} from "../models/publisher-model";
+import {PublisherModel} from "../models/inputs/publisher-model";
 
 var amqp = require('amqp');
 

@@ -1,7 +1,7 @@
 import {Subscription} from "./subscription";
 import {Logger} from "../loggers/logger";
 import {Injectable} from "conditional-injector";
-import {SubscriptionModel} from "../models/subscription-model";
+import {SubscriptionModel} from "../models/inputs/subscription-model";
 import {isNullOrUndefined} from "util";
 const express = require('express');
 

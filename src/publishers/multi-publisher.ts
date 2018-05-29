@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
 import {Logger} from "../loggers/logger";
-import {PublisherModel} from "../models/publisher-model";
+import {PublisherModel} from "../models/inputs/publisher-model";
 import {Container} from "conditional-injector";
 
 export class MultiPublisher {

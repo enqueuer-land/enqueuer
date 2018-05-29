@@ -1,5 +1,5 @@
 import {Subscription} from "./subscription";
-import {SubscriptionModel} from "../models/subscription-model";
+import {SubscriptionModel} from "../models/inputs/subscription-model";
 import {Injectable} from "conditional-injector";
 
 @Injectable()

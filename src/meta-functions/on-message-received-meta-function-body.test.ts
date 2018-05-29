@@ -1,5 +1,5 @@
 import {OnMessageReceivedMetaFunctionBody} from "./on-message-received-meta-function-body";
-import {SubscriptionModel} from "../models/subscription-model";
+import {SubscriptionModel} from "../models/inputs/subscription-model";
 
 describe('OnMessageReceivedMetaFunctionBody', () => {
 

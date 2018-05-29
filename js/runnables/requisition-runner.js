@@ -8,9 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const requisition_reporter_1 = require("../reporters/requisition-reporter");
+const input = __importStar(require("../models/inputs/requisition-model"));
 const runner_1 = require("./runner");
 const conditional_injector_1 = require("conditional-injector");
 let RequisitionRunner = class RequisitionRunner extends runner_1.Runner {

@@ -1,18 +1,32 @@
 import {DateController} from "../timers/date-controller";
-import {Report} from "../reports/report";
-import {Reporter} from "./reporter";
-import {RequisitionModel} from "../models/requisition-model";
-import {ReportCompositor} from "../reports/report-compositor";
+import * as input from "../models/inputs/requisition-model";
+import * as output from "../models/outputs/requisition-model";
+import {StartEventModel} from "../models/outputs/start-event-model";
+import {SubscriptionModel} from "../models/outputs/subscription-model";
+import {RequisitionModel} from "../models/outputs/requisition-model";
+import {checkValidation} from "../models/outputs/report-model";
 
-export class ReportGenerator implements Reporter {
+export class ReportGenerator {
 
     private startTime?: DateController;
     private timeout?: number;
 
-    private requisitionReports: ReportCompositor;
+    private report: output.RequisitionModel;
 
-    public constructor(requisitionAttributes: RequisitionModel) {
-        this.requisitionReports = new ReportCompositor(requisitionAttributes.name);
+    public constructor(requisitionAttributes: input.RequisitionModel) {
+        this.report = {
+            type: "requisition",
+            valid: true,
+            tests: {},
+            name: requisitionAttributes.name,
+            time: {
+                startTime: "",
+                endTime: "",
+                totalTime: 0
+            },
+            subscriptions: [],
+            startEvent: {}
+        }
     }
 
     public start(timeout?: number) {
@@ -20,16 +34,24 @@ export class ReportGenerator implements Reporter {
         this.timeout = timeout;
     }
 
-    public setStartEventReport(startEventReports: Report): void {
-        this.requisitionReports.addSubReport(startEventReports);
+    public setStartEventReport(startEventReports: StartEventModel): void {
+        this.report.startEvent = startEventReports;
+        if (this.report.startEvent.publisher)
+            this.report.valid = this.report.valid && this.report.startEvent.publisher.valid;
+        if (this.report.startEvent.subscription)
+            this.report.valid = this.report.valid && this.report.startEvent.subscription.valid;
     }
 
-    public setSubscriptionReport(subscriptionReport: Report): void {
-        this.requisitionReports.addSubReport(subscriptionReport);
+    public setSubscriptionReport(subscriptionReport: SubscriptionModel[]): void {
+        this.report.subscriptions = subscriptionReport;
+        this.report.subscriptions.forEach(subscriptionReport => {
+            this.report.valid = this.report.valid && subscriptionReport.valid;
+        })
     }
 
-    public getReport(): Report {
-        return this.requisitionReports.snapshot();
+    public getReport(): RequisitionModel {
+        this.report.valid = checkValidation(this.report);
+        return this.report;
     }
 
     public finish(): void {
@@ -37,7 +59,7 @@ export class ReportGenerator implements Reporter {
     }
 
     public addError(error: string): any {
-        this.requisitionReports.addTest(`${error}`, false);
+        this.report.tests[error] = false;
     }
 
     private addTimesReport(): void{
@@ -49,11 +71,10 @@ export class ReportGenerator implements Reporter {
             timesReport.endTime = endDate.toString();
             if (this.timeout) {
                 timesReport.timeout = this.timeout;
-                timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
-                this.requisitionReports.addTest(`No time out`, !timesReport.hasTimedOut);
+                this.report.tests[`No time out`] = timesReport.totalTime <= this.timeout;
             }
 
-            this.requisitionReports.addInfo({time: timesReport});
+            this.report.time = timesReport;
         }
     }
 

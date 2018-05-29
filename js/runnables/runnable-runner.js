@@ -12,13 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const runner_1 = require("./runner");
 const timeout_1 = require("../timers/timeout");
-const report_compositor_1 = require("../reports/report-compositor");
 let RunnableRunner = class RunnableRunner extends runner_1.Runner {
     constructor(runnableModel) {
         super();
         this.runnableModel = runnableModel;
-        this.reportCompositor = new report_compositor_1.ReportCompositor(this.runnableModel.name);
-        this.reportCompositor.addInfo({ id: runnableModel.id });
+        this.report = {
+            type: "runnable",
+            valid: true,
+            tests: {},
+            name: this.runnableModel.name,
+            id: this.runnableModel.id,
+            runnables: []
+        };
     }
     run() {
         return new Promise((resolve) => {
@@ -27,8 +32,8 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
                     .map(runnable => conditional_injector_1.Container.subclassesOf(runner_1.Runner)
                     .create(runnable)
                     .run()
-                    .then((report) => this.reportCompositor.addSubReport(report))))
-                    .then(() => this.reportCompositor.snapshot());
+                    .then((report) => this.report.runnables.push(report))))
+                    .then(() => this.report);
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);
         });

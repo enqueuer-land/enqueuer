@@ -2,8 +2,8 @@ import {Subscription} from "../subscriptions/subscription";
 import {Logger} from "../loggers/logger";
 import {Container} from "conditional-injector";
 import {RunnableParser} from "../runnables/runnable-parser";
-import {SubscriptionModel} from "../models/subscription-model";
-import {RunnableModel} from "../models/runnable-model";
+import {SubscriptionModel} from "../models/inputs/subscription-model";
+import {RunnableModel} from "../models/inputs/runnable-model";
 
 export class DaemonRunInput {
 

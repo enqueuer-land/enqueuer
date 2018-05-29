@@ -51,17 +51,13 @@ describe("Inception test", () => {
 
             expect(testerReports.length).toBe(2);
             expect(testerReports[1].valid).toBeTruthy();
-            const finalReport = testerReports[1].runnableFile;
+            const finalReport = testerReports[1].runnables[0];
 
-            expect(finalReport.valid).toBeTruthy();
             expect(finalReport.time.hasTimedOut).toBeFalsy();
 
-            expect(finalReport.subscriptions.valid).toBeTruthy();
+            expect(finalReport.subscriptions[0].valid).toBeTruthy();
 
-            expect(finalReport.subscriptions.subscriptionFile.valid).toBeTruthy();
-            expect(finalReport.subscriptions.subscriptionFile.onMessageFunctionReport.tests[0].name).toBe("true");
-
-            expect(finalReport.runnableFilePublisher.valid).toBeTruthy();
+            expect(finalReport.startEvent.publisher.valid).toBeTruthy();
 
             tester.on('exit', (statusCode) => {
                 expect(statusCode).toBe(0);
@@ -76,7 +72,7 @@ describe("Inception test", () => {
     afterAll(() => {
         killThemAll();
         removeEveryReportFile();
-    })
+    });
 
     let killThemAll = () => {
         beingTested.kill('SIGINT');

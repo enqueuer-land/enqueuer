@@ -1,29 +1,49 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const date_controller_1 = require("../timers/date-controller");
-const report_compositor_1 = require("../reports/report-compositor");
+const report_model_1 = require("../models/outputs/report-model");
 class ReportGenerator {
     constructor(requisitionAttributes) {
-        this.requisitionReports = new report_compositor_1.ReportCompositor(requisitionAttributes.name);
+        this.report = {
+            type: "requisition",
+            valid: true,
+            tests: {},
+            name: requisitionAttributes.name,
+            time: {
+                startTime: "",
+                endTime: "",
+                totalTime: 0
+            },
+            subscriptions: [],
+            startEvent: {}
+        };
     }
     start(timeout) {
         this.startTime = new date_controller_1.DateController();
         this.timeout = timeout;
     }
     setStartEventReport(startEventReports) {
-        this.requisitionReports.addSubReport(startEventReports);
+        this.report.startEvent = startEventReports;
+        if (this.report.startEvent.publisher)
+            this.report.valid = this.report.valid && this.report.startEvent.publisher.valid;
+        if (this.report.startEvent.subscription)
+            this.report.valid = this.report.valid && this.report.startEvent.subscription.valid;
     }
     setSubscriptionReport(subscriptionReport) {
-        this.requisitionReports.addSubReport(subscriptionReport);
+        this.report.subscriptions = subscriptionReport;
+        this.report.subscriptions.forEach(subscriptionReport => {
+            this.report.valid = this.report.valid && subscriptionReport.valid;
+        });
     }
     getReport() {
-        return this.requisitionReports.snapshot();
+        this.report.valid = report_model_1.checkValidation(this.report);
+        return this.report;
     }
     finish() {
         this.addTimesReport();
     }
     addError(error) {
-        this.requisitionReports.addTest(`${error}`, false);
+        this.report.tests[error] = false;
     }
     addTimesReport() {
         if (this.startTime) {
@@ -34,10 +54,9 @@ class ReportGenerator {
             timesReport.endTime = endDate.toString();
             if (this.timeout) {
                 timesReport.timeout = this.timeout;
-                timesReport.hasTimedOut = (timesReport.totalTime > this.timeout);
-                this.requisitionReports.addTest(`No time out`, !timesReport.hasTimedOut);
+                this.report.tests[`No time out`] = timesReport.totalTime <= this.timeout;
             }
-            this.requisitionReports.addInfo({ time: timesReport });
+            this.report.time = timesReport;
         }
     }
 }

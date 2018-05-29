@@ -1,16 +1,15 @@
 import { ReportGenerator } from "./report-generator";
 import {Logger} from "../loggers/logger";
 import {StartEventReporter} from "./start-event/start-event-reporter";
-import {RequisitionModel} from "../models/requisition-model";
+import * as input from "../models/inputs/requisition-model";
+import * as output from "../models/outputs/requisition-model";
 import {Timeout} from "../timers/timeout";
-import {Report} from "../reports/report";
 import {MultiSubscriptionsReporter} from "./subscription/multi-subscriptions-reporter";
 import {Container} from "conditional-injector";
-import {Reporter} from "./reporter";
 
 export type RequisitionRunnerCallback = () => void;
 
-export class RequisitionReporter implements Reporter {
+export class RequisitionReporter {
     private reportGenerator: ReportGenerator;
     private startEvent: StartEventReporter;
     private multiSubscriptionsReporter: MultiSubscriptionsReporter;
@@ -19,7 +18,7 @@ export class RequisitionReporter implements Reporter {
     private startEventDoneItsJob = false;
     private allSubscriptionsStoppedWaiting = false;
 
-    constructor(requisitionAttributes: RequisitionModel) {
+    constructor(requisitionAttributes: input.RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes);
         this.startEvent = Container.subclassesOf(StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
@@ -43,7 +42,7 @@ export class RequisitionReporter implements Reporter {
             });
     }
 
-    public getReport(): Report {
+    public getReport(): output.RequisitionModel {
         return this.reportGenerator.getReport();
     }
 

@@ -5,8 +5,8 @@ const date_controller_1 = require("../../timers/date-controller");
 const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
-const report_compositor_1 = require("../../reports/report-compositor");
 const on_message_received_reporter_1 = require("../../meta-functions/on-message-received-reporter");
+const report_model_1 = require("../../models/outputs/report-model");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -21,7 +21,12 @@ class SubscriptionReporter {
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         this.startTime = new date_controller_1.DateController();
-        this.reportCompositor = new report_compositor_1.ReportCompositor(this.subscription.name);
+        this.report = {
+            name: this.subscription.name,
+            type: this.subscription.type,
+            tests: {},
+            valid: true
+        };
     }
     startTimeout(onTimeOutCallback) {
         this.subscription.messageReceived = undefined;
@@ -42,16 +47,15 @@ class SubscriptionReporter {
             logger_1.Logger.trace(`[${this.subscription.name}] is connecting`);
             this.subscription.connect()
                 .then(() => {
-                this.reportCompositor.addInfo({
-                    connectionTime: new date_controller_1.DateController().toString()
-                });
+                this.report.connectionTime = new date_controller_1.DateController().toString();
+                this.report.tests["Able to connect"] = true;
                 resolve();
                 process.on('SIGINT', this.handleKillSignal);
                 process.on('SIGTERM', this.handleKillSignal);
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                this.reportCompositor.addTest("Unable to connect", false);
+                this.report.tests["Able to connect"] = false;
                 reject(err);
             });
         });
@@ -74,7 +78,6 @@ class SubscriptionReporter {
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                this.reportCompositor.addTest("Unable to receive message", false);
                 this.subscription.unsubscribe();
                 reject(err);
             });
@@ -82,16 +85,12 @@ class SubscriptionReporter {
     }
     getReport() {
         const hasReceivedMessage = this.subscription.messageReceived != null;
-        this.reportCompositor.addTest("Message received", hasReceivedMessage);
+        this.report.tests["Message received"] = hasReceivedMessage;
         if (hasReceivedMessage)
-            this.reportCompositor.addTest("No time out", !this.hasTimedOut);
-        this.reportCompositor.addInfo({
-            type: this.subscription.type,
-            hasReceivedMessage: hasReceivedMessage,
-            hasTimedOut: this.hasTimedOut
-        });
+            this.report.tests["No time out"] = !this.hasTimedOut;
         this.cleanUp();
-        return this.reportCompositor.snapshot();
+        this.report.valid = report_model_1.checkValidation(this.report);
+        return this.report;
     }
     cleanUp() {
         this.cleanUp = () => { };
@@ -117,11 +116,9 @@ class SubscriptionReporter {
         const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.subscription.messageReceived, this.subscription.onMessageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
-            .map((passing) => this.reportCompositor.addTest(passing.name, passing.valid));
-        this.reportCompositor.addInfo({
-            onMessageFunctionReport: functionResponse,
-            messageReceivedTime: new date_controller_1.DateController().toString()
-        });
+            .map((test) => this.report.tests[test.name] = test.valid);
+        this.report.messageReceivedTime = new date_controller_1.DateController().toString();
+        logger_1.Logger.debug(`onMessageFunctionReport: ${functionResponse}`);
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;

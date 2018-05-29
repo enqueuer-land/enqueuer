@@ -1,8 +1,8 @@
 import {Configuration} from "./configurations/configuration";
 import {EnqueuerExecutor} from "./executors/enqueuer-executor";
-import {Report} from "./reports/report";
 import {Logger} from "./loggers/logger";
 import {Container} from "conditional-injector";
+import {SingleRunResultModel} from "./models/outputs/single-run-result-model";
 
 export class EnqueuerStarter {
 
@@ -16,7 +16,7 @@ export class EnqueuerStarter {
     public async start(): Promise<number> {
         return this.executor.init()
             .then(() => this.executor.execute())
-            .then((report: Report) => {
+            .then((report: SingleRunResultModel) => {
                 Logger.info("Enqueuer execution is over (" + report.valid + ")");
                 return report.valid ? 0: 1;
             })

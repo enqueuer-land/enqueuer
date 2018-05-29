@@ -1,7 +1,7 @@
 import {Logger} from "../loggers/logger";
-import {RequisitionModel} from "../models/requisition-model";
-import {Report} from "../reports/report";
 import {RequisitionReporter} from "../reporters/requisition-reporter";
+import * as input from "../models/inputs/requisition-model";
+import * as output from "../models/outputs/requisition-model";
 import {Runner} from "./runner";
 import {Injectable} from "conditional-injector";
 
@@ -12,14 +12,14 @@ export class RequisitionRunner extends Runner {
 
     private requisitionName: string;
 
-    public constructor(requisition: RequisitionModel) {
+    public constructor(requisition: input.RequisitionModel) {
         super();
         this.requisitionName = requisition.name;
         Logger.info(`Starting requisition '${requisition.name}'`);
         this.requisitionReporter = new RequisitionReporter(requisition);
     }
 
-    public run(): Promise<Report> {
+    public run(): Promise<output.RequisitionModel> {
         return new Promise((resolve) => {
             return this.requisitionReporter.start(
                 () => {
