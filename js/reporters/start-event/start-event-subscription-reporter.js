@@ -33,7 +33,7 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
     }
     getReport() {
         let report = this.subscriptionReporter.getReport();
-        report.valid = report_model_1.checkValidation(report);
+        report.valid = report.valid && report_model_1.checkValidation(report);
         return {
             subscription: report
         };

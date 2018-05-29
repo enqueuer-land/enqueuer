@@ -53,7 +53,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 .then(runnable => new RunnableRunner(runnable).run())
                 .then(report => {
                     this.report.runnables[report.name] = report;
-                    this.report.valid = this.report.valid && checkValidation(report)
+                    this.report.valid = this.report.valid && report.valid;
                     return report;
                 })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))

@@ -32,7 +32,10 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
                     .map(runnable => conditional_injector_1.Container.subclassesOf(runner_1.Runner)
                     .create(runnable)
                     .run()
-                    .then((report) => this.report.runnables.push(report))))
+                    .then((report) => {
+                    this.report.valid = this.report.valid && report.valid;
+                    this.report.runnables.push(report);
+                })))
                     .then(() => this.report);
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);

@@ -97,7 +97,7 @@ export class SubscriptionReporter {
             this.report.tests["No time out"] = !this.hasTimedOut;
 
         this.cleanUp();
-        this.report.valid = checkValidation(this.report);
+        this.report.valid = this.report.valid && checkValidation(this.report);
         return this.report;
     }
 

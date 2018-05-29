@@ -50,7 +50,7 @@ export class ReportGenerator {
     }
 
     public getReport(): RequisitionModel {
-        this.report.valid = checkValidation(this.report);
+        this.report.valid = this.report.valid && checkValidation(this.report);
         return this.report;
     }
 

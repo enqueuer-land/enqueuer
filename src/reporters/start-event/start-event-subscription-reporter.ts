@@ -31,7 +31,7 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
 
     public getReport(): StartEventModel {
         let report = this.subscriptionReporter.getReport();
-        report.valid = checkValidation(report);
+        report.valid = report.valid && checkValidation(report);
         return {
             subscription: report
         };

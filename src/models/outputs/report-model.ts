@@ -7,8 +7,6 @@ export interface ReportModel {
 }
 
 export function checkValidation(reportModel: ReportModel): boolean {
-    const length2 = Object.keys(reportModel.tests).filter((key: string) => !reportModel.tests[key]).length;
-    console.log(length2)
-    return length2 == 0;
+    return Object.keys(reportModel.tests).filter((key: string) => !reportModel.tests[key]).length == 0;
 }
 

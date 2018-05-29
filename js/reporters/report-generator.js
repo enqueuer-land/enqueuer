@@ -36,7 +36,7 @@ class ReportGenerator {
         });
     }
     getReport() {
-        this.report.valid = report_model_1.checkValidation(this.report);
+        this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
     }
     finish() {

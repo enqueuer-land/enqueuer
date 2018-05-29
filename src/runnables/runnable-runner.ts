@@ -31,7 +31,10 @@ export class RunnableRunner extends Runner {
                         Container.subclassesOf(Runner)
                             .create(runnable)
                             .run()
-                            .then((report: ResultModel) => this.report.runnables.push(report))))
+                            .then((report: ResultModel) => {
+                                this.report.valid = this.report.valid && report.valid;
+                                this.report.runnables.push(report)
+                            })))
                     .then(() => this.report);
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);

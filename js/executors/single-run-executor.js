@@ -24,7 +24,6 @@ const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
-const report_model_1 = require("../models/outputs/report-model");
 const fs = require("fs");
 const prettyjson = require('prettyjson');
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
@@ -60,7 +59,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
                 .then(report => {
                 this.report.runnables[report.name] = report;
-                this.report.valid = this.report.valid && report_model_1.checkValidation(report);
+                this.report.valid = this.report.valid && report.valid;
                 return report;
             })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
