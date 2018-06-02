@@ -4,8 +4,10 @@ To Create:
 - [ ] mongodb: http://mongodb.github.io/node-mongodb-native/3.0/tutorials/crud/
 - [ ] Stomp: https://github.com/easternbloc/node-stomp-client
 - [ ] zeroMq: https://github.com/zeromq/zeromq.js/
+- [ ] WebSocket:
+- [ ] Kafka: https://www.npmjs.com/package/kafka-typescript
 - [ ] Tcp:
-- [ ] SQS:
+- [ ] SQS: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/sqs-examples-send-receive-messages.html
 
 - [ ] Add iterations to runnables
 
@@ -17,5 +19,3 @@ To Create:
         https://github.com/mranney/http_trace
         https://github.com/mscdex/cap
         https://github.com/node-pcap/node_pcap
-        
-- [ ] Add 'onMessageReceived' field to publishers
