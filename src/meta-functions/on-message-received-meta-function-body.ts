@@ -1,6 +1,4 @@
 import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
-import {SubscriptionModel} from "../models/inputs/subscription-model";
-import {Subscription} from "../subscriptions/subscription";
 
 export class OnMessageReceivedMetaFunctionBody implements MetaFunctionBodyCreator {
 

@@ -5,11 +5,14 @@
     "type": {
       "const": "amqp"
     },
+    "exchange": {
+      "type": "string"
+    },
     "queueName": {
-      "type": "string",
-      "title": "The queue name that will be created bound to the default exchange and listening to the routing key with the same value",
-      "default": "",
-      "examples": ["queueName"]
+      "type": "string"
+    },
+    "routingKey": {
+      "type": "string"
     },
     "options": {
         "type": "object",
@@ -90,6 +93,8 @@
     }
   },
   "required": [
+    "exchange",
+    "routingKey",
     "queueName",
     "options"
   ]

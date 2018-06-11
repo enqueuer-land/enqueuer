@@ -1,0 +1,58 @@
+{
+  "runnableVersion": "01.00.00",
+  "name": "runnablePayment",
+  "id": "runnablePayment",
+  "initialDelay": 0,
+  "runnables": [
+    {
+      "timeout": 3000,
+      "name": "OrderAheadTest",
+      "subscriptions": [
+        {
+          "type": "amqp",
+          "name": "OrderAheadSubscription",
+          "options": {
+            "host": "localhost",
+            "port": 5672
+          },
+          "queueName": "queueNameEnqueuer",
+          "exchange": "STORE_EXCHANGE",
+          "routingKey": "stores.#",
+          "onMessageReceived": "message = JSON.parse(message); test['orderAhead payment type'] = message.headers.type = 'orderAheadPayment'; test['card number translated'] = message.cardNumber == 123456; console.log(message.cardNumber)",
+          "timeout": 1000
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "amqp",
+          "name": "OrderAheadPublisher",
+          "payload": {
+            "headers": {
+              "correlationId": "456"
+            },
+            "body": {
+              "posTicketId": "7",
+              "storeId": 9995,
+              "customerPaymentId": "{{cardNumber}}",
+              "cardNumber": "itDoesNotMatter",
+              "paymentId": "8765",
+              "orderId": "xyz",
+              "orderVersion": "22",
+              "customerId": "92965352-3f96-4622-94bb-f87261061067",
+              "paymentAmount": "12.10",
+              "subTicketId": "0",
+              "timestamp": 0
+            }
+          },
+          "options": {
+            "host": "localhost",
+            "port": 5672
+          },
+          "exchange": "ICE_PAYMENT.E.PAYMENT_NOTIFICATION",
+          "routingKey": "ICE_PAYMENT.K.PAYMENT_NOTIFICATION.REQUESTED",
+          "prePublishing": "persistSessionVariable('cardNumber', 123456);"
+        }
+      }
+    }
+  ]
+}

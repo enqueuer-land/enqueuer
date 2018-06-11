@@ -15,9 +15,11 @@
             "host": "localhost",
             "port": 5672
           },
-          "queueName": "enqueuerQueue",
+          "queueName": "queueName2",
+          "exchange": "exchangeName2",
+          "routingKey": "#",
           "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';",
-          "timeout": 1000
+          "timeout": 3000
         }
       ],
       "startEvent": {
@@ -29,7 +31,8 @@
             "host": "localhost",
             "port": 5672
           },
-          "queueName": "enqueuerQueue",
+          "exchange": "exchangeName2",
+          "routingKey": "routingKey2",
           "prePublishing": "publisher.payload=new Date().getTime();"
         }
       }

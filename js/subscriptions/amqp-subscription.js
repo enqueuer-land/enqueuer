@@ -11,18 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
+const logger_1 = require("../loggers/logger");
 const amqp = require('amqp');
 let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.options = subscriptionAttributes.options;
+        this.exchange = subscriptionAttributes.exchange;
+        this.routingKey = subscriptionAttributes.routingKey;
         this.queueName = subscriptionAttributes.queueName;
     }
     receiveMessage() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.connection.queue(this.queueName, (queue) => {
-                queue.subscribe((message) => {
-                    resolve(message.data.toString());
+                logger_1.Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
+                queue.bind(this.exchange, this.routingKey, () => {
+                    logger_1.Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
+                    queue.subscribe((message) => {
+                        logger_1.Logger.debug(`Queue ${this.queueName} subscribed.`);
+                        resolve(message.data.toString());
+                    });
                 });
             });
         });

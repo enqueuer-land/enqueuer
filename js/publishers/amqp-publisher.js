@@ -11,26 +11,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");
+const logger_1 = require("../loggers/logger");
 var amqp = require('amqp');
 let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
         this.options = publish.options;
-        this.queueName = publish.queueName;
+        this.exchange = publish.exchange;
+        this.routingKey = publish.routingKey;
         this.messageOptions = publish.messageOptions || {};
     }
     publish() {
         return new Promise((resolve, reject) => {
             this.connection = amqp.createConnection(this.options);
             this.connection.on('ready', () => {
-                const exchange = this.connection.exchange();
+                logger_1.Logger.debug(`Creating exchange ${this.exchange}`);
+                const exchange = this.connection.exchange(this.exchange, { confirm: true, passive: true });
                 exchange.on('open', () => {
-                    exchange.publish(this.queueName, this.payload, this.messageOptions, (errored, err) => {
-                        return reject(err);
+                    logger_1.Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
+                    exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored, err) => {
+                        logger_1.Logger.trace(`Exchange published callback`);
+                        if (errored)
+                            return reject(err);
+                        logger_1.Logger.debug(`Message published`);
+                        this.connection.disconnect();
+                        this.connection.end();
+                        return resolve();
                     });
-                    this.connection.disconnect();
-                    this.connection.end();
-                    return resolve();
                 });
             });
             this.connection.on('error', (err) => {

@@ -136,7 +136,9 @@ const validAmqpRunnable = {
                         "host": "localhost",
                         "port": 5672
                     },
-                    "queueName": "enqueuerQueue",
+                    "routingKey": "routingKey",
+                    "exchange": "exchange",
+                    "queueName": "queueName",
                     "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';",
                     "timeout": 1000
                 }
@@ -150,7 +152,8 @@ const validAmqpRunnable = {
                         "port": 5672
                     },
                     "payload": "enqueuerQueue",
-                    "queueName": "enqueuerQueue",
+                    "routingKey": "routingKey",
+                    "exchange": "exchange",
                     "prePublishing": "publisher.payload=new Date().getTime();"
                 }
             }
