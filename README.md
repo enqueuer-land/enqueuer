@@ -2,11 +2,11 @@
 [![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer)
 
 ### summary
-**Enqueuer** is an event-driven-component asynchronous messages testing tool.
+**Enqueuer** is an asynchronous messages testing tool.
 
 ```There are many reasons why you should care about events; they drive autonomy, increase stability, help you move faster and allow for time travel, Jonas Bonér.```\
-There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometime it is a synchronous http post and sometimes it writes a file.\
-In an event-driven world everything all events move asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component of your architecture acts like it should act when it was designed. It makes you be sure that, at least on the boundaries of this service, everything works as expected.
+There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometimes it is a synchronous http post and sometimes it writes a file.\
+In an event-driven world all events happen asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component or a group of components in the same flow act like it should act when it was designed. It makes you be sure that everything works as expected.
 
 ##### Go ahead and try it:
     $ git clone https://github.com/lopidio/enqueuer.git
