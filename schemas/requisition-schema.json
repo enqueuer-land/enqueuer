@@ -27,6 +27,7 @@
           {"oneOf": [
             {"$ref": "https://github.com/lopidio/enqueuer/subscription/mqtt"},
             {"$ref": "https://github.com/lopidio/enqueuer/subscription/amqp"},
+            {"$ref": "https://github.com/lopidio/enqueuer/subscription/sqs"},
             {"$ref": "https://github.com/lopidio/enqueuer/subscription/uds"},
             {"$ref": "https://github.com/lopidio/enqueuer/subscription/http"},
             {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
@@ -43,6 +44,7 @@
             {"oneOf": [
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/mqtt"},
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/amqp"},
+              {"$ref": "https://github.com/lopidio/enqueuer/subscription/sqs"},
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/uds"},
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/http"},
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
@@ -55,6 +57,7 @@
             {"$ref": "https://github.com/lopidio/enqueuer/publisher"},
             {"oneOf": [
               {"$ref": "https://github.com/lopidio/enqueuer/publisher/mqtt"},
+              {"$ref": "https://github.com/lopidio/enqueuer/publisher/sqs"},
               {"$ref": "https://github.com/lopidio/enqueuer/publisher/amqp"},
               {"$ref": "https://github.com/lopidio/enqueuer/publisher/uds"},
               {"$ref": "https://github.com/lopidio/enqueuer/publisher/http"},

@@ -227,6 +227,46 @@ const validHttpRunnable = {
         }
     ]
 }
+const validSqsRunnable = {
+    "runnableVersion": "01.00.00",
+    "name": "runnableSqs",
+    "initialDelay": 0,
+    "runnables": [
+        {
+            "timeout": 30000,
+            "name": "SqsTitle",
+            "subscriptions": [
+                {
+                    "type": "sqs",
+                    "name": "SqsSubscriptionTitle",
+                    "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === 'virgs';",
+                    "awsConfiguration": {
+                        "anyStuff": "thatMakesSense"
+                    },
+                    "messageParams": {
+                        "anyStuff": "thatMakesSense"
+                    },
+                    "timeout": 10000
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "sqs",
+                    "name": "sqsPublisherClientTitle",
+                    "payload": {
+                        "enqueuer": "virgs"
+                    },
+                    "awsConfiguration": {
+                        "anyStuff": "thatMakesSense"
+                    },
+                    "messageParams": {
+                        "anyStuff": "thatMakesSense"
+                    }
+                }
+            }
+        }
+    ]
+}
 const validMqttRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableMqtt",
@@ -341,6 +381,10 @@ describe('RunnableParser', () => {
 
     it('Should accept amqp runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validAmqpRunnable))).not.toBeNull();
+    });
+
+    it('Should accept sqs runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validSqsRunnable))).not.toBeNull();
     });
 
     it('Should accept uds runnable', () => {

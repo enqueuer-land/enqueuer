@@ -1,0 +1,19 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/publisher/sqs",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "sqs"
+    },
+    "awsConfiguration": {
+      "type": "object"
+    },
+    "messageParams": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "awsConfiguration",
+    "messageParams"
+  ]
+}

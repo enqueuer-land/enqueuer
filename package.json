@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "test": "jest --forceExit && npm start -- -c integrationTest/enqueuer.yml",
+    "test": "npm run unitTest && npm run integrationTest",
+    "unitTest": "jest --forceExit",
+    "integrationTest": "npm start -- -c integrationTest/enqueuer.yml",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
-    "all": "npm run clean && npm run build && npm link && npm tst",
+    "all": "npm run clean && npm run build && npm link && npm run test",
     "build": "./scripts/generate-injectables-list.sh src/injectable-files-list.ts src && tsc"
   },
   "repository": {
@@ -22,6 +24,7 @@
   "dependencies": {
     "ajv": "^6.2.1",
     "amqp": "^0.2.6",
+    "aws-sdk": "^2.255.1",
     "chokidar": "^2.0.2",
     "commander": "^2.14.1",
     "conditional-injector": "^1.0.4",

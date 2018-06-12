@@ -7,7 +7,6 @@ To Create:
 - [ ] WebSocket:
 - [ ] Kafka: https://www.npmjs.com/package/kafka-typescript
 - [ ] Tcp:
-- [ ] SQS: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/sqs-examples-send-receive-messages.html
 
 - [ ] Add iterations to runnables
 
