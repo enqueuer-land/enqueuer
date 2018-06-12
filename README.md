@@ -1,7 +1,7 @@
 # enqueuer
 [![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer)
 
-(https://github.com/lopidio/enqueuer/blob/develop/docs/enqueuer-marca.png "logo")
+![alt text][enqueuerlogo]
 
 ### summary
 **Enqueuer** is an asynchronous messages testing tool.
@@ -157,3 +157,5 @@ The value '**valid**' in the root of report json file will be shown as false and
 ### frequently asked question
 1.	**Q**: Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?\
 	**A**: I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely, [check it out.](/src/inceptionTest/inception.test.ts "Inception Test")
+
+[enqueuerlogo]: https://github.com/lopidio/enqueuer/blob/develop/docs/enqueuer-marca.png "Enqueuer Logo"
