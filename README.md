@@ -1,7 +1,7 @@
 # enqueuer
 [![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer)
 
-[](https://github.com/lopidio/enqueuer/blob/develop/docs/enqueuer-marca.png "logo")
+(https://github.com/lopidio/enqueuer/blob/develop/docs/enqueuer-marca.png "logo")
 
 ### summary
 **Enqueuer** is an asynchronous messages testing tool.
