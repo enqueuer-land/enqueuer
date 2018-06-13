@@ -29,6 +29,8 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
         return new Promise((resolve) => {
             new timeout_1.Timeout(() => {
                 const promise = Promise.all(this.runnableModel.runnables
+                    .slice(0) //copy
+                    .reverse() //goes in the correct direction
                     .map(runnable => conditional_injector_1.Container.subclassesOf(runner_1.Runner)
                     .create(runnable)
                     .run()
