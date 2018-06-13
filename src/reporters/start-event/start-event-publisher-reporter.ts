@@ -71,7 +71,6 @@ export class StartEventPublisherReporter extends StartEventReporter {
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
             .map((test: any) => this.report.tests[test.name] = test.valid);
-        Logger.debug(`onMessageFunctionReport: ${functionResponse}`);
     }
 
     private executePrePublishingFunction() {

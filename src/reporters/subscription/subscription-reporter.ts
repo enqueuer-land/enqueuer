@@ -128,7 +128,6 @@ export class SubscriptionReporter {
         functionResponse.tests
             .map((test: any) => this.report.tests[test.name] = test.valid);
         this.report.messageReceivedTime = new DateController().toString();
-        Logger.debug(`onMessageFunctionReport: ${functionResponse}`);
     }
 
     private handleKillSignal = (signal: Signals): void => {

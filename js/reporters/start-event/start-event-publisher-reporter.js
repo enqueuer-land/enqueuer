@@ -77,7 +77,6 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
             .map((test) => this.report.tests[test.name] = test.valid);
-        logger_1.Logger.debug(`onMessageFunctionReport: ${functionResponse}`);
     }
     executePrePublishingFunction() {
         const prePublishFunction = new pre_publish_meta_function_body_1.PrePublishMetaFunctionBody(this.publisherOriginalAttributes);
