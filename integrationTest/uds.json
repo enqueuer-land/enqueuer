@@ -20,19 +20,19 @@
           "name": "udsPublisher",
           "path": "/tmp/unix.sock",
           "payload": "{{udsPayload}}",
-          "prePublishing": "const payload = 'enqueuer'; persistSessionVariable('udsPayload', payload);"
+          "prePublishing": "const payload = 'enqueuer'; persistSessionVariable('udsPayload', payload); persistSessionVariable('uds2RequisitionName', 'RequisitionUds2Name'); persistSessionVariable('uds2Timeout', '500');"
         }
       }
     },
     {
-      "name": "uds2",
+      "name": "{{uds2RequisitionName}}",
       "subscriptions": [
         {
           "type": "uds",
           "path": "/tmp/unix2.sock",
           "name": "udsSubscription2",
           "onMessageReceived": "message = JSON.parse(message); test['Message received is {{udsPayload}}'] = message === '{{udsPayload}}';",
-          "timeout": 500
+          "timeout": "{{uds2Timeout}}"
         }
       ],
       "startEvent": {

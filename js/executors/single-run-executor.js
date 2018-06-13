@@ -65,6 +65,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then(() => resolve(this.execute())) //Run the next one
                 .catch((err) => {
+                this.report.valid = false;
                 this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                 logger_1.Logger.error(err);
                 resolve(this.execute());

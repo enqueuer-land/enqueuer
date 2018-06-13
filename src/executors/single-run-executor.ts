@@ -6,7 +6,6 @@ import {Logger} from "../loggers/logger";
 import {Injectable} from "conditional-injector";
 import {RunnableRunner} from "../runnables/runnable-runner";
 import {SingleRunResultModel} from "../models/outputs/single-run-result-model";
-import {checkValidation} from "../models/outputs/report-model";
 
 const fs = require("fs");
 const prettyjson = require('prettyjson');
@@ -59,6 +58,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then( () => resolve(this.execute())) //Run the next one
                 .catch((err) => {
+                    this.report.valid = false;
                     this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                     Logger.error(err);
                     resolve(this.execute());

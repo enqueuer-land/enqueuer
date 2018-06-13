@@ -3,7 +3,7 @@
   "type": "object",
   "properties": {
     "timeout": {
-      "type": "number",
+      "type": ["integer", "string"],
       "title": "The requisition timeout",
       "default": "",
       "examples": [
@@ -48,7 +48,6 @@
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/uds"},
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/http"},
               {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
-
             ]}
           ]
         },

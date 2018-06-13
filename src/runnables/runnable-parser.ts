@@ -52,12 +52,12 @@ export class RunnableParser {
         return runnableWithId;
     }
 
-    private readFilesFromSchemaFolders = (subfolderName: string): string[] => {
+    private readFilesFromSchemaFolders = (subFolderName: string): string[] => {
         let files = [];
-        var dirContent = fs.readdirSync(subfolderName);
-        for (var i = 0; i < dirContent.length; i++) {
-            var filename = subfolderName + dirContent[i];
-            var stat = fs.lstatSync(filename);
+        const dirContent = fs.readdirSync(subFolderName);
+        for (let i = 0; i < dirContent.length; i++) {
+            const filename = subFolderName + dirContent[i];
+            const stat = fs.lstatSync(filename);
             if (!stat.isDirectory()) {
                 const fileContent = this.readJsonFile(filename);
                 files.push(fileContent);
