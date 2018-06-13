@@ -1,7 +1,6 @@
 {
   "runnableVersion": "01.00.00",
   "name": "runnableUDSName",
-  "initialDelay": 0,
   "runnables": [
     {
       "timeout": 3000,
@@ -11,7 +10,7 @@
           "type": "uds",
           "path": "/tmp/unix.sock",
           "name": "udsSubscription",
-          "onMessageReceived": "message = JSON.parse(message); test['Message received is \\'' + '{{udsPayload}}?\\''] = message === '{{udsPayload}}';",
+          "onMessageReceived": "message = JSON.parse(message); test['Message received is {{udsPayload}}'] = message === '{{udsPayload}}';",
           "timeout": 500
         }
       ],
@@ -24,6 +23,28 @@
           "prePublishing": "const payload = 'enqueuer'; persistSessionVariable('udsPayload', payload);"
         }
       }
+    },
+    {
+      "name": "uds2",
+      "subscriptions": [
+        {
+          "type": "uds",
+          "path": "/tmp/unix2.sock",
+          "name": "udsSubscription2",
+          "onMessageReceived": "message = JSON.parse(message); test['Message received is {{udsPayload}}'] = message === '{{udsPayload}}';",
+          "timeout": 500
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "uds",
+          "name": "udsPublisher2",
+          "path": "/tmp/unix2.sock",
+          "payload": "{{udsPayload}}",
+          "prePublishing": "test['Message to be published is {{udsPayload}}'] = publisher.payload === '{{udsPayload}}';"
+        }
+      }
     }
+
   ]
 }

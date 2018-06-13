@@ -1,48 +1,91 @@
 {
-  "type": "runnable",
-  "valid": true,
-  "tests": {},
-  "name": "runnableUDSName",
-  "id": "20180528200007083626_c5a4248f",
-  "runnables": [
-    {
-      "type": "requisition",
-      "valid": true,
-      "tests": {
-        "No time out": true
-      },
-      "name": "uds",
-      "time": {
-        "totalTime": 5,
-        "startTime": "2018-05-28T23:00:07.839Z",
-        "endTime": "2018-05-28T23:00:07.844Z",
-        "timeout": 3000,
-        "hasTimedOut": false
-      },
-      "subscriptions": [
-        {
-          "name": "udsSubscription",
-          "type": "uds",
-          "tests": {
-            "Able to connect": true,
-            "first letter": true,
-            "Message received": true,
-            "No time out": true
-          },
-          "valid": true,
-          "connectionTime": "2018-05-28T23:00:07.841Z",
-          "messageReceivedTime": "2018-05-28T23:00:07.843Z"
+    "name": "integrationTests",
+    "tests": {},
+    "valid": true,
+    "runnables": {
+        "runnableUDSName": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableUDSName",
+            "id": "20180613143210089727_28480101",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {},
+                    "name": "uds2",
+                    "time": {
+                        "totalTime": 10,
+                        "startTime": "2018-06-13T17:32:10.902Z",
+                        "endTime": "2018-06-13T17:32:10.912Z"
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubscription2",
+                            "type": "uds",
+                            "tests": {
+                                "Able to connect": true,
+                                "Message received is enqueuer": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T17:32:10.907Z",
+                            "messageReceivedTime": "2018-06-13T17:32:10.911Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udsPublisher2",
+                            "valid": true,
+                            "type": "uds",
+                            "tests": {
+                                "Message to be published is enqueuer": true
+                            },
+                            "publishTime": "2018-06-13T17:32:10.907Z"
+                        }
+                    }
+                },
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "uds",
+                    "time": {
+                        "totalTime": 9,
+                        "startTime": "2018-06-13T17:32:10.902Z",
+                        "endTime": "2018-06-13T17:32:10.911Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubscription",
+                            "type": "uds",
+                            "tests": {
+                                "Able to connect": true,
+                                "Message received is enqueuer": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T17:32:10.904Z",
+                            "messageReceivedTime": "2018-06-13T17:32:10.910Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udsPublisher",
+                            "valid": true,
+                            "type": "uds",
+                            "tests": {},
+                            "publishTime": "2018-06-13T17:32:10.906Z"
+                        }
+                    }
+                }
+            ]
         }
-      ],
-      "startEvent": {
-        "publisher": {
-          "name": "udsPublisher",
-          "valid": true,
-          "type": "uds",
-          "tests": {},
-          "publishTime": "2018-05-28T23:00:07.841Z"
-        }
-      }
     }
-  ]
 }

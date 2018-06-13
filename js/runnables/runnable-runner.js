@@ -12,10 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const runner_1 = require("./runner");
 const timeout_1 = require("../timers/timeout");
+const json_placeholder_replacer_1 = require("json-placeholder-replacer");
+const variables_controller_1 = require("../variables/variables-controller");
 let RunnableRunner = class RunnableRunner extends runner_1.Runner {
     constructor(runnableModel) {
         super();
         this.runnableModel = runnableModel;
+        this.placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
         this.report = {
             type: "runnable",
             valid: true,
@@ -29,19 +32,24 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
         return new Promise((resolve) => {
             new timeout_1.Timeout(() => {
                 const promise = Promise.all(this.runnableModel.runnables
-                    .slice(0) //copy
-                    .reverse() //goes in the correct direction
+                    .map(runnable => this.replaceVariables(runnable))
                     .map(runnable => conditional_injector_1.Container.subclassesOf(runner_1.Runner)
                     .create(runnable)
                     .run()
                     .then((report) => {
                     this.report.valid = this.report.valid && report.valid;
-                    this.report.runnables.push(report);
+                    this.report.runnables.unshift(report);
                 })))
                     .then(() => this.report);
                 resolve(promise);
             }).start(this.runnableModel.initialDelay || 0);
         });
+    }
+    replaceVariables(runnable) {
+        this.placeHolderReplacer
+            .addVariableMap(variables_controller_1.VariablesController.persistedVariables())
+            .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
+        return this.placeHolderReplacer.replace(runnable);
     }
 };
 RunnableRunner = __decorate([

@@ -5,12 +5,6 @@ class PrePublishMetaFunctionBody {
         this.publisherAttributes = publisherAttributes;
     }
     createBody() {
-        // const publisherAttributesObject = {publisherAttributes: this.publisherAttributes};
-        // const placeHolderReplacer = new JsonPlaceholderReplacer();
-        // placeHolderReplacer
-        //     .addVariableMap(VariablesController.persistedVariables())
-        //     .addVariableMap(VariablesController.sessionVariables());
-        // const replaced = (placeHolderReplacer.replace(publisherAttributesObject) as any).publisherAttributes;
         return `let test = {};
                     let report = {};
                     let publisher = \`${JSON.stringify(this.publisherAttributes)}\`;
