@@ -1,0 +1,54 @@
+{
+    "name": "title",
+    "tests": {},
+    "valid": true,
+    "runnables": {
+        "runnableSqsName": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableSqsName",
+            "id": "20180612213923033318_51c81b59",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "sqsRequisition",
+                    "time": {
+                        "totalTime": 33,
+                        "startTime": "2018-06-13T00:39:23.348Z",
+                        "endTime": "2018-06-13T00:39:23.381Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubs",
+                            "type": "sqs",
+                            "tests": {
+                                "Able to connect": true,
+                                "First letter equals enqueuer": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T00:39:23.348Z",
+                            "messageReceivedTime": "2018-06-13T00:39:23.379Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "sqsPublisher",
+                            "valid": true,
+                            "type": "sqs",
+                            "tests": {},
+                            "publishTime": "2018-06-13T00:39:23.362Z"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

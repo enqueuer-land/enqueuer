@@ -28,12 +28,7 @@
           "type": "sqs",
           "name": "sqsPublisher",
           "payload": "enqueuer",
-          "awsConfiguration": {
-            "endpoint": "http://localhost:9324",
-            "accessKeyId": "na",
-            "secretAccessKey": "na",
-            "region": "us-west-2"
-          },
+          "awsConfiguration": "{{awsConfiguration}}",
           "messageParams": {
             "QueueUrl": "http://localhost:9324/queue/enqueuerQueue"
           }

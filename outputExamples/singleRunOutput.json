@@ -3,12 +3,204 @@
     "tests": {},
     "valid": true,
     "runnables": {
+        "runnableAmqp": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableAmqp",
+            "id": "runnableAmqpId",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "AmqpReq",
+                    "time": {
+                        "totalTime": 21,
+                        "startTime": "2018-06-13T00:37:36.090Z",
+                        "endTime": "2018-06-13T00:37:36.111Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "AmqpSubs",
+                            "type": "amqp",
+                            "tests": {
+                                "Able to connect": true,
+                                "works": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T00:37:36.099Z",
+                            "messageReceivedTime": "2018-06-13T00:37:36.110Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "AmqpPub",
+                            "valid": true,
+                            "type": "amqp",
+                            "tests": {},
+                            "publishTime": "2018-06-13T00:37:36.101Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "runnableFile": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableFile",
+            "id": "20180612213736021680_8bf67a9a",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "file",
+                    "time": {
+                        "totalTime": 110,
+                        "startTime": "2018-06-13T00:37:36.219Z",
+                        "endTime": "2018-06-13T00:37:36.329Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "fileSubscription",
+                            "type": "file-name-watcher",
+                            "tests": {
+                                "Able to connect": true,
+                                "some time has passed": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T00:37:36.223Z",
+                            "messageReceivedTime": "2018-06-13T00:37:36.329Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "filePublisher",
+                            "valid": true,
+                            "type": "file",
+                            "tests": {},
+                            "publishTime": "2018-06-13T00:37:36.224Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "runnableHttp": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableHttp",
+            "id": "20180612213736043197_30741a0b",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "HttpTitle",
+                    "time": {
+                        "totalTime": 17,
+                        "startTime": "2018-06-13T00:37:36.433Z",
+                        "endTime": "2018-06-13T00:37:36.450Z",
+                        "timeout": 30000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "HttpSubscriptionTitle",
+                            "type": "http-server",
+                            "tests": {
+                                "Able to connect": true,
+                                "works": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T00:37:36.434Z",
+                            "messageReceivedTime": "2018-06-13T00:37:36.448Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "HttpPublisherClientTitle",
+                            "valid": true,
+                            "type": "http-client",
+                            "tests": {
+                                "prePublishingTest": true,
+                                "publisherOnMessageReceivedTest": true,
+                                "publisherOnMessageReceivedPayloadTest": true
+                            },
+                            "publishTime": "2018-06-13T00:37:36.435Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "runnableMqtt": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableMqtt",
+            "id": "20180612213736055637_e7880728",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "RequisitionMqtt",
+                    "time": {
+                        "totalTime": 46,
+                        "startTime": "2018-06-13T00:37:36.558Z",
+                        "endTime": "2018-06-13T00:37:36.604Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "MqttSub",
+                            "type": "mqtt",
+                            "tests": {
+                                "Able to connect": true,
+                                "works": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T00:37:36.594Z",
+                            "messageReceivedTime": "2018-06-13T00:37:36.603Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "MqttPub",
+                            "valid": true,
+                            "type": "mqtt",
+                            "tests": {},
+                            "publishTime": "2018-06-13T00:37:36.596Z"
+                        }
+                    }
+                }
+            ]
+        },
         "runnableSqsName": {
             "type": "runnable",
             "valid": true,
             "tests": {},
             "name": "runnableSqsName",
-            "id": "20180612202025067087_51c81b59",
+            "id": "20180612213736070998_51c81b59",
             "runnables": [
                 {
                     "type": "requisition",
@@ -18,9 +210,9 @@
                     },
                     "name": "sqsRequisition",
                     "time": {
-                        "totalTime": 33,
-                        "startTime": "2018-06-12T23:20:25.677Z",
-                        "endTime": "2018-06-12T23:20:25.710Z",
+                        "totalTime": 23,
+                        "startTime": "2018-06-13T00:37:36.714Z",
+                        "endTime": "2018-06-13T00:37:36.737Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -34,8 +226,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-12T23:20:25.677Z",
-                            "messageReceivedTime": "2018-06-12T23:20:25.707Z"
+                            "connectionTime": "2018-06-13T00:37:36.714Z",
+                            "messageReceivedTime": "2018-06-13T00:37:36.736Z"
                         }
                     ],
                     "startEvent": {
@@ -44,7 +236,54 @@
                             "valid": true,
                             "type": "sqs",
                             "tests": {},
-                            "publishTime": "2018-06-12T23:20:25.689Z"
+                            "publishTime": "2018-06-13T00:37:36.722Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "runnableUDSName": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableUDSName",
+            "id": "20180612213736084311_c5a4248f",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "uds",
+                    "time": {
+                        "totalTime": 2,
+                        "startTime": "2018-06-13T00:37:36.845Z",
+                        "endTime": "2018-06-13T00:37:36.847Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubscription",
+                            "type": "uds",
+                            "tests": {
+                                "Able to connect": true,
+                                "first letter": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-13T00:37:36.846Z",
+                            "messageReceivedTime": "2018-06-13T00:37:36.847Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udsPublisher",
+                            "valid": true,
+                            "type": "uds",
+                            "tests": {},
+                            "publishTime": "2018-06-13T00:37:36.846Z"
                         }
                     }
                 }

@@ -2,8 +2,8 @@ requisitions:
   run-mode:
     single-run:
       name: title
-      fileNamePattern: integrationTest/sqs.json
-      output-file: outputExamples/singleRunOutput.json
+      fileNamePattern: integrationTest/*.json
+#      output-file: outputExamples/singleRunOutput.json
 #outputs:
 #  -
 #    type: file
@@ -11,3 +11,8 @@ requisitions:
 #    filenameExtension: json
 variables:
   tcpPort: 23070
+  awsConfiguration:
+    endpoint: http://localhost:9324,
+    accessKeyId: na,
+    secretAccessKey: na,
+    region: us-west-2
