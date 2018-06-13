@@ -11,7 +11,7 @@
           "type": "uds",
           "path": "/tmp/unix.sock",
           "name": "udsSubscription",
-          "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('UDS message: ' + message)",
+          "onMessageReceived": "message = JSON.parse(message); test['Message received is \\'' + '{{udsPayload}}?\\''] = message === '{{udsPayload}}';",
           "timeout": 500
         }
       ],
@@ -20,7 +20,8 @@
           "type": "uds",
           "name": "udsPublisher",
           "path": "/tmp/unix.sock",
-          "payload": "enqueuer"
+          "payload": "{{udsPayload}}",
+          "prePublishing": "const payload = 'enqueuer'; persistSessionVariable('udsPayload', payload);"
         }
       }
     }

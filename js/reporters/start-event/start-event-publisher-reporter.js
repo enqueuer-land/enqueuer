@@ -16,6 +16,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+///<reference path="../../variables/variables-controller.ts"/>
 const publisher_1 = require("../../publishers/publisher");
 const start_event_reporter_1 = require("./start-event-reporter");
 const pre_publish_meta_function_body_1 = require("../../meta-functions/pre-publish-meta-function-body");
@@ -26,6 +27,8 @@ const logger_1 = require("../../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const on_message_received_reporter_1 = require("../../meta-functions/on-message-received-reporter");
 const report_model_1 = require("../../models/outputs/report-model");
+const json_placeholder_replacer_1 = require("json-placeholder-replacer");
+const variables_controller_1 = require("../../variables/variables-controller");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -78,12 +81,18 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
     executePrePublishingFunction() {
         const prePublishFunction = new pre_publish_meta_function_body_1.PrePublishMetaFunctionBody(this.publisherOriginalAttributes);
-        const functionResponse = new meta_function_executor_1.MetaFunctionExecutor(prePublishFunction).execute();
+        let functionResponse = new meta_function_executor_1.MetaFunctionExecutor(prePublishFunction).execute();
+        logger_1.Logger.debug(`PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
+        const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
+        placeHolderReplacer
+            .addVariableMap(variables_controller_1.VariablesController.persistedVariables())
+            .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
+        functionResponse = placeHolderReplacer.replace(functionResponse);
+        logger_1.Logger.debug(`Replaced PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
         if (functionResponse.publisher.payload)
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
         logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(functionResponse.publisher);
-        logger_1.Logger.debug(`PrePublishingFunctionReport: ${functionResponse}`);
         functionResponse.tests
             .map((test) => this.report.tests[test.name] = test.valid);
         if (functionResponse.exception) {

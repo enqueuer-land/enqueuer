@@ -1,6 +1,6 @@
 import {Publisher} from "./publisher";
 import {PublisherModel} from "../models/inputs/publisher-model";
-const net = require('net')
+const net = require('net');
 import {Injectable} from "conditional-injector";
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "uds"})

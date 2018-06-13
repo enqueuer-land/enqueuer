@@ -1,3 +1,4 @@
+///<reference path="../../variables/variables-controller.ts"/>
 import {Publisher} from "../../publishers/publisher";
 import {StartEventReporter} from "./start-event-reporter";
 import {PrePublishMetaFunctionBody} from "../../meta-functions/pre-publish-meta-function-body";
@@ -10,6 +11,8 @@ import {Injectable, Container} from "conditional-injector";
 import {OnMessageReceivedReporter} from "../../meta-functions/on-message-received-reporter";
 import {StartEventModel} from "../../models/outputs/start-event-model";
 import {checkValidation} from "../../models/outputs/report-model";
+import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
+import {VariablesController} from "../../variables/variables-controller";
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
@@ -73,14 +76,21 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
     private executePrePublishingFunction() {
         const prePublishFunction = new PrePublishMetaFunctionBody(this.publisherOriginalAttributes);
-        const functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
+        let functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
+
+        Logger.debug(`PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
+        const placeHolderReplacer = new JsonPlaceholderReplacer();
+        placeHolderReplacer
+            .addVariableMap(VariablesController.persistedVariables())
+            .addVariableMap(VariablesController.sessionVariables());
+        functionResponse = (placeHolderReplacer.replace(functionResponse) as any);
+        Logger.debug(`Replaced PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
 
         if (functionResponse.publisher.payload)
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
 
         Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);
-        Logger.debug(`PrePublishingFunctionReport: ${functionResponse}`);
 
         functionResponse.tests
             .map((test: any) => this.report.tests[test.name] = test.valid);
