@@ -4,16 +4,16 @@ const fs = require("fs");
 let findEveryJsonFile = (): string[] => {
     let files = [];
     const path = "src/inceptionTest/";
-    var dirContent = fs.readdirSync(path);
-    for (var i = 0; i < dirContent.length; i++) {
-        var filename = path + dirContent[i];
-        var stat = fs.lstatSync(filename);
+    const dirContent = fs.readdirSync(path);
+    for (let i = 0; i < dirContent.length; i++) {
+        const filename = path + dirContent[i];
+        const stat = fs.lstatSync(filename);
         if (!stat.isDirectory() && filename.indexOf(".json") >= 0) {
             files.push(filename);
         }
     }
     return files;
-}
+};
 
 let removeEveryReportFile = (): void => {
     findEveryJsonFile().forEach(file => fs.unlinkSync(file));
@@ -47,7 +47,7 @@ describe("Inception test", () => {
             const testerReports = findEveryJsonFile()
                 .filter(filename => filename.indexOf("_test.") >= 0)
                 .map(filename => fs.readFileSync(filename))
-                .map(fileContent => JSON.parse(fileContent))
+                .map(fileContent => JSON.parse(fileContent));
 
             expect(testerReports.length).toBe(2);
             expect(testerReports[1].valid).toBeTruthy();
@@ -61,13 +61,13 @@ describe("Inception test", () => {
 
             tester.on('exit', (statusCode) => {
                 expect(statusCode).toBe(0);
-            })
+            });
                 done();
         } catch (err) {
             console.error(err)
         }
 
-    })
+    });
 
     afterAll(() => {
         killThemAll();

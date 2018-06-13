@@ -1,7 +1,6 @@
 import {RunnableParser} from "./runnable-parser";
 
-const validRunnable =
-    {
+const validRunnable = {
         runnableVersion: "01.00.00",
         name: "name",
         initialDelay: 10,
@@ -89,7 +88,6 @@ const validRunnable =
             }
         ]
     };
-
 const validFileRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableFile",
@@ -303,7 +301,6 @@ const validMqttRunnable = {
         }
     ]
 }
-
 const validRunnableWithId = {
     "runnableVersion": "01.00.00",
     "name": "runnableFile",
@@ -335,7 +332,6 @@ const validRunnableWithId = {
         }
     ]
 }
-
 
 describe('RunnableParser', () => {
 

@@ -10,7 +10,7 @@
         {
           "type": "sqs",
           "name": "udsSubs",
-          "onMessageReceived": "const messageBody = JSON.parse(message).Body; test['First letter equals enqueuer'] = messageBody.substring(1,2) === 'e';",
+          "onMessageReceived": "const messageBody = JSON.parse(message).Body; test['First letter equals enqueuer'] = messageBody.substring(1,2) === 'e'; console.log('{{persistedVariable}}')",
           "awsConfiguration": {
             "endpoint": "http://localhost:9324",
             "accessKeyId": "na",
@@ -28,10 +28,11 @@
           "type": "sqs",
           "name": "sqsPublisher",
           "payload": "enqueuer",
-          "awsConfiguration": "{{awsConfiguration}}",
+          "awsConfiguration": "{{awsVariableConfiguration}}",
           "messageParams": {
             "QueueUrl": "http://localhost:9324/queue/enqueuerQueue"
-          }
+          },
+          "prePublishing": "persistSessionVariable('persistedVariable', 'printThis');"
         }
       }
     }

@@ -1,4 +1,6 @@
 import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
+import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
+import {VariablesController} from "../variables/variables-controller";
 
 export class OnMessageReceivedMetaFunctionBody implements MetaFunctionBodyCreator {
 
@@ -11,10 +13,17 @@ export class OnMessageReceivedMetaFunctionBody implements MetaFunctionBodyCreato
     }
 
     public createBody(): string {
+        const onMessageReceivedObject = {onMessageReceived: this.onMessageReceived};
+        const placeHolderReplacer = new JsonPlaceholderReplacer();
+        placeHolderReplacer
+            .addVariableMap(VariablesController.persistedVariables())
+            .addVariableMap(VariablesController.sessionVariables());
+        const replaced: any = placeHolderReplacer.replace(onMessageReceivedObject);
+
         return    `let test = {};
                     let report = {};
                     let message = ${JSON.stringify(this.messageReceived)};
-                    ${this.onMessageReceived};
+                    ${replaced.onMessageReceived};
                     return {
                             test: test,
                             report: report
