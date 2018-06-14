@@ -11,6 +11,8 @@ require("./subscriptions/amqp-subscription");
 require("./subscriptions/standard-input-subscription");
 require("./subscriptions/mqtt-subscription");
 require("./subscriptions/null-subscription");
+require("./result-creator/EnqueuerResultCreator");
+require("./result-creator/StandardOutputResultCreator");
 require("./executors/single-run-executor");
 require("./executors/daemon-executor");
 require("./executors/null-run-executor");

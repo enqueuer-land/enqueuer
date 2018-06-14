@@ -21,9 +21,9 @@ class EnqueuerStarter {
         return __awaiter(this, void 0, void 0, function* () {
             return this.executor.init()
                 .then(() => this.executor.execute())
-                .then((report) => {
-                logger_1.Logger.info("Enqueuer execution is over (" + report.valid + ")");
-                return report.valid ? 0 : 1;
+                .then((valid) => {
+                logger_1.Logger.info("Enqueuer execution is over (" + valid + ")");
+                return valid ? 0 : 1;
             })
                 .catch((error) => {
                 logger_1.Logger.fatal(`Execution error: ${error}`);

@@ -3,7 +3,9 @@ requisitions:
     single-run:
       name: integrationTests
       fileNamePattern: integrationTest/*.json
-#      output-file: outputExamples/singleRunOutput.json
+      report:
+          type: enqueuer
+          filename: outputExamples/singleRunOutput.json
 #outputs:
 #  -
 #    type: file

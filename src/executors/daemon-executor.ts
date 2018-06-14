@@ -29,7 +29,7 @@ export class DaemonExecutor extends EnqueuerExecutor{
         return;
     }
 
-    public execute(): Promise<SingleRunResultModel> {
+    public execute(): Promise<boolean> {
         return new Promise(() => {
             this.requisitionInputs
                 .forEach((input: DaemonRunInput) => {

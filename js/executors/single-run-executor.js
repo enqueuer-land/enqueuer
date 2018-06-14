@@ -24,23 +24,15 @@ const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
-const fs = require("fs");
-const prettyjson = require('prettyjson');
+const ResultCreator_1 = require("../result-creator/ResultCreator");
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
         logger_1.Logger.info("Executing in Single-Run mode");
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
-        this.outputFilename = singleRunConfiguration["output-file"];
+        this.resultCreator = conditional_injector_1.Container.subclassesOf(ResultCreator_1.ResultCreator).create(enqueuerConfiguration["single-run"].report);
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
-        this.singleRunInput =
-            new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
-        this.report = {
-            name: singleRunConfiguration["name"] || "single-run-title",
-            tests: {},
-            valid: true,
-            runnables: {}
-        };
+        this.singleRunInput = new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -52,39 +44,25 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
                 logger_1.Logger.info("There is no more requisition to be ran");
-                this.persistSummary();
-                return resolve(this.report);
+                this.resultCreator.create();
+                return resolve(this.resultCreator.isValid());
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
                 .then(report => {
-                this.report.runnables[report.name] = report;
-                this.report.valid = this.report.valid && report.valid;
+                this.resultCreator.addTestSuite(report);
                 return report;
             })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
-                .then(() => resolve(this.execute())) //Run the next one
+                .then(() => resolve(this.execute())) //Runs the next one
                 .catch((err) => {
-                this.report.valid = false;
+                logger_1.Logger.error(`Error reported: ${JSON.stringify(err, null, 4)}`);
+                this.resultCreator.addError(err);
                 this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
-                logger_1.Logger.error(err);
-                resolve(this.execute());
+                resolve(this.execute()); //Runs the next one
             });
         });
     }
-    persistSummary() {
-        const options = {
-            defaultIndentation: 4,
-            keysColor: "white",
-            dashColor: "grey",
-            inlineArrays: true
-        };
-        logger_1.Logger.debug(`Reports summary: ${JSON.stringify(this.report, null, 4)}`);
-        console.log(prettyjson.render(this.report, options));
-        if (this.outputFilename)
-            fs.writeFileSync(this.outputFilename, JSON.stringify(this.report, null, 4));
-    }
-    ;
 };
 SingleRunExecutor = __decorate([
     conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"] }),

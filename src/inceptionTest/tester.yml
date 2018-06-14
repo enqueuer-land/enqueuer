@@ -2,7 +2,9 @@ requisitions:
   run-mode:
     single-run:
       fileNamePattern: src/inceptionTest/*.enq
-      output-file: src/inceptionTest/singleRunInceptionReport.json
+      report:
+          type: default
+          filename: src/inceptionTest/singleRunInceptionReport.json
 outputs:
   -
     type: file

@@ -16,9 +16,9 @@ export class EnqueuerStarter {
     public async start(): Promise<number> {
         return this.executor.init()
             .then(() => this.executor.execute())
-            .then((report: SingleRunResultModel) => {
-                Logger.info("Enqueuer execution is over (" + report.valid + ")");
-                return report.valid ? 0: 1;
+            .then((valid: boolean) => {
+                Logger.info("Enqueuer execution is over (" + valid + ")");
+                return valid ? 0: 1;
             })
             .catch((error: any) => {
                 Logger.fatal(`Execution error: ${error}`)

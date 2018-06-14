@@ -1,5 +1,5 @@
 {
-    "name": "integrationTests",
+    "name": "outputExamples/singleRunOutput.json",
     "tests": {},
     "valid": true,
     "runnables": {
@@ -18,9 +18,9 @@
                     },
                     "name": "AmqpReq",
                     "time": {
-                        "totalTime": 31,
-                        "startTime": "2018-06-13T17:32:23.361Z",
-                        "endTime": "2018-06-13T17:32:23.392Z",
+                        "totalTime": 21,
+                        "startTime": "2018-06-14T22:57:35.829Z",
+                        "endTime": "2018-06-14T22:57:35.850Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -34,8 +34,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-13T17:32:23.379Z",
-                            "messageReceivedTime": "2018-06-13T17:32:23.392Z"
+                            "connectionTime": "2018-06-14T22:57:35.839Z",
+                            "messageReceivedTime": "2018-06-14T22:57:35.850Z"
                         }
                     ],
                     "startEvent": {
@@ -44,7 +44,7 @@
                             "valid": true,
                             "type": "amqp",
                             "tests": {},
-                            "publishTime": "2018-06-13T17:32:23.381Z"
+                            "publishTime": "2018-06-14T22:57:35.841Z"
                         }
                     }
                 }
@@ -55,7 +55,7 @@
             "valid": true,
             "tests": {},
             "name": "runnableFile",
-            "id": "20180613143223049562_8bf67a9a",
+            "id": "20180614195735095514_8bf67a9a",
             "runnables": [
                 {
                     "type": "requisition",
@@ -65,9 +65,9 @@
                     },
                     "name": "file",
                     "time": {
-                        "totalTime": 213,
-                        "startTime": "2018-06-13T17:32:23.500Z",
-                        "endTime": "2018-06-13T17:32:23.713Z",
+                        "totalTime": 209,
+                        "startTime": "2018-06-14T22:57:35.958Z",
+                        "endTime": "2018-06-14T22:57:36.167Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -81,8 +81,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-13T17:32:23.505Z",
-                            "messageReceivedTime": "2018-06-13T17:32:23.713Z"
+                            "connectionTime": "2018-06-14T22:57:35.962Z",
+                            "messageReceivedTime": "2018-06-14T22:57:36.167Z"
                         }
                     ],
                     "startEvent": {
@@ -91,18 +91,18 @@
                             "valid": true,
                             "type": "file",
                             "tests": {},
-                            "publishTime": "2018-06-13T17:32:23.506Z"
+                            "publishTime": "2018-06-14T22:57:35.962Z"
                         }
                     }
                 }
             ]
         },
-        "runnableHttp": {
+        "runnableHttpJsonPayload": {
             "type": "runnable",
             "valid": true,
             "tests": {},
-            "name": "runnableHttp",
-            "id": "20180613143223081985_30741a0b",
+            "name": "runnableHttpJsonPayload",
+            "id": "20180614195736027191_febccec3",
             "runnables": [
                 {
                     "type": "requisition",
@@ -113,8 +113,8 @@
                     "name": "HttpTitle",
                     "time": {
                         "totalTime": 19,
-                        "startTime": "2018-06-13T17:32:23.824Z",
-                        "endTime": "2018-06-13T17:32:23.843Z",
+                        "startTime": "2018-06-14T22:57:36.275Z",
+                        "endTime": "2018-06-14T22:57:36.294Z",
                         "timeout": 30000
                     },
                     "subscriptions": [
@@ -123,13 +123,13 @@
                             "type": "http-server",
                             "tests": {
                                 "Able to connect": true,
-                                "works": true,
+                                "Payload.enqueuer is Virgs": true,
                                 "Message received": true,
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-13T17:32:23.826Z",
-                            "messageReceivedTime": "2018-06-13T17:32:23.841Z"
+                            "connectionTime": "2018-06-14T22:57:36.276Z",
+                            "messageReceivedTime": "2018-06-14T22:57:36.290Z"
                         }
                     ],
                     "startEvent": {
@@ -142,7 +142,43 @@
                                 "publisherOnMessageReceivedTest": true,
                                 "publisherOnMessageReceivedPayloadTest": true
                             },
-                            "publishTime": "2018-06-13T17:32:23.827Z"
+                            "publishTime": "2018-06-14T22:57:36.277Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "runnableHittingOnlineEnqueuer": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableHittingOnlineEnqueuer",
+            "id": "20180614195736039928_7b7035f6",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "HttpTitle",
+                    "time": {
+                        "totalTime": 1676,
+                        "startTime": "2018-06-14T22:57:36.401Z",
+                        "endTime": "2018-06-14T22:57:38.077Z",
+                        "timeout": 30000
+                    },
+                    "subscriptions": [],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "HttpEnqueuerRepository",
+                            "valid": true,
+                            "type": "http-client",
+                            "tests": {
+                                "PrePublishingTest": true,
+                                "It is online": true
+                            },
+                            "publishTime": "2018-06-14T22:57:36.401Z"
                         }
                     }
                 }
@@ -153,7 +189,7 @@
             "valid": true,
             "tests": {},
             "name": "runnableMqtt",
-            "id": "20180613143223094527_e7880728",
+            "id": "20180614195738018128_e7880728",
             "runnables": [
                 {
                     "type": "requisition",
@@ -163,9 +199,9 @@
                     },
                     "name": "RequisitionMqtt",
                     "time": {
-                        "totalTime": 53,
-                        "startTime": "2018-06-13T17:32:23.948Z",
-                        "endTime": "2018-06-13T17:32:24.001Z",
+                        "totalTime": 42,
+                        "startTime": "2018-06-14T22:57:38.184Z",
+                        "endTime": "2018-06-14T22:57:38.226Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -179,8 +215,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-13T17:32:23.989Z",
-                            "messageReceivedTime": "2018-06-13T17:32:24.000Z"
+                            "connectionTime": "2018-06-14T22:57:38.217Z",
+                            "messageReceivedTime": "2018-06-14T22:57:38.225Z"
                         }
                     ],
                     "startEvent": {
@@ -189,7 +225,7 @@
                             "valid": true,
                             "type": "mqtt",
                             "tests": {},
-                            "publishTime": "2018-06-13T17:32:23.990Z"
+                            "publishTime": "2018-06-14T22:57:38.219Z"
                         }
                     }
                 }
@@ -200,7 +236,7 @@
             "valid": true,
             "tests": {},
             "name": "runnableSqsName",
-            "id": "20180613143224010786_40929c35",
+            "id": "20180614195738032933_40929c35",
             "runnables": [
                 {
                     "type": "requisition",
@@ -210,9 +246,9 @@
                     },
                     "name": "sqsRequisition",
                     "time": {
-                        "totalTime": 26,
-                        "startTime": "2018-06-13T17:32:24.120Z",
-                        "endTime": "2018-06-13T17:32:24.146Z",
+                        "totalTime": 27,
+                        "startTime": "2018-06-14T22:57:38.336Z",
+                        "endTime": "2018-06-14T22:57:38.363Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -226,8 +262,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-13T17:32:24.120Z",
-                            "messageReceivedTime": "2018-06-13T17:32:24.144Z"
+                            "connectionTime": "2018-06-14T22:57:38.336Z",
+                            "messageReceivedTime": "2018-06-14T22:57:38.361Z"
                         }
                     ],
                     "startEvent": {
@@ -236,7 +272,7 @@
                             "valid": true,
                             "type": "sqs",
                             "tests": {},
-                            "publishTime": "2018-06-13T17:32:24.130Z"
+                            "publishTime": "2018-06-14T22:57:38.346Z"
                         }
                     }
                 }
@@ -247,45 +283,8 @@
             "valid": true,
             "tests": {},
             "name": "runnableUDSName",
-            "id": "20180613143224024937_28480101",
+            "id": "20180614195738046745_3492bd99",
             "runnables": [
-                {
-                    "type": "requisition",
-                    "valid": true,
-                    "tests": {},
-                    "name": "uds2",
-                    "time": {
-                        "totalTime": 5,
-                        "startTime": "2018-06-13T17:32:24.252Z",
-                        "endTime": "2018-06-13T17:32:24.257Z"
-                    },
-                    "subscriptions": [
-                        {
-                            "name": "udsSubscription2",
-                            "type": "uds",
-                            "tests": {
-                                "Able to connect": true,
-                                "Message received is enqueuer": true,
-                                "Message received": true,
-                                "No time out": true
-                            },
-                            "valid": true,
-                            "connectionTime": "2018-06-13T17:32:24.254Z",
-                            "messageReceivedTime": "2018-06-13T17:32:24.257Z"
-                        }
-                    ],
-                    "startEvent": {
-                        "publisher": {
-                            "name": "udsPublisher2",
-                            "valid": true,
-                            "type": "uds",
-                            "tests": {
-                                "Message to be published is enqueuer": true
-                            },
-                            "publishTime": "2018-06-13T17:32:24.255Z"
-                        }
-                    }
-                },
                 {
                     "type": "requisition",
                     "valid": true,
@@ -294,9 +293,9 @@
                     },
                     "name": "uds",
                     "time": {
-                        "totalTime": 4,
-                        "startTime": "2018-06-13T17:32:24.252Z",
-                        "endTime": "2018-06-13T17:32:24.256Z",
+                        "totalTime": 3,
+                        "startTime": "2018-06-14T22:57:38.470Z",
+                        "endTime": "2018-06-14T22:57:38.473Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -310,8 +309,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-13T17:32:24.253Z",
-                            "messageReceivedTime": "2018-06-13T17:32:24.256Z"
+                            "connectionTime": "2018-06-14T22:57:38.471Z",
+                            "messageReceivedTime": "2018-06-14T22:57:38.473Z"
                         }
                     ],
                     "startEvent": {
@@ -320,7 +319,44 @@
                             "valid": true,
                             "type": "uds",
                             "tests": {},
-                            "publishTime": "2018-06-13T17:32:24.254Z"
+                            "publishTime": "2018-06-14T22:57:38.472Z"
+                        }
+                    }
+                },
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {},
+                    "name": "RequisitionUds2Name",
+                    "time": {
+                        "totalTime": 2,
+                        "startTime": "2018-06-14T22:57:38.473Z",
+                        "endTime": "2018-06-14T22:57:38.475Z"
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubscription2",
+                            "type": "uds",
+                            "tests": {
+                                "Able to connect": true,
+                                "Message received is enqueuer": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-06-14T22:57:38.474Z",
+                            "messageReceivedTime": "2018-06-14T22:57:38.475Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udsPublisher2",
+                            "valid": true,
+                            "type": "uds",
+                            "tests": {
+                                "Message to be published is enqueuer": true
+                            },
+                            "publishTime": "2018-06-14T22:57:38.474Z"
                         }
                     }
                 }

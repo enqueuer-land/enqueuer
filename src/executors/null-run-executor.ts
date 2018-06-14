@@ -1,7 +1,6 @@
 import {EnqueuerExecutor} from "./enqueuer-executor";
 import {Injectable} from "conditional-injector";
 import {Logger} from "../loggers/logger";
-import {SingleRunResultModel} from "../models/outputs/single-run-result-model";
 
 @Injectable()
 export class NullRunExecutor extends EnqueuerExecutor {
@@ -17,7 +16,7 @@ export class NullRunExecutor extends EnqueuerExecutor {
         throw new Error(`Impossible to initialize new executor from: ${this.enqueuerConfiguration}`);
     }
 
-    public execute(): Promise<SingleRunResultModel> {
+    public execute(): Promise<boolean> {
         return Promise.reject(new Error(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`));
     }
 }
