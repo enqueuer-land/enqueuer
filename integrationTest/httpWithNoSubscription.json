@@ -1,0 +1,27 @@
+{
+  "runnableVersion": "01.00.00",
+  "name": "runnableHittingOnlineEnqueuer",
+  "initialDelay": 0,
+  "runnables": [
+    {
+      "timeout": 30000,
+      "name": "HttpTitle",
+      "subscriptions": [
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "http-client",
+          "name": "HttpEnqueuerRepository",
+          "url": "https://github.com/lopidio/enqueuer",
+          "method": "GET",
+          "prePublishing": "test['PrePublishingTest'] = true",
+          "onMessageReceived": "test['It is online'] = JSON.parse(message).statusCode == 200",
+          "payload": "",
+          "headers": {
+            "content-type": "application/json"
+          }
+        }
+      }
+    }
+  ]
+}

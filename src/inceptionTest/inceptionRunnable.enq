@@ -1,15 +1,15 @@
 {
   "runnableVersion": "01.00.00",
-  "name": "outterRunnableFile",
+  "name": "outterRunnableUds",
   "initialDelay": 0,
   "runnables": [
     {
       "timeout": 10000,
-      "name": "runnableFile",
+      "name": "runnableUds",
       "subscriptions": [
         {
           "type": "uds",
-          "name": "subscriptionFile",
+          "name": "subscriptionUds",
           "path": "/tmp/outUnix.sock",
           "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true;",
           "timeout": 10000
@@ -18,20 +18,20 @@
       "startEvent": {
         "publisher": {
           "type": "uds",
-          "name": "runnableFilePublisher",
+          "name": "runnableUdsPublisher",
           "path": "/tmp/inUnix.sock",
           "payload": {
             "runnableVersion": "01.00.00",
-            "name": "runnableFile",
+            "name": "runnableUds",
             "initialDelay": 0,
             "runnables": [
               {
-                "name": "innerRunnableFile",
+                "name": "innerRunnableUds",
                 "timeout": 3000,
                 "subscriptions": [
                   {
                     "type": "uds",
-                    "name": "runnableFile",
+                    "name": "runnableUds",
                     "path": "/tmp/loopUnix.sock",
                     "onMessageReceived": "test['works'] = message == 100;",
                     "timeout": 1000
@@ -39,7 +39,7 @@
                 ],
                 "startEvent": {
                   "publisher": {
-                    "name": "runnableFile",
+                    "name": "runnableUds",
                     "type": "uds",
                     "path": "/tmp/loopUnix.sock",
                     "payload": 100

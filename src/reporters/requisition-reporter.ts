@@ -34,7 +34,7 @@ export class RequisitionReporter {
             .then(() => {
                 Logger.trace("Multisubscriptions are ready");
                 this.initializeTimeout();
-                this.onSubscriptionsCompleted()
+                this.onSubscriptionsCompleted();
             })
             .catch(err => {
                 Logger.error(`Error connecting multiSubscription: ${err}`);

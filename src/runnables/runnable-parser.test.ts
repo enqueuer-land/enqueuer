@@ -332,6 +332,29 @@ const validRunnableWithId = {
         }
     ]
 };
+const validRunnableWithNoSubscriptions = {
+    "runnableVersion": "01.00.00",
+    "name": "runnableFile",
+    "id": "virgulation",
+    "initialDelay": 0,
+    "runnables": [
+        {
+            "timeout": 3000,
+            "name": "file",
+            "subscriptions": [],
+            "startEvent": {
+                "publisher": {
+                    "type": "file",
+                    "name": "filePublisher",
+                    "payload": "filePublisher",
+                    "filenamePrefix": "temp/fileTest",
+                    "filenameExtension": "file",
+                    "prePublishing": "publisher.payload=new Date().getTime();"
+                }
+            }
+        }
+    ]
+};
 
 describe('RunnableParser', () => {
 
@@ -392,6 +415,10 @@ describe('RunnableParser', () => {
 
     it('Should accept mqtt runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validMqttRunnable))).not.toBeNull();
+    });
+
+    it('Should accept runnable with no subscriptions', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validRunnableWithNoSubscriptions))).not.toBeNull();
     });
 
 });

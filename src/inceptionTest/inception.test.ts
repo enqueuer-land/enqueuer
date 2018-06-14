@@ -1,3 +1,8 @@
+import {ResultModel} from "../models/outputs/result-model";
+import {SingleRunResultModel} from "../models/outputs/single-run-result-model";
+import {RunnableModel} from "../models/inputs/runnable-model";
+import {RequisitionModel} from "../models/outputs/requisition-model";
+
 const { spawn } = require('child_process');
 const fs = require("fs");
 
@@ -50,19 +55,45 @@ describe("Inception test", () => {
                 .map(fileContent => JSON.parse(fileContent));
 
             expect(testerReports.length).toBe(2);
-            expect(testerReports[1].valid).toBeTruthy();
-            const finalReport = testerReports[1].runnables[0];
 
-            expect(finalReport.time.hasTimedOut).toBeFalsy();
 
-            expect(finalReport.subscriptions[0].valid).toBeTruthy();
+            const innterTest = testerReports[0];
+            expect(innterTest.valid).toBeTruthy();
+            const innerReport: RequisitionModel = innterTest.runnables[0];
 
-            expect(finalReport.startEvent.publisher.valid).toBeTruthy();
+            expect(innerReport.tests["No time out"]).toBeTruthy();
+            expect(innerReport.name).toBe("innerRunnableUds");
+
+            expect(innerReport.subscriptions[0].valid).toBeTruthy();
+            expect(innerReport.subscriptions[0].tests["Able to connect"]).toBeTruthy();
+            expect(innerReport.subscriptions[0].tests["works"]).toBeTruthy();
+            expect(innerReport.subscriptions[0].tests["Message received"]).toBeTruthy();
+            expect(innerReport.subscriptions[0].tests["No time out"]).toBeTruthy();
+
+            expect(innerReport.startEvent.publisher.valid).toBeTruthy();
+            expect(innerReport.startEvent.publisher.name).toBe("runnableUds");
+
+
+            const outterTest = testerReports[1];
+            expect(outterTest.valid).toBeTruthy();
+            const outterReport: RequisitionModel = testerReports[1].runnables[0];
+
+            expect(outterReport.tests["No time out"]).toBeTruthy();
+            expect(outterReport.name).toBe("runnableUds");
+
+            expect(outterReport.subscriptions[0].valid).toBeTruthy();
+            expect(outterReport.subscriptions[0].tests["Able to connect"]).toBeTruthy();
+            expect(outterReport.subscriptions[0].tests["true"]).toBeTruthy();
+            expect(outterReport.subscriptions[0].tests["Message received"]).toBeTruthy();
+            expect(outterReport.subscriptions[0].tests["No time out"]).toBeTruthy();
+
+            expect(outterReport.startEvent.publisher.valid).toBeTruthy();
+            expect(outterReport.startEvent.publisher.name).toBe("runnableUdsPublisher");
 
             tester.on('exit', (statusCode) => {
                 expect(statusCode).toBe(0);
-            });
                 done();
+            });
         } catch (err) {
             console.error(err)
         }

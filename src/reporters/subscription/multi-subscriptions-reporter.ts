@@ -20,6 +20,8 @@ export class MultiSubscriptionsReporter {
 
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
+            if (this.subscriptionReporters.length <= 0)
+                return resolve();
             this.subscriptionReporters.forEach(subscriptionHandler => {
                 subscriptionHandler.startTimeout(() => {
                     if (this.haveAllSubscriptionsStoppedWaiting())
