@@ -39,9 +39,9 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.app.all(this.endpoint, (request, response) => {
-                const payload = JSON.parse(request.rawBody).toString();
+                const payload = request.rawBody;
                 if (util_1.isNullOrUndefined(this.response.payload))
-                    this.response.payload = `Requisition read: ${payload}`;
+                    this.response.payload = payload;
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key]);
                 }

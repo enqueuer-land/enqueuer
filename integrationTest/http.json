@@ -1,6 +1,6 @@
 {
   "runnableVersion": "01.00.00",
-  "name": "runnableHttp",
+  "name": "runnableHttpJsonPayload",
   "initialDelay": 0,
   "runnables": [
     {
@@ -17,7 +17,7 @@
             "status": 321,
             "payload": "responsePayload"
           },
-          "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === 'virgs';",
+          "onMessageReceived": "test['Payload.enqueuer is Virgs'] = JSON.parse(message).enqueuer === 'virgs';",
           "timeout": 10000
         }
       ],

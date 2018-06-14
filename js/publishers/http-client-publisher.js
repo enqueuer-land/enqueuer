@@ -68,7 +68,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
             }
             catch (exc) { }
         }
-        return JSON.stringify(this.payload);
+        return this.payload;
     }
 };
 HttpClientPublisher = __decorate([

@@ -9,6 +9,7 @@ To Create:
 - [ ] Tcp:
 
 - [ ] Add iterations to runnables
+- [ ] Report junit compatible: https://github.com/davidparsson/junit-report-builder
 
 - [ ] Http proxy for http subscription (Http sniffer/Fiddler)
         https://blog.websecurify.com/2017/03/http-pcap-in-node.html

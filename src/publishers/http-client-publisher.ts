@@ -74,6 +74,6 @@ export class HttpClientPublisher extends Publisher {
             }
             catch (exc) {}
         }
-        return JSON.stringify(this.payload);
+        return this.payload;
     }
 }
