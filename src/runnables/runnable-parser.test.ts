@@ -117,7 +117,7 @@ const validFileRunnable = {
             }
         }
     ]
-}
+};
 const validAmqpRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableAmqp",
@@ -157,7 +157,7 @@ const validAmqpRunnable = {
             }
         }
     ]
-}
+};
 const validUdsRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableUDSName",
@@ -185,7 +185,7 @@ const validUdsRunnable = {
             }
         }
     ]
-}
+};
 const validHttpRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableHttp",
@@ -224,7 +224,7 @@ const validHttpRunnable = {
             }
         }
     ]
-}
+};
 const validSqsRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableSqs",
@@ -264,7 +264,7 @@ const validSqsRunnable = {
             }
         }
     ]
-}
+};
 const validMqttRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableMqtt",
@@ -300,7 +300,7 @@ const validMqttRunnable = {
             }
         }
     ]
-}
+};
 const validRunnableWithId = {
     "runnableVersion": "01.00.00",
     "name": "runnableFile",
@@ -331,7 +331,7 @@ const validRunnableWithId = {
             }
         }
     ]
-}
+};
 
 describe('RunnableParser', () => {
 
@@ -360,7 +360,6 @@ describe('RunnableParser', () => {
         const runnableStringified: string = JSON.stringify(validRunnable);
         const parser: RunnableParser = new RunnableParser();
 
-        expect(validRunnable.id).toBeUndefined();
         expect(parser.parse(runnableStringified).id).toBeDefined();
     });
 
