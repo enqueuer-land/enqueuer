@@ -1,8 +1,7 @@
-import {Configuration} from "./configurations/configuration";
-import {EnqueuerExecutor} from "./executors/enqueuer-executor";
-import {Logger} from "./loggers/logger";
-import {Container} from "conditional-injector";
-import {SingleRunResultModel} from "./models/outputs/single-run-result-model";
+import {Configuration} from './configurations/configuration';
+import {EnqueuerExecutor} from './executors/enqueuer-executor';
+import {Logger} from './loggers/logger';
+import {Container} from 'conditional-injector';
 
 export class EnqueuerStarter {
 
@@ -17,13 +16,12 @@ export class EnqueuerStarter {
         return this.executor.init()
             .then(() => this.executor.execute())
             .then((valid: boolean) => {
-                Logger.info("Enqueuer execution is over (" + valid + ")");
-                return valid ? 0: 1;
+                Logger.info('Enqueuer execution is over (' + valid + ')');
+                return valid ? 0 : 1;
             })
             .catch((error: any) => {
-                Logger.fatal(`Execution error: ${error}`)
+                Logger.fatal(`Execution error: ${error}`);
                 return -1;
-            })
+            });
     }
 }
-

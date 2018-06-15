@@ -22,7 +22,7 @@ class EnqueuerStarter {
             return this.executor.init()
                 .then(() => this.executor.execute())
                 .then((valid) => {
-                logger_1.Logger.info("Enqueuer execution is over (" + valid + ")");
+                logger_1.Logger.info('Enqueuer execution is over (' + valid + ')');
                 return valid ? 0 : 1;
             })
                 .catch((error) => {
