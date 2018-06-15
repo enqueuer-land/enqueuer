@@ -5,7 +5,7 @@ import {Configuration} from "../configurations/configuration";
 import {Logger} from "../loggers/logger";
 import {Container, Injectable} from "conditional-injector";
 import {RunnableRunner} from "../runnables/runnable-runner";
-import {ResultCreator} from "../result-creator/ResultCreator";
+import {ResultCreator} from "../result-creator/result-creator";
 
 @Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"]})
 export class SingleRunExecutor extends EnqueuerExecutor {

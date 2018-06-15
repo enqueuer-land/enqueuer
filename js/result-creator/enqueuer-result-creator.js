@@ -17,9 +17,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
-const ResultCreator_1 = require("./ResultCreator");
+const result_creator_1 = require("./result-creator");
 const fs = __importStar(require("fs"));
-let EnqueuerResultCreator = class EnqueuerResultCreator extends ResultCreator_1.ResultCreator {
+let EnqueuerResultCreator = class EnqueuerResultCreator extends result_creator_1.ResultCreator {
     constructor(resultCreatorAttributes) {
         super();
         this.report = {
@@ -44,7 +44,7 @@ let EnqueuerResultCreator = class EnqueuerResultCreator extends ResultCreator_1.
     }
 };
 EnqueuerResultCreator = __decorate([
-    conditional_injector_1.Injectable({ predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === "enqueuer" }),
+    conditional_injector_1.Injectable({ predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'enqueuer' }),
     __metadata("design:paramtypes", [Object])
 ], EnqueuerResultCreator);
 exports.EnqueuerResultCreator = EnqueuerResultCreator;

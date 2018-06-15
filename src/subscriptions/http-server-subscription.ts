@@ -1,11 +1,11 @@
-import {Subscription} from "./subscription";
-import {Logger} from "../loggers/logger";
-import {Injectable} from "conditional-injector";
-import {SubscriptionModel} from "../models/inputs/subscription-model";
-import {isNullOrUndefined} from "util";
-const express = require('express');
+import {Subscription} from './subscription';
+import {Logger} from '../loggers/logger';
+import {Injectable} from 'conditional-injector';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
+import {isNullOrUndefined} from 'util';
+import express from 'express';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "http-server"})
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-server'})
 export class HttpServerSubscription extends Subscription {
     private app: any;
 
@@ -25,7 +25,7 @@ export class HttpServerSubscription extends Subscription {
             req.on('data', function(chunk: any) {
                 req.rawBody += chunk;
             });
-            req.on('end', function(){
+            req.on('end', function() {
                 Logger.trace(`Http subscription read ${req.rawBody}`);
                 next();
             });
@@ -42,18 +42,19 @@ export class HttpServerSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             this.app.all(this.endpoint, (request: any, response: any) => {
                 const payload = request.rawBody;
-                if (isNullOrUndefined(this.response.payload))
+                if (isNullOrUndefined(this.response.payload)) {
                     this.response.payload = payload;
-                for (const key in this.response.header) {
-                    response.header(key, this.response.header[key])
                 }
-                if (request.method != this.method)
+                for (const key in this.response.header) {
+                    response.header(key, this.response.header[key]);
+                }
+                if (request.method != this.method) {
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
-                else {
+                } else {
                     response.status(this.response.status).send(this.response.payload);
                     resolve(payload);
                 }
-            })
+            });
         });
     }
 
@@ -64,8 +65,7 @@ export class HttpServerSubscription extends Subscription {
                     reject(err);
                 }
                 resolve();
-            })
-
+            });
         });
     }
 

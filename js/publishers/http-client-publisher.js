@@ -8,17 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
-const request = require("request");
+const request_1 = __importDefault(require("request"));
 let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
         this.url = publish.url;
         this.method = publish.method.toUpperCase();
-        this.payload = publish.payload || "";
+        this.payload = publish.payload || '';
         this.headers = publish.headers || {};
     }
     publish() {
@@ -29,18 +32,20 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
                 headers: this.headers
             };
             options.data = options.body = this.handleObjectPayload(options);
-            if (this.method.toUpperCase() != "GET")
-                options.headers['Content-Length'] = options.headers["Content-Length"] || this.setContentLength(options.data);
+            if (this.method.toUpperCase() != 'GET') {
+                options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
+            }
             logger_1.Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
-            request(options, (error, response, body) => {
+            request_1.default(options, (error, response) => {
                 if (response) {
                     this.messageReceived = JSON.stringify(response);
                     logger_1.Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}...`);
                 }
-                else
+                else {
                     logger_1.Logger.warning(`No http requisition response`);
+                }
                 if (error) {
-                    reject("Error firing http request: " + error);
+                    reject('Error firing http request: ' + error);
                 }
                 else {
                     resolve();
@@ -53,12 +58,12 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
             return value.length;
         }
         else {
-            return Buffer.from(value, "utf8").byteLength;
+            return Buffer.from(value, 'utf8').byteLength;
         }
     }
     handleObjectPayload(options) {
         let result = Object.assign({}, options);
-        if (this.method.toUpperCase() != "GET") {
+        if (this.method.toUpperCase() != 'GET') {
             try {
                 const isObject = typeof JSON.parse(this.payload) === 'object';
                 if (isObject) {
@@ -66,13 +71,15 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
                     result.json = true;
                 }
             }
-            catch (exc) { }
+            catch (exc) {
+                //do nothing
+            }
         }
         return this.payload;
     }
 };
 HttpClientPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === "http-client" }),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'http-client' }),
     __metadata("design:paramtypes", [Object])
 ], HttpClientPublisher);
 exports.HttpClientPublisher = HttpClientPublisher;

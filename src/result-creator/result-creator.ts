@@ -1,4 +1,4 @@
-import {ResultModel} from "../models/outputs/result-model";
+import {ResultModel} from '../models/outputs/result-model';
 
 export abstract class ResultCreator {
     public abstract addTestSuite(suite: ResultModel): void;

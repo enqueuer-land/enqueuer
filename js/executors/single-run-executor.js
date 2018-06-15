@@ -24,13 +24,13 @@ const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
-const ResultCreator_1 = require("../result-creator/ResultCreator");
+const result_creator_1 = require("../result-creator/result-creator");
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
         logger_1.Logger.info("Executing in Single-Run mode");
         const singleRunConfiguration = enqueuerConfiguration["single-run"];
-        this.resultCreator = conditional_injector_1.Container.subclassesOf(ResultCreator_1.ResultCreator).create(enqueuerConfiguration["single-run"].report);
+        this.resultCreator = conditional_injector_1.Container.subclassesOf(result_creator_1.ResultCreator).create(enqueuerConfiguration["single-run"].report);
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunInput = new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
     }

@@ -1,14 +1,13 @@
-import {ResultModel} from "../models/outputs/result-model";
-import {Injectable} from "conditional-injector";
-import {ResultCreator} from "./ResultCreator";
-import {SingleRunResultModel} from "../models/outputs/single-run-result-model";
-
-const prettyjson = require('prettyjson');
+import {ResultModel} from '../models/outputs/result-model';
+import {Injectable} from 'conditional-injector';
+import {ResultCreator} from './result-creator';
+import {SingleRunResultModel} from '../models/outputs/single-run-result-model';
+import prettyjson from 'prettyjson';
 
 const options = {
     defaultIndentation: 4,
-    keysColor: "white",
-    dashColor: "grey",
+    keysColor: 'white',
+    dashColor: 'grey',
     inlineArrays: true
 };
 
@@ -19,7 +18,7 @@ export class StandardOutputResultCreator extends ResultCreator {
     public constructor() {
         super();
         this.report = {
-            name: "standardOutput",
+            name: 'standardOutput',
             tests: {},
             valid: true,
             runnables: {}
