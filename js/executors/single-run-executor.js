@@ -28,22 +28,22 @@ const result_creator_1 = require("../result-creator/result-creator");
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
-        logger_1.Logger.info("Executing in Single-Run mode");
-        const singleRunConfiguration = enqueuerConfiguration["single-run"];
-        this.resultCreator = conditional_injector_1.Container.subclassesOf(result_creator_1.ResultCreator).create(enqueuerConfiguration["single-run"].report);
+        logger_1.Logger.info('Executing in Single-Run mode');
+        const singleRunConfiguration = enqueuerConfiguration['single-run'];
+        this.resultCreator = conditional_injector_1.Container.subclassesOf(result_creator_1.ResultCreator).create(enqueuerConfiguration['single-run'].report);
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunInput = new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
-            logger_1.Logger.info("Initializing Single-Run mode");
+            logger_1.Logger.info('Initializing Single-Run mode');
             return this.singleRunInput.syncDir();
         });
     }
     execute() {
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
-                logger_1.Logger.info("There is no more requisition to be ran");
+                logger_1.Logger.info('There is no more requisition to be ran');
                 this.resultCreator.create();
                 return resolve(this.resultCreator.isValid());
             });
@@ -65,7 +65,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
 };
 SingleRunExecutor = __decorate([
-    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"] }),
+    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration['single-run'] }),
     __metadata("design:paramtypes", [Object])
 ], SingleRunExecutor);
 exports.SingleRunExecutor = SingleRunExecutor;

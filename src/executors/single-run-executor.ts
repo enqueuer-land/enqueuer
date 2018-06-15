@@ -1,13 +1,13 @@
-import {EnqueuerExecutor} from "./enqueuer-executor";
-import {MultiPublisher} from "../publishers/multi-publisher";
-import {SingleRunInput} from "./single-run-input";
-import {Configuration} from "../configurations/configuration";
-import {Logger} from "../loggers/logger";
-import {Container, Injectable} from "conditional-injector";
-import {RunnableRunner} from "../runnables/runnable-runner";
-import {ResultCreator} from "../result-creator/result-creator";
+import {EnqueuerExecutor} from './enqueuer-executor';
+import {MultiPublisher} from '../publishers/multi-publisher';
+import {SingleRunInput} from './single-run-input';
+import {Configuration} from '../configurations/configuration';
+import {Logger} from '../loggers/logger';
+import {Container, Injectable} from 'conditional-injector';
+import {RunnableRunner} from '../runnables/runnable-runner';
+import {ResultCreator} from '../result-creator/result-creator';
 
-@Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration["single-run"]})
+@Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration['single-run']})
 export class SingleRunExecutor extends EnqueuerExecutor {
 
     private multiPublisher: MultiPublisher;
@@ -16,23 +16,23 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     constructor(enqueuerConfiguration: any) {
         super();
-        Logger.info("Executing in Single-Run mode");
-        const singleRunConfiguration = enqueuerConfiguration["single-run"];
-        this.resultCreator = Container.subclassesOf(ResultCreator).create(enqueuerConfiguration["single-run"].report);
+        Logger.info('Executing in Single-Run mode');
+        const singleRunConfiguration = enqueuerConfiguration['single-run'];
+        this.resultCreator = Container.subclassesOf(ResultCreator).create(enqueuerConfiguration['single-run'].report);
 
         this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
         this.singleRunInput = new SingleRunInput(singleRunConfiguration.fileNamePattern);
     }
 
     public async init(): Promise<void> {
-        Logger.info("Initializing Single-Run mode");
+        Logger.info('Initializing Single-Run mode');
         return this.singleRunInput.syncDir();
     }
 
     public execute(): Promise<boolean> {
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
-                Logger.info("There is no more requisition to be ran");
+                Logger.info('There is no more requisition to be ran');
                 this.resultCreator.create();
                 return resolve(this.resultCreator.isValid());
             });
@@ -49,7 +49,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                     this.resultCreator.addError(err);
                     this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                     resolve(this.execute()); //Runs the next one
-                })
+                });
         });
     }
 

@@ -27,13 +27,11 @@ const runnable_runner_1 = require("../runnables/runnable-runner");
 let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
-        logger_1.Logger.info("Executing in Daemon mode");
+        logger_1.Logger.info('Executing in Daemon mode');
         const configuration = new configuration_1.Configuration();
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.getOutputs());
-        ;
-        this.requisitionInputs = enqueuerConfiguration["daemon"]
+        this.requisitionInputs = enqueuerConfiguration['daemon']
             .map((input) => new daemon_run_input_1.DaemonRunInput(input));
-        ;
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -67,7 +65,7 @@ let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerEx
     }
 };
 DaemonExecutor = __decorate([
-    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration["daemon"] }),
+    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration['daemon'] }),
     __metadata("design:paramtypes", [Object])
 ], DaemonExecutor);
 exports.DaemonExecutor = DaemonExecutor;

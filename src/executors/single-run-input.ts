@@ -1,6 +1,6 @@
-import {SubscriptionReporter} from "../reporters/subscription/subscription-reporter";
-import {RunnableParser} from "../runnables/runnable-parser";
-import {RunnableModel} from "../models/inputs/runnable-model";
+import {SubscriptionReporter} from '../reporters/subscription/subscription-reporter';
+import {RunnableParser} from '../runnables/runnable-parser';
+import {RunnableModel} from '../models/inputs/runnable-model';
 
 export class SingleRunInput {
 
@@ -28,8 +28,9 @@ export class SingleRunInput {
     }
 
     public receiveRequisition(): Promise<RunnableModel> {
-        if (this.executorTimeout)
+        if (this.executorTimeout) {
             this.subscriptionReporter.startTimeout(this.executorTimeout);
+        }
         return this.subscriptionReporter
             .receiveMessage()
             .then((unparsed: string) => this.runnableParser.parse(unparsed));

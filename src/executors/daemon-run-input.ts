@@ -1,9 +1,9 @@
-import {Subscription} from "../subscriptions/subscription";
-import {Logger} from "../loggers/logger";
-import {Container} from "conditional-injector";
-import {RunnableParser} from "../runnables/runnable-parser";
-import {SubscriptionModel} from "../models/inputs/subscription-model";
-import {RunnableModel} from "../models/inputs/runnable-model";
+import {Subscription} from '../subscriptions/subscription';
+import {Logger} from '../loggers/logger';
+import {Container} from 'conditional-injector';
+import {RunnableParser} from '../runnables/runnable-parser';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
+import {RunnableModel} from '../models/inputs/runnable-model';
 
 export class DaemonRunInput {
 
@@ -34,11 +34,10 @@ export class DaemonRunInput {
                     Logger.info(`${this.type} got a message`);
                     try {
                         resolve(this.runnableParser.parse(message));
+                    } catch (err) {
+                        Logger.error(`Error parsing runnable ${JSON.stringify(err)}`);
                     }
-                    catch(err) {
-                        Logger.error(`Error parsing runnable ${JSON.stringify(err)}`)
-                    }
-                })
+                });
         });
     }
 

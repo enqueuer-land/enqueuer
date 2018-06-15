@@ -20,8 +20,9 @@ class SingleRunInput {
         this.executorTimeout = executorTimeout;
     }
     receiveRequisition() {
-        if (this.executorTimeout)
+        if (this.executorTimeout) {
             this.subscriptionReporter.startTimeout(this.executorTimeout);
+        }
         return this.subscriptionReporter
             .receiveMessage()
             .then((unparsed) => this.runnableParser.parse(unparsed));
