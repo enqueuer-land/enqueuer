@@ -1,9 +1,9 @@
-import {StartEventReporter} from "./start-event-reporter";
-import {SubscriptionReporter} from "../subscription/subscription-reporter";
-import {SubscriptionModel} from "../../models/inputs/subscription-model";
-import {Injectable} from "conditional-injector";
-import {StartEventModel} from "../../models/outputs/start-event-model";
-import {checkValidation} from "../../models/outputs/report-model";
+import {StartEventReporter} from './start-event-reporter';
+import {SubscriptionReporter} from '../subscription/subscription-reporter';
+import {SubscriptionModel} from '../../models/inputs/subscription-model';
+import {Injectable} from 'conditional-injector';
+import {StartEventModel} from '../../models/outputs/start-event-model';
+import {checkValidation} from '../../models/outputs/report-model';
 
 @Injectable({predicate: (startEvent: any) => startEvent.subscription != null})
 export class StartEventSubscriptionReporter extends StartEventReporter {

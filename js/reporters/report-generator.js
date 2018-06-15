@@ -5,13 +5,13 @@ const report_model_1 = require("../models/outputs/report-model");
 class ReportGenerator {
     constructor(requisitionAttributes) {
         this.report = {
-            type: "requisition",
+            type: 'requisition',
             valid: true,
             tests: {},
             name: requisitionAttributes.name,
             time: {
-                startTime: "",
-                endTime: "",
+                startTime: '',
+                endTime: '',
                 totalTime: 0
             },
             subscriptions: [],
@@ -24,10 +24,12 @@ class ReportGenerator {
     }
     setStartEventReport(startEventReports) {
         this.report.startEvent = startEventReports;
-        if (this.report.startEvent.publisher)
+        if (this.report.startEvent.publisher) {
             this.report.valid = this.report.valid && this.report.startEvent.publisher.valid;
-        if (this.report.startEvent.subscription)
+        }
+        if (this.report.startEvent.subscription) {
             this.report.valid = this.report.valid && this.report.startEvent.subscription.valid;
+        }
     }
     setSubscriptionReport(subscriptionReport) {
         this.report.subscriptions = subscriptionReport;

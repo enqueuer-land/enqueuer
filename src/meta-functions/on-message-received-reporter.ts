@@ -1,6 +1,6 @@
-import {OnMessageReceivedMetaFunctionBody} from "./on-message-received-meta-function-body";
-import {MetaFunctionExecutor} from "./meta-function-executor";
-import {Logger} from "../loggers/logger";
+import {OnMessageReceivedMetaFunctionBody} from './on-message-received-meta-function-body';
+import {MetaFunctionExecutor} from './meta-function-executor';
+import {Logger} from '../loggers/logger';
 
 export class OnMessageReceivedReporter {
 

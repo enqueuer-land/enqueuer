@@ -1,6 +1,6 @@
-import * as input from "../../models/inputs/subscription-model";
-import * as output from "../../models/outputs/subscription-model";
-import {SubscriptionReporter} from "./subscription-reporter";
+import * as input from '../../models/inputs/subscription-model';
+import * as output from '../../models/outputs/subscription-model';
+import {SubscriptionReporter} from './subscription-reporter';
 
 export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
@@ -20,19 +20,22 @@ export class MultiSubscriptionsReporter {
 
     public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (this.subscriptionReporters.length <= 0)
+            if (this.subscriptionReporters.length <= 0) {
                 return resolve();
+            }
             this.subscriptionReporters.forEach(subscriptionHandler => {
                 subscriptionHandler.startTimeout(() => {
-                    if (this.haveAllSubscriptionsStoppedWaiting())
+                    if (this.haveAllSubscriptionsStoppedWaiting()) {
                         resolve();
+                    }
                 });
                 subscriptionHandler.receiveMessage()
                     .then(() => {
-                        if (this.haveAllSubscriptionsStoppedWaiting())
+                        if (this.haveAllSubscriptionsStoppedWaiting()) {
                             resolve();
+                        }
                     })
-                    .catch(err => reject(err))
+                    .catch(err => reject(err));
             }
             );
         });

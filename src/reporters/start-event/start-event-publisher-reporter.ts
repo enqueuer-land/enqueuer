@@ -1,18 +1,17 @@
-///<reference path="../../variables/variables-controller.ts"/>
-import {Publisher} from "../../publishers/publisher";
-import {StartEventReporter} from "./start-event-reporter";
-import {PrePublishMetaFunctionBody} from "../../meta-functions/pre-publish-meta-function-body";
-import {MetaFunctionExecutor} from "../../meta-functions/meta-function-executor";
-import {DateController} from "../../timers/date-controller";
-import * as output from "../../models/outputs/publisher-model";
-import * as input from "../../models/inputs/publisher-model";
-import {Logger} from "../../loggers/logger";
-import {Injectable, Container} from "conditional-injector";
-import {OnMessageReceivedReporter} from "../../meta-functions/on-message-received-reporter";
-import {StartEventModel} from "../../models/outputs/start-event-model";
-import {checkValidation} from "../../models/outputs/report-model";
-import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
-import {VariablesController} from "../../variables/variables-controller";
+import {Publisher} from '../../publishers/publisher';
+import {StartEventReporter} from './start-event-reporter';
+import {PrePublishMetaFunctionBody} from '../../meta-functions/pre-publish-meta-function-body';
+import {MetaFunctionExecutor} from '../../meta-functions/meta-function-executor';
+import {DateController} from '../../timers/date-controller';
+import * as output from '../../models/outputs/publisher-model';
+import * as input from '../../models/inputs/publisher-model';
+import {Logger} from '../../loggers/logger';
+import {Injectable, Container} from 'conditional-injector';
+import {OnMessageReceivedReporter} from '../../meta-functions/on-message-received-reporter';
+import {StartEventModel} from '../../models/outputs/start-event-model';
+import {checkValidation} from '../../models/outputs/report-model';
+import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
+import {VariablesController} from '../../variables/variables-controller';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
@@ -28,7 +27,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
             valid: true,
             type: this.publisherOriginalAttributes.type,
             tests: {}
-        }
+        };
     }
 
     public start(): Promise<void> {
@@ -46,10 +45,9 @@ export class StartEventPublisherReporter extends StartEventReporter {
                     .catch((err: any) => {
                         Logger.error(err);
                         this.report.tests[`Error publishing start event '${this.publisher}'`] = false;
-                        reject(err)
+                        reject(err);
                     });
-            }
-            else {
+            } else {
                 const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
                 this.report.tests[message] = false;
                 reject(message);
@@ -65,8 +63,9 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived)
+        if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived) {
             return;
+        }
         const onMessageReceivedReporter = new OnMessageReceivedReporter(this.publisher.messageReceived, this.publisher.onMessageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
@@ -85,8 +84,9 @@ export class StartEventPublisherReporter extends StartEventReporter {
         functionResponse = (placeHolderReplacer.replace(functionResponse) as any);
         Logger.debug(`Replaced PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
 
-        if (functionResponse.publisher.payload)
+        if (functionResponse.publisher.payload) {
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
+        }
 
         Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);

@@ -1,11 +1,11 @@
-import { ReportGenerator } from "./report-generator";
-import {Logger} from "../loggers/logger";
-import {StartEventReporter} from "./start-event/start-event-reporter";
-import * as input from "../models/inputs/requisition-model";
-import * as output from "../models/outputs/requisition-model";
-import {Timeout} from "../timers/timeout";
-import {MultiSubscriptionsReporter} from "./subscription/multi-subscriptions-reporter";
-import {Container} from "conditional-injector";
+import { ReportGenerator } from './report-generator';
+import {Logger} from '../loggers/logger';
+import {StartEventReporter} from './start-event/start-event-reporter';
+import * as input from '../models/inputs/requisition-model';
+import * as output from '../models/outputs/requisition-model';
+import {Timeout} from '../timers/timeout';
+import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
+import {Container} from 'conditional-injector';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -23,22 +23,24 @@ export class RequisitionReporter {
         this.startEvent = Container.subclassesOf(StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
-        this.onFinishCallback = () => {};
+        this.onFinishCallback = () => {
+            //do nothing
+        };
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
-        Logger.trace("Multisubscribing");
+        Logger.trace('Multisubscribing');
         this.multiSubscriptionsReporter.connect()
             .then(() => {
-                Logger.trace("Multisubscriptions are ready");
+                Logger.trace('Multisubscriptions are ready');
                 this.initializeTimeout();
                 this.onSubscriptionsCompleted();
             })
             .catch(err => {
                 Logger.error(`Error connecting multiSubscription: ${err}`);
-                this.onFinish(err)
+                this.onFinish(err);
             });
     }
 
@@ -50,10 +52,10 @@ export class RequisitionReporter {
         this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
-                Logger.error(`Error receiving message in multiSubscription: ${err}`)
-                this.onFinish(err)
+                Logger.error(`Error receiving message in multiSubscription: ${err}`);
+                this.onFinish(err);
             });
-        Logger.debug("Triggering start event");
+        Logger.debug('Triggering start event');
         this.startEvent.start()
             .then(() => {
                 this.startEventDoneItsJob = true;
@@ -61,7 +63,7 @@ export class RequisitionReporter {
             })
             .catch(err => {
                 const message = `Error triggering startingEvent: ${err}`;
-                Logger.error(message)
+                Logger.error(message);
                 this.onFinish(message);
             });
 
@@ -70,24 +72,27 @@ export class RequisitionReporter {
     private initializeTimeout() {
         if (this.requisitionTimeout) {
             new Timeout(() => {
-                this.onFinish("Requisition has timed out");
+                this.onFinish('Requisition has timed out');
             }).start(this.requisitionTimeout);
         }
     }
 
     private onAllSubscriptionsStopWaiting(): void {
-        Logger.info("All subscriptions stopped waiting");
+        Logger.info('All subscriptions stopped waiting');
         this.allSubscriptionsStoppedWaiting = true;
         this.tryToFinishExecution();
     }
 
     private tryToFinishExecution() {
-        if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting)
+        if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
             this.onFinish();
+        }
     }
 
     private onFinish(error?: string): void {
-        this.onFinish = () => {};
+        this.onFinish = () => {
+            //do nothing
+        };
         Logger.info(`Start gathering reports`);
 
         if (error) {

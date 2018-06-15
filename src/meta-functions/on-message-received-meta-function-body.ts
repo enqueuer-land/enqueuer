@@ -1,6 +1,6 @@
-import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
-import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
-import {VariablesController} from "../variables/variables-controller";
+import {MetaFunctionBodyCreator} from './meta-function-body-creator';
+import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
+import {VariablesController} from '../variables/variables-controller';
 
 export class OnMessageReceivedMetaFunctionBody implements MetaFunctionBodyCreator {
 

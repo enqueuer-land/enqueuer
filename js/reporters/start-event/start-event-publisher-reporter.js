@@ -16,7 +16,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-///<reference path="../../variables/variables-controller.ts"/>
 const publisher_1 = require("../../publishers/publisher");
 const start_event_reporter_1 = require("./start-event-reporter");
 const pre_publish_meta_function_body_1 = require("../../meta-functions/pre-publish-meta-function-body");
@@ -71,8 +70,9 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         };
     }
     executeOnMessageReceivedFunction() {
-        if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived)
+        if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived) {
             return;
+        }
         const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.publisher.messageReceived, this.publisher.onMessageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
@@ -88,8 +88,9 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
             .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
         functionResponse = placeHolderReplacer.replace(functionResponse);
         logger_1.Logger.debug(`Replaced PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
-        if (functionResponse.publisher.payload)
+        if (functionResponse.publisher.payload) {
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
+        }
         logger_1.Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
         this.publisher = conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(functionResponse.publisher);
         functionResponse.tests

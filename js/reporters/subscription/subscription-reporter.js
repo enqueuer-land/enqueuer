@@ -14,7 +14,7 @@ class SubscriptionReporter {
             logger_1.Logger.fatal(`Handling kill signal ${signal}`);
             this.cleanUp();
             new timeout_1.Timeout(() => {
-                logger_1.Logger.fatal("Adios muchachos");
+                logger_1.Logger.fatal('Adios muchachos');
                 process.exit(1);
             }).start(2000);
         };
@@ -30,8 +30,9 @@ class SubscriptionReporter {
     }
     startTimeout(onTimeOutCallback) {
         this.subscription.messageReceived = undefined;
-        if (this.timeOut)
+        if (this.timeOut) {
             this.timeOut.clear();
+        }
         this.timeOut = new timeout_1.Timeout(() => {
             if (!this.subscription.messageReceived) {
                 const message = `[${this.subscription.name}] stop waiting because it has timed out`;
@@ -48,14 +49,14 @@ class SubscriptionReporter {
             this.subscription.connect()
                 .then(() => {
                 this.report.connectionTime = new date_controller_1.DateController().toString();
-                this.report.tests["Able to connect"] = true;
+                this.report.tests['Able to connect'] = true;
                 resolve();
                 process.on('SIGINT', this.handleKillSignal);
                 process.on('SIGTERM', this.handleKillSignal);
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                this.report.tests["Able to connect"] = false;
+                this.report.tests['Able to connect'] = false;
                 reject(err);
             });
         });
@@ -66,7 +67,7 @@ class SubscriptionReporter {
             this.subscription.receiveMessage()
                 .then((message) => {
                 if (message) {
-                    logger_1.Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + "...");
+                    logger_1.Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
                         this.executeSubscriptionFunction();
@@ -85,15 +86,18 @@ class SubscriptionReporter {
     }
     getReport() {
         const hasReceivedMessage = this.subscription.messageReceived != null;
-        this.report.tests["Message received"] = hasReceivedMessage;
-        if (hasReceivedMessage)
-            this.report.tests["No time out"] = !this.hasTimedOut;
+        this.report.tests['Message received'] = hasReceivedMessage;
+        if (hasReceivedMessage) {
+            this.report.tests['No time out'] = !this.hasTimedOut;
+        }
         this.cleanUp();
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
     }
     cleanUp() {
-        this.cleanUp = () => { };
+        this.cleanUp = () => {
+            //do nothing
+        };
         logger_1.Logger.info(`Unsubscribing subscription ${this.subscription.type}`);
         try {
             this.subscription.unsubscribe();
@@ -101,8 +105,9 @@ class SubscriptionReporter {
         catch (err) {
             logger_1.Logger.error(err);
         }
-        if (this.timeOut)
+        if (this.timeOut) {
             this.timeOut.clear();
+        }
     }
     initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
@@ -111,8 +116,9 @@ class SubscriptionReporter {
         }
     }
     executeSubscriptionFunction() {
-        if (!this.subscription.messageReceived || !this.subscription.onMessageReceived)
+        if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
             return;
+        }
         const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.subscription.messageReceived, this.subscription.onMessageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests

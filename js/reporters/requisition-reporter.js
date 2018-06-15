@@ -14,15 +14,17 @@ class RequisitionReporter {
         this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
-        this.onFinishCallback = () => { };
+        this.onFinishCallback = () => {
+            //do nothing
+        };
     }
     start(onFinishCallback) {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
-        logger_1.Logger.trace("Multisubscribing");
+        logger_1.Logger.trace('Multisubscribing');
         this.multiSubscriptionsReporter.connect()
             .then(() => {
-            logger_1.Logger.trace("Multisubscriptions are ready");
+            logger_1.Logger.trace('Multisubscriptions are ready');
             this.initializeTimeout();
             this.onSubscriptionsCompleted();
         })
@@ -41,7 +43,7 @@ class RequisitionReporter {
             logger_1.Logger.error(`Error receiving message in multiSubscription: ${err}`);
             this.onFinish(err);
         });
-        logger_1.Logger.debug("Triggering start event");
+        logger_1.Logger.debug('Triggering start event');
         this.startEvent.start()
             .then(() => {
             this.startEventDoneItsJob = true;
@@ -56,21 +58,24 @@ class RequisitionReporter {
     initializeTimeout() {
         if (this.requisitionTimeout) {
             new timeout_1.Timeout(() => {
-                this.onFinish("Requisition has timed out");
+                this.onFinish('Requisition has timed out');
             }).start(this.requisitionTimeout);
         }
     }
     onAllSubscriptionsStopWaiting() {
-        logger_1.Logger.info("All subscriptions stopped waiting");
+        logger_1.Logger.info('All subscriptions stopped waiting');
         this.allSubscriptionsStoppedWaiting = true;
         this.tryToFinishExecution();
     }
     tryToFinishExecution() {
-        if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting)
+        if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
             this.onFinish();
+        }
     }
     onFinish(error) {
-        this.onFinish = () => { };
+        this.onFinish = () => {
+            //do nothing
+        };
         logger_1.Logger.info(`Start gathering reports`);
         if (error) {
             logger_1.Logger.debug(`Error collected: ${error}`);

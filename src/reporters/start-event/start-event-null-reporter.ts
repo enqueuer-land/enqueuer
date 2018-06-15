@@ -1,13 +1,12 @@
-import {StartEventReporter} from "./start-event-reporter";
-import {Injectable} from "conditional-injector";
+import {StartEventReporter} from './start-event-reporter';
+import {Injectable} from 'conditional-injector';
 
 @Injectable()
 export class StartEventNullReporter extends StartEventReporter {
 
     private startEvent: any;
 
-    public constructor(startEvent: any)
-    {
+    public constructor(startEvent: any) {
         super();
         this.startEvent = startEvent;
     }
