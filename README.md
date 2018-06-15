@@ -135,7 +135,7 @@ While writing a meta function body field (*onMessageReceived, prePublishing*) yo
 		-	**deleteEnqueuerVariable**:
 		To delete the a *enqueuerVariable* do this: ```deleteEnqueuerVariable("httpPort");```.
 		-	**persistSessionVariable**:
-		In the other hand, *sessionVariables* are kept in memmory, which means that they will be persisted just while the current **enqueuer** process is executed. To persist a *sessionVariable*, your code has to have: ```persistSessionVariable("sessionVar", 100)```;
+		In the other hand, *sessionVariables* are kept in memory, which means that they will be persisted just while the current **enqueuer** process is executed. To persist a *sessionVariable*, your code has to have: ```persistSessionVariable("sessionVar", 100)```;
 
 ### when is a runnable result invalid?
 A runnable is invalid when:
