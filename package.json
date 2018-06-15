@@ -8,6 +8,7 @@
     "test": "npm run unitTest && npm run integrationTest",
     "unitTest": "jest --forceExit",
     "integrationTest": "npm start -- -c integrationTest/enqueuer.yml",
+    "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "all": "npm run clean && npm run build && npm link && npm run test",
     "build": "./scripts/generate-injectables-list.sh src/injectable-files-list.ts src && tsc"
@@ -22,6 +23,7 @@
     "enqueuer": "js/index.js"
   },
   "dependencies": {
+    "@types/yamljs": "^0.2.30",
     "ajv": "^6.2.1",
     "amqp": "^0.2.6",
     "aws-sdk": "^2.255.1",
@@ -42,6 +44,7 @@
     "jest": "^22.4.2",
     "ts-jest": "^22.4.1",
     "ts-node": "^4.1.0",
+    "tslint": "^5.10.0",
     "typescript": "^2.7.2"
   },
   "jest": {

@@ -1,23 +1,23 @@
-import {PublisherModel} from "../models/inputs/publisher-model";
-import {Logger} from "../loggers/logger";
-const version = require('../../package.json').version;
-const yaml = require('yamljs');
-let configFileName = "conf/enqueuer.yml";
-const fs = require("fs");
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {Logger} from '../loggers/logger';
+import * as yaml from 'yamljs';
+import * as fs from 'fs';
+import {Command} from 'commander';
 
-
+const packageJson: any = '../../package.json';
+let configFileName = 'conf/enqueuer.yml';
 
 let commandLineVariables: any = {};
 let commander: any = {};
-if (!process.argv[1].toString().match("jest")) {
-    commander = require('commander')
-    .version(process.env.npm_package_version || version, '-V, --version')
+if (!process.argv[1].toString().match('jest')) {
+    commander = new Command()
+    .version(process.env.npm_package_version || packageJson.version, '-V, --version')
     .option('-v, --verbose', 'Activates verbose mode', false)
     .option('-l, --log-level <level>', 'Set log level')
     .option('-c, --config-file <path>', 'Set configurationFile. Defaults to conf/enqueuer.yml')
     .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session',
-        (val: string, memo: string[]) =>{
-                const split = val.split("=");
+        (val: string, memo: string[]) => {
+                const split = val.split('=');
                 if (split.length == 2) {
                     commandLineVariables[split[0]] = split[1];
                 }
@@ -30,7 +30,6 @@ if (!process.argv[1].toString().match("jest")) {
 
     configFileName = commander.configFile || configFileName;
 }
-
 
 let ymlFile = {};
 try {
@@ -52,21 +51,24 @@ export class Configuration {
     }
 
     public getLogLevel(): string | undefined {
-        if (this.commandLine.verbose)
+        if (this.commandLine.verbose) {
             return 'trace';
+        }
         return (this.commandLine.logLevel) ||
-            (this.configurationFile["log-level"]);
+            (this.configurationFile['log-level']);
     }
 
     public getRequisitionRunMode(): any {
-        if (this.configurationFile.requisitions)
-            return this.configurationFile.requisitions["run-mode"];
-        else return undefined;
+        if (this.configurationFile.requisitions) {
+            return this.configurationFile.requisitions['run-mode'];
+        }
+        return undefined;
     }
 
     public getOutputs(): PublisherModel[] {
-        if (!this.configurationFile.outputs)
+        if (!this.configurationFile.outputs) {
             return [];
+        }
         return this.configurationFile.outputs;
     }
 
