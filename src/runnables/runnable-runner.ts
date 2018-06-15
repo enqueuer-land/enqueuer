@@ -28,7 +28,7 @@ export class RunnableRunner extends Runner {
         runnableFunctions.reduce((promise, runPromiseFunction) =>
                                     promise.then(result => runPromiseFunction()
                                             .then(Array.prototype.concat.bind(result))),
-                                Promise.resolve([]));
+                                Promise.resolve([]))
 
     public run(): Promise<ResultModel> {
         const promises = this.runnableModel.runnables
@@ -45,7 +45,7 @@ export class RunnableRunner extends Runner {
                     .then( () => resolve(this.report));
                 })
             .start(this.runnableModel.initialDelay || 0);
-        })
+        });
     }
 
 }

@@ -1,6 +1,6 @@
-import {EnqueuerExecutor} from "./enqueuer-executor";
-import {Injectable} from "conditional-injector";
-import {Logger} from "../loggers/logger";
+import {EnqueuerExecutor} from './enqueuer-executor';
+import {Injectable} from 'conditional-injector';
+import {Logger} from '../loggers/logger';
 
 @Injectable()
 export class NullRunExecutor extends EnqueuerExecutor {
@@ -8,7 +8,7 @@ export class NullRunExecutor extends EnqueuerExecutor {
 
     constructor(enqueuerConfiguration: any) {
         super();
-        Logger.info("Executing in Not-Identified mode");
+        Logger.info('Executing in Not-Identified mode');
         this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
     }
 

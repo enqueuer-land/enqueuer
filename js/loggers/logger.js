@@ -10,8 +10,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const log4js = __importStar(require("log4js"));
 class Logger {
     static setLoggerLevel(level) {
-        if (level)
+        if (level) {
             Logger.getLogger().level = level;
+        }
     }
     static trace(message) {
         Logger.getLogger().trace(message);
@@ -48,12 +49,12 @@ class Logger {
                     },
                     errorOutput: {
                         level: 'WARN',
-                        type: "stderr",
+                        type: 'stderr',
                     }
                     // ,
                     // errors: {
-                    //     type: "logLevelFilter",
-                    //     level: "WARNING",
+                    //     type: 'logLevelFilter',
+                    //     level: 'WARNING',
                     //     appender: 'stderr'
                     // }
                 },

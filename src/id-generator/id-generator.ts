@@ -1,5 +1,5 @@
-import {DateController} from "../timers/date-controller";
-var hash = require('object-hash');
+import {DateController} from '../timers/date-controller';
+import hash from 'object-hash';
 
 export class IdGenerator {
 
@@ -11,7 +11,7 @@ export class IdGenerator {
 
     public generateId(): string {
         return new DateController().getStringOnlyNumbers() +
-                "_" +
+                '_' +
                 hash(this.value).substr(0, 8);
     }
 

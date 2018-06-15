@@ -33,9 +33,8 @@ export class RequisitionRunner extends Runner {
             return this.requisitionReporter.start(
                 () => {
                     Logger.info(`Requisition '${this.requisitionName}' is over`);
-                    resolve(this.requisitionReporter.getReport())
+                    resolve(this.requisitionReporter.getReport());
                 });
         });
     }
 }
-

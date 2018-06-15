@@ -5,8 +5,9 @@ export class Logger {
     private static logger?: log4js.Logger;
 
     public static setLoggerLevel(level?: string): void {
-        if (level)
+        if (level) {
             Logger.getLogger().level = level;
+        }
     }
     public static trace(message: string) {
         Logger.getLogger().trace(message);
@@ -44,12 +45,12 @@ export class Logger {
                     },
                     errorOutput: {
                         level: 'WARN',
-                        type: "stderr",
+                        type: 'stderr',
                     }
                     // ,
                     // errors: {
-                    //     type: "logLevelFilter",
-                    //     level: "WARNING",
+                    //     type: 'logLevelFilter',
+                    //     level: 'WARNING',
                     //     appender: 'stderr'
                     // }
                 },

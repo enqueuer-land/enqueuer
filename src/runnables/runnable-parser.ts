@@ -5,10 +5,8 @@ import {VariablesController} from '../variables/variables-controller';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {RunnableModel} from '../models/inputs/runnable-model';
 import {isNullOrUndefined} from 'util';
-const fs = require('fs');
-const Ajv = require('ajv');
-
-
+import fs from 'fs';
+import Ajv from 'ajv';
 
 export class RunnableParser {
 
@@ -17,17 +15,17 @@ export class RunnableParser {
         const schemasPath = this.discoverSchemasFolder();
         this.validator = this.readFilesFromSchemaFolders(schemasPath.concat('publishers/'))
             .concat(this.readFilesFromSchemaFolders(schemasPath.concat('subscribers/')))
-            .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new Ajv({allErrors: true, verbose: false}))
+            .reduce((ajv, schemaObject: any) => ajv.addSchema(schemaObject), new Ajv({allErrors: true, verbose: false}))
             .addSchema(this.readJsonFile(schemasPath.concat('requisition-schema.json')))
-            .compile(this.readJsonFile(schemasPath.concat('runnable-schema.json')))
+            .compile(this.readJsonFile(schemasPath.concat('runnable-schema.json')));
     }
 
     private discoverSchemasFolder() {
         let realPath = process.argv[1];
         try {
-            realPath = fs.realpathSync(process.argv[1])
-        }
-        catch {
+            realPath = fs.realpathSync(process.argv[1]);
+        } catch {
+            //do nothing
         }
         const prefix = realPath.split('enqueuer')[0];
         const schemasPath = prefix.concat('enqueuer/schemas/');
@@ -41,11 +39,12 @@ export class RunnableParser {
             Logger.error(`Invalid runnable: ${JSON.stringify(variablesReplaced, null, 2)}`);
             this.validator.errors.map(error => {
                 Logger.error(JSON.stringify(error));
-            })
+            });
             throw new Error(JSON.stringify(this.validator.errors, null, 2));
         }
-        if (isNullOrUndefined(variablesReplaced.id))
+        if (isNullOrUndefined(variablesReplaced.id)) {
             variablesReplaced.id = new IdGenerator(variablesReplaced).generateId();
+        }
         const runnableWithId: RunnableModel = variablesReplaced as RunnableModel;
         Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
         Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);

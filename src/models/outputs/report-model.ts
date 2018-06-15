@@ -9,4 +9,3 @@ export interface ReportModel {
 export function checkValidation(reportModel: ReportModel): boolean {
     return Object.keys(reportModel.tests).filter((key: string) => !reportModel.tests[key]).length == 0;
 }
-

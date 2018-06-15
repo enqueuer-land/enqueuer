@@ -8,6 +8,8 @@ class Subscription {
         this.type = subscriptionAttributes.type;
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;
     }
-    unsubscribe() { }
+    unsubscribe() {
+        //do nothing
+    }
 }
 exports.Subscription = Subscription;

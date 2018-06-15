@@ -1,5 +1,5 @@
-import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
-import {PublisherModel} from "../models/inputs/publisher-model";
+import {MetaFunctionBodyCreator} from './meta-function-body-creator';
+import {PublisherModel} from '../models/inputs/publisher-model';
 
 export class PrePublishMetaFunctionBody implements MetaFunctionBodyCreator {
 

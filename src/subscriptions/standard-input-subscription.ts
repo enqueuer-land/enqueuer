@@ -6,7 +6,7 @@ process.stdin.setEncoding('utf8');
 process.stdin.resume();
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'standard-input'})
-export class StandardInputSubscription extends Subscription{
+export class StandardInputSubscription extends Subscription {
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);

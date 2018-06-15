@@ -1,24 +1,25 @@
 #!/usr/bin/env node
 
-import {EnqueuerStarter} from "./enqueuer-starter";
-import {Configuration} from "./configurations/configuration";
-import {Logger} from "./loggers/logger";
-import "./injectable-files-list";
-const prettyjson = require('prettyjson');
+import {EnqueuerStarter} from './enqueuer-starter';
+import {Configuration} from './configurations/configuration';
+import {Logger} from './loggers/logger';
+import './injectable-files-list';
+import prettyjson from 'prettyjson';
 
 let configuration = new Configuration();
 const logLevel = configuration.getLogLevel();
 
 const setLogLevel = function () {
-    if (Logger)
+    if (Logger) {
         Logger.setLoggerLevel(logLevel);
+    }
 };
 
 let printConfigurationFile = function () {
     const options = {
         defaultIndentation: 4,
-        keysColor: "white",
-        dashColor: "grey"
+        keysColor: 'white',
+        dashColor: 'grey'
     };
     console.log(prettyjson.render(configuration.getFile(), options));
 };

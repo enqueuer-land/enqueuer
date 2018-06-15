@@ -6,16 +6,16 @@ import {Logger} from '../loggers/logger';
 let persistEnqueuerVariable = (name: string, value: any): void => {
     const configuration = new Configuration();
     configuration.setFileVariable(name, value);
-}
+};
 
 let persistSessionVariable = (name: string, value: any): void => {
     VariablesController.sessionVariables()[name] = value;
-}
+};
 
 let deleteEnqueuerVariable = (name: string): void => {
     const configuration = new Configuration();
     configuration.deleteFileVariable(name);
-}
+};
 
 export class MetaFunctionExecutor {
     private functionBody: string;

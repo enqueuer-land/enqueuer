@@ -23,7 +23,7 @@ const logger_1 = require("../loggers/logger");
 let NullRunExecutor = class NullRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
-        logger_1.Logger.info("Executing in Not-Identified mode");
+        logger_1.Logger.info('Executing in Not-Identified mode');
         this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
     }
     init() {
