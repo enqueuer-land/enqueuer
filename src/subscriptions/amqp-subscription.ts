@@ -1,14 +1,14 @@
-import {Subscription} from "./subscription";
-import {Injectable} from "conditional-injector";
-import {SubscriptionModel} from "../models/inputs/subscription-model";
-import {Logger} from "../loggers/logger";
-const amqp = require('amqp');
+import {Subscription} from './subscription';
+import {Injectable} from 'conditional-injector';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
+import {Logger} from '../loggers/logger';
+import * as amqp from 'amqp';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "amqp"})
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'amqp'})
 export class AmqpSubscription extends Subscription {
 
     private connection: any;
-    private options: string;
+    private options: any;
     private exchange: string;
     private routingKey: string;
     private queueName: string;
@@ -23,7 +23,7 @@ export class AmqpSubscription extends Subscription {
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve) => {
-            this.connection.queue(this.queueName, (queue:any) => {
+            this.connection.queue(this.queueName, (queue: any) => {
                 Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
                 queue.bind(this.exchange, this.routingKey, () => {
                     Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);

@@ -1,11 +1,11 @@
-import {Subscription} from "./subscription";
-import {Logger} from "../loggers/logger";
-import {SubscriptionModel} from "../models/inputs/subscription-model";
-import {Injectable} from "conditional-injector";
-const fs = require("fs");
-const chokidar = require('chokidar');
+import {Subscription} from './subscription';
+import {Logger} from '../loggers/logger';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
+import {Injectable} from 'conditional-injector';
+import * as fs from 'fs';
+import * as chokidar from 'chokidar';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "file-name-watcher"})
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'file-name-watcher'})
 export class FileNameWatcherSubscription extends Subscription {
 
     private watcher: any;
@@ -26,9 +26,9 @@ export class FileNameWatcherSubscription extends Subscription {
             });
             this.watcher.on('ready', () => {
                 Logger.trace(`${this.type} is ready`);
-                resolve()
+                resolve();
             });
-        })
+        });
     }
 
     public async receiveMessage(): Promise<string> {
@@ -39,13 +39,12 @@ export class FileNameWatcherSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             let interval = setInterval(() => {
                 const pop = this.filesName.shift();
-                if (pop)
-                {
+                if (pop) {
                     try {
                         resolve(fs.readFileSync(pop).toString());
                     }
                     catch (error) {
-                        Logger.warning(`Error reading file ${JSON.stringify(error)}`)
+                        Logger.warning(`Error reading file ${JSON.stringify(error)}`);
                         reject(error);
                     }
                     clearInterval(interval);

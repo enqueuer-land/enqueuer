@@ -1,11 +1,10 @@
-import {Subscription} from "./subscription";
-import {Logger} from "../loggers/logger";
-import {Injectable} from "conditional-injector";
-import {SubscriptionModel} from "../models/inputs/subscription-model";
+import {Subscription} from './subscription';
+import {Logger} from '../loggers/logger';
+import {Injectable} from 'conditional-injector';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
+import * as mqtt from 'mqtt';
 
-const mqtt = require("mqtt")
-
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === "mqtt"})
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'mqtt'})
 export class MqttSubscription extends Subscription {
 
     private brokerAddress: string;
@@ -18,15 +17,16 @@ export class MqttSubscription extends Subscription {
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
         this.options = subscriptionAttributes.options || {};
-        this.options.clientId = this.options.clientId || 'mqtt_' + (1+Math.random()*4294967295).toString(16);
+        this.options.clientId = this.options.clientId || 'mqtt_' + (1 + Math.random() * 4294967295).toString(16);
     }
 
     public receiveMessage(): Promise<string> {
         Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
         this.client.subscribe(this.topic);
         return new Promise((resolve, reject) => {
-            if (!this.client.connected)
+            if (!this.client.connected) {
                 reject(`Error trying to receive message. Subscription is not connected yet: ${this.topic}`);
+            }
             this.client.on('message', (topic: string, message: string) => resolve(message.toString()));
         });
     }
@@ -35,12 +35,11 @@ export class MqttSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             this.client = mqtt.connect(this.brokerAddress, this.options);
             if (!this.client.connected) {
-                this.client.on("connect", () =>  resolve());
-            }
-            else {
+                this.client.on('connect', () =>  resolve());
+            } else {
                 resolve();
             }
-            this.client.on("error", (error: any) => {
+            this.client.on('error', (error: any) => {
                 reject(error);
             });
         });

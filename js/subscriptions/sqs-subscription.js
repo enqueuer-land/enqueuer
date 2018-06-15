@@ -30,12 +30,12 @@ let SqsSubscription = class SqsSubscription extends subscription_1.Subscription 
         return new Promise((resolve, reject) => {
             this.sqs.receiveMessage(this.params, (err, data) => {
                 if (err) {
-                    logger_1.Logger.error("Error receiving message from SQS");
+                    logger_1.Logger.error('Error receiving message from SQS');
                     return reject(err);
                 }
                 else if (data.Messages && data.Messages.length > 0) {
                     const stringifiedMessage = JSON.stringify(data.Messages[0], null, 2);
-                    logger_1.Logger.debug("SQS got a message: " + stringifiedMessage);
+                    logger_1.Logger.debug('SQS got a message: ' + stringifiedMessage);
                     return resolve(stringifiedMessage);
                 }
             });
@@ -46,7 +46,7 @@ let SqsSubscription = class SqsSubscription extends subscription_1.Subscription 
     }
 };
 SqsSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === "sqs" }),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'sqs' }),
     __metadata("design:paramtypes", [Object])
 ], SqsSubscription);
 exports.SqsSubscription = SqsSubscription;

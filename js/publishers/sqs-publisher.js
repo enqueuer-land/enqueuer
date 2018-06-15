@@ -31,7 +31,7 @@ let SqsPublisher = class SqsPublisher extends publisher_1.Publisher {
         return new Promise((resolve, reject) => {
             this.sqsSend.sendMessage(this.params, (err, data) => {
                 if (err) {
-                    logger_1.Logger.error("Error publishing to SQS");
+                    logger_1.Logger.error('Error publishing to SQS');
                     return reject(err);
                 }
                 else {
@@ -44,7 +44,7 @@ let SqsPublisher = class SqsPublisher extends publisher_1.Publisher {
     }
 };
 SqsPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === "sqs" }),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'sqs' }),
     __metadata("design:paramtypes", [Object])
 ], SqsPublisher);
 exports.SqsPublisher = SqsPublisher;

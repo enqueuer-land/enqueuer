@@ -1,11 +1,11 @@
-import {Publisher} from "./publisher";
-import {PublisherModel} from "../models/inputs/publisher-model";
-import {Injectable} from "conditional-injector";
-import {Logger} from "../loggers/logger";
-import {SendMessageRequest, SendMessageResult} from "aws-sdk/clients/sqs";
-import * as AWS from "aws-sdk";
+import {Publisher} from './publisher';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {Injectable} from 'conditional-injector';
+import {Logger} from '../loggers/logger';
+import {SendMessageRequest, SendMessageResult} from 'aws-sdk/clients/sqs';
+import * as AWS from 'aws-sdk';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "sqs"})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'sqs'})
 export class SqsPublisher extends Publisher {
 
     private sqsSend: AWS.SQS;
@@ -23,7 +23,7 @@ export class SqsPublisher extends Publisher {
         return new Promise((resolve, reject) => {
             this.sqsSend.sendMessage(this.params, (err: AWS.AWSError, data: SendMessageResult) => {
                 if (err) {
-                    Logger.error("Error publishing to SQS");
+                    Logger.error('Error publishing to SQS');
                     return reject(err);
                 } else {
                     this.messageReceived = JSON.stringify(data);

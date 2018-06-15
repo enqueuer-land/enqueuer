@@ -1,11 +1,11 @@
-import {Publisher} from "./publisher";
-import {PublisherModel} from "../models/inputs/publisher-model";
-import {IdGenerator} from "../id-generator/id-generator";
-import {Injectable} from "conditional-injector";
-import {isNullOrUndefined} from "util";
-const fs = require("fs");
+import {Publisher} from './publisher';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {IdGenerator} from '../id-generator/id-generator';
+import {Injectable} from 'conditional-injector';
+import {isNullOrUndefined} from 'util';
+import * as fs from 'fs';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "file"})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'file'})
 export class FilePublisher extends Publisher {
 
     private filename: string;
@@ -16,7 +16,7 @@ export class FilePublisher extends Publisher {
         super(publisherAttributes);
         this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
-        this.filenameExtension = publisherAttributes.filenameExtension || ".enqRun";
+        this.filenameExtension = publisherAttributes.filenameExtension || '.enqRun';
     }
 
     public publish(): Promise<void> {
@@ -24,7 +24,9 @@ export class FilePublisher extends Publisher {
         let value = this.payload;
         try {
             value = JSON.stringify(JSON.parse(this.payload), null, 2);
-        } catch (exc){}
+        } catch (exc) {
+            //do nothing
+        }
 
         fs.writeFileSync(filename, value);
         return Promise.resolve();
@@ -35,7 +37,7 @@ export class FilePublisher extends Publisher {
         if (!filename) {
             filename = this.filenamePrefix;
             filename += this.generateId();
-            filename += "." + this.filenameExtension;
+            filename += '.' + this.filenameExtension;
         }
         return filename;
     }
@@ -43,9 +45,12 @@ export class FilePublisher extends Publisher {
     private generateId() {
         try {
             const id = JSON.parse(this.payload).id;
-            if (!isNullOrUndefined(id))
+            if (!isNullOrUndefined(id)) {
                 return id;
-        } catch (exc){}
-        return new IdGenerator(this.payload).generateId() + ".";
+            }
+        } catch (exc) {
+            //do nothing
+        }
+        return new IdGenerator(this.payload).generateId() + '.';
     }
 }

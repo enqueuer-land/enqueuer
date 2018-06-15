@@ -25,12 +25,10 @@ do
 done
 
 #Creates injectable string
-injectableString=$(echo ${injectableFiles} | sed 's/;/import "/g' | sed 's/\.ts/"\\\n/g')
+injectableString=$(echo ${injectableFiles} | sed "s/;/import '/g" | sed "s/\.ts/';\\\n/g")
 
 #gets back to first directory
 cd ${currentDirectory}
 
 #inserts in $injectableFileName
-echo -e "//#Auto-Generated Code\n"${injectableString} | tr "\\" "\n" > ${injectableFileName}
-
-
+echo -e "//#Auto-Generated Code\n"${injectableString} | tr "\\" "\n" | sed -e "$ d" > ${injectableFileName}

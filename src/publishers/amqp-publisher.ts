@@ -1,14 +1,13 @@
-import {Publisher} from "./publisher";
-import {Injectable} from "conditional-injector";
-import {PublisherModel} from "../models/inputs/publisher-model";
-import {Logger} from "../loggers/logger";
+import {Publisher} from './publisher';
+import {Injectable} from 'conditional-injector';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {Logger} from '../loggers/logger';
+import * as amqp from 'amqp';
 
-var amqp = require('amqp');
-
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === "amqp"})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'amqp'})
 export class AmqpPublisher extends Publisher {
     private connection: any;
-    private options: string;
+    private options: any;
     private exchange: string;
     private routingKey: string;
     private messageOptions: any;
@@ -31,8 +30,9 @@ export class AmqpPublisher extends Publisher {
                     Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
                     exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored: any, err: any) => {
                         Logger.trace(`Exchange published callback`);
-                        if (errored)
+                        if (errored) {
                             return reject(err);
+                        }
                         Logger.debug(`Message published`);
                         this.connection.disconnect();
                         this.connection.end();
