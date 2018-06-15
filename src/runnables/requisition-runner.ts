@@ -1,11 +1,11 @@
-import {Logger} from "../loggers/logger";
-import {RequisitionReporter} from "../reporters/requisition-reporter";
-import * as input from "../models/inputs/requisition-model";
-import * as output from "../models/outputs/requisition-model";
-import {Runner} from "./runner";
-import {Injectable} from "conditional-injector";
-import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
-import {VariablesController} from "../variables/variables-controller";
+import {Logger} from '../loggers/logger';
+import {RequisitionReporter} from '../reporters/requisition-reporter';
+import * as input from '../models/inputs/requisition-model';
+import * as output from '../models/outputs/requisition-model';
+import {Runner} from './runner';
+import {Injectable} from 'conditional-injector';
+import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
+import {VariablesController} from '../variables/variables-controller';
 
 @Injectable()
 export class RequisitionRunner extends Runner {

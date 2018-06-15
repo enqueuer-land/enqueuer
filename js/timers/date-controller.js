@@ -8,7 +8,7 @@ class DateController {
         return this.date.toISOString();
     }
     leftPad(number, targetLength) {
-        var output = number + '';
+        let output = number + '';
         while (output.length < targetLength) {
             output = '0' + output;
         }

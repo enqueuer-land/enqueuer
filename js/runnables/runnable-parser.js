@@ -5,8 +5,8 @@ const id_generator_1 = require("../id-generator/id-generator");
 const variables_controller_1 = require("../variables/variables-controller");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
 const util_1 = require("util");
-const fs = require("fs");
-const Ajv = require("ajv");
+const fs = require('fs');
+const Ajv = require('ajv');
 class RunnableParser {
     constructor() {
         this.readFilesFromSchemaFolders = (subFolderName) => {
@@ -23,11 +23,11 @@ class RunnableParser {
             return files;
         };
         const schemasPath = this.discoverSchemasFolder();
-        this.validator = this.readFilesFromSchemaFolders(schemasPath.concat("publishers/"))
-            .concat(this.readFilesFromSchemaFolders(schemasPath.concat("subscribers/")))
+        this.validator = this.readFilesFromSchemaFolders(schemasPath.concat('publishers/'))
+            .concat(this.readFilesFromSchemaFolders(schemasPath.concat('subscribers/')))
             .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new Ajv({ allErrors: true, verbose: false }))
-            .addSchema(this.readJsonFile(schemasPath.concat("requisition-schema.json")))
-            .compile(this.readJsonFile(schemasPath.concat("runnable-schema.json")));
+            .addSchema(this.readJsonFile(schemasPath.concat('requisition-schema.json')))
+            .compile(this.readJsonFile(schemasPath.concat('runnable-schema.json')));
     }
     discoverSchemasFolder() {
         let realPath = process.argv[1];
@@ -36,8 +36,8 @@ class RunnableParser {
         }
         catch (_a) {
         }
-        const prefix = realPath.split("enqueuer")[0];
-        const schemasPath = prefix.concat("enqueuer/schemas/");
+        const prefix = realPath.split('enqueuer')[0];
+        const schemasPath = prefix.concat('enqueuer/schemas/');
         return schemasPath;
     }
     parse(runnableMessage) {

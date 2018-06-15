@@ -1,4 +1,4 @@
-import {PublisherModel} from "../models/inputs/publisher-model";
+import {PublisherModel} from '../models/inputs/publisher-model';
 
 export abstract class Publisher {
     public type: string;

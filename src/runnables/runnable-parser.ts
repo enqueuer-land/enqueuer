@@ -1,12 +1,12 @@
-import {Logger} from "../loggers/logger";
-import {IdGenerator} from "../id-generator/id-generator";
-import {ValidateFunction} from "ajv";
-import {VariablesController} from "../variables/variables-controller";
-import {JsonPlaceholderReplacer} from "json-placeholder-replacer";
-import {RunnableModel} from "../models/inputs/runnable-model";
-import {isNullOrUndefined} from "util";
-const fs = require("fs");
-const Ajv = require("ajv");
+import {Logger} from '../loggers/logger';
+import {IdGenerator} from '../id-generator/id-generator';
+import {ValidateFunction} from 'ajv';
+import {VariablesController} from '../variables/variables-controller';
+import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
+import {RunnableModel} from '../models/inputs/runnable-model';
+import {isNullOrUndefined} from 'util';
+const fs = require('fs');
+const Ajv = require('ajv');
 
 
 
@@ -15,11 +15,11 @@ export class RunnableParser {
     private validator: ValidateFunction;
     public constructor() {
         const schemasPath = this.discoverSchemasFolder();
-        this.validator = this.readFilesFromSchemaFolders(schemasPath.concat("publishers/"))
-            .concat(this.readFilesFromSchemaFolders(schemasPath.concat("subscribers/")))
+        this.validator = this.readFilesFromSchemaFolders(schemasPath.concat('publishers/'))
+            .concat(this.readFilesFromSchemaFolders(schemasPath.concat('subscribers/')))
             .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new Ajv({allErrors: true, verbose: false}))
-            .addSchema(this.readJsonFile(schemasPath.concat("requisition-schema.json")))
-            .compile(this.readJsonFile(schemasPath.concat("runnable-schema.json")))
+            .addSchema(this.readJsonFile(schemasPath.concat('requisition-schema.json')))
+            .compile(this.readJsonFile(schemasPath.concat('runnable-schema.json')))
     }
 
     private discoverSchemasFolder() {
@@ -29,8 +29,8 @@ export class RunnableParser {
         }
         catch {
         }
-        const prefix = realPath.split("enqueuer")[0];
-        const schemasPath = prefix.concat("enqueuer/schemas/");
+        const prefix = realPath.split('enqueuer')[0];
+        const schemasPath = prefix.concat('enqueuer/schemas/');
         return schemasPath;
     }
 

@@ -1,4 +1,4 @@
-import {SubscriptionModel} from "../models/inputs/subscription-model";
+import {SubscriptionModel} from '../models/inputs/subscription-model';
 
 export abstract class Subscription {
 

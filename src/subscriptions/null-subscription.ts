@@ -1,6 +1,6 @@
-import {Subscription} from "./subscription";
-import {SubscriptionModel} from "../models/inputs/subscription-model";
-import {Injectable} from "conditional-injector";
+import {Subscription} from './subscription';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
+import {Injectable} from 'conditional-injector';
 
 @Injectable()
 export class NullSubscription extends Subscription {

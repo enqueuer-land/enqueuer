@@ -8,26 +8,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");
-const prettyjson = require('prettyjson');
+const prettyjson_1 = __importDefault(require("prettyjson"));
 const options = {
     defaultIndentation: 4,
-    keysColor: "white",
-    dashColor: "grey"
+    keysColor: 'white',
+    dashColor: 'grey'
 };
 let StandardOutputPublisher = class StandardOutputPublisher extends publisher_1.Publisher {
     constructor(publisherProperties) {
         super(publisherProperties);
     }
     publish() {
-        console.log(prettyjson.render(JSON.parse(this.payload), options));
+        console.log(prettyjson_1.default.render(JSON.parse(this.payload), options));
         return Promise.resolve();
     }
 };
 StandardOutputPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === "standard-output" }),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'standard-output' }),
     __metadata("design:paramtypes", [Object])
 ], StandardOutputPublisher);
 exports.StandardOutputPublisher = StandardOutputPublisher;

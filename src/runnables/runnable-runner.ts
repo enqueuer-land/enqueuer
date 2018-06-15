@@ -1,8 +1,8 @@
-import {Container, Injectable} from "conditional-injector";
-import {Runner} from "./runner";
-import {Timeout} from "../timers/timeout";
-import {ResultModel} from "../models/outputs/result-model";
-import {RunnableModel} from "../models/inputs/runnable-model";
+import {Container, Injectable} from 'conditional-injector';
+import {Runner} from './runner';
+import {Timeout} from '../timers/timeout';
+import {ResultModel} from '../models/outputs/result-model';
+import {RunnableModel} from '../models/inputs/runnable-model';
 
 @Injectable({predicate: runnable => runnable.runnables})
 export class RunnableRunner extends Runner {
@@ -15,7 +15,7 @@ export class RunnableRunner extends Runner {
         this.runnableModel = runnableModel;
 
         this.report = {
-            type: "runnable",
+            type: 'runnable',
             valid: true,
             tests: {},
             name: this.runnableModel.name,

@@ -1,7 +1,7 @@
-import {Publisher} from "./publisher";
-import {Logger} from "../loggers/logger";
-import {PublisherModel} from "../models/inputs/publisher-model";
-import {Container} from "conditional-injector";
+import {Publisher} from './publisher';
+import {Logger} from '../loggers/logger';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {Container} from 'conditional-injector';
 
 export class MultiPublisher {
 
@@ -19,7 +19,7 @@ export class MultiPublisher {
         return Promise.all(this.repliers.map(
             reporter => {
                         reporter.payload = payload;
-                        return reporter.publish()
+                        return reporter.publish();
                     }));
 
     }

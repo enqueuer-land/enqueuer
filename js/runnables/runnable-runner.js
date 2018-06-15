@@ -19,7 +19,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             .then(Array.prototype.concat.bind(result))), Promise.resolve([]));
         this.runnableModel = runnableModel;
         this.report = {
-            type: "runnable",
+            type: 'runnable',
             valid: true,
             tests: {},
             name: this.runnableModel.name,

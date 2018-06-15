@@ -1,5 +1,5 @@
-import {Publisher} from "./publisher";
-import {Injectable} from "conditional-injector";
+import {Publisher} from './publisher';
+import {Injectable} from 'conditional-injector';
 
 @Injectable()
 export class NullPublisher extends Publisher {

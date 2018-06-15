@@ -7,7 +7,6 @@ export class Timeout {
         this.callback = callBack;
     }
 
-
     public start(period: number) {
         this.timer = global.setTimeout(() => {
             this.clear();

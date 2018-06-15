@@ -19,7 +19,7 @@ let StandardInputSubscription = class StandardInputSubscription extends subscrip
     }
     receiveMessage() {
         return new Promise((resolve) => {
-            let requisition = "";
+            let requisition = '';
             process.stdin.on('data', (chunk) => requisition += chunk);
             process.stdin.on('end', () => resolve(requisition));
         });
@@ -32,7 +32,7 @@ let StandardInputSubscription = class StandardInputSubscription extends subscrip
     }
 };
 StandardInputSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === "standard-input" }),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'standard-input' }),
     __metadata("design:paramtypes", [Object])
 ], StandardInputSubscription);
 exports.StandardInputSubscription = StandardInputSubscription;

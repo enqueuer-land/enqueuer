@@ -11,7 +11,7 @@ export class DateController {
     }
 
     private leftPad(number: number, targetLength: number): string {
-        var output = number + '';
+        let output = number + '';
         while (output.length < targetLength) {
             output = '0' + output;
         }
@@ -26,7 +26,7 @@ export class DateController {
                 this.leftPad(this.date.getMinutes(), 2) +
                 this.leftPad(this.date.getSeconds(), 2) +
                 this.leftPad(this.date.getMilliseconds(), 4) +
-                this.leftPad(Math.trunc(Math.random()*100), 2);
+                this.leftPad(Math.trunc(Math.random() * 100), 2);
     }
 
     public getTime(): number {

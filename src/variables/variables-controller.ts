@@ -1,4 +1,4 @@
-import {Configuration} from "../configurations/configuration";
+import {Configuration} from '../configurations/configuration';
 
 export class VariablesController {
     private static instance: VariablesController = new VariablesController();

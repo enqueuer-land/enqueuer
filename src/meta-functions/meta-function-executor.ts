@@ -1,7 +1,7 @@
-import {MetaFunctionBodyCreator} from "./meta-function-body-creator";
-import {VariablesController} from "../variables/variables-controller";
-import {Configuration} from "../configurations/configuration";
-import {Logger} from "../loggers/logger";
+import {MetaFunctionBodyCreator} from './meta-function-body-creator';
+import {VariablesController} from '../variables/variables-controller';
+import {Configuration} from '../configurations/configuration';
+import {Logger} from '../loggers/logger';
 
 let persistEnqueuerVariable = (name: string, value: any): void => {
     const configuration = new Configuration();
@@ -26,9 +26,9 @@ export class MetaFunctionExecutor {
 
     public execute(): any {
         try {
-            let functionToExecute = new Function("persistEnqueuerVariable",
-                                                "persistSessionVariable",
-                                                "deleteEnqueuerVariable",
+            let functionToExecute = new Function('persistEnqueuerVariable',
+                                                'persistSessionVariable',
+                                                'deleteEnqueuerVariable',
                                                 this.functionBody);
 
             Logger.trace(`Function to execute: ${functionToExecute.toString()}`);
