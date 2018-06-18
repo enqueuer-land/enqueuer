@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "test": "npm run unitTest && npm run integrationTest",
-    "unitTest": "jest --forceExit",
+    "test": "npm run unitTest && npm run componentTest && npm run integrationTest",
+    "unitTest": "jest .test.ts",
+    "componentTest": "jest --forceExit .comp.ts",
     "integrationTest": "npm start -- -c integrationTest/enqueuer.yml",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
-    "all": "npm run clean && npm run build && npm link && npm run test && npm run lint",
+    "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
     "build": "./scripts/generate-injectables-list.sh src/injectable-files-list.ts src && tsc"
   },
   "repository": {
@@ -57,7 +58,7 @@
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": ".*\\.test\\.ts$",
+    "testRegex": ".*\\.((comp)|(test))\\.ts$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
