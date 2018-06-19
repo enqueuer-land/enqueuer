@@ -1,5 +1,7 @@
 language: node_js
 
+sudo: required
+
 node_js:
   - "node"
   - "9"
@@ -8,8 +10,19 @@ cache:
   directories:
     - node_modules
 
+notifications:
+  email:
+    recipients:
+      - guilherme.moraes@outlook.com
+    on_success: never
+    on_failure: always
+
+services:
+  - rabbitmq
+
 before_install:
   - npm install
+
 script:
   - npm run lint
   - npm run build

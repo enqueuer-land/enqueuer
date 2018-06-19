@@ -42,10 +42,3 @@ queues {
 EOF
 
 java -Dconfig.file=elasticMq.conf -jar elasticmq-server-0.13.11.jar &
-
-#mqtt
-#sudo apt-get install mosquitto
-#/usr/sbin/mosquitto &
-
-#amqp
-#docker run -d --hostname my-rabbit --name some-rabbit rabbitmq:3
