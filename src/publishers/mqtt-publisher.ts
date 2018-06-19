@@ -45,7 +45,10 @@ export class MqttPublisher extends Publisher {
             } else {
                 client.on('connect', () =>  resolve(client));
             }
-            client.on('error', (err: any) =>  reject(err));
+            client.on('error', (err: any) =>  {
+                Logger.error(`Error connecting to publish to mqtt ${err}`);
+                reject(err);
+            });
         });
     }
 

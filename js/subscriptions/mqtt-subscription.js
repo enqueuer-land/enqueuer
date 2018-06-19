@@ -27,6 +27,7 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
         this.topic = subscriptionAttributes.topic;
         this.options = subscriptionAttributes.options || {};
         this.options.clientId = this.options.clientId || 'mqtt_' + (1 + Math.random() * 4294967295).toString(16);
+        this.options.connectTimeout = this.options.connectTimeout || 10 * 1000;
     }
     receiveMessage() {
         logger_1.Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
@@ -48,6 +49,7 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
                 resolve();
             }
             this.client.on('error', (error) => {
+                logger_1.Logger.error(`Error subscribing to mqtt ${error}`);
                 reject(error);
             });
         });

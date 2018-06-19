@@ -24,11 +24,11 @@ export class RunnableRunner extends Runner {
         };
     }
 
-    private sequentialRunner = (runnableFunctions: Function[]) =>
-        runnableFunctions.reduce((promise, runPromiseFunction) =>
-                                    promise.then(result => runPromiseFunction()
-                                            .then(Array.prototype.concat.bind(result))),
-                                Promise.resolve([]))
+    private sequentialRunner(runnableFunctions: Function[]): Promise<ResultModel[]> {
+        return runnableFunctions.reduce(
+                        (promise, runPromiseFunction) => promise.then(result => runPromiseFunction().then(Array.prototype.concat.bind(result))),
+                        Promise.resolve([]));
+    }
 
     public run(): Promise<ResultModel> {
         const promises = this.runnableModel.runnables

@@ -45,7 +45,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then( () => resolve(this.execute())) //Runs the next one
                 .catch((err) => {
-                    Logger.error(`Error reported: ${JSON.stringify(err, null, 4)}`);
+                    Logger.error(`Single-run error reported: ${JSON.stringify(err, null, 4)}`);
                     this.resultCreator.addError(err);
                     this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                     resolve(this.execute()); //Runs the next one

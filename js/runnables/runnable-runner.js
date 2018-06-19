@@ -15,8 +15,6 @@ const timeout_1 = require("../timers/timeout");
 let RunnableRunner = class RunnableRunner extends runner_1.Runner {
     constructor(runnableModel) {
         super();
-        this.sequentialRunner = (runnableFunctions) => runnableFunctions.reduce((promise, runPromiseFunction) => promise.then(result => runPromiseFunction()
-            .then(Array.prototype.concat.bind(result))), Promise.resolve([]));
         this.runnableModel = runnableModel;
         this.report = {
             type: 'runnable',
@@ -26,6 +24,9 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             id: this.runnableModel.id,
             runnables: []
         };
+    }
+    sequentialRunner(runnableFunctions) {
+        return runnableFunctions.reduce((promise, runPromiseFunction) => promise.then(result => runPromiseFunction().then(Array.prototype.concat.bind(result))), Promise.resolve([]));
     }
     run() {
         const promises = this.runnableModel.runnables
