@@ -41,5 +41,3 @@ queues {
 EOF
 
 java -Dconfig.file=elasticMq.conf -jar elasticmq-server-0.13.11.jar &
-
-rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
