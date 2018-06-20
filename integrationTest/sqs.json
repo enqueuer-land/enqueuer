@@ -4,7 +4,7 @@
   "initialDelay": 0,
   "runnables": [
     {
-      "timeout": 3000,
+      "timeout": 5000,
       "name": "sqsRequisition",
       "subscriptions": [
         {
@@ -20,7 +20,7 @@
           "messageParams": {
             "QueueUrl": "http://localhost:9324/queue/enqueuerQueue"
           },
-          "timeout": 1500
+          "timeout": 3000
         }
       ],
       "startEvent": {
