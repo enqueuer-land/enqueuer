@@ -21,6 +21,7 @@ export class SqsSubscription extends Subscription {
     public receiveMessage(): Promise<string> {
         return new Promise((resolve, reject) => {
             this.sqs.receiveMessage(this.params, (err: AWS.AWSError, data: ReceiveMessageResult) => {
+                Logger.trace(`SQS got data: ${data}`);
                 if (err) {
                     Logger.error('Error receiving message from SQS');
                     return reject(err);
