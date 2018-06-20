@@ -23,7 +23,6 @@ services:
 before_install:
   - npm install
   - ./scripts/set-integration-tests-environment.sh
-  - rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
 
 script:
   - npm run lint
