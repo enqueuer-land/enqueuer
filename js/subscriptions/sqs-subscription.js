@@ -29,6 +29,7 @@ let SqsSubscription = class SqsSubscription extends subscription_1.Subscription 
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.sqs.receiveMessage(this.params, (err, data) => {
+                logger_1.Logger.trace(`SQS got data: ${JSON.stringify(data, null, 2)}`);
                 if (err) {
                     logger_1.Logger.error('Error receiving message from SQS');
                     return reject(err);

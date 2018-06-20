@@ -95,7 +95,7 @@ export class SubscriptionReporter {
         const hasReceivedMessage = this.subscription.messageReceived != null;
         this.report.tests['Message received'] = hasReceivedMessage;
         if (!this.hasTimedOut || hasReceivedMessage) {
-            this.report.tests[`No time out ${this.subscription.timeout}`] = !this.hasTimedOut;
+            this.report.tests['No time out'] = !this.hasTimedOut;
         }
 
         this.cleanUp();
