@@ -42,4 +42,4 @@ EOF
 
 java -Dconfig.file=elasticMq.conf -jar elasticmq-server-0.13.11.jar &
 
-sudo rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
+./rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
