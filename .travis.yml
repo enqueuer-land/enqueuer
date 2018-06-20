@@ -22,6 +22,7 @@ services:
 
 before_install:
   - npm install
+  - set-integration-tests-environment.sh
 
 script:
   - npm run lint

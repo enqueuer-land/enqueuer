@@ -5,7 +5,6 @@ mkdir temp
 
 #sqs test
 wget https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.13.11.jar
-elasticMq.conf
 
 cat > elasticMq.conf << EOF
 include classpath("application.conf")
@@ -42,3 +41,5 @@ queues {
 EOF
 
 java -Dconfig.file=elasticMq.conf -jar elasticmq-server-0.13.11.jar &
+
+rabbitmqadmin declare exchange name=enqueuer.exchange type=topic

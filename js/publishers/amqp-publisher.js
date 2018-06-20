@@ -32,8 +32,8 @@ let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
         return new Promise((resolve, reject) => {
             this.connection = amqp.createConnection(this.options);
             this.connection.on('ready', () => {
-                logger_1.Logger.debug(`Creating exchange ${this.exchange}`);
                 const exchange = this.connection.exchange(this.exchange, { confirm: true, passive: true });
+                logger_1.Logger.debug(`Exchange to publish:${this.exchange} created: ${exchange}`);
                 exchange.on('open', () => {
                     logger_1.Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
                     exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored, err) => {

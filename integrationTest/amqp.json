@@ -15,9 +15,9 @@
             "host": "localhost",
             "port": 5672
           },
-          "queueName": "queueName2",
-          "exchange": "exchangeName2",
-          "routingKey": "#",
+          "queueName": "enqueuer.queue.name",
+          "exchange": "enqueuer.exchange",
+          "routingKey": "enqueuer.integration.test.routing.#",
           "onMessageReceived": "test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';",
           "timeout": 3000
         }
@@ -31,8 +31,8 @@
             "host": "localhost",
             "port": 5672
           },
-          "exchange": "exchangeName2",
-          "routingKey": "routingKey2",
+          "exchange": "enqueuer.exchange",
+          "routingKey": "enqueuer.integration.test.routing.key",
           "prePublishing": "publisher.payload=new Date().getTime();"
         }
       }
