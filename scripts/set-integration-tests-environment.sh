@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-file test
+#file test
 mkdir temp
 
-sqs test
+#sqs test
 wget https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.13.11.jar
 
 cat > elasticMq.conf << EOF
@@ -41,5 +41,3 @@ queues {
 EOF
 
 java -Dconfig.file=elasticMq.conf -jar elasticmq-server-0.13.11.jar &
-
-./rabbitmqadmin declare exchange name=enqueuer.exchange type=topic

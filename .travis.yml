@@ -23,7 +23,7 @@ services:
 before_install:
   - npm install
   - ./scripts/set-integration-tests-environment.sh
-
+  - ./scripts/rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
 script:
   - npm run lint
   - npm run build
