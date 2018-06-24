@@ -94,7 +94,8 @@ export class SubscriptionReporter {
     public getReport(): output.SubscriptionModel {
         const hasReceivedMessage = this.subscription.messageReceived != null;
         this.report.tests['Message received'] = hasReceivedMessage;
-        this.report.tests['No time out'] = !this.hasTimedOut;
+        if (this.subscription.timeout)
+            this.report.tests['No time out'] = !this.hasTimedOut;
 
         this.cleanUp();
         this.report.valid = this.report.valid && checkValidation(this.report);

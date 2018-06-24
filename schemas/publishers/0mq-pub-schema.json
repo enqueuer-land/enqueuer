@@ -1,0 +1,19 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/publisher/0mq-pub",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "0mq-pub"
+    },
+    "address": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "address",
+    "topic"
+  ]
+}

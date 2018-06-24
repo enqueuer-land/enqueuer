@@ -301,6 +301,34 @@ const validMqttRunnable = {
         }
     ]
 };
+const valid0MqRunnable = {
+    "runnableVersion": "01.00.00",
+    "name": "runnable0Mq",
+    "runnables": [
+        {
+            "timeout": 3000,
+            "name": "Requisition0Mq",
+            "subscriptions": [
+                {
+                    "type": "0mq-sub",
+                    "address": "tcp://localhost:3030",
+                    "name": "0MqSub",
+                    "topic": "enqueuer",
+                    "onMessageReceived": "test['works'] = message = 'message';"
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "0mq-pub",
+                    "name": "0MqPub",
+                    "address": "tcp://localhost:3030",
+                    "payload": "enqueuer",
+                    "topic": "enqueuer"
+                }
+            }
+        }
+    ]
+};
 const validRunnableWithId = {
     "runnableVersion": "01.00.00",
     "name": "runnableFile",
@@ -411,6 +439,10 @@ describe('RunnableParser', () => {
 
     it('Should accept http runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validHttpRunnable))).not.toBeNull();
+    });
+
+    it('Should accept 0Mq runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(valid0MqRunnable))).not.toBeNull();
     });
 
     it('Should accept mqtt runnable', () => {

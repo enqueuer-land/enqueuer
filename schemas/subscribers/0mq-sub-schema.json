@@ -1,0 +1,19 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription/0mq-sub",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "0mq-sub"
+    },
+    "address": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "address",
+    "topic"
+  ]
+}
