@@ -1,0 +1,31 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription/stomp",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "stomp"
+    },
+    "address": {
+      "type": "string"
+    },
+    "port": {
+      "type": ["string", "integer"]
+    },
+    "queue": {
+      "type": "string"
+    },
+    "user": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "address",
+    "port",
+    "queue"
+  ]
+}
+
+

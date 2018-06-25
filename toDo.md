@@ -2,14 +2,11 @@
 
 To Create:
 - [ ] mongodb: http://mongodb.github.io/node-mongodb-native/3.0/tutorials/crud/
-- [ ] Stomp: https://github.com/easternbloc/node-stomp-client
-- [ ] zeroMq: https://github.com/zeromq/zeromq.js/
-- [ ] WebSocket:
 - [ ] Kafka: https://www.npmjs.com/package/kafka-typescript
-- [ ] Tcp:
+- [ ] NSQ: https://github.com/nsqio/nsq
+- [ ] WebSocket:
 
 - [ ] Add iterations to runnables
-- [ ] Report junit compatible: https://github.com/davidparsson/junit-report-builder
 
 - [ ] Http proxy for http subscription (Http sniffer/Fiddler)
         https://blog.websecurify.com/2017/03/http-pcap-in-node.html

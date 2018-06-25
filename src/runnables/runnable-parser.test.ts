@@ -329,6 +329,39 @@ const validZeroMqRunnable = {
         }
     ]
 };
+const validStompRunnable = {
+    "runnableVersion": "01.00.00",
+    "name": "runnableStomp",
+    "runnables": [
+        {
+            "timeout": 3000,
+            "name": "RequisitionStomp",
+            "subscriptions": [
+                {
+                    "type": "stomp",
+                    "name": "stompSub",
+                    "address": "localhost",
+                    "port": 61613,
+                    "user": "guest",
+                    "password": "guest",
+                    "queue": "stompQueue"
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "stomp",
+                    "name": "stompPub",
+                    "address": "localhost",
+                    "port": "61613",
+                    "user": "guest",
+                    "password": "guest",
+                    "queue": "enqueuer",
+                    "payload": "stompQueue"
+                }
+            }
+        }
+    ]
+};
 const validRunnableWithId = {
     "runnableVersion": "01.00.00",
     "name": "runnableFile",
@@ -447,6 +480,10 @@ describe('RunnableParser', () => {
 
     it('Should accept mqtt runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validMqttRunnable))).not.toBeNull();
+    });
+
+    it('Should accept stomp runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validStompRunnable))).not.toBeNull();
     });
 
     it('Should accept runnable with no subscriptions', () => {
