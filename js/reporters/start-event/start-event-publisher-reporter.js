@@ -34,12 +34,15 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         this.publisherOriginalAttributes = startEvent.publisher;
         this.report = {
             name: this.publisherOriginalAttributes.name,
-            valid: true,
+            valid: false,
             type: this.publisherOriginalAttributes.type,
-            tests: {}
+            tests: {
+                "Started": false
+            }
         };
     }
     start() {
+        this.resetReport();
         logger_1.Logger.trace(`Firing publication as startEvent`);
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
@@ -68,6 +71,10 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         return {
             publisher: this.report
         };
+    }
+    resetReport() {
+        this.report.valid = true;
+        this.report.tests = {};
     }
     executeOnMessageReceivedFunction() {
         if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived) {
