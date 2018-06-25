@@ -44,7 +44,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
                     })
                     .catch((err: any) => {
                         Logger.error(err);
-                        this.report.tests[`Error publishing start event '${this.publisher}'`] = false;
+                        this.report.tests[`Error publishing start event '${JSON.stringify(this.publisher, null, 2)}'`] = false;
                         reject(err);
                     });
             } else {

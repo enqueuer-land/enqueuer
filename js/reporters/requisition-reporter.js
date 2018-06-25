@@ -58,7 +58,7 @@ class RequisitionReporter {
     initializeTimeout() {
         if (this.requisitionTimeout) {
             new timeout_1.Timeout(() => {
-                this.onFinish(`No time out ${this.requisitionTimeout}`);
+                this.onFinish();
             }).start(this.requisitionTimeout);
         }
     }

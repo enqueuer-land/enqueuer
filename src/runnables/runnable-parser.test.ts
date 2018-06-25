@@ -279,7 +279,7 @@ const validMqttRunnable = {
                     "brokerAddress": "mqtt://localhost",
                     "name": "MqttSub",
                     "topic": "enqueuer",
-                    "onMessageReceived": "test['works'] = message = 'message';",
+                    "onMessageReceived": "test['works'] = message == 'message';",
                     "options": {
                         "clientId": "enqueuerPublishOptionsExampleId"
                     },
@@ -301,7 +301,7 @@ const validMqttRunnable = {
         }
     ]
 };
-const valid0MqRunnable = {
+const validZeroMqRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnable0Mq",
     "runnables": [
@@ -310,16 +310,16 @@ const valid0MqRunnable = {
             "name": "Requisition0Mq",
             "subscriptions": [
                 {
-                    "type": "0mq-sub",
+                    "type": "zero-mq-sub",
                     "address": "tcp://localhost:3030",
                     "name": "0MqSub",
                     "topic": "enqueuer",
-                    "onMessageReceived": "test['works'] = message = 'message';"
+                    "onMessageReceived": "test['works'] = message == 'message';"
                 }
             ],
             "startEvent": {
                 "publisher": {
-                    "type": "0mq-pub",
+                    "type": "zero-mq-pub",
                     "name": "0MqPub",
                     "address": "tcp://localhost:3030",
                     "payload": "enqueuer",
@@ -441,8 +441,8 @@ describe('RunnableParser', () => {
         expect(new RunnableParser().parse(JSON.stringify(validHttpRunnable))).not.toBeNull();
     });
 
-    it('Should accept 0Mq runnable', () => {
-        expect(new RunnableParser().parse(JSON.stringify(valid0MqRunnable))).not.toBeNull();
+    it('Should accept zero-mq-pub runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validZeroMqRunnable))).not.toBeNull();
     });
 
     it('Should accept mqtt runnable', () => {

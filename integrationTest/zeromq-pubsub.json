@@ -1,0 +1,28 @@
+{
+  "runnableVersion": "01.00.00",
+  "name": "runnable0Mq",
+  "runnables": [
+    {
+      "timeout": 3000,
+      "name": "RequisitionZeroMq",
+      "subscriptions": [
+        {
+          "type": "zero-mq-sub",
+          "address": "{{zeroMqAddress}}",
+          "name": "ZeroMqSub",
+          "topic": "topic",
+          "onMessageReceived": "test['0Mq is awesome'] = JSON.parse(message) == 'tcp://127.0.0.1:3000';"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "zero-mq-pub",
+          "name": "ZeroMqPub",
+          "address": "{{zeroMqAddress}}",
+          "payload": "{{zeroMqAddress}}",
+          "topic": "topic"
+        }
+      }
+    }
+  ]
+}
