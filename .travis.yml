@@ -38,4 +38,4 @@ script:
   - npm run componentTest
   - npm run codeCoverage
   - npm run integrationTest
-  - enqueuer -c integrationTest/enqueuer.yml
+  - enqueuer --config-file integrationTest/enqueuer.yml --session-variables zeroMqAddress=tcp://127.0.0.1:3000

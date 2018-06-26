@@ -3,27 +3,54 @@
 
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
 
-### summary
+# summary
 **Enqueuer** is an asynchronous messages testing tool.
 
-```There are many reasons why you should care about events; they drive autonomy, increase stability, help you move faster and allow for time travel, Jonas Bonér.```\
-There is no doubt in how important events are, hence, test them becomes a high priority task. When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometimes it is a synchronous http post and sometimes it writes a file.\
-In an event-driven world all events happen asynchronously. As soon as we exit the boundary of a service, we enter a nondeterministic world. What **enqueuer** proposes to do is to give you confidence that a single component or a group of components in the same flow act like it should act when it was designed. It makes you be sure that everything works as expected.
+## what it does?
+Checks whether an event-driven-component acts as expected.
+By "acts as expected" we mean, the event-driven-component, when triggered by an event:
+  - publishes where it is suppose to publish;
+  - publishes what it is suppose to publish; and
+  - publishes faster than the its timeout.
+
+There is no doubt in how important events are, therefore, test them becomes a high priority task.
+When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometimes it is a synchronous http post and sometimes it writes a file.\
+In an event-driven world all events happen asynchronously.
+As soon as we exit the boundary of a service, we enter a non-deterministic world.
+What **enqueuer** proposes to do is to give you confidence that a single component or a group of components in the same flow act like it should act when it was designed.
+It makes you be sure that everything works as expected.
+
+## why is it useful?
+It is meant to help your development process.
+Although there are other ways of using it, the two main ways are:
+  - using it while you are developing a new feature of your component, in some kind of TDDish way; and
+  - adding it to your testing pipeline, so you'll be asserting that the event-driven-component still behaves properly in every commit.
+
+## how it works?
+-	receives a [runnable](/playground "Runnable examples") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
+-	confirms the runnable reception;
+	-	starts the runnable (publishing or waiting on an event);
+	-	waits for events published by the event-driven-component;
+-	executes hook script upon these received events;
+-	reports back the [result](/outputExamples/).
+    
+### let me draw it for you
+This is how your event-driven-component should acts when triggered by an *Input*:\
+![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Event-driven-component expected behavior")
+
+What **enqueuer** does is to trigger *Input*, by itself, so the component-to-be-tested acts like it should.
+Then, **enqueuer** collects component-to-be-tested outputs and checks if they are what they are supposed to be.
+Quite simple, don't you think?
+
+When **enqueuer** receives a runnable, it starts an event described in the requisitions inside it and awaits until all expected outputs are fulfilled or timed out.
+Once it happens, **enqueuer** gathers them all and reports the result back.
 
 ##### Go ahead and try it:
     $ git clone https://github.com/lopidio/enqueuer.git
     $ cd enqueuer
     $ npm install
     $ npm run build
-    $ npm tst #if you want to test it
     $ enqueuer --config-file conf/enqueuer.yml --session-variables httpPayload=virgs
-
-### what it does?
-Checks whether an event-driven-component acts as expected.
-By "acts as expected" we mean, the event-driven-component, when triggered by an event:
-  - publishes where it is suppose to publish;
-  - publishes what it is suppose to publish; and
-  - publishes faster than the its timeout.
 
 ### how to use
     $ enqueuer --help
@@ -35,9 +62,9 @@ By "acts as expected" we mean, the event-driven-component, when triggered by an 
            -c, --config-file <path>  Set configurationFile
            -h, --help                output usage information
 
-No big surprises, hum? No mistery, as simple as $enqueuer.
+No big surprises, hum? As simple as `$enqueuer`.
 
-### runnable
+## runnable
 Generally, a runnable looks like [this](/playground "Requisition examples") and [these](/integrationTest "Others examples").
 Bellow there is a definition of a **runnable** and a **requisition**:
 #### **runnable**:
@@ -72,30 +99,7 @@ Bellow there is a definition of a **runnable** and a **requisition**:
                 Ex.: ```"test['typeMqtt'] = publisher.type=='mqtt';"```.
             You can read more about meta-function code in the **meta-function** session.			
 
-### why is it useful?
-It is meant to help your development process.
-Although there are other ways of using it, the two main ways are:
-  - using it while you are developing a new feature of your component, in some kind of TDDish way; and
-  - adding it to your testing pipeline, so you'll be asserting that the event-driven-component still behaves properly in every commit.
-
-### how it works?
--	receives a [runnable](/playground "Runnable examples") from some IPC mechanism defined in its [configuration](/conf/enqueuer.yml);
--	confirms the runnable reception;
-	-	starts the runnable (publishing or waiting on an event);
-	-	waits for events published by the event-driven-component;
--	executes hook script upon these received events;
--	reports back the [result](/outputExamples/).
-    
-#### let me draw it for you
-This is how your event-driven-conponent should act when triggered by an *Input*:\
-![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Event-driven-component expected behavior")
-
-What **enqueuer** does is to trigger *Input*, by itself, so the component-to-be-tested acts like it should. And then, **enqueuer** collects component-to-be-tested outputs and checks if they are what they are supposed to be.
-Quite simple, don't you think?
-
-When **enqueuer** receives a runnable, it starts an event described in the requisitions inside it and awaits until all expected outputs are fulfilled or timed out. Once it happens, **enqueuer** gathers all it has and reports the result back through a mechanism described in the configuration file.
-
-### configuration file
+## configuration file
 So, by default, **enqueuer** reads [conf/enqueuer.yml](/conf/enqueuer.yml) file to configure its execution options.
 Below, there is an explanation of each field of a configuration file.
 
