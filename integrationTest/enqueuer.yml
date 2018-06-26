@@ -2,7 +2,7 @@ requisitions:
   run-mode:
     single-run:
       name: integrationTests
-      fileNamePattern: integrationTest/*.json
+      fileNamePattern: integrationTest/stomp.json
 #      report:
 #          type: enqueuer
 #          filename: outputExamples/singleRunOutput.json
@@ -22,4 +22,4 @@ variables:
 
   zeroMqAddress: tcp://127.0.0.1:3000
 
-#log-level: trace
+log-level: trace

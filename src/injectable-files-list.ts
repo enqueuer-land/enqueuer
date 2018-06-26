@@ -2,6 +2,7 @@
 import './runnables/requisition-runner';
 import './runnables/runnable-runner';
 import './subscriptions/filename-watcher-subscription';
+import './subscriptions/stomp-subscription';
 import './subscriptions/sqs-subscription';
 import './subscriptions/http-server-subscription';
 import './subscriptions/uds-subscription';
@@ -21,6 +22,7 @@ import './publishers/uds-publisher';
 import './publishers/mqtt-publisher';
 import './publishers/standard-output-publisher';
 import './publishers/amqp-publisher';
+import './publishers/stomp-publisher';
 import './publishers/null-publisher';
 import './publishers/zero-mq-pub-publisher';
 import './publishers/file-publisher';

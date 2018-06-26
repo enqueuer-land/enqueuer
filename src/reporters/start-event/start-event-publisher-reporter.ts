@@ -24,16 +24,15 @@ export class StartEventPublisherReporter extends StartEventReporter {
         this.publisherOriginalAttributes = startEvent.publisher;
         this.report = {
             name: this.publisherOriginalAttributes.name,
-            valid: false,
+            valid: true,
             type: this.publisherOriginalAttributes.type,
             tests: {
-                "Started": false
+                'Published': false
             }
         };
     }
 
     public start(): Promise<void> {
-        this.resetReport();
         Logger.trace(`Firing publication as startEvent`);
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
@@ -42,6 +41,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
                 this.publisher.publish()
                     .then(() => {
+                        Logger.trace(`Start event published`);
+                        this.report.tests['Published'] = true;
                         this.executeOnMessageReceivedFunction();
                         return resolve();
                     })
@@ -63,11 +64,6 @@ export class StartEventPublisherReporter extends StartEventReporter {
         return {
             publisher: this.report
         };
-    }
-
-    private resetReport() {
-        this.report.valid = true;
-        this.report.tests = {};
     }
 
     private executeOnMessageReceivedFunction() {
