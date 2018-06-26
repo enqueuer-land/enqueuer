@@ -2,7 +2,6 @@ import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
-// import * as Stomp from 'stomp-client';
 const Stomp = require('stomp-client');
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'stomp'})

@@ -1,6 +1,5 @@
 import {Logger} from '../../loggers/logger';
 import {DateController} from '../../timers/date-controller';
-import Signals = NodeJS.Signals;
 import {Subscription} from '../../subscriptions/subscription';
 import {Timeout} from '../../timers/timeout';
 import {Container} from 'conditional-injector';
@@ -8,6 +7,7 @@ import {OnMessageReceivedReporter} from '../../meta-functions/on-message-receive
 import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
+import Signals = NodeJS.Signals;
 
 export class SubscriptionReporter {
 
@@ -24,7 +24,10 @@ export class SubscriptionReporter {
         this.report = {
             name: this.subscription.name,
             type: this.subscription.type,
-            tests: {},
+            tests: {
+                'Connected': false,
+                'Message received': false
+            },
             valid: true
         };
     }
@@ -51,7 +54,7 @@ export class SubscriptionReporter {
             this.subscription.connect()
                 .then(() => {
                     this.report.connectionTime = new DateController().toString();
-                    this.report.tests['Able to connect'] = true;
+                    this.report.tests['Connected'] = true;
                     resolve();
 
                     process.on('SIGINT', this.handleKillSignal);
@@ -60,7 +63,6 @@ export class SubscriptionReporter {
                 })
                 .catch((err: any) => {
                     Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                    this.report.tests['Able to connect'] = false;
                     reject(err);
                 });
         });

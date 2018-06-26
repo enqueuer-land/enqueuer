@@ -1,0 +1,46 @@
+{
+  "type": "runnable",
+  "valid": true,
+  "tests": {},
+  "name": "runnableStomp",
+  "id": "20180625222458067649_01dbf042",
+  "runnables": [
+    {
+      "type": "requisition",
+      "valid": true,
+      "tests": {
+        "No time out": true
+      },
+      "name": "RequisitionStomp",
+      "time": {
+        "totalTime": 369,
+        "startTime": "2018-06-26T01:24:58.679Z",
+        "endTime": "2018-06-26T01:24:59.048Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "stompSub",
+          "type": "stomp",
+          "tests": {
+            "Connected": true,
+            "Message received": true
+          },
+          "valid": true,
+          "connectionTime": "2018-06-26T01:24:59.033Z"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "name": "stompPub",
+          "valid": true,
+          "type": "stomp",
+          "tests": {
+            "Published": true
+          },
+          "publishTime": "2018-06-26T01:24:59.047Z"
+        }
+      }
+    }
+  ]
+}

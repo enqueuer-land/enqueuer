@@ -56,7 +56,7 @@ describe('Inception test', () => {
         expect(innerReport.tests['No time out']).toBeTruthy();
         expect(innerReport.name).toBe('innerRunnableUds');
         expect(innerReport.subscriptions[0].valid).toBeTruthy();
-        expect(innerReport.subscriptions[0].tests['Able to connect']).toBeTruthy();
+        expect(innerReport.subscriptions[0].tests['Connected']).toBeTruthy();
         expect(innerReport.subscriptions[0].tests['works']).toBeTruthy();
         expect(innerReport.subscriptions[0].tests['Message received']).toBeTruthy();
         expect(innerReport.subscriptions[0].tests['No time out']).toBeTruthy();
@@ -71,7 +71,7 @@ describe('Inception test', () => {
         expect(outterReport.tests['No time out']).toBeTruthy();
         expect(outterReport.name).toBe('runnableUds');
         expect(outterReport.subscriptions[0].valid).toBeTruthy();
-        expect(outterReport.subscriptions[0].tests['Able to connect']).toBeTruthy();
+        expect(outterReport.subscriptions[0].tests['Connected']).toBeTruthy();
         expect(outterReport.subscriptions[0].tests['true']).toBeTruthy();
         expect(outterReport.subscriptions[0].tests['Message received']).toBeTruthy();
         expect(outterReport.subscriptions[0].tests['No time out']).toBeTruthy();

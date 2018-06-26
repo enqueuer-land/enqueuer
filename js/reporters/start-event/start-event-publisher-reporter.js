@@ -46,10 +46,10 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
             if (this.publisher) {
-                this.report.publishTime = new date_controller_1.DateController().toString();
                 this.publisher.publish()
                     .then(() => {
                     logger_1.Logger.trace(`Start event published`);
+                    this.report.publishTime = new date_controller_1.DateController().toString();
                     this.report.tests['Published'] = true;
                     this.executeOnMessageReceivedFunction();
                     return resolve();

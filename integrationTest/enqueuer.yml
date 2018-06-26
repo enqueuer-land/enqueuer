@@ -2,15 +2,15 @@ requisitions:
   run-mode:
     single-run:
       name: integrationTests
-      fileNamePattern: integrationTest/stomp.json
+      fileNamePattern: integrationTest/*.json
 #      report:
 #          type: enqueuer
 #          filename: outputExamples/singleRunOutput.json
-#outputs:
-#  -
-#    type: file
-#    filenamePrefix: outputExamples/
-#    filenameExtension: json
+outputs:
+  -
+    type: file
+    filenamePrefix: outputExamples/
+    filenameExtension: json
 variables:
   tcpPort: 23070
 
@@ -22,4 +22,4 @@ variables:
 
   zeroMqAddress: tcp://127.0.0.1:3000
 
-log-level: trace
+#log-level: trace

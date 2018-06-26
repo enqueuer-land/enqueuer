@@ -36,7 +36,7 @@ let StompSubscription = class StompSubscription extends subscription_1.Subscript
     }
     connect() {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.debug(`Stomp subscription connecting to ${this.address}: ${this.port}`);
+            logger_1.Logger.debug(`Stomp subscription connecting to ${this.address}:${this.port}`);
             this.client = new Stomp(this.address, this.port, this.user, this.password);
             this.client.connect((sessionId) => {
                 logger_1.Logger.debug(`Stomp subscription connected id ${sessionId}`);

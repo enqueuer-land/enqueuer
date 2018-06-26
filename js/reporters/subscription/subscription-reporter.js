@@ -24,7 +24,10 @@ class SubscriptionReporter {
         this.report = {
             name: this.subscription.name,
             type: this.subscription.type,
-            tests: {},
+            tests: {
+                'Connected': false,
+                'Message received': false
+            },
             valid: true
         };
     }
@@ -49,14 +52,13 @@ class SubscriptionReporter {
             this.subscription.connect()
                 .then(() => {
                 this.report.connectionTime = new date_controller_1.DateController().toString();
-                this.report.tests['Able to connect'] = true;
+                this.report.tests['Connected'] = true;
                 resolve();
                 process.on('SIGINT', this.handleKillSignal);
                 process.on('SIGTERM', this.handleKillSignal);
             })
                 .catch((err) => {
                 logger_1.Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
-                this.report.tests['Able to connect'] = false;
                 reject(err);
             });
         });

@@ -37,11 +37,11 @@ export class StartEventPublisherReporter extends StartEventReporter {
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
             if (this.publisher) {
-                this.report.publishTime = new DateController().toString();
 
                 this.publisher.publish()
                     .then(() => {
                         Logger.trace(`Start event published`);
+                        this.report.publishTime = new DateController().toString();
                         this.report.tests['Published'] = true;
                         this.executeOnMessageReceivedFunction();
                         return resolve();

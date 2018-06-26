@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
-// import * as Stomp from 'stomp-client';
 const Stomp = require('stomp-client');
 let StompPublisher = class StompPublisher extends publisher_1.Publisher {
     constructor(publisherProperties) {
