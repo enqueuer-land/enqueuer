@@ -3,7 +3,7 @@
   "valid": true,
   "tests": {},
   "name": "runnableFile",
-  "id": "20180528200007061353_8bf67a9a",
+  "id": "file",
   "runnables": [
     {
       "type": "requisition",
@@ -13,25 +13,24 @@
       },
       "name": "file",
       "time": {
-        "totalTime": 111,
-        "startTime": "2018-05-28T23:00:07.618Z",
-        "endTime": "2018-05-28T23:00:07.729Z",
-        "timeout": 3000,
-        "hasTimedOut": false
+        "totalTime": 108,
+        "startTime": "2018-06-26T15:16:07.255Z",
+        "endTime": "2018-06-26T15:16:07.363Z",
+        "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "fileSubscription",
           "type": "file-name-watcher",
           "tests": {
-            "Able to connect": true,
-            "some time has passed": true,
+            "Connected": true,
             "Message received": true,
+            "some time has passed": true,
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-05-28T23:00:07.624Z",
-          "messageReceivedTime": "2018-05-28T23:00:07.729Z"
+          "connectionTime": "2018-06-26T15:16:07.261Z",
+          "messageReceivedTime": "2018-06-26T15:16:07.363Z"
         }
       ],
       "startEvent": {
@@ -39,8 +38,10 @@
           "name": "filePublisher",
           "valid": true,
           "type": "file",
-          "tests": {},
-          "publishTime": "2018-05-28T23:00:07.624Z"
+          "tests": {
+            "Published": true
+          },
+          "publishTime": "2018-06-26T15:16:07.263Z"
         }
       }
     }

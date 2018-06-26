@@ -2,8 +2,8 @@
   "type": "runnable",
   "valid": true,
   "tests": {},
-  "name": "runnableHttp",
-  "id": "20180528200008009839_30741a0b",
+  "name": "runnableHttpJsonPayload",
+  "id": "http",
   "runnables": [
     {
       "type": "requisition",
@@ -13,25 +13,24 @@
       },
       "name": "HttpTitle",
       "time": {
-        "totalTime": 20,
-        "startTime": "2018-05-28T23:00:08.104Z",
-        "endTime": "2018-05-28T23:00:08.124Z",
-        "timeout": 30000,
-        "hasTimedOut": false
+        "totalTime": 15,
+        "startTime": "2018-06-26T15:16:09.088Z",
+        "endTime": "2018-06-26T15:16:09.103Z",
+        "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "HttpSubscriptionTitle",
           "type": "http-server",
           "tests": {
-            "Able to connect": true,
-            "works": true,
+            "Connected": true,
             "Message received": true,
+            "Payload.enqueuer is Virgs": true,
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-05-28T23:00:08.105Z",
-          "messageReceivedTime": "2018-05-28T23:00:08.121Z"
+          "connectionTime": "2018-06-26T15:16:09.089Z",
+          "messageReceivedTime": "2018-06-26T15:16:09.102Z"
         }
       ],
       "startEvent": {
@@ -40,11 +39,12 @@
           "valid": true,
           "type": "http-client",
           "tests": {
+            "Published": true,
             "prePublishingTest": true,
             "publisherOnMessageReceivedTest": true,
             "publisherOnMessageReceivedPayloadTest": true
           },
-          "publishTime": "2018-05-28T23:00:08.106Z"
+          "publishTime": "2018-06-26T15:16:09.103Z"
         }
       }
     }

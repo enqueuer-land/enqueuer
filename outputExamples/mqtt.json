@@ -3,7 +3,7 @@
   "valid": true,
   "tests": {},
   "name": "runnableMqtt",
-  "id": "20180528200007094952_e7880728",
+  "id": "mqtt",
   "runnables": [
     {
       "type": "requisition",
@@ -13,25 +13,24 @@
       },
       "name": "RequisitionMqtt",
       "time": {
-        "totalTime": 42,
-        "startTime": "2018-05-28T23:00:07.952Z",
-        "endTime": "2018-05-28T23:00:07.994Z",
-        "timeout": 3000,
-        "hasTimedOut": false
+        "totalTime": 1081,
+        "startTime": "2018-06-26T15:16:09.212Z",
+        "endTime": "2018-06-26T15:16:10.293Z",
+        "timeout": 8000
       },
       "subscriptions": [
         {
           "name": "MqttSub",
           "type": "mqtt",
           "tests": {
-            "Able to connect": true,
-            "works": true,
+            "Connected": true,
             "Message received": true,
+            "works": true,
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-05-28T23:00:07.983Z",
-          "messageReceivedTime": "2018-05-28T23:00:07.994Z"
+          "connectionTime": "2018-06-26T15:16:09.636Z",
+          "messageReceivedTime": "2018-06-26T15:16:10.292Z"
         }
       ],
       "startEvent": {
@@ -39,8 +38,10 @@
           "name": "MqttPub",
           "valid": true,
           "type": "mqtt",
-          "tests": {},
-          "publishTime": "2018-05-28T23:00:07.985Z"
+          "tests": {
+            "Published": true
+          },
+          "publishTime": "2018-06-26T15:16:09.983Z"
         }
       }
     }

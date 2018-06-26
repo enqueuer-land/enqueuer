@@ -3,7 +3,7 @@
   "valid": true,
   "tests": {},
   "name": "runnableAmqp",
-  "id": "runnableAmqpId",
+  "id": "amqp",
   "runnables": [
     {
       "type": "requisition",
@@ -13,25 +13,24 @@
       },
       "name": "AmqpReq",
       "time": {
-        "totalTime": 25,
-        "startTime": "2018-05-28T23:00:07.485Z",
-        "endTime": "2018-05-28T23:00:07.510Z",
-        "timeout": 3000,
-        "hasTimedOut": false
+        "totalTime": 27,
+        "startTime": "2018-06-26T15:16:07.122Z",
+        "endTime": "2018-06-26T15:16:07.149Z",
+        "timeout": 5000
       },
       "subscriptions": [
         {
           "name": "AmqpSubs",
           "type": "amqp",
           "tests": {
-            "Able to connect": true,
-            "works": true,
+            "Connected": true,
             "Message received": true,
+            "works": true,
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-05-28T23:00:07.494Z",
-          "messageReceivedTime": "2018-05-28T23:00:07.510Z"
+          "connectionTime": "2018-06-26T15:16:07.137Z",
+          "messageReceivedTime": "2018-06-26T15:16:07.148Z"
         }
       ],
       "startEvent": {
@@ -39,8 +38,10 @@
           "name": "AmqpPub",
           "valid": true,
           "type": "amqp",
-          "tests": {},
-          "publishTime": "2018-05-28T23:00:07.496Z"
+          "tests": {
+            "Published": true
+          },
+          "publishTime": "2018-06-26T15:16:07.149Z"
         }
       }
     }
