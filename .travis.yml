@@ -25,10 +25,15 @@ before_install:
   - wget -O temp/elasticmq-server-0.13.11.jar https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.13.11.jar
   - java -Dconfig.file=scripts/elasticMq.conf -jar temp/elasticmq-server-0.13.11.jar &
   - ./scripts/rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
+  - wget -O temp/kafka_2.11-1.0.0.tgz http://mirror.nbtelecom.com.br/apache/kafka/1.0.0/kafka_2.11-1.0.0.tgz
+  - cd temp
+  - tar -xvzf temp/kafka_2.11-1.0.0.tgz
+  - cd kafka_2.11-1.0.0
+  - bin/zookeeper-server-start.sh config/zookeeper.properties &
+  - bin/kafka-server-start.sh ../server.properties &
+  - bin/kafka-topics.sh --create --topic enqueuer-topic-name --zookeeper localhost:2181 --partitions 3 --replication-factor 2
   - sudo rabbitmq-plugins enable rabbitmq_mqtt
   - sudo rabbitmq-plugins enable rabbitmq_stomp
-
-
 
 script:
   - npm run lint

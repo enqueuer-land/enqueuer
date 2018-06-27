@@ -362,6 +362,40 @@ const validStompRunnable = {
         }
     ]
 };
+const validKafkaRunnable = {
+    "runnableVersion": "01.00.00",
+    "name": "kafkaName",
+    "id": "kafka",
+    "runnables": [
+        {
+            "timeout": 3000,
+            "name": "RequisitionKafka",
+            "subscriptions": [
+                {
+                    "type": "kafka",
+                    "name": "kafkaSub",
+                    "client": {
+                        "kafkaHost": "localhost:9093"
+                    },
+                    "options": {
+                        "topic": "enqueuer-topic-name"
+                    }
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "kafka",
+                    "name": "kafkaPub",
+                    "client": {
+                        "kafkaHost": "localhost:9093"
+                    },
+                    "topic": "enqueuer-topic-name",
+                    "payload": "stompQueue"
+                }
+            }
+        }
+    ]
+};
 const validRunnableWithId = {
     "runnableVersion": "01.00.00",
     "name": "runnableFile",
@@ -484,6 +518,10 @@ describe('RunnableParser', () => {
 
     it('Should accept stomp runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validStompRunnable))).not.toBeNull();
+    });
+
+    it('Should accept kafka runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validKafkaRunnable))).not.toBeNull();
     });
 
     it('Should accept runnable with no subscriptions', () => {

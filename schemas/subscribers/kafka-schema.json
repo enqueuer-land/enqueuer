@@ -1,0 +1,43 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription/kafka",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "kafka"
+    },
+    "client": {
+      "type": [
+        "object",
+        "string"
+      ],
+      "properties": {
+        "kafkaHost": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kafkaHost"
+      ]
+    },
+    "options": {
+      "type": [
+        "object",
+        "string"
+      ],
+      "properties": {
+        "topic": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "topic"
+      ]
+    }
+  },
+  "required": [
+    "client",
+    "options"
+  ]
+}
+
+
