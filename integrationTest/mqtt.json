@@ -13,7 +13,7 @@
           "brokerAddress": "mqtt://iot.eclipse.org",
           "name": "MqttSub",
           "topic": "enqueuer/integration/public/test",
-          "onMessageReceived": "let enqueuer = 'enqueuer'; test['works'] = JSON.parse(message) === enqueuer;",
+          "onMessageReceived": "let enqueuer = 'enqueuer'; test['Works'] = JSON.parse(message) === enqueuer;",
           "options": {
             "clientId": "enqueuerSubscriptionOptionsExampleId9900223"
           },

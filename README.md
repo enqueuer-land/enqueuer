@@ -161,3 +161,14 @@ The value '**valid**' in the root of report json file will be shown as false and
 ### frequently asked question
 1.	**Q**: Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?\
 	**A**: I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely, [check it out.](/src/inceptionTest/inception.comp.ts "Inception Test")
+
+#### currently supported IPCs
+1. Amqp - Advanced Message Queuing Protocol
+2. File
+3. Http - Hypertext Transfer Protocol
+4. Kafka
+5. Mqtt - Message Queuing Telemetry Transport
+6. Sqs - Amazon Simple Queue Service
+7. StdOut - Process Standard output
+8. Stomp - Simple (or Streaming) Text Orientated Messaging Protocol
+9. Uds - Unix Domain Sockets

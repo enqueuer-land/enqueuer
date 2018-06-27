@@ -32,7 +32,7 @@ before_install:
   - wget -O temp/elasticmq-server-0.13.11.jar https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.13.11.jar
   - java -Dconfig.file=scripts/elasticMq.conf -jar temp/elasticmq-server-0.13.11.jar &
   - ./scripts/rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
-  - temp/kafka_2.11-1.0.0/bin/kafka-topics.sh --create --topic enqueuer-topic-name --zookeeper localhost:2181 --partitions 3 --replication-factor 1
+  - temp/kafka_2.11-1.0.0/bin/kafka-topics.sh --create --topic enqueuer-topic-name --zookeeper localhost:2181 --partitions 3 --replication-factor 1 #We have to give some time for broker and zookeeper
   - sudo rabbitmq-plugins enable rabbitmq_mqtt
   - sudo rabbitmq-plugins enable rabbitmq_stomp
 
