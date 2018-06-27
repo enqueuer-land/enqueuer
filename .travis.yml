@@ -27,7 +27,7 @@ before_install:
   - ./scripts/rabbitmqadmin declare exchange name=enqueuer.exchange type=topic
   - wget -O temp/kafka_2.11-1.0.0.tgz http://mirror.nbtelecom.com.br/apache/kafka/1.0.0/kafka_2.11-1.0.0.tgz
   - cd temp
-  - tar -xvzf temp/kafka_2.11-1.0.0.tgz
+  - tar -xvzf kafka_2.11-1.0.0.tgz
   - cd kafka_2.11-1.0.0
   - bin/zookeeper-server-start.sh config/zookeeper.properties &
   - bin/kafka-server-start.sh ../server.properties &
