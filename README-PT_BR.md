@@ -15,12 +15,12 @@
 - [Cenários de testes](#cenários-de-testes)
     - [Quando um cenário de testes é inválido](#quando-um-cenário-de-testes-é-inválido)
     - [Meta-Functions](#meta-functions)
-- [Arquivo de configuração](arquivo-de-configuracao)
+- [Arquivo de configuração](#arquivo-de-configuracao)
     - [Modos de execução](#run-mode)
     - [Saídas](#outputs)
     - [Níveis de log](#log-level)
     - [Variáveis](#variables)
-- [Questão ~~nem tão~~ frequentemente perguntada](questão-nem-tao-frequentemente-perguntada)
+- [Questão ~~nem tão~~ frequentemente perguntada](#questão-nem-tao-frequentemente-perguntada)
 
 ## justificativa
 Ao desenvolver arquiteturas reativas é comum que os fluxos de negócio sejam permeados por diversos protocolos de comunicação.
