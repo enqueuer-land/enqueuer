@@ -4,7 +4,9 @@
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
 
 # summary
-**Enqueuer** is an asynchronous messages testing tool.
+**Enqueuer** is a multiprotocol tool for asynchronous systems testing
+
+[Take a look if you prefer to read it in portuguese](/README-PT_BR.md);
 
 ## what it does?
 Checks whether an event-driven-component acts as expected.
@@ -13,7 +15,7 @@ By "acts as expected" we mean, the event-driven-component, when triggered by an 
   - publishes what it is suppose to publish; and
   - publishes faster than the its timeout.
 
-There is no doubt in how important events are, therefore, test them becomes a high priority task.
+There is no doubt in how important events are, therefore, testing event-driven-components becomes a high priority task.
 When developing an event-driven-architecture, it gets hard to keep track of how every component exchange messages with each other. Sometimes it occurs through message brokers, sometimes it is a synchronous http post and sometimes it writes a file.\
 In an event-driven world all events happen asynchronously.
 As soon as we exit the boundary of a service, we enter a non-deterministic world.
@@ -35,7 +37,7 @@ Although there are other ways of using it, the two main ways are:
 -	reports back the [result](/outputExamples/).
     
 ### let me draw it for you
-This is how your event-driven-component should acts when triggered by an *Input*:\
+This is how your event-driven-component acts when triggered by an *Input*:\
 ![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Event-driven-component expected behavior")
 
 What **enqueuer** does is to trigger *Input*, by itself, so the component-to-be-tested acts like it should.
@@ -70,7 +72,7 @@ Bellow there is a definition of a **runnable** and a **requisition**:
 #### **runnable**:
 -	**runnableVersion**: string, it tells you which version of runnable should be ran. Ex.: "01.00.00".
 -	**name**: string, identifies the runnable throughout its execution.
--	**initialDelay**: optional number in milliseconds, it tells you how long the requisition has to wait before running a runnable. Ex.: 2000.
+-	**initialDelay**: optional number in milliseconds, it tells you how long the runnable has to wait before running a runnable. Ex.: 2000.
 -	**runnables**: array of other **runnables** or **requisitions**. Yes, it can get recursive.
 
 #### **requisition**:
@@ -162,7 +164,7 @@ The value '**valid**' in the root of report json file will be shown as false and
 1.	**Q**: Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?\
 	**A**: I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely, [check it out.](/src/inceptionTest/inception.comp.ts "Inception Test")
 
-#### currently supported IPCs
+#### currently supported IPC protocols
 1. Amqp - Advanced Message Queuing Protocol
 2. File
 3. Http - Hypertext Transfer Protocol
