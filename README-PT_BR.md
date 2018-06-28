@@ -4,7 +4,31 @@
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
 
 # sumário
-**Enqueuer** é uma ferramenta multiprotocolo de testes de sistemas assíncrono
+- [Justificativa](#justificativa)
+- [O que faz?](#o-que-faz)
+- [Por que é útil?](#por-que-é-útil)
+- [Como funciona?](#como-funciona)
+    - [Permita-me desenhar para você](#permita-me-desenhar-para-você)
+- [Como usar](#como-usar)
+    - [Vá fundo e experimente](#vá-fundo-e-experimente)
+- [Protocolos IPC atualmente suportados](#protocolos-ipc-atualmente-suportados)
+- [Cenários de testes](#cenários-de-testes)
+    - [Quando um cenário de testes é inválido](#quando-um-cenário-de-testes-é-inválido)
+    - [Meta-Functions](#meta-functions)
+- [Arquivo de configuração](arquivo-de-configuracao)
+    - [Modos de execução](#run-mode)
+    - [Saídas](#outputs)
+    - [Níveis de log](#log-level)
+    - [Variáveis](#variables)
+- [Questão ~~nem tão~~ frequentemente perguntada](questão-nem-tao-frequentemente-perguntada)
+
+## justificativa
+Ao desenvolver arquiteturas reativas é comum que os fluxos de negócio sejam permeados por diversos protocolos de comunicação.
+Em muitos casos, pela facilidade, pela familiariadade ou pelo propósito mais adequado, arquiteturas RESTful baseadas em requisições HTTP são adotadas.
+Contudo, em outros casos, outros protocolos são preferíveis, tais como: amqp; mqtt; sqs etc..
+Para arquiteturas RESTful, ferramentas como [postman e newman](https://www.getpostman.com/) suprem a necessidade de realização de testes.
+Mas, quando se trata de outros protocolos, ou de fluxos que demandam mais de um protocolo, se carece de uma ferramenta capaz de realizar testes e agilizar o processo de desenvolvimento.
+Esse é o conceito do **enqueuer**: uma ferramenta de testes de sistemas multiprotocolo.
 
 ## o que faz?
 Verifica se um componente dirigido a eventos atua como esperado quando estimulado por um evento.
@@ -30,14 +54,14 @@ Embora haja outras maneiras de ser utilizado, as duas principais são:
 4. executa testes em cima das mensagens trocadas;
 5. reporta o [relatório final](/outputExamples/).
     
-### permita-me desenhar para você
+#### permita-me desenhar para você
 É assim que um componente dirigido a evento age quando estimulado por um *Input*:\
-![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Comportamento esperado de um componente dirigido a eventod")\
+![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Comportamento esperado de um componente dirigido a eventos")\
 **enqueuer** dispara o evento esperado fazendo com que o componente a ser testado atue.
 Logo, **enqueuer** coleta os *Outputs* e verifica se estão conforme descrito previamente.
 Bem simples, não acha?
 
-### como usar
+## como usar
     $ enqueuer --help
          Usage: enqueuer [options]
          Options:
@@ -67,11 +91,7 @@ Sem grandes surpresas, hum? Tão simples quanto `$enqueuer`.
 8. **Stomp**  - Simple (or Streaming) Text Orientated Messaging Protocol
 9. **Uds**    - Unix Domain Sockets
 
-### questão ~~nem tão~~ frequentemente perguntada
-1.	**Questão**: Uma vez que **enqueuer** é uma ferramenta para testar componentes dirigidos a eventos e **enqueuer** é um componente dirigido a eventos, **enqueue** testa a si mesmo?\
-	**Resposta**: Estou grato que tenha se perguntado isso. A resposta é sim, a ferramenta se testa, absolutamente, [dê uma olhada](/src/inceptionTest/inception.comp.ts "Inception Teste")
-
-## cenário de testes
+## cenários de testes
 Um cenário de testes parece com [isso](/playground "Exemplos de teste") e com [isso](/integrationTest "Mais exemplos").
 Abaixo, uma definição dos campos do cenário de teste:
 #### **runnable**:
@@ -108,7 +128,7 @@ Abaixo, uma definição dos campos do cenário de teste:
                 Como dito anteriormente, também é possível realizar testes nesse código.
                 Leia mais sobre meta-functions na sessão **meta-function**.			
 
-### quando um cenário de testes é inválido?
+#### quando um cenário de testes é inválido?
 Um cenário de testes é inválido quando:
 - Pelo menos um cenário de testes aninhado é inválido; ou
 - Pelo menos uma requisição interna é inválida por:
@@ -124,7 +144,7 @@ Um cenário de testes é inválido quando:
 
 O valor '**valid**' na raiz do [relatório final](/outputExamples/) será **false**.
 
-### meta-functions 
+#### meta-functions 
 Ao escrever uma meta-function (*onMessageReceived, prePublishing*) haverá uma variável especial chamada **test**
 -	**test**:
     Para testar algo: "test['nome do teste'] = expressãoBooleana;".
@@ -156,12 +176,16 @@ Quando todos os cenários forem executados, **enqueuer** encerrará a execução
      - 1, if there is at least one invalid runnable.
     
 ##### outputs:
-
 Aceita uma lista de mecanismos de publicações. Cada vez que um novo cenário de teste é executado, **enqueuer** publica pelo protocolo definido o resultado.
 
 ##### log-level:
-
 Define a profundidade que os logs terão. Os valores aceitos são: **trace**; **debug**; **info**; **warning**; **error**; and **fatal**.
 
-##### variables
+##### variables:
 Zona onde as variáveis persistidas entre diferentes execuções do enqueuer são armazenadas.
+
+
+## questão ~~nem tão~~ frequentemente perguntada
+1.	**Questão**: Uma vez que **enqueuer** é uma ferramenta para testar componentes dirigidos a eventos e **enqueuer** é um componente dirigido a eventos, **enqueue** testa a si mesmo?\
+	**Resposta**: Estou grato que tenha se perguntado isso. A resposta é sim, a ferramenta se testa, absolutamente, [dê uma olhada](/src/inceptionTest/inception.comp.ts "Inception Teste")
+
