@@ -32,7 +32,7 @@ Embora haja outras maneiras de ser utilizado, as duas principais são:
     
 ### permita-me desenhar para você
 É assim que um componente dirigido a evento age quando estimulado por um *Input*:\
-![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Comportamento esperado de um componente dirigido a eventod")
+![2018-03-11 19_20_00](https://media.giphy.com/media/YWLDPktqvpBIBgzYEX/giphy.gif "Comportamento esperado de um componente dirigido a eventod")\
 **enqueuer** dispara o evento esperado fazendo com que o componente a ser testado atue.
 Logo, **enqueuer** coleta os *Outputs* e verifica se estão conforme descrito previamente.
 Bem simples, não acha?
@@ -57,15 +57,15 @@ Bem simples, não acha?
 Sem grandes surpresas, hum? Tão simples quanto `$enqueuer`.
 
 #### protocolos IPC atualmente suportados
-1. Amqp - Advanced Message Queuing Protocol
-2. File
-3. Http - Hypertext Transfer Protocol
-4. Kafka
-5. Mqtt - Message Queuing Telemetry Transport
-6. Sqs - Amazon Simple Queue Service
-7. StdOut - Process Standard output
-8. Stomp - Simple (or Streaming) Text Orientated Messaging Protocol
-9. Uds - Unix Domain Sockets
+1. **Amqp**   - Advanced Message Queuing Protocol
+2. **File**
+3. **Http**   - Hypertext Transfer Protocol
+4. **Kafka**
+5. **Mqtt**   - Message Queuing Telemetry Transport
+6. **Sqs**    - Amazon Simple Queue Service
+7. **StdOut** - Process Standard output
+8. **Stomp**  - Simple (or Streaming) Text Orientated Messaging Protocol
+9. **Uds**    - Unix Domain Sockets
 
 ### questão ~~nem tão~~ frequentemente perguntada
 1.	**Questão**: Uma vez que **enqueuer** é uma ferramenta para testar componentes dirigidos a eventos e **enqueuer** é um componente dirigido a eventos, **enqueue** testa a si mesmo?\
@@ -163,5 +163,5 @@ Aceita uma lista de mecanismos de publicações. Cada vez que um novo cenário d
 
 Define a profundidade que os logs terão. Os valores aceitos são: **trace**; **debug**; **info**; **warning**; **error**; and **fatal**.
 
-#### variables
+##### variables
 Zona onde as variáveis persistidas entre diferentes execuções do enqueuer são armazenadas.
