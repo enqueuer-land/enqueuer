@@ -11,7 +11,7 @@ export class SqsPublisher extends Publisher {
     private sqsSend: AWS.SQS;
     private params: SendMessageRequest;
 
-    constructor(publisherProperties: PublisherModel) {
+    public constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);
 
         this.sqsSend = new AWS.SQS(publisherProperties.awsConfiguration);

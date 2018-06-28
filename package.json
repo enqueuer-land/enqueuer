@@ -9,7 +9,7 @@
     "unitTest": "jest .test.ts",
     "componentTest": "jest --forceExit .comp.ts",
     "integrationTest": "npm start -- -c integrationTest/enqueuer.yml --session-variables zeroMqAddress=tcp://127.0.0.1:3000",
-    "codeCoverage": "jest --coverage --collectCoverageFrom=src/**/*.ts",
+    "codeCoverage": "jest --coverage",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "all": "npm run clean && npm run lint && npm run build && npm link && npm run test && npm run codeCoverage",
@@ -61,12 +61,17 @@
     "typescript": "^2.7.2"
   },
   "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/publishers/**",
+      "!src/subscriptions/**"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 5,
-        "functions": 10,
-        "lines": 10,
-        "statements": 10
+        "functions": 15,
+        "lines": 20,
+        "statements": 15
       }
     },
     "transform": {

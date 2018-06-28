@@ -33,6 +33,9 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
             })
                 .on('error', function (data) {
                 reject(data);
+            })
+                .on('data', (msg) => {
+                this.messageReceived = msg.toString();
             });
         });
     }

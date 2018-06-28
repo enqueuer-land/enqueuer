@@ -31,6 +31,7 @@ export class KafkaPublisher extends Publisher {
                         return reject(err);
                     }
                     Logger.trace(`Kafka publish message data ${JSON.stringify(data, null, 2)}`);
+                    this.messageReceived = JSON.stringify(data);
                     return resolve();
                 });
             });

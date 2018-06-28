@@ -8,7 +8,7 @@ export abstract class Publisher {
     public prePublishing?: string;
     public messageReceived?: string;
 
-    constructor(publisherAttributes: PublisherModel) {
+    public constructor(publisherAttributes: PublisherModel) {
         this.type = publisherAttributes.type;
         this.payload = publisherAttributes.payload;
         this.name = publisherAttributes.name;

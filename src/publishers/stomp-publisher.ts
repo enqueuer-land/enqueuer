@@ -12,7 +12,7 @@ export class StompPublisher extends Publisher {
     private port: string;
     private address: string;
 
-    constructor(publisherProperties: PublisherModel) {
+    public constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);
 
         this.address = publisherProperties.address;

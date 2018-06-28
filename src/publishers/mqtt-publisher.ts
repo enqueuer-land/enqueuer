@@ -10,7 +10,7 @@ export class MqttPublisher extends Publisher {
     private topic: string;
     private options: any;
 
-    constructor(publish: PublisherModel) {
+    public constructor(publish: PublisherModel) {
         super(publish);
         this.brokerAddress = publish.brokerAddress;
         this.topic = publish.topic;

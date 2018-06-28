@@ -13,7 +13,7 @@ export class UdsPublisher extends Publisher {
         this.path = publisherAttributes.path;
     }
 
-    publish(): Promise<void> {
+    public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
             const client = net.createConnection(this.path)
                 .on('connect', () => {
@@ -22,6 +22,9 @@ export class UdsPublisher extends Publisher {
                 })
                 .on('error', function(data: any) {
                     reject(data);
+                })
+                .on('data', (msg: Buffer) => {
+                    this.messageReceived = msg.toString();
                 });
         });
     }

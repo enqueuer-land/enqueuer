@@ -12,7 +12,7 @@ const options = {
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'standard-output'})
 export class StandardOutputPublisher extends Publisher {
 
-    constructor(publisherProperties: PublisherModel) {
+    public constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);
     }
 
