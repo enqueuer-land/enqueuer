@@ -26,8 +26,7 @@
 Ao desenvolver arquiteturas reativas é comum que os fluxos de negócio sejam permeados por diversos protocolos de comunicação.
 Em muitos casos, pela facilidade, pela familiariadade ou pelo propósito mais adequado, arquiteturas RESTful baseadas em requisições HTTP são adotadas.
 Contudo, em outros casos, outros protocolos são preferíveis, tais como: amqp; mqtt; sqs etc..
-Para arquiteturas RESTful, ferramentas como [postman e newman](https://www.getpostman.com/) suprem a necessidade de realização de testes.
-Mas, quando se trata de outros protocolos, ou de fluxos que demandam mais de um protocolo, se carece de uma ferramenta capaz de realizar testes e agilizar o processo de desenvolvimento.
+Quando se trata de fluxos que demandam mais de um protocolo, há uma carência de uma ferramenta capaz de realizar testes e agilizar o processo de desenvolvimento e integrar a pipeline de integração contínua.
 Esse é o conceito do **enqueuer**: uma ferramenta de testes de sistemas multiprotocolo.
 
 ## o que faz?
