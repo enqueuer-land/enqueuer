@@ -37,11 +37,9 @@ describe('Configuration', function() {
 
     it('daemon run mode', function () {
         const configurationFile = {
-            requisitions: {
                 "run-mode": {
                     "daemon": ["bla"]
                 }
-            }
         }
         const actualInput = new Configuration({}, configurationFile).getRequisitionRunMode()["daemon"];
 
@@ -50,11 +48,9 @@ describe('Configuration', function() {
 
     it('single run mode', function () {
         const configurationFile = {
-            requisitions: {
                 "run-mode": {
                     "single-run": "bla"
                 }
-            }
         }
         const actualInput = new Configuration({}, configurationFile).getRequisitionRunMode()["single-run"];
 

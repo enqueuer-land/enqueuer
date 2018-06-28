@@ -59,8 +59,8 @@ export class Configuration {
     }
 
     public getRequisitionRunMode(): any {
-        if (this.configurationFile.requisitions) {
-            return this.configurationFile.requisitions['run-mode'];
+        if (this.configurationFile) {
+            return this.configurationFile['run-mode'];
         }
         return undefined;
     }
