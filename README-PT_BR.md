@@ -102,7 +102,7 @@ Abaixo, uma definição dos campos do cenário de teste:
 #### **requisition**:
 -	**timeout**: número opcional em milissegundos, informa quanto tempo o cenário tem que esperar antes de considerar o teste como expirado. Ex.: 2000.
 -	**name**: string, identifica a requisição por toda a execução.
--	**startEvent**:\
+-	**startEvent**:
     -	**publisher**: object
         -	**type**: string, identifica o protocolo a ser publicado. Ex.: "mqtt", "kafka", "amqp" etc..
         -	**name**: string, identifica o **publisher** por toda a execução.
