@@ -26,8 +26,9 @@
 Ao desenvolver arquiteturas reativas é comum que os fluxos de negócio sejam permeados por diversos protocolos de comunicação.
 Em muitos casos, pela facilidade, pela familiariadade ou pelo propósito mais adequado, arquiteturas RESTful baseadas em requisições HTTP são adotadas.
 Contudo, em outros casos, outros protocolos são preferíveis, tais como: amqp; mqtt; sqs etc..
+Por vezes, é natural que tuando estimulado por um determinado protocolo IPC, o sistema processe e emita mensagens por meio de diferentes protoclos IPC.
 Quando se trata de fluxos que demandam mais de um protocolo, há uma carência de uma ferramenta capaz de realizar testes e agilizar o processo de desenvolvimento e integrar a pipeline de integração contínua.
-Esse é o conceito do **enqueuer**: uma ferramenta de testes de sistemas multiprotocolo.
+Esse é o conceito do **enqueuer**: uma ferramenta de testes de sistemas com múltiplos protocolos IPC.
 
 ## o que faz?
 Verifica se um componente dirigido a eventos atua como esperado quando estimulado por um evento.
@@ -35,10 +36,6 @@ Por "atua como esperado" se quer dizer:
   - publica onde deve publicar;
   - publica o que deve publicar;
   - publica mais rápido que o tempo máximo.
-
-Não resta dúvidas do quão importante os eventos são, logo, testar os sistemas orientados a eventos se torna uma tarefa de alta prioridade.
-Ao se desenvolver um sistema desse tipo, se torna difícil de manter como cada componente troca mensagens com um outro.
-O que **enqueuer** se propõe a fazer é assegurar que um componente, ou um conjunto de componentes de um mesmo fluxo, atua como deveria quando foi concebido.
 
 ## por que é útil?
 Foi designado para ajudar o processo de desenvolvimento.
@@ -102,30 +99,29 @@ Abaixo, uma definição dos campos do cenário de teste:
 #### **requisition**:
 -	**timeout**: número opcional em milissegundos, informa quanto tempo o cenário tem que esperar antes de considerar o teste como expirado. Ex.: 2000.
 -	**name**: string, identifica a requisição por toda a execução.
+-	**subscriptions**: vetor de subscriptions
+    -	**subscription**
+        -	**type**: string, identifica o protocolo a ser subscrito. Ex.: "mqtt", "kafka", "amqp" etc..
+        -	**name**: string, identifica a **subscription** por toda a execução.
+        -	**timeout**: número opcional em milissegundos, informa quanto tempo a subscrição deve esperar antes de ser considerada como inválida. Ex.: 2000.
+        -	**onMessageReceived**: código javascript opcional, executada quando o evento aguardado é recebido.
+                Existe uma variável especial chamada **message**. À variável será atribuída a própria mensagem recebida.
+                É possível fazer testes, caso desejado: Ex.: ```"test['typeMqtt'] = publisher.type=='mqtt';"```.
+                Leia mais sobre meta-functions na sessão [**meta-functions**](#meta-functions).			
 -	**startEvent**:
     -	**publisher**: object
         -	**type**: string, identifica o protocolo a ser publicado. Ex.: "mqtt", "kafka", "amqp" etc..
         -	**name**: string, identifica o **publisher** por toda a execução.
-        -	**payload**: string/object/number, o que será publicado. Pode ser o que for desejado. Inclusive outro **runnable**.[Saca essa](/src/inceptionTest/inceptionRequisition.json)
-        -	**prePublishing**: código javascript, código executado imediatamente antes da publicação da mensagem. 
+        -	**payload**: string/object/number, o que será publicado. Pode ser o que for desejado. Inclusive outro **runnable**.[Saca essa](/src/inceptionTest/inceptionRunnable.enq)
+        -	**prePublishing**: código javascript opcional, código executado imediatamente antes da publicação da mensagem. 
                     Existe uma variável especial chamada **publisher**. A variável representa o próprio **publisher** e seus atributos.
                     É possível inclusive redefinir novos valores para esses atributos em "tempo de execução".
                     Tipo assim: ```"publisher.payload=new Date().getTime();"``` or ```"publisher.type='mqtt'"```.
-                    É possível fazer testes, caso desejado: Ex.: ```"test['typeMqtt'] = publisher.type=='mqtt';"```.
-                    Leia mais sobre meta-functions na sessão **meta-function**.			
-        -	**onMessageReceived**: código javascript, código executado quando o protocolo (geralmente síncrono) fornece algum dado quando uma mensagem é publicada. 
+                    Leia mais sobre meta-functions na sessão [**meta-functions**](#meta-functions).                    
+        -	**onMessageReceived**: código javascript opcional, código executado quando o protocolo (geralmente síncrono) fornece algum dado quando uma mensagem é publicada. 
                     Existe uma variável especial chamada **message**. À variável será atribuída a informação vinda da publicação da mensagem. 
                     Como dito anteriormente, também é possível realizar testes nesse código.
-                    Leia mais sobre meta-functions na sessão **meta-function**.			
--	**subscriptions**: vetor de subscriptions
-    -	**subscription**, object
-        -	**type**: string, identifica o protocolo a ser subscrito. Ex.: "mqtt", "kafka", "amqp" etc..
-        -	**name**: string, identifica a **subscription** por toda a execução.
-        -	**timeout**: número opcional em milissegundos, informa quanto tempo a subscrição deve esperar antes de ser considerada como inválida. Ex.: 2000.
-        -	**onMessageReceived**: código javascript, executada quando o evento aguardado é recebido.
-                Existe uma variável especial chamada **message**. À variável será atribuída a própria mensagem recebida.
-                Como dito anteriormente, também é possível realizar testes nesse código.
-                Leia mais sobre meta-functions na sessão **meta-function**.			
+                    Leia mais sobre meta-functions na sessão [**meta-functions**](#meta-functions).			
 
 #### quando um cenário de testes é inválido?
 Um cenário de testes é inválido quando:
@@ -144,11 +140,12 @@ Um cenário de testes é inválido quando:
 O valor '**valid**' na raiz do [relatório final](/outputExamples/) será **false**.
 
 #### meta-functions 
-Ao escrever uma meta-function (*onMessageReceived, prePublishing*) haverá uma variável especial chamada **test**
+Ao escrever uma meta-function (*onMessageReceived, prePublishing*) haverá uma variável especial chamada **test**:
 -	**test**:
     Para testar algo: "test['nome do teste'] = expressãoBooleana;".
     A expressão booleana será avaliada em tempo de execução e todas as averiguações serão levadas em consideração para determinar se um cenário é válido ou não.
     Ex.: ```"test['test label'] = true;"```.
+    O resultado desses testes estarão expostos no [relatório final](/outputExamples/).
 -	**special functions**:
 Haverá também três funções especiais: **persistEnqueuerVariable(name, value)**, **persistSessionVariable(name, value)** e **deleteEnqueuerVariable(name)**;
 Para recuperar uma variável *enqueuerVariable* ou uma variável *sessionVariable* use chaves duplas: "{{variableName}}". Ex.: ```console.log({{httpPort}});```
