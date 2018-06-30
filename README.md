@@ -13,9 +13,9 @@
     - [Go ahead and try it](#go-ahead-and-try-it)
 - [Currently supported IPC protocols](#currently-supported-IPC-protocols)
 - [Runnable](#runnable)
-    - [when is a runnable result invalid](#when-is-a-runnable-result-invalid)
-    - [meta-Functions](#meta-functions)
-- [configuration file](#configuration file)
+    - [When is a runnable result invalid](#when-is-a-runnable-result-invalid)
+    - [Meta-Functions](#meta-functions)
+- [Configuration file](#configuration-file)
     - [run-mode](#run-mode)
     - [outputs](#outputs)
     - [log-level](#log-level)
@@ -183,6 +183,6 @@ Accepted values are: **trace**; **debug**; **info**; **warning**; **error**; and
 ##### variables:
 Variables persisted across different **enqueuer** executions will be stored here. 
 
-### frequently asked question
+### ~~Not so~~ frequently asked question
 1.	**Q**: Given that **enqueuer** is a tool that tests event-driven-components and it is also an event-driven-component, does it test itself?\
 	**A**: I'm glad that you asked. As a matter of fact, yes, it does test itself, absolutely, [check it out.](/src/inceptionTest/inception.comp.ts "Inception Test")
