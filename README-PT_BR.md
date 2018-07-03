@@ -182,6 +182,6 @@ Zona onde as variáveis persistidas entre diferentes execuções do enqueuer sã
 
 
 ## questão ~~nem tão~~ frequentemente perguntada
-1.	**Questão**: Uma vez que **enqueuer** é uma ferramenta para testar componentes dirigidos a eventos e **enqueuer** é um componente dirigido a eventos, **enqueue** testa a si mesmo?\
+1.	**Questão**: Uma vez que **enqueuer** é uma ferramenta para testar componentes dirigidos a eventos e **enqueuer** é um componente dirigido a eventos, **enqueuer** testa a si mesmo?\
 	**Resposta**: Estou grato que tenha se perguntado isso. A resposta é sim, a ferramenta se testa, absolutamente, [dê uma olhada](/src/inceptionTest/inception.comp.ts "Inception Teste")
 
