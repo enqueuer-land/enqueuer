@@ -3,7 +3,7 @@
 
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
 
-# sumário
+# summary
 - [Motivation](#motivation)
 - [What it does?](#what-it-does)
 - [Why is it useful?](#why-is-it-useful)
@@ -28,7 +28,7 @@
 It's not unusual, when developing reactive architectures, to have business flows full of several IPC protocols.
 In many of these flows, be it because it's easy, or because it's the one the suits better, RESTful architectures based on HTTP requisitions are chosen.
 However, there are cases that others IPC protocols are more appropriated, such as: amqp; mqtt; sqs etc..
-Sometimes, it' natural that when triggered by a some kind of IPC protocol, the component outputs messages in others IPC protocol.
+Sometimes, it's natural that when triggered by a some kind of IPC protocol, the component outputs messages in others IPC protocol.
 When it comes to multiprotocol flows, there is a need for a tool able to test, speed up the development process and be integrated to the CI server.
 This is the concept behind **enqueuer**: a multi IPC protocol systems testing tool.  
 
