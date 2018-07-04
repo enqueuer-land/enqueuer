@@ -39,6 +39,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new RunnableRunner(runnable).run())
                 .then(report => {
+                    Logger.trace('Adding test suite');
                     this.resultCreator.addTestSuite(report);
                     return report;
                 })

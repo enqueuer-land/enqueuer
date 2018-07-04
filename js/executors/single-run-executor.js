@@ -50,6 +50,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
                 .then(report => {
+                logger_1.Logger.trace('Adding test suite');
                 this.resultCreator.addTestSuite(report);
                 return report;
             })
