@@ -7,19 +7,6 @@
     {
       "timeout": 8000,
       "name": "RequisitionMqtt",
-      "subscriptions": [
-        {
-          "type": "mqtt",
-          "brokerAddress": "mqtt://iot.eclipse.org",
-          "name": "MqttSub",
-          "topic": "enqueuer/integration/public/test",
-          "onMessageReceived": "let enqueuer = 'enqueuer'; test['Works'] = JSON.parse(message) === enqueuer;",
-          "options": {
-            "clientId": "enqueuerSubscriptionOptionsExampleId9900223"
-          },
-          "timeout": 5000
-        }
-      ],
       "startEvent": {
         "publisher": {
           "type": "mqtt",
@@ -31,7 +18,20 @@
             "clientId": "enqueuerPublishOptionsExampleIdDifferent2313"
           }
         }
-      }
+      },
+      "subscriptions": [
+        {
+          "type": "mqtt",
+          "brokerAddress": "mqtt://iot.eclipse.org",
+          "name": "MqttSub",
+          "topic": "enqueuer/integration/public/test",
+          "onMessageReceived": "let enqueuer = 'enqueuer'; test['Test Label Description'] = JSON.parse(message) === enqueuer;",
+          "options": {
+            "clientId": "enqueuerSubscriptionOptionsExampleId9900223"
+          },
+          "timeout": 5000
+        }
+      ]
     }
   ]
 }

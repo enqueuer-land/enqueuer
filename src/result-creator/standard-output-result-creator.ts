@@ -31,7 +31,7 @@ export class StandardOutputResultCreator extends ResultCreator {
     public addTestSuite(suite: ResultModel): void {
         this.report.runnables[suite.name] = suite;
         this.report.valid = this.report.valid && suite.valid;
-        this.findRequisitions(suite);
+        this.findRequisitions(suite, this.report.name);
     }
     public addError(err: any): void {
         ++this.testCounter;
@@ -55,13 +55,14 @@ export class StandardOutputResultCreator extends ResultCreator {
         }
     }
 
-    private findRequisitions(resultModel: ResultModel) {
+    private findRequisitions(resultModel: ResultModel, prefix: string) {
         resultModel.runnables.forEach((runnable: ResultModel | RequisitionModel) => {
+            const levelName = prefix.concat(".").concat(resultModel.name);
             if (runnable.type == 'runnable') {
-                this.findRequisitions(runnable);
+                this.findRequisitions(runnable, levelName);
             } else if (runnable.type == 'requisition') {
                 const requisition = runnable as RequisitionModel;
-                this.findTests(requisition, this.report.name.concat('.').concat(requisition.name));
+                this.findTests(requisition, levelName.concat('.').concat(requisition.name));
             }
         });
     }

@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node js/index.js",
     "test": "npm run unitTest && npm run componentTest && npm run integrationTest",
-    "unitTest": "jest .test.ts",
-    "componentTest": "jest --forceExit .comp.ts",
+    "unitTest": "jest --silent .test.ts",
+    "componentTest": "jest --forceExit --silent .comp.ts",
     "integrationTest": "npm start -- -c integrationTest/enqueuer.yml --session-variables zeroMqAddress=tcp://127.0.0.1:3000",
-    "codeCoverage": "jest --coverage",
+    "codeCoverage": "jest --silent --coverage",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "all": "npm run clean && npm run lint && npm run build && npm link && npm run test && npm run codeCoverage",

@@ -27,7 +27,7 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
         this.testCounter = 0;
         this.failedTestNames = [];
         this.report = {
-            name: 'StandardOutputResultCreator',
+            name: 'SingleRun',
             tests: {},
             valid: true,
             runnables: {}
@@ -36,7 +36,7 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
     addTestSuite(suite) {
         this.report.runnables[suite.name] = suite;
         this.report.valid = this.report.valid && suite.valid;
-        this.findRequisitions(suite);
+        this.findRequisitions(suite, this.report.name);
     }
     addError(err) {
         ++this.testCounter;
@@ -57,25 +57,26 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
             });
         }
     }
-    findRequisitions(resultModel) {
+    findRequisitions(resultModel, prefix) {
         resultModel.runnables.forEach((runnable) => {
-            if (runnable.type == "runnable") {
-                this.findRequisitions(runnable);
+            const levelName = prefix.concat(".").concat(resultModel.name);
+            if (runnable.type == 'runnable') {
+                this.findRequisitions(runnable, levelName);
             }
-            else if (runnable.type == "requisition") {
+            else if (runnable.type == 'requisition') {
                 const requisition = runnable;
-                this.findTests(requisition, this.report.name.concat(".").concat(requisition.name));
+                this.findTests(requisition, levelName.concat('.').concat(requisition.name));
             }
         });
     }
     findTests(requisition, prefix) {
         this.inspectInvalidTests(requisition.tests, prefix);
-        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, prefix.concat(".").concat(subscription.name)));
+        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, prefix.concat('.').concat(subscription.name)));
         if (requisition.startEvent.subscription) {
-            this.inspectInvalidTests(requisition.startEvent.subscription.tests, prefix.concat(".").concat(requisition.startEvent.subscription.name));
+            this.inspectInvalidTests(requisition.startEvent.subscription.tests, prefix.concat('.').concat(requisition.startEvent.subscription.name));
         }
         if (requisition.startEvent.publisher) {
-            this.inspectInvalidTests(requisition.startEvent.publisher.tests, prefix.concat(".").concat(requisition.startEvent.publisher.name));
+            this.inspectInvalidTests(requisition.startEvent.publisher.tests, prefix.concat('.').concat(requisition.startEvent.publisher.name));
         }
     }
     inspectInvalidTests(tests, prefix) {
