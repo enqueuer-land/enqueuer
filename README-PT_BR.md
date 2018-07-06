@@ -3,6 +3,14 @@
 
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
 
+## **TL;DR**
+Quando um endpoint http do seu e-commerce é atingido, você deve enviar uma informação para uma API de processamento de cartões de crédito fazendo uso de MQTT, notificar um provedor de conteúdo de marketing através de uma requisição Rest/Http, notificar o usuário com SQS, persistir dados em um banco de dados e enfileirar uma mensagem AMQP para um sistema de métricas.
+Neste momento, você tem três opções:
+1. Não escrever teste algum;
+2. Escrever testes de componente no próprio código do e-commerce para cada caso separadamente, mockando todos eles, tratando novas dependências, desvendando detalhes e debugando todos quando falham; ou
+3. Usar **enqueuer** e ter tudo isso testado de mão beijada.
+![Report Example](https://github.com/lopidio/enqueuer/blob/develop/docs//mqttOutputExample.png "Report Example")
+
 # sumário
 - [Justificativa](#justificativa)
 - [O que faz?](#o-que-faz)
