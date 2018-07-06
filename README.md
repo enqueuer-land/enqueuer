@@ -4,10 +4,10 @@
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
 
 ## **TL;DR**
-When your e-commerce http endpoint is hit, you have to send an information to a credit card processing API through MQTT, notify a marketing content provider through Rest/Http, push a notification to the user with SQS, store data in a database and enqueue an AMQP message to a metric system.
+When your e-commerce http endpoint is hit, you have to send an information to a credit card processing API through MQTT, notify a marketing content provider through Rest/Http request, push a notification to the user with SQS, store data in a database and enqueue an AMQP message to a metric system.
 Now, you have three options:
-1. No to write test at all;
-2. Write a test for each one of these cases separately, figure out details and deal with debugging them when they fail; or
+1. Write no test at all;
+2. Write a component test for each one of these cases separately, mocking them all, handling with new dependencies, figure out details and deal with debugging them when they fail; or
 3. Use **enqueuer** and have it all tested right out of the box.
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs//mqttOutputExample.png "Report Example")
 
