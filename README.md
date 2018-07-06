@@ -9,7 +9,7 @@ Now, you have three options:
 1. Write no test at all;
 2. Write a component test for each one of these cases separately, mocking them all, handling with new dependencies, figure out details and deal with debugging them when they fail; or
 3. Use **enqueuer** and have it all tested right out of the box.
-![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs//mqttOutputExample.png "Report Example")
+![Report Example](https://github.com/lopidio/enqueuer/blob/develop/docs//mqttOutputExample.png "Report Example")
 
 # summary
 - [Motivation](#motivation)
@@ -19,7 +19,7 @@ Now, you have three options:
     - [Let me draw it for you](#let-me-draw-it-for-you)
 - [How to use](#how-to-use)
     - [Go ahead and try it](#go-ahead-and-try-it)
-- [Currently supported IPC protocols](#currently-supported-IPC-protocols)
+- [Currently supported IPC protocols](#currently-supported-ipc-protocols)
 - [Runnable](#runnable)
     - [When is a runnable result invalid](#when-is-a-runnable-result-invalid)
     - [Meta-Functions](#meta-functions)
