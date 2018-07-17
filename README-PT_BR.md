@@ -31,12 +31,12 @@ Neste momento, você tem três opções:
 - [Questão ~~nem tão~~ frequentemente perguntada](#questão-nem-tao-frequentemente-perguntada)
 
 ## justificativa
-Ao desenvolver arquiteturas reativas é comum que os fluxos de negócio sejam permeados por diversos protocolos de comunicação.
+Ao desenvolver arquiteturas reativas é comum que os fluxos de negócio sejam permeados por diversos protocolos de comunicação o que chamamos de **fluxo de comunicação poliglota**.
 Em muitos casos, pela facilidade, pela familiariadade ou pelo propósito mais adequado, arquiteturas RESTful baseadas em requisições HTTP são adotadas.
 Contudo, em outros casos, outros protocolos são preferíveis, tais como: amqp; mqtt; sqs etc..
-Por vezes, é natural que tuando estimulado por um determinado protocolo IPC, o sistema processe e emita mensagens por meio de diferentes protoclos IPC.
+Por vezes, é natural que quando estimulado por uma determinada mensagens, o sistema processe e emita mensagens por meio de diferentes protocolos.
 Quando se trata de fluxos que demandam mais de um protocolo, há uma carência de uma ferramenta capaz de realizar testes e agilizar o processo de desenvolvimento e integrar a pipeline de integração contínua.
-Esse é o conceito do **enqueuer**: uma ferramenta de testes de sistemas com múltiplos protocolos IPC.
+Esse é o conceito do **enqueuer**: uma ferramenta de testes de comunicação poliglota.
 
 ## o que faz?
 Verifica se um componente dirigido a eventos atua como esperado quando estimulado por um evento.
