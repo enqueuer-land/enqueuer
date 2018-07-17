@@ -33,12 +33,12 @@ Now, you have three options:
 [Take a look if you prefer to read it in portuguese](/README-PT_BR.md);
 
 ## motivation
-It's not unusual, when developing reactive architectures, to have business flows full of several IPC protocols.
+It's not unusual, when developing reactive architectures, to have business flows full of several IPC protocols what we call a **polyglot communication flow**.
 In many of these flows, be it because it's easy, or because it's the one the suits better, RESTful architectures based on HTTP requisitions are chosen.
-However, there are cases that others IPC protocols are more appropriated, such as: amqp; mqtt; sqs etc..
+However, there are cases that others protocols are more appropriated, such as: amqp; mqtt; sqs etc..
 Sometimes, it's natural that when triggered by a some kind of IPC protocol, the component outputs messages in others IPC protocol.
 When it comes to multiprotocol flows, there is a need for a tool able to test, speed up the development process and be integrated to the CI server.
-This is the concept behind **enqueuer**: a multi IPC protocol systems testing tool.  
+This is the concept behind **enqueuer**: polyglot communication testing tool.  
 
 ## what it does?
 Checks whether a flow acts as expected when trigger by some sort of event.
