@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
 const variables_controller_1 = require("../variables/variables-controller");
 class OnMessageReceivedMetaFunctionBody {
-    constructor(messageReceived, onMessageReceived) {
-        this.messageReceived = messageReceived;
+    constructor(onMessageReceived, messageReceived) {
         this.onMessageReceived = onMessageReceived;
+        this.messageReceived = messageReceived;
     }
     createBody() {
         const onMessageReceivedObject = { onMessageReceived: this.onMessageReceived };
@@ -14,9 +14,13 @@ class OnMessageReceivedMetaFunctionBody {
             .addVariableMap(variables_controller_1.VariablesController.persistedVariables())
             .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
         const replaced = placeHolderReplacer.replace(onMessageReceivedObject);
+        let message = 'null';
+        if (this.messageReceived) {
+            message = JSON.stringify(this.messageReceived);
+        }
         return `let test = {};
                     let report = {};
-                    let message = ${JSON.stringify(this.messageReceived)};
+                    let message = ${message};
                     ${replaced.onMessageReceived};
                     return {
                             test: test,

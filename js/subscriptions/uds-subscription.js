@@ -24,6 +24,12 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.path = subscriptionAttributes.path;
+        if (typeof subscriptionAttributes.response != 'string') {
+            this.response = JSON.stringify(subscriptionAttributes.response);
+        }
+        else {
+            this.response = subscriptionAttributes.response;
+        }
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
@@ -34,8 +40,12 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
                 });
                 stream.on('data', (msg) => {
                     msg = msg.toString();
-                    resolve(msg);
+                    // console.log('UDS response: ' + this.response + ' -> ' + typeof  this.response);
+                    if (this.response) {
+                        stream.write(this.response);
+                    }
                     stream.end();
+                    resolve(msg);
                 });
             });
         });

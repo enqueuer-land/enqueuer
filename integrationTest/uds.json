@@ -12,6 +12,7 @@
           "path": "/tmp/unix.sock",
           "name": "udsSubscription",
           "onMessageReceived": "message = JSON.parse(message); test['Message received is {{udsPayload}}'] = message === '{{udsPayload}}';",
+          "response": "responsePayload",
           "timeout": 500
         }
       ],
@@ -21,6 +22,7 @@
           "name": "udsPublisher",
           "path": "/tmp/unix.sock",
           "payload": "{{udsPayload}}",
+          "onMessageReceived": "test['It is bidirectional'] = message == 'responsePayload'",
           "prePublishing": "const payload = 'enqueuer'; persistSessionVariable('udsPayload', payload); persistSessionVariable('uds2RequisitionName', 'RequisitionUds2Name'); persistSessionVariable('uds2Timeout', '500');"
         }
       }

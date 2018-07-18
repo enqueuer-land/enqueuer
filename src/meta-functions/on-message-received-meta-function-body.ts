@@ -4,12 +4,12 @@ import {VariablesController} from '../variables/variables-controller';
 
 export class OnMessageReceivedMetaFunctionBody implements MetaFunctionBodyCreator {
 
-    private messageReceived: string;
+    private messageReceived?: string;
     private onMessageReceived: string;
 
-    public constructor(messageReceived: string, onMessageReceived: string) {
-        this.messageReceived = messageReceived;
+    public constructor(onMessageReceived: string, messageReceived?: string) {
         this.onMessageReceived = onMessageReceived;
+        this.messageReceived = messageReceived;
     }
 
     public createBody(): string {
@@ -20,9 +20,14 @@ export class OnMessageReceivedMetaFunctionBody implements MetaFunctionBodyCreato
             .addVariableMap(VariablesController.sessionVariables());
         const replaced: any = placeHolderReplacer.replace(onMessageReceivedObject);
 
+        let message = 'null';
+        if (this.messageReceived) {
+            message = JSON.stringify(this.messageReceived);
+        }
+
         return    `let test = {};
                     let report = {};
-                    let message = ${JSON.stringify(this.messageReceived)};
+                    let message = ${message};
                     ${replaced.onMessageReceived};
                     return {
                             test: test,

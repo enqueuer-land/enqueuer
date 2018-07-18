@@ -29,13 +29,16 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
             const client = net.createConnection(this.path)
                 .on('connect', () => {
                 client.write(this.payload);
-                resolve();
             })
-                .on('error', function (data) {
+                .on('error', (data) => {
                 reject(data);
+            })
+                .on('end', () => {
+                resolve();
             })
                 .on('data', (msg) => {
                 this.messageReceived = msg.toString();
+                resolve();
             });
         });
     }

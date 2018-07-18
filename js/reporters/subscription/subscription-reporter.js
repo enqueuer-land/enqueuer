@@ -121,7 +121,7 @@ class SubscriptionReporter {
         if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
             return;
         }
-        const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.subscription.messageReceived, this.subscription.onMessageReceived);
+        const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.subscription.onMessageReceived, this.subscription.messageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
             .map((test) => this.report.tests[test.name] = test.valid);

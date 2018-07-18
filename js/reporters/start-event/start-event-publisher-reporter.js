@@ -74,10 +74,10 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         };
     }
     executeOnMessageReceivedFunction() {
-        if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived) {
+        if (!this.publisher || !this.publisher.onMessageReceived) {
             return;
         }
-        const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.publisher.messageReceived, this.publisher.onMessageReceived);
+        const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.publisher.onMessageReceived, this.publisher.messageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
             .map((test) => this.report.tests[test.name] = test.valid);

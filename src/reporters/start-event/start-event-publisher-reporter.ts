@@ -6,7 +6,7 @@ import {DateController} from '../../timers/date-controller';
 import * as output from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
 import {Logger} from '../../loggers/logger';
-import {Injectable, Container} from 'conditional-injector';
+import {Container, Injectable} from 'conditional-injector';
 import {OnMessageReceivedReporter} from '../../meta-functions/on-message-received-reporter';
 import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
@@ -67,10 +67,10 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        if (!this.publisher || !this.publisher.messageReceived || !this.publisher.onMessageReceived) {
+        if (!this.publisher || !this.publisher.onMessageReceived) {
             return;
         }
-        const onMessageReceivedReporter = new OnMessageReceivedReporter(this.publisher.messageReceived, this.publisher.onMessageReceived);
+        const onMessageReceivedReporter = new OnMessageReceivedReporter(this.publisher.onMessageReceived, this.publisher.messageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
             .map((test: any) => this.report.tests[test.name] = test.valid);

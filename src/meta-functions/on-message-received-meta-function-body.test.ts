@@ -8,7 +8,7 @@ describe('OnMessageReceivedMetaFunctionBody', () => {
             type: "test",
             onMessageReceived: "test[\"valid\"] = true;"
         };
-        const onMessage: OnMessageReceivedMetaFunctionBody = new OnMessageReceivedMetaFunctionBody("", constructorArgument.onMessageReceived);
+        const onMessage: OnMessageReceivedMetaFunctionBody = new OnMessageReceivedMetaFunctionBody(constructorArgument.onMessageReceived, "");
 
         const functionResponse: any = new Function(onMessage.createBody())();
 
@@ -20,7 +20,7 @@ describe('OnMessageReceivedMetaFunctionBody', () => {
             type: "test",
             onMessageReceived: "report[\"first\"] = \"someValue\";"
         };
-        const onMessage: OnMessageReceivedMetaFunctionBody = new OnMessageReceivedMetaFunctionBody("", constructorArgument.onMessageReceived);
+        const onMessage: OnMessageReceivedMetaFunctionBody = new OnMessageReceivedMetaFunctionBody(constructorArgument.onMessageReceived, "");
 
         const functionResponse: any = new Function(onMessage.createBody())();
 

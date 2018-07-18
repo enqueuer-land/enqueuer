@@ -18,13 +18,16 @@ export class UdsPublisher extends Publisher {
             const client = net.createConnection(this.path)
                 .on('connect', () => {
                     client.write(this.payload);
-                    resolve();
                 })
-                .on('error', function(data: any) {
+                .on('error', (data: any) => {
                     reject(data);
+                })
+                .on('end', () => {
+                    resolve();
                 })
                 .on('data', (msg: Buffer) => {
                     this.messageReceived = msg.toString();
+                    resolve();
                 });
         });
     }

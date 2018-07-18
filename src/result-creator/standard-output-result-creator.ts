@@ -57,7 +57,7 @@ export class StandardOutputResultCreator extends ResultCreator {
 
     private findRequisitions(resultModel: ResultModel, prefix: string) {
         resultModel.runnables.forEach((runnable: ResultModel | RequisitionModel) => {
-            const levelName = prefix.concat(".").concat(resultModel.name);
+            const levelName = prefix.concat('.').concat(resultModel.name);
             if (runnable.type == 'runnable') {
                 this.findRequisitions(runnable, levelName);
             } else if (runnable.type == 'requisition') {

@@ -9,10 +9,16 @@ export class UdsSubscription extends Subscription {
 
     private server: any;
     private path: string;
+    private response?: string;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.path = subscriptionAttributes.path;
+        if (typeof subscriptionAttributes.response != 'string') {
+            this.response = JSON.stringify(subscriptionAttributes.response);
+        } else {
+            this.response = subscriptionAttributes.response;
+        }
     }
 
     public receiveMessage(): Promise<string> {
@@ -25,8 +31,12 @@ export class UdsSubscription extends Subscription {
 
                     stream.on('data', (msg: any) => {
                         msg = msg.toString();
-                        resolve(msg);
+                        // console.log('UDS response: ' + this.response + ' -> ' + typeof  this.response);
+                        if (this.response) {
+                            stream.write(this.response);
+                        }
                         stream.end();
+                        resolve(msg);
                     });
 
                 });
