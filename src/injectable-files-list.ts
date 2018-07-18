@@ -1,6 +1,7 @@
 //#Auto-Generated Code
 import './runnables/requisition-runner';
 import './runnables/runnable-runner';
+import './subscriptions/tcp-subscription';
 import './subscriptions/filename-watcher-subscription';
 import './subscriptions/stomp-subscription';
 import './subscriptions/sqs-subscription';
@@ -28,6 +29,7 @@ import './publishers/null-publisher';
 import './publishers/kafka-publisher';
 import './publishers/zero-mq-pub-publisher';
 import './publishers/file-publisher';
+import './publishers/tcp-publisher';
 import './reporters/start-event/start-event-subscription-reporter';
 import './reporters/start-event/start-event-null-reporter';
 import './reporters/start-event/start-event-publisher-reporter';

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //#Auto-Generated Code
 require("./runnables/requisition-runner");
 require("./runnables/runnable-runner");
+require("./subscriptions/tcp-subscription");
 require("./subscriptions/filename-watcher-subscription");
 require("./subscriptions/stomp-subscription");
 require("./subscriptions/sqs-subscription");
@@ -30,6 +31,7 @@ require("./publishers/null-publisher");
 require("./publishers/kafka-publisher");
 require("./publishers/zero-mq-pub-publisher");
 require("./publishers/file-publisher");
+require("./publishers/tcp-publisher");
 require("./reporters/start-event/start-event-subscription-reporter");
 require("./reporters/start-event/start-event-null-reporter");
 require("./reporters/start-event/start-event-publisher-reporter");

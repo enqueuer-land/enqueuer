@@ -2,18 +2,17 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as net from 'net';
-import * as fs from 'fs';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'uds'})
-export class UdsSubscription extends Subscription {
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp'})
+export class TcpSubscription extends Subscription {
 
     private server: any;
-    private path: string;
     private response?: string;
+    private port: number;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.path = subscriptionAttributes.path;
+        this.port = subscriptionAttributes.port;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         } else {
@@ -44,13 +43,10 @@ export class UdsSubscription extends Subscription {
 
     public connect(): Promise<void> {
         return new Promise((resolve) => {
-            fs.unlink(this.path, () => {
-                this.server = net.createServer()
-                    .listen(this.path, () => {
-                        resolve();
-                    });
-            });
-
+            this.server = net.createServer()
+                .listen(this.port, 'localhost', () => {
+                    resolve();
+                });
         });
     }
 

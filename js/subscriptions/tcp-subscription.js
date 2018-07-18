@@ -19,11 +19,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
-const fs = __importStar(require("fs"));
-let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
+let TcpSubscription = class TcpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.path = subscriptionAttributes.path;
+        this.port = subscriptionAttributes.port;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
@@ -51,11 +50,9 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
     }
     connect() {
         return new Promise((resolve) => {
-            fs.unlink(this.path, () => {
-                this.server = net.createServer()
-                    .listen(this.path, () => {
-                    resolve();
-                });
+            this.server = net.createServer()
+                .listen(this.port, 'localhost', () => {
+                resolve();
             });
         });
     }
@@ -63,8 +60,8 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
         this.server.close();
     }
 };
-UdsSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'uds' }),
+TcpSubscription = __decorate([
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'tcp' }),
     __metadata("design:paramtypes", [Object])
-], UdsSubscription);
-exports.UdsSubscription = UdsSubscription;
+], TcpSubscription);
+exports.TcpSubscription = TcpSubscription;

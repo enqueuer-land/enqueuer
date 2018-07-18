@@ -1,0 +1,15 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription/tcp",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "tcp"
+    },
+    "port": {
+      "type": ["string", "integer"]
+    }
+  },
+  "required": [
+    "port"
+  ]
+}

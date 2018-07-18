@@ -186,6 +186,35 @@ const validUdsRunnable = {
         }
     ]
 };
+const validTcpRunnable = {
+    "runnableVersion": "01.00.00",
+    "name": "runnableTcpName",
+    "initialDelay": 0,
+    "runnables": [
+        {
+            "timeout": 3000,
+            "name": "tcp",
+            "subscriptions": [
+                {
+                    "type": "tcp",
+                    "port": 23076,
+                    "name": "tcpSubscription",
+                    "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
+                    "timeout": 500
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "tcp",
+                    "serverAddress": "localhost",
+                    "port": 23076,
+                    "name": "tcpPublisher",
+                    "payload": "enqueuer"
+                }
+            }
+        }
+    ]
+};
 const validHttpRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableHttp",
@@ -502,6 +531,10 @@ describe('RunnableParser', () => {
 
     it('Should accept uds runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validUdsRunnable))).not.toBeNull();
+    });
+
+    it('Should accept tcp runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validTcpRunnable))).not.toBeNull();
     });
 
     it('Should accept http runnable', () => {

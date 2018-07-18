@@ -1,0 +1,30 @@
+{
+  "runnableVersion": "01.00.00",
+  "name": "runnableTcpName",
+  "id": "uds",
+  "runnables": [
+    {
+      "timeout": 3000,
+      "name": "tcp",
+      "subscriptions": [
+        {
+          "type": "tcp",
+          "port": 23076,
+          "name": "tcpSubscription",
+          "response": "{{tcpPayload}}",
+          "timeout": 500
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "tcp",
+          "name": "tcpPublisher",
+          "serverAddress": "localhost",
+          "port": "23076",
+          "payload": "I don't care",
+          "onMessageReceived": "test['It is bidirectional'] = message == '{{tcpPayload}}'"
+        }
+      }
+    }
+  ]
+}
