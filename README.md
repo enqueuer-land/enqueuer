@@ -88,15 +88,17 @@ Quite simple, don't you think?
 No big surprises, hum? As simple as `$enqueuer`.
 
 #### currently supported IPC protocols
-1. **Amqp**   - Advanced Message Queuing Protocol
+1. **Amqp**     - Advanced Message Queuing Protocol
 2. **File**
-3. **Http**   - Hypertext Transfer Protocol
+3. **Http**     - Hypertext Transfer Protocol
 4. **Kafka**
-5. **Mqtt**   - Message Queuing Telemetry Transport
-6. **Sqs**    - Amazon Simple Queue Service
-7. **StdOut** - Process Standard output
-8. **Stomp**  - Simple (or Streaming) Text Orientated Messaging Protocol
-9. **Uds**    - Unix Domain Sockets
+5. **Mqtt**     - Message Queuing Telemetry Transport
+6. **Sqs**      - Amazon Simple Queue Service
+7. **StdOut**   - Process Standard output
+8. **ZeroMq**   - ZeroMq
+9. **Stomp**    - Simple (or Streaming) Text Orientated Messaging Protocol
+10. **Uds**     - Unix Domain Sockets
+11. **Tcp**     - Transfer Control Protocol
 
 ## runnable
 Generally, a runnable looks like [this](/playground "Requisition examples") and [these](/integrationTest "Others examples").
