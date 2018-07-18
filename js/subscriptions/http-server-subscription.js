@@ -17,22 +17,11 @@ const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const util_1 = require("util");
 const express_1 = __importDefault(require("express"));
-let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
+let HttpServerSubscription = HttpServerSubscription_1 = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.response = {};
-        this.app = express_1.default();
-        this.app.use((req, res, next) => {
-            req.setEncoding('utf8');
-            req.rawBody = '';
-            req.on('data', function (chunk) {
-                req.rawBody += chunk;
-            });
-            req.on('end', function () {
-                logger_1.Logger.trace(`Http subscription read ${req.rawBody}`);
-                next();
-            });
-        });
+        this.initializeExpressApp();
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method;
@@ -40,8 +29,8 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         this.response.status = this.response.status || 200;
     }
     receiveMessage() {
-        return new Promise((resolve, reject) => {
-            this.app.all(this.endpoint, (request, response) => {
+        return new Promise((resolve) => {
+            HttpServerSubscription_1.app.all(this.endpoint, (request, response) => {
                 const payload = request.rawBody;
                 if (util_1.isNullOrUndefined(this.response.payload)) {
                     this.response.payload = payload;
@@ -61,23 +50,41 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
     connect() {
         return new Promise((resolve, reject) => {
-            this.server = this.app.listen(this.port, (err) => {
-                if (err) {
-                    reject(err);
-                }
+            if (HttpServerSubscription_1.server) {
                 resolve();
-            });
+            }
+            else {
+                HttpServerSubscription_1.server = HttpServerSubscription_1.app.listen(this.port, (err) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve();
+                });
+            }
         });
     }
-    unsubscribe() {
-        if (this.server) {
-            this.server.close();
+    initializeExpressApp() {
+        if (!HttpServerSubscription_1.app) {
+            HttpServerSubscription_1.app = express_1.default();
+            HttpServerSubscription_1.app.use((req, res, next) => {
+                req.setEncoding('utf8');
+                req.rawBody = '';
+                req.on('data', function (chunk) {
+                    req.rawBody += chunk;
+                });
+                req.on('end', function () {
+                    logger_1.Logger.trace(`Http subscription read ${req.rawBody}`);
+                    next();
+                });
+            });
         }
-        delete this.server;
     }
 };
-HttpServerSubscription = __decorate([
+HttpServerSubscription.app = null;
+HttpServerSubscription.server = null;
+HttpServerSubscription = HttpServerSubscription_1 = __decorate([
     conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-server' }),
     __metadata("design:paramtypes", [Object])
 ], HttpServerSubscription);
 exports.HttpServerSubscription = HttpServerSubscription;
+var HttpServerSubscription_1;
