@@ -215,6 +215,35 @@ const validTcpRunnable = {
         }
     ]
 };
+const validUdpRunnable = {
+    "runnableVersion": "01.00.00",
+    "name": "runnableUdpName",
+    "initialDelay": 0,
+    "runnables": [
+        {
+            "timeout": 3000,
+            "name": "udp",
+            "subscriptions": [
+                {
+                    "type": "udp",
+                    "port": 23076,
+                    "name": "udpSubscription",
+                    "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
+                    "timeout": 500
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "udp",
+                    "serverAddress": "localhost",
+                    "port": 23076,
+                    "name": "udpPublisher",
+                    "payload": "enqueuer"
+                }
+            }
+        }
+    ]
+};
 const validHttpRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableHttp",
@@ -535,6 +564,10 @@ describe('RunnableParser', () => {
 
     it('Should accept tcp runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validTcpRunnable))).not.toBeNull();
+    });
+
+    it('Should accept udp runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validUdpRunnable))).not.toBeNull();
     });
 
     it('Should accept http runnable', () => {

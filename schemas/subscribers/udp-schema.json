@@ -1,0 +1,15 @@
+{
+  "$id": "https://github.com/lopidio/enqueuer/subscription/udp",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "udp"
+    },
+    "port": {
+      "type": ["string", "integer"]
+    }
+  },
+  "required": [
+    "port"
+  ]
+}

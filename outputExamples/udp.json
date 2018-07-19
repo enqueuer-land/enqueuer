@@ -2,8 +2,8 @@
   "type": "runnable",
   "valid": true,
   "tests": {},
-  "name": "runnableFile",
-  "id": "file",
+  "name": "runnableUdpName",
+  "id": "udp",
   "runnables": [
     {
       "type": "requisition",
@@ -11,37 +11,36 @@
       "tests": {
         "No time out": true
       },
-      "name": "file",
+      "name": "udp",
       "time": {
-        "totalTime": 206,
-        "startTime": "2018-07-19T03:01:14.910Z",
-        "endTime": "2018-07-19T03:01:15.116Z",
+        "totalTime": 3,
+        "startTime": "2018-07-19T03:01:19.709Z",
+        "endTime": "2018-07-19T03:01:19.712Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
-          "name": "fileSubscription",
-          "type": "file-name-watcher",
+          "name": "udpSubscription",
+          "type": "udp",
           "tests": {
             "Connected": true,
             "Message received": true,
-            "some time has passed": true,
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-07-19T03:01:14.914Z",
-          "messageReceivedTime": "2018-07-19T03:01:15.116Z"
+          "connectionTime": "2018-07-19T03:01:19.710Z"
         }
       ],
       "startEvent": {
         "publisher": {
-          "name": "filePublisher",
+          "name": "udpPublisher",
           "valid": true,
-          "type": "file",
+          "type": "udp",
           "tests": {
-            "Published": true
+            "Published": true,
+            "It is bidirectional": true
           },
-          "publishTime": "2018-07-19T03:01:14.915Z"
+          "publishTime": "2018-07-19T03:01:19.712Z"
         }
       }
     }

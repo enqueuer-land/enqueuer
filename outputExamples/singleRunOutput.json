@@ -18,9 +18,9 @@
                     },
                     "name": "AmqpReq",
                     "time": {
-                        "totalTime": 27,
-                        "startTime": "2018-06-26T15:16:07.122Z",
-                        "endTime": "2018-06-26T15:16:07.149Z",
+                        "totalTime": 173,
+                        "startTime": "2018-07-19T03:01:14.484Z",
+                        "endTime": "2018-07-19T03:01:14.657Z",
                         "timeout": 5000
                     },
                     "subscriptions": [
@@ -34,8 +34,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:07.137Z",
-                            "messageReceivedTime": "2018-06-26T15:16:07.148Z"
+                            "connectionTime": "2018-07-19T03:01:14.644Z",
+                            "messageReceivedTime": "2018-07-19T03:01:14.656Z"
                         }
                     ],
                     "startEvent": {
@@ -46,7 +46,63 @@
                             "tests": {
                                 "Published": true
                             },
-                            "publishTime": "2018-06-26T15:16:07.149Z"
+                            "publishTime": "2018-07-19T03:01:14.657Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "eCommerceExample": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "eCommerceExample",
+            "id": "20180719000114077184_3da1af21",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {},
+                    "name": "eCommerceFirstFlow",
+                    "time": {
+                        "totalTime": 27,
+                        "startTime": "2018-07-19T03:01:14.777Z",
+                        "endTime": "2018-07-19T03:01:14.804Z"
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "/outputs1",
+                            "type": "http-server",
+                            "tests": {
+                                "Connected": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-07-19T03:01:14.778Z"
+                        },
+                        {
+                            "name": "/outputs2",
+                            "type": "http-server",
+                            "tests": {
+                                "Connected": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-07-19T03:01:14.778Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "eCommerceEndPointToBeHit",
+                            "valid": true,
+                            "type": "http-client",
+                            "tests": {
+                                "Published": true,
+                                "prePublishingTest": true
+                            },
+                            "publishTime": "2018-07-19T03:01:14.797Z"
                         }
                     }
                 }
@@ -67,9 +123,9 @@
                     },
                     "name": "file",
                     "time": {
-                        "totalTime": 108,
-                        "startTime": "2018-06-26T15:16:07.255Z",
-                        "endTime": "2018-06-26T15:16:07.363Z",
+                        "totalTime": 206,
+                        "startTime": "2018-07-19T03:01:14.910Z",
+                        "endTime": "2018-07-19T03:01:15.116Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -83,8 +139,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:07.261Z",
-                            "messageReceivedTime": "2018-06-26T15:16:07.363Z"
+                            "connectionTime": "2018-07-19T03:01:14.914Z",
+                            "messageReceivedTime": "2018-07-19T03:01:15.116Z"
                         }
                     ],
                     "startEvent": {
@@ -95,7 +151,7 @@
                             "tests": {
                                 "Published": true
                             },
-                            "publishTime": "2018-06-26T15:16:07.263Z"
+                            "publishTime": "2018-07-19T03:01:14.915Z"
                         }
                     }
                 }
@@ -116,9 +172,9 @@
                     },
                     "name": "HttpTitle",
                     "time": {
-                        "totalTime": 1508,
-                        "startTime": "2018-06-26T15:16:07.470Z",
-                        "endTime": "2018-06-26T15:16:08.978Z",
+                        "totalTime": 1770,
+                        "startTime": "2018-07-19T03:01:15.226Z",
+                        "endTime": "2018-07-19T03:01:16.996Z",
                         "timeout": 3000
                     },
                     "subscriptions": [],
@@ -132,7 +188,7 @@
                                 "PrePublishingTest": true,
                                 "It is online": true
                             },
-                            "publishTime": "2018-06-26T15:16:08.974Z"
+                            "publishTime": "2018-07-19T03:01:16.991Z"
                         }
                     }
                 }
@@ -153,9 +209,9 @@
                     },
                     "name": "HttpTitle",
                     "time": {
-                        "totalTime": 15,
-                        "startTime": "2018-06-26T15:16:09.088Z",
-                        "endTime": "2018-06-26T15:16:09.103Z",
+                        "totalTime": 4,
+                        "startTime": "2018-07-19T03:01:17.103Z",
+                        "endTime": "2018-07-19T03:01:17.107Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -169,8 +225,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:09.089Z",
-                            "messageReceivedTime": "2018-06-26T15:16:09.102Z"
+                            "connectionTime": "2018-07-19T03:01:17.103Z",
+                            "messageReceivedTime": "2018-07-19T03:01:17.106Z"
                         }
                     ],
                     "startEvent": {
@@ -184,7 +240,53 @@
                                 "publisherOnMessageReceivedTest": true,
                                 "publisherOnMessageReceivedPayloadTest": true
                             },
-                            "publishTime": "2018-06-26T15:16:09.103Z"
+                            "publishTime": "2018-07-19T03:01:17.107Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "kafkaName": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "kafkaName",
+            "id": "kafka",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "RequisitionKafka",
+                    "time": {
+                        "totalTime": 71,
+                        "startTime": "2018-07-19T03:01:17.224Z",
+                        "endTime": "2018-07-19T03:01:17.295Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "kafkaSub",
+                            "type": "kafka",
+                            "tests": {
+                                "Connected": true,
+                                "Message received": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-07-19T03:01:17.264Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "kafkaPub",
+                            "valid": true,
+                            "type": "kafka",
+                            "tests": {
+                                "Published": true
+                            },
+                            "publishTime": "2018-07-19T03:01:17.295Z"
                         }
                     }
                 }
@@ -205,9 +307,9 @@
                     },
                     "name": "RequisitionMqtt",
                     "time": {
-                        "totalTime": 1081,
-                        "startTime": "2018-06-26T15:16:09.212Z",
-                        "endTime": "2018-06-26T15:16:10.293Z",
+                        "totalTime": 997,
+                        "startTime": "2018-07-19T03:01:17.402Z",
+                        "endTime": "2018-07-19T03:01:18.399Z",
                         "timeout": 8000
                     },
                     "subscriptions": [
@@ -217,12 +319,12 @@
                             "tests": {
                                 "Connected": true,
                                 "Message received": true,
-                                "works": true,
+                                "Test Label Description": true,
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:09.636Z",
-                            "messageReceivedTime": "2018-06-26T15:16:10.292Z"
+                            "connectionTime": "2018-07-19T03:01:17.834Z",
+                            "messageReceivedTime": "2018-07-19T03:01:18.399Z"
                         }
                     ],
                     "startEvent": {
@@ -233,7 +335,7 @@
                             "tests": {
                                 "Published": true
                             },
-                            "publishTime": "2018-06-26T15:16:09.983Z"
+                            "publishTime": "2018-07-19T03:01:18.229Z"
                         }
                     }
                 }
@@ -254,9 +356,9 @@
                     },
                     "name": "sqsRequisition",
                     "time": {
-                        "totalTime": 37,
-                        "startTime": "2018-06-26T15:16:10.407Z",
-                        "endTime": "2018-06-26T15:16:10.444Z",
+                        "totalTime": 74,
+                        "startTime": "2018-07-19T03:01:18.512Z",
+                        "endTime": "2018-07-19T03:01:18.586Z",
                         "timeout": 5000
                     },
                     "subscriptions": [
@@ -270,8 +372,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:10.407Z",
-                            "messageReceivedTime": "2018-06-26T15:16:10.442Z"
+                            "connectionTime": "2018-07-19T03:01:18.512Z",
+                            "messageReceivedTime": "2018-07-19T03:01:18.586Z"
                         }
                     ],
                     "startEvent": {
@@ -282,7 +384,7 @@
                             "tests": {
                                 "Published": true
                             },
-                            "publishTime": "2018-06-26T15:16:10.444Z"
+                            "publishTime": "2018-07-19T03:01:18.584Z"
                         }
                     }
                 }
@@ -303,9 +405,9 @@
                     },
                     "name": "RequisitionStomp",
                     "time": {
-                        "totalTime": 43,
-                        "startTime": "2018-06-26T15:16:10.552Z",
-                        "endTime": "2018-06-26T15:16:10.595Z",
+                        "totalTime": 800,
+                        "startTime": "2018-07-19T03:01:18.691Z",
+                        "endTime": "2018-07-19T03:01:19.491Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -317,7 +419,7 @@
                                 "Message received": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:10.572Z"
+                            "connectionTime": "2018-07-19T03:01:19.460Z"
                         }
                     ],
                     "startEvent": {
@@ -328,7 +430,103 @@
                             "tests": {
                                 "Published": true
                             },
-                            "publishTime": "2018-06-26T15:16:10.594Z"
+                            "publishTime": "2018-07-19T03:01:19.490Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "runnableTcpName": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableTcpName",
+            "id": "tcp",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "tcp",
+                    "time": {
+                        "totalTime": 4,
+                        "startTime": "2018-07-19T03:01:19.599Z",
+                        "endTime": "2018-07-19T03:01:19.603Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "tcpSubscription",
+                            "type": "tcp",
+                            "tests": {
+                                "Connected": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-07-19T03:01:19.601Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "tcpPublisher",
+                            "valid": true,
+                            "type": "tcp",
+                            "tests": {
+                                "Published": true,
+                                "It is bidirectional": true
+                            },
+                            "publishTime": "2018-07-19T03:01:19.603Z"
+                        }
+                    }
+                }
+            ]
+        },
+        "runnableUdpName": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "runnableUdpName",
+            "id": "udp",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "udp",
+                    "time": {
+                        "totalTime": 3,
+                        "startTime": "2018-07-19T03:01:19.709Z",
+                        "endTime": "2018-07-19T03:01:19.712Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udpSubscription",
+                            "type": "udp",
+                            "tests": {
+                                "Connected": true,
+                                "Message received": true,
+                                "No time out": true
+                            },
+                            "valid": true,
+                            "connectionTime": "2018-07-19T03:01:19.710Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udpPublisher",
+                            "valid": true,
+                            "type": "udp",
+                            "tests": {
+                                "Published": true,
+                                "It is bidirectional": true
+                            },
+                            "publishTime": "2018-07-19T03:01:19.712Z"
                         }
                     }
                 }
@@ -349,9 +547,9 @@
                     },
                     "name": "uds",
                     "time": {
-                        "totalTime": 3,
-                        "startTime": "2018-06-26T15:16:10.702Z",
-                        "endTime": "2018-06-26T15:16:10.705Z",
+                        "totalTime": 2,
+                        "startTime": "2018-07-19T03:01:19.825Z",
+                        "endTime": "2018-07-19T03:01:19.827Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -365,8 +563,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:10.703Z",
-                            "messageReceivedTime": "2018-06-26T15:16:10.704Z"
+                            "connectionTime": "2018-07-19T03:01:19.825Z",
+                            "messageReceivedTime": "2018-07-19T03:01:19.826Z"
                         }
                     ],
                     "startEvent": {
@@ -375,9 +573,10 @@
                             "valid": true,
                             "type": "uds",
                             "tests": {
-                                "Published": true
+                                "Published": true,
+                                "It is bidirectional": true
                             },
-                            "publishTime": "2018-06-26T15:16:10.704Z"
+                            "publishTime": "2018-07-19T03:01:19.827Z"
                         }
                     }
                 },
@@ -388,8 +587,8 @@
                     "name": "RequisitionUds2Name",
                     "time": {
                         "totalTime": 2,
-                        "startTime": "2018-06-26T15:16:10.705Z",
-                        "endTime": "2018-06-26T15:16:10.707Z"
+                        "startTime": "2018-07-19T03:01:19.827Z",
+                        "endTime": "2018-07-19T03:01:19.829Z"
                     },
                     "subscriptions": [
                         {
@@ -402,8 +601,8 @@
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:10.705Z",
-                            "messageReceivedTime": "2018-06-26T15:16:10.707Z"
+                            "connectionTime": "2018-07-19T03:01:19.828Z",
+                            "messageReceivedTime": "2018-07-19T03:01:19.828Z"
                         }
                     ],
                     "startEvent": {
@@ -415,7 +614,7 @@
                                 "Published": true,
                                 "Message to be published is enqueuer": true
                             },
-                            "publishTime": "2018-06-26T15:16:10.706Z"
+                            "publishTime": "2018-07-19T03:01:19.829Z"
                         }
                     }
                 }
@@ -436,9 +635,9 @@
                     },
                     "name": "RequisitionZeroMq",
                     "time": {
-                        "totalTime": 259,
-                        "startTime": "2018-06-26T15:16:10.812Z",
-                        "endTime": "2018-06-26T15:16:11.071Z",
+                        "totalTime": 254,
+                        "startTime": "2018-07-19T03:01:19.943Z",
+                        "endTime": "2018-07-19T03:01:20.197Z",
                         "timeout": 3000
                     },
                     "subscriptions": [
@@ -451,8 +650,8 @@
                                 "0Mq is awesome": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-06-26T15:16:10.813Z",
-                            "messageReceivedTime": "2018-06-26T15:16:11.071Z"
+                            "connectionTime": "2018-07-19T03:01:19.944Z",
+                            "messageReceivedTime": "2018-07-19T03:01:20.197Z"
                         }
                     ],
                     "startEvent": {
@@ -463,7 +662,7 @@
                             "tests": {
                                 "Published": true
                             },
-                            "publishTime": "2018-06-26T15:16:11.070Z"
+                            "publishTime": "2018-07-19T03:01:20.196Z"
                         }
                     }
                 }

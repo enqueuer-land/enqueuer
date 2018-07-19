@@ -1,18 +1,19 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
-import * as net from 'net';
+import * as dgram from 'dgram';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp'})
-export class TcpSubscription extends Subscription {
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'udp'})
+export class UdpSubscription extends Subscription {
 
     private server: any;
-    private response?: string;
     private port: number;
+    private response?: string;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
+
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         } else {
@@ -22,30 +23,31 @@ export class TcpSubscription extends Subscription {
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve, reject) => {
-            this.server.on('connection', (stream: any) => {
-                    stream.on('end', () => {
-                        stream.end();
-                        reject();
-                    });
+            this.server.on('error', (err: any) => {
+                reject(err);
+            });
 
-                    stream.on('data', (msg: any) => {
-                        if (this.response) {
-                            stream.write(this.response);
+            this.server.on('message', (msg: Buffer, rinfo: any) => {
+                if (this.response) {
+                    this.server.send(this.response, rinfo.port, rinfo.address, (error: any) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(msg.toString());
                         }
-                        stream.end();
-                        resolve(msg.toString());
                     });
-
-                });
+                } else {
+                    resolve(msg.toString());
+                }
+            });
         });
     }
 
     public connect(): Promise<void> {
         return new Promise((resolve) => {
-            this.server = net.createServer()
-                .listen(this.port, 'localhost', () => {
-                    resolve();
-                });
+            this.server = dgram.createSocket('udp4');
+            this.server.bind(this.port);
+            resolve();
         });
     }
 

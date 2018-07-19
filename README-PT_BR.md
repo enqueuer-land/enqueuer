@@ -95,7 +95,8 @@ Sem grandes surpresas, hum? Tão simples quanto `$enqueuer`.
 8. **ZeroMq**   - ZeroMq
 9. **Stomp**    - Simple (or Streaming) Text Orientated Messaging Protocol
 10. **Uds**     - Unix Domain Sockets
-11. **Tcp**     - Transfer Control Protocol
+11. **Tcp**     - Transmission Control Protocol
+12. **Udp**     - User Datagram Protocol
 
 ## cenários de testes
 Um cenário de testes parece com [isso](/playground "Exemplos de teste") e com [isso](/integrationTest "Mais exemplos").

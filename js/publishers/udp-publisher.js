@@ -17,10 +17,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
-const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
-let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
+const dgram = __importStar(require("dgram"));
+let UdpPublisher = class UdpPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.serverAddress = publisherAttributes.serverAddress;
@@ -28,18 +28,22 @@ let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
     }
     publish() {
         return new Promise((resolve, reject) => {
-            const client = new net.Socket();
-            logger_1.Logger.debug('Tcp client trying to connect');
-            client.connect(this.port, this.serverAddress, () => {
-                logger_1.Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
-                client.write(this.payload);
+            const client = dgram.createSocket('udp4');
+            logger_1.Logger.debug('Udp client trying to send message');
+            client.send(Buffer.from(this.payload), this.port, this.serverAddress, (error) => {
+                if (error) {
+                    client.close();
+                    reject(error);
+                    return;
+                }
+                logger_1.Logger.debug('Udp message published');
                 client.on('error', (data) => {
                     reject(data);
-                })
-                    .on('end', () => {
+                });
+                client.on('end', () => {
                     resolve();
-                })
-                    .on('data', (msg) => {
+                });
+                client.on('message', (msg) => {
                     this.messageReceived = msg.toString();
                     resolve();
                 });
@@ -47,8 +51,8 @@ let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
         });
     }
 };
-TcpPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'tcp' }),
+UdpPublisher = __decorate([
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'udp' }),
     __metadata("design:paramtypes", [Object])
-], TcpPublisher);
-exports.TcpPublisher = TcpPublisher;
+], UdpPublisher);
+exports.UdpPublisher = UdpPublisher;

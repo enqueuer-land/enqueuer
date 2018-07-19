@@ -18,8 +18,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
-const net = __importStar(require("net"));
-let TcpSubscription = class TcpSubscription extends subscription_1.Subscription {
+const dgram = __importStar(require("dgram"));
+let UdpSubscription = class UdpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
@@ -32,35 +32,39 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            this.server.on('connection', (stream) => {
-                stream.on('end', () => {
-                    stream.end();
-                    reject();
-                });
-                stream.on('data', (msg) => {
-                    if (this.response) {
-                        stream.write(this.response);
-                    }
-                    stream.end();
+            this.server.on('error', (err) => {
+                reject(err);
+            });
+            this.server.on('message', (msg, rinfo) => {
+                if (this.response) {
+                    this.server.send(this.response, rinfo.port, rinfo.address, (error) => {
+                        if (error) {
+                            reject(error);
+                        }
+                        else {
+                            resolve(msg.toString());
+                        }
+                    });
+                }
+                else {
                     resolve(msg.toString());
-                });
+                }
             });
         });
     }
     connect() {
         return new Promise((resolve) => {
-            this.server = net.createServer()
-                .listen(this.port, 'localhost', () => {
-                resolve();
-            });
+            this.server = dgram.createSocket('udp4');
+            this.server.bind(this.port);
+            resolve();
         });
     }
     unsubscribe() {
         this.server.close();
     }
 };
-TcpSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'tcp' }),
+UdpSubscription = __decorate([
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'udp' }),
     __metadata("design:paramtypes", [Object])
-], TcpSubscription);
-exports.TcpSubscription = TcpSubscription;
+], UdpSubscription);
+exports.UdpSubscription = UdpSubscription;
