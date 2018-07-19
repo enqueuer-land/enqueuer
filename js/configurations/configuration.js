@@ -12,12 +12,13 @@ const yaml = __importStar(require("yamljs"));
 const fs = __importStar(require("fs"));
 const commander_1 = require("commander");
 const packageJson = '../../package.json';
-let configFileName = 'conf/enqueuer.yml';
+let configFileName = '';
 let commandLineVariables = {};
 let commander = {};
 if (!process.argv[1].toString().match('jest')) {
     commander = new commander_1.Command()
         .version(process.env.npm_package_version || packageJson.version, '-V, --version')
+        .usage('-c <confif-file-path>')
         .option('-v, --verbose', 'Activates verbose mode', false)
         .option('-l, --log-level <level>', 'Set log level')
         .option('-c, --config-file <path>', 'Set configurationFile. Defaults to conf/enqueuer.yml')
@@ -37,7 +38,7 @@ try {
     ymlFile = yaml.load(configFileName);
 }
 catch (err) {
-    logger_1.Logger.error(`Impossible to read ${configFileName} file: ${err}`);
+    logger_1.Logger.error(`Impossible to read configuration file: ${configFileName} -> ${err}`);
     ymlFile = {};
 }
 class Configuration {

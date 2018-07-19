@@ -1,17 +1,18 @@
 run-mode:
   single-run:
     name: playground
-    fileNamePattern: playground/*.json
-  report:
-      type: enqueuer
-      filename: src/inceptionTest/singleRunInceptionReport.json
-
+    fileNamePattern: playground.json
+    report:
+        type: enqueuer
+        filename: result.json
 outputs:
-    -
-      type: standard-output
+  -
+    type: file
+    filenamePrefix: output_
+    filenameExtension: json
 
 variables:
     httpPort: 23076
     enqueuerKey: 10
 
-log-level: trace
+log-level: info

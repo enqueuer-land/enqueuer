@@ -1,0 +1,44 @@
+{
+    "name": "result.json",
+    "tests": {},
+    "valid": true,
+    "runnables": {
+        "playground": {
+            "type": "runnable",
+            "valid": true,
+            "tests": {},
+            "name": "playground",
+            "id": "playgroundId",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": {
+                        "No time out": true
+                    },
+                    "name": "playgroundScenario",
+                    "time": {
+                        "totalTime": 1877,
+                        "startTime": "2018-07-19T12:58:35.883Z",
+                        "endTime": "2018-07-19T12:58:37.760Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "GitHubEnqueuerHit",
+                            "valid": true,
+                            "type": "http-client",
+                            "tests": {
+                                "Published": true,
+                                "PrePublishingTest": true,
+                                "It is online": true
+                            },
+                            "publishTime": "2018-07-19T12:58:37.757Z"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

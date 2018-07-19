@@ -69,6 +69,11 @@ Then, **enqueuer** collects outputs and checks if they are what they are suppose
 Quite simple, don't you think?
 
 ### how to use
+    $ npm install enqueuer
+    $ enqueuer -c conf/enqueuer.yml
+Or:
+    
+    $ npm install enqueuer
     $ enqueuer --help
          Usage: enqueuer [options]
          Options:

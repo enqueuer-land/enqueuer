@@ -66,13 +66,18 @@ Logo, **enqueuer** coleta os *Outputs* e verifica se estão conforme descrito pr
 Bem simples, não acha?
 
 ## como usar
+    $ npm install enqueuer
+    $ enqueuer -c conf/enqueuer.yml
+Ou:
+
+    $ npm install enqueuer
     $ enqueuer --help
          Usage: enqueuer [options]
          Options:
            -V, --version             Exibe o número da versão
            -v, --verbose             Ativa o modo verboso
            -l, --log-level <level>   Altera o level do log
-           -c, --config-file <path>  Altera o endereço do arquivo de configuração
+           -c, --config-file <path>  Define o endereço do arquivo de configuração
            -h, --help                Exibe o próprio modo de uso
 
 ##### vá fundo e experimente:

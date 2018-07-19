@@ -5,16 +5,17 @@ import * as fs from 'fs';
 import {Command} from 'commander';
 
 const packageJson: any = '../../package.json';
-let configFileName = 'conf/enqueuer.yml';
+let configFileName = '';
 
 let commandLineVariables: any = {};
 let commander: any = {};
 if (!process.argv[1].toString().match('jest')) {
     commander = new Command()
     .version(process.env.npm_package_version || packageJson.version, '-V, --version')
+    .usage('-c <confif-file-path>')
     .option('-v, --verbose', 'Activates verbose mode', false)
     .option('-l, --log-level <level>', 'Set log level')
-    .option('-c, --config-file <path>', 'Set configurationFile. Defaults to conf/enqueuer.yml')
+    .option('-c, --config-file <path>', 'Set configurationFile')
     .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session',
         (val: string, memo: string[]) => {
                 const split = val.split('=');
@@ -35,7 +36,7 @@ let ymlFile = {};
 try {
     ymlFile = yaml.load(configFileName);
 } catch (err) {
-    Logger.error(`Impossible to read ${configFileName} file: ${err}`);
+    Logger.error(`Impossible to read configuration file: ${configFileName} -> ${err}`);
     ymlFile = {};
 }
 
