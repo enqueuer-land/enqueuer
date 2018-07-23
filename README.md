@@ -16,7 +16,8 @@ To use **enqueuer**, you have to:
 
 1. install it:
 
-    $ npm install -g enqueuer    
+    ```$npm install -g enqueuer```
+    
 2. create a configuration file like this:
     ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-config.png "config-file.yml")
 
@@ -25,7 +26,7 @@ To use **enqueuer**, you have to:
 
 4. execute it:
 
-    $ enqueuer --config-file config-file.yml
-
+    ```$enqueuer --config-file config-file.yml```
+    
 5. get the result:
     ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "Resultado do exemplo")
