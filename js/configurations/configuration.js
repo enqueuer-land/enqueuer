@@ -21,7 +21,7 @@ if (!process.argv[1].toString().match('jest')) {
         .usage('-c <confif-file-path>')
         .option('-v, --verbose', 'Activates verbose mode', false)
         .option('-l, --log-level <level>', 'Set log level')
-        .option('-c, --config-file <path>', 'Set configurationFile. Defaults to conf/enqueuer.yml')
+        .option('-c, --config-file <path>', 'Set configurationFile')
         .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session', (val, memo) => {
         const split = val.split('=');
         if (split.length == 2) {

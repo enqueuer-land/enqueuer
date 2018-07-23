@@ -27,7 +27,7 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
         this.testCounter = 0;
         this.failedTestNames = [];
         this.report = {
-            name: 'SingleRun',
+            name: '',
             tests: {},
             valid: true,
             runnables: {}
@@ -40,7 +40,7 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
     }
     addError(err) {
         ++this.testCounter;
-        this.failedTestNames.push(this.report.name.concat('.').concat(err.toString()));
+        this.failedTestNames.push(this.addLevel(this.report.name, err.toString()));
         this.report.valid = false;
     }
     isValid() {
@@ -59,24 +59,24 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
     }
     findRequisitions(resultModel, prefix) {
         resultModel.runnables.forEach((runnable) => {
-            const levelName = prefix.concat('.').concat(resultModel.name);
+            const levelName = this.addLevel(prefix, resultModel.name);
             if (runnable.type == 'runnable') {
                 this.findRequisitions(runnable, levelName);
             }
             else if (runnable.type == 'requisition') {
                 const requisition = runnable;
-                this.findTests(requisition, levelName.concat('.').concat(requisition.name));
+                this.findTests(requisition, this.addLevel(levelName, requisition.name));
             }
         });
     }
     findTests(requisition, prefix) {
         this.inspectInvalidTests(requisition.tests, prefix);
-        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, prefix.concat('.').concat(subscription.name)));
+        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, this.addLevel(prefix, subscription.name)));
         if (requisition.startEvent.subscription) {
-            this.inspectInvalidTests(requisition.startEvent.subscription.tests, prefix.concat('.').concat(requisition.startEvent.subscription.name));
+            this.inspectInvalidTests(requisition.startEvent.subscription.tests, this.addLevel(prefix, requisition.startEvent.subscription.name));
         }
         if (requisition.startEvent.publisher) {
-            this.inspectInvalidTests(requisition.startEvent.publisher.tests, prefix.concat('.').concat(requisition.startEvent.publisher.name));
+            this.inspectInvalidTests(requisition.startEvent.publisher.tests, this.addLevel(prefix, requisition.startEvent.publisher.name));
         }
     }
     inspectInvalidTests(tests, prefix) {
@@ -84,9 +84,12 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
         Object.keys(tests)
             .forEach((key) => {
             if (!tests[key]) {
-                this.failedTestNames.push(prefix.concat('.').concat(key));
+                this.failedTestNames.push(this.addLevel(prefix, key));
             }
         });
+    }
+    addLevel(prefix, newLevelName) {
+        return prefix.concat(' -> ').concat(newLevelName);
     }
 };
 StandardOutputResultCreator = __decorate([
