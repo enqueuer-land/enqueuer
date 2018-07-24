@@ -25,7 +25,7 @@ before_install:
   - wget -O temp/kafka_2.12-1.1.1.tgz http://www-us.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz
   - cd temp
   - tar -xvzf kafka_2.12-1.1.1.tgz
-  - cd kafka_2.12-1.1.1.tgz
+  - cd kafka_2.12-1.1.1
   - bin/zookeeper-server-start.sh config/zookeeper.properties &
   - bin/kafka-server-start.sh ../../scripts/server.properties &
   - cd ../../
