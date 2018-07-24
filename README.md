@@ -2,6 +2,7 @@
 [![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer) [![Build Status](https://travis-ci.org/lopidio/enqueuer.svg?branch=develop)](https://travis-ci.org/lopidio/enqueuer)
 
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
+[Take a look if you prefer to read it in portuguese](/README-PT_BR.md);
 
 When your e-commerce http endpoint is hit, you have to send an information to a credit card processing RESTful API and notify users about this through MQTT events.
 
@@ -22,11 +23,13 @@ To use **enqueuer**, you have to:
     ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-config.png "config-file.yml")
 
 3. create a file to describe how to test:
-![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-test.png "testfile")
+    ![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-test.png "testfile")
 
 4. execute it:
 
     ```$enqueuer --config-file config-file.yml```
     
 5. get the result:
-    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "Resultado do exemplo")
+    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "example result")
+    
+Consider reading the ![wiki](https://github.com/lopidio/enqueuer/wiki "wiki") for further details

@@ -13,17 +13,19 @@ Neste momento, existem três opções para testar o fluxo poligota:
 3. Usar **enqueuer** e ter isso tudo testado de mão beijada.
 
 Para usar **enqueuer**, basta:
+1. instalar:
 
-    $ npm install -g enqueuer    
-Criar um arquivo de configuração, como esse:
-![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-config.png "config-file.yml")
+    ```$npm install -g enqueuer```
+    
+2. criar um arquivo de configuração:
+    ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-config.png "config-file.yml")
 
-Criar um arquivo descrevendo o cenário de testes:
-![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-test.png "Arquivo de testes")
+3. criar um arquivo descrevendo o cenáiro de testes:
+    ![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-test.png "testfile")
 
-E executar:
+4. executar:
 
-    $ enqueuer --config-file config-file.yml
-
-O resultado será:
-![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "Resultado do exemplo")
+    ```$enqueuer --config-file config-file.yml```
+    
+5. analisar o resultado:
+    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "example result")
