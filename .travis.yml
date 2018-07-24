@@ -22,10 +22,10 @@ services:
 before_install:
   - npm install
   - mkdir temp
-  - wget -O temp/kafka_2.11-1.0.0.tgz http://mirror.nbtelecom.com.br/apache/kafka/1.0.0/kafka_2.11-1.0.0.tgz
+  - wget -O temp/kafka_2.12-1.1.1.tgz http://www-us.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz
   - cd temp
-  - tar -xvzf kafka_2.11-1.0.0.tgz
-  - cd kafka_2.11-1.0.0
+  - tar -xvzf kafka_2.12-1.1.1.tgz
+  - cd kafka_2.12-1.1.1.tgz
   - bin/zookeeper-server-start.sh config/zookeeper.properties &
   - bin/kafka-server-start.sh ../../scripts/server.properties &
   - cd ../../

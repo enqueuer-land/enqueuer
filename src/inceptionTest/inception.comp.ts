@@ -38,7 +38,7 @@ describe('Inception test', () => {
     it('should run enqueuer to test another enqueuer process', done => {
         jest.setTimeout(10000);
 
-        beingTested = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/beingTested.yml']);
+        beingTested = spawn('nqr',  ['--config-file', 'src/inceptionTest/beingTested.yml']);
         // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
         sleep(500);
 
