@@ -3,10 +3,8 @@
 To Create:
 - [ ] mongodb: http://mongodb.github.io/node-mongodb-native/3.0/tutorials/crud/ ?
 - [ ] NSQ: https://github.com/nsqio/nsq ?
-- [ ] WebSocket: ?
-- [ ] TCP: 
-- [ ] UDP: 
-- [ ] SOAP: 
+- [ ] WebSocket: 
+- [ ] SOAP: ?
 
 - [ ] Add iterations to runnables ?
 
