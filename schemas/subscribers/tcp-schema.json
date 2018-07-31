@@ -7,9 +7,22 @@
     },
     "port": {
       "type": ["string", "integer"]
+    },
+    "persistStreamName": {
+      "type": ["string"]
+    },
+    "loadStreamName": {
+      "type": ["string"]
     }
   },
-  "required": [
-    "port"
+  "oneOf": [
+    {
+      "required": ["port"],
+      "not": {"required": ["loadStreamName"]}
+    },
+    {
+      "required": ["loadStreamName"],
+      "not": {"required": ["port"]}
+    }
   ]
 }

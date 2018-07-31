@@ -19,36 +19,63 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
+const variables_controller_1 = require("../variables/variables-controller");
+const logger_1 = require("../loggers/logger");
 let TcpSubscription = class TcpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
+        this.persistStreamName = subscriptionAttributes.persistStreamName;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
         else {
             this.response = subscriptionAttributes.response;
         }
+        this.loadStreamName = subscriptionAttributes.loadStreamName;
+        if (subscriptionAttributes.loadStreamName) {
+            logger_1.Logger.debug(`Loading tcp client: ${this.loadStreamName}`);
+            this.loadStream = variables_controller_1.VariablesController.sessionVariables()[subscriptionAttributes.loadStreamName];
+        }
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            this.server.on('connection', (stream) => {
-                stream.on('end', () => {
-                    stream.end();
-                    reject();
+            if (this.loadStreamName) {
+                if (!this.loadStream) {
+                    reject(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
+                    return;
+                }
+                this.waitForData(this.loadStream, reject, resolve);
+            }
+            else {
+                this.server.on('connection', (stream) => {
+                    this.waitForData(stream, reject, resolve);
                 });
-                stream.on('data', (msg) => {
-                    if (this.response) {
-                        stream.write(this.response);
-                    }
-                    stream.end();
+            }
+        });
+    }
+    waitForData(stream, reject, resolve) {
+        stream.on('end', () => {
+            reject();
+        });
+        stream.on('data', (msg) => {
+            if (this.response) {
+                stream.write(this.response, () => {
+                    this.persistStream(stream);
                     resolve(msg.toString());
                 });
-            });
+            }
         });
     }
     connect() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+            if (this.loadStreamName) {
+                if (!this.loadStream) {
+                    reject(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
+                }
+                resolve();
+                return;
+            }
             this.server = net.createServer()
                 .listen(this.port, 'localhost', () => {
                 resolve();
@@ -56,7 +83,19 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
         });
     }
     unsubscribe() {
-        this.server.close();
+        if (this.server) {
+            this.server.close();
+        }
+    }
+    persistStream(stream) {
+        if (this.persistStreamName) {
+            logger_1.Logger.debug(`Persisting subscription stream ${this.persistStreamName}`);
+            variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
+        }
+        else {
+            logger_1.Logger.trace(`Ending TCP stream`);
+            stream.end();
+        }
     }
 };
 TcpSubscription = __decorate([

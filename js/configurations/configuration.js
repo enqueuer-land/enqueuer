@@ -78,7 +78,7 @@ class Configuration {
         fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
     }
     getSessionVariables() {
-        return commandLineVariables;
+        return commandLineVariables || {};
     }
     getFile() {
         return this.configurationFile;

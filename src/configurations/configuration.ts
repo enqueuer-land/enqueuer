@@ -88,7 +88,7 @@ export class Configuration {
     }
 
     public getSessionVariables(): any {
-        return commandLineVariables;
+        return commandLineVariables || {};
     }
 
     public getFile(): any {

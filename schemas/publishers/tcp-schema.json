@@ -10,10 +10,22 @@
     },
     "serverAddress": {
       "type": "string"
+    },
+    "persistStreamName": {
+      "type": ["string"]
+    },
+    "loadStreamName": {
+      "type": ["string"]
     }
   },
-  "required": [
-    "port",
-    "serverAddress"
+  "oneOf": [
+    {
+      "required": ["port", "serverAddress"],
+      "not": {"required": ["loadStreamName"]}
+    },
+    {
+      "required": ["loadStreamName"],
+      "not": {"required": ["port"]}
+    }
   ]
 }

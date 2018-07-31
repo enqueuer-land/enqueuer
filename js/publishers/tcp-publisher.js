@@ -20,30 +20,53 @@ const publisher_1 = require("./publisher");
 const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
+const variables_controller_1 = require("../variables/variables-controller");
 let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.serverAddress = publisherAttributes.serverAddress;
         this.port = publisherAttributes.port;
+        this.persistStreamName = publisherAttributes.persistStreamName;
+        this.loadStreamName = publisherAttributes.loadStreamName;
+        if (publisherAttributes.loadStreamName) {
+            logger_1.Logger.debug(`Loading tcp client: ${this.loadStreamName}`);
+            this.loadStream = variables_controller_1.VariablesController.sessionVariables()[publisherAttributes.loadStreamName];
+        }
     }
     publish() {
         return new Promise((resolve, reject) => {
-            const client = new net.Socket();
-            logger_1.Logger.debug('Tcp client trying to connect');
-            client.connect(this.port, this.serverAddress, () => {
-                logger_1.Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
-                client.write(this.payload);
-                client.on('error', (data) => {
-                    reject(data);
-                })
-                    .on('end', () => {
-                    resolve();
-                })
-                    .on('data', (msg) => {
-                    this.messageReceived = msg.toString();
-                    resolve();
+            if (this.loadStreamName) {
+                if (!this.loadStream) {
+                    return new Error(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
+                }
+                this.publishData(this.loadStream, resolve, reject);
+            }
+            else {
+                const stream = new net.Socket();
+                logger_1.Logger.debug('Tcp stream trying to connect');
+                stream.connect(this.port, this.serverAddress, () => {
+                    logger_1.Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
+                    this.publishData(stream, resolve, reject);
                 });
-            });
+            }
+        });
+    }
+    publishData(stream, resolve, reject) {
+        stream.on('error', (data) => {
+            reject(data);
+        })
+            .on('end', () => {
+            resolve();
+        })
+            .on('data', (msg) => {
+            this.messageReceived = msg.toString();
+            resolve();
+        });
+        stream.write(this.payload, () => {
+            if (this.persistStreamName) {
+                logger_1.Logger.debug(`Persisting publisher stream ${this.persistStreamName}`);
+                variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
+            }
         });
     }
 };
