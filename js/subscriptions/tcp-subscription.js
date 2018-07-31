@@ -48,19 +48,22 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
                 this.waitForData(this.loadStream, reject, resolve);
             }
             else {
-                this.server.on('connection', (stream) => {
+                this.server.once('connection', (stream) => {
                     this.waitForData(stream, reject, resolve);
                 });
             }
         });
     }
     waitForData(stream, reject, resolve) {
-        stream.on('end', () => {
+        logger_1.Logger.debug(`WAIT FOR DATA`);
+        stream.once('end', () => {
             reject();
         });
-        stream.on('data', (msg) => {
+        stream.once('data', (msg) => {
             if (this.response) {
+                logger_1.Logger.debug(`ON DATA ${msg.toString()}`);
                 stream.write(this.response, () => {
+                    logger_1.Logger.debug(`SUBSCRIPTION IS WRITING`);
                     this.persistStream(stream);
                     resolve(msg.toString());
                 });
@@ -91,6 +94,7 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
         if (this.persistStreamName) {
             logger_1.Logger.debug(`Persisting subscription stream ${this.persistStreamName}`);
             variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
+            this.persistStreamName = undefined;
         }
         else {
             logger_1.Logger.trace(`Ending TCP stream`);

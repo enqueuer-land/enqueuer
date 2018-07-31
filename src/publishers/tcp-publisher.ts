@@ -47,13 +47,13 @@ export class TcpPublisher extends Publisher {
     }
 
     private publishData(stream: any, resolve: (value?: (PromiseLike<any> | any)) => void, reject: (reason?: any) => void) {
-        stream.on('error', (data: any) => {
+        stream.once('error', (data: any) => {
             reject(data);
         })
-        .on('end', () => {
+        .once('end', () => {
             resolve();
         })
-        .on('data', (msg: Buffer) => {
+        .once('data', (msg: Buffer) => {
             this.messageReceived = msg.toString();
             resolve();
         });

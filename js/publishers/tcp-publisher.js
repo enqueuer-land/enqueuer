@@ -52,13 +52,13 @@ let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
         });
     }
     publishData(stream, resolve, reject) {
-        stream.on('error', (data) => {
+        stream.once('error', (data) => {
             reject(data);
         })
-            .on('end', () => {
+            .once('end', () => {
             resolve();
         })
-            .on('data', (msg) => {
+            .once('data', (msg) => {
             this.messageReceived = msg.toString();
             resolve();
         });

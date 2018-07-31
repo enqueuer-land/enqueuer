@@ -11,16 +11,16 @@
       "tests": {
         "No time out": true
       },
-      "name": "tcp",
+      "name": "tcpFirstPart",
       "time": {
-        "totalTime": 4,
-        "startTime": "2018-07-19T03:01:19.599Z",
-        "endTime": "2018-07-19T03:01:19.603Z",
+        "totalTime": 19,
+        "startTime": "2018-07-31T02:01:28.734Z",
+        "endTime": "2018-07-31T02:01:28.753Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
-          "name": "tcpSubscription",
+          "name": "tcpSubscription1",
           "type": "tcp",
           "tests": {
             "Connected": true,
@@ -28,19 +28,60 @@
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-07-19T03:01:19.601Z"
+          "connectionTime": "2018-07-31T02:01:28.737Z"
         }
       ],
       "startEvent": {
         "publisher": {
-          "name": "tcpPublisher",
+          "name": "tcpPublisher1",
           "valid": true,
           "type": "tcp",
           "tests": {
             "Published": true,
             "It is bidirectional": true
           },
-          "publishTime": "2018-07-19T03:01:19.603Z"
+          "publishTime": "2018-07-31T02:01:28.752Z"
+        }
+      }
+    },
+    {
+      "type": "requisition",
+      "valid": true,
+      "tests": {
+        "No time out": true
+      },
+      "name": "tcpSecondPart",
+      "time": {
+        "totalTime": 6,
+        "startTime": "2018-07-31T02:01:28.754Z",
+        "endTime": "2018-07-31T02:01:28.760Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "tcpSubscription2",
+          "type": "tcp",
+          "tests": {
+            "Connected": true,
+            "Message received": true,
+            "It is still open": true,
+            "No time out": true
+          },
+          "valid": true,
+          "connectionTime": "2018-07-31T02:01:28.754Z",
+          "messageReceivedTime": "2018-07-31T02:01:28.759Z"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "name": "tcpPublisher2",
+          "valid": true,
+          "type": "tcp",
+          "tests": {
+            "Published": true,
+            "Second message response": true
+          },
+          "publishTime": "2018-07-31T02:01:28.759Z"
         }
       }
     }
