@@ -7,6 +7,7 @@ import {RunnableModel} from '../models/inputs/runnable-model';
 import {isNullOrUndefined} from 'util';
 import fs from 'fs';
 import Ajv from 'ajv';
+import * as yaml from 'yamljs';
 
 export class RunnableParser {
 
@@ -33,7 +34,7 @@ export class RunnableParser {
     }
 
     public parse(runnableMessage: string): RunnableModel {
-        const parsedRunnable = JSON.parse(runnableMessage);
+        const parsedRunnable = this.parseToObject(runnableMessage);
         let variablesReplaced: any = this.replaceVariables(parsedRunnable);
         if (!this.validator(variablesReplaced) && this.validator.errors) {
             Logger.error(`Invalid runnable: ${JSON.stringify(variablesReplaced, null, 2)}`);
@@ -49,6 +50,16 @@ export class RunnableParser {
         Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
         Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
         return runnableWithId;
+    }
+
+    private parseToObject(runnableMessage: string) {
+        try {
+            return JSON.parse(runnableMessage);
+        } catch (err) {
+            Logger.info(`Not able to parse JSON string to Object`);
+            Logger.info(`Trying to parse as Yaml string to Object`);
+            return yaml.parse(runnableMessage);
+        }
     }
 
     private readFilesFromSchemaFolders = (subFolderName: string): string[] => {

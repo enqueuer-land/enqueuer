@@ -55,7 +55,6 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
         });
     }
     waitForData(stream, reject, resolve) {
-        logger_1.Logger.debug(`WAIT FOR DATA`);
         stream.once('end', () => {
             reject();
         });
@@ -63,7 +62,6 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
             if (this.response) {
                 logger_1.Logger.debug(`ON DATA ${msg.toString()}`);
                 stream.write(this.response, () => {
-                    logger_1.Logger.debug(`SUBSCRIPTION IS WRITING`);
                     this.persistStream(stream);
                     resolve(msg.toString());
                 });
