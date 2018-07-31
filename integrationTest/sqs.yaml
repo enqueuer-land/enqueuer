@@ -10,7 +10,7 @@ runnables:
     name: udsSubs
     onMessageReceived: >-
       const messageBody = JSON.parse(message).Body;
-      test['First letter equals enqueuer'] = messageBody.substring(1,2) === 'e');
+      test['First letter equals enqueuer'] = messageBody.substring(1,2) === 'e';
     awsConfiguration:
       endpoint: http://localhost:9324
       accessKeyId: na
