@@ -1,24 +1,34 @@
-runnableVersion: 01.00.00
-name: runnableStomp
-id: stomp
-runnables:
-- timeout: 3000
-  name: RequisitionStomp
-  subscriptions:
-  - type: stomp
-    name: stompSub
-    address: localhost
-    port: 61613
-    user: guest
-    password: guest
-    queue: "/queue/stompQueue"
-  startEvent:
-    publisher:
-      type: stomp
-      name: stompPub
-      address: localhost
-      port: '61613'
-      user: guest
-      password: guest
-      queue: "/queue/stompQueue"
-      payload: stompQueue
+{
+  "runnableVersion": "01.00.00",
+  "name": "runnableStomp",
+  "id": "stomp",
+  "runnables": [
+    {
+      "timeout": 3000,
+      "name": "RequisitionStomp",
+      "subscriptions": [
+        {
+          "type": "stomp",
+          "name": "stompSub",
+          "address": "localhost",
+          "port": 61613,
+          "user": "guest",
+          "password": "guest",
+          "queue": "/queue/stompQueue"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "type": "stomp",
+          "name": "stompPub",
+          "address": "localhost",
+          "port": "61613",
+          "user": "guest",
+          "password": "guest",
+          "queue": "/queue/stompQueue",
+          "payload": "stompQueue"
+        }
+      }
+    }
+  ]
+}
