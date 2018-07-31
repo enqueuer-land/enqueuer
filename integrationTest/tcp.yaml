@@ -1,0 +1,40 @@
+runnableVersion: 01.00.00
+name: runnableTcpName
+id: tcp
+runnables:
+-
+  timeout: 3000
+  name: tcpFirstPart
+  startEvent:
+    publisher:
+      type: tcp
+      name: tcpPublisher1
+      serverAddress: localhost
+      port: '23076'
+      payload: I don't care
+      persistStreamName: tcpPublisherSocket
+      onMessageReceived: test['It is bidirectional'] = message == '{{tcpPayload}}'
+  subscriptions:
+  - type: tcp
+    port: 23076
+    name: tcpSubscription1
+    persistStreamName: tcpSubscriptionSocket
+    response: "{{tcpPayload}}"
+    timeout: 500
+-
+  name: tcpSecondPart
+  timeout: 3000
+  startEvent:
+    publisher:
+      type: tcp
+      name: tcpPublisher2
+      payload: The socket is still open
+      loadStreamName: tcpPublisherSocket
+      onMessageReceived: test['Second message response'] = message == 'second message response'
+  subscriptions:
+  - type: tcp
+    name: tcpSubscription2
+    loadStreamName: tcpSubscriptionSocket
+    response: second message response
+    onMessageReceived: test['It is still open'] = JSON.parse(message) == 'The socket is still open'
+    timeout: 500

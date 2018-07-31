@@ -20,7 +20,8 @@ runnables:
       onMessageReceived: test['It is bidirectional'] = message == 'responsePayload'
       prePublishing: >-
         test['PrePublishingTest'] = true;
-        const payload = 'enqueuer'; persistSessionVariable('udsPayload', payload);
+        const payload = 'enqueuer';
+        persistSessionVariable('udsPayload', payload);
         persistSessionVariable('uds2RequisitionName', 'RequisitionUds2Name');
         persistSessionVariable('uds2Timeout', '500');
 -
