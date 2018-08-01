@@ -72,12 +72,11 @@ class RunnableParser {
     }
     parseToObject(runnableMessage) {
         try {
-            return JSON.parse(runnableMessage);
+            return yaml.parse(runnableMessage);
         }
         catch (err) {
-            logger_1.Logger.info(`Not able to parse JSON string to Object`);
-            logger_1.Logger.info(`Trying to parse as Yaml string to Object`);
-            return yaml.parse(runnableMessage);
+            logger_1.Logger.info(`Not able to parse as Yaml string to Object. Trying to parse as JSON string`);
+            return JSON.parse(runnableMessage);
         }
     }
     readJsonFile(filename) {

@@ -54,11 +54,10 @@ export class RunnableParser {
 
     private parseToObject(runnableMessage: string) {
         try {
-            return JSON.parse(runnableMessage);
-        } catch (err) {
-            Logger.info(`Not able to parse JSON string to Object`);
-            Logger.info(`Trying to parse as Yaml string to Object`);
             return yaml.parse(runnableMessage);
+        } catch (err) {
+            Logger.info(`Not able to parse as Yaml string to Object. Trying to parse as JSON string`);
+            return JSON.parse(runnableMessage);
         }
     }
 
