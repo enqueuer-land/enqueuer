@@ -67,6 +67,9 @@ let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
                 logger_1.Logger.debug(`Persisting publisher stream ${this.persistStreamName}`);
                 variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
             }
+            else {
+                stream.end();
+            }
         });
     }
 };

@@ -61,6 +61,8 @@ export class TcpPublisher extends Publisher {
             if (this.persistStreamName) {
                 Logger.debug(`Persisting publisher stream ${this.persistStreamName}`);
                 VariablesController.sessionVariables()[this.persistStreamName] = stream;
+            } else {
+                stream.end();
             }
         });
     }
