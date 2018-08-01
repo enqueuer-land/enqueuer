@@ -1,0 +1,42 @@
+name: outputExamples/singleRunOutput.yml
+tests: {}
+valid: true
+runnables:
+  runnableMqtt:
+    type: runnable
+    valid: true
+    tests: {}
+    name: runnableMqtt
+    id: mqtt
+    runnables:
+      -
+        type: requisition
+        valid: true
+        tests:
+          'No time out': true
+        name: RequisitionMqtt
+        time:
+          totalTime: 1590
+          startTime: '2018-08-01T01:19:58.905Z'
+          endTime: '2018-08-01T01:20:00.495Z'
+          timeout: 8000
+        subscriptions:
+          -
+            name: MqttSub
+            type: mqtt
+            tests:
+              Connected: true
+              'Message received': true
+              'Test Label Description': true
+              'No time out': true
+            valid: true
+            connectionTime: '2018-08-01T01:19:59.525Z'
+            messageReceivedTime: '2018-08-01T01:20:00.494Z'
+        startEvent:
+          publisher:
+            name: MqttPub
+            valid: true
+            type: mqtt
+            tests:
+              Published: true
+            publishTime: '2018-08-01T01:20:00.195Z'

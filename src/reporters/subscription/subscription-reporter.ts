@@ -8,7 +8,7 @@ import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import Signals = NodeJS.Signals;
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from 'util';
 
 export class SubscriptionReporter {
 

@@ -19,7 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const result_creator_1 = require("./result-creator");
 const fs = __importStar(require("fs"));
-let EnqueuerResultCreator = class EnqueuerResultCreator extends result_creator_1.ResultCreator {
+let JsonResultCreator = class JsonResultCreator extends result_creator_1.ResultCreator {
     constructor(resultCreatorAttributes) {
         super();
         this.report = {
@@ -43,8 +43,8 @@ let EnqueuerResultCreator = class EnqueuerResultCreator extends result_creator_1
         fs.writeFileSync(this.report.name, JSON.stringify(this.report, null, 4));
     }
 };
-EnqueuerResultCreator = __decorate([
-    conditional_injector_1.Injectable({ predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'enqueuer' }),
+JsonResultCreator = __decorate([
+    conditional_injector_1.Injectable({ predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'json' }),
     __metadata("design:paramtypes", [Object])
-], EnqueuerResultCreator);
-exports.EnqueuerResultCreator = EnqueuerResultCreator;
+], JsonResultCreator);
+exports.JsonResultCreator = JsonResultCreator;

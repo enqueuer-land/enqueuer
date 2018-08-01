@@ -4,8 +4,8 @@ import {ResultCreator} from './result-creator';
 import {SingleRunResultModel} from '../models/outputs/single-run-result-model';
 import * as fs from 'fs';
 
-@Injectable({predicate: (resultCreatorAttributes: any) => resultCreatorAttributes && resultCreatorAttributes.type === 'enqueuer'})
-export class EnqueuerResultCreator extends ResultCreator {
+@Injectable({predicate: (resultCreatorAttributes: any) => resultCreatorAttributes && resultCreatorAttributes.type === 'json'})
+export class JsonResultCreator extends ResultCreator {
     private report: SingleRunResultModel;
 
     public constructor(resultCreatorAttributes: any) {
