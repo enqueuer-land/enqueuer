@@ -8,10 +8,11 @@ import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import Signals = NodeJS.Signals;
+import {isNullOrUndefined} from "util";
 
 export class SubscriptionReporter {
 
-    private subscription: input.SubscriptionModel;
+    private subscription: Subscription;
     private report: output.SubscriptionModel;
     private startTime: DateController;
     private timeOut?: Timeout;
@@ -22,8 +23,8 @@ export class SubscriptionReporter {
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         this.startTime = new DateController();
         this.report = {
-            name: this.subscription.name,
-            type: this.subscription.type,
+            name: subscriptionAttributes.name,
+            type: subscriptionAttributes.type,
             tests: {
                 'Connected': false,
                 'Message received': false
@@ -73,7 +74,7 @@ export class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message: any) => {
-                    if (message) {
+                    if (!isNullOrUndefined(message)) {
                         Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
 
                         if (!this.hasTimedOut) {

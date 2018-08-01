@@ -29,9 +29,10 @@ let HttpServerSubscription = HttpServerSubscription_1 = class HttpServerSubscrip
         this.response.status = this.response.status || 200;
     }
     receiveMessage() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             HttpServerSubscription_1.app.all(this.endpoint, (request, response) => {
                 const payload = request.rawBody;
+                logger_1.Logger.trace(`Http got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 if (util_1.isNullOrUndefined(this.response.payload)) {
                     this.response.payload = payload;
                 }

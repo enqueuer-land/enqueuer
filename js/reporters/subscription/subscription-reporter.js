@@ -7,6 +7,7 @@ const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
 const on_message_received_reporter_1 = require("../../meta-functions/on-message-received-reporter");
 const report_model_1 = require("../../models/outputs/report-model");
+const util_1 = require("util");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -22,8 +23,8 @@ class SubscriptionReporter {
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         this.startTime = new date_controller_1.DateController();
         this.report = {
-            name: this.subscription.name,
-            type: this.subscription.type,
+            name: subscriptionAttributes.name,
+            type: subscriptionAttributes.type,
             tests: {
                 'Connected': false,
                 'Message received': false
@@ -68,7 +69,7 @@ class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message) => {
-                if (message) {
+                if (!util_1.isNullOrUndefined(message)) {
                     logger_1.Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;

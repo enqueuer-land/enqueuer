@@ -75,7 +75,7 @@ class RunnableParser {
             return JSON.parse(runnableMessage);
         }
         catch (err) {
-            logger_1.Logger.info(`Error parsing JSON string to Object`);
+            logger_1.Logger.info(`Not able to parse JSON string to Object`);
             logger_1.Logger.info(`Trying to parse as Yaml string to Object`);
             return yaml.parse(runnableMessage);
         }
