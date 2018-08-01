@@ -1,0 +1,19 @@
+runnableVersion: 01.00.00
+name: playground
+id: playgroundId
+initialDelay: 0
+runnables:
+- timeout: 3000
+  name: playgroundScenario
+  subscriptions: []
+  startEvent:
+    publisher:
+      type: http-client
+      name: GitHubEnqueuerHit
+      url: https://github.com/lopidio/enqueuer
+      method: GET
+      prePublishing: test['PrePublishingTest'] = true
+      onMessageReceived: test['It is online'] = JSON.parse(message).statusCode == 200
+      payload: ''
+      headers:
+        content-type: application/json

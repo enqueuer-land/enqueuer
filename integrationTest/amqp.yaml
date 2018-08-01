@@ -1,0 +1,29 @@
+runnableVersion: 01.00.00
+name: runnableAmqp
+id: amqp
+initialDelay: 0
+runnables:
+- timeout: 5000
+  name: AmqpReq
+  subscriptions:
+  - type: amqp
+    name: AmqpSubs
+    options:
+      host: localhost
+      port: 5672
+    queueName: enqueuer.queue.name
+    exchange: enqueuer.exchange
+    routingKey: enqueuer.integration.test.routing.#
+    onMessageReceived: test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';
+    timeout: 3000
+  startEvent:
+    publisher:
+      type: amqp
+      name: AmqpPub
+      payload: AmqpPub
+      options:
+        host: localhost
+        port: 5672
+      exchange: enqueuer.exchange
+      routingKey: enqueuer.integration.test.routing.key
+      prePublishing: publisher.payload=new Date().getTime();
