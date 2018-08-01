@@ -12,6 +12,7 @@ export class AmqpSubscription extends Subscription {
     private exchange: string;
     private routingKey: string;
     private queueName: string;
+    private messageReceiverPromiseResolver?: Function;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -23,25 +24,24 @@ export class AmqpSubscription extends Subscription {
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve) => {
-            this.connection.queue(this.queueName, (queue: any) => {
-                Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
-                queue.bind(this.exchange, this.routingKey, () => {
-                    Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
-                    queue.subscribe((message: any) => {
-                        Logger.debug(`Queue ${this.queueName} subscribed.`);
-                        resolve(message.data.toString());
-                    });
-                });
-            });
+            this.messageReceiverPromiseResolver = resolve;
         });
     }
 
     public connect(): Promise<void> {
         this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
-            this.connection.on('ready', () => resolve());
+            this.connection.on('ready', () => {
+                this.connection.queue(this.queueName, (queue: any) => {
+                    Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
+                    queue.bind(this.exchange, this.routingKey, () => {
+                        Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
+                        queue.subscribe((message: any) => this.gotMessage(message));
+                        resolve();
+                    });
+                });
+            });
             this.connection.on('error', (err: any) => reject(err));
-
         });
     }
 
@@ -50,6 +50,13 @@ export class AmqpSubscription extends Subscription {
             this.connection.disconnect();
         }
         delete this.connection;
+    }
+
+    private gotMessage(message: any) {
+        Logger.debug(`Queue ${this.queueName} got Message.`);
+        if (this.messageReceiverPromiseResolver) {
+            this.messageReceiverPromiseResolver(message.data.toString());
+        }
     }
 
 }

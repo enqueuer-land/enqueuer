@@ -30,22 +30,22 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
     }
     receiveMessage() {
         return new Promise((resolve) => {
-            this.connection.queue(this.queueName, (queue) => {
-                logger_1.Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
-                queue.bind(this.exchange, this.routingKey, () => {
-                    logger_1.Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
-                    queue.subscribe((message) => {
-                        logger_1.Logger.debug(`Queue ${this.queueName} subscribed.`);
-                        resolve(message.data.toString());
-                    });
-                });
-            });
+            this.messageReceiverPromiseResolver = resolve;
         });
     }
     connect() {
         this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
-            this.connection.on('ready', () => resolve());
+            this.connection.on('ready', () => {
+                this.connection.queue(this.queueName, (queue) => {
+                    logger_1.Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
+                    queue.bind(this.exchange, this.routingKey, () => {
+                        logger_1.Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
+                        queue.subscribe((message) => this.gotMessage(message));
+                        resolve();
+                    });
+                });
+            });
             this.connection.on('error', (err) => reject(err));
         });
     }
@@ -54,6 +54,12 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
             this.connection.disconnect();
         }
         delete this.connection;
+    }
+    gotMessage(message) {
+        logger_1.Logger.debug(`Queue ${this.queueName} got Message.`);
+        if (this.messageReceiverPromiseResolver) {
+            this.messageReceiverPromiseResolver(message.data.toString());
+        }
     }
 };
 AmqpSubscription = __decorate([
