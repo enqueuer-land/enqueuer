@@ -8,9 +8,11 @@ export class MultiResultCreator extends ResultCreator {
 
     public constructor(reports: string[]) {
         super();
-        reports.forEach(report => {
-            this.resultCreators.push(Container.subclassesOf(ResultCreator).create(report));
-        });
+        if (reports) {
+            reports.forEach(report => {
+                this.resultCreators.push(Container.subclassesOf(ResultCreator).create(report));
+            });
+        }
         this.resultCreators.push(new SummaryResultCreator());
     }
 

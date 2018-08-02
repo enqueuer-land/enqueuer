@@ -7,9 +7,11 @@ class MultiResultCreator extends result_creator_1.ResultCreator {
     constructor(reports) {
         super();
         this.resultCreators = [];
-        reports.forEach(report => {
-            this.resultCreators.push(conditional_injector_1.Container.subclassesOf(result_creator_1.ResultCreator).create(report));
-        });
+        if (reports) {
+            reports.forEach(report => {
+                this.resultCreators.push(conditional_injector_1.Container.subclassesOf(result_creator_1.ResultCreator).create(report));
+            });
+        }
         this.resultCreators.push(new summary_result_creator_1.SummaryResultCreator());
     }
     addTestSuite(suite) {
