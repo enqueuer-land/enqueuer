@@ -43,7 +43,13 @@ export class HttpServerSubscription extends Subscription {
                     response.status(405).send(`Http server is expecting a ${this.method} call`);
                 } else {
                     response.status(this.response.status).send(this.response.payload);
-                    resolve(payload);
+
+                    const result = {
+                        params: request.params,
+                        query: request.query,
+                        body: payload
+                    };
+                    resolve(JSON.stringify(result));
                 }
             });
         });

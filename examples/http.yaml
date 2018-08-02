@@ -8,19 +8,23 @@ runnables:
   subscriptions:
   - type: http-server
     name: HttpSubscriptionTitle
-    endpoint: "/enqueuer"
+    endpoint: /enqueuer/:someId
     port: 23075
     method: POST
     response:
       status: 321
       payload: responsePayload
-    onMessageReceived: test['Payload.enqueuer is Virgs'] = JSON.parse(message).enqueuer === 'virgs';
+    onMessageReceived: >-
+      message = JSON.parse(message);
+      test['Params is someId'] = message.params.someId === 'idStuff';
+      test['Query is 123'] = message.query.query === '123';
+      test['Payload is Virgs'] = JSON.parse(message.body).enqueuer === 'virgs';
     timeout: 10000
   startEvent:
     publisher:
       type: http-client
       name: HttpPublisherClientTitle
-      url: http://localhost:23075/enqueuer
+      url: http://localhost:23075/enqueuer/idStuff?query=123
       method: POST
       prePublishing: test['prePublishingTest'] = true
       onMessageReceived: >-
