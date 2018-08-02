@@ -2,16 +2,19 @@ import {ResultModel} from '../models/outputs/result-model';
 import {ResultCreator} from './result-creator';
 import {Container} from 'conditional-injector';
 import {SummaryResultCreator} from './summary-result-creator';
+import {StandardOutputResultCreator} from './standard-output-result-creator';
 
 export class MultiResultCreator extends ResultCreator {
     private resultCreators: ResultCreator[] = [];
 
     public constructor(reports: string[]) {
         super();
-        if (reports) {
+        if (reports && reports.length > 0) {
             reports.forEach(report => {
                 this.resultCreators.push(Container.subclassesOf(ResultCreator).create(report));
             });
+        } else {
+            this.resultCreators.push(new StandardOutputResultCreator());
         }
         this.resultCreators.push(new SummaryResultCreator());
     }

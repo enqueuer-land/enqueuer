@@ -27,7 +27,7 @@ export class HttpServerSubscription extends Subscription {
     }
 
     public receiveMessage(): Promise<string> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             HttpServerSubscription.app.all(this.endpoint, (request: any, response: any) => {
                 const payload = request.rawBody;
                 Logger.trace(`Http got hit (${request.method}) ${this.endpoint}: ${payload}`);

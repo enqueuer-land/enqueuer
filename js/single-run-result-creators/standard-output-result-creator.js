@@ -46,7 +46,8 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
     }
 };
 StandardOutputResultCreator = __decorate([
-    conditional_injector_1.Injectable({ scope: conditional_injector_1.Scope.Application }),
+    conditional_injector_1.Injectable({ scope: conditional_injector_1.Scope.Application,
+        predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'console' }),
     __metadata("design:paramtypes", [])
 ], StandardOutputResultCreator);
 exports.StandardOutputResultCreator = StandardOutputResultCreator;

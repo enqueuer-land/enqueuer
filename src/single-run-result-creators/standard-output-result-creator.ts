@@ -2,8 +2,6 @@ import {ResultModel} from '../models/outputs/result-model';
 import {Injectable, Scope} from 'conditional-injector';
 import {ResultCreator} from './result-creator';
 import prettyjson from 'prettyjson';
-import {TestModel} from '../models/outputs/test-model';
-import {RequisitionModel} from '../models/outputs/requisition-model';
 
 const options = {
     defaultIndentation: 4,
@@ -12,7 +10,9 @@ const options = {
     inlineArrays: true
 };
 
-@Injectable({scope: Scope.Application})
+@Injectable({scope: Scope.Application,
+    predicate: (resultCreatorAttributes: any) => resultCreatorAttributes && resultCreatorAttributes.type === 'console'})
+
 export class StandardOutputResultCreator extends ResultCreator {
     private report: any;
 
