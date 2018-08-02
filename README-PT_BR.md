@@ -24,8 +24,9 @@ Para usar **enqueuer**, basta:
     ![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-test.png "testfile")
 
 4. executar:
-
-    ```$enqueuer --config-file config-file.yml```
+    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result-cli.png "example result")
     
-5. analisar o resultado:
+5. analisar o arquivo gerado:
     ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "example result")
+    
+Para mais detalhes, considere dar uma olhada na ![wiki](https://github.com/lopidio/enqueuer/wiki "wiki").
