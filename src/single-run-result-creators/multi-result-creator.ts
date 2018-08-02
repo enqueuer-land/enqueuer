@@ -1,6 +1,7 @@
 import {ResultModel} from '../models/outputs/result-model';
 import {ResultCreator} from './result-creator';
 import {Container} from 'conditional-injector';
+import {SummaryResultCreator} from './summary-result-creator';
 
 export class MultiResultCreator extends ResultCreator {
     private resultCreators: ResultCreator[] = [];
@@ -10,6 +11,7 @@ export class MultiResultCreator extends ResultCreator {
         reports.forEach(report => {
             this.resultCreators.push(Container.subclassesOf(ResultCreator).create(report));
         });
+        this.resultCreators.push(new SummaryResultCreator());
     }
 
     public addTestSuite(suite: ResultModel): void {

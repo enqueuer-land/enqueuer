@@ -24,8 +24,6 @@ const options = {
 let StandardOutputResultCreator = class StandardOutputResultCreator extends result_creator_1.ResultCreator {
     constructor() {
         super();
-        this.testCounter = 0;
-        this.failedTestNames = [];
         this.report = {
             name: '',
             tests: {},
@@ -36,11 +34,8 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
     addTestSuite(suite) {
         this.report.runnables[suite.name] = suite;
         this.report.valid = this.report.valid && suite.valid;
-        this.findRequisitions(suite, this.report.name);
     }
     addError(err) {
-        ++this.testCounter;
-        this.failedTestNames.push(this.addLevel(this.report.name, err.toString()));
         this.report.valid = false;
     }
     isValid() {
@@ -48,48 +43,6 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
     }
     create() {
         console.log(prettyjson_1.default.render(this.report, options));
-        console.log(`Tests summary (${this.testCounter - this.failedTestNames.length}/${this.testCounter})`);
-        if (this.failedTestNames.length > 0) {
-            console.log(`Failing tests:`);
-            this.failedTestNames
-                .forEach((failingTest) => {
-                console.log(`\t${failingTest}`);
-            });
-        }
-    }
-    findRequisitions(resultModel, prefix) {
-        resultModel.runnables.forEach((runnable) => {
-            const levelName = this.addLevel(prefix, resultModel.name);
-            if (runnable.type == 'runnable') {
-                this.findRequisitions(runnable, levelName);
-            }
-            else if (runnable.type == 'requisition') {
-                const requisition = runnable;
-                this.findTests(requisition, this.addLevel(levelName, requisition.name));
-            }
-        });
-    }
-    findTests(requisition, prefix) {
-        this.inspectInvalidTests(requisition.tests, prefix);
-        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, this.addLevel(prefix, subscription.name)));
-        if (requisition.startEvent.subscription) {
-            this.inspectInvalidTests(requisition.startEvent.subscription.tests, this.addLevel(prefix, requisition.startEvent.subscription.name));
-        }
-        if (requisition.startEvent.publisher) {
-            this.inspectInvalidTests(requisition.startEvent.publisher.tests, this.addLevel(prefix, requisition.startEvent.publisher.name));
-        }
-    }
-    inspectInvalidTests(tests, prefix) {
-        this.testCounter += Object.keys(tests).length;
-        Object.keys(tests)
-            .forEach((key) => {
-            if (!tests[key]) {
-                this.failedTestNames.push(this.addLevel(prefix, key));
-            }
-        });
-    }
-    addLevel(prefix, newLevelName) {
-        return prefix.concat(' -> ').concat(newLevelName);
     }
 };
 StandardOutputResultCreator = __decorate([
