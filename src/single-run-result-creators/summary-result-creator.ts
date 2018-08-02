@@ -25,7 +25,7 @@ export class SummaryResultCreator extends ResultCreator {
 
     public create(): void {
         console.log(`Tests summary ${this.testCounter - this.failedTestNames.length}/${this.testCounter} => ` +
-                    `${100 * (this.testCounter - this.failedTestNames.length) / this.testCounter}% passing`);
+                    `${Math.trunc(10000 * (this.testCounter - this.failedTestNames.length) / this.testCounter) / 100}% passing`);
         if (this.failedTestNames.length > 0) {
             console.log(`Failing tests:`);
             this.failedTestNames

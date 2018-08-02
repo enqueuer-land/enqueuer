@@ -28,7 +28,10 @@ export class MqttSubscription extends Subscription {
             if (!this.client.connected) {
                 reject(`Error trying to receive message. Subscription is not connected yet: ${this.topic}`);
             }
-            this.client.on('message', (topic: string, message: string) => resolve(message.toString()));
+            this.client.on('message', (topic: string, payload: string) => {
+                const message = {topic: topic, payload: payload};
+                resolve(JSON.stringify(message));
+            });
         });
     }
 

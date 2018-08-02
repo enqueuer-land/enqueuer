@@ -19,8 +19,12 @@ runnables:
     brokerAddress: mqtt://iot.eclipse.org
     name: MqttSub
     topic: enqueuer/integration/public/test
-    onMessageReceived: let enqueuer = 'enqueuer'; test['Test Label Description'] =
-      JSON.parse(message) === enqueuer;
+    onMessageReceived: >-
+      let enqueuer = 'enqueuer';
+      const parsedMessage = JSON.parse(message);
+      const payload = JSON.parse(Buffer.from(parsedMessage.payload));
+      test['Payload'] = payload == enqueuer;
+      test['Topic'] = parsedMessage.topic === 'enqueuer/integration/public/test';
     options:
       clientId: enqueuerSubscriptionOptionsExampleId9900223
     timeout: 5000
