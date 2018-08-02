@@ -36,7 +36,7 @@ export class AmqpSubscription extends Subscription {
                     Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
                     queue.bind(this.exchange, this.routingKey, () => {
                         Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
-                        queue.subscribe((message: any) => this.gotMessage(message));
+                        queue.subscribe((message: any, headers: any) => this.gotMessage(message, headers));
                         resolve();
                     });
                 });
@@ -52,10 +52,11 @@ export class AmqpSubscription extends Subscription {
         delete this.connection;
     }
 
-    private gotMessage(message: any) {
+    private gotMessage(message: any, headers: any) {
         Logger.debug(`Queue ${this.queueName} got Message.`);
         if (this.messageReceiverPromiseResolver) {
-            this.messageReceiverPromiseResolver(message.data.toString());
+            message.headers = headers;
+            this.messageReceiverPromiseResolver(message);
         }
     }
 

@@ -5,6 +5,21 @@ initialDelay: 0
 runnables:
 - timeout: 5000
   name: AmqpReq
+  startEvent:
+    publisher:
+      type: amqp
+      name: AmqpPub
+      payload: I'll be replaced by prePublishing function
+      options:
+        host: localhost
+        port: 5672
+      exchange: enqueuer.exchange
+      messageOptions:
+        headers:
+          key: value
+          otherKey: otherValue
+      routingKey: enqueuer.integration.test.routing.key
+      prePublishing: publisher.payload=new Date().getTime();
   subscriptions:
   - type: amqp
     name: AmqpSubs
@@ -14,16 +29,8 @@ runnables:
     queueName: enqueuer.queue.name
     exchange: enqueuer.exchange
     routingKey: enqueuer.integration.test.routing.#
-    onMessageReceived: test['works'] = new Date().getTime() + '' >= message; report['virgs'] = 'lopídio';
+    onMessageReceived: >-
+      const payload = Buffer.from(message.data);
+      test['Payload replaced'] = new Date().getTime() >= payload;
+      test['Header'] = message.headers.key == 'value';
     timeout: 3000
-  startEvent:
-    publisher:
-      type: amqp
-      name: AmqpPub
-      payload: AmqpPub
-      options:
-        host: localhost
-        port: 5672
-      exchange: enqueuer.exchange
-      routingKey: enqueuer.integration.test.routing.key
-      prePublishing: publisher.payload=new Date().getTime();
