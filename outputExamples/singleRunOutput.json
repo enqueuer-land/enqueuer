@@ -3,12 +3,12 @@
     "tests": {},
     "valid": true,
     "runnables": {
-        "runnableMqtt": {
+        "runnableAmqp": {
             "type": "runnable",
             "valid": true,
             "tests": {},
-            "name": "runnableMqtt",
-            "id": "mqtt",
+            "name": "runnableAmqp",
+            "id": "amqp",
             "runnables": [
                 {
                     "type": "requisition",
@@ -16,37 +16,38 @@
                     "tests": {
                         "No time out": true
                     },
-                    "name": "RequisitionMqtt",
+                    "name": "AmqpReq",
                     "time": {
-                        "totalTime": 1430,
-                        "startTime": "2018-08-01T01:13:27.502Z",
-                        "endTime": "2018-08-01T01:13:28.932Z",
-                        "timeout": 8000
+                        "totalTime": 27,
+                        "startTime": "2018-08-02T00:36:10.541Z",
+                        "endTime": "2018-08-02T00:36:10.568Z",
+                        "timeout": 5000
                     },
                     "subscriptions": [
                         {
-                            "name": "MqttSub",
-                            "type": "mqtt",
+                            "name": "AmqpSubs",
+                            "type": "amqp",
                             "tests": {
                                 "Connected": true,
                                 "Message received": true,
-                                "Test Label Description": true,
+                                "Payload replaced": true,
+                                "Header": true,
                                 "No time out": true
                             },
                             "valid": true,
-                            "connectionTime": "2018-08-01T01:13:28.142Z",
-                            "messageReceivedTime": "2018-08-01T01:13:28.931Z"
+                            "connectionTime": "2018-08-02T00:36:10.557Z",
+                            "messageReceivedTime": "2018-08-02T00:36:10.567Z"
                         }
                     ],
                     "startEvent": {
                         "publisher": {
-                            "name": "MqttPub",
+                            "name": "AmqpPub",
                             "valid": true,
-                            "type": "mqtt",
+                            "type": "amqp",
                             "tests": {
                                 "Published": true
                             },
-                            "publishTime": "2018-08-01T01:13:28.580Z"
+                            "publishTime": "2018-08-02T00:36:10.566Z"
                         }
                     }
                 }

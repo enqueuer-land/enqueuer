@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //#Auto-Generated Code
+require("./single-run-result-creators/yml-result-creator");
+require("./single-run-result-creators/standard-output-result-creator");
+require("./single-run-result-creators/json-result-creator");
 require("./runnables/requisition-runner");
 require("./runnables/runnable-runner");
 require("./subscriptions/tcp-subscription");
@@ -16,9 +19,6 @@ require("./subscriptions/standard-input-subscription");
 require("./subscriptions/udp-subscription");
 require("./subscriptions/mqtt-subscription");
 require("./subscriptions/null-subscription");
-require("./result-creator/yml-result-creator");
-require("./result-creator/standard-output-result-creator");
-require("./result-creator/json-result-creator");
 require("./executors/single-run-executor");
 require("./executors/daemon-executor");
 require("./executors/null-run-executor");

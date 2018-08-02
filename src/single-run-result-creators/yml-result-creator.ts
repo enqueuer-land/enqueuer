@@ -1,11 +1,13 @@
 import {ResultModel} from '../models/outputs/result-model';
-import {Injectable} from 'conditional-injector';
+import {Injectable, Scope} from 'conditional-injector';
 import {ResultCreator} from './result-creator';
 import {SingleRunResultModel} from '../models/outputs/single-run-result-model';
 import * as fs from 'fs';
+import * as yaml from 'yamljs';
 
-@Injectable({predicate: (resultCreatorAttributes: any) => resultCreatorAttributes && resultCreatorAttributes.type === 'json'})
-export class JsonResultCreator extends ResultCreator {
+@Injectable({scope: Scope.Application,
+    predicate: (resultCreatorAttributes: any) => resultCreatorAttributes && resultCreatorAttributes.type === 'yml'})
+export class YmlResultCreator extends ResultCreator {
     private report: SingleRunResultModel;
 
     public constructor(resultCreatorAttributes: any) {
@@ -30,6 +32,6 @@ export class JsonResultCreator extends ResultCreator {
         return this.report.valid;
     }
     public create(): void {
-        fs.writeFileSync(this.report.name, JSON.stringify(this.report, null, 4));
+        fs.writeFileSync(this.report.name, yaml.stringify(this.report, 10, 2));
     }
 }

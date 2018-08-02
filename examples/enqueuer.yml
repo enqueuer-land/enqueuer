@@ -2,11 +2,13 @@ run-mode:
   single-run:
     name: examples
     fileNamePattern: examples/*.{json,yaml}
-    report:
-#        type: yml
-#        filename: outputExamples/singleRunOutput.yml
-#        type: json
-#        filename: outputExamples/singleRunOutput.json
+    reports:
+      -
+        type: yml
+        filename: outputExamples/singleRunOutput.yml
+      -
+        type: json
+        filename: outputExamples/singleRunOutput.json
 
 #outputs:
 #  -
@@ -25,4 +27,4 @@ variables:
 
   zeroMqAddress: tcp://127.0.0.1:3000
 
-#log-level: trace
+#log-level: tracem

@@ -1,8 +1,9 @@
 run-mode:
   single-run:
     fileNamePattern: src/inceptionTest/*.enq
-    report:
-        type: enqueuer
+    reports:
+      -
+        type: json
         filename: src/inceptionTest/singleRunInceptionReport.json
 outputs:
   -

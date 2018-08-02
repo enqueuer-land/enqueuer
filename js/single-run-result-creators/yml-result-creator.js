@@ -45,7 +45,8 @@ let YmlResultCreator = class YmlResultCreator extends result_creator_1.ResultCre
     }
 };
 YmlResultCreator = __decorate([
-    conditional_injector_1.Injectable({ predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'yml' }),
+    conditional_injector_1.Injectable({ scope: conditional_injector_1.Scope.Application,
+        predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'yml' }),
     __metadata("design:paramtypes", [Object])
 ], YmlResultCreator);
 exports.YmlResultCreator = YmlResultCreator;

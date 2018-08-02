@@ -1,5 +1,5 @@
 import {ResultModel} from '../models/outputs/result-model';
-import {Injectable} from 'conditional-injector';
+import {Injectable, Scope} from 'conditional-injector';
 import {ResultCreator} from './result-creator';
 import prettyjson from 'prettyjson';
 import {TestModel} from '../models/outputs/test-model';
@@ -12,7 +12,7 @@ const options = {
     inlineArrays: true
 };
 
-@Injectable()
+@Injectable({scope: Scope.Application})
 export class StandardOutputResultCreator extends ResultCreator {
     private report: any;
     private testCounter: number = 0;

@@ -24,13 +24,13 @@ const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
-const result_creator_1 = require("../result-creator/result-creator");
+const multi_result_creator_1 = require("../single-run-result-creators/multi-result-creator");
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
         logger_1.Logger.info('Executing in Single-Run mode');
         const singleRunConfiguration = enqueuerConfiguration['single-run'];
-        this.resultCreator = conditional_injector_1.Container.subclassesOf(result_creator_1.ResultCreator).create(enqueuerConfiguration['single-run'].report);
+        this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(enqueuerConfiguration['single-run'].reports);
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunInput = new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
     }
@@ -44,21 +44,21 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => {
                 logger_1.Logger.info('There is no more requisition to be ran');
-                this.resultCreator.create();
-                return resolve(this.resultCreator.isValid());
+                this.multiResultCreator.create();
+                return resolve(this.multiResultCreator.isValid());
             });
             this.singleRunInput.receiveRequisition()
                 .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
                 .then(report => {
                 logger_1.Logger.trace('Adding test suite');
-                this.resultCreator.addTestSuite(report);
+                this.multiResultCreator.addTestSuite(report);
                 return report;
             })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then(() => resolve(this.execute())) //Runs the next one
                 .catch((err) => {
                 logger_1.Logger.error(`Single-run error reported: ${JSON.stringify(err, null, 4)}`);
-                this.resultCreator.addError(err);
+                this.multiResultCreator.addError(err);
                 this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
                 resolve(this.execute()); //Runs the next one
             });

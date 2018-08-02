@@ -93,7 +93,7 @@ let StandardOutputResultCreator = class StandardOutputResultCreator extends resu
     }
 };
 StandardOutputResultCreator = __decorate([
-    conditional_injector_1.Injectable(),
+    conditional_injector_1.Injectable({ scope: conditional_injector_1.Scope.Application }),
     __metadata("design:paramtypes", [])
 ], StandardOutputResultCreator);
 exports.StandardOutputResultCreator = StandardOutputResultCreator;

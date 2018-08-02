@@ -44,7 +44,10 @@ let JsonResultCreator = class JsonResultCreator extends result_creator_1.ResultC
     }
 };
 JsonResultCreator = __decorate([
-    conditional_injector_1.Injectable({ predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'json' }),
+    conditional_injector_1.Injectable({
+        scope: conditional_injector_1.Scope.Application,
+        predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'json'
+    }),
     __metadata("design:paramtypes", [Object])
 ], JsonResultCreator);
 exports.JsonResultCreator = JsonResultCreator;

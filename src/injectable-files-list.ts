@@ -1,4 +1,7 @@
 //#Auto-Generated Code
+import './single-run-result-creators/yml-result-creator';
+import './single-run-result-creators/standard-output-result-creator';
+import './single-run-result-creators/json-result-creator';
 import './runnables/requisition-runner';
 import './runnables/runnable-runner';
 import './subscriptions/tcp-subscription';
@@ -14,9 +17,6 @@ import './subscriptions/standard-input-subscription';
 import './subscriptions/udp-subscription';
 import './subscriptions/mqtt-subscription';
 import './subscriptions/null-subscription';
-import './result-creator/yml-result-creator';
-import './result-creator/standard-output-result-creator';
-import './result-creator/json-result-creator';
 import './executors/single-run-executor';
 import './executors/daemon-executor';
 import './executors/null-run-executor';
