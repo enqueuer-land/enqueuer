@@ -66,9 +66,9 @@ export class SummaryResultCreator extends ResultCreator {
                 const testDescription = this.addLevel(prefix, key);
                 if (!tests[key]) {
                     this.failedTestNames.push(testDescription);
-                    console.log(chalk.red(`\t${testDescription}`));
+                    console.log(chalk.red(`\t[FAIL] ${testDescription}`));
                 } else {
-                    console.log(chalk.green(`\t${testDescription}`));
+                    console.log(chalk.green(`\t[PASS] ${testDescription}`));
                 }
             });
     }
