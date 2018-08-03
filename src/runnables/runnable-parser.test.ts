@@ -196,7 +196,7 @@ const validTcpRunnable = {
             "name": "tcp",
             "subscriptions": [
                 {
-                    "type": "tcp",
+                    "type": "tcp-server",
                     "port": 23076,
                     "name": "tcpSubscription",
                     "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
@@ -205,7 +205,7 @@ const validTcpRunnable = {
             ],
             "startEvent": {
                 "publisher": {
-                    "type": "tcp",
+                    "type": "tcp-client",
                     "serverAddress": "localhost",
                     "port": 23076,
                     "name": "tcpPublisher",
@@ -225,7 +225,7 @@ const validTcpPersistingStuff = {
             "name": "tcp",
             "subscriptions": [
                 {
-                    "type": "tcp",
+                    "type": "tcp-server",
                     "loadStreamName": "name",
                     "name": "tcpSubscription",
                     "onMessageReceived": "test['first letter'] = message.substring(1,2) === 'e'; console.log('Message: ' + message)",
@@ -234,7 +234,7 @@ const validTcpPersistingStuff = {
             ],
             "startEvent": {
                 "publisher": {
-                    "type": "tcp",
+                    "type": "tcp-client",
                     "serverAddress": "localhost",
                     "port": 23076,
                     "name": "tcpPublisher",

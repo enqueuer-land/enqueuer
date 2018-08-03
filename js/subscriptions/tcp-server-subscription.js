@@ -21,11 +21,12 @@ const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
 const variables_controller_1 = require("../variables/variables-controller");
 const logger_1 = require("../loggers/logger");
-let TcpSubscription = class TcpSubscription extends subscription_1.Subscription {
+let TcpServerSubscription = class TcpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
         this.persistStreamName = subscriptionAttributes.persistStreamName;
+        this.greetingResponse = subscriptionAttributes.greetingResponse;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
@@ -48,23 +49,7 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
                 this.waitForData(this.loadStream, reject, resolve);
             }
             else {
-                this.server.once('connection', (stream) => {
-                    this.waitForData(stream, reject, resolve);
-                });
-            }
-        });
-    }
-    waitForData(stream, reject, resolve) {
-        stream.once('end', () => {
-            reject();
-        });
-        stream.once('data', (msg) => {
-            if (this.response) {
-                logger_1.Logger.debug(`ON DATA ${msg.toString()}`);
-                stream.write(this.response, () => {
-                    this.persistStream(stream);
-                    resolve(msg.toString());
-                });
+                this.server.once('connection', (stream) => this.gotConnection(stream, reject, resolve));
             }
         });
     }
@@ -79,6 +64,7 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
             }
             this.server = net.createServer()
                 .listen(this.port, 'localhost', () => {
+                logger_1.Logger.debug(`Tcp server is listening for tcp clients`);
                 resolve();
             });
         });
@@ -88,7 +74,33 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
             this.server.close();
         }
     }
-    persistStream(stream) {
+    gotConnection(stream, reject, resolve) {
+        logger_1.Logger.debug(`Tcp server got a client`);
+        if (this.greetingResponse) {
+            logger_1.Logger.debug(`Tcp server sending greeting message`);
+            stream.write(this.greetingResponse);
+        }
+        this.waitForData(stream, reject, resolve);
+    }
+    waitForData(stream, reject, resolve) {
+        logger_1.Logger.trace(`Tcp server is waiting on data`);
+        stream.once('end', () => {
+            logger_1.Logger.debug(`Tcp server detected 'end' event`);
+            reject();
+        });
+        stream.once('data', (msg) => {
+            logger_1.Logger.debug(`Tcp server got data ${msg.toString()}`);
+            if (this.response) {
+                logger_1.Logger.debug(`Tcp server sending response`);
+                stream.write(this.response, () => this.persistStream(stream, resolve, msg));
+            }
+            else {
+                this.persistStream(stream, resolve, msg);
+                resolve(msg.toString());
+            }
+        });
+    }
+    persistStream(stream, resolve, msg) {
         if (this.persistStreamName) {
             logger_1.Logger.debug(`Persisting subscription stream ${this.persistStreamName}`);
             variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
@@ -98,10 +110,11 @@ let TcpSubscription = class TcpSubscription extends subscription_1.Subscription 
             logger_1.Logger.trace(`Ending TCP stream`);
             stream.end();
         }
+        resolve(msg.toString());
     }
 };
-TcpSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'tcp' }),
+TcpServerSubscription = __decorate([
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'tcp-server' }),
     __metadata("design:paramtypes", [Object])
-], TcpSubscription);
-exports.TcpSubscription = TcpSubscription;
+], TcpServerSubscription);
+exports.TcpServerSubscription = TcpServerSubscription;

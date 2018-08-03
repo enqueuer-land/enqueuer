@@ -77,6 +77,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         if (!this.publisher || !this.publisher.onMessageReceived) {
             return;
         }
+        logger_1.Logger.trace(`Publisher received message: ${this.publisher.messageReceived}`);
         const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.publisher.onMessageReceived, this.publisher.messageReceived);
         const functionResponse = onMessageReceivedReporter.execute();
         functionResponse.tests
@@ -85,13 +86,12 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     executePrePublishingFunction() {
         const prePublishFunction = new pre_publish_meta_function_body_1.PrePublishMetaFunctionBody(this.publisherOriginalAttributes);
         let functionResponse = new meta_function_executor_1.MetaFunctionExecutor(prePublishFunction).execute();
-        logger_1.Logger.debug(`PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
         placeHolderReplacer
             .addVariableMap(variables_controller_1.VariablesController.persistedVariables())
             .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
         functionResponse = placeHolderReplacer.replace(functionResponse);
-        logger_1.Logger.debug(`Replaced PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
+        logger_1.Logger.trace(`Replaced PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
         if (functionResponse.publisher.payload) {
             functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
         }

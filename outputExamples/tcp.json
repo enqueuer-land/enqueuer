@@ -13,34 +13,36 @@
       },
       "name": "tcpFirstPart",
       "time": {
-        "totalTime": 19,
-        "startTime": "2018-07-31T02:01:28.734Z",
-        "endTime": "2018-07-31T02:01:28.753Z",
+        "totalTime": 113,
+        "startTime": "2018-08-03T19:11:36.596Z",
+        "endTime": "2018-08-03T19:11:36.709Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "tcpSubscription1",
-          "type": "tcp",
+          "type": "tcp-server",
           "tests": {
             "Connected": true,
             "Message received": true,
+            "I care": true,
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-07-31T02:01:28.737Z"
+          "connectionTime": "2018-08-03T19:11:36.599Z",
+          "messageReceivedTime": "2018-08-03T19:11:36.605Z"
         }
       ],
       "startEvent": {
         "publisher": {
           "name": "tcpPublisher1",
           "valid": true,
-          "type": "tcp",
+          "type": "tcp-client",
           "tests": {
             "Published": true,
-            "It is bidirectional": true
+            "Greeting received": true
           },
-          "publishTime": "2018-07-31T02:01:28.752Z"
+          "publishTime": "2018-08-03T19:11:36.708Z"
         }
       }
     },
@@ -52,15 +54,15 @@
       },
       "name": "tcpSecondPart",
       "time": {
-        "totalTime": 6,
-        "startTime": "2018-07-31T02:01:28.754Z",
-        "endTime": "2018-07-31T02:01:28.760Z",
+        "totalTime": 3,
+        "startTime": "2018-08-03T19:11:36.710Z",
+        "endTime": "2018-08-03T19:11:36.713Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "tcpSubscription2",
-          "type": "tcp",
+          "type": "tcp-server",
           "tests": {
             "Connected": true,
             "Message received": true,
@@ -68,20 +70,20 @@
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-07-31T02:01:28.754Z",
-          "messageReceivedTime": "2018-07-31T02:01:28.759Z"
+          "connectionTime": "2018-08-03T19:11:36.710Z",
+          "messageReceivedTime": "2018-08-03T19:11:36.711Z"
         }
       ],
       "startEvent": {
         "publisher": {
           "name": "tcpPublisher2",
           "valid": true,
-          "type": "tcp",
+          "type": "tcp-client",
           "tests": {
             "Published": true,
             "Second message response": true
           },
-          "publishTime": "2018-07-31T02:01:28.759Z"
+          "publishTime": "2018-08-03T19:11:36.713Z"
         }
       }
     }

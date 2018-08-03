@@ -5,8 +5,8 @@ import * as net from 'net';
 import {VariablesController} from '../variables/variables-controller';
 import {Logger} from '../loggers/logger';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp'})
-export class TcpSubscription extends Subscription {
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp-server'})
+export class TcpServerSubscription extends Subscription {
 
     private server: any;
     private response?: string;
@@ -14,11 +14,13 @@ export class TcpSubscription extends Subscription {
     private persistStreamName?: string;
     private loadStreamName: string;
     private loadStream: any;
+    private greetingResponse: string;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
         this.persistStreamName = subscriptionAttributes.persistStreamName;
+        this.greetingResponse = subscriptionAttributes.greetingResponse;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         } else {
@@ -40,29 +42,10 @@ export class TcpSubscription extends Subscription {
                 }
                 this.waitForData(this.loadStream, reject, resolve);
             } else {
-                this.server.once('connection', (stream: any) => {
-                    this.waitForData(stream, reject, resolve);
-                });
+                this.server.once('connection', (stream: any) => this.gotConnection(stream, reject, resolve));
             }
 
         });
-    }
-
-    private waitForData(stream: any, reject: Function, resolve: Function) {
-        stream.once('end', () => {
-            reject();
-        });
-
-        stream.once('data', (msg: any) => {
-            if (this.response) {
-                Logger.debug(`ON DATA ${msg.toString()}`);
-                stream.write(this.response, () => {
-                    this.persistStream(stream);
-                    resolve(msg.toString());
-                });
-            }
-        });
-
     }
 
     public connect(): Promise<void> {
@@ -77,6 +60,7 @@ export class TcpSubscription extends Subscription {
 
             this.server = net.createServer()
                 .listen(this.port, 'localhost', () => {
+                    Logger.debug(`Tcp server is listening for tcp clients`);
                     resolve();
                 });
         });
@@ -88,7 +72,36 @@ export class TcpSubscription extends Subscription {
         }
     }
 
-    private persistStream(stream: any) {
+    private gotConnection(stream: any, reject: any, resolve: any) {
+        Logger.debug(`Tcp server got a client`);
+        if (this.greetingResponse) {
+            Logger.debug(`Tcp server sending greeting message`);
+            stream.write(this.greetingResponse);
+        }
+        this.waitForData(stream, reject, resolve);
+    }
+
+    private waitForData(stream: any, reject: Function, resolve: Function) {
+        Logger.trace(`Tcp server is waiting on data`);
+        stream.once('end', () => {
+            Logger.debug(`Tcp server detected 'end' event`);
+            reject();
+        });
+
+        stream.once('data', (msg: any) => {
+            Logger.debug(`Tcp server got data ${msg.toString()}`);
+            if (this.response) {
+                Logger.debug(`Tcp server sending response`);
+                stream.write(this.response, () => this.persistStream(stream, resolve, msg));
+            } else {
+                this.persistStream(stream, resolve, msg);
+                resolve(msg.toString());
+            }
+        });
+
+    }
+
+    private persistStream(stream: any, resolve: Function, msg: any) {
         if (this.persistStreamName) {
             Logger.debug(`Persisting subscription stream ${this.persistStreamName}`);
             VariablesController.sessionVariables()[this.persistStreamName] = stream;
@@ -97,6 +110,7 @@ export class TcpSubscription extends Subscription {
             Logger.trace(`Ending TCP stream`);
             stream.end();
         }
+        resolve(msg.toString());
     }
 
 }

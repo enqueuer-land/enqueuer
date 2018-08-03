@@ -30,8 +30,6 @@ export class MetaFunctionExecutor {
                                                 'persistSessionVariable',
                                                 'deleteEnqueuerVariable',
                                                 this.functionBody);
-
-            Logger.trace(`Function to execute: ${functionToExecute.toString()}`);
             try {
                 let functionResponse = functionToExecute((name: string, value: any) => persistEnqueuerVariable(name, value),
                                                          (name: string, value: any) => persistSessionVariable(name, value),

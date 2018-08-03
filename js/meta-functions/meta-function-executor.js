@@ -21,7 +21,6 @@ class MetaFunctionExecutor {
     execute() {
         try {
             let functionToExecute = new Function('persistEnqueuerVariable', 'persistSessionVariable', 'deleteEnqueuerVariable', this.functionBody);
-            logger_1.Logger.trace(`Function to execute: ${functionToExecute.toString()}`);
             try {
                 let functionResponse = functionToExecute((name, value) => persistEnqueuerVariable(name, value), (name, value) => persistSessionVariable(name, value), (name) => deleteEnqueuerVariable(name));
                 let result = this.fillResponseAttributes(functionResponse);

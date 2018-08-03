@@ -21,13 +21,15 @@ const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
 const variables_controller_1 = require("../variables/variables-controller");
-let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
+const util_1 = require("util");
+let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.serverAddress = publisherAttributes.serverAddress;
         this.port = publisherAttributes.port;
         this.persistStreamName = publisherAttributes.persistStreamName;
         this.loadStreamName = publisherAttributes.loadStreamName;
+        this.timeout = publisherAttributes.timeout || 100;
         if (publisherAttributes.loadStreamName) {
             logger_1.Logger.debug(`Loading tcp client: ${this.loadStreamName}`);
             this.loadStream = variables_controller_1.VariablesController.sessionVariables()[publisherAttributes.loadStreamName];
@@ -36,6 +38,7 @@ let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
     publish() {
         return new Promise((resolve, reject) => {
             if (this.loadStreamName) {
+                logger_1.Logger.debug('Trying to reuse tcp stream');
                 if (!this.loadStream) {
                     return new Error(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
                 }
@@ -43,7 +46,7 @@ let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
             }
             else {
                 const stream = new net.Socket();
-                logger_1.Logger.debug('Tcp stream trying to connect');
+                logger_1.Logger.debug('Tcp client trying to connect');
                 stream.connect(this.port, this.serverAddress, () => {
                     logger_1.Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
                     this.publishData(stream, resolve, reject);
@@ -52,29 +55,46 @@ let TcpPublisher = class TcpPublisher extends publisher_1.Publisher {
         });
     }
     publishData(stream, resolve, reject) {
-        stream.once('error', (data) => {
+        logger_1.Logger.debug(`Tcp client publishing`);
+        stream.setTimeout(this.timeout);
+        stream.on('timeout', () => {
+            logger_1.Logger.debug(`Tcp client detected 'timeout' event`);
+            if (!this.persistStreamName) {
+                stream.end();
+            }
+            stream.removeAllListeners('data');
+            resolve(this.messageReceived);
+        })
+            .once('error', (data) => {
+            if (!this.persistStreamName) {
+                stream.end();
+            }
             reject(data);
         })
             .once('end', () => {
+            logger_1.Logger.debug(`Tcp client detected 'end' event`);
+            if (!this.persistStreamName) {
+                stream.end();
+            }
             resolve();
         })
-            .once('data', (msg) => {
-            this.messageReceived = msg.toString();
-            resolve();
+            .on('data', (msg) => {
+            logger_1.Logger.debug(`Tcp client got data '${msg.toString()}'`);
+            if (util_1.isNullOrUndefined(this.messageReceived)) {
+                this.messageReceived = '';
+            }
+            this.messageReceived += msg.toString();
         });
         stream.write(this.payload, () => {
             if (this.persistStreamName) {
                 logger_1.Logger.debug(`Persisting publisher stream ${this.persistStreamName}`);
                 variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
             }
-            else {
-                stream.end();
-            }
         });
     }
 };
-TcpPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'tcp' }),
+TcpClientPublisher = __decorate([
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'tcp-client' }),
     __metadata("design:paramtypes", [Object])
-], TcpPublisher);
-exports.TcpPublisher = TcpPublisher;
+], TcpClientPublisher);
+exports.TcpClientPublisher = TcpClientPublisher;
