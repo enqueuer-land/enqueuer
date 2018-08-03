@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const result_creator_1 = require("./result-creator");
+const chalk_1 = __importDefault(require("chalk"));
 class SummaryResultCreator extends result_creator_1.ResultCreator {
     constructor() {
         super();
@@ -18,13 +22,12 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
         return this.failedTestNames.length == 0;
     }
     create() {
-        console.log(`Tests summary ${this.testCounter - this.failedTestNames.length}/${this.testCounter} => ` +
-            `${Math.trunc(10000 * (this.testCounter - this.failedTestNames.length) / this.testCounter) / 100}% passing`);
+        this.printSummary();
         if (this.failedTestNames.length > 0) {
-            console.log(`Failing tests:`);
+            console.log(chalk_1.default.red(`\tFailing tests:`));
             this.failedTestNames
                 .forEach((failingTest) => {
-                console.log(`\t${failingTest}`);
+                console.log(chalk_1.default.red(`\t\t${failingTest}`));
             });
         }
     }
@@ -54,13 +57,34 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
         this.testCounter += Object.keys(tests).length;
         Object.keys(tests)
             .forEach((key) => {
+            const testDescription = this.addLevel(prefix, key);
             if (!tests[key]) {
-                this.failedTestNames.push(this.addLevel(prefix, key));
+                this.failedTestNames.push(testDescription);
+                console.log(chalk_1.default.red(`\t${testDescription}`));
+            }
+            else {
+                console.log(chalk_1.default.green(`\t${testDescription}`));
             }
         });
     }
     addLevel(prefix, newLevelName) {
         return prefix.concat(' -> ').concat(newLevelName);
+    }
+    printSummary() {
+        console.log(chalk_1.default.white(`------------------------------`));
+        const divisionString = `${this.testCounter - this.failedTestNames.length}/${this.testCounter}`;
+        const percentage = Math.trunc(10000 * (this.testCounter - this.failedTestNames.length) / this.testCounter) / 100;
+        console.log(this.percentageColor(percentage)(`\tTests summary` +
+            `\t\tPassing tests: ${divisionString} => ${percentage}%`));
+    }
+    percentageColor(percentage) {
+        if (percentage == 100) {
+            return chalk_1.default.bgGreen.black;
+        }
+        else if (percentage > 50) {
+            return chalk_1.default.bgYellow.black;
+        }
+        return chalk_1.default.bgRed.black;
     }
 }
 exports.SummaryResultCreator = SummaryResultCreator;

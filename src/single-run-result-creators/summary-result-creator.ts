@@ -2,6 +2,7 @@ import {ResultModel} from '../models/outputs/result-model';
 import {ResultCreator} from './result-creator';
 import {TestModel} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
+import chalk from 'chalk';
 
 export class SummaryResultCreator extends ResultCreator {
     private testCounter: number = 0;
@@ -24,13 +25,12 @@ export class SummaryResultCreator extends ResultCreator {
     }
 
     public create(): void {
-        console.log(`Tests summary ${this.testCounter - this.failedTestNames.length}/${this.testCounter} => ` +
-                    `${Math.trunc(10000 * (this.testCounter - this.failedTestNames.length) / this.testCounter) / 100}% passing`);
+        this.printSummary();
         if (this.failedTestNames.length > 0) {
-            console.log(`Failing tests:`);
+            console.log(chalk.red(`\tFailing tests:`));
             this.failedTestNames
                 .forEach((failingTest) => {
-                    console.log(`\t${failingTest}`);
+                    console.log(chalk.red(`\t\t${failingTest}`));
                 });
         }
     }
@@ -63,8 +63,12 @@ export class SummaryResultCreator extends ResultCreator {
         this.testCounter += Object.keys(tests).length;
         Object.keys(tests)
             .forEach((key: string) => {
+                const testDescription = this.addLevel(prefix, key);
                 if (!tests[key]) {
-                    this.failedTestNames.push(this.addLevel(prefix, key));
+                    this.failedTestNames.push(testDescription);
+                    console.log(chalk.red(`\t${testDescription}`));
+                } else {
+                    console.log(chalk.green(`\t${testDescription}`));
                 }
             });
     }
@@ -73,4 +77,20 @@ export class SummaryResultCreator extends ResultCreator {
         return prefix.concat(' -> ').concat(newLevelName);
     }
 
+    private printSummary() {
+        console.log(chalk.white(`------------------------------`));
+        const divisionString = `${this.testCounter - this.failedTestNames.length}/${this.testCounter}`;
+        const percentage = Math.trunc(10000 * (this.testCounter - this.failedTestNames.length) / this.testCounter) / 100;
+        console.log(this.percentageColor(percentage)(`\tTests summary` +
+                                                            `\t\tPassing tests: ${divisionString} => ${percentage}%`));
+    }
+
+    private percentageColor(percentage: number): Function {
+        if (percentage == 100) {
+            return chalk.bgGreen.black;
+        } else if (percentage > 50) {
+            return chalk.bgYellow.black;
+        }
+        return chalk.bgRed.black;
+    }
 }
