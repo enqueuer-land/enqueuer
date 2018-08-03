@@ -11,11 +11,52 @@
       "tests": {
         "No time out": true
       },
+      "name": "tcpNoPart",
+      "time": {
+        "totalTime": 10,
+        "startTime": "2018-08-03T20:07:36.941Z",
+        "endTime": "2018-08-03T20:07:36.951Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "Any name Sub",
+          "type": "tcp-server",
+          "tests": {
+            "Connected": true,
+            "Message received": true,
+            "Beatles Song": true,
+            "No time out": true
+          },
+          "valid": true,
+          "connectionTime": "2018-08-03T20:07:36.944Z",
+          "messageReceivedTime": "2018-08-03T20:07:36.950Z"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "name": "Any name Pub",
+          "valid": true,
+          "type": "tcp-client",
+          "tests": {
+            "Published": true,
+            "Do not make it bad": true
+          },
+          "publishTime": "2018-08-03T20:07:36.951Z"
+        }
+      }
+    },
+    {
+      "type": "requisition",
+      "valid": true,
+      "tests": {
+        "No time out": true
+      },
       "name": "tcpFirstPart",
       "time": {
-        "totalTime": 113,
-        "startTime": "2018-08-03T19:11:36.596Z",
-        "endTime": "2018-08-03T19:11:36.709Z",
+        "totalTime": 105,
+        "startTime": "2018-08-03T20:07:36.951Z",
+        "endTime": "2018-08-03T20:07:37.056Z",
         "timeout": 3000
       },
       "subscriptions": [
@@ -29,8 +70,8 @@
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-08-03T19:11:36.599Z",
-          "messageReceivedTime": "2018-08-03T19:11:36.605Z"
+          "connectionTime": "2018-08-03T20:07:36.953Z",
+          "messageReceivedTime": "2018-08-03T20:07:36.955Z"
         }
       ],
       "startEvent": {
@@ -42,7 +83,7 @@
             "Published": true,
             "Greeting received": true
           },
-          "publishTime": "2018-08-03T19:11:36.708Z"
+          "publishTime": "2018-08-03T20:07:37.056Z"
         }
       }
     },
@@ -54,9 +95,9 @@
       },
       "name": "tcpSecondPart",
       "time": {
-        "totalTime": 3,
-        "startTime": "2018-08-03T19:11:36.710Z",
-        "endTime": "2018-08-03T19:11:36.713Z",
+        "totalTime": 1,
+        "startTime": "2018-08-03T20:07:37.056Z",
+        "endTime": "2018-08-03T20:07:37.057Z",
         "timeout": 3000
       },
       "subscriptions": [
@@ -70,8 +111,8 @@
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-08-03T19:11:36.710Z",
-          "messageReceivedTime": "2018-08-03T19:11:36.711Z"
+          "connectionTime": "2018-08-03T20:07:37.056Z",
+          "messageReceivedTime": "2018-08-03T20:07:37.057Z"
         }
       ],
       "startEvent": {
@@ -83,7 +124,7 @@
             "Published": true,
             "Second message response": true
           },
-          "publishTime": "2018-08-03T19:11:36.713Z"
+          "publishTime": "2018-08-03T20:07:37.057Z"
         }
       }
     }
