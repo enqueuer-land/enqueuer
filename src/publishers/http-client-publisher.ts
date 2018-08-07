@@ -67,9 +67,13 @@ export class HttpClientPublisher extends Publisher {
                     Logger.trace(`Http payload is an object: ${this.payload}`);
                     result.json = true;
                 }
+                return this.payload;
             }
             catch (exc) {
                 //do nothing
+            }
+            if (typeof(this.payload) != "string") {
+                this.payload = JSON.stringify(this.payload);
             }
         }
         return this.payload;

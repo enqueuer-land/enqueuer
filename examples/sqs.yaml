@@ -9,8 +9,8 @@ runnables:
   - type: sqs
     name: udsSubs
     onMessageReceived: >-
-      const messageBody = JSON.parse(message).Body;
-      test['First letter equals enqueuer'] = messageBody.substring(1,2) === 'e';
+      const messageBody = message.Body;
+      tester.contains('First letter equals enqueuer', messageBody, 'e');
     awsConfiguration:
       endpoint: http://localhost:9324
       accessKeyId: na
@@ -27,4 +27,3 @@ runnables:
       awsConfiguration: "{{awsVariableConfiguration}}"
       messageParams:
         QueueUrl: http://localhost:9324/queue/enqueuerQueue
-      prePublishing: persistSessionVariable('persistedVariable', 'printThis');

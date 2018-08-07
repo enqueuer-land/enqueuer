@@ -32,7 +32,7 @@ class Tester {
         }
         this.report.push(result);
     }
-    isGreaterThanOrEqual(label, actual, expected) {
+    isGreaterThanOrEqualTo(label, actual, expected) {
         let result = {
             label: label,
             valid: false,
@@ -56,7 +56,7 @@ class Tester {
         }
         this.report.push(result);
     }
-    isLessThanOrEqual(label, actual, expected) {
+    isLessThanOrEqualTo(label, actual, expected) {
         let result = {
             label: label,
             valid: false,

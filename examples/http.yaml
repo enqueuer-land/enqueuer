@@ -16,9 +16,9 @@ runnables:
       payload: responsePayload
     onMessageReceived: >-
       message = JSON.parse(message);
-      test['Params is someId'] = message.params.someId === 'idStuff';
-      test['Query is 123'] = message.query.query === '123';
-      test['Payload is Virgs'] = JSON.parse(message.body).enqueuer === 'virgs';
+      tester.isEqualTo('Params is someId', message.params.someId, 'idStuff');
+      tester.isEqualTo('Query is 123', message.query.query, '123');
+      tester.isEqualTo('Payload is Virgs', JSON.parse(message.body).enqueuer, 'virgs');
     timeout: 10000
   startEvent:
     publisher:
@@ -26,10 +26,10 @@ runnables:
       name: HttpPublisherClientTitle
       url: http://localhost:23075/enqueuer/idStuff?query=123
       method: POST
-      prePublishing: test['prePublishingTest'] = true
+      prePublishing: tester.isTruthy('prePublishingTest', true);
       onMessageReceived: >-
-        test['publisherOnMessageReceivedTest'] = JSON.parse(message).statusCode == 321;
-        test['publisherOnMessageReceivedPayloadTest'] = JSON.parse(message).body == 'responsePayload'
+        tester.isEqualTo('publisherOnMessageReceivedTest', JSON.parse(message).statusCode, 321);
+        tester.isEqualTo('publisherOnMessageReceivedPayloadTest', JSON.parse(message).body, 'responsePayload');
       payload:
         enqueuer: virgs
       headers:
@@ -47,7 +47,7 @@ runnables:
       payload: responsePayload
     onMessageReceived: >-
       message = JSON.parse(message);
-      test['Duplicated'] = JSON.parse(message.body).duplicated;
+      tester.isTruthy('Duplicated', JSON.parse(message.body).duplicated);
     timeout: 10000
   startEvent:
     publisher:
@@ -55,9 +55,9 @@ runnables:
       name: HttpPublisherClientTitle
       url: http://localhost:23075/enqueuer/234234234?query=123
       method: POST
-      prePublishing: test['prePublishingTest'] = true
+      prePublishing: tester.isTruthy('prePublishingTest', true);
       onMessageReceived: >-
-        test['publisherOnMessageReceivedTest'] = JSON.parse(message).statusCode == 321;
-        test['publisherOnMessageReceivedPayloadTest'] = JSON.parse(message).body == 'responsePayload'
+        tester.isEqualTo('publisherOnMessageReceivedTest', JSON.parse(message).statusCode, 321);
+        tester.isEqualTo('publisherOnMessageReceivedPayloadTest', JSON.parse(message).body, 'responsePayload');
       payload:
         duplicated: true

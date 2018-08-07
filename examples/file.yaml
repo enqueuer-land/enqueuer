@@ -9,7 +9,9 @@ runnables:
   - type: file-name-watcher
     name: fileSubscription
     fileNamePattern: temp/fileTest*file
-    onMessageReceived: const now = new Date().getTime(); test['some time has passed'] = now + '' >= message; report['something'] = now;
+    onMessageReceived: >-
+      const now = new Date().getTime();
+      tester.isGreaterThanOrEqualTo('some time has passed', now + '', message);
     timeout: 1000
   startEvent:
     publisher:

@@ -1,17 +1,16 @@
 import {Publisher} from '../../publishers/publisher';
 import {StartEventReporter} from './start-event-reporter';
-import {PrePublishMetaFunctionBody} from '../../meta-functions/pre-publish-meta-function-body';
-import {MetaFunctionExecutor} from '../../meta-functions/meta-function-executor';
 import {DateController} from '../../timers/date-controller';
 import * as output from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
 import {Logger} from '../../loggers/logger';
 import {Container, Injectable} from 'conditional-injector';
-import {OnMessageReceivedReporter} from '../../meta-functions/on-message-received-reporter';
 import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {VariablesController} from '../../variables/variables-controller';
+import {TesterExecutor} from '../../testers/tester-executor';
+import {Test} from '../../testers/test';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
@@ -36,6 +35,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
         Logger.trace(`Firing publication as startEvent`);
         return new Promise((resolve, reject) => {
             this.executePrePublishingFunction();
+            Logger.debug(`Instantiating requisition publisher from '${this.publisherOriginalAttributes.type}'`);
+            this.publisher = Container.subclassesOf(Publisher).create(this.publisherOriginalAttributes);
             if (this.publisher) {
 
                 this.publisher.publish()
@@ -52,7 +53,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
                         reject(err);
                     });
             } else {
-                const message = `Publisher is undefined after prePublish function execution '${this.publisher}'`;
+                const message = `Publisher is undefined after prePublish function execution ' ` +
+                                    `${JSON.stringify(this.publisherOriginalAttributes, null, 2)}'`;
                 this.report.tests[message] = false;
                 reject(message);
             }
@@ -67,40 +69,38 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        if (!this.publisher || !this.publisher.onMessageReceived) {
+        if (!this.publisher || !this.publisher.onMessageReceived || !this.publisher.messageReceived) {
             return;
         }
-        Logger.trace(`Publisher received message: ${this.publisher.messageReceived}`);
+        Logger.trace(`Publisher received message: ${this.publisher.messageReceived.substr(0, 100)}`);
 
-        const onMessageReceivedReporter = new OnMessageReceivedReporter(this.publisher.onMessageReceived, this.publisher.messageReceived);
-        const functionResponse = onMessageReceivedReporter.execute();
-        functionResponse.tests
-            .map((test: any) => this.report.tests[test.name] = test.valid);
+        const testExecutor = new TesterExecutor(this.publisher.onMessageReceived);
+        testExecutor.addArgument('publisher', this.publisher);
+        testExecutor.addArgument('message', this.publisher.messageReceived);
+
+        const tests = testExecutor.execute();
+        tests.map((test: Test) => this.report.tests[test.label] = test.valid);
     }
 
     private executePrePublishingFunction() {
-        const prePublishFunction = new PrePublishMetaFunctionBody(this.publisherOriginalAttributes);
-        let functionResponse = new MetaFunctionExecutor(prePublishFunction).execute();
+        if (!this.publisherOriginalAttributes.prePublishing) {
+            return;
+        }
+
+        Logger.trace(`Executing pre publishing function`);
+
+        const testExecutor = new TesterExecutor(this.publisherOriginalAttributes.prePublishing);
+        testExecutor.addArgument('publisher', this.publisherOriginalAttributes);
+
+        const tests = testExecutor.execute();
 
         const placeHolderReplacer = new JsonPlaceholderReplacer();
         placeHolderReplacer
             .addVariableMap(VariablesController.persistedVariables())
             .addVariableMap(VariablesController.sessionVariables());
-        functionResponse = (placeHolderReplacer.replace(functionResponse) as any);
-        Logger.trace(`Replaced PrePublishingFunctionReport: ${JSON.stringify(functionResponse, null, 3)}`);
+        this.publisherOriginalAttributes = (placeHolderReplacer.replace(this.publisherOriginalAttributes) as any);
 
-        if (functionResponse.publisher.payload) {
-            functionResponse.publisher.payload = JSON.stringify(functionResponse.publisher.payload);
-        }
-
-        Logger.trace(`Instantiating requisition publisher from '${functionResponse.publisher.type}'`);
-        this.publisher = Container.subclassesOf(Publisher).create(functionResponse.publisher);
-
-        functionResponse.tests
-            .map((test: any) => this.report.tests[test.name] = test.valid);
-        if (functionResponse.exception) {
-            this.report.tests[functionResponse.exception] = false;
-        }
-
+        Logger.trace(`Adding prePublishing functions tests to report`);
+        tests.map((test: Test) => this.report.tests[test.label] = test.valid);
     }
 }

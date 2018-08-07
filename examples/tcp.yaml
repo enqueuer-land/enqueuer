@@ -12,14 +12,14 @@ runnables:
       serverAddress: localhost
       port: 23070
       payload: Hey Jude
-      onMessageReceived: test['Do not make it bad'] = message == 'Do not make it bad'
+      onMessageReceived: tester.isEqualTo('Do not make it bad', message, 'Do not make it bad');
       timeout: 100
   subscriptions:
   - type: tcp-server
     port: 23070
     name: Any name Sub
     response: Do not make it bad
-    onMessageReceived: test['Beatles Song'] = message == '"Hey Jude"'
+    onMessageReceived: tester.isEqualTo('Beatles Song', message, 'Hey Jude');
     timeout: 200
 -
   timeout: 3000
@@ -32,7 +32,7 @@ runnables:
       port: 23070
       payload: I do not care
       persistStreamName: tcpPublisherSocket
-      onMessageReceived: test['Greeting received'] = message == 'EnqueuerRocks'
+      onMessageReceived: tester.isEqualTo('Greeting received', message, 'EnqueuerRocks');
       timeout: 100
   subscriptions:
   - type: tcp-server
@@ -41,7 +41,7 @@ runnables:
     persistStreamName: tcpSubscriptionSocket
     greetingResponse: Enqueuer
     response: Rocks
-    onMessageReceived: test['I care'] = message == '"I do not care"'
+    onMessageReceived: tester.isEqualTo('I care', message, 'I do not care');
     timeout: 200
 -
   name: tcpSecondPart
@@ -52,11 +52,11 @@ runnables:
       name: tcpPublisher2
       payload: The socket is still open
       loadStreamName: tcpPublisherSocket
-      onMessageReceived: test['Second message response'] = message == '{{tcpPayload}}'
+      onMessageReceived: tester.isEqualTo('Second message response', message, '{{tcpPayload}}');
   subscriptions:
   - type: tcp-server
     name: tcpSubscription2
     loadStreamName: tcpSubscriptionSocket
     response: "{{tcpPayload}}"
-    onMessageReceived: test['It is still open'] = JSON.parse(message) == 'The socket is still open'
+    onMessageReceived: tester.isEqualTo('It is still open', message, 'The socket is still open');
     timeout: 500

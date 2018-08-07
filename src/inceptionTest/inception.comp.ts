@@ -62,7 +62,7 @@ describe('Inception test', () => {
 
         expect(innerReport.subscriptions[0].valid).toBeTruthy();
         expect(innerReport.subscriptions[0].tests['Connected']).toBeTruthy();
-        expect(innerReport.subscriptions[0].tests['works']).toBeTruthy();
+        expect(innerReport.subscriptions[0].tests['Works']).toBeTruthy();
         expect(innerReport.subscriptions[0].tests['Message received']).toBeTruthy();
         expect(innerReport.subscriptions[0].tests['No time out']).toBeTruthy();
 

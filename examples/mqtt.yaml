@@ -22,9 +22,9 @@ runnables:
     onMessageReceived: >-
       let enqueuer = 'enqueuer';
       const parsedMessage = JSON.parse(message);
-      const payload = JSON.parse(Buffer.from(parsedMessage.payload));
-      test['Payload'] = payload == enqueuer;
-      test['Topic'] = parsedMessage.topic === 'enqueuer/integration/public/test';
+      const payload = Buffer.from(parsedMessage.payload);
+      tester.isEqualTo('Payload', payload, enqueuer);
+      tester.isEqualTo('Topic', parsedMessage.topic, 'enqueuer/integration/public/test');
     options:
       clientId: enqueuerSubscriptionOptionsExampleId9900223
     timeout: 5000

@@ -22,6 +22,9 @@ const conditional_injector_1 = require("conditional-injector");
 let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
+        if (typeof (this.payload) == 'string' || !Buffer.isBuffer(this.payload)) {
+            this.payload = JSON.stringify(this.payload);
+        }
         this.path = publisherAttributes.path;
     }
     publish() {

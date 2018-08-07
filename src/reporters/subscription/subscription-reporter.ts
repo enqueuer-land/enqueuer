@@ -3,15 +3,17 @@ import {DateController} from '../../timers/date-controller';
 import {Subscription} from '../../subscriptions/subscription';
 import {Timeout} from '../../timers/timeout';
 import {Container} from 'conditional-injector';
-import {OnMessageReceivedReporter} from '../../meta-functions/on-message-received-reporter';
 import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import Signals = NodeJS.Signals;
 import {isNullOrUndefined} from 'util';
+import {TesterExecutor} from '../../testers/tester-executor';
+import {Test} from '../../testers/test';
 
 export class SubscriptionReporter {
 
+    private subscriptionOriginalAttributes: input.SubscriptionModel;
     private subscription: Subscription;
     private report: output.SubscriptionModel;
     private startTime: DateController;
@@ -20,6 +22,7 @@ export class SubscriptionReporter {
 
     constructor(subscriptionAttributes: input.SubscriptionModel) {
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+        this.subscriptionOriginalAttributes = subscriptionAttributes;
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         this.startTime = new DateController();
         this.report = {
@@ -74,8 +77,9 @@ export class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message: any) => {
+                    Logger.debug(`[${this.subscription.name}] received its message`);
                     if (!isNullOrUndefined(message)) {
-                        Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
+                        Logger.debug(`[${this.subscription.name}] message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
 
                         if (!this.hasTimedOut) {
                             this.subscription.messageReceived = message;
@@ -84,6 +88,8 @@ export class SubscriptionReporter {
                         }
                         this.cleanUp();
                         resolve(message);
+                    } else {
+                        Logger.warning(`[${this.subscription.name}] message is null or undefined`);
                     }
                 })
                 .catch((err: any) => {
@@ -132,10 +138,13 @@ export class SubscriptionReporter {
         if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
             return;
         }
-        const onMessageReceivedReporter = new OnMessageReceivedReporter(this.subscription.onMessageReceived, this.subscription.messageReceived);
-        const functionResponse = onMessageReceivedReporter.execute();
-        functionResponse.tests
-            .map((test: any) => this.report.tests[test.name] = test.valid);
+
+        const testExecutor = new TesterExecutor(this.subscription.onMessageReceived);
+        testExecutor.addArgument('subscription', this.subscriptionOriginalAttributes);
+        testExecutor.addArgument('message', this.subscription.messageReceived);
+
+        const tests = testExecutor.execute();
+        tests.map((test: Test) => this.report.tests[test.label] = test.valid);
         this.report.messageReceivedTime = new DateController().toString();
     }
 

@@ -11,8 +11,8 @@ runnables:
       name: HttpEnqueuerRepository
       url: https://github.com/lopidio/enqueuer
       method: GET
-      prePublishing: test['PrePublishingTest'] = true
-      onMessageReceived: test['It is online'] = JSON.parse(message).statusCode == 200
+      prePublishing: tester.isTruthy('prePublishingTest', true);
+      onMessageReceived: tester.isEqualTo('It is online', JSON.parse(message).statusCode, 200);
       payload: ''
       headers:
         content-type: application/json

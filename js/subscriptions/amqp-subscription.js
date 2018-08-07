@@ -30,17 +30,18 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
     }
     receiveMessage() {
         return new Promise((resolve) => {
+            logger_1.Logger.debug(`Amqp subscription registering receiveMessage resolver`);
             this.messageReceiverPromiseResolver = resolve;
         });
     }
     connect() {
         this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
-            this.connection.on('ready', () => {
+            this.connection.once('ready', () => {
                 this.connection.queue(this.queueName, (queue) => {
-                    logger_1.Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
+                    logger_1.Logger.debug(`Amqp subscription binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
                     queue.bind(this.exchange, this.routingKey, () => {
-                        logger_1.Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
+                        logger_1.Logger.debug(`Queue ${this.queueName} bound. Subscribing`);
                         queue.subscribe((message, headers) => this.gotMessage(message, headers));
                         resolve();
                     });
@@ -56,10 +57,12 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
         delete this.connection;
     }
     gotMessage(message, headers) {
-        logger_1.Logger.debug(`Queue ${this.queueName} got Message.`);
         if (this.messageReceiverPromiseResolver) {
-            message.headers = headers;
-            this.messageReceiverPromiseResolver(message);
+            const result = { data: message, headers: headers };
+            this.messageReceiverPromiseResolver(JSON.stringify(result));
+        }
+        else {
+            logger_1.Logger.warning(`Queue ${this.queueName} is not subscribed yet`);
         }
     }
 };

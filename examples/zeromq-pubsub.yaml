@@ -8,7 +8,7 @@ runnables:
     address: "{{zeroMqAddress}}"
     name: ZeroMqSub
     topic: topic
-    onMessageReceived: test['0Mq is awesome'] = JSON.parse(message) == 'tcp://127.0.0.1:3000';
+    onMessageReceived: tester.isEqualTo('0Mq is awesome', message, 'tcp://127.0.0.1:3000');
   startEvent:
     publisher:
       type: zero-mq-pub

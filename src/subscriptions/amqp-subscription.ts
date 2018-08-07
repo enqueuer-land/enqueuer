@@ -12,7 +12,7 @@ export class AmqpSubscription extends Subscription {
     private exchange: string;
     private routingKey: string;
     private queueName: string;
-    private messageReceiverPromiseResolver?: Function;
+    private messageReceiverPromiseResolver?: (value?: string | PromiseLike<string> | undefined) => void;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -24,6 +24,7 @@ export class AmqpSubscription extends Subscription {
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve) => {
+            Logger.debug(`Amqp subscription registering receiveMessage resolver`);
             this.messageReceiverPromiseResolver = resolve;
         });
     }
@@ -31,11 +32,11 @@ export class AmqpSubscription extends Subscription {
     public connect(): Promise<void> {
         this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
-            this.connection.on('ready', () => {
+            this.connection.once('ready', () => {
                 this.connection.queue(this.queueName, (queue: any) => {
-                    Logger.debug(`Binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
+                    Logger.debug(`Amqp subscription binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
                     queue.bind(this.exchange, this.routingKey, () => {
-                        Logger.debug(`Queue ${this.queueName} bound. Subscribing.`);
+                        Logger.debug(`Queue ${this.queueName} bound. Subscribing`);
                         queue.subscribe((message: any, headers: any) => this.gotMessage(message, headers));
                         resolve();
                     });
@@ -53,10 +54,11 @@ export class AmqpSubscription extends Subscription {
     }
 
     private gotMessage(message: any, headers: any) {
-        Logger.debug(`Queue ${this.queueName} got Message.`);
         if (this.messageReceiverPromiseResolver) {
-            message.headers = headers;
-            this.messageReceiverPromiseResolver(message);
+            const result = {data: message, headers: headers};
+            this.messageReceiverPromiseResolver(JSON.stringify(result));
+        } else {
+            Logger.warning(`Queue ${this.queueName} is not subscribed yet`);
         }
     }
 

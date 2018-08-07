@@ -11,7 +11,7 @@
           "type": "uds",
           "name": "subscriptionUds",
           "path": "/tmp/outUnix.sock",
-          "onMessageReceived": "report['reportMessage'] = 'reportMessage'; test['true'] = true;",
+          "onMessageReceived": "tester.isTruthy('true', true);",
           "timeout": 10000
         }
       ],
@@ -33,7 +33,7 @@
                     "type": "uds",
                     "name": "runnableUds",
                     "path": "/tmp/loopUnix.sock",
-                    "onMessageReceived": "test['works'] = message == 100;",
+                    "onMessageReceived": "tester.isEqualTo('Works', message, 100);",
                     "timeout": 1000
                   }
                 ],
@@ -48,7 +48,7 @@
               }
             ]
           },
-          "prePublishing": "publisher.type='uds';report['type'] = publisher.type;"
+          "prePublishing": "publisher.type='uds';"
         }
       }
     }

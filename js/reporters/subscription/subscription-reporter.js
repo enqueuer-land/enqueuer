@@ -5,9 +5,9 @@ const date_controller_1 = require("../../timers/date-controller");
 const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
-const on_message_received_reporter_1 = require("../../meta-functions/on-message-received-reporter");
 const report_model_1 = require("../../models/outputs/report-model");
 const util_1 = require("util");
+const tester_executor_1 = require("../../testers/tester-executor");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -20,6 +20,7 @@ class SubscriptionReporter {
             }).start(2000);
         };
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+        this.subscriptionOriginalAttributes = subscriptionAttributes;
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         this.startTime = new date_controller_1.DateController();
         this.report = {
@@ -69,8 +70,9 @@ class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message) => {
+                logger_1.Logger.debug(`[${this.subscription.name}] received its message`);
                 if (!util_1.isNullOrUndefined(message)) {
-                    logger_1.Logger.debug(`[${this.subscription.name}] received its message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
+                    logger_1.Logger.debug(`[${this.subscription.name}] message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
                     if (!this.hasTimedOut) {
                         this.subscription.messageReceived = message;
                         this.executeSubscriptionFunction();
@@ -78,6 +80,9 @@ class SubscriptionReporter {
                     }
                     this.cleanUp();
                     resolve(message);
+                }
+                else {
+                    logger_1.Logger.warning(`[${this.subscription.name}] message is null or undefined`);
                 }
             })
                 .catch((err) => {
@@ -122,10 +127,11 @@ class SubscriptionReporter {
         if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
             return;
         }
-        const onMessageReceivedReporter = new on_message_received_reporter_1.OnMessageReceivedReporter(this.subscription.onMessageReceived, this.subscription.messageReceived);
-        const functionResponse = onMessageReceivedReporter.execute();
-        functionResponse.tests
-            .map((test) => this.report.tests[test.name] = test.valid);
+        const testExecutor = new tester_executor_1.TesterExecutor(this.subscription.onMessageReceived);
+        testExecutor.addArgument('subscription', this.subscriptionOriginalAttributes);
+        testExecutor.addArgument('message', this.subscription.messageReceived);
+        const tests = testExecutor.execute();
+        tests.map((test) => this.report.tests[test.label] = test.valid);
         this.report.messageReceivedTime = new date_controller_1.DateController().toString();
     }
 }

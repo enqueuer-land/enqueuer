@@ -56,10 +56,10 @@ it('Report is empty when initialized', () => {
         expect(isGreaterThan.description).toEqual('5 is greater than 3');
     });
 
-    it('isNotGreaterThanOrEqual', () => {
+    it('isNotGreaterThanOrEqualTo', () => {
         const tester: Tester = new Tester;
 
-        tester.isGreaterThanOrEqual('label', 3, 4);
+        tester.isGreaterThanOrEqualTo('label', 3, 4);
 
         const isNotGreaterThanOrEqual = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -68,10 +68,10 @@ it('Report is empty when initialized', () => {
         expect(isNotGreaterThanOrEqual.description).toEqual('3 is not greater than or equal to 4');
     });
 
-    it('isGreaterThanOrEqual', () => {
+    it('isGreaterThanOrEqualTo', () => {
         const tester: Tester = new Tester;
 
-        tester.isGreaterThanOrEqual('label', 5, 5);
+        tester.isGreaterThanOrEqualTo('label', 5, 5);
 
         const isGreaterThanOrEqual = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -104,10 +104,10 @@ it('Report is empty when initialized', () => {
         expect(isLessThan.description).toEqual('1 is less than 3');
     });
 
-    it('isNotLessThanOrEqual', () => {
+    it('isNotLessThanOrEqualTo', () => {
         const tester: Tester = new Tester;
 
-        tester.isLessThanOrEqual('label', 5, 4);
+        tester.isLessThanOrEqualTo('label', 5, 4);
 
         const isNotLessThanOrEqual = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -116,10 +116,10 @@ it('Report is empty when initialized', () => {
         expect(isNotLessThanOrEqual.description).toEqual('5 is not less than or equal to 4');
     });
 
-    it('isLessThanOrEqual', () => {
+    it('isLessThanOrEqualTo', () => {
         const tester: Tester = new Tester;
 
-        tester.isLessThanOrEqual('label', 5, 5);
+        tester.isLessThanOrEqualTo('label', 5, 5);
 
         const isLessThanOrEqual = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
