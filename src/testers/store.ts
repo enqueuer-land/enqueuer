@@ -4,7 +4,7 @@ import {VariablesController} from '../variables/variables-controller';
 export class Store {
     private configuration = new Configuration();
 
-    public  persistEnqueuerVariable = (name: string, value: any): void => {
+    public persistEnqueuerVariable = (name: string, value: any): void => {
         this.configuration.setFileVariable(name, value);
     }
 

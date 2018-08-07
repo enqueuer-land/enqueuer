@@ -9,6 +9,7 @@ runnables:
   - type: sqs
     name: udsSubs
     onMessageReceived: >-
+      message = JSON.parse(message);
       const messageBody = message.Body;
       tester.contains('First letter equals enqueuer', messageBody, 'e');
     awsConfiguration:
