@@ -9,6 +9,7 @@ import express from 'express';
 export class HttpServerSubscription extends Subscription {
     private static app: any = null;
     private static server: any = null;
+    private static instanceCounter: number = 0;
 
     private port: string;
     private endpoint: string;
@@ -21,16 +22,16 @@ export class HttpServerSubscription extends Subscription {
 
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
-        this.method = subscriptionAttributes.method;
+        this.method = subscriptionAttributes.method.toLowerCase();
         this.response = subscriptionAttributes.response || {};
         this.response.status = this.response.status || 200;
     }
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve) => {
-            HttpServerSubscription.app.all(this.endpoint, (request: any, response: any) => {
+            HttpServerSubscription.app[this.method](this.endpoint, (request: any, response: any) => {
                 const payload = request.rawBody;
-                Logger.trace(`Http got hit (${request.method}) ${this.endpoint}: ${payload}`);
+                Logger.debug(`Http got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 if (isNullOrUndefined(this.response.payload)) {
                     this.response.payload = payload;
                 }
@@ -38,19 +39,14 @@ export class HttpServerSubscription extends Subscription {
                 for (const key in this.response.header) {
                     response.header(key, this.response.header[key]);
                 }
+                response.status(this.response.status).send(this.response.payload);
+                const result = {
+                    params: request.params,
+                    query: request.query,
+                    body: payload
+                };
 
-                if (request.method != this.method) {
-                    response.status(405).send(`Http server is expecting a ${this.method} call`);
-                } else {
-                    response.status(this.response.status).send(this.response.payload);
-
-                    const result = {
-                        params: request.params,
-                        query: request.query,
-                        body: payload
-                    };
-                    resolve(JSON.stringify(result));
-                }
+                resolve(JSON.stringify(result));
             });
         });
     }
@@ -58,8 +54,10 @@ export class HttpServerSubscription extends Subscription {
     public connect(): Promise<void> {
         return new Promise((resolve, reject) => {
             if (HttpServerSubscription.server) {
+                ++HttpServerSubscription.instanceCounter;
                 resolve();
             } else {
+                ++HttpServerSubscription.instanceCounter;
                 HttpServerSubscription.server = HttpServerSubscription.app.listen(this.port, (err: any) => {
                     if (err) {
                         reject(err);
@@ -68,6 +66,15 @@ export class HttpServerSubscription extends Subscription {
                 });
             }
         });
+    }
+
+    public unsubscribe() {
+        --HttpServerSubscription.instanceCounter;
+        if (HttpServerSubscription.instanceCounter == 0) {
+            HttpServerSubscription.app = null;
+            HttpServerSubscription.server.close();
+            HttpServerSubscription.server = null;
+        }
     }
 
     private initializeExpressApp() {

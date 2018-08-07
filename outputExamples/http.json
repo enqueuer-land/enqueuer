@@ -2,7 +2,7 @@
   "type": "runnable",
   "valid": true,
   "tests": {},
-  "name": "runnableHttpJsonPayload",
+  "name": "runnableHttpYmlPayload",
   "id": "http",
   "runnables": [
     {
@@ -11,11 +11,11 @@
       "tests": {
         "No time out": true
       },
-      "name": "HttpTitle",
+      "name": "HttpOriginal",
       "time": {
-        "totalTime": 23,
-        "startTime": "2018-08-02T17:49:03.937Z",
-        "endTime": "2018-08-02T17:49:03.960Z",
+        "totalTime": 13,
+        "startTime": "2018-08-07T03:36:52.857Z",
+        "endTime": "2018-08-07T03:36:52.870Z",
         "timeout": 3000
       },
       "subscriptions": [
@@ -31,8 +31,8 @@
             "No time out": true
           },
           "valid": true,
-          "connectionTime": "2018-08-02T17:49:03.938Z",
-          "messageReceivedTime": "2018-08-02T17:49:03.957Z"
+          "connectionTime": "2018-08-07T03:36:52.859Z",
+          "messageReceivedTime": "2018-08-07T03:36:52.869Z"
         }
       ],
       "startEvent": {
@@ -46,7 +46,50 @@
             "publisherOnMessageReceivedTest": true,
             "publisherOnMessageReceivedPayloadTest": true
           },
-          "publishTime": "2018-08-02T17:49:03.959Z"
+          "publishTime": "2018-08-07T03:36:52.869Z"
+        }
+      }
+    },
+    {
+      "type": "requisition",
+      "valid": true,
+      "tests": {
+        "No time out": true
+      },
+      "name": "HttpTitleDuplicated",
+      "time": {
+        "totalTime": 4,
+        "startTime": "2018-08-07T03:36:52.870Z",
+        "endTime": "2018-08-07T03:36:52.874Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "DuplicatedEndPointTest",
+          "type": "http-server",
+          "tests": {
+            "Connected": true,
+            "Message received": true,
+            "Duplicated": true,
+            "No time out": true
+          },
+          "valid": true,
+          "connectionTime": "2018-08-07T03:36:52.870Z",
+          "messageReceivedTime": "2018-08-07T03:36:52.873Z"
+        }
+      ],
+      "startEvent": {
+        "publisher": {
+          "name": "HttpPublisherClientTitle",
+          "valid": true,
+          "type": "http-client",
+          "tests": {
+            "Published": true,
+            "prePublishingTest": true,
+            "publisherOnMessageReceivedTest": true,
+            "publisherOnMessageReceivedPayloadTest": true
+          },
+          "publishTime": "2018-08-07T03:36:52.874Z"
         }
       }
     }

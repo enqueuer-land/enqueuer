@@ -1,10 +1,10 @@
 runnableVersion: 01.00.00
-name: runnableHttpJsonPayload
+name: runnableHttpYmlPayload
 id: http
 initialDelay: 0
 runnables:
 - timeout: 3000
-  name: HttpTitle
+  name: HttpOriginal
   subscriptions:
   - type: http-server
     name: HttpSubscriptionTitle
@@ -34,3 +34,30 @@ runnables:
         enqueuer: virgs
       headers:
         content-type: application/json
+- timeout: 3000
+  name: HttpTitleDuplicated
+  subscriptions:
+  - type: http-server
+    name: DuplicatedEndPointTest
+    endpoint: /enqueuer/:someId
+    port: 23075
+    method: POST
+    response:
+      status: 321
+      payload: responsePayload
+    onMessageReceived: >-
+      message = JSON.parse(message);
+      test['Duplicated'] = JSON.parse(message.body).duplicated;
+    timeout: 10000
+  startEvent:
+    publisher:
+      type: http-client
+      name: HttpPublisherClientTitle
+      url: http://localhost:23075/enqueuer/234234234?query=123
+      method: POST
+      prePublishing: test['prePublishingTest'] = true
+      onMessageReceived: >-
+        test['publisherOnMessageReceivedTest'] = JSON.parse(message).statusCode == 321;
+        test['publisherOnMessageReceivedPayloadTest'] = JSON.parse(message).body == 'responsePayload'
+      payload:
+        duplicated: true

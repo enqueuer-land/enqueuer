@@ -14,7 +14,7 @@ export class SingleRunInput {
                 type: 'file-name-watcher',
                 name: 'SingleRunInput',
                 fileNamePattern: fileNamePattern,
-                timeout: 1000
+                timeout: 200
             });
         this.runnableParser = new RunnableParser();
     }
