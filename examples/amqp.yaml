@@ -19,7 +19,7 @@ runnables:
           key: value
           otherKey: otherValue
       routingKey: enqueuer.integration.test.routing.key
-      prePublishing: publisher.payload=new Date().getTime();
+      prePublishing: publisher.payload = new Date().getTime();
   subscriptions:
   - type: amqp
     name: AmqpSubs

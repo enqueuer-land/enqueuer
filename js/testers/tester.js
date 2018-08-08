@@ -12,11 +12,11 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `${actual} is not equal to ${expected}`
+            description: `'${actual}' is not equal to '${expected}'`
         };
         if (actual == expected) {
             result.valid = true;
-            result.description = `${actual} is equal to ${expected}`;
+            result.description = `'${actual}' is equal to '${expected}'`;
         }
         this.report.push(result);
     }
@@ -24,11 +24,11 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `${actual} is not greater than ${expected}`
+            description: `'${actual}' is not greater than '${expected}'`
         };
         if (actual > expected) {
             result.valid = true;
-            result.description = `${actual} is greater than ${expected}`;
+            result.description = `'${actual}' is greater than '${expected}'`;
         }
         this.report.push(result);
     }
@@ -36,11 +36,11 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `${actual} is not greater than or equal to ${expected}`
+            description: `'${actual}' is not greater than or equal to '${expected}'`
         };
         if (actual >= expected) {
             result.valid = true;
-            result.description = `${actual} is greater than or equal to ${expected}`;
+            result.description = `'${actual}' is greater than or equal to '${expected}'`;
         }
         this.report.push(result);
     }
@@ -48,11 +48,11 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `${actual} is not less than ${expected}`
+            description: `'${actual}' is not less than '${expected}'`
         };
         if (actual < expected) {
             result.valid = true;
-            result.description = `${actual} is less than ${expected}`;
+            result.description = `'${actual}' is less than '${expected}'`;
         }
         this.report.push(result);
     }
@@ -60,11 +60,11 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `${actual} is not less than or equal to ${expected}`
+            description: `'${actual}' is not less than or equal to '${expected}'`
         };
         if (actual <= expected) {
             result.valid = true;
-            result.description = `${actual} is less than or equal to ${expected}`;
+            result.description = `'${actual}' is less than or equal to '${expected}'`;
         }
         this.report.push(result);
     }
@@ -72,7 +72,7 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `${expected} is not true. I swear`
+            description: `'${expected}' is not true. I swear`
         };
         if (!!expected) {
             result.valid = true;
@@ -84,7 +84,7 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `${expected} is not false. (Oh really?)`
+            description: `'${expected}' is not false. (Oh really?)`
         };
         if (!!!expected) {
             result.valid = true;
