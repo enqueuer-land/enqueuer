@@ -17,9 +17,9 @@ export class MultiResultCreator extends ResultCreator {
         this.resultCreators.push(new SummaryResultCreator());
     }
 
-    public addTestSuite(suite: ResultModel): void {
+    public addTestSuite(name: string, report: ResultModel): void {
         Logger.trace('Adding test suite');
-        this.resultCreators.forEach(result => result.addTestSuite(suite));
+        this.resultCreators.forEach(result => result.addTestSuite(name, report));
     }
 
     public addError(err: any): void {

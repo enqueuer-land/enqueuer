@@ -44,10 +44,13 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => this.onFinishRunnables(resolve));
             this.singleRunInput.receiveRequisition()
-                .then(file => new runnable_runner_1.RunnableRunner(file.content).run())
+                .then(file => new runnable_runner_1.RunnableRunner(file.content).run()
                 .then(report => {
-                this.multiResultCreator.addTestSuite(report);
-                return report;
+                return { filename: file.name, report: report };
+            }))
+                .then((reportFile) => {
+                this.multiResultCreator.addTestSuite(reportFile.filename, reportFile.report);
+                return reportFile.report;
             })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then(() => resolve(this.execute())) //Runs the next one

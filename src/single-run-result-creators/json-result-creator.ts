@@ -20,9 +20,10 @@ export class JsonResultCreator extends ResultCreator {
         };
 
     }
-    public addTestSuite(suite: ResultModel): void {
-        this.report.runnables.push(suite);
-        this.report.valid = this.report.valid && suite.valid;
+
+    public addTestSuite(name: string, report: ResultModel): void {
+        this.report.runnables.push(report);
+        this.report.valid = this.report.valid && report.valid;
     }
     public addError(err: any): void {
         this.report.valid = false;

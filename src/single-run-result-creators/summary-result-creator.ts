@@ -11,8 +11,9 @@ export class SummaryResultCreator extends ResultCreator {
     public constructor() {
         super();
     }
-    public addTestSuite(suite: ResultModel): void {
-        this.findRequisitions(suite, suite.name);
+
+    public addTestSuite(name: string, report: ResultModel): void {
+        this.findRequisitions(report, name);
     }
 
     public addError(err: any): void {

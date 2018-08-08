@@ -11,8 +11,8 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
         this.testCounter = 0;
         this.failingTests = [];
     }
-    addTestSuite(suite) {
-        this.findRequisitions(suite, suite.name);
+    addTestSuite(name, report) {
+        this.findRequisitions(report, name);
     }
     addError(err) {
         ++this.testCounter;

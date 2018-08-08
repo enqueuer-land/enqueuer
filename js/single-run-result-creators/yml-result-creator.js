@@ -30,9 +30,9 @@ let YmlResultCreator = class YmlResultCreator extends result_creator_1.ResultCre
             runnables: []
         };
     }
-    addTestSuite(suite) {
-        this.report.runnables.push(suite);
-        this.report.valid = this.report.valid && suite.valid;
+    addTestSuite(name, report) {
+        this.report.runnables.push(report);
+        this.report.valid = this.report.valid && report.valid;
     }
     addError(err) {
         this.report.valid = false;

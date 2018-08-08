@@ -33,10 +33,13 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return new Promise((resolve) => {
             this.singleRunInput.onNoMoreFilesToBeRead(() => this.onFinishRunnables(resolve));
             this.singleRunInput.receiveRequisition()
-                .then(file => new RunnableRunner(file.content).run())
-                .then(report => {
-                    this.multiResultCreator.addTestSuite(report);
-                    return report;
+                .then(file => new RunnableRunner(file.content).run()
+                    .then(report => {
+                        return {filename: file.name, report: report}
+                    }))
+                .then((reportFile: any) => {
+                    this.multiResultCreator.addTestSuite(reportFile.filename, reportFile.report);
+                    return reportFile.report;
                 })
                 .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
                 .then( () => resolve(this.execute())) //Runs the next one
