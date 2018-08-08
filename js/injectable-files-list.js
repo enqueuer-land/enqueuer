@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 //#Auto-Generated Code
 require("./single-run-result-creators/yml-result-creator");
-require("./single-run-result-creators/standard-output-result-creator");
 require("./single-run-result-creators/json-result-creator");
 require("./runnables/requisition-runner");
 require("./runnables/runnable-runner");

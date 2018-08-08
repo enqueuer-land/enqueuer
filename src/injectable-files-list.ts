@@ -1,6 +1,5 @@
 //#Auto-Generated Code
 import './single-run-result-creators/yml-result-creator';
-import './single-run-result-creators/standard-output-result-creator';
 import './single-run-result-creators/json-result-creator';
 import './runnables/requisition-runner';
 import './runnables/runnable-runner';

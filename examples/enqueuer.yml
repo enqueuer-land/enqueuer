@@ -3,20 +3,12 @@ run-mode:
     name: examples
     fileNamePattern: examples/*.{json,yaml}
     reports:
-#      -
-#        type: console
       -
         type: yml
         filename: outputExamples/singleRunOutput.yml
       -
         type: json
         filename: outputExamples/singleRunOutput.json
-
-outputs:
-  -
-    type: file
-    filenamePrefix: outputExamples/
-    filenameExtension: json
 
 variables:
   tcpPayload: "enqueuer Rocks"
