@@ -1,19 +1,19 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableHittingOnlineEnqueuer",
   "id": "http-no-subscription",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {},
+      "tests": [],
       "name": "HttpTitle",
       "time": {
-        "totalTime": 1560,
-        "startTime": "2018-08-07T19:51:51.166Z",
-        "endTime": "2018-08-07T19:51:52.726Z"
+        "totalTime": 3129,
+        "startTime": "2018-08-08T02:55:31.382Z",
+        "endTime": "2018-08-08T02:55:34.511Z"
       },
       "subscriptions": [],
       "startEvent": {
@@ -21,12 +21,24 @@
           "name": "HttpEnqueuerRepository",
           "valid": true,
           "type": "http-client",
-          "tests": {
-            "Published": true,
-            "prePublishingTest": true,
-            "It is online": true
-          },
-          "publishTime": "2018-08-07T19:51:52.724Z"
+          "tests": [
+            {
+              "name": "prePublishingTest",
+              "valid": true,
+              "description": "Definitely true"
+            },
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "It is online",
+              "valid": true,
+              "description": "200 is equal to 200"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:34.510Z"
         }
       }
     }

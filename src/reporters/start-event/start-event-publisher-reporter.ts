@@ -25,9 +25,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
             name: this.publisherOriginalAttributes.name,
             valid: true,
             type: this.publisherOriginalAttributes.type,
-            tests: {
-                'Published': false
-            }
+            tests: []
         };
     }
 
@@ -43,19 +41,18 @@ export class StartEventPublisherReporter extends StartEventReporter {
                     .then(() => {
                         Logger.trace(`Start event published`);
                         this.report.publishTime = new DateController().toString();
-                        this.report.tests['Published'] = true;
+                        this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
                         this.executeOnMessageReceivedFunction();
                         return resolve();
                     })
                     .catch((err: any) => {
                         Logger.error(err);
-                        this.report.tests[`Error publishing start event '${JSON.stringify(this.publisher, null, 2)}'`] = false;
+                        this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
                         reject(err);
                     });
             } else {
                 const message = `Publisher is undefined after prePublish function execution ' ` +
                                     `${JSON.stringify(this.publisherOriginalAttributes, null, 2)}'`;
-                this.report.tests[message] = false;
                 reject(message);
             }
         });
@@ -79,7 +76,9 @@ export class StartEventPublisherReporter extends StartEventReporter {
         testExecutor.addArgument('message', this.publisher.messageReceived);
 
         const tests = testExecutor.execute();
-        tests.map((test: Test) => this.report.tests[test.label] = test.valid);
+        this.report.tests = this.report.tests.concat(tests.map(test => {
+            return {name: test.label, valid: test.valid, description: test.description};
+        }));
     }
 
     private executePrePublishingFunction() {
@@ -101,6 +100,8 @@ export class StartEventPublisherReporter extends StartEventReporter {
         this.publisherOriginalAttributes = (placeHolderReplacer.replace(this.publisherOriginalAttributes) as any);
 
         Logger.trace(`Adding prePublishing functions tests to report`);
-        tests.map((test: Test) => this.report.tests[test.label] = test.valid);
+        this.report.tests = this.report.tests.concat(tests.map(test => {
+            return {name: test.label, valid: test.valid, description: test.description};
+        }));
     }
 }

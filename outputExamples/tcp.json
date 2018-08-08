@@ -1,36 +1,51 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableTcpName",
   "id": "tcp",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "tcpNoPart",
       "time": {
-        "totalTime": 11,
-        "startTime": "2018-08-07T20:04:23.621Z",
-        "endTime": "2018-08-07T20:04:23.632Z",
+        "totalTime": 4,
+        "startTime": "2018-08-08T02:55:35.961Z",
+        "endTime": "2018-08-08T02:55:35.965Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "Any name Sub",
           "type": "tcp-server",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "Beatles Song": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "Beatles Song",
+              "valid": true,
+              "description": "Hey Jude is equal to Hey Jude"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T20:04:23.625Z",
-          "messageReceivedTime": "2018-08-07T20:04:23.631Z"
+          "connectionTime": "2018-08-08T02:55:35.962Z",
+          "messageReceivedTime": "2018-08-08T02:55:35.965Z"
         }
       ],
       "startEvent": {
@@ -38,40 +53,63 @@
           "name": "Any name Pub",
           "valid": true,
           "type": "tcp-client",
-          "tests": {
-            "Published": true,
-            "Do not make it bad": true
-          },
-          "publishTime": "2018-08-07T20:04:23.632Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Do not make it bad",
+              "valid": true,
+              "description": "Do not make it bad is equal to Do not make it bad"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:35.965Z"
         }
       }
     },
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "tcpFirstPart",
       "time": {
         "totalTime": 104,
-        "startTime": "2018-08-07T20:04:23.633Z",
-        "endTime": "2018-08-07T20:04:23.737Z",
+        "startTime": "2018-08-08T02:55:35.965Z",
+        "endTime": "2018-08-08T02:55:36.069Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "tcpSubscription1",
           "type": "tcp-server",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "I care": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "I care",
+              "valid": true,
+              "description": "I do not care is equal to I do not care"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T20:04:23.633Z",
-          "messageReceivedTime": "2018-08-07T20:04:23.635Z"
+          "connectionTime": "2018-08-08T02:55:35.966Z",
+          "messageReceivedTime": "2018-08-08T02:55:35.968Z"
         }
       ],
       "startEvent": {
@@ -79,40 +117,63 @@
           "name": "tcpPublisher1",
           "valid": true,
           "type": "tcp-client",
-          "tests": {
-            "Published": true,
-            "Greeting received": true
-          },
-          "publishTime": "2018-08-07T20:04:23.737Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Greeting received",
+              "valid": true,
+              "description": "EnqueuerRocks is equal to EnqueuerRocks"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:36.069Z"
         }
       }
     },
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "tcpSecondPart",
       "time": {
         "totalTime": 1,
-        "startTime": "2018-08-07T20:04:23.737Z",
-        "endTime": "2018-08-07T20:04:23.738Z",
+        "startTime": "2018-08-08T02:55:36.069Z",
+        "endTime": "2018-08-08T02:55:36.070Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "tcpSubscription2",
           "type": "tcp-server",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "It is still open": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "It is still open",
+              "valid": true,
+              "description": "The socket is still open is equal to The socket is still open"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T20:04:23.737Z",
-          "messageReceivedTime": "2018-08-07T20:04:23.738Z"
+          "connectionTime": "2018-08-08T02:55:36.069Z",
+          "messageReceivedTime": "2018-08-08T02:55:36.070Z"
         }
       ],
       "startEvent": {
@@ -120,11 +181,19 @@
           "name": "tcpPublisher2",
           "valid": true,
           "type": "tcp-client",
-          "tests": {
-            "Published": true,
-            "Second message response": true
-          },
-          "publishTime": "2018-08-07T20:04:23.738Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Second message response",
+              "valid": true,
+              "description": "enqueuer Rocks is equal to enqueuer Rocks"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:36.070Z"
         }
       }
     }

@@ -26,10 +26,7 @@ class SubscriptionReporter {
         this.report = {
             name: subscriptionAttributes.name,
             type: subscriptionAttributes.type,
-            tests: {
-                'Connected': false,
-                'Message received': false
-            },
+            tests: [],
             valid: true
         };
     }
@@ -54,7 +51,6 @@ class SubscriptionReporter {
             this.subscription.connect()
                 .then(() => {
                 this.report.connectionTime = new date_controller_1.DateController().toString();
-                this.report.tests['Connected'] = true;
                 resolve();
                 process.on('SIGINT', this.handleKillSignal);
                 process.on('SIGTERM', this.handleKillSignal);
@@ -74,9 +70,12 @@ class SubscriptionReporter {
                 if (!util_1.isNullOrUndefined(message)) {
                     logger_1.Logger.debug(`[${this.subscription.name}] message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
                     if (!this.hasTimedOut) {
+                        logger_1.Logger.info(`[${this.subscription.name}] stop waiting because it has received its message`);
                         this.subscription.messageReceived = message;
                         this.executeSubscriptionFunction();
-                        logger_1.Logger.info(`[${this.subscription.name}] stop waiting because it has received its message`);
+                    }
+                    else {
+                        logger_1.Logger.info(`[${this.subscription.name}] has received message in a unable time`);
                     }
                     this.cleanUp();
                     resolve(message);
@@ -93,14 +92,42 @@ class SubscriptionReporter {
         });
     }
     getReport() {
-        const hasReceivedMessage = this.subscription.messageReceived != null;
-        this.report.tests['Message received'] = hasReceivedMessage;
-        if (this.subscription.timeout) {
-            this.report.tests['No time out'] = !this.hasTimedOut;
-        }
+        this.addMessageReceivedReport();
+        this.addTimeoutReport();
         this.cleanUp();
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
+    }
+    addMessageReceivedReport() {
+        const messageReceivedTestLabel = 'Message received';
+        if (this.subscription.messageReceived != null) {
+            this.report.tests.push({
+                valid: true,
+                name: messageReceivedTestLabel,
+                description: `Subscription has received its message successfully`
+            });
+        }
+        else {
+            this.report.tests.push({
+                valid: true,
+                name: messageReceivedTestLabel,
+                description: `Subscription has not received its message in a valid time`
+            });
+        }
+    }
+    addTimeoutReport() {
+        if (this.subscription.timeout) {
+            const timeoutTest = {
+                valid: false,
+                name: 'No time out',
+                description: `Subscription has timed out`
+            };
+            if (!this.hasTimedOut) {
+                timeoutTest.valid = true;
+                timeoutTest.description = 'Subscription has not timed out';
+            }
+            this.report.tests.push(timeoutTest);
+        }
     }
     cleanUp() {
         this.cleanUp = () => {
@@ -125,13 +152,18 @@ class SubscriptionReporter {
     }
     executeSubscriptionFunction() {
         if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
+            logger_1.Logger.trace(`[${this.subscription.name}] has no onMessageReceived to be executed`);
             return;
         }
+        logger_1.Logger.trace(`[${this.subscription.name}] executing onMessageReceived`);
         const testExecutor = new tester_executor_1.TesterExecutor(this.subscription.onMessageReceived);
         testExecutor.addArgument('subscription', this.subscriptionOriginalAttributes);
         testExecutor.addArgument('message', this.subscription.messageReceived);
         const tests = testExecutor.execute();
-        tests.map((test) => this.report.tests[test.label] = test.valid);
+        this.report.tests = this.report.tests.concat(tests.map(test => {
+            return { name: test.label, valid: test.valid, description: test.description };
+        }));
+        logger_1.Logger.trace(`[${this.subscription.name}] tests ${JSON.stringify(this.report.tests, null, 2)}`);
         this.report.messageReceivedTime = new date_controller_1.DateController().toString();
     }
 }

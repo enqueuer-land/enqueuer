@@ -31,15 +31,15 @@
                 "subscriptions": [
                   {
                     "type": "uds",
-                    "name": "runnableUds",
+                    "name": "runnableSubsUds",
                     "path": "/tmp/loopUnix.sock",
-                    "onMessageReceived": "tester.isEqualTo('Works', message, 100);",
+                    "onMessageReceived": "tester.isEqualTo('Works', message, '100');",
                     "timeout": 1000
                   }
                 ],
                 "startEvent": {
                   "publisher": {
-                    "name": "runnableUds",
+                    "name": "runnablePubsUds",
                     "type": "uds",
                     "path": "/tmp/loopUnix.sock",
                     "payload": 100

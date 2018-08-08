@@ -5,6 +5,7 @@ import {StartEventModel} from '../models/outputs/start-event-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {checkValidation} from '../models/outputs/report-model';
+import {TestModel} from '../models/outputs/test-model';
 
 export class ReportGenerator {
 
@@ -17,7 +18,7 @@ export class ReportGenerator {
         this.report = {
             type: 'requisition',
             valid: true,
-            tests: {},
+            tests: [],
             name: requisitionAttributes.name,
             time: {
                 startTime: '',
@@ -61,7 +62,12 @@ export class ReportGenerator {
     }
 
     public addError(error: string): any {
-        this.report.tests[error] = false;
+        const errorTest: TestModel = {
+            valid: false,
+            name: error,
+            description: error
+        };
+        this.report.tests.push(errorTest);
     }
 
     private addTimesReport(): void {
@@ -71,13 +77,24 @@ export class ReportGenerator {
             timesReport.totalTime = endDate.getTime() - this.startTime.getTime();
             timesReport.startTime = this.startTime.toString();
             timesReport.endTime = endDate.toString();
-            if (this.timeout) {
-                timesReport.timeout = this.timeout;
-                this.report.tests[`No time out`] = timesReport.totalTime <= this.timeout;
-            }
-
+            this.addTimeoutReport(timesReport);
             this.report.time = timesReport;
         }
     }
 
+    private addTimeoutReport(timesReport: any) {
+        if (this.timeout) {
+            timesReport.timeout = this.timeout;
+            const timeoutTest: TestModel = {
+                valid: false,
+                name: 'No time out',
+                description: `Requisition has timed out ${timesReport.totalTime} > ${this.timeout}`
+            };
+            if (timesReport.totalTime <= this.timeout) {
+                timeoutTest.valid = true;
+                timeoutTest.description = 'Requisition has not timed out';
+            }
+            this.report.tests.push(timeoutTest);
+        }
+    }
 }

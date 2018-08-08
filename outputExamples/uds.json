@@ -1,36 +1,51 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableUDSName",
   "id": "uds",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "uds",
       "time": {
-        "totalTime": 7,
-        "startTime": "2018-08-07T20:01:14.127Z",
-        "endTime": "2018-08-07T20:01:14.134Z",
+        "totalTime": 2,
+        "startTime": "2018-08-08T02:55:36.285Z",
+        "endTime": "2018-08-08T02:55:36.287Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "udsSubscription",
           "type": "uds",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "Message received is {{udsPayload}}": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "Message received is {{udsPayload}}",
+              "valid": true,
+              "description": "enqueuer is equal to enqueuer"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T20:01:14.128Z",
-          "messageReceivedTime": "2018-08-07T20:01:14.132Z"
+          "connectionTime": "2018-08-08T02:55:36.286Z",
+          "messageReceivedTime": "2018-08-08T02:55:36.287Z"
         }
       ],
       "startEvent": {
@@ -38,37 +53,56 @@
           "name": "udsPublisher",
           "valid": true,
           "type": "uds",
-          "tests": {
-            "Published": true,
-            "It is bidirectional": true
-          },
-          "publishTime": "2018-08-07T20:01:14.133Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "It is bidirectional",
+              "valid": true,
+              "description": "responsePayload is equal to responsePayload"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:36.287Z"
         }
       }
     },
     {
       "type": "requisition",
       "valid": true,
-      "tests": {},
+      "tests": [],
       "name": "RequisitionUds2Name",
       "time": {
         "totalTime": 2,
-        "startTime": "2018-08-07T20:01:14.134Z",
-        "endTime": "2018-08-07T20:01:14.136Z"
+        "startTime": "2018-08-08T02:55:36.288Z",
+        "endTime": "2018-08-08T02:55:36.290Z"
       },
       "subscriptions": [
         {
           "name": "udsSubscription2",
           "type": "uds",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "Message received is enqueuer": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "Message received is enqueuer",
+              "valid": true,
+              "description": "enqueuer is equal to enqueuer"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T20:01:14.135Z",
-          "messageReceivedTime": "2018-08-07T20:01:14.136Z"
+          "connectionTime": "2018-08-08T02:55:36.288Z",
+          "messageReceivedTime": "2018-08-08T02:55:36.289Z"
         }
       ],
       "startEvent": {
@@ -76,11 +110,19 @@
           "name": "udsPublisher2",
           "valid": true,
           "type": "uds",
-          "tests": {
-            "Published": true,
-            "Message to be published is enqueuer": true
-          },
-          "publishTime": "2018-08-07T20:01:14.136Z"
+          "tests": [
+            {
+              "name": "Message to be published is enqueuer",
+              "valid": true,
+              "description": "enqueuer is equal to enqueuer"
+            },
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:36.290Z"
         }
       }
     }

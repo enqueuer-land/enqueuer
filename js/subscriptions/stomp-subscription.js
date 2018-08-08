@@ -29,7 +29,7 @@ let StompSubscription = class StompSubscription extends subscription_1.Subscript
                 logger_1.Logger.trace(`Stomp message received header ${JSON.stringify(headers, null, 2)}`);
                 resolve(message);
             });
-            this.client.on('error', (err) => {
+            this.client.once('error', (err) => {
                 reject(err);
             });
         });

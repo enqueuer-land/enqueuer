@@ -9,25 +9,26 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
     constructor() {
         super();
         this.testCounter = 0;
-        this.failedTestNames = [];
+        this.failingTests = [];
     }
     addTestSuite(suite) {
         this.findRequisitions(suite, '');
     }
     addError(err) {
         ++this.testCounter;
-        this.failedTestNames.push(this.addLevel('', err.toString()));
+        this.failingTests.push({ name: 'Error running runnable', valid: false, description: err.toString() });
     }
     isValid() {
-        return this.failedTestNames.length == 0;
+        return this.failingTests.length == 0;
     }
     create() {
         this.printSummary();
-        if (this.failedTestNames.length > 0) {
-            console.log(chalk_1.default.red(`\tFailing tests:`));
-            this.failedTestNames
+        if (this.failingTests.length > 0) {
+            console.log(chalk_1.default.red(`\t\tFailing tests:`));
+            this.failingTests
                 .forEach((failingTest) => {
-                console.log(chalk_1.default.red(`\t\t${failingTest}`));
+                console.log(chalk_1.default.red(`\t\t\tName: ${failingTest.name}`));
+                console.log(chalk_1.default.red(`\t\t\t\t${failingTest.description}`));
             });
         }
     }
@@ -55,15 +56,17 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
     }
     inspectInvalidTests(tests, prefix) {
         this.testCounter += Object.keys(tests).length;
-        Object.keys(tests)
-            .forEach((key) => {
-            const testDescription = this.addLevel(prefix, key);
-            if (!tests[key]) {
-                this.failedTestNames.push(testDescription);
-                console.log(chalk_1.default.red(`\t[FAIL] ${testDescription}`));
+        tests
+            .forEach((test) => {
+            const testHierarchy = this.addLevel(prefix, test.name);
+            if (!test.valid) {
+                test.name = testHierarchy;
+                this.failingTests.push(test);
+                console.log(chalk_1.default.red(`\t[FAIL] ${testHierarchy}`));
+                console.log(chalk_1.default.red(`\t\t ${test.description}`));
             }
             else {
-                console.log(chalk_1.default.green(`\t[PASS] ${testDescription}`));
+                console.log(chalk_1.default.green(`\t[PASS] ${testHierarchy}`));
             }
         });
     }
@@ -72,8 +75,8 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
     }
     printSummary() {
         console.log(chalk_1.default.white(`------------------------------`));
-        const divisionString = `${this.testCounter - this.failedTestNames.length}/${this.testCounter}`;
-        const percentage = Math.trunc(10000 * (this.testCounter - this.failedTestNames.length) / this.testCounter) / 100;
+        const divisionString = `${this.testCounter - this.failingTests.length}/${this.testCounter}`;
+        const percentage = Math.trunc(10000 * (this.testCounter - this.failingTests.length) / this.testCounter) / 100;
         console.log(this.percentageColor(percentage)(`\tTests summary` +
             `\t\tPassing tests: ${divisionString} => ${percentage}%`));
     }

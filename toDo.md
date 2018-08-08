@@ -21,3 +21,5 @@ Publish not only string
 Subscribe not only string
 HttpServerPool
 Https support
+Rename report-generator -> requisition
+File publisher put more stuff

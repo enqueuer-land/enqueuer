@@ -1,32 +1,39 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnable0Mq",
   "id": "zeromq-pubsub",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {},
+      "tests": [],
       "name": "RequisitionZeroMq",
       "time": {
-        "totalTime": 258,
-        "startTime": "2018-08-07T20:02:02.441Z",
-        "endTime": "2018-08-07T20:02:02.699Z"
+        "totalTime": 256,
+        "startTime": "2018-08-08T02:55:36.395Z",
+        "endTime": "2018-08-08T02:55:36.651Z"
       },
       "subscriptions": [
         {
           "name": "ZeroMqSub",
           "type": "zero-mq-sub",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "0Mq is awesome": true
-          },
+          "tests": [
+            {
+              "name": "0Mq is awesome",
+              "valid": true,
+              "description": "tcp://127.0.0.1:3000 is equal to tcp://127.0.0.1:3000"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T20:02:02.441Z",
-          "messageReceivedTime": "2018-08-07T20:02:02.699Z"
+          "connectionTime": "2018-08-08T02:55:36.396Z",
+          "messageReceivedTime": "2018-08-08T02:55:36.651Z"
         }
       ],
       "startEvent": {
@@ -34,10 +41,14 @@
           "name": "ZeroMqPub",
           "valid": true,
           "type": "zero-mq-pub",
-          "tests": {
-            "Published": true
-          },
-          "publishTime": "2018-08-07T20:02:02.698Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:36.650Z"
         }
       }
     }

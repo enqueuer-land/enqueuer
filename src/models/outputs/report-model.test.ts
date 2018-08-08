@@ -6,7 +6,7 @@ describe('ReportModel', () => {
         const reportModel: ReportModel = {
             valid: true,
             name: "any",
-            tests: {}
+            tests: []
         }
 
         expect(reportModel.valid).toBeTruthy();
@@ -17,13 +17,12 @@ describe('ReportModel', () => {
         let reportModel: ReportModel = {
             valid: true,
             name: "any",
-            tests: {}
+            tests: []
         }
 
-        reportModel.tests["true"] = true;
-        reportModel.tests["other"] = true;
-        reportModel.tests["stuff"] = true;
-        reportModel.tests["true"] = true;
+        reportModel.tests.push({valid: true, name: "any", description: "any"});
+        reportModel.tests.push({valid: true, name: "any", description: "any"});
+        reportModel.tests.push({valid: true, name: "any", description: "any"});
 
         expect(checkValidation(reportModel)).toBeTruthy();
     });
@@ -32,13 +31,13 @@ describe('ReportModel', () => {
         let reportModel: ReportModel = {
             valid: true,
             name: "any",
-            tests: {}
+            tests: []
         }
 
-        reportModel.tests["true"] = true;
-        reportModel.tests["other"] = true;
-        reportModel.tests["stuff"] = true;
-        reportModel.tests["true"] = false;
+        reportModel.tests.push({valid: true, name: "any", description: "any"});
+        reportModel.tests.push({valid: true, name: "any", description: "any"});
+        reportModel.tests.push({valid: true, name: "any", description: "any"});
+        reportModel.tests.push({valid: false, name: "any", description: "any"});
 
         expect(checkValidation(reportModel)).toBeFalsy();
     });

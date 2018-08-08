@@ -17,7 +17,7 @@ export class RunnableRunner extends Runner {
         this.report = {
             type: 'runnable',
             valid: true,
-            tests: {},
+            tests: [],
             name: this.runnableModel.name,
             id: this.runnableModel.id,
             runnables: []

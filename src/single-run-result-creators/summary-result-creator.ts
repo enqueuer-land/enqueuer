@@ -6,7 +6,7 @@ import chalk from 'chalk';
 
 export class SummaryResultCreator extends ResultCreator {
     private testCounter: number = 0;
-    private failedTestNames: string[] = [];
+    private failingTests: TestModel[] = [];
 
     public constructor() {
         super();
@@ -17,20 +17,21 @@ export class SummaryResultCreator extends ResultCreator {
 
     public addError(err: any): void {
         ++this.testCounter;
-        this.failedTestNames.push(this.addLevel('', err.toString()));
+        this.failingTests.push({name: 'Error running runnable', valid: false, description: err.toString()});
     }
 
     public isValid(): boolean {
-        return this.failedTestNames.length == 0;
+        return this.failingTests.length == 0;
     }
 
     public create(): void {
         this.printSummary();
-        if (this.failedTestNames.length > 0) {
-            console.log(chalk.red(`\tFailing tests:`));
-            this.failedTestNames
+        if (this.failingTests.length > 0) {
+            console.log(chalk.red(`\t\tFailing tests:`));
+            this.failingTests
                 .forEach((failingTest) => {
-                    console.log(chalk.red(`\t\t${failingTest}`));
+                    console.log(chalk.red(`\t\t\tName: ${failingTest.name}`));
+                    console.log(chalk.red(`\t\t\t\t${failingTest.description}`));
                 });
         }
     }
@@ -59,16 +60,18 @@ export class SummaryResultCreator extends ResultCreator {
         }
     }
 
-    private inspectInvalidTests(tests: TestModel, prefix: string) {
+    private inspectInvalidTests(tests: TestModel[], prefix: string) {
         this.testCounter += Object.keys(tests).length;
-        Object.keys(tests)
-            .forEach((key: string) => {
-                const testDescription = this.addLevel(prefix, key);
-                if (!tests[key]) {
-                    this.failedTestNames.push(testDescription);
-                    console.log(chalk.red(`\t[FAIL] ${testDescription}`));
+        tests
+            .forEach((test: TestModel) => {
+                const testHierarchy = this.addLevel(prefix, test.name);
+                if (!test.valid) {
+                    test.name = testHierarchy;
+                    this.failingTests.push(test);
+                    console.log(chalk.red(`\t[FAIL] ${testHierarchy}`));
+                    console.log(chalk.red(`\t\t ${test.description}`));
                 } else {
-                    console.log(chalk.green(`\t[PASS] ${testDescription}`));
+                    console.log(chalk.green(`\t[PASS] ${testHierarchy}`));
                 }
             });
     }
@@ -79,8 +82,8 @@ export class SummaryResultCreator extends ResultCreator {
 
     private printSummary() {
         console.log(chalk.white(`------------------------------`));
-        const divisionString = `${this.testCounter - this.failedTestNames.length}/${this.testCounter}`;
-        const percentage = Math.trunc(10000 * (this.testCounter - this.failedTestNames.length) / this.testCounter) / 100;
+        const divisionString = `${this.testCounter - this.failingTests.length}/${this.testCounter}`;
+        const percentage = Math.trunc(10000 * (this.testCounter - this.failingTests.length) / this.testCounter) / 100;
         console.log(this.percentageColor(percentage)(`\tTests summary` +
                                                             `\t\tPassing tests: ${divisionString} => ${percentage}%`));
     }

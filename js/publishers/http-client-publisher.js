@@ -75,7 +75,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
             catch (exc) {
                 //do nothing
             }
-            if (typeof (this.payload) != "string") {
+            if (typeof (this.payload) != 'string') {
                 this.payload = JSON.stringify(this.payload);
             }
         }

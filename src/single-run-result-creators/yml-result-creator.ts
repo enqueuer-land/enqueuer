@@ -14,14 +14,14 @@ export class YmlResultCreator extends ResultCreator {
         super();
         this.report = {
             name: resultCreatorAttributes.filename,
-            tests: {},
+            tests: [],
             valid: true,
-            runnables: {}
+            runnables: []
         };
 
     }
     public addTestSuite(suite: ResultModel): void {
-        this.report.runnables[suite.name] = suite;
+        this.report.runnables.push(suite);
         this.report.valid = this.report.valid && suite.valid;
     }
     public addError(err: any): void {

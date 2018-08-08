@@ -7,7 +7,7 @@ class ReportGenerator {
         this.report = {
             type: 'requisition',
             valid: true,
-            tests: {},
+            tests: [],
             name: requisitionAttributes.name,
             time: {
                 startTime: '',
@@ -45,7 +45,12 @@ class ReportGenerator {
         this.addTimesReport();
     }
     addError(error) {
-        this.report.tests[error] = false;
+        const errorTest = {
+            valid: false,
+            name: error,
+            description: error
+        };
+        this.report.tests.push(errorTest);
     }
     addTimesReport() {
         if (this.startTime) {
@@ -54,11 +59,23 @@ class ReportGenerator {
             timesReport.totalTime = endDate.getTime() - this.startTime.getTime();
             timesReport.startTime = this.startTime.toString();
             timesReport.endTime = endDate.toString();
-            if (this.timeout) {
-                timesReport.timeout = this.timeout;
-                this.report.tests[`No time out`] = timesReport.totalTime <= this.timeout;
-            }
+            this.addTimeoutReport(timesReport);
             this.report.time = timesReport;
+        }
+    }
+    addTimeoutReport(timesReport) {
+        if (this.timeout) {
+            timesReport.timeout = this.timeout;
+            const timeoutTest = {
+                valid: false,
+                name: 'No time out',
+                description: `Requisition has timed out ${timesReport.totalTime} > ${this.timeout}`
+            };
+            if (timesReport.totalTime <= this.timeout) {
+                timeoutTest.valid = true;
+                timeoutTest.description = 'Requisition has not timed out';
+            }
+            this.report.tests.push(timeoutTest);
         }
     }
 }

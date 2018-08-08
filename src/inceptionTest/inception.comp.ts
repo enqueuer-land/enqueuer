@@ -1,6 +1,7 @@
 import { spawn } from 'child_process';
 import * as fs from 'fs';
 import {RequisitionModel} from '../models/outputs/requisition-model';
+import {TestModel} from '../models/outputs/test-model';
 
 let findEveryJsonFile = (): string[] => {
     let files = [];
@@ -25,6 +26,10 @@ let sleep = (millisecondsToWait: number): void => {
     while (waitTill > new Date()) {
         //wait
     }
+};
+
+const findTest = (label: string, tests: TestModel[]): TestModel | undefined => {
+    return tests.find((test) => test.name == label);
 };
 
 describe('Inception test', () => {
@@ -57,33 +62,30 @@ describe('Inception test', () => {
         expect(innerTest.valid).toBeTruthy();
         const innerReport: RequisitionModel = innerTest.runnables[0];
 
-        expect(innerReport.tests['No time out']).toBeTruthy();
+        expect(findTest('No time out', innerReport.tests)).toBeTruthy();
         expect(innerReport.name).toBe('innerRunnableUds');
 
         expect(innerReport.subscriptions[0].valid).toBeTruthy();
-        expect(innerReport.subscriptions[0].tests['Connected']).toBeTruthy();
-        expect(innerReport.subscriptions[0].tests['Works']).toBeTruthy();
-        expect(innerReport.subscriptions[0].tests['Message received']).toBeTruthy();
-        expect(innerReport.subscriptions[0].tests['No time out']).toBeTruthy();
+        expect(findTest('Works', innerReport.subscriptions[0].tests)).toBeTruthy();
+        expect(findTest('Message received', innerReport.subscriptions[0].tests)).toBeTruthy();
+        expect(findTest('No time out', innerReport.subscriptions[0].tests)).toBeTruthy();
 
         expect(innerReport.startEvent.publisher).toBeDefined();
         if (innerReport.startEvent.publisher) {
             expect(innerReport.startEvent.publisher.valid).toBeTruthy();
-            expect(innerReport.startEvent.publisher.name).toBe('runnableUds');
+            expect(innerReport.startEvent.publisher.name).toBe('runnablePubsUds');
         }
 
         const outterTest = testerReports[1];
         expect(outterTest.valid).toBeTruthy();
         const outterReport: RequisitionModel = testerReports[1].runnables[0];
 
-        expect(outterReport.tests['No time out']).toBeTruthy();
+        expect(findTest('No time out', outterReport.tests)).toBeTruthy();
         expect(outterReport.name).toBe('runnableUds');
 
         expect(outterReport.subscriptions[0].valid).toBeTruthy();
-        expect(outterReport.subscriptions[0].tests['Connected']).toBeTruthy();
-        expect(outterReport.subscriptions[0].tests['true']).toBeTruthy();
-        expect(outterReport.subscriptions[0].tests['Message received']).toBeTruthy();
-        expect(outterReport.subscriptions[0].tests['No time out']).toBeTruthy();
+        expect(findTest('Message received', outterReport.subscriptions[0].tests)).toBeTruthy();
+        expect(findTest('No time out', outterReport.subscriptions[0].tests)).toBeTruthy();
 
         expect(outterReport.startEvent.publisher).toBeDefined();
         if (outterReport.startEvent.publisher) {

@@ -24,13 +24,13 @@ let JsonResultCreator = class JsonResultCreator extends result_creator_1.ResultC
         super();
         this.report = {
             name: resultCreatorAttributes.filename,
-            tests: {},
+            tests: [],
             valid: true,
-            runnables: {}
+            runnables: []
         };
     }
     addTestSuite(suite) {
-        this.report.runnables[suite.name] = suite;
+        this.report.runnables.push(suite);
         this.report.valid = this.report.valid && suite.valid;
     }
     addError(err) {

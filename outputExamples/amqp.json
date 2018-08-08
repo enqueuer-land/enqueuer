@@ -1,37 +1,56 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableAmqp",
   "id": "amqp",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "AmqpReq",
       "time": {
-        "totalTime": 65,
-        "startTime": "2018-08-07T19:31:24.878Z",
-        "endTime": "2018-08-07T19:31:24.943Z",
+        "totalTime": 35,
+        "startTime": "2018-08-08T02:55:30.921Z",
+        "endTime": "2018-08-08T02:55:30.956Z",
         "timeout": 5000
       },
       "subscriptions": [
         {
           "name": "AmqpSubs",
           "type": "amqp",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "Payload replaced": true,
-            "Header": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "Payload replaced",
+              "valid": true,
+              "description": "1533696930955 is greater than or equal to 1533696930941"
+            },
+            {
+              "name": "Header",
+              "valid": true,
+              "description": "value is equal to value"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T19:31:24.917Z",
-          "messageReceivedTime": "2018-08-07T19:31:24.942Z"
+          "connectionTime": "2018-08-08T02:55:30.940Z",
+          "messageReceivedTime": "2018-08-08T02:55:30.955Z"
         }
       ],
       "startEvent": {
@@ -39,10 +58,14 @@
           "name": "AmqpPub",
           "valid": true,
           "type": "amqp",
-          "tests": {
-            "Published": true
-          },
-          "publishTime": "2018-08-07T19:31:24.938Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:30.953Z"
         }
       }
     }

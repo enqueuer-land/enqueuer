@@ -1,38 +1,61 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableHttpYmlPayload",
   "id": "http",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "HttpOriginal",
       "time": {
         "totalTime": 12,
-        "startTime": "2018-08-07T19:51:52.835Z",
-        "endTime": "2018-08-07T19:51:52.847Z",
+        "startTime": "2018-08-08T02:55:34.621Z",
+        "endTime": "2018-08-08T02:55:34.633Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "HttpSubscriptionTitle",
           "type": "http-server",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "Params is someId": true,
-            "Query is 123": true,
-            "Payload is Virgs": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "Params is someId",
+              "valid": true,
+              "description": "idStuff is equal to idStuff"
+            },
+            {
+              "name": "Query is 123",
+              "valid": true,
+              "description": "123 is equal to 123"
+            },
+            {
+              "name": "Payload is Virgs",
+              "valid": true,
+              "description": "virgs is equal to virgs"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T19:51:52.836Z",
-          "messageReceivedTime": "2018-08-07T19:51:52.846Z"
+          "connectionTime": "2018-08-08T02:55:34.623Z",
+          "messageReceivedTime": "2018-08-08T02:55:34.632Z"
         }
       ],
       "startEvent": {
@@ -40,42 +63,73 @@
           "name": "HttpPublisherClientTitle",
           "valid": true,
           "type": "http-client",
-          "tests": {
-            "Published": true,
-            "prePublishingTest": true,
-            "publisherOnMessageReceivedTest": true,
-            "publisherOnMessageReceivedPayloadTest": true
-          },
-          "publishTime": "2018-08-07T19:51:52.847Z"
+          "tests": [
+            {
+              "name": "prePublishingTest",
+              "valid": true,
+              "description": "Definitely true"
+            },
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "publisherOnMessageReceivedTest",
+              "valid": true,
+              "description": "321 is equal to 321"
+            },
+            {
+              "name": "publisherOnMessageReceivedPayloadTest",
+              "valid": true,
+              "description": "responsePayload is equal to responsePayload"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:34.633Z"
         }
       }
     },
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "HttpTitleDuplicated",
       "time": {
-        "totalTime": 4,
-        "startTime": "2018-08-07T19:51:52.850Z",
-        "endTime": "2018-08-07T19:51:52.854Z",
+        "totalTime": 3,
+        "startTime": "2018-08-08T02:55:34.633Z",
+        "endTime": "2018-08-08T02:55:34.636Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "DuplicatedEndPointTest",
           "type": "http-server",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "Duplicated": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "Duplicated",
+              "valid": true,
+              "description": "Definitely true"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T19:51:52.850Z",
-          "messageReceivedTime": "2018-08-07T19:51:52.854Z"
+          "connectionTime": "2018-08-08T02:55:34.633Z",
+          "messageReceivedTime": "2018-08-08T02:55:34.636Z"
         }
       ],
       "startEvent": {
@@ -83,13 +137,29 @@
           "name": "HttpPublisherClientTitle",
           "valid": true,
           "type": "http-client",
-          "tests": {
-            "Published": true,
-            "prePublishingTest": true,
-            "publisherOnMessageReceivedTest": true,
-            "publisherOnMessageReceivedPayloadTest": true
-          },
-          "publishTime": "2018-08-07T19:51:52.854Z"
+          "tests": [
+            {
+              "name": "prePublishingTest",
+              "valid": true,
+              "description": "Definitely true"
+            },
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "publisherOnMessageReceivedTest",
+              "valid": true,
+              "description": "321 is equal to 321"
+            },
+            {
+              "name": "publisherOnMessageReceivedPayloadTest",
+              "valid": true,
+              "description": "responsePayload is equal to responsePayload"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:34.636Z"
         }
       }
     }

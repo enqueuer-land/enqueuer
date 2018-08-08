@@ -1,36 +1,51 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableFile",
   "id": "file",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "file",
       "time": {
-        "totalTime": 108,
-        "startTime": "2018-08-07T19:38:11.096Z",
-        "endTime": "2018-08-07T19:38:11.204Z",
+        "totalTime": 210,
+        "startTime": "2018-08-08T02:55:31.065Z",
+        "endTime": "2018-08-08T02:55:31.275Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "fileSubscription",
           "type": "file-name-watcher",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "some time has passed": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "some time has passed",
+              "valid": true,
+              "description": "1533696931274 is greater than or equal to 1533696931068"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T19:38:11.100Z",
-          "messageReceivedTime": "2018-08-07T19:38:11.203Z"
+          "connectionTime": "2018-08-08T02:55:31.067Z",
+          "messageReceivedTime": "2018-08-08T02:55:31.274Z"
         }
       ],
       "startEvent": {
@@ -38,10 +53,14 @@
           "name": "filePublisher",
           "valid": true,
           "type": "file",
-          "tests": {
-            "Published": true
-          },
-          "publishTime": "2018-08-07T19:38:11.103Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:31.069Z"
         }
       }
     }

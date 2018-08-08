@@ -19,7 +19,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
         this.report = {
             type: 'runnable',
             valid: true,
-            tests: {},
+            tests: [],
             name: this.runnableModel.name,
             id: this.runnableModel.id,
             runnables: []

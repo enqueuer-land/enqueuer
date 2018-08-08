@@ -1,36 +1,51 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableSqsName",
   "id": "sqs",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "sqsRequisition",
       "time": {
-        "totalTime": 39,
-        "startTime": "2018-08-07T20:24:06.678Z",
-        "endTime": "2018-08-07T20:24:06.717Z",
+        "totalTime": 31,
+        "startTime": "2018-08-08T02:55:35.822Z",
+        "endTime": "2018-08-08T02:55:35.853Z",
         "timeout": 5000
       },
       "subscriptions": [
         {
           "name": "udsSubs",
           "type": "sqs",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "First letter equals enqueuer": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "name": "Message contains q",
+              "valid": true,
+              "description": "'enqueuer' contains 'q'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T20:24:06.678Z",
-          "messageReceivedTime": "2018-08-07T20:24:06.714Z"
+          "connectionTime": "2018-08-08T02:55:35.823Z",
+          "messageReceivedTime": "2018-08-08T02:55:35.852Z"
         }
       ],
       "startEvent": {
@@ -38,10 +53,14 @@
           "name": "sqsPublisher",
           "valid": true,
           "type": "sqs",
-          "tests": {
-            "Published": true
-          },
-          "publishTime": "2018-08-07T20:24:06.716Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:35.853Z"
         }
       }
     }

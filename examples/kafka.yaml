@@ -4,13 +4,6 @@ id: kafka
 runnables:
 - timeout: 3000
   name: RequisitionKafka
-  subscriptions:
-  - type: kafka
-    name: kafkaSub
-    client:
-      kafkaHost: localhost:9093
-    options:
-      topic: enqueuer-topic-name
   startEvent:
     publisher:
       type: kafka
@@ -19,3 +12,11 @@ runnables:
         kafkaHost: localhost:9093
       topic: enqueuer-topic-name
       payload: kafkaPayload
+  subscriptions:
+  - type: kafka
+    name: kafkaSub
+    client:
+      kafkaHost: localhost:9093
+    options:
+      topic: enqueuer-topic-name
+    onMessageReceived: tester.isEqualTo('kafka payload', message, 'kafkaPayload');

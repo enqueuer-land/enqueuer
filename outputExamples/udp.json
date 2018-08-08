@@ -1,34 +1,45 @@
 {
   "type": "runnable",
   "valid": true,
-  "tests": {},
+  "tests": [],
   "name": "runnableUdpName",
   "id": "udp",
   "runnables": [
     {
       "type": "requisition",
       "valid": true,
-      "tests": {
-        "No time out": true
-      },
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
       "name": "udp",
       "time": {
-        "totalTime": 6,
-        "startTime": "2018-08-07T19:57:05.833Z",
-        "endTime": "2018-08-07T19:57:05.839Z",
+        "totalTime": 4,
+        "startTime": "2018-08-08T02:55:36.175Z",
+        "endTime": "2018-08-08T02:55:36.179Z",
         "timeout": 3000
       },
       "subscriptions": [
         {
           "name": "udpSubscription",
           "type": "udp",
-          "tests": {
-            "Connected": true,
-            "Message received": true,
-            "No time out": true
-          },
+          "tests": [
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message successfully"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Subscription has not timed out"
+            }
+          ],
           "valid": true,
-          "connectionTime": "2018-08-07T19:57:05.834Z"
+          "connectionTime": "2018-08-08T02:55:36.176Z"
         }
       ],
       "startEvent": {
@@ -36,11 +47,19 @@
           "name": "udpPublisher",
           "valid": true,
           "type": "udp",
-          "tests": {
-            "Published": true,
-            "It is bidirectional": true
-          },
-          "publishTime": "2018-08-07T19:57:05.838Z"
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "It is bidirectional",
+              "valid": true,
+              "description": "damm is equal to damm"
+            }
+          ],
+          "publishTime": "2018-08-08T02:55:36.179Z"
         }
       }
     }

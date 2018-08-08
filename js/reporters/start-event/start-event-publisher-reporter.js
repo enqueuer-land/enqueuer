@@ -34,9 +34,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
             name: this.publisherOriginalAttributes.name,
             valid: true,
             type: this.publisherOriginalAttributes.type,
-            tests: {
-                'Published': false
-            }
+            tests: []
         };
     }
     start() {
@@ -50,20 +48,19 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
                     .then(() => {
                     logger_1.Logger.trace(`Start event published`);
                     this.report.publishTime = new date_controller_1.DateController().toString();
-                    this.report.tests['Published'] = true;
+                    this.report.tests.push({ name: 'Published', valid: true, description: 'Published successfully' });
                     this.executeOnMessageReceivedFunction();
                     return resolve();
                 })
                     .catch((err) => {
                     logger_1.Logger.error(err);
-                    this.report.tests[`Error publishing start event '${JSON.stringify(this.publisher, null, 2)}'`] = false;
+                    this.report.tests.push({ name: 'Published', valid: false, description: err.toString() });
                     reject(err);
                 });
             }
             else {
                 const message = `Publisher is undefined after prePublish function execution ' ` +
                     `${JSON.stringify(this.publisherOriginalAttributes, null, 2)}'`;
-                this.report.tests[message] = false;
                 reject(message);
             }
         });
@@ -83,7 +80,9 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         testExecutor.addArgument('publisher', this.publisher);
         testExecutor.addArgument('message', this.publisher.messageReceived);
         const tests = testExecutor.execute();
-        tests.map((test) => this.report.tests[test.label] = test.valid);
+        this.report.tests = this.report.tests.concat(tests.map(test => {
+            return { name: test.label, valid: test.valid, description: test.description };
+        }));
     }
     executePrePublishingFunction() {
         if (!this.publisherOriginalAttributes.prePublishing) {
@@ -99,7 +98,9 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
             .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
         this.publisherOriginalAttributes = placeHolderReplacer.replace(this.publisherOriginalAttributes);
         logger_1.Logger.trace(`Adding prePublishing functions tests to report`);
-        tests.map((test) => this.report.tests[test.label] = test.valid);
+        this.report.tests = this.report.tests.concat(tests.map(test => {
+            return { name: test.label, valid: test.valid, description: test.description };
+        }));
     }
 };
 StartEventPublisherReporter = __decorate([

@@ -72,7 +72,7 @@ export class HttpClientPublisher extends Publisher {
             catch (exc) {
                 //do nothing
             }
-            if (typeof(this.payload) != "string") {
+            if (typeof(this.payload) != 'string') {
                 this.payload = JSON.stringify(this.payload);
             }
         }

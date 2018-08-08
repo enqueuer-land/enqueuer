@@ -1,3 +1,5 @@
 export interface TestModel {
-    [name: string]: boolean;
+    description: string;
+    valid: boolean;
+    name: string;
 }

@@ -11,7 +11,7 @@ runnables:
     onMessageReceived: >-
       message = JSON.parse(message);
       const messageBody = message.Body;
-      tester.contains('First letter equals enqueuer', messageBody, 'e');
+      tester.contains('Message contains q', messageBody, 'q');
     awsConfiguration:
       endpoint: http://localhost:9324
       accessKeyId: na
