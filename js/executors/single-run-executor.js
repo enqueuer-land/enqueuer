@@ -42,15 +42,10 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     execute() {
         return new Promise((resolve) => {
-            this.singleRunInput.onNoMoreFilesToBeRead(() => {
-                logger_1.Logger.info('There is no more requisition to be ran');
-                this.multiResultCreator.create();
-                return resolve(this.multiResultCreator.isValid());
-            });
+            this.singleRunInput.onNoMoreFilesToBeRead(() => this.onFinishRunnables(resolve));
             this.singleRunInput.receiveRequisition()
                 .then(file => new runnable_runner_1.RunnableRunner(file.content).run())
                 .then(report => {
-                logger_1.Logger.trace('Adding test suite');
                 this.multiResultCreator.addTestSuite(report);
                 return report;
             })
@@ -63,6 +58,11 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 resolve(this.execute()); //Runs the next one
             });
         });
+    }
+    onFinishRunnables(resolve) {
+        logger_1.Logger.info('There is no more requisition to be ran');
+        this.multiResultCreator.create();
+        return resolve(this.multiResultCreator.isValid());
     }
 };
 SingleRunExecutor = __decorate([

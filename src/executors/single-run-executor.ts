@@ -31,15 +31,10 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     public execute(): Promise<boolean> {
         return new Promise((resolve) => {
-            this.singleRunInput.onNoMoreFilesToBeRead(() => {
-                Logger.info('There is no more requisition to be ran');
-                this.multiResultCreator.create();
-                return resolve(this.multiResultCreator.isValid());
-            });
+            this.singleRunInput.onNoMoreFilesToBeRead(() => this.onFinishRunnables(resolve));
             this.singleRunInput.receiveRequisition()
                 .then(file => new RunnableRunner(file.content).run())
                 .then(report => {
-                    Logger.trace('Adding test suite');
                     this.multiResultCreator.addTestSuite(report);
                     return report;
                 })
@@ -54,4 +49,9 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
+    private onFinishRunnables(resolve: any) {
+        Logger.info('There is no more requisition to be ran');
+        this.multiResultCreator.create();
+        return resolve(this.multiResultCreator.isValid());
+    }
 }

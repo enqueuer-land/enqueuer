@@ -12,7 +12,7 @@ export class SummaryResultCreator extends ResultCreator {
         super();
     }
     public addTestSuite(suite: ResultModel): void {
-        this.findRequisitions(suite, '');
+        this.findRequisitions(suite, suite.name);
     }
 
     public addError(err: any): void {

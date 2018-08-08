@@ -1,0 +1,1082 @@
+{
+    "name": "outputExamples/singleRunOutput.json",
+    "tests": [],
+    "valid": true,
+    "runnables": [
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableAmqp",
+            "id": "amqp",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "AmqpReq",
+                    "time": {
+                        "totalTime": 25,
+                        "startTime": "2018-08-08T04:19:03.602Z",
+                        "endTime": "2018-08-08T04:19:03.627Z",
+                        "timeout": 5000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "AmqpSubs",
+                            "type": "amqp",
+                            "tests": [
+                                {
+                                    "name": "Payload replaced",
+                                    "valid": true,
+                                    "description": "1533701943626 is greater than or equal to 1533701943617"
+                                },
+                                {
+                                    "name": "Header",
+                                    "valid": true,
+                                    "description": "value is equal to value"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:03.616Z",
+                            "messageReceivedTime": "2018-08-08T04:19:03.626Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "AmqpPub",
+                            "valid": true,
+                            "type": "amqp",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:03.625Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableFile",
+            "id": "file",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "file",
+                    "time": {
+                        "totalTime": 104,
+                        "startTime": "2018-08-08T04:19:03.735Z",
+                        "endTime": "2018-08-08T04:19:03.839Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "fileSubscription",
+                            "type": "file-name-watcher",
+                            "tests": [
+                                {
+                                    "name": "Some time has passed",
+                                    "valid": true,
+                                    "description": "1533701943839 is greater than or equal to 1533701853918"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:03.739Z",
+                            "messageReceivedTime": "2018-08-08T04:19:03.839Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "filePublisher",
+                            "valid": true,
+                            "type": "file",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:03.741Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableHittingOnlineEnqueuer",
+            "id": "http-no-subscription",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [],
+                    "name": "HttpTitle",
+                    "time": {
+                        "totalTime": 1930,
+                        "startTime": "2018-08-08T04:19:03.943Z",
+                        "endTime": "2018-08-08T04:19:05.873Z"
+                    },
+                    "subscriptions": [],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "HttpEnqueuerRepository",
+                            "valid": true,
+                            "type": "http-client",
+                            "tests": [
+                                {
+                                    "name": "prePublishingTest",
+                                    "valid": true,
+                                    "description": "Definitely true"
+                                },
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "It is online",
+                                    "valid": true,
+                                    "description": "200 is equal to 200"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:05.870Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableHttpYmlPayload",
+            "id": "http",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "HttpOriginal",
+                    "time": {
+                        "totalTime": 13,
+                        "startTime": "2018-08-08T04:19:05.985Z",
+                        "endTime": "2018-08-08T04:19:05.998Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "HttpSubscriptionTitle",
+                            "type": "http-server",
+                            "tests": [
+                                {
+                                    "name": "Params is someId",
+                                    "valid": true,
+                                    "description": "idStuff is equal to idStuff"
+                                },
+                                {
+                                    "name": "Query is 123",
+                                    "valid": true,
+                                    "description": "123 is equal to 123"
+                                },
+                                {
+                                    "name": "Payload is Virgs",
+                                    "valid": true,
+                                    "description": "virgs is equal to virgs"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:05.986Z",
+                            "messageReceivedTime": "2018-08-08T04:19:05.997Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "HttpPublisherClientTitle",
+                            "valid": true,
+                            "type": "http-client",
+                            "tests": [
+                                {
+                                    "name": "prePublishingTest",
+                                    "valid": true,
+                                    "description": "Definitely true"
+                                },
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "publisherOnMessageReceivedTest",
+                                    "valid": true,
+                                    "description": "321 is equal to 321"
+                                },
+                                {
+                                    "name": "publisherOnMessageReceivedPayloadTest",
+                                    "valid": true,
+                                    "description": "responsePayload is equal to responsePayload"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:05.998Z"
+                        }
+                    }
+                },
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "HttpTitleDuplicated",
+                    "time": {
+                        "totalTime": 4,
+                        "startTime": "2018-08-08T04:19:05.999Z",
+                        "endTime": "2018-08-08T04:19:06.003Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "DuplicatedEndPointTest",
+                            "type": "http-server",
+                            "tests": [
+                                {
+                                    "name": "Duplicated",
+                                    "valid": true,
+                                    "description": "Definitely true"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:05.999Z",
+                            "messageReceivedTime": "2018-08-08T04:19:06.002Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "HttpPublisherClientTitle",
+                            "valid": true,
+                            "type": "http-client",
+                            "tests": [
+                                {
+                                    "name": "prePublishingTest",
+                                    "valid": true,
+                                    "description": "Definitely true"
+                                },
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "publisherOnMessageReceivedTest",
+                                    "valid": true,
+                                    "description": "321 is equal to 321"
+                                },
+                                {
+                                    "name": "publisherOnMessageReceivedPayloadTest",
+                                    "valid": true,
+                                    "description": "responsePayload is equal to responsePayload"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:06.003Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "kafkaName",
+            "id": "kafka",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "RequisitionKafka",
+                    "time": {
+                        "totalTime": 55,
+                        "startTime": "2018-08-08T04:19:06.115Z",
+                        "endTime": "2018-08-08T04:19:06.170Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "kafkaSub",
+                            "type": "kafka",
+                            "tests": [
+                                {
+                                    "name": "kafka payload",
+                                    "valid": true,
+                                    "description": "kafkaPayload is equal to kafkaPayload"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:06.128Z",
+                            "messageReceivedTime": "2018-08-08T04:19:06.169Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "kafkaPub",
+                            "valid": true,
+                            "type": "kafka",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:06.170Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableMqtt",
+            "id": "mqtt",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "RequisitionMqtt",
+                    "time": {
+                        "totalTime": 645,
+                        "startTime": "2018-08-08T04:19:06.275Z",
+                        "endTime": "2018-08-08T04:19:06.920Z",
+                        "timeout": 8000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "MqttSub",
+                            "type": "mqtt",
+                            "tests": [
+                                {
+                                    "name": "Payload",
+                                    "valid": true,
+                                    "description": "enqueuer is equal to enqueuer"
+                                },
+                                {
+                                    "name": "Topic",
+                                    "valid": true,
+                                    "description": "enqueuer/integration/public/test is equal to enqueuer/integration/public/test"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:06.543Z",
+                            "messageReceivedTime": "2018-08-08T04:19:06.919Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "MqttPub",
+                            "valid": true,
+                            "type": "mqtt",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:06.795Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableSqsName",
+            "id": "sqs",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "sqsRequisition",
+                    "time": {
+                        "totalTime": 26,
+                        "startTime": "2018-08-08T04:19:07.030Z",
+                        "endTime": "2018-08-08T04:19:07.056Z",
+                        "timeout": 5000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubs",
+                            "type": "sqs",
+                            "tests": [
+                                {
+                                    "name": "Message contains q",
+                                    "valid": true,
+                                    "description": "'enqueuer' contains 'q'"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.030Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.055Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "sqsPublisher",
+                            "valid": true,
+                            "type": "sqs",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.056Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableStomp",
+            "id": "stomp",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "RequisitionStomp",
+                    "time": {
+                        "totalTime": 26,
+                        "startTime": "2018-08-08T04:19:07.162Z",
+                        "endTime": "2018-08-08T04:19:07.188Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "stompSub",
+                            "type": "stomp",
+                            "tests": [
+                                {
+                                    "name": "Payload",
+                                    "valid": true,
+                                    "description": "stompQueue is equal to stompQueue"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.175Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.188Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "stompPub",
+                            "valid": true,
+                            "type": "stomp",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.187Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableTcpName",
+            "id": "tcp",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "tcpNoPart",
+                    "time": {
+                        "totalTime": 5,
+                        "startTime": "2018-08-08T04:19:07.297Z",
+                        "endTime": "2018-08-08T04:19:07.302Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "Any name Sub",
+                            "type": "tcp-server",
+                            "tests": [
+                                {
+                                    "name": "Beatles Song",
+                                    "valid": true,
+                                    "description": "Hey Jude is equal to Hey Jude"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.298Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.301Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "Any name Pub",
+                            "valid": true,
+                            "type": "tcp-client",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "Do not make it bad",
+                                    "valid": true,
+                                    "description": "Do not make it bad is equal to Do not make it bad"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.301Z"
+                        }
+                    }
+                },
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "tcpFirstPart",
+                    "time": {
+                        "totalTime": 105,
+                        "startTime": "2018-08-08T04:19:07.302Z",
+                        "endTime": "2018-08-08T04:19:07.407Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "tcpSubscription1",
+                            "type": "tcp-server",
+                            "tests": [
+                                {
+                                    "name": "I care",
+                                    "valid": true,
+                                    "description": "I do not care is equal to I do not care"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.303Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.304Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "tcpPublisher1",
+                            "valid": true,
+                            "type": "tcp-client",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "Greeting received",
+                                    "valid": true,
+                                    "description": "EnqueuerRocks is equal to EnqueuerRocks"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.407Z"
+                        }
+                    }
+                },
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "tcpSecondPart",
+                    "time": {
+                        "totalTime": 2,
+                        "startTime": "2018-08-08T04:19:07.407Z",
+                        "endTime": "2018-08-08T04:19:07.409Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "tcpSubscription2",
+                            "type": "tcp-server",
+                            "tests": [
+                                {
+                                    "name": "It is still open",
+                                    "valid": true,
+                                    "description": "The socket is still open is equal to The socket is still open"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.407Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.408Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "tcpPublisher2",
+                            "valid": true,
+                            "type": "tcp-client",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "Second message response",
+                                    "valid": true,
+                                    "description": "enqueuer Rocks is equal to enqueuer Rocks"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.409Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableUdpName",
+            "id": "udp",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "udp",
+                    "time": {
+                        "totalTime": 4,
+                        "startTime": "2018-08-08T04:19:07.515Z",
+                        "endTime": "2018-08-08T04:19:07.519Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udpSubscription",
+                            "type": "udp",
+                            "tests": [
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.516Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udpPublisher",
+                            "valid": true,
+                            "type": "udp",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "It is bidirectional",
+                                    "valid": true,
+                                    "description": "damm is equal to damm"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.519Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnableUDSName",
+            "id": "uds",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has not timed out"
+                        }
+                    ],
+                    "name": "uds",
+                    "time": {
+                        "totalTime": 3,
+                        "startTime": "2018-08-08T04:19:07.626Z",
+                        "endTime": "2018-08-08T04:19:07.629Z",
+                        "timeout": 3000
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubscription",
+                            "type": "uds",
+                            "tests": [
+                                {
+                                    "name": "Message received is enqueuer 1",
+                                    "valid": true,
+                                    "description": "enqueuer is equal to enqueuer"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.627Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.628Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udsPublisher",
+                            "valid": true,
+                            "type": "uds",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "It is bidirectional",
+                                    "valid": true,
+                                    "description": "responsePayload is equal to responsePayload"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.629Z"
+                        }
+                    }
+                },
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [],
+                    "name": "RequisitionUds2Name",
+                    "time": {
+                        "totalTime": 2,
+                        "startTime": "2018-08-08T04:19:07.629Z",
+                        "endTime": "2018-08-08T04:19:07.631Z"
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "udsSubscription2",
+                            "type": "uds",
+                            "tests": [
+                                {
+                                    "name": "Message received is enqueuer 2",
+                                    "valid": true,
+                                    "description": "enqueuer is equal to enqueuer"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "No time out",
+                                    "description": "Subscription has not timed out"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.630Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.631Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "udsPublisher2",
+                            "valid": true,
+                            "type": "uds",
+                            "tests": [
+                                {
+                                    "name": "Message to be published is enqueuer",
+                                    "valid": true,
+                                    "description": "enqueuer is equal to enqueuer"
+                                },
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.631Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "runnable",
+            "valid": true,
+            "tests": [],
+            "name": "runnable0Mq",
+            "id": "zeromq-pubsub",
+            "runnables": [
+                {
+                    "type": "requisition",
+                    "valid": true,
+                    "tests": [],
+                    "name": "RequisitionZeroMq",
+                    "time": {
+                        "totalTime": 258,
+                        "startTime": "2018-08-08T04:19:07.738Z",
+                        "endTime": "2018-08-08T04:19:07.996Z"
+                    },
+                    "subscriptions": [
+                        {
+                            "name": "ZeroMqSub",
+                            "type": "zero-mq-sub",
+                            "tests": [
+                                {
+                                    "name": "0Mq is awesome",
+                                    "valid": true,
+                                    "description": "tcp://127.0.0.1:3000 is equal to tcp://127.0.0.1:3000"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message successfully"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-08-08T04:19:07.738Z",
+                            "messageReceivedTime": "2018-08-08T04:19:07.995Z"
+                        }
+                    ],
+                    "startEvent": {
+                        "publisher": {
+                            "name": "ZeroMqPub",
+                            "valid": true,
+                            "type": "zero-mq-pub",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                }
+                            ],
+                            "publishTime": "2018-08-08T04:19:07.994Z"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

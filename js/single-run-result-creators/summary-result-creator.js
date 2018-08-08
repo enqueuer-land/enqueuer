@@ -12,7 +12,7 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
         this.failingTests = [];
     }
     addTestSuite(suite) {
-        this.findRequisitions(suite, '');
+        this.findRequisitions(suite, suite.name);
     }
     addError(err) {
         ++this.testCounter;

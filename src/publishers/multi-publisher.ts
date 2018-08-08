@@ -5,21 +5,21 @@ import {Container} from 'conditional-injector';
 
 export class MultiPublisher {
 
-    private repliers: Publisher[] = [];
+    private publishers: Publisher[] = [];
 
     public constructor(reportersAttributes: PublisherModel[]) {
         reportersAttributes.forEach((report: PublisherModel) => {
             Logger.debug(`Instantiating publisher ${report.type}`);
             const publisher = Container.subclassesOf(Publisher).create(report);
-            this.repliers.push(publisher);
+            this.publishers.push(publisher);
         });
     }
 
     public publish(payload: string): Promise<void[]> {
-        return Promise.all(this.repliers.map(
-            reporter => {
-                        reporter.payload = payload;
-                        return reporter.publish();
+        return Promise.all(this.publishers.map(
+            publisher => {
+                        publisher.payload = payload;
+                        return publisher.publish();
                     }));
 
     }

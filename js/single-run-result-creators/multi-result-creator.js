@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const result_creator_1 = require("./result-creator");
 const conditional_injector_1 = require("conditional-injector");
 const summary_result_creator_1 = require("./summary-result-creator");
+const logger_1 = require("../loggers/logger");
 class MultiResultCreator extends result_creator_1.ResultCreator {
     constructor(reports) {
         super();
@@ -15,6 +16,7 @@ class MultiResultCreator extends result_creator_1.ResultCreator {
         this.resultCreators.push(new summary_result_creator_1.SummaryResultCreator());
     }
     addTestSuite(suite) {
+        logger_1.Logger.trace('Adding test suite');
         this.resultCreators.forEach(result => result.addTestSuite(suite));
     }
     addError(err) {
