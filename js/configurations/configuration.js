@@ -19,6 +19,7 @@ if (!process.argv[1].toString().match('jest')) {
     commander = new commander_1.Command()
         .version(process.env.npm_package_version || packageJson.version, '-v, --version')
         .usage('-c <confif-file-path>')
+        .option('-q, --quiet', 'Disable logging', false)
         .option('-l, --log-level <level>', 'Set log level')
         .option('-c, --config-file <path>', 'Set configurationFile')
         .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session', (val, memo) => {
@@ -47,9 +48,6 @@ class Configuration {
         this.configurationFile.variables = this.configurationFile.variables || {};
     }
     getLogLevel() {
-        if (this.commandLine.verbose) {
-            return 'trace';
-        }
         return (this.commandLine.logLevel) ||
             (this.configurationFile['log-level']);
     }
@@ -67,6 +65,9 @@ class Configuration {
     }
     getFileVariables() {
         return this.configurationFile.variables || {};
+    }
+    isQuietMode() {
+        return this.commandLine.quiet || false;
     }
     setFileVariable(name, value) {
         this.configurationFile.variables[name] = value;

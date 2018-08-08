@@ -11,7 +11,11 @@ const logLevel = configuration.getLogLevel();
 
 const setLogLevel = function () {
     if (Logger) {
-        Logger.setLoggerLevel(logLevel);
+        if (configuration.isQuietMode()) {
+            Logger.disable();
+        } else {
+            Logger.setLoggerLevel(logLevel);
+        }
     }
 };
 
@@ -25,8 +29,8 @@ let printConfigurationFile = function () {
 };
 
 if (logLevel) {
-    printConfigurationFile();
     setLogLevel();
+    printConfigurationFile();
 }
 
 new EnqueuerStarter()

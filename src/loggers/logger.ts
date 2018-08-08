@@ -2,11 +2,23 @@ import * as log4js from 'log4js';
 
 export class Logger {
 
-    private static logger?: log4js.Logger;
+    private static logger?: any;
 
     public static setLoggerLevel(level?: string): void {
         if (level) {
             Logger.getLogger().level = level;
+        }
+    }
+
+    public static disable(): void {
+        console.log = function() {}
+        Logger.logger = {
+            trace(message: string){},
+            debug(message: string){},
+            info(message: string){},
+            warning(message: string){},
+            error(message: string){},
+            fatal(message: string){}
         }
     }
     public static trace(message: string) {
@@ -33,4 +45,8 @@ export class Logger {
         }
         return Logger.logger;
     }
+}
+
+if (process.argv[1].toString().match('jest')) {
+    Logger.disable();
 }

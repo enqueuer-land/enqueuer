@@ -14,6 +14,17 @@ class Logger {
             Logger.getLogger().level = level;
         }
     }
+    static disable() {
+        console.log = function () { };
+        Logger.logger = {
+            trace(message) { },
+            debug(message) { },
+            info(message) { },
+            warning(message) { },
+            error(message) { },
+            fatal(message) { }
+        };
+    }
     static trace(message) {
         Logger.getLogger().trace(message);
     }
@@ -40,3 +51,6 @@ class Logger {
     }
 }
 exports.Logger = Logger;
+if (process.argv[1].toString().match('jest')) {
+    Logger.disable();
+}

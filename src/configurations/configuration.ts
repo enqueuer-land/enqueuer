@@ -12,6 +12,7 @@ if (!process.argv[1].toString().match('jest')) {
     commander = new Command()
     .version(process.env.npm_package_version || packageJson.version, '-v, --version')
     .usage('-c <confif-file-path>')
+    .option('-q, --quiet', 'Disable logging', false)
     .option('-l, --log-level <level>', 'Set log level')
     .option('-c, --config-file <path>', 'Set configurationFile')
     .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session',
@@ -50,9 +51,6 @@ export class Configuration {
     }
 
     public getLogLevel(): string | undefined {
-        if (this.commandLine.verbose) {
-            return 'trace';
-        }
         return (this.commandLine.logLevel) ||
             (this.configurationFile['log-level']);
     }
@@ -73,6 +71,10 @@ export class Configuration {
 
     public getFileVariables(): any {
         return this.configurationFile.variables || {};
+    }
+
+    public isQuietMode(): any {
+        return this.commandLine.quiet || false;
     }
 
     public setFileVariable(name: string, value: any) {

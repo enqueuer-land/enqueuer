@@ -3,15 +3,6 @@ import {Configuration} from "./configuration";
 describe('Configuration', function() {
 
     describe('getLogLevel', function() {
-        it('should check \'Verbose\' mode in command line', function() {
-            const expectedLevel = 'trace';
-            const commandLine = {
-                verbose: expectedLevel
-            }
-            const actualLevel = new Configuration(commandLine).getLogLevel();
-
-            expect(actualLevel).toBe(expectedLevel);
-        });
 
         it('should check \'LogLevel\' in command line', function() {
             const expectedLevel = 'anyStuff';

@@ -13,7 +13,12 @@ let configuration = new configuration_1.Configuration();
 const logLevel = configuration.getLogLevel();
 const setLogLevel = function () {
     if (logger_1.Logger) {
-        logger_1.Logger.setLoggerLevel(logLevel);
+        if (configuration.isQuietMode()) {
+            logger_1.Logger.disable();
+        }
+        else {
+            logger_1.Logger.setLoggerLevel(logLevel);
+        }
     }
 };
 let printConfigurationFile = function () {
@@ -25,8 +30,8 @@ let printConfigurationFile = function () {
     console.log(prettyjson_1.default.render(configuration.getFile(), options));
 };
 if (logLevel) {
-    printConfigurationFile();
     setLogLevel();
+    printConfigurationFile();
 }
 new enqueuer_starter_1.EnqueuerStarter()
     .start()
