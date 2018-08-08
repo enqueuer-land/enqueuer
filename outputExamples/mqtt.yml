@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: RequisitionMqtt
     time:
-      totalTime: 3644
-      startTime: '2018-08-08T13:04:44.821Z'
-      endTime: '2018-08-08T13:04:48.465Z'
+      totalTime: 643
+      startTime: '2018-08-08T15:52:33.672Z'
+      endTime: '2018-08-08T15:52:34.315Z'
       timeout: 8000
     subscriptions:
       -
@@ -26,11 +26,11 @@ runnables:
           -
             name: Payload
             valid: true
-            description: 'enqueuer is equal to enqueuer'
+            description: '''enqueuer'' is equal to ''enqueuer'''
           -
             name: Topic
             valid: true
-            description: 'enqueuer/integration/public/test is equal to enqueuer/integration/public/test'
+            description: '''enqueuer/integration/public/test'' is equal to ''enqueuer/integration/public/test'''
           -
             valid: true
             name: 'Message received'
@@ -40,8 +40,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T13:04:46.773Z'
-        messageReceivedTime: '2018-08-08T13:04:48.464Z'
+        connectionTime: '2018-08-08T15:52:33.944Z'
+        messageReceivedTime: '2018-08-08T15:52:34.315Z'
     startEvent:
       publisher:
         name: MqttPub
@@ -52,4 +52,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-08T13:04:47.908Z'
+        publishTime: '2018-08-08T15:52:34.191Z'

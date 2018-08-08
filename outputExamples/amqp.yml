@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: AmqpReq
     time:
-      totalTime: 522
-      startTime: '2018-08-08T13:04:39.428Z'
-      endTime: '2018-08-08T13:04:39.950Z'
+      totalTime: 23
+      startTime: '2018-08-08T15:52:32.092Z'
+      endTime: '2018-08-08T15:52:32.115Z'
       timeout: 5000
     subscriptions:
       -
@@ -26,11 +26,11 @@ runnables:
           -
             name: 'Payload replaced'
             valid: true
-            description: '1533733479949 is greater than or equal to 1533733479940'
+            description: '''1533743552115'' is greater than or equal to ''1533743552106'''
           -
             name: Header
             valid: true
-            description: 'value is equal to value'
+            description: '''value'' is equal to ''value'''
           -
             valid: true
             name: 'Message received'
@@ -40,8 +40,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T13:04:39.939Z'
-        messageReceivedTime: '2018-08-08T13:04:39.950Z'
+        connectionTime: '2018-08-08T15:52:32.106Z'
+        messageReceivedTime: '2018-08-08T15:52:32.115Z'
     startEvent:
       publisher:
         name: AmqpPub
@@ -52,4 +52,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-08T13:04:39.948Z'
+        publishTime: '2018-08-08T15:52:32.113Z'

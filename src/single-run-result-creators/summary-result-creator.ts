@@ -3,13 +3,16 @@ import {ResultCreator} from './result-creator';
 import {TestModel} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import chalk from 'chalk';
+import {DateController} from '../timers/date-controller';
 
 export class SummaryResultCreator extends ResultCreator {
     private testCounter: number = 0;
     private failingTests: TestModel[] = [];
+    private startTime: DateController;
 
     public constructor() {
         super();
+        this.startTime = new DateController();
     }
 
     public addTestSuite(name: string, report: ResultModel): void {
@@ -82,11 +85,13 @@ export class SummaryResultCreator extends ResultCreator {
     }
 
     private printSummary() {
+        const totalTime = new DateController().getTime() - this.startTime.getTime();
+
         console.log(chalk.white(`------------------------------`));
-        const divisionString = `${this.testCounter - this.failingTests.length}/${this.testCounter}`;
         const percentage = Math.trunc(10000 * (this.testCounter - this.failingTests.length) / this.testCounter) / 100;
-        console.log(this.percentageColor(percentage)(`\tTests summary` +
-                                                            `\t\tPassing tests: ${divisionString} => ${percentage}%`));
+        const divisionString = `${this.testCounter - this.failingTests.length} tests passing of ${this.testCounter} total ` +
+                                            `(${percentage}%) ran in ${totalTime}ms`;
+        console.log(this.percentageColor(percentage)(`\tTests summary \t\t ${divisionString}`));
     }
 
     private percentageColor(percentage: number): Function {

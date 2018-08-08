@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: RequisitionKafka
     time:
-      totalTime: 37
-      startTime: '2018-08-08T13:04:44.671Z'
-      endTime: '2018-08-08T13:04:44.708Z'
+      totalTime: 29
+      startTime: '2018-08-08T15:52:34.431Z'
+      endTime: '2018-08-08T15:52:34.460Z'
       timeout: 3000
     subscriptions:
       -
@@ -26,14 +26,14 @@ runnables:
           -
             name: 'kafka payload'
             valid: true
-            description: 'kafkaPayload is equal to kafkaPayload'
+            description: '''kafkaPayload'' is equal to ''kafkaPayload'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-08T13:04:44.685Z'
-        messageReceivedTime: '2018-08-08T13:04:44.706Z'
+        connectionTime: '2018-08-08T15:52:34.443Z'
+        messageReceivedTime: '2018-08-08T15:52:34.458Z'
     startEvent:
       publisher:
         name: kafkaPub
@@ -44,4 +44,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-08T13:04:44.708Z'
+        publishTime: '2018-08-08T15:52:34.460Z'

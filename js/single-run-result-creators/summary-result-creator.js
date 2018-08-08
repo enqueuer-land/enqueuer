@@ -5,11 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const result_creator_1 = require("./result-creator");
 const chalk_1 = __importDefault(require("chalk"));
+const date_controller_1 = require("../timers/date-controller");
 class SummaryResultCreator extends result_creator_1.ResultCreator {
     constructor() {
         super();
         this.testCounter = 0;
         this.failingTests = [];
+        this.startTime = new date_controller_1.DateController();
     }
     addTestSuite(name, report) {
         this.findRequisitions(report, name);
@@ -74,11 +76,12 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
         return prefix.concat(' -> ').concat(newLevelName);
     }
     printSummary() {
+        const totalTime = new date_controller_1.DateController().getTime() - this.startTime.getTime();
         console.log(chalk_1.default.white(`------------------------------`));
-        const divisionString = `${this.testCounter - this.failingTests.length}/${this.testCounter}`;
         const percentage = Math.trunc(10000 * (this.testCounter - this.failingTests.length) / this.testCounter) / 100;
-        console.log(this.percentageColor(percentage)(`\tTests summary` +
-            `\t\tPassing tests: ${divisionString} => ${percentage}%`));
+        const divisionString = `${this.testCounter - this.failingTests.length} tests passing of ${this.testCounter} total ` +
+            `(${percentage}%) ran in ${totalTime}ms`;
+        console.log(this.percentageColor(percentage)(`\tTests summary \t\t ${divisionString}`));
     }
     percentageColor(percentage) {
         if (percentage == 100) {

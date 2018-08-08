@@ -10,9 +10,9 @@ runnables:
     tests: []
     name: RequisitionZeroMq
     time:
-      totalTime: 256
-      startTime: '2018-08-08T13:04:49.894Z'
-      endTime: '2018-08-08T13:04:50.150Z'
+      totalTime: 255
+      startTime: '2018-08-08T15:52:35.286Z'
+      endTime: '2018-08-08T15:52:35.541Z'
     subscriptions:
       -
         name: ZeroMqSub
@@ -21,14 +21,14 @@ runnables:
           -
             name: '0Mq is awesome'
             valid: true
-            description: 'tcp://127.0.0.1:3000 is equal to tcp://127.0.0.1:3000'
+            description: '''tcp://127.0.0.1:3000'' is equal to ''tcp://127.0.0.1:3000'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-08T13:04:49.897Z'
-        messageReceivedTime: '2018-08-08T13:04:50.150Z'
+        connectionTime: '2018-08-08T15:52:35.287Z'
+        messageReceivedTime: '2018-08-08T15:52:35.541Z'
     startEvent:
       publisher:
         name: ZeroMqPub
@@ -39,4 +39,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-08T13:04:50.149Z'
+        publishTime: '2018-08-08T15:52:35.540Z'

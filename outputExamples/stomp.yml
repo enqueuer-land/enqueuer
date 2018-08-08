@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: RequisitionStomp
     time:
-      totalTime: 613
-      startTime: '2018-08-08T13:04:48.717Z'
-      endTime: '2018-08-08T13:04:49.330Z'
+      totalTime: 24
+      startTime: '2018-08-08T15:52:34.926Z'
+      endTime: '2018-08-08T15:52:34.950Z'
       timeout: 3000
     subscriptions:
       -
@@ -26,14 +26,14 @@ runnables:
           -
             name: Payload
             valid: true
-            description: 'stompQueue is equal to stompQueue'
+            description: '''stompQueue'' is equal to ''stompQueue'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-08T13:04:49.318Z'
-        messageReceivedTime: '2018-08-08T13:04:49.330Z'
+        connectionTime: '2018-08-08T15:52:34.938Z'
+        messageReceivedTime: '2018-08-08T15:52:34.950Z'
     startEvent:
       publisher:
         name: stompPub
@@ -44,4 +44,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-08T13:04:49.329Z'
+        publishTime: '2018-08-08T15:52:34.949Z'
