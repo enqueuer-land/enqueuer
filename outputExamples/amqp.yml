@@ -1,0 +1,55 @@
+type: runnable
+valid: true
+tests: []
+name: runnableAmqp
+id: amqp
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: AmqpReq
+    time:
+      totalTime: 522
+      startTime: '2018-08-08T13:04:39.428Z'
+      endTime: '2018-08-08T13:04:39.950Z'
+      timeout: 5000
+    subscriptions:
+      -
+        name: AmqpSubs
+        type: amqp
+        tests:
+          -
+            name: 'Payload replaced'
+            valid: true
+            description: '1533733479949 is greater than or equal to 1533733479940'
+          -
+            name: Header
+            valid: true
+            description: 'value is equal to value'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
+        valid: true
+        connectionTime: '2018-08-08T13:04:39.939Z'
+        messageReceivedTime: '2018-08-08T13:04:39.950Z'
+    startEvent:
+      publisher:
+        name: AmqpPub
+        valid: true
+        type: amqp
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-08-08T13:04:39.948Z'

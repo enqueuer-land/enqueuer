@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //#Auto-Generated Code
-require("./single-run-result-creators/yml-result-creator");
-require("./single-run-result-creators/json-result-creator");
+require("./single-run-result-creators/file-result-creator");
 require("./runnables/requisition-runner");
 require("./runnables/runnable-runner");
 require("./subscriptions/filename-watcher-subscription");

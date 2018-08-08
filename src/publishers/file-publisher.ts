@@ -3,7 +3,9 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {IdGenerator} from '../id-generator/id-generator';
 import {Injectable} from 'conditional-injector';
 import {isNullOrUndefined} from 'util';
+import * as yaml from 'yamljs';
 import * as fs from 'fs';
+import {Logger} from '../loggers/logger';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'file'})
 export class FilePublisher extends Publisher {
@@ -16,16 +18,22 @@ export class FilePublisher extends Publisher {
         super(publisherAttributes);
         this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
-        this.filenameExtension = publisherAttributes.filenameExtension || '.enqRun';
+        this.filenameExtension = publisherAttributes.filenameExtension || 'enq';
     }
 
     public publish(): Promise<void> {
         let filename = this.createFilename();
         let value = this.payload;
         try {
-            value = JSON.stringify(JSON.parse(this.payload), null, 2);
+            const parsedToObject = JSON.parse(this.payload);
+            if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
+                value = yaml.stringify(parsedToObject, 10, 2);
+            } else  {
+                value = JSON.stringify(parsedToObject, null, 2);
+            }
+
         } catch (exc) {
-            //do nothing
+            Logger.info('Content to write a file is not parseable');
         }
 
         fs.writeFileSync(filename, value);

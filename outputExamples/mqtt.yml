@@ -1,0 +1,55 @@
+type: runnable
+valid: true
+tests: []
+name: runnableMqtt
+id: mqtt
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: RequisitionMqtt
+    time:
+      totalTime: 3644
+      startTime: '2018-08-08T13:04:44.821Z'
+      endTime: '2018-08-08T13:04:48.465Z'
+      timeout: 8000
+    subscriptions:
+      -
+        name: MqttSub
+        type: mqtt
+        tests:
+          -
+            name: Payload
+            valid: true
+            description: 'enqueuer is equal to enqueuer'
+          -
+            name: Topic
+            valid: true
+            description: 'enqueuer/integration/public/test is equal to enqueuer/integration/public/test'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
+        valid: true
+        connectionTime: '2018-08-08T13:04:46.773Z'
+        messageReceivedTime: '2018-08-08T13:04:48.464Z'
+    startEvent:
+      publisher:
+        name: MqttPub
+        valid: true
+        type: mqtt
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-08-08T13:04:47.908Z'

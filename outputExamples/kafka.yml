@@ -1,0 +1,47 @@
+type: runnable
+valid: true
+tests: []
+name: kafkaName
+id: kafka
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: RequisitionKafka
+    time:
+      totalTime: 37
+      startTime: '2018-08-08T13:04:44.671Z'
+      endTime: '2018-08-08T13:04:44.708Z'
+      timeout: 3000
+    subscriptions:
+      -
+        name: kafkaSub
+        type: kafka
+        tests:
+          -
+            name: 'kafka payload'
+            valid: true
+            description: 'kafkaPayload is equal to kafkaPayload'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+        valid: true
+        connectionTime: '2018-08-08T13:04:44.685Z'
+        messageReceivedTime: '2018-08-08T13:04:44.706Z'
+    startEvent:
+      publisher:
+        name: kafkaPub
+        valid: true
+        type: kafka
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-08-08T13:04:44.708Z'

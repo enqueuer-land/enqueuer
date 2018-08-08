@@ -1,0 +1,153 @@
+type: runnable
+valid: true
+tests: []
+name: runnableTcpName
+id: tcp
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: tcpNoPart
+    time:
+      totalTime: 6
+      startTime: '2018-08-08T13:04:49.439Z'
+      endTime: '2018-08-08T13:04:49.445Z'
+      timeout: 3000
+    subscriptions:
+      -
+        name: 'Any name Sub'
+        type: tcp-server
+        tests:
+          -
+            name: 'Beatles Song'
+            valid: true
+            description: 'Hey Jude is equal to Hey Jude'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
+        valid: true
+        connectionTime: '2018-08-08T13:04:49.441Z'
+        messageReceivedTime: '2018-08-08T13:04:49.444Z'
+    startEvent:
+      publisher:
+        name: 'Any name Pub'
+        valid: true
+        type: tcp-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Do not make it bad'
+            valid: true
+            description: 'Do not make it bad is equal to Do not make it bad'
+        publishTime: '2018-08-08T13:04:49.444Z'
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: tcpFirstPart
+    time:
+      totalTime: 111
+      startTime: '2018-08-08T13:04:49.445Z'
+      endTime: '2018-08-08T13:04:49.556Z'
+      timeout: 3000
+    subscriptions:
+      -
+        name: tcpSubscription1
+        type: tcp-server
+        tests:
+          -
+            name: 'I care'
+            valid: true
+            description: 'I do not care is equal to I do not care'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
+        valid: true
+        connectionTime: '2018-08-08T13:04:49.451Z'
+        messageReceivedTime: '2018-08-08T13:04:49.453Z'
+    startEvent:
+      publisher:
+        name: tcpPublisher1
+        valid: true
+        type: tcp-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Greeting received'
+            valid: true
+            description: 'EnqueuerRocks is equal to EnqueuerRocks'
+        publishTime: '2018-08-08T13:04:49.556Z'
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: tcpSecondPart
+    time:
+      totalTime: 2
+      startTime: '2018-08-08T13:04:49.556Z'
+      endTime: '2018-08-08T13:04:49.558Z'
+      timeout: 3000
+    subscriptions:
+      -
+        name: tcpSubscription2
+        type: tcp-server
+        tests:
+          -
+            name: 'It is still open'
+            valid: true
+            description: 'The socket is still open is equal to The socket is still open'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
+        valid: true
+        connectionTime: '2018-08-08T13:04:49.556Z'
+        messageReceivedTime: '2018-08-08T13:04:49.558Z'
+    startEvent:
+      publisher:
+        name: tcpPublisher2
+        valid: true
+        type: tcp-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Second message response'
+            valid: true
+            description: 'enqueuer Rocks is equal to enqueuer Rocks'
+        publishTime: '2018-08-08T13:04:49.558Z'

@@ -19,7 +19,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const result_creator_1 = require("./result-creator");
 const fs = __importStar(require("fs"));
-let JsonResultCreator = class JsonResultCreator extends result_creator_1.ResultCreator {
+const yaml = __importStar(require("yamljs"));
+let FileResultCreator = class FileResultCreator extends result_creator_1.ResultCreator {
     constructor(resultCreatorAttributes) {
         super();
         this.report = {
@@ -40,14 +41,19 @@ let JsonResultCreator = class JsonResultCreator extends result_creator_1.ResultC
         return this.report.valid;
     }
     create() {
-        fs.writeFileSync(this.report.name, JSON.stringify(this.report, null, 4));
+        let content = this.report;
+        if (this.report.name.endsWith('yml') || this.report.name.endsWith('yaml')) {
+            content = yaml.stringify(content, 10, 2);
+        }
+        else {
+            content = JSON.stringify(content, null, 2);
+        }
+        fs.writeFileSync(this.report.name, content);
     }
 };
-JsonResultCreator = __decorate([
-    conditional_injector_1.Injectable({
-        scope: conditional_injector_1.Scope.Application,
-        predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'json'
-    }),
+FileResultCreator = __decorate([
+    conditional_injector_1.Injectable({ scope: conditional_injector_1.Scope.Application,
+        predicate: (resultCreatorAttributes) => resultCreatorAttributes && resultCreatorAttributes.type === 'file' }),
     __metadata("design:paramtypes", [Object])
-], JsonResultCreator);
-exports.JsonResultCreator = JsonResultCreator;
+], FileResultCreator);
+exports.FileResultCreator = FileResultCreator;

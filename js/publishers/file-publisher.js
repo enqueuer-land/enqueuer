@@ -20,22 +20,30 @@ const publisher_1 = require("./publisher");
 const id_generator_1 = require("../id-generator/id-generator");
 const conditional_injector_1 = require("conditional-injector");
 const util_1 = require("util");
+const yaml = __importStar(require("yamljs"));
 const fs = __importStar(require("fs"));
+const logger_1 = require("../loggers/logger");
 let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
-        this.filenameExtension = publisherAttributes.filenameExtension || '.enqRun';
+        this.filenameExtension = publisherAttributes.filenameExtension || 'enq';
     }
     publish() {
         let filename = this.createFilename();
         let value = this.payload;
         try {
-            value = JSON.stringify(JSON.parse(this.payload), null, 2);
+            const parsedToObject = JSON.parse(this.payload);
+            if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
+                value = yaml.stringify(parsedToObject, 10, 2);
+            }
+            else {
+                value = JSON.stringify(parsedToObject, null, 2);
+            }
         }
         catch (exc) {
-            //do nothing
+            logger_1.Logger.info('Content to write a file is not parseable');
         }
         fs.writeFileSync(filename, value);
         return Promise.resolve();
