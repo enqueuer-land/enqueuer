@@ -3,17 +3,15 @@ import {Logger} from '../loggers/logger';
 import * as yaml from 'yamljs';
 import * as fs from 'fs';
 import {Command} from 'commander';
-
-const packageJson: any = '../../package.json';
+const packageJson = require('../../package.json');
 let configFileName = '';
 
 let commandLineVariables: any = {};
 let commander: any = {};
 if (!process.argv[1].toString().match('jest')) {
     commander = new Command()
-    .version(process.env.npm_package_version || packageJson.version, '-V, --version')
+    .version(process.env.npm_package_version || packageJson.version, '-v, --version')
     .usage('-c <confif-file-path>')
-    .option('-v, --verbose', 'Activates verbose mode', false)
     .option('-l, --log-level <level>', 'Set log level')
     .option('-c, --config-file <path>', 'Set configurationFile')
     .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session',

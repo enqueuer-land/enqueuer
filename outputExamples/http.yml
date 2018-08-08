@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: HttpOriginal
     time:
-      totalTime: 12
-      startTime: '2018-08-08T17:23:34.264Z'
-      endTime: '2018-08-08T17:23:34.276Z'
+      totalTime: 13
+      startTime: '2018-08-08T18:33:20.594Z'
+      endTime: '2018-08-08T18:33:20.607Z'
       timeout: 3000
     subscriptions:
       -
@@ -44,8 +44,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T17:23:34.266Z'
-        messageReceivedTime: '2018-08-08T17:23:34.275Z'
+        connectionTime: '2018-08-08T18:33:20.596Z'
+        messageReceivedTime: '2018-08-08T18:33:20.606Z'
     startEvent:
       publisher:
         name: HttpPublisherClientTitle
@@ -68,7 +68,7 @@ runnables:
             name: publisherOnMessageReceivedPayloadTest
             valid: true
             description: '''responsePayload'' is equal to ''responsePayload'''
-        publishTime: '2018-08-08T17:23:34.276Z'
+        publishTime: '2018-08-08T18:33:20.607Z'
   -
     type: requisition
     valid: true
@@ -80,8 +80,8 @@ runnables:
     name: HttpTitleDuplicated
     time:
       totalTime: 4
-      startTime: '2018-08-08T17:23:34.277Z'
-      endTime: '2018-08-08T17:23:34.281Z'
+      startTime: '2018-08-08T18:33:20.608Z'
+      endTime: '2018-08-08T18:33:20.612Z'
       timeout: 3000
     subscriptions:
       -
@@ -101,8 +101,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T17:23:34.277Z'
-        messageReceivedTime: '2018-08-08T17:23:34.280Z'
+        connectionTime: '2018-08-08T18:33:20.608Z'
+        messageReceivedTime: '2018-08-08T18:33:20.611Z'
     startEvent:
       publisher:
         name: HttpPublisherClientTitle
@@ -125,7 +125,7 @@ runnables:
             name: publisherOnMessageReceivedPayloadTest
             valid: true
             description: '''responsePayload'' is equal to ''responsePayload'''
-        publishTime: '2018-08-08T17:23:34.281Z'
+        publishTime: '2018-08-08T18:33:20.612Z'
   -
     type: requisition
     valid: true
@@ -136,9 +136,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: HttpGET
     time:
-      totalTime: 5
-      startTime: '2018-08-08T17:23:34.281Z'
-      endTime: '2018-08-08T17:23:34.286Z'
+      totalTime: 3
+      startTime: '2018-08-08T18:33:20.612Z'
+      endTime: '2018-08-08T18:33:20.615Z'
       timeout: 3000
     subscriptions:
       -
@@ -154,8 +154,8 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-08T17:23:34.281Z'
-        messageReceivedTime: '2018-08-08T17:23:34.286Z'
+        connectionTime: '2018-08-08T18:33:20.612Z'
+        messageReceivedTime: '2018-08-08T18:33:20.615Z'
     startEvent:
       publisher:
         name: HttpEnqueuerRepository
@@ -174,4 +174,4 @@ runnables:
             name: 'It runs get onMessageReceived'
             valid: true
             description: '''200'' is equal to ''200'''
-        publishTime: '2018-08-08T17:23:34.286Z'
+        publishTime: '2018-08-08T18:33:20.615Z'

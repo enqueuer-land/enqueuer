@@ -11,15 +11,14 @@ const logger_1 = require("../loggers/logger");
 const yaml = __importStar(require("yamljs"));
 const fs = __importStar(require("fs"));
 const commander_1 = require("commander");
-const packageJson = '../../package.json';
+const packageJson = require('../../package.json');
 let configFileName = '';
 let commandLineVariables = {};
 let commander = {};
 if (!process.argv[1].toString().match('jest')) {
     commander = new commander_1.Command()
-        .version(process.env.npm_package_version || packageJson.version, '-V, --version')
+        .version(process.env.npm_package_version || packageJson.version, '-v, --version')
         .usage('-c <confif-file-path>')
-        .option('-v, --verbose', 'Activates verbose mode', false)
         .option('-l, --log-level <level>', 'Set log level')
         .option('-c, --config-file <path>', 'Set configurationFile')
         .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session', (val, memo) => {

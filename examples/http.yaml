@@ -71,7 +71,6 @@ runnables:
         status: 200
         payload: responsePayload
       onMessageReceived: >-
-        console.log(message);
         tester.isDefined('isDefined', message);
   startEvent:
     publisher:

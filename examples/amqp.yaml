@@ -31,7 +31,6 @@ runnables:
     exchange: enqueuer.exchange
     routingKey: enqueuer.integration.test.routing.#
     onMessageReceived: >-
-      console.log(message);
       tester.isEqualTo('Payload', message.data.how.about, 'a new object?');
       tester.isEqualTo('Header', message.headers.key, 'value');
       tester.isEqualTo('Other header value', message.headers.otherKey, 'otherValue');
