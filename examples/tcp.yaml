@@ -52,11 +52,11 @@ runnables:
       name: tcpPublisher2
       payload: The socket is still open
       loadStreamName: tcpPublisherSocket
-      onMessageReceived: tester.isEqualTo('Second message response', message.toString(), '{{tcpPayload}}');
+      onMessageReceived: tester.isEqualTo(`Second message is '<<tcpPayload>>'`, message.toString(), '<<tcpPayload>>');
   subscriptions:
   - type: tcp-server
     name: tcpSubscription2
     loadStreamName: tcpSubscriptionSocket
-    response: "{{tcpPayload}}"
+    response: <<tcpPayload>>
     onMessageReceived: tester.isEqualTo('It is still open', message.toString(), 'The socket is still open');
     timeout: 500
