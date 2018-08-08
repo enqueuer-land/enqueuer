@@ -17,9 +17,6 @@ To Create:
         https://github.com/mscdex/cap
         https://github.com/node-pcap/node_pcap
 
-Publish not only string
 Subscribe not only string
 HttpServerPool
 Https support
-Rename report-generator -> requisition
-File publisher put more stuff

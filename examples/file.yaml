@@ -5,14 +5,6 @@ initialDelay: 0
 runnables:
 - timeout: 3000
   name: file
-  subscriptions:
-  - type: file-name-watcher
-    name: fileSubscription
-    fileNamePattern: temp/fileTest*file
-    onMessageReceived: >-
-      const now = new Date().getTime();
-      tester.isGreaterThanOrEqualTo('some time has passed', now + '', message);
-    timeout: 1000
   startEvent:
     publisher:
       type: file
@@ -21,3 +13,12 @@ runnables:
       filenamePrefix: temp/fileTest
       filenameExtension: file
       prePublishing: publisher.payload=new Date().getTime();
+  subscriptions:
+  - type: file-name-watcher
+    name: fileSubscription
+    fileNamePattern: temp/fileTest*file
+    onMessageReceived: >-
+      const now = new Date().getTime();
+      message = JSON.parse(message);
+      tester.isGreaterThanOrEqualTo('Some time has passed', now + '', message.content);
+    timeout: 1000

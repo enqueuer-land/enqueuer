@@ -25,7 +25,11 @@ class SingleRunInput {
         }
         return this.subscriptionReporter
             .receiveMessage()
-            .then((unparsed) => this.runnableParser.parse(unparsed));
+            .then((file) => {
+            let fileObj = JSON.parse(file);
+            fileObj.content = this.runnableParser.parse(fileObj.content);
+            return fileObj;
+        });
     }
 }
 exports.SingleRunInput = SingleRunInput;

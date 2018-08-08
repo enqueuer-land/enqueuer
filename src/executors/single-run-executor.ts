@@ -37,7 +37,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 return resolve(this.multiResultCreator.isValid());
             });
             this.singleRunInput.receiveRequisition()
-                .then(runnable => new RunnableRunner(runnable).run())
+                .then(file => new RunnableRunner(file.content).run())
                 .then(report => {
                     Logger.trace('Adding test suite');
                     this.multiResultCreator.addTestSuite(report);

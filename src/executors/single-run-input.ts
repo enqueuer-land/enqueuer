@@ -27,13 +27,17 @@ export class SingleRunInput {
         this.executorTimeout = executorTimeout;
     }
 
-    public receiveRequisition(): Promise<RunnableModel> {
+    public receiveRequisition(): Promise<any> {
         if (this.executorTimeout) {
             this.subscriptionReporter.startTimeout(this.executorTimeout);
         }
         return this.subscriptionReporter
             .receiveMessage()
-            .then((unparsed: string) => this.runnableParser.parse(unparsed));
+            .then((file: string) => {
+                let fileObj = JSON.parse(file);
+                fileObj.content = this.runnableParser.parse(fileObj.content);
+                return fileObj;
+            });
     }
 
 }

@@ -48,7 +48,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 return resolve(this.multiResultCreator.isValid());
             });
             this.singleRunInput.receiveRequisition()
-                .then(runnable => new runnable_runner_1.RunnableRunner(runnable).run())
+                .then(file => new runnable_runner_1.RunnableRunner(file.content).run())
                 .then(report => {
                 logger_1.Logger.trace('Adding test suite');
                 this.multiResultCreator.addTestSuite(report);

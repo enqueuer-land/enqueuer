@@ -59,7 +59,14 @@ let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subs
                 const pop = this.filesName.shift();
                 if (pop) {
                     try {
-                        resolve(fs.readFileSync(pop).toString());
+                        const stat = fs.lstatSync(pop);
+                        resolve(JSON.stringify({
+                            content: fs.readFileSync(pop).toString(),
+                            name: pop,
+                            size: stat.size,
+                            modified: stat.mtime,
+                            created: stat.ctime
+                        }));
                     }
                     catch (error) {
                         logger_1.Logger.warning(`Error reading file ${JSON.stringify(error)}`);
