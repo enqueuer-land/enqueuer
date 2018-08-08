@@ -89,14 +89,14 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             reject();
         });
         stream.once('data', (msg) => {
-            logger_1.Logger.debug(`Tcp server got data ${msg.toString()}`);
+            logger_1.Logger.debug(`Tcp server got data ${msg}`);
             if (this.response) {
                 logger_1.Logger.debug(`Tcp server sending response`);
                 stream.write(this.response, () => this.persistStream(stream, resolve, msg));
             }
             else {
                 this.persistStream(stream, resolve, msg);
-                resolve(msg.toString());
+                resolve(msg);
             }
         });
     }

@@ -21,7 +21,7 @@ export class MqttSubscription extends Subscription {
         this.options.connectTimeout = this.options.connectTimeout || 10 * 1000;
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
         this.client.subscribe(this.topic);
         return new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ export class MqttSubscription extends Subscription {
             }
             this.client.on('message', (topic: string, payload: string) => {
                 const message = {topic: topic, payload: payload};
-                resolve(JSON.stringify(message));
+                resolve(message);
             });
         });
     }

@@ -17,9 +17,9 @@
       ],
       "name": "RequisitionStomp",
       "time": {
-        "totalTime": 217,
-        "startTime": "2018-08-08T03:22:56.508Z",
-        "endTime": "2018-08-08T03:22:56.725Z",
+        "totalTime": 218,
+        "startTime": "2018-08-08T03:52:18.296Z",
+        "endTime": "2018-08-08T03:52:18.514Z",
         "timeout": 3000
       },
       "subscriptions": [
@@ -28,13 +28,19 @@
           "type": "stomp",
           "tests": [
             {
+              "name": "Payload",
+              "valid": true,
+              "description": "stompQueue is equal to stompQueue"
+            },
+            {
               "valid": true,
               "name": "Message received",
               "description": "Subscription has received its message successfully"
             }
           ],
           "valid": true,
-          "connectionTime": "2018-08-08T03:22:56.710Z"
+          "connectionTime": "2018-08-08T03:52:18.501Z",
+          "messageReceivedTime": "2018-08-08T03:52:18.514Z"
         }
       ],
       "startEvent": {
@@ -49,7 +55,7 @@
               "description": "Published successfully"
             }
           ],
-          "publishTime": "2018-08-08T03:22:56.724Z"
+          "publishTime": "2018-08-08T03:52:18.513Z"
         }
       }
     }

@@ -30,7 +30,6 @@ runnables:
     exchange: enqueuer.exchange
     routingKey: enqueuer.integration.test.routing.#
     onMessageReceived: >-
-      message = JSON.parse(message);
       tester.isGreaterThanOrEqualTo('Payload replaced', new Date().getTime(), message.data);
       tester.isEqualTo('Header', message.headers.key, 'value');
     timeout: 3000

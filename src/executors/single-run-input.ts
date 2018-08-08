@@ -1,6 +1,5 @@
 import {SubscriptionReporter} from '../reporters/subscription/subscription-reporter';
 import {RunnableParser} from '../runnables/runnable-parser';
-import {RunnableModel} from '../models/inputs/runnable-model';
 
 export class SingleRunInput {
 
@@ -33,10 +32,9 @@ export class SingleRunInput {
         }
         return this.subscriptionReporter
             .receiveMessage()
-            .then((file: string) => {
-                let fileObj = JSON.parse(file);
-                fileObj.content = this.runnableParser.parse(fileObj.content);
-                return fileObj;
+            .then((file: any) => {
+                file.content = this.runnableParser.parse(file.content);
+                return file;
             });
     }
 

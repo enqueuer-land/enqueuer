@@ -17,4 +17,4 @@ runnables:
       serverAddress: localhost
       port: '23070'
       payload: it
-      onMessageReceived: tester.isEqualTo('It is bidirectional', message, 'damm');
+      onMessageReceived: tester.isEqualTo('It is bidirectional', message.toString(), 'damm');

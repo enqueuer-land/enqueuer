@@ -19,6 +19,5 @@ runnables:
     fileNamePattern: temp/fileTest*file
     onMessageReceived: >-
       const now = new Date().getTime();
-      message = JSON.parse(message);
       tester.isGreaterThanOrEqualTo('Some time has passed', now + '', message.content);
     timeout: 1000

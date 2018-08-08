@@ -17,12 +17,12 @@ export class ZeroMqSubSubscription extends Subscription {
         this.socket = zmq.socket('sub');
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve) => {
             Logger.trace(`ZeroMqSub waiting for a message related to topic ${this.topic}`);
             this.socket.on('message', (topic: Buffer, message: Buffer) => {
                 Logger.debug(`ZeroMqSub received a message related to topic ${topic.toString()}`);
-                resolve(message.toString());
+                resolve(message);
             });
         });
     }

@@ -21,7 +21,7 @@ export class UdpSubscription extends Subscription {
         }
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.server.on('error', (err: any) => {
                 reject(err);
@@ -33,11 +33,11 @@ export class UdpSubscription extends Subscription {
                         if (error) {
                             reject(error);
                         } else {
-                            resolve(msg.toString());
+                            resolve(msg);
                         }
                     });
                 } else {
-                    resolve(msg.toString());
+                    resolve(msg);
                 }
             });
         });

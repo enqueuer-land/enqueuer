@@ -20,7 +20,7 @@ export class KafkaSubscription extends Subscription {
         this.offset = new Offset(this.client);
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
 
             const consumer = new Consumer(
@@ -36,7 +36,7 @@ export class KafkaSubscription extends Subscription {
 
             consumer.on('message', (message: Message) => {
                 Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
-                resolve(message.value.toString());
+                resolve(message.value);
             });
 
             consumer.on('error', (error: any) => {

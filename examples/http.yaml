@@ -15,7 +15,6 @@ runnables:
       status: 321
       payload: responsePayload
     onMessageReceived: >-
-      message = JSON.parse(message);
       tester.isEqualTo('Params is someId', message.params.someId, 'idStuff');
       tester.isEqualTo('Query is 123', message.query.query, '123');
       tester.isEqualTo('Payload is Virgs', JSON.parse(message.body).enqueuer, 'virgs');
@@ -46,7 +45,6 @@ runnables:
       status: 321
       payload: responsePayload
     onMessageReceived: >-
-      message = JSON.parse(message);
       tester.isTruthy('Duplicated', JSON.parse(message.body).duplicated);
     timeout: 10000
   startEvent:

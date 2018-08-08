@@ -37,7 +37,7 @@ let SqsSubscription = class SqsSubscription extends subscription_1.Subscription 
                 else if (data.Messages && data.Messages.length > 0) {
                     const stringifiedMessage = JSON.stringify(data.Messages[0], null, 2);
                     logger_1.Logger.debug('SQS got a message: ' + stringifiedMessage);
-                    return resolve(stringifiedMessage);
+                    return resolve(data.Messages[0]);
                 }
             });
         });

@@ -38,7 +38,7 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
             }
             this.client.on('message', (topic, payload) => {
                 const message = { topic: topic, payload: payload };
-                resolve(JSON.stringify(message));
+                resolve(message);
             });
         });
     }

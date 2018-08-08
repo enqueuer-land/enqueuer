@@ -33,7 +33,7 @@ export class TcpServerSubscription extends Subscription {
         }
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.loadStreamName) {
                 if (!this.loadStream ) {
@@ -89,13 +89,13 @@ export class TcpServerSubscription extends Subscription {
         });
 
         stream.once('data', (msg: any) => {
-            Logger.debug(`Tcp server got data ${msg.toString()}`);
+            Logger.debug(`Tcp server got data ${msg}`);
             if (this.response) {
                 Logger.debug(`Tcp server sending response`);
                 stream.write(this.response, () => this.persistStream(stream, resolve, msg));
             } else {
                 this.persistStream(stream, resolve, msg);
-                resolve(msg.toString());
+                resolve(msg);
             }
         });
 

@@ -9,7 +9,6 @@ runnables:
   - type: sqs
     name: udsSubs
     onMessageReceived: >-
-      message = JSON.parse(message);
       const messageBody = message.Body;
       tester.contains('Message contains q', messageBody, 'q');
     awsConfiguration:

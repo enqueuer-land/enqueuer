@@ -35,20 +35,20 @@ export class FileNameWatcherSubscription extends Subscription {
         return this.popFileContent();
     }
 
-    private popFileContent(): Promise<string> {
+    private popFileContent(): Promise<any> {
         return new Promise((resolve, reject) => {
             let interval = setInterval(() => {
                 const pop = this.filesName.shift();
                 if (pop) {
                     try {
                         const stat = fs.lstatSync(pop);
-                        resolve(JSON.stringify({
+                        resolve({
                             content: fs.readFileSync(pop).toString(),
                             name: pop,
                             size: stat.size,
                             modified: stat.mtime,
                             created: stat.ctime
-                        }));
+                        });
                     }
                     catch (error) {
                         Logger.warning(`Error reading file ${JSON.stringify(error)}`);

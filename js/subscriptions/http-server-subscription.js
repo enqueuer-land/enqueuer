@@ -45,7 +45,7 @@ let HttpServerSubscription = HttpServerSubscription_1 = class HttpServerSubscrip
                     query: request.query,
                     body: payload
                 };
-                resolve(JSON.stringify(result));
+                resolve(result);
             });
         });
     }

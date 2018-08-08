@@ -27,7 +27,7 @@ let StompSubscription = class StompSubscription extends subscription_1.Subscript
             logger_1.Logger.trace(`Stomp waiting for a message related to queue ${this.queue}`);
             this.client.subscribe(this.queue, (message, headers) => {
                 logger_1.Logger.trace(`Stomp message received header ${JSON.stringify(headers, null, 2)}`);
-                resolve(message);
+                resolve({ payload: message, headers: headers });
             });
             this.client.once('error', (err) => {
                 reject(err);

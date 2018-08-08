@@ -33,7 +33,7 @@
                     "type": "uds",
                     "name": "runnableSubsUds",
                     "path": "/tmp/loopUnix.sock",
-                    "onMessageReceived": "tester.isEqualTo('Works', message, '100');",
+                    "onMessageReceived": "tester.isEqualTo('Works', message.toString(), '100');",
                     "timeout": 1000
                   }
                 ],

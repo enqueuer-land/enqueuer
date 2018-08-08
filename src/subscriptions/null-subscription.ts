@@ -12,7 +12,7 @@ export class NullSubscription extends Subscription {
         return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
     }
 

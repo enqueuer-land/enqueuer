@@ -21,7 +21,7 @@ export class UdsSubscription extends Subscription {
         }
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.server.on('connection', (stream: any) => {
                     stream.on('end', () => {
@@ -30,7 +30,6 @@ export class UdsSubscription extends Subscription {
                     });
 
                     stream.on('data', (msg: any) => {
-                        msg = msg.toString();
                         if (this.response) {
                             stream.write(this.response);
                         }

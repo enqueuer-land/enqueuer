@@ -27,7 +27,7 @@ export class HttpServerSubscription extends Subscription {
         this.response.status = this.response.status || 200;
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve) => {
             HttpServerSubscription.app[this.method](this.endpoint, (request: any, response: any) => {
                 const payload = request.rawBody;
@@ -46,7 +46,7 @@ export class HttpServerSubscription extends Subscription {
                     body: payload
                 };
 
-                resolve(JSON.stringify(result));
+                resolve(result);
             });
         });
     }

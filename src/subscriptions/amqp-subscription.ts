@@ -12,7 +12,7 @@ export class AmqpSubscription extends Subscription {
     private exchange: string;
     private routingKey: string;
     private queueName: string;
-    private messageReceiverPromiseResolver?: (value?: string | PromiseLike<string> | undefined) => void;
+    private messageReceiverPromiseResolver?: (value?: (PromiseLike<any> | any)) => void;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -22,7 +22,7 @@ export class AmqpSubscription extends Subscription {
         this.queueName = subscriptionAttributes.queueName;
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve) => {
             Logger.debug(`Amqp subscription registering receiveMessage resolver`);
             this.messageReceiverPromiseResolver = resolve;
@@ -56,7 +56,7 @@ export class AmqpSubscription extends Subscription {
     private gotMessage(message: any, headers: any) {
         if (this.messageReceiverPromiseResolver) {
             const result = {data: message, headers: headers};
-            this.messageReceiverPromiseResolver(JSON.stringify(result));
+            this.messageReceiverPromiseResolver(result);
         } else {
             Logger.warning(`Queue ${this.queueName} is not subscribed yet`);
         }

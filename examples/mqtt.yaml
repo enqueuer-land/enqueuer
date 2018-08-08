@@ -21,10 +21,9 @@ runnables:
     topic: enqueuer/integration/public/test
     onMessageReceived: >-
       let enqueuer = 'enqueuer';
-      const parsedMessage = JSON.parse(message);
-      const payload = Buffer.from(parsedMessage.payload);
+      const payload = Buffer.from(message.payload);
       tester.isEqualTo('Payload', payload, enqueuer);
-      tester.isEqualTo('Topic', parsedMessage.topic, 'enqueuer/integration/public/test');
+      tester.isEqualTo('Topic', message.topic, 'enqueuer/integration/public/test');
     options:
       clientId: enqueuerSubscriptionOptionsExampleId9900223
     timeout: 5000

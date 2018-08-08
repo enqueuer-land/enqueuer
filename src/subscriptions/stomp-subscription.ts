@@ -22,12 +22,12 @@ export class StompSubscription extends Subscription {
         this.queue = subscriptionModel.queue;
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             Logger.trace(`Stomp waiting for a message related to queue ${this.queue}`);
             this.client.subscribe(this.queue, (message: string, headers: {}) => {
                 Logger.trace(`Stomp message received header ${JSON.stringify(headers, null, 2)}`);
-                resolve(message);
+                resolve({payload: message, headers: headers});
             });
             this.client.once('error', (err: any) => {
                 reject(err);

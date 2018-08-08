@@ -18,7 +18,7 @@ export class SqsSubscription extends Subscription {
         this.params = subscriptionModel.messageParams;
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.sqs.receiveMessage(this.params, (err: AWS.AWSError, data: ReceiveMessageResult) => {
                 Logger.trace(`SQS got data: ${JSON.stringify(data, null, 2)}`);
@@ -28,7 +28,7 @@ export class SqsSubscription extends Subscription {
                 } else if (data.Messages && data.Messages.length > 0) {
                     const stringifiedMessage = JSON.stringify(data.Messages[0], null, 2);
                     Logger.debug('SQS got a message: ' + stringifiedMessage);
-                    return resolve(stringifiedMessage);
+                    return resolve(data.Messages[0]);
                 }
             });
         });

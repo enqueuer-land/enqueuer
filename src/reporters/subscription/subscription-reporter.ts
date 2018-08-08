@@ -68,7 +68,7 @@ export class SubscriptionReporter {
         });
     }
 
-    public receiveMessage(): Promise<string> {
+    public receiveMessage(): Promise<any> {
         this.initializeTimeout();
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()

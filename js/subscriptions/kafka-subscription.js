@@ -30,7 +30,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
             });
             consumer.on('message', (message) => {
                 logger_1.Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
-                resolve(message.value.toString());
+                resolve(message.value);
             });
             consumer.on('error', (error) => {
                 logger_1.Logger.error('Kafka error message data: ' + JSON.stringify(error, null, 2));

@@ -39,7 +39,6 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
                     reject();
                 });
                 stream.on('data', (msg) => {
-                    msg = msg.toString();
                     if (this.response) {
                         stream.write(this.response);
                     }

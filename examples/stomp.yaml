@@ -12,6 +12,8 @@ runnables:
     user: guest
     password: guest
     queue: "/queue/stompQueue"
+    onMessageReceived: >-
+      tester.isEqualTo('Payload', message.payload, 'stompQueue');
   startEvent:
     publisher:
       type: stomp

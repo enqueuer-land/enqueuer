@@ -42,12 +42,12 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
                             reject(error);
                         }
                         else {
-                            resolve(msg.toString());
+                            resolve(msg);
                         }
                     });
                 }
                 else {
-                    resolve(msg.toString());
+                    resolve(msg);
                 }
             });
         });

@@ -59,7 +59,7 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
     gotMessage(message, headers) {
         if (this.messageReceiverPromiseResolver) {
             const result = { data: message, headers: headers };
-            this.messageReceiverPromiseResolver(JSON.stringify(result));
+            this.messageReceiverPromiseResolver(result);
         }
         else {
             logger_1.Logger.warning(`Queue ${this.queueName} is not subscribed yet`);
