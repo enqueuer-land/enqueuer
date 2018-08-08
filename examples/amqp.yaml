@@ -9,7 +9,9 @@ runnables:
     publisher:
       type: amqp
       name: AmqpPub
-      payload: I'll be replaced by prePublishing function
+      payload:
+        how:
+          about: a new object?
       options:
         host: localhost
         port: 5672
@@ -19,7 +21,6 @@ runnables:
           key: value
           otherKey: otherValue
       routingKey: enqueuer.integration.test.routing.key
-      prePublishing: publisher.payload = new Date().getTime();
   subscriptions:
   - type: amqp
     name: AmqpSubs
@@ -30,6 +31,9 @@ runnables:
     exchange: enqueuer.exchange
     routingKey: enqueuer.integration.test.routing.#
     onMessageReceived: >-
-      tester.isGreaterThanOrEqualTo('Payload replaced', new Date().getTime(), message.data);
+      console.log(message);
+      tester.isEqualTo('Payload', message.data.how.about, 'a new object?');
       tester.isEqualTo('Header', message.headers.key, 'value');
+      tester.isEqualTo('Other header value', message.headers.otherKey, 'otherValue');
+      tester.isEqualTo('Routing key', message.deliveryInfo.routingKey, 'enqueuer.integration.test.routing.key');
     timeout: 3000

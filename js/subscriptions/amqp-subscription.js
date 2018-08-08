@@ -42,7 +42,7 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
                     logger_1.Logger.debug(`Amqp subscription binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
                     queue.bind(this.exchange, this.routingKey, () => {
                         logger_1.Logger.debug(`Queue ${this.queueName} bound. Subscribing`);
-                        queue.subscribe((message, headers) => this.gotMessage(message, headers));
+                        queue.subscribe((message, headers, deliveryInfo) => this.gotMessage(message, headers, deliveryInfo));
                         resolve();
                     });
                 });
@@ -56,9 +56,9 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
         }
         delete this.connection;
     }
-    gotMessage(message, headers) {
+    gotMessage(message, headers, deliveryInfo) {
         if (this.messageReceiverPromiseResolver) {
-            const result = { data: message, headers: headers };
+            const result = { data: message, headers: headers, deliveryInfo: deliveryInfo };
             this.messageReceiverPromiseResolver(result);
         }
         else {
