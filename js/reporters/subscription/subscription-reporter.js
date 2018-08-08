@@ -109,7 +109,7 @@ class SubscriptionReporter {
         }
         else {
             this.report.tests.push({
-                valid: true,
+                valid: false,
                 name: messageReceivedTestLabel,
                 description: `Subscription has not received its message in a valid time`
             });

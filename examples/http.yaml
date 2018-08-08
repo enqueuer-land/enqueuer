@@ -35,18 +35,6 @@ runnables:
         content-type: application/json
 - timeout: 3000
   name: HttpTitleDuplicated
-  subscriptions:
-  - type: http-server
-    name: DuplicatedEndPointTest
-    endpoint: /enqueuer/:someId
-    port: 23075
-    method: POST
-    response:
-      status: 321
-      payload: responsePayload
-    onMessageReceived: >-
-      tester.isTruthy('Duplicated', JSON.parse(message.body).duplicated);
-    timeout: 10000
   startEvent:
     publisher:
       type: http-client
@@ -59,3 +47,41 @@ runnables:
         tester.isEqualTo('publisherOnMessageReceivedPayloadTest', JSON.parse(message).body, 'responsePayload');
       payload:
         duplicated: true
+  subscriptions:
+  - type: http-server
+    name: DuplicatedEndPointTest
+    endpoint: /enqueuer/:someId
+    port: 23075
+    method: POST
+    response:
+      status: 321
+      payload: responsePayload
+    onMessageReceived: >-
+      tester.isTruthy('Duplicated', JSON.parse(message.body).duplicated);
+    timeout: 10000
+- name: HttpGET
+  timeout: 3000
+  subscriptions:
+    - type: http-server
+      name: GetStuff
+      endpoint: /gui
+      port: 23075
+      method: GET
+      response:
+        status: 200
+        payload: responsePayload
+      onMessageReceived: >-
+        console.log(message);
+        tester.isDefined('isDefined', message);
+  startEvent:
+    publisher:
+      type: http-client
+      name: HttpEnqueuerRepository
+      url: http://localhost:23075/gui
+      method: GET
+      prePublishing: tester.isTruthy('prePublishingTest', true);
+      onMessageReceived: tester.isEqualTo('It runs get onMessageReceived', JSON.parse(message).statusCode, 200);
+      payload: ''
+      headers:
+        content-type: application/json
+
