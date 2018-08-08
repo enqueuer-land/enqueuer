@@ -2,17 +2,17 @@ run-mode:
   single-run:
     name: examples
     fileNamePattern: examples/*.{json,yaml}
-    reports:
-      -
-        type: file
-        filename: outputExamples/singleRunOutput.yml #outputExamples/singleRunOutput.json
+#optional
+    reportName: outputExamples/singleRunOutput.yml #outputExamples/singleRunOutput.json
 
+#optional
 outputs:
   -
     type: file
     filenamePrefix: outputExamples/
     filenameExtension: yml #json
 
+#optional
 variables:
   tcpPayload: "enqueuer Rocks"
 

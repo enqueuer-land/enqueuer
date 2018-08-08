@@ -18,7 +18,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         super();
         Logger.info('Executing in Single-Run mode');
         const singleRunConfiguration = enqueuerConfiguration['single-run'];
-        this.multiResultCreator = new MultiResultCreator(enqueuerConfiguration['single-run'].reports);
+        this.multiResultCreator = new MultiResultCreator(enqueuerConfiguration['single-run'].reportName);
 
         this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
         this.singleRunInput = new SingleRunInput(singleRunConfiguration.fileNamePattern);

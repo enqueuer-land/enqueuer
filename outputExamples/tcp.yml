@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: tcpNoPart
     time:
-      totalTime: 11
-      startTime: '2018-08-08T20:10:36.968Z'
-      endTime: '2018-08-08T20:10:36.979Z'
+      totalTime: 5
+      startTime: '2018-08-08T20:25:28.186Z'
+      endTime: '2018-08-08T20:25:28.191Z'
       timeout: 3000
     subscriptions:
       -
@@ -36,8 +36,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T20:10:36.971Z'
-        messageReceivedTime: '2018-08-08T20:10:36.977Z'
+        connectionTime: '2018-08-08T20:25:28.187Z'
+        messageReceivedTime: '2018-08-08T20:25:28.190Z'
     startEvent:
       publisher:
         name: 'Any name Pub'
@@ -52,7 +52,7 @@ runnables:
             name: 'Do not make it bad'
             valid: true
             description: '''Do not make it bad'' is equal to ''Do not make it bad'''
-        publishTime: '2018-08-08T20:10:36.978Z'
+        publishTime: '2018-08-08T20:25:28.191Z'
   -
     type: requisition
     valid: true
@@ -64,8 +64,8 @@ runnables:
     name: tcpFirstPart
     time:
       totalTime: 104
-      startTime: '2018-08-08T20:10:36.979Z'
-      endTime: '2018-08-08T20:10:37.083Z'
+      startTime: '2018-08-08T20:25:28.191Z'
+      endTime: '2018-08-08T20:25:28.295Z'
       timeout: 3000
     subscriptions:
       -
@@ -85,8 +85,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T20:10:36.980Z'
-        messageReceivedTime: '2018-08-08T20:10:36.982Z'
+        connectionTime: '2018-08-08T20:25:28.192Z'
+        messageReceivedTime: '2018-08-08T20:25:28.194Z'
     startEvent:
       publisher:
         name: tcpPublisher1
@@ -101,7 +101,7 @@ runnables:
             name: 'Greeting received'
             valid: true
             description: '''EnqueuerRocks'' is equal to ''EnqueuerRocks'''
-        publishTime: '2018-08-08T20:10:37.083Z'
+        publishTime: '2018-08-08T20:25:28.295Z'
   -
     type: requisition
     valid: true
@@ -112,9 +112,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: tcpSecondPart
     time:
-      totalTime: 2
-      startTime: '2018-08-08T20:10:37.083Z'
-      endTime: '2018-08-08T20:10:37.085Z'
+      totalTime: 1
+      startTime: '2018-08-08T20:25:28.296Z'
+      endTime: '2018-08-08T20:25:28.297Z'
       timeout: 3000
     subscriptions:
       -
@@ -134,8 +134,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T20:10:37.083Z'
-        messageReceivedTime: '2018-08-08T20:10:37.084Z'
+        connectionTime: '2018-08-08T20:25:28.296Z'
+        messageReceivedTime: '2018-08-08T20:25:28.296Z'
     startEvent:
       publisher:
         name: tcpPublisher2
@@ -150,4 +150,4 @@ runnables:
             name: 'Second message is ''enqueuer Rocks'''
             valid: true
             description: '''enqueuer Rocks'' is equal to ''enqueuer Rocks'''
-        publishTime: '2018-08-08T20:10:37.084Z'
+        publishTime: '2018-08-08T20:25:28.297Z'

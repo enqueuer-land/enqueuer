@@ -1,5 +1,4 @@
 //#Auto-Generated Code
-import './single-run-result-creators/file-result-creator';
 import './runnables/requisition-runner';
 import './runnables/runnable-runner';
 import './subscriptions/filename-watcher-subscription';

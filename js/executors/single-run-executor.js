@@ -30,7 +30,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         super();
         logger_1.Logger.info('Executing in Single-Run mode');
         const singleRunConfiguration = enqueuerConfiguration['single-run'];
-        this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(enqueuerConfiguration['single-run'].reports);
+        this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(enqueuerConfiguration['single-run'].reportName);
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.singleRunInput = new single_run_input_1.SingleRunInput(singleRunConfiguration.fileNamePattern);
     }

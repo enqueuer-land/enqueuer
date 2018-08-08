@@ -11,15 +11,29 @@ export class Logger {
     }
 
     public static disable(): void {
-        console.log = function() {}
+        console.log = function() {
+            //empty
+        };
         Logger.logger = {
-            trace(message: string){},
-            debug(message: string){},
-            info(message: string){},
-            warning(message: string){},
-            error(message: string){},
-            fatal(message: string){}
-        }
+            trace(message: string) {
+                //empty
+            },
+            debug(message: string) {
+                //empty
+            },
+            info(message: string) {
+                //empty
+            },
+            warning(message: string) {
+                //empty
+            },
+            error(message: string) {
+                //empty
+            },
+            fatal(message: string) {
+                //empty
+            }
+        };
     }
     public static trace(message: string) {
         Logger.getLogger().trace(message);

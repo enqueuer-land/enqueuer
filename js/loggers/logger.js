@@ -15,14 +15,28 @@ class Logger {
         }
     }
     static disable() {
-        console.log = function () { };
+        console.log = function () {
+            //empty
+        };
         Logger.logger = {
-            trace(message) { },
-            debug(message) { },
-            info(message) { },
-            warning(message) { },
-            error(message) { },
-            fatal(message) { }
+            trace(message) {
+                //empty
+            },
+            debug(message) {
+                //empty
+            },
+            info(message) {
+                //empty
+            },
+            warning(message) {
+                //empty
+            },
+            error(message) {
+                //empty
+            },
+            fatal(message) {
+                //empty
+            }
         };
     }
     static trace(message) {
