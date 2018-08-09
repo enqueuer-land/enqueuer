@@ -42,6 +42,5 @@ script:
   - npm run unitTest
   - npm link
   - npm run componentTest
-  - npm run codeCoverage
   - npm run integrationTest
   - enqueuer --config-file examples/enqueuer.yml --session-variables zeroMqAddress=tcp://127.0.0.1:3000
