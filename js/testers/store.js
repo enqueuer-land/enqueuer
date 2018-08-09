@@ -11,8 +11,11 @@ class Store {
         this.persistSessionVariable = (name, value) => {
             variables_controller_1.VariablesController.sessionVariables()[name] = value;
         };
-        this.deleteEnqueuerVariable = (name) => {
-            this.configuration.deleteFileVariable(name);
+        this.getVariable = (name) => {
+            if (variables_controller_1.VariablesController.sessionVariables()[name]) {
+                return variables_controller_1.VariablesController.sessionVariables()[name];
+            }
+            return variables_controller_1.VariablesController.persistedVariables()[name];
         };
     }
 }

@@ -38,10 +38,11 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
     publish() {
         return new Promise((resolve, reject) => {
             if (this.loadStreamName) {
-                logger_1.Logger.debug('Trying to reuse tcp stream');
+                logger_1.Logger.debug('Client is trying to reuse tcp stream');
                 if (!this.loadStream) {
                     return new Error(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
                 }
+                logger_1.Logger.debug('Client is reusing tcp stream');
                 this.publishData(this.loadStream, resolve, reject);
             }
             else {

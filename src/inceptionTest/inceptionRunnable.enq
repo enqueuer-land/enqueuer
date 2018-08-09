@@ -4,15 +4,15 @@
   "initialDelay": 0,
   "runnables": [
     {
-      "timeout": 10000,
+      "timeout": 5000,
       "name": "runnableUds",
       "subscriptions": [
         {
           "type": "uds",
           "name": "subscriptionUds",
           "path": "/tmp/outUnix.sock",
-          "onMessageReceived": "tester.isTruthy('true', true);",
-          "timeout": 10000
+          "onMessageReceived": "tester.isTruthy('Test label', true);",
+          "timeout": 5000
         }
       ],
       "startEvent": {

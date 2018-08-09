@@ -12,7 +12,10 @@ export class Store {
         VariablesController.sessionVariables()[name] = value;
     }
 
-    public deleteEnqueuerVariable = (name: string): void => {
-        this.configuration.deleteFileVariable(name);
+    public getVariable = (name: string): any => {
+        if (VariablesController.sessionVariables()[name]) {
+            return VariablesController.sessionVariables()[name];
+        }
+        return VariablesController.persistedVariables()[name];
     }
 }

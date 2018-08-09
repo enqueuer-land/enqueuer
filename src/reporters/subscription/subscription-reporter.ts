@@ -13,7 +13,6 @@ import {TestModel} from '../../models/outputs/test-model';
 
 export class SubscriptionReporter {
 
-    private subscriptionOriginalAttributes: input.SubscriptionModel;
     private subscription: Subscription;
     private report: output.SubscriptionModel;
     private startTime: DateController;
@@ -22,7 +21,6 @@ export class SubscriptionReporter {
 
     constructor(subscriptionAttributes: input.SubscriptionModel) {
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscriptionOriginalAttributes = subscriptionAttributes;
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         this.startTime = new DateController();
         this.report = {
@@ -40,7 +38,7 @@ export class SubscriptionReporter {
         }
         this.timeOut = new Timeout(() => {
             if (!this.subscription.messageReceived) {
-                const message = `[${this.subscription.name}] stop waiting because it has timed out`;
+                const message = `[${this.subscription.name}] stopped waiting because it has timed out`;
                 Logger.info(message);
                 this.hasTimedOut = true;
                 onTimeOutCallback();
@@ -75,16 +73,7 @@ export class SubscriptionReporter {
                 .then((message: any) => {
                     Logger.debug(`[${this.subscription.name}] received its message`);
                     if (!isNullOrUndefined(message)) {
-                        Logger.debug(`[${this.subscription.name}] message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
-
-                        if (!this.hasTimedOut) {
-                            Logger.info(`[${this.subscription.name}] stop waiting because it has received its message`);
-                            this.subscription.messageReceived = message;
-                            this.executeSubscriptionFunction();
-                        } else {
-                            Logger.info(`[${this.subscription.name}] has received message in a unable time`);
-                        }
-                        this.cleanUp();
+                        this.handleMessageArrival(message);
                         resolve(message);
                     } else {
                         Logger.warning(`[${this.subscription.name}] message is null or undefined`);
@@ -105,6 +94,23 @@ export class SubscriptionReporter {
         this.cleanUp();
         this.report.valid = this.report.valid && checkValidation(this.report);
         return this.report;
+    }
+
+    private handleMessageArrival(message: any) {
+        Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
+
+        if (!this.hasTimedOut) {
+            Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
+            this.subscription.messageReceived = message;
+            this.executeOnMessageReceivedFunction();
+            if (this.subscription.response) {
+                Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
+                this.subscription.sendResponse();
+            }
+        } else {
+            Logger.info(`${this.subscription.name} has received message in a unable time`);
+        }
+        this.cleanUp();
     }
 
     private addMessageReceivedReport() {
@@ -161,7 +167,7 @@ export class SubscriptionReporter {
         }
     }
 
-    private executeSubscriptionFunction() {
+    private executeOnMessageReceivedFunction() {
         if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
             Logger.trace(`[${this.subscription.name}] has no onMessageReceived to be executed`);
             return;
@@ -169,7 +175,7 @@ export class SubscriptionReporter {
         Logger.trace(`[${this.subscription.name}] executing onMessageReceived`);
 
         const testExecutor = new TesterExecutor(this.subscription.onMessageReceived);
-        testExecutor.addArgument('subscription', this.subscriptionOriginalAttributes);
+        testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
 
         const tests = testExecutor.execute();

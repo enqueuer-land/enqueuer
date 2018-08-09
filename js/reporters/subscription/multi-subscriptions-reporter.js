@@ -5,8 +5,10 @@ class MultiSubscriptionsReporter {
     constructor(subscriptionsAttributes) {
         this.subscriptionReporters = [];
         this.subscriptionsStoppedWaitingCounter = 0;
-        for (let id = 0; id < subscriptionsAttributes.length; ++id) {
-            this.subscriptionReporters.push(new subscription_reporter_1.SubscriptionReporter(subscriptionsAttributes[id]));
+        if (subscriptionsAttributes) {
+            for (let id = 0; id < subscriptionsAttributes.length; ++id) {
+                this.subscriptionReporters.push(new subscription_reporter_1.SubscriptionReporter(subscriptionsAttributes[id]));
+            }
         }
     }
     connect() {

@@ -2,12 +2,7 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import {Logger} from '../loggers/logger';
-import * as fs from "fs";
 
-// var options = {
-//     key: fs.readFileSync('/path/to/key.pem'),
-//     cert: fs.readFileSync('/path/to/cert.pem')
-// };
 type ServerHandler = {
     counter: number,
     server: any

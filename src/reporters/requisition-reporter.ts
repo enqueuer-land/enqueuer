@@ -40,8 +40,9 @@ export class RequisitionReporter {
                 this.onSubscriptionsCompleted();
             })
             .catch(err => {
-                Logger.error(`Error connecting multiSubscription: ${err}`);
-                this.onFinish(err);
+                const message = `Error connecting multiSubscription: ${err}`;
+                Logger.error(message);
+                this.onFinish({valid: false, description: message, name: 'Subscriptions connection'});
             });
     }
 
@@ -53,12 +54,14 @@ export class RequisitionReporter {
         this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
-                Logger.error(`Error receiving message in multiSubscription: ${err}`);
-                this.onFinish(err);
+                const message = `Error receiving message in multiSubscription: ${err}`;
+                Logger.error(message);
+                this.onFinish({valid: false, description: err, name: 'Subscriptions message received'});
             });
         Logger.debug('Triggering start event');
         this.startEvent.start()
             .then(() => {
+                Logger.debug('Start event triggered');
                 this.startEventDoneItsJob = true;
                 this.tryToFinishExecution();
             })
@@ -85,6 +88,7 @@ export class RequisitionReporter {
     }
 
     private tryToFinishExecution() {
+        Logger.info(`Trying to finish requisition execution`);
         if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
             this.onFinish();
         }

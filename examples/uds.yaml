@@ -8,10 +8,10 @@ runnables:
   - type: uds
     path: "/tmp/unix.sock"
     name: udsSubscription
-    onMessageReceived: |-
-      tester.isEqualTo('Message received is enqueuer 1', JSON.parse(message), 'enqueuer');
     response: responsePayload
     timeout: 500
+    onMessageReceived: |-
+      tester.isEqualTo('Message received is enqueuer 1', JSON.parse(message), 'enqueuer');
   startEvent:
     publisher:
       type: uds
@@ -26,12 +26,6 @@ runnables:
         store.persistSessionVariable('uds2Timeout', '500');
 -
   name: "{{uds2RequisitionName}}"
-  subscriptions:
-  - type: uds
-    path: "/tmp/unix2.sock"
-    name: udsSubscription2
-    onMessageReceived: tester.isEqualTo('Message received is {{udsPayload}} 2', JSON.parse(message), '{{udsPayload}}');
-    timeout: "{{uds2Timeout}}"
   startEvent:
     publisher:
       type: uds
@@ -39,3 +33,9 @@ runnables:
       path: "/tmp/unix2.sock"
       payload: "{{udsPayload}}"
       prePublishing: tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, '{{udsPayload}}');
+  subscriptions:
+  - type: uds
+    path: "/tmp/unix2.sock"
+    name: udsSubscription2
+    onMessageReceived: tester.isEqualTo('Message received is {{udsPayload}} 2', JSON.parse(message), '{{udsPayload}}');
+    timeout: "{{uds2Timeout}}"

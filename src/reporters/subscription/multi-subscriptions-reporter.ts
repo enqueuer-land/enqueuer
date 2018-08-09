@@ -7,8 +7,10 @@ export class MultiSubscriptionsReporter {
     private subscriptionsStoppedWaitingCounter: number = 0;
 
     constructor(subscriptionsAttributes: input.SubscriptionModel[]) {
-        for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
-            this.subscriptionReporters.push(new SubscriptionReporter(subscriptionsAttributes[id]));
+        if (subscriptionsAttributes) {
+            for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
+                this.subscriptionReporters.push(new SubscriptionReporter(subscriptionsAttributes[id]));
+            }
         }
     }
 
@@ -36,8 +38,7 @@ export class MultiSubscriptionsReporter {
                         }
                     })
                     .catch(err => reject(err));
-            }
-            );
+            });
         });
     }
 

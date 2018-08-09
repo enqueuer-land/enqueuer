@@ -20,6 +20,7 @@ const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
 const fs = __importStar(require("fs"));
+const logger_1 = require("../loggers/logger");
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -27,26 +28,34 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
-        else {
-            this.response = subscriptionAttributes.response;
-        }
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.server.on('connection', (stream) => {
-                stream.on('end', () => {
-                    stream.end();
+                this.stream = stream;
+                this.stream.once('end', () => {
+                    logger_1.Logger.debug(`Uds server detected stream's end`);
                     reject();
                 });
-                stream.on('data', (msg) => {
-                    if (this.response) {
-                        stream.write(this.response);
+                this.stream.on('data', (msg) => {
+                    if (!this.response) {
+                        this.stream.end();
                     }
-                    stream.end();
                     resolve(msg);
                 });
             });
         });
+    }
+    sendResponse() {
+        if (this.stream) {
+            logger_1.Logger.debug(`Uds server sending response`);
+            this.stream.write(this.response);
+            this.stream.end();
+            this.stream = null;
+        }
+        else {
+            logger_1.Logger.warning(`No uds response was sent because uds stream is null`);
+        }
     }
     connect() {
         return new Promise((resolve) => {
@@ -59,6 +68,10 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
         });
     }
     unsubscribe() {
+        if (this.stream) {
+            this.stream.end();
+            this.stream = null;
+        }
         this.server.close();
     }
 };

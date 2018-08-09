@@ -1,4 +1,5 @@
 import {SubscriptionModel} from '../models/inputs/subscription-model';
+import {Logger} from '../loggers/logger';
 
 export abstract class Subscription {
 
@@ -6,12 +7,14 @@ export abstract class Subscription {
     public messageReceived?: string;
     public timeout?: number;
     public onMessageReceived?: string;
+    public response?: any;
     public type?: string;
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {
         this.messageReceived = subscriptionAttributes.messageReceived;
         this.name = subscriptionAttributes.name;
         this.timeout = subscriptionAttributes.timeout;
+        this.response = subscriptionAttributes.response;
         this.type = subscriptionAttributes.type;
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;
     }
@@ -20,5 +23,9 @@ export abstract class Subscription {
     public abstract receiveMessage(): Promise<any>;
     public unsubscribe(): void {
         //do nothing
+    }
+
+    public sendResponse(): void {
+        Logger.warning(`Subscription of ${this.type} does not provide synchronous response`);
     }
 }

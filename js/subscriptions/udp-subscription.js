@@ -26,29 +26,15 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
-        else {
-            this.response = subscriptionAttributes.response;
-        }
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.server.on('error', (err) => {
                 reject(err);
             });
-            this.server.on('message', (msg, rinfo) => {
-                if (this.response) {
-                    this.server.send(this.response, rinfo.port, rinfo.address, (error) => {
-                        if (error) {
-                            reject(error);
-                        }
-                        else {
-                            resolve(msg);
-                        }
-                    });
-                }
-                else {
-                    resolve(msg);
-                }
+            this.server.on('message', (msg, remoteInfo) => {
+                this.remoteInfo = remoteInfo;
+                resolve({ payload: msg, remoteInfo: remoteInfo });
             });
         });
     }
@@ -60,7 +46,9 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
         });
     }
     unsubscribe() {
-        this.server.close();
+        if (this.server) {
+            this.server.close();
+        }
     }
 };
 UdpSubscription = __decorate([

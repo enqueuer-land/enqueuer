@@ -30,35 +30,35 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
-        else {
-            this.response = subscriptionAttributes.response;
-        }
         this.loadStreamName = subscriptionAttributes.loadStreamName;
-        if (subscriptionAttributes.loadStreamName) {
-            logger_1.Logger.debug(`Loading tcp client: ${this.loadStreamName}`);
-            this.loadStream = variables_controller_1.VariablesController.sessionVariables()[subscriptionAttributes.loadStreamName];
+        if (this.loadStreamName) {
+            this.loadStream();
         }
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
             if (this.loadStreamName) {
-                if (!this.loadStream) {
-                    reject(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
-                    return;
-                }
-                this.waitForData(this.loadStream, reject, resolve);
+                this.waitForData(reject, resolve);
             }
             else {
-                this.server.once('connection', (stream) => this.gotConnection(stream, reject, resolve));
+                console.log('connection: ' + this.server);
+                this.server.once('connection', (stream) => {
+                    this.stream = stream;
+                    if (this.greetingResponse) {
+                        logger_1.Logger.debug(`Tcp server sending greeting message`);
+                        this.stream.write(this.greetingResponse);
+                    }
+                    this.waitForData(reject, resolve);
+                    this.server.close();
+                    this.server = null;
+                });
             }
         });
     }
     connect() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (this.loadStreamName) {
-                if (!this.loadStream) {
-                    reject(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
-                }
+                logger_1.Logger.debug('Server is reusing tcp stream');
                 resolve();
                 return;
             }
@@ -69,48 +69,45 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             });
         });
     }
-    unsubscribe() {
-        if (this.server) {
-            this.server.close();
+    sendResponse() {
+        if (this.stream) {
+            logger_1.Logger.debug(`Tcp server sending response`);
+            this.stream.write(this.response, () => this.persistStream());
         }
     }
-    gotConnection(stream, reject, resolve) {
-        logger_1.Logger.debug(`Tcp server got a client`);
-        if (this.greetingResponse) {
-            logger_1.Logger.debug(`Tcp server sending greeting message`);
-            stream.write(this.greetingResponse);
+    loadStream() {
+        logger_1.Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);
+        this.stream = variables_controller_1.VariablesController.sessionVariables()[this.loadStreamName];
+        if (this.stream) {
+            logger_1.Logger.debug(`Server loaded tcp stream: ${this.loadStreamName}`);
         }
-        this.waitForData(stream, reject, resolve);
+        else {
+            throw new Error(`Impossible to load tcp stream: ${this.loadStreamName}`);
+        }
     }
-    waitForData(stream, reject, resolve) {
+    waitForData(reject, resolve) {
         logger_1.Logger.trace(`Tcp server is waiting on data`);
-        stream.once('end', () => {
+        console.log('end: ' + this.stream);
+        this.stream.once('end', () => {
             logger_1.Logger.debug(`Tcp server detected 'end' event`);
             reject();
         });
-        stream.once('data', (msg) => {
+        console.log('data: ' + this.stream);
+        this.stream.once('data', (msg) => {
             logger_1.Logger.debug(`Tcp server got data ${msg}`);
-            if (this.response) {
-                logger_1.Logger.debug(`Tcp server sending response`);
-                stream.write(this.response, () => this.persistStream(stream, resolve, msg));
-            }
-            else {
-                this.persistStream(stream, resolve, msg);
-                resolve(msg);
-            }
+            resolve(msg);
         });
     }
-    persistStream(stream, resolve, msg) {
+    persistStream() {
         if (this.persistStreamName) {
-            logger_1.Logger.debug(`Persisting subscription stream ${this.persistStreamName}`);
-            variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
+            logger_1.Logger.debug(`Persisting subscription tcp stream ${this.persistStreamName}`);
+            variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = this.stream;
             this.persistStreamName = undefined;
         }
         else {
             logger_1.Logger.trace(`Ending TCP stream`);
-            stream.end();
+            this.stream.end();
         }
-        resolve(msg.toString());
     }
 };
 TcpServerSubscription = __decorate([

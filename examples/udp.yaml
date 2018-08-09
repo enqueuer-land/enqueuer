@@ -8,8 +8,14 @@ runnables:
   - type: udp
     port: 23070
     name: udpSubscription
-    response: damm
     timeout: 500
+    onMessageReceived: |-
+      console.log(message);
+      const payload = Buffer.from(message.payload);
+      console.log(payload);
+      console.log(payload.toString());
+      tester.isEqualTo('Iupi', payload.toString(), 'it');
+      tester.isEqualTo('Client address is localhost', message.remoteInfo.address, '127.0.0.1');
   startEvent:
     publisher:
       type: udp
@@ -17,4 +23,3 @@ runnables:
       serverAddress: localhost
       port: '23070'
       payload: it
-      onMessageReceived: tester.isEqualTo('It is bidirectional', message.toString(), 'damm');

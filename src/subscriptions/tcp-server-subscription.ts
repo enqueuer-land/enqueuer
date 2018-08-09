@@ -9,12 +9,11 @@ import {Logger} from '../loggers/logger';
 export class TcpServerSubscription extends Subscription {
 
     private server: any;
-    private response?: string;
     private port: number;
     private persistStreamName?: string;
     private loadStreamName: string;
-    private loadStream: any;
     private greetingResponse: string;
+    private stream?: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -23,37 +22,38 @@ export class TcpServerSubscription extends Subscription {
         this.greetingResponse = subscriptionAttributes.greetingResponse;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
-        } else {
-            this.response = subscriptionAttributes.response;
         }
         this.loadStreamName = subscriptionAttributes.loadStreamName;
-        if (subscriptionAttributes.loadStreamName) {
-            Logger.debug(`Loading tcp client: ${this.loadStreamName}`);
-            this.loadStream = VariablesController.sessionVariables()[subscriptionAttributes.loadStreamName];
+        if (this.loadStreamName) {
+            this.loadStream();
         }
     }
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.loadStreamName) {
-                if (!this.loadStream ) {
-                    reject(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
-                    return;
-                }
-                this.waitForData(this.loadStream, reject, resolve);
+                this.waitForData(reject, resolve);
             } else {
-                this.server.once('connection', (stream: any) => this.gotConnection(stream, reject, resolve));
+                this.server.once('connection', (stream: any) => {
+                    this.stream = stream;
+                    if (this.greetingResponse) {
+                        Logger.debug(`Tcp server sending greeting message`);
+                        this.stream.write(this.greetingResponse);
+                    }
+                    this.waitForData(reject, resolve);
+
+                    this.server.close();
+                    this.server = null;
+                });
             }
 
         });
     }
 
     public connect(): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (this.loadStreamName) {
-                if (!this.loadStream ) {
-                    reject(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
-                }
+                Logger.debug('Server is reusing tcp stream');
                 resolve();
                 return;
             }
@@ -66,51 +66,46 @@ export class TcpServerSubscription extends Subscription {
         });
     }
 
-    public unsubscribe(): void {
-        if (this.server) {
-            this.server.close();
+    public sendResponse() {
+        if (this.stream) {
+            Logger.debug(`Tcp server sending response`);
+            this.stream.write(this.response, () => this.persistStream());
         }
     }
 
-    private gotConnection(stream: any, reject: any, resolve: any) {
-        Logger.debug(`Tcp server got a client`);
-        if (this.greetingResponse) {
-            Logger.debug(`Tcp server sending greeting message`);
-            stream.write(this.greetingResponse);
+    private loadStream() {
+        Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);
+        this.stream = VariablesController.sessionVariables()[this.loadStreamName];
+        if (this.stream) {
+            Logger.debug(`Server loaded tcp stream: ${this.loadStreamName}`);
+        } else {
+            throw new Error(`Impossible to load tcp stream: ${this.loadStreamName}`);
         }
-        this.waitForData(stream, reject, resolve);
     }
 
-    private waitForData(stream: any, reject: Function, resolve: Function) {
+    private waitForData(reject: Function, resolve: Function) {
         Logger.trace(`Tcp server is waiting on data`);
-        stream.once('end', () => {
+        this.stream.once('end', () => {
             Logger.debug(`Tcp server detected 'end' event`);
             reject();
         });
 
-        stream.once('data', (msg: any) => {
+        this.stream.once('data', (msg: any) => {
             Logger.debug(`Tcp server got data ${msg}`);
-            if (this.response) {
-                Logger.debug(`Tcp server sending response`);
-                stream.write(this.response, () => this.persistStream(stream, resolve, msg));
-            } else {
-                this.persistStream(stream, resolve, msg);
-                resolve(msg);
-            }
+            resolve(msg);
         });
 
     }
 
-    private persistStream(stream: any, resolve: Function, msg: any) {
+    private persistStream() {
         if (this.persistStreamName) {
-            Logger.debug(`Persisting subscription stream ${this.persistStreamName}`);
-            VariablesController.sessionVariables()[this.persistStreamName] = stream;
+            Logger.debug(`Persisting subscription tcp stream ${this.persistStreamName}`);
+            VariablesController.sessionVariables()[this.persistStreamName] = this.stream;
             this.persistStreamName = undefined;
         } else {
             Logger.trace(`Ending TCP stream`);
-            stream.end();
+            this.stream.end();
         }
-        resolve(msg.toString());
     }
 
 }

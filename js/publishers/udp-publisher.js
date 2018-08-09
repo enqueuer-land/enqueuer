@@ -36,17 +36,8 @@ let UdpPublisher = class UdpPublisher extends publisher_1.Publisher {
                     reject(error);
                     return;
                 }
-                logger_1.Logger.debug('Udp message published');
-                client.on('error', (data) => {
-                    reject(data);
-                });
-                client.on('end', () => {
-                    resolve();
-                });
-                client.on('message', (msg) => {
-                    this.messageReceived = msg.toString();
-                    resolve();
-                });
+                logger_1.Logger.debug('Udp client sent message');
+                resolve();
             });
         });
     }

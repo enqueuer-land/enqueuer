@@ -17,7 +17,6 @@ const http_server_pool_1 = require("../pools/http-server-pool");
 let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.response = {};
         this.key = subscriptionAttributes.key;
         this.cert = subscriptionAttributes.cert;
         this.port = subscriptionAttributes.port;
@@ -25,19 +24,22 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         this.method = subscriptionAttributes.method.toLowerCase();
         this.response = subscriptionAttributes.response || {};
         this.response.status = this.response.status || 200;
+        if (!this.response) {
+            throw new Error(`Invalid ${this.type}: no 'response' field was given`);
+        }
     }
     receiveMessage() {
         return new Promise((resolve) => {
-            http_server_pool_1.HttpServerPool.getInstance().getApp()[this.method](this.endpoint, (request, response) => {
+            http_server_pool_1.HttpServerPool.getInstance().getApp()[this.method](this.endpoint, (request, responseHandler) => {
                 const payload = request.rawBody;
                 logger_1.Logger.debug(`Http got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 if (util_1.isNullOrUndefined(this.response.payload)) {
                     this.response.payload = payload;
                 }
                 for (const key in this.response.header) {
-                    response.header(key, this.response.header[key]);
+                    responseHandler.header(key, this.response.header[key]);
                 }
-                response.status(this.response.status).send(this.response.payload);
+                this.responseHandler = responseHandler;
                 const result = {
                     params: request.params,
                     query: request.query,
@@ -62,12 +64,12 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
             }
             server.on('error', (err) => {
                 if (err) {
-                    reject(err);
+                    reject(`Error creating ${this.type} ${err}`);
                 }
             });
             server.listen(this.port, (err) => {
                 if (err) {
-                    reject(err);
+                    reject(`Error listening ${this.type} ${err}`);
                 }
                 resolve();
             });
@@ -79,6 +81,12 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         }
         else {
             http_server_pool_1.HttpServerPool.getInstance().closeHttpServer();
+        }
+    }
+    sendResponse() {
+        if (this.responseHandler) {
+            logger_1.Logger.debug(`${this.type} sending response`);
+            this.responseHandler.status(this.response.status).send(this.response.payload);
         }
     }
 };

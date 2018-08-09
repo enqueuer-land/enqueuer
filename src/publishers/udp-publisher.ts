@@ -27,22 +27,10 @@ export class UdpPublisher extends Publisher {
                     reject(error);
                     return;
                 }
-
-                Logger.debug('Udp message published');
-                client.on('error', (data: any) => {
-                    reject(data);
-                });
-
-                client.on('end', () => {
-                    resolve();
-                });
-
-                client.on('message', (msg: Buffer) => {
-                    this.messageReceived = msg.toString();
-                    resolve();
-                });
-
+                Logger.debug('Udp client sent message');
+                resolve();
             });
+
         });
     }
 }

@@ -20,7 +20,6 @@ class SubscriptionReporter {
             }).start(2000);
         };
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscriptionOriginalAttributes = subscriptionAttributes;
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         this.startTime = new date_controller_1.DateController();
         this.report = {
@@ -37,7 +36,7 @@ class SubscriptionReporter {
         }
         this.timeOut = new timeout_1.Timeout(() => {
             if (!this.subscription.messageReceived) {
-                const message = `[${this.subscription.name}] stop waiting because it has timed out`;
+                const message = `[${this.subscription.name}] stopped waiting because it has timed out`;
                 logger_1.Logger.info(message);
                 this.hasTimedOut = true;
                 onTimeOutCallback();
@@ -68,16 +67,7 @@ class SubscriptionReporter {
                 .then((message) => {
                 logger_1.Logger.debug(`[${this.subscription.name}] received its message`);
                 if (!util_1.isNullOrUndefined(message)) {
-                    logger_1.Logger.debug(`[${this.subscription.name}] message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
-                    if (!this.hasTimedOut) {
-                        logger_1.Logger.info(`[${this.subscription.name}] stop waiting because it has received its message`);
-                        this.subscription.messageReceived = message;
-                        this.executeSubscriptionFunction();
-                    }
-                    else {
-                        logger_1.Logger.info(`[${this.subscription.name}] has received message in a unable time`);
-                    }
-                    this.cleanUp();
+                    this.handleMessageArrival(message);
                     resolve(message);
                 }
                 else {
@@ -97,6 +87,22 @@ class SubscriptionReporter {
         this.cleanUp();
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
+    }
+    handleMessageArrival(message) {
+        logger_1.Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
+        if (!this.hasTimedOut) {
+            logger_1.Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
+            this.subscription.messageReceived = message;
+            this.executeOnMessageReceivedFunction();
+            if (this.subscription.response) {
+                logger_1.Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
+                this.subscription.sendResponse();
+            }
+        }
+        else {
+            logger_1.Logger.info(`${this.subscription.name} has received message in a unable time`);
+        }
+        this.cleanUp();
     }
     addMessageReceivedReport() {
         const messageReceivedTestLabel = 'Message received';
@@ -150,14 +156,14 @@ class SubscriptionReporter {
             this.timeOut.start(this.subscription.timeout);
         }
     }
-    executeSubscriptionFunction() {
+    executeOnMessageReceivedFunction() {
         if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
             logger_1.Logger.trace(`[${this.subscription.name}] has no onMessageReceived to be executed`);
             return;
         }
         logger_1.Logger.trace(`[${this.subscription.name}] executing onMessageReceived`);
         const testExecutor = new tester_executor_1.TesterExecutor(this.subscription.onMessageReceived);
-        testExecutor.addArgument('subscription', this.subscriptionOriginalAttributes);
+        testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
         const tests = testExecutor.execute();
         this.report.tests = this.report.tests.concat(tests.map(test => {

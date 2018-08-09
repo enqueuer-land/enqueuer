@@ -31,7 +31,7 @@ export class HttpClientPublisher extends Publisher {
                 options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
             }
             Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
-            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request(options,
                 (error: any, response: any) => {
                     if (response) {

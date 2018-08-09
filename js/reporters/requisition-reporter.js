@@ -29,8 +29,9 @@ class RequisitionReporter {
             this.onSubscriptionsCompleted();
         })
             .catch(err => {
-            logger_1.Logger.error(`Error connecting multiSubscription: ${err}`);
-            this.onFinish(err);
+            const message = `Error connecting multiSubscription: ${err}`;
+            logger_1.Logger.error(message);
+            this.onFinish({ valid: false, description: message, name: 'Subscriptions connection' });
         });
     }
     getReport() {
@@ -40,12 +41,14 @@ class RequisitionReporter {
         this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
-            logger_1.Logger.error(`Error receiving message in multiSubscription: ${err}`);
-            this.onFinish(err);
+            const message = `Error receiving message in multiSubscription: ${err}`;
+            logger_1.Logger.error(message);
+            this.onFinish({ valid: false, description: err, name: 'Subscriptions message received' });
         });
         logger_1.Logger.debug('Triggering start event');
         this.startEvent.start()
             .then(() => {
+            logger_1.Logger.debug('Start event triggered');
             this.startEventDoneItsJob = true;
             this.tryToFinishExecution();
         })
@@ -68,6 +71,7 @@ class RequisitionReporter {
         this.tryToFinishExecution();
     }
     tryToFinishExecution() {
+        logger_1.Logger.info(`Trying to finish requisition execution`);
         if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
             this.onFinish();
         }
