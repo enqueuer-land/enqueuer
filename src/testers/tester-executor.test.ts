@@ -18,13 +18,15 @@ Tester.mockImplementation(() => {
 const testDeleteEnqueuerMock = jest.fn();
 const testPersistEnqueuerMock = jest.fn();
 const testPersistSessionMock = jest.fn();
+const testGetVariableMock = jest.fn();
 
 jest.mock("./store");
 Store.mockImplementation(() => {
     return {
         deleteEnqueuerVariable: testDeleteEnqueuerMock,
-        persistEnqueuerVariable: testPersistEnqueuerMock,
-        persistSessionVariable: testPersistSessionMock
+        setEnqueuerVariable: testPersistEnqueuerMock,
+        setSessionVariable: testPersistSessionMock,
+        getVariable: testGetVariableMock
     };
 });
 
@@ -51,15 +53,17 @@ describe('TesterExecutor', () => {
     });
 
     it('Should call store methods', () => {
-        const testerExecutor: TesterExecutor = new TesterExecutor(`store.deleteEnqueuerVariable('name');` +
-                                                                    `store.persistEnqueuerVariable('name', 2);` +
-                                                                    `store.persistSessionVariable('name', 3);`);
+        const testerExecutor: TesterExecutor = new TesterExecutor(`store.deleteEnqueuerVariable('del');` +
+                                                                    `store.setEnqueuerVariable('enq', 2);` +
+                                                                    `store.getVariable('enq');` +
+                                                                    `store.setSessionVariable('ses', 3);`);
 
         testerExecutor.execute();
 
-        expect(testDeleteEnqueuerMock).toHaveBeenCalledWith('name');
-        expect(testPersistEnqueuerMock).toHaveBeenCalledWith('name', 2);
-        expect(testPersistSessionMock).toHaveBeenCalledWith('name', 3);
+        expect(testDeleteEnqueuerMock).toHaveBeenCalledWith('del');
+        expect(testGetVariableMock).toHaveBeenCalledWith('enq');
+        expect(testPersistEnqueuerMock).toHaveBeenCalledWith('enq', 2);
+        expect(testPersistSessionMock).toHaveBeenCalledWith('ses', 3);
     });
 
     it('Should catch function creation error', () => {

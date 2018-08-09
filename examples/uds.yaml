@@ -21,9 +21,9 @@ runnables:
       onMessageReceived: tester.isEqualTo('It is bidirectional', message.toString(), 'responsePayload');
       prePublishing: |-
         const payload = 'enqueuer';
-        store.persistSessionVariable('udsPayload', payload);
-        store.persistSessionVariable('uds2RequisitionName', 'RequisitionUds2Name');
-        store.persistSessionVariable('uds2Timeout', '500');
+        store.setSessionVariable('udsPayload', payload);
+        store.setSessionVariable('uds2RequisitionName', 'RequisitionUds2Name');
+        store.setSessionVariable('uds2Timeout', '500');
 -
   name: "{{uds2RequisitionName}}"
   startEvent:

@@ -5,10 +5,10 @@ const variables_controller_1 = require("../variables/variables-controller");
 class Store {
     constructor() {
         this.configuration = new configuration_1.Configuration();
-        this.persistEnqueuerVariable = (name, value) => {
+        this.setEnqueuerVariable = (name, value) => {
             this.configuration.setFileVariable(name, value);
         };
-        this.persistSessionVariable = (name, value) => {
+        this.setSessionVariable = (name, value) => {
             variables_controller_1.VariablesController.sessionVariables()[name] = value;
         };
         this.getVariable = (name) => {

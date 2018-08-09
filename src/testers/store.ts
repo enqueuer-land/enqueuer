@@ -4,11 +4,11 @@ import {VariablesController} from '../variables/variables-controller';
 export class Store {
     private configuration = new Configuration();
 
-    public persistEnqueuerVariable = (name: string, value: any): void => {
+    public setEnqueuerVariable = (name: string, value: any): void => {
         this.configuration.setFileVariable(name, value);
     }
 
-    public persistSessionVariable = (name: string, value: any): void => {
+    public setSessionVariable = (name: string, value: any): void => {
         VariablesController.sessionVariables()[name] = value;
     }
 
