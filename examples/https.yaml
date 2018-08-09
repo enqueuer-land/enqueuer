@@ -12,11 +12,10 @@ runnables:
       url: https://localhost:4430/enqueuer/idHttps?query=999
       method: I'll be reaplaced. Not because I have to. It's just an example
       prePublishing: >-
-        store.persistSessionVariable('variableExample', 'anyValue');
         publisher.method = 'POST';
       onMessageReceived: >-
         tester.isEqualTo('Status code', JSON.parse(message).statusCode, 200);
-        tester.isEqualTo('Replaced payload', JSON.parse(message).body, '<<variableExample>>');
+        tester.isEqualTo('Replaced payload', JSON.parse(message).body, 'idHttps');
       payload:
         https: works!
       headers:
@@ -34,6 +33,7 @@ runnables:
       tester.isEqualTo('Params is someId', message.params.someId, 'idHttps');
       tester.isEqualTo('Query is 999', message.query.query, '999');
       tester.isEqualTo('Payload Https', JSON.parse(message.body).https, 'works!');
+      subscription.response.payload = message.params.someId;
     timeout: 1000
     key: |-
       -----BEGIN RSA PRIVATE KEY-----

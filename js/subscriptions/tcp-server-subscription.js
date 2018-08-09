@@ -41,7 +41,6 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
                 this.waitForData(reject, resolve);
             }
             else {
-                console.log('connection: ' + this.server);
                 this.server.once('connection', (stream) => {
                     this.stream = stream;
                     if (this.greetingResponse) {
@@ -87,12 +86,10 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     }
     waitForData(reject, resolve) {
         logger_1.Logger.trace(`Tcp server is waiting on data`);
-        console.log('end: ' + this.stream);
         this.stream.once('end', () => {
             logger_1.Logger.debug(`Tcp server detected 'end' event`);
             reject();
         });
-        console.log('data: ' + this.stream);
         this.stream.once('data', (msg) => {
             logger_1.Logger.debug(`Tcp server got data ${msg}`);
             resolve(msg);
