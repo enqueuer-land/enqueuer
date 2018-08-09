@@ -74,7 +74,7 @@ let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subs
                     }
                     clearInterval(interval);
                 }
-            }, 100);
+            }, 50);
         });
     }
 };

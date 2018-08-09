@@ -56,7 +56,7 @@ export class FileNameWatcherSubscription extends Subscription {
                     }
                     clearInterval(interval);
                 }
-            }, 100);
+            }, 50);
         });
     }
 }

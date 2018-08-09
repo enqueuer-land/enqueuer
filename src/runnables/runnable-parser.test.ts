@@ -312,6 +312,45 @@ const validHttpRunnable = {
         }
     ]
 };
+const validHttpsRunnable = {
+    "runnableVersion": "01.00.00",
+    "name": "runnableHttp",
+    "initialDelay": 0,
+    "runnables": [
+        {
+            "timeout": 30000,
+            "name": "HttpTitle",
+            "subscriptions": [
+                {
+                    "type": "http-server",
+                    "name": "HttpSubscriptionTitle",
+                    "endpoint": "/enqueuer",
+                    "port": 23075,
+                    "method": "POST",
+                    "response": {
+                        "status": 200
+                    },
+                    "onMessageReceived": "test['works'] = JSON.parse(message).enqueuer === 'virgs';",
+                    "timeout": 10000
+                }
+            ],
+            "startEvent": {
+                "publisher": {
+                    "type": "https-client",
+                    "name": "HttpPublisherClientTitle",
+                    "url": "http://localhost:23075/enqueuer",
+                    "method": "POST",
+                    "payload": {
+                        "enqueuer": "virgs"
+                    },
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }
+            }
+        }
+    ]
+};
 const validSqsRunnable = {
     "runnableVersion": "01.00.00",
     "name": "runnableSqs",
@@ -605,6 +644,10 @@ describe('RunnableParser', () => {
 
     it('Should accept http runnable', () => {
         expect(new RunnableParser().parse(JSON.stringify(validHttpRunnable))).not.toBeNull();
+    });
+
+    it('Should accept https runnable', () => {
+        expect(new RunnableParser().parse(JSON.stringify(validHttpsRunnable))).not.toBeNull();
     });
 
     it('Should accept zero-mq-pub runnable', () => {

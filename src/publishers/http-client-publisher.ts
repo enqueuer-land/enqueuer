@@ -4,7 +4,7 @@ import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import request from 'request';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'http-client'})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'http-client' ||  publishRequisition.type === 'https-client'})
 export class HttpClientPublisher extends Publisher {
     private url: string;
     private method: string;

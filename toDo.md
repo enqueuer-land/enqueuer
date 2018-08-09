@@ -17,5 +17,4 @@ To Create:
         https://github.com/mscdex/cap
         https://github.com/node-pcap/node_pcap
 
-HttpServerPool
 Https support

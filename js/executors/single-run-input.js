@@ -9,7 +9,7 @@ class SingleRunInput {
             type: 'file-name-watcher',
             name: 'SingleRunInput',
             fileNamePattern: fileNamePattern,
-            timeout: 200
+            timeout: 100
         });
         this.runnableParser = new runnable_parser_1.RunnableParser();
     }

@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: HttpOriginal
     time:
-      totalTime: 13
-      startTime: '2018-08-08T20:25:26.857Z'
-      endTime: '2018-08-08T20:25:26.870Z'
+      totalTime: 35
+      startTime: '2018-08-09T01:15:50.198Z'
+      endTime: '2018-08-09T01:15:50.233Z'
       timeout: 3000
     subscriptions:
       -
@@ -44,8 +44,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T20:25:26.858Z'
-        messageReceivedTime: '2018-08-08T20:25:26.869Z'
+        connectionTime: '2018-08-09T01:15:50.202Z'
+        messageReceivedTime: '2018-08-09T01:15:50.229Z'
     startEvent:
       publisher:
         name: HttpPublisherClientTitle
@@ -68,7 +68,7 @@ runnables:
             name: publisherOnMessageReceivedPayloadTest
             valid: true
             description: '''responsePayload'' is equal to ''responsePayload'''
-        publishTime: '2018-08-08T20:25:26.870Z'
+        publishTime: '2018-08-09T01:15:50.232Z'
   -
     type: requisition
     valid: true
@@ -79,10 +79,10 @@ runnables:
         description: 'Requisition has not timed out'
     name: HttpTitleDuplicated
     time:
-      totalTime: 5
-      startTime: '2018-08-08T20:25:26.870Z'
-      endTime: '2018-08-08T20:25:26.875Z'
-      timeout: 3000
+      totalTime: 16
+      startTime: '2018-08-09T01:15:50.233Z'
+      endTime: '2018-08-09T01:15:50.249Z'
+      timeout: 5000
     subscriptions:
       -
         name: DuplicatedEndPointTest
@@ -101,8 +101,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-08T20:25:26.871Z'
-        messageReceivedTime: '2018-08-08T20:25:26.874Z'
+        connectionTime: '2018-08-09T01:15:50.234Z'
+        messageReceivedTime: '2018-08-09T01:15:50.246Z'
     startEvent:
       publisher:
         name: HttpPublisherClientTitle
@@ -124,8 +124,8 @@ runnables:
           -
             name: publisherOnMessageReceivedPayloadTest
             valid: true
-            description: '''responsePayload'' is equal to ''responsePayload'''
-        publishTime: '2018-08-08T20:25:26.875Z'
+            description: '''duplicatedResponsePayload'' is equal to ''duplicatedResponsePayload'''
+        publishTime: '2018-08-09T01:15:50.249Z'
   -
     type: requisition
     valid: true
@@ -136,9 +136,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: HttpGET
     time:
-      totalTime: 4
-      startTime: '2018-08-08T20:25:26.875Z'
-      endTime: '2018-08-08T20:25:26.879Z'
+      totalTime: 5
+      startTime: '2018-08-09T01:15:50.250Z'
+      endTime: '2018-08-09T01:15:50.255Z'
       timeout: 3000
     subscriptions:
       -
@@ -154,8 +154,8 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-08T20:25:26.875Z'
-        messageReceivedTime: '2018-08-08T20:25:26.878Z'
+        connectionTime: '2018-08-09T01:15:50.250Z'
+        messageReceivedTime: '2018-08-09T01:15:50.254Z'
     startEvent:
       publisher:
         name: HttpEnqueuerRepository
@@ -174,4 +174,29 @@ runnables:
             name: 'It runs get onMessageReceived'
             valid: true
             description: '''200'' is equal to ''200'''
-        publishTime: '2018-08-08T20:25:26.879Z'
+        publishTime: '2018-08-09T01:15:50.255Z'
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: runnableHittingOnlineEnqueuer
+    time:
+      totalTime: 2999
+      startTime: '2018-08-09T01:15:50.256Z'
+      endTime: '2018-08-09T01:15:53.255Z'
+      timeout: 3000
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: HttpEnqueuerRepository
+        valid: true
+        type: http-client
+        tests:
+          -
+            name: prePublishingTest
+            valid: true
+            description: 'Definitely true'
