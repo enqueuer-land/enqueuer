@@ -1,0 +1,89 @@
+runnableVersion: 01.00.00
+name: Https
+id: https
+initialDelay: 0
+runnables:
+- timeout: 3000
+  name: Https
+  startEvent:
+    publisher:
+      type: https-client
+      name: HttpsClient
+      url: https://localhost:4430/enqueuer/idHttps?query=999
+      method: I'll be reaplaced. Not because I have to. It's just an example
+      prePublishing: >-
+        store.persistSessionVariable('variableExample', 'anyValue');
+        publisher.method = 'POST';
+      onMessageReceived: >-
+        tester.isEqualTo('Status code', JSON.parse(message).statusCode, 200);
+        tester.isEqualTo('Replaced payload', JSON.parse(message).body, '<<variableExample>>');
+      payload:
+        https: works!
+      headers:
+        content-type: application/json
+  subscriptions:
+  - type: https-server
+    name: HttpsServer
+    endpoint: /enqueuer/:someId
+    port: 4430
+    method: POST
+    response:
+      status: 200
+      payload: anyValue
+    onMessageReceived: >-
+      tester.isEqualTo('Params is someId', message.params.someId, 'idHttps');
+      tester.isEqualTo('Query is 999', message.query.query, '999');
+      tester.isEqualTo('Payload Https', JSON.parse(message.body).https, 'works!');
+    timeout: 1000
+    key: |-
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEA5dJgImUrAPpWRZE59ZO/MXhJA+mu4PeD6s3wBS6gu7DzPZ8S
+      5Vhfo6VhWA7SrMmUA1UE1ab0NibsrbOPKfhkGwn9/a/rTEW9d178UpLOabJBndDd
+      cYv2G7AnjbDDhm53sVni1zt3a8HIITppfKslRRLjyHWZPPaSFtcbg+fHk0yrUu+U
+      SBjKnWE73oWBWlbWbMzUf1SQEzAE+ojYQy/7iEDjxvesmhWVY96AdmBwD/pZifXY
+      Eqqt3Cd7xvWPJFu9t8GMgo3ZiQLHBaF3np6J6D+Cwxw6iN1S5uHe7kbGpBrBGbd9
+      IKOgog1qbOB6xUEI0C0yMVV0ubkkU0DewwjRAQIDAQABAoIBAQCALqNR681dgULn
+      EEYcc6ia5fULiqXwcf0Q1IX/ze72YI56myPF6VGGi7JMlA/rMY8tgJjutWzWW0V8
+      6H58MT9cWWlhumHpq6guUTs4rwsTpsm0RQ+NyjudW9Xj0GhtrWVy9Khx1YgZAP8n
+      kVXOpAJokU2cvAKZHwmCVb3SB0+oFndN8QBXFLt05CdNi2RvdxtSG6+y6Ww+l6o2
+      NaMIMxCVVfxDiACYZ5tMLSLspZAIGShdGSMuCAm3jDG7jm5vvaIsOuhYT+1Oaf9b
+      Yo0kGqbKpdszxxDHuCRlPY7AB6qNLq8L4esiYw6ijV8m1XJ4XF2WO/vTqqHhhfjH
+      bGBp0x1lAoGBAP1xcBE8KDst/79BfKH6qIK4zfO1f08/cxxq4hUXOF7hjEI6jm63
+      GiGKzPaZAMogZcF2LTQYS+TZG4mSEKQ/VdLIj/jD4nCEVcN+R3l5cBxd9tDzPEEZ
+      +xrtSYv/nvakkeHOxMotG95FR3+Qy1ZIdoZ8cne1Opt3Ke29C5GIkK9HAoGBAOgj
+      7nIh7iW2YqQYLD9deJcjek141FBMO/mPQNadXFaT/Pkqf/lsnwWkVDKKDJpDaxoW
+      yOXRJyhuTmvxltI9sb4uyP8UUFbJIv8w28yq76uE8VcyJ07ynt81po4hA9W1BcAk
+      5B/jmI9/nZmlNKuYCTKzIm3lii/biBMTeq/Qz3F3AoGANHVPafHWrfEmd3LZljlo
+      ua4AywntMP0EGYSyCQWGYHU079xo8Nera/fr1rryo+OyzClmz9qbkuGxRndaRHTr
+      kbZ7vlTlQL7TdaRkrOsK3oRAex1tglgbVoZ466ZcQ9bqbx+6MdLGaupSE0BoJhLX
+      nZySoN59JAK1RgUUKOpocC8CgYAZYuyNoLZJe4OYDGiyWUd5x9B1LnSRf3TDmu3t
+      SnIxqadtnD84iK9vT4RBrqUoLZ1F0h4QO+o7WqzK0zW6MjMA6F7kvlT22LIyFCbF
+      YCArsrMt5Pc1hATpxhU7z9J6iXxigeZMsngZoUwb5Fw5M7w1xi9Ks2KET063P1cY
+      aQ52iwKBgGcCWmskSbHiCYtWfIANTnzDAXbWnm1wL77You9w/MjhHefcRa60BrPf
+      7h4x4ZN+KTyTneR9Wgc3XbLTIy8zmbX8KfduZM/ZOmIDKuqvqzHSh5VTYq3pptsu
+      xa9rKdITdFrhuLb+qZ6k103m8JfylsxAtJBwdoab6QfBQhkkQYul
+      -----END RSA PRIVATE KEY-----
+    cert: |-
+      -----BEGIN CERTIFICATE-----
+      MIIDcjCCAloCCQDWt6re3wwXVTANBgkqhkiG9w0BAQUFADB7MQswCQYDVQQGEwJF
+      TjEWMBQGA1UECAwNRW5xdWV1ZXIgTGFuZDEWMBQGA1UEBwwNRW5xdWV1ZXIgVG93
+      bjEWMBQGA1UECgwNRW5xdWV1ZXIgSW5jLjERMA8GA1UECwwIRW5xdWV1ZXIxETAP
+      BgNVBAMMCEVucXVldWVyMB4XDTE4MDgwOTAzMzUxNVoXDTE4MDkwODAzMzUxNVow
+      ezELMAkGA1UEBhMCRU4xFjAUBgNVBAgMDUVucXVldWVyIExhbmQxFjAUBgNVBAcM
+      DUVucXVldWVyIFRvd24xFjAUBgNVBAoMDUVucXVldWVyIEluYy4xETAPBgNVBAsM
+      CEVucXVldWVyMREwDwYDVQQDDAhFbnF1ZXVlcjCCASIwDQYJKoZIhvcNAQEBBQAD
+      ggEPADCCAQoCggEBAOXSYCJlKwD6VkWROfWTvzF4SQPpruD3g+rN8AUuoLuw8z2f
+      EuVYX6OlYVgO0qzJlANVBNWm9DYm7K2zjyn4ZBsJ/f2v60xFvXde/FKSzmmyQZ3Q
+      3XGL9huwJ42ww4Zud7FZ4tc7d2vByCE6aXyrJUUS48h1mTz2khbXG4Pnx5NMq1Lv
+      lEgYyp1hO96FgVpW1mzM1H9UkBMwBPqI2EMv+4hA48b3rJoVlWPegHZgcA/6WYn1
+      2BKqrdwne8b1jyRbvbfBjIKN2YkCxwWhd56eieg/gsMcOojdUubh3u5GxqQawRm3
+      fSCjoKINamzgesVBCNAtMjFVdLm5JFNA3sMI0QECAwEAATANBgkqhkiG9w0BAQUF
+      AAOCAQEAbgWl5hpJyXNXqZIRL1RnK7+849z+R/iW/89BkW6JFnoYXeOrl//TTRDK
+      VY36RF3Pd4mDocwrrNPk348Xqvsq6yf2aqz8LQTbCm2anZPPZfOsvywEaTjKl9R+
+      EpWFRAvm6yw58FfoQtN8ujMTCQavERYyUMvh//z64H4g1udlkv2RMZmr7R999PFW
+      tIxc1ZY7jg7Z6dghAqic8f85wqdlHyu/C8O2ZUlWhf9hi9/NWku4mPf03teiAVyU
+      wUwIs5SDMqYHxKjatva4cd4piJeB0eG4/47HbhYGfhtz4BvIZ5/pwql7myfJYekH
+      mLX8DjMYA3XuADxkmlUhY9xBAfBeVw==
+      -----END CERTIFICATE-----
+
+

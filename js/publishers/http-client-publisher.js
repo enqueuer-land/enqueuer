@@ -36,6 +36,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
                 options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
             }
             logger_1.Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             request_1.default(options, (error, response) => {
                 if (response) {
                     this.messageReceived = JSON.stringify(response);
@@ -45,7 +46,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
                     logger_1.Logger.warning(`No http requisition response`);
                 }
                 if (error) {
-                    reject('Error firing http request: ' + error);
+                    reject('Http request error: ' + error);
                 }
                 else {
                     resolve();

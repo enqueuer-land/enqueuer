@@ -8,7 +8,7 @@ runnables:
   - type: uds
     path: "/tmp/unix.sock"
     name: udsSubscription
-    onMessageReceived: >-
+    onMessageReceived: |-
       tester.isEqualTo('Message received is enqueuer 1', JSON.parse(message), 'enqueuer');
     response: responsePayload
     timeout: 500
@@ -19,7 +19,7 @@ runnables:
       path: "/tmp/unix.sock"
       payload: "{{udsPayload}}"
       onMessageReceived: tester.isEqualTo('It is bidirectional', message.toString(), 'responsePayload');
-      prePublishing: >-
+      prePublishing: |-
         const payload = 'enqueuer';
         store.persistSessionVariable('udsPayload', payload);
         store.persistSessionVariable('uds2RequisitionName', 'RequisitionUds2Name');

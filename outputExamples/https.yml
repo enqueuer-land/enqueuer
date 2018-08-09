@@ -1,0 +1,67 @@
+type: runnable
+valid: true
+tests: []
+name: Https
+id: https
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: Https
+    time:
+      totalTime: 13
+      startTime: '2018-08-09T04:04:42.405Z'
+      endTime: '2018-08-09T04:04:42.418Z'
+      timeout: 3000
+    subscriptions:
+      -
+        name: HttpsServer
+        type: https-server
+        tests:
+          -
+            name: 'Params is someId'
+            valid: true
+            description: '''idHttps'' is equal to ''idHttps'''
+          -
+            name: 'Query is 999'
+            valid: true
+            description: '''999'' is equal to ''999'''
+          -
+            name: 'Payload Https'
+            valid: true
+            description: '''works!'' is equal to ''works!'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
+        valid: true
+        connectionTime: '2018-08-09T04:04:42.407Z'
+        messageReceivedTime: '2018-08-09T04:04:42.417Z'
+    startEvent:
+      publisher:
+        name: HttpsClient
+        valid: true
+        type: https-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Status code'
+            valid: true
+            description: '''200'' is equal to ''200'''
+          -
+            name: 'Replaced payload'
+            valid: true
+            description: '''anyValue'' is equal to ''anyValue'''
+        publishTime: '2018-08-09T04:04:42.418Z'

@@ -19,7 +19,7 @@ runnables:
     brokerAddress: mqtt://iot.eclipse.org
     name: MqttSub
     topic: enqueuer/integration/public/test
-    onMessageReceived: >-
+    onMessageReceived: |-
       let enqueuer = 'enqueuer';
       const payload = Buffer.from(message.payload);
       tester.isEqualTo('Payload', payload, enqueuer);

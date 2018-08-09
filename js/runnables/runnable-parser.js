@@ -66,7 +66,6 @@ class RunnableParser {
             variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
         }
         const runnableWithId = variablesReplaced;
-        logger_1.Logger.trace(`Parsed runnable: ${JSON.stringify(runnableWithId, null, 2)}`);
         logger_1.Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
         return runnableWithId;
     }

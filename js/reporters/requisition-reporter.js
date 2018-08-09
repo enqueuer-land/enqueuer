@@ -50,9 +50,9 @@ class RequisitionReporter {
             this.tryToFinishExecution();
         })
             .catch(err => {
-            const message = `Error triggering startingEvent: ${err}`;
+            const message = `Error triggering startEvent: ${err}`;
             logger_1.Logger.error(message);
-            this.onFinish(message);
+            this.onFinish({ valid: false, description: err, name: 'Start Event' });
         });
     }
     initializeTimeout() {
@@ -78,7 +78,7 @@ class RequisitionReporter {
         };
         logger_1.Logger.info(`Start gathering reports`);
         if (error) {
-            logger_1.Logger.debug(`Error collected: ${error}`);
+            logger_1.Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());

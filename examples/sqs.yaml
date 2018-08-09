@@ -8,7 +8,7 @@ runnables:
   subscriptions:
   - type: sqs
     name: udsSubs
-    onMessageReceived: >-
+    onMessageReceived: |-
       const messageBody = message.Body;
       tester.contains('Message contains q', messageBody, 'q');
     awsConfiguration:

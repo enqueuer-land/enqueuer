@@ -47,8 +47,8 @@ class ReportGenerator {
     addError(error) {
         const errorTest = {
             valid: false,
-            name: error,
-            description: error
+            name: error.name,
+            description: error.description
         };
         this.report.tests.push(errorTest);
     }

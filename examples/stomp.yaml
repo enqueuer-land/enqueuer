@@ -12,7 +12,7 @@ runnables:
     user: guest
     password: guest
     queue: "/queue/stompQueue"
-    onMessageReceived: >-
+    onMessageReceived: |-
       tester.isEqualTo('Payload', message.payload, 'stompQueue');
   startEvent:
     publisher:

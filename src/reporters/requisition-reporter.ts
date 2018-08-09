@@ -6,6 +6,7 @@ import * as output from '../models/outputs/requisition-model';
 import {Timeout} from '../timers/timeout';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {Container} from 'conditional-injector';
+import {TestModel} from '../models/outputs/test-model';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -62,9 +63,9 @@ export class RequisitionReporter {
                 this.tryToFinishExecution();
             })
             .catch(err => {
-                const message = `Error triggering startingEvent: ${err}`;
+                const message = `Error triggering startEvent: ${err}`;
                 Logger.error(message);
-                this.onFinish(message);
+                this.onFinish({valid: false, description: err, name: 'Start Event'});
             });
 
     }
@@ -89,14 +90,14 @@ export class RequisitionReporter {
         }
     }
 
-    private onFinish(error?: string): void {
+    private onFinish(error?: TestModel): void {
         this.onFinish = () => {
             //do nothing
         };
         Logger.info(`Start gathering reports`);
 
         if (error) {
-            Logger.debug(`Error collected: ${error}`);
+            Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());

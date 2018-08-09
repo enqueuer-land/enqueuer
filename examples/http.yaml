@@ -14,7 +14,7 @@ runnables:
     response:
       status: 321
       payload: responsePayload
-    onMessageReceived: >-
+    onMessageReceived: |-
       tester.isEqualTo('Params is someId', message.params.someId, 'idStuff');
       tester.isEqualTo('Query is 123', message.query.query, '123');
       tester.isEqualTo('Payload is Virgs', JSON.parse(message.body).enqueuer, 'virgs');
@@ -26,7 +26,7 @@ runnables:
       url: http://localhost:23075/enqueuer/idStuff?query=123
       method: POST
       prePublishing: tester.isTruthy('prePublishingTest', true);
-      onMessageReceived: >-
+      onMessageReceived: |-
         tester.isEqualTo('publisherOnMessageReceivedTest', JSON.parse(message).statusCode, 321);
         tester.isEqualTo('publisherOnMessageReceivedPayloadTest', JSON.parse(message).body, 'responsePayload');
       payload:
@@ -42,8 +42,8 @@ runnables:
       url: http://localhost:23075/enqueuer/234234234?query=123
       method: POST
       prePublishing: tester.isTruthy('prePublishingTest', true);
-      onMessageReceived: >-
-        tester.isEqualTo('publisherOnMessageReceivedTest', JSON.parse(message).statusCode, 321);
+      onMessageReceived: |-
+        tester.isEqualTo('publisherOnMessageReceivedTest', JSON.parse(message).statusCode, 321)
         tester.isEqualTo('publisherOnMessageReceivedPayloadTest', JSON.parse(message).body, 'duplicatedResponsePayload');
       payload:
         duplicated: true
@@ -56,7 +56,7 @@ runnables:
     response:
       status: 321
       payload: duplicatedResponsePayload
-    onMessageReceived: >-
+    onMessageReceived: |-
       tester.isTruthy('Duplicated', JSON.parse(message.body).duplicated);
     timeout: 3000
 - name: HttpGET
@@ -70,7 +70,7 @@ runnables:
       response:
         status: 200
         payload: responsePayload
-      onMessageReceived: >-
+      onMessageReceived: |-
         tester.isDefined('isDefined', message);
   startEvent:
     publisher:

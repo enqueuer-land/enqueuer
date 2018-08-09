@@ -29,8 +29,8 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
             console.log(chalk_1.default.red(`\t\tFailing tests:`));
             this.failingTests
                 .forEach((failingTest) => {
-                console.log(chalk_1.default.red(`\t\t\tName: ${failingTest.name}`));
-                console.log(chalk_1.default.red(`\t\t\t\t${failingTest.description}`));
+                console.log(chalk_1.default.red(`\t\t\t${failingTest.name}`));
+                console.log(`\t\t\t\t\t${failingTest.description}`);
             });
         }
     }

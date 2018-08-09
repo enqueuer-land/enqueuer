@@ -322,7 +322,7 @@ const validHttpsRunnable = {
             "name": "HttpTitle",
             "subscriptions": [
                 {
-                    "type": "http-server",
+                    "type": "https-server",
                     "name": "HttpSubscriptionTitle",
                     "endpoint": "/enqueuer",
                     "port": 23075,

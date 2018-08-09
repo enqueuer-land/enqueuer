@@ -13,11 +13,13 @@ const subscription_1 = require("./subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const util_1 = require("util");
-const http_server_pool_1 = require("../runnables/pools/http-server-pool");
+const http_server_pool_1 = require("../pools/http-server-pool");
 let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.response = {};
+        this.key = subscriptionAttributes.key;
+        this.cert = subscriptionAttributes.cert;
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method.toLowerCase();
@@ -47,7 +49,23 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
     connect() {
         return new Promise((resolve, reject) => {
-            http_server_pool_1.HttpServerPool.getInstance().getHttpServer().listen(this.port, (err) => {
+            let server = null;
+            if (this.type == 'https-server') {
+                server = http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.key, this.cert);
+            }
+            else if (this.type == 'http-server') {
+                server = http_server_pool_1.HttpServerPool.getInstance().getHttpServer();
+            }
+            else {
+                reject(`Http server type is not known: ${this.type}`);
+                return;
+            }
+            server.on('error', (err) => {
+                if (err) {
+                    reject(err);
+                }
+            });
+            server.listen(this.port, (err) => {
                 if (err) {
                     reject(err);
                 }
@@ -56,11 +74,17 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         });
     }
     unsubscribe() {
-        http_server_pool_1.HttpServerPool.getInstance().closeHttpServer();
+        if (this.type == 'https-server') {
+            http_server_pool_1.HttpServerPool.getInstance().closeHttpsServer();
+        }
+        else {
+            http_server_pool_1.HttpServerPool.getInstance().closeHttpServer();
+        }
     }
 };
 HttpServerSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-server' }),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-server'
+            || subscriptionAttributes.type === 'https-server' }),
     __metadata("design:paramtypes", [Object])
 ], HttpServerSubscription);
 exports.HttpServerSubscription = HttpServerSubscription;
