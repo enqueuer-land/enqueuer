@@ -3,11 +3,15 @@
   "type": "object",
   "properties": {
     "timeout": {
-      "type": ["integer", "string"],
+      "type": [
+        "integer",
+        "string"
+      ],
       "title": "The requisition timeout",
       "default": "",
       "examples": [
-        5000, 60000
+        5000,
+        60000
       ]
     },
     "name": {
@@ -21,68 +25,31 @@
     "subscriptions": {
       "type": "array",
       "items": {
-        "allOf": [
-          {"$ref": "https://github.com/lopidio/enqueuer/subscription"},
-          {"oneOf": [
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/mqtt"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/amqp"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/tcp"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/sqs"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/uds"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/udp"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/http"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/zero-mq-sub"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/stomp"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/kafka"},
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
-          ]}
-        ]
+        "type": "object"
       }
     },
     "startEvent": {
       "type": "object",
       "properties": {
         "subscription": {
-          "allOf": [
-            {"$ref": "https://github.com/lopidio/enqueuer/subscription"},
-            {"oneOf": [
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/mqtt"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/amqp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/sqs"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/uds"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/tcp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/udp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/http"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/zero-mq-sub"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/stomp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/kafka"},
-              {"$ref": "https://github.com/lopidio/enqueuer/subscription/file"}
-            ]}
-          ]
+          "type": "object"
         },
         "publisher": {
-          "allOf": [
-            {"$ref": "https://github.com/lopidio/enqueuer/publisher"},
-            {"oneOf": [
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/mqtt"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/sqs"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/amqp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/uds"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/tcp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/udp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/http"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/zero-mq-pub"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/stomp"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/kafka"},
-              {"$ref": "https://github.com/lopidio/enqueuer/publisher/file"}
-            ]}
-          ]
+          "type": "object"
         }
       },
       "additionalProperties": false,
       "oneOf": [
-        { "required": [ "subscription" ] },
-        { "required": [ "publisher" ] }
+        {
+          "required": [
+            "subscription"
+          ]
+        },
+        {
+          "required": [
+            "publisher"
+          ]
+        }
       ]
     }
   },

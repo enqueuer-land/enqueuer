@@ -14,9 +14,7 @@ export class RunnableParser {
     private validator: ValidateFunction;
     public constructor() {
         const schemasPath = this.discoverSchemasFolder();
-        this.validator = this.readFilesFromSchemaFolders(schemasPath.concat('publishers/'))
-            .concat(this.readFilesFromSchemaFolders(schemasPath.concat('subscribers/')))
-            .reduce((ajv, schemaObject: any) => ajv.addSchema(schemaObject), new Ajv({allErrors: true, verbose: false}))
+        this.validator = new Ajv({allErrors: true, verbose: false})
             .addSchema(this.readJsonFile(schemasPath.concat('requisition-schema.json')))
             .compile(this.readJsonFile(schemasPath.concat('runnable-schema.json')));
     }
@@ -58,20 +56,6 @@ export class RunnableParser {
             Logger.info(`Not able to parse as Yaml string to Object. Trying to parse as JSON string`);
             return JSON.parse(runnableMessage);
         }
-    }
-
-    private readFilesFromSchemaFolders = (subFolderName: string): string[] => {
-        let files = [];
-        const dirContent = fs.readdirSync(subFolderName);
-        for (let i = 0; i < dirContent.length; i++) {
-            const filename = subFolderName + dirContent[i];
-            const stat = fs.lstatSync(filename);
-            if (!stat.isDirectory()) {
-                const fileContent = this.readJsonFile(filename);
-                files.push(fileContent);
-            }
-        }
-        return files;
     }
 
     private readJsonFile(filename: string) {

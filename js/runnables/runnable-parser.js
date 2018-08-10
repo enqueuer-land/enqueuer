@@ -20,23 +20,8 @@ const ajv_1 = __importDefault(require("ajv"));
 const yaml = __importStar(require("yamljs"));
 class RunnableParser {
     constructor() {
-        this.readFilesFromSchemaFolders = (subFolderName) => {
-            let files = [];
-            const dirContent = fs_1.default.readdirSync(subFolderName);
-            for (let i = 0; i < dirContent.length; i++) {
-                const filename = subFolderName + dirContent[i];
-                const stat = fs_1.default.lstatSync(filename);
-                if (!stat.isDirectory()) {
-                    const fileContent = this.readJsonFile(filename);
-                    files.push(fileContent);
-                }
-            }
-            return files;
-        };
         const schemasPath = this.discoverSchemasFolder();
-        this.validator = this.readFilesFromSchemaFolders(schemasPath.concat('publishers/'))
-            .concat(this.readFilesFromSchemaFolders(schemasPath.concat('subscribers/')))
-            .reduce((ajv, schemaObject) => ajv.addSchema(schemaObject), new ajv_1.default({ allErrors: true, verbose: false }))
+        this.validator = new ajv_1.default({ allErrors: true, verbose: false })
             .addSchema(this.readJsonFile(schemasPath.concat('requisition-schema.json')))
             .compile(this.readJsonFile(schemasPath.concat('runnable-schema.json')));
     }
