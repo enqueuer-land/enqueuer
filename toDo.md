@@ -18,3 +18,6 @@ To Create:
         https://github.com/node-pcap/node_pcap
 
 Inception run only one spawn mode
+
+beforeSubscription method hook
+do not save variables in config file amymore (set/qet Session variables)
