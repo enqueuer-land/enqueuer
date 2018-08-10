@@ -43,17 +43,12 @@ export class HttpServerPool {
         return this.http.server;
     }
 
-    public getHttpsServer(key: any, cert: any): http.Server {
+    public getHttpsServer(credentials: any): http.Server {
         ++this.https.counter;
         if (!this.http.server) {
             this.initializeExpress();
-            Logger.debug('Creating a new Https server');
-            const options = {
-                key: key,
-                cert: cert
-            };
-
-            this.https.server = https.createServer(options, this.app);
+            Logger.debug(`Creating a new Https server: ${credentials}`);
+            this.https.server = https.createServer(credentials, this.app);
         }
         return this.https.server;
     }

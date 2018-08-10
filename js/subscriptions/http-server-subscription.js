@@ -17,8 +17,7 @@ const http_server_pool_1 = require("../pools/http-server-pool");
 let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.key = subscriptionAttributes.key;
-        this.cert = subscriptionAttributes.cert;
+        this.credentials = subscriptionAttributes.credentials;
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method.toLowerCase();
@@ -53,7 +52,7 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         return new Promise((resolve, reject) => {
             let server = null;
             if (this.type == 'https-server') {
-                server = http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.key, this.cert);
+                server = http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.credentials);
             }
             else if (this.type == 'http-server') {
                 server = http_server_pool_1.HttpServerPool.getInstance().getHttpServer();

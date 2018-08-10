@@ -12,15 +12,13 @@ export class HttpServerSubscription extends Subscription {
     private port: string;
     private endpoint: string;
     private method: string;
-    private key?: string;
-    private cert?: string;
+    private credentials?: string;
     private responseHandler?: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
 
-        this.key = subscriptionAttributes.key;
-        this.cert = subscriptionAttributes.cert;
+        this.credentials = subscriptionAttributes.credentials;
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method.toLowerCase();
@@ -60,7 +58,7 @@ export class HttpServerSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             let server = null;
             if (this.type == 'https-server') {
-                server = HttpServerPool.getInstance().getHttpsServer(this.key, this.cert);
+                server = HttpServerPool.getInstance().getHttpsServer(this.credentials);
             } else if (this.type == 'http-server') {
                 server = HttpServerPool.getInstance().getHttpServer();
             } else {
