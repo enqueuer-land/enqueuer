@@ -19,5 +19,9 @@ To Create:
 
 Inception run only one spawn mode
 
-beforeSubscription method hook
-do not save variables in config file amymore (set/qet Session variables)
+do not save variables in config file anymore (store['name']);
+http credentials
+prePublishing -> onInit
+create onInit to subscriptions, requisitions and publisher
+Json schema validation just for requisition and runnables
+Hook examples test
