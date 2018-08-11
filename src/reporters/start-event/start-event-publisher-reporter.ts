@@ -14,47 +14,37 @@ import {Test} from '../../testers/test';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
-    private publisherOriginalAttributes: input.PublisherModel;
-    private publisher?: Publisher;
+    private publisher: Publisher;
     private report: output.PublisherModel;
 
     constructor(startEvent: input.PublisherModel) {
         super();
-        this.publisherOriginalAttributes = startEvent.publisher;
+        const startEventPublisher = startEvent.publisher;
         this.report = {
-            name: this.publisherOriginalAttributes.name,
+            name: startEventPublisher.name,
             valid: true,
-            type: this.publisherOriginalAttributes.type,
+            type: startEventPublisher.type,
             tests: []
         };
+        this.publisher = this.executeOnInitFunction(startEventPublisher);
     }
 
     public start(): Promise<void> {
         Logger.trace(`Firing publication as startEvent`);
         return new Promise((resolve, reject) => {
-            this.executePrePublishingFunction();
-            Logger.debug(`Instantiating requisition publisher from '${this.publisherOriginalAttributes.type}'`);
-            this.publisher = Container.subclassesOf(Publisher).create(this.publisherOriginalAttributes);
-            if (this.publisher) {
-
-                this.publisher.publish()
-                    .then(() => {
-                        Logger.trace(`Start event published`);
-                        this.report.publishTime = new DateController().toString();
-                        this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
-                        this.executeOnMessageReceivedFunction();
-                        return resolve();
-                    })
-                    .catch((err: any) => {
-                        Logger.error(err);
-                        this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
-                        reject(err);
-                    });
-            } else {
-                const message = `Publisher is undefined after prePublish function execution ' ` +
-                                    `${JSON.stringify(this.publisherOriginalAttributes, null, 2)}'`;
-                reject(message);
-            }
+            this.publisher.publish()
+                .then(() => {
+                    Logger.trace(`Start event published`);
+                    this.report.publishTime = new DateController().toString();
+                    this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
+                    this.executeOnMessageReceivedFunction();
+                    return resolve();
+                })
+                .catch((err: any) => {
+                    Logger.error(err);
+                    this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
+                    reject(err);
+                });
         });
     }
 
@@ -81,27 +71,27 @@ export class StartEventPublisherReporter extends StartEventReporter {
         }));
     }
 
-    private executePrePublishingFunction() {
-        if (!this.publisherOriginalAttributes.prePublishing) {
-            return;
+    private executeOnInitFunction(publisher: input.PublisherModel): Publisher {
+        Logger.trace(`Executing publisher::onInit function`);
+        if (publisher.onInit) {
+            const testExecutor = new TesterExecutor(publisher.onInit);
+            testExecutor.addArgument('publisher', publisher);
+
+            const tests = testExecutor.execute();
+
+            const placeHolderReplacer = new JsonPlaceholderReplacer();
+            placeHolderReplacer
+                .addVariableMap(VariablesController.persistedVariables())
+                .addVariableMap(VariablesController.sessionVariables());
+            publisher = (placeHolderReplacer.replace(publisher) as any);
+
+            Logger.trace(`Adding publisher::onInit functions tests to report`);
+            this.report.tests = this.report.tests.concat(tests.map(test => {
+                return {name: test.label, valid: test.valid, description: test.description};
+            }));
         }
 
-        Logger.trace(`Executing pre publishing function`);
-
-        const testExecutor = new TesterExecutor(this.publisherOriginalAttributes.prePublishing);
-        testExecutor.addArgument('publisher', this.publisherOriginalAttributes);
-
-        const tests = testExecutor.execute();
-
-        const placeHolderReplacer = new JsonPlaceholderReplacer();
-        placeHolderReplacer
-            .addVariableMap(VariablesController.persistedVariables())
-            .addVariableMap(VariablesController.sessionVariables());
-        this.publisherOriginalAttributes = (placeHolderReplacer.replace(this.publisherOriginalAttributes) as any);
-
-        Logger.trace(`Adding prePublishing functions tests to report`);
-        this.report.tests = this.report.tests.concat(tests.map(test => {
-            return {name: test.label, valid: test.valid, description: test.description};
-        }));
+        Logger.debug(`Instantiating publisher from '${publisher.type}'`);
+        return Container.subclassesOf(Publisher).create(publisher);
     }
 }

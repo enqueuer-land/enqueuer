@@ -5,14 +5,14 @@ export abstract class Publisher {
     public payload: string;
     public name: string;
     public onMessageReceived?: string;
-    public prePublishing?: string;
+    public onInit?: string;
     public messageReceived?: string;
 
     public constructor(publisherAttributes: PublisherModel) {
         this.type = publisherAttributes.type;
         this.payload = publisherAttributes.payload;
         this.name = publisherAttributes.name;
-        this.prePublishing = publisherAttributes.prePublishing;
+        this.onInit = publisherAttributes.onInit;
         this.onMessageReceived = publisherAttributes.onMessageReceived;
     }
 

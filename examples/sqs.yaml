@@ -5,9 +5,22 @@ initialDelay: 0
 runnables:
 - timeout: 5000
   name: sqsRequisition
+  startEvent:
+    publisher:
+      type: sqs
+      name: sqsPublisher
+      payload: enqueuer
+      awsConfiguration: <<awsVariableConfiguration>>
+      messageParams:
+        QueueUrl: http://localhost:9324/queue/enqueuerQueue
+      onMessageReceived: |-
+        message = JSON.parse(message);
+        tester.isEqualTo('Request Id is equal to', message.ResponseMetadata.RequestId, '00000000-0000-0000-0000-000000000000');
+        tester.isDefined('Md5Body exists', message.MD5OfMessageBody);
+        tester.isDefined('MessageId exists', message.MessageId);
   subscriptions:
   - type: sqs
-    name: udsSubs
+    name: sqsSubs
     onMessageReceived: |-
       const messageBody = message.Body;
       tester.contains('Message contains q', messageBody, 'q');
@@ -19,11 +32,3 @@ runnables:
     messageParams:
       QueueUrl: http://localhost:9324/queue/enqueuerQueue
     timeout: 3000
-  startEvent:
-    publisher:
-      type: sqs
-      name: sqsPublisher
-      payload: enqueuer
-      awsConfiguration: <<awsVariableConfiguration>>
-      messageParams:
-        QueueUrl: http://localhost:9324/queue/enqueuerQueue

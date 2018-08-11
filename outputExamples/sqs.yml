@@ -14,13 +14,13 @@ runnables:
         description: 'Requisition has not timed out'
     name: sqsRequisition
     time:
-      totalTime: 28
-      startTime: '2018-08-09T18:24:00.429Z'
-      endTime: '2018-08-09T18:24:00.457Z'
+      totalTime: 27
+      startTime: '2018-08-11T21:28:22.614Z'
+      endTime: '2018-08-11T21:28:22.641Z'
       timeout: 5000
     subscriptions:
       -
-        name: udsSubs
+        name: sqsSubs
         type: sqs
         tests:
           -
@@ -36,8 +36,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-09T18:24:00.429Z'
-        messageReceivedTime: '2018-08-09T18:24:00.456Z'
+        connectionTime: '2018-08-11T21:28:22.614Z'
+        messageReceivedTime: '2018-08-11T21:28:22.639Z'
     startEvent:
       publisher:
         name: sqsPublisher
@@ -48,4 +48,16 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-09T18:24:00.457Z'
+          -
+            name: 'Request Id is equal to'
+            valid: true
+            description: '''00000000-0000-0000-0000-000000000000'' is equal to ''00000000-0000-0000-0000-000000000000'''
+          -
+            name: 'Md5Body exists'
+            valid: true
+            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is defined'
+          -
+            name: 'MessageId exists'
+            valid: true
+            description: '''41c5e994-16f7-484d-952c-b48d50f1f93a'' is defined'
+        publishTime: '2018-08-11T21:28:22.640Z'

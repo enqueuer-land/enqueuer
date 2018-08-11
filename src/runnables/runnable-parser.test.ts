@@ -112,7 +112,7 @@ const validFileRunnable = {
                     "payload": "filePublisher",
                     "filenamePrefix": "temp/fileTest",
                     "filenameExtension": "file",
-                    "prePublishing": "publisher.payload=new Date().getTime();"
+                    "onInit": "publisher.payload=new Date().getTime();"
                 }
             }
         }
@@ -152,7 +152,7 @@ const validAmqpRunnable = {
                     "payload": "enqueuerQueue",
                     "routingKey": "routingKey",
                     "exchange": "exchange",
-                    "prePublishing": "publisher.payload=new Date().getTime();"
+                    "onInit": "publisher.payload=new Date().getTime();"
                 }
             }
         }
@@ -547,7 +547,7 @@ const validRunnableWithId = {
                     "payload": "filePublisher",
                     "filenamePrefix": "temp/fileTest",
                     "filenameExtension": "file",
-                    "prePublishing": "publisher.payload=new Date().getTime();"
+                    "onInit": "publisher.payload=new Date().getTime();"
                 }
             }
         }
@@ -570,7 +570,7 @@ const validRunnableWithNoSubscriptions = {
                     "payload": "filePublisher",
                     "filenamePrefix": "temp/fileTest",
                     "filenameExtension": "file",
-                    "prePublishing": "publisher.payload=new Date().getTime();"
+                    "onInit": "publisher.payload=new Date().getTime();"
                 }
             }
         }
