@@ -46,7 +46,8 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
                     return reject(error);
                 }
                 this.latestOffset = offsets[this.options.topic][0];
-                return resolve();
+                logger_1.Logger.trace('Kafka subscription is connected');
+                resolve();
             });
         });
     }

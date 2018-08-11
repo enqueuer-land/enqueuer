@@ -2,7 +2,7 @@ runnableVersion: 01.00.00
 name: kafkaName
 id: kafka
 runnables:
-- timeout: 3000
+- timeout: 8000
   name: RequisitionKafka
   startEvent:
     publisher:
@@ -15,6 +15,7 @@ runnables:
   subscriptions:
   - type: kafka
     name: kafkaSub
+    timeout: 2000
     client:
       kafkaHost: localhost:9093
     options:
