@@ -7,6 +7,7 @@ import {Timeout} from '../timers/timeout';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {Container} from 'conditional-injector';
 import {TestModel} from '../models/outputs/test-model';
+import {TesterExecutor} from '../testers/tester-executor';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -21,6 +22,12 @@ export class RequisitionReporter {
 
     constructor(requisitionAttributes: input.RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes);
+        if (requisitionAttributes.onInit) {
+            Logger.info(`Executing requisition::onInit hook function`);
+            const testExecutor = new TesterExecutor(requisitionAttributes.onInit);
+            testExecutor.addArgument('requisition', requisitionAttributes);
+            this.executeHookFunction(testExecutor);
+        }
         this.startEvent = Container.subclassesOf(StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
@@ -108,5 +115,12 @@ export class RequisitionReporter {
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
         this.onFinishCallback();
+    }
+
+    private executeHookFunction(testExecutor: TesterExecutor) {
+        const tests = testExecutor.execute();
+        this.reportGenerator.addTests(tests.map(test => {
+            return {name: test.label, valid: test.valid, description: test.description};
+        }));
     }
 }

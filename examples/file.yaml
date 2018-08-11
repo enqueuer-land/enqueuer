@@ -12,7 +12,7 @@ runnables:
       payload: filePublisher
       filenamePrefix: temp/fileTest
       filenameExtension: file
-      prePublishing: publisher.payload=new Date().getTime();
+      onInit: publisher.payload=new Date().getTime();
   subscriptions:
   - type: file-name-watcher
     name: fileSubscription

@@ -20,8 +20,6 @@ export class SubscriptionReporter {
     private hasTimedOut: boolean = false;
 
     constructor(subscriptionAttributes: input.SubscriptionModel) {
-        Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         this.startTime = new DateController();
         this.report = {
             name: subscriptionAttributes.name,
@@ -29,6 +27,18 @@ export class SubscriptionReporter {
             tests: [],
             valid: true
         };
+
+        if (subscriptionAttributes.onInit) {
+            Logger.info(`Executing subscription::onInit hook function`);
+            const testExecutor = new TesterExecutor(subscriptionAttributes.onInit);
+            testExecutor.addArgument('subscription', subscriptionAttributes.subscription);
+            this.executeHookFunction(testExecutor);
+            Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+            this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
+        } else {
+            Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+            this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
+        }
     }
 
     public startTimeout(onTimeOutCallback: Function) {
@@ -177,14 +187,18 @@ export class SubscriptionReporter {
         const testExecutor = new TesterExecutor(this.subscription.onMessageReceived);
         testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
-
-        const tests = testExecutor.execute();
-        this.report.tests = this.report.tests.concat(tests.map(test => {
-            return {name: test.label, valid: test.valid, description: test.description};
-        }));
-        Logger.trace(`[${this.subscription.name}] tests ${JSON.stringify(this.report.tests, null, 2)}`);
+        this.executeHookFunction(testExecutor);
 
         this.report.messageReceivedTime = new DateController().toString();
+    }
+
+    private executeHookFunction(testExecutor: TesterExecutor) {
+        const tests = testExecutor.execute();
+        this.report.tests = tests.map(test => {
+                                                    return {name: test.label, valid: test.valid, description: test.description};
+                                                })
+                                .concat(this.report.tests);
+        Logger.trace(`[${this.report.name}] tests ${JSON.stringify(this.report.tests, null, 2)}`);
     }
 
     private handleKillSignal = (signal: Signals): void => {

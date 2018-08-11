@@ -1,0 +1,30 @@
+runnableVersion: 01.00.00
+name: hooks example
+id: file
+runnables:
+- timeout: 100
+  onInit: >-
+    console.log('requisition::onInit');
+  name: example
+  startEvent:
+    publisher:
+      type: http-client
+      name: publishing
+      url: http://localhost:23078/hooks
+      method: GET
+      onInit: >-
+        console.log('publishing::onInit');
+      onMessageReceived: >-
+        console.log('publishing::onMessageReceived');
+  subscriptions:
+    - type: http-server
+      name: subscription
+      endpoint: /hooks
+      port: 23078
+      method: GET
+      response:
+        status: 200
+      onInit: >-
+        console.log('subscription::onInit');
+      onMessageReceived: >-
+        console.log('subscription::onMessageReceived');

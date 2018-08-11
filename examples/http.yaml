@@ -25,7 +25,7 @@ runnables:
       name: HttpPublisherClientTitle
       url: http://localhost:23075/enqueuer/idStuff?query=123
       method: POST
-      prePublishing: tester.isTruthy('prePublishingTest', true);
+      onInit: tester.isTruthy('onInit', true);
       onMessageReceived: |-
         tester.isEqualTo('publisherOnMessageReceivedTest', JSON.parse(message).statusCode, 321);
         tester.isEqualTo('publisherOnMessageReceivedPayloadTest', JSON.parse(message).body, 'responsePayload');
@@ -41,7 +41,7 @@ runnables:
       name: HttpPublisherClientTitle
       url: http://localhost:23075/enqueuer/234234234?query=123
       method: POST
-      prePublishing: tester.isTruthy('prePublishingTest', true);
+      onInit: tester.isTruthy('onInitTest', true);
       onMessageReceived: |-
         tester.isEqualTo('publisherOnMessageReceivedTest', JSON.parse(message).statusCode, 321)
         tester.isEqualTo('publisherOnMessageReceivedPayloadTest', JSON.parse(message).body, 'duplicatedResponsePayload');
@@ -78,7 +78,7 @@ runnables:
       name: HttpEnqueuerRepository
       url: http://localhost:23075/gui
       method: GET
-      prePublishing: tester.isTruthy('prePublishingTest', true);
+      onInit: tester.isTruthy('onInitTest', true);
       onMessageReceived: tester.isEqualTo('It runs get onMessageReceived', JSON.parse(message).statusCode, 200);
       headers:
         content-type: application/json
@@ -91,7 +91,7 @@ runnables:
      name: HttpEnqueuerRepository
      url: https://github.com/lopidio/enqueuer
      method: GET
-     prePublishing: tester.isTruthy('prePublishingTest', true);
+     onInit: tester.isTruthy('onInitTest', true);
      onMessageReceived: tester.isEqualTo('It is online', JSON.parse(message).statusCode, 200);
      headers:
        content-type: application/json

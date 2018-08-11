@@ -20,6 +20,4 @@ To Create:
 Inception run only one spawn mode
 
 do not save variables in config file anymore (store['name']);
-create onInit to subscriptions, requisitions and publisher
-Hook examples test
 enqueuer -c configFile => enqueuer configFile

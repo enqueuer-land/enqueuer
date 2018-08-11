@@ -61,13 +61,17 @@ export class ReportGenerator {
         this.addTimesReport();
     }
 
-    public addError(error: TestModel): any {
+    public addError(error: TestModel) {
         const errorTest: TestModel = {
             valid: false,
             name: error.name,
             description: error.description
         };
         this.report.tests.push(errorTest);
+    }
+
+    public addTests(tests: TestModel[]) {
+        this.report.tests = this.report.tests.concat(tests);
     }
 
     private addTimesReport(): void {

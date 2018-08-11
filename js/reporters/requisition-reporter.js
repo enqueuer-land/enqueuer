@@ -6,11 +6,18 @@ const start_event_reporter_1 = require("./start-event/start-event-reporter");
 const timeout_1 = require("../timers/timeout");
 const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptions-reporter");
 const conditional_injector_1 = require("conditional-injector");
+const tester_executor_1 = require("../testers/tester-executor");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.startEventDoneItsJob = false;
         this.allSubscriptionsStoppedWaiting = false;
         this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes);
+        if (requisitionAttributes.onInit) {
+            logger_1.Logger.info(`Executing requisition::onInit hook function`);
+            const testExecutor = new tester_executor_1.TesterExecutor(requisitionAttributes.onInit);
+            testExecutor.addArgument('requisition', requisitionAttributes);
+            this.executeHookFunction(testExecutor);
+        }
         this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
@@ -89,6 +96,12 @@ class RequisitionReporter {
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
         this.onFinishCallback();
+    }
+    executeHookFunction(testExecutor) {
+        const tests = testExecutor.execute();
+        this.reportGenerator.addTests(tests.map(test => {
+            return { name: test.label, valid: test.valid, description: test.description };
+        }));
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

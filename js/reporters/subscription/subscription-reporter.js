@@ -19,8 +19,6 @@ class SubscriptionReporter {
                 process.exit(1);
             }).start(2000);
         };
-        logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         this.startTime = new date_controller_1.DateController();
         this.report = {
             name: subscriptionAttributes.name,
@@ -28,6 +26,18 @@ class SubscriptionReporter {
             tests: [],
             valid: true
         };
+        if (subscriptionAttributes.onInit) {
+            logger_1.Logger.info(`Executing subscription::onInit hook function`);
+            const testExecutor = new tester_executor_1.TesterExecutor(subscriptionAttributes.onInit);
+            testExecutor.addArgument('subscription', subscriptionAttributes.subscription);
+            this.executeHookFunction(testExecutor);
+            logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+            this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
+        }
+        else {
+            logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+            this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
+        }
     }
     startTimeout(onTimeOutCallback) {
         this.subscription.messageReceived = undefined;
@@ -165,12 +175,16 @@ class SubscriptionReporter {
         const testExecutor = new tester_executor_1.TesterExecutor(this.subscription.onMessageReceived);
         testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
-        const tests = testExecutor.execute();
-        this.report.tests = this.report.tests.concat(tests.map(test => {
-            return { name: test.label, valid: test.valid, description: test.description };
-        }));
-        logger_1.Logger.trace(`[${this.subscription.name}] tests ${JSON.stringify(this.report.tests, null, 2)}`);
+        this.executeHookFunction(testExecutor);
         this.report.messageReceivedTime = new date_controller_1.DateController().toString();
+    }
+    executeHookFunction(testExecutor) {
+        const tests = testExecutor.execute();
+        this.report.tests = tests.map(test => {
+            return { name: test.label, valid: test.valid, description: test.description };
+        })
+            .concat(this.report.tests);
+        logger_1.Logger.trace(`[${this.report.name}] tests ${JSON.stringify(this.report.tests, null, 2)}`);
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;

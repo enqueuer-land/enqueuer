@@ -19,7 +19,7 @@ runnables:
       path: "/tmp/unix.sock"
       payload: "{{udsPayload}}"
       onMessageReceived: tester.isEqualTo('It is bidirectional', message.toString(), 'responsePayload');
-      prePublishing: |-
+      onInit: |-
         const payload = 'enqueuer';
         store.setSessionVariable('udsPayload', payload);
         store.setSessionVariable('uds2RequisitionName', 'RequisitionUds2Name');
@@ -32,7 +32,7 @@ runnables:
       name: udsPublisher2
       path: "/tmp/unix2.sock"
       payload: "{{udsPayload}}"
-      prePublishing: tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, '{{udsPayload}}');
+      onInit: tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, '{{udsPayload}}');
   subscriptions:
   - type: uds
     path: "/tmp/unix2.sock"

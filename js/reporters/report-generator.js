@@ -52,6 +52,9 @@ class ReportGenerator {
         };
         this.report.tests.push(errorTest);
     }
+    addTests(tests) {
+        this.report.tests = this.report.tests.concat(tests);
+    }
     addTimesReport() {
         if (this.startTime) {
             let timesReport = {};

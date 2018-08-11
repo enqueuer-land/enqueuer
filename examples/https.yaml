@@ -11,7 +11,7 @@ runnables:
       name: HttpsClient
       url: https://localhost:4430/enqueuer/idHttps?query=999
       method: I'll be reaplaced. Not because I have to. It's just an example
-      prePublishing: >-
+      onInit: >-
         publisher.method = 'POST';
       onMessageReceived: >-
         tester.isEqualTo('Status code', JSON.parse(message).statusCode, 200);
