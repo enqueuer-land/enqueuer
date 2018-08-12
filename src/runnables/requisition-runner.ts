@@ -5,7 +5,7 @@ import * as output from '../models/outputs/requisition-model';
 import {Runner} from './runner';
 import {Injectable} from 'conditional-injector';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
-import {VariablesController} from '../variables/variables-controller';
+import {Store} from '../testers/store';
 
 @Injectable()
 export class RequisitionRunner extends Runner {
@@ -18,8 +18,7 @@ export class RequisitionRunner extends Runner {
         super();
         const placeHolderReplacer = new JsonPlaceholderReplacer();
         Logger.debug(`Updating replaceable variables in requisition '${requisition.name}'`);
-        const replacedRequisition = placeHolderReplacer.addVariableMap(VariablesController.persistedVariables())
-                            .addVariableMap(VariablesController.sessionVariables())
+        const replacedRequisition = placeHolderReplacer.addVariableMap(Store.getData())
                             .replace(requisition) as input.RequisitionModel;
 
         this.requisitionName = replacedRequisition.name;

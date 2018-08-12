@@ -24,8 +24,8 @@ const logger_1 = require("../../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const variables_controller_1 = require("../../variables/variables-controller");
 const tester_executor_1 = require("../../testers/tester-executor");
+const store_1 = require("../../testers/store");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -83,8 +83,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
             const tests = testExecutor.execute();
             const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
             placeHolderReplacer
-                .addVariableMap(variables_controller_1.VariablesController.persistedVariables())
-                .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
+                .addVariableMap(store_1.Store.getData());
             publisher = placeHolderReplacer.replace(publisher);
             logger_1.Logger.trace(`Adding publisher::onInit functions tests to report`);
             this.report.tests = this.report.tests.concat(tests.map(test => {

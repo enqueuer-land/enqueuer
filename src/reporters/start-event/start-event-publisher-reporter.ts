@@ -8,9 +8,8 @@ import {Container, Injectable} from 'conditional-injector';
 import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
-import {VariablesController} from '../../variables/variables-controller';
 import {TesterExecutor} from '../../testers/tester-executor';
-import {Test} from '../../testers/test';
+import {Store} from '../../testers/store';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
@@ -81,8 +80,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
             const placeHolderReplacer = new JsonPlaceholderReplacer();
             placeHolderReplacer
-                .addVariableMap(VariablesController.persistedVariables())
-                .addVariableMap(VariablesController.sessionVariables());
+                .addVariableMap(Store.getData());
             publisher = (placeHolderReplacer.replace(publisher) as any);
 
             Logger.trace(`Adding publisher::onInit functions tests to report`);

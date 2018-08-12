@@ -20,8 +20,8 @@ const publisher_1 = require("./publisher");
 const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
-const variables_controller_1 = require("../variables/variables-controller");
 const util_1 = require("util");
+const store_1 = require("../testers/store");
 let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
@@ -32,7 +32,7 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         this.timeout = publisherAttributes.timeout || 100;
         if (publisherAttributes.loadStream) {
             logger_1.Logger.debug(`Loading tcp client: ${this.loadStream}`);
-            this.loadedStream = variables_controller_1.VariablesController.sessionVariables()[publisherAttributes.loadStream];
+            this.loadedStream = store_1.Store.getData()[publisherAttributes.loadStream];
         }
     }
     publish() {
@@ -89,7 +89,7 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         stream.write(this.payload, () => {
             if (this.saveStream) {
                 logger_1.Logger.debug(`Persisting publisher stream ${this.saveStream}`);
-                variables_controller_1.VariablesController.sessionVariables()[this.saveStream] = stream;
+                store_1.Store.getData()[this.saveStream] = stream;
             }
         });
     }

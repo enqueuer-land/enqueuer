@@ -3,8 +3,8 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import * as net from 'net';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
-import {VariablesController} from '../variables/variables-controller';
 import {isNullOrUndefined} from 'util';
+import {Store} from '../testers/store';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client'})
 export class TcpClientPublisher extends Publisher {
@@ -25,7 +25,7 @@ export class TcpClientPublisher extends Publisher {
         this.timeout = publisherAttributes.timeout || 100;
         if (publisherAttributes.loadStream) {
             Logger.debug(`Loading tcp client: ${this.loadStream}`);
-            this.loadedStream = VariablesController.sessionVariables()[publisherAttributes.loadStream];
+            this.loadedStream = Store.getData()[publisherAttributes.loadStream];
         }
     }
 
@@ -86,7 +86,7 @@ export class TcpClientPublisher extends Publisher {
         stream.write(this.payload, () => {
             if (this.saveStream) {
                 Logger.debug(`Persisting publisher stream ${this.saveStream}`);
-                VariablesController.sessionVariables()[this.saveStream] = stream;
+                Store.getData()[this.saveStream] = stream;
             }
         });
     }

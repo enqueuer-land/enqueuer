@@ -22,14 +22,13 @@ const input = __importStar(require("../models/inputs/requisition-model"));
 const runner_1 = require("./runner");
 const conditional_injector_1 = require("conditional-injector");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const variables_controller_1 = require("../variables/variables-controller");
+const store_1 = require("../testers/store");
 let RequisitionRunner = class RequisitionRunner extends runner_1.Runner {
     constructor(requisition) {
         super();
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
         logger_1.Logger.debug(`Updating replaceable variables in requisition '${requisition.name}'`);
-        const replacedRequisition = placeHolderReplacer.addVariableMap(variables_controller_1.VariablesController.persistedVariables())
-            .addVariableMap(variables_controller_1.VariablesController.sessionVariables())
+        const replacedRequisition = placeHolderReplacer.addVariableMap(store_1.Store.getData())
             .replace(requisition);
         this.requisitionName = replacedRequisition.name;
         this.requisitionReporter = new requisition_reporter_1.RequisitionReporter(replacedRequisition);

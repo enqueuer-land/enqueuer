@@ -1,13 +1,13 @@
 import {Logger} from '../loggers/logger';
 import {IdGenerator} from '../id-generator/id-generator';
 import {ValidateFunction} from 'ajv';
-import {VariablesController} from '../variables/variables-controller';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {RunnableModel} from '../models/inputs/runnable-model';
 import {isNullOrUndefined} from 'util';
 import fs from 'fs';
 import Ajv from 'ajv';
 import * as yaml from 'yamljs';
+import {Store} from '../testers/store';
 
 export class RunnableParser {
 
@@ -65,8 +65,7 @@ export class RunnableParser {
     private replaceVariables(parsedRunnable: {}): any {
         const placeHolderReplacer = new JsonPlaceholderReplacer();
         placeHolderReplacer
-            .addVariableMap(VariablesController.persistedVariables())
-            .addVariableMap(VariablesController.sessionVariables());
+            .addVariableMap(Store.getData());
         return placeHolderReplacer.replace(parsedRunnable);
     }
 

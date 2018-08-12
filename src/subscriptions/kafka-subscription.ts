@@ -37,7 +37,7 @@ export class KafkaSubscription extends Subscription {
             consumer.on('message', (message: Message) => {
                 Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
                 resolve(message.value);
-                consumer.close(()=> {
+                consumer.close(() => {
                     Logger.trace('Kafka consumer is closed');
                 });
             });
@@ -45,7 +45,7 @@ export class KafkaSubscription extends Subscription {
             consumer.on('error', (error: any) => {
                 Logger.error('Kafka error message data: ' + JSON.stringify(error, null, 2));
                 reject(error);
-                consumer.close(()=> {
+                consumer.close(() => {
                     Logger.trace('Kafka consumer is closed');
                 });
             });

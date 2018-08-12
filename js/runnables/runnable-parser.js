@@ -12,12 +12,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const id_generator_1 = require("../id-generator/id-generator");
-const variables_controller_1 = require("../variables/variables-controller");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
 const util_1 = require("util");
 const fs_1 = __importDefault(require("fs"));
 const ajv_1 = __importDefault(require("ajv"));
 const yaml = __importStar(require("yamljs"));
+const store_1 = require("../testers/store");
 class RunnableParser {
     constructor() {
         const schemasPath = this.discoverSchemasFolder();
@@ -69,8 +69,7 @@ class RunnableParser {
     replaceVariables(parsedRunnable) {
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
         placeHolderReplacer
-            .addVariableMap(variables_controller_1.VariablesController.persistedVariables())
-            .addVariableMap(variables_controller_1.VariablesController.sessionVariables());
+            .addVariableMap(store_1.Store.getData());
         return placeHolderReplacer.replace(parsedRunnable);
     }
 }

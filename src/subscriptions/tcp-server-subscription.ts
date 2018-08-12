@@ -2,8 +2,8 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as net from 'net';
-import {VariablesController} from '../variables/variables-controller';
 import {Logger} from '../loggers/logger';
+import {Store} from '../testers/store';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp-server'})
 export class TcpServerSubscription extends Subscription {
@@ -75,7 +75,7 @@ export class TcpServerSubscription extends Subscription {
 
     private loadStream() {
         Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);
-        this.stream = VariablesController.sessionVariables()[this.loadStreamName];
+        this.stream = Store.getData()[this.loadStreamName];
         if (this.stream) {
             Logger.debug(`Server loaded tcp stream: ${this.loadStreamName}`);
         } else {
@@ -100,7 +100,7 @@ export class TcpServerSubscription extends Subscription {
     private persistStream() {
         if (this.saveStream) {
             Logger.debug(`Persisting subscription tcp stream ${this.saveStream}`);
-            VariablesController.sessionVariables()[this.saveStream] = this.stream;
+            Store.getData()[this.saveStream] = this.stream;
             this.saveStream = undefined;
         } else {
             Logger.trace(`Ending TCP stream`);

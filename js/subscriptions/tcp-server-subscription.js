@@ -19,8 +19,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
-const variables_controller_1 = require("../variables/variables-controller");
 const logger_1 = require("../loggers/logger");
+const store_1 = require("../testers/store");
 let TcpServerSubscription = class TcpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -76,7 +76,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     }
     loadStream() {
         logger_1.Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);
-        this.stream = variables_controller_1.VariablesController.sessionVariables()[this.loadStreamName];
+        this.stream = store_1.Store.getData()[this.loadStreamName];
         if (this.stream) {
             logger_1.Logger.debug(`Server loaded tcp stream: ${this.loadStreamName}`);
         }
@@ -98,7 +98,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     persistStream() {
         if (this.saveStream) {
             logger_1.Logger.debug(`Persisting subscription tcp stream ${this.saveStream}`);
-            variables_controller_1.VariablesController.sessionVariables()[this.saveStream] = this.stream;
+            store_1.Store.getData()[this.saveStream] = this.stream;
             this.saveStream = undefined;
         }
         else {
