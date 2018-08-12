@@ -105,7 +105,7 @@ describe('Inception test', () => {
     };
 
     afterAll(() => {
-        // killThemAll();
+        killThemAll();
         removeEveryReportFile();
     });
 
