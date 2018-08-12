@@ -184,7 +184,6 @@ class SubscriptionReporter {
             return { name: test.label, valid: test.valid, description: test.description };
         })
             .concat(this.report.tests);
-        logger_1.Logger.trace(`[${this.report.name}] tests ${JSON.stringify(this.report.tests, null, 2)}`);
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;

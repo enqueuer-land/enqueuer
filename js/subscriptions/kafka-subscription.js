@@ -31,10 +31,16 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
             consumer.on('message', (message) => {
                 logger_1.Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
                 resolve(message.value);
+                consumer.close(() => {
+                    logger_1.Logger.trace('Kafka consumer is closed');
+                });
             });
             consumer.on('error', (error) => {
                 logger_1.Logger.error('Kafka error message data: ' + JSON.stringify(error, null, 2));
                 reject(error);
+                consumer.close(() => {
+                    logger_1.Logger.trace('Kafka consumer is closed');
+                });
             });
         });
     }
@@ -50,6 +56,9 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
                 resolve();
             });
         });
+    }
+    unsubscribe() {
+        this.client.close();
     }
 };
 KafkaSubscription = __decorate([

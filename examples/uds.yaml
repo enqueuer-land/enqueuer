@@ -4,6 +4,20 @@ id: uds
 runnables:
 - timeout: 3000
   name: uds
+  startEvent:
+    publisher:
+      type: uds
+      name: udsPublisher
+      path: "/tmp/unix.sock"
+      payload: I'll be replaced in 'onInit'
+      onMessageReceived: tester.isEqualTo('It is bidirectional', message.toString(), 'responsePayload');
+      onInit: |-
+        const payload = 'enqueuer';
+        store.udsPayload = payload;
+        store.uds2RequisitionName = 'RequisitionUds2Name';
+        store.uds2Timeout = '500';
+        store.uds2Name = 'UDS2 Name';
+        publisher.payload = store.udsPayload;
   subscriptions:
   - type: uds
     path: "/tmp/unix.sock"
@@ -11,31 +25,19 @@ runnables:
     response: responsePayload
     timeout: 500
     onMessageReceived: |-
-      tester.isEqualTo('Message received is enqueuer 1', JSON.parse(message), 'enqueuer');
-  startEvent:
-    publisher:
-      type: uds
-      name: udsPublisher
-      path: "/tmp/unix.sock"
-      payload: "{{udsPayload}}"
-      onMessageReceived: tester.isEqualTo('It is bidirectional', message.toString(), 'responsePayload');
-      onInit: |-
-        const payload = 'enqueuer';
-        store.setSessionVariable('udsPayload', payload);
-        store.setSessionVariable('uds2RequisitionName', 'RequisitionUds2Name');
-        store.setSessionVariable('uds2Timeout', '500');
+      tester.isEqualTo('Message received is enqueuer', JSON.parse(message), store.udsPayload);
 -
-  name: "{{uds2RequisitionName}}"
+  name: <<uds2Name>>
   startEvent:
     publisher:
       type: uds
       name: udsPublisher2
       path: "/tmp/unix2.sock"
       payload: "{{udsPayload}}"
-      onInit: tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, '{{udsPayload}}');
+      onInit: tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, store.udsPayload);
   subscriptions:
   - type: uds
     path: "/tmp/unix2.sock"
     name: udsSubscription2
-    onMessageReceived: tester.isEqualTo('Message received is {{udsPayload}} 2', JSON.parse(message), '{{udsPayload}}');
+    onMessageReceived: tester.isEqualTo('Message received is {{udsPayload}} 2', JSON.parse(message), store.udsPayload);
     timeout: "{{uds2Timeout}}"

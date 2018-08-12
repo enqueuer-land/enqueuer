@@ -19,5 +19,5 @@ To Create:
 
 Inception run only one spawn mode
 
-do not save variables in config file anymore (store['name']);
+Remove VariablesControllerClass
 enqueuer -c configFile => enqueuer configFile

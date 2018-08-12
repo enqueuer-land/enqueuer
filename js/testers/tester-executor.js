@@ -34,8 +34,7 @@ class TesterExecutor {
     }
     executeFunction(dynamicFunction) {
         let tester = new tester_1.Tester();
-        let store = new store_1.Store();
-        const callArgs = [store, tester].concat(this.arguments.map(arg => arg.value));
+        const callArgs = [store_1.Store.getData(), tester].concat(this.arguments.map(arg => arg.value));
         dynamicFunction.apply(this, callArgs);
         return tester.getReport();
     }

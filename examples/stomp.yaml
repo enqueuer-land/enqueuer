@@ -11,7 +11,7 @@ runnables:
     port: 61613
     user: guest
     password: guest
-    queue: "/queue/stompQueue"
+    queue: /queue/stompQueue
     onMessageReceived: |-
       tester.isEqualTo('Payload', message.payload, 'stompQueue');
   startEvent:
@@ -22,5 +22,5 @@ runnables:
       port: '61613'
       user: guest
       password: guest
-      queue: "/queue/stompQueue"
+      queue: /queue/stompQueue
       payload: stompQueue

@@ -1,7 +1,7 @@
 type: runnable
 valid: true
 tests: []
-name: 'hooks example'
+name: runnableFile
 id: file
 runnables:
   -
@@ -12,32 +12,40 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: example
+    name: file
     time:
-      totalTime: 20
-      startTime: '2018-08-11T23:40:36.629Z'
-      endTime: '2018-08-11T23:40:36.649Z'
-      timeout: 100
+      totalTime: 163
+      startTime: '2018-08-12T03:13:36.387Z'
+      endTime: '2018-08-12T03:13:36.550Z'
+      timeout: 3000
     subscriptions:
       -
-        name: subscription
-        type: http-server
+        name: fileSubscription
+        type: file-name-watcher
         tests:
+          -
+            name: 'Some time has passed'
+            valid: true
+            description: '''1534043616549'' is greater than or equal to ''1534043616386'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-11T23:40:36.632Z'
-        messageReceivedTime: '2018-08-11T23:40:36.644Z'
+        connectionTime: '2018-08-12T03:13:36.391Z'
+        messageReceivedTime: '2018-08-12T03:13:36.549Z'
     startEvent:
       publisher:
-        name: publishing
+        name: filePublisher
         valid: true
-        type: http-client
+        type: file
         tests:
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-11T23:40:36.649Z'
+        publishTime: '2018-08-12T03:13:36.394Z'

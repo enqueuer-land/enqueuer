@@ -10,7 +10,7 @@ export class TcpServerSubscription extends Subscription {
 
     private server: any;
     private port: number;
-    private persistStreamName?: string;
+    private saveStream?: string;
     private loadStreamName: string;
     private greetingResponse: string;
     private stream?: any;
@@ -18,12 +18,12 @@ export class TcpServerSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
-        this.persistStreamName = subscriptionAttributes.persistStreamName;
+        this.saveStream = subscriptionAttributes.saveStream;
         this.greetingResponse = subscriptionAttributes.greetingResponse;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
-        this.loadStreamName = subscriptionAttributes.loadStreamName;
+        this.loadStreamName = subscriptionAttributes.loadStream;
         if (this.loadStreamName) {
             this.loadStream();
         }
@@ -98,10 +98,10 @@ export class TcpServerSubscription extends Subscription {
     }
 
     private persistStream() {
-        if (this.persistStreamName) {
-            Logger.debug(`Persisting subscription tcp stream ${this.persistStreamName}`);
-            VariablesController.sessionVariables()[this.persistStreamName] = this.stream;
-            this.persistStreamName = undefined;
+        if (this.saveStream) {
+            Logger.debug(`Persisting subscription tcp stream ${this.saveStream}`);
+            VariablesController.sessionVariables()[this.saveStream] = this.stream;
+            this.saveStream = undefined;
         } else {
             Logger.trace(`Ending TCP stream`);
             this.stream.end();

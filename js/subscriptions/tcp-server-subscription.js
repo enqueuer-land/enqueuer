@@ -25,12 +25,12 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
-        this.persistStreamName = subscriptionAttributes.persistStreamName;
+        this.saveStream = subscriptionAttributes.saveStream;
         this.greetingResponse = subscriptionAttributes.greetingResponse;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
-        this.loadStreamName = subscriptionAttributes.loadStreamName;
+        this.loadStreamName = subscriptionAttributes.loadStream;
         if (this.loadStreamName) {
             this.loadStream();
         }
@@ -96,10 +96,10 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         });
     }
     persistStream() {
-        if (this.persistStreamName) {
-            logger_1.Logger.debug(`Persisting subscription tcp stream ${this.persistStreamName}`);
-            variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = this.stream;
-            this.persistStreamName = undefined;
+        if (this.saveStream) {
+            logger_1.Logger.debug(`Persisting subscription tcp stream ${this.saveStream}`);
+            variables_controller_1.VariablesController.sessionVariables()[this.saveStream] = this.stream;
+            this.saveStream = undefined;
         }
         else {
             logger_1.Logger.trace(`Ending TCP stream`);

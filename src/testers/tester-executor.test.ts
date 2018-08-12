@@ -15,21 +15,6 @@ Tester.mockImplementation(() => {
     };
 });
 
-const testDeleteEnqueuerMock = jest.fn();
-const testPersistEnqueuerMock = jest.fn();
-const testPersistSessionMock = jest.fn();
-const testGetVariableMock = jest.fn();
-
-jest.mock("./store");
-Store.mockImplementation(() => {
-    return {
-        deleteEnqueuerVariable: testDeleteEnqueuerMock,
-        setEnqueuerVariable: testPersistEnqueuerMock,
-        setSessionVariable: testPersistSessionMock,
-        getVariable: testGetVariableMock
-    };
-});
-
 describe('TesterExecutor', () => {
 
     it('Should add argument and pass it to the function', () => {
@@ -52,18 +37,15 @@ describe('TesterExecutor', () => {
         expect(testGetReportMock).toHaveBeenCalled();
     });
 
-    it('Should call store methods', () => {
-        const testerExecutor: TesterExecutor = new TesterExecutor(`store.deleteEnqueuerVariable('del');` +
-                                                                    `store.setEnqueuerVariable('enq', 2);` +
-                                                                    `store.getVariable('enq');` +
-                                                                    `store.setSessionVariable('ses', 3);`);
+    it('Should call store', () => {
+        let getter: any = {};
+        new TesterExecutor(`store.name = 'initial';`).execute();
+        const tester: TesterExecutor = new TesterExecutor(`getter.name = store.name; console.log(store.name)`);
+        tester.addArgument('getter', getter);
 
-        testerExecutor.execute();
+        tester.execute();
 
-        expect(testDeleteEnqueuerMock).toHaveBeenCalledWith('del');
-        expect(testGetVariableMock).toHaveBeenCalledWith('enq');
-        expect(testPersistEnqueuerMock).toHaveBeenCalledWith('enq', 2);
-        expect(testPersistSessionMock).toHaveBeenCalledWith('ses', 3);
+        expect(getter.name).toBe('initial');
     });
 
     it('Should catch function creation error', () => {

@@ -1,22 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const configuration_1 = require("../configurations/configuration");
-const variables_controller_1 = require("../variables/variables-controller");
 class Store {
     constructor() {
-        this.configuration = new configuration_1.Configuration();
-        this.setEnqueuerVariable = (name, value) => {
-            this.configuration.setFileVariable(name, value);
-        };
-        this.setSessionVariable = (name, value) => {
-            variables_controller_1.VariablesController.sessionVariables()[name] = value;
-        };
-        this.getVariable = (name) => {
-            if (variables_controller_1.VariablesController.sessionVariables()[name]) {
-                return variables_controller_1.VariablesController.sessionVariables()[name];
-            }
-            return variables_controller_1.VariablesController.persistedVariables()[name];
-        };
+        //private
+    }
+    static getData() {
+        if (!Store.data) {
+            Store.data = new configuration_1.Configuration().getFileVariables();
+        }
+        return Store.data;
     }
 }
+Store.data = null;
 exports.Store = Store;

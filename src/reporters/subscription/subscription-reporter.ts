@@ -198,7 +198,6 @@ export class SubscriptionReporter {
                                                     return {name: test.label, valid: test.valid, description: test.description};
                                                 })
                                 .concat(this.report.tests);
-        Logger.trace(`[${this.report.name}] tests ${JSON.stringify(this.report.tests, null, 2)}`);
     }
 
     private handleKillSignal = (signal: Signals): void => {

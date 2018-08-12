@@ -1,21 +1,16 @@
 import {Configuration} from '../configurations/configuration';
-import {VariablesController} from '../variables/variables-controller';
 
 export class Store {
-    private configuration = new Configuration();
+    private static data: any = null;
 
-    public setEnqueuerVariable = (name: string, value: any): void => {
-        this.configuration.setFileVariable(name, value);
+    private constructor() {
+        //private
     }
 
-    public setSessionVariable = (name: string, value: any): void => {
-        VariablesController.sessionVariables()[name] = value;
-    }
-
-    public getVariable = (name: string): any => {
-        if (VariablesController.sessionVariables()[name]) {
-            return VariablesController.sessionVariables()[name];
+    public static getData(): any {
+        if (!Store.data) {
+            Store.data = new Configuration().getFileVariables();
         }
-        return VariablesController.persistedVariables()[name];
+        return Store.data;
     }
 }

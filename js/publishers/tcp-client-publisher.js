@@ -27,23 +27,23 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         super(publisherAttributes);
         this.serverAddress = publisherAttributes.serverAddress;
         this.port = publisherAttributes.port;
-        this.persistStreamName = publisherAttributes.persistStreamName;
-        this.loadStreamName = publisherAttributes.loadStreamName;
+        this.saveStream = publisherAttributes.saveStream;
+        this.loadStream = publisherAttributes.loadStream;
         this.timeout = publisherAttributes.timeout || 100;
-        if (publisherAttributes.loadStreamName) {
-            logger_1.Logger.debug(`Loading tcp client: ${this.loadStreamName}`);
-            this.loadStream = variables_controller_1.VariablesController.sessionVariables()[publisherAttributes.loadStreamName];
+        if (publisherAttributes.loadStream) {
+            logger_1.Logger.debug(`Loading tcp client: ${this.loadStream}`);
+            this.loadedStream = variables_controller_1.VariablesController.sessionVariables()[publisherAttributes.loadStream];
         }
     }
     publish() {
         return new Promise((resolve, reject) => {
-            if (this.loadStreamName) {
+            if (this.loadStream) {
                 logger_1.Logger.debug('Client is trying to reuse tcp stream');
-                if (!this.loadStream) {
-                    return new Error(`There is no tcp stream able to be loaded named ${this.loadStreamName}`);
+                if (!this.loadedStream) {
+                    return new Error(`There is no tcp stream able to be loaded named ${this.loadStream}`);
                 }
                 logger_1.Logger.debug('Client is reusing tcp stream');
-                this.publishData(this.loadStream, resolve, reject);
+                this.publishData(this.loadedStream, resolve, reject);
             }
             else {
                 const stream = new net.Socket();
@@ -60,21 +60,21 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         stream.setTimeout(this.timeout);
         stream.on('timeout', () => {
             logger_1.Logger.debug(`Tcp client detected 'timeout' event`);
-            if (!this.persistStreamName) {
+            if (!this.saveStream) {
                 stream.end();
             }
             stream.removeAllListeners('data');
             resolve(this.messageReceived);
         })
             .once('error', (data) => {
-            if (!this.persistStreamName) {
+            if (!this.saveStream) {
                 stream.end();
             }
             reject(data);
         })
             .once('end', () => {
             logger_1.Logger.debug(`Tcp client detected 'end' event`);
-            if (!this.persistStreamName) {
+            if (!this.saveStream) {
                 stream.end();
             }
             resolve();
@@ -87,9 +87,9 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
             this.messageReceived += msg.toString();
         });
         stream.write(this.payload, () => {
-            if (this.persistStreamName) {
-                logger_1.Logger.debug(`Persisting publisher stream ${this.persistStreamName}`);
-                variables_controller_1.VariablesController.sessionVariables()[this.persistStreamName] = stream;
+            if (this.saveStream) {
+                logger_1.Logger.debug(`Persisting publisher stream ${this.saveStream}`);
+                variables_controller_1.VariablesController.sessionVariables()[this.saveStream] = stream;
             }
         });
     }

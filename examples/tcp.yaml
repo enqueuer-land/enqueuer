@@ -31,14 +31,14 @@ runnables:
       serverAddress: localhost
       port: 23070
       payload: I do not care
-      persistStreamName: tcpPublisherSocket
+      saveStream: tcpPublisherSocket
       onMessageReceived: tester.isEqualTo('Greeting received', message.toString(), 'EnqueuerRocks');
       timeout: 100
   subscriptions:
   - type: tcp-server
     port: 23070
     name: tcpSubscription1
-    persistStreamName: tcpSubscriptionSocket
+    saveStream: tcpSubscriptionSocket
     greetingResponse: Enqueuer
     response: Rocks
     onMessageReceived: tester.isEqualTo('I care', message.toString(), 'I do not care');
@@ -51,12 +51,12 @@ runnables:
       type: tcp-client
       name: tcpPublisher2
       payload: The socket is still open
-      loadStreamName: tcpPublisherSocket
+      loadStream: tcpPublisherSocket
       onMessageReceived: tester.isEqualTo(`Second message is '<<tcpPayload>>'`, message.toString(), '<<tcpPayload>>');
   subscriptions:
   - type: tcp-server
     name: tcpSubscription2
-    loadStreamName: tcpSubscriptionSocket
+    loadStream: tcpSubscriptionSocket
     response: <<tcpPayload>>
     onMessageReceived: tester.isEqualTo('It is still open', message.toString(), 'The socket is still open');
-    timeout: 500
+    timeout: 1000

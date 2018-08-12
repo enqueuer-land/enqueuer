@@ -31,12 +31,16 @@ export class KafkaPublisher extends Publisher {
                     }
                     Logger.trace(`Kafka publish message data ${JSON.stringify(data, null, 2)}`);
                     this.messageReceived = JSON.stringify(data);
+                    producer.close();
+                    this.client.close();
                     resolve();
                 });
             // });
 
             producer.on('error', (err: any) => {
                 Logger.error(`Error on publishing kafka message ${JSON.stringify(err, null, 2)}`);
+                producer.close();
+                this.client.close();
                 return reject(err);
             });
         });
