@@ -6,6 +6,7 @@ runnables:
   onInit: >-
     tester.isDefined('Requisition exists', requisition);
     tester.isEqualTo('Requisition name', requisition.name, 'example');
+    store.sequence = 'requisition::onInit';
   name: example
   startEvent:
     publisher:
@@ -17,9 +18,12 @@ runnables:
         tester.isDefined('Publisher exists onInit', publisher);
         tester.isEqualTo('Publisher name', publisher.name, 'publishing');
         publisher.name = 'changed';
+        store.sequence += ' -> publisher::onInit';
       onMessageReceived: >-
         tester.isDefined('Publisher exists onMessageReceived', publisher);
         tester.isEqualTo('Publisher name changed', publisher.name, 'changed');
+        tester.contains('Publisher onInit executed', store.sequence, 'publisher::onInit');
+        store.sequence += ' -> publisher::onMessageReceived';
   subscriptions:
     - type: http-server
       name: subscription
@@ -32,6 +36,9 @@ runnables:
         tester.isDefined('Subscription exists onInit', subscription);
         tester.isEqualTo('Subscription name', subscription.name, 'subscription');
         subscription.name = 'changed';
+        store.sequence += ' -> subscription::onInit';
       onMessageReceived: >-
         tester.isDefined('Subscription exists onMessageReceived', subscription);
         tester.isEqualTo('Subscription name changed', subscription.name, 'changed');
+        tester.contains('Subscription onInit executed', store.sequence, 'subscription::onInit');
+        store.sequence += ' -> subscription::onMessageReceived';

@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: uds
     time:
-      totalTime: 3
-      startTime: '2018-08-12T03:49:58.880Z'
-      endTime: '2018-08-12T03:49:58.883Z'
+      totalTime: 2
+      startTime: '2018-08-13T14:13:51.908Z'
+      endTime: '2018-08-13T14:13:51.910Z'
       timeout: 3000
     subscriptions:
       -
@@ -36,8 +36,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-12T03:49:58.881Z'
-        messageReceivedTime: '2018-08-12T03:49:58.882Z'
+        connectionTime: '2018-08-13T14:13:51.908Z'
+        messageReceivedTime: '2018-08-13T14:13:51.909Z'
     startEvent:
       publisher:
         name: udsPublisher
@@ -52,16 +52,16 @@ runnables:
             name: 'It is bidirectional'
             valid: true
             description: '''responsePayload'' is equal to ''responsePayload'''
-        publishTime: '2018-08-12T03:49:58.883Z'
+        publishTime: '2018-08-13T14:13:51.910Z'
   -
     type: requisition
     valid: true
     tests: []
     name: 'UDS2 Name'
     time:
-      totalTime: 2
-      startTime: '2018-08-12T03:49:58.883Z'
-      endTime: '2018-08-12T03:49:58.885Z'
+      totalTime: 1
+      startTime: '2018-08-13T14:13:51.910Z'
+      endTime: '2018-08-13T14:13:51.911Z'
     subscriptions:
       -
         name: udsSubscription2
@@ -80,8 +80,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-12T03:49:58.884Z'
-        messageReceivedTime: '2018-08-12T03:49:58.884Z'
+        connectionTime: '2018-08-13T14:13:51.910Z'
+        messageReceivedTime: '2018-08-13T14:13:51.911Z'
     startEvent:
       publisher:
         name: udsPublisher2
@@ -96,4 +96,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-12T03:49:58.885Z'
+        publishTime: '2018-08-13T14:13:51.911Z'

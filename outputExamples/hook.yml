@@ -1,0 +1,91 @@
+type: runnable
+valid: true
+tests: []
+name: 'hooks example'
+id: hook
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        name: 'Requisition exists'
+        valid: true
+        description: '''[object Object]'' is defined'
+      -
+        name: 'Requisition name'
+        valid: true
+        description: '''example'' is equal to ''example'''
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: example
+    time:
+      totalTime: 19
+      startTime: '2018-08-13T14:13:49.643Z'
+      endTime: '2018-08-13T14:13:49.662Z'
+      timeout: 100
+    subscriptions:
+      -
+        name: subscription
+        type: http-server
+        tests:
+          -
+            name: 'Subscription exists onMessageReceived'
+            valid: true
+            description: '''[object Object]'' is defined'
+          -
+            name: 'Subscription name changed'
+            valid: true
+            description: '''changed'' is equal to ''changed'''
+          -
+            name: 'Subscription onInit executed'
+            valid: true
+            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit'' contains ''subscription::onInit'''
+          -
+            name: 'Subscription exists onInit'
+            valid: true
+            description: '''[object Object]'' is defined'
+          -
+            name: 'Subscription name'
+            valid: true
+            description: '''subscription'' is equal to ''subscription'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+        valid: true
+        connectionTime: '2018-08-13T14:13:49.646Z'
+        messageReceivedTime: '2018-08-13T14:13:49.658Z'
+    startEvent:
+      publisher:
+        name: publishing
+        valid: true
+        type: http-client
+        tests:
+          -
+            name: 'Publisher exists onInit'
+            valid: true
+            description: '''[object Object]'' is defined'
+          -
+            name: 'Publisher name'
+            valid: true
+            description: '''publishing'' is equal to ''publishing'''
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Publisher exists onMessageReceived'
+            valid: true
+            description: '''[object Object]'' is defined'
+          -
+            name: 'Publisher name changed'
+            valid: true
+            description: '''changed'' is equal to ''changed'''
+          -
+            name: 'Publisher onInit executed'
+            valid: true
+            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit -> subscription::onMessageReceived'' contains ''publisher::onInit'''
+        publishTime: '2018-08-13T14:13:49.662Z'

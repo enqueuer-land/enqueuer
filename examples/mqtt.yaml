@@ -1,7 +1,6 @@
 runnableVersion: 01.00.00
 name: runnableMqtt
 id: mqtt
-initialDelay: 0
 runnables:
 - timeout: 8000
   name: RequisitionMqtt
@@ -9,14 +8,14 @@ runnables:
     publisher:
       type: mqtt
       name: MqttPub
-      brokerAddress: mqtt://iot.eclipse.org
+      brokerAddress: mqtt://localhost
       payload: enqueuer
       topic: enqueuer/integration/public/test
       options:
         clientId: enqueuerPublishOptionsExampleIdDifferent2313
   subscriptions:
   - type: mqtt
-    brokerAddress: mqtt://iot.eclipse.org
+    brokerAddress: mqtt://localhost
     name: MqttSub
     topic: enqueuer/integration/public/test
     onMessageReceived: |-
