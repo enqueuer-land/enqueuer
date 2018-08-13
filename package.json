@@ -7,7 +7,7 @@
     "start": "node js/index.js",
     "test": "npm run unitTest && npm run componentTest && npm run integrationTest",
     "unitTest": "jest --silent .test.ts",
-    "componentTest": "jest --forceExit --silent .comp.ts",
+    "inceptionTest": "jest --forceExit --silent .comp.ts",
     "integrationTest": "npm start -- -c examples/enqueuer.yml --session-variables zeroMqAddress=tcp://127.0.0.1:3000",
     "codeCoverage": "jest --silent --coverage",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
