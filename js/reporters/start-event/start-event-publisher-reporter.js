@@ -58,12 +58,27 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
     getReport() {
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
+        this.pushResponseMessageReceivedTest();
         return {
             publisher: this.report
         };
     }
+    pushResponseMessageReceivedTest() {
+        if (this.publisher.onMessageReceived) {
+            let responseTest = {
+                name: 'Response message received',
+                valid: false,
+                description: 'No response message was received'
+            };
+            if (this.publisher.messageReceived) {
+                responseTest.valid = true;
+                responseTest.description = 'Response message was received';
+            }
+            this.report.tests.push(responseTest);
+        }
+    }
     executeOnMessageReceivedFunction() {
-        if (!this.publisher || !this.publisher.onMessageReceived || !this.publisher.messageReceived) {
+        if (!this.publisher.onMessageReceived || !this.publisher.messageReceived) {
             return;
         }
         logger_1.Logger.trace(`Publisher received message: ${this.publisher.messageReceived.substr(0, 100)}`);

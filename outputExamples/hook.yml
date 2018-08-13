@@ -22,9 +22,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: example
     time:
-      totalTime: 24
-      startTime: '2018-08-13T15:39:44.641Z'
-      endTime: '2018-08-13T15:39:44.665Z'
+      totalTime: 5
+      startTime: '2018-08-13T22:49:44.606Z'
+      endTime: '2018-08-13T22:49:44.611Z'
       timeout: 100
     subscriptions:
       -
@@ -56,8 +56,8 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-13T15:39:44.645Z'
-        messageReceivedTime: '2018-08-13T15:39:44.660Z'
+        connectionTime: '2018-08-13T22:49:44.606Z'
+        messageReceivedTime: '2018-08-13T22:49:44.610Z'
     startEvent:
       publisher:
         name: publishing
@@ -88,4 +88,8 @@ runnables:
             name: 'Publisher onInit executed'
             valid: true
             description: '''requisition::onInit -> publisher::onInit -> subscription::onInit -> subscription::onMessageReceived'' contains ''publisher::onInit'''
-        publishTime: '2018-08-13T15:39:44.665Z'
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-08-13T22:49:44.611Z'

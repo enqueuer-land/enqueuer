@@ -49,13 +49,29 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
     public getReport(): StartEventModel {
         this.report.valid = this.report.valid && checkValidation(this.report);
+        this.pushResponseMessageReceivedTest();
         return {
             publisher: this.report
         };
     }
 
+    private pushResponseMessageReceivedTest() {
+        if (this.publisher.onMessageReceived) {
+            let responseTest = {
+                name: 'Response message received',
+                valid: false,
+                description: 'No response message was received'
+            };
+            if (this.publisher.messageReceived) {
+                responseTest.valid = true;
+                responseTest.description = 'Response message was received';
+            }
+            this.report.tests.push(responseTest);
+        }
+    }
+
     private executeOnMessageReceivedFunction() {
-        if (!this.publisher || !this.publisher.onMessageReceived || !this.publisher.messageReceived) {
+        if (!this.publisher.onMessageReceived || !this.publisher.messageReceived) {
             return;
         }
         Logger.trace(`Publisher received message: ${this.publisher.messageReceived.substr(0, 100)}`);
