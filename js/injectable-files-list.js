@@ -35,3 +35,5 @@ require("./publishers/udp-publisher");
 require("./reporters/start-event/start-event-subscription-reporter");
 require("./reporters/start-event/start-event-null-reporter");
 require("./reporters/start-event/start-event-publisher-reporter");
+require("./http-authentications/no-authentication");
+require("./http-authentications/http-basic-authentication");

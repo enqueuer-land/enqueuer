@@ -38,8 +38,12 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
                 for (const key in this.response.header) {
                     responseHandler.header(key, this.response.header[key]);
                 }
+                let headers = {};
+                Object.keys(request.headers)
+                    .forEach((header) => headers[header] = request.headers[header]);
                 this.responseHandler = responseHandler;
                 const result = {
+                    headers,
                     params: request.params,
                     query: request.query,
                     body: payload

@@ -5,20 +5,6 @@ initialDelay: 0
 runnables:
 - timeout: 3000
   name: HttpOriginal
-  subscriptions:
-  - type: http-server
-    name: HttpSubscriptionTitle
-    endpoint: /enqueuer/:someId
-    port: 23075
-    method: POST
-    response:
-      status: 321
-      payload: responsePayload
-    onMessageReceived: |-
-      tester.isEqualTo('Params is someId', message.params.someId, 'idStuff');
-      tester.isEqualTo('Query is 123', message.query.query, '123');
-      tester.isEqualTo('Payload is Virgs', JSON.parse(message.body).enqueuer, 'virgs');
-    timeout: 10000
   startEvent:
     publisher:
       type: http-client
@@ -33,6 +19,20 @@ runnables:
         enqueuer: virgs
       headers:
         content-type: application/json
+  subscriptions:
+  - type: http-server
+    name: HttpSubscriptionTitle
+    endpoint: /enqueuer/:someId
+    port: 23075
+    method: POST
+    response:
+      status: 321
+      payload: responsePayload
+    onMessageReceived: |-
+      tester.isEqualTo('Params is someId', message.params.someId, 'idStuff');
+      tester.isEqualTo('Query is 123', message.query.query, '123');
+      tester.isEqualTo('Payload is Virgs', JSON.parse(message.body).enqueuer, 'virgs');
+    timeout: 10000
 - timeout: 5000
   name: HttpTitleDuplicated
   startEvent:
@@ -61,6 +61,16 @@ runnables:
     timeout: 3000
 - name: HttpGET
   timeout: 3000
+  startEvent:
+    publisher:
+      type: http-client
+      name: HttpEnqueuerRepository
+      url: http://localhost:23075/gui
+      method: GET
+      onInit: tester.isTruthy('onInitTest', true);
+      onMessageReceived: tester.isEqualTo('It runs get onMessageReceived', JSON.parse(message).statusCode, 200);
+      headers:
+        content-type: application/json
   subscriptions:
     - type: http-server
       name: GetStuff
@@ -72,16 +82,34 @@ runnables:
         payload: responsePayload
       onMessageReceived: |-
         tester.isDefined('isDefined', message);
+- name: HttpWithBasicAuth
+  timeout: 3000
   startEvent:
     publisher:
       type: http-client
       name: HttpEnqueuerRepository
-      url: http://localhost:23075/gui
+      url: http://localhost:23075/basicAuth
       method: GET
       onInit: tester.isTruthy('onInitTest', true);
       onMessageReceived: tester.isEqualTo('It runs get onMessageReceived', JSON.parse(message).statusCode, 200);
+      authentication:
+        basic:
+          user: user
+          password: password
       headers:
         content-type: application/json
+  subscriptions:
+    - type: http-server
+      name: GetBasicAuth
+      endpoint: /basicAuth
+      port: 23075
+      method: GET
+      response:
+        status: 200
+        payload: responsePayload
+      onMessageReceived: |-
+        console.log(message);
+        tester.isEqualTo('Basic authentication', message.headers.authorization, 'Basic dXNlcjpwYXNzd29yZA==');
 - name: runnableHittingOnlineEnqueuer
   timeout: 3000
   subscriptions: []

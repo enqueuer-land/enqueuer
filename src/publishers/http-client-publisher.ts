@@ -1,18 +1,21 @@
 import {Publisher} from './publisher';
 import {Logger} from '../loggers/logger';
-import {Injectable} from 'conditional-injector';
+import {Container, Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import request from 'request';
+import {HttpAuthentication} from '../http-authentications/http-authentication';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'http-client' ||  publishRequisition.type === 'https-client'})
 export class HttpClientPublisher extends Publisher {
     private url: string;
     private method: string;
     private headers: any;
+    private authentication: any;
 
     constructor(publish: PublisherModel) {
         super(publish);
         this.url = publish.url;
+        this.authentication = publish.authentication;
         this.method = publish.method.toUpperCase();
         this.payload = publish.payload || '';
         this.headers = publish.headers || {};
@@ -20,7 +23,7 @@ export class HttpClientPublisher extends Publisher {
 
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
-
+            this.insertAuthentication();
             let options: any = {
                 url: this.url,
                 method: this.method,
@@ -78,5 +81,15 @@ export class HttpClientPublisher extends Publisher {
             }
         }
         return this.payload;
+    }
+
+    private insertAuthentication() {
+        if (this.authentication) {
+            const authenticator = Container.subclassesOf(HttpAuthentication).create(this.authentication);
+            const authentication = authenticator.generate();
+            if (authentication) {
+                this.headers = Object.assign(this.headers, authentication);
+            }
+        }
     }
 }

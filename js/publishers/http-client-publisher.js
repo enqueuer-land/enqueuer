@@ -16,16 +16,19 @@ const publisher_1 = require("./publisher");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const request_1 = __importDefault(require("request"));
+const http_authentication_1 = require("../http-authentications/http-authentication");
 let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
         this.url = publish.url;
+        this.authentication = publish.authentication;
         this.method = publish.method.toUpperCase();
         this.payload = publish.payload || '';
         this.headers = publish.headers || {};
     }
     publish() {
         return new Promise((resolve, reject) => {
+            this.insertAuthentication();
             let options = {
                 url: this.url,
                 method: this.method,
@@ -81,6 +84,15 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
             }
         }
         return this.payload;
+    }
+    insertAuthentication() {
+        if (this.authentication) {
+            const authenticator = conditional_injector_1.Container.subclassesOf(http_authentication_1.HttpAuthentication).create(this.authentication);
+            const authentication = authenticator.generate();
+            if (authentication) {
+                this.headers = Object.assign(this.headers, authentication);
+            }
+        }
     }
 };
 HttpClientPublisher = __decorate([
