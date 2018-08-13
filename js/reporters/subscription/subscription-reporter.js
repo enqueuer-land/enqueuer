@@ -29,15 +29,11 @@ class SubscriptionReporter {
         if (subscriptionAttributes.onInit) {
             logger_1.Logger.info(`Executing subscription::onInit hook function`);
             const testExecutor = new tester_executor_1.TesterExecutor(subscriptionAttributes.onInit);
-            testExecutor.addArgument('subscription', subscriptionAttributes.subscription);
+            testExecutor.addArgument('subscription', subscriptionAttributes);
             this.executeHookFunction(testExecutor);
-            logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-            this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
         }
-        else {
-            logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-            this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
-        }
+        logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+        this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
     }
     startTimeout(onTimeOutCallback) {
         this.subscription.messageReceived = undefined;

@@ -90,7 +90,7 @@ describe('Inception test', () => {
         tester.kill('SIGINT');
     };
     afterAll(() => {
-        // killThemAll();
+        killThemAll();
         removeEveryReportFile();
     });
 });

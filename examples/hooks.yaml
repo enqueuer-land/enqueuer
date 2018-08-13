@@ -1,10 +1,11 @@
 runnableVersion: 01.00.00
 name: hooks example
-id: file
+id: hook
 runnables:
 - timeout: 100
   onInit: >-
-    console.log('requisition::onInit');
+    tester.isDefined('Requisition exists', requisition);
+    tester.isEqualTo('Requisition name', requisition.name, 'example');
   name: example
   startEvent:
     publisher:
@@ -13,9 +14,12 @@ runnables:
       url: http://localhost:23078/hooks
       method: GET
       onInit: >-
-        console.log('publishing::onInit');
+        tester.isDefined('Publisher exists onInit', publisher);
+        tester.isEqualTo('Publisher name', publisher.name, 'publishing');
+        publisher.name = 'changed';
       onMessageReceived: >-
-        console.log('publishing::onMessageReceived');
+        tester.isDefined('Publisher exists onMessageReceived', publisher);
+        tester.isEqualTo('Publisher name changed', publisher.name, 'changed');
   subscriptions:
     - type: http-server
       name: subscription
@@ -25,6 +29,9 @@ runnables:
       response:
         status: 200
       onInit: >-
-        console.log('subscription::onInit');
+        tester.isDefined('Subscription exists onInit', subscription);
+        tester.isEqualTo('Subscription name', subscription.name, 'subscription');
+        subscription.name = 'changed';
       onMessageReceived: >-
-        console.log('subscription::onMessageReceived');
+        tester.isDefined('Subscription exists onMessageReceived', subscription);
+        tester.isEqualTo('Subscription name changed', subscription.name, 'changed');

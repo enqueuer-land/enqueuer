@@ -31,14 +31,11 @@ export class SubscriptionReporter {
         if (subscriptionAttributes.onInit) {
             Logger.info(`Executing subscription::onInit hook function`);
             const testExecutor = new TesterExecutor(subscriptionAttributes.onInit);
-            testExecutor.addArgument('subscription', subscriptionAttributes.subscription);
+            testExecutor.addArgument('subscription', subscriptionAttributes);
             this.executeHookFunction(testExecutor);
-            Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-            this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
-        } else {
-            Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-            this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         }
+        Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
+        this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
     }
 
     public startTimeout(onTimeOutCallback: Function) {
