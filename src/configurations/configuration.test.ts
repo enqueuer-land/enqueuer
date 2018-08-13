@@ -62,10 +62,10 @@ describe('Configuration', function() {
     it('get variables from file', function () {
         const expectedVariable = {key: "value"};
         const configurationFile = {
-            variables: expectedVariable
+            store: expectedVariable
         }
 
-        const actualOutput = new Configuration({}, configurationFile).getFileVariables();
+        const actualOutput = new Configuration({}, configurationFile).getStore();
 
         expect(actualOutput).toBe(expectedVariable);
     });
@@ -73,10 +73,10 @@ describe('Configuration', function() {
     it('get variables from command line', function () {
         const expectedVariable = {key: "value"};
         const configurationFile = {
-            variables: expectedVariable
+            store: expectedVariable
         }
 
-        const actualOutput = new Configuration({}, configurationFile).getFileVariables();
+        const actualOutput = new Configuration({}, configurationFile).getStore();
 
         expect(actualOutput).toBe(expectedVariable);
     });

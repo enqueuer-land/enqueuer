@@ -1,12 +1,11 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
 import * as yaml from 'yamljs';
-import * as fs from 'fs';
 import {Command} from 'commander';
 const packageJson = require('../../package.json');
 let configFileName = '';
 
-let commandLineVariables: any = {};
+let commandLineStore: any = {};
 let commander: any = {};
 if (!process.argv[1].toString().match('jest')) {
     commander = new Command()
@@ -15,11 +14,11 @@ if (!process.argv[1].toString().match('jest')) {
     .option('-q, --quiet', 'Disable logging', false)
     .option('-l, --log-level <level>', 'Set log level')
     .option('-c, --config-file <path>', 'Set configurationFile')
-    .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session',
+    .option('-s, --store [store]', 'Add variables values to this session',
         (val: string, memo: string[]) => {
                 const split = val.split('=');
                 if (split.length == 2) {
-                    commandLineVariables[split[0]] = split[1];
+                    commandLineStore[split[0]] = split[1];
                 }
 
                 memo.push(val);
@@ -47,7 +46,7 @@ export class Configuration {
     public constructor(commandLine: any = commander, configurationFile: any = ymlFile) {
         this.commandLine = commandLine;
         this.configurationFile = configurationFile;
-        this.configurationFile.variables = this.configurationFile.variables || {};
+        this.configurationFile.store = this.configurationFile.store || {};
     }
 
     public getLogLevel(): string | undefined {
@@ -69,26 +68,12 @@ export class Configuration {
         return this.configurationFile.outputs;
     }
 
-    public getFileVariables(): any {
-        return this.configurationFile.variables || {};
+    public getStore(): any {
+        return this.configurationFile.store || {};
     }
 
     public isQuietMode(): any {
         return this.commandLine.quiet || false;
-    }
-
-    public setFileVariable(name: string, value: any) {
-        this.configurationFile.variables[name] = value;
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
-    }
-
-    public deleteFileVariable(name: string) {
-        delete this.configurationFile.variables[name];
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
-    }
-
-    public getSessionVariables(): any {
-        return commandLineVariables || {};
     }
 
     public getFile(): any {

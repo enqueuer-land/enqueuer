@@ -9,11 +9,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const yaml = __importStar(require("yamljs"));
-const fs = __importStar(require("fs"));
 const commander_1 = require("commander");
 const packageJson = require('../../package.json');
 let configFileName = '';
-let commandLineVariables = {};
+let commandLineStore = {};
 let commander = {};
 if (!process.argv[1].toString().match('jest')) {
     commander = new commander_1.Command()
@@ -22,10 +21,10 @@ if (!process.argv[1].toString().match('jest')) {
         .option('-q, --quiet', 'Disable logging', false)
         .option('-l, --log-level <level>', 'Set log level')
         .option('-c, --config-file <path>', 'Set configurationFile')
-        .option('-s, --session-variables [sessionVariable]', 'Add variables values to this session', (val, memo) => {
+        .option('-s, --store [store]', 'Add variables values to this session', (val, memo) => {
         const split = val.split('=');
         if (split.length == 2) {
-            commandLineVariables[split[0]] = split[1];
+            commandLineStore[split[0]] = split[1];
         }
         memo.push(val);
         return memo;
@@ -45,7 +44,7 @@ class Configuration {
     constructor(commandLine = commander, configurationFile = ymlFile) {
         this.commandLine = commandLine;
         this.configurationFile = configurationFile;
-        this.configurationFile.variables = this.configurationFile.variables || {};
+        this.configurationFile.store = this.configurationFile.store || {};
     }
     getLogLevel() {
         return (this.commandLine.logLevel) ||
@@ -63,22 +62,11 @@ class Configuration {
         }
         return this.configurationFile.outputs;
     }
-    getFileVariables() {
-        return this.configurationFile.variables || {};
+    getStore() {
+        return this.configurationFile.store || {};
     }
     isQuietMode() {
         return this.commandLine.quiet || false;
-    }
-    setFileVariable(name, value) {
-        this.configurationFile.variables[name] = value;
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
-    }
-    deleteFileVariable(name) {
-        delete this.configurationFile.variables[name];
-        fs.writeFileSync(configFileName, yaml.stringify(this.configurationFile, 10, 2));
-    }
-    getSessionVariables() {
-        return commandLineVariables || {};
     }
     getFile() {
         return this.configurationFile;

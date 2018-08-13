@@ -10,7 +10,7 @@ runnables:
       type: sqs
       name: sqsPublisher
       payload: enqueuer
-      awsConfiguration: <<awsVariableConfiguration>>
+      awsConfiguration: <<awsConfiguration>>
       messageParams:
         QueueUrl: http://localhost:9324/queue/enqueuerQueue
       onMessageReceived: |-

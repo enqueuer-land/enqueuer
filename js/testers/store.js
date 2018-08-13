@@ -7,7 +7,7 @@ class Store {
     }
     static getData() {
         if (!Store.data) {
-            Store.data = new configuration_1.Configuration().getFileVariables();
+            Store.data = new configuration_1.Configuration().getStore();
         }
         return Store.data;
     }
