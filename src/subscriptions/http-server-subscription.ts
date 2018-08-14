@@ -1,14 +1,17 @@
 import {Subscription} from './subscription';
 import {Logger} from '../loggers/logger';
-import {Injectable} from 'conditional-injector';
+import {Container, Injectable} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {isNullOrUndefined} from 'util';
 import {HttpServerPool} from '../pools/http-server-pool';
+import {TestModel} from '../models/outputs/test-model';
+import {HttpAuthentication} from '../http-authentications/http-authentication';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-server'
                                                         || subscriptionAttributes.type === 'https-server'})
 export class HttpServerSubscription extends Subscription {
 
+    private authentication: any;
     private port: string;
     private endpoint: string;
     private method: string;
@@ -19,6 +22,7 @@ export class HttpServerSubscription extends Subscription {
         super(subscriptionAttributes);
 
         this.credentials = subscriptionAttributes.credentials;
+        this.authentication = subscriptionAttributes.authentication;
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method.toLowerCase();
@@ -99,4 +103,12 @@ export class HttpServerSubscription extends Subscription {
         }
     }
 
+    public onMessageReceivedTests(): TestModel[] {
+        if (this.authentication && this.messageReceived) {
+            Logger.debug(`${this.type} authenticating message with ${JSON.stringify(Object.keys(this.authentication))}`);
+            const verifier = Container.subclassesOf(HttpAuthentication).create(this.authentication);
+            return verifier.verify(this.messageReceived.headers.authorization);
+        }
+        return [];
+    }
 }

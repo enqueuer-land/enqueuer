@@ -16,5 +16,8 @@ class Subscription {
     sendResponse() {
         logger_1.Logger.warning(`Subscription of ${this.type} does not provide synchronous response`);
     }
+    onMessageReceivedTests() {
+        return [];
+    }
 }
 exports.Subscription = Subscription;

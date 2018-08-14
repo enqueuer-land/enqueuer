@@ -22,4 +22,5 @@ Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Runnable injectable
 Yaml files explaining input values
+subscription sendResponse to return a promise
 rename 'connect' subscription method to 'subscribe';

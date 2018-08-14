@@ -22,7 +22,8 @@ export class ZeroMqSubSubscription extends Subscription {
             Logger.trace(`ZeroMqSub waiting for a message related to topic ${this.topic}`);
             this.socket.on('message', (topic: Buffer, message: Buffer) => {
                 Logger.debug(`ZeroMqSub received a message related to topic ${topic.toString()}`);
-                resolve(message);
+
+                resolve({topic: topic, payload: message});
             });
         });
     }

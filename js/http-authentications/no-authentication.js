@@ -11,12 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const http_authentication_1 = require("./http-authentication");
+const logger_1 = require("../loggers/logger");
 let NoAuthentication = class NoAuthentication extends http_authentication_1.HttpAuthentication {
     constructor() {
         super();
     }
     generate() {
+        logger_1.Logger.warning('No authentication method was found to authenticate a HTTP requisition');
         return null;
+    }
+    verify(requisition) {
+        logger_1.Logger.warning('No authentication method was found to verify an HTTP authentication');
+        return [];
     }
 };
 NoAuthentication = __decorate([

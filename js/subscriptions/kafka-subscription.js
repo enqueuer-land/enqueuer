@@ -17,6 +17,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
     constructor(subscriptionModel) {
         super(subscriptionModel);
         subscriptionModel.options.requestTimeout = subscriptionModel.options.requestTimeout || 10000;
+        subscriptionModel.options.connectTimeout = subscriptionModel.options.connectTimeout || 10000;
         this.options = subscriptionModel.options;
         this.client = new kafka_node_1.KafkaClient(subscriptionModel.client);
         this.offset = new kafka_node_1.Offset(this.client);
@@ -47,15 +48,27 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
     }
     connect() {
         return new Promise((resolve, reject) => {
-            this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => {
-                if (error) {
-                    logger_1.Logger.error(`Error fetching kafka topic ${JSON.stringify(error, null, 2)}`);
-                    return reject(error);
-                }
-                this.latestOffset = offsets[this.options.topic][0];
-                logger_1.Logger.trace('Kafka subscription is connected');
-                resolve();
-            });
+            try {
+                this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => {
+                    if (error) {
+                        logger_1.Logger.error(`Error fetching kafka topic ${JSON.stringify(error, null, 2)}`);
+                        reject(error);
+                    }
+                    else {
+                        this.latestOffset = offsets[this.options.topic][0];
+                        logger_1.Logger.trace('Kafka subscription is connected');
+                        resolve();
+                    }
+                });
+                this.offset.on('error', (error) => {
+                    logger_1.Logger.error(`Error offset kafka ${JSON.stringify(error, null, 2)}`);
+                    reject(error);
+                });
+            }
+            catch (exc) {
+                logger_1.Logger.error(`Error connecting kafka ${JSON.stringify(exc, null, 2)}`);
+                reject(exc);
+            }
         });
     }
     unsubscribe() {

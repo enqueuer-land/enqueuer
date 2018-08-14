@@ -175,17 +175,17 @@ export class SubscriptionReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
-            Logger.trace(`[${this.subscription.name}] has no onMessageReceived to be executed`);
+        Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
+        this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
+        if (!this.subscription.onMessageReceived) {
+            Logger.trace(`${this.subscription.name} has no onMessageReceived to be executed`);
             return;
         }
-        Logger.trace(`[${this.subscription.name}] executing onMessageReceived`);
-
+        Logger.trace(`${this.subscription.name} executing onMessageReceived`);
         const testExecutor = new TesterExecutor(this.subscription.onMessageReceived);
         testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
         this.executeHookFunction(testExecutor);
-
         this.report.messageReceivedTime = new DateController().toString();
     }
 

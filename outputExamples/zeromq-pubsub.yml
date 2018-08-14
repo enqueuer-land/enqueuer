@@ -7,19 +7,32 @@ runnables:
   -
     type: requisition
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: RequisitionZeroMq
     time:
-      totalTime: 254
-      startTime: '2018-08-14T02:45:08.559Z'
-      endTime: '2018-08-14T02:45:08.813Z'
+      totalTime: 259
+      startTime: '2018-08-14T15:13:22.904Z'
+      endTime: '2018-08-14T15:13:23.163Z'
+      timeout: 5000
     subscriptions:
       -
         name: ZeroMqSub
         type: zero-mq-sub
         tests:
           -
-            name: '0Mq is awesome'
+            name: '0Mq is awesome topic'
+            valid: true
+            description: '''topic.enqueuer.virgs'' is equal to ''topic.enqueuer.virgs'''
+          -
+            name: '0Mq is awesome payload'
+            valid: true
+            description: '''enqueuer zeroes'' is equal to ''enqueuer zeroes'''
+          -
+            name: '0Mq is awesome address'
             valid: true
             description: '''tcp://127.0.0.1:3000'' is equal to ''tcp://127.0.0.1:3000'''
           -
@@ -27,8 +40,8 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-14T02:45:08.559Z'
-        messageReceivedTime: '2018-08-14T02:45:08.812Z'
+        connectionTime: '2018-08-14T15:13:22.905Z'
+        messageReceivedTime: '2018-08-14T15:13:23.162Z'
     startEvent:
       publisher:
         name: ZeroMqPub
@@ -39,4 +52,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-14T02:45:08.811Z'
+        publishTime: '2018-08-14T15:13:23.161Z'

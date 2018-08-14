@@ -32,7 +32,7 @@ let ZeroMqSubSubscription = class ZeroMqSubSubscription extends subscription_1.S
             logger_1.Logger.trace(`ZeroMqSub waiting for a message related to topic ${this.topic}`);
             this.socket.on('message', (topic, message) => {
                 logger_1.Logger.debug(`ZeroMqSub received a message related to topic ${topic.toString()}`);
-                resolve(message);
+                resolve({ topic: topic, payload: message });
             });
         });
     }

@@ -1,10 +1,11 @@
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Logger} from '../loggers/logger';
+import {TestModel} from '../models/outputs/test-model';
 
 export abstract class Subscription {
 
     public name: string;
-    public messageReceived?: string;
+    public messageReceived?: any;
     public timeout?: number;
     public onMessageReceived?: string;
     public response?: any;
@@ -27,5 +28,9 @@ export abstract class Subscription {
 
     public sendResponse(): void {
         Logger.warning(`Subscription of ${this.type} does not provide synchronous response`);
+    }
+
+    public onMessageReceivedTests(): TestModel[] {
+        return [];
     }
 }

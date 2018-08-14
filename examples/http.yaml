@@ -107,16 +107,10 @@ runnables:
       response:
         status: 200
         payload: responsePayload
-      onMessageReceived: |-
-        const auth = message.headers.authorization;
-        const plainAuth = new Buffer(auth.split(' ')[1], 'base64').toString(); //decode
-        const credentials = plainAuth.split(':');
-        const username = credentials[0];
-        const password = credentials[1];
-
-        tester.isEqualTo('Basic authentication prefix', auth.split(' ')[0], 'Basic');
-        tester.isEqualTo('Basic authentication user', username, 'user');
-        tester.isEqualTo('Basic authentication password', password, 'password');
+      authentication:
+        basic:
+          user: user
+          password: password
 - name: runnableHittingOnlineEnqueuer
   timeout: 5000
   subscriptions: []

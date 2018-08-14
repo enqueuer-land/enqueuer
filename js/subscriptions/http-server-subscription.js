@@ -14,10 +14,12 @@ const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const util_1 = require("util");
 const http_server_pool_1 = require("../pools/http-server-pool");
+const http_authentication_1 = require("../http-authentications/http-authentication");
 let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.credentials = subscriptionAttributes.credentials;
+        this.authentication = subscriptionAttributes.authentication;
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
         this.method = subscriptionAttributes.method.toLowerCase();
@@ -91,6 +93,14 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
             logger_1.Logger.debug(`${this.type} sending response`);
             this.responseHandler.status(this.response.status).send(this.response.payload);
         }
+    }
+    onMessageReceivedTests() {
+        if (this.authentication && this.messageReceived) {
+            logger_1.Logger.debug(`${this.type} authenticating message with ${JSON.stringify(Object.keys(this.authentication))}`);
+            const verifier = conditional_injector_1.Container.subclassesOf(http_authentication_1.HttpAuthentication).create(this.authentication);
+            return verifier.verify(this.messageReceived.headers.authorization);
+        }
+        return [];
     }
 };
 HttpServerSubscription = __decorate([

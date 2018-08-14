@@ -163,11 +163,13 @@ class SubscriptionReporter {
         }
     }
     executeOnMessageReceivedFunction() {
-        if (!this.subscription.messageReceived || !this.subscription.onMessageReceived) {
-            logger_1.Logger.trace(`[${this.subscription.name}] has no onMessageReceived to be executed`);
+        logger_1.Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
+        this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
+        if (!this.subscription.onMessageReceived) {
+            logger_1.Logger.trace(`${this.subscription.name} has no onMessageReceived to be executed`);
             return;
         }
-        logger_1.Logger.trace(`[${this.subscription.name}] executing onMessageReceived`);
+        logger_1.Logger.trace(`${this.subscription.name} executing onMessageReceived`);
         const testExecutor = new tester_executor_1.TesterExecutor(this.subscription.onMessageReceived);
         testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
