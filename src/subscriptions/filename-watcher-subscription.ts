@@ -10,11 +10,12 @@ export class FileNameWatcherSubscription extends Subscription {
 
     private watcher: any;
     private fileNamePattern: string;
-    private filesName: string[] = [];
+    private filesName: string[];
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
+        this.filesName = subscriptionAttributes.files || [];
     }
 
     public subscribe(): Promise<void> {

@@ -3,12 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_reporter_1 = require("../reporters/subscription/subscription-reporter");
 const runnable_parser_1 = require("../runnables/runnable-parser");
 class SingleRunInput {
-    constructor(fileNamePattern) {
+    constructor(singleRunConfiguration) {
         this.executorTimeout = null;
         this.subscriptionReporter = new subscription_reporter_1.SubscriptionReporter({
             type: 'file-name-watcher',
             name: 'SingleRunInput',
-            fileNamePattern: fileNamePattern,
+            fileNamePattern: singleRunConfiguration.fileNamePattern,
+            files: singleRunConfiguration.files,
             timeout: 100
         });
         this.runnableParser = new runnable_parser_1.RunnableParser();

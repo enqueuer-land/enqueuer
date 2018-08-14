@@ -20,7 +20,7 @@ To Create:
 Inception run only one spawn mode
 
 enqueuer -c configFile => enqueuer configFile
-Runnable injectable
+Runnable injectable by version
 uds to keep opened streams
 Yaml files explaining input values
 merge 'connect' and 'receiveMessage' subscription methods;

@@ -32,8 +32,8 @@ const chokidar = __importStar(require("chokidar"));
 let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.filesName = [];
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
+        this.filesName = subscriptionAttributes.files || [];
     }
     subscribe() {
         this.watcher = chokidar.watch(this.fileNamePattern, { ignored: /(^|[\/\\])\../ });

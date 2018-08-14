@@ -21,7 +21,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         this.multiResultCreator = new MultiResultCreator(enqueuerConfiguration['single-run'].reportName);
 
         this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
-        this.singleRunInput = new SingleRunInput(singleRunConfiguration.fileNamePattern);
+        this.singleRunInput = new SingleRunInput(singleRunConfiguration);
     }
 
     public async init(): Promise<void> {

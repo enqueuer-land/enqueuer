@@ -8,7 +8,7 @@
     "test": "npm run unitTest && npm run inceptionTest && npm run integrationTest",
     "unitTest": "jest --silent .test.ts",
     "inceptionTest": "jest --forceExit --silent .comp.ts",
-    "integrationTest": "npm start -- -c examples/enqueuer.yml --store zeroMqAddress=tcp://127.0.0.1:3000",
+    "integrationTest": "npm start -- -c enqueuer.yml --store zeroMqAddress=tcp://127.0.0.1:3000",
     "codeCoverage": "jest --silent --coverage",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",

@@ -11,7 +11,7 @@ COPY tsconfig.json ./tsconfig.json
 COPY src ./src
 COPY scripts ./scripts
 COPY schemas ./schemas
-COPY conf/enqueuerExample.yml /home/enqueuer/conf/enqueuer.yml
+COPY conf/enqueuerExample.yml /home/enqueuer/enqueuer.yml
 
 RUN npm install typescript -g
 RUN npm install

@@ -7,12 +7,13 @@ export class SingleRunInput {
     private subscriptionReporter: SubscriptionReporter;
     private executorTimeout: Function | null = null;
 
-    constructor(fileNamePattern: string) {
+    constructor(singleRunConfiguration: any) {
         this.subscriptionReporter = new SubscriptionReporter(
             {
                 type: 'file-name-watcher',
                 name: 'SingleRunInput',
-                fileNamePattern: fileNamePattern,
+                fileNamePattern: singleRunConfiguration.fileNamePattern,
+                files: singleRunConfiguration.files,
                 timeout: 100
             });
         this.runnableParser = new RunnableParser();
