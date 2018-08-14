@@ -17,7 +17,7 @@ runnables:
   - type: mqtt
     brokerAddress: mqtt://localhost
     name: MqttSub
-    topic: enqueuer/integration/public/test
+    topic: enqueuer/+/public/test
     onMessageReceived: |-
       let enqueuer = 'enqueuer';
       const payload = Buffer.from(message.payload);

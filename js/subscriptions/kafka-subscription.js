@@ -16,6 +16,7 @@ const kafka_node_1 = require("kafka-node");
 let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
         super(subscriptionModel);
+        subscriptionModel.options.requestTimeout = subscriptionModel.options.requestTimeout || 10000;
         this.options = subscriptionModel.options;
         this.client = new kafka_node_1.KafkaClient(subscriptionModel.client);
         this.offset = new kafka_node_1.Offset(this.client);

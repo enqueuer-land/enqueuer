@@ -15,6 +15,7 @@ export class KafkaSubscription extends Subscription {
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
 
+        subscriptionModel.options.requestTimeout = subscriptionModel.options.requestTimeout || 10000;
         this.options = subscriptionModel.options;
         this.client = new KafkaClient(subscriptionModel.client);
         this.offset = new Offset(this.client);

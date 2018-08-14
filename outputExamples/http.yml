@@ -15,8 +15,8 @@ runnables:
     name: HttpOriginal
     time:
       totalTime: 21
-      startTime: '2018-08-13T23:48:35.089Z'
-      endTime: '2018-08-13T23:48:35.110Z'
+      startTime: '2018-08-14T02:45:05.828Z'
+      endTime: '2018-08-14T02:45:05.849Z'
       timeout: 3000
     subscriptions:
       -
@@ -44,8 +44,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-13T23:48:35.092Z'
-        messageReceivedTime: '2018-08-13T23:48:35.106Z'
+        connectionTime: '2018-08-14T02:45:05.832Z'
+        messageReceivedTime: '2018-08-14T02:45:05.844Z'
     startEvent:
       publisher:
         name: HttpPublisherClientTitle
@@ -72,7 +72,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-13T23:48:35.110Z'
+        publishTime: '2018-08-14T02:45:05.849Z'
   -
     type: requisition
     valid: true
@@ -83,9 +83,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: HttpTitleDuplicated
     time:
-      totalTime: 4
-      startTime: '2018-08-13T23:48:35.110Z'
-      endTime: '2018-08-13T23:48:35.114Z'
+      totalTime: 5
+      startTime: '2018-08-14T02:45:05.849Z'
+      endTime: '2018-08-14T02:45:05.854Z'
       timeout: 5000
     subscriptions:
       -
@@ -105,8 +105,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-13T23:48:35.111Z'
-        messageReceivedTime: '2018-08-13T23:48:35.113Z'
+        connectionTime: '2018-08-14T02:45:05.850Z'
+        messageReceivedTime: '2018-08-14T02:45:05.853Z'
     startEvent:
       publisher:
         name: HttpPublisherClientTitle
@@ -133,7 +133,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-13T23:48:35.114Z'
+        publishTime: '2018-08-14T02:45:05.854Z'
   -
     type: requisition
     valid: true
@@ -144,9 +144,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: HttpGET
     time:
-      totalTime: 3
-      startTime: '2018-08-13T23:48:35.115Z'
-      endTime: '2018-08-13T23:48:35.118Z'
+      totalTime: 4
+      startTime: '2018-08-14T02:45:05.854Z'
+      endTime: '2018-08-14T02:45:05.858Z'
       timeout: 3000
     subscriptions:
       -
@@ -162,8 +162,8 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-13T23:48:35.115Z'
-        messageReceivedTime: '2018-08-13T23:48:35.117Z'
+        connectionTime: '2018-08-14T02:45:05.854Z'
+        messageReceivedTime: '2018-08-14T02:45:05.857Z'
     startEvent:
       publisher:
         name: HttpEnqueuerRepository
@@ -186,7 +186,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-13T23:48:35.117Z'
+        publishTime: '2018-08-14T02:45:05.858Z'
   -
     type: requisition
     valid: true
@@ -198,8 +198,8 @@ runnables:
     name: HttpWithBasicAuth
     time:
       totalTime: 4
-      startTime: '2018-08-13T23:48:35.118Z'
-      endTime: '2018-08-13T23:48:35.122Z'
+      startTime: '2018-08-14T02:45:05.858Z'
+      endTime: '2018-08-14T02:45:05.862Z'
       timeout: 3000
     subscriptions:
       -
@@ -207,16 +207,24 @@ runnables:
         type: http-server
         tests:
           -
-            name: 'Basic authentication'
+            name: 'Basic authentication prefix'
             valid: true
-            description: '''Basic dXNlcjpwYXNzd29yZA=='' is equal to ''Basic dXNlcjpwYXNzd29yZA=='''
+            description: '''Basic'' is equal to ''Basic'''
+          -
+            name: 'Basic authentication user'
+            valid: true
+            description: '''user'' is equal to ''user'''
+          -
+            name: 'Basic authentication password'
+            valid: true
+            description: '''password'' is equal to ''password'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-13T23:48:35.118Z'
-        messageReceivedTime: '2018-08-13T23:48:35.121Z'
+        connectionTime: '2018-08-14T02:45:05.858Z'
+        messageReceivedTime: '2018-08-14T02:45:05.861Z'
     startEvent:
       publisher:
         name: HttpEnqueuerRepository
@@ -239,7 +247,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-13T23:48:35.122Z'
+        publishTime: '2018-08-14T02:45:05.862Z'
   -
     type: requisition
     valid: true
@@ -250,10 +258,10 @@ runnables:
         description: 'Requisition has not timed out'
     name: runnableHittingOnlineEnqueuer
     time:
-      totalTime: 60
-      startTime: '2018-08-13T23:48:35.122Z'
-      endTime: '2018-08-13T23:48:35.182Z'
-      timeout: 3000
+      totalTime: 1695
+      startTime: '2018-08-14T02:45:05.862Z'
+      endTime: '2018-08-14T02:45:07.557Z'
+      timeout: 5000
     subscriptions: []
     startEvent:
       publisher:
@@ -277,4 +285,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-13T23:48:35.182Z'
+        publishTime: '2018-08-14T02:45:07.556Z'

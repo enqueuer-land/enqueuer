@@ -20,6 +20,6 @@ To Create:
 Inception run only one spawn mode
 
 enqueuer -c configFile => enqueuer configFile
-Http authentication injectable
 Runnable injectable
-Yaml files exmplaining input values
+Yaml files explaining input values
+rename 'connect' subscription method to 'subscribe';

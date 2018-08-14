@@ -11,6 +11,7 @@ export class MqttSubscription extends Subscription {
     private topic: string;
     private client: any;
     private options: any;
+    private messageReceivedResolver?: (value?: (PromiseLike<any> | any)) => void;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -22,16 +23,13 @@ export class MqttSubscription extends Subscription {
     }
 
     public receiveMessage(): Promise<any> {
-        Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
-        this.client.subscribe(this.topic);
         return new Promise((resolve, reject) => {
             if (!this.client.connected) {
                 reject(`Error trying to receive message. Subscription is not connected yet: ${this.topic}`);
+            } else {
+                Logger.debug('Mqtt message receiver resolver initialized');
+                this.messageReceivedResolver = resolve;
             }
-            this.client.on('message', (topic: string, payload: string) => {
-                const message = {topic: topic, payload: payload};
-                resolve(message);
-            });
         });
     }
 
@@ -39,9 +37,11 @@ export class MqttSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             this.client = mqtt.connect(this.brokerAddress, this.options);
             if (!this.client.connected) {
-                this.client.on('connect', () =>  resolve());
+                this.client.on('connect', () =>  {
+                    this.subscribeToTopic(reject, resolve);
+                });
             } else {
-                resolve();
+                this.subscribeToTopic(reject, resolve);
             }
             this.client.on('error', (error: any) => {
                 Logger.error(`Error subscribing to mqtt ${error}`);
@@ -58,4 +58,25 @@ export class MqttSubscription extends Subscription {
         delete this.client;
     }
 
+    private subscribeToTopic(reject: Function, resolve: Function) {
+        Logger.trace(`Mqtt connected`);
+        Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
+        this.client.subscribe(this.topic, (err: any) => {
+            if (err) {
+                reject(err);
+            } else {
+                this.client.on('message', (topic: string, payload: string) => this.gotMessage(topic, payload));
+                resolve();
+            }
+        });
+    }
+
+    private gotMessage(topic: string, payload: string) {
+        if (this.messageReceivedResolver) {
+            Logger.debug('Mqtt got message');
+            this.messageReceivedResolver({topic: topic, payload: payload});
+        } else {
+            Logger.error('Mqtt message receiver resolver is not initialized');
+        }
+    }
 }

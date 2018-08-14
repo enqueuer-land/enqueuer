@@ -30,26 +30,26 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
         this.options.connectTimeout = this.options.connectTimeout || 10 * 1000;
     }
     receiveMessage() {
-        logger_1.Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
-        this.client.subscribe(this.topic);
         return new Promise((resolve, reject) => {
             if (!this.client.connected) {
                 reject(`Error trying to receive message. Subscription is not connected yet: ${this.topic}`);
             }
-            this.client.on('message', (topic, payload) => {
-                const message = { topic: topic, payload: payload };
-                resolve(message);
-            });
+            else {
+                logger_1.Logger.debug('Mqtt message receiver resolver initialized');
+                this.messageReceivedResolver = resolve;
+            }
         });
     }
     connect() {
         return new Promise((resolve, reject) => {
             this.client = mqtt.connect(this.brokerAddress, this.options);
             if (!this.client.connected) {
-                this.client.on('connect', () => resolve());
+                this.client.on('connect', () => {
+                    this.subscribeToTopic(reject, resolve);
+                });
             }
             else {
-                resolve();
+                this.subscribeToTopic(reject, resolve);
             }
             this.client.on('error', (error) => {
                 logger_1.Logger.error(`Error subscribing to mqtt ${error}`);
@@ -63,6 +63,28 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
             this.client.end(true);
         }
         delete this.client;
+    }
+    subscribeToTopic(reject, resolve) {
+        logger_1.Logger.trace(`Mqtt connected`);
+        logger_1.Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
+        this.client.subscribe(this.topic, (err) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                this.client.on('message', (topic, payload) => this.gotMessage(topic, payload));
+                resolve();
+            }
+        });
+    }
+    gotMessage(topic, payload) {
+        if (this.messageReceivedResolver) {
+            logger_1.Logger.debug('Mqtt got message');
+            this.messageReceivedResolver({ topic: topic, payload: payload });
+        }
+        else {
+            logger_1.Logger.error('Mqtt message receiver resolver is not initialized');
+        }
     }
 };
 MqttSubscription = __decorate([
