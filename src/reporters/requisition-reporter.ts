@@ -40,7 +40,7 @@ export class RequisitionReporter {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
         Logger.trace('Multisubscribing');
-        this.multiSubscriptionsReporter.connect()
+        this.multiSubscriptionsReporter.subscribe()
             .then(() => {
                 Logger.trace('Multisubscriptions are ready');
                 this.initializeTimeout();

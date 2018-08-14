@@ -17,7 +17,7 @@ export class FileNameWatcherSubscription extends Subscription {
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         this.watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
         return new Promise((resolve) => {
             this.watcher.on('add', (fileName: string) => {

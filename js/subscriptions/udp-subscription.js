@@ -38,7 +38,7 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
             });
         });
     }
-    connect() {
+    subscribe() {
         return new Promise((resolve) => {
             this.server = dgram.createSocket('udp4');
             this.server.bind(this.port);

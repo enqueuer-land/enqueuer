@@ -19,7 +19,7 @@ export class SingleRunInput {
     }
 
     public syncDir(): Promise<void> {
-        return this.subscriptionReporter.connect();
+        return this.subscriptionReporter.subscribe();
     }
 
     public onNoMoreFilesToBeRead(executorTimeout: Function): void {

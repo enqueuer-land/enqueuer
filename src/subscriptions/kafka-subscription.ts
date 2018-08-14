@@ -55,7 +55,7 @@ export class KafkaSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
             try {
                 this.offset.fetchLatestOffsets([this.options.topic], (error: any, offsets: any) => {

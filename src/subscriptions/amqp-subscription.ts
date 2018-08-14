@@ -29,7 +29,7 @@ export class AmqpSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
             this.connection.once('ready', () => {

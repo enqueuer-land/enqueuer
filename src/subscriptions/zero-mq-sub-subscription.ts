@@ -28,7 +28,7 @@ export class ZeroMqSubSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         Logger.trace(`ZeroMqSub trying to connect to zeroMq ${this.address}`);
         this.socket = this.socket.connect(this.address);
         this.socket = this.socket.subscribe(this.topic);

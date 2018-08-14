@@ -24,7 +24,7 @@ let StandardInputSubscription = class StandardInputSubscription extends subscrip
             process.stdin.on('end', () => resolve(requisition));
         });
     }
-    connect() {
+    subscribe() {
         return Promise.resolve();
     }
     unsubscribe() {

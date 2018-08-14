@@ -12,15 +12,15 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: HttpOriginal
+    name: Original
     time:
-      totalTime: 9
-      startTime: '2018-08-14T15:13:19.984Z'
-      endTime: '2018-08-14T15:13:19.993Z'
+      totalTime: 16
+      startTime: '2018-08-14T16:59:28.587Z'
+      endTime: '2018-08-14T16:59:28.603Z'
       timeout: 3000
     subscriptions:
       -
-        name: HttpSubscriptionTitle
+        name: 'Original Subscription'
         type: http-server
         tests:
           -
@@ -44,11 +44,11 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-14T15:13:19.985Z'
-        messageReceivedTime: '2018-08-14T15:13:19.991Z'
+        connectionTime: '2018-08-14T16:59:28.588Z'
+        messageReceivedTime: '2018-08-14T16:59:28.594Z'
     startEvent:
       publisher:
-        name: HttpPublisherClientTitle
+        name: 'Original Publisher'
         valid: true
         type: http-client
         tests:
@@ -72,7 +72,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-14T15:13:19.992Z'
+        publishTime: '2018-08-14T16:59:28.603Z'
   -
     type: requisition
     valid: true
@@ -81,15 +81,15 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: HttpTitleDuplicated
+    name: Duplicated
     time:
-      totalTime: 10
-      startTime: '2018-08-14T15:13:19.994Z'
-      endTime: '2018-08-14T15:13:20.004Z'
+      totalTime: 14
+      startTime: '2018-08-14T16:59:28.616Z'
+      endTime: '2018-08-14T16:59:28.630Z'
       timeout: 5000
     subscriptions:
       -
-        name: DuplicatedEndPointTest
+        name: 'Duplicated Subscription'
         type: http-server
         tests:
           -
@@ -105,11 +105,11 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-14T15:13:19.994Z'
-        messageReceivedTime: '2018-08-14T15:13:20.002Z'
+        connectionTime: '2018-08-14T16:59:28.616Z'
+        messageReceivedTime: '2018-08-14T16:59:28.619Z'
     startEvent:
       publisher:
-        name: HttpPublisherClientTitle
+        name: 'Duplicated Publisher'
         valid: true
         type: http-client
         tests:
@@ -133,7 +133,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-14T15:13:20.004Z'
+        publishTime: '2018-08-14T16:59:28.629Z'
   -
     type: requisition
     valid: true
@@ -142,15 +142,15 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: HttpGET
+    name: 'GET method test'
     time:
-      totalTime: 19
-      startTime: '2018-08-14T15:13:20.005Z'
-      endTime: '2018-08-14T15:13:20.024Z'
+      totalTime: 16
+      startTime: '2018-08-14T16:59:28.631Z'
+      endTime: '2018-08-14T16:59:28.647Z'
       timeout: 3000
     subscriptions:
       -
-        name: GetStuff
+        name: Subscription
         type: http-server
         tests:
           -
@@ -162,11 +162,11 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-14T15:13:20.005Z'
-        messageReceivedTime: '2018-08-14T15:13:20.023Z'
+        connectionTime: '2018-08-14T16:59:28.631Z'
+        messageReceivedTime: '2018-08-14T16:59:28.634Z'
     startEvent:
       publisher:
-        name: HttpEnqueuerRepository
+        name: Publisher
         valid: true
         type: http-client
         tests:
@@ -186,7 +186,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-14T15:13:20.024Z'
+        publishTime: '2018-08-14T16:59:28.647Z'
   -
     type: requisition
     valid: true
@@ -195,15 +195,15 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: HttpWithBasicAuth
+    name: 'Basic Authentication'
     time:
-      totalTime: 5
-      startTime: '2018-08-14T15:13:20.032Z'
-      endTime: '2018-08-14T15:13:20.037Z'
+      totalTime: 19
+      startTime: '2018-08-14T16:59:28.648Z'
+      endTime: '2018-08-14T16:59:28.667Z'
       timeout: 3000
     subscriptions:
       -
-        name: GetBasicAuth
+        name: subscription
         type: http-server
         tests:
           -
@@ -223,10 +223,10 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-14T15:13:20.032Z'
+        connectionTime: '2018-08-14T16:59:28.648Z'
     startEvent:
       publisher:
-        name: HttpEnqueuerRepository
+        name: Publisher
         valid: true
         type: http-client
         tests:
@@ -246,7 +246,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-14T15:13:20.036Z'
+        publishTime: '2018-08-14T16:59:28.667Z'
   -
     type: requisition
     valid: true
@@ -255,11 +255,11 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: runnableHittingOnlineEnqueuer
+    name: 'Hit online webpage'
     time:
-      totalTime: 1975
-      startTime: '2018-08-14T15:13:20.037Z'
-      endTime: '2018-08-14T15:13:22.012Z'
+      totalTime: 1473
+      startTime: '2018-08-14T16:59:28.668Z'
+      endTime: '2018-08-14T16:59:30.141Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -284,4 +284,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-14T15:13:22.011Z'
+        publishTime: '2018-08-14T16:59:30.140Z'

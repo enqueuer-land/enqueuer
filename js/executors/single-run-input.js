@@ -14,7 +14,7 @@ class SingleRunInput {
         this.runnableParser = new runnable_parser_1.RunnableParser();
     }
     syncDir() {
-        return this.subscriptionReporter.connect();
+        return this.subscriptionReporter.subscribe();
     }
     onNoMoreFilesToBeRead(executorTimeout) {
         this.executorTimeout = executorTimeout;

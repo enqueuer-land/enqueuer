@@ -11,8 +11,8 @@ class MultiSubscriptionsReporter {
             }
         }
     }
-    connect() {
-        return Promise.all(this.subscriptionReporters.map(subscriptionHandler => subscriptionHandler.connect()));
+    subscribe() {
+        return Promise.all(this.subscriptionReporters.map(subscriptionHandler => subscriptionHandler.subscribe()));
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {

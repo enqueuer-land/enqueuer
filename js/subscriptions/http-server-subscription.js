@@ -54,7 +54,7 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
             });
         });
     }
-    connect() {
+    subscribe() {
         return new Promise((resolve, reject) => {
             let server = null;
             if (this.type == 'https-server') {

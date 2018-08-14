@@ -34,7 +34,7 @@ export class SqsSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return Promise.resolve();
     }
 

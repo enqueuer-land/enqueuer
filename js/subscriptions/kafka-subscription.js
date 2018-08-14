@@ -46,7 +46,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
             });
         });
     }
-    connect() {
+    subscribe() {
         return new Promise((resolve, reject) => {
             try {
                 this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => {

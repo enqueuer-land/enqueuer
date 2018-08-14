@@ -14,9 +14,9 @@ export class MultiSubscriptionsReporter {
         }
     }
 
-    public connect(): Promise<void[]> {
+    public subscribe(): Promise<void[]> {
         return Promise.all(this.subscriptionReporters.map(
-            subscriptionHandler => subscriptionHandler.connect()
+            subscriptionHandler => subscriptionHandler.subscribe()
             ));
     }
 

@@ -4,11 +4,11 @@ id: http
 initialDelay: 0
 runnables:
 - timeout: 3000
-  name: HttpOriginal
+  name: Original
   startEvent:
     publisher:
       type: http-client
-      name: HttpPublisherClientTitle
+      name: Original Publisher
       url: http://localhost:23075/enqueuer/idStuff?query=123
       method: POST
       onInit: tester.isTruthy('onInit', true);
@@ -21,7 +21,7 @@ runnables:
         content-type: application/json
   subscriptions:
   - type: http-server
-    name: HttpSubscriptionTitle
+    name: Original Subscription
     endpoint: /enqueuer/:someId
     port: 23075
     method: POST
@@ -34,11 +34,11 @@ runnables:
       tester.isEqualTo('Payload is Virgs', JSON.parse(message.body).enqueuer, 'virgs');
     timeout: 10000
 - timeout: 5000
-  name: HttpTitleDuplicated
+  name: Duplicated
   startEvent:
     publisher:
       type: http-client
-      name: HttpPublisherClientTitle
+      name: Duplicated Publisher
       url: http://localhost:23075/enqueuer/234234234?query=123
       method: POST
       onInit: tester.isTruthy('onInitTest', true);
@@ -49,7 +49,7 @@ runnables:
         duplicated: true
   subscriptions:
   - type: http-server
-    name: DuplicatedEndPointTest
+    name: Duplicated Subscription
     endpoint: /enqueuer/:someId
     port: 23075
     method: POST
@@ -59,12 +59,12 @@ runnables:
     onMessageReceived: |-
       tester.isTruthy('Duplicated', JSON.parse(message.body).duplicated);
     timeout: 3000
-- name: HttpGET
+- name: GET method test
   timeout: 3000
   startEvent:
     publisher:
       type: http-client
-      name: HttpEnqueuerRepository
+      name: Publisher
       url: http://localhost:23075/gui
       method: GET
       onInit: tester.isTruthy('onInitTest', true);
@@ -73,7 +73,7 @@ runnables:
         content-type: application/json
   subscriptions:
     - type: http-server
-      name: GetStuff
+      name: Subscription
       endpoint: /gui
       port: 23075
       method: GET
@@ -82,12 +82,12 @@ runnables:
         payload: responsePayload
       onMessageReceived: |-
         tester.isDefined('isDefined', message);
-- name: HttpWithBasicAuth
+- name: Basic Authentication
   timeout: 3000
   startEvent:
     publisher:
       type: http-client
-      name: HttpEnqueuerRepository
+      name: Publisher
       url: http://localhost:23075/basicAuth
       method: GET
       onInit: tester.isTruthy('onInitTest', true);
@@ -100,7 +100,7 @@ runnables:
         content-type: application/json
   subscriptions:
     - type: http-server
-      name: GetBasicAuth
+      name: subscription
       endpoint: /basicAuth
       port: 23075
       method: GET
@@ -111,7 +111,7 @@ runnables:
         basic:
           user: user
           password: password
-- name: runnableHittingOnlineEnqueuer
+- name: Hit online webpage
   timeout: 5000
   subscriptions: []
   startEvent:

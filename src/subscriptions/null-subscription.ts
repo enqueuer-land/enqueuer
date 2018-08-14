@@ -8,7 +8,7 @@ export class NullSubscription extends Subscription {
         super(subscriptionAttributes);
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
     }
 

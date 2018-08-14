@@ -51,7 +51,7 @@ export class UdsSubscription extends Subscription {
         }
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return new Promise((resolve) => {
             fs.unlink(this.path, () => {
                 this.server = net.createServer()

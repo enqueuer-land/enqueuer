@@ -54,7 +54,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             }
         });
     }
-    connect() {
+    subscribe() {
         return new Promise((resolve) => {
             if (this.loadStreamName) {
                 logger_1.Logger.debug('Server is reusing tcp stream');

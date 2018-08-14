@@ -33,9 +33,11 @@ export class MqttSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
+            Logger.trace(`Mqtt connecting to broker ${this.brokerAddress}`);
             this.client = mqtt.connect(this.brokerAddress, this.options);
+            Logger.trace(`Mqtt client created`);
             if (!this.client.connected) {
                 this.client.on('connect', () =>  {
                     this.subscribeToTopic(reject, resolve);
@@ -59,7 +61,6 @@ export class MqttSubscription extends Subscription {
     }
 
     private subscribeToTopic(reject: Function, resolve: Function) {
-        Logger.trace(`Mqtt connected`);
         Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
         this.client.subscribe(this.topic, (err: any) => {
             if (err) {
@@ -72,8 +73,8 @@ export class MqttSubscription extends Subscription {
     }
 
     private gotMessage(topic: string, payload: string) {
+        Logger.debug('Mqtt got message');
         if (this.messageReceivedResolver) {
-            Logger.debug('Mqtt got message');
             this.messageReceivedResolver({topic: topic, payload: payload});
         } else {
             Logger.error('Mqtt message receiver resolver is not initialized');

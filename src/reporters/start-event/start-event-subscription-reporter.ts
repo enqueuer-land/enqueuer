@@ -17,7 +17,7 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
 
     public start(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.subscriptionReporter.connect()
+            this.subscriptionReporter.subscribe()
                 .then(() => {
                     this.subscriptionReporter
                         .startTimeout(() => resolve());

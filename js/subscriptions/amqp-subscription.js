@@ -34,7 +34,7 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
             this.messageReceiverPromiseResolver = resolve;
         });
     }
-    connect() {
+    subscribe() {
         this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
             this.connection.once('ready', () => {

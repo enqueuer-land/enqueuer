@@ -35,7 +35,7 @@ export class StompSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
             Logger.debug(`Stomp subscription connecting to ${this.address}:${this.port}`);
             this.client = new Stomp(this.address, this.port, this.user, this.password);

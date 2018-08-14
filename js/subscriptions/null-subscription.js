@@ -15,7 +15,7 @@ let NullSubscription = class NullSubscription extends subscription_1.Subscriptio
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
     }
-    connect() {
+    subscribe() {
         return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
     }
     receiveMessage() {

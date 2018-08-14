@@ -42,7 +42,7 @@ let SqsSubscription = class SqsSubscription extends subscription_1.Subscription 
             });
         });
     }
-    connect() {
+    subscribe() {
         return Promise.resolve();
     }
 };

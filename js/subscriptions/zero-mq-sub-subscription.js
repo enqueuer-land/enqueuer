@@ -36,7 +36,7 @@ let ZeroMqSubSubscription = class ZeroMqSubSubscription extends subscription_1.S
             });
         });
     }
-    connect() {
+    subscribe() {
         logger_1.Logger.trace(`ZeroMqSub trying to connect to zeroMq ${this.address}`);
         this.socket = this.socket.connect(this.address);
         this.socket = this.socket.subscribe(this.topic);

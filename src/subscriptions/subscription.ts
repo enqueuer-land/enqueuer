@@ -20,7 +20,7 @@ export abstract class Subscription {
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;
     }
 
-    public abstract connect(): Promise<void>;
+    public abstract subscribe(): Promise<void>;
     public abstract receiveMessage(): Promise<any>;
     public unsubscribe(): void {
         //do nothing

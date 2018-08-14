@@ -57,7 +57,7 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
             logger_1.Logger.warning(`No uds response was sent because uds stream is null`);
         }
     }
-    connect() {
+    subscribe() {
         return new Promise((resolve) => {
             fs.unlink(this.path, () => {
                 this.server = net.createServer()

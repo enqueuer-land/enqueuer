@@ -50,7 +50,7 @@ export class TcpServerSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return new Promise((resolve) => {
             if (this.loadStreamName) {
                 Logger.debug('Server is reusing tcp stream');

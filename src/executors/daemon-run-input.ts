@@ -21,7 +21,7 @@ export class DaemonRunInput {
         Logger.info(`Connecting to input ${this.type}`);
 
         return new Promise((resolve, reject) => {
-            this.subscription.connect()
+            this.subscription.subscribe()
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });

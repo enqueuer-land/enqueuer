@@ -20,7 +20,7 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
     }
     start() {
         return new Promise((resolve, reject) => {
-            this.subscriptionReporter.connect()
+            this.subscriptionReporter.subscribe()
                 .then(() => {
                 this.subscriptionReporter
                     .startTimeout(() => resolve());

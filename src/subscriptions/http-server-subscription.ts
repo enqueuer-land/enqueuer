@@ -63,7 +63,7 @@ export class HttpServerSubscription extends Subscription {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
             let server = null;
             if (this.type == 'https-server') {

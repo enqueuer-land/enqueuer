@@ -40,9 +40,11 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
             }
         });
     }
-    connect() {
+    subscribe() {
         return new Promise((resolve, reject) => {
+            logger_1.Logger.trace(`Mqtt connecting to broker ${this.brokerAddress}`);
             this.client = mqtt.connect(this.brokerAddress, this.options);
+            logger_1.Logger.trace(`Mqtt client created`);
             if (!this.client.connected) {
                 this.client.on('connect', () => {
                     this.subscribeToTopic(reject, resolve);
@@ -65,7 +67,6 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
         delete this.client;
     }
     subscribeToTopic(reject, resolve) {
-        logger_1.Logger.trace(`Mqtt connected`);
         logger_1.Logger.trace(`Mqtt subscribing on topic ${this.topic}`);
         this.client.subscribe(this.topic, (err) => {
             if (err) {
@@ -78,8 +79,8 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
         });
     }
     gotMessage(topic, payload) {
+        logger_1.Logger.debug('Mqtt got message');
         if (this.messageReceivedResolver) {
-            logger_1.Logger.debug('Mqtt got message');
             this.messageReceivedResolver({ topic: topic, payload: payload });
         }
         else {

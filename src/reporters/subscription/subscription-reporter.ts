@@ -54,10 +54,10 @@ export class SubscriptionReporter {
         });
     }
 
-    public connect(): Promise<void> {
+    public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.trace(`[${this.subscription.name}] is connecting`);
-            this.subscription.connect()
+            Logger.trace(`[${this.subscription.name}] is subscribing`);
+            this.subscription.subscribe()
                 .then(() => {
                     this.report.connectionTime = new DateController().toString();
                     resolve();
@@ -153,6 +153,10 @@ export class SubscriptionReporter {
     }
 
     private cleanUp(): void {
+
+        process.removeListener('SIGINT', this.handleKillSignal);
+        process.removeListener('SIGTERM', this.handleKillSignal);
+
         this.cleanUp = () => {
             //do nothing
         };

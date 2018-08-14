@@ -50,10 +50,10 @@ class SubscriptionReporter {
             this.cleanUp();
         });
     }
-    connect() {
+    subscribe() {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.trace(`[${this.subscription.name}] is connecting`);
-            this.subscription.connect()
+            logger_1.Logger.trace(`[${this.subscription.name}] is subscribing`);
+            this.subscription.subscribe()
                 .then(() => {
                 this.report.connectionTime = new date_controller_1.DateController().toString();
                 resolve();
@@ -142,6 +142,8 @@ class SubscriptionReporter {
         }
     }
     cleanUp() {
+        process.removeListener('SIGINT', this.handleKillSignal);
+        process.removeListener('SIGTERM', this.handleKillSignal);
         this.cleanUp = () => {
             //do nothing
         };
