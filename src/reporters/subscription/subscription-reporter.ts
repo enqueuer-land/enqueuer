@@ -73,21 +73,22 @@ export class SubscriptionReporter {
         });
     }
 
-    public receiveMessage(): Promise<any> {
+    public async receiveMessage(): Promise<any> {
         this.initializeTimeout();
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message: any) => {
-                    Logger.debug(`[${this.subscription.name}] received its message`);
+                    Logger.debug(`${this.subscription.name} received its message`);
                     if (!isNullOrUndefined(message)) {
-                        this.handleMessageArrival(message);
-                        resolve(message);
+                        this.handleMessageArrival(message)
+                            .then(() => Logger.debug(`${this.subscription.name} handled message arrival`))
+                            .then(() => resolve(message));
                     } else {
-                        Logger.warning(`[${this.subscription.name}] message is null or undefined`);
+                        Logger.warning(`${this.subscription.name} message is null or undefined`);
                     }
                 })
                 .catch((err: any) => {
-                    Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
+                    Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
                     this.subscription.unsubscribe();
                     reject(err);
                 });
@@ -103,7 +104,7 @@ export class SubscriptionReporter {
         return this.report;
     }
 
-    private handleMessageArrival(message: any) {
+    private async handleMessageArrival(message: any): Promise<void> {
         Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
 
         if (!this.hasTimedOut) {
@@ -112,7 +113,7 @@ export class SubscriptionReporter {
             this.executeOnMessageReceivedFunction();
             if (this.subscription.response) {
                 Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-                this.subscription.sendResponse();
+                await this.subscription.sendResponse();
             }
         } else {
             Logger.info(`${this.subscription.name} has received message in a unable time`);

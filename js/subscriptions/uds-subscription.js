@@ -8,6 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -47,15 +55,17 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
         });
     }
     sendResponse() {
-        if (this.stream) {
-            logger_1.Logger.debug(`Uds server sending response`);
-            this.stream.write(this.response);
-            this.stream.end();
-            this.stream = null;
-        }
-        else {
-            logger_1.Logger.warning(`No uds response was sent because uds stream is null`);
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.stream) {
+                logger_1.Logger.debug(`Uds server sending response`);
+                this.stream.write(this.response);
+                this.stream.end();
+                this.stream = null;
+            }
+            else {
+                logger_1.Logger.warning(`No uds response was sent because uds stream is null`);
+            }
+        });
     }
     subscribe() {
         return new Promise((resolve) => {

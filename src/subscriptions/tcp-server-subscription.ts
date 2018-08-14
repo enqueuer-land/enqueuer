@@ -66,11 +66,16 @@ export class TcpServerSubscription extends Subscription {
         });
     }
 
-    public sendResponse() {
-        if (this.stream) {
-            Logger.debug(`Tcp server sending response`);
-            this.stream.write(this.response, () => this.persistStream());
-        }
+    public sendResponse(): Promise<void> {
+        return new Promise((resolve) => {
+            if (this.stream) {
+                Logger.debug(`Tcp server sending response`);
+                this.stream.write(this.response, () => {
+                    this.persistStream();
+                    resolve();
+                });
+            }
+        });
     }
 
     private loadStream() {

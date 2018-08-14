@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../../loggers/logger");
 const date_controller_1 = require("../../timers/date-controller");
@@ -67,23 +75,26 @@ class SubscriptionReporter {
         });
     }
     receiveMessage() {
-        this.initializeTimeout();
-        return new Promise((resolve, reject) => {
-            this.subscription.receiveMessage()
-                .then((message) => {
-                logger_1.Logger.debug(`[${this.subscription.name}] received its message`);
-                if (!util_1.isNullOrUndefined(message)) {
-                    this.handleMessageArrival(message);
-                    resolve(message);
-                }
-                else {
-                    logger_1.Logger.warning(`[${this.subscription.name}] message is null or undefined`);
-                }
-            })
-                .catch((err) => {
-                logger_1.Logger.error(`[${this.subscription.name}] is unable to receive message: ${err}`);
-                this.subscription.unsubscribe();
-                reject(err);
+        return __awaiter(this, void 0, void 0, function* () {
+            this.initializeTimeout();
+            return new Promise((resolve, reject) => {
+                this.subscription.receiveMessage()
+                    .then((message) => {
+                    logger_1.Logger.debug(`${this.subscription.name} received its message`);
+                    if (!util_1.isNullOrUndefined(message)) {
+                        this.handleMessageArrival(message)
+                            .then(() => logger_1.Logger.debug(`${this.subscription.name} handled message arrival`))
+                            .then(() => resolve(message));
+                    }
+                    else {
+                        logger_1.Logger.warning(`${this.subscription.name} message is null or undefined`);
+                    }
+                })
+                    .catch((err) => {
+                    logger_1.Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
+                    this.subscription.unsubscribe();
+                    reject(err);
+                });
             });
         });
     }
@@ -95,20 +106,22 @@ class SubscriptionReporter {
         return this.report;
     }
     handleMessageArrival(message) {
-        logger_1.Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
-        if (!this.hasTimedOut) {
-            logger_1.Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
-            this.subscription.messageReceived = message;
-            this.executeOnMessageReceivedFunction();
-            if (this.subscription.response) {
-                logger_1.Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-                this.subscription.sendResponse();
+        return __awaiter(this, void 0, void 0, function* () {
+            logger_1.Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
+            if (!this.hasTimedOut) {
+                logger_1.Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
+                this.subscription.messageReceived = message;
+                this.executeOnMessageReceivedFunction();
+                if (this.subscription.response) {
+                    logger_1.Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
+                    yield this.subscription.sendResponse();
+                }
             }
-        }
-        else {
-            logger_1.Logger.info(`${this.subscription.name} has received message in a unable time`);
-        }
-        this.cleanUp();
+            else {
+                logger_1.Logger.info(`${this.subscription.name} has received message in a unable time`);
+            }
+            this.cleanUp();
+        });
     }
     addMessageReceivedReport() {
         const messageReceivedTestLabel = 'Message received';

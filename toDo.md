@@ -21,6 +21,6 @@ Inception run only one spawn mode
 
 enqueuer -c configFile => enqueuer configFile
 Runnable injectable
+uds to keep opened streams
 Yaml files explaining input values
-subscription sendResponse to return a promise
 merge 'connect' and 'receiveMessage' subscription methods;

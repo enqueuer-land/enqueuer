@@ -40,7 +40,7 @@ export class UdsSubscription extends Subscription {
         });
     }
 
-    public sendResponse() {
+    public async sendResponse(): Promise<void> {
         if (this.stream) {
             Logger.debug(`Uds server sending response`);
             this.stream.write(this.response);

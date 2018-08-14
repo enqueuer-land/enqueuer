@@ -26,7 +26,7 @@ export abstract class Subscription {
         //do nothing
     }
 
-    public sendResponse(): void {
+    public async sendResponse(): Promise<void> {
         Logger.warning(`Subscription of ${this.type} does not provide synchronous response`);
     }
 

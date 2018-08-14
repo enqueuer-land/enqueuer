@@ -69,10 +69,15 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         });
     }
     sendResponse() {
-        if (this.stream) {
-            logger_1.Logger.debug(`Tcp server sending response`);
-            this.stream.write(this.response, () => this.persistStream());
-        }
+        return new Promise((resolve) => {
+            if (this.stream) {
+                logger_1.Logger.debug(`Tcp server sending response`);
+                this.stream.write(this.response, () => {
+                    this.persistStream();
+                    resolve();
+                });
+            }
+        });
     }
     loadStream() {
         logger_1.Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);

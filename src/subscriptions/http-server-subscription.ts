@@ -96,7 +96,7 @@ export class HttpServerSubscription extends Subscription {
         }
     }
 
-    public sendResponse() {
+    public async sendResponse(): Promise<void> {
         if (this.responseHandler) {
             Logger.debug(`${this.type} sending response`);
             this.responseHandler.status(this.response.status).send(this.response.payload);
