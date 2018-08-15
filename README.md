@@ -26,9 +26,7 @@ To use **enqueuer**, you have to:
     ![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-test.png "testfile")
 
 4. execute it:
-    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result-cli.png "executing")
+    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "executing")
     
-5. get the result file:
-    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-result.png "example result")
     
 Consider reading the ![wiki](https://github.com/lopidio/enqueuer/wiki "wiki") for further details
