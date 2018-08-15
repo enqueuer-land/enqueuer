@@ -50,7 +50,7 @@ class SubscriptionReporter {
         }
         this.timeOut = new timeout_1.Timeout(() => {
             if (!this.subscription.messageReceived) {
-                const message = `[${this.subscription.name}] stopped waiting because it has timed out`;
+                const message = `${this.subscription.name} stopped waiting because it has timed out`;
                 logger_1.Logger.info(message);
                 this.hasTimedOut = true;
                 onTimeOutCallback();
@@ -60,7 +60,7 @@ class SubscriptionReporter {
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.trace(`[${this.subscription.name}] is subscribing`);
+            logger_1.Logger.trace(`${this.subscription.name} is subscribing`);
             this.subscription.subscribe()
                 .then(() => {
                 this.report.connectionTime = new date_controller_1.DateController().toString();
@@ -69,7 +69,7 @@ class SubscriptionReporter {
                 process.on('SIGTERM', this.handleKillSignal);
             })
                 .catch((err) => {
-                logger_1.Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
+                logger_1.Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
                 reject(err);
             });
         });
@@ -173,7 +173,7 @@ class SubscriptionReporter {
     }
     initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
-            logger_1.Logger.debug(`[${this.subscription.name}] setting timeout to ${this.subscription.timeout}ms`);
+            logger_1.Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);
         }
     }

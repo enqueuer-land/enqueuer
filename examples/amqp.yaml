@@ -31,7 +31,7 @@ runnables:
     exchange: enqueuer.exchange
     routingKey: enqueuer.integration.test.routing.#
     onMessageReceived: >-
-      tester.isEqualTo('Payload', message.data.how.about, 'a new object?');
+      tester.isEqualTo('Payload', message.payload.how.about, 'a new object?');
       tester.isEqualTo('Header', message.headers.key, 'value');
       tester.isEqualTo('Other header value', message.headers.otherKey, 'otherValue');
       tester.isEqualTo('Routing key', message.deliveryInfo.routingKey, 'enqueuer.integration.test.routing.key');

@@ -23,4 +23,3 @@ enqueuer -c configFile => enqueuer configFile
 Runnable injectable by version
 uds to keep opened streams
 Yaml files explaining input values
-merge 'connect' and 'receiveMessage' subscription methods;

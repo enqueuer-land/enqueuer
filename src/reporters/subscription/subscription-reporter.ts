@@ -45,7 +45,7 @@ export class SubscriptionReporter {
         }
         this.timeOut = new Timeout(() => {
             if (!this.subscription.messageReceived) {
-                const message = `[${this.subscription.name}] stopped waiting because it has timed out`;
+                const message = `${this.subscription.name} stopped waiting because it has timed out`;
                 Logger.info(message);
                 this.hasTimedOut = true;
                 onTimeOutCallback();
@@ -56,7 +56,7 @@ export class SubscriptionReporter {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.trace(`[${this.subscription.name}] is subscribing`);
+            Logger.trace(`${this.subscription.name} is subscribing`);
             this.subscription.subscribe()
                 .then(() => {
                     this.report.connectionTime = new DateController().toString();
@@ -67,7 +67,7 @@ export class SubscriptionReporter {
 
                 })
                 .catch((err: any) => {
-                    Logger.error(`[${this.subscription.name}] is unable to connect: ${err}`);
+                    Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
                     reject(err);
                 });
         });
@@ -174,7 +174,7 @@ export class SubscriptionReporter {
 
     private initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
-            Logger.debug(`[${this.subscription.name}] setting timeout to ${this.subscription.timeout}ms`);
+            Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);
         }
     }
@@ -197,9 +197,9 @@ export class SubscriptionReporter {
     private executeHookFunction(testExecutor: TesterExecutor) {
         const tests = testExecutor.execute();
         this.report.tests = tests.map(test => {
-                                                    return {name: test.label, valid: test.valid, description: test.description};
-                                                })
-                                .concat(this.report.tests);
+            return {name: test.label, valid: test.valid, description: test.description};
+        })
+            .concat(this.report.tests);
     }
 
     private handleKillSignal = (signal: Signals): void => {

@@ -16,11 +16,17 @@ export class FileNameWatcherSubscription extends Subscription {
         super(subscriptionAttributes);
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
         this.filesName = subscriptionAttributes.files || [];
+        if (!this.fileNamePattern && this.filesName.length == 0) {
+            throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' and no 'files' fields`);
+        }
     }
 
     public subscribe(): Promise<void> {
         this.watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
         return new Promise((resolve) => {
+            if (!this.fileNamePattern) {
+                resolve();
+            }
             this.watcher.on('add', (fileName: string) => {
                 Logger.trace(`${this.type} found file: ${fileName}`);
                 this.filesName.push(fileName);

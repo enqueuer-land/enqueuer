@@ -55,7 +55,7 @@ export class AmqpSubscription extends Subscription {
 
     private gotMessage(message: any, headers: any, deliveryInfo: any) {
         if (this.messageReceiverPromiseResolver) {
-            const result = {data: message, headers: headers, deliveryInfo: deliveryInfo};
+            const result = {payload: message, headers: headers, deliveryInfo: deliveryInfo};
             this.messageReceiverPromiseResolver(result);
         } else {
             Logger.warning(`Queue ${this.queueName} is not subscribed yet`);

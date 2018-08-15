@@ -58,7 +58,7 @@ let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscriptio
     }
     gotMessage(message, headers, deliveryInfo) {
         if (this.messageReceiverPromiseResolver) {
-            const result = { data: message, headers: headers, deliveryInfo: deliveryInfo };
+            const result = { payload: message, headers: headers, deliveryInfo: deliveryInfo };
             this.messageReceiverPromiseResolver(result);
         }
         else {

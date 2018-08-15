@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
-    "test": "npm run unitTest && npm run inceptionTest && npm run integrationTest",
+    "test": "npm run unitTest && npm run inceptionTest && npm run codeCoverage && npm run integrationTest",
     "unitTest": "jest --silent .test.ts",
     "inceptionTest": "jest --forceExit --silent .comp.ts",
     "integrationTest": "npm start -- -c enqueuer.yml --store zeroMqAddress=tcp://127.0.0.1:3000",
