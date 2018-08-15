@@ -3,7 +3,7 @@
 
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/logo/fullLogo1.png "Enqueuer Logo")
 
-Quando um _endpoint_ _http_ do seu _e-commerce_ é atingido, é necessário enviar uma informação para uma _API RESTful_ de processamento de cartões de crédito e notificar os usuários interessados através de uma publicação *MQTT*.
+Quando um _servidor_ _TCP_ do seu _e-commerce_ é atingido, é necessário enviar uma informação para uma _API RESTful_ de processamento de cartões de crédito e notificar os usuários interessados através de uma publicação *AMQP*.
 
 ![readme-flow](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-flow.png "Fluxo do exemplo")
 
@@ -15,7 +15,7 @@ Neste momento, existem três opções para testar o fluxo poligota:
 Para usar **enqueuer**, basta:
 1. instalar:
 
-    ```$npm install -g enqueuer```
+    ```$npm install enqueuer -g```
     
 2. criar um arquivo de configuração:
     ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/readme-config.png "config-file.yml")
