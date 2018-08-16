@@ -1,0 +1,21 @@
+#Every publisher has its own properties. But they all have properties defined in /docs/publishers/publisher.yml
+
+#IPC protocol type. It has to be 'amqp'.
+type: amqp
+
+#Accepted values defined here: https://github.com/postwait/node-amqp#connection-options-and-url
+options:
+  host: localhost
+  port: 5672
+
+#Accepted values defined here: https://github.com/postwait/node-amqp#exchangepublishroutingkey-message-options-callback
+messageOptions:
+  headers:
+    key: value
+    otherKey: otherValue
+
+#Exchange name to have a message published in
+exchange: enqueuer.exchange
+
+#Routing key to have a message published in
+routingKey: enqueuer.integration.test.routing.key

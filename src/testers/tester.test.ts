@@ -17,7 +17,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotEqualTo.label).toBe(`label`);
         expect(isNotEqualTo.valid).toBeFalsy();
-        expect(isNotEqualTo.description).toEqual(`'3' is not equal to '5'`);
+        expect(isNotEqualTo.description).toEqual("Expected value to equal '5'. Received '3'");
     });
 
     it(`isEqualTo`, () => {
@@ -41,7 +41,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotGreaterThan.label).toBe(`label`);
         expect(isNotGreaterThan.valid).toBeFalsy();
-        expect(isNotGreaterThan.description).toEqual(`'3' is not greater than '3'`);
+        expect(isNotGreaterThan.description).toEqual("Expected value to be greater than '3'. Received '3'");
     });
 
     it(`isGreaterThan`, () => {
@@ -65,7 +65,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotGreaterThanOrEqual.label).toBe(`label`);
         expect(isNotGreaterThanOrEqual.valid).toBeFalsy();
-        expect(isNotGreaterThanOrEqual.description).toEqual(`'3' is not greater than or equal to '4'`);
+        expect(isNotGreaterThanOrEqual.description).toEqual("Expected value to be greater than or equal to '4'. Received '3'");
     });
 
     it(`isGreaterThanOrEqualTo`, () => {
@@ -89,7 +89,8 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotLessThan.label).toBe(`label`);
         expect(isNotLessThan.valid).toBeFalsy();
-        expect(isNotLessThan.description).toEqual(`'4' is not less than '3'`);
+        expect(isNotLessThan.description).toEqual(  "Expected value to be less than '3'. Received '4'"
+        );
     });
 
     it(`isLessThan`, () => {
@@ -113,7 +114,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotLessThanOrEqual.label).toBe(`label`);
         expect(isNotLessThanOrEqual.valid).toBeFalsy();
-        expect(isNotLessThanOrEqual.description).toEqual(`'5' is not less than or equal to '4'`);
+        expect(isNotLessThanOrEqual.description).toEqual("Expected value to be less than or equal to '4'. Received '5'");
     });
 
     it(`isLessThanOrEqualTo`, () => {
@@ -222,6 +223,30 @@ describe('Tester', () => {
         expect(isDefined.label).toBe(`label`);
         expect(isDefined.valid).toBeTruthy();
         expect(isDefined.description).toEqual(`'value' is defined`);
+    });
+
+    it(`isNotUndefined`, () => {
+        const tester: Tester = new Tester;
+
+        tester.isUndefined(`label`, 'value');
+        const isNotUndefined = tester.getReport()[0];
+
+        expect(tester.getReport().length).toBe(1);
+        expect(isNotUndefined.label).toBe(`label`);
+        expect(isNotUndefined.valid).toBeFalsy();
+        expect(isNotUndefined.description).toEqual(`'value' is not undefined`);
+    });
+
+    it(`isUndefined`, () => {
+        const tester: Tester = new Tester;
+
+        tester.isUndefined(`label`, undefined);
+        const isUndefined = tester.getReport()[0];
+
+        expect(tester.getReport().length).toBe(1);
+        expect(isUndefined.label).toBe(`label`);
+        expect(isUndefined.valid).toBeTruthy();
+        expect(isUndefined.description).toEqual(`'undefined' is undefined`);
     });
 
 });

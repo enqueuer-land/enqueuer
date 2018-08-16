@@ -1,0 +1,29 @@
+#Every subscription has its own properties. But they all have properties defined in /docs/subscriptions/subscription.yml
+
+#IPC protocol type. It has to be 'http-server' or 'https-server.
+type: http-client
+
+#Endpoint expecting to be hit
+endpoint: /endpoint/:paramName/something
+
+#TCP port to the server be running on
+port: 23075
+
+#Method expecting to be called
+method: GET
+
+#Mock value that will be sent as response when this subscription is hit
+response:
+  #Http status code
+  status: 200
+  #Response payload
+  ##It can be strings, numbers, boolean or even whole objects.
+  payload: responsePayload
+
+#Optional. Automatically verifies 'authorization' header value following authentication specification.
+#So additional tests will be added to the report depending on which authorization is being used
+authentication:
+  #'basic' is the only method currently supported
+  basic:
+    user: user
+    password: password

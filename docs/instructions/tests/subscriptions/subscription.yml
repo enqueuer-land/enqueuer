@@ -1,0 +1,27 @@
+#Every subscription has its own properties. But they all have these properties defined here.
+
+#Used to describe the subscription scenario
+name: subscription scenario
+
+#IPC protocol type. There are several accepted values: amqp, file, http-client, mqtt etc.
+#You can check them all in: /docs/tests/subscriptions folder.
+type: amqp
+
+#Optional. Sets in milliseconds how log the subscription has to wait before being considered as invalid.
+#Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
+timeout: 3000
+
+#Optional. Javascript code snippet executed as soon as the subscription is initialized.
+#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.txt) and store.
+onInit: |-
+  console.log('Hey');
+  tester.isEqualTo('test label', 2, 2);
+
+#Optional. Javascript code snippet executed the subscription receives the message it was expecting for.
+#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.txt), message and store.
+onMessageReceived: |-
+  const payload = JSON.parse(Buffer.from(message.payload.data).toString());
+  store.someLabe = 'anything';
+  tester.isEqualTo('Routing key', message.deliveryInfo.routingKey, 'expectedRoutingKey');
+  tester.isEqualTo('Payload name', payload.name, 'Virgs');
+  tester.isEqualTo('Payload type', payload.type, 'awesome');

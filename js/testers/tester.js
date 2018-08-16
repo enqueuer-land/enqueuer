@@ -12,7 +12,7 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `'${actual}' is not equal to '${expected}'`
+            description: `Expected value to equal '${expected}'. Received '${actual}'`
         };
         if (actual == expected) {
             result.valid = true;
@@ -24,7 +24,7 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `'${actual}' is not greater than '${expected}'`
+            description: `Expected value to be greater than '${expected}'. Received '${actual}'`
         };
         if (actual > expected) {
             result.valid = true;
@@ -36,7 +36,7 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `'${actual}' is not greater than or equal to '${expected}'`
+            description: `Expected value to be greater than or equal to '${expected}'. Received '${actual}'`
         };
         if (actual >= expected) {
             result.valid = true;
@@ -48,7 +48,7 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `'${actual}' is not less than '${expected}'`
+            description: `Expected value to be less than '${expected}'. Received '${actual}'`
         };
         if (actual < expected) {
             result.valid = true;
@@ -60,7 +60,7 @@ class Tester {
         let result = {
             label: label,
             valid: false,
-            description: `'${actual}' is not less than or equal to '${expected}'`
+            description: `Expected value to be less than or equal to '${expected}'. Received '${actual}'`
         };
         if (actual <= expected) {
             result.valid = true;
@@ -113,6 +113,18 @@ class Tester {
         if (!util_1.isUndefined(defined)) {
             result.valid = true;
             result.description = `'${defined}' is defined`;
+        }
+        this.report.push(result);
+    }
+    isUndefined(label, defined) {
+        let result = {
+            label: label,
+            valid: false,
+            description: `'${defined}' is not undefined`
+        };
+        if (util_1.isUndefined(defined)) {
+            result.valid = true;
+            result.description = `'${defined}' is undefined`;
         }
         this.report.push(result);
     }

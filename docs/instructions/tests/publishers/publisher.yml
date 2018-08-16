@@ -1,0 +1,18 @@
+#Every publisher has its own properties. But they all have these properties defined here.
+
+#Used to describe the publisher scenario
+name: publishing scenario
+
+#IPC protocol type. There are several accepted values: amqp, file, http-client, mqtt etc.
+#You can check them all in: /docs/tests/publishers folder.
+type: amqp
+
+#Optional. Javascript code snippet executed as soon as the publisher is initialized.
+#Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/assertions.txt) and store.
+onInit: |-
+  console.log('Hey');
+  tester.isEqualTo('test label', 2, 2);
+
+#Optional. The message itself that will be send through this IPC protocol.
+#It can be strings, numbers, boolean or even whole objects.
+payload: value

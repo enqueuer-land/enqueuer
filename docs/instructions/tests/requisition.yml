@@ -1,0 +1,26 @@
+#Used to describe your requisition scenario
+name: Valid card scenario
+
+#Optional. Sets in milliseconds how log the requisition has to wait before being considered as invalid.
+#Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
+timeout: 3000
+
+#Optional. Javascript code snippet executed as soon as the requisition is initialized.
+#Available objects are: requisition (/docs/instructions/tests/requisition.yml), tester (/docs/instructions/tests/assertions.txt) and store.
+onInit:
+
+#Defines what triggers this execution
+#Two values are mutually exclusive: publisher and subscription. At least one of them has to be defined.
+startEvent:
+
+  #This requisition acts proactively. Enqueuer triggers it by itself.
+  #Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
+  publisher:
+
+  #This requisition acts reactively.
+  #Enqueuer waits, as long as it's not longer than the timeout, to start listening to the subscriptions list defined.
+  subscription:
+
+#Subscriptions list that have to be attended in order to consider this requisition a valid one.
+#Every supported IPC protocol is available here and you can check their values in /docs/tests/subscriptions folder.
+subscriptions: []

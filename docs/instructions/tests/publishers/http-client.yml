@@ -1,0 +1,28 @@
+#Every publisher has its own properties. But they all have properties defined in /docs/publishers/publisher.yml
+
+#IPC protocol type. It has to be 'http-client' or 'https-client.
+type: http-client
+
+#Url to be hit
+url: http://localhost:23075/enqueuer/idStuff?query=123
+
+#Method that will be used
+method: POST
+
+#Optional. Headers to be defined in the requisition
+headers:
+  content-type: application/json
+
+#Optional. Automatically sets the 'authorization' header value following authentication specification.
+authentication:
+  #'basic' is the only method currently supported
+  basic:
+    user: user
+    password: password
+
+#Optional. Given that HTTP is a synchronous protocol, you have the possibility to run codes whenever a response is received.
+#Javascript code snippet executed as soon as the publisher receives a response.
+#Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/assertions.txt), message and store.
+onMessageReceived: |-
+  tester.isEqualTo('status code', JSON.parse(message).statusCode, 321);
+  tester.isEqualTo('body', JSON.parse(message).body, 'body');

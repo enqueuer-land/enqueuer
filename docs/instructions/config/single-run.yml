@@ -1,0 +1,54 @@
+#This file tells how enqueuer should be executed
+
+#execution mode
+#two modes are mutually exclusive:
+# single-run: executes a single time. This is the one that has to be used when your goal is to integrate your pipeline.
+#             It runs every file (/docs/tests/test.yml) listed in 'files' field or that matches 'fileNamePattern' value. One after the other.
+#             Once them all are ran, enqueuer ends its execution, compiles a summary and saves it in a file defined in 'reportName'.
+#             Also a status code is returned:
+#               0, if all runnables are valid; or
+#               1, if there is at least one invalid runnable.
+# daemon: it will run indefinitely. Endlessly. As a service.
+run-mode:
+  single-run:
+    #Used to describe your config test scenario
+    name: examples
+
+    #You can use 'fileNamePattern' along with 'files'. Depending whether the files execution order matters
+    #But at least on of them has to be used
+
+    #Optiona. File globbing to determine which test files will be executed
+    fileNamePattern: examples/*.{json,yaml}
+
+    #Optional. Use this if you want to explicitly set the files and the execution order
+    files:
+    - 1.yml
+    - 2.yml
+
+    #Optional. A single file with the whole execution report is generated. Every test of every input file will be there.
+    reportName: singleRunOutput.yml #outputExamples/singleRunOutput.json
+
+#Optional. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
+log-level: trace
+
+#Optional. A single file for each input is generated and every test of it will be there.
+#Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
+outputs:
+  -
+    type: file
+    filenamePrefix: outputExamples/
+    filenameExtension: yml #json
+
+#Optional
+store:
+  #Variables keys and its variable value
+  #Below, a 'tcpKey' key is defined with the value 'tcp value'.
+  #there are two ways of using it:
+  #   Non js code snippet: the easiest one is to type <<tcpKey>> where you want it to be replaced in a test file.
+  #   js code snippet: simply store.tcpKey. So, if you type console.log(store.tcpKey) you'l see 'tcp value' being printed out in the console.
+  tcpKey: "tcp value"
+  #We can have as many definitions as you want to. You can even define whole objects here:
+  object:
+    first: first value
+    second:
+      nested: thing
