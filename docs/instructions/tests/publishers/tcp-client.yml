@@ -1,0 +1,31 @@
+#Every publisher has its own properties. But they all have properties defined in /docs/publishers/publisher.yml
+
+#IPC protocol type. It has to be 'tcp-client'.
+type: tcp-client
+
+#TCP server address
+#Ignored/Optional if a 'loadStream' field is set
+serverAddress: 127.0.0.1
+
+#TCP server port
+#Ignored/Optional if a 'loadStream' field is set
+port: 23075
+
+#Optional. You know, once we open a socket stream sometime we want to keep it open to keep sending/receiving messages.
+#So, instead of opening it, you can load the same from a previous one saved with the same identifier in 'saveStream' field.
+#If this field is set, the fields 'serverAddress' and 'port' are ignored.
+loadStream: nameToIdentifyTheStream
+
+#Optional. You know, once we open a socket stream sometime we want to keep it open to keep sending/receiving messages.
+#So, instead of closing it, you can save it and open it later using the same identifier in 'loadStream' field.
+saveStream: nameToIdentifyTheStream
+
+#Optional. Sets in milliseconds how log after publishing it has to wait before ending the event.
+#No invalid test will exist if this timeout expires. Even because there will be always a timeout set.
+timeout: 3000
+
+#Optional. Given that TCP is a bidirectional protocol, you have the possibility to run codes whenever a response is received.
+#Javascript code snippet executed as soon as the publisher receives a response.
+#Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/tester.d.ts), message and store.
+onMessageReceived: |- #|- is a yml multiline value identifier
+  tester.isDefined('message', message);
