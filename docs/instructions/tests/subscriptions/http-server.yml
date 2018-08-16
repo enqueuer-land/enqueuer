@@ -6,10 +6,10 @@ type: http-client
 #Endpoint expecting to be hit
 endpoint: /endpoint/:paramName/something
 
-#TCP port to the server be running on
+#HTTP port to the server be running on
 port: 23075
 
-#Method expecting to be called
+#Method expecting to be called: POST, GET, PUT, PATCH, OPTION, DELETE etc...
 method: GET
 
 #Mock value that will be sent as response when this subscription is hit
@@ -23,7 +23,7 @@ response:
 #Optional. Automatically verifies 'authorization' header value following authentication specification.
 #So additional tests will be added to the report depending on which authorization is being used
 authentication:
-  #'basic' is the only method currently supported
+  #'basic' is the only authentication method currently supported
   basic:
     user: user
     password: password

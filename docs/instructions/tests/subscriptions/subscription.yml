@@ -13,7 +13,7 @@ timeout: 3000
 
 #Optional. Javascript code snippet executed as soon as the subscription is initialized.
 #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.txt) and store.
-onInit: |-
+onInit: |- #|- is a yml multiline value identifier
   console.log('Hey');
   tester.isEqualTo('test label', 2, 2);
 

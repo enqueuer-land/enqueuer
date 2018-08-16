@@ -6,7 +6,7 @@ type: http-client
 #Url to be hit
 url: http://localhost:23075/enqueuer/idStuff?query=123
 
-#Method that will be used
+#Http method that will be used: POST, GET, PUT, PATCH, OPTION, DELETE etc...
 method: POST
 
 #Optional. Headers to be defined in the requisition
@@ -15,7 +15,7 @@ headers:
 
 #Optional. Automatically sets the 'authorization' header value following authentication specification.
 authentication:
-  #'basic' is the only method currently supported
+  #'basic' is the only authentication method currently supported
   basic:
     user: user
     password: password
@@ -23,6 +23,6 @@ authentication:
 #Optional. Given that HTTP is a synchronous protocol, you have the possibility to run codes whenever a response is received.
 #Javascript code snippet executed as soon as the publisher receives a response.
 #Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/assertions.txt), message and store.
-onMessageReceived: |-
+onMessageReceived: |- #|- is a yml multiline value identifier
   tester.isEqualTo('status code', JSON.parse(message).statusCode, 321);
   tester.isEqualTo('body', JSON.parse(message).body, 'body');
