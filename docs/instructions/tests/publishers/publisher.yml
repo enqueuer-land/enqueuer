@@ -8,7 +8,7 @@ name: publishing scenario
 type: amqp
 
 #Optional. Javascript code snippet executed as soon as the publisher is initialized.
-#Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/assertions.txt) and store.
+#Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/tester.d.ts) and store.
 onInit: |- #|- is a yml multiline value identifier
   console.log('Hey');
   tester.isEqualTo('test label', 2, 2);
