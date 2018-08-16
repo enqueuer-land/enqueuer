@@ -29,4 +29,4 @@ To use **enqueuer**, you have to:
     ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-result.png "executing")
     
     
-Consider reading the ![instructions](https://github.com/lopidio/enqueuer/tree/develop/docs/instructions "instructions") for further details
+Consider reading the [instructions](https://github.com/lopidio/enqueuer/tree/develop/docs/instructions "instructions") for further details
