@@ -26,4 +26,4 @@ Para usar **enqueuer**, basta:
 4. executar:
     ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-result.png "example result")
         
-Para mais detalhes, considere dar uma olhada na ![wiki](https://github.com/lopidio/enqueuer/wiki "wiki").
+Para mais detalhes, considere dar uma olhada nas [instruções](https://github.com/lopidio/enqueuer/tree/develop/docs/instructions "instructions")
