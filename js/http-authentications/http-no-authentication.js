@@ -11,22 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const http_authentication_1 = require("./http-authentication");
-const logger_1 = require("../loggers/logger");
-let NoAuthentication = class NoAuthentication extends http_authentication_1.HttpAuthentication {
-    constructor() {
+let HttpNoAuthentication = class HttpNoAuthentication extends http_authentication_1.HttpAuthentication {
+    constructor(authentication) {
         super();
+        this.authentication = authentication;
     }
     generate() {
-        logger_1.Logger.warning('No authentication method was found to authenticate a HTTP requisition');
         return null;
     }
     verify(requisition) {
-        logger_1.Logger.warning('No authentication method was found to verify an HTTP authentication');
-        return [];
+        return [{
+                name: 'Http authentication',
+                description: `No supported http authentication method was found from: ${this.authentication}`,
+                valid: false
+            }];
     }
 };
-NoAuthentication = __decorate([
+HttpNoAuthentication = __decorate([
     conditional_injector_1.Injectable(),
-    __metadata("design:paramtypes", [])
-], NoAuthentication);
-exports.NoAuthentication = NoAuthentication;
+    __metadata("design:paramtypes", [Object])
+], HttpNoAuthentication);
+exports.HttpNoAuthentication = HttpNoAuthentication;

@@ -89,6 +89,8 @@ export class HttpClientPublisher extends Publisher {
             const authentication = authenticator.generate();
             if (authentication) {
                 this.headers = Object.assign(this.headers, authentication);
+            } else {
+                Logger.warning(`No http authentication method was generated from: ${this.authentication}`);
             }
         }
     }

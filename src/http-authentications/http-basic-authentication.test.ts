@@ -2,6 +2,19 @@ import {HttpBasicAuthentication} from './http-basic-authentication';
 
 describe('HttpBasicAuthentication', () => {
 
+    it('tests number', () => {
+        const authentication = {
+            basic: {
+                user: 'user',
+                password: 'password'
+            }
+        };
+        const authorization: HttpBasicAuthentication = new HttpBasicAuthentication(authentication);
+        const verify = authorization.verify('Basic dXNlcjpwYXNzd29yZA');
+
+        expect(verify.length).toBe(4);
+    });
+
     it('user:password', () => {
         const authentication = {
             basic: {

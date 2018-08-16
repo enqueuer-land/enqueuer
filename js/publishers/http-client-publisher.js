@@ -92,6 +92,9 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
             if (authentication) {
                 this.headers = Object.assign(this.headers, authentication);
             }
+            else {
+                logger_1.Logger.warning(`No http authentication method was generated from: ${this.authentication}`);
+            }
         }
     }
 };

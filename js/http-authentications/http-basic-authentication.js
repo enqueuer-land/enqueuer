@@ -15,6 +15,7 @@ const util_1 = require("util");
 let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authentication_1.HttpAuthentication {
     constructor(authentication) {
         super();
+        this.tests = [];
         this.user = authentication.basic.user;
         this.password = authentication.basic.password;
     }
@@ -22,23 +23,36 @@ let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authent
         return { 'authorization': 'Basic ' + Buffer.from(`${this.user}:${this.password}`, 'ascii').toString('base64') };
     }
     verify(authorization) {
+        this.tests = [];
         const plainAuth = new Buffer(authorization.split(' ')[1], 'base64').toString(); //decode
         const credentials = plainAuth.split(':');
-        let tests = [];
-        tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
-        tests.push(this.authenticateUser(credentials[0]));
-        tests.push(this.authenticatePassword(credentials[1]));
-        return tests;
+        this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
+        this.tests.push(this.authenticateUser(credentials[0]));
+        this.tests.push(this.authenticatePassword(credentials[1]));
+        this.tests.push(this.basicAuthentication());
+        return this.tests;
+    }
+    basicAuthentication() {
+        let test = {
+            name: '"Basic" authentication',
+            valid: false,
+            description: 'Fail to authenticate \'Basic\' authentication'
+        };
+        if (this.tests.every(test => test.valid)) {
+            test.valid = true;
+            test.description = `Basic authentication is valid`;
+        }
+        return test;
     }
     authenticatePrefix(prefix) {
         let test = {
             name: '"Basic" authentication prefix',
             valid: false,
-            description: 'Prefix "Basic" was not found in Basic authentication'
+            description: `Prefix "Basic" was not found in Basic authentication. Got ${prefix} instead`
         };
         if (prefix == 'Basic') {
             test.valid = true;
-            test.description = `Prefix "Basic" was not found. Got ${prefix} instead`;
+            test.description = `Prefix "Basic" was found.`;
         }
         return test;
     }
@@ -46,11 +60,11 @@ let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authent
         let test = {
             name: '"Basic" authentication user',
             valid: false,
-            description: 'Basic user was not found'
+            description: `User was not found. Got ${user} instead`
         };
         if (user == this.user) {
             test.valid = true;
-            test.description = `User was not found. Got ${user} instead`;
+            test.description = `User found`;
         }
         return test;
     }
@@ -58,11 +72,11 @@ let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authent
         let test = {
             name: '"Basic" authentication password',
             valid: false,
-            description: 'Basic password does not match'
+            description: `Password does not match. Got ${pass} instead`
         };
         if (pass == this.password) {
             test.valid = true;
-            test.description = `Password does not match. Got ${pass} instead`;
+            test.description = `Password matchs`;
         }
         return test;
     }

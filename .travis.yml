@@ -40,7 +40,8 @@ script:
   - npm run lint
   - npm run build
   - npm run unitTest
-  - npm link
   - npm run inceptionTest
+  - npm link
+  - npm run codeCoverage
   - npm run integrationTest
   - enqueuer --config-file enqueuer.yml --store zeroMqAddress=tcp://127.0.0.1:3000

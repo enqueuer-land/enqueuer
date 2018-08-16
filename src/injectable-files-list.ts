@@ -33,5 +33,5 @@ import './publishers/udp-publisher';
 import './reporters/start-event/start-event-subscription-reporter';
 import './reporters/start-event/start-event-null-reporter';
 import './reporters/start-event/start-event-publisher-reporter';
-import './http-authentications/no-authentication';
+import './http-authentications/http-no-authentication';
 import './http-authentications/http-basic-authentication';
