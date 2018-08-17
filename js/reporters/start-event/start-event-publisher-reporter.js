@@ -81,7 +81,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         if (!this.publisher.onMessageReceived || !this.publisher.messageReceived) {
             return;
         }
-        logger_1.Logger.trace(`Publisher received message: ${this.publisher.messageReceived.substr(0, 100)}`);
+        logger_1.Logger.trace(`Publisher received response`);
         const testExecutor = new tester_executor_1.TesterExecutor(this.publisher.onMessageReceived);
         testExecutor.addArgument('publisher', this.publisher);
         testExecutor.addArgument('message', this.publisher.messageReceived);

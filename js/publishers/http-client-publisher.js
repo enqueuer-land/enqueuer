@@ -29,25 +29,11 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
     publish() {
         return new Promise((resolve, reject) => {
             this.insertAuthentication();
-            let options = {
-                url: this.url,
-                method: this.method,
-                headers: this.headers
-            };
-            options.data = options.body = this.handleObjectPayload(options);
-            if (this.method.toUpperCase() != 'GET') {
-                options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
-            }
+            const options = this.createOptions();
             logger_1.Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request_1.default(options, (error, response) => {
-                if (response) {
-                    this.messageReceived = JSON.stringify(response);
-                    logger_1.Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}...`);
-                }
-                else {
-                    logger_1.Logger.warning(`No http requisition response`);
-                }
+                this.handleResponse(response);
                 if (error) {
                     reject('Http request error: ' + error);
                 }
@@ -56,6 +42,27 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
                 }
             });
         });
+    }
+    handleResponse(response) {
+        if (response) {
+            this.messageReceived = response;
+            logger_1.Logger.trace(`Http requisition response: ${JSON.stringify(response)}`.substr(0, 128));
+        }
+        else {
+            logger_1.Logger.warning(`No http requisition response`);
+        }
+    }
+    createOptions() {
+        let options = {
+            url: this.url,
+            method: this.method,
+            headers: this.headers
+        };
+        options.data = options.body = this.handleObjectPayload(options);
+        if (this.method.toUpperCase() != 'GET') {
+            options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
+        }
+        return options;
     }
     setContentLength(value) {
         if (Buffer.isBuffer(value)) {
@@ -69,8 +76,8 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
         let result = Object.assign({}, options);
         if (this.method.toUpperCase() != 'GET') {
             try {
-                const isObject = typeof JSON.parse(this.payload) === 'object';
-                if (isObject) {
+                const parsedPayload = JSON.parse(this.payload);
+                if (typeof parsedPayload === 'object') {
                     logger_1.Logger.trace(`Http payload is an object: ${this.payload}`);
                     result.json = true;
                 }

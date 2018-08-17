@@ -24,12 +24,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            const consumer = new kafka_node_1.Consumer(this.client, [{
-                    topic: this.options.topic,
-                    offset: this.latestOffset
-                }], {
-                fromOffset: true
-            });
+            const consumer = this.createConsumer();
             consumer.on('message', (message) => {
                 logger_1.Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
                 resolve(message.value);
@@ -73,6 +68,14 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
     }
     unsubscribe() {
         this.client.close();
+    }
+    createConsumer() {
+        return new kafka_node_1.Consumer(this.client, [{
+                topic: this.options.topic,
+                offset: this.latestOffset
+            }], {
+            fromOffset: true
+        });
     }
 };
 KafkaSubscription = __decorate([

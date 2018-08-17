@@ -24,26 +24,12 @@ export class HttpClientPublisher extends Publisher {
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.insertAuthentication();
-            let options: any = {
-                url: this.url,
-                method: this.method,
-                headers: this.headers
-            };
-            options.data = options.body = this.handleObjectPayload(options);
-            if (this.method.toUpperCase() != 'GET') {
-                options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
-            }
+            const options = this.createOptions();
             Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request(options,
                 (error: any, response: any) => {
-                    if (response) {
-                        this.messageReceived = JSON.stringify(response);
-                        Logger.trace(`Http requisition response: ${JSON.stringify(response).substr(0, 128)}...`);
-                    } else {
-                        Logger.warning(`No http requisition response`);
-                    }
-
+                    this.handleResponse(response);
                     if (error) {
                         reject('Http request error: '  + error);
                     } else {
@@ -52,6 +38,28 @@ export class HttpClientPublisher extends Publisher {
                 });
         });
 
+    }
+
+    private handleResponse(response: any) {
+        if (response) {
+            this.messageReceived = response;
+            Logger.trace(`Http requisition response: ${JSON.stringify(response)}`.substr(0, 128));
+        } else {
+            Logger.warning(`No http requisition response`);
+        }
+    }
+
+    private createOptions() {
+        let options: any = {
+            url: this.url,
+            method: this.method,
+            headers: this.headers
+        };
+        options.data = options.body = this.handleObjectPayload(options);
+        if (this.method.toUpperCase() != 'GET') {
+            options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
+        }
+        return options;
     }
 
     private setContentLength(value: string): number {
@@ -66,8 +74,8 @@ export class HttpClientPublisher extends Publisher {
         let result: any = Object.assign({}, options);
         if (this.method.toUpperCase() != 'GET') {
             try {
-                const isObject = typeof JSON.parse(this.payload) === 'object';
-                if (isObject) {
+                const parsedPayload = JSON.parse(this.payload);
+                if (typeof parsedPayload === 'object') {
                     Logger.trace(`Http payload is an object: ${this.payload}`);
                     result.json = true;
                 }

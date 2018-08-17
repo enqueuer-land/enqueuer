@@ -55,11 +55,11 @@ class HttpServerPool {
         }
     }
     closeHttpsServer() {
-        --this.http.counter;
-        if (this.http.counter == 0) {
-            logger_1.Logger.debug('Closing http server');
-            this.http.server.close();
-            this.http.server = null;
+        --this.https.counter;
+        if (this.https.counter == 0) {
+            logger_1.Logger.debug('Closing https server');
+            this.https.server.close();
+            this.https.server = null;
             this.finalizeExpress();
         }
     }

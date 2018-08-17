@@ -14,8 +14,8 @@ runnables:
       onInit: >-
         publisher.method = 'POST';
       onMessageReceived: >-
-        tester.isEqualTo('Status code', JSON.parse(message).statusCode, 200);
-        tester.isEqualTo('Replaced payload', JSON.parse(message).body, 'idHttps');
+        tester.isEqualTo('Status code', message.statusCode, 200);
+        tester.isEqualTo('Replaced payload', message.body, 'idHttps');
       payload:
         https: works!
       headers:

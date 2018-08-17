@@ -74,7 +74,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
         if (!this.publisher.onMessageReceived || !this.publisher.messageReceived) {
             return;
         }
-        Logger.trace(`Publisher received message: ${this.publisher.messageReceived.substr(0, 100)}`);
+        Logger.trace(`Publisher received response`);
 
         const testExecutor = new TesterExecutor(this.publisher.onMessageReceived);
         testExecutor.addArgument('publisher', this.publisher);

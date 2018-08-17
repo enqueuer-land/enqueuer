@@ -24,18 +24,7 @@ export class KafkaSubscription extends Subscription {
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
-
-            const consumer = new Consumer(
-                this.client,
-                [{
-                    topic: this.options.topic,
-                    offset: this.latestOffset
-                }],
-                {
-                    fromOffset: true
-                }
-            );
-
+            const consumer = this.createConsumer();
             consumer.on('message', (message: Message) => {
                 Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
                 resolve(message.value);
@@ -82,4 +71,18 @@ export class KafkaSubscription extends Subscription {
     public unsubscribe() {
         this.client.close();
     }
+
+    private createConsumer() {
+        return new Consumer(
+            this.client,
+            [{
+                topic: this.options.topic,
+                offset: this.latestOffset
+            }],
+            {
+                fromOffset: true
+            }
+        );
+    }
+
 }
