@@ -3,7 +3,6 @@ import {RequisitionModel} from './requisition-model';
 export interface RunnableModel {
     id: string;
     name: string;
-    runnableVersion: string;
-    initialDelay?: number;
+    delay?: number;
     runnables: (RunnableModel | RequisitionModel)[];
 }

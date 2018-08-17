@@ -13,16 +13,6 @@
     "id": {
       "type": "string"
     },
-    "initialDelay": {
-      "type": ["integer", "string"],
-      "title": "Initial delay",
-      "examples": [
-        100
-      ]
-    },
-    "runnableVersion": {
-      "const": "01.00.00"
-    },
     "runnables": {
       "type": "array",
       "minItems": 1,
@@ -37,9 +27,8 @@
     "additionalProperties": false
   },
   "required": [
-    "runnableVersion",
     "name",
     "runnables"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

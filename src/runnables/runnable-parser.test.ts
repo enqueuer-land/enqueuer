@@ -1,97 +1,91 @@
 import {RunnableParser} from "./runnable-parser";
 
 const validRunnable = {
-        runnableVersion: "01.00.00",
-        name: "name",
-        initialDelay: 10,
-        runnables: [
-            {
-                timeout: 3000,
-                name: "name",
-                subscriptions: [
-                    {
-                        name: "name",
-                        type: "uds",
-                        path: "/tmp/unix.sock",
-                        timeout: 500
-                    }
-                ],
-                startEvent: {
-                    publisher: {
-                        name: "name",
-                        type: "uds",
-                        path: "/tmp/unix.sock",
-                        payload: "{{sessionKey}}"
-                    }
+    sion: "01.00.00",
+    name: "name",
+    runnables: [
+        {
+            timeout: 3000,
+            name: "name",
+            subscriptions: [
+                {
+                    name: "name",
+                    type: "uds",
+                    path: "/tmp/unix.sock",
+                    timeout: 500
                 }
-            },
-            {
-                runnableVersion: "01.00.00",
-                name: "name",
-                initialDelay: 3000,
-                runnables: [
-                    {
-                        runnableVersion: "01.00.00",
-                        name: "name",
-                        initialDelay: 10,
-                        runnables: [
-                            {
-                                timeout: 3000,
-                                name: "name",
-                                subscriptions: [
-                                    {
-                                        name: "name",
-                                        type: "uds",
-                                        path: "/tmp/unix.sock",
-                                        timeout: 500
-                                    }
-                                ],
-                                startEvent: {
-                                    publisher: {
-                                        name: "name",
-                                        type: "uds",
-                                        path: "/tmp/unix.sock",
-                                        payload: "{{sessionKey}}"
-                                    }
+            ],
+            startEvent: {
+                publisher: {
+                    name: "name",
+                    type: "uds",
+                    path: "/tmp/unix.sock",
+                    payload: "{{sessionKey}}"
+                }
+            }
+        },
+        {
+            sion: "01.00.00",
+            name: "name",
+            runnables: [
+                {
+                    sion: "01.00.00",
+                    name: "name",
+                    runnables: [
+                        {
+                            timeout: 3000,
+                            name: "name",
+                            subscriptions: [
+                                {
+                                    name: "name",
+                                    type: "uds",
+                                    path: "/tmp/unix.sock",
+                                    timeout: 500
                                 }
-                            },
-                            {
-                                runnableVersion: "01.00.00",
-                                name: "name",
-                                initialDelay: 3000,
-                                runnables: [
-                                    {
-                                        timeout: 3000,
-                                        name: "name",
-                                        subscriptions: [
-                                            {
-                                                name: "name",
-                                                type: "uds",
-                                                path: "/tmp/unix.sock",
-                                                timeout: 500
-                                            }
-                                        ],
-                                        startEvent: {
-                                            publisher: {
-                                                name: "name",
-                                                type: "uds",
-                                                path: "/tmp/unix.sock",
-                                                payload: "{{sessionKey}}"
-                                            }
+                            ],
+                            startEvent: {
+                                publisher: {
+                                    name: "name",
+                                    type: "uds",
+                                    path: "/tmp/unix.sock",
+                                    payload: "{{sessionKey}}"
+                                }
+                            }
+                        },
+                        {
+                            sion: "01.00.00",
+                            name: "name",
+                            runnables: [
+                                {
+                                    timeout: 3000,
+                                    name: "name",
+                                    subscriptions: [
+                                        {
+                                            name: "name",
+                                            type: "uds",
+                                            path: "/tmp/unix.sock",
+                                            timeout: 500
+                                        }
+                                    ],
+                                    startEvent: {
+                                        publisher: {
+                                            name: "name",
+                                            type: "uds",
+                                            path: "/tmp/unix.sock",
+                                            payload: "{{sessionKey}}"
                                         }
                                     }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    };
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
 const validFileRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableFile",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -119,9 +113,7 @@ const validFileRunnable = {
     ]
 };
 const validAmqpRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableAmqp",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -159,9 +151,7 @@ const validAmqpRunnable = {
     ]
 };
 const validUdsRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableUDSName",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -187,9 +177,7 @@ const validUdsRunnable = {
     ]
 };
 const validTcpRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableTcpName",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -216,9 +204,8 @@ const validTcpRunnable = {
     ]
 };
 const validTcpPersistingStuff = {
-    "runnableVersion": "01.00.00",
     "name": "runnableTcpName",
-    "initialDelay": 0,
+    "delay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -245,9 +232,8 @@ const validTcpPersistingStuff = {
     ]
 };
 const validUdpRunnable = {
-    "runnableVersion": "01.00.00",
+
     "name": "runnableUdpName",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -274,9 +260,7 @@ const validUdpRunnable = {
     ]
 };
 const validHttpRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableHttp",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 30000,
@@ -313,9 +297,7 @@ const validHttpRunnable = {
     ]
 };
 const validHttpsRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableHttp",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 30000,
@@ -352,9 +334,7 @@ const validHttpsRunnable = {
     ]
 };
 const validSqsRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableSqs",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 30000,
@@ -392,9 +372,7 @@ const validSqsRunnable = {
     ]
 };
 const validMqttRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableMqtt",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -428,7 +406,6 @@ const validMqttRunnable = {
     ]
 };
 const validZeroMqRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnable0Mq",
     "runnables": [
         {
@@ -456,7 +433,6 @@ const validZeroMqRunnable = {
     ]
 };
 const validStompRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "runnableStomp",
     "runnables": [
         {
@@ -489,7 +465,6 @@ const validStompRunnable = {
     ]
 };
 const validKafkaRunnable = {
-    "runnableVersion": "01.00.00",
     "name": "kafkaName",
     "id": "kafka",
     "runnables": [
@@ -523,10 +498,8 @@ const validKafkaRunnable = {
     ]
 };
 const validRunnableWithId = {
-    "runnableVersion": "01.00.00",
     "name": "runnableFile",
     "id": "virgulation",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,
@@ -554,10 +527,8 @@ const validRunnableWithId = {
     ]
 };
 const validRunnableWithNoSubscriptions = {
-    "runnableVersion": "01.00.00",
     "name": "runnableFile",
     "id": "virgulation",
-    "initialDelay": 0,
     "runnables": [
         {
             "timeout": 3000,

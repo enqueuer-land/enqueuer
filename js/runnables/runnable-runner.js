@@ -40,7 +40,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
                 }))
                     .then(() => resolve(this.report));
             })
-                .start(this.runnableModel.initialDelay || 0);
+                .start(this.runnableModel.delay || 0);
         });
     }
 };

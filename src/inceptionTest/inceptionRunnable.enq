@@ -1,7 +1,5 @@
 {
-  "runnableVersion": "01.00.00",
   "name": "outterRunnableUds",
-  "initialDelay": 0,
   "runnables": [
     {
       "timeout": 5000,
@@ -21,9 +19,7 @@
           "name": "runnableUdsPublisher",
           "path": "/tmp/inUnix.sock",
           "payload": {
-            "runnableVersion": "01.00.00",
             "name": "runnableUds",
-            "initialDelay": 0,
             "runnables": [
               {
                 "name": "innerRunnableUds",
