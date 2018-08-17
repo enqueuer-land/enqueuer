@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
-}
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");

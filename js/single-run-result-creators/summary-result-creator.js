@@ -1,7 +1,7 @@
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
-}
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const result_creator_1 = require("./result-creator");
 const chalk_1 = __importDefault(require("chalk"));

@@ -2,7 +2,7 @@
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
-}
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_starter_1 = require("./enqueuer-starter");
 const configuration_1 = require("./configurations/configuration");
@@ -35,5 +35,6 @@ if (logLevel) {
 }
 new enqueuer_starter_1.EnqueuerStarter()
     .start()
+    // .then(statusCode => process.exitCode = statusCode);
     .then(statusCode => process.exit(statusCode))
     .catch(console.log.bind(console));
