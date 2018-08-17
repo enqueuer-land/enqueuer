@@ -55,7 +55,7 @@ export class HttpClientPublisher extends Publisher {
             method: this.method,
             headers: this.headers
         };
-        options.data = options.body = this.handleObjectPayload(options);
+        options.data = options.body = this.handleObjectPayload();
         if (this.method.toUpperCase() != 'GET') {
             options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
         }
@@ -70,24 +70,24 @@ export class HttpClientPublisher extends Publisher {
         }
     }
 
-    private handleObjectPayload(options: any): string {
-        let result: any = Object.assign({}, options);
-        if (this.method.toUpperCase() != 'GET') {
-            try {
-                const parsedPayload = JSON.parse(this.payload);
-                if (typeof parsedPayload === 'object') {
-                    Logger.trace(`Http payload is an object: ${this.payload}`);
-                    result.json = true;
-                }
-                return this.payload;
-            }
-            catch (exc) {
-                //do nothing
-            }
-            if (typeof(this.payload) != 'string') {
-                this.payload = JSON.stringify(this.payload);
-            }
+    private handleObjectPayload(): string {
+        if (this.method.toUpperCase() == 'GET') {
+            return this.payload;
         }
+        try {
+            const parsedPayload = JSON.parse(this.payload);
+            if (typeof parsedPayload === 'object') {
+                Logger.trace(`Http payload is an object: ${this.payload}`);
+            }
+            return this.payload;
+        }
+        catch (exc) {
+            //do nothing
+        }
+        if (typeof(this.payload) != 'string') {
+            this.payload = JSON.stringify(this.payload);
+        }
+
         return this.payload;
     }
 
