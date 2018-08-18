@@ -8,14 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -29,6 +21,7 @@ const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
 const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
+const store_1 = require("../testers/store");
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -36,39 +29,35 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
+        this.loadStream = subscriptionAttributes.loadStream;
+        this.saveStream = subscriptionAttributes.saveStream;
     }
     receiveMessage() {
-        return new Promise((resolve, reject) => {
-            this.server.on('connection', (stream) => {
-                this.stream = stream;
-                this.stream.once('end', () => {
-                    logger_1.Logger.debug(`Uds server detected stream's end`);
-                    reject();
-                });
-                this.stream.on('data', (msg) => {
-                    if (!this.response) {
-                        this.stream.end();
-                    }
-                    resolve(msg);
-                });
-            });
-        });
-    }
-    sendResponse() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => {
             if (this.stream) {
-                logger_1.Logger.debug(`Uds server sending response`);
-                this.stream.write(this.response);
-                this.stream.end();
-                this.stream = null;
+                this.waitForData(resolve);
             }
             else {
-                logger_1.Logger.warning(`No uds response was sent because uds stream is null`);
+                this.server.on('connection', (stream) => {
+                    this.server.close();
+                    this.server = null;
+                    this.stream = stream;
+                    this.waitForData(resolve);
+                });
             }
         });
     }
     subscribe() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+            if (this.loadStream) {
+                logger_1.Logger.debug(`Server is trying to reuse uds stream: ${this.loadStream}`);
+                this.stream = store_1.Store.getData()[this.loadStream];
+                if (!this.stream) {
+                    reject(`No uds stream able for being reused`);
+                }
+                resolve();
+                return;
+            }
             fs.unlink(this.path, () => {
                 this.server = net.createServer()
                     .listen(this.path, () => {
@@ -77,12 +66,53 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
             });
         });
     }
-    unsubscribe() {
-        if (this.stream) {
-            this.stream.end();
-            this.stream = null;
+    waitForData(resolve) {
+        this.stream.once('end', () => {
+            logger_1.Logger.debug(`Uds server detected stream's end`);
+            this.persistStream();
+            resolve();
+            return;
+        });
+        this.stream.on('data', (msg) => {
+            logger_1.Logger.debug(`Uds server got data`);
+            if (!this.response) {
+                this.persistStream();
+            }
+            resolve(msg);
+        });
+    }
+    sendResponse() {
+        return new Promise((resolve, reject) => {
+            if (this.stream) {
+                logger_1.Logger.debug(`Uds server sending response`);
+                this.stream.write(this.response, () => {
+                    logger_1.Logger.debug(`Uds server response sent`);
+                    this.persistStream();
+                    resolve();
+                });
+            }
+            else {
+                const message = `No uds response was sent because uds stream is null`;
+                logger_1.Logger.warning(message);
+                reject(message);
+            }
+        });
+    }
+    persistStream() {
+        if (this.saveStream) {
+            this.stream.removeAllListeners('data');
+            this.stream.removeAllListeners('connect');
+            this.stream.removeAllListeners('error');
+            this.stream.removeAllListeners('end');
+            logger_1.Logger.debug(`Uds server saving stream: ${this.saveStream}`);
+            store_1.Store.getData()[this.saveStream] = this.stream;
         }
-        this.server.close();
+        else {
+            if (this.stream) {
+                this.stream.end();
+                this.stream = null;
+            }
+        }
     }
 };
 UdsSubscription = __decorate([

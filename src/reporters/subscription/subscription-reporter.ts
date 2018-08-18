@@ -79,7 +79,7 @@ export class SubscriptionReporter {
             this.subscription.receiveMessage()
                 .then((message: any) => {
                     Logger.debug(`${this.subscription.name} received its message`);
-                    if (!isNullOrUndefined(message)) {
+                    if (message !== null || message !== undefined) {
                         this.handleMessageArrival(message)
                             .then(() => Logger.debug(`${this.subscription.name} handled message arrival`))
                             .then(() => resolve(message));

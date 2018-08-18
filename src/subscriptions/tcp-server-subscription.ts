@@ -12,14 +12,14 @@ export class TcpServerSubscription extends Subscription {
     private port: number;
     private saveStream?: string;
     private loadStreamName: string;
-    private greetingResponse: string;
+    private greeting: string;
     private stream?: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
         this.saveStream = subscriptionAttributes.saveStream;
-        this.greetingResponse = subscriptionAttributes.greetingResponse;
+        this.greeting = subscriptionAttributes.greeting;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
@@ -36,12 +36,8 @@ export class TcpServerSubscription extends Subscription {
             } else {
                 this.server.once('connection', (stream: any) => {
                     this.stream = stream;
-                    if (this.greetingResponse) {
-                        Logger.debug(`Tcp server sending greeting message`);
-                        this.stream.write(this.greetingResponse);
-                    }
+                    this.sendGreeting();
                     this.waitForData(reject, resolve);
-
                     this.server.close();
                     this.server = null;
                 });
@@ -76,6 +72,13 @@ export class TcpServerSubscription extends Subscription {
                 });
             }
         });
+    }
+
+    private sendGreeting() {
+        if (this.greeting) {
+            Logger.debug(`Tcp server sending greeting message`);
+            this.stream.write(this.greeting);
+        }
     }
 
     private loadStream() {

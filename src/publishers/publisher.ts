@@ -6,7 +6,7 @@ export abstract class Publisher {
     public name: string;
     public onMessageReceived?: string;
     public onInit?: string;
-    public messageReceived?: string;
+    public messageReceived?: any;
 
     public constructor(publisherAttributes: PublisherModel) {
         this.type = publisherAttributes.type;

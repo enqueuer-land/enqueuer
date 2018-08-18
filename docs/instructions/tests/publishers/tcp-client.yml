@@ -11,13 +11,13 @@ serverAddress: 127.0.0.1
 #Ignored/Optional if a 'loadStream' field is set
 port: 23075
 
-#Optional. You know, once we open a socket stream sometime we want to keep it open to keep sending/receiving messages.
-#So, instead of opening it, you can load the same from a previous one saved with the same identifier in 'saveStream' field.
+#Optional. You know, once we open a socket stream sometimes we want to keep it open to keep sending/receiving messages.
+#So, instead of opening it again, you can load the same from a previous one saved with the same identifier set in 'saveStream' field.
 #If this field is set, the fields 'serverAddress' and 'port' are ignored.
 loadStream: nameToIdentifyTheStream
 
-#Optional. You know, once we open a socket stream sometime we want to keep it open to keep sending/receiving messages.
-#So, instead of closing it, you can save it and open it later using the same identifier in 'loadStream' field.
+#Optional. You know, once we open a socket stream sometimes we want to keep it open to keep sending/receiving messages.
+#So, instead of closing it again, you can save it and open it later using the same identifier set in 'loadStream' field.
 saveStream: nameToIdentifyTheStream
 
 #Defaults to 0. Sets in milliseconds how log after publishing it has to wait before ending the event.

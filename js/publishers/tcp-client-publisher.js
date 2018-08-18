@@ -20,7 +20,6 @@ const publisher_1 = require("./publisher");
 const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
-const util_1 = require("util");
 const store_1 = require("../testers/store");
 let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
@@ -73,10 +72,12 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         })
             .on('data', (msg) => {
             logger_1.Logger.debug(`Tcp client got data '${msg.toString()}'`);
-            if (util_1.isNullOrUndefined(this.messageReceived)) {
-                this.messageReceived = '';
+            if (this.messageReceived === null || this.messageReceived === undefined) {
+                this.messageReceived = msg;
             }
-            this.messageReceived += msg.toString();
+            else {
+                this.messageReceived += msg;
+            }
         });
         this.write(stream);
     }

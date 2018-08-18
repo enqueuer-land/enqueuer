@@ -1,0 +1,36 @@
+name: outterRunnableUds
+runnables:
+- name: runnableUds
+  timeout: 5000
+  startEvent:
+    publisher:
+      type: replaced
+      onInit: publisher.type='uds';
+      name: runnableUdsPublisher
+      path: /tmp/inUnix.sock
+      payload:
+
+        #inner runnable
+
+        name: runnableUds
+        runnables:
+        - name: innerRunnableUds
+          startEvent:
+            publisher:
+              name: runnablePubsUds
+              type: uds
+              path: "/tmp/loopUnix.sock"
+              payload: 100
+          subscriptions:
+          - type: uds
+            name: runnableSubsUds
+            path: "/tmp/loopUnix.sock"
+            onMessageReceived: |-
+              tester.isEqualTo('Works', message, '100');
+  subscriptions:
+  - type: uds
+    name: subscriptionUds
+    path: /tmp/outUnix.sock
+    onMessageReceived: |-
+      tester.isDefined('Test label', message);
+    timeout: 5000

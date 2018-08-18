@@ -26,7 +26,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
         this.saveStream = subscriptionAttributes.saveStream;
-        this.greetingResponse = subscriptionAttributes.greetingResponse;
+        this.greeting = subscriptionAttributes.greeting;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
@@ -43,10 +43,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             else {
                 this.server.once('connection', (stream) => {
                     this.stream = stream;
-                    if (this.greetingResponse) {
-                        logger_1.Logger.debug(`Tcp server sending greeting message`);
-                        this.stream.write(this.greetingResponse);
-                    }
+                    this.sendGreeting();
                     this.waitForData(reject, resolve);
                     this.server.close();
                     this.server = null;
@@ -78,6 +75,12 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
                 });
             }
         });
+    }
+    sendGreeting() {
+        if (this.greeting) {
+            logger_1.Logger.debug(`Tcp server sending greeting message`);
+            this.stream.write(this.greeting);
+        }
     }
     loadStream() {
         logger_1.Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);

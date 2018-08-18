@@ -63,7 +63,7 @@ export class RequisitionReporter {
             .catch(err => {
                 const message = `Error receiving message in multiSubscription: ${err}`;
                 Logger.error(message);
-                this.onFinish({valid: false, description: err, name: 'Subscriptions message received'});
+                this.onFinish({valid: false, description: err, name: 'Subscriptions message receiving'});
             });
         Logger.debug('Triggering start event');
         this.startEvent.start()
@@ -95,7 +95,11 @@ export class RequisitionReporter {
     }
 
     private tryToFinishExecution() {
-        Logger.info(`Trying to finish requisition execution`);
+        if (!this.startEventDoneItsJob) {
+            Logger.info(`Waiting for start event to finish requisition execution`);
+        } else {
+            Logger.info(`Waiting for all subscriptions receive their messages to finish requisition execution`);
+        }
         if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
             this.onFinish();
         }

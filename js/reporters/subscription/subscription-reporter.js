@@ -14,7 +14,6 @@ const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
-const util_1 = require("util");
 const tester_executor_1 = require("../../testers/tester-executor");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
@@ -81,7 +80,7 @@ class SubscriptionReporter {
                 this.subscription.receiveMessage()
                     .then((message) => {
                     logger_1.Logger.debug(`${this.subscription.name} received its message`);
-                    if (!util_1.isNullOrUndefined(message)) {
+                    if (message !== null || message !== undefined) {
                         this.handleMessageArrival(message)
                             .then(() => logger_1.Logger.debug(`${this.subscription.name} handled message arrival`))
                             .then(() => resolve(message));

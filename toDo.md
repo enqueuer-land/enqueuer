@@ -27,10 +27,6 @@ One of:
 - Basic Unix tools required for some tests, Git for Windows includes Git Bash and tools which can be included in the global PATH.
 - To build, launch a git shell (e.g. Cmd or PowerShell), run vcbuild.bat (to build with VS2017 you need to explicitly add a vs2017 argument), which will checkout the GYP code into build/gyp, generate uv.sln as well as the necesery related project files, and start building.
 
-
-Check greetings tcp
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
-Runnable injectable by version
-uds to keep opened streams
 Yaml files explaining input values

@@ -38,7 +38,7 @@ runnables:
     port: 23070
     name: tcpSubscription1
     saveStream: tcpSubscriptionSocket
-    greetingResponse: Enqueuer
+    greeting: Enqueuer
     response: Rocks
     onMessageReceived: tester.isEqualTo('I care', message.toString(), 'I do not care');
     timeout: 200

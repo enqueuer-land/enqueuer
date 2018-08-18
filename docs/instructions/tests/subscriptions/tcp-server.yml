@@ -7,19 +7,17 @@ type: tcp-server
 #Ignored/Optional if a 'loadStream' field is set
 port: 23075
 
-#Optional. You know, once we open a socket stream sometime we want to keep it open to keep sending/receiving messages.
-#So, instead of opening it, you can load the same from a previous one saved with the same identifier in 'saveStream' field.
+#Optional. You know, once we open a socket stream sometimes we want to keep it open to keep sending/receiving messages.
+#So, instead of opening it, you can load the same from a previous one saved with the same identifier set in 'saveStream' field.
 #If this field is set, the field 'port' is ignored.
 loadStream: nameToIdentifyTheStream
 
-#Optional. You know, once we open a socket stream sometime we want to keep it open to keep sending/receiving messages.
-#So, instead of closing it, you can save it and open it later using the same identifier in 'loadStream' field.
+#Optional. You know, once we open a socket stream sometimes we want to keep it open to keep sending/receiving messages.
+#So, instead of closing it, you can save it and open it later using the same identifier set in 'loadStream' field.
 saveStream: nameToIdentifyTheStream
 
-#Optional. Mock value that will be sent as response when this subscription is hit
-#If 'greetingResponse' is set 'response' field will be ignored
+#Optional. Mock value that will be sent as response when this subscription receives a message
 response: someValueHere
 
 #Optional. Mock value that will be sent as soon as the tcp server got a connection
-#If it's set 'response' field will be ignored
-greetingResponse: string;
+greeting: Ahoy;

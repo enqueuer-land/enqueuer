@@ -69,10 +69,11 @@ export class TcpClientPublisher extends Publisher {
         })
         .on('data', (msg: Buffer) => {
             Logger.debug(`Tcp client got data '${msg.toString()}'`);
-            if (isNullOrUndefined(this.messageReceived)) {
-                this.messageReceived = '';
+            if (this.messageReceived === null || this.messageReceived === undefined) {
+                this.messageReceived = msg;
+            } else {
+                this.messageReceived += msg;
             }
-            this.messageReceived += msg.toString();
         });
         this.write(stream);
     }

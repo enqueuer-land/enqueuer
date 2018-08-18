@@ -6,7 +6,7 @@ runnables:
   runnables:
   - name: incrementer
     onInit: >-
-      store.iteration = (store.iteration + 1) || 1;
+      store.iteration = (store.iteration + 1) || 0;
       store.lastExecution = new Date().getTime();
     startEvent:
       publisher:
@@ -21,7 +21,7 @@ runnables:
   runnables:
   - name: checker
     onInit: >-
-      tester.isEqualTo('It was executed 10 times', store.iteration, 10);
+      tester.isEqualTo('It was executed 10 times', store.iteration, 9);
       const delayedTime = new Date().getTime() - store.lastExecution;
       tester.isGreaterThan('It delayed for at least ~3 seconds', delayedTime, 3000);
       tester.isLessThan('It delayed for no more than ~3 seconds', delayedTime - 500, 3000);

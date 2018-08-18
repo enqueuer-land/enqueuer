@@ -43,7 +43,7 @@ describe('Inception test', () => {
     it('should run enqueuer to test another enqueuer process', done => {
         jest.setTimeout(10000);
         beingTested = child_process_1.spawn('nqr', ['--config-file', 'src/inceptionTest/beingTested.yml']);
-        // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
+        beingTested.stdout.on('data', (data) => console.log('beingTested: ' + data));
         sleep(500);
         tester = child_process_1.spawn('enqueuer', ['--config-file', 'src/inceptionTest/tester.yml']);
         // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
@@ -56,12 +56,10 @@ describe('Inception test', () => {
         const innerTest = testerReports[0];
         expect(innerTest.valid).toBeTruthy();
         const innerReport = innerTest.runnables[0];
-        expect(findTest('No time out', innerReport.tests)).toBeTruthy();
         expect(innerReport.name).toBe('innerRunnableUds');
         expect(innerReport.subscriptions[0].valid).toBeTruthy();
         expect(findTest('Works', innerReport.subscriptions[0].tests)).toBeTruthy();
         expect(findTest('Message received', innerReport.subscriptions[0].tests)).toBeTruthy();
-        expect(findTest('No time out', innerReport.subscriptions[0].tests)).toBeTruthy();
         expect(innerReport.startEvent.publisher).toBeDefined();
         if (innerReport.startEvent.publisher) {
             expect(innerReport.startEvent.publisher.valid).toBeTruthy();
@@ -87,7 +85,7 @@ describe('Inception test', () => {
     });
     let killThemAll = () => {
         beingTested.kill('SIGINT');
-        tester.kill('SIGINT');
+        // tester.kill('SIGINT');
     };
     afterAll(() => {
         killThemAll();
