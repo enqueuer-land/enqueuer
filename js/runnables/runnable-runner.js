@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const runner_1 = require("./runner");
 const timeout_1 = require("../timers/timeout");
+const logger_1 = require("../loggers/logger");
 let RunnableRunner = class RunnableRunner extends runner_1.Runner {
     constructor(runnableModel) {
         super();
@@ -25,13 +26,13 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             runnables: []
         };
     }
-    sequentialRunner(runnableFunctions) {
-        return runnableFunctions.reduce((promise, runPromiseFunction) => promise.then(result => runPromiseFunction().then(Array.prototype.concat.bind(result))), Promise.resolve([]));
-    }
     run() {
-        const promises = this.runnableModel.runnables
-            .map(runnable => () => conditional_injector_1.Container.subclassesOf(runner_1.Runner).create(runnable).run());
+        const delay = this.runnableModel.delay;
+        const promises = this.promisifyRunnableExecutionCall();
         return new Promise((resolve) => {
+            if (delay) {
+                logger_1.Logger.info(`Delaying execution for ${delay}ms`);
+            }
             new timeout_1.Timeout(() => {
                 this.sequentialRunner(promises)
                     .then((reports) => reports.forEach((report) => {
@@ -40,8 +41,36 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
                 }))
                     .then(() => resolve(this.report));
             })
-                .start(this.runnableModel.delay || 0);
+                .start(delay || 0);
         });
+    }
+    promisifyRunnableExecutionCall() {
+        return this.multiplyIterations()
+            .map(runnable => () => conditional_injector_1.Container
+            .subclassesOf(runner_1.Runner)
+            .create(runnable)
+            .run());
+    }
+    multiplyIterations() {
+        if (!this.runnableModel.iterations) {
+            return this.runnableModel.runnables;
+        }
+        let runnables = [];
+        for (let x = this.runnableModel.iterations; x > 0; --x) {
+            const clone = this.runnableModel.runnables.map(x => (Object.assign({}, x)));
+            const items = clone
+                .map(item => {
+                item.name = `${x}: ` + item.name;
+                return item;
+            });
+            runnables = runnables.concat(items);
+        }
+        return runnables;
+    }
+    sequentialRunner(runnableFunctions) {
+        return runnableFunctions.reduce((runnableRan, runPromiseFunction) => runnableRan
+            .then(result => runPromiseFunction()
+            .then(Array.prototype.concat.bind(result))), Promise.resolve([]));
     }
 };
 RunnableRunner = __decorate([

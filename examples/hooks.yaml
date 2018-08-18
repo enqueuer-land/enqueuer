@@ -1,11 +1,9 @@
-sion: 01.00.00
 name: hooks example
 id: hook
 runnables:
 - timeout: 100
   onInit: >-
     tester.isDefined('Requisition exists', requisition);
-    tester.isEqualTo('Requisition name', requisition.name, 'example');
     store.sequence = 'requisition::onInit';
   name: example
   startEvent:

@@ -20,7 +20,7 @@ loadStream: nameToIdentifyTheStream
 #So, instead of closing it, you can save it and open it later using the same identifier in 'loadStream' field.
 saveStream: nameToIdentifyTheStream
 
-#Optional. Sets in milliseconds how log after publishing it has to wait before ending the event.
+#Defaults to 0. Sets in milliseconds how log after publishing it has to wait before ending the event.
 #No invalid test will exist if this timeout expires. Even because there will be always a timeout set.
 timeout: 3000
 

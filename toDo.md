@@ -16,9 +16,6 @@ To Create:
         https://github.com/mscdex/cap
         https://github.com/node-pcap/node_pcap
 
-Add iterations to runnables ?
-Rename initialDelay to delay -> add a test to it
-Do not print store file values
 
 #####Prerequisites:
 
@@ -31,7 +28,7 @@ One of:
 - To build, launch a git shell (e.g. Cmd or PowerShell), run vcbuild.bat (to build with VS2017 you need to explicitly add a vs2017 argument), which will checkout the GYP code into build/gyp, generate uv.sln as well as the necesery related project files, and start building.
 
 
-
+Check greetings tcp
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Runnable injectable by version

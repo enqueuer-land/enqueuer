@@ -23,8 +23,3 @@ response: someValueHere
 #Optional. Mock value that will be sent as soon as the tcp server got a connection
 #If it's set 'response' field will be ignored
 greetingResponse: string;
-
-#Optional. Javascript code snippet executed as soon as the subscription receives a response.
-#Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/tester.d.ts), message and store.
-onMessageReceived: |- #|- is a yml multiline value identifier
-  tester.isDefined('message', message);

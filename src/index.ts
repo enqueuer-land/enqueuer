@@ -19,18 +19,8 @@ const setLogLevel = function () {
     }
 };
 
-let printConfigurationFile = function () {
-    const options = {
-        defaultIndentation: 4,
-        keysColor: 'white',
-        dashColor: 'grey'
-    };
-    console.log(prettyjson.render(configuration.getFile(), options));
-};
-
 if (logLevel) {
     setLogLevel();
-    printConfigurationFile();
 }
 
 new EnqueuerStarter()

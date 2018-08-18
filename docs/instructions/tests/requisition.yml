@@ -1,13 +1,14 @@
 #Used to describe your requisition scenario
 name: Valid card scenario
 
-#Optional. Sets in milliseconds how log the requisition has to wait before being considered as invalid.
+#Defaults to 0. Sets in milliseconds how log the requisition has to wait before being considered as invalid.
 #Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
 timeout: 3000
 
 #Optional. Javascript code snippet executed as soon as the requisition is initialized.
 #Available objects are: requisition (/docs/instructions/tests/requisition.yml), tester (/docs/instructions/tests/tester.d.ts) and store.
-onInit:
+onInit: |-
+  console.log('iai');
 
 #Defines what triggers this execution
 #Two values are mutually exclusive: publisher and subscription. At least one of them has to be defined.

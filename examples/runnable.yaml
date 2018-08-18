@@ -1,0 +1,33 @@
+name: runnable properties example
+id: runnable
+runnables:
+- name: storer
+  iterations: 10
+  runnables:
+  - name: incrementer
+    onInit: >-
+      store.iteration = (store.iteration + 1) || 1;
+      store.lastExecution = new Date().getTime();
+    startEvent:
+      publisher:
+        type: zero-mq-pub
+        name: There has to be a publisher
+        address: tcp://127.0.0.1:3000
+        payload: blabla
+        topic: runnable.incrementor
+- name: checker
+  delay: 3000
+  runnables:
+  - name: checker
+    onInit: >-
+      tester.isEqualTo('It was executed 10 times', store.iteration, 10);
+      const delayedTime = new Date().getTime() - store.lastExecution;
+      tester.isGreaterThan('It delayed for at least ~3 seconds', delayedTime, 3000);
+      tester.isLessThan('It delayed for no more than ~3 seconds', delayedTime - 500, 3000);
+    startEvent:
+      publisher:
+        type: zero-mq-pub
+        name: There has to be a publisher
+        address: tcp://127.0.0.1:3000
+        payload: blabla
+        topic: runnable.checker
