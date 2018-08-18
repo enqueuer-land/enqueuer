@@ -12,9 +12,10 @@ runnables:
       publisher:
         type: zero-mq-pub
         name: There has to be a publisher
-        address: tcp://127.0.0.1:3333
         payload: blabla
         topic: runnable.incrementor
+        onInit: >-
+          publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
 - name: checker
   delay: 3000
   runnables:
@@ -28,6 +29,7 @@ runnables:
       publisher:
         type: zero-mq-pub
         name: There has to be a publisher
-        address: tcp://127.0.0.1:3000
         payload: blabla
         topic: runnable.checker
+        onInit: >-
+          publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
