@@ -34,6 +34,7 @@ let ZeroMqPubPublisher = class ZeroMqPubPublisher extends publisher_1.Publisher 
             setTimeout(() => {
                 logger_1.Logger.debug(`Bound and publishing to zeroMq socket topic ${this.topic} and message ${this.payload}`);
                 this.socket = this.socket.send([this.topic, this.payload]);
+                this.socket.unbindSync(this.address);
                 this.socket.close();
                 resolve();
             }, 250);

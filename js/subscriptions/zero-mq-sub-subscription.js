@@ -44,6 +44,8 @@ let ZeroMqSubSubscription = class ZeroMqSubSubscription extends subscription_1.S
         return Promise.resolve();
     }
     unsubscribe() {
+        this.socket.unsubscribe(this.topic);
+        this.socket.disconnect(this.address);
         this.socket.close();
     }
 };

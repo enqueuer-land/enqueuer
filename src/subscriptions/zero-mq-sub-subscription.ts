@@ -37,6 +37,8 @@ export class ZeroMqSubSubscription extends Subscription {
     }
 
     public unsubscribe(): void {
+        this.socket.unsubscribe(this.topic);
+        this.socket.disconnect(this.address);
         this.socket.close();
     }
 
