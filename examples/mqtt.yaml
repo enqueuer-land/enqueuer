@@ -16,12 +16,10 @@ runnables:
   - type: mqtt
     brokerAddress: mqtt://localhost
     name: MqttSub
-    topic: enqueuer/+/public/test
+    topic: '#'
     onMessageReceived: |-
       let enqueuer = 'enqueuer';
       const payload = Buffer.from(message.payload);
       tester.isEqualTo('Payload', payload, enqueuer);
       tester.isEqualTo('Topic', message.topic, 'enqueuer/integration/public/test');
-    options:
-      clientId: enqueuerSubscriptionOptionsExampleId9900223
     timeout: 5000

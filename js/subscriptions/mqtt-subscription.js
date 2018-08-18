@@ -73,6 +73,7 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
                 reject(err);
             }
             else {
+                logger_1.Logger.trace(`Mqtt subscribed on topic ${this.topic}`);
                 this.client.on('message', (topic, payload) => this.gotMessage(topic, payload));
                 resolve();
             }

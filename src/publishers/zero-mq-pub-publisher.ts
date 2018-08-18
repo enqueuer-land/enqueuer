@@ -14,21 +14,16 @@ export class ZeroMqPubPublisher extends Publisher {
         super(publish);
         this.address = publish.address;
         this.topic = publish.topic;
-        this.socket = zmq.socket('pub');
+        this.socket = zmq.socket('pub').bindSync(this.address);
     }
 
     public publish(): Promise<void> {
         return new Promise((resolve) => {
-            Logger.debug('Binding socket to publish to zeroMq');
-            this.socket = this.socket.bindSync(this.address);
-
-            setTimeout(() => {
-                Logger.debug(`Bound and publishing to zeroMq socket topic ${this.topic} and message ${this.payload}`);
+                Logger.debug(`Publishing to zeroMq socket topic ${this.topic} and message ${this.payload}`);
                 this.socket = this.socket.send([this.topic, this.payload]);
                 this.socket.unbindSync(this.address);
                 this.socket.close();
                 resolve();
-            }, 250);
         });
     }
 }

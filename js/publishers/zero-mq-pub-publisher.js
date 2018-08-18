@@ -25,19 +25,15 @@ let ZeroMqPubPublisher = class ZeroMqPubPublisher extends publisher_1.Publisher 
         super(publish);
         this.address = publish.address;
         this.topic = publish.topic;
-        this.socket = zmq.socket('pub');
+        this.socket = zmq.socket('pub').bindSync(this.address);
     }
     publish() {
         return new Promise((resolve) => {
-            logger_1.Logger.debug('Binding socket to publish to zeroMq');
-            this.socket = this.socket.bindSync(this.address);
-            setTimeout(() => {
-                logger_1.Logger.debug(`Bound and publishing to zeroMq socket topic ${this.topic} and message ${this.payload}`);
-                this.socket = this.socket.send([this.topic, this.payload]);
-                this.socket.unbindSync(this.address);
-                this.socket.close();
-                resolve();
-            }, 250);
+            logger_1.Logger.debug(`Publishing to zeroMq socket topic ${this.topic} and message ${this.payload}`);
+            this.socket = this.socket.send([this.topic, this.payload]);
+            this.socket.unbindSync(this.address);
+            this.socket.close();
+            resolve();
         });
     }
 };
