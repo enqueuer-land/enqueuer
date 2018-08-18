@@ -54,21 +54,21 @@ export class HttpServerPool {
     }
 
     public closeHttpServer() {
-        --this.http.counter;
-        if (this.http.counter == 0) {
-            Logger.debug('Closing http server');
-            this.http.server.close();
-            this.http.server = null;
-            this.finalizeExpress();
-        }
+        Logger.debug('Closing http server');
+        this.closeServer(this.http);
     }
 
     public closeHttpsServer() {
-        --this.https.counter;
-        if (this.https.counter == 0) {
+        Logger.debug('Closing https server');
+        this.closeServer(this.https);
+    }
+
+    private closeServer(server: any) {
+        --server.counter;
+        if (server.counter == 0) {
             Logger.debug('Closing https server');
-            this.https.server.close();
-            this.https.server = null;
+            server.server.close();
+            server.server = null;
             this.finalizeExpress();
         }
     }

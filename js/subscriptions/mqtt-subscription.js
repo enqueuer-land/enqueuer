@@ -26,7 +26,6 @@ let MqttSubscription = class MqttSubscription extends subscription_1.Subscriptio
         this.brokerAddress = subscriptionAttributes.brokerAddress;
         this.topic = subscriptionAttributes.topic;
         this.options = subscriptionAttributes.options || {};
-        this.options.clientId = this.options.clientId || 'mqtt_' + (1 + Math.random() * 4294967295).toString(16);
         this.options.connectTimeout = this.options.connectTimeout || 10 * 1000;
     }
     receiveMessage() {
