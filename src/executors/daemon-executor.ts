@@ -24,10 +24,6 @@ export class DaemonExecutor extends EnqueuerExecutor {
                 .map((input: any) => new DaemonRunInput(input));
     }
 
-    public async init(): Promise<void> {
-        return;
-    }
-
     public execute(): Promise<boolean> {
         return new Promise(() => {
             this.requisitionInputs

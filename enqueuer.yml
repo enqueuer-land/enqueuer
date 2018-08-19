@@ -1,11 +1,11 @@
 run-mode:
   single-run:
     name: examples
-    #you can use fileNamePattern along with #files. Depending whether the files execution order matters
-    fileNamePattern: examples/*.{json,yaml}
+
     files:
-    - examples/tcp.yml
-    - examples/udp.yml
+    - examples/*
+#    - examples/tcp.yml
+#    - examples/udp.yml
 
 #optional
     reportName: outputExamples/singleRunOutput.yml #outputExamples/singleRunOutput.json
@@ -15,8 +15,7 @@ log-level: trace
 
 #optional
 outputs:
-  -
-    type: file
+  - type: file
     filenamePrefix: outputExamples/
     filenameExtension: yml #json
 

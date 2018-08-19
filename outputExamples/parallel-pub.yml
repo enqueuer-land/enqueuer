@@ -1,0 +1,40 @@
+type: runnable
+valid: true
+tests: []
+name: 'Parallel Pub'
+id: parallel-pub
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'Parallel Pub'
+    time:
+      totalTime: 156
+      startTime: '2018-08-19T17:45:27.979Z'
+      endTime: '2018-08-19T17:45:28.135Z'
+      timeout: 3000
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Parallel pub'
+        valid: true
+        type: tcp-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Back and forth'
+            valid: true
+            description: '''anyValue'' is equal to ''anyValue'''
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-08-19T17:45:28.134Z'

@@ -78,10 +78,17 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
     printSummary() {
         const totalTime = new date_controller_1.DateController().getTime() - this.startTime.getTime();
         console.log(chalk_1.default.white(`------------------------------`));
-        const percentage = Math.trunc(10000 * (this.testCounter - this.failingTests.length) / this.testCounter) / 100;
+        let percentage = this.calcPercentage();
         const divisionString = `${this.testCounter - this.failingTests.length} tests passing of ${this.testCounter} total ` +
             `(${percentage}%) ran in ${totalTime}ms`;
         console.log(this.percentageColor(percentage)(`\tTests summary \t\t ${divisionString}`));
+    }
+    calcPercentage() {
+        let percentage = Math.trunc(10000 * (this.testCounter - this.failingTests.length) / this.testCounter) / 100;
+        if (isNaN(percentage)) {
+            percentage = 0;
+        }
+        return percentage;
     }
     percentageColor(percentage) {
         if (percentage == 100) {

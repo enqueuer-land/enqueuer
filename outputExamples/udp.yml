@@ -7,17 +7,12 @@ runnables:
   -
     type: requisition
     valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
+    tests: []
     name: udp
     time:
-      totalTime: 10
-      startTime: '2018-08-18T20:52:16.053Z'
-      endTime: '2018-08-18T20:52:16.063Z'
-      timeout: 3000
+      totalTime: 246
+      startTime: '2018-08-19T17:45:27.576Z'
+      endTime: '2018-08-19T17:45:27.822Z'
     subscriptions:
       -
         name: udpSubscription
@@ -40,8 +35,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-18T20:52:16.055Z'
-        messageReceivedTime: '2018-08-18T20:52:16.063Z'
+        connectionTime: '2018-08-19T17:45:27.581Z'
+        messageReceivedTime: '2018-08-19T17:45:27.815Z'
     startEvent:
       publisher:
         name: udpPublisher
@@ -52,4 +47,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-18T20:52:16.062Z'
+        publishTime: '2018-08-19T17:45:27.812Z'

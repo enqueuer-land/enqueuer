@@ -1,0 +1,15 @@
+name: Parallel Pub
+id: parallel-pub
+delay: 500
+runnables:
+- name: Parallel Pub
+  timeout: 3000
+  startEvent:
+    publisher:
+      type: tcp-client
+      name: Parallel pub
+      serverAddress: localhost
+      port: 23081
+      payload: anything
+      onMessageReceived: >-
+        tester.isEqualTo('Back and forth', message, 'anyValue');

@@ -4,7 +4,7 @@
 #two modes are mutually exclusive 'single-run' and 'daemon'. At least one of them has to be defined
 run-mode:
   # single-run mode: executes a single time. This is the one that has to be used when your goal is to integrate your pipeline.
-  #             It runs every file (/docs/tests/test.yml) listed in 'files' field or that matches 'fileNamePattern' value. One after the other.
+  #             It runs, at the same time, every file (/docs/tests/test.yml) listed in 'files' field or that matches 'file' value.
   #             Once them all are ran, enqueuer ends its execution, compiles a summary and saves it in a file defined in 'reportName'.
   #             At the end of execution, a status code is returned:
   #               0, if everything is ok; or
@@ -13,16 +13,11 @@ run-mode:
     #Used to describe your config test scenario
     name: examples
 
-    #You can use 'fileNamePattern' along with 'files'. Depending whether the files execution order matters
-    #But at least on of them has to be used
-
-    #Optiona. File globbing to determine which test files will be executed
-    fileNamePattern: examples/*.{json,yaml}
-
-    #Optional. Use this if you want to explicitly set the files and the execution order
+    #test files name or glob
     files:
     - 1.yml
     - 2.yml
+    - *.json
 
     #Optional. A single file with the whole execution report is generated. Every test of every input file will be there.
     reportName: singleRunOutput.yml #outputExamples/singleRunOutput.json

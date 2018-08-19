@@ -1,8 +1,14 @@
 name: runnableUdpName
 id: udp
 runnables:
-- timeout: 3000
-  name: udp
+- name: udp
+  startEvent:
+    publisher:
+      type: udp
+      name: udpPublisher
+      serverAddress: localhost
+      port: '23070'
+      payload: it
   subscriptions:
   - type: udp
     port: 23070
@@ -12,10 +18,3 @@ runnables:
       const payload = Buffer.from(message.payload);
       tester.isEqualTo('Iupi', payload.toString(), 'it');
       tester.isEqualTo('Client address is localhost', message.remoteInfo.address, '127.0.0.1');
-  startEvent:
-    publisher:
-      type: udp
-      name: udpPublisher
-      serverAddress: localhost
-      port: '23070'
-      payload: it

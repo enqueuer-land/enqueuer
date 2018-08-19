@@ -1,42 +1,30 @@
-import {SubscriptionReporter} from '../reporters/subscription/subscription-reporter';
 import {RunnableParser} from '../runnables/runnable-parser';
+import * as glob from 'glob';
+import * as fs from 'fs';
+import {Logger} from '../loggers/logger';
 
 export class SingleRunInput {
 
-    private runnableParser: RunnableParser;
-    private subscriptionReporter: SubscriptionReporter;
-    private executorTimeout: Function | null = null;
+    private filesName: string[] = [];
 
     constructor(singleRunConfiguration: any) {
-        this.subscriptionReporter = new SubscriptionReporter(
-            {
-                type: 'file-name-watcher',
-                name: 'SingleRunInput',
-                fileNamePattern: singleRunConfiguration.fileNamePattern,
-                files: singleRunConfiguration.files,
-                timeout: 100
-            });
-        this.runnableParser = new RunnableParser();
+        singleRunConfiguration.files.forEach((file: string) => {
+            this.filesName = this.filesName.concat(glob.sync(file));
+        });
+        Logger.info(`Files list: ${this.filesName}`);
     }
 
-    public syncDir(): Promise<void> {
-        return this.subscriptionReporter.subscribe();
-    }
-
-    public onNoMoreFilesToBeRead(executorTimeout: Function): void {
-        this.executorTimeout = executorTimeout;
-    }
-
-    public receiveRequisition(): Promise<any> {
-        if (this.executorTimeout) {
-            this.subscriptionReporter.startTimeout(this.executorTimeout);
-        }
-        return this.subscriptionReporter
-            .receiveMessage()
-            .then((file: any) => {
-                file.content = this.runnableParser.parse(file.content);
-                return file;
-            });
+    public getRequisitionsRunnables(): any {
+        const runnableParser: RunnableParser = new RunnableParser();
+        let result: any = [];
+         this.filesName.map(fileName => {
+            try {
+                result.push({name: fileName, content: runnableParser.parse(fs.readFileSync(fileName).toString())});
+            } catch (err) {
+                Logger.error(`Error parsing ${fileName}: ` + err);
+            }
+         });
+         return result;
     }
 
 }

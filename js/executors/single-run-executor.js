@@ -8,14 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const multi_publisher_1 = require("../publishers/multi-publisher");
@@ -26,50 +18,44 @@ const conditional_injector_1 = require("conditional-injector");
 const runnable_runner_1 = require("../runnables/runnable-runner");
 const multi_result_creator_1 = require("../single-run-result-creators/multi-result-creator");
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
-    constructor(enqueuerConfiguration) {
+    constructor(runMode) {
         super();
         logger_1.Logger.info('Executing in Single-Run mode');
-        const singleRunConfiguration = enqueuerConfiguration['single-run'];
-        this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(enqueuerConfiguration['single-run'].reportName);
+        const singleRunConfiguration = runMode['single-run'];
+        this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(runMode['single-run'].reportName);
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
-        this.singleRunInput = new single_run_input_1.SingleRunInput(singleRunConfiguration);
-    }
-    init() {
-        return __awaiter(this, void 0, void 0, function* () {
-            logger_1.Logger.info('Initializing Single-Run mode');
-            return this.singleRunInput.syncDir();
-        });
+        this.runnables = new single_run_input_1.SingleRunInput(singleRunConfiguration).getRequisitionsRunnables();
     }
     execute() {
         return new Promise((resolve) => {
-            this.singleRunInput.onNoMoreFilesToBeRead(() => this.onFinishRunnables(resolve));
-            this.singleRunInput.receiveRequisition()
-                .then(file => new runnable_runner_1.RunnableRunner(file.content).run()
+            Promise.all(this.runnables.map((runnable) => this.runRunnable(runnable)))
+                .then(() => {
+                logger_1.Logger.info('There is no more requisition to be ran');
+                this.multiResultCreator.create();
+                resolve(this.multiResultCreator.isValid());
+            });
+        });
+    }
+    runRunnable(runnable) {
+        return new Promise((resolve, reject) => {
+            new runnable_runner_1.RunnableRunner(runnable.content)
+                .run()
                 .then(report => {
-                return { filename: file.name, report: report };
-            }))
-                .then((reportFile) => {
-                this.multiResultCreator.addTestSuite(reportFile.filename, reportFile.report);
-                return reportFile.report;
+                this.multiResultCreator.addTestSuite(runnable.name, report);
+                this.multiPublisher.publish(JSON.stringify(report, null, 2)).catch(console.log.bind(console));
+                resolve();
             })
-                .then(report => this.multiPublisher.publish(JSON.stringify(report, null, 2)))
-                .then(() => resolve(this.execute())) //Runs the next one
                 .catch((err) => {
                 logger_1.Logger.error(`Single-run error reported: ${JSON.stringify(err, null, 4)}`);
                 this.multiResultCreator.addError(err);
                 this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
-                resolve(this.execute()); //Runs the next one
+                reject();
             });
         });
     }
-    onFinishRunnables(resolve) {
-        logger_1.Logger.info('There is no more requisition to be ran');
-        this.multiResultCreator.create();
-        return resolve(this.multiResultCreator.isValid());
-    }
 };
 SingleRunExecutor = __decorate([
-    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration['single-run'] }),
+    conditional_injector_1.Injectable({ predicate: runMode => runMode['single-run'] }),
     __metadata("design:paramtypes", [Object])
 ], SingleRunExecutor);
 exports.SingleRunExecutor = SingleRunExecutor;

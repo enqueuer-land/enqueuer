@@ -13,15 +13,14 @@ export class EnqueuerStarter {
     }
 
     public async start(): Promise<number> {
-        return this.executor.init()
-            .then(() => this.executor.execute())
-            .then((valid: boolean) => {
-                Logger.info('Enqueuer execution is over (' + valid + ')');
-                return valid ? 0 : 1;
-            })
-            .catch((error: any) => {
-                Logger.fatal(`Execution error: ${error}`);
-                return -1;
-            });
+        return this.executor.execute()
+                            .then((valid: boolean) => {
+                                Logger.info('Enqueuer execution is over (' + valid + ')');
+                                return valid ? 0 : 1;
+                            })
+                            .catch((error: any) => {
+                                Logger.fatal(`Execution error: ${error}`);
+                                return -1;
+                            });
     }
 }

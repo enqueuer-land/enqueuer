@@ -8,14 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
@@ -25,11 +17,6 @@ let NullRunExecutor = class NullRunExecutor extends enqueuer_executor_1.Enqueuer
         super();
         logger_1.Logger.info('Executing in Not-Identified mode');
         this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
-    }
-    init() {
-        return __awaiter(this, void 0, void 0, function* () {
-            throw new Error(`Impossible to initialize new executor from: ${this.enqueuerConfiguration}`);
-        });
     }
     execute() {
         return Promise.reject(new Error(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`));

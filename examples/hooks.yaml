@@ -1,17 +1,18 @@
 name: hooks example
 id: hook
 runnables:
-- timeout: 100
+- timeout: 1000
   onInit: >-
     tester.isDefined('Requisition exists', requisition);
     store.sequence = 'requisition::onInit';
   name: example
   startEvent:
     publisher:
-      type: http-client
+      type: tcp-client
+      serverAddress: localhost
+      port: 23080
       name: publishing
-      url: http://localhost:23078/hooks
-      method: GET
+      payload: it
       onInit: >-
         tester.isDefined('Publisher exists onInit', publisher);
         tester.isEqualTo('Publisher name', publisher.name, 'publishing');
@@ -23,13 +24,10 @@ runnables:
         tester.contains('Publisher onInit executed', store.sequence, 'publisher::onInit');
         store.sequence += ' -> publisher::onMessageReceived';
   subscriptions:
-    - type: http-server
+    - type: tcp-server
       name: subscription
-      endpoint: /hooks
-      port: 23078
-      method: GET
-      response:
-        status: 200
+      port: 23080
+      response: hook response
       onInit: >-
         tester.isDefined('Subscription exists onInit', subscription);
         tester.isEqualTo('Subscription name', subscription.name, 'subscription');

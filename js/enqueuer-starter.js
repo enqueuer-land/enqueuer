@@ -19,8 +19,7 @@ class EnqueuerStarter {
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.executor.init()
-                .then(() => this.executor.execute())
+            return this.executor.execute()
                 .then((valid) => {
                 logger_1.Logger.info('Enqueuer execution is over (' + valid + ')');
                 return valid ? 0 : 1;

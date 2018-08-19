@@ -1,0 +1,13 @@
+name: Parallel Sub
+id: parallel-sub
+runnables:
+- name: Parallel Sub
+  timeout: 3000
+  startEvent:
+    subscription:
+      type: tcp-server
+      name: Parallel Sub
+      port: 23081
+      response: anyValue
+      onMessageReceived: >-
+        tester.isEqualTo('Paralleling', message, 'anything');

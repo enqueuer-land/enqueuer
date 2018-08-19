@@ -1,35 +1,36 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const subscription_reporter_1 = require("../reporters/subscription/subscription-reporter");
 const runnable_parser_1 = require("../runnables/runnable-parser");
+const glob = __importStar(require("glob"));
+const fs = __importStar(require("fs"));
+const logger_1 = require("../loggers/logger");
 class SingleRunInput {
     constructor(singleRunConfiguration) {
-        this.executorTimeout = null;
-        this.subscriptionReporter = new subscription_reporter_1.SubscriptionReporter({
-            type: 'file-name-watcher',
-            name: 'SingleRunInput',
-            fileNamePattern: singleRunConfiguration.fileNamePattern,
-            files: singleRunConfiguration.files,
-            timeout: 100
+        this.filesName = [];
+        singleRunConfiguration.files.forEach((file) => {
+            this.filesName = this.filesName.concat(glob.sync(file));
         });
-        this.runnableParser = new runnable_parser_1.RunnableParser();
+        logger_1.Logger.error(`Files list: ${this.filesName}`);
     }
-    syncDir() {
-        return this.subscriptionReporter.subscribe();
-    }
-    onNoMoreFilesToBeRead(executorTimeout) {
-        this.executorTimeout = executorTimeout;
-    }
-    receiveRequisition() {
-        if (this.executorTimeout) {
-            this.subscriptionReporter.startTimeout(this.executorTimeout);
-        }
-        return this.subscriptionReporter
-            .receiveMessage()
-            .then((file) => {
-            file.content = this.runnableParser.parse(file.content);
-            return file;
+    getRequisitionsRunnables() {
+        const runnableParser = new runnable_parser_1.RunnableParser();
+        let result = [];
+        this.filesName.map(fileName => {
+            try {
+                result.push({ name: fileName, content: runnableParser.parse(fs.readFileSync(fileName).toString()) });
+            }
+            catch (err) {
+                logger_1.Logger.error(`Error parsing ${fileName}: ` + err);
+            }
         });
+        return result;
     }
 }
 exports.SingleRunInput = SingleRunInput;

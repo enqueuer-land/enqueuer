@@ -8,14 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const daemon_run_input_1 = require("./daemon-run-input");
 const logger_1 = require("../loggers/logger");
@@ -32,11 +24,6 @@ let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerEx
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.getOutputs());
         this.requisitionInputs = enqueuerConfiguration['daemon']
             .map((input) => new daemon_run_input_1.DaemonRunInput(input));
-    }
-    init() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return;
-        });
     }
     execute() {
         return new Promise(() => {

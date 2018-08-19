@@ -15,9 +15,9 @@ export class FileNameWatcherSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
-        this.filesName = subscriptionAttributes.files || [];
-        if (!this.fileNamePattern && this.filesName.length == 0) {
-            throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' and no 'files' fields`);
+        this.filesName = [];
+        if (!this.fileNamePattern) {
+            throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' field`);
         }
     }
 

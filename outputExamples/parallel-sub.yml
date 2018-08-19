@@ -1,0 +1,37 @@
+type: runnable
+valid: true
+tests: []
+name: 'Parallel Sub'
+id: parallel-sub
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'Parallel Sub'
+    time:
+      totalTime: 561
+      startTime: '2018-08-19T17:45:27.544Z'
+      endTime: '2018-08-19T17:45:28.105Z'
+      timeout: 3000
+    subscriptions: []
+    startEvent:
+      subscription:
+        name: 'Parallel Sub'
+        type: tcp-server
+        tests:
+          -
+            name: Paralleling
+            valid: true
+            description: '''anything'' is equal to ''anything'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+        valid: true
+        connectionTime: '2018-08-19T17:45:27.749Z'
+        messageReceivedTime: '2018-08-19T17:45:28.083Z'

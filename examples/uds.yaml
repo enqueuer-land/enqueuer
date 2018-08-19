@@ -56,5 +56,4 @@ runnables:
     loadStream: udsSubStreamName
     response: I am still bidirectional
     onMessageReceived: |-
-      console.log('Iei: ' + message);
       tester.isEqualTo('Publisher stream was still opened', message, 'I am still opened');
