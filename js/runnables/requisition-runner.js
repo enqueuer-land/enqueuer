@@ -37,8 +37,9 @@ let RequisitionRunner = class RequisitionRunner extends runner_1.Runner {
     run() {
         return new Promise((resolve) => {
             return this.requisitionReporter.start(() => {
-                logger_1.Logger.info(`Requisition '${this.requisitionName}' is over`);
-                resolve(this.requisitionReporter.getReport());
+                const report = this.requisitionReporter.getReport();
+                logger_1.Logger.info(`Requisition '${this.requisitionName}' is over (${report.valid})`);
+                resolve(report);
             });
         });
     }

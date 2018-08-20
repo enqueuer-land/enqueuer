@@ -54,13 +54,13 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     subscribe() {
         return new Promise((resolve) => {
             if (this.loadStreamName) {
-                logger_1.Logger.debug('Server is reusing tcp stream');
+                logger_1.Logger.debug(`Server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
                 return;
             }
             this.server = net.createServer()
                 .listen(this.port, 'localhost', () => {
-                logger_1.Logger.debug(`Tcp server is listening for tcp clients`);
+                logger_1.Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
                 resolve();
             });
         });
@@ -68,7 +68,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     sendResponse() {
         return new Promise((resolve) => {
             if (this.stream) {
-                logger_1.Logger.debug(`Tcp server sending response`);
+                logger_1.Logger.debug(`Tcp server (${this.stream.localPort}) sending response`);
                 this.stream.write(this.response, () => {
                     this.persistStream();
                     resolve();
@@ -78,7 +78,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     }
     sendGreeting() {
         if (this.greeting) {
-            logger_1.Logger.debug(`Tcp server sending greeting message`);
+            logger_1.Logger.debug(`Tcp server (${this.stream.localPort}) sending greeting message`);
             this.stream.write(this.greeting);
         }
     }
@@ -86,31 +86,31 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         logger_1.Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);
         this.stream = store_1.Store.getData()[this.loadStreamName];
         if (this.stream) {
-            logger_1.Logger.debug(`Server loaded tcp stream: ${this.loadStreamName}`);
+            logger_1.Logger.debug(`Server loaded tcp stream: ${this.loadStreamName} (${this.stream.localPort})`);
         }
         else {
             throw new Error(`Impossible to load tcp stream: ${this.loadStreamName}`);
         }
     }
     waitForData(reject, resolve) {
-        logger_1.Logger.trace(`Tcp server is waiting on data`);
+        logger_1.Logger.trace(`Tcp server (${this.stream.localPort}) is waiting on data`);
         this.stream.once('end', () => {
             logger_1.Logger.debug(`Tcp server detected 'end' event`);
             reject();
         });
         this.stream.once('data', (msg) => {
-            logger_1.Logger.debug(`Tcp server got data ${msg}`);
+            logger_1.Logger.debug(`Tcp server (${this.stream.localPort}) got data ${msg}`);
             resolve(msg);
         });
     }
     persistStream() {
         if (this.saveStream) {
-            logger_1.Logger.debug(`Persisting subscription tcp stream ${this.saveStream}`);
+            logger_1.Logger.debug(`Persisting subscription tcp stream ${this.saveStream} (${this.stream.localPort})`);
             store_1.Store.getData()[this.saveStream] = this.stream;
             this.saveStream = undefined;
         }
         else {
-            logger_1.Logger.trace(`Ending TCP stream`);
+            logger_1.Logger.trace(`Ending TCP stream (${this.stream.localPort})`);
             this.stream.end();
         }
     }
