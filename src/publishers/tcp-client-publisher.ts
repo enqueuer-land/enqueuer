@@ -46,6 +46,9 @@ export class TcpClientPublisher extends Publisher {
                     Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
                     this.publishData(stream, resolve, reject);
                 });
+                stream.on('error', (error) => {
+                    reject(error);
+                });
             }
 
         });

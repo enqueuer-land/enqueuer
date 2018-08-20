@@ -51,6 +51,9 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
                     logger_1.Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
                     this.publishData(stream, resolve, reject);
                 });
+                stream.on('error', (error) => {
+                    reject(error);
+                });
             }
         });
     }

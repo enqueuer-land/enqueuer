@@ -73,17 +73,11 @@ class RequisitionReporter {
         }
     }
     onAllSubscriptionsStopWaiting() {
-        logger_1.Logger.info('All subscriptions stopped waiting');
+        logger_1.Logger.info('All subscriptions have done their job');
         this.allSubscriptionsStoppedWaiting = true;
         this.tryToFinishExecution();
     }
     tryToFinishExecution() {
-        if (!this.startEventDoneItsJob) {
-            logger_1.Logger.info(`Waiting for start event to finish requisition execution`);
-        }
-        else {
-            logger_1.Logger.info(`Waiting for all subscriptions receive their messages to finish requisition execution`);
-        }
         if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
             this.onFinish();
         }

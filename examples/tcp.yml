@@ -9,7 +9,7 @@ runnables:
       type: tcp-client
       name: Any name Pub
       serverAddress: localhost
-      port: 23090
+      port: 23069
       payload: Hey Jude
       onMessageReceived: tester.isEqualTo('Do not make it bad', message.toString(), 'Do not make it bad');
       timeout: 100
