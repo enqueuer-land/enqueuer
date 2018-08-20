@@ -92,6 +92,7 @@ export class HttpServerPool {
 
     private finalizeExpress() {
         if (this.http.counter + this.https.counter <= 0) {
+            Logger.trace(`Finalizing express application`);
             this.app = null;
         }
     }

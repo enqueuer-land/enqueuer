@@ -17,7 +17,7 @@ class SingleRunInput {
         singleRunConfiguration.files.forEach((file) => {
             this.filesName = this.filesName.concat(glob.sync(file));
         });
-        logger_1.Logger.error(`Files list: ${this.filesName}`);
+        logger_1.Logger.info(`Files list: ${this.filesName}`);
     }
     getRequisitionsRunnables() {
         const runnableParser = new runnable_parser_1.RunnableParser();

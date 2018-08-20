@@ -29,7 +29,7 @@ export class RunnableRunner extends Runner {
     public run(): Promise<ResultModel> {
         const delay = this.runnableModel.delay;
         const promises = this.promisifyRunnableExecutionCall();
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (delay) {
                 Logger.info(`Delaying execution for ${delay}ms`);
             }
@@ -40,7 +40,8 @@ export class RunnableRunner extends Runner {
                                 this.report.valid = this.report.valid && report.valid;
                                 this.report.runnables.push(report);
                             }))
-                    .then( () => resolve(this.report));
+                    .then( () => resolve(this.report))
+                    .catch( (err: any) => reject(err));
                 })
             .start(delay || 0);
         });
@@ -72,11 +73,9 @@ export class RunnableRunner extends Runner {
     }
 
     private sequentialRunner(runnableFunctions: Function[]): Promise<ResultModel[]> {
-        return runnableFunctions.reduce(
-            (runnableRan, runPromiseFunction) => runnableRan
-                .then(result => runPromiseFunction()
-                    .then(Array.prototype.concat.bind(result))),
-            Promise.resolve([]));
+        return runnableFunctions.reduce((runnableRan, runPromiseFunction) => {
+                return runnableRan.then(result => runPromiseFunction().then(Array.prototype.concat.bind(result)));
+            }, Promise.resolve([]));
     }
 
 }
