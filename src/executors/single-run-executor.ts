@@ -28,11 +28,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     public execute(): Promise<boolean> {
         return new Promise((resolve) => {
             Promise.all(this.runnables.map((runnable: any) => this.runRunnable(runnable)))
-                .then(() => {
-                    Logger.info('There is no more requisition to be ran');
-                    this.multiResultCreator.create();
-                    resolve(this.multiResultCreator.isValid());
-            });
+                .then(() => resolve(this.finishExecution()));
         });
     }
 
@@ -54,4 +50,11 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
 
     }
+
+    private finishExecution() {
+        Logger.info('There is no more requisition to be ran');
+        this.multiResultCreator.create();
+        return this.multiResultCreator.isValid();
+    }
+
 }
