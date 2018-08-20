@@ -9,6 +9,7 @@ runnables:
   startEvent:
     publisher:
       type: tcp-client
+      timeout: 1000
       serverAddress: localhost
       port: 23080
       name: publishing
