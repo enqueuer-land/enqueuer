@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: uds
     time:
-      totalTime: 188
-      startTime: '2018-08-20T15:34:59.079Z'
-      endTime: '2018-08-20T15:34:59.267Z'
+      totalTime: 152
+      startTime: '2018-08-20T17:31:45.329Z'
+      endTime: '2018-08-20T17:31:45.481Z'
       timeout: 3000
     subscriptions:
       -
@@ -36,8 +36,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-20T15:34:59.140Z'
-        messageReceivedTime: '2018-08-20T15:34:59.205Z'
+        connectionTime: '2018-08-20T17:31:45.391Z'
+        messageReceivedTime: '2018-08-20T17:31:45.449Z'
     startEvent:
       publisher:
         name: udsPublisher
@@ -56,16 +56,16 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-20T15:34:59.267Z'
+        publishTime: '2018-08-20T17:31:45.481Z'
   -
     type: requisition
     valid: true
     tests: []
     name: 'UDS2 Name'
     time:
-      totalTime: 1035
-      startTime: '2018-08-20T15:34:59.274Z'
-      endTime: '2018-08-20T15:35:00.309Z'
+      totalTime: 1026
+      startTime: '2018-08-20T17:31:45.485Z'
+      endTime: '2018-08-20T17:31:46.511Z'
     subscriptions:
       -
         name: udsSubscription2
@@ -84,8 +84,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-20T15:34:59.286Z'
-        messageReceivedTime: '2018-08-20T15:34:59.318Z'
+        connectionTime: '2018-08-20T17:31:45.494Z'
+        messageReceivedTime: '2018-08-20T17:31:45.515Z'
     startEvent:
       publisher:
         name: udsPublisher2
@@ -100,16 +100,16 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-20T15:35:00.309Z'
+        publishTime: '2018-08-20T17:31:46.511Z'
   -
     type: requisition
     valid: true
     tests: []
     name: udsStreamLoader
     time:
-      totalTime: 2
-      startTime: '2018-08-20T15:35:00.310Z'
-      endTime: '2018-08-20T15:35:00.312Z'
+      totalTime: 3
+      startTime: '2018-08-20T17:31:46.511Z'
+      endTime: '2018-08-20T17:31:46.514Z'
     subscriptions:
       -
         name: 'udsStreamLoader subscription'
@@ -124,8 +124,8 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-20T15:35:00.310Z'
-        messageReceivedTime: '2018-08-20T15:35:00.311Z'
+        connectionTime: '2018-08-20T17:31:46.512Z'
+        messageReceivedTime: '2018-08-20T17:31:46.513Z'
     startEvent:
       publisher:
         name: 'udsStreamLoader publisher'
@@ -144,4 +144,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-20T15:35:00.312Z'
+        publishTime: '2018-08-20T17:31:46.514Z'
