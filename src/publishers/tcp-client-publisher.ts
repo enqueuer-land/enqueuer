@@ -22,7 +22,7 @@ export class TcpClientPublisher extends Publisher {
         this.port = publisherAttributes.port;
         this.saveStream = publisherAttributes.saveStream;
         this.loadStream = publisherAttributes.loadStream;
-        this.timeout = publisherAttributes.timeout || 100;
+        this.timeout = publisherAttributes.timeout || 1000;
         if (publisherAttributes.loadStream) {
             Logger.debug(`Loading tcp client: ${this.loadStream}`);
             this.loadedStream = Store.getData()[publisherAttributes.loadStream];

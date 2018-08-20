@@ -29,11 +29,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     execute() {
         return new Promise((resolve) => {
             Promise.all(this.runnables.map((runnable) => this.runRunnable(runnable)))
-                .then(() => {
-                logger_1.Logger.info('There is no more requisition to be ran');
-                this.multiResultCreator.create();
-                resolve(this.multiResultCreator.isValid());
-            });
+                .then(() => resolve(this.finishExecution()));
         });
     }
     runRunnable(runnable) {
@@ -52,6 +48,11 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 reject();
             });
         });
+    }
+    finishExecution() {
+        logger_1.Logger.info('There is no more requisition to be ran');
+        this.multiResultCreator.create();
+        return this.multiResultCreator.isValid();
     }
 };
 SingleRunExecutor = __decorate([

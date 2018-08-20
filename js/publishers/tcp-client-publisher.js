@@ -28,7 +28,7 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         this.port = publisherAttributes.port;
         this.saveStream = publisherAttributes.saveStream;
         this.loadStream = publisherAttributes.loadStream;
-        this.timeout = publisherAttributes.timeout || 100;
+        this.timeout = publisherAttributes.timeout || 1000;
         if (publisherAttributes.loadStream) {
             logger_1.Logger.debug(`Loading tcp client: ${this.loadStream}`);
             this.loadedStream = store_1.Store.getData()[publisherAttributes.loadStream];
