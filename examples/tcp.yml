@@ -9,13 +9,13 @@ runnables:
       type: tcp-client
       name: Any name Pub
       serverAddress: localhost
-      port: 23070
+      port: 23060
       payload: Hey Jude
       onMessageReceived: tester.isEqualTo('Do not make it bad', message.toString(), 'Do not make it bad');
       timeout: 100
   subscriptions:
   - type: tcp-server
-    port: 23070
+    port: 23060
     name: Any name Sub
     response: Do not make it bad
     onMessageReceived: tester.isEqualTo('Beatles Song', message.toString(), 'Hey Jude');
