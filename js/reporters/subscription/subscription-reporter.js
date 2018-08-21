@@ -55,10 +55,18 @@ class SubscriptionReporter {
     subscribe() {
         return new Promise((resolve, reject) => {
             logger_1.Logger.trace(`${this.subscription.name} is subscribing`);
+            this.initializeTimeout();
             this.subscription.subscribe()
                 .then(() => {
-                this.report.connectionTime = new date_controller_1.DateController().toString();
-                resolve();
+                if (this.hasTimedOut) {
+                    const message = `Ignoring subscription ${this.subscription.name} because it has timed out`;
+                    logger_1.Logger.error(message);
+                    reject(message);
+                }
+                else {
+                    this.report.connectionTime = new date_controller_1.DateController().toString();
+                    resolve();
+                }
                 process.on('SIGINT', this.handleKillSignal);
                 process.on('SIGTERM', this.handleKillSignal);
             })
@@ -70,7 +78,6 @@ class SubscriptionReporter {
     }
     receiveMessage() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.initializeTimeout();
             return new Promise((resolve, reject) => {
                 this.subscription.receiveMessage()
                     .then((message) => {
