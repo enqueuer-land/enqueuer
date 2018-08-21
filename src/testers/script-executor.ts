@@ -3,7 +3,7 @@ import {Test} from './test';
 import {Tester} from './tester';
 import {Store} from './store';
 
-export class TesterExecutor {
+export class ScriptExecutor {
 
     private functionBody: string;
     private arguments: {name: string, value: any}[] = [];

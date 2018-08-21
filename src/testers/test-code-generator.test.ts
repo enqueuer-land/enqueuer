@@ -17,10 +17,10 @@ describe('TesterCodeGenerator', () => {
         expect(() => testCodeGenerator.generate({label: 'label name', expected: 5, unknown: 3})).toThrow();
     });
 
-    it('Should generate toBeGreaterThanFunction', () => {
+    it('Should generate function', () => {
         const testCodeGenerator: TestCodeGenerator = new TestCodeGenerator('tester');
 
-        const code: string = testCodeGenerator.generate({label: 'label name', expected: 5, toBeGreaterThan: 3});
-        expect(code).toBe("tester.toBeGreaterThan(`label name`, 5, 3);");
+        const code: string = testCodeGenerator.generate({label: 'label name', expected: 5, isGreaterThan: 3});
+        expect(code).toBe("tester.isGreaterThan(`label name`, 5, 3);");
     });
 });

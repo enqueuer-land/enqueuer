@@ -6,7 +6,7 @@ import {Container} from 'conditional-injector';
 import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
-import {TesterExecutor} from '../../testers/tester-executor';
+import {ScriptExecutor} from '../../testers/script-executor';
 import Signals = NodeJS.Signals;
 import {TestModel} from '../../models/outputs/test-model';
 import {SubscriptionModel} from '../../models/inputs/subscription-model';
@@ -177,7 +177,7 @@ export class SubscriptionReporter {
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         if (subscriptionAttributes.onInit) {
             Logger.info(`Executing subscription::onInit hook function`);
-            const testExecutor = new TesterExecutor(subscriptionAttributes.onInit);
+            const testExecutor = new ScriptExecutor(subscriptionAttributes.onInit);
             testExecutor.addArgument('subscription', subscriptionAttributes);
             this.executeHookFunction(testExecutor);
         }
@@ -191,14 +191,14 @@ export class SubscriptionReporter {
             return;
         }
         Logger.trace(`${this.subscription.name} executing onMessageReceived`);
-        const testExecutor = new TesterExecutor(this.subscription.onMessageReceived);
+        const testExecutor = new ScriptExecutor(this.subscription.onMessageReceived);
         testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
         this.executeHookFunction(testExecutor);
         this.report.messageReceivedTime = new DateController().toString();
     }
 
-    private executeHookFunction(testExecutor: TesterExecutor) {
+    private executeHookFunction(testExecutor: ScriptExecutor) {
         const tests = testExecutor.execute();
         this.report.tests = tests.map(test => {
             return {name: test.label, valid: test.valid, description: test.description};

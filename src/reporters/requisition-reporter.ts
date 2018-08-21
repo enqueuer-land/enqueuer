@@ -7,7 +7,7 @@ import {Timeout} from '../timers/timeout';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {Container} from 'conditional-injector';
 import {TestModel} from '../models/outputs/test-model';
-import {TesterExecutor} from '../testers/tester-executor';
+import {ScriptExecutor} from '../testers/script-executor';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -24,7 +24,7 @@ export class RequisitionReporter {
         this.reportGenerator = new ReportGenerator(requisitionAttributes);
         if (requisitionAttributes.onInit) {
             Logger.info(`Executing requisition::onInit hook function`);
-            const testExecutor = new TesterExecutor(requisitionAttributes.onInit);
+            const testExecutor = new ScriptExecutor(requisitionAttributes.onInit);
             testExecutor.addArgument('requisition', requisitionAttributes);
             this.executeHookFunction(testExecutor);
         }
@@ -116,7 +116,7 @@ export class RequisitionReporter {
         this.onFinishCallback();
     }
 
-    private executeHookFunction(testExecutor: TesterExecutor) {
+    private executeHookFunction(testExecutor: ScriptExecutor) {
         const tests = testExecutor.execute();
         this.reportGenerator.addTests(tests.map(test => {
             return {name: test.label, valid: test.valid, description: test.description};

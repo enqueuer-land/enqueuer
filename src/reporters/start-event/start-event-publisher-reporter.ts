@@ -8,7 +8,7 @@ import {Container, Injectable} from 'conditional-injector';
 import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
-import {TesterExecutor} from '../../testers/tester-executor';
+import {ScriptExecutor} from '../../testers/script-executor';
 import {Store} from '../../testers/store';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
@@ -76,7 +76,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
         }
         Logger.trace(`Publisher received response`);
 
-        const testExecutor = new TesterExecutor(this.publisher.onMessageReceived);
+        const testExecutor = new ScriptExecutor(this.publisher.onMessageReceived);
         testExecutor.addArgument('publisher', this.publisher);
         testExecutor.addArgument('message', this.publisher.messageReceived);
 
@@ -89,7 +89,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
     private executeOnInitFunction(publisher: input.PublisherModel): Publisher {
         Logger.trace(`Executing publisher::onInit function`);
         if (publisher.onInit) {
-            const testExecutor = new TesterExecutor(publisher.onInit);
+            const testExecutor = new ScriptExecutor(publisher.onInit);
             testExecutor.addArgument('publisher', publisher);
 
             const tests = testExecutor.execute();

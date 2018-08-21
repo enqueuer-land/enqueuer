@@ -1,4 +1,4 @@
-import {TesterExecutor} from './tester-executor';
+import {ScriptExecutor} from './script-executor';
 import {Tester} from "./tester";
 
 const testIsEqualToMock = jest.fn();
@@ -14,10 +14,10 @@ Tester.mockImplementation(() => {
     };
 });
 
-describe('TesterExecutor', () => {
+describe('ScriptExecutor', () => {
 
     it('Should add argument and pass it to the function', () => {
-        const testerExecutor: TesterExecutor = new TesterExecutor('name.value++;');
+        const testerExecutor: ScriptExecutor = new ScriptExecutor('name.value++;');
         const arg = {value: 2};
 
         testerExecutor.addArgument('name', arg);
@@ -27,7 +27,7 @@ describe('TesterExecutor', () => {
     });
 
     it('Should call tester assertions', () => {
-        const testerExecutor: TesterExecutor = new TesterExecutor(`tester.isEqualTo('label', 2, 3);`);
+        const testerExecutor: ScriptExecutor = new ScriptExecutor(`tester.isEqualTo('label', 2, 3);`);
 
         const tests = testerExecutor.execute();
 
@@ -38,8 +38,8 @@ describe('TesterExecutor', () => {
 
     it('Should call store', () => {
         let getter: any = {};
-        new TesterExecutor(`store.name = 'initial';`).execute();
-        const tester: TesterExecutor = new TesterExecutor(`getter.name = store.name; console.log(store.name)`);
+        new ScriptExecutor(`store.name = 'initial';`).execute();
+        const tester: ScriptExecutor = new ScriptExecutor(`getter.name = store.name; console.log(store.name)`);
         tester.addArgument('getter', getter);
 
         tester.execute();
@@ -48,7 +48,7 @@ describe('TesterExecutor', () => {
     });
 
     it('Should catch function creation error', () => {
-        const testerExecutor: TesterExecutor = new TesterExecutor('invalid statement');
+        const testerExecutor: ScriptExecutor = new ScriptExecutor('invalid statement');
 
         const tests = testerExecutor.execute();
 
@@ -59,7 +59,7 @@ describe('TesterExecutor', () => {
     });
 
     it('Should catch function execution error', () => {
-        const testerExecutor: TesterExecutor = new TesterExecutor('notDefined++');
+        const testerExecutor: ScriptExecutor = new ScriptExecutor('notDefined++');
 
         const tests = testerExecutor.execute();
 
