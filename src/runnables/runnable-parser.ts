@@ -34,7 +34,7 @@ export class RunnableParser {
         const parsedRunnable = this.parseToObject(runnableMessage);
         let variablesReplaced: any = this.replaceVariables(parsedRunnable);
         if (!this.validator(variablesReplaced)) {
-            this.throwError(variablesReplaced);
+            this.throwError();
         }
         if (!variablesReplaced.id) {
             variablesReplaced.id = new IdGenerator(variablesReplaced).generateId();
@@ -44,8 +44,7 @@ export class RunnableParser {
         return runnableWithId;
     }
 
-    private throwError(variablesReplaced: any) {
-        Logger.error(`Invalid runnable: ${JSON.stringify(variablesReplaced, null, 2)}`);
+    private throwError() {
         if (this.validator.errors) {
             this.validator.errors.forEach(error => {
                 Logger.error(JSON.stringify(error));

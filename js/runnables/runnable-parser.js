@@ -40,7 +40,7 @@ class RunnableParser {
         const parsedRunnable = this.parseToObject(runnableMessage);
         let variablesReplaced = this.replaceVariables(parsedRunnable);
         if (!this.validator(variablesReplaced)) {
-            this.throwError(variablesReplaced);
+            this.throwError();
         }
         if (!variablesReplaced.id) {
             variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
@@ -49,8 +49,7 @@ class RunnableParser {
         logger_1.Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
         return runnableWithId;
     }
-    throwError(variablesReplaced) {
-        logger_1.Logger.error(`Invalid runnable: ${JSON.stringify(variablesReplaced, null, 2)}`);
+    throwError() {
         if (this.validator.errors) {
             this.validator.errors.forEach(error => {
                 logger_1.Logger.error(JSON.stringify(error));
@@ -72,7 +71,7 @@ class RunnableParser {
             }
             catch (jsonErr) {
                 logger_1.Logger.warning(`Not able to parse as Json: ${jsonErr}`);
-                throw Error(JSON.stringify({ jsonError: jsonErr.toString(), ymlError: ymlErr }));
+                throw Error(JSON.stringify({ ymlError: ymlErr, jsonError: jsonErr.toString() }));
             }
         }
     }
