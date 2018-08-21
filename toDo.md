@@ -27,10 +27,9 @@ One of:
     - Basic Unix tools required for some tests, Git for Windows includes Git Bash and tools which can be included in the global PATH.
     - To build, launch a git shell (e.g. Cmd or PowerShell), run vcbuild.bat (to build with VS2017 you need to explicitly add a vs2017 argument), which will checkout the GYP code into build/gyp, generate uv.sln as well as the necesery related project files, and start building.
 
+Config option to chose parallel/serial executions
 Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Yaml files explaining input values
 Use glob in filenamewatcher. Rename filename watcher to filesystem watcher
-test('label').assertThat(2).isLessThan(3);
-//EventTestExecutor - improve test on assertions

@@ -10,12 +10,16 @@ runnables:
       payload: filePublisher
       filenamePrefix: temp/fileTest
       filenameExtension: file
-      onInit: publisher.payload=new Date().getTime();
+      onInit:
+        script: publisher.payload=new Date().getTime();
   subscriptions:
   - type: file-name-watcher
     name: fileSubscription
     fileNamePattern: temp/fileTest*file
-    onMessageReceived: >-
-      const now = new Date().getTime();
-      tester.isGreaterThanOrEqualTo('Some time has passed', now + '', message.content);
+    onMessageReceived:
+      script: now = new Date().getTime();
+      assertions:
+      - name: Some time has passed
+        expected: now
+        isGreaterThanOrEqualTo: message.content
     timeout: 1000

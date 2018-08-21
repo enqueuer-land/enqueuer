@@ -9,7 +9,7 @@ runnables:
     valid: true
     tests:
       -
-        name: 'Requisition exists'
+        name: 'Requisitions exists onInit'
         valid: true
         description: '''[object Object]'' is defined'
       -
@@ -18,9 +18,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: example
     time:
-      totalTime: 127
-      startTime: '2018-08-21T00:11:06.891Z'
-      endTime: '2018-08-21T00:11:07.018Z'
+      totalTime: 35
+      startTime: '2018-08-21T19:14:16.430Z'
+      endTime: '2018-08-21T19:14:16.465Z'
       timeout: 1000
     subscriptions:
       -
@@ -38,7 +38,7 @@ runnables:
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit'' contains ''subscription::onInit'''
+            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived'' contains ''subscription::onInit'''
           -
             name: 'Subscription exists onInit'
             valid: true
@@ -46,14 +46,14 @@ runnables:
           -
             name: 'Subscription name'
             valid: true
-            description: '''subscription'' is equal to ''subscription'''
+            description: '''changed'' is equal to ''changed'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-21T00:11:06.936Z'
-        messageReceivedTime: '2018-08-21T00:11:07.000Z'
+        connectionTime: '2018-08-21T19:14:16.442Z'
+        messageReceivedTime: '2018-08-21T19:14:16.459Z'
     startEvent:
       publisher:
         name: publishing
@@ -67,7 +67,7 @@ runnables:
           -
             name: 'Publisher name'
             valid: true
-            description: '''publishing'' is equal to ''publishing'''
+            description: '''changed'' is defined'
           -
             name: Published
             valid: true
@@ -83,9 +83,9 @@ runnables:
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit -> subscription::onMessageReceived'' contains ''publisher::onInit'''
+            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived'' contains ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T00:11:07.018Z'
+        publishTime: '2018-08-21T19:14:16.465Z'

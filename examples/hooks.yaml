@@ -1,0 +1,67 @@
+name: hooks example
+id: hook
+runnables:
+- timeout: 1000
+  onInit:
+    script: |-
+      store.sequence = 'requisition::onInit';
+    assertions:
+    - name: Requisitions exists onInit
+      isDefined: requisition
+  name: example
+  startEvent:
+    publisher:
+      type: tcp-client
+      timeout: 1000
+      serverAddress: localhost
+      port: 23080
+      name: publishing
+      payload: it
+      onInit:
+        script: |-
+          publisher.name = 'changed';
+          store.sequence += ' -> publisher::onInit';
+        assertions:
+          - name: Publisher exists onInit
+            isDefined: publisher
+          - name: Publisher name
+            expected: publisher.name
+            isDefined: publisher
+      onMessageReceived:
+        script: store.sequence += ' -> publisher::onMessageReceived';
+        assertions:
+          - name: Publisher exists onMessageReceived
+            isDefined: publisher
+          - name: Publisher name changed
+            expected: publisher.name
+            isEqualTo: `changed`
+          - name: Publisher onInit executed
+            expected: store.sequence
+            contains: `publisher::onInit`
+  subscriptions:
+    - type: tcp-server
+      name: subscription
+      port: 23080
+      response: hook response
+      onInit:
+        script: |-
+          subscription.name = 'changed';
+          store.sequence += ' -> subscription::onInit';
+        assertions:
+          - name: Subscription exists onInit
+            isDefined: subscription
+          - name: Subscription name
+            expected: subscription.name
+            isEqualTo: `changed`
+      onMessageReceived:
+        script: |-
+          store.sequence += ' -> subscription::onMessageReceived';
+        assertions:
+          - name: Subscription exists onMessageReceived
+            isDefined: subscription
+          - name: Subscription name changed
+            expected: subscription.name
+            isEqualTo: `changed`
+          - name: Subscription onInit executed
+            expected: store.sequence
+            contains: `subscription::onInit`

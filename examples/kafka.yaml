@@ -19,4 +19,8 @@ runnables:
       kafkaHost: localhost:9093
     options:
       topic: enqueuer-topic-name
-    onMessageReceived: tester.isEqualTo('kafka payload', message, 'kafkaPayload');
+    onMessageReceived:
+      assertions:
+        - name: kafka payload
+          expected: message
+          isEqualTo: `kafkaPayload`
