@@ -64,20 +64,23 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
             .forEach((test) => {
             if (!test.valid) {
                 this.failingTests.push(Object.assign(test, { hierarchy: hierarchy }));
-                let message = chalk_1.default.red(`\t[FAIL] `);
+                let message = `\t${chalk_1.default.black.bgRed('[FAIL]')} `;
                 message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.red);
                 console.log(message);
                 console.log(chalk_1.default.red(`\t\t ${test.description}`));
             }
             else {
-                let message = chalk_1.default.green(`\t[PASS] `);
+                let message = `\t${chalk_1.default.black.bgGreen('[PASS]')} `;
                 message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.green);
                 console.log(message);
             }
         });
     }
     createTestHierarchyMessage(hierarchy, name, color) {
-        return hierarchy.map((level) => color(level)).join(chalk_1.default.gray('->')) + chalk_1.default.gray('->') + chalk_1.default.reset(name);
+        if (!hierarchy || hierarchy.length == 0) {
+            return '';
+        }
+        return hierarchy.map((level) => color(level)).join(chalk_1.default.gray(' › ')) + chalk_1.default.gray(' › ') + chalk_1.default.reset(name);
     }
     printSummary() {
         const totalTime = new date_controller_1.DateController().getTime() - this.startTime.getTime();

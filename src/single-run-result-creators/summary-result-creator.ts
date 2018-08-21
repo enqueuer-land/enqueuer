@@ -71,12 +71,12 @@ export class SummaryResultCreator extends ResultCreator {
             .forEach((test: TestModel) => {
                 if (!test.valid) {
                     this.failingTests.push(Object.assign(test, {hierarchy: hierarchy}));
-                    let message = chalk.red(`\t[FAIL] `);
+                    let message = `\t${chalk.black.bgRed('[FAIL]')} `;
                     message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.red);
                     console.log(message);
                     console.log(chalk.red(`\t\t ${test.description}`));
                 } else {
-                    let message = chalk.green(`\t[PASS] `);
+                    let message = `\t${chalk.black.bgGreen('[PASS]')} `;
                     message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.green);
                     console.log(message);
                 }
@@ -84,7 +84,10 @@ export class SummaryResultCreator extends ResultCreator {
     }
 
     private createTestHierarchyMessage(hierarchy: string[], name: string, color: Function) {
-        return hierarchy.map((level: string) => color(level)).join(chalk.gray('->')) + chalk.gray('->') + chalk.reset(name);
+        if (!hierarchy || hierarchy.length == 0) {
+            return '';
+        }
+        return hierarchy.map((level: string) => color(level)).join(chalk.gray(' › ')) + chalk.gray(' › ') + chalk.reset(name);
     }
 
     private printSummary() {

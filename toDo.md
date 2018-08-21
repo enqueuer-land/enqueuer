@@ -33,3 +33,8 @@ Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Yaml files explaining input values
 Use glob in filenamewatcher. Rename filename watcher to filesystem watcher
+
+Summary to look like this.
+ FAIL  src/inceptionTest/inception.comp.ts
+  ● Inception test › should run enqueuer to test another enqueuer process
+    ✕ should run enqueuer to test another enqueuer process (3032ms)
