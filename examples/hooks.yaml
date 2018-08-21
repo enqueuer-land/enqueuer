@@ -1,14 +1,14 @@
 name: hooks example
 id: hook
 runnables:
-- timeout: 1000
+- name: example
+  timeout: 1000
   onInit:
     script: |-
       store.sequence = 'requisition::onInit';
     assertions:
     - name: Requisitions exists onInit
       isDefined: requisition
-  name: example
   startEvent:
     publisher:
       type: tcp-client

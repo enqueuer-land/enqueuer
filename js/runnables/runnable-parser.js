@@ -13,7 +13,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const id_generator_1 = require("../id-generator/id-generator");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const util_1 = require("util");
 const fs_1 = __importDefault(require("fs"));
 const ajv_1 = __importDefault(require("ajv"));
 const yaml = __importStar(require("yamljs"));
@@ -22,8 +21,8 @@ class RunnableParser {
     constructor() {
         const schemasPath = this.discoverSchemasFolder();
         this.validator = new ajv_1.default({ allErrors: true, verbose: false })
-            .addSchema(this.readJsonFile(schemasPath.concat('requisition-schema.json')))
-            .compile(this.readJsonFile(schemasPath.concat('runnable-schema.json')));
+            .addSchema(this.readJsonSchemaFile(schemasPath.concat('requisition-schema.json')))
+            .compile(this.readJsonSchemaFile(schemasPath.concat('runnable-schema.json')));
     }
     discoverSchemasFolder() {
         let realPath = process.argv[1];
@@ -40,30 +39,38 @@ class RunnableParser {
     parse(runnableMessage) {
         const parsedRunnable = this.parseToObject(runnableMessage);
         let variablesReplaced = this.replaceVariables(parsedRunnable);
-        if (!this.validator(variablesReplaced) && this.validator.errors) {
-            logger_1.Logger.error(`Invalid runnable: ${JSON.stringify(variablesReplaced, null, 2)}`);
-            this.validator.errors.map(error => {
-                logger_1.Logger.error(JSON.stringify(error));
-            });
-            throw new Error(JSON.stringify(this.validator.errors, null, 2));
+        if (!this.validator(variablesReplaced)) {
+            this.throwError(variablesReplaced);
         }
-        if (util_1.isNullOrUndefined(variablesReplaced.id)) {
+        if (!variablesReplaced.id) {
             variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
         }
         const runnableWithId = variablesReplaced;
         logger_1.Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
         return runnableWithId;
     }
+    throwError(variablesReplaced) {
+        logger_1.Logger.error(`Invalid runnable: ${JSON.stringify(variablesReplaced, null, 2)}`);
+        if (this.validator.errors) {
+            this.validator.errors.forEach(error => {
+                logger_1.Logger.error(JSON.stringify(error));
+            });
+            if (this.validator.errors.length > 0) {
+                throw Error(this.validator.errors[0].dataPath);
+            }
+        }
+        throw Error(JSON.stringify(this.validator, null, 2));
+    }
     parseToObject(runnableMessage) {
         try {
             return yaml.parse(runnableMessage);
         }
         catch (err) {
-            logger_1.Logger.info(`Not able to parse as Yaml string to Object. Trying to parse as JSON string`);
+            logger_1.Logger.warning(`Not able to parse as Yaml string to Object. Trying to parse as JSON string`);
             return JSON.parse(runnableMessage);
         }
     }
-    readJsonFile(filename) {
+    readJsonSchemaFile(filename) {
         return JSON.parse(fs_1.default.readFileSync(filename).toString());
     }
     replaceVariables(parsedRunnable) {

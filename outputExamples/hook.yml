@@ -1,12 +1,12 @@
 type: runnable
-valid: false
+valid: true
 tests: []
 name: 'hooks example'
 id: hook
 runnables:
   -
     type: requisition
-    valid: false
+    valid: true
     tests:
       -
         name: 'Requisitions exists onInit'
@@ -18,9 +18,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: example
     time:
-      totalTime: 37
-      startTime: '2018-08-21T20:19:59.426Z'
-      endTime: '2018-08-21T20:19:59.463Z'
+      totalTime: 39
+      startTime: '2018-08-21T20:53:56.749Z'
+      endTime: '2018-08-21T20:53:56.788Z'
       timeout: 1000
     subscriptions:
       -
@@ -52,12 +52,12 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-21T20:19:59.437Z'
-        messageReceivedTime: '2018-08-21T20:19:59.454Z'
+        connectionTime: '2018-08-21T20:53:56.761Z'
+        messageReceivedTime: '2018-08-21T20:53:56.782Z'
     startEvent:
       publisher:
         name: publishing
-        valid: false
+        valid: true
         type: tcp-client
         tests:
           -
@@ -65,14 +65,9 @@ runnables:
             valid: true
             description: '''[object Object]'' is defined'
           -
-            name: 'Assertion ''Publisher name'' is valid'
-            valid: false
-            description: 'ReferenceError: publishera is not defined'
-            hierarchy:
-              - examples/hooks.yaml
-              - 'hooks example'
-              - example
-              - publishing
+            name: 'Publisher name'
+            valid: true
+            description: '''changed'' is defined'
           -
             name: Published
             valid: true
@@ -93,4 +88,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T20:19:59.462Z'
+        publishTime: '2018-08-21T20:53:56.788Z'
