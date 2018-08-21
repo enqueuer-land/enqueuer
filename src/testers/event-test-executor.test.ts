@@ -46,7 +46,7 @@ describe('EventTestExecutor', () => {
         expect(generateMock).toHaveBeenCalledTimes(3);
         expect(generateMock).toHaveBeenNthCalledWith(1, {"expected": 2, "isEqualTo": 2, "name": "equalName"});
         expect(generateMock).toHaveBeenNthCalledWith(2, {"isDefined": "x", "name": "isDefinedName"});
-        expect(generateMock).toHaveBeenNthCalledWith(3, {"unamed": "x", "name": "2"});
+        expect(generateMock).toHaveBeenNthCalledWith(3, {"unamed": "x", "name": "Assertion #2"});
     });
 
     it('Should add argument and pass it to the script executor', () => {

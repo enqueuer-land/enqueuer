@@ -20,7 +20,7 @@ class EventTestExecutor {
         let assertionCounter = 0;
         return assertions.map(assertion => {
             if (!assertion.name) {
-                assertion.name = assertionCounter.toString();
+                assertion.name = `Assertion #${assertionCounter.toString()}`;
             }
             ++assertionCounter;
             return assertion;

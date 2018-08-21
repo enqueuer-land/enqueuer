@@ -7,7 +7,7 @@ import {DateController} from '../timers/date-controller';
 
 export class SummaryResultCreator extends ResultCreator {
     private testCounter: number = 0;
-    private failingTests: TestModel[] = [];
+    private failingTests: any = [];
     private startTime: DateController;
 
     public constructor() {
@@ -16,7 +16,7 @@ export class SummaryResultCreator extends ResultCreator {
     }
 
     public addTestSuite(name: string, report: ResultModel): void {
-        this.findRequisitions(report, name);
+        this.findRequisitions(report, [name]);
     }
 
     public addError(err: any): void {
@@ -33,55 +33,58 @@ export class SummaryResultCreator extends ResultCreator {
         if (this.failingTests.length > 0) {
             console.log(chalk.red(`\t\tFailing tests:`));
             this.failingTests
-                .forEach((failingTest) => {
-                    console.log(chalk.red(`\t\t\t${failingTest.name}`));
-                    console.log(`\t\t\t\t\t${failingTest.description}`);
+                .forEach((failingTest: any) => {
+                    let message = '\t\t\t';
+                    message += this.createTestHierarchyMessage(failingTest.hierarchy, failingTest.name, chalk.red);
+                    console.log(message);
+                    console.log(chalk.red(`\t\t\t\t\t ${failingTest.description}`));
                 });
         }
     }
 
-    private findRequisitions(resultModel: ResultModel, prefix: string) {
+    private findRequisitions(resultModel: ResultModel, hierarchy: string[]) {
         resultModel.runnables.forEach((runnable: ResultModel | RequisitionModel) => {
-            const levelName = this.addLevel(prefix, resultModel.name);
+            const levelName = hierarchy.concat(resultModel.name);
             if (runnable.type == 'runnable') {
-                this.findRequisitions(runnable, levelName);
+                this.findRequisitions(runnable as ResultModel, levelName);
             } else if (runnable.type == 'requisition') {
                 const requisition = runnable as RequisitionModel;
-                this.findTests(requisition, this.addLevel(levelName, requisition.name));
+                this.findTests(requisition, levelName.concat(requisition.name));
             }
         });
     }
 
-    private findTests(requisition: RequisitionModel, prefix: string) {
-        this.inspectInvalidTests(requisition.tests, prefix);
-        requisition.subscriptions.forEach(subscription =>
-                                        this.inspectInvalidTests(subscription.tests, this.addLevel(prefix, subscription.name)));
+    private findTests(requisition: RequisitionModel, hierarchy: string[]) {
+        this.inspectInvalidTests(requisition.tests, hierarchy);
+        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
         if (requisition.startEvent.subscription) {
-            this.inspectInvalidTests(requisition.startEvent.subscription.tests, this.addLevel(prefix, requisition.startEvent.subscription.name));
+            this.inspectInvalidTests(requisition.startEvent.subscription.tests, hierarchy.concat(requisition.startEvent.subscription.name));
         }
         if (requisition.startEvent.publisher) {
-            this.inspectInvalidTests(requisition.startEvent.publisher.tests, this.addLevel(prefix, requisition.startEvent.publisher.name));
+            this.inspectInvalidTests(requisition.startEvent.publisher.tests, hierarchy.concat(requisition.startEvent.publisher.name));
         }
     }
 
-    private inspectInvalidTests(tests: TestModel[], prefix: string) {
+    private inspectInvalidTests(tests: TestModel[], hierarchy: string[]) {
         this.testCounter += Object.keys(tests).length;
         tests
             .forEach((test: TestModel) => {
-                const testHierarchy = this.addLevel(prefix, test.name);
                 if (!test.valid) {
-                    test.name = testHierarchy;
-                    this.failingTests.push(test);
-                    console.log(chalk.red(`\t[FAIL] ${testHierarchy}`));
+                    this.failingTests.push(Object.assign(test, {hierarchy: hierarchy}));
+                    let message = chalk.red(`\t[FAIL] `);
+                    message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.red);
+                    console.log(message);
                     console.log(chalk.red(`\t\t ${test.description}`));
                 } else {
-                    console.log(chalk.green(`\t[PASS] ${testHierarchy}`));
+                    let message = chalk.green(`\t[PASS] `);
+                    message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.green);
+                    console.log(message);
                 }
             });
     }
 
-    private addLevel(prefix: string, newLevelName: string) {
-        return prefix.concat(' -> ').concat(newLevelName);
+    private createTestHierarchyMessage(hierarchy: string[], name: string, color: Function) {
+        return hierarchy.map((level: string) => color(level)).join(chalk.gray('->')) + chalk.gray('->') + chalk.reset(name);
     }
 
     private printSummary() {

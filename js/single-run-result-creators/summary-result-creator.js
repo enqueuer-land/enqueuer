@@ -14,7 +14,7 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
         this.startTime = new date_controller_1.DateController();
     }
     addTestSuite(name, report) {
-        this.findRequisitions(report, name);
+        this.findRequisitions(report, [name]);
     }
     addError(err) {
         ++this.testCounter;
@@ -29,51 +29,55 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
             console.log(chalk_1.default.red(`\t\tFailing tests:`));
             this.failingTests
                 .forEach((failingTest) => {
-                console.log(chalk_1.default.red(`\t\t\t${failingTest.name}`));
-                console.log(`\t\t\t\t\t${failingTest.description}`);
+                let message = '\t\t\t';
+                message += this.createTestHierarchyMessage(failingTest.hierarchy, failingTest.name, chalk_1.default.red);
+                console.log(message);
+                console.log(chalk_1.default.red(`\t\t\t\t\t ${failingTest.description}`));
             });
         }
     }
-    findRequisitions(resultModel, prefix) {
+    findRequisitions(resultModel, hierarchy) {
         resultModel.runnables.forEach((runnable) => {
-            const levelName = this.addLevel(prefix, resultModel.name);
+            const levelName = hierarchy.concat(resultModel.name);
             if (runnable.type == 'runnable') {
                 this.findRequisitions(runnable, levelName);
             }
             else if (runnable.type == 'requisition') {
                 const requisition = runnable;
-                this.findTests(requisition, this.addLevel(levelName, requisition.name));
+                this.findTests(requisition, levelName.concat(requisition.name));
             }
         });
     }
-    findTests(requisition, prefix) {
-        this.inspectInvalidTests(requisition.tests, prefix);
-        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, this.addLevel(prefix, subscription.name)));
+    findTests(requisition, hierarchy) {
+        this.inspectInvalidTests(requisition.tests, hierarchy);
+        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
         if (requisition.startEvent.subscription) {
-            this.inspectInvalidTests(requisition.startEvent.subscription.tests, this.addLevel(prefix, requisition.startEvent.subscription.name));
+            this.inspectInvalidTests(requisition.startEvent.subscription.tests, hierarchy.concat(requisition.startEvent.subscription.name));
         }
         if (requisition.startEvent.publisher) {
-            this.inspectInvalidTests(requisition.startEvent.publisher.tests, this.addLevel(prefix, requisition.startEvent.publisher.name));
+            this.inspectInvalidTests(requisition.startEvent.publisher.tests, hierarchy.concat(requisition.startEvent.publisher.name));
         }
     }
-    inspectInvalidTests(tests, prefix) {
+    inspectInvalidTests(tests, hierarchy) {
         this.testCounter += Object.keys(tests).length;
         tests
             .forEach((test) => {
-            const testHierarchy = this.addLevel(prefix, test.name);
             if (!test.valid) {
-                test.name = testHierarchy;
-                this.failingTests.push(test);
-                console.log(chalk_1.default.red(`\t[FAIL] ${testHierarchy}`));
+                this.failingTests.push(Object.assign(test, { hierarchy: hierarchy }));
+                let message = chalk_1.default.red(`\t[FAIL] `);
+                message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.red);
+                console.log(message);
                 console.log(chalk_1.default.red(`\t\t ${test.description}`));
             }
             else {
-                console.log(chalk_1.default.green(`\t[PASS] ${testHierarchy}`));
+                let message = chalk_1.default.green(`\t[PASS] `);
+                message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.green);
+                console.log(message);
             }
         });
     }
-    addLevel(prefix, newLevelName) {
-        return prefix.concat(' -> ').concat(newLevelName);
+    createTestHierarchyMessage(hierarchy, name, color) {
+        return hierarchy.map((level) => color(level)).join(chalk_1.default.gray('->')) + chalk_1.default.gray('->') + chalk_1.default.reset(name);
     }
     printSummary() {
         const totalTime = new date_controller_1.DateController().getTime() - this.startTime.getTime();
