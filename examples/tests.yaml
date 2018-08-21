@@ -1,47 +1,27 @@
-onMessageReceived:
-    script: |-
-      console.log('uhul');
-    tests:
-    - label: 'Beatles song'
-      expected: message
-      isEqualTo: 'Hey Judae';
-
-    - label: 'Beatles song'
-      expected: message.length
-      isGreaterThan: 5
-
-name: runnable properties example
-id: runnable
+name: runnableUdpName
+id: udp
 runnables:
-- name: storer
-  iterations: 10
-  runnables:
-  - name: incrementer
-    onInit: >-
-      store.iteration = (store.iteration + 1) || 0;
-      store.lastExecution = new Date().getTime();
-    startEvent:
-      publisher:
-        type: zero-mq-pub
-        name: There has to be a publisher
-        payload: blabla
-        topic: runnable.incrementor
-        onInit: >-
-          publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
-- name: checker
-  delay: 3000
-  runnables:
-  - name: checker
-    onInit: >-
-      tester.isEqualTo('It was executed 10 times', store.iteration, 9);
-      const delayedTime = new Date().getTime() - store.lastExecution;
-      tester.isGreaterThan('It delayed for at least ~3 seconds', delayedTime, 3000);
-      tester.isLessThan('It delayed for no more than ~3 seconds', delayedTime - 500, 3000);
-    startEvent:
-      publisher:
-        type: zero-mq-pub
-        name: There has to be a publisher
-        payload: blabla
-        topic: runnable.checker
-        onInit: >-
-          publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
+- name: udp
+  startEvent:
+    publisher:
+      type: udp
+      name: udpPublisher
+      serverAddress: localhost
+      port: '23070'
+      payload: it
+  subscriptions:
+  - type: udp
+    port: 23070
+    name: udpSubscription
+    timeout: 500
+  onMessageReceived:
+      script: |-
+        console.log('uhul');
+        const payload = Buffer.from(message.payload);
+      tests:
+      - label: Payload
+        expected: payload.toString()
+        isEqualTo: 'it'
+      - label: Client Address
+        expected: message.remoteInfo.address
+        isGreaterThan: '127.0.0.1'

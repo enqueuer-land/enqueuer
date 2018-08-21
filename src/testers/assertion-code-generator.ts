@@ -1,6 +1,7 @@
 import {Tester} from './tester';
+import {Assertion} from './event';
 
-export class TestCodeGenerator {
+export class AssertionCodeGenerator {
     private testerInstanceName: string;
     private testerMethods: string[];
     private tester: any;
@@ -11,18 +12,18 @@ export class TestCodeGenerator {
         this.testerMethods = this.identifyTesterMethods();
     }
 
-    public generate(test: any): string {
-        const assertion = this.getAssertion(test);
-        const assertionMethodName = Object.getOwnPropertyNames(assertion)[0];
+    public generate(assertion: Assertion): string {
+        const condition = this.getCondition(assertion);
+        const assertionMethodName = Object.getOwnPropertyNames(condition)[0];
 
         if (this.tester[assertionMethodName] !== undefined) {
-            const value = assertion[assertionMethodName];
-            return `${this.testerInstanceName}.${assertionMethodName}(\`${test.label}\`, ${test.expected}, ${value});`;
+            const value = condition[assertionMethodName];
+            return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertion.label}\`, ${assertion.expected}, ${value});`;
         }
         throw new Error(`Tester class has no method called ${assertionMethodName}. Available ones are: ${this.testerMethods}`);
     }
 
-    private getAssertion(test: any): any {
+    private getCondition(test: any): any {
         let clone: any = Object.assign({}, test);
         if (!clone.label) {
             throw new Error(`Test has to have a 'label' field`);

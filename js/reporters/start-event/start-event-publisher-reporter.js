@@ -24,7 +24,7 @@ const logger_1 = require("../../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const tester_executor_1 = require("../../testers/tester-executor");
+const script_executor_1 = require("../../testers/script-executor");
 const store_1 = require("../../testers/store");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
@@ -82,7 +82,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
             return;
         }
         logger_1.Logger.trace(`Publisher received response`);
-        const testExecutor = new tester_executor_1.TesterExecutor(this.publisher.onMessageReceived);
+        const testExecutor = new script_executor_1.ScriptExecutor(this.publisher.onMessageReceived);
         testExecutor.addArgument('publisher', this.publisher);
         testExecutor.addArgument('message', this.publisher.messageReceived);
         const tests = testExecutor.execute();
@@ -93,7 +93,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     executeOnInitFunction(publisher) {
         logger_1.Logger.trace(`Executing publisher::onInit function`);
         if (publisher.onInit) {
-            const testExecutor = new tester_executor_1.TesterExecutor(publisher.onInit);
+            const testExecutor = new script_executor_1.ScriptExecutor(publisher.onInit);
             testExecutor.addArgument('publisher', publisher);
             const tests = testExecutor.execute();
             const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();

@@ -14,7 +14,7 @@ const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
-const tester_executor_1 = require("../../testers/tester-executor");
+const script_executor_1 = require("../../testers/script-executor");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -174,7 +174,7 @@ class SubscriptionReporter {
     executeOnInitFunction(subscriptionAttributes) {
         if (subscriptionAttributes.onInit) {
             logger_1.Logger.info(`Executing subscription::onInit hook function`);
-            const testExecutor = new tester_executor_1.TesterExecutor(subscriptionAttributes.onInit);
+            const testExecutor = new script_executor_1.ScriptExecutor(subscriptionAttributes.onInit);
             testExecutor.addArgument('subscription', subscriptionAttributes);
             this.executeHookFunction(testExecutor);
         }
@@ -187,7 +187,7 @@ class SubscriptionReporter {
             return;
         }
         logger_1.Logger.trace(`${this.subscription.name} executing onMessageReceived`);
-        const testExecutor = new tester_executor_1.TesterExecutor(this.subscription.onMessageReceived);
+        const testExecutor = new script_executor_1.ScriptExecutor(this.subscription.onMessageReceived);
         testExecutor.addArgument('subscription', this.subscription);
         testExecutor.addArgument('message', this.subscription.messageReceived);
         this.executeHookFunction(testExecutor);

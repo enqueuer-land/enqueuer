@@ -1,7 +1,4 @@
-import {Logger} from '../loggers/logger';
 import {Test} from './test';
-import {Tester} from './tester';
-import {Store} from './store';
 
 export class ScriptExecutor {
 
@@ -17,49 +14,17 @@ export class ScriptExecutor {
     }
 
     public execute(): Test[] {
-        try {
-            const dynamicFunction = this.createFunction();
-            try {
-                return this.executeFunction(dynamicFunction);
-            } catch (exc) {
-                return this.executionError(exc);
-            }
-        } catch (exc) {
-            return this.creationError(exc);
-        }
+        return this.executeFunction(this.createFunction());
     }
 
     private createFunction() {
-        const constructorArgs = ['store', 'tester']
-            .concat(this.arguments.map(arg => arg.name))
-            .concat(this.functionBody);
-        const dynamicFunction: Function = ((...args: string[]) => new Function(...args)).apply(null, constructorArgs);
-        return dynamicFunction;
+        const constructorArgs = this.arguments.map(arg => arg.name).concat(this.functionBody);
+        return ((...args: string[]) => new Function(...args)).apply(null, constructorArgs);
     }
 
     private executeFunction(dynamicFunction: Function): Test[] {
-        let tester = new Tester();
-        const callArgs = [Store.getData(), tester].concat(this.arguments.map(arg => arg.value));
-        dynamicFunction.apply(this, callArgs);
-        return tester.getReport();
-    }
-
-    private creationError(exc: any) {
-        Logger.error(`Error creating function: ${exc}`);
-        return [{
-            label: 'Function created',
-            valid: false,
-            description: exc.toString()
-        }];
-    }
-
-    private executionError(exc: any) {
-        Logger.error(`Error executing function: ${exc}`);
-        return [{
-            label: 'Function executed',
-            valid: false,
-            description: exc.toString()
-        }];
+        const callArgs = this.arguments.map(arg => arg.value);
+        return dynamicFunction.apply(this, callArgs);
     }
 
 }
