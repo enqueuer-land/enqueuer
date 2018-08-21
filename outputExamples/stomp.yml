@@ -1,7 +1,7 @@
 type: runnable
 valid: true
 tests: []
-name: runnableStomp
+name: 'stomp test description'
 id: stomp
 runnables:
   -
@@ -12,15 +12,15 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: RequisitionStomp
+    name: 'requisition description'
     time:
-      totalTime: 137
-      startTime: '2018-08-21T00:11:06.905Z'
-      endTime: '2018-08-21T00:11:07.042Z'
+      totalTime: 128
+      startTime: '2018-08-21T22:01:16.863Z'
+      endTime: '2018-08-21T22:01:16.991Z'
       timeout: 3000
     subscriptions:
       -
-        name: stompSub
+        name: 'subscription description'
         type: stomp
         tests:
           -
@@ -32,11 +32,11 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-21T00:11:07.006Z'
-        messageReceivedTime: '2018-08-21T00:11:07.042Z'
+        connectionTime: '2018-08-21T22:01:16.958Z'
+        messageReceivedTime: '2018-08-21T22:01:16.991Z'
     startEvent:
       publisher:
-        name: stompPub
+        name: 'publisher description'
         valid: true
         type: stomp
         tests:
@@ -44,4 +44,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T00:11:07.041Z'
+        publishTime: '2018-08-21T22:01:16.985Z'

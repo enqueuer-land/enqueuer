@@ -192,9 +192,11 @@ class SubscriptionReporter {
         const eventTestExecutor = new event_test_executor_1.EventTestExecutor(onMessageReceived);
         eventTestExecutor.addArgument('subscription', this.subscription);
         eventTestExecutor.addArgument('message', message);
-        Object.keys(message).filter(key => typeof (message[key]) == 'object').forEach((key) => {
-            eventTestExecutor.addArgument(key, message[key]);
-        });
+        if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
+            Object.keys(message).forEach((key) => {
+                eventTestExecutor.addArgument(key, message[key]);
+            });
+        }
         this.executeHookFunction(eventTestExecutor);
         this.report.messageReceivedTime = new date_controller_1.DateController().toString();
     }

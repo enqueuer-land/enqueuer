@@ -27,7 +27,7 @@ export class KafkaSubscription extends Subscription {
             const consumer = this.createConsumer();
             consumer.on('message', (message: Message) => {
                 Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
-                resolve(message.value);
+                resolve(message);
                 consumer.close(() => {
                     Logger.trace('Kafka consumer is closed');
                 });

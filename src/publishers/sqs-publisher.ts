@@ -26,7 +26,7 @@ export class SqsPublisher extends Publisher {
                     Logger.error('Error publishing to SQS');
                     return reject(err);
                 } else {
-                    this.messageReceived = JSON.stringify(data);
+                    this.messageReceived = data;
                     Logger.trace(`SQS send message result: ${JSON.stringify(data).substr(0, 128)}...`);
                     return resolve();
                 }

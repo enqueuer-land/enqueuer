@@ -1,17 +1,14 @@
-name: runnableUDSName
+name: uds test description
 id: uds
 runnables:
-- name: uds
+- name: requisition description
   timeout: 3000
   startEvent:
     publisher:
+      name: publisher description
       type: uds
-      name: udsPublisher
-      path: "/tmp/unix.sock"
+      path: /tmp/unix.sock
       payload: I'll be replaced in 'onInit'
-      onMessageReceived:
-        script: |-
-          tester.isEqualTo('It is bidirectional', message, 'responsePayload');
       onInit:
         script: |-
           const payload = 'enqueuer';
@@ -20,10 +17,15 @@ runnables:
           store.uds2Timeout = '500';
           store.uds2Name = 'UDS2 Name';
           publisher.payload = store.udsPayload;
+      onMessageReceived:
+        assertions:
+          - name: It is bidirectional
+            expected: message
+            isEqualTo: `responsePayload`
   subscriptions:
-  - type: uds
-    path: "/tmp/unix.sock"
-    name: udsSubscription
+  - name: subscription description
+    type: uds
+    path: /tmp/unix.sock
     response: responsePayload
     timeout: 500
     onMessageReceived:
@@ -31,44 +33,44 @@ runnables:
       - name: Message received is enqueuer
         expected: message
         isEqualTo: store.udsPayload
-- name: <<uds2Name>>
+- name: <<uds2Name>> description
   startEvent:
     publisher:
+      name: udsPublisher2 description
       type: uds
-      name: udsPublisher2
-      path: "/tmp/unix2.sock"
-      payload: "{{udsPayload}}"
+      path: /tmp/unix2.sock
+      payload: <<udsPayload>>
       saveStream: udsPubStreamName
       onInit:
         assertions:
-        - name: Message to be published is {{udsPayload}}
+        - name: Message to be published is <<udsPayload>>
           expected: publisher.payload
           isEqualTo: store.udsPayload
   subscriptions:
-  - type: uds
-    path: "/tmp/unix2.sock"
+  - name: udsSubscription2 description
+    type: uds
+    path: /tmp/unix2.sock
     saveStream: udsSubStreamName
-    name: udsSubscription2
     onMessageReceived:
       assertions:
-      - name: 'Message received is {{udsPayload}} 2'
+      - name: Message received is <<udsPayload>> 2
         expected: message
         isEqualTo: store.udsPayload
     timeout: <<uds2Timeout>>
-- name: udsStreamLoader
+- name: udsStreamLoader description
   startEvent:
     publisher:
-      type: uds
       name: udsStreamLoader publisher
+      type: uds
       payload: I am still opened
       loadStream: udsPubStreamName
       onMessageReceived:
-      - name: 'Message received'
+      - name: Message received
         expected: message
         isEqualTo: I am still bidirectional
   subscriptions:
-  - type: uds
-    name: udsStreamLoader subscription
+  - name: udsStreamLoader subscription
+    type: uds
     loadStream: udsSubStreamName
     response: I am still bidirectional
     onMessageReceived:

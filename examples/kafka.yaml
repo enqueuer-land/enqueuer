@@ -1,19 +1,23 @@
-name: kafkaName
+name: kafka test description
 id: kafka
 runnables:
-- timeout: 8000
-  name: RequisitionKafka
+- name: requisition description
+  timeout: 8000
   startEvent:
     publisher:
       type: kafka
-      name: kafkaPub
+      name: publisher description
       client:
         kafkaHost: localhost:9093
       topic: enqueuer-topic-name
       payload: kafkaPayload
+      onMessageReceived:
+        assertions:
+        - name: kafka publish response payload
+          isDefined: `enqueuer-topic-name`
   subscriptions:
-  - type: kafka
-    name: kafkaSub
+  - name: subscription description
+    type: kafka
     timeout: 2000
     client:
       kafkaHost: localhost:9093
@@ -21,6 +25,15 @@ runnables:
       topic: enqueuer-topic-name
     onMessageReceived:
       assertions:
-        - name: kafka payload
-          expected: message
-          isEqualTo: `kafkaPayload`
+      - name: payload
+        expected: value
+        isEqualTo: `kafkaPayload`
+      - name: topic
+        expected: topic
+        isEqualTo: `enqueuer-topic-name`
+      - name: offset
+        isDefined: offset
+      - name: partition
+        isDefined: partition
+      - name: timestamp
+        isDefined: timestamp

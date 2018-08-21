@@ -1,7 +1,7 @@
 type: runnable
 valid: true
 tests: []
-name: runnableSqsName
+name: 'sqs test description'
 id: sqs
 runnables:
   -
@@ -12,21 +12,33 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: sqsRequisition
+    name: 'requisition description'
     time:
-      totalTime: 93
-      startTime: '2018-08-21T00:11:06.905Z'
-      endTime: '2018-08-21T00:11:06.998Z'
+      totalTime: 89
+      startTime: '2018-08-21T22:01:16.863Z'
+      endTime: '2018-08-21T22:01:16.952Z'
       timeout: 5000
     subscriptions:
       -
-        name: sqsSubs
+        name: 'subscription description'
         type: sqs
         tests:
           -
-            name: 'Message contains q'
+            name: Body
             valid: true
-            description: '''enqueuer'' contains ''q'''
+            description: '''enqueuer'' contains ''enq'''
+          -
+            name: MessageId
+            valid: true
+            description: '''2ccdcc40-1ff7-48c7-aa73-c9c37ba3b4ea'' is defined'
+          -
+            name: ReceiptHandle
+            valid: true
+            description: '''2ccdcc40-1ff7-48c7-aa73-c9c37ba3b4ea#a103ece2-3ff3-40f9-8357-79fb9c5210c2'' is defined'
+          -
+            name: MD5OfBody
+            valid: true
+            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is defined'
           -
             valid: true
             name: 'Message received'
@@ -36,11 +48,11 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T00:11:06.909Z'
-        messageReceivedTime: '2018-08-21T00:11:06.996Z'
+        connectionTime: '2018-08-21T22:01:16.866Z'
+        messageReceivedTime: '2018-08-21T22:01:16.950Z'
     startEvent:
       publisher:
-        name: sqsPublisher
+        name: 'publisher description'
         valid: true
         type: sqs
         tests:
@@ -49,19 +61,27 @@ runnables:
             valid: true
             description: 'Published successfully'
           -
-            name: 'Request Id is equal to'
+            name: 'Request Id is all 000000'
             valid: true
             description: '''00000000-0000-0000-0000-000000000000'' is equal to ''00000000-0000-0000-0000-000000000000'''
           -
-            name: 'Md5Body exists'
+            name: ResponseMetadata
+            valid: true
+            description: '''[object Object]'' is defined'
+          -
+            name: MD5
             valid: true
             description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is defined'
           -
-            name: 'MessageId exists'
+            name: MD5OfMessageAttributes
             valid: true
-            description: '''f3243233-5f70-4938-b83e-48efd8ac1d5e'' is defined'
+            description: '''d41d8cd98f00b204e9800998ecf8427e'' is defined'
+          -
+            name: MessageId
+            valid: true
+            description: '''1fe95264-e153-4c9e-8d69-6b2184faabcc'' is defined'
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T00:11:06.998Z'
+        publishTime: '2018-08-21T22:01:16.951Z'

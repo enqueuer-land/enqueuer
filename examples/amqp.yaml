@@ -1,12 +1,12 @@
-name: runnableAmqp
+name: amqp test description
 id: amqp
 runnables:
-- timeout: 5000
-  name: AmqpReq
+- name: requisition description
+  timeout: 5000
   startEvent:
     publisher:
       type: amqp
-      name: AmqpPub
+      name: publisher description
       payload:
         how:
           about: a new object?
@@ -21,12 +21,12 @@ runnables:
       routingKey: enqueuer.integration.test.routing.key
       onInit:
         assertions:
-          -
-            expected: publisher.options.port
+          - expected: publisher.options.port
             isEqualTo: 5672
   subscriptions:
-  - type: amqp
-    name: AmqpSubs
+  - name: subscription description
+    type: amqp
+    timeout: 3000
     options:
       host: localhost
       port: 5672
@@ -47,4 +47,3 @@ runnables:
         - name: Routing Key
           expected: deliveryInfo.routingKey
           isEqualTo: `enqueuer.integration.test.routing.key`
-    timeout: 3000

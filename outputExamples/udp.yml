@@ -1,21 +1,21 @@
 type: runnable
 valid: true
 tests: []
-name: runnableUdpName
+name: 'udp test description'
 id: udp
 runnables:
   -
     type: requisition
     valid: true
     tests: []
-    name: udp
+    name: 'requisition description'
     time:
-      totalTime: 12
-      startTime: '2018-08-21T03:06:35.885Z'
-      endTime: '2018-08-21T03:06:35.897Z'
+      totalTime: 63
+      startTime: '2018-08-21T22:01:16.864Z'
+      endTime: '2018-08-21T22:01:16.927Z'
     subscriptions:
       -
-        name: udpSubscription
+        name: 'subscription description'
         type: udp
         tests:
           -
@@ -23,7 +23,7 @@ runnables:
             valid: true
             description: '''it'' is equal to ''it'''
           -
-            name: 'Client Address'
+            name: 'Remote Adderss'
             valid: true
             description: '''127.0.0.1'' is equal to ''127.0.0.1'''
           -
@@ -35,11 +35,11 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T03:06:35.887Z'
-        messageReceivedTime: '2018-08-21T03:06:35.896Z'
+        connectionTime: '2018-08-21T22:01:16.866Z'
+        messageReceivedTime: '2018-08-21T22:01:16.927Z'
     startEvent:
       publisher:
-        name: udpPublisher
+        name: 'publisher description'
         valid: true
         type: udp
         tests:
@@ -47,4 +47,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T03:06:35.894Z'
+        publishTime: '2018-08-21T22:01:16.926Z'

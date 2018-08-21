@@ -1,0 +1,25 @@
+name: udp test description
+id: udp
+runnables:
+- name: requisition description
+  startEvent:
+    publisher:
+      type: udp
+      name: publisher description
+      serverAddress: localhost
+      port: 23070
+      payload: it
+  subscriptions:
+  - name: subscription description
+    type: udp
+    port: 23070
+    timeout: 500
+    onMessageReceived:
+      script: payload = Buffer.from(message.payload);
+      assertions:
+      - name: Payload
+        expected: payload
+        isEqualTo: `it`
+      - name: Remote Adderss
+        expected: remoteInfo.address
+        isEqualTo: `127.0.0.1`

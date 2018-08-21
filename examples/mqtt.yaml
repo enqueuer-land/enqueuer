@@ -1,0 +1,32 @@
+name: mqtt test description
+id: mqtt
+runnables:
+- name: requisition description
+  timeout: 8000
+  startEvent:
+    publisher:
+      type: mqtt
+      name: publisher description
+      brokerAddress: mqtt://localhost
+      payload: enqueuer
+      topic: enqueuer/integration/public/test
+      options:
+        clientId: enqueuerPublishOptionsExampleIdDifferent2313
+  subscriptions:
+  - name: subscription description
+    type: mqtt
+    brokerAddress: mqtt://localhost
+    topic: '#'
+    onMessageReceived:
+      script: payload = Buffer.from(message.payload);
+      assertions:
+        - name: Payload
+          expected: payload
+          isEqualTo: `enqueuer`
+        - name: Topic
+          expected: topic
+          isEqualTo: `enqueuer/integration/public/test`
+        - name: Beatles song
+          expected: payload.length
+          isGreaterThan: 5
+    timeout: 5000

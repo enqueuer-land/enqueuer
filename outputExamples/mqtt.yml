@@ -1,41 +1,54 @@
 type: runnable
-valid: false
+valid: true
 tests: []
-name: runnableMqtt
+name: 'mqtt test description'
 id: mqtt
 runnables:
   -
     type: requisition
-    valid: false
+    valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: RequisitionMqtt
+    name: 'requisition description'
     time:
-      totalTime: 5505
-      startTime: '2018-08-20T20:29:18.025Z'
-      endTime: '2018-08-20T20:29:23.530Z'
+      totalTime: 153
+      startTime: '2018-08-21T22:01:16.840Z'
+      endTime: '2018-08-21T22:01:16.993Z'
       timeout: 8000
     subscriptions:
       -
-        name: MqttSub
+        name: 'subscription description'
         type: mqtt
         tests:
           -
-            valid: false
-            name: 'examples/mqtt.yml -> runnableMqtt -> RequisitionMqtt -> MqttSub -> Message received'
-            description: 'Subscription has not received its message in a valid time'
+            name: Payload
+            valid: true
+            description: '''enqueuer'' is equal to ''enqueuer'''
           -
-            valid: false
-            name: 'examples/mqtt.yml -> runnableMqtt -> RequisitionMqtt -> MqttSub -> No time out'
-            description: 'Subscription has timed out'
-        valid: false
-        connectionTime: '2018-08-20T20:29:18.526Z'
+            name: Topic
+            valid: true
+            description: '''enqueuer/integration/public/test'' is equal to ''enqueuer/integration/public/test'''
+          -
+            name: 'Beatles song'
+            valid: true
+            description: '''8'' is greater than ''5'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message successfully'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Subscription has not timed out'
+        valid: true
+        connectionTime: '2018-08-21T22:01:16.962Z'
+        messageReceivedTime: '2018-08-21T22:01:16.993Z'
     startEvent:
       publisher:
-        name: MqttPub
+        name: 'publisher description'
         valid: true
         type: mqtt
         tests:
@@ -43,4 +56,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-20T20:29:18.537Z'
+        publishTime: '2018-08-21T22:01:16.986Z'

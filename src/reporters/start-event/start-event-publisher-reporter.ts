@@ -80,10 +80,11 @@ export class StartEventPublisherReporter extends StartEventReporter {
         const eventTestExecutor = new EventTestExecutor(this.publisher.onMessageReceived);
         eventTestExecutor.addArgument('publisher', this.publisher);
         eventTestExecutor.addArgument('message', message);
-
-        Object.keys(message).filter(key => typeof(message[key]) == 'object').forEach((key) => {
-            eventTestExecutor.addArgument(key, message[key]);
-        });
+        if (typeof(message) == 'object' && !Buffer.isBuffer(message)) {
+            Object.keys(message).forEach((key) => {
+                eventTestExecutor.addArgument(key, message[key]);
+            });
+        }
         this.executeHookMethod(eventTestExecutor);
     }
 

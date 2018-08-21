@@ -1,20 +1,21 @@
-name: runnableFile
+name: file test description
 id: file
 runnables:
-- timeout: 3000
-  name: file
+- name: requisition description
+  timeout: 3000
   startEvent:
     publisher:
       type: file
-      name: filePublisher
+      name: publisher description
       payload: filePublisher
       filenamePrefix: temp/fileTest
       filenameExtension: file
       onInit:
         script: publisher.payload=new Date().getTime();
   subscriptions:
-  - type: file-name-watcher
-    name: fileSubscription
+  - name: subscription description
+    type: file-name-watcher
+    timeout: 1000
     fileNamePattern: temp/fileTest*file
     onMessageReceived:
       script: now = new Date().getTime();
@@ -22,4 +23,15 @@ runnables:
       - name: Some time has passed
         expected: now
         isGreaterThanOrEqualTo: message.content
-    timeout: 1000
+      - name: Filename
+        expected: name
+        contains: `temp/`
+      - name: Content
+        isDefined: content
+      - name: Created
+        isDefined: created
+      - name: Modified
+        isDefined: modified
+      - name: Size
+        expected: size
+        isGreaterThan: 0

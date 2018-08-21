@@ -1,0 +1,44 @@
+name: sqs test description
+id: sqs
+runnables:
+- name: requisition description
+  timeout: 5000
+  startEvent:
+    publisher:
+      name: publisher description
+      type: sqs
+      payload: enqueuer
+      awsConfiguration: <<awsConfiguration>>
+      messageParams:
+        QueueUrl: http://localhost:9324/queue/enqueuerQueue
+      onMessageReceived:
+        assertions:
+        - name: Request Id is all 000000
+          expected: ResponseMetadata.RequestId
+          isEqualTo: `00000000-0000-0000-0000-000000000000`
+        - name: ResponseMetadata
+          isDefined: ResponseMetadata
+        - name: MD5
+          isDefined: MD5OfMessageBody
+        - name: MD5OfMessageAttributes
+          isDefined: MD5OfMessageAttributes
+        - name: MessageId
+          isDefined: MessageId
+  subscriptions:
+  - name: subscription description
+    type: sqs
+    awsConfiguration: <<awsConfiguration>>
+    messageParams:
+      QueueUrl: http://localhost:9324/queue/enqueuerQueue
+    timeout: 3000
+    onMessageReceived:
+      assertions:
+      - name: Body
+        expected: Body
+        contains: `enq`
+      - name: MessageId
+        isDefined: MessageId
+      - name: ReceiptHandle
+        isDefined: ReceiptHandle
+      - name: MD5OfBody
+        isDefined: MD5OfBody

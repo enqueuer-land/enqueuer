@@ -1,7 +1,7 @@
 type: runnable
 valid: true
 tests: []
-name: 'hooks example'
+name: 'hooks test description'
 id: hook
 runnables:
   -
@@ -16,15 +16,15 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: example
+    name: 'requisition description'
     time:
-      totalTime: 39
-      startTime: '2018-08-21T20:53:56.749Z'
-      endTime: '2018-08-21T20:53:56.788Z'
+      totalTime: 136
+      startTime: '2018-08-21T22:01:16.833Z'
+      endTime: '2018-08-21T22:01:16.969Z'
       timeout: 1000
     subscriptions:
       -
-        name: subscription
+        name: 'subscription description'
         type: tcp-server
         tests:
           -
@@ -52,11 +52,11 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-21T20:53:56.761Z'
-        messageReceivedTime: '2018-08-21T20:53:56.782Z'
+        connectionTime: '2018-08-21T22:01:16.886Z'
+        messageReceivedTime: '2018-08-21T22:01:16.959Z'
     startEvent:
       publisher:
-        name: publishing
+        name: 'publisher description'
         valid: true
         type: tcp-client
         tests:
@@ -88,4 +88,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T20:53:56.788Z'
+        publishTime: '2018-08-21T22:01:16.968Z'

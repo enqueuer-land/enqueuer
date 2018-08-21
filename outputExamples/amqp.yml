@@ -1,7 +1,7 @@
 type: runnable
 valid: true
 tests: []
-name: runnableAmqp
+name: 'amqp test description'
 id: amqp
 runnables:
   -
@@ -12,15 +12,15 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: AmqpReq
+    name: 'requisition description'
     time:
-      totalTime: 119
-      startTime: '2018-08-21T20:53:56.726Z'
-      endTime: '2018-08-21T20:53:56.845Z'
+      totalTime: 207
+      startTime: '2018-08-21T22:01:16.808Z'
+      endTime: '2018-08-21T22:01:17.015Z'
       timeout: 5000
     subscriptions:
       -
-        name: AmqpSubs
+        name: 'subscription description'
         type: amqp
         tests:
           -
@@ -48,11 +48,11 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T20:53:56.825Z'
-        messageReceivedTime: '2018-08-21T20:53:56.844Z'
+        connectionTime: '2018-08-21T22:01:16.975Z'
+        messageReceivedTime: '2018-08-21T22:01:17.014Z'
     startEvent:
       publisher:
-        name: AmqpPub
+        name: 'publisher description'
         valid: true
         type: amqp
         tests:
@@ -64,4 +64,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T20:53:56.843Z'
+        publishTime: '2018-08-21T22:01:17.015Z'

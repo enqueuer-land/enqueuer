@@ -35,7 +35,7 @@ let SqsPublisher = class SqsPublisher extends publisher_1.Publisher {
                     return reject(err);
                 }
                 else {
-                    this.messageReceived = JSON.stringify(data);
+                    this.messageReceived = data;
                     logger_1.Logger.trace(`SQS send message result: ${JSON.stringify(data).substr(0, 128)}...`);
                     return resolve();
                 }

@@ -86,9 +86,11 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         const eventTestExecutor = new event_test_executor_1.EventTestExecutor(this.publisher.onMessageReceived);
         eventTestExecutor.addArgument('publisher', this.publisher);
         eventTestExecutor.addArgument('message', message);
-        Object.keys(message).filter(key => typeof (message[key]) == 'object').forEach((key) => {
-            eventTestExecutor.addArgument(key, message[key]);
-        });
+        if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
+            Object.keys(message).forEach((key) => {
+                eventTestExecutor.addArgument(key, message[key]);
+            });
+        }
         this.executeHookMethod(eventTestExecutor);
     }
     executeOnInitFunction(publisher) {
