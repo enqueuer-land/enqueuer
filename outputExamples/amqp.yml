@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: AmqpReq
     time:
-      totalTime: 46
-      startTime: '2018-08-21T03:55:24.427Z'
-      endTime: '2018-08-21T03:55:24.473Z'
+      totalTime: 66
+      startTime: '2018-08-21T15:43:59.995Z'
+      endTime: '2018-08-21T15:44:00.061Z'
       timeout: 5000
     subscriptions:
       -
@@ -48,8 +48,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T03:55:24.459Z'
-        messageReceivedTime: '2018-08-21T03:55:24.472Z'
+        connectionTime: '2018-08-21T15:44:00.039Z'
+        messageReceivedTime: '2018-08-21T15:44:00.060Z'
     startEvent:
       publisher:
         name: AmqpPub
@@ -57,11 +57,11 @@ runnables:
         type: amqp
         tests:
           -
-            name: Port
+            name: '0'
             valid: true
             description: '''5672'' is equal to ''5672'''
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T03:55:24.470Z'
+        publishTime: '2018-08-21T15:44:00.049Z'

@@ -1,4 +1,4 @@
 export interface Assertion {
-    label: string;
+    name: string;
     [propName: string]: any;
 }

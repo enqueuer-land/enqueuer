@@ -7,13 +7,24 @@ const store_1 = require("./store");
 const logger_1 = require("../loggers/logger");
 class EventTestExecutor {
     constructor(event) {
+        this.testerInstanceName = 'tester';
         this.arguments = [];
         this.assertions = [];
         this.script = '';
         if (event) {
             this.script = event.script || '';
-            this.assertions = event.assertions || [];
+            this.assertions = this.prepareAssertions(event.assertions || []);
         }
+    }
+    prepareAssertions(assertions) {
+        let assertionCounter = 0;
+        return assertions.map(assertion => {
+            if (!assertion.name) {
+                assertion.name = assertionCounter.toString();
+            }
+            ++assertionCounter;
+            return assertion;
+        });
     }
     addArgument(name, value) {
         this.arguments.push({ name: name, value: value });
@@ -32,30 +43,32 @@ class EventTestExecutor {
     }
     testEachAssertion(initial) {
         let result = [];
-        this.assertions.forEach(assertion => {
+        this.assertions.forEach((assertion) => {
             try {
                 result = result.concat(this.runAssertion(assertion));
             }
             catch (err) {
-                result = result.concat({ valid: false, label: `Assertion '${assertion.label}' is valid`, description: err.toString() });
+                result = result.concat({ valid: false, label: `Assertion '${assertion.name}' is valid`, description: err.toString() });
             }
         });
         return initial.concat(result);
     }
     runAssertion(assertion) {
-        const assertionCodeGenerator = new assertion_code_generator_1.AssertionCodeGenerator('tester');
+        logger_1.Logger.trace(`Running assertion: ${JSON.stringify(assertion.name)}`);
+        const assertionCodeGenerator = new assertion_code_generator_1.AssertionCodeGenerator(this.testerInstanceName);
         const code = assertionCodeGenerator.generate(assertion);
+        logger_1.Logger.trace(`Assertion: ${JSON.stringify(assertion.name)} ran`);
         return this.scriptRunner(this.script + code);
     }
     scriptRunner(script) {
         const scriptExecutor = new script_executor_1.ScriptExecutor(script);
         let tester = new tester_1.Tester();
         scriptExecutor.addArgument('store', store_1.Store.getData());
-        scriptExecutor.addArgument('tester', tester);
+        scriptExecutor.addArgument(this.testerInstanceName, tester);
         this.arguments.forEach(argument => {
             scriptExecutor.addArgument(argument.name, argument.value);
         });
-        logger_1.Logger.trace(`Function result: ${scriptExecutor.execute()}`);
+        scriptExecutor.execute();
         return tester.getReport();
     }
 }

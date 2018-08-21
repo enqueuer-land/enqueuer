@@ -8,6 +8,8 @@ import {Store} from './store';
 import {Logger} from '../loggers/logger';
 
 export class EventTestExecutor {
+    private testerInstanceName = 'tester';
+
     private arguments: {name: string, value: any}[] = [];
     private assertions: Assertion[] = [];
     private script: string = '';
@@ -15,8 +17,19 @@ export class EventTestExecutor {
     public constructor(event?: Event) {
         if (event) {
             this.script = event.script || '';
-            this.assertions = event.assertions || [];
+            this.assertions = this.prepareAssertions(event.assertions || []);
         }
+    }
+
+    private prepareAssertions(assertions: Assertion[]) {
+        let assertionCounter = 0;
+        return assertions.map(assertion => {
+            if (!assertion.name) {
+                assertion.name = assertionCounter.toString();
+            }
+            ++assertionCounter;
+            return assertion;
+        });
     }
 
     public addArgument(name: string, value: any): void {
@@ -38,20 +51,21 @@ export class EventTestExecutor {
 
     private testEachAssertion(initial: Test[]) {
         let result: Test[] = [];
-
-        this.assertions.forEach(assertion => {
+        this.assertions.forEach((assertion: any) => {
             try {
                 result = result.concat(this.runAssertion(assertion));
             } catch (err) {
-                result = result.concat({valid: false, label: `Assertion '${assertion.label}' is valid`, description: err.toString()});
+                result = result.concat({valid: false, label: `Assertion '${assertion.name}' is valid`, description: err.toString()});
             }
         });
         return initial.concat(result);
     }
 
     private runAssertion(assertion: Assertion): Test[] {
-        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
+        Logger.trace(`Running assertion: ${JSON.stringify(assertion.name)}`);
+        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator(this.testerInstanceName);
         const code = assertionCodeGenerator.generate(assertion);
+        Logger.trace(`Assertion: ${JSON.stringify(assertion.name)} ran`);
         return this.scriptRunner(this.script + code);
     }
 
@@ -61,7 +75,7 @@ export class EventTestExecutor {
         let tester = new Tester();
 
         scriptExecutor.addArgument('store', Store.getData());
-        scriptExecutor.addArgument('tester', tester);
+        scriptExecutor.addArgument(this.testerInstanceName, tester);
         this.arguments.forEach(argument => {
             scriptExecutor.addArgument(argument.name, argument.value);
         });

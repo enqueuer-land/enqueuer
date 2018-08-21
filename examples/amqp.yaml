@@ -21,7 +21,7 @@ runnables:
       routingKey: enqueuer.integration.test.routing.key
       onInit:
         assertions:
-          - label: Port
+          -
             expected: publisher.options.port
             isEqualTo: 5672
   subscriptions:
@@ -35,16 +35,16 @@ runnables:
     routingKey: enqueuer.integration.test.routing.#
     onMessageReceived:
       assertions:
-        - label: Payload
+        - name: Payload
           expected: payload.how.about
           isEqualTo: `a new object?`
-        - label: Header
+        - name: Header
           expected: headers.key
           isEqualTo: `value`
-        - label: Other Header Value
+        - name: Other Header Value
           expected: headers.otherKey
           isEqualTo: `otherValue`
-        - label: Routing Key
+        - name: Routing Key
           expected: deliveryInfo.routingKey
           isEqualTo: `enqueuer.integration.test.routing.key`
     timeout: 3000

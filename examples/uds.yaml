@@ -28,7 +28,7 @@ runnables:
     timeout: 500
     onMessageReceived:
       assertions:
-      - label: Message received is enqueuer
+      - name: Message received is enqueuer
         expected: message
         isEqualTo: store.udsPayload
 - name: <<uds2Name>>
@@ -41,7 +41,7 @@ runnables:
       saveStream: udsPubStreamName
       onInit:
         assertions:
-        - label: Message to be published is {{udsPayload}}
+        - name: Message to be published is {{udsPayload}}
           expected: publisher.payload
           isEqualTo: store.udsPayload
   subscriptions:
@@ -51,7 +51,7 @@ runnables:
     name: udsSubscription2
     onMessageReceived:
       assertions:
-      - label: 'Message received is {{udsPayload}} 2'
+      - name: 'Message received is {{udsPayload}} 2'
         expected: message
         isEqualTo: store.udsPayload
     timeout: <<uds2Timeout>>
@@ -63,7 +63,7 @@ runnables:
       payload: I am still opened
       loadStream: udsPubStreamName
       onMessageReceived:
-      - label: 'Message received'
+      - name: 'Message received'
         expected: message
         isEqualTo: I am still bidirectional
   subscriptions:
@@ -72,6 +72,6 @@ runnables:
     loadStream: udsSubStreamName
     response: I am still bidirectional
     onMessageReceived:
-    - label: Publisher stream was still opened
+    - name: Publisher stream was still opened
       expected: message
       isEqualTo: I am still opened

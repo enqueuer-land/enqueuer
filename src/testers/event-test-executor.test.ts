@@ -1,6 +1,7 @@
 import {ScriptExecutor} from './script-executor';
 import {Tester} from './tester';
 import {EventTestExecutor} from './event-test-executor';
+import {AssertionCodeGenerator} from './assertion-code-generator';
 
 let addArgumentMock = jest.fn();
 let executeMock = jest.fn();
@@ -13,7 +14,40 @@ ScriptExecutor.mockImplementation(() => {
     };
 });
 
+let generateMock = jest.fn();
+jest.mock('././assertion-code-generator');
+AssertionCodeGenerator.mockImplementation(() => {
+    return {
+        generate: generateMock
+    };
+});
+
 describe('EventTestExecutor', () => {
+
+    it('Should create assertions', () => {
+        const assertions = [
+            {
+                name: 'equalName',
+                expected: 2,
+                isEqualTo: 2
+            },
+            {
+                name: 'isDefinedName',
+                isDefined: 'x'
+            },
+            {
+                unamed: 'x'
+            }
+        ];
+        const eventTestExecutor: EventTestExecutor = new EventTestExecutor({assertions: assertions});
+
+        eventTestExecutor.execute();
+
+        expect(generateMock).toHaveBeenCalledTimes(3);
+        expect(generateMock).toHaveBeenNthCalledWith(1, {"expected": 2, "isEqualTo": 2, "name": "equalName"});
+        expect(generateMock).toHaveBeenNthCalledWith(2, {"isDefined": "x", "name": "isDefinedName"});
+        expect(generateMock).toHaveBeenNthCalledWith(3, {"unamed": "x", "name": "2"});
+    });
 
     it('Should add argument and pass it to the script executor', () => {
         const eventTestExecutor: EventTestExecutor = new EventTestExecutor();

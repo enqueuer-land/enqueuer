@@ -29,7 +29,7 @@ runnables:
             onMessageReceived:
               script: payload = Buffer.from(message).toString();
               assertions:
-              - label: Works
+              - name: Works
                 expected: payload
                 isEqualTo: 100
 
@@ -39,6 +39,6 @@ runnables:
     path: /tmp/outUnix.sock
     onMessageReceived:
       assertions:
-      - label: Test label
+      - name: Test name
         isDefined: message
     timeout: 5000
