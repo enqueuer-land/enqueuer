@@ -19,6 +19,11 @@ runnables:
           key: value
           otherKey: otherValue
       routingKey: enqueuer.integration.test.routing.key
+      onInit:
+        assertions:
+          - label: Port
+            expected: publisher.options.port
+            isEqualTo: 5672
   subscriptions:
   - type: amqp
     name: AmqpSubs
@@ -28,9 +33,18 @@ runnables:
     queueName: enqueuer.queue.name
     exchange: enqueuer.exchange
     routingKey: enqueuer.integration.test.routing.#
-    onMessageReceived: >-
-      tester.isEqualTo('Payload', message.payload.how.about, 'a new object?');
-      tester.isEqualTo('Header', message.headers.key, 'value');
-      tester.isEqualTo('Other header value', message.headers.otherKey, 'otherValue');
-      tester.isEqualTo('Routing key', message.deliveryInfo.routingKey, 'enqueuer.integration.test.routing.key');
+    onMessageReceived:
+      assertions:
+        - label: Payload
+          expected: payload.how.about
+          isEqualTo: `a new object?`
+        - label: Header
+          expected: headers.key
+          isEqualTo: `value`
+        - label: Other Header Value
+          expected: headers.otherKey
+          isEqualTo: `otherValue`
+        - label: Routing Key
+          expected: deliveryInfo.routingKey
+          isEqualTo: `enqueuer.integration.test.routing.key`
     timeout: 3000

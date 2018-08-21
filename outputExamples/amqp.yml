@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: AmqpReq
     time:
-      totalTime: 191
-      startTime: '2018-08-21T00:11:06.868Z'
-      endTime: '2018-08-21T00:11:07.059Z'
+      totalTime: 46
+      startTime: '2018-08-21T03:55:24.427Z'
+      endTime: '2018-08-21T03:55:24.473Z'
       timeout: 5000
     subscriptions:
       -
@@ -32,11 +32,11 @@ runnables:
             valid: true
             description: '''value'' is equal to ''value'''
           -
-            name: 'Other header value'
+            name: 'Other Header Value'
             valid: true
             description: '''otherValue'' is equal to ''otherValue'''
           -
-            name: 'Routing key'
+            name: 'Routing Key'
             valid: true
             description: '''enqueuer.integration.test.routing.key'' is equal to ''enqueuer.integration.test.routing.key'''
           -
@@ -48,8 +48,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T00:11:07.027Z'
-        messageReceivedTime: '2018-08-21T00:11:07.059Z'
+        connectionTime: '2018-08-21T03:55:24.459Z'
+        messageReceivedTime: '2018-08-21T03:55:24.472Z'
     startEvent:
       publisher:
         name: AmqpPub
@@ -57,7 +57,11 @@ runnables:
         type: amqp
         tests:
           -
+            name: Port
+            valid: true
+            description: '''5672'' is equal to ''5672'''
+          -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T00:11:07.057Z'
+        publishTime: '2018-08-21T03:55:24.470Z'

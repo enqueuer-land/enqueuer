@@ -23,7 +23,7 @@ class AssertionCodeGenerator {
             const assertionMethodName = Object.getOwnPropertyNames(remainingArguments)[0];
             if (this.tester[assertionMethodName] !== undefined) {
                 const value = remainingArguments[assertionMethodName];
-                return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertion.label}\`, ${assertion.expected}, ${JSON.stringify(value)});`;
+                return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertion.label}\`, ${assertion.expected}, ${value});`;
             }
             throw new Error(`Tester class has no method called ${assertionMethodName}. Available ones are: ${this.testerMethods}`);
         }

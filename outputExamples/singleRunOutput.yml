@@ -6,6 +6,74 @@ runnables:
     type: runnable
     valid: true
     tests: []
+    name: runnableAmqp
+    id: amqp
+    runnables:
+      -
+        type: requisition
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: AmqpReq
+        time:
+          totalTime: 46
+          startTime: '2018-08-21T03:55:24.427Z'
+          endTime: '2018-08-21T03:55:24.473Z'
+          timeout: 5000
+        subscriptions:
+          -
+            name: AmqpSubs
+            type: amqp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: '''a new object?'' is equal to ''a new object?'''
+              -
+                name: Header
+                valid: true
+                description: '''value'' is equal to ''value'''
+              -
+                name: 'Other Header Value'
+                valid: true
+                description: '''otherValue'' is equal to ''otherValue'''
+              -
+                name: 'Routing Key'
+                valid: true
+                description: '''enqueuer.integration.test.routing.key'' is equal to ''enqueuer.integration.test.routing.key'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message successfully'
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Subscription has not timed out'
+            valid: true
+            connectionTime: '2018-08-21T03:55:24.459Z'
+            messageReceivedTime: '2018-08-21T03:55:24.472Z'
+        startEvent:
+          publisher:
+            name: AmqpPub
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Port
+                valid: true
+                description: '''5672'' is equal to ''5672'''
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-08-21T03:55:24.470Z'
+  -
+    type: runnable
+    valid: true
+    tests: []
     name: runnableUDSName
     id: uds
     runnables:
@@ -19,9 +87,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: uds
         time:
-          totalTime: 18
-          startTime: '2018-08-21T03:34:49.514Z'
-          endTime: '2018-08-21T03:34:49.532Z'
+          totalTime: 12
+          startTime: '2018-08-21T03:55:24.431Z'
+          endTime: '2018-08-21T03:55:24.443Z'
           timeout: 3000
         subscriptions:
           -
@@ -41,8 +109,8 @@ runnables:
                 name: 'No time out'
                 description: 'Subscription has not timed out'
             valid: true
-            connectionTime: '2018-08-21T03:34:49.518Z'
-            messageReceivedTime: '2018-08-21T03:34:49.527Z'
+            connectionTime: '2018-08-21T03:55:24.434Z'
+            messageReceivedTime: '2018-08-21T03:55:24.439Z'
         startEvent:
           publisher:
             name: udsPublisher
@@ -57,21 +125,25 @@ runnables:
                 name: 'It is bidirectional'
                 valid: true
                 description: '''responsePayload'' is equal to ''responsePayload'''
-            publishTime: '2018-08-21T03:34:49.531Z'
+            publishTime: '2018-08-21T03:55:24.441Z'
       -
         type: requisition
         valid: true
         tests: []
         name: 'UDS2 Name'
         time:
-          totalTime: 1009
-          startTime: '2018-08-21T03:34:49.534Z'
-          endTime: '2018-08-21T03:34:50.543Z'
+          totalTime: 1005
+          startTime: '2018-08-21T03:55:24.444Z'
+          endTime: '2018-08-21T03:55:25.449Z'
         subscriptions:
           -
             name: udsSubscription2
             type: uds
             tests:
+              -
+                name: 'Message received is enqueuer 2'
+                valid: true
+                description: '''enqueuer'' is equal to ''enqueuer'''
               -
                 valid: true
                 name: 'Message received'
@@ -81,8 +153,8 @@ runnables:
                 name: 'No time out'
                 description: 'Subscription has not timed out'
             valid: true
-            connectionTime: '2018-08-21T03:34:49.535Z'
-            messageReceivedTime: '2018-08-21T03:34:49.540Z'
+            connectionTime: '2018-08-21T03:55:24.447Z'
+            messageReceivedTime: '2018-08-21T03:55:24.450Z'
         startEvent:
           publisher:
             name: udsPublisher2
@@ -97,32 +169,28 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-21T03:34:50.543Z'
+            publishTime: '2018-08-21T03:55:25.449Z'
       -
         type: requisition
         valid: true
         tests: []
         name: udsStreamLoader
         time:
-          totalTime: 3
-          startTime: '2018-08-21T03:34:50.544Z'
-          endTime: '2018-08-21T03:34:50.547Z'
+          totalTime: 570
+          startTime: '2018-08-21T03:55:25.450Z'
+          endTime: '2018-08-21T03:55:26.020Z'
         subscriptions:
           -
             name: 'udsStreamLoader subscription'
             type: uds
             tests:
               -
-                name: 'Publisher stream was still opened'
-                valid: true
-                description: '''I am still opened'' is equal to ''I am still opened'''
-              -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message successfully'
             valid: true
-            connectionTime: '2018-08-21T03:34:50.544Z'
-            messageReceivedTime: '2018-08-21T03:34:50.546Z'
+            connectionTime: '2018-08-21T03:55:25.450Z'
+            messageReceivedTime: '2018-08-21T03:55:25.451Z'
         startEvent:
           publisher:
             name: 'udsStreamLoader publisher'
@@ -133,8 +201,4 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-              -
-                name: 'Message received'
-                valid: true
-                description: '''I am still bidirectional'' is equal to ''I am still bidirectional'''
-            publishTime: '2018-08-21T03:34:50.547Z'
+            publishTime: '2018-08-21T03:55:26.019Z'

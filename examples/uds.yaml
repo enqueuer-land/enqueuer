@@ -3,8 +3,6 @@ id: uds
 runnables:
 - name: uds
   timeout: 3000
-  onInit:
-    script: console.log('onInit');
   startEvent:
     publisher:
       type: uds
@@ -29,8 +27,10 @@ runnables:
     response: responsePayload
     timeout: 500
     onMessageReceived:
-      script: |-
-        tester.isEqualTo('Message received is enqueuer', message, store.udsPayload);
+      assertions:
+      - label: Message received is enqueuer
+        expected: message
+        isEqualTo: store.udsPayload
 - name: <<uds2Name>>
   startEvent:
     publisher:
@@ -40,14 +40,20 @@ runnables:
       payload: "{{udsPayload}}"
       saveStream: udsPubStreamName
       onInit:
-        script: |-
-          tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, store.udsPayload);
+        assertions:
+        - label: Message to be published is {{udsPayload}}
+          expected: publisher.payload
+          isEqualTo: store.udsPayload
   subscriptions:
   - type: uds
     path: "/tmp/unix2.sock"
     saveStream: udsSubStreamName
     name: udsSubscription2
-    onMessageReceived: tester.isEqualTo('Message received is {{udsPayload}} 2', message, store.udsPayload);
+    onMessageReceived:
+      assertions:
+      - label: 'Message received is {{udsPayload}} 2'
+        expected: message
+        isEqualTo: store.udsPayload
     timeout: <<uds2Timeout>>
 - name: udsStreamLoader
   startEvent:
@@ -57,13 +63,15 @@ runnables:
       payload: I am still opened
       loadStream: udsPubStreamName
       onMessageReceived:
-        script: |-
-          tester.isEqualTo('Message received', message, 'I am still bidirectional');
+      - label: 'Message received'
+        expected: message
+        isEqualTo: I am still bidirectional
   subscriptions:
   - type: uds
     name: udsStreamLoader subscription
     loadStream: udsSubStreamName
     response: I am still bidirectional
     onMessageReceived:
-      script: |-
-        tester.isEqualTo('Publisher stream was still opened', message, 'I am still opened');
+    - label: Publisher stream was still opened
+      expected: message
+      isEqualTo: I am still opened

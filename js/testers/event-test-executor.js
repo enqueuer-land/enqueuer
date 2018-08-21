@@ -37,7 +37,7 @@ class EventTestExecutor {
                 result = result.concat(this.runAssertion(assertion));
             }
             catch (err) {
-                result = result.concat({ valid: false, label: `Assertion ${assertion.label} code is valid`, description: err.toString() });
+                result = result.concat({ valid: false, label: `Assertion '${assertion.label}' is valid`, description: err.toString() });
             }
         });
         return initial.concat(result);

@@ -43,7 +43,7 @@ export class EventTestExecutor {
             try {
                 result = result.concat(this.runAssertion(assertion));
             } catch (err) {
-                result = result.concat({valid: false, label: `Assertion ${assertion.label} code is valid`, description: err.toString()});
+                result = result.concat({valid: false, label: `Assertion '${assertion.label}' is valid`, description: err.toString()});
             }
         });
         return initial.concat(result);
@@ -66,7 +66,7 @@ export class EventTestExecutor {
             scriptExecutor.addArgument(argument.name, argument.value);
         });
 
-        Logger.trace(`Function result: ${scriptExecutor.execute()}`);
+        scriptExecutor.execute();
         return tester.getReport();
     }
 
