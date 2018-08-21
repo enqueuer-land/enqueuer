@@ -6,18 +6,13 @@ const start_event_reporter_1 = require("./start-event/start-event-reporter");
 const timeout_1 = require("../timers/timeout");
 const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptions-reporter");
 const conditional_injector_1 = require("conditional-injector");
-const script_executor_1 = require("../testers/script-executor");
+const event_test_executor_1 = require("../testers/event-test-executor");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.startEventDoneItsJob = false;
         this.allSubscriptionsStoppedWaiting = false;
         this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes);
-        if (requisitionAttributes.onInit) {
-            logger_1.Logger.info(`Executing requisition::onInit hook function`);
-            const testExecutor = new script_executor_1.ScriptExecutor(requisitionAttributes.onInit);
-            testExecutor.addArgument('requisition', requisitionAttributes);
-            this.executeHookFunction(testExecutor);
-        }
+        this.executeOnInitFunction(requisitionAttributes);
         this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
@@ -96,11 +91,16 @@ class RequisitionReporter {
         this.reportGenerator.finish();
         this.onFinishCallback();
     }
-    executeHookFunction(testExecutor) {
-        const tests = testExecutor.execute();
-        this.reportGenerator.addTests(tests.map(test => {
-            return { name: test.label, valid: test.valid, description: test.description };
-        }));
+    executeOnInitFunction(requisitionAttributes) {
+        if (requisitionAttributes.onInit) {
+            logger_1.Logger.info(`Executing requisition::onInit hook function`);
+            const eventTestExecutor = new event_test_executor_1.EventTestExecutor(requisitionAttributes.onInit);
+            eventTestExecutor.addArgument('requisition', requisitionAttributes);
+            const tests = eventTestExecutor.execute();
+            this.reportGenerator.addTests(tests.map(test => {
+                return { name: test.label, valid: test.valid, description: test.description };
+            }));
+        }
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

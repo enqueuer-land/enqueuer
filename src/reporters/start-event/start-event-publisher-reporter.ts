@@ -7,9 +7,7 @@ import {Logger} from '../../loggers/logger';
 import {Container, Injectable} from 'conditional-injector';
 import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
-import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
-import {ScriptExecutor} from '../../testers/script-executor';
-import {Store} from '../../testers/store';
+import {EventTestExecutor} from '../../testers/event-test-executor';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
@@ -25,7 +23,9 @@ export class StartEventPublisherReporter extends StartEventReporter {
             type: startEventPublisher.type,
             tests: []
         };
-        this.publisher = this.executeOnInitFunction(startEventPublisher);
+        this.executeOnInitFunction(startEventPublisher);
+        Logger.debug(`Instantiating publisher from '${startEventPublisher.type}'`);
+        this.publisher = Container.subclassesOf(Publisher).create(startEventPublisher);
     }
 
     public start(): Promise<void> {
@@ -56,7 +56,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     private pushResponseMessageReceivedTest() {
-        if (this.publisher.onMessageReceived) {
+        if (this.publisher.onMessageReceived && this.publisher.onMessageReceived.assertions) {
             let responseTest = {
                 name: 'Response message received',
                 valid: false,
@@ -71,41 +71,37 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        if (!this.publisher.onMessageReceived || !this.publisher.messageReceived) {
+        const message = this.publisher.messageReceived;
+        if (!this.publisher.onMessageReceived || !message) {
             return;
         }
         Logger.trace(`Publisher received response`);
 
-        const testExecutor = new ScriptExecutor(this.publisher.onMessageReceived);
-        testExecutor.addArgument('publisher', this.publisher);
-        testExecutor.addArgument('message', this.publisher.messageReceived);
+        const eventTestExecutor = new EventTestExecutor(this.publisher.onMessageReceived);
+        eventTestExecutor.addArgument('publisher', this.publisher);
+        eventTestExecutor.addArgument('message', message);
 
-        const tests = testExecutor.execute();
+        Object.keys(message).filter(key => typeof(message[key]) == 'object').forEach((key) => {
+            eventTestExecutor.addArgument(key, message[key]);
+        });
+        this.executeHookMethod(eventTestExecutor);
+    }
+
+    private executeOnInitFunction(publisher: input.PublisherModel) {
+        if (publisher.onInit) {
+            Logger.info(`Executing publisher::onInit hook function`);
+            const eventTestExecutor = new EventTestExecutor(publisher.onInit);
+            eventTestExecutor.addArgument('publisher', publisher);
+
+            this.executeHookMethod(eventTestExecutor);
+        }
+    }
+
+    private executeHookMethod(eventTestExecutor: EventTestExecutor) {
+        const tests = eventTestExecutor.execute();
         this.report.tests = this.report.tests.concat(tests.map(test => {
             return {name: test.label, valid: test.valid, description: test.description};
         }));
     }
 
-    private executeOnInitFunction(publisher: input.PublisherModel): Publisher {
-        Logger.trace(`Executing publisher::onInit function`);
-        if (publisher.onInit) {
-            const testExecutor = new ScriptExecutor(publisher.onInit);
-            testExecutor.addArgument('publisher', publisher);
-
-            const tests = testExecutor.execute();
-
-            const placeHolderReplacer = new JsonPlaceholderReplacer();
-            placeHolderReplacer
-                .addVariableMap(Store.getData());
-            publisher = (placeHolderReplacer.replace(publisher) as any);
-
-            Logger.trace(`Adding publisher::onInit functions tests to report`);
-            this.report.tests = this.report.tests.concat(tests.map(test => {
-                return {name: test.label, valid: test.valid, description: test.description};
-            }));
-        }
-
-        Logger.debug(`Instantiating publisher from '${publisher.type}'`);
-        return Container.subclassesOf(Publisher).create(publisher);
-    }
 }

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const logger_1 = require("../loggers/logger");
 class ScriptExecutor {
     constructor(functionBody) {
         this.arguments = [];
@@ -16,8 +17,14 @@ class ScriptExecutor {
         return ((...args) => new Function(...args)).apply(null, constructorArgs);
     }
     executeFunction(dynamicFunction) {
-        const callArgs = this.arguments.map(arg => arg.value);
-        return dynamicFunction.apply(this, callArgs);
+        try {
+            const callArgs = this.arguments.map(arg => arg.value);
+            return dynamicFunction.apply(this, callArgs);
+        }
+        catch (err) {
+            logger_1.Logger.error(`Error with function: ${dynamicFunction}`);
+            throw err;
+        }
     }
 }
 exports.ScriptExecutor = ScriptExecutor;

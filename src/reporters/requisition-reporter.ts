@@ -1,13 +1,14 @@
-import { ReportGenerator } from './report-generator';
+import {ReportGenerator} from './report-generator';
 import {Logger} from '../loggers/logger';
 import {StartEventReporter} from './start-event/start-event-reporter';
 import * as input from '../models/inputs/requisition-model';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {Timeout} from '../timers/timeout';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {Container} from 'conditional-injector';
 import {TestModel} from '../models/outputs/test-model';
-import {ScriptExecutor} from '../testers/script-executor';
+import {EventTestExecutor} from '../testers/event-test-executor';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -22,12 +23,7 @@ export class RequisitionReporter {
 
     constructor(requisitionAttributes: input.RequisitionModel) {
         this.reportGenerator = new ReportGenerator(requisitionAttributes);
-        if (requisitionAttributes.onInit) {
-            Logger.info(`Executing requisition::onInit hook function`);
-            const testExecutor = new ScriptExecutor(requisitionAttributes.onInit);
-            testExecutor.addArgument('requisition', requisitionAttributes);
-            this.executeHookFunction(testExecutor);
-        }
+        this.executeOnInitFunction(requisitionAttributes);
         this.startEvent = Container.subclassesOf(StartEventReporter).create(requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
         this.requisitionTimeout = requisitionAttributes.timeout;
@@ -116,10 +112,16 @@ export class RequisitionReporter {
         this.onFinishCallback();
     }
 
-    private executeHookFunction(testExecutor: ScriptExecutor) {
-        const tests = testExecutor.execute();
-        this.reportGenerator.addTests(tests.map(test => {
-            return {name: test.label, valid: test.valid, description: test.description};
-        }));
+    private executeOnInitFunction(requisitionAttributes: RequisitionModel) {
+        if (requisitionAttributes.onInit) {
+            Logger.info(`Executing requisition::onInit hook function`);
+            const eventTestExecutor = new EventTestExecutor(requisitionAttributes.onInit);
+            eventTestExecutor.addArgument('requisition', requisitionAttributes);
+
+            const tests = eventTestExecutor.execute();
+            this.reportGenerator.addTests(tests.map(test => {
+                return {name: test.label, valid: test.valid, description: test.description};
+            }));
+        }
     }
 }

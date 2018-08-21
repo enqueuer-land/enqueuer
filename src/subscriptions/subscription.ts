@@ -1,13 +1,14 @@
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Logger} from '../loggers/logger';
 import {TestModel} from '../models/outputs/test-model';
+import {Event} from '../testers/event';
 
 export abstract class Subscription {
 
     public name: string;
     public messageReceived?: any;
     public timeout?: number;
-    public onMessageReceived?: string;
+    public onMessageReceived?: Event;
     public response?: any;
     public type?: string;
 

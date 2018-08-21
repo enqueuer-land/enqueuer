@@ -1,9 +1,11 @@
-import {Event, Assertion} from './event';
+import {Event} from './event';
+import {Assertion} from './assertion';
 import {Test} from './test';
 import {Tester} from './tester';
 import {AssertionCodeGenerator} from './assertion-code-generator';
 import {ScriptExecutor} from './script-executor';
-import {Store} from "./store";
+import {Store} from './store';
+import {Logger} from '../loggers/logger';
 
 export class EventTestExecutor {
     private arguments: {name: string, value: any}[] = [];
@@ -22,12 +24,14 @@ export class EventTestExecutor {
     }
 
     public execute(): Test[] {
+        Logger.trace(`Executing event function`);
         let result: Test[] = [];
 
         try {
             result = this.scriptRunner(this.script);
         } catch (err) {
-            return [{valid: false, label: 'Script code is valid', description: err}];
+            Logger.error(`Error executing event function ${err}`);
+            return [{valid: false, label: 'Script code is valid', description: err.toString()}];
         }
         return this.testEachAssertion(result);
     }
@@ -39,7 +43,7 @@ export class EventTestExecutor {
             try {
                 result = result.concat(this.runAssertion(assertion));
             } catch (err) {
-                result = result.concat({valid: false, label: `Assertion ${assertion.label} code is valid`, description: err});
+                result = result.concat({valid: false, label: `Assertion ${assertion.label} code is valid`, description: err.toString()});
             }
         });
         return initial.concat(result);
@@ -62,7 +66,7 @@ export class EventTestExecutor {
             scriptExecutor.addArgument(argument.name, argument.value);
         });
 
-        scriptExecutor.execute();
+        Logger.trace(`Function result: ${scriptExecutor.execute()}`);
         return tester.getReport();
     }
 

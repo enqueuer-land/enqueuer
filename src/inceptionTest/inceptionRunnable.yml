@@ -5,7 +5,8 @@ runnables:
   startEvent:
     publisher:
       type: replaced
-      onInit: publisher.type='uds';
+      onInit:
+        script: publisher.type='uds';
       name: runnableUdsPublisher
       path: /tmp/inUnix.sock
       payload:
@@ -25,12 +26,19 @@ runnables:
           - type: uds
             name: runnableSubsUds
             path: "/tmp/loopUnix.sock"
-            onMessageReceived: |-
-              tester.isEqualTo('Works', message, '100');
+            onMessageReceived:
+              script: payload = Buffer.from(message).toString();
+              assertions:
+              - label: Works
+                expected: payload
+                isEqualTo: 100
+
   subscriptions:
   - type: uds
     name: subscriptionUds
     path: /tmp/outUnix.sock
-    onMessageReceived: |-
-      tester.isDefined('Test label', message);
+    onMessageReceived:
+      assertions:
+      - label: Test label
+        isDefined: message
     timeout: 5000

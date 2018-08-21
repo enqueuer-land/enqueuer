@@ -3,29 +3,34 @@ id: uds
 runnables:
 - name: uds
   timeout: 3000
+  onInit:
+    script: console.log('onInit');
   startEvent:
     publisher:
       type: uds
       name: udsPublisher
       path: "/tmp/unix.sock"
       payload: I'll be replaced in 'onInit'
-      onMessageReceived: |-
-        tester.isEqualTo('It is bidirectional', message, 'responsePayload');
-      onInit: |-
-        const payload = 'enqueuer';
-        store.udsPayload = payload;
-        store.uds2RequisitionName = 'RequisitionUds2Name';
-        store.uds2Timeout = '500';
-        store.uds2Name = 'UDS2 Name';
-        publisher.payload = store.udsPayload;
+      onMessageReceived:
+        script: |-
+          tester.isEqualTo('It is bidirectional', message, 'responsePayload');
+      onInit:
+        script: |-
+          const payload = 'enqueuer';
+          store.udsPayload = payload;
+          store.uds2RequisitionName = 'RequisitionUds2Name';
+          store.uds2Timeout = '500';
+          store.uds2Name = 'UDS2 Name';
+          publisher.payload = store.udsPayload;
   subscriptions:
   - type: uds
     path: "/tmp/unix.sock"
     name: udsSubscription
     response: responsePayload
     timeout: 500
-    onMessageReceived: |-
-      tester.isEqualTo('Message received is enqueuer', message, store.udsPayload);
+    onMessageReceived:
+      script: |-
+        tester.isEqualTo('Message received is enqueuer', message, store.udsPayload);
 - name: <<uds2Name>>
   startEvent:
     publisher:
@@ -34,7 +39,9 @@ runnables:
       path: "/tmp/unix2.sock"
       payload: "{{udsPayload}}"
       saveStream: udsPubStreamName
-      onInit: tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, store.udsPayload);
+      onInit:
+        script: |-
+          tester.isEqualTo('Message to be published is {{udsPayload}}', publisher.payload, store.udsPayload);
   subscriptions:
   - type: uds
     path: "/tmp/unix2.sock"
@@ -49,11 +56,14 @@ runnables:
       name: udsStreamLoader publisher
       payload: I am still opened
       loadStream: udsPubStreamName
-      onMessageReceived: tester.isEqualTo('Message received', message, 'I am still bidirectional');
+      onMessageReceived:
+        script: |-
+          tester.isEqualTo('Message received', message, 'I am still bidirectional');
   subscriptions:
   - type: uds
     name: udsStreamLoader subscription
     loadStream: udsSubStreamName
     response: I am still bidirectional
-    onMessageReceived: |-
-      tester.isEqualTo('Publisher stream was still opened', message, 'I am still opened');
+    onMessageReceived:
+      script: |-
+        tester.isEqualTo('Publisher stream was still opened', message, 'I am still opened');

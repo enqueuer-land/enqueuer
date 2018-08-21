@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: uds
     time:
-      totalTime: 96
-      startTime: '2018-08-21T00:11:06.907Z'
-      endTime: '2018-08-21T00:11:07.003Z'
+      totalTime: 18
+      startTime: '2018-08-21T03:34:49.514Z'
+      endTime: '2018-08-21T03:34:49.532Z'
       timeout: 3000
     subscriptions:
       -
@@ -36,8 +36,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T00:11:06.938Z'
-        messageReceivedTime: '2018-08-21T00:11:06.985Z'
+        connectionTime: '2018-08-21T03:34:49.518Z'
+        messageReceivedTime: '2018-08-21T03:34:49.527Z'
     startEvent:
       publisher:
         name: udsPublisher
@@ -52,29 +52,21 @@ runnables:
             name: 'It is bidirectional'
             valid: true
             description: '''responsePayload'' is equal to ''responsePayload'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-08-21T00:11:07.003Z'
+        publishTime: '2018-08-21T03:34:49.531Z'
   -
     type: requisition
     valid: true
     tests: []
     name: 'UDS2 Name'
     time:
-      totalTime: 1023
-      startTime: '2018-08-21T00:11:07.003Z'
-      endTime: '2018-08-21T00:11:08.026Z'
+      totalTime: 1009
+      startTime: '2018-08-21T03:34:49.534Z'
+      endTime: '2018-08-21T03:34:50.543Z'
     subscriptions:
       -
         name: udsSubscription2
         type: uds
         tests:
-          -
-            name: 'Message received is enqueuer 2'
-            valid: true
-            description: '''enqueuer'' is equal to ''enqueuer'''
           -
             valid: true
             name: 'Message received'
@@ -84,8 +76,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T00:11:07.014Z'
-        messageReceivedTime: '2018-08-21T00:11:07.028Z'
+        connectionTime: '2018-08-21T03:34:49.535Z'
+        messageReceivedTime: '2018-08-21T03:34:49.540Z'
     startEvent:
       publisher:
         name: udsPublisher2
@@ -100,16 +92,16 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T00:11:08.026Z'
+        publishTime: '2018-08-21T03:34:50.543Z'
   -
     type: requisition
     valid: true
     tests: []
     name: udsStreamLoader
     time:
-      totalTime: 1
-      startTime: '2018-08-21T00:11:08.027Z'
-      endTime: '2018-08-21T00:11:08.028Z'
+      totalTime: 3
+      startTime: '2018-08-21T03:34:50.544Z'
+      endTime: '2018-08-21T03:34:50.547Z'
     subscriptions:
       -
         name: 'udsStreamLoader subscription'
@@ -124,8 +116,8 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-21T00:11:08.027Z'
-        messageReceivedTime: '2018-08-21T00:11:08.027Z'
+        connectionTime: '2018-08-21T03:34:50.544Z'
+        messageReceivedTime: '2018-08-21T03:34:50.546Z'
     startEvent:
       publisher:
         name: 'udsStreamLoader publisher'
@@ -140,8 +132,4 @@ runnables:
             name: 'Message received'
             valid: true
             description: '''I am still bidirectional'' is equal to ''I am still bidirectional'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-08-21T00:11:08.028Z'
+        publishTime: '2018-08-21T03:34:50.547Z'

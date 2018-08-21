@@ -17,10 +17,17 @@ describe('AssertionCodeGenerator', () => {
         expect(() => assertionCodeGenerator.generate({label: 'label name', expected: 5, unknown: 3})).toThrow();
     });
 
-    it('Should generate function', () => {
+    it('Should generate 2 arguments function', () => {
         const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
 
         const code: string = assertionCodeGenerator.generate({label: 'label name', expected: 5, isGreaterThan: 3});
         expect(code).toBe(";tester.isGreaterThan(`label name`, 5, 3);");
+    });
+
+    it('Should generate 1 arguments function', () => {
+        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
+
+        const code: string = assertionCodeGenerator.generate({label: 'label name', isDefined: 'varName'});
+        expect(code).toBe(";tester.isDefined(`label name`, varName);");
     });
 });

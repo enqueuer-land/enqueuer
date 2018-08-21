@@ -10,6 +10,7 @@ import {ScriptExecutor} from '../../testers/script-executor';
 import Signals = NodeJS.Signals;
 import {TestModel} from '../../models/outputs/test-model';
 import {SubscriptionModel} from '../../models/inputs/subscription-model';
+import {EventTestExecutor} from '../../testers/event-test-executor';
 
 export class SubscriptionReporter {
 
@@ -177,29 +178,34 @@ export class SubscriptionReporter {
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         if (subscriptionAttributes.onInit) {
             Logger.info(`Executing subscription::onInit hook function`);
-            const testExecutor = new ScriptExecutor(subscriptionAttributes.onInit);
-            testExecutor.addArgument('subscription', subscriptionAttributes);
-            this.executeHookFunction(testExecutor);
+            const eventTestExecutor = new EventTestExecutor(subscriptionAttributes.onInit);
+            eventTestExecutor.addArgument('subscription', subscriptionAttributes);
+            this.executeHookFunction(eventTestExecutor);
         }
     }
 
     private executeOnMessageReceivedFunction() {
         Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-        if (!this.subscription.onMessageReceived) {
+        const onMessageReceived = this.subscription.onMessageReceived;
+        const message = this.subscription.messageReceived;
+        if (!onMessageReceived) {
             Logger.trace(`${this.subscription.name} has no onMessageReceived to be executed`);
             return;
         }
         Logger.trace(`${this.subscription.name} executing onMessageReceived`);
-        const testExecutor = new ScriptExecutor(this.subscription.onMessageReceived);
-        testExecutor.addArgument('subscription', this.subscription);
-        testExecutor.addArgument('message', this.subscription.messageReceived);
-        this.executeHookFunction(testExecutor);
+        const eventTestExecutor = new EventTestExecutor(onMessageReceived);
+        eventTestExecutor.addArgument('subscription', this.subscription);
+        eventTestExecutor.addArgument('message', message);
+        Object.keys(message).filter(key => typeof(message[key]) == 'object').forEach((key) => {
+            eventTestExecutor.addArgument(key, message[key]);
+        });
+        this.executeHookFunction(eventTestExecutor);
         this.report.messageReceivedTime = new DateController().toString();
     }
 
-    private executeHookFunction(testExecutor: ScriptExecutor) {
-        const tests = testExecutor.execute();
+    private executeHookFunction(eventTestExecutor: EventTestExecutor) {
+        const tests = eventTestExecutor.execute();
         this.report.tests = tests.map(test => {
             return {name: test.label, valid: test.valid, description: test.description};
         })

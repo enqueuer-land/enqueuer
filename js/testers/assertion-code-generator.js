@@ -8,28 +8,39 @@ class AssertionCodeGenerator {
         this.testerMethods = this.identifyTesterMethods();
     }
     generate(assertion) {
-        const condition = this.getCondition(assertion);
-        const assertionMethodName = Object.getOwnPropertyNames(condition)[0];
-        if (this.tester[assertionMethodName] !== undefined) {
-            const value = condition[assertionMethodName];
-            return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertion.label}\`, ${assertion.expected}, ${value});`;
+        let remainingArguments = this.removeField('label', assertion);
+        const argumentsLength = Object.getOwnPropertyNames(remainingArguments).length;
+        if (argumentsLength == 1) {
+            const assertionMethodName = Object.getOwnPropertyNames(remainingArguments)[0];
+            if (this.tester[assertionMethodName] !== undefined) {
+                const value = remainingArguments[assertionMethodName];
+                return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertion.label}\`, ${value});`;
+            }
+            throw new Error(`Tester class has no method called ${assertionMethodName}. Available ones are: ${this.testerMethods}`);
         }
-        throw new Error(`Tester class has no method called ${assertionMethodName}. Available ones are: ${this.testerMethods}`);
+        else if (argumentsLength == 2) {
+            remainingArguments = this.removeField('expected', remainingArguments);
+            const assertionMethodName = Object.getOwnPropertyNames(remainingArguments)[0];
+            if (this.tester[assertionMethodName] !== undefined) {
+                const value = remainingArguments[assertionMethodName];
+                return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertion.label}\`, ${assertion.expected}, ${JSON.stringify(value)});`;
+            }
+            throw new Error(`Tester class has no method called ${assertionMethodName}. Available ones are: ${this.testerMethods}`);
+        }
+        else {
+            throw new Error(`Tester class does not work with ${argumentsLength} arguments functions`);
+        }
     }
-    getCondition(test) {
+    removeField(field, test) {
         let clone = Object.assign({}, test);
-        if (!clone.label) {
+        if (!clone[field]) {
             throw new Error(`Test has to have a 'label' field`);
         }
-        if (!clone.expected) {
-            throw new Error(`Test ${clone.label} to have a 'expected' field`);
-        }
-        delete clone.label;
-        delete clone.expected;
+        delete clone[field];
         return clone;
     }
     identifyTesterMethods() {
-        return Object.getOwnPropertyNames(Object.getPrototypeOf(this.tester));
+        return Object.getOwnPropertyNames(Object.getPrototypeOf(this.tester)).filter(methodName => methodName != 'constructor');
     }
 }
 exports.AssertionCodeGenerator = AssertionCodeGenerator;

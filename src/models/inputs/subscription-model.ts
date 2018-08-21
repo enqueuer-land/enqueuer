@@ -1,8 +1,10 @@
+import {Event} from '../../testers/event';
+
 export interface SubscriptionModel {
     type: string;
     name: string;
-    onMessageReceived?: string;
-    onInit?: string;
+    onMessageReceived?: Event;
+    onInit?: Event;
     response?: any;
     timeout?: number;
 

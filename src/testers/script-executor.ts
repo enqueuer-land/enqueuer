@@ -1,4 +1,5 @@
 import {Test} from './test';
+import {Logger} from '../loggers/logger';
 
 export class ScriptExecutor {
 
@@ -13,7 +14,7 @@ export class ScriptExecutor {
         this.arguments.push({name: name, value: value});
     }
 
-    public execute(): Test[] {
+    public execute(): any {
         return this.executeFunction(this.createFunction());
     }
 
@@ -22,9 +23,14 @@ export class ScriptExecutor {
         return ((...args: string[]) => new Function(...args)).apply(null, constructorArgs);
     }
 
-    private executeFunction(dynamicFunction: Function): Test[] {
-        const callArgs = this.arguments.map(arg => arg.value);
-        return dynamicFunction.apply(this, callArgs);
+    private executeFunction(dynamicFunction: Function): any {
+        try {
+            const callArgs = this.arguments.map(arg => arg.value);
+            return dynamicFunction.apply(this, callArgs);
+        } catch (err) {
+            Logger.error(`Error with function: ${dynamicFunction}`);
+            throw err;
+        }
     }
 
 }

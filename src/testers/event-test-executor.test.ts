@@ -48,7 +48,7 @@ describe('EventTestExecutor', () => {
         const tests = eventTestExecutor.execute();
 
         expect(tests.length).toBe(1);
-        expect(JSON.stringify(tests[0])).toBe(`{\"valid\":false,\"label\":\"Script code is valid\",\"description\":{}}`);
+        expect(JSON.stringify(tests[0])).toBe(`{\"valid\":false,\"label\":\"Script code is valid\",\"description\":\"Error: pp\"}`);
     });
 
 });

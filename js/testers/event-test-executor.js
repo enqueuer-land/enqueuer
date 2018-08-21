@@ -4,6 +4,7 @@ const tester_1 = require("./tester");
 const assertion_code_generator_1 = require("./assertion-code-generator");
 const script_executor_1 = require("./script-executor");
 const store_1 = require("./store");
+const logger_1 = require("../loggers/logger");
 class EventTestExecutor {
     constructor(event) {
         this.arguments = [];
@@ -18,12 +19,14 @@ class EventTestExecutor {
         this.arguments.push({ name: name, value: value });
     }
     execute() {
+        logger_1.Logger.trace(`Executing event function`);
         let result = [];
         try {
             result = this.scriptRunner(this.script);
         }
         catch (err) {
-            return [{ valid: false, label: 'Script code is valid', description: err }];
+            logger_1.Logger.error(`Error executing event function ${err}`);
+            return [{ valid: false, label: 'Script code is valid', description: err.toString() }];
         }
         return this.testEachAssertion(result);
     }
@@ -34,7 +37,7 @@ class EventTestExecutor {
                 result = result.concat(this.runAssertion(assertion));
             }
             catch (err) {
-                result = result.concat({ valid: false, label: `Assertion ${assertion.label} code is valid`, description: err });
+                result = result.concat({ valid: false, label: `Assertion ${assertion.label} code is valid`, description: err.toString() });
             }
         });
         return initial.concat(result);
@@ -52,7 +55,7 @@ class EventTestExecutor {
         this.arguments.forEach(argument => {
             scriptExecutor.addArgument(argument.name, argument.value);
         });
-        scriptExecutor.execute();
+        logger_1.Logger.trace(`Function result: ${scriptExecutor.execute()}`);
         return tester.getReport();
     }
 }

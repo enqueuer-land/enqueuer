@@ -23,9 +23,7 @@ const input = __importStar(require("../../models/inputs/publisher-model"));
 const logger_1 = require("../../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
-const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const script_executor_1 = require("../../testers/script-executor");
-const store_1 = require("../../testers/store");
+const event_test_executor_1 = require("../../testers/event-test-executor");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -36,7 +34,9 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
             type: startEventPublisher.type,
             tests: []
         };
-        this.publisher = this.executeOnInitFunction(startEventPublisher);
+        this.executeOnInitFunction(startEventPublisher);
+        logger_1.Logger.debug(`Instantiating publisher from '${startEventPublisher.type}'`);
+        this.publisher = conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(startEventPublisher);
     }
     start() {
         logger_1.Logger.trace(`Firing publication as startEvent`);
@@ -64,7 +64,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         };
     }
     pushResponseMessageReceivedTest() {
-        if (this.publisher.onMessageReceived) {
+        if (this.publisher.onMessageReceived && this.publisher.onMessageReceived.assertions) {
             let responseTest = {
                 name: 'Response message received',
                 valid: false,
@@ -78,35 +78,32 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         }
     }
     executeOnMessageReceivedFunction() {
-        if (!this.publisher.onMessageReceived || !this.publisher.messageReceived) {
+        const message = this.publisher.messageReceived;
+        if (!this.publisher.onMessageReceived || !message) {
             return;
         }
         logger_1.Logger.trace(`Publisher received response`);
-        const testExecutor = new script_executor_1.ScriptExecutor(this.publisher.onMessageReceived);
-        testExecutor.addArgument('publisher', this.publisher);
-        testExecutor.addArgument('message', this.publisher.messageReceived);
-        const tests = testExecutor.execute();
+        const eventTestExecutor = new event_test_executor_1.EventTestExecutor(this.publisher.onMessageReceived);
+        eventTestExecutor.addArgument('publisher', this.publisher);
+        eventTestExecutor.addArgument('message', message);
+        Object.keys(message).filter(key => typeof (message[key]) == 'object').forEach((key) => {
+            eventTestExecutor.addArgument(key, message[key]);
+        });
+        this.executeHookMethod(eventTestExecutor);
+    }
+    executeOnInitFunction(publisher) {
+        if (publisher.onInit) {
+            logger_1.Logger.info(`Executing publisher::onInit hook function`);
+            const eventTestExecutor = new event_test_executor_1.EventTestExecutor(publisher.onInit);
+            eventTestExecutor.addArgument('publisher', publisher);
+            this.executeHookMethod(eventTestExecutor);
+        }
+    }
+    executeHookMethod(eventTestExecutor) {
+        const tests = eventTestExecutor.execute();
         this.report.tests = this.report.tests.concat(tests.map(test => {
             return { name: test.label, valid: test.valid, description: test.description };
         }));
-    }
-    executeOnInitFunction(publisher) {
-        logger_1.Logger.trace(`Executing publisher::onInit function`);
-        if (publisher.onInit) {
-            const testExecutor = new script_executor_1.ScriptExecutor(publisher.onInit);
-            testExecutor.addArgument('publisher', publisher);
-            const tests = testExecutor.execute();
-            const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
-            placeHolderReplacer
-                .addVariableMap(store_1.Store.getData());
-            publisher = placeHolderReplacer.replace(publisher);
-            logger_1.Logger.trace(`Adding publisher::onInit functions tests to report`);
-            this.report.tests = this.report.tests.concat(tests.map(test => {
-                return { name: test.label, valid: test.valid, description: test.description };
-            }));
-        }
-        logger_1.Logger.debug(`Instantiating publisher from '${publisher.type}'`);
-        return conditional_injector_1.Container.subclassesOf(publisher_1.Publisher).create(publisher);
     }
 };
 StartEventPublisherReporter = __decorate([

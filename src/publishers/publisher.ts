@@ -1,11 +1,12 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
+import {Event} from '../testers/event';
 
 export abstract class Publisher {
     public type: string;
     public payload: string;
     public name: string;
-    public onMessageReceived?: string;
-    public onInit?: string;
+    public onMessageReceived?: Event;
+    public onInit?: Event;
     public messageReceived?: any;
 
     public constructor(publisherAttributes: PublisherModel) {
