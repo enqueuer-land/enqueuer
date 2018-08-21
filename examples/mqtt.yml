@@ -22,4 +22,9 @@ runnables:
       const payload = Buffer.from(message.payload);
       tester.isEqualTo('Payload', payload, enqueuer);
       tester.isEqualTo('Topic', message.topic, 'enqueuer/integration/public/test');
+    script:
+      console.log(asas);
+    - label: 'Beatles song'
+      expected: message.length
+      isGreaterThan: 5
     timeout: 5000

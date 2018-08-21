@@ -31,3 +31,4 @@ Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Yaml files explaining input values
 Use glob in filenamewatcher. Rename filename watcher to filesystem watcher
+test('label').assertThat(2).isLessThan(3);

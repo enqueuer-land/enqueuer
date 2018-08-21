@@ -6,10 +6,10 @@ import {Container} from 'conditional-injector';
 import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
-import {isNullOrUndefined} from 'util';
 import {TesterExecutor} from '../../testers/tester-executor';
 import Signals = NodeJS.Signals;
 import {TestModel} from '../../models/outputs/test-model';
+import {SubscriptionModel} from '../../models/inputs/subscription-model';
 
 export class SubscriptionReporter {
 
@@ -28,12 +28,7 @@ export class SubscriptionReporter {
             valid: true
         };
 
-        if (subscriptionAttributes.onInit) {
-            Logger.info(`Executing subscription::onInit hook function`);
-            const testExecutor = new TesterExecutor(subscriptionAttributes.onInit);
-            testExecutor.addArgument('subscription', subscriptionAttributes);
-            this.executeHookFunction(testExecutor);
-        }
+        this.executeOnInitFunction(subscriptionAttributes);
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
     }
@@ -176,6 +171,15 @@ export class SubscriptionReporter {
         if (this.timeOut && this.subscription.timeout) {
             Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);
+        }
+    }
+
+    private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
+        if (subscriptionAttributes.onInit) {
+            Logger.info(`Executing subscription::onInit hook function`);
+            const testExecutor = new TesterExecutor(subscriptionAttributes.onInit);
+            testExecutor.addArgument('subscription', subscriptionAttributes);
+            this.executeHookFunction(testExecutor);
         }
     }
 

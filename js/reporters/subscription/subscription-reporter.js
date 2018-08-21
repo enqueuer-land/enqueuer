@@ -33,12 +33,7 @@ class SubscriptionReporter {
             tests: [],
             valid: true
         };
-        if (subscriptionAttributes.onInit) {
-            logger_1.Logger.info(`Executing subscription::onInit hook function`);
-            const testExecutor = new tester_executor_1.TesterExecutor(subscriptionAttributes.onInit);
-            testExecutor.addArgument('subscription', subscriptionAttributes);
-            this.executeHookFunction(testExecutor);
-        }
+        this.executeOnInitFunction(subscriptionAttributes);
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
     }
@@ -174,6 +169,14 @@ class SubscriptionReporter {
         if (this.timeOut && this.subscription.timeout) {
             logger_1.Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);
+        }
+    }
+    executeOnInitFunction(subscriptionAttributes) {
+        if (subscriptionAttributes.onInit) {
+            logger_1.Logger.info(`Executing subscription::onInit hook function`);
+            const testExecutor = new tester_executor_1.TesterExecutor(subscriptionAttributes.onInit);
+            testExecutor.addArgument('subscription', subscriptionAttributes);
+            this.executeHookFunction(testExecutor);
         }
     }
     executeOnMessageReceivedFunction() {

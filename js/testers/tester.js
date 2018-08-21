@@ -32,6 +32,9 @@ class Tester {
         }
         this.report.push(result);
     }
+    toBeGreaterThan(label, actual, expected) {
+        return this.isGreaterThan(label, actual, expected);
+    }
     isGreaterThanOrEqualTo(label, actual, expected) {
         let result = {
             label: label,

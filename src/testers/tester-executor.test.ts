@@ -1,6 +1,5 @@
 import {TesterExecutor} from './tester-executor';
 import {Tester} from "./tester";
-import {Store} from "./store";
 
 const testIsEqualToMock = jest.fn();
 const testGetReportMock = jest.fn(() => {

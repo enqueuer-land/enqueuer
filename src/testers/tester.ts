@@ -35,6 +35,10 @@ export class Tester {
         this.report.push(result);
     }
 
+    public toBeGreaterThan(label: string, actual: number, expected: number): void {
+        return this.isGreaterThan(label, actual, expected);
+    }
+
     public isGreaterThanOrEqualTo(label: string, actual: number, expected: number): void {
         let result: Test = {
             label: label,
