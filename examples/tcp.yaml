@@ -1,0 +1,85 @@
+name: tcp test description
+id: tcp
+runnables:
+- name: requisition 0 description
+  timeout: 3000
+  startEvent:
+    publisher:
+      type: tcp-client
+      timeout: 1000
+      name: publisher description
+      timeout: 100
+      serverAddress: localhost
+      port: 23069
+      payload: Hey Jude
+      onMessageReceived:
+        assertions:
+        - name: Do not make it bad
+          expected: message.toString()
+          isEqualTo: `Do not make it bad`
+  subscriptions:
+  - type: tcp-server
+    port: 23069
+    name: subscription description
+    timeout: 1000
+    response: Do not make it bad
+    onMessageReceived:
+      assertions:
+      - name: Beatles Song
+        expected: message.toString()
+        isEqualTo: `Hey Jude`
+- name: requisition 1 description
+  timeout: 3000
+  startEvent:
+    publisher:
+      name: publisher description
+      type: tcp-client
+      timeout: 100
+      serverAddress: localhost
+      port: 23070
+      payload: I do not care
+      saveStream: tcpPublisherSocket
+      onMessageReceived:
+        assertions:
+        - name: Greeting received
+          expected: message.toString()
+          isEqualTo: `EnqueuerRocks`
+  subscriptions:
+  - name: subscription description
+    type: tcp-server
+    port: 23070
+    timeout: 200
+    saveStream: tcpSubscriptionSocket
+    greeting: Enqueuer
+    response: Rocks
+    onMessageReceived:
+      assertions:
+      - name: I care
+        expected: message.toString()
+        isEqualTo: `I do not care`
+-
+  name: requisition 2 description
+  timeout: 3000
+  startEvent:
+    publisher:
+      name: publisher description
+      type: tcp-client
+      payload: The socket is still open
+      loadStream: tcpPublisherSocket
+      onMessageReceived:
+        assertions:
+        - name: Second message is '<<tcpPayload>>'
+          expected: message.toString()
+          isEqualTo: `<<tcpPayload>>`
+  subscriptions:
+  - type: tcp-server
+    name: subscription description
+    loadStream: tcpSubscriptionSocket
+    response: <<tcpPayload>>
+    timeout: 1000
+    onMessageReceived:
+      assertions:
+      - name: It is still open
+        expected: message.toString()
+        isEqualTo: `The socket is still open`
+

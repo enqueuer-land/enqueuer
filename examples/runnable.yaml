@@ -1,0 +1,43 @@
+name: runnable test description
+id: runnable
+runnables:
+- name: first runner description
+  iterations: 10
+  runnables:
+  - name: requisition description
+    onInit:
+      script: |-
+        store.iteration = (store.iteration + 1) || 0;
+        store.lastExecution = new Date().getTime();
+    startEvent:
+      publisher:
+        type: zero-mq-pub
+        name: publisher description
+        payload: blabla
+        topic: runnable.incrementor
+        onInit:
+          script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
+- name: second runner description
+  delay: 3000
+  runnables:
+  - name: requisition description
+    onInit:
+      script: delayedTime = new Date().getTime() - store.lastExecution;
+      assertions:
+      - name: It was executed 10 times
+        expected: store.iteration
+        isEqualTo: 9
+      - name: It delayed for at least ~3 seconds
+        expected: delayedTime + 50
+        isGreaterThan: 3000
+      - name: It delayed for no more than ~3 seconds
+        expected: delayedTime - 500
+        isLessThan: 3000
+    startEvent:
+      publisher:
+        type: zero-mq-pub
+        name: publisher description
+        payload: blabla
+        topic: runnable.checker
+        onInit:
+          script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;

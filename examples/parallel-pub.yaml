@@ -1,0 +1,18 @@
+name: Parallel Pub test description
+id: parallel-pub
+delay: 500
+runnables:
+- name: requisition description
+  timeout: 3000
+  startEvent:
+    publisher:
+      name: publisher description
+      type: tcp-client
+      serverAddress: localhost
+      port: 23081
+      payload: anything
+      onMessageReceived:
+        assertions:
+          - name: Back and forth
+            expected: message
+            isEqualTo: `anyValue`

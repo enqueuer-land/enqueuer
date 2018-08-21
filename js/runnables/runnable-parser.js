@@ -65,9 +65,15 @@ class RunnableParser {
         try {
             return yaml.parse(runnableMessage);
         }
-        catch (err) {
-            logger_1.Logger.warning(`Not able to parse as Yaml string to Object. Trying to parse as JSON string`);
-            return JSON.parse(runnableMessage);
+        catch (ymlErr) {
+            logger_1.Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
+            try {
+                return JSON.parse(runnableMessage);
+            }
+            catch (jsonErr) {
+                logger_1.Logger.warning(`Not able to parse as Json: ${jsonErr}`);
+                throw Error(JSON.stringify({ jsonError: jsonErr.toString(), ymlError: ymlErr }));
+            }
         }
     }
     readJsonSchemaFile(filename) {
