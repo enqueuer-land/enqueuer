@@ -3,67 +3,56 @@ import {Logger} from '../loggers/logger';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as fs from 'fs';
-import * as chokidar from 'chokidar';
+import * as glob from 'glob';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'file-name-watcher'})
-export class FileNameWatcherSubscription extends Subscription {
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'file-system-watcher'})
+export class FileSystemWatcherSubscription extends Subscription {
 
-    private watcher: any;
     private fileNamePattern: string;
-    private filesName: string[];
+    private options: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
-        this.filesName = [];
+        this.options = subscriptionAttributes.options || {nodir: true};
         if (!this.fileNamePattern) {
             throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' field`);
         }
+
     }
 
     public subscribe(): Promise<void> {
-        this.watcher = chokidar.watch(this.fileNamePattern, {ignored: /(^|[\/\\])\../});
-        return new Promise((resolve) => {
-            if (!this.fileNamePattern) {
-                resolve();
-            }
-            this.watcher.on('add', (fileName: string) => {
-                Logger.trace(`${this.type} found file: ${fileName}`);
-                this.filesName.push(fileName);
-            });
-            this.watcher.on('ready', () => {
-                Logger.trace(`${this.type} is ready`);
-                resolve();
-            });
-        });
+        return Promise.resolve();
     }
 
-    public async receiveMessage(): Promise<string> {
-        return this.popFileContent();
-    }
-
-    private popFileContent(): Promise<any> {
+    public async receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             let interval = setInterval(() => {
-                const pop = this.filesName.shift();
-                if (pop) {
+                const files = glob.sync(this.fileNamePattern, this.options);
+                if (files.length > 0) {
+                    const filename = files[0];
                     try {
-                        const stat = fs.lstatSync(pop);
-                        resolve({
-                            content: fs.readFileSync(pop).toString(),
-                            name: pop,
-                            size: stat.size,
-                            modified: stat.mtime,
-                            created: stat.ctime
-                        });
+                        resolve(this.extractFileInformation(filename));
                     }
                     catch (error) {
-                        Logger.warning(`Error reading file ${JSON.stringify(error)}`);
+                        Logger.warning(`Error reading file ${filename}: ${error}`);
                         reject(error);
                     }
                     clearInterval(interval);
                 }
             }, 50);
         });
+    }
+
+    private extractFileInformation(filename: string) {
+        const stat = fs.lstatSync(filename);
+        const message = {
+            content: fs.readFileSync(filename).toString(),
+            name: filename,
+            size: stat.size,
+            modified: stat.mtime,
+            created: stat.ctime
+        };
+        return message;
     }
 }

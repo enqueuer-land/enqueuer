@@ -14,9 +14,9 @@ runnables:
         script: publisher.payload=new Date().getTime();
   subscriptions:
   - name: subscription description
-    type: file-name-watcher
-    timeout: 1000
-    fileNamePattern: temp/fileTest*file
+    type: file-system-watcher
+    timeout: 3000
+    fileNamePattern: temp/fileTest*
     onMessageReceived:
       script: now = new Date().getTime();
       assertions:

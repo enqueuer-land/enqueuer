@@ -28,64 +28,53 @@ const subscription_1 = require("./subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const fs = __importStar(require("fs"));
-const chokidar = __importStar(require("chokidar"));
-let FileNameWatcherSubscription = class FileNameWatcherSubscription extends subscription_1.Subscription {
+const glob = __importStar(require("glob"));
+let FileSystemWatcherSubscription = class FileSystemWatcherSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.fileNamePattern = subscriptionAttributes.fileNamePattern;
-        this.filesName = [];
+        this.options = subscriptionAttributes.options || { nodir: true };
         if (!this.fileNamePattern) {
             throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' field`);
         }
     }
     subscribe() {
-        this.watcher = chokidar.watch(this.fileNamePattern, { ignored: /(^|[\/\\])\../ });
-        return new Promise((resolve) => {
-            if (!this.fileNamePattern) {
-                resolve();
-            }
-            this.watcher.on('add', (fileName) => {
-                logger_1.Logger.trace(`${this.type} found file: ${fileName}`);
-                this.filesName.push(fileName);
-            });
-            this.watcher.on('ready', () => {
-                logger_1.Logger.trace(`${this.type} is ready`);
-                resolve();
-            });
-        });
+        return Promise.resolve();
     }
     receiveMessage() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.popFileContent();
+            return new Promise((resolve, reject) => {
+                let interval = setInterval(() => {
+                    const files = glob.sync(this.fileNamePattern, this.options);
+                    if (files.length > 0) {
+                        const filename = files[0];
+                        try {
+                            resolve(this.extractFileInformation(filename));
+                        }
+                        catch (error) {
+                            logger_1.Logger.warning(`Error reading file ${filename}: ${error}`);
+                            reject(error);
+                        }
+                        clearInterval(interval);
+                    }
+                }, 50);
+            });
         });
     }
-    popFileContent() {
-        return new Promise((resolve, reject) => {
-            let interval = setInterval(() => {
-                const pop = this.filesName.shift();
-                if (pop) {
-                    try {
-                        const stat = fs.lstatSync(pop);
-                        resolve({
-                            content: fs.readFileSync(pop).toString(),
-                            name: pop,
-                            size: stat.size,
-                            modified: stat.mtime,
-                            created: stat.ctime
-                        });
-                    }
-                    catch (error) {
-                        logger_1.Logger.warning(`Error reading file ${JSON.stringify(error)}`);
-                        reject(error);
-                    }
-                    clearInterval(interval);
-                }
-            }, 50);
-        });
+    extractFileInformation(filename) {
+        const stat = fs.lstatSync(filename);
+        const message = {
+            content: fs.readFileSync(filename).toString(),
+            name: filename,
+            size: stat.size,
+            modified: stat.mtime,
+            created: stat.ctime
+        };
+        return message;
     }
 };
-FileNameWatcherSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'file-name-watcher' }),
+FileSystemWatcherSubscription = __decorate([
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'file-system-watcher' }),
     __metadata("design:paramtypes", [Object])
-], FileNameWatcherSubscription);
-exports.FileNameWatcherSubscription = FileNameWatcherSubscription;
+], FileSystemWatcherSubscription);
+exports.FileSystemWatcherSubscription = FileSystemWatcherSubscription;
