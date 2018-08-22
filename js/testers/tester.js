@@ -7,6 +7,9 @@ class Tester {
     getReport() {
         return this.report;
     }
+    addTest(test) {
+        this.report.push(test);
+    }
     toBeEqualTo(label, actual, expected) {
         this.report.push({
             label: label,

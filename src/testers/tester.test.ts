@@ -8,6 +8,16 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(0);
     });
 
+    it(`Report gets added`, () => {
+        const tester: Tester = new Tester;
+        const test = {label: 'error', valid: false, errorDescription: 'description'};
+
+        tester.addTest(test);
+
+        expect(tester.getReport().length).toBe(1);
+        expect(tester.getReport()[0]).toBe(test);
+    });
+
     it(`isNotEqualTo`, () => {
         const tester: Tester = new Tester;
 

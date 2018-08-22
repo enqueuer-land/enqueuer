@@ -8,6 +8,10 @@ export class Tester {
         return this.report;
     }
 
+    public addTest(test: Test): void {
+        this.report.push(test);
+    }
+
     public toBeEqualTo(label: string, actual: number, expected: number): void {
         this.report.push({
             label: label,

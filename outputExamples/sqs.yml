@@ -10,27 +10,23 @@ runnables:
     tests:
       -
         valid: false
-        name: 'Subscriptions message receiving'
+        name: 'Start Event'
         description:
           message: 'AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
           code: AWS.SimpleQueueService.NonExistentQueue
-          time: '2018-08-22T19:02:07.106Z'
+          time: '2018-08-22T19:39:53.809Z'
           statusCode: 400
           retryable: false
-          retryDelay: 38.1634053854063
-        hierarchy:
-          - examples/sqs.yml
-          - 'sqs test description'
-          - 'requisition description'
+          retryDelay: 72.49123733158717
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 95
-      startTime: '2018-08-22T19:02:07.013Z'
-      endTime: '2018-08-22T19:02:07.108Z'
+      totalTime: 83
+      startTime: '2018-08-22T19:39:53.731Z'
+      endTime: '2018-08-22T19:39:53.814Z'
       timeout: 5000
     subscriptions:
       -
@@ -41,25 +37,19 @@ runnables:
             valid: false
             name: 'Message received'
             description: 'Subscription has not received its message in a valid time'
-            hierarchy:
-              - examples/sqs.yml
-              - 'sqs test description'
-              - 'requisition description'
-              - 'subscription description'
         valid: false
-        connectionTime: '2018-08-22T19:02:07.026Z'
+        connectionTime: '2018-08-22T19:39:53.736Z'
     startEvent:
       publisher:
         name: 'publisher description'
-        valid: true
+        valid: false
         type: sqs
         tests:
+          -
+            name: Published
+            valid: false
+            description: 'AWS.SimpleQueueService.NonExistentQueue: AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
           -
             name: 'Response message received'
             valid: false
             description: 'No response message was received'
-            hierarchy:
-              - examples/sqs.yml
-              - 'sqs test description'
-              - 'requisition description'
-              - 'publisher description'

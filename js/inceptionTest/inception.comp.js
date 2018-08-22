@@ -43,10 +43,10 @@ describe('Inception test', () => {
     it('should run enqueuer to test another enqueuer process', done => {
         jest.setTimeout(10000);
         beingTested = child_process_1.spawn('nqr', ['--config-file', 'src/inceptionTest/beingTested.yml']);
-        // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
+        beingTested.stdout.on('data', (data) => console.log('beingTested: ' + data));
         sleep(500);
         tester = child_process_1.spawn('enqueuer', ['--config-file', 'src/inceptionTest/tester.yml']);
-        tester.stdout.on('data', (data) => console.log('tester: ' + data));
+        // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
         sleep(2500);
         const testerReports = findEveryJsonFile()
             .filter(filename => filename.indexOf('_test.') >= 0)
@@ -88,6 +88,6 @@ describe('Inception test', () => {
     };
     afterAll(() => {
         killThemAll();
-        removeEveryReportFile();
+        // removeEveryReportFile();
     });
 });

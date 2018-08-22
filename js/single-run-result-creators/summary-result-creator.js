@@ -63,7 +63,7 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
         tests
             .forEach((test) => {
             if (!test.valid) {
-                this.failingTests.push(Object.assign(test, { hierarchy: hierarchy }));
+                this.failingTests.push(Object.assign({}, test, { hierarchy: hierarchy }));
                 let message = `\t${chalk_1.default.black.bgRed('[FAIL]')} `;
                 message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.red);
                 console.log(message);

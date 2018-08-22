@@ -14,36 +14,80 @@ export class AssertionCodeGenerator {
 
     public generate(assertion: Assertion): string {
         const assertionName = assertion.name;
-        assertion = this.removeField('name', assertion);
-        const argumentsLength = Object.getOwnPropertyNames(assertion).length;
+        try {
+            assertion = this.removeField('name', assertion);
+        } catch (err) {
+            return `;${this.testerInstanceName}.addTest({
+                        errorDescription: \`${err}'\`,
+                        valid: false,
+                        label: 'Required field not found'
+                    });`;
+        }
+
+    const argumentsLength = Object.getOwnPropertyNames(assertion).length;
         if (argumentsLength == 1) {
             return this.executeOneArgumentFunction(assertionName, assertion);
         } else if (argumentsLength == 2) {
             return this.executeTwoArgumentsFunction(assertionName, assertion);
         } else {
-            throw new Error(`Tester class does not work with ${argumentsLength} arguments functions`);
+            return `;${this.testerInstanceName}.addTest({
+                    errorDescription: \`Tester class does not work with '${argumentsLength}' arguments function'\`,
+                    valid: false,
+                    label: 'Unknown assertion method'
+                });`;
         }
-
     }
 
     private executeOneArgumentFunction(assertionName: string, assertion: any) {
         const assertionMethodName = Object.getOwnPropertyNames(assertion)[0];
         if (this.tester[assertionMethodName] !== undefined) {
             const value = assertion[assertionMethodName];
-            return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${value});`;
+            return `;   try {
+                            ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${value});
+                        } catch (err) {
+                            ${this.testerInstanceName}.addTest({
+                                errorDescription: \`Error executing assertion: '\${err}'\`,
+                                valid: false,
+                                label: 'Unknown assertion method'
+                            });
+                        }`;
         }
-        throw new Error(`Tester class has no method called '${assertionMethodName}'. Available ones are: ${this.testerMethods}`);
+        return `;${this.testerInstanceName}.addTest({
+                    errorDescription: \`Tester class has no one argument method called '${assertionMethodName}'\`,
+                    valid: false,
+                    label: 'Unknown assertion method'
+                });`;
     }
 
     private executeTwoArgumentsFunction(assertionName: any, assertion: any): string {
         const expect = assertion.expect;
-        assertion = this.removeField('expect', assertion);
+        try {
+            assertion = this.removeField('expect', assertion);
+        } catch (err) {
+            return `;${this.testerInstanceName}.addTest({
+                    errorDescription: \`${err}'\`,
+                    valid: false,
+                    label: 'Required field not found'
+                });`;
+        }
         const assertionMethodName = Object.getOwnPropertyNames(assertion)[0];
         if (this.tester[assertionMethodName] !== undefined) {
             const value = assertion[assertionMethodName];
-            return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${expect}, ${value});`;
+            return `;   try {
+                            ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${expect}, ${value});
+                        } catch (err) {
+                            ${this.testerInstanceName}.addTest({
+                                errorDescription: \`Error executing assertion: '\${err}'\`,
+                                valid: false,
+                                label: 'Unknown assertion method'
+                            });
+                        }`;
         }
-        throw new Error(`Tester class has no method called '${assertionMethodName}'. Available ones are: ${this.testerMethods}`);
+        return `;${this.testerInstanceName}.addTest({
+                    errorDescription: \`Tester class has no two arguments method called '${assertionMethodName}'\`,
+                    valid: false,
+                    label: 'Unknown assertion method'
+                });`;
     }
 
     private removeField(field: string, test: any): any {
