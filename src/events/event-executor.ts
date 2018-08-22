@@ -26,15 +26,9 @@ export abstract class EventExecutor {
 
     protected execute(): Test[] {
         Logger.trace(`Executing event function`);
-        let result: Test[] = [];
-
-        try {
-            result = this.scriptRunner(this.script);
-        } catch (err) {
-            Logger.error(`Error executing event function ${err}`);
-            return [{valid: false, label: 'Script code is valid', errorDescription: err.toString()}];
-        }
-        return this.testEachAssertion(result);
+        const code = this.addAssertions();
+        console.log(code);
+        return this.scriptRunner(code);
     }
 
     private prepareAssertions(assertions: Assertion[]) {
@@ -52,24 +46,23 @@ export abstract class EventExecutor {
         this.arguments.push({name: name, value: value});
     }
 
-    private testEachAssertion(initial: Test[]) {
-        let result: Test[] = [];
+    private addAssertions(): string {
+        //TODO extract to its own class
+        let code  =
+        `try {
+            ${this.script}
+        } catch (err) {
+            ${this.testerInstanceName}.addTest({
+                    errorDescription: \`Error executing 'script' code: '\${err}'\`,
+                    valid: false,
+                    label: "Valid 'script' code"
+                });
+        }`;
         this.assertions.forEach((assertion: any) => {
-            try {
-                result = result.concat(this.runAssertion(assertion));
-            } catch (err) {
-                result = result.concat({valid: false, label: `Assertion '${assertion.name}' is valid`, errorDescription: err.toString()});
-            }
+            const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator(this.testerInstanceName);
+            code += assertionCodeGenerator.generate(assertion);
         });
-        return initial.concat(result);
-    }
-
-    private runAssertion(assertion: Assertion): Test[] {
-        Logger.trace(`Running assertion: ${JSON.stringify(assertion.name)}`);
-        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator(this.testerInstanceName);
-        const code = assertionCodeGenerator.generate(assertion);
-        Logger.trace(`Assertion: ${JSON.stringify(assertion.name)} ran`);
-        return this.scriptRunner(this.script + code);
+        return code;
     }
 
     private scriptRunner(script: string): Test[] {

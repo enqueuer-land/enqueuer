@@ -915,7 +915,6 @@ class KeyValueList(Lister):
                 row.append("{0}=\"{1}\"".format(columns[j], table[i][j]))
             print(" ".join(row))
 
-# TODO handle spaces etc in completable names
 class BashList(Lister):
     def __init__(self, columns, obj_info, options):
         self.columns = columns

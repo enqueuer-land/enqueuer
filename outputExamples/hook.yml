@@ -18,9 +18,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 136
-      startTime: '2018-08-22T19:39:53.700Z'
-      endTime: '2018-08-22T19:39:53.836Z'
+      totalTime: 167
+      startTime: '2018-08-22T19:59:39.183Z'
+      endTime: '2018-08-22T19:59:39.350Z'
       timeout: 1000
     subscriptions:
       -
@@ -46,13 +46,13 @@ runnables:
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived'' does not contain ''subscription::onInit'''
+            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit -> subscription::onMessageReceived'' does not contain ''subscription::onInit'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-22T19:39:53.763Z'
+        connectionTime: '2018-08-22T19:59:39.250Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -82,9 +82,9 @@ runnables:
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived'' does not contain ''publisher::onInit'''
+            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit -> subscription::onMessageReceived -> publisher::onMessageReceived'' does not contain ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-22T19:39:53.836Z'
+        publishTime: '2018-08-22T19:59:39.349Z'
