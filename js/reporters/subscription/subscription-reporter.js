@@ -14,7 +14,7 @@ const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
-const event_test_executor_1 = require("../../testers/event-test-executor");
+const event_test_executor_1 = require("../../events/event-test-executor");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;

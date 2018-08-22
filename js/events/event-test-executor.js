@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tester_1 = require("./tester");
-const assertion_code_generator_1 = require("./assertion-code-generator");
-const script_executor_1 = require("./script-executor");
-const store_1 = require("./store");
+const tester_1 = require("../testers/tester");
+const assertion_code_generator_1 = require("../testers/assertion-code-generator");
+const script_executor_1 = require("../testers/script-executor");
+const store_1 = require("../testers/store");
 const logger_1 = require("../loggers/logger");
 class EventTestExecutor {
     constructor(event) {

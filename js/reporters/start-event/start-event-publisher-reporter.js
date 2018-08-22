@@ -23,7 +23,7 @@ const input = __importStar(require("../../models/inputs/publisher-model"));
 const logger_1 = require("../../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
-const event_test_executor_1 = require("../../testers/event-test-executor");
+const event_test_executor_1 = require("../../events/event-test-executor");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();

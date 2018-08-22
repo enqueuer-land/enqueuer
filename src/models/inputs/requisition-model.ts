@@ -1,6 +1,6 @@
 import {SubscriptionModel} from './subscription-model';
 import {StartEventModel} from './start-event-model';
-import {Event} from '../../testers/event';
+import {Event} from '../../events/event';
 
 export interface RequisitionModel {
     timeout?: number;

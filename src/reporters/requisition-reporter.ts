@@ -8,7 +8,7 @@ import {Timeout} from '../timers/timeout';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {Container} from 'conditional-injector';
 import {TestModel} from '../models/outputs/test-model';
-import {EventTestExecutor} from '../testers/event-test-executor';
+import {EventTestExecutor} from '../events/event-test-executor';
 
 export type RequisitionRunnerCallback = () => void;
 

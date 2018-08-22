@@ -1,4 +1,3 @@
-import {Test} from './test';
 import {Logger} from '../loggers/logger';
 
 export class ScriptExecutor {

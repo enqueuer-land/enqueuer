@@ -1,10 +1,10 @@
 import {Event} from './event';
-import {Assertion} from './assertion';
-import {Test} from './test';
-import {Tester} from './tester';
-import {AssertionCodeGenerator} from './assertion-code-generator';
-import {ScriptExecutor} from './script-executor';
-import {Store} from './store';
+import {Assertion} from '../testers/assertion';
+import {Test} from '../testers/test';
+import {Tester} from '../testers/tester';
+import {AssertionCodeGenerator} from '../testers/assertion-code-generator';
+import {ScriptExecutor} from '../testers/script-executor';
+import {Store} from '../testers/store';
 import {Logger} from '../loggers/logger';
 
 export class EventTestExecutor {

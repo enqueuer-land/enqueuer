@@ -1,4 +1,4 @@
-import {Assertion} from './assertion';
+import {Assertion} from '../testers/assertion';
 
 export interface Event {
     script: string;

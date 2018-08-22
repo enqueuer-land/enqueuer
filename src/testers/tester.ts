@@ -1,5 +1,4 @@
 import {Test} from './test';
-import {isUndefined} from 'util';
 
 export class Tester {
 

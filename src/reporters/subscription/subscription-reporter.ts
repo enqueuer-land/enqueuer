@@ -10,7 +10,7 @@ import {ScriptExecutor} from '../../testers/script-executor';
 import Signals = NodeJS.Signals;
 import {TestModel} from '../../models/outputs/test-model';
 import {SubscriptionModel} from '../../models/inputs/subscription-model';
-import {EventTestExecutor} from '../../testers/event-test-executor';
+import {EventTestExecutor} from '../../events/event-test-executor';
 
 export class SubscriptionReporter {
 

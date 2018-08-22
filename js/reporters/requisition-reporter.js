@@ -6,7 +6,7 @@ const start_event_reporter_1 = require("./start-event/start-event-reporter");
 const timeout_1 = require("../timers/timeout");
 const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptions-reporter");
 const conditional_injector_1 = require("conditional-injector");
-const event_test_executor_1 = require("../testers/event-test-executor");
+const event_test_executor_1 = require("../events/event-test-executor");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.startEventDoneItsJob = false;

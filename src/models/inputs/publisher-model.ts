@@ -1,4 +1,4 @@
-import {Event} from '../../testers/event';
+import {Event} from '../../events/event';
 
 export interface PublisherModel {
     type: string;

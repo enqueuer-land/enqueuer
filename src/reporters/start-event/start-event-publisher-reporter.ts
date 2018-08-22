@@ -7,7 +7,7 @@ import {Logger} from '../../loggers/logger';
 import {Container, Injectable} from 'conditional-injector';
 import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
-import {EventTestExecutor} from '../../testers/event-test-executor';
+import {EventTestExecutor} from '../../events/event-test-executor';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {

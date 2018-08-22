@@ -1,12 +1,12 @@
-import {ScriptExecutor} from './script-executor';
-import {Tester} from './tester';
+import {ScriptExecutor} from '../testers/script-executor';
+import {Tester} from '../testers/tester';
 import {EventTestExecutor} from './event-test-executor';
-import {AssertionCodeGenerator} from './assertion-code-generator';
+import {AssertionCodeGenerator} from '../testers/assertion-code-generator';
 
 let addArgumentMock = jest.fn();
 let executeMock = jest.fn();
 
-jest.mock('./script-executor');
+jest.mock('../testers/script-executor');
 ScriptExecutor.mockImplementation(() => {
     return {
         addArgument: addArgumentMock,
@@ -15,7 +15,7 @@ ScriptExecutor.mockImplementation(() => {
 });
 
 let generateMock = jest.fn();
-jest.mock('././assertion-code-generator');
+jest.mock('../testers/assertion-code-generator');
 AssertionCodeGenerator.mockImplementation(() => {
     return {
         generate: generateMock
