@@ -9,7 +9,9 @@ export class MultiSubscriptionsReporter {
     constructor(subscriptionsAttributes: input.SubscriptionModel[]) {
         if (subscriptionsAttributes) {
             for (let id: number = 0; id < subscriptionsAttributes.length; ++id) {
-                this.subscriptionReporters.push(new SubscriptionReporter(subscriptionsAttributes[id]));
+                const subscriptionReporter = new SubscriptionReporter(subscriptionsAttributes[id]);
+                subscriptionReporter.setDefaultName(`Subscription #${id}`);
+                this.subscriptionReporters.push(subscriptionReporter);
             }
         }
     }

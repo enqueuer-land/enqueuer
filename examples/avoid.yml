@@ -1,11 +1,7 @@
-name: avoid test description
 id: avoid
 runnables:
-- name: requisition  description
-  timeout: 4000
-  startEvent:
+- startEvent:
     subscription:
-      name: subscription description
       type: tcp-server
       port: 23232
       avoid: true

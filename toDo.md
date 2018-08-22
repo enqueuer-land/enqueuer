@@ -32,7 +32,6 @@ Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Yaml files explaining input values
-Defaults requisition/subscription/publisher names
 Parallel config property
 store array event property
 

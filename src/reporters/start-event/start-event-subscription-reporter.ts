@@ -14,6 +14,7 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
     public constructor(startEvent: SubscriptionModel) {
         super();
         this.subscriptionReporter = new SubscriptionReporter(startEvent.subscription);
+        this.subscriptionReporter.setDefaultName(`Start event subscription`);
     }
 
     public start(): Promise<void> {

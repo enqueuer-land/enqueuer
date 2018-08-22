@@ -24,6 +24,7 @@ export class RunnableRunner extends Runner {
             id: this.runnableModel.id,
             runnables: []
         };
+        this.addDefaultName();
     }
 
     public run(): Promise<ResultModel> {
@@ -47,6 +48,20 @@ export class RunnableRunner extends Runner {
         });
     }
 
+    private addDefaultName() {
+        let requisitionCounter = 0;
+        let runnableCounter = 0;
+        this.runnableModel.runnables.map((runnable: any) => {
+            if (!runnable.name) {
+                if (runnable.runnables) {
+                    runnable.name = `Runnable #${runnableCounter++}`;
+                } else {
+                    runnable.name = `Requisition #${requisitionCounter++}`;
+                }
+            }
+        });
+    }
+
     private promisifyRunnableExecutionCall() {
         return this.multiplyIterations()
                     .map(runnable => () => Container
@@ -64,7 +79,7 @@ export class RunnableRunner extends Runner {
             const clone = this.runnableModel.runnables.map(x => ({ ...x }));
             const items = clone
                 .map(item => {
-                    item.name = `[${x}] ` + item.name;
+                    item.name = item.name + `[${x}]`;
                     return item;
                 });
             runnables = runnables.concat(items);

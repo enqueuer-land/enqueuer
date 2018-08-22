@@ -18,6 +18,7 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
     constructor(startEvent) {
         super();
         this.subscriptionReporter = new subscription_reporter_1.SubscriptionReporter(startEvent.subscription);
+        this.subscriptionReporter.setDefaultName(`Start event subscription`);
     }
     start() {
         return new Promise((resolve, reject) => {

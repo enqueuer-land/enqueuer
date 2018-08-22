@@ -34,6 +34,12 @@ export class SubscriptionReporter {
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
     }
 
+    public setDefaultName(name: string) {
+        if (!this.subscription.name) {
+            this.subscription.name = name;
+        }
+    }
+
     public startTimeout(onTimeOutCallback: Function) {
         this.subscription.messageReceived = undefined;
         if (this.timeOut) {
@@ -145,7 +151,6 @@ export class SubscriptionReporter {
     }
 
     private initializeTimeout() {
-        console.log(`${this.subscription.name} ${this.timeOut} -> ${this.subscription.timeout}`);
         if (this.timeOut && this.subscription.timeout) {
             Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);

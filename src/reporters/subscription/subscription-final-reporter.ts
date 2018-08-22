@@ -2,6 +2,7 @@ import {TestModel} from '../../models/outputs/test-model';
 
 //TODO test it
 export class SubscriptionFinalReporter {
+    private messageReceivedTestName: string = `Message received`;
 
     private avoidable: boolean;
     private hasMessage: boolean = false;
@@ -31,34 +32,32 @@ export class SubscriptionFinalReporter {
     }
 
     private createMessageReceived() {
-        const name: string = 'Message received';
         if (!this.avoidable) {
             return {
                 valid: true,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Subscription has received its message`
             };
         } else {
             return {
                 valid: false,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Avoidable subscription shouldn't have received a message`
             };
         }
     }
 
     private createMessageNotReceived() {
-        const name = `Subscription avoided`;
         if (!this.avoidable) {
             return {
                 valid: false,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Subscription has not received its message in a valid time`
             };
         } else {
             return {
                 valid: true,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Avoidable subscription has not received a message`
             };
         }

@@ -25,6 +25,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             id: this.runnableModel.id,
             runnables: []
         };
+        this.addDefaultName();
     }
     run() {
         const delay = this.runnableModel.delay;
@@ -45,6 +46,20 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
                 .start(delay || 0);
         });
     }
+    addDefaultName() {
+        let requisitionCounter = 0;
+        let runnableCounter = 0;
+        this.runnableModel.runnables.map((runnable) => {
+            if (!runnable.name) {
+                if (runnable.runnables) {
+                    runnable.name = `Runnable #${runnableCounter++}`;
+                }
+                else {
+                    runnable.name = `Requisition #${requisitionCounter++}`;
+                }
+            }
+        });
+    }
     promisifyRunnableExecutionCall() {
         return this.multiplyIterations()
             .map(runnable => () => conditional_injector_1.Container
@@ -61,7 +76,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             const clone = this.runnableModel.runnables.map(x => (Object.assign({}, x)));
             const items = clone
                 .map(item => {
-                item.name = `[${x}] ` + item.name;
+                item.name = item.name + `[${x}]`;
                 return item;
             });
             runnables = runnables.concat(items);

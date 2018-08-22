@@ -37,9 +37,12 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     execute() {
         return new Promise((resolve) => {
-            Promise.all(this.runnableFileNames.map((fileName) => {
+            Promise.all(this.runnableFileNames.map((fileName, index) => {
                 const runnable = this.parseRunnable(fileName);
                 if (runnable) {
+                    if (!runnable.name) {
+                        runnable.name = `Runnable #${index}`;
+                    }
                     return this.runRunnable(fileName, runnable);
                 }
                 else {

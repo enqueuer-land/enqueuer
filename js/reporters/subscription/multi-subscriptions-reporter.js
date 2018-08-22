@@ -7,7 +7,9 @@ class MultiSubscriptionsReporter {
         this.subscriptionsStoppedWaitingCounter = 0;
         if (subscriptionsAttributes) {
             for (let id = 0; id < subscriptionsAttributes.length; ++id) {
-                this.subscriptionReporters.push(new subscription_reporter_1.SubscriptionReporter(subscriptionsAttributes[id]));
+                const subscriptionReporter = new subscription_reporter_1.SubscriptionReporter(subscriptionsAttributes[id]);
+                subscriptionReporter.setDefaultName(`Subscription #${id}`);
+                this.subscriptionReporters.push(subscriptionReporter);
             }
         }
     }

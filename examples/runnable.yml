@@ -1,27 +1,22 @@
 name: runnable test description
 id: runnable
 runnables:
-- name: first runner description
-  iterations: 10
+- iterations: 10
   runnables:
-  - name: requisition description
-    onInit:
+  - onInit:
       script: |-
         store.iteration = (store.iteration + 1) || 0;
         store.lastExecution = new Date().getTime();
     startEvent:
       publisher:
         type: zero-mq-pub
-        name: publisher description
         payload: blabla
         topic: runnable.incrementor
         onInit:
           script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
-- name: second runner description
-  delay: 3000
+- delay: 3000
   runnables:
-  - name: requisition description
-    onInit:
+  - onInit:
       script: delayedTime = new Date().getTime() - store.lastExecution;
       assertions:
       - name: It was executed 10 times
@@ -36,7 +31,6 @@ runnables:
     startEvent:
       publisher:
         type: zero-mq-pub
-        name: publisher description
         payload: blabla
         topic: runnable.checker
         onInit:

@@ -1,36 +1,30 @@
 type: runnable
 valid: true
 tests: []
-name: 'avoid test description'
+name: 'Runnable #1'
 id: avoid
 runnables:
   -
     type: requisition
     valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'requisition  description'
+    tests: []
+    name: 'Requisition #0'
     time:
-      totalTime: 2048
-      startTime: '2018-08-22T16:52:39.616Z'
-      endTime: '2018-08-22T16:52:41.664Z'
-      timeout: 4000
+      totalTime: 2038
+      startTime: '2018-08-22T17:19:10.025Z'
+      endTime: '2018-08-22T17:19:12.063Z'
     subscriptions: []
     startEvent:
       subscription:
-        name: 'subscription description'
         type: tcp-server
         tests:
           -
             valid: true
-            name: 'Subscription avoided'
+            name: 'Message received'
             description: 'Avoidable subscription has not received a message'
           -
             valid: true
             name: 'No time out'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-08-22T16:52:39.697Z'
+        connectionTime: '2018-08-22T17:19:10.097Z'

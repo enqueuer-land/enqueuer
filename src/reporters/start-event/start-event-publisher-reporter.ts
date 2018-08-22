@@ -19,7 +19,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
         super();
         const startEventPublisher = startEvent.publisher;
         this.report = {
-            name: startEventPublisher.name,
+            name: startEventPublisher.name || `Start event publisher`,
             valid: true,
             type: startEventPublisher.type,
             tests: []

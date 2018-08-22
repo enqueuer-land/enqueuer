@@ -29,9 +29,12 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     public execute(): Promise<boolean> {
         return new Promise((resolve) => {
-            Promise.all(this.runnableFileNames.map((fileName: string) => {
+            Promise.all(this.runnableFileNames.map((fileName: string, index) => {
                 const runnable: RunnableModel | undefined = this.parseRunnable(fileName);
                 if (runnable) {
+                    if (!runnable.name) {
+                        runnable.name = `Runnable #${index}`;
+                    }
                     return this.runRunnable(fileName, runnable);
                 } else {
                     return {};

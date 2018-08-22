@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //TODO test it
 class SubscriptionFinalReporter {
     constructor(avoidable, hasMessage, hasTimedOut) {
+        this.messageReceivedTestName = `Message received`;
         this.hasMessage = false;
         this.avoidable = avoidable;
         this.hasMessage = hasMessage;
@@ -25,35 +26,33 @@ class SubscriptionFinalReporter {
         }
     }
     createMessageReceived() {
-        const name = 'Message received';
         if (!this.avoidable) {
             return {
                 valid: true,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Subscription has received its message`
             };
         }
         else {
             return {
                 valid: false,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Avoidable subscription shouldn't have received a message`
             };
         }
     }
     createMessageNotReceived() {
-        const name = `Subscription avoided`;
         if (!this.avoidable) {
             return {
                 valid: false,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Subscription has not received its message in a valid time`
             };
         }
         else {
             return {
                 valid: true,
-                name: name,
+                name: this.messageReceivedTestName,
                 description: `Avoidable subscription has not received a message`
             };
         }
