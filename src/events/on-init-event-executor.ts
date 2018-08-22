@@ -3,7 +3,6 @@ import {EventExecutor} from './event-executor';
 import {Initializable} from './initializable';
 import {TestModel} from '../models/outputs/test-model';
 
-//TODO test it
 export class OnInitEventExecutor extends EventExecutor {
     private initializable: Initializable;
 
@@ -19,9 +18,7 @@ export class OnInitEventExecutor extends EventExecutor {
             Logger.trace(`No onOnInit to be played here`);
             return [];
         }
-        return this.execute().map(test => {
-            return {name: test.label, valid: test.valid, description: test.errorDescription};
-        });
+        return this.execute();
     }
 
 }

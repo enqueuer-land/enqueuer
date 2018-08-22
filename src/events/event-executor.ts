@@ -24,10 +24,12 @@ export abstract class EventExecutor {
 
     public abstract trigger(): TestModel[];
 
-    protected execute(): Test[] {
+    protected execute(): TestModel[] {
         Logger.trace(`Executing event function`);
         const code = this.addAssertions();
-        return this.scriptRunner(code);
+        return this.scriptRunner(code).map(test => {
+            return {name: test.label, valid: test.valid, description: test.errorDescription};
+        });
     }
 
     private prepareAssertions(assertions: Assertion[]) {

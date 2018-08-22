@@ -1,32 +1,22 @@
 type: runnable
-valid: false
+valid: true
 tests: []
 name: 'sqs test description'
 id: sqs
 runnables:
   -
     type: requisition
-    valid: false
+    valid: true
     tests:
-      -
-        valid: false
-        name: 'Subscriptions message receiving'
-        description:
-          message: 'AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
-          code: AWS.SimpleQueueService.NonExistentQueue
-          time: '2018-08-22T21:18:32.973Z'
-          statusCode: 400
-          retryable: false
-          retryDelay: 98.869192784684
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 102
-      startTime: '2018-08-22T21:18:32.873Z'
-      endTime: '2018-08-22T21:18:32.975Z'
+      totalTime: 84
+      startTime: '2018-08-22T23:01:29.684Z'
+      endTime: '2018-08-22T23:01:29.768Z'
       timeout: 5000
     subscriptions:
       -
@@ -34,11 +24,27 @@ runnables:
         type: sqs
         tests:
           -
-            valid: false
+            name: Body
+            valid: true
+            description: '''enqueuer'' does not contain ''enq'''
+          -
+            name: MessageId
+            valid: true
+            description: '''21dd9645-1714-4e92-94e6-b07552fd77cd'' is not defined'
+          -
+            name: ReceiptHandle
+            valid: true
+            description: '''21dd9645-1714-4e92-94e6-b07552fd77cd#aeedb450-12ec-4cd1-a0b2-d745ffccf678'' is not defined'
+          -
+            name: MD5OfBody
+            valid: true
+            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is not defined'
+          -
+            valid: true
             name: 'Message received'
-            description: 'Subscription has not received its message'
-        valid: false
-        connectionTime: '2018-08-22T21:18:32.879Z'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-08-22T23:01:29.689Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -46,6 +52,31 @@ runnables:
         type: sqs
         tests:
           -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Request Id is all 000000'
+            valid: true
+            description: 'Expected value to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
+          -
+            name: ResponseMetadata
+            valid: true
+            description: '''[object Object]'' is not defined'
+          -
+            name: MD5
+            valid: true
+            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is not defined'
+          -
+            name: MD5OfMessageAttributes
+            valid: true
+            description: '''d41d8cd98f00b204e9800998ecf8427e'' is not defined'
+          -
+            name: MessageId
+            valid: true
+            description: '''21dd9645-1714-4e92-94e6-b07552fd77cd'' is not defined'
+          -
             name: 'Response message received'
-            valid: false
-            description: 'No response message was received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-08-22T23:01:29.765Z'

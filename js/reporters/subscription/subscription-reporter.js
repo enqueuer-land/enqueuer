@@ -39,12 +39,6 @@ class SubscriptionReporter {
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
     }
-    setDefaultName(name) {
-        if (!this.subscription.name) {
-            this.subscription.name = name;
-            this.report.name = name;
-        }
-    }
     startTimeout(onTimeOutCallback) {
         this.subscription.messageReceived = undefined;
         if (this.timeOut) {

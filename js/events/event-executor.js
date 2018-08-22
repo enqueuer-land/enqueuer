@@ -19,7 +19,9 @@ class EventExecutor {
     execute() {
         logger_1.Logger.trace(`Executing event function`);
         const code = this.addAssertions();
-        return this.scriptRunner(code);
+        return this.scriptRunner(code).map(test => {
+            return { name: test.label, valid: test.valid, description: test.errorDescription };
+        });
     }
     prepareAssertions(assertions) {
         let assertionCounter = 0;

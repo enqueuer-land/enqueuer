@@ -17,6 +17,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private multiPublisher: MultiPublisher;
     private multiResultCreator: MultiResultCreator;
     private parallelMode: boolean;
+    private totalFilesNum: number;
 
     constructor(runMode: any) {
         super();
@@ -28,10 +29,11 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
         this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
         this.runnableFileNames = this.getTestFiles(singleRunConfiguration.files);
+        this.totalFilesNum = this.runnableFileNames.length;
     }
 
     public execute(): Promise<boolean> {
-        if (this.runnableFileNames.length == 0) {
+        if (this.totalFilesNum == 0) {
             return Promise.reject(`No test file was found`);
         }
 
@@ -44,12 +46,12 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     private executeSequentialMode(runnableFileNames: string[]): Promise<boolean> {
         return new Promise((resolve) => {
-            const index = runnableFileNames.length;
+            const nameIndex = this.totalFilesNum - runnableFileNames.length;
             const fileName = runnableFileNames.shift();
             if (fileName) {
                 const runnable: RunnableModel | undefined = this.parseRunnable(fileName);
                 if (runnable) {
-                    this.runRunnable(fileName, this.setDefaultRunnableName(runnable, index))
+                    this.runRunnable(fileName, this.setDefaultRunnableName(runnable, nameIndex))
                         .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
                 }
             } else {

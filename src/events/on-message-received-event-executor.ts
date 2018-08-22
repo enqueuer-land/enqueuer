@@ -3,7 +3,6 @@ import {Logger} from '../loggers/logger';
 import {EventExecutor} from './event-executor';
 import {TestModel} from '../models/outputs/test-model';
 
-//TODO test it
 export class OnMessageReceivedEventExecutor extends EventExecutor {
     private messageReceiver: MessageReceiver;
 
@@ -26,8 +25,6 @@ export class OnMessageReceivedEventExecutor extends EventExecutor {
             Logger.trace(`No onMessageReceived to be played here`);
             return [];
         }
-        return this.execute().map(test => {
-            return {name: test.label, valid: test.valid, description: test.errorDescription};
-        });
+        return this.execute();
     }
 }

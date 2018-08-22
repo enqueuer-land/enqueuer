@@ -34,13 +34,6 @@ export class SubscriptionReporter {
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
     }
 
-    public setDefaultName(name: string) {
-        if (!this.subscription.name) {
-            this.subscription.name = name;
-            this.report.name = name;
-        }
-    }
-
     public startTimeout(onTimeOutCallback: Function) {
         this.subscription.messageReceived = undefined;
         if (this.timeOut) {

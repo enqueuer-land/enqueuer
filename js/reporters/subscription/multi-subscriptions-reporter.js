@@ -6,11 +6,12 @@ class MultiSubscriptionsReporter {
         this.subscriptionReporters = [];
         this.subscriptionsStoppedWaitingCounter = 0;
         if (subscriptionsAttributes) {
-            for (let id = 0; id < subscriptionsAttributes.length; ++id) {
-                const subscriptionReporter = new subscription_reporter_1.SubscriptionReporter(subscriptionsAttributes[id]);
-                subscriptionReporter.setDefaultName(`Subscription #${id}`);
-                this.subscriptionReporters.push(subscriptionReporter);
-            }
+            this.subscriptionReporters = subscriptionsAttributes.map((subscription, index) => {
+                if (!subscription.name) {
+                    subscription.name = `Subscription #${index}`;
+                }
+                return new subscription_reporter_1.SubscriptionReporter(subscription);
+            });
         }
     }
     subscribe() {

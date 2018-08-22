@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const event_executor_1 = require("./event-executor");
-//TODO test it
 class OnMessageReceivedEventExecutor extends event_executor_1.EventExecutor {
     constructor(name, messageReceiver) {
         super(messageReceiver.onMessageReceived);
@@ -21,9 +20,7 @@ class OnMessageReceivedEventExecutor extends event_executor_1.EventExecutor {
             logger_1.Logger.trace(`No onMessageReceived to be played here`);
             return [];
         }
-        return this.execute().map(test => {
-            return { name: test.label, valid: test.valid, description: test.errorDescription };
-        });
+        return this.execute();
     }
 }
 exports.OnMessageReceivedEventExecutor = OnMessageReceivedEventExecutor;
