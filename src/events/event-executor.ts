@@ -3,7 +3,7 @@ import {Assertion} from '../testers/assertion';
 import {Test} from '../testers/test';
 import {Tester} from '../testers/tester';
 import {AssertionCodeGenerator} from '../testers/assertion-code-generator';
-import {ScriptExecutor} from '../testers/script-executor';
+import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';
 import {Store} from '../testers/store';
 import {Logger} from '../loggers/logger';
 import {TestModel} from '../models/outputs/test-model';
@@ -67,7 +67,7 @@ export abstract class EventExecutor {
     }
 
     private scriptRunner(script: string): Test[] {
-        const scriptExecutor = new ScriptExecutor(script);
+        const scriptExecutor = new DynamicFunctionController(script);
 
         let tester = new Tester();
 

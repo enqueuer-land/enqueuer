@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
-class ScriptExecutor {
+class DynamicFunctionController {
     constructor(functionBody) {
         this.arguments = [];
         this.functionBody = functionBody;
@@ -27,4 +27,4 @@ class ScriptExecutor {
         }
     }
 }
-exports.ScriptExecutor = ScriptExecutor;
+exports.DynamicFunctionController = DynamicFunctionController;

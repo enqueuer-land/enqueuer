@@ -1,9 +1,9 @@
-import {ScriptExecutor} from './script-executor';
+import {DynamicFunctionController} from './dynamic-function-controller';
 
-describe('ScriptExecutor', () => {
+describe('DynamicFunctionController', () => {
 
     it('Should add argument and pass it to the function', () => {
-        const testerExecutor: ScriptExecutor = new ScriptExecutor('name.value++;');
+        const testerExecutor: DynamicFunctionController = new DynamicFunctionController('name.value++;');
         const arg = {value: 2};
 
         testerExecutor.addArgument('name', arg);
@@ -13,13 +13,13 @@ describe('ScriptExecutor', () => {
     });
 
     it('Should throw function creation error', () => {
-        const testerExecutor: ScriptExecutor = new ScriptExecutor('invalid statement');
+        const testerExecutor: DynamicFunctionController = new DynamicFunctionController('invalid statement');
 
         expect(() => testerExecutor.execute()).toThrow();
     });
 
     it('Should throw function execution error', () => {
-        const testerExecutor: ScriptExecutor = new ScriptExecutor('notDefined++');
+        const testerExecutor: DynamicFunctionController = new DynamicFunctionController('notDefined++');
 
         expect(() => testerExecutor.execute()).toThrow();
     });

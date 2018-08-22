@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tester_1 = require("../testers/tester");
 const assertion_code_generator_1 = require("../testers/assertion-code-generator");
-const script_executor_1 = require("../testers/script-executor");
+const dynamic_function_controller_1 = require("../dynamic-functions/dynamic-function-controller");
 const store_1 = require("../testers/store");
 const logger_1 = require("../loggers/logger");
 class EventExecutor {
@@ -54,7 +54,7 @@ class EventExecutor {
         return code;
     }
     scriptRunner(script) {
-        const scriptExecutor = new script_executor_1.ScriptExecutor(script);
+        const scriptExecutor = new dynamic_function_controller_1.DynamicFunctionController(script);
         let tester = new tester_1.Tester();
         scriptExecutor.addArgument('store', store_1.Store.getData());
         scriptExecutor.addArgument(this.testerInstanceName, tester);

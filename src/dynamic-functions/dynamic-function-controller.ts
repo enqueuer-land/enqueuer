@@ -1,6 +1,6 @@
 import {Logger} from '../loggers/logger';
 
-export class ScriptExecutor {
+export class DynamicFunctionController {
 
     private functionBody: string;
     private arguments: {name: string, value: any}[] = [];

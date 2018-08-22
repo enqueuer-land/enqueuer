@@ -1,4 +1,4 @@
-import {ScriptExecutor} from '../testers/script-executor';
+import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';
 import {Tester} from '../testers/tester';
 import {AssertionCodeGenerator} from '../testers/assertion-code-generator';
 import {OnMessageReceivedEventExecutor} from './on-message-received-event-executor';
@@ -7,8 +7,8 @@ import {MessageReceiver} from './message-receiver';
 let addArgumentMock = jest.fn();
 let executeMock = jest.fn();
 
-jest.mock('../testers/script-executor');
-ScriptExecutor.mockImplementation(() => {
+jest.mock('../dynamic-functions/dynamic-function-controller');
+DynamicFunctionController.mockImplementation(() => {
     return {
         addArgument: addArgumentMock,
         execute: executeMock,
