@@ -11,18 +11,24 @@ type: amqp
 #Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
 timeout: 3000
 
-#Optional. Javascript code snippet executed as soon as the subscription is initialized.
-#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/tester.yml) and store.
-onInit: |- #|- is a yml multiline value identifier
-  console.log('Hey');
-  tester.toBeEqualTo('test label', 2, 2);
+#Optional. Event triggered as soon as the requisition is initialized.
+onInit:
+  #Optional. Javascript code snippet executed when the event is triggered.
+  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+  script:
+    console.log('iai');
 
-#Optional. Javascript code snippet executed the subscription receives the message it was expecting for.
-#If a value is set and no message is received a failing test will be registered.
-#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/tester.yml), message and store.
-onMessageReceived: |-
-  const payload = JSON.parse(Buffer.from(message.payload.data).toString());
-  store.someLabe = 'anything';
-  tester.isEqualTo('Routing key', message.deliveryInfo.routingKey, 'expectedRoutingKey');
-  tester.isEqualTo('Payload name', payload.name, 'Virgs');
-  tester.isEqualTo('Payload type', payload.type, 'awesome');
+  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  assertions:
+
+#Optional. Event triggered when a subscription receives the message it was waiting for
+onMessageReceived:
+  #Optional. Javascript code snippet executed when the event is triggered.
+  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml), message and store.
+  #Other objects IPC related might be available. Check (/docs/instructions/tests/subscription/) for further details
+  script:
+    console.log('iai');
+
+  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  #If at least one value is defined and no message is received a failing test will be registered.
+  assertions:

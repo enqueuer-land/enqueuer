@@ -24,8 +24,13 @@ saveStream: nameToIdentifyTheStream
 #No invalid test will exist if this timeout expires. Even because there will be always a timeout set.
 timeout: 3000
 
-#Optional. Given that TCP is a bidirectional protocol, you have the possibility to run codes whenever a response is received.
-#Javascript code snippet executed as soon as the publisher receives a response.
-#Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/tester.yml), message and store.
-onMessageReceived: |- #|- is a yml multiline value identifier
-  tester.toBeDefined('message', message);
+#Optional. Given that TCP is a bidirectional protocol, this event is triggered whenever a response is received.
+onMessageReceived:
+  #Optional. Javascript code snippet executed when the event is triggered.
+  #Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+  script:
+    console.log('iai');
+
+  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  #If at least one value is defined and no message is received a failing test will be registered.
+  assertions:

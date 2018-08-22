@@ -20,10 +20,13 @@ authentication:
     user: user
     password: password
 
-#Optional. Given that HTTP is a synchronous protocol, you have the possibility to run codes whenever a response is received.
-#Javascript code snippet executed as soon as the publisher receives a response.
-#If a value is set and no message is received a failing test will be registered.
-#Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/tester.yml), message and store.
-onMessageReceived: |- #|- is a yml multiline value identifier
-  tester.toBeEqualTo('status code', JSON.parse(message).statusCode, 321);
-  tester.toBeEqualTo('body', JSON.parse(message).body, 'body');
+#Optional. Given that HTTP is a synchronous protocol, this event is triggered whenever a response is received.
+onMessageReceived:
+  #Optional. Javascript code snippet executed when the event is triggered.
+  #Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/assertions.yml), message, statusCode, body and store.
+  script:
+    console.log('iai');
+
+  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  #If at least one value is defined and no message is received a failing test will be registered.
+  assertions:

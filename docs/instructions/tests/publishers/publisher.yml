@@ -7,11 +7,16 @@ name: publishing scenario
 #You can check them all in: /docs/tests/publishers folder.
 type: amqp
 
-#Optional. Javascript code snippet executed as soon as the publisher is initialized.
-#Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/tester.yml) and store.
-onInit: |- #|- is a yml multiline value identifier
-  console.log('Hey');
-  tester.toBeEqualTo('test label', 2, 2);
+#Optional. Event triggered as soon as the requisition is initialized.
+onInit:
+  #Optional. Javascript code snippet executed as soon as the requisition is initialized.
+  #Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+  script:
+    console.log('iai');
+
+  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  assertions:
+
 
 #Optional. The message itself that will be send through this IPC protocol.
 #It can be strings, numbers, boolean or even whole objects.

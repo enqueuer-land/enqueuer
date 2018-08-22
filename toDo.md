@@ -32,7 +32,7 @@ Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Yaml files explaining input values
-Use glob in filenamewatcher. Rename filename watcher to filesystem watcher
+Defaults requisition/subscription/publisher names
 
 
 Summary to look like this.
