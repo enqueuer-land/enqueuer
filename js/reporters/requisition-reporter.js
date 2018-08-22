@@ -98,7 +98,7 @@ class RequisitionReporter {
             eventTestExecutor.addArgument('requisition', requisitionAttributes);
             const tests = eventTestExecutor.execute();
             this.reportGenerator.addTests(tests.map(test => {
-                return { name: test.label, valid: test.valid, description: test.description };
+                return { name: test.label, valid: test.valid, description: test.errorDescription };
             }));
         }
     }

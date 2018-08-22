@@ -15,15 +15,15 @@ runnables:
         assertions:
         - name: Request Id is all 000000
           expected: ResponseMetadata.RequestId
-          isEqualTo: `00000000-0000-0000-0000-000000000000`
+          toBeEqualTo: `00000000-0000-0000-0000-000000000000`
         - name: ResponseMetadata
-          isDefined: ResponseMetadata
+          toBeDefined: ResponseMetadata
         - name: MD5
-          isDefined: MD5OfMessageBody
+          toBeDefined: MD5OfMessageBody
         - name: MD5OfMessageAttributes
-          isDefined: MD5OfMessageAttributes
+          toBeDefined: MD5OfMessageAttributes
         - name: MessageId
-          isDefined: MessageId
+          toBeDefined: MessageId
   subscriptions:
   - name: subscription description
     type: sqs
@@ -35,10 +35,10 @@ runnables:
       assertions:
       - name: Body
         expected: Body
-        contains: `enq`
+        toContain: `enq`
       - name: MessageId
-        isDefined: MessageId
+        toBeDefined: MessageId
       - name: ReceiptHandle
-        isDefined: ReceiptHandle
+        toBeDefined: ReceiptHandle
       - name: MD5OfBody
-        isDefined: MD5OfBody
+        toBeDefined: MD5OfBody

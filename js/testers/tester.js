@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("util");
 class Tester {
     constructor() {
         this.report = [];
@@ -8,125 +7,75 @@ class Tester {
     getReport() {
         return this.report;
     }
-    isEqualTo(label, actual, expected) {
-        let result = {
+    toBeEqualTo(label, actual, expected) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `Expected value to equal '${expected}'. Received '${actual}'`
-        };
-        if (actual == expected) {
-            result.valid = true;
-            result.description = `'${actual}' is equal to '${expected}'`;
-        }
-        this.report.push(result);
+            valid: actual == expected,
+            errorDescription: `Expected value to be equal to '${expected}'. Received '${actual}'`
+        });
     }
-    isGreaterThan(label, actual, expected) {
-        let result = {
+    toBeGreaterThan(label, actual, expected) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `Expected value to be greater than '${expected}'. Received '${actual}'`
-        };
-        if (actual > expected) {
-            result.valid = true;
-            result.description = `'${actual}' is greater than '${expected}'`;
-        }
-        this.report.push(result);
+            valid: actual > expected,
+            errorDescription: `Expected value to be greater than '${expected}'. Received '${actual}'`
+        });
     }
-    isGreaterThanOrEqualTo(label, actual, expected) {
-        let result = {
+    toBeGreaterThanOrEqualTo(label, actual, expected) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `Expected value to be greater than or equal to '${expected}'. Received '${actual}'`
-        };
-        if (actual >= expected) {
-            result.valid = true;
-            result.description = `'${actual}' is greater than or equal to '${expected}'`;
-        }
-        this.report.push(result);
+            valid: actual >= expected,
+            errorDescription: `Expected value to be greater than or equal to '${expected}'. Received '${actual}'`
+        });
     }
-    isLessThan(label, actual, expected) {
-        let result = {
+    toBeLessThan(label, actual, expected) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `Expected value to be less than '${expected}'. Received '${actual}'`
-        };
-        if (actual < expected) {
-            result.valid = true;
-            result.description = `'${actual}' is less than '${expected}'`;
-        }
-        this.report.push(result);
+            valid: actual < expected,
+            errorDescription: `Expected value to be less than '${expected}'. Received '${actual}'`
+        });
     }
-    isLessThanOrEqualTo(label, actual, expected) {
-        let result = {
+    toBeLessThanOrEqualTo(label, actual, expected) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `Expected value to be less than or equal to '${expected}'. Received '${actual}'`
-        };
-        if (actual <= expected) {
-            result.valid = true;
-            result.description = `'${actual}' is less than or equal to '${expected}'`;
-        }
-        this.report.push(result);
+            valid: actual <= expected,
+            errorDescription: `Expected value to be less than or equal to '${expected}'. Received '${actual}'`
+        });
     }
-    isTruthy(label, expected) {
-        let result = {
+    toBeTruthy(label, expected) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `'${expected}' is not true. I swear`
-        };
-        if (!!expected) {
-            result.valid = true;
-            result.description = 'Definitely true';
-        }
-        this.report.push(result);
+            valid: !!expected,
+            errorDescription: `'${expected}' is not true. I swear`
+        });
     }
-    isFalsy(label, expected) {
-        let result = {
+    toBeFalsy(label, expected) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `'${expected}' is not false. (Oh really?)`
-        };
-        if (!!!expected) {
-            result.valid = true;
-            result.description = 'Definitely false';
-        }
-        this.report.push(result);
+            valid: !expected,
+            errorDescription: `'${expected}' is not false. (Oh really?)`
+        });
     }
-    contains(label, expected, toContain) {
-        let result = {
+    toContain(label, expected, toContain) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `'${expected}' does not contain '${toContain}'`
-        };
-        if (expected.indexOf(toContain) != -1) {
-            result.valid = true;
-            result.description = `'${expected}' contains '${toContain}'`;
-        }
-        this.report.push(result);
+            valid: expected.indexOf(toContain) != -1,
+            errorDescription: `'${expected}' does not contain '${toContain}'`
+        });
     }
-    isDefined(label, defined) {
-        let result = {
+    toBeDefined(label, defined) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `'${defined}' is not defined`
-        };
-        if (!util_1.isUndefined(defined)) {
-            result.valid = true;
-            result.description = `'${defined}' is defined`;
-        }
-        this.report.push(result);
+            valid: defined !== undefined,
+            errorDescription: `'${defined}' is not defined`
+        });
     }
-    isUndefined(label, defined) {
-        let result = {
+    toBeUndefined(label, defined) {
+        this.report.push({
             label: label,
-            valid: false,
-            description: `'${defined}' is not undefined`
-        };
-        if (util_1.isUndefined(defined)) {
-            result.valid = true;
-            result.description = `'${defined}' is undefined`;
-        }
-        this.report.push(result);
+            valid: defined === undefined,
+            errorDescription: `'${defined}' is not undefined`
+        });
     }
 }
 exports.Tester = Tester;

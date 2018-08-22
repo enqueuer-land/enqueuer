@@ -22,7 +22,7 @@ runnables:
       onInit:
         assertions:
           - expected: publisher.options.port
-            isEqualTo: 5672
+            toBeEqualTo: 5672
   subscriptions:
   - name: subscription description
     type: amqp
@@ -37,13 +37,13 @@ runnables:
       assertions:
         - name: Payload
           expected: payload.how.about
-          isEqualTo: `a new object?`
+          toBeEqualTo: `a new object?`
         - name: Header
           expected: headers.key
-          isEqualTo: `value`
+          toBeEqualTo: `value`
         - name: Other Header Value
           expected: headers.otherKey
-          isEqualTo: `otherValue`
+          toBeEqualTo: `otherValue`
         - name: Routing Key
           expected: deliveryInfo.routingKey
-          isEqualTo: `enqueuer.integration.test.routing.key`
+          toBeEqualTo: `enqueuer.integration.test.routing.key`

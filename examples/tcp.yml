@@ -16,7 +16,7 @@ runnables:
         assertions:
         - name: Do not make it bad
           expected: message.toString()
-          isEqualTo: `Do not make it bad`
+          toBeEqualTo: `Do not make it bad`
   subscriptions:
   - type: tcp-server
     port: 23069
@@ -27,7 +27,7 @@ runnables:
       assertions:
       - name: Beatles Song
         expected: message.toString()
-        isEqualTo: `Hey Jude`
+        toBeEqualTo: `Hey Jude`
 - name: requisition 1 description
   timeout: 3000
   startEvent:
@@ -43,7 +43,7 @@ runnables:
         assertions:
         - name: Greeting received
           expected: message.toString()
-          isEqualTo: `EnqueuerRocks`
+          toBeEqualTo: `EnqueuerRocks`
   subscriptions:
   - name: subscription description
     type: tcp-server
@@ -56,7 +56,7 @@ runnables:
       assertions:
       - name: I care
         expected: message.toString()
-        isEqualTo: `I do not care`
+        toBeEqualTo: `I do not care`
 -
   name: requisition 2 description
   timeout: 3000
@@ -70,7 +70,7 @@ runnables:
         assertions:
         - name: Second message is '<<tcpPayload>>'
           expected: message.toString()
-          isEqualTo: `<<tcpPayload>>`
+          toBeEqualTo: `<<tcpPayload>>`
   subscriptions:
   - type: tcp-server
     name: subscription description
@@ -81,5 +81,5 @@ runnables:
       assertions:
       - name: It is still open
         expected: message.toString()
-        isEqualTo: `The socket is still open`
+        toBeEqualTo: `The socket is still open`
 

@@ -20,14 +20,14 @@ describe('AssertionCodeGenerator', () => {
     it('Should generate 2 arguments function', () => {
         const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
 
-        const code: string = assertionCodeGenerator.generate({name: 'label name', expected: 5, isGreaterThan: 3});
-        expect(code).toBe(";tester.isGreaterThan(`label name`, 5, 3);");
+        const code: string = assertionCodeGenerator.generate({name: 'label name', expected: 5, toBeGreaterThan: 3});
+        expect(code).toBe(";tester.toBeGreaterThan(`label name`, 5, 3);");
     });
 
     it('Should generate 1 arguments function', () => {
         const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
 
-        const code: string = assertionCodeGenerator.generate({name: 'label name', isDefined: 'varName'});
-        expect(code).toBe(";tester.isDefined(`label name`, varName);");
+        const code: string = assertionCodeGenerator.generate({name: 'label name', toBeDefined: 'varName'});
+        expect(code).toBe(";tester.toBeDefined(`label name`, varName);");
     });
 });

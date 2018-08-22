@@ -21,10 +21,10 @@ runnables:
         assertions:
         - name: Status Code
           expected: statusCode
-          isEqualTo: 321
+          toBeEqualTo: 321
         - name: Body
           expected: body
-          isEqualTo: `responsePayload`
+          toBeEqualTo: `responsePayload`
   subscriptions:
   - name: subscription description
     type: http-server
@@ -43,13 +43,13 @@ runnables:
       assertions:
       - name: Payload
         expected: JSON.parse(message.body).enqueuer
-        isEqualTo: `virgs`
+        toBeEqualTo: `virgs`
       - name: Params
         expected: params.someId
-        isEqualTo: `idStuff`
+        toBeEqualTo: `idStuff`
       - name: Query
         expected: query.query
-        isEqualTo: 123
+        toBeEqualTo: 123
 - name: requisition 1 description
   timeout: 5000
   startEvent:
@@ -66,10 +66,10 @@ runnables:
         assertions:
         - name: Status Code
           expected: statusCode
-          isEqualTo: 321
+          toBeEqualTo: 321
         - name: Body
           expected: body
-          isEqualTo: `duplicatedResponsePayload`
+          toBeEqualTo: `duplicatedResponsePayload`
   subscriptions:
   - name: subscription description
     type: http-server
@@ -83,7 +83,7 @@ runnables:
     onMessageReceived:
       assertions:
       - name: Payload
-        isTruthy: JSON.parse(message.body).duplicated
+        toBeTruthy: JSON.parse(message.body).duplicated
 - name: requisition 2 description
   timeout: 3000
   startEvent:
@@ -100,10 +100,10 @@ runnables:
         assertions:
         - name: Status Code
           expected: statusCode
-          isEqualTo: 200
+          toBeEqualTo: 200
         - name: Body
           expected: body
-          isEqualTo: `https`
+          toBeEqualTo: `https`
   subscriptions:
   - type: https-server
     name: subscription description
@@ -119,4 +119,4 @@ runnables:
       assertions:
       - name: Https payload
         expected: JSON.parse(message.body).https
-        isEqualTo: `works!`
+        toBeEqualTo: `works!`

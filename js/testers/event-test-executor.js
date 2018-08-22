@@ -37,7 +37,7 @@ class EventTestExecutor {
         }
         catch (err) {
             logger_1.Logger.error(`Error executing event function ${err}`);
-            return [{ valid: false, label: 'Script code is valid', description: err.toString() }];
+            return [{ valid: false, label: 'Script code is valid', errorDescription: err.toString() }];
         }
         return this.testEachAssertion(result);
     }
@@ -48,7 +48,7 @@ class EventTestExecutor {
                 result = result.concat(this.runAssertion(assertion));
             }
             catch (err) {
-                result = result.concat({ valid: false, label: `Assertion '${assertion.name}' is valid`, description: err.toString() });
+                result = result.concat({ valid: false, label: `Assertion '${assertion.name}' is valid`, errorDescription: err.toString() });
             }
         });
         return initial.concat(result);

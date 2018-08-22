@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition 0 description'
     time:
-      totalTime: 169
-      startTime: '2018-08-21T23:42:55.901Z'
-      endTime: '2018-08-21T23:42:56.070Z'
+      totalTime: 165
+      startTime: '2018-08-22T00:18:16.826Z'
+      endTime: '2018-08-22T00:18:16.991Z'
       timeout: 3000
     subscriptions:
       -
@@ -26,15 +26,15 @@ runnables:
           -
             name: Payload
             valid: true
-            description: '''virgs'' is equal to ''virgs'''
+            description: 'Expected value to be equal to ''virgs''. Received ''virgs'''
           -
             name: Params
             valid: true
-            description: '''idStuff'' is equal to ''idStuff'''
+            description: 'Expected value to be equal to ''idStuff''. Received ''idStuff'''
           -
             name: Query
             valid: true
-            description: '''123'' is equal to ''123'''
+            description: 'Expected value to be equal to ''123''. Received ''123'''
           -
             name: '"Basic" authentication prefix'
             valid: true
@@ -60,8 +60,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T23:42:55.952Z'
-        messageReceivedTime: '2018-08-21T23:42:56.052Z'
+        connectionTime: '2018-08-22T00:18:16.876Z'
+        messageReceivedTime: '2018-08-22T00:18:16.977Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -75,16 +75,16 @@ runnables:
           -
             name: 'Status Code'
             valid: true
-            description: '''321'' is equal to ''321'''
+            description: 'Expected value to be equal to ''321''. Received ''321'''
           -
             name: Body
             valid: true
-            description: '''responsePayload'' is equal to ''responsePayload'''
+            description: 'Expected value to be equal to ''responsePayload''. Received ''responsePayload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T23:42:56.070Z'
+        publishTime: '2018-08-22T00:18:16.990Z'
   -
     type: requisition
     valid: true
@@ -95,9 +95,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition 1 description'
     time:
-      totalTime: 19
-      startTime: '2018-08-21T23:42:56.070Z'
-      endTime: '2018-08-21T23:42:56.089Z'
+      totalTime: 24
+      startTime: '2018-08-22T00:18:16.991Z'
+      endTime: '2018-08-22T00:18:17.015Z'
       timeout: 5000
     subscriptions:
       -
@@ -107,7 +107,7 @@ runnables:
           -
             name: Payload
             valid: true
-            description: 'Definitely true'
+            description: '''true'' is not true. I swear'
           -
             valid: true
             name: 'Message received'
@@ -117,8 +117,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T23:42:56.071Z'
-        messageReceivedTime: '2018-08-21T23:42:56.085Z'
+        connectionTime: '2018-08-22T00:18:16.991Z'
+        messageReceivedTime: '2018-08-22T00:18:17.010Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -132,16 +132,16 @@ runnables:
           -
             name: 'Status Code'
             valid: true
-            description: '''321'' is equal to ''321'''
+            description: 'Expected value to be equal to ''321''. Received ''321'''
           -
             name: Body
             valid: true
-            description: '''duplicatedResponsePayload'' is equal to ''duplicatedResponsePayload'''
+            description: 'Expected value to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T23:42:56.089Z'
+        publishTime: '2018-08-22T00:18:17.015Z'
   -
     type: requisition
     valid: true
@@ -152,9 +152,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition 2 description'
     time:
-      totalTime: 39
-      startTime: '2018-08-21T23:42:56.089Z'
-      endTime: '2018-08-21T23:42:56.128Z'
+      totalTime: 40
+      startTime: '2018-08-22T00:18:17.016Z'
+      endTime: '2018-08-22T00:18:17.056Z'
       timeout: 3000
     subscriptions:
       -
@@ -164,7 +164,7 @@ runnables:
           -
             name: 'Https payload'
             valid: true
-            description: '''works!'' is equal to ''works!'''
+            description: 'Expected value to be equal to ''works!''. Received ''works!'''
           -
             valid: true
             name: 'Message received'
@@ -174,8 +174,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T23:42:56.097Z'
-        messageReceivedTime: '2018-08-21T23:42:56.126Z'
+        connectionTime: '2018-08-22T00:18:17.023Z'
+        messageReceivedTime: '2018-08-22T00:18:17.054Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -189,13 +189,13 @@ runnables:
           -
             name: 'Status Code'
             valid: true
-            description: '''200'' is equal to ''200'''
+            description: 'Expected value to be equal to ''200''. Received ''200'''
           -
             name: Body
             valid: true
-            description: '''https'' is equal to ''https'''
+            description: 'Expected value to be equal to ''https''. Received ''https'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T23:42:56.128Z'
+        publishTime: '2018-08-22T00:18:17.055Z'

@@ -19,10 +19,10 @@ runnables:
       assertions:
       - name: topic
         expected: topic
-        isEqualTo: `topic.enqueuer.virgs`
+        toBeEqualTo: `topic.enqueuer.virgs`
       - name: payload
         expected: payload
-        isEqualTo: `enqueuer zeroes`
+        toBeEqualTo: `enqueuer zeroes`
       - name: address
         expected: store.zeroMqAddress
-        isEqualTo: `tcp://127.0.0.1:3000`
+        toBeEqualTo: `tcp://127.0.0.1:3000`

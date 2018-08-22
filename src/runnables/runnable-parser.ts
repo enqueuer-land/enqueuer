@@ -65,7 +65,7 @@ export class RunnableParser {
                 return JSON.parse(runnableMessage);
             } catch (jsonErr) {
                 Logger.warning(`Not able to parse as Json: ${jsonErr}`);
-                throw Error(JSON.stringify({ymlError: ymlErr, jsonError:jsonErr.toString()}));
+                throw Error(JSON.stringify({ymlError: ymlErr, jsonError: jsonErr.toString()}));
             }
         }
     }

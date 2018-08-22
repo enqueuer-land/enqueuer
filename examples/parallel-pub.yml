@@ -1,4 +1,4 @@
-name: Parallel Pub test description
+name: parallel-pub test description
 id: parallel-pub
 delay: 500
 runnables:
@@ -15,4 +15,4 @@ runnables:
         assertions:
           - name: Back and forth
             expected: message
-            isEqualTo: `anyValue`
+            toBeEqualTo: `anyValue`

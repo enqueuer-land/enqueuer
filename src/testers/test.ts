@@ -1,5 +1,5 @@
 export interface Test {
-    description: string;
+    errorDescription: string;
     valid: boolean;
     label: string;
 }

@@ -23,7 +23,7 @@ authentication:
 #Optional. Given that HTTP is a synchronous protocol, you have the possibility to run codes whenever a response is received.
 #Javascript code snippet executed as soon as the publisher receives a response.
 #If a value is set and no message is received a failing test will be registered.
-#Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/tester.d.ts), message and store.
+#Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/tester.yml), message and store.
 onMessageReceived: |- #|- is a yml multiline value identifier
-  tester.isEqualTo('status code', JSON.parse(message).statusCode, 321);
-  tester.isEqualTo('body', JSON.parse(message).body, 'body');
+  tester.toBeEqualTo('status code', JSON.parse(message).statusCode, 321);
+  tester.toBeEqualTo('body', JSON.parse(message).body, 'body');

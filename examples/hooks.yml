@@ -8,7 +8,7 @@ runnables:
       store.sequence = 'requisition::onInit';
     assertions:
     - name: Requisitions exists onInit
-      isDefined: requisition
+      toBeDefined: requisition
   startEvent:
     publisher:
       name: publisher description
@@ -22,45 +22,45 @@ runnables:
           publisher.name = 'changed';
           store.sequence += ' -> publisher::onInit';
         assertions:
-          - name: Publisher exists onInit
-            isDefined: publisher
-          - name: Publisher name
-            expected: publisher.name
-            isDefined: publisher
+        - name: Publisher exists onInit
+          toBeDefined: publisher
+        - name: Publisher name
+          expected: publisher.name
+          toBeDefined: publisher
       onMessageReceived:
         script: store.sequence += ' -> publisher::onMessageReceived';
         assertions:
-          - name: Publisher exists onMessageReceived
-            isDefined: publisher
-          - name: Publisher name changed
-            expected: publisher.name
-            isEqualTo: `changed`
-          - name: Publisher onInit executed
-            expected: store.sequence
-            contains: `publisher::onInit`
+        - name: Publisher exists onMessageReceived
+          toBeDefined: publisher
+        - name: Publisher name changed
+          expected: publisher.name
+          toBeEqualTo: `changed`
+        - name: Publisher onInit executed
+          expected: store.sequence
+          toContain: `publisher::onInit`
   subscriptions:
-    - name: subscription description
-      type: tcp-server
-      port: 23080
-      response: hook response
-      onInit:
-        script: |-
-          subscription.name = 'changed';
-          store.sequence += ' -> subscription::onInit';
-        assertions:
-          - name: Subscription exists onInit
-            isDefined: subscription
-          - name: Subscription name
-            expected: subscription.name
-            isEqualTo: `changed`
-      onMessageReceived:
-        script: store.sequence += ' -> subscription::onMessageReceived';
-        assertions:
-          - name: Subscription exists onMessageReceived
-            isDefined: subscription
-          - name: Subscription name changed
-            expected: subscription.name
-            isEqualTo: `changed`
-          - name: Subscription onInit executed
-            expected: store.sequence
-            contains: `subscription::onInit`
+  - name: subscription description
+    type: tcp-server
+    port: 23080
+    response: hook response
+    onInit:
+      script: |-
+        subscription.name = 'changed';
+        store.sequence += ' -> subscription::onInit';
+      assertions:
+      - name: Subscription exists onInit
+        toBeDefined: subscription
+      - name: Subscription name
+        expected: subscription.name
+        toBeEqualTo: `changed`
+    onMessageReceived:
+      script: store.sequence += ' -> subscription::onMessageReceived';
+      assertions:
+      - name: Subscription exists onMessageReceived
+        toBeDefined: subscription
+      - name: Subscription name changed
+        expected: subscription.name
+        toBeEqualTo: `changed`
+      - name: Subscription onInit executed
+        expected: store.sequence
+        toContain: `subscription::onInit`

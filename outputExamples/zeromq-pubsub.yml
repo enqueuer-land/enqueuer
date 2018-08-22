@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 59
-      startTime: '2018-08-21T23:42:55.937Z'
-      endTime: '2018-08-21T23:42:55.996Z'
+      totalTime: 61
+      startTime: '2018-08-22T00:18:16.859Z'
+      endTime: '2018-08-22T00:18:16.920Z'
       timeout: 5000
     subscriptions:
       -
@@ -26,22 +26,22 @@ runnables:
           -
             name: topic
             valid: true
-            description: '''topic.enqueuer.virgs'' is equal to ''topic.enqueuer.virgs'''
+            description: 'Expected value to be equal to ''topic.enqueuer.virgs''. Received ''topic.enqueuer.virgs'''
           -
             name: payload
             valid: true
-            description: '''enqueuer zeroes'' is equal to ''enqueuer zeroes'''
+            description: 'Expected value to be equal to ''enqueuer zeroes''. Received ''enqueuer zeroes'''
           -
             name: address
             valid: true
-            description: '''tcp://127.0.0.1:3000'' is equal to ''tcp://127.0.0.1:3000'''
+            description: 'Expected value to be equal to ''tcp://127.0.0.1:3000''. Received ''tcp://127.0.0.1:3000'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-21T23:42:55.937Z'
-        messageReceivedTime: '2018-08-21T23:42:55.995Z'
+        connectionTime: '2018-08-22T00:18:16.860Z'
+        messageReceivedTime: '2018-08-22T00:18:16.919Z'
     startEvent:
       publisher:
         name: publisher
@@ -52,4 +52,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T23:42:55.950Z'
+        publishTime: '2018-08-22T00:18:16.874Z'

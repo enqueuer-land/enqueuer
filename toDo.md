@@ -35,6 +35,9 @@ Yaml files explaining input values
 Use glob in filenamewatcher. Rename filename watcher to filesystem watcher
 Merge every onInit && onMessageReceived functions
 
+Rename TestModel::description to errorDescription
+
+
 Summary to look like this.
  FAIL  src/inceptionTest/inception.comp.ts
   ● Inception test › should run enqueuer to test another enqueuer process

@@ -22,11 +22,11 @@ runnables:
       assertions:
         - name: Payload
           expected: payload
-          isEqualTo: `enqueuer`
+          toBeEqualTo: `enqueuer`
         - name: Topic
           expected: topic
-          isEqualTo: `enqueuer/integration/public/test`
+          toBeEqualTo: `enqueuer/integration/public/test`
         - name: Beatles song
           expected: payload.length
-          isGreaterThan: 5
+          toBeGreaterThan: 5
     timeout: 5000

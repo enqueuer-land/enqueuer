@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 197
-      startTime: '2018-08-21T23:42:55.912Z'
-      endTime: '2018-08-21T23:42:56.109Z'
+      totalTime: 196
+      startTime: '2018-08-22T00:18:16.836Z'
+      endTime: '2018-08-22T00:18:17.032Z'
       timeout: 8000
     subscriptions:
       -
@@ -26,15 +26,15 @@ runnables:
           -
             name: Payload
             valid: true
-            description: '''enqueuer'' is equal to ''enqueuer'''
+            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             name: Topic
             valid: true
-            description: '''enqueuer/integration/public/test'' is equal to ''enqueuer/integration/public/test'''
+            description: 'Expected value to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
           -
             name: 'Beatles song'
             valid: true
-            description: '''8'' is greater than ''5'''
+            description: 'Expected value to be greater than ''5''. Received ''8'''
           -
             valid: true
             name: 'Message received'
@@ -44,8 +44,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T23:42:56.056Z'
-        messageReceivedTime: '2018-08-21T23:42:56.108Z'
+        connectionTime: '2018-08-22T00:18:16.983Z'
+        messageReceivedTime: '2018-08-22T00:18:17.031Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -56,4 +56,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T23:42:56.099Z'
+        publishTime: '2018-08-22T00:18:17.014Z'

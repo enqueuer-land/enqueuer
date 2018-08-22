@@ -104,7 +104,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     executeHookMethod(eventTestExecutor) {
         const tests = eventTestExecutor.execute();
         this.report.tests = this.report.tests.concat(tests.map(test => {
-            return { name: test.label, valid: test.valid, description: test.description };
+            return { name: test.label, valid: test.valid, description: test.errorDescription };
         }));
     }
 };

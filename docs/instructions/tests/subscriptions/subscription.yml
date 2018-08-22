@@ -12,14 +12,14 @@ type: amqp
 timeout: 3000
 
 #Optional. Javascript code snippet executed as soon as the subscription is initialized.
-#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/tester.d.ts) and store.
+#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/tester.yml) and store.
 onInit: |- #|- is a yml multiline value identifier
   console.log('Hey');
-  tester.isEqualTo('test label', 2, 2);
+  tester.toBeEqualTo('test label', 2, 2);
 
 #Optional. Javascript code snippet executed the subscription receives the message it was expecting for.
 #If a value is set and no message is received a failing test will be registered.
-#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/tester.d.ts), message and store.
+#Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/tester.yml), message and store.
 onMessageReceived: |-
   const payload = JSON.parse(Buffer.from(message.payload.data).toString());
   store.someLabe = 'anything';

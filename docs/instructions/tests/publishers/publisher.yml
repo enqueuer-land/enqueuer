@@ -8,10 +8,10 @@ name: publishing scenario
 type: amqp
 
 #Optional. Javascript code snippet executed as soon as the publisher is initialized.
-#Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/tester.d.ts) and store.
+#Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/tester.yml) and store.
 onInit: |- #|- is a yml multiline value identifier
   console.log('Hey');
-  tester.isEqualTo('test label', 2, 2);
+  tester.toBeEqualTo('test label', 2, 2);
 
 #Optional. The message itself that will be send through this IPC protocol.
 #It can be strings, numbers, boolean or even whole objects.

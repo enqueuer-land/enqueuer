@@ -22,16 +22,16 @@ runnables:
       assertions:
       - name: Some time has passed
         expected: now
-        isGreaterThanOrEqualTo: message.content
+        toBeGreaterThanOrEqualTo: message.content
       - name: Filename
         expected: name
-        contains: `temp/`
+        toContain: `temp/`
       - name: Content
-        isDefined: content
+        toBeDefined: content
       - name: Created
-        isDefined: created
+        toBeDefined: created
       - name: Modified
-        isDefined: modified
+        toBeDefined: modified
       - name: Size
         expected: size
-        isGreaterThan: 0
+        toBeGreaterThan: 0

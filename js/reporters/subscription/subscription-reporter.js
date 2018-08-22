@@ -210,7 +210,7 @@ class SubscriptionReporter {
     executeHookFunction(eventTestExecutor) {
         const tests = eventTestExecutor.execute();
         this.report.tests = tests.map(test => {
-            return { name: test.label, valid: test.valid, description: test.description };
+            return { name: test.label, valid: test.valid, description: test.errorDescription };
         })
             .concat(this.report.tests);
     }

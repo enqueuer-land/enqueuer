@@ -8,7 +8,7 @@ describe('StartEventNullReporter', function() {
         return expect(nullHandler.start()).rejects.toMatch('argument');
     });
 
-    it('should return constructor\'s argument in the error description', () => {
+    it('should return constructor\'s argument in the error errorDescription', () => {
         const nullHandler: StartEventNullReporter = new StartEventNullReporter('argument');
 
         const report = nullHandler.getReport();

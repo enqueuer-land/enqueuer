@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 247
-      startTime: '2018-08-21T23:42:55.876Z'
-      endTime: '2018-08-21T23:42:56.123Z'
+      totalTime: 249
+      startTime: '2018-08-22T00:18:16.802Z'
+      endTime: '2018-08-22T00:18:17.051Z'
       timeout: 5000
     subscriptions:
       -
@@ -26,19 +26,19 @@ runnables:
           -
             name: Payload
             valid: true
-            description: '''a new object?'' is equal to ''a new object?'''
+            description: 'Expected value to be equal to ''a new object?''. Received ''a new object?'''
           -
             name: Header
             valid: true
-            description: '''value'' is equal to ''value'''
+            description: 'Expected value to be equal to ''value''. Received ''value'''
           -
             name: 'Other Header Value'
             valid: true
-            description: '''otherValue'' is equal to ''otherValue'''
+            description: 'Expected value to be equal to ''otherValue''. Received ''otherValue'''
           -
             name: 'Routing Key'
             valid: true
-            description: '''enqueuer.integration.test.routing.key'' is equal to ''enqueuer.integration.test.routing.key'''
+            description: 'Expected value to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
           -
             valid: true
             name: 'Message received'
@@ -48,8 +48,8 @@ runnables:
             name: 'No time out'
             description: 'Subscription has not timed out'
         valid: true
-        connectionTime: '2018-08-21T23:42:56.081Z'
-        messageReceivedTime: '2018-08-21T23:42:56.123Z'
+        connectionTime: '2018-08-22T00:18:17.004Z'
+        messageReceivedTime: '2018-08-22T00:18:17.051Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -59,9 +59,9 @@ runnables:
           -
             name: 'Assertion #0'
             valid: true
-            description: '''5672'' is equal to ''5672'''
+            description: 'Expected value to be equal to ''5672''. Received ''5672'''
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-21T23:42:56.122Z'
+        publishTime: '2018-08-22T00:18:17.050Z'

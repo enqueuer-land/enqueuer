@@ -11,16 +11,16 @@ runnables:
       -
         name: 'Requisitions exists onInit'
         valid: true
-        description: '''[object Object]'' is defined'
+        description: '''[object Object]'' is not defined'
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 158
-      startTime: '2018-08-21T23:42:55.900Z'
-      endTime: '2018-08-21T23:42:56.058Z'
+      totalTime: 160
+      startTime: '2018-08-22T00:18:16.825Z'
+      endTime: '2018-08-22T00:18:16.985Z'
       timeout: 1000
     subscriptions:
       -
@@ -30,30 +30,30 @@ runnables:
           -
             name: 'Subscription exists onMessageReceived'
             valid: true
-            description: '''[object Object]'' is defined'
+            description: '''[object Object]'' is not defined'
           -
             name: 'Subscription name changed'
             valid: true
-            description: '''changed'' is equal to ''changed'''
+            description: 'Expected value to be equal to ''changed''. Received ''changed'''
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived'' contains ''subscription::onInit'''
+            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived'' does not contain ''subscription::onInit'''
           -
             name: 'Subscription exists onInit'
             valid: true
-            description: '''[object Object]'' is defined'
+            description: '''[object Object]'' is not defined'
           -
             name: 'Subscription name'
             valid: true
-            description: '''changed'' is equal to ''changed'''
+            description: 'Expected value to be equal to ''changed''. Received ''changed'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-21T23:42:55.963Z'
-        messageReceivedTime: '2018-08-21T23:42:56.038Z'
+        connectionTime: '2018-08-22T00:18:16.887Z'
+        messageReceivedTime: '2018-08-22T00:18:16.962Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -63,11 +63,11 @@ runnables:
           -
             name: 'Publisher exists onInit'
             valid: true
-            description: '''[object Object]'' is defined'
+            description: '''[object Object]'' is not defined'
           -
             name: 'Publisher name'
             valid: true
-            description: '''changed'' is defined'
+            description: '''changed'' is not defined'
           -
             name: Published
             valid: true
@@ -75,17 +75,17 @@ runnables:
           -
             name: 'Publisher exists onMessageReceived'
             valid: true
-            description: '''[object Object]'' is defined'
+            description: '''[object Object]'' is not defined'
           -
             name: 'Publisher name changed'
             valid: true
-            description: '''changed'' is equal to ''changed'''
+            description: 'Expected value to be equal to ''changed''. Received ''changed'''
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived'' contains ''publisher::onInit'''
+            description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived -> publisher::onMessageReceived'' does not contain ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-21T23:42:56.058Z'
+        publishTime: '2018-08-22T00:18:16.984Z'
