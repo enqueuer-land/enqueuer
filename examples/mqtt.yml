@@ -21,12 +21,12 @@ runnables:
       script: payload = Buffer.from(message.payload);
       assertions:
         - name: Payload
-          expected: payload
+          expect: payload
           toBeEqualTo: `enqueuer`
         - name: Topic
-          expected: topic
+          expect: topic
           toBeEqualTo: `enqueuer/integration/public/test`
         - name: Beatles song
-          expected: payload.length
+          expect: payload.length
           toBeGreaterThan: 5
     timeout: 5000

@@ -25,13 +25,13 @@ runnables:
       script: delayedTime = new Date().getTime() - store.lastExecution;
       assertions:
       - name: It was executed 10 times
-        expected: store.iteration
+        expect: store.iteration
         toBeEqualTo: 9
       - name: It delayed for at least ~3 seconds
-        expected: delayedTime + 50
+        expect: delayedTime + 50
         toBeGreaterThan: 3000
       - name: It delayed for no more than ~3 seconds
-        expected: delayedTime - 500
+        expect: delayedTime - 500
         toBeLessThan: 3000
     startEvent:
       publisher:

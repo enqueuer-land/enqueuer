@@ -21,7 +21,7 @@ runnables:
       routingKey: enqueuer.integration.test.routing.key
       onInit:
         assertions:
-          - expected: publisher.options.port
+          - expect: publisher.options.port
             toBeEqualTo: 5672
   subscriptions:
   - name: subscription description
@@ -36,14 +36,14 @@ runnables:
     onMessageReceived:
       assertions:
         - name: Payload
-          expected: payload.how.about
+          expect: payload.how.about
           toBeEqualTo: `a new object?`
         - name: Header
-          expected: headers.key
+          expect: headers.key
           toBeEqualTo: `value`
         - name: Other Header Value
-          expected: headers.otherKey
+          expect: headers.otherKey
           toBeEqualTo: `otherValue`
         - name: Routing Key
-          expected: deliveryInfo.routingKey
+          expect: deliveryInfo.routingKey
           toBeEqualTo: `enqueuer.integration.test.routing.key`

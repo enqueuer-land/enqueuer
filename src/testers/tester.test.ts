@@ -127,7 +127,7 @@ describe('Tester', () => {
     it(`isNotTruthy`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeTruthy(`label`, false);
+        tester.expectToBeTruthy(`label`, false);
 
         const isNotTruthy = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -139,7 +139,7 @@ describe('Tester', () => {
     it(`isTruthy`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeTruthy(`label`, true);
+        tester.expectToBeTruthy(`label`, true);
 
         const isTruthy = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -150,7 +150,7 @@ describe('Tester', () => {
     it(`isNotFalsy`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeFalsy(`label`, true);
+        tester.expectToBeFalsy(`label`, true);
 
         const isNotFalsy = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -162,7 +162,7 @@ describe('Tester', () => {
     it(`isFalsy`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeFalsy(`label`, false);
+        tester.expectToBeFalsy(`label`, false);
 
         const isFalsy = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -196,7 +196,7 @@ describe('Tester', () => {
     it(`isNotDefined`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeDefined(`label`, undefined);
+        tester.expectToBeDefined(`label`, undefined);
         const isNotDefined = tester.getReport()[0];
 
         expect(tester.getReport().length).toBe(1);
@@ -208,7 +208,7 @@ describe('Tester', () => {
     it(`isDefined`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeDefined(`label`, "value");
+        tester.expectToBeDefined(`label`, "value");
         const isDefined = tester.getReport()[0];
 
         expect(tester.getReport().length).toBe(1);
@@ -219,7 +219,7 @@ describe('Tester', () => {
     it(`isNotUndefined`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeUndefined(`label`, 'value');
+        tester.expectToBeUndefined(`label`, 'value');
         const isNotUndefined = tester.getReport()[0];
 
         expect(tester.getReport().length).toBe(1);
@@ -231,7 +231,7 @@ describe('Tester', () => {
     it(`isUndefined`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeUndefined(`label`, undefined);
+        tester.expectToBeUndefined(`label`, undefined);
         const isUndefined = tester.getReport()[0];
 
         expect(tester.getReport().length).toBe(1);

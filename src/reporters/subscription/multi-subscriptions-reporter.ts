@@ -22,7 +22,7 @@ export class MultiSubscriptionsReporter {
                             return Promise.resolve();
                         }
                     });
-                    return subscriptionHandler.subscribe()
+                    return subscriptionHandler.subscribe();
                 }
             ));
     }

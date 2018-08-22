@@ -36,12 +36,12 @@ export class AssertionCodeGenerator {
     }
 
     private executeTwoArgumentsFunction(assertionName: any, assertion: any): string {
-        const expected = assertion.expected;
-        assertion = this.removeField('expected', assertion);
+        const expect = assertion.expect;
+        assertion = this.removeField('expect', assertion);
         const assertionMethodName = Object.getOwnPropertyNames(assertion)[0];
         if (this.tester[assertionMethodName] !== undefined) {
             const value = assertion[assertionMethodName];
-            return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${expected}, ${value});`;
+            return `;${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${expect}, ${value});`;
         }
         throw new Error(`Tester class has no method called '${assertionMethodName}'. Available ones are: ${this.testerMethods}`);
     }

@@ -21,17 +21,17 @@ runnables:
       script: now = new Date().getTime();
       assertions:
       - name: Some time has passed
-        expected: now
+        expect: now
         toBeGreaterThanOrEqualTo: message.content
       - name: Filename
-        expected: name
+        expect: name
         toContain: `temp/`
       - name: Content
-        toBeDefined: content
+        expectToBeDefined: content
       - name: Created
-        toBeDefined: created
+        expectToBeDefined: created
       - name: Modified
-        toBeDefined: modified
+        expectToBeDefined: modified
       - name: Size
-        expected: size
+        expect: size
         toBeGreaterThan: 0

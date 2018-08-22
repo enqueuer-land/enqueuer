@@ -18,11 +18,11 @@ runnables:
     onMessageReceived:
       assertions:
       - name: topic
-        expected: topic
+        expect: topic
         toBeEqualTo: `topic.enqueuer.virgs`
       - name: payload
-        expected: payload
+        expect: payload
         toBeEqualTo: `enqueuer zeroes`
       - name: address
-        expected: store.zeroMqAddress
+        expect: store.zeroMqAddress
         toBeEqualTo: `tcp://127.0.0.1:3000`

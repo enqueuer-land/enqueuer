@@ -48,22 +48,6 @@ export class Tester {
         });
     }
 
-    public toBeTruthy(label: string, expected: any): void {
-        this.report.push({
-            label: label,
-            valid: !!expected,
-            errorDescription: `'${expected}' is not true. I swear`
-        });
-    }
-
-    public toBeFalsy(label: string, expected: any): void {
-        this.report.push({
-            label: label,
-            valid: !expected,
-            errorDescription: `'${expected}' is not false. (Oh really?)`
-        });
-    }
-
     public toContain(label: string, expected: string, toContain: string): void {
         this.report.push({
             label: label,
@@ -72,7 +56,23 @@ export class Tester {
         });
     }
 
-    public toBeDefined(label: string, defined: any): void {
+    public expectToBeTruthy(label: string, expected: any): void {
+        this.report.push({
+            label: label,
+            valid: !!expected,
+            errorDescription: `'${expected}' is not true. I swear`
+        });
+    }
+
+    public expectToBeFalsy(label: string, expected: any): void {
+        this.report.push({
+            label: label,
+            valid: !expected,
+            errorDescription: `'${expected}' is not false. (Oh really?)`
+        });
+    }
+
+    public expectToBeDefined(label: string, defined: any): void {
         this.report.push({
             label: label,
             valid: defined !== undefined,
@@ -80,7 +80,7 @@ export class Tester {
         });
     }
 
-    public toBeUndefined(label: string, defined: any): void {
+    public expectToBeUndefined(label: string, defined: any): void {
         this.report.push({
             label: label,
             valid: defined === undefined,

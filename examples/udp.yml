@@ -18,8 +18,8 @@ runnables:
       script: payload = Buffer.from(message.payload);
       assertions:
       - name: Payload
-        expected: payload
+        expect: payload
         toBeEqualTo: `it`
       - name: Remote Adderss
-        expected: remoteInfo.address
+        expect: remoteInfo.address
         toBeEqualTo: `127.0.0.1`

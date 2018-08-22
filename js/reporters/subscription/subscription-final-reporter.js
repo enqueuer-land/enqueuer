@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger_1 = require("../../loggers/logger");
 //TODO test it
 class SubscriptionFinalReporter {
     constructor(avoidable, hasMessage, hasTimedOut) {
@@ -15,7 +14,6 @@ class SubscriptionFinalReporter {
         if (this.hasTimedOut) {
             tests = tests.concat(this.createTimeoutReport());
         }
-        logger_1.Logger.trace(`Subscription final report: ${JSON.stringify(tests)}`);
         return tests;
     }
     createMessageReport() {

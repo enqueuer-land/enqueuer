@@ -29,7 +29,7 @@ runnables:
               script: payload = Buffer.from(message).toString();
               assertions:
               - name: Works
-                expected: payload
+                expect: payload
                 toBeEqualTo: 100
 
   subscriptions:
@@ -39,5 +39,5 @@ runnables:
     onMessageReceived:
       assertions:
       - name: Test name
-        toBeDefined: message
+        expectToBeDefined: message
     timeout: 5000

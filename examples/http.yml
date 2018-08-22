@@ -20,10 +20,10 @@ runnables:
       onMessageReceived:
         assertions:
         - name: Status Code
-          expected: statusCode
+          expect: statusCode
           toBeEqualTo: 321
         - name: Body
-          expected: body
+          expect: body
           toBeEqualTo: `responsePayload`
   subscriptions:
   - name: subscription description
@@ -42,13 +42,13 @@ runnables:
     onMessageReceived:
       assertions:
       - name: Payload
-        expected: JSON.parse(message.body).enqueuer
+        expect: JSON.parse(message.body).enqueuer
         toBeEqualTo: `virgs`
       - name: Params
-        expected: params.someId
+        expect: params.someId
         toBeEqualTo: `idStuff`
       - name: Query
-        expected: query.query
+        expect: query.query
         toBeEqualTo: 123
 - name: requisition 1 description
   timeout: 5000
@@ -65,10 +65,10 @@ runnables:
       onMessageReceived:
         assertions:
         - name: Status Code
-          expected: statusCode
+          expect: statusCode
           toBeEqualTo: 321
         - name: Body
-          expected: body
+          expect: body
           toBeEqualTo: `duplicatedResponsePayload`
   subscriptions:
   - name: subscription description
@@ -83,7 +83,7 @@ runnables:
     onMessageReceived:
       assertions:
       - name: Payload
-        toBeTruthy: JSON.parse(message.body).duplicated
+        expectToBeTruthy: JSON.parse(message.body).duplicated
 - name: requisition 2 description
   timeout: 3000
   startEvent:
@@ -99,10 +99,10 @@ runnables:
       onMessageReceived:
         assertions:
         - name: Status Code
-          expected: statusCode
+          expect: statusCode
           toBeEqualTo: 200
         - name: Body
-          expected: body
+          expect: body
           toBeEqualTo: `https`
   subscriptions:
   - type: https-server
@@ -118,5 +118,5 @@ runnables:
     onMessageReceived:
       assertions:
       - name: Https payload
-        expected: JSON.parse(message.body).https
+        expect: JSON.parse(message.body).https
         toBeEqualTo: `works!`

@@ -15,7 +15,7 @@ runnables:
       onMessageReceived:
         assertions:
         - name: Do not make it bad
-          expected: message.toString()
+          expect: message.toString()
           toBeEqualTo: `Do not make it bad`
   subscriptions:
   - type: tcp-server
@@ -26,7 +26,7 @@ runnables:
     onMessageReceived:
       assertions:
       - name: Beatles Song
-        expected: message.toString()
+        expect: message.toString()
         toBeEqualTo: `Hey Jude`
 - name: requisition 1 description
   timeout: 3000
@@ -42,7 +42,7 @@ runnables:
       onMessageReceived:
         assertions:
         - name: Greeting received
-          expected: message.toString()
+          expect: message.toString()
           toBeEqualTo: `EnqueuerRocks`
   subscriptions:
   - name: subscription description
@@ -55,7 +55,7 @@ runnables:
     onMessageReceived:
       assertions:
       - name: I care
-        expected: message.toString()
+        expect: message.toString()
         toBeEqualTo: `I do not care`
 -
   name: requisition 2 description
@@ -69,7 +69,7 @@ runnables:
       onMessageReceived:
         assertions:
         - name: Second message is '<<tcpPayload>>'
-          expected: message.toString()
+          expect: message.toString()
           toBeEqualTo: `<<tcpPayload>>`
   subscriptions:
   - type: tcp-server
@@ -80,6 +80,5 @@ runnables:
     onMessageReceived:
       assertions:
       - name: It is still open
-        expected: message.toString()
+        expect: message.toString()
         toBeEqualTo: `The socket is still open`
-

@@ -7,7 +7,6 @@ import {ScriptExecutor} from '../testers/script-executor';
 import {Store} from '../testers/store';
 import {Logger} from '../loggers/logger';
 
-//TODO change it to do all assertions at once
 export class EventAsserter {
     private testerInstanceName = 'tester';
 

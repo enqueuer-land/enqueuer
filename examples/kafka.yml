@@ -14,7 +14,7 @@ runnables:
       onMessageReceived:
         assertions:
         - name: kafka publish response payload
-          toBeDefined: `enqueuer-topic-name`
+          expectToBeDefined: `enqueuer-topic-name`
   subscriptions:
   - name: subscription description
     type: kafka
@@ -26,14 +26,14 @@ runnables:
     onMessageReceived:
       assertions:
       - name: payload
-        expected: value
+        expect: value
         toBeEqualTo: `kafkaPayload`
       - name: topic
-        expected: topic
+        expect: topic
         toBeEqualTo: `enqueuer-topic-name`
       - name: offset
-        toBeDefined: offset
+        expectToBeDefined: offset
       - name: partition
-        toBeDefined: partition
+        expectToBeDefined: partition
       - name: timestamp
-        toBeDefined: timestamp
+        expectToBeDefined: timestamp
