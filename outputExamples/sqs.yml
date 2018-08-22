@@ -1,22 +1,36 @@
 type: runnable
-valid: true
+valid: false
 tests: []
 name: 'sqs test description'
 id: sqs
 runnables:
   -
     type: requisition
-    valid: true
+    valid: false
     tests:
+      -
+        valid: false
+        name: 'Subscriptions message receiving'
+        description:
+          message: 'AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
+          code: AWS.SimpleQueueService.NonExistentQueue
+          time: '2018-08-22T16:22:09.542Z'
+          statusCode: 400
+          retryable: false
+          retryDelay: 8.097181895102267
+        hierarchy:
+          - examples/sqs.yml
+          - 'sqs test description'
+          - 'requisition description'
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 118
-      startTime: '2018-08-22T03:10:27.792Z'
-      endTime: '2018-08-22T03:10:27.910Z'
+      totalTime: 97
+      startTime: '2018-08-22T16:22:09.446Z'
+      endTime: '2018-08-22T16:22:09.543Z'
       timeout: 5000
     subscriptions:
       -
@@ -24,31 +38,16 @@ runnables:
         type: sqs
         tests:
           -
-            name: Body
-            valid: true
-            description: '''enqueuer'' does not contain ''enq'''
-          -
-            name: MessageId
-            valid: true
-            description: '''49b9dacd-1046-4321-a722-123cecb0dadf'' is not defined'
-          -
-            name: ReceiptHandle
-            valid: true
-            description: '''49b9dacd-1046-4321-a722-123cecb0dadf#bf8cf127-3485-4c14-b3a1-1b1c6ed99758'' is not defined'
-          -
-            name: MD5OfBody
-            valid: true
-            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is not defined'
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message successfully'
-          -
-            valid: true
-            name: 'No time out'
-            description: 'Subscription has not timed out'
-        valid: true
-        connectionTime: '2018-08-22T03:10:27.797Z'
+            valid: false
+            name: 'Subscription avoided'
+            description: 'Subscription has not received its message in a valid time'
+            hierarchy:
+              - examples/sqs.yml
+              - 'sqs test description'
+              - 'requisition description'
+              - 'subscription description'
+        valid: false
+        connectionTime: '2018-08-22T16:22:09.455Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -56,31 +55,11 @@ runnables:
         type: sqs
         tests:
           -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Request Id is all 000000'
-            valid: true
-            description: 'Expected value to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
-          -
-            name: ResponseMetadata
-            valid: true
-            description: '''[object Object]'' is not defined'
-          -
-            name: MD5
-            valid: true
-            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is not defined'
-          -
-            name: MD5OfMessageAttributes
-            valid: true
-            description: '''d41d8cd98f00b204e9800998ecf8427e'' is not defined'
-          -
-            name: MessageId
-            valid: true
-            description: '''734678d0-0353-4b45-adfc-6f669184acab'' is not defined'
-          -
             name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-08-22T03:10:27.907Z'
+            valid: false
+            description: 'No response message was received'
+            hierarchy:
+              - examples/sqs.yml
+              - 'sqs test description'
+              - 'requisition description'
+              - 'publisher description'

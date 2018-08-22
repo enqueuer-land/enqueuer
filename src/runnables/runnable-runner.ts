@@ -64,7 +64,7 @@ export class RunnableRunner extends Runner {
             const clone = this.runnableModel.runnables.map(x => ({ ...x }));
             const items = clone
                 .map(item => {
-                    item.name = `${x}: ` + item.name;
+                    item.name = `[${x}] ` + item.name;
                     return item;
                 });
             runnables = runnables.concat(items);

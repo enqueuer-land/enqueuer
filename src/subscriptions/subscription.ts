@@ -11,6 +11,7 @@ export abstract class Subscription {
     public onMessageReceived?: Event;
     public response?: any;
     public type?: string;
+    public avoid: boolean = false;
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {
         this.messageReceived = subscriptionAttributes.messageReceived;
@@ -19,6 +20,7 @@ export abstract class Subscription {
         this.response = subscriptionAttributes.response;
         this.type = subscriptionAttributes.type;
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;
+        this.avoid = subscriptionAttributes.avoid || false;
     }
 
     public abstract subscribe(): Promise<void>;

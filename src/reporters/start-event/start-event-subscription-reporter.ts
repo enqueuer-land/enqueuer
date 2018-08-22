@@ -4,6 +4,7 @@ import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
+import {Logger} from '../../loggers/logger';
 
 @Injectable({predicate: (startEvent: any) => startEvent.subscription != null})
 export class StartEventSubscriptionReporter extends StartEventReporter {
@@ -17,12 +18,18 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
 
     public start(): Promise<void> {
         return new Promise((resolve, reject) => {
+            this.subscriptionReporter
+                .startTimeout(() => {
+                    Logger.trace(`Subscription as start event has timed out`);
+                    resolve();
+                });
             this.subscriptionReporter.subscribe()
                 .then(() => {
-                    this.subscriptionReporter
-                        .startTimeout(() => resolve());
                     this.subscriptionReporter.receiveMessage()
-                        .then(() => resolve())
+                        .then(() => {
+                            Logger.trace(`Subscription as start event has received its message`);
+                            resolve();
+                        })
                         .catch(err => reject(err));
                 })
                 .catch(err => reject(err));

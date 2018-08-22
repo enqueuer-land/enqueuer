@@ -4,6 +4,7 @@ import {EventAsserter} from './event-asserter';
 import {EventExecutor} from './event-executor';
 import {TestModel} from '../models/outputs/test-model';
 
+//TODO test it
 export class OnMessageReceivedEventExecutor implements EventExecutor {
     private messageReceiver: MessageReceiver;
     private name: string;

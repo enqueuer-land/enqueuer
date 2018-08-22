@@ -16,7 +16,14 @@ export class MultiSubscriptionsReporter {
 
     public subscribe(): Promise<void[]> {
         return Promise.all(this.subscriptionReporters.map(
-            subscriptionHandler => subscriptionHandler.subscribe()
+            subscriptionHandler => {
+                    subscriptionHandler.startTimeout(() => {
+                        if (this.haveAllSubscriptionsStoppedWaiting()) {
+                            return Promise.resolve();
+                        }
+                    });
+                    return subscriptionHandler.subscribe()
+                }
             ));
     }
 
@@ -26,11 +33,6 @@ export class MultiSubscriptionsReporter {
                 return resolve();
             }
             this.subscriptionReporters.forEach(subscriptionHandler => {
-                subscriptionHandler.startTimeout(() => {
-                    if (this.haveAllSubscriptionsStoppedWaiting()) {
-                        resolve();
-                    }
-                });
                 subscriptionHandler.receiveMessage()
                     .then(() => {
                         if (this.haveAllSubscriptionsStoppedWaiting()) {

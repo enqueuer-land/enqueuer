@@ -72,7 +72,6 @@ describe('Inception test', () => {
         expect(outterReport.name).toBe('runnableUds');
         expect(outterReport.subscriptions[0].valid).toBeTruthy();
         expect(findTest('Message received', outterReport.subscriptions[0].tests)).toBeTruthy();
-        expect(findTest('No time out', outterReport.subscriptions[0].tests)).toBeTruthy();
         expect(outterReport.startEvent.publisher).toBeDefined();
         if (outterReport.startEvent.publisher) {
             expect(outterReport.startEvent.publisher.valid).toBeTruthy();

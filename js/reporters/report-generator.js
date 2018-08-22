@@ -72,7 +72,7 @@ class ReportGenerator {
             const timeoutTest = {
                 valid: false,
                 name: 'No time out',
-                description: `Requisition has timed out ${timesReport.totalTime} > ${this.timeout}`
+                description: `Requisition has timed out: ${timesReport.totalTime} > ${this.timeout}`
             };
             if (timesReport.totalTime <= this.timeout) {
                 timeoutTest.valid = true;

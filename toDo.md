@@ -33,7 +33,9 @@ Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Yaml files explaining input values
 Defaults requisition/subscription/publisher names
-
+Avoid subscription property
+Parallel config property
+store array event property
 
 Summary to look like this.
  FAIL  src/inceptionTest/inception.comp.ts

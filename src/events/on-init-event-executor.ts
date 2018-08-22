@@ -4,6 +4,7 @@ import {Initializable} from './initializable';
 import {EventExecutor} from './event-executor';
 import {TestModel} from '../models/outputs/test-model';
 
+//TODO test it
 export class OnInitEventExecutor implements EventExecutor {
     private initializable: Initializable;
     private name: string;

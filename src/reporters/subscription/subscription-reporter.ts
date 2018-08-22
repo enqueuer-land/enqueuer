@@ -7,9 +7,9 @@ import * as input from '../../models/inputs/subscription-model';
 import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
-import {TestModel} from '../../models/outputs/test-model';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
+import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import Signals = NodeJS.Signals;
 
 export class SubscriptionReporter {
@@ -52,8 +52,9 @@ export class SubscriptionReporter {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.trace(`${this.subscription.name} is subscribing`);
+            Logger.trace(`Starting ${this.subscription.name} timer`);
             this.initializeTimeout();
+            Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
             this.subscription.subscribe()
                 .then(() => {
                     if (this.hasTimedOut) {
@@ -98,8 +99,10 @@ export class SubscriptionReporter {
     }
 
     public getReport(): output.SubscriptionModel {
-        this.addMessageReceivedReport();
-        this.addTimeoutReport();
+        const finalReporter = new SubscriptionFinalReporter(this.subscription.avoid,
+                                                            !!this.subscription.messageReceived,
+                                                            !!this.subscription.timeout && this.hasTimedOut);
+        this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
         this.cleanUp();
         this.report.valid = this.report.valid && checkValidation(this.report);
@@ -123,40 +126,7 @@ export class SubscriptionReporter {
         this.cleanUp();
     }
 
-    private addMessageReceivedReport() {
-        const messageReceivedTestLabel = 'Message received';
-        if (this.subscription.messageReceived != null) {
-            this.report.tests.push({
-                valid: true,
-                name: messageReceivedTestLabel,
-                description: `Subscription has received its message successfully`
-            });
-        } else {
-            this.report.tests.push({
-                valid: false,
-                name: messageReceivedTestLabel,
-                description: `Subscription has not received its message in a valid time`
-            });
-        }
-    }
-
-    private addTimeoutReport() {
-        if (this.subscription.timeout) {
-            const timeoutTest: TestModel = {
-                valid: false,
-                name: 'No time out',
-                description: `Subscription has timed out`
-            };
-            if (!this.hasTimedOut) {
-                timeoutTest.valid = true;
-                timeoutTest.description = 'Subscription has not timed out';
-            }
-            this.report.tests.push(timeoutTest);
-        }
-    }
-
     private cleanUp(): void {
-
         process.removeListener('SIGINT', this.handleKillSignal);
         process.removeListener('SIGTERM', this.handleKillSignal);
 
@@ -175,6 +145,7 @@ export class SubscriptionReporter {
     }
 
     private initializeTimeout() {
+        console.log(`${this.subscription.name} ${this.timeOut} -> ${this.subscription.timeout}`);
         if (this.timeOut && this.subscription.timeout) {
             Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);

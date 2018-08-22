@@ -62,9 +62,8 @@ class RequisitionReporter {
     }
     initializeTimeout() {
         if (this.requisitionTimeout) {
-            new timeout_1.Timeout(() => {
-                this.onFinish();
-            }).start(this.requisitionTimeout);
+            new timeout_1.Timeout(() => this.onFinish())
+                .start(this.requisitionTimeout);
         }
     }
     onAllSubscriptionsStopWaiting() {

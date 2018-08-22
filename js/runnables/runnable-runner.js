@@ -61,7 +61,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             const clone = this.runnableModel.runnables.map(x => (Object.assign({}, x)));
             const items = clone
                 .map(item => {
-                item.name = `${x}: ` + item.name;
+                item.name = `[${x}] ` + item.name;
                 return item;
             });
             runnables = runnables.concat(items);

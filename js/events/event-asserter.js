@@ -5,6 +5,7 @@ const assertion_code_generator_1 = require("../testers/assertion-code-generator"
 const script_executor_1 = require("../testers/script-executor");
 const store_1 = require("../testers/store");
 const logger_1 = require("../loggers/logger");
+//TODO change it to do all assertions at once
 class EventAsserter {
     constructor(event) {
         this.testerInstanceName = 'tester';

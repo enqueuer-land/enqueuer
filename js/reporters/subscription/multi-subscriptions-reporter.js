@@ -12,7 +12,14 @@ class MultiSubscriptionsReporter {
         }
     }
     subscribe() {
-        return Promise.all(this.subscriptionReporters.map(subscriptionHandler => subscriptionHandler.subscribe()));
+        return Promise.all(this.subscriptionReporters.map(subscriptionHandler => {
+            subscriptionHandler.startTimeout(() => {
+                if (this.haveAllSubscriptionsStoppedWaiting()) {
+                    return Promise.resolve();
+                }
+            });
+            return subscriptionHandler.subscribe();
+        }));
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
@@ -20,11 +27,6 @@ class MultiSubscriptionsReporter {
                 return resolve();
             }
             this.subscriptionReporters.forEach(subscriptionHandler => {
-                subscriptionHandler.startTimeout(() => {
-                    if (this.haveAllSubscriptionsStoppedWaiting()) {
-                        resolve();
-                    }
-                });
                 subscriptionHandler.receiveMessage()
                     .then(() => {
                     if (this.haveAllSubscriptionsStoppedWaiting()) {

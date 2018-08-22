@@ -16,6 +16,7 @@ const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
 const on_init_event_executor_1 = require("../../events/on-init-event-executor");
 const on_message_received_event_executor_1 = require("../../events/on-message-received-event-executor");
+const subscription_final_reporter_1 = require("./subscription-final-reporter");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -55,8 +56,9 @@ class SubscriptionReporter {
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.trace(`${this.subscription.name} is subscribing`);
+            logger_1.Logger.trace(`Starting ${this.subscription.name} timer`);
             this.initializeTimeout();
+            logger_1.Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
             this.subscription.subscribe()
                 .then(() => {
                 if (this.hasTimedOut) {
@@ -101,8 +103,8 @@ class SubscriptionReporter {
         });
     }
     getReport() {
-        this.addMessageReceivedReport();
-        this.addTimeoutReport();
+        const finalReporter = new subscription_final_reporter_1.SubscriptionFinalReporter(this.subscription.avoid, !!this.subscription.messageReceived, !!this.subscription.timeout && this.hasTimedOut);
+        this.report.tests = this.report.tests.concat(finalReporter.getReport());
         this.cleanUp();
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
@@ -125,37 +127,6 @@ class SubscriptionReporter {
             this.cleanUp();
         });
     }
-    addMessageReceivedReport() {
-        const messageReceivedTestLabel = 'Message received';
-        if (this.subscription.messageReceived != null) {
-            this.report.tests.push({
-                valid: true,
-                name: messageReceivedTestLabel,
-                description: `Subscription has received its message successfully`
-            });
-        }
-        else {
-            this.report.tests.push({
-                valid: false,
-                name: messageReceivedTestLabel,
-                description: `Subscription has not received its message in a valid time`
-            });
-        }
-    }
-    addTimeoutReport() {
-        if (this.subscription.timeout) {
-            const timeoutTest = {
-                valid: false,
-                name: 'No time out',
-                description: `Subscription has timed out`
-            };
-            if (!this.hasTimedOut) {
-                timeoutTest.valid = true;
-                timeoutTest.description = 'Subscription has not timed out';
-            }
-            this.report.tests.push(timeoutTest);
-        }
-    }
     cleanUp() {
         process.removeListener('SIGINT', this.handleKillSignal);
         process.removeListener('SIGTERM', this.handleKillSignal);
@@ -174,6 +145,7 @@ class SubscriptionReporter {
         }
     }
     initializeTimeout() {
+        console.log(`${this.subscription.name} ${this.timeOut} -> ${this.subscription.timeout}`);
         if (this.timeOut && this.subscription.timeout) {
             logger_1.Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
             this.timeOut.start(this.subscription.timeout);

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const event_asserter_1 = require("./event-asserter");
+//TODO test it
 class OnMessageReceivedEventExecutor {
     constructor(name, messageReceiver) {
         this.name = name;

@@ -6,6 +6,7 @@ import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {checkValidation} from '../models/outputs/report-model';
 import {TestModel} from '../models/outputs/test-model';
+import {Logger} from '../loggers/logger';
 
 export class ReportGenerator {
 
@@ -92,7 +93,7 @@ export class ReportGenerator {
             const timeoutTest: TestModel = {
                 valid: false,
                 name: 'No time out',
-                description: `Requisition has timed out ${timesReport.totalTime} > ${this.timeout}`
+                description: `Requisition has timed out: ${timesReport.totalTime} > ${this.timeout}`
             };
             if (timesReport.totalTime <= this.timeout) {
                 timeoutTest.valid = true;

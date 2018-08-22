@@ -6,6 +6,7 @@ export interface SubscriptionModel {
     onMessageReceived?: Event;
     onInit?: Event;
     response?: any;
+    avoid?: boolean;
     timeout?: number;
 
     [propName: string]: any;

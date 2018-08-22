@@ -1,8 +1,8 @@
 type: runnable
 valid: true
 tests: []
-name: 'parallel-sub test description'
-id: parallel-sub
+name: 'avoid test description'
+id: avoid
 runnables:
   -
     type: requisition
@@ -12,12 +12,12 @@ runnables:
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'requisition description'
+    name: 'requisition  description'
     time:
-      totalTime: 375
-      startTime: '2018-08-22T16:22:09.441Z'
-      endTime: '2018-08-22T16:22:09.816Z'
-      timeout: 3000
+      totalTime: 2056
+      startTime: '2018-08-22T16:22:09.399Z'
+      endTime: '2018-08-22T16:22:11.455Z'
+      timeout: 4000
     subscriptions: []
     startEvent:
       subscription:
@@ -25,12 +25,12 @@ runnables:
         type: tcp-server
         tests:
           -
-            name: Paralleling
             valid: true
-            description: 'Expected value to be equal to ''anything''. Received ''anything'''
+            name: 'Subscription avoided'
+            description: 'Avoidable subscription has not received a message'
           -
             valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
+            name: 'No time out'
+            description: 'Avoidable subscription has not received a message'
         valid: true
         connectionTime: '2018-08-22T16:22:09.496Z'
