@@ -19,7 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
-const store_1 = require("../testers/store");
+const store_1 = require("../configurations/store");
 const logger_1 = require("../loggers/logger");
 let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tester_1 = require("./tester");
+const tester_1 = require("../testers/tester");
 class AssertionCodeGenerator {
     constructor(testerInstanceName) {
         this.tester = new tester_1.Tester();

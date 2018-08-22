@@ -5,7 +5,7 @@ import * as output from '../models/outputs/requisition-model';
 import {Runner} from './runner';
 import {Injectable} from 'conditional-injector';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
-import {Store} from '../testers/store';
+import {Store} from '../configurations/store';
 
 @Injectable()
 export class RequisitionRunner extends Runner {

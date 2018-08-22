@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const configuration_1 = require("../configurations/configuration");
+const configuration_1 = require("./configuration");
 class Store {
     constructor() {
         //private

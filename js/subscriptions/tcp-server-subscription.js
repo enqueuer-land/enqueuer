@@ -20,7 +20,7 @@ const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
 const logger_1 = require("../loggers/logger");
-const store_1 = require("../testers/store");
+const store_1 = require("../configurations/store");
 let TcpServerSubscription = class TcpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);

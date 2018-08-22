@@ -2,7 +2,7 @@ import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as net from 'net';
 import {Injectable} from 'conditional-injector';
-import {Store} from '../testers/store';
+import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'uds'})

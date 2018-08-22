@@ -6,7 +6,7 @@ import {RunnableModel} from '../models/inputs/runnable-model';
 import fs from 'fs';
 import Ajv from 'ajv';
 import * as yaml from 'yamljs';
-import {Store} from '../testers/store';
+import {Store} from '../configurations/store';
 
 export class RunnableParser {
 

@@ -1,6 +1,6 @@
 import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';
 import {Tester} from '../testers/tester';
-import {AssertionCodeGenerator} from '../testers/assertion-code-generator';
+import {AssertionCodeGenerator} from '../code-generators/assertion-code-generator';
 import {OnInitEventExecutor} from "./on-init-event-executor";
 import {Initializable} from "./initializable";
 
@@ -16,7 +16,7 @@ DynamicFunctionController.mockImplementation(() => {
 });
 
 let generateMock = jest.fn();
-jest.mock('../testers/assertion-code-generator');
+jest.mock('../code-generators/assertion-code-generator');
 AssertionCodeGenerator.mockImplementation(() => {
     return {
         generate: generateMock

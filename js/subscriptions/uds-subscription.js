@@ -21,7 +21,7 @@ const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
 const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
-const store_1 = require("../testers/store");
+const store_1 = require("../configurations/store");
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);

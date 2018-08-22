@@ -20,7 +20,7 @@ const publisher_1 = require("./publisher");
 const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
-const store_1 = require("../testers/store");
+const store_1 = require("../configurations/store");
 let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);

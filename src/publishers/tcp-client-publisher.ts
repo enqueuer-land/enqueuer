@@ -4,7 +4,7 @@ import * as net from 'net';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {isNullOrUndefined} from 'util';
-import {Store} from '../testers/store';
+import {Store} from '../configurations/store';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client'})
 export class TcpClientPublisher extends Publisher {

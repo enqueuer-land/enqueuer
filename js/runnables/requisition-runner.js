@@ -22,7 +22,7 @@ const input = __importStar(require("../models/inputs/requisition-model"));
 const runner_1 = require("./runner");
 const conditional_injector_1 = require("conditional-injector");
 const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const store_1 = require("../testers/store");
+const store_1 = require("../configurations/store");
 let RequisitionRunner = class RequisitionRunner extends runner_1.Runner {
     constructor(requisition) {
         super();

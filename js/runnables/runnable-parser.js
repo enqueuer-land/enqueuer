@@ -16,7 +16,7 @@ const json_placeholder_replacer_1 = require("json-placeholder-replacer");
 const fs_1 = __importDefault(require("fs"));
 const ajv_1 = __importDefault(require("ajv"));
 const yaml = __importStar(require("yamljs"));
-const store_1 = require("../testers/store");
+const store_1 = require("../configurations/store");
 class RunnableParser {
     constructor() {
         const schemasPath = this.discoverSchemasFolder();

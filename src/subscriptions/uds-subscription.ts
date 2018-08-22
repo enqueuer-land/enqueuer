@@ -4,7 +4,7 @@ import {Injectable} from 'conditional-injector';
 import * as net from 'net';
 import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
-import {Store} from '../testers/store';
+import {Store} from '../configurations/store';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'uds'})
 export class UdsSubscription extends Subscription {

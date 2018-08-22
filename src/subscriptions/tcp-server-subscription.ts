@@ -3,7 +3,7 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as net from 'net';
 import {Logger} from '../loggers/logger';
-import {Store} from '../testers/store';
+import {Store} from '../configurations/store';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp-server'})
 export class TcpServerSubscription extends Subscription {

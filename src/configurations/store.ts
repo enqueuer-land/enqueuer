@@ -1,4 +1,4 @@
-import {Configuration} from '../configurations/configuration';
+import {Configuration} from './configuration';
 
 export class Store {
     private static data: any = null;
