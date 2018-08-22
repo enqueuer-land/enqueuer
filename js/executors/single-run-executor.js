@@ -30,26 +30,58 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     constructor(runMode) {
         super();
         logger_1.Logger.info('Executing in Single-Run mode');
-        const singleRunConfiguration = runMode['single-run'];
-        this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(runMode['single-run'].reportName);
+        const singleRunMode = runMode['single-run'];
+        const singleRunConfiguration = singleRunMode;
+        this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(singleRunMode.reportName);
+        this.parallelMode = !!singleRunMode.parallel;
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
         this.runnableFileNames = this.getTestFiles(singleRunConfiguration.files);
     }
     execute() {
+        if (this.runnableFileNames.length == 0) {
+            return Promise.reject(`No test file was found`);
+        }
+        if (this.parallelMode) {
+            return this.executeParallelMode();
+        }
+        else {
+            return this.executeSequentialMode(this.runnableFileNames);
+        }
+    }
+    executeSequentialMode(runnableFileNames) {
+        return new Promise((resolve) => {
+            const index = runnableFileNames.length;
+            const fileName = runnableFileNames.shift();
+            if (fileName) {
+                const runnable = this.parseRunnable(fileName);
+                if (runnable) {
+                    this.runRunnable(fileName, this.setDefaultRunnableName(runnable, index))
+                        .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
+                }
+            }
+            else {
+                resolve(this.finishExecution());
+            }
+        });
+    }
+    executeParallelMode() {
         return new Promise((resolve) => {
             Promise.all(this.runnableFileNames.map((fileName, index) => {
                 const runnable = this.parseRunnable(fileName);
                 if (runnable) {
-                    if (!runnable.name) {
-                        runnable.name = `Runnable #${index}`;
-                    }
-                    return this.runRunnable(fileName, runnable);
+                    return this.runRunnable(fileName, this.setDefaultRunnableName(runnable, index));
                 }
                 else {
                     return {};
                 }
             })).then(() => resolve(this.finishExecution()));
         });
+    }
+    setDefaultRunnableName(runnable, index) {
+        if (!runnable.name) {
+            runnable.name = `Runnable #${index}`;
+        }
+        return runnable;
     }
     getTestFiles(files) {
         let result = [];
@@ -89,10 +121,6 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         });
     }
     finishExecution() {
-        if (this.runnableFileNames.length == 0) {
-            logger_1.Logger.warning('No test file was found');
-            return false;
-        }
         logger_1.Logger.info('There is no more requisition to be ran');
         this.multiResultCreator.create();
         return this.multiResultCreator.isValid();

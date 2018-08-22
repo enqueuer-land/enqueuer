@@ -22,6 +22,10 @@ run-mode:
     #Optional. A single file with the whole execution report is generated. Every test of every input file will be there.
     reportName: singleRunOutput.yml #outputExamples/singleRunOutput.json
 
+    #Default: false
+    #Run every runnable file at the same time
+    parallel: false
+
   ##--------------------------------------
 
   # daemon mode: it will run indefinitely. Endlessly. As a service.

@@ -44,11 +44,11 @@ describe('Inception test', () => {
         jest.setTimeout(10000);
 
         beingTested = spawn('nqr',  ['--config-file', 'src/inceptionTest/beingTested.yml']);
-        beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
+        // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
         sleep(500);
 
         tester = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/tester.yml']);
-        // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
+        tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
         sleep(2500);
 
         const testerReports = findEveryJsonFile()

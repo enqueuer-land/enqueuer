@@ -16,31 +16,66 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private runnableFileNames: string[];
     private multiPublisher: MultiPublisher;
     private multiResultCreator: MultiResultCreator;
+    private parallelMode: boolean;
 
     constructor(runMode: any) {
         super();
         Logger.info('Executing in Single-Run mode');
-        const singleRunConfiguration = runMode['single-run'];
-        this.multiResultCreator = new MultiResultCreator(runMode['single-run'].reportName);
+        const singleRunMode: any = runMode['single-run'];
+        const singleRunConfiguration = singleRunMode;
+        this.multiResultCreator = new MultiResultCreator(singleRunMode.reportName);
+        this.parallelMode = !!singleRunMode.parallel;
 
         this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
         this.runnableFileNames = this.getTestFiles(singleRunConfiguration.files);
     }
 
     public execute(): Promise<boolean> {
+        if (this.runnableFileNames.length == 0) {
+            return Promise.reject(`No test file was found`);
+        }
+
+        if (this.parallelMode) {
+            return this.executeParallelMode();
+        } else {
+            return this.executeSequentialMode(this.runnableFileNames);
+        }
+    }
+
+    private executeSequentialMode(runnableFileNames: string[]): Promise<boolean> {
+        return new Promise((resolve) => {
+            const index = runnableFileNames.length;
+            const fileName = runnableFileNames.shift();
+            if (fileName) {
+                const runnable: RunnableModel | undefined = this.parseRunnable(fileName);
+                if (runnable) {
+                    this.runRunnable(fileName, this.setDefaultRunnableName(runnable, index))
+                        .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
+                }
+            } else {
+                resolve(this.finishExecution());
+            }
+        });
+    }
+
+    private executeParallelMode(): Promise<boolean> {
         return new Promise((resolve) => {
             Promise.all(this.runnableFileNames.map((fileName: string, index) => {
                 const runnable: RunnableModel | undefined = this.parseRunnable(fileName);
                 if (runnable) {
-                    if (!runnable.name) {
-                        runnable.name = `Runnable #${index}`;
-                    }
-                    return this.runRunnable(fileName, runnable);
+                    return this.runRunnable(fileName, this.setDefaultRunnableName(runnable, index));
                 } else {
                     return {};
                 }
             })).then(() => resolve(this.finishExecution()));
         });
+    }
+
+    private setDefaultRunnableName(runnable: RunnableModel | any, index: number): RunnableModel {
+        if (!runnable.name) {
+            runnable.name = `Runnable #${index}`;
+        }
+        return runnable;
     }
 
     private getTestFiles(files: string[]): string[] {
@@ -84,12 +119,9 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     }
 
     private finishExecution(): boolean {
-        if (this.runnableFileNames.length == 0) {
-            Logger.warning('No test file was found');
-            return false;
-        }
         Logger.info('There is no more requisition to be ran');
         this.multiResultCreator.create();
         return this.multiResultCreator.isValid();
     }
+
 }

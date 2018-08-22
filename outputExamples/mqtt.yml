@@ -1,22 +1,26 @@
 type: runnable
-valid: true
+valid: false
 tests: []
 name: 'mqtt test description'
 id: mqtt
 runnables:
   -
     type: requisition
-    valid: true
+    valid: false
     tests:
       -
-        valid: true
+        valid: false
         name: 'No time out'
-        description: 'Requisition has not timed out'
+        description: 'Requisition has timed out: 8150 > 8000'
+        hierarchy:
+          - examples/mqtt.yml
+          - 'mqtt test description'
+          - 'requisition description'
     name: 'requisition description'
     time:
-      totalTime: 185
-      startTime: '2018-08-22T17:19:10.036Z'
-      endTime: '2018-08-22T17:19:10.221Z'
+      totalTime: 8150
+      startTime: '2018-08-22T18:30:29.891Z'
+      endTime: '2018-08-22T18:30:38.041Z'
       timeout: 8000
     subscriptions:
       -
@@ -24,23 +28,25 @@ runnables:
         type: mqtt
         tests:
           -
-            name: Payload
-            valid: true
-            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            name: Topic
-            valid: true
-            description: 'Expected value to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
-          -
-            name: 'Beatles song'
-            valid: true
-            description: 'Expected value to be greater than ''5''. Received ''8'''
-          -
-            valid: true
+            valid: false
             name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-08-22T17:19:10.166Z'
+            description: 'Subscription has not received its message in a valid time'
+            hierarchy:
+              - examples/mqtt.yml
+              - 'mqtt test description'
+              - 'requisition description'
+              - 'subscription description'
+          -
+            valid: false
+            name: 'No time out'
+            description: 'Subscription has timed out'
+            hierarchy:
+              - examples/mqtt.yml
+              - 'mqtt test description'
+              - 'requisition description'
+              - 'subscription description'
+        valid: false
+        connectionTime: '2018-08-22T18:30:30.041Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -51,4 +57,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-22T17:19:10.216Z'
+        publishTime: '2018-08-22T18:30:30.078Z'
