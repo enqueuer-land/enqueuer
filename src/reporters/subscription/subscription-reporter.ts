@@ -37,6 +37,7 @@ export class SubscriptionReporter {
     public setDefaultName(name: string) {
         if (!this.subscription.name) {
             this.subscription.name = name;
+            this.report.name = name;
         }
     }
 

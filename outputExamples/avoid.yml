@@ -10,21 +10,18 @@ runnables:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 2056
-      startTime: '2018-08-22T19:59:39.170Z'
-      endTime: '2018-08-22T19:59:41.226Z'
+      totalTime: 2064
+      startTime: '2018-08-22T21:18:32.819Z'
+      endTime: '2018-08-22T21:18:34.883Z'
     subscriptions: []
     startEvent:
       subscription:
+        name: 'Start event subscription'
         type: tcp-server
         tests:
           -
             valid: true
-            name: 'Message received'
-            description: 'Avoidable subscription has not received a message'
-          -
-            valid: true
-            name: 'No time out'
+            name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-08-22T19:59:39.252Z'
+        connectionTime: '2018-08-22T21:18:32.917Z'

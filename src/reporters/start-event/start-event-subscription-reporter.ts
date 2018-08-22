@@ -13,8 +13,10 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
 
     public constructor(startEvent: SubscriptionModel) {
         super();
+        if (!startEvent.subscription.name) {
+            startEvent.subscription.name = `Start event subscription`;
+        }
         this.subscriptionReporter = new SubscriptionReporter(startEvent.subscription);
-        this.subscriptionReporter.setDefaultName(`Start event subscription`);
     }
 
     public start(): Promise<void> {

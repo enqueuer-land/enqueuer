@@ -42,6 +42,7 @@ class SubscriptionReporter {
     setDefaultName(name) {
         if (!this.subscription.name) {
             this.subscription.name = name;
+            this.report.name = name;
         }
     }
     startTimeout(onTimeOutCallback) {

@@ -17,8 +17,10 @@ const logger_1 = require("../../loggers/logger");
 let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
+        if (!startEvent.subscription.name) {
+            startEvent.subscription.name = `Start event subscription`;
+        }
         this.subscriptionReporter = new subscription_reporter_1.SubscriptionReporter(startEvent.subscription);
-        this.subscriptionReporter.setDefaultName(`Start event subscription`);
     }
     start() {
         return new Promise((resolve, reject) => {

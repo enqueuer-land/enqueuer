@@ -19,7 +19,6 @@ class EventExecutor {
     execute() {
         logger_1.Logger.trace(`Executing event function`);
         const code = this.addAssertions();
-        console.log(code);
         return this.scriptRunner(code);
     }
     prepareAssertions(assertions) {

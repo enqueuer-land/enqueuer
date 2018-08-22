@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//TODO test it
 class SubscriptionFinalReporter {
     constructor(avoidable, hasMessage, hasTimedOut) {
         this.messageReceivedTestName = `Message received`;
+        this.subscriptionAvoidedTestName = `Subscription avoided`;
+        this.noTimeOutTestName = `No time out`;
         this.hasMessage = false;
         this.avoidable = avoidable;
         this.hasMessage = hasMessage;
@@ -11,22 +12,22 @@ class SubscriptionFinalReporter {
     }
     getReport() {
         let tests = [];
-        tests = tests.concat(this.createMessageReport());
+        if (this.avoidable) {
+            tests = tests.concat(this.createAvoidableReport());
+        }
+        else {
+            tests = tests.concat(this.createMessageReport());
+        }
         if (this.hasTimedOut) {
-            tests = tests.concat(this.createTimeoutReport());
+            const timeoutReport = this.createTimeoutReport();
+            if (timeoutReport) {
+                tests = tests.concat(timeoutReport);
+            }
         }
         return tests;
     }
     createMessageReport() {
         if (this.hasMessage) {
-            return this.createMessageReceived();
-        }
-        else {
-            return this.createMessageNotReceived();
-        }
-    }
-    createMessageReceived() {
-        if (!this.avoidable) {
             return {
                 valid: true,
                 name: this.messageReceivedTestName,
@@ -37,39 +38,31 @@ class SubscriptionFinalReporter {
             return {
                 valid: false,
                 name: this.messageReceivedTestName,
-                description: `Avoidable subscription shouldn't have received a message`
-            };
-        }
-    }
-    createMessageNotReceived() {
-        if (!this.avoidable) {
-            return {
-                valid: false,
-                name: this.messageReceivedTestName,
-                description: `Subscription has not received its message in a valid time`
-            };
-        }
-        else {
-            return {
-                valid: true,
-                name: this.messageReceivedTestName,
-                description: `Avoidable subscription has not received a message`
+                description: `Subscription has not received its message`
             };
         }
     }
     createTimeoutReport() {
-        const name = `No time out`;
         if (!this.avoidable) {
             return {
                 valid: false,
-                name: name,
-                description: `Subscription has timed out`
+                name: this.noTimeOutTestName,
+                description: `Not avoidable Subscription has timed out`
+            };
+        }
+    }
+    createAvoidableReport() {
+        if (this.hasMessage) {
+            return {
+                valid: false,
+                name: this.subscriptionAvoidedTestName,
+                description: `Avoidable subscription should not receive a message`
             };
         }
         else {
             return {
                 valid: true,
-                name: name,
+                name: this.subscriptionAvoidedTestName,
                 description: `Avoidable subscription has not received a message`
             };
         }

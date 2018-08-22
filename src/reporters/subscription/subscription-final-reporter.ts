@@ -1,10 +1,11 @@
 import {TestModel} from '../../models/outputs/test-model';
 
-//TODO test it
 export class SubscriptionFinalReporter {
     private messageReceivedTestName: string = `Message received`;
+    private subscriptionAvoidedTestName: string = `Subscription avoided`;
+    private noTimeOutTestName: string = `No time out`;
 
-    private avoidable: boolean;
+    private avoidable?: boolean;
     private hasMessage: boolean = false;
     private hasTimedOut: boolean;
 
@@ -16,23 +17,22 @@ export class SubscriptionFinalReporter {
 
     public getReport(): TestModel[] {
         let tests: TestModel[] = [];
-        tests = tests.concat(this.createMessageReport());
+        if (this.avoidable) {
+            tests = tests.concat(this.createAvoidableReport());
+        } else {
+            tests = tests.concat(this.createMessageReport());
+        }
         if (this.hasTimedOut) {
-            tests = tests.concat(this.createTimeoutReport());
+            const timeoutReport = this.createTimeoutReport();
+            if (timeoutReport) {
+                tests = tests.concat(timeoutReport);
+            }
         }
         return tests;
     }
 
     private createMessageReport(): TestModel {
         if (this.hasMessage) {
-            return this.createMessageReceived();
-        } else {
-            return this.createMessageNotReceived();
-        }
-    }
-
-    private createMessageReceived() {
-        if (!this.avoidable) {
             return {
                 valid: true,
                 name: this.messageReceivedTestName,
@@ -42,42 +42,33 @@ export class SubscriptionFinalReporter {
             return {
                 valid: false,
                 name: this.messageReceivedTestName,
-                description: `Avoidable subscription shouldn't have received a message`
+                description: `Subscription has not received its message`
+            };
+        }
+    }
+    private createTimeoutReport(): TestModel | undefined {
+        if (!this.avoidable) {
+            return {
+                valid: false,
+                name: this.noTimeOutTestName,
+                description: `Not avoidable Subscription has timed out`
             };
         }
     }
 
-    private createMessageNotReceived() {
-        if (!this.avoidable) {
+    private createAvoidableReport() {
+        if (this.hasMessage) {
             return {
                 valid: false,
-                name: this.messageReceivedTestName,
-                description: `Subscription has not received its message in a valid time`
+                name: this.subscriptionAvoidedTestName,
+                description: `Avoidable subscription should not receive a message`
             };
         } else {
             return {
                 valid: true,
-                name: this.messageReceivedTestName,
+                name: this.subscriptionAvoidedTestName,
                 description: `Avoidable subscription has not received a message`
             };
         }
     }
-
-    private createTimeoutReport(): TestModel {
-        const name = `No time out`;
-        if (!this.avoidable) {
-            return {
-                valid: false,
-                name: name,
-                description: `Subscription has timed out`
-            };
-        } else {
-            return {
-                valid: true,
-                name: name,
-                description: `Avoidable subscription has not received a message`
-            };
-        }
-    }
-
 }

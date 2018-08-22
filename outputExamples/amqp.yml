@@ -1,12 +1,12 @@
 type: runnable
-valid: false
+valid: true
 tests: []
 name: 'amqp test description'
 id: amqp
 runnables:
   -
     type: requisition
-    valid: false
+    valid: true
     tests:
       -
         valid: true
@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 259
-      startTime: '2018-08-22T19:59:39.167Z'
-      endTime: '2018-08-22T19:59:39.426Z'
+      totalTime: 305
+      startTime: '2018-08-22T21:18:32.814Z'
+      endTime: '2018-08-22T21:18:33.119Z'
       timeout: 5000
     subscriptions:
       -
@@ -44,17 +44,13 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-22T19:59:39.368Z'
+        connectionTime: '2018-08-22T21:18:33.064Z'
     startEvent:
       publisher:
         name: 'publisher description'
-        valid: false
+        valid: true
         type: amqp
         tests:
-          -
-            name: 'Valid ''script'' code'
-            valid: false
-            description: 'Error executing ''script'' code: ''ReferenceError: error is not defined'''
           -
             name: 'Assertion #0'
             valid: true
@@ -63,4 +59,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-22T19:59:39.424Z'
+        publishTime: '2018-08-22T21:18:33.117Z'

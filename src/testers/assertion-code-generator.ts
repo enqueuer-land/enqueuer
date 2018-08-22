@@ -20,7 +20,7 @@ export class AssertionCodeGenerator {
             return `;${this.testerInstanceName}.addTest({
                         errorDescription: \`${err}'\`,
                         valid: false,
-                        label: 'Required field not found'
+                        label: 'Required field \'name\' found'
                     });`;
         }
 
@@ -33,7 +33,7 @@ export class AssertionCodeGenerator {
             return `;${this.testerInstanceName}.addTest({
                     errorDescription: \`Tester class does not work with '${argumentsLength}' arguments function'\`,
                     valid: false,
-                    label: 'Unknown assertion method'
+                    label: 'Assertion identified'
                 });`;
         }
     }
@@ -48,14 +48,14 @@ export class AssertionCodeGenerator {
                             ${this.testerInstanceName}.addTest({
                                 errorDescription: \`Error executing assertion: '\${err}'\`,
                                 valid: false,
-                                label: 'Unknown assertion method'
+                                label: 'Assertion code valid'
                             });
                         }`;
         }
         return `;${this.testerInstanceName}.addTest({
                     errorDescription: \`Tester class has no one argument method called '${assertionMethodName}'\`,
                     valid: false,
-                    label: 'Unknown assertion method'
+                    label: 'Known assertion method'
                 });`;
     }
 
@@ -67,7 +67,7 @@ export class AssertionCodeGenerator {
             return `;${this.testerInstanceName}.addTest({
                     errorDescription: \`${err}'\`,
                     valid: false,
-                    label: 'Required field not found'
+                    label: 'Required 'expect' not found'
                 });`;
         }
         const assertionMethodName = Object.getOwnPropertyNames(assertion)[0];
@@ -79,14 +79,14 @@ export class AssertionCodeGenerator {
                             ${this.testerInstanceName}.addTest({
                                 errorDescription: \`Error executing assertion: '\${err}'\`,
                                 valid: false,
-                                label: 'Unknown assertion method'
+                                label: 'Assertion code valid'
                             });
                         }`;
         }
         return `;${this.testerInstanceName}.addTest({
                     errorDescription: \`Tester class has no two arguments method called '${assertionMethodName}'\`,
                     valid: false,
-                    label: 'Unknown assertion method'
+                    label: 'Known assertion method'
                 });`;
     }
 

@@ -27,7 +27,6 @@ export abstract class EventExecutor {
     protected execute(): Test[] {
         Logger.trace(`Executing event function`);
         const code = this.addAssertions();
-        console.log(code);
         return this.scriptRunner(code);
     }
 

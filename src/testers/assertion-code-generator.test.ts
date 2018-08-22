@@ -9,7 +9,7 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe(";tester.addTest({\n" +
             "                    errorDescription: `Tester class does not work with '0' arguments function'`,\n" +
             "                    valid: false,\n" +
-            "                    label: 'Unknown assertion method'\n" +
+            "                    label: 'Assertion identified'\n" +
             "                });");
     });
 
@@ -20,7 +20,7 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe(";tester.addTest({\n" +
             "                    errorDescription: `Tester class does not work with '4' arguments function'`,\n" +
             "                    valid: false,\n" +
-            "                    label: 'Unknown assertion method'\n" +
+            "                    label: 'Assertion identified'\n" +
             "                });");
     });
 
@@ -31,7 +31,7 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe(";tester.addTest({\n" +
             "                    errorDescription: `Tester class has no one argument method called 'unknown'`,\n" +
             "                    valid: false,\n" +
-            "                    label: 'Unknown assertion method'\n" +
+            "                    label: 'Known assertion method'\n" +
             "                });");
     });
 
@@ -42,7 +42,7 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe(";tester.addTest({\n" +
             "                    errorDescription: `Tester class has no two arguments method called 'third'`,\n" +
             "                    valid: false,\n" +
-            "                    label: 'Unknown assertion method'\n" +
+            "                    label: 'Known assertion method'\n" +
             "                });");
     });
 
@@ -53,7 +53,7 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe(";tester.addTest({\n" +
             "                    errorDescription: `Error: Test has to have a 'expect' field'`,\n" +
             "                    valid: false,\n" +
-            "                    label: 'Required field not found'\n" +
+            "                    label: 'Required 'expect' not found'\n" +
             "                });");
     });
 
@@ -67,9 +67,10 @@ describe('AssertionCodeGenerator', () => {
             "                            tester.addTest({\n" +
             "                                errorDescription: `Error executing assertion: '${err}'`,\n" +
             "                                valid: false,\n" +
-            "                                label: 'Unknown assertion method'\n" +
+            "                                label: 'Assertion code valid'\n" +
             "                            });\n" +
-            "                        }");    });
+            "                        }");
+    });
 
     it('Should generate 1 arguments function', () => {
         const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
@@ -81,7 +82,7 @@ describe('AssertionCodeGenerator', () => {
             "                            tester.addTest({\n" +
             "                                errorDescription: `Error executing assertion: '${err}'`,\n" +
             "                                valid: false,\n" +
-            "                                label: 'Unknown assertion method'\n" +
+            "                                label: 'Assertion code valid'\n" +
             "                            });\n" +
             "                        }");
     });

@@ -35,15 +35,15 @@ runnables:
     routingKey: enqueuer.integration.test.routing.#
     onMessageReceived:
       assertions:
-        - name: Payload
-          expect: payload.how.about
-          toBeEqualTo: `a new object?`
-        - name: Header
-          expect: headers.key
-          toBeEqualTo: `value`
-        - name: Other Header Value
-          expect: headers.otherKey
-          toBeEqualTo: `otherValue`
-        - name: Routing Key
-          expect: deliveryInfo.routingKey
-          toBeEqualTo: `enqueuer.integration.test.routing.key`
+      - name: Payload
+        expect: payload.how.about
+        toBeEqualTo: `a new object?`
+      - name: Header
+        expect: headers.key
+        toBeEqualTo: `value`
+      - name: Other Header Value
+        expect: headers.otherKey
+        toBeEqualTo: `otherValue`
+      - name: Routing Key
+        expect: deliveryInfo.routingKey
+        toBeEqualTo: `enqueuer.integration.test.routing.key`
