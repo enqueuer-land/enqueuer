@@ -80,10 +80,10 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
     executeOnMessageReceivedFunction() {
         logger_1.Logger.trace(`Executing publisher onMessageReceivedResponse`);
-        this.report.tests = this.report.tests.concat(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor('publisher', this.publisher).execute());
+        this.report.tests = this.report.tests.concat(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor('publisher', this.publisher).trigger());
     }
     executeOnInitFunction(publisher) {
-        this.report.tests = this.report.tests.concat(new on_init_event_executor_1.OnInitEventExecutor('publisher', publisher).execute());
+        this.report.tests = this.report.tests.concat(new on_init_event_executor_1.OnInitEventExecutor('publisher', publisher).trigger());
     }
 };
 StartEventPublisherReporter = __decorate([

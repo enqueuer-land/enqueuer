@@ -31,8 +31,6 @@ Config option to chose parallel/serial executions
 Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
-Yaml files explaining input values
-Parallel config property
 store array event property
 
 Summary to look like this.

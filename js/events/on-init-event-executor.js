@@ -1,27 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
-const event_asserter_1 = require("./event-asserter");
+const event_executor_1 = require("./event-executor");
 //TODO test it
-class OnInitEventExecutor {
+class OnInitEventExecutor extends event_executor_1.EventExecutor {
     constructor(name, initializable) {
+        super(initializable.onInit);
         this.initializable = initializable;
-        this.name = name;
+        this.addArgument(name, this.initializable);
     }
-    execute() {
+    trigger() {
         logger_1.Logger.trace(`Executing onInit`);
         if (!this.initializable.onInit) {
             logger_1.Logger.trace(`No onOnInit to be played here`);
             return [];
         }
-        return this.buildEventAsserter().assert().map(test => {
+        return this.execute().map(test => {
             return { name: test.label, valid: test.valid, description: test.errorDescription };
         });
-    }
-    buildEventAsserter() {
-        const eventTestExecutor = new event_asserter_1.EventAsserter(this.initializable.onInit);
-        eventTestExecutor.addArgument(this.name, this.initializable);
-        return eventTestExecutor;
     }
 }
 exports.OnInitEventExecutor = OnInitEventExecutor;

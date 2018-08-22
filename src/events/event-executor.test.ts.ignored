@@ -1,6 +1,6 @@
 import {ScriptExecutor} from '../testers/script-executor';
 import {Tester} from '../testers/tester';
-import {EventAsserter} from './event-asserter';
+import {EventExecutor} from './event-executor';
 import {AssertionCodeGenerator} from '../testers/assertion-code-generator';
 
 let addArgumentMock = jest.fn();
@@ -22,7 +22,7 @@ AssertionCodeGenerator.mockImplementation(() => {
     };
 });
 
-describe('EventAsserter', () => {
+describe('EventExecutor', () => {
 
     it('Should create assertions', () => {
         const assertions = [
@@ -39,9 +39,9 @@ describe('EventAsserter', () => {
                 unamed: 'x'
             }
         ];
-        const eventTestExecutor: EventAsserter = new EventAsserter({assertions: assertions});
+        const eventTestExecutor: EventExecutor = new EventExecutor({assertions: assertions});
 
-        eventTestExecutor.assert();
+        eventTestExecutor.trigger();
 
         expect(generateMock).toHaveBeenCalledTimes(3);
         expect(generateMock).toHaveBeenNthCalledWith(1, {"expected": 2, "isEqualTo": 2, "name": "equalName"});
@@ -50,7 +50,7 @@ describe('EventAsserter', () => {
     });
 
     it('Should add argument and pass it to the script executor', () => {
-        const eventTestExecutor: EventAsserter = new EventAsserter();
+        const eventTestExecutor: EventExecutor = new EventExecutor();
         const arg = {value: 2};
 
         eventTestExecutor.addArgument('name', arg);
@@ -60,7 +60,7 @@ describe('EventAsserter', () => {
     });
 
     it('Should add store and pass it to the script executor', () => {
-        const eventTestExecutor: EventAsserter = new EventAsserter();
+        const eventTestExecutor: EventExecutor = new EventExecutor();
 
         eventTestExecutor.assert();
 
@@ -68,7 +68,7 @@ describe('EventAsserter', () => {
     });
 
     it('Should add tester and pass it to the script executor', () => {
-        const eventTestExecutor: EventAsserter = new EventAsserter();
+        const eventTestExecutor: EventExecutor = new EventExecutor();
 
         eventTestExecutor.assert();
 
@@ -76,7 +76,7 @@ describe('EventAsserter', () => {
     });
 
     it('Should catch function error', () => {
-        const eventTestExecutor: EventAsserter = new EventAsserter();
+        const eventTestExecutor: EventExecutor = new EventExecutor();
         executeMock = jest.fn(() => {throw new Error('pp')});
 
         const tests = eventTestExecutor.assert();

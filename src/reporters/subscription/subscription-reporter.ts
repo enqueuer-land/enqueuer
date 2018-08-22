@@ -159,14 +159,14 @@ export class SubscriptionReporter {
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         Logger.info(`Executing subscription::onInit hook function`);
-        this.report.tests = this.report.tests.concat(new OnInitEventExecutor('subscription', subscriptionAttributes).execute());
+        this.report.tests = this.report.tests.concat(new OnInitEventExecutor('subscription', subscriptionAttributes).trigger());
     }
 
     private executeOnMessageReceivedFunction() {
         Logger.trace(`Executing publisher onMessageReceivedResponse`);
         Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-        this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('subscription', this.subscription).execute());
+        this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('subscription', this.subscription).trigger());
     }
 
     private handleKillSignal = (signal: Signals): void => {

@@ -113,7 +113,7 @@ export class RequisitionReporter {
 
     private executeOnInitFunction(requisitionAttributes: RequisitionModel) {
         Logger.info(`Executing requisition::onInit hook function`);
-        this.reportGenerator.addTests(new OnInitEventExecutor('requisition', requisitionAttributes).execute());
+        this.reportGenerator.addTests(new OnInitEventExecutor('requisition', requisitionAttributes).trigger());
     }
 
 }
