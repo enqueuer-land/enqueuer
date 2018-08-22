@@ -1,28 +1,32 @@
 import {Logger} from '../loggers/logger';
-import {EventTestExecutor} from './event-test-executor';
-import {Test} from '../testers/test';
+import {EventAsserter} from './event-asserter';
 import {Initializable} from './initializable';
 import {EventExecutor} from './event-executor';
+import {TestModel} from '../models/outputs/test-model';
 
 export class OnInitEventExecutor implements EventExecutor {
-    private owner: Initializable;
+    private initializable: Initializable;
+    private name: string;
 
-    constructor(owner: Initializable) {
-        this.owner = owner;
+    constructor(name: string, initializable: Initializable) {
+        this.initializable = initializable;
+        this.name = name;
     }
 
-    public execute(): Test[] {
+    public execute(): TestModel[] {
         Logger.trace(`Executing onInit`);
-        if (!this.owner.onInit) {
+        if (!this.initializable.onInit) {
             Logger.trace(`No onOnInit to be played here`);
             return [];
         }
-        return this.buildEventTestExecutor().execute();
+        return this.buildEventAsserter().assert().map(test => {
+            return {name: test.label, valid: test.valid, description: test.errorDescription};
+        });
     }
 
-    private buildEventTestExecutor() {
-        const eventTestExecutor = new EventTestExecutor(this.owner.onInit);
-        eventTestExecutor.addArgument(this.owner.name, this.owner.value);
+    private buildEventAsserter() {
+        const eventTestExecutor = new EventAsserter(this.initializable.onInit);
+        eventTestExecutor.addArgument(this.name, this.initializable);
         return eventTestExecutor;
     }
 }

@@ -1,6 +1,6 @@
 import {ScriptExecutor} from '../testers/script-executor';
 import {Tester} from '../testers/tester';
-import {EventTestExecutor} from './event-test-executor';
+import {EventAsserter} from './event-asserter';
 import {AssertionCodeGenerator} from '../testers/assertion-code-generator';
 
 let addArgumentMock = jest.fn();
@@ -22,7 +22,7 @@ AssertionCodeGenerator.mockImplementation(() => {
     };
 });
 
-describe('EventTestExecutor', () => {
+describe('EventAsserter', () => {
 
     it('Should create assertions', () => {
         const assertions = [
@@ -39,9 +39,9 @@ describe('EventTestExecutor', () => {
                 unamed: 'x'
             }
         ];
-        const eventTestExecutor: EventTestExecutor = new EventTestExecutor({assertions: assertions});
+        const eventTestExecutor: EventAsserter = new EventAsserter({assertions: assertions});
 
-        eventTestExecutor.execute();
+        eventTestExecutor.assert();
 
         expect(generateMock).toHaveBeenCalledTimes(3);
         expect(generateMock).toHaveBeenNthCalledWith(1, {"expected": 2, "isEqualTo": 2, "name": "equalName"});
@@ -50,36 +50,36 @@ describe('EventTestExecutor', () => {
     });
 
     it('Should add argument and pass it to the script executor', () => {
-        const eventTestExecutor: EventTestExecutor = new EventTestExecutor();
+        const eventTestExecutor: EventAsserter = new EventAsserter();
         const arg = {value: 2};
 
         eventTestExecutor.addArgument('name', arg);
-        eventTestExecutor.execute();
+        eventTestExecutor.assert();
 
         expect(addArgumentMock).toHaveBeenCalledWith('name', arg);
     });
 
     it('Should add store and pass it to the script executor', () => {
-        const eventTestExecutor: EventTestExecutor = new EventTestExecutor();
+        const eventTestExecutor: EventAsserter = new EventAsserter();
 
-        eventTestExecutor.execute();
+        eventTestExecutor.assert();
 
         expect(addArgumentMock).toHaveBeenCalledWith('store', {});
     });
 
     it('Should add tester and pass it to the script executor', () => {
-        const eventTestExecutor: EventTestExecutor = new EventTestExecutor();
+        const eventTestExecutor: EventAsserter = new EventAsserter();
 
-        eventTestExecutor.execute();
+        eventTestExecutor.assert();
 
         expect(addArgumentMock).toHaveBeenCalledWith('tester', new Tester());
     });
 
     it('Should catch function error', () => {
-        const eventTestExecutor: EventTestExecutor = new EventTestExecutor();
+        const eventTestExecutor: EventAsserter = new EventAsserter();
         executeMock = jest.fn(() => {throw new Error('pp')});
 
-        const tests = eventTestExecutor.execute();
+        const tests = eventTestExecutor.assert();
 
         expect(tests.length).toBe(1);
         expect(JSON.stringify(tests[0])).toBe(`{\"valid\":false,\"label\":\"Script code is valid\",\"errorDescription\":\"Error: pp\"}`);

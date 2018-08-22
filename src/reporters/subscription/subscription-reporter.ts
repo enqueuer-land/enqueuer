@@ -8,7 +8,6 @@ import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import {TestModel} from '../../models/outputs/test-model';
-import {EventExecutor} from '../../events/event-executor';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import Signals = NodeJS.Signals;
@@ -184,34 +183,14 @@ export class SubscriptionReporter {
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         Logger.info(`Executing subscription::onInit hook function`);
-        const initializable = {
-            onInit: subscriptionAttributes.onInit,
-            name: 'subscription',
-            value: subscriptionAttributes
-        };
-        this.executeHookMethod(new OnInitEventExecutor(initializable));
+        this.report.tests = this.report.tests.concat(new OnInitEventExecutor('subscription', subscriptionAttributes).execute());
     }
 
     private executeOnMessageReceivedFunction() {
         Logger.trace(`Executing publisher onMessageReceivedResponse`);
         Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-
-        const receiver = {
-            onMessageReceived: this.subscription.onMessageReceived,
-            messageReceived: this.subscription.messageReceived,
-            name: 'subscription',
-            value: this.subscription
-        };
-        this.report.messageReceivedTime = new DateController().toString();
-        this.executeHookMethod(new OnMessageReceivedEventExecutor(receiver));
-    }
-
-    private executeHookMethod(eventExecutor: EventExecutor) {
-        const tests = eventExecutor.execute();
-        this.report.tests = this.report.tests.concat(tests.map(test => {
-            return {name: test.label, valid: test.valid, description: test.errorDescription};
-        }));
+        this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('subscription', this.subscription).execute());
     }
 
     private handleKillSignal = (signal: Signals): void => {

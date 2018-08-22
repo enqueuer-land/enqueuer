@@ -1,28 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
-const event_test_executor_1 = require("./event-test-executor");
+const event_asserter_1 = require("./event-asserter");
 class OnMessageReceivedEventExecutor {
-    constructor(messageReceiver) {
-        this.owner = messageReceiver;
+    constructor(name, messageReceiver) {
+        this.name = name;
+        this.messageReceiver = messageReceiver;
     }
     execute() {
         logger_1.Logger.trace(`Executing on message received`);
-        if (!this.owner.onMessageReceived || !this.owner.messageReceived) {
+        if (!this.messageReceiver.onMessageReceived || !this.messageReceiver.messageReceived) {
             logger_1.Logger.trace(`No onMessageReceived to be played here`);
             return [];
         }
-        return this.buildEventTestExecutor().execute();
+        return this.buildEventAsserter().assert().map(test => {
+            return { name: test.label, valid: test.valid, description: test.errorDescription };
+        });
     }
-    buildEventTestExecutor() {
-        const eventTestExecutor = new event_test_executor_1.EventTestExecutor(this.owner.onMessageReceived);
-        if (typeof (this.owner.messageReceived) == 'object' && !Buffer.isBuffer(this.owner.messageReceived)) {
-            Object.keys(this.owner.messageReceived).forEach((key) => {
-                eventTestExecutor.addArgument(key, this.owner.messageReceived[key]);
+    buildEventAsserter() {
+        const eventTestExecutor = new event_asserter_1.EventAsserter(this.messageReceiver.onMessageReceived);
+        if (typeof (this.messageReceiver.messageReceived) == 'object' && !Buffer.isBuffer(this.messageReceiver.messageReceived)) {
+            Object.keys(this.messageReceiver.messageReceived).forEach((key) => {
+                eventTestExecutor.addArgument(key, this.messageReceiver.messageReceived[key]);
             });
         }
-        eventTestExecutor.addArgument('message', this.owner.messageReceived);
-        eventTestExecutor.addArgument(this.owner.name, this.owner.value);
+        eventTestExecutor.addArgument('message', this.messageReceiver.messageReceived);
+        eventTestExecutor.addArgument(this.name, this.messageReceiver);
         return eventTestExecutor;
     }
 }

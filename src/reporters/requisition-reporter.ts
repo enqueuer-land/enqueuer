@@ -114,16 +114,7 @@ export class RequisitionReporter {
 
     private executeOnInitFunction(requisitionAttributes: RequisitionModel) {
         Logger.info(`Executing requisition::onInit hook function`);
-        const initializable = {
-            onInit: requisitionAttributes.onInit,
-            name: 'requisition',
-            value: requisitionAttributes
-        };
-        const eventExecutor = new OnInitEventExecutor(initializable);
-        const tests = eventExecutor.execute();
-        this.reportGenerator.addTests(tests.map(test => {
-            return {name: test.label, valid: test.valid, description: test.errorDescription};
-        }));
+        this.reportGenerator.addTests(new OnInitEventExecutor('requisition', requisitionAttributes).execute());
     }
 
 }

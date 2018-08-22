@@ -93,16 +93,7 @@ class RequisitionReporter {
     }
     executeOnInitFunction(requisitionAttributes) {
         logger_1.Logger.info(`Executing requisition::onInit hook function`);
-        const initializable = {
-            onInit: requisitionAttributes.onInit,
-            name: 'requisition',
-            value: requisitionAttributes
-        };
-        const eventExecutor = new on_init_event_executor_1.OnInitEventExecutor(initializable);
-        const tests = eventExecutor.execute();
-        this.reportGenerator.addTests(tests.map(test => {
-            return { name: test.label, valid: test.valid, description: test.errorDescription };
-        }));
+        this.reportGenerator.addTests(new on_init_event_executor_1.OnInitEventExecutor('requisition', requisitionAttributes).execute());
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

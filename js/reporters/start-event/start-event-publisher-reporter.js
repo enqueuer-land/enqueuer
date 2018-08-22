@@ -80,27 +80,10 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
     executeOnMessageReceivedFunction() {
         logger_1.Logger.trace(`Executing publisher onMessageReceivedResponse`);
-        const receiver = {
-            onMessageReceived: this.publisher.onMessageReceived,
-            messageReceived: this.publisher.messageReceived,
-            name: 'publisher',
-            value: this.publisher
-        };
-        this.executeHookMethod(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor(receiver));
+        this.report.tests = this.report.tests.concat(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor('publisher', this.publisher).execute());
     }
     executeOnInitFunction(publisher) {
-        const initializable = {
-            onInit: publisher.onInit,
-            name: 'publisher',
-            value: publisher
-        };
-        this.executeHookMethod(new on_init_event_executor_1.OnInitEventExecutor(initializable));
-    }
-    executeHookMethod(eventExecutor) {
-        const tests = eventExecutor.execute();
-        this.report.tests = this.report.tests.concat(tests.map(test => {
-            return { name: test.label, valid: test.valid, description: test.errorDescription };
-        }));
+        this.report.tests = this.report.tests.concat(new on_init_event_executor_1.OnInitEventExecutor('publisher', publisher).execute());
     }
 };
 StartEventPublisherReporter = __decorate([

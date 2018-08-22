@@ -5,7 +5,7 @@ const assertion_code_generator_1 = require("../testers/assertion-code-generator"
 const script_executor_1 = require("../testers/script-executor");
 const store_1 = require("../testers/store");
 const logger_1 = require("../loggers/logger");
-class EventTestExecutor {
+class EventAsserter {
     constructor(event) {
         this.testerInstanceName = 'tester';
         this.arguments = [];
@@ -29,7 +29,7 @@ class EventTestExecutor {
     addArgument(name, value) {
         this.arguments.push({ name: name, value: value });
     }
-    execute() {
+    assert() {
         logger_1.Logger.trace(`Executing event function`);
         let result = [];
         try {
@@ -72,4 +72,4 @@ class EventTestExecutor {
         return tester.getReport();
     }
 }
-exports.EventTestExecutor = EventTestExecutor;
+exports.EventAsserter = EventAsserter;

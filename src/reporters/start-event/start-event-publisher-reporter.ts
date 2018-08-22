@@ -9,7 +9,6 @@ import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
-import {EventExecutor} from '../../events/event-executor';
 
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
@@ -74,29 +73,11 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
     private executeOnMessageReceivedFunction() {
         Logger.trace(`Executing publisher onMessageReceivedResponse`);
-        const receiver = {
-            onMessageReceived: this.publisher.onMessageReceived,
-            messageReceived: this.publisher.messageReceived,
-            name: 'publisher',
-            value: this.publisher
-        };
-        this.executeHookMethod(new OnMessageReceivedEventExecutor(receiver));
+        this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('publisher', this.publisher).execute());
     }
 
     private executeOnInitFunction(publisher: input.PublisherModel) {
-        const initializable = {
-            onInit: publisher.onInit,
-            name: 'publisher',
-            value: publisher
-        };
-        this.executeHookMethod(new OnInitEventExecutor(initializable));
-    }
-
-    private executeHookMethod(eventExecutor: EventExecutor) {
-        const tests = eventExecutor.execute();
-        this.report.tests = this.report.tests.concat(tests.map(test => {
-            return {name: test.label, valid: test.valid, description: test.errorDescription};
-        }));
+        this.report.tests = this.report.tests.concat(new OnInitEventExecutor('publisher', publisher).execute());
     }
 
 }

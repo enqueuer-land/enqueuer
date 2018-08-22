@@ -7,7 +7,7 @@ import {ScriptExecutor} from '../testers/script-executor';
 import {Store} from '../testers/store';
 import {Logger} from '../loggers/logger';
 
-export class EventTestExecutor {
+export class EventAsserter {
     private testerInstanceName = 'tester';
 
     private arguments: {name: string, value: any}[] = [];
@@ -36,7 +36,7 @@ export class EventTestExecutor {
         this.arguments.push({name: name, value: value});
     }
 
-    public execute(): Test[] {
+    public assert(): Test[] {
         Logger.trace(`Executing event function`);
         let result: Test[] = [];
 

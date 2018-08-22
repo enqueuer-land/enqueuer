@@ -1,7 +1,6 @@
 import {Event} from './event';
-import {EventOwner} from './event-owner';
 
-export interface MessageReceiver extends EventOwner {
+export interface MessageReceiver {
     messageReceived?: any;
     onMessageReceived?: Event;
 }

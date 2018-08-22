@@ -181,31 +181,13 @@ class SubscriptionReporter {
     }
     executeOnInitFunction(subscriptionAttributes) {
         logger_1.Logger.info(`Executing subscription::onInit hook function`);
-        const initializable = {
-            onInit: subscriptionAttributes.onInit,
-            name: 'subscription',
-            value: subscriptionAttributes
-        };
-        this.executeHookMethod(new on_init_event_executor_1.OnInitEventExecutor(initializable));
+        this.report.tests = this.report.tests.concat(new on_init_event_executor_1.OnInitEventExecutor('subscription', subscriptionAttributes).execute());
     }
     executeOnMessageReceivedFunction() {
         logger_1.Logger.trace(`Executing publisher onMessageReceivedResponse`);
         logger_1.Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-        const receiver = {
-            onMessageReceived: this.subscription.onMessageReceived,
-            messageReceived: this.subscription.messageReceived,
-            name: 'subscription',
-            value: this.subscription
-        };
-        this.report.messageReceivedTime = new date_controller_1.DateController().toString();
-        this.executeHookMethod(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor(receiver));
-    }
-    executeHookMethod(eventExecutor) {
-        const tests = eventExecutor.execute();
-        this.report.tests = this.report.tests.concat(tests.map(test => {
-            return { name: test.label, valid: test.valid, description: test.errorDescription };
-        }));
+        this.report.tests = this.report.tests.concat(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor('subscription', this.subscription).execute());
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;

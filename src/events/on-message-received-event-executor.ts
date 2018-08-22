@@ -1,34 +1,38 @@
 import {MessageReceiver} from './message-receiver';
 import {Logger} from '../loggers/logger';
-import {EventTestExecutor} from './event-test-executor';
-import {Test} from '../testers/test';
+import {EventAsserter} from './event-asserter';
 import {EventExecutor} from './event-executor';
+import {TestModel} from '../models/outputs/test-model';
 
 export class OnMessageReceivedEventExecutor implements EventExecutor {
-    private owner: MessageReceiver;
+    private messageReceiver: MessageReceiver;
+    private name: string;
 
-    constructor(messageReceiver: MessageReceiver) {
-        this.owner = messageReceiver;
+    constructor(name: string, messageReceiver: MessageReceiver) {
+        this.name = name;
+        this.messageReceiver = messageReceiver;
     }
 
-    public execute(): Test[] {
+    public execute(): TestModel[] {
         Logger.trace(`Executing on message received`);
-        if (!this.owner.onMessageReceived || !this.owner.messageReceived) {
+        if (!this.messageReceiver.onMessageReceived || !this.messageReceiver.messageReceived) {
             Logger.trace(`No onMessageReceived to be played here`);
             return [];
         }
-        return this.buildEventTestExecutor().execute();
+        return this.buildEventAsserter().assert().map(test => {
+            return {name: test.label, valid: test.valid, description: test.errorDescription};
+        });
     }
 
-    private buildEventTestExecutor() {
-        const eventTestExecutor = new EventTestExecutor(this.owner.onMessageReceived);
-        if (typeof(this.owner.messageReceived) == 'object' && !Buffer.isBuffer(this.owner.messageReceived)) {
-            Object.keys(this.owner.messageReceived).forEach((key) => {
-                eventTestExecutor.addArgument(key, this.owner.messageReceived[key]);
+    private buildEventAsserter() {
+        const eventTestExecutor = new EventAsserter(this.messageReceiver.onMessageReceived);
+        if (typeof(this.messageReceiver.messageReceived) == 'object' && !Buffer.isBuffer(this.messageReceiver.messageReceived)) {
+            Object.keys(this.messageReceiver.messageReceived).forEach((key) => {
+                eventTestExecutor.addArgument(key, this.messageReceiver.messageReceived[key]);
             });
         }
-        eventTestExecutor.addArgument('message', this.owner.messageReceived);
-        eventTestExecutor.addArgument(this.owner.name, this.owner.value);
+        eventTestExecutor.addArgument('message', this.messageReceiver.messageReceived);
+        eventTestExecutor.addArgument(this.name, this.messageReceiver);
         return eventTestExecutor;
     }
 }

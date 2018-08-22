@@ -1,5 +1,5 @@
-import {Test} from '../testers/test';
+import {TestModel} from '../models/outputs/test-model';
 
 export interface EventExecutor {
-    execute(): Test[];
+    execute(): TestModel[];
 }
