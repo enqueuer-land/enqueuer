@@ -6,7 +6,7 @@ const start_event_reporter_1 = require("./start-event/start-event-reporter");
 const timeout_1 = require("../timers/timeout");
 const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptions-reporter");
 const conditional_injector_1 = require("conditional-injector");
-const event_test_executor_1 = require("../events/event-test-executor");
+const on_init_event_executor_1 = require("../events/on-init-event-executor");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.startEventDoneItsJob = false;
@@ -92,15 +92,17 @@ class RequisitionReporter {
         this.onFinishCallback();
     }
     executeOnInitFunction(requisitionAttributes) {
-        if (requisitionAttributes.onInit) {
-            logger_1.Logger.info(`Executing requisition::onInit hook function`);
-            const eventTestExecutor = new event_test_executor_1.EventTestExecutor(requisitionAttributes.onInit);
-            eventTestExecutor.addArgument('requisition', requisitionAttributes);
-            const tests = eventTestExecutor.execute();
-            this.reportGenerator.addTests(tests.map(test => {
-                return { name: test.label, valid: test.valid, description: test.errorDescription };
-            }));
-        }
+        logger_1.Logger.info(`Executing requisition::onInit hook function`);
+        const initializable = {
+            onInit: requisitionAttributes.onInit,
+            name: 'requisition',
+            value: requisitionAttributes
+        };
+        const eventExecutor = new on_init_event_executor_1.OnInitEventExecutor(initializable);
+        const tests = eventExecutor.execute();
+        this.reportGenerator.addTests(tests.map(test => {
+            return { name: test.label, valid: test.valid, description: test.errorDescription };
+        }));
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

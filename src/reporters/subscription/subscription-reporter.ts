@@ -4,13 +4,14 @@ import {Subscription} from '../../subscriptions/subscription';
 import {Timeout} from '../../timers/timeout';
 import {Container} from 'conditional-injector';
 import * as input from '../../models/inputs/subscription-model';
+import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {checkValidation} from '../../models/outputs/report-model';
-import {ScriptExecutor} from '../../testers/script-executor';
-import Signals = NodeJS.Signals;
 import {TestModel} from '../../models/outputs/test-model';
-import {SubscriptionModel} from '../../models/inputs/subscription-model';
-import {EventTestExecutor} from '../../events/event-test-executor';
+import {EventExecutor} from '../../events/event-executor';
+import {OnInitEventExecutor} from '../../events/on-init-event-executor';
+import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
+import Signals = NodeJS.Signals;
 
 export class SubscriptionReporter {
 
@@ -182,42 +183,35 @@ export class SubscriptionReporter {
     }
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
-        if (subscriptionAttributes.onInit) {
-            Logger.info(`Executing subscription::onInit hook function`);
-            const eventTestExecutor = new EventTestExecutor(subscriptionAttributes.onInit);
-            eventTestExecutor.addArgument('subscription', subscriptionAttributes);
-            this.executeHookFunction(eventTestExecutor);
-        }
+        Logger.info(`Executing subscription::onInit hook function`);
+        const initializable = {
+            onInit: subscriptionAttributes.onInit,
+            name: 'subscription',
+            value: subscriptionAttributes
+        };
+        this.executeHookMethod(new OnInitEventExecutor(initializable));
     }
 
     private executeOnMessageReceivedFunction() {
+        Logger.trace(`Executing publisher onMessageReceivedResponse`);
         Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-        const onMessageReceived = this.subscription.onMessageReceived;
-        const message = this.subscription.messageReceived;
-        if (!onMessageReceived) {
-            Logger.trace(`${this.subscription.name} has no onMessageReceived to be executed`);
-            return;
-        }
-        Logger.trace(`${this.subscription.name} executing onMessageReceived`);
-        const eventTestExecutor = new EventTestExecutor(onMessageReceived);
-        eventTestExecutor.addArgument('subscription', this.subscription);
-        eventTestExecutor.addArgument('message', message);
-        if (typeof(message) == 'object' && !Buffer.isBuffer(message)) {
-            Object.keys(message).forEach((key) => {
-                eventTestExecutor.addArgument(key, message[key]);
-            });
-        }
-        this.executeHookFunction(eventTestExecutor);
+
+        const receiver = {
+            onMessageReceived: this.subscription.onMessageReceived,
+            messageReceived: this.subscription.messageReceived,
+            name: 'subscription',
+            value: this.subscription
+        };
         this.report.messageReceivedTime = new DateController().toString();
+        this.executeHookMethod(new OnMessageReceivedEventExecutor(receiver));
     }
 
-    private executeHookFunction(eventTestExecutor: EventTestExecutor) {
-        const tests = eventTestExecutor.execute();
-        this.report.tests = tests.map(test => {
+    private executeHookMethod(eventExecutor: EventExecutor) {
+        const tests = eventExecutor.execute();
+        this.report.tests = this.report.tests.concat(tests.map(test => {
             return {name: test.label, valid: test.valid, description: test.errorDescription};
-        })
-            .concat(this.report.tests);
+        }));
     }
 
     private handleKillSignal = (signal: Signals): void => {

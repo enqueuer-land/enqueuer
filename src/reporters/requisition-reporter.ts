@@ -8,7 +8,7 @@ import {Timeout} from '../timers/timeout';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {Container} from 'conditional-injector';
 import {TestModel} from '../models/outputs/test-model';
-import {EventTestExecutor} from '../events/event-test-executor';
+import {OnInitEventExecutor} from '../events/on-init-event-executor';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -113,15 +113,17 @@ export class RequisitionReporter {
     }
 
     private executeOnInitFunction(requisitionAttributes: RequisitionModel) {
-        if (requisitionAttributes.onInit) {
-            Logger.info(`Executing requisition::onInit hook function`);
-            const eventTestExecutor = new EventTestExecutor(requisitionAttributes.onInit);
-            eventTestExecutor.addArgument('requisition', requisitionAttributes);
-
-            const tests = eventTestExecutor.execute();
-            this.reportGenerator.addTests(tests.map(test => {
-                return {name: test.label, valid: test.valid, description: test.errorDescription};
-            }));
-        }
+        Logger.info(`Executing requisition::onInit hook function`);
+        const initializable = {
+            onInit: requisitionAttributes.onInit,
+            name: 'requisition',
+            value: requisitionAttributes
+        };
+        const eventExecutor = new OnInitEventExecutor(initializable);
+        const tests = eventExecutor.execute();
+        this.reportGenerator.addTests(tests.map(test => {
+            return {name: test.label, valid: test.valid, description: test.errorDescription};
+        }));
     }
+
 }

@@ -86,6 +86,10 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         });
     }
     finishExecution() {
+        if (this.runnableFileNames.length == 0) {
+            logger_1.Logger.warning('No test file was found');
+            return false;
+        }
         logger_1.Logger.info('There is no more requisition to be ran');
         this.multiResultCreator.create();
         return this.multiResultCreator.isValid();

@@ -33,7 +33,6 @@ Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 Yaml files explaining input values
 Use glob in filenamewatcher. Rename filename watcher to filesystem watcher
-Merge every onInit && onMessageReceived functions
 
 
 Summary to look like this.

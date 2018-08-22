@@ -80,7 +80,11 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     }
 
-    private finishExecution() {
+    private finishExecution(): boolean {
+        if (this.runnableFileNames.length == 0) {
+            Logger.warning('No test file was found');
+            return false;
+        }
         Logger.info('There is no more requisition to be ran');
         this.multiResultCreator.create();
         return this.multiResultCreator.isValid();

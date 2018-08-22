@@ -23,7 +23,8 @@ const input = __importStar(require("../../models/inputs/publisher-model"));
 const logger_1 = require("../../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
-const event_test_executor_1 = require("../../events/event-test-executor");
+const on_message_received_event_executor_1 = require("../../events/on-message-received-event-executor");
+const on_init_event_executor_1 = require("../../events/on-init-event-executor");
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
@@ -78,31 +79,25 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         }
     }
     executeOnMessageReceivedFunction() {
-        const message = this.publisher.messageReceived;
-        if (!this.publisher.onMessageReceived || !message) {
-            return;
-        }
-        logger_1.Logger.trace(`Publisher received response`);
-        const eventTestExecutor = new event_test_executor_1.EventTestExecutor(this.publisher.onMessageReceived);
-        eventTestExecutor.addArgument('publisher', this.publisher);
-        eventTestExecutor.addArgument('message', message);
-        if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
-            Object.keys(message).forEach((key) => {
-                eventTestExecutor.addArgument(key, message[key]);
-            });
-        }
-        this.executeHookMethod(eventTestExecutor);
+        logger_1.Logger.trace(`Executing publisher onMessageReceivedResponse`);
+        const receiver = {
+            onMessageReceived: this.publisher.onMessageReceived,
+            messageReceived: this.publisher.messageReceived,
+            name: 'publisher',
+            value: this.publisher
+        };
+        this.executeHookMethod(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor(receiver));
     }
     executeOnInitFunction(publisher) {
-        if (publisher.onInit) {
-            logger_1.Logger.info(`Executing publisher::onInit hook function`);
-            const eventTestExecutor = new event_test_executor_1.EventTestExecutor(publisher.onInit);
-            eventTestExecutor.addArgument('publisher', publisher);
-            this.executeHookMethod(eventTestExecutor);
-        }
+        const initializable = {
+            onInit: publisher.onInit,
+            name: 'publisher',
+            value: publisher
+        };
+        this.executeHookMethod(new on_init_event_executor_1.OnInitEventExecutor(initializable));
     }
-    executeHookMethod(eventTestExecutor) {
-        const tests = eventTestExecutor.execute();
+    executeHookMethod(eventExecutor) {
+        const tests = eventExecutor.execute();
         this.report.tests = this.report.tests.concat(tests.map(test => {
             return { name: test.label, valid: test.valid, description: test.errorDescription };
         }));

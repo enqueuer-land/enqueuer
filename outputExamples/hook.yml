@@ -18,15 +18,23 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 174
-      startTime: '2018-08-22T00:32:58.664Z'
-      endTime: '2018-08-22T00:32:58.838Z'
+      totalTime: 187
+      startTime: '2018-08-22T01:45:28.624Z'
+      endTime: '2018-08-22T01:45:28.811Z'
       timeout: 1000
     subscriptions:
       -
         name: 'subscription description'
         type: tcp-server
         tests:
+          -
+            name: 'Subscription exists onInit'
+            valid: true
+            description: '''[object Object]'' is not defined'
+          -
+            name: 'Subscription name'
+            valid: true
+            description: 'Expected value to be equal to ''changed''. Received ''changed'''
           -
             name: 'Subscription exists onMessageReceived'
             valid: true
@@ -40,20 +48,12 @@ runnables:
             valid: true
             description: '''requisition::onInit -> publisher::onInit -> publisher::onInit -> publisher::onInit -> subscription::onInit -> subscription::onInit -> subscription::onInit -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived -> subscription::onMessageReceived'' does not contain ''subscription::onInit'''
           -
-            name: 'Subscription exists onInit'
-            valid: true
-            description: '''[object Object]'' is not defined'
-          -
-            name: 'Subscription name'
-            valid: true
-            description: 'Expected value to be equal to ''changed''. Received ''changed'''
-          -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message successfully'
         valid: true
-        connectionTime: '2018-08-22T00:32:58.744Z'
-        messageReceivedTime: '2018-08-22T00:32:58.809Z'
+        connectionTime: '2018-08-22T01:45:28.694Z'
+        messageReceivedTime: '2018-08-22T01:45:28.786Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -88,4 +88,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-22T00:32:58.838Z'
+        publishTime: '2018-08-22T01:45:28.811Z'

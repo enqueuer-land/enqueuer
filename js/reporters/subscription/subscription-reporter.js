@@ -14,7 +14,8 @@ const subscription_1 = require("../../subscriptions/subscription");
 const timeout_1 = require("../../timers/timeout");
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
-const event_test_executor_1 = require("../../events/event-test-executor");
+const on_init_event_executor_1 = require("../../events/on-init-event-executor");
+const on_message_received_event_executor_1 = require("../../events/on-message-received-event-executor");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -179,40 +180,32 @@ class SubscriptionReporter {
         }
     }
     executeOnInitFunction(subscriptionAttributes) {
-        if (subscriptionAttributes.onInit) {
-            logger_1.Logger.info(`Executing subscription::onInit hook function`);
-            const eventTestExecutor = new event_test_executor_1.EventTestExecutor(subscriptionAttributes.onInit);
-            eventTestExecutor.addArgument('subscription', subscriptionAttributes);
-            this.executeHookFunction(eventTestExecutor);
-        }
+        logger_1.Logger.info(`Executing subscription::onInit hook function`);
+        const initializable = {
+            onInit: subscriptionAttributes.onInit,
+            name: 'subscription',
+            value: subscriptionAttributes
+        };
+        this.executeHookMethod(new on_init_event_executor_1.OnInitEventExecutor(initializable));
     }
     executeOnMessageReceivedFunction() {
+        logger_1.Logger.trace(`Executing publisher onMessageReceivedResponse`);
         logger_1.Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-        const onMessageReceived = this.subscription.onMessageReceived;
-        const message = this.subscription.messageReceived;
-        if (!onMessageReceived) {
-            logger_1.Logger.trace(`${this.subscription.name} has no onMessageReceived to be executed`);
-            return;
-        }
-        logger_1.Logger.trace(`${this.subscription.name} executing onMessageReceived`);
-        const eventTestExecutor = new event_test_executor_1.EventTestExecutor(onMessageReceived);
-        eventTestExecutor.addArgument('subscription', this.subscription);
-        eventTestExecutor.addArgument('message', message);
-        if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
-            Object.keys(message).forEach((key) => {
-                eventTestExecutor.addArgument(key, message[key]);
-            });
-        }
-        this.executeHookFunction(eventTestExecutor);
+        const receiver = {
+            onMessageReceived: this.subscription.onMessageReceived,
+            messageReceived: this.subscription.messageReceived,
+            name: 'subscription',
+            value: this.subscription
+        };
         this.report.messageReceivedTime = new date_controller_1.DateController().toString();
+        this.executeHookMethod(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor(receiver));
     }
-    executeHookFunction(eventTestExecutor) {
-        const tests = eventTestExecutor.execute();
-        this.report.tests = tests.map(test => {
+    executeHookMethod(eventExecutor) {
+        const tests = eventExecutor.execute();
+        this.report.tests = this.report.tests.concat(tests.map(test => {
             return { name: test.label, valid: test.valid, description: test.errorDescription };
-        })
-            .concat(this.report.tests);
+        }));
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;
