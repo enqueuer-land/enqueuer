@@ -51,11 +51,17 @@ class SummaryResultCreator extends result_creator_1.ResultCreator {
     findTests(requisition, hierarchy) {
         this.inspectInvalidTests(requisition.tests, hierarchy);
         requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
-        if (requisition.startEvent.subscription) {
-            this.inspectInvalidTests(requisition.startEvent.subscription.tests, hierarchy.concat(requisition.startEvent.subscription.name));
+        const startEvent = this.detectStartEvent(requisition);
+        if (startEvent) {
+            this.inspectInvalidTests(startEvent.tests, hierarchy.concat(startEvent.name));
         }
-        if (requisition.startEvent.publisher) {
-            this.inspectInvalidTests(requisition.startEvent.publisher.tests, hierarchy.concat(requisition.startEvent.publisher.name));
+    }
+    detectStartEvent(requisition) {
+        if (requisition.startEvent.subscription) {
+            return requisition.startEvent.subscription;
+        }
+        else if (requisition.startEvent.publisher) {
+            return requisition.startEvent.publisher;
         }
     }
     inspectInvalidTests(tests, hierarchy) {
