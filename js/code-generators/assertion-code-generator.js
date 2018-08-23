@@ -13,12 +13,20 @@ class AssertionCodeGenerator {
             assertion = this.removeField('name', assertion);
         }
         catch (err) {
-            return `;${this.testerInstanceName}.addTest({
-                        errorDescription: \`${err}'\`,
-                        valid: false,
-                        label: 'Required field \'name\' found'
-                    });`;
+            return this.fieldNotFoundError(err);
         }
+        try {
+            return this.executePattern(assertionName, assertion);
+        }
+        catch (err) {
+            return `;${this.testerInstanceName}.addTest({
+                    errorDescription: \`Tester class does not recognize the pattern '${JSON.stringify(Object.keys(assertion))}'\`,
+                    valid: false,
+                    label: 'Known assertion method'
+                });`;
+        }
+    }
+    executePattern(assertionName, assertion) {
         const argumentsLength = Object.getOwnPropertyNames(assertion).length;
         if (argumentsLength == 1) {
             return this.executeOneArgumentFunction(assertionName, assertion);
@@ -40,19 +48,9 @@ class AssertionCodeGenerator {
             const value = assertion[assertionMethodName];
             return `;   try {
                             ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${value});
-                        } catch (err) {
-                            ${this.testerInstanceName}.addTest({
-                                errorDescription: \`Error executing assertion: '\${err}'\`,
-                                valid: false,
-                                label: 'Assertion code valid'
-                            });
-                        }`;
+                        } ` + this.generateAssertionCodeCatch();
         }
-        return `;${this.testerInstanceName}.addTest({
-                    errorDescription: \`Tester class has no one argument method called '${assertionMethodName}'\`,
-                    valid: false,
-                    label: 'Known assertion method'
-                });`;
+        throw Error('One argument method');
     }
     executeTwoArgumentsFunction(assertionName, assertion) {
         const expect = assertion.expect;
@@ -60,29 +58,22 @@ class AssertionCodeGenerator {
             assertion = this.removeField('expect', assertion);
         }
         catch (err) {
-            return `;${this.testerInstanceName}.addTest({
-                    errorDescription: \`${err}'\`,
-                    valid: false,
-                    label: 'Required 'expect' not found'
-                });`;
+            return this.fieldNotFoundError(err);
         }
         const assertionMethodName = Object.getOwnPropertyNames(assertion)[0];
         if (this.tester[assertionMethodName] !== undefined) {
             const value = assertion[assertionMethodName];
             return `;   try {
                             ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${expect}, ${value});
-                        } catch (err) {
-                            ${this.testerInstanceName}.addTest({
-                                errorDescription: \`Error executing assertion: '\${err}'\`,
-                                valid: false,
-                                label: 'Assertion code valid'
-                            });
-                        }`;
+                        } ` + this.generateAssertionCodeCatch();
         }
+        throw Error('Two arguments method');
+    }
+    fieldNotFoundError(err) {
         return `;${this.testerInstanceName}.addTest({
-                    errorDescription: \`Tester class has no two arguments method called '${assertionMethodName}'\`,
+                    errorDescription: \`${err}'\`,
                     valid: false,
-                    label: 'Known assertion method'
+                    label: 'Required field not found'
                 });`;
     }
     removeField(field, test) {
@@ -95,6 +86,15 @@ class AssertionCodeGenerator {
     }
     identifyTesterMethods() {
         return Object.getOwnPropertyNames(Object.getPrototypeOf(this.tester)).filter(methodName => methodName != 'constructor');
+    }
+    generateAssertionCodeCatch() {
+        return `catch (err) {
+                    ${this.testerInstanceName}.addTest({
+                        errorDescription: \`Error executing assertion: '\${err}'\`,
+                        valid: false,
+                        label: 'Assertion code valid'
+                    });
+                }`;
     }
 }
 exports.AssertionCodeGenerator = AssertionCodeGenerator;

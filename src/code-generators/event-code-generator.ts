@@ -2,6 +2,7 @@ import {Event} from '../events/event';
 import {AssertionCodeGenerator} from './assertion-code-generator';
 import {Assertion} from '../events/assertion';
 
+//TODO test it
 export class EventCodeGenerator {
     private testerInstanceName: string;
     private assertions: Assertion[];
@@ -14,16 +15,15 @@ export class EventCodeGenerator {
     }
 
     public generate(): string {
-        let code =
-        `try { 
-            ${this.script}
-        } catch (err) {
-            ${this.testerInstanceName}.addTest({
-                    errorDescription: \`Error executing 'script' code: '\${err}'\`,
-                    valid: false,
-                    label: "Valid 'script' code"
-                });
-        }`;
+        let code = `try { 
+                        ${this.script}
+                    } catch (err) {
+                        ${this.testerInstanceName}.addTest({
+                                errorDescription: \`Error executing 'script' code: '\${err}'\`,
+                                valid: false,
+                                label: "Valid 'script' code"
+                            });
+                    }`;
         if (this.assertions) {
             this.assertions.forEach((assertion: any) => {
                 const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator(this.testerInstanceName);
