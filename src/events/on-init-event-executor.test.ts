@@ -29,8 +29,6 @@ Tester.mockImplementation(() => {
     };
 });
 
-
-
 let initializable: Initializable;
 
 describe('OnInitEventExecutor', () => {

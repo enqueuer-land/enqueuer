@@ -14,7 +14,6 @@ class EventCodeGenerator {
         let code = this.addScriptSnippet();
         code += this.addAssertionSnippet();
         code += this.addStoreSnippet();
-        console.log(code);
         return code;
     }
     addScriptSnippet() {
