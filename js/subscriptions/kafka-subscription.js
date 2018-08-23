@@ -44,18 +44,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
     subscribe() {
         return new Promise((resolve, reject) => {
             try {
-                this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => {
-                    if (error) {
-                        logger_1.Logger.error(`Error fetching kafka topic ${JSON.stringify(error, null, 2)}`);
-                        reject(error);
-                    }
-                    else {
-                        this.latestOffset = offsets[this.options.topic][0];
-                        logger_1.Logger.trace('Kafka offset fetched');
-                        logger_1.Logger.trace('Kafka subscription is connected');
-                        resolve();
-                    }
-                });
+                this.fetchOffset(reject, resolve);
                 this.offset.on('error', (error) => {
                     logger_1.Logger.error(`Error offset kafka ${JSON.stringify(error, null, 2)}`);
                     reject(error);
@@ -68,6 +57,20 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
             catch (exc) {
                 logger_1.Logger.error(`Error connecting kafka ${JSON.stringify(exc, null, 2)}`);
                 reject(exc);
+            }
+        });
+    }
+    fetchOffset(reject, resolve) {
+        this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => {
+            if (error) {
+                logger_1.Logger.error(`Error fetching kafka topic ${JSON.stringify(error, null, 2)}`);
+                reject(error);
+            }
+            else {
+                this.latestOffset = offsets[this.options.topic][0];
+                logger_1.Logger.trace('Kafka offset fetched');
+                logger_1.Logger.trace('Kafka subscription is connected');
+                resolve();
             }
         });
     }

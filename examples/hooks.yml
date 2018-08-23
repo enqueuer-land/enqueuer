@@ -2,7 +2,7 @@ name: hooks test description
 id: hook
 runnables:
 - name: requisition description
-  timeout: 1000
+  timeout: 2000
   onInit:
     store:
       sequence: `requisition::onInit`
@@ -13,7 +13,7 @@ runnables:
     publisher:
       name: publisher description
       type: tcp-client
-      timeout: 1000
+      timeout: 2000
       serverAddress: localhost
       port: 23080
       payload: it

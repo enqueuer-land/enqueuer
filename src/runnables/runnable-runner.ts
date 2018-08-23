@@ -42,7 +42,10 @@ export class RunnableRunner extends Runner {
                                 this.report.runnables.push(report);
                             }))
                     .then( () => resolve(this.report))
-                    .catch( (err: any) => reject(err));
+                    .catch( (err: any) => {
+                        Logger.error(`Error running sequentially: ${err}`);
+                        reject(err);
+                    });
                 })
             .start(delay || 0);
         });
@@ -76,9 +79,9 @@ export class RunnableRunner extends Runner {
         }
         let runnables: (RunnableModel | RequisitionModel)[] = [];
         for (let x = this.runnableModel.iterations; x > 0; --x) {
-            const clone = this.runnableModel.runnables.map(x => ({ ...x }));
+            const clone: any = this.runnableModel.runnables.map(x => ({ ...x }));
             const items = clone
-                .map(item => {
+                .map((item: any) => {
                     item.name = item.name + `[${x}]`;
                     return item;
                 });

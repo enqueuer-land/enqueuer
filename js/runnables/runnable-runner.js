@@ -41,7 +41,10 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
                     this.report.runnables.push(report);
                 }))
                     .then(() => resolve(this.report))
-                    .catch((err) => reject(err));
+                    .catch((err) => {
+                    logger_1.Logger.error(`Error running sequentially: ${err}`);
+                    reject(err);
+                });
             })
                 .start(delay || 0);
         });
@@ -75,7 +78,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
         for (let x = this.runnableModel.iterations; x > 0; --x) {
             const clone = this.runnableModel.runnables.map(x => (Object.assign({}, x)));
             const items = clone
-                .map(item => {
+                .map((item) => {
                 item.name = item.name + `[${x}]`;
                 return item;
             });
