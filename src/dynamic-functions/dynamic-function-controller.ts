@@ -14,12 +14,20 @@ export class DynamicFunctionController {
     }
 
     public execute(): any {
-        return this.executeFunction(this.createFunction());
+        const dynamicFunction = this.createFunction();
+        if (dynamicFunction) {
+            return this.executeFunction(dynamicFunction);
+        }
     }
 
-    private createFunction() {
-        const constructorArgs = this.arguments.map(arg => arg.name).concat(this.functionBody);
-        return ((...args: string[]) => new Function(...args)).apply(null, constructorArgs);
+    private createFunction(): Function {
+        try {
+            const constructorArgs = this.arguments.map(arg => arg.name).concat(this.functionBody);
+            return ((...args: string[]) => new Function(...args)).apply(null, constructorArgs);
+        } catch (err) {
+            Logger.error(`Error creating function '${err}'`);
+            throw err;
+        }
     }
 
     private executeFunction(dynamicFunction: Function): any {
@@ -27,7 +35,7 @@ export class DynamicFunctionController {
             const callArgs = this.arguments.map(arg => arg.value);
             return dynamicFunction.apply(this, callArgs);
         } catch (err) {
-            Logger.error(`Error with function: ${dynamicFunction}`);
+            Logger.error(`Error running function '${err}'}`);
             throw err;
         }
     }

@@ -82,7 +82,7 @@ export class RunnableRunner extends Runner {
             const clone: any = this.runnableModel.runnables.map(x => ({ ...x }));
             const items = clone
                 .map((item: any) => {
-                    item.name = item.name + `[${x}]`;
+                    item.name = item.name + ` [${x}]`;
                     return item;
                 });
             runnables = runnables.concat(items);
@@ -92,7 +92,9 @@ export class RunnableRunner extends Runner {
 
     private sequentialRunner(runnableFunctions: Function[]): Promise<ResultModel[]> {
         return runnableFunctions.reduce((runnableRan, runPromiseFunction) => {
-                return runnableRan.then(result => runPromiseFunction().then(Array.prototype.concat.bind(result)));
+                return runnableRan
+                    .then(result => runPromiseFunction().then(Array.prototype.concat.bind(result)))
+                    .catch(err => Logger.error(`Error running run promise ${err}`));
             }, Promise.resolve([]));
     }
 

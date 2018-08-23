@@ -10,11 +10,20 @@ class DynamicFunctionController {
         this.arguments.push({ name: name, value: value });
     }
     execute() {
-        return this.executeFunction(this.createFunction());
+        const dynamicFunction = this.createFunction();
+        if (dynamicFunction) {
+            return this.executeFunction(dynamicFunction);
+        }
     }
     createFunction() {
-        const constructorArgs = this.arguments.map(arg => arg.name).concat(this.functionBody);
-        return ((...args) => new Function(...args)).apply(null, constructorArgs);
+        try {
+            const constructorArgs = this.arguments.map(arg => arg.name).concat(this.functionBody);
+            return ((...args) => new Function(...args)).apply(null, constructorArgs);
+        }
+        catch (err) {
+            logger_1.Logger.error(`Error creating function '${err}'`);
+            throw err;
+        }
     }
     executeFunction(dynamicFunction) {
         try {
@@ -22,7 +31,7 @@ class DynamicFunctionController {
             return dynamicFunction.apply(this, callArgs);
         }
         catch (err) {
-            logger_1.Logger.error(`Error with function: ${dynamicFunction}`);
+            logger_1.Logger.error(`Error running function '${err}'}`);
             throw err;
         }
     }

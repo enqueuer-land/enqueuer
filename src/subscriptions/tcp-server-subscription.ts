@@ -94,8 +94,9 @@ export class TcpServerSubscription extends Subscription {
     private waitForData(reject: Function, resolve: Function) {
         Logger.trace(`Tcp server (${this.stream.localPort}) is waiting on data`);
         this.stream.once('end', () => {
-            Logger.debug(`Tcp server detected 'end' event`);
-            reject();
+            const message = `Tcp server detected 'end' event`;
+            Logger.debug(message);
+            reject(message);
         });
 
         this.stream.once('data', (msg: any) => {

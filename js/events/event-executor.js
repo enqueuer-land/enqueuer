@@ -52,7 +52,13 @@ class EventExecutor {
         this.arguments.forEach(argument => {
             scriptExecutor.addArgument(argument.name, argument.value);
         });
-        scriptExecutor.execute();
+        try {
+            scriptExecutor.execute();
+        }
+        catch (err) {
+            logger_1.Logger.error(`Error running event: ${err}`);
+            tester.addTest({ valid: false, label: 'Event ran', errorDescription: err });
+        }
         return tester.getReport();
     }
 }

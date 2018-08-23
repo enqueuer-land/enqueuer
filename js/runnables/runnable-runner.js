@@ -79,7 +79,7 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             const clone = this.runnableModel.runnables.map(x => (Object.assign({}, x)));
             const items = clone
                 .map((item) => {
-                item.name = item.name + `[${x}]`;
+                item.name = item.name + ` [${x}]`;
                 return item;
             });
             runnables = runnables.concat(items);
@@ -88,7 +88,9 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
     }
     sequentialRunner(runnableFunctions) {
         return runnableFunctions.reduce((runnableRan, runPromiseFunction) => {
-            return runnableRan.then(result => runPromiseFunction().then(Array.prototype.concat.bind(result)));
+            return runnableRan
+                .then(result => runPromiseFunction().then(Array.prototype.concat.bind(result)))
+                .catch(err => logger_1.Logger.error(`Error running run promise ${err}`));
         }, Promise.resolve([]));
     }
 };

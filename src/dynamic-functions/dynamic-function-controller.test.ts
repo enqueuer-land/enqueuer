@@ -13,7 +13,7 @@ describe('DynamicFunctionController', () => {
     });
 
     it('Should throw function creation error', () => {
-        const testerExecutor: DynamicFunctionController = new DynamicFunctionController('invalid statement');
+        const testerExecutor: DynamicFunctionController = new DynamicFunctionController('inv;alid statement');
 
         expect(() => testerExecutor.execute()).toThrow();
     });

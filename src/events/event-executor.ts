@@ -71,7 +71,12 @@ export abstract class EventExecutor {
             scriptExecutor.addArgument(argument.name, argument.value);
         });
 
-        scriptExecutor.execute();
+        try {
+            scriptExecutor.execute();
+        } catch (err) {
+            Logger.error(`Error running event: ${err}`);
+            tester.addTest({valid: false, label: 'Event ran', errorDescription: err});
+        }
         return tester.getReport();
     }
 
