@@ -15,7 +15,7 @@ export class MultiPublisher {
         });
     }
 
-    public publish(payload: string): Promise<void[]> {
+    public publish(payload: any): Promise<void[]> {
         return Promise.all(this.publishers.map(
             publisher => {
                         publisher.payload = payload;

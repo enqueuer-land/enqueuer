@@ -98,7 +98,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return undefined;
     }
 
-    private sendErrorMessage(message: string) {
+    private sendErrorMessage(message: any) {
         Logger.error(message);
         this.multiResultCreator.addError(message);
         this.multiPublisher.publish(message).then().catch(console.log.bind(console));
@@ -110,7 +110,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 .run()
                 .then(report => {
                     this.multiResultCreator.addTestSuite(name, report);
-                    this.multiPublisher.publish(JSON.stringify(report, null, 2)).catch(console.log.bind(console));
+                    this.multiPublisher.publish(report).catch(console.log.bind(console));
                     resolve();
                 })
                 .catch((err) => {

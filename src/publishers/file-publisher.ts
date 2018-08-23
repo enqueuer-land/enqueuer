@@ -24,19 +24,29 @@ export class FilePublisher extends Publisher {
     public publish(): Promise<void> {
         let filename = this.createFilename();
         let value = this.payload;
-        try {
-            const parsedToObject = JSON.parse(this.payload);
-            if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
-                value = yaml.stringify(parsedToObject, 10, 2);
-            } else  {
-                value = JSON.stringify(parsedToObject, null, 2);
-            }
-
-        } catch (exc) {
-            Logger.debug('Content to write to file is not parseable');
+        if (typeof(value) == 'string') {
+            value = this.stringifyPayload(value);
+        } else if (typeof(value) == 'object') {
+            value = this.stringifyPayload(JSON.stringify(value));
         }
+
         fs.writeFileSync(filename, value);
         return Promise.resolve();
+    }
+
+    private stringifyPayload(value: string) {
+        try {
+            value = JSON.parse(value);
+        } catch (exc) {
+            Logger.debug('Content to write to file is not parseable');
+            return value;
+        }
+
+        if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
+            return yaml.stringify(value, 10, 2);
+        }
+
+        return JSON.stringify(value, null, 2);
     }
 
     private createFilename() {
@@ -51,8 +61,8 @@ export class FilePublisher extends Publisher {
 
     private generateId() {
         try {
-            const id = JSON.parse(this.payload).id;
-            if (!isNullOrUndefined(id)) {
+            const id = this.payload.id;
+            if (id) {
                 return id;
             }
         } catch (exc) {

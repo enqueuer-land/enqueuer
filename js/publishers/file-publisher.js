@@ -19,7 +19,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const id_generator_1 = require("../id-generator/id-generator");
 const conditional_injector_1 = require("conditional-injector");
-const util_1 = require("util");
 const yaml = __importStar(require("yamljs"));
 const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
@@ -33,20 +32,27 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     publish() {
         let filename = this.createFilename();
         let value = this.payload;
-        try {
-            const parsedToObject = JSON.parse(this.payload);
-            if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
-                value = yaml.stringify(parsedToObject, 10, 2);
-            }
-            else {
-                value = JSON.stringify(parsedToObject, null, 2);
-            }
+        if (typeof (value) == 'string') {
+            value = this.stringifyPayload(value);
         }
-        catch (exc) {
-            logger_1.Logger.debug('Content to write to file is not parseable');
+        else if (typeof (value) == 'object') {
+            value = this.stringifyPayload(JSON.stringify(value));
         }
         fs.writeFileSync(filename, value);
         return Promise.resolve();
+    }
+    stringifyPayload(value) {
+        try {
+            value = JSON.parse(value);
+        }
+        catch (exc) {
+            logger_1.Logger.debug('Content to write to file is not parseable');
+            return value;
+        }
+        if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
+            return yaml.stringify(value, 10, 2);
+        }
+        return JSON.stringify(value, null, 2);
     }
     createFilename() {
         let filename = this.filename;
@@ -59,8 +65,8 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     }
     generateId() {
         try {
-            const id = JSON.parse(this.payload).id;
-            if (!util_1.isNullOrUndefined(id)) {
+            const id = this.payload.id;
+            if (id) {
                 return id;
             }
         }

@@ -3,7 +3,7 @@ import {Event} from '../events/event';
 
 export abstract class Publisher {
     public type: string;
-    public payload: string;
+    public payload: any;
     public name: string;
     public onMessageReceived?: Event;
     public onInit?: Event;

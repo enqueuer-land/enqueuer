@@ -10,9 +10,9 @@ class DynamicFunctionController {
         this.arguments.push({ name: name, value: value });
     }
     execute() {
-        const dynamicFunction = this.createFunction();
-        if (dynamicFunction) {
-            return this.executeFunction(dynamicFunction);
+        const createdFunction = this.createFunction();
+        if (createdFunction) {
+            return this.executeFunction(createdFunction);
         }
     }
     createFunction() {

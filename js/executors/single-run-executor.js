@@ -112,7 +112,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 .run()
                 .then(report => {
                 this.multiResultCreator.addTestSuite(name, report);
-                this.multiPublisher.publish(JSON.stringify(report, null, 2)).catch(console.log.bind(console));
+                this.multiPublisher.publish(report).catch(console.log.bind(console));
                 resolve();
             })
                 .catch((err) => {

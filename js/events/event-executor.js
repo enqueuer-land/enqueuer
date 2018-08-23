@@ -45,15 +45,15 @@ class EventExecutor {
         this.arguments.push({ name: name, value: value });
     }
     runEvent(script) {
-        const scriptExecutor = new dynamic_function_controller_1.DynamicFunctionController(script);
+        const dynamicFunction = new dynamic_function_controller_1.DynamicFunctionController(script);
         let tester = new tester_1.Tester();
-        scriptExecutor.addArgument(this.testerInstanceName, tester);
-        scriptExecutor.addArgument(this.storeInstanceName, store_1.Store.getData());
+        dynamicFunction.addArgument(this.testerInstanceName, tester);
+        dynamicFunction.addArgument(this.storeInstanceName, store_1.Store.getData());
         this.arguments.forEach(argument => {
-            scriptExecutor.addArgument(argument.name, argument.value);
+            dynamicFunction.addArgument(argument.name, argument.value);
         });
         try {
-            scriptExecutor.execute();
+            dynamicFunction.execute();
         }
         catch (err) {
             logger_1.Logger.error(`Error running event: ${err}`);

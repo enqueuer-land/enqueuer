@@ -1,6 +1,6 @@
 export class Timeout {
 
-    timer?: NodeJS.Timer;
+    private timer?: NodeJS.Timer;
     private callback: Function;
 
     public constructor(callBack: Function) {
