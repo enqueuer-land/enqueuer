@@ -34,7 +34,7 @@ runnables:
     publisher:
       name: tcp 1 publisher description
       type: tcp-client
-      timeout: 100
+      timeout: 800
       serverAddress: localhost
       port: 23070
       payload: I do not care
@@ -48,7 +48,7 @@ runnables:
   - name: tcp 1 subscription description
     type: tcp-server
     port: 23070
-    timeout: 200
+    timeout: 500
     saveStream: tcpSubscriptionSocket
     greeting: Enqueuer
     response: Rocks
