@@ -5,13 +5,12 @@ import {RequisitionModel} from '../models/outputs/requisition-model';
 import chalk from 'chalk';
 import {DateController} from '../timers/date-controller';
 
-export class SummaryResultCreator extends ResultCreator {
+export class SummaryResultCreator implements ResultCreator {
     private testCounter: number = 0;
     private failingTests: any = [];
     private startTime: DateController;
 
     public constructor() {
-        super();
         this.startTime = new DateController();
     }
 

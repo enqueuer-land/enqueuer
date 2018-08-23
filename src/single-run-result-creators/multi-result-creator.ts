@@ -4,11 +4,10 @@ import {SummaryResultCreator} from './summary-result-creator';
 import {Logger} from '../loggers/logger';
 import {FileResultCreator} from './file-result-creator';
 
-export class MultiResultCreator extends ResultCreator {
+export class MultiResultCreator implements ResultCreator {
     private resultCreators: ResultCreator[] = [];
 
     public constructor(reportName?: string) {
-        super();
         if (reportName) {
             this.resultCreators.push(new FileResultCreator(reportName));
         }

@@ -4,11 +4,10 @@ import {SingleRunResultModel} from '../models/outputs/single-run-result-model';
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
 
-export class FileResultCreator extends ResultCreator {
+export class FileResultCreator implements ResultCreator {
     private report: SingleRunResultModel;
 
     public constructor(filename: string) {
-        super();
         this.report = {
             name: filename,
             tests: [],
