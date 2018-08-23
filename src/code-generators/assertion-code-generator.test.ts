@@ -2,6 +2,17 @@ import {AssertionCodeGenerator} from './assertion-code-generator';
 
 describe('AssertionCodeGenerator', () => {
 
+    it('Should pass tester instance name', () => {
+        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('testerInstanceName');
+        const code: string = assertionCodeGenerator.generate({name: 5});
+
+        expect(code).toBe(";testerInstanceName.addTest({\n" +
+            "                    errorDescription: `Tester class does not work with '0' arguments function'`,\n" +
+            "                    valid: false,\n" +
+            "                    label: 'Assertion identified'\n" +
+            "                });");
+    });
+
     it('Should add error if num arguments is less than 2', () => {
         const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
         const code: string = assertionCodeGenerator.generate({name: 5});
@@ -64,12 +75,12 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe(";   try {\n" +
             "                            tester.toBeGreaterThan(`label name`, 5, 3);\n" +
             "                        } catch (err) {\n" +
-            "                    tester.addTest({\n" +
-            "                        errorDescription: `Error executing assertion: '${err}'`,\n" +
-            "                        valid: false,\n" +
-            "                        label: 'Assertion code valid'\n" +
-            "                    });\n" +
-            "                }");
+            "                        tester.addTest({\n" +
+            "                            errorDescription: `Error executing assertion: '${err}'`,\n" +
+            "                            valid: false,\n" +
+            "                            label: 'Assertion code valid'\n" +
+            "                        });\n" +
+            "                    }");
     });
 
     it('Should generate 1 arguments function', () => {
@@ -79,11 +90,11 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe(";   try {\n" +
             "                            tester.expectToBeDefined(`label name`, varName);\n" +
             "                        } catch (err) {\n" +
-            "                    tester.addTest({\n" +
-            "                        errorDescription: `Error executing assertion: '${err}'`,\n" +
-            "                        valid: false,\n" +
-            "                        label: 'Assertion code valid'\n" +
-            "                    });\n" +
-            "                }");
+            "                        tester.addTest({\n" +
+            "                            errorDescription: `Error executing assertion: '${err}'`,\n" +
+            "                            valid: false,\n" +
+            "                            label: 'Assertion code valid'\n" +
+            "                        });\n" +
+            "                    }");
     });
 });

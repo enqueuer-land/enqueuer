@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const assertion_code_generator_1 = require("./assertion-code-generator");
-//TODO test it
 class EventCodeGenerator {
     constructor(testerInstanceName, eventValue) {
         this.testerInstanceName = testerInstanceName;
@@ -9,7 +8,7 @@ class EventCodeGenerator {
         this.assertions = eventValue.assertions || [];
     }
     generate() {
-        let code = `try { 
+        let code = `try {
                         ${this.script}
                     } catch (err) {
                         ${this.testerInstanceName}.addTest({
@@ -17,11 +16,11 @@ class EventCodeGenerator {
                                 valid: false,
                                 label: "Valid 'script' code"
                             });
-                    }`;
+                    }\n`;
         if (this.assertions) {
             this.assertions.forEach((assertion) => {
                 const assertionCodeGenerator = new assertion_code_generator_1.AssertionCodeGenerator(this.testerInstanceName);
-                code += assertionCodeGenerator.generate(assertion);
+                code += assertionCodeGenerator.generate(assertion) + '\n';
             });
         }
         return code;

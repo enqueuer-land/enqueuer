@@ -97,12 +97,12 @@ export class AssertionCodeGenerator {
 
     private generateAssertionCodeCatch() {
         return `catch (err) {
-                    ${this.testerInstanceName}.addTest({
-                        errorDescription: \`Error executing assertion: '\${err}'\`,
-                        valid: false,
-                        label: 'Assertion code valid'
-                    });
-                }`;
+                        ${this.testerInstanceName}.addTest({
+                            errorDescription: \`Error executing assertion: '\${err}'\`,
+                            valid: false,
+                            label: 'Assertion code valid'
+                        });
+                    }`;
     }
 
 }
