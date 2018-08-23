@@ -67,7 +67,7 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
         catch (exc) {
             //do nothing
         }
-        return new id_generator_1.IdGenerator(this.payload).generateId() + '.';
+        return new id_generator_1.IdGenerator(this.payload).generateId();
     }
 };
 FilePublisher = __decorate([

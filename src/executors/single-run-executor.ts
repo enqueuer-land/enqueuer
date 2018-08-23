@@ -49,9 +49,9 @@ export class SingleRunExecutor extends EnqueuerExecutor {
             const nameIndex = this.totalFilesNum - runnableFileNames.length;
             const fileName = runnableFileNames.shift();
             if (fileName) {
-                const runnable: RunnableModel | undefined = this.parseRunnable(fileName);
+                const runnable: RunnableModel | undefined = this.parseFileRunnable(fileName);
                 if (runnable) {
-                    this.runRunnable(fileName, this.setDefaultRunnableName(runnable, nameIndex))
+                    this.runFileRunnable(fileName, this.setDefaultFileRunnableName(runnable, nameIndex))
                         .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
                 }
             } else {
@@ -63,9 +63,9 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private executeParallelMode(): Promise<boolean> {
         return new Promise((resolve) => {
             Promise.all(this.runnableFileNames.map((fileName: string, index) => {
-                const runnable: RunnableModel | undefined = this.parseRunnable(fileName);
+                const runnable: RunnableModel | undefined = this.parseFileRunnable(fileName);
                 if (runnable) {
-                    return this.runRunnable(fileName, this.setDefaultRunnableName(runnable, index));
+                    return this.runFileRunnable(fileName, this.setDefaultFileRunnableName(runnable, index));
                 } else {
                     return {};
                 }
@@ -73,7 +73,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private setDefaultRunnableName(runnable: RunnableModel | any, index: number): RunnableModel {
+    private setDefaultFileRunnableName(runnable: RunnableModel | any, index: number): RunnableModel {
         if (!runnable.name) {
             runnable.name = `Runnable #${index}`;
         }
@@ -89,19 +89,22 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return result;
     }
 
-    private parseRunnable(fileName: string): RunnableModel | undefined {
+    private parseFileRunnable(fileName: string): RunnableModel | undefined {
         try {
             return new RunnableParser().parse(fs.readFileSync(fileName).toString());
         } catch (err) {
-            const message = `Error parsing: ${fileName}: ` + err;
-            Logger.error(message);
-            this.multiResultCreator.addError(message);
-            this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
+            this.sendErrorMessage(`Error parsing: ${fileName}: ` + err);
         }
         return undefined;
     }
 
-    private runRunnable(name: string, runnable: RunnableModel) {
+    private sendErrorMessage(message: string) {
+        Logger.error(message);
+        this.multiResultCreator.addError(message);
+        this.multiPublisher.publish(message).then().catch(console.log.bind(console));
+    }
+
+    private runFileRunnable(name: string, runnable: RunnableModel) {
         return new Promise((resolve, reject) => {
             new RunnableRunner(runnable)
                 .run()
@@ -111,9 +114,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                     resolve();
                 })
                 .catch((err) => {
-                    Logger.error(`Single-run error reported: ${JSON.stringify(err, null, 4)}`);
-                    this.multiResultCreator.addError(err);
-                    this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
+                    this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
                     reject();
                 });
         });

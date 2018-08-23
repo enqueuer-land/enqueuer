@@ -54,9 +54,9 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             const nameIndex = this.totalFilesNum - runnableFileNames.length;
             const fileName = runnableFileNames.shift();
             if (fileName) {
-                const runnable = this.parseRunnable(fileName);
+                const runnable = this.parseFileRunnable(fileName);
                 if (runnable) {
-                    this.runRunnable(fileName, this.setDefaultRunnableName(runnable, nameIndex))
+                    this.runFileRunnable(fileName, this.setDefaultFileRunnableName(runnable, nameIndex))
                         .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
                 }
             }
@@ -68,9 +68,9 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     executeParallelMode() {
         return new Promise((resolve) => {
             Promise.all(this.runnableFileNames.map((fileName, index) => {
-                const runnable = this.parseRunnable(fileName);
+                const runnable = this.parseFileRunnable(fileName);
                 if (runnable) {
-                    return this.runRunnable(fileName, this.setDefaultRunnableName(runnable, index));
+                    return this.runFileRunnable(fileName, this.setDefaultFileRunnableName(runnable, index));
                 }
                 else {
                     return {};
@@ -78,7 +78,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             })).then(() => resolve(this.finishExecution()));
         });
     }
-    setDefaultRunnableName(runnable, index) {
+    setDefaultFileRunnableName(runnable, index) {
         if (!runnable.name) {
             runnable.name = `Runnable #${index}`;
         }
@@ -92,19 +92,21 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         logger_1.Logger.info(`Files list: ${result}`);
         return result;
     }
-    parseRunnable(fileName) {
+    parseFileRunnable(fileName) {
         try {
             return new runnable_parser_1.RunnableParser().parse(fs.readFileSync(fileName).toString());
         }
         catch (err) {
-            const message = `Error parsing: ${fileName}: ` + err;
-            logger_1.Logger.error(message);
-            this.multiResultCreator.addError(message);
-            this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
+            this.sendErrorMessage(`Error parsing: ${fileName}: ` + err);
         }
         return undefined;
     }
-    runRunnable(name, runnable) {
+    sendErrorMessage(message) {
+        logger_1.Logger.error(message);
+        this.multiResultCreator.addError(message);
+        this.multiPublisher.publish(message).then().catch(console.log.bind(console));
+    }
+    runFileRunnable(name, runnable) {
         return new Promise((resolve, reject) => {
             new runnable_runner_1.RunnableRunner(runnable)
                 .run()
@@ -114,9 +116,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 resolve();
             })
                 .catch((err) => {
-                logger_1.Logger.error(`Single-run error reported: ${JSON.stringify(err, null, 4)}`);
-                this.multiResultCreator.addError(err);
-                this.multiPublisher.publish(JSON.stringify(err, null, 2)).then().catch(console.log.bind(console));
+                this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
                 reject();
             });
         });

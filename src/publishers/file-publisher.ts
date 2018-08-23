@@ -59,6 +59,6 @@ export class FilePublisher extends Publisher {
         } catch (exc) {
             //do nothing
         }
-        return new IdGenerator(this.payload).generateId() + '.';
+        return new IdGenerator(this.payload).generateId();
     }
 }
