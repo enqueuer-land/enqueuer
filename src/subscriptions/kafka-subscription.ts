@@ -53,6 +53,7 @@ export class KafkaSubscription extends Subscription {
                         reject(error);
                     } else {
                         this.latestOffset = offsets[this.options.topic][0];
+                        Logger.trace('Kafka offset fetched');
                         Logger.trace('Kafka subscription is connected');
                         resolve();
                     }
@@ -60,6 +61,10 @@ export class KafkaSubscription extends Subscription {
                 this.offset.on('error', (error) => {
                     Logger.error(`Error offset kafka ${JSON.stringify(error, null, 2)}`);
                     reject(error);
+                });
+                this.offset.on('connect', () => {
+                    Logger.trace('Kafka offset connected');
+                    resolve();
                 });
             } catch (exc) {
                 Logger.error(`Error connecting kafka ${JSON.stringify(exc, null, 2)}`);
