@@ -51,6 +51,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
                     }
                     else {
                         this.latestOffset = offsets[this.options.topic][0];
+                        logger_1.Logger.trace('Kafka offset fetched');
                         logger_1.Logger.trace('Kafka subscription is connected');
                         resolve();
                     }
@@ -58,6 +59,10 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
                 this.offset.on('error', (error) => {
                     logger_1.Logger.error(`Error offset kafka ${JSON.stringify(error, null, 2)}`);
                     reject(error);
+                });
+                this.offset.on('connect', () => {
+                    logger_1.Logger.trace('Kafka offset connected');
+                    resolve();
                 });
             }
             catch (exc) {

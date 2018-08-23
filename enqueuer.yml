@@ -2,15 +2,7 @@ run-mode:
   single-run:
     name: examples
     files:
-    - examples/a*
-    - examples/f*
-    - examples/h*
-    - examples/k*
-    - examples/m*
-    - examples/p*
-    - examples/s*
-    - examples/t*
-    - examples/u*
+    - examples/*
 
 #optional
     parallel: true
@@ -19,7 +11,7 @@ run-mode:
     reportName: outputExamples/singleRunOutput.yml #outputExamples/singleRunOutput.json
 
 #optional
-log-level: debug
+log-level: trace
 
 #optional
 outputs:

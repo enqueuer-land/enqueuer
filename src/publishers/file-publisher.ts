@@ -33,9 +33,8 @@ export class FilePublisher extends Publisher {
             }
 
         } catch (exc) {
-            Logger.info('Content to write a file is not parseable');
+            Logger.debug('Content to write to file is not parseable');
         }
-
         fs.writeFileSync(filename, value);
         return Promise.resolve();
     }

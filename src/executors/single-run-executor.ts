@@ -105,7 +105,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     }
 
     private runFileRunnable(name: string, runnable: RunnableModel) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             new RunnableRunner(runnable)
                 .run()
                 .then(report => {
@@ -115,7 +115,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 })
                 .catch((err) => {
                     this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
-                    reject();
+                    resolve();
                 });
         });
 

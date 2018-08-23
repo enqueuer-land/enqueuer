@@ -1,7 +1,7 @@
 name: tcp test description
 id: tcp
 runnables:
-- name: requisition 0 description
+- name: tcp requisition 0 description
   timeout: 3000
   startEvent:
     publisher:
@@ -28,7 +28,7 @@ runnables:
       - name: Beatles Song
         expect: message.toString()
         toBeEqualTo: `Hey Jude`
-- name: requisition 1 description
+- name: tcp requisition 1 description
   timeout: 3000
   startEvent:
     publisher:
@@ -58,7 +58,7 @@ runnables:
         expect: message.toString()
         toBeEqualTo: `I do not care`
 -
-  name: requisition 2 description
+  name: tcp requisition 2 description
   timeout: 3000
   startEvent:
     publisher:

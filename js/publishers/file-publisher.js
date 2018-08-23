@@ -43,7 +43,7 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
             }
         }
         catch (exc) {
-            logger_1.Logger.info('Content to write a file is not parseable');
+            logger_1.Logger.debug('Content to write to file is not parseable');
         }
         fs.writeFileSync(filename, value);
         return Promise.resolve();

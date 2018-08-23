@@ -107,7 +107,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         this.multiPublisher.publish(message).then().catch(console.log.bind(console));
     }
     runFileRunnable(name, runnable) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             new runnable_runner_1.RunnableRunner(runnable)
                 .run()
                 .then(report => {
@@ -117,7 +117,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             })
                 .catch((err) => {
                 this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
-                reject();
+                resolve();
             });
         });
     }
