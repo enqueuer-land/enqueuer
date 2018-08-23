@@ -14,9 +14,9 @@ export class DynamicFunctionController {
     }
 
     public execute(): any {
-        const dynamicFunction = this.createFunction();
-        if (dynamicFunction) {
-            return this.executeFunction(dynamicFunction);
+        const createdFunction = this.createFunction();
+        if (createdFunction) {
+            return this.executeFunction(createdFunction);
         }
     }
 

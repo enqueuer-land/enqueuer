@@ -4,13 +4,13 @@ import {OnMessageReceivedEventExecutor} from './on-message-received-event-execut
 import {MessageReceiver} from './message-receiver';
 
 let addArgumentMock = jest.fn();
-let executeMock = jest.fn();
+let dynamicFunctionExecuteMock = jest.fn();
 
 jest.mock('../dynamic-functions/dynamic-function-controller');
 DynamicFunctionController.mockImplementation(() => {
     return {
         addArgument: addArgumentMock,
-        execute: executeMock,
+        execute: dynamicFunctionExecuteMock,
     };
 });
 
@@ -22,13 +22,15 @@ let getReportMock = jest.fn(() => {
     }]
 });
 
+let addTestMock = jest.fn();
+
 jest.mock('../testers/tester');
 Tester.mockImplementation(() => {
     return {
+        addTest: addTestMock,
         getReport: getReportMock
     };
 });
-
 
 let messageReceiver: MessageReceiver;
 
@@ -112,5 +114,15 @@ describe('OnMessageReceivedEventExecutor', () => {
         expect(testModels.length).toBe(1);
         expect(testModels[0]).toEqual({"description": "desc", "name": "label", "valid": false});
     });
+
+    it('Should catch function creation exception', () => {
+        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', messageReceiver);
+        dynamicFunctionExecuteMock = jest.fn(() => {throw 'nqr';} );
+
+        eventExecutor.trigger();
+
+        expect(addTestMock).toHaveBeenCalledWith({"errorDescription": 'nqr', "label": "Event ran", "valid": false});
+    });
+
 });
 

@@ -61,18 +61,18 @@ export abstract class EventExecutor {
     }
 
     private runEvent(script: string): Test[] {
-        const scriptExecutor = new DynamicFunctionController(script);
+        const dynamicFunction = new DynamicFunctionController(script);
 
         let tester = new Tester();
-        scriptExecutor.addArgument(this.testerInstanceName, tester);
-        scriptExecutor.addArgument(this.storeInstanceName, Store.getData());
+        dynamicFunction.addArgument(this.testerInstanceName, tester);
+        dynamicFunction.addArgument(this.storeInstanceName, Store.getData());
 
         this.arguments.forEach(argument => {
-            scriptExecutor.addArgument(argument.name, argument.value);
+            dynamicFunction.addArgument(argument.name, argument.value);
         });
 
         try {
-            scriptExecutor.execute();
+            dynamicFunction.execute();
         } catch (err) {
             Logger.error(`Error running event: ${err}`);
             tester.addTest({valid: false, label: 'Event ran', errorDescription: err});
