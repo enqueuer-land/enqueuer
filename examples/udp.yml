@@ -7,12 +7,12 @@ runnables:
       type: udp
       name: publisher description
       serverAddress: localhost
-      port: 23070
+      port: 23071
       payload: it
   subscriptions:
   - name: subscription description
     type: udp
-    port: 23070
+    port: 23071
     timeout: 500
     onMessageReceived:
       script: payload = Buffer.from(message.payload);
