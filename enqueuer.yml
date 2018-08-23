@@ -2,7 +2,7 @@ run-mode:
   single-run:
     name: examples
     files:
-    - examples/*
+    - examples/tcp*
 
 #optional
     parallel: true
@@ -11,7 +11,7 @@ run-mode:
     reportName: outputExamples/singleRunOutput.yml #outputExamples/singleRunOutput.json
 
 #optional
-log-level: debug
+log-level: trace
 
 #optional
 outputs:

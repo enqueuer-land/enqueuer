@@ -1,13 +1,13 @@
 name: tcp test description
 id: tcp
 runnables:
-- name: tcp requisition 0 description
+- name: tcp 0 requisition description
   timeout: 3000
   startEvent:
     publisher:
       type: tcp-client
       timeout: 1000
-      name: publisher description
+      name: tcp 0 publisher description
       timeout: 100
       serverAddress: localhost
       port: 23069
@@ -20,7 +20,7 @@ runnables:
   subscriptions:
   - type: tcp-server
     port: 23069
-    name: subscription description
+    name: tcp 0 subscription description
     timeout: 1000
     response: Do not make it bad
     onMessageReceived:
@@ -28,11 +28,11 @@ runnables:
       - name: Beatles Song
         expect: message.toString()
         toBeEqualTo: `Hey Jude`
-- name: tcp requisition 1 description
+- name: tcp 1 requisition description
   timeout: 3000
   startEvent:
     publisher:
-      name: publisher description
+      name: tcp 1 publisher description
       type: tcp-client
       timeout: 100
       serverAddress: localhost
@@ -45,7 +45,7 @@ runnables:
           expect: message.toString()
           toBeEqualTo: `EnqueuerRocks`
   subscriptions:
-  - name: subscription description
+  - name: tcp 1 subscription description
     type: tcp-server
     port: 23070
     timeout: 200
@@ -58,7 +58,7 @@ runnables:
         expect: message.toString()
         toBeEqualTo: `I do not care`
 -
-  name: tcp requisition 2 description
+  name: tcp 2 requisition description
   timeout: 3000
   startEvent:
     publisher:
@@ -73,7 +73,7 @@ runnables:
           toBeEqualTo: `<<tcpPayload>>`
   subscriptions:
   - type: tcp-server
-    name: subscription description
+    name: tcp 2 subscription description
     loadStream: tcpSubscriptionSocket
     response: <<tcpPayload>>
     timeout: 1000
