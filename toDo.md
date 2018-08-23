@@ -31,7 +31,6 @@ Config option to chose parallel/serial executions
 Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
-store array event property
 
 Summary to look like this.
  FAIL  src/inceptionTest/inception.comp.ts

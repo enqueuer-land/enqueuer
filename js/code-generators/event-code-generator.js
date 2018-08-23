@@ -1,14 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const assertion_code_generator_1 = require("./assertion-code-generator");
+const store_code_generator_1 = require("./store-code-generator");
 class EventCodeGenerator {
-    constructor(testerInstanceName, eventValue) {
+    constructor(testerInstanceName, storeInstanceName, eventValue) {
         this.testerInstanceName = testerInstanceName;
+        this.storeInstanceName = storeInstanceName;
+        this.store = eventValue.store || {};
         this.script = eventValue.script || '';
         this.assertions = eventValue.assertions || [];
     }
     generate() {
-        let code = `try {
+        let code = this.addScriptSnippet();
+        code += this.addAssertionSnippet();
+        code += this.addStoreSnippet();
+        console.log(code);
+        return code;
+    }
+    addScriptSnippet() {
+        return `try {
                         ${this.script}
                     } catch (err) {
                         ${this.testerInstanceName}.addTest({
@@ -17,13 +27,18 @@ class EventCodeGenerator {
                                 label: "Valid 'script' code"
                             });
                     }\n`;
-        if (this.assertions) {
-            this.assertions.forEach((assertion) => {
-                const assertionCodeGenerator = new assertion_code_generator_1.AssertionCodeGenerator(this.testerInstanceName);
-                code += assertionCodeGenerator.generate(assertion) + '\n';
-            });
-        }
+    }
+    addAssertionSnippet() {
+        let code = '';
+        this.assertions.forEach((assertion) => {
+            const assertionCodeGenerator = new assertion_code_generator_1.AssertionCodeGenerator(this.testerInstanceName);
+            code += assertionCodeGenerator.generate(assertion) + '\n';
+        });
         return code;
+    }
+    addStoreSnippet() {
+        const storeCodeGenerator = new store_code_generator_1.StoreCodeGenerator(this.testerInstanceName, this.storeInstanceName);
+        return storeCodeGenerator.generate(this.store);
     }
 }
 exports.EventCodeGenerator = EventCodeGenerator;

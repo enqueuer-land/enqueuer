@@ -4,8 +4,8 @@ runnables:
 - name: requisition description
   timeout: 1000
   onInit:
-    script: |-
-      store.sequence = 'requisition::onInit';
+    store:
+      sequence: `requisition::onInit`
     assertions:
     - name: Requisitions exists onInit
       expectToBeDefined: requisition
@@ -18,9 +18,9 @@ runnables:
       port: 23080
       payload: it
       onInit:
-        script: |-
-          publisher.name = 'changed';
-          store.sequence += ' -> publisher::onInit';
+        script: publisher.name = 'changed';
+        store:
+          sequence: store.sequence + `-> publisher::onInit`
         assertions:
         - name: Publisher exists onInit
           expectToBeDefined: publisher
@@ -28,10 +28,14 @@ runnables:
           expect: publisher.name
           expectToBeDefined: publisher
       onMessageReceived:
-        script: store.sequence += ' -> publisher::onMessageReceived';
+        store:
+          sequence: store.sequence + `-> publisher::onMessageReceived`
         assertions:
         - name: Publisher exists onMessageReceived
           expectToBeDefined: publisher
+        - name: Requisition onInit
+          expect: store.sequence
+          toContain: `requisition::onInit`
         - name: Publisher name changed
           expect: publisher.name
           toBeEqualTo: `changed`
@@ -44,9 +48,9 @@ runnables:
     port: 23080
     response: hook response
     onInit:
-      script: |-
-        subscription.name = 'changed';
-        store.sequence += ' -> subscription::onInit';
+      script: subscription.name = 'changed';
+      store:
+        sequence: store.sequence + `-> subscription::onInit`
       assertions:
       - name: Subscription exists onInit
         expectToBeDefined: subscription
@@ -54,7 +58,6 @@ runnables:
         expect: subscription.name
         toBeEqualTo: `changed`
     onMessageReceived:
-      script: store.sequence += ' -> subscription::onMessageReceived';
       assertions:
       - name: Subscription exists onMessageReceived
         expectToBeDefined: subscription

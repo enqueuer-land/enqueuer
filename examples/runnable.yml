@@ -4,9 +4,9 @@ runnables:
 - iterations: 10
   runnables:
   - onInit:
-      script: |-
-        store.iteration = (store.iteration + 1) || 0;
-        store.lastExecution = new Date().getTime();
+      store:
+        iteration: (store.iteration + 1) || 0
+        lastExecutionTime: new Date().getTime();
     startEvent:
       publisher:
         type: zero-mq-pub
@@ -17,7 +17,7 @@ runnables:
 - delay: 3000
   runnables:
   - onInit:
-      script: delayedTime = new Date().getTime() - store.lastExecution;
+      script: delayedTime = new Date().getTime() - store.lastExecutionTime;
       assertions:
       - name: It was executed 10 times
         expect: store.iteration

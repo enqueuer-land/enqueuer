@@ -8,6 +8,7 @@ const event_code_generator_1 = require("../code-generators/event-code-generator"
 class EventExecutor {
     constructor(event) {
         this.testerInstanceName = 'tester';
+        this.storeInstanceName = 'store';
         this.arguments = [];
         this.event = event;
     }
@@ -17,7 +18,7 @@ class EventExecutor {
         }
         this.event = this.initializeEvent(this.event);
         logger_1.Logger.trace(`Executing event function`);
-        const eventCodeGenerator = new event_code_generator_1.EventCodeGenerator(this.testerInstanceName, this.event);
+        const eventCodeGenerator = new event_code_generator_1.EventCodeGenerator(this.testerInstanceName, this.storeInstanceName, this.event);
         const code = eventCodeGenerator.generate();
         return this.runEvent(code).map(test => {
             return { name: test.label, valid: test.valid, description: test.errorDescription };
@@ -26,6 +27,7 @@ class EventExecutor {
     initializeEvent(event) {
         return {
             script: event.script || '',
+            store: event.store || {},
             assertions: this.prepareAssertions(event.assertions || [])
         };
     }
@@ -46,7 +48,7 @@ class EventExecutor {
         const scriptExecutor = new dynamic_function_controller_1.DynamicFunctionController(script);
         let tester = new tester_1.Tester();
         scriptExecutor.addArgument(this.testerInstanceName, tester);
-        scriptExecutor.addArgument('store', store_1.Store.getData());
+        scriptExecutor.addArgument(this.storeInstanceName, store_1.Store.getData());
         this.arguments.forEach(argument => {
             scriptExecutor.addArgument(argument.name, argument.value);
         });

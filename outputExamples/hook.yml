@@ -18,9 +18,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 906
-      startTime: '2018-08-23T01:27:51.827Z'
-      endTime: '2018-08-23T01:27:52.733Z'
+      totalTime: 335
+      startTime: '2018-08-23T02:42:49.621Z'
+      endTime: '2018-08-23T02:42:49.956Z'
       timeout: 1000
     subscriptions:
       -
@@ -46,13 +46,13 @@ runnables:
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit -> subscription::onMessageReceived'' does not contain ''subscription::onInit'''
+            description: '''requisition::onInit-> publisher::onInit-> subscription::onInit'' does not contain ''subscription::onInit'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-23T01:27:51.897Z'
+        connectionTime: '2018-08-23T02:42:49.771Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -76,15 +76,19 @@ runnables:
             valid: true
             description: '''[object Object]'' is not defined'
           -
+            name: 'Requisition onInit'
+            valid: true
+            description: '''requisition::onInit-> publisher::onInit-> subscription::onInit'' does not contain ''requisition::onInit'''
+          -
             name: 'Publisher name changed'
             valid: true
             description: 'Expected value to be equal to ''changed''. Received ''changed'''
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: '''requisition::onInit -> publisher::onInit -> subscription::onInit -> subscription::onMessageReceived -> publisher::onMessageReceived'' does not contain ''publisher::onInit'''
+            description: '''requisition::onInit-> publisher::onInit-> subscription::onInit'' does not contain ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-23T01:27:52.733Z'
+        publishTime: '2018-08-23T02:42:49.949Z'

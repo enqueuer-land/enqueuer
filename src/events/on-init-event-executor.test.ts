@@ -1,6 +1,5 @@
 import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';
 import {Tester} from '../testers/tester';
-import {AssertionCodeGenerator} from '../code-generators/assertion-code-generator';
 import {OnInitEventExecutor} from "./on-init-event-executor";
 import {Initializable} from "./initializable";
 
@@ -12,14 +11,6 @@ DynamicFunctionController.mockImplementation(() => {
     return {
         addArgument: addArgumentMock,
         execute: executeMock,
-    };
-});
-
-let generateMock = jest.fn();
-jest.mock('../code-generators/assertion-code-generator');
-AssertionCodeGenerator.mockImplementation(() => {
-    return {
-        generate: generateMock
     };
 });
 
@@ -47,6 +38,9 @@ describe('OnInitEventExecutor', () => {
     beforeEach(() => {
         initializable = {
             onInit: {
+                store: {
+                  key: 'value'
+                },
                 script: 'code',
                 assertions: [
                 {
@@ -60,16 +54,6 @@ describe('OnInitEventExecutor', () => {
                 }]
             }
         }
-    });
-
-    it('Should create assertions', () => {
-      const eventExecutor: OnInitEventExecutor = new OnInitEventExecutor('initializableName', initializable);
-
-        eventExecutor.trigger();
-
-        expect(generateMock).toHaveBeenCalledTimes(2);
-        expect(generateMock).toHaveBeenNthCalledWith(1, {"expected": 2, "isEqualTo": 2, "name": "equalName"});
-        expect(generateMock).toHaveBeenNthCalledWith(2, {"isDefined": "x", "name": "isDefinedName"});
     });
 
     it('Should add argument and pass it to the script executor', () => {

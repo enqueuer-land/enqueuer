@@ -1,6 +1,5 @@
 import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';
 import {Tester} from '../testers/tester';
-import {AssertionCodeGenerator} from '../code-generators/assertion-code-generator';
 import {OnMessageReceivedEventExecutor} from './on-message-received-event-executor';
 import {MessageReceiver} from './message-receiver';
 
@@ -12,14 +11,6 @@ DynamicFunctionController.mockImplementation(() => {
     return {
         addArgument: addArgumentMock,
         execute: executeMock,
-    };
-});
-
-let generateMock = jest.fn();
-jest.mock('../code-generators/assertion-code-generator');
-AssertionCodeGenerator.mockImplementation(() => {
-    return {
-        generate: generateMock
     };
 });
 
@@ -62,16 +53,6 @@ describe('OnMessageReceivedEventExecutor', () => {
                         }]
             }
         }
-    });
-
-    it('Should create assertions', () => {
-        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', messageReceiver);
-
-        eventExecutor.trigger();
-
-        expect(generateMock).toHaveBeenCalledTimes(2);
-        expect(generateMock).toHaveBeenNthCalledWith(1, {"expected": 2, "isEqualTo": 2, "name": "equalName"});
-        expect(generateMock).toHaveBeenNthCalledWith(2, {"isDefined": "x", "name": "isDefinedName"});
     });
 
     it('Should add name and pass it to the script executor', () => {

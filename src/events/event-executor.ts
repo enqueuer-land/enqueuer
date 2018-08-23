@@ -10,6 +10,7 @@ import {EventCodeGenerator} from '../code-generators/event-code-generator';
 
 export abstract class EventExecutor {
     private testerInstanceName = 'tester';
+    private storeInstanceName = 'store';
 
     private arguments: {name: string, value: any}[] = [];
     private event?: Event;
@@ -27,7 +28,9 @@ export abstract class EventExecutor {
         this.event = this.initializeEvent(this.event);
 
         Logger.trace(`Executing event function`);
-        const eventCodeGenerator: EventCodeGenerator = new EventCodeGenerator(this.testerInstanceName, this.event);
+        const eventCodeGenerator: EventCodeGenerator = new EventCodeGenerator(this.testerInstanceName,
+                                                                                this.storeInstanceName,
+                                                                                this.event);
         const code = eventCodeGenerator.generate();
         return this.runEvent(code).map(test => {
             return {name: test.label, valid: test.valid, description: test.errorDescription};
@@ -37,6 +40,7 @@ export abstract class EventExecutor {
     private initializeEvent(event: Event): Event {
         return {
             script: event.script || '',
+            store: event.store || {},
             assertions: this.prepareAssertions(event.assertions || [])
         };
     }
@@ -61,8 +65,8 @@ export abstract class EventExecutor {
 
         let tester = new Tester();
         scriptExecutor.addArgument(this.testerInstanceName, tester);
+        scriptExecutor.addArgument(this.storeInstanceName, Store.getData());
 
-        scriptExecutor.addArgument('store', Store.getData());
         this.arguments.forEach(argument => {
             scriptExecutor.addArgument(argument.name, argument.value);
         });
