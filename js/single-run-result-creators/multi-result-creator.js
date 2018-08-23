@@ -1,12 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const result_creator_1 = require("./result-creator");
 const summary_result_creator_1 = require("./summary-result-creator");
 const logger_1 = require("../loggers/logger");
 const file_result_creator_1 = require("./file-result-creator");
-class MultiResultCreator extends result_creator_1.ResultCreator {
+class MultiResultCreator {
     constructor(reportName) {
-        super();
         this.resultCreators = [];
         if (reportName) {
             this.resultCreators.push(new file_result_creator_1.FileResultCreator(reportName));

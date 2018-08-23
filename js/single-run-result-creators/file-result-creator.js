@@ -7,12 +7,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const result_creator_1 = require("./result-creator");
 const fs = __importStar(require("fs"));
 const yaml = __importStar(require("yamljs"));
-class FileResultCreator extends result_creator_1.ResultCreator {
+class FileResultCreator {
     constructor(filename) {
-        super();
         this.report = {
             name: filename,
             tests: [],

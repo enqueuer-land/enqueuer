@@ -3,12 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const result_creator_1 = require("./result-creator");
 const chalk_1 = __importDefault(require("chalk"));
 const date_controller_1 = require("../timers/date-controller");
-class SummaryResultCreator extends result_creator_1.ResultCreator {
+class SummaryResultCreator {
     constructor() {
-        super();
         this.testCounter = 0;
         this.failingTests = [];
         this.startTime = new date_controller_1.DateController();
