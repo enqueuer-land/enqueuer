@@ -1,27 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tester_1 = require("../testers/tester");
-const assertion_code_generator_1 = require("../code-generators/assertion-code-generator");
 const dynamic_function_controller_1 = require("../dynamic-functions/dynamic-function-controller");
 const store_1 = require("../configurations/store");
 const logger_1 = require("../loggers/logger");
+const event_code_generator_1 = require("../code-generators/event-code-generator");
 class EventExecutor {
     constructor(event) {
         this.testerInstanceName = 'tester';
         this.arguments = [];
-        this.assertions = [];
-        this.script = '';
-        if (event) {
-            this.script = event.script || '';
-            this.assertions = this.prepareAssertions(event.assertions || []);
-        }
+        this.event = event;
     }
     execute() {
+        if (!this.event) {
+            return [];
+        }
+        this.event = this.initializeEvent(this.event);
         logger_1.Logger.trace(`Executing event function`);
-        const code = this.addAssertions();
-        return this.scriptRunner(code).map(test => {
+        const eventCodeGenerator = new event_code_generator_1.EventCodeGenerator(this.testerInstanceName, this.event);
+        const code = eventCodeGenerator.generate();
+        return this.runEvent(code).map(test => {
             return { name: test.label, valid: test.valid, description: test.errorDescription };
         });
+    }
+    initializeEvent(event) {
+        return {
+            script: event.script || '',
+            assertions: this.prepareAssertions(event.assertions || [])
+        };
     }
     prepareAssertions(assertions) {
         let assertionCounter = 0;
@@ -36,28 +42,11 @@ class EventExecutor {
     addArgument(name, value) {
         this.arguments.push({ name: name, value: value });
     }
-    addAssertions() {
-        //TODO extract to its own class
-        let code = `try {
-            ${this.script}
-        } catch (err) {
-            ${this.testerInstanceName}.addTest({
-                    errorDescription: \`Error executing 'script' code: '\${err}'\`,
-                    valid: false,
-                    label: "Valid 'script' code"
-                });
-        }`;
-        this.assertions.forEach((assertion) => {
-            const assertionCodeGenerator = new assertion_code_generator_1.AssertionCodeGenerator(this.testerInstanceName);
-            code += assertionCodeGenerator.generate(assertion);
-        });
-        return code;
-    }
-    scriptRunner(script) {
+    runEvent(script) {
         const scriptExecutor = new dynamic_function_controller_1.DynamicFunctionController(script);
         let tester = new tester_1.Tester();
-        scriptExecutor.addArgument('store', store_1.Store.getData());
         scriptExecutor.addArgument(this.testerInstanceName, tester);
+        scriptExecutor.addArgument('store', store_1.Store.getData());
         this.arguments.forEach(argument => {
             scriptExecutor.addArgument(argument.name, argument.value);
         });

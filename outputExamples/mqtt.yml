@@ -1,22 +1,22 @@
 type: runnable
-valid: true
+valid: false
 tests: []
 name: 'mqtt test description'
 id: mqtt
 runnables:
   -
     type: requisition
-    valid: true
+    valid: false
     tests:
       -
-        valid: true
+        valid: false
         name: 'No time out'
-        description: 'Requisition has not timed out'
+        description: 'Requisition has timed out: 8598 > 8000'
     name: 'requisition description'
     time:
-      totalTime: 547
-      startTime: '2018-08-22T23:17:51.629Z'
-      endTime: '2018-08-22T23:17:52.176Z'
+      totalTime: 8598
+      startTime: '2018-08-23T00:25:55.881Z'
+      endTime: '2018-08-23T00:26:04.479Z'
       timeout: 8000
     subscriptions:
       -
@@ -24,23 +24,15 @@ runnables:
         type: mqtt
         tests:
           -
-            name: Payload
-            valid: true
-            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            name: Topic
-            valid: true
-            description: 'Expected value to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
-          -
-            name: 'Beatles song'
-            valid: true
-            description: 'Expected value to be greater than ''5''. Received ''8'''
-          -
-            valid: true
+            valid: false
             name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-08-22T23:17:52.136Z'
+            description: 'Subscription has not received its message'
+          -
+            valid: false
+            name: 'No time out'
+            description: 'Not avoidable Subscription has timed out'
+        valid: false
+        connectionTime: '2018-08-23T00:25:56.475Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -51,4 +43,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-22T23:17:52.162Z'
+        publishTime: '2018-08-23T00:25:56.482Z'
