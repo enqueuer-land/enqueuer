@@ -10,13 +10,14 @@ const logger_1 = require("../loggers/logger");
 class HttpServerPool {
     constructor() {
         this.http = {
-            ports: [],
+            ports: {},
             server: null
         };
         this.https = {
-            ports: [],
+            ports: {},
             server: null
         };
+        this.initializeExpress();
     }
     static getInstance() {
         if (!HttpServerPool.instance) {
@@ -28,70 +29,48 @@ class HttpServerPool {
         return this.app;
     }
     getHttpServer(port) {
+        logger_1.Logger.debug(`Getting a Http server ${port}`);
+        if (!this.http.server) {
+            logger_1.Logger.debug(`Creating a new Http server ${port}`);
+            const server = http_1.default.createServer(this.app);
+            this.http.server = server;
+        }
+        return this.listenToPort(this.http, port);
+    }
+    listenToPort(server, port) {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.debug(`Getting a Http server ${port}`);
-            if (!this.http.server) {
-                this.initializeExpress();
-                logger_1.Logger.debug(`Creating a new Http server ${port}`);
-                const server = http_1.default.createServer(this.app);
-                this.http.server = server;
-            }
-            this.http.server.on('error', (err) => {
+            server.server.on('error', (err) => {
                 if (err) {
-                    const message = `Error creating http ${err}`;
+                    const message = `Error creating server ${err}`;
                     logger_1.Logger.error(message);
                     return reject(message);
                 }
             });
-            if (this.http.ports.filter((value) => value == port).length == 0) {
-                this.http.server.listen(port, (err) => {
+            if (!server.ports[port]) {
+                server.server.listen(port, (err) => {
                     if (err) {
-                        const message = `Error listening http ${err}`;
+                        const message = `Error listening to server ${err}`;
                         logger_1.Logger.error(message);
                         return reject(message);
                     }
-                    this.http.ports.push(port);
+                    server.ports[port] = true;
                     return resolve();
                 });
             }
             else {
-                this.http.ports.push(port);
+                server.ports[port] = true;
                 return resolve();
             }
         });
     }
     getHttpsServer(credentials, port) {
         logger_1.Logger.debug(`Getting a Https server ${port}`);
-        return new Promise((resolve, reject) => {
-            if (!this.https.server) {
-                this.initializeExpress();
-                logger_1.Logger.debug(`Creating a new Https server ${port}`);
-                const server = https_1.default.createServer(credentials, this.app);
-                this.https.server = server;
-            }
-            this.https.server.on('error', (err) => {
-                if (err) {
-                    const message = `Error creating https ${err}`;
-                    logger_1.Logger.error(message);
-                    return reject(message);
-                }
-            });
-            if (this.https.ports.filter((value) => value == port).length == 0) {
-                this.https.server.listen(port, (err) => {
-                    if (err) {
-                        const message = `Error listening https ${err}`;
-                        logger_1.Logger.error(message);
-                        return reject(message);
-                    }
-                    this.https.ports.push(port);
-                    return resolve();
-                });
-            }
-            else {
-                this.https.ports.push(port);
-                return resolve();
-            }
-        });
+        if (!this.https.server) {
+            logger_1.Logger.debug(`Creating a new Https server ${port}`);
+            const server = https_1.default.createServer(credentials, this.app);
+            this.https.server = server;
+        }
+        return this.listenToPort(this.https, port);
     }
     initializeExpress() {
         if (!this.app) {
@@ -99,10 +78,10 @@ class HttpServerPool {
             this.app.use((req, res, next) => {
                 req.setEncoding('utf8');
                 req.rawBody = '';
-                req.on('data', function (chunk) {
+                req.on('data', (chunk) => {
                     req.rawBody += chunk;
                 });
-                req.on('end', function () {
+                req.on('end', () => {
                     logger_1.Logger.trace(`Http(s) server got message: ${req.rawBody}`);
                     next();
                 });
