@@ -14,6 +14,7 @@ const subscription_reporter_1 = require("../subscription/subscription-reporter")
 const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
 const logger_1 = require("../../loggers/logger");
+//TODO test it
 let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();

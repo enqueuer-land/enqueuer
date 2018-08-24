@@ -86,10 +86,12 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     getTestFiles(files) {
         let result = [];
-        files.forEach((file) => {
-            result = result.concat(glob.sync(file));
-        });
-        logger_1.Logger.info(`Files list: ${result}`);
+        if (files) {
+            files.forEach((file) => {
+                result = result.concat(glob.sync(file));
+            });
+            logger_1.Logger.info(`Files list: ${result}`);
+        }
         return result;
     }
     parseFileRunnable(fileName) {

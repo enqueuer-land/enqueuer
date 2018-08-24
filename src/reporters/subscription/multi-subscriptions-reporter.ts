@@ -1,6 +1,7 @@
 import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {SubscriptionReporter} from './subscription-reporter';
+import {Logger} from '../../loggers/logger';
 
 export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
@@ -17,12 +18,13 @@ export class MultiSubscriptionsReporter {
         }
     }
 
-    public subscribe(): Promise<void[]> {
+    public subscribe(stoppedWaitingCallback: Function): Promise<void[]> {
         return Promise.all(this.subscriptionReporters.map(
             subscriptionHandler => {
                     subscriptionHandler.startTimeout(() => {
                         if (this.haveAllSubscriptionsStoppedWaiting()) {
-                            return Promise.resolve();
+                            Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
+                            return Promise.resolve(stoppedWaitingCallback());
                         }
                     });
                     return subscriptionHandler.subscribe();
@@ -39,6 +41,7 @@ export class MultiSubscriptionsReporter {
                 subscriptionHandler.receiveMessage()
                     .then(() => {
                         if (this.haveAllSubscriptionsStoppedWaiting()) {
+                            Logger.debug(`All up-to-receive subscriptions stopped waiting`);
                             resolve();
                         }
                     })
@@ -53,7 +56,11 @@ export class MultiSubscriptionsReporter {
 
     private haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;
-        return (this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length);
+        Logger.debug(`Subscription stopped waiting ${this.subscriptionsStoppedWaitingCounter}/${this.subscriptionReporters.length}`);
+        if (this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_reporter_1 = require("./subscription-reporter");
+const logger_1 = require("../../loggers/logger");
 class MultiSubscriptionsReporter {
     constructor(subscriptionsAttributes) {
         this.subscriptionReporters = [];
@@ -14,11 +15,12 @@ class MultiSubscriptionsReporter {
             });
         }
     }
-    subscribe() {
+    subscribe(stoppedWaitingCallback) {
         return Promise.all(this.subscriptionReporters.map(subscriptionHandler => {
             subscriptionHandler.startTimeout(() => {
                 if (this.haveAllSubscriptionsStoppedWaiting()) {
-                    return Promise.resolve();
+                    logger_1.Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
+                    return Promise.resolve(stoppedWaitingCallback());
                 }
             });
             return subscriptionHandler.subscribe();
@@ -33,6 +35,7 @@ class MultiSubscriptionsReporter {
                 subscriptionHandler.receiveMessage()
                     .then(() => {
                     if (this.haveAllSubscriptionsStoppedWaiting()) {
+                        logger_1.Logger.debug(`All up-to-receive subscriptions stopped waiting`);
                         resolve();
                     }
                 })
@@ -45,7 +48,11 @@ class MultiSubscriptionsReporter {
     }
     haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;
-        return (this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length);
+        logger_1.Logger.debug(`Subscription stopped waiting ${this.subscriptionsStoppedWaitingCounter}/${this.subscriptionReporters.length}`);
+        if (this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length) {
+            return true;
+        }
+        return false;
     }
 }
 exports.MultiSubscriptionsReporter = MultiSubscriptionsReporter;

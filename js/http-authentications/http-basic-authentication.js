@@ -12,23 +12,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const http_authentication_1 = require("./http-authentication");
 const util_1 = require("util");
+const logger_1 = require("../loggers/logger");
 let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authentication_1.HttpAuthentication {
     constructor(authentication) {
         super();
         this.tests = [];
-        this.user = authentication.basic.user;
+        this.user = authentication.basic.user || '';
         this.password = authentication.basic.password;
     }
     generate() {
         return { 'authorization': 'Basic ' + Buffer.from(`${this.user}:${this.password}`, 'ascii').toString('base64') };
     }
     verify(authorization) {
-        this.tests = [];
-        const plainAuth = new Buffer(authorization.split(' ')[1], 'base64').toString(); //decode
-        const credentials = plainAuth.split(':');
-        this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
-        this.tests.push(this.authenticateUser(credentials[0]));
-        this.tests.push(this.authenticatePassword(credentials[1]));
+        try {
+            this.tests = [];
+            const plainAuth = new Buffer(authorization.split(' ')[1], 'base64').toString(); //decode
+            const credentials = plainAuth.split(':');
+            this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
+            this.tests.push(this.authenticateUser(credentials[0]));
+            this.tests.push(this.authenticatePassword(credentials[1]));
+        }
+        catch (err) {
+            logger_1.Logger.error(`Error trying to authenticate: ${err}`);
+        }
         this.tests.push(this.basicAuthentication());
         return this.tests;
     }
@@ -38,9 +44,11 @@ let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authent
             valid: false,
             description: 'Fail to authenticate \'Basic\' authentication'
         };
-        if (this.tests.every(test => test.valid)) {
-            test.valid = true;
-            test.description = `Basic authentication is valid`;
+        if (this.tests.length > 0) {
+            if (this.tests.every(test => test.valid)) {
+                test.valid = true;
+                test.description = `Basic authentication is valid`;
+            }
         }
         return test;
     }

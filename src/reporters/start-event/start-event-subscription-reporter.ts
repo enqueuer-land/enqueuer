@@ -6,6 +6,7 @@ import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import {Logger} from '../../loggers/logger';
 
+//TODO test it
 @Injectable({predicate: (startEvent: any) => startEvent.subscription != null})
 export class StartEventSubscriptionReporter extends StartEventReporter {
 

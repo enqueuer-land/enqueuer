@@ -2,6 +2,7 @@ import {Injectable} from 'conditional-injector';
 import {HttpAuthentication} from './http-authentication';
 import {isNullOrUndefined} from 'util';
 import {TestModel} from '../models/outputs/test-model';
+import {Logger} from '../loggers/logger';
 
 @Injectable({predicate: (authentication: any) => !isNullOrUndefined(authentication.basic)})
 export class HttpBasicAuthentication extends HttpAuthentication {
@@ -12,7 +13,7 @@ export class HttpBasicAuthentication extends HttpAuthentication {
 
     public constructor(authentication: any) {
         super();
-        this.user = authentication.basic.user;
+        this.user = authentication.basic.user || '';
         this.password = authentication.basic.password;
     }
 
@@ -21,13 +22,17 @@ export class HttpBasicAuthentication extends HttpAuthentication {
     }
 
     public verify(authorization: string): TestModel[] {
-        this.tests = [];
-        const plainAuth = new Buffer(authorization.split(' ')[1], 'base64').toString(); //decode
-        const credentials = plainAuth.split(':');
-
-        this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
-        this.tests.push(this.authenticateUser(credentials[0]));
-        this.tests.push(this.authenticatePassword(credentials[1]));
+        try {
+            this.tests = [];
+            const plainAuth = new Buffer(authorization.split(' ')[1], 'base64').toString(); //decode
+            const credentials = plainAuth.split(':');
+    
+            this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
+            this.tests.push(this.authenticateUser(credentials[0]));
+            this.tests.push(this.authenticatePassword(credentials[1]));
+        } catch (err) {
+            Logger.error(`Error trying to authenticate: ${err}`);
+        }
         this.tests.push(this.basicAuthentication());
 
         return this.tests;
@@ -39,9 +44,11 @@ export class HttpBasicAuthentication extends HttpAuthentication {
             valid: false,
             description: 'Fail to authenticate \'Basic\' authentication'
         };
-        if (this.tests.every(test => test.valid)) {
-            test.valid = true;
-            test.description = `Basic authentication is valid`;
+        if (this.tests.length > 0) {
+            if (this.tests.every(test => test.valid)) {
+                test.valid = true;
+                test.description = `Basic authentication is valid`;
+            }
         }
         return test;
     }

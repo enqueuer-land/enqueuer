@@ -82,10 +82,12 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     private getTestFiles(files: string[]): string[] {
         let result: string[] = [];
-        files.forEach((file: string) => {
-            result = result.concat(glob.sync(file));
-        });
-        Logger.info(`Files list: ${result}`);
+        if (files) {
+            files.forEach((file: string) => {
+                result = result.concat(glob.sync(file));
+            });
+            Logger.info(`Files list: ${result}`);
+        }
         return result;
     }
 

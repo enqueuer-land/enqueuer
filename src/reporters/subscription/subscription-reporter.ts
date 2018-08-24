@@ -142,6 +142,7 @@ export class SubscriptionReporter {
         if (this.timeOut) {
             this.timeOut.clear();
         }
+        Logger.info(`Subscription ${this.subscription.type} unsubscribed`);
     }
 
     private initializeTimeout() {

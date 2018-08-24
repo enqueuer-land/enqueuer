@@ -30,6 +30,7 @@ One of:
 Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
+replace variables before eache requisition. only this time
 
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts

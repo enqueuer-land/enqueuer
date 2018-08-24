@@ -143,6 +143,7 @@ class SubscriptionReporter {
         if (this.timeOut) {
             this.timeOut.clear();
         }
+        logger_1.Logger.info(`Subscription ${this.subscription.type} unsubscribed`);
     }
     initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {

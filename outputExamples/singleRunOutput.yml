@@ -19,9 +19,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 39
-          startTime: '2018-08-23T21:28:37.234Z'
-          endTime: '2018-08-23T21:28:37.273Z'
+          totalTime: 40
+          startTime: '2018-08-24T03:41:48.422Z'
+          endTime: '2018-08-24T03:41:48.462Z'
           timeout: 5000
         subscriptions:
           -
@@ -45,7 +45,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.234Z'
+            connectionTime: '2018-08-24T03:41:48.423Z'
         startEvent:
           publisher:
             name: publisher
@@ -56,7 +56,7 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:37.250Z'
+            publishTime: '2018-08-24T03:41:48.442Z'
   -
     type: runnable
     valid: true
@@ -74,9 +74,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 50
-          startTime: '2018-08-23T21:28:37.229Z'
-          endTime: '2018-08-23T21:28:37.279Z'
+          totalTime: 58
+          startTime: '2018-08-24T03:41:48.417Z'
+          endTime: '2018-08-24T03:41:48.475Z'
           timeout: 1000
         subscriptions: []
         startEvent:
@@ -93,7 +93,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.235Z'
+            connectionTime: '2018-08-24T03:41:48.424Z'
   -
     type: runnable
     valid: true
@@ -107,9 +107,9 @@ runnables:
         tests: []
         name: 'requisition description'
         time:
-          totalTime: 51
-          startTime: '2018-08-23T21:28:37.231Z'
-          endTime: '2018-08-23T21:28:37.282Z'
+          totalTime: 59
+          startTime: '2018-08-24T03:41:48.419Z'
+          endTime: '2018-08-24T03:41:48.478Z'
         subscriptions:
           -
             name: 'subscription description'
@@ -128,7 +128,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.234Z'
+            connectionTime: '2018-08-24T03:41:48.423Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -139,7 +139,7 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:37.278Z'
+            publishTime: '2018-08-24T03:41:48.468Z'
   -
     type: runnable
     valid: true
@@ -157,9 +157,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 104
-          startTime: '2018-08-23T21:28:37.193Z'
-          endTime: '2018-08-23T21:28:37.297Z'
+          totalTime: 109
+          startTime: '2018-08-24T03:41:48.381Z'
+          endTime: '2018-08-24T03:41:48.490Z'
           timeout: 3000
         subscriptions:
           -
@@ -169,23 +169,23 @@ runnables:
               -
                 name: 'Some time has passed'
                 valid: true
-                description: 'Expected value to be greater than or equal to ''1535059698199''. Received ''1535059717296'''
+                description: 'Expected value to be greater than or equal to ''1535082108381''. Received ''1535082108490'''
               -
                 name: Filename
                 valid: true
-                description: '''temp/fileTest20180823182818025139_d17940db.file'' does not contain ''temp/'''
+                description: '''temp/fileTest20180824004148042518_365011a7.file'' does not contain ''temp/'''
               -
                 name: Content
                 valid: true
-                description: '''1535059698199'' is not defined'
+                description: '''1535082108381'' is not defined'
               -
                 name: Created
                 valid: true
-                description: '''Thu Aug 23 2018 18:28:18 GMT-0300 (-03)'' is not defined'
+                description: '''Fri Aug 24 2018 00:41:48 GMT-0300 (-03)'' is not defined'
               -
                 name: Modified
                 valid: true
-                description: '''Thu Aug 23 2018 18:28:18 GMT-0300 (-03)'' is not defined'
+                description: '''Fri Aug 24 2018 00:41:48 GMT-0300 (-03)'' is not defined'
               -
                 name: Size
                 valid: true
@@ -195,7 +195,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.234Z'
+            connectionTime: '2018-08-24T03:41:48.423Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -206,7 +206,7 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:37.250Z'
+            publishTime: '2018-08-24T03:41:48.442Z'
   -
     type: runnable
     valid: false
@@ -224,20 +224,20 @@ runnables:
             description:
               message: 'AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
               code: AWS.SimpleQueueService.NonExistentQueue
-              time: 2018-08-23T21:28:37.315Z
+              time: 2018-08-24T03:41:48.515Z
               requestId: null
               statusCode: 400
               retryable: false
-              retryDelay: 53.46429525679737
+              retryDelay: 13.23378235541266
           -
             valid: true
             name: 'No time out'
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 87
-          startTime: '2018-08-23T21:28:37.229Z'
-          endTime: '2018-08-23T21:28:37.316Z'
+          totalTime: 99
+          startTime: '2018-08-24T03:41:48.417Z'
+          endTime: '2018-08-24T03:41:48.516Z'
           timeout: 5000
         subscriptions:
           -
@@ -249,7 +249,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has not received its message'
             valid: false
-            connectionTime: '2018-08-23T21:28:37.234Z'
+            connectionTime: '2018-08-24T03:41:48.423Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -285,9 +285,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 154
-          startTime: '2018-08-23T21:28:37.194Z'
-          endTime: '2018-08-23T21:28:37.348Z'
+          totalTime: 171
+          startTime: '2018-08-24T03:41:48.382Z'
+          endTime: '2018-08-24T03:41:48.553Z'
           timeout: 2000
         subscriptions:
           -
@@ -319,7 +319,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.268Z'
+            connectionTime: '2018-08-24T03:41:48.456Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -358,7 +358,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.348Z'
+            publishTime: '2018-08-24T03:41:48.552Z'
   -
     type: runnable
     valid: true
@@ -376,9 +376,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 166
-          startTime: '2018-08-23T21:28:37.207Z'
-          endTime: '2018-08-23T21:28:37.373Z'
+          totalTime: 192
+          startTime: '2018-08-24T03:41:48.393Z'
+          endTime: '2018-08-24T03:41:48.585Z'
           timeout: 8000
         subscriptions:
           -
@@ -410,7 +410,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.305Z'
+            connectionTime: '2018-08-24T03:41:48.505Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -429,7 +429,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.362Z'
+            publishTime: '2018-08-24T03:41:48.579Z'
   -
     type: runnable
     valid: true
@@ -447,9 +447,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 170
-          startTime: '2018-08-23T21:28:37.229Z'
-          endTime: '2018-08-23T21:28:37.399Z'
+          totalTime: 191
+          startTime: '2018-08-24T03:41:48.417Z'
+          endTime: '2018-08-24T03:41:48.608Z'
           timeout: 3000
         subscriptions:
           -
@@ -465,7 +465,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.331Z'
+            connectionTime: '2018-08-24T03:41:48.530Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -476,7 +476,7 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:37.383Z'
+            publishTime: '2018-08-24T03:41:48.589Z'
   -
     type: runnable
     valid: true
@@ -494,9 +494,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 196
-          startTime: '2018-08-23T21:28:37.208Z'
-          endTime: '2018-08-23T21:28:37.404Z'
+          totalTime: 216
+          startTime: '2018-08-24T03:41:48.394Z'
+          endTime: '2018-08-24T03:41:48.610Z'
           timeout: 8000
         subscriptions:
           -
@@ -520,7 +520,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.336Z'
+            connectionTime: '2018-08-24T03:41:48.534Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -531,7 +531,7 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:37.384Z'
+            publishTime: '2018-08-24T03:41:48.590Z'
   -
     type: runnable
     valid: true
@@ -549,9 +549,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 228
-          startTime: '2018-08-23T21:28:37.188Z'
-          endTime: '2018-08-23T21:28:37.416Z'
+          totalTime: 254
+          startTime: '2018-08-24T03:41:48.377Z'
+          endTime: '2018-08-24T03:41:48.631Z'
           timeout: 5000
         subscriptions:
           -
@@ -579,7 +579,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.366Z'
+            connectionTime: '2018-08-24T03:41:48.575Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -594,7 +594,7 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:37.414Z'
+            publishTime: '2018-08-24T03:41:48.623Z'
   -
     type: runnable
     valid: true
@@ -612,9 +612,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition 0 description'
         time:
-          totalTime: 155
-          startTime: '2018-08-23T21:28:37.198Z'
-          endTime: '2018-08-23T21:28:37.353Z'
+          totalTime: 179
+          startTime: '2018-08-24T03:41:48.384Z'
+          endTime: '2018-08-24T03:41:48.563Z'
           timeout: 3000
         subscriptions:
           -
@@ -654,7 +654,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.252Z'
+            connectionTime: '2018-08-24T03:41:48.444Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -677,7 +677,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.353Z'
+            publishTime: '2018-08-24T03:41:48.563Z'
       -
         type: requisition
         valid: true
@@ -688,9 +688,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition 1 description'
         time:
-          totalTime: 32
-          startTime: '2018-08-23T21:28:37.353Z'
-          endTime: '2018-08-23T21:28:37.385Z'
+          totalTime: 28
+          startTime: '2018-08-24T03:41:48.563Z'
+          endTime: '2018-08-24T03:41:48.591Z'
           timeout: 5000
         subscriptions:
           -
@@ -706,7 +706,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.354Z'
+            connectionTime: '2018-08-24T03:41:48.564Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -729,7 +729,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.385Z'
+            publishTime: '2018-08-24T03:41:48.591Z'
       -
         type: requisition
         valid: true
@@ -740,9 +740,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition 2 description'
         time:
-          totalTime: 39
-          startTime: '2018-08-23T21:28:37.386Z'
-          endTime: '2018-08-23T21:28:37.425Z'
+          totalTime: 44
+          startTime: '2018-08-24T03:41:48.592Z'
+          endTime: '2018-08-24T03:41:48.636Z'
           timeout: 3000
         subscriptions:
           -
@@ -758,7 +758,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.394Z'
+            connectionTime: '2018-08-24T03:41:48.602Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -781,7 +781,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.424Z'
+            publishTime: '2018-08-24T03:41:48.636Z'
   -
     type: runnable
     valid: true
@@ -799,9 +799,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 383
-          startTime: '2018-08-23T21:28:37.225Z'
-          endTime: '2018-08-23T21:28:37.608Z'
+          totalTime: 386
+          startTime: '2018-08-24T03:41:48.413Z'
+          endTime: '2018-08-24T03:41:48.799Z'
           timeout: 3000
         subscriptions: []
         startEvent:
@@ -818,7 +818,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.270Z'
+            connectionTime: '2018-08-24T03:41:48.458Z'
   -
     type: runnable
     valid: true
@@ -837,8 +837,8 @@ runnables:
         name: 'requisition description'
         time:
           totalTime: 4
-          startTime: '2018-08-23T21:28:37.605Z'
-          endTime: '2018-08-23T21:28:37.609Z'
+          startTime: '2018-08-24T03:41:48.796Z'
+          endTime: '2018-08-24T03:41:48.800Z'
           timeout: 3000
         subscriptions: []
         startEvent:
@@ -859,7 +859,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.609Z'
+            publishTime: '2018-08-24T03:41:48.800Z'
   -
     type: runnable
     valid: true
@@ -877,9 +877,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'tcp 0 requisition description'
         time:
-          totalTime: 117
-          startTime: '2018-08-23T21:28:37.230Z'
-          endTime: '2018-08-23T21:28:37.347Z'
+          totalTime: 142
+          startTime: '2018-08-24T03:41:48.418Z'
+          endTime: '2018-08-24T03:41:48.560Z'
           timeout: 3000
         subscriptions:
           -
@@ -895,7 +895,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.269Z'
+            connectionTime: '2018-08-24T03:41:48.457Z'
         startEvent:
           publisher:
             name: 'tcp 0 publisher description'
@@ -914,7 +914,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.347Z'
+            publishTime: '2018-08-24T03:41:48.559Z'
       -
         type: requisition
         valid: true
@@ -925,9 +925,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'tcp 1 requisition description'
         time:
-          totalTime: 849
-          startTime: '2018-08-23T21:28:37.348Z'
-          endTime: '2018-08-23T21:28:38.197Z'
+          totalTime: 848
+          startTime: '2018-08-24T03:41:48.560Z'
+          endTime: '2018-08-24T03:41:49.408Z'
           timeout: 3000
         subscriptions:
           -
@@ -943,7 +943,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.360Z'
+            connectionTime: '2018-08-24T03:41:48.570Z'
         startEvent:
           publisher:
             name: 'tcp 1 publisher description'
@@ -962,7 +962,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:38.196Z'
+            publishTime: '2018-08-24T03:41:49.407Z'
       -
         type: requisition
         valid: true
@@ -973,9 +973,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'tcp 2 requisition description'
         time:
-          totalTime: 2
-          startTime: '2018-08-23T21:28:38.197Z'
-          endTime: '2018-08-23T21:28:38.199Z'
+          totalTime: 1
+          startTime: '2018-08-24T03:41:49.409Z'
+          endTime: '2018-08-24T03:41:49.410Z'
           timeout: 3000
         subscriptions:
           -
@@ -991,7 +991,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:38.197Z'
+            connectionTime: '2018-08-24T03:41:49.409Z'
         startEvent:
           publisher:
             name: 'tcp 2 publisher description'
@@ -1010,7 +1010,7 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:38.199Z'
+            publishTime: '2018-08-24T03:41:49.410Z'
   -
     type: runnable
     valid: true
@@ -1028,9 +1028,9 @@ runnables:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 105
-          startTime: '2018-08-23T21:28:37.232Z'
-          endTime: '2018-08-23T21:28:37.337Z'
+          totalTime: 117
+          startTime: '2018-08-24T03:41:48.420Z'
+          endTime: '2018-08-24T03:41:48.537Z'
           timeout: 3000
         subscriptions:
           -
@@ -1046,7 +1046,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.270Z'
+            connectionTime: '2018-08-24T03:41:48.458Z'
         startEvent:
           publisher:
             name: 'publisher description'
@@ -1065,16 +1065,16 @@ runnables:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-08-23T21:28:37.337Z'
+            publishTime: '2018-08-24T03:41:48.536Z'
       -
         type: requisition
         valid: true
         tests: []
         name: 'UDS2 Name description'
         time:
-          totalTime: 1030
-          startTime: '2018-08-23T21:28:37.338Z'
-          endTime: '2018-08-23T21:28:38.368Z'
+          totalTime: 1031
+          startTime: '2018-08-24T03:41:48.538Z'
+          endTime: '2018-08-24T03:41:49.569Z'
         subscriptions:
           -
             name: 'udsSubscription2 description'
@@ -1089,7 +1089,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.347Z'
+            connectionTime: '2018-08-24T03:41:48.541Z'
         startEvent:
           publisher:
             name: 'udsPublisher2 description'
@@ -1104,16 +1104,16 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:38.367Z'
+            publishTime: '2018-08-24T03:41:49.568Z'
       -
         type: requisition
         valid: true
         tests: []
         name: 'udsStreamLoader description'
         time:
-          totalTime: 2
-          startTime: '2018-08-23T21:28:38.368Z'
-          endTime: '2018-08-23T21:28:38.370Z'
+          totalTime: 1
+          startTime: '2018-08-24T03:41:49.570Z'
+          endTime: '2018-08-24T03:41:49.571Z'
         subscriptions:
           -
             name: 'udsStreamLoader subscription'
@@ -1124,7 +1124,7 @@ runnables:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-08-23T21:28:38.368Z'
+            connectionTime: '2018-08-24T03:41:49.570Z'
         startEvent:
           publisher:
             name: 'udsStreamLoader publisher'
@@ -1135,7 +1135,7 @@ runnables:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-08-23T21:28:38.370Z'
+            publishTime: '2018-08-24T03:41:49.571Z'
   -
     type: runnable
     valid: true
@@ -1149,9 +1149,9 @@ runnables:
         tests: []
         name: 'Requisition #0'
         time:
-          totalTime: 2047
-          startTime: '2018-08-23T21:28:37.192Z'
-          endTime: '2018-08-23T21:28:39.239Z'
+          totalTime: 2048
+          startTime: '2018-08-24T03:41:48.380Z'
+          endTime: '2018-08-24T03:41:50.428Z'
         subscriptions: []
         startEvent:
           subscription:
@@ -1163,7 +1163,7 @@ runnables:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received a message'
             valid: true
-            connectionTime: '2018-08-23T21:28:37.270Z'
+            connectionTime: '2018-08-24T03:41:48.458Z'
   -
     type: runnable
     valid: true
@@ -1185,8 +1185,8 @@ runnables:
             name: 'Requisition #0 [10]'
             time:
               totalTime: 1
-              startTime: '2018-08-23T21:28:37.257Z'
-              endTime: '2018-08-23T21:28:37.258Z'
+              startTime: '2018-08-24T03:41:48.448Z'
+              endTime: '2018-08-24T03:41:48.449Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1195,16 +1195,16 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.257Z'
+                publishTime: '2018-08-24T03:41:48.449Z'
           -
             type: requisition
             valid: true
             tests: []
             name: 'Requisition #0 [9]'
             time:
-              totalTime: 1
-              startTime: '2018-08-23T21:28:37.258Z'
-              endTime: '2018-08-23T21:28:37.259Z'
+              totalTime: 0
+              startTime: '2018-08-24T03:41:48.450Z'
+              endTime: '2018-08-24T03:41:48.450Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1213,7 +1213,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.258Z'
+                publishTime: '2018-08-24T03:41:48.450Z'
           -
             type: requisition
             valid: true
@@ -1221,8 +1221,8 @@ runnables:
             name: 'Requisition #0 [8]'
             time:
               totalTime: 1
-              startTime: '2018-08-23T21:28:37.259Z'
-              endTime: '2018-08-23T21:28:37.260Z'
+              startTime: '2018-08-24T03:41:48.450Z'
+              endTime: '2018-08-24T03:41:48.451Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1231,7 +1231,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.260Z'
+                publishTime: '2018-08-24T03:41:48.451Z'
           -
             type: requisition
             valid: true
@@ -1239,8 +1239,8 @@ runnables:
             name: 'Requisition #0 [7]'
             time:
               totalTime: 0
-              startTime: '2018-08-23T21:28:37.260Z'
-              endTime: '2018-08-23T21:28:37.260Z'
+              startTime: '2018-08-24T03:41:48.451Z'
+              endTime: '2018-08-24T03:41:48.451Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1249,7 +1249,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.260Z'
+                publishTime: '2018-08-24T03:41:48.451Z'
           -
             type: requisition
             valid: true
@@ -1257,8 +1257,8 @@ runnables:
             name: 'Requisition #0 [6]'
             time:
               totalTime: 0
-              startTime: '2018-08-23T21:28:37.261Z'
-              endTime: '2018-08-23T21:28:37.261Z'
+              startTime: '2018-08-24T03:41:48.452Z'
+              endTime: '2018-08-24T03:41:48.452Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1267,7 +1267,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.261Z'
+                publishTime: '2018-08-24T03:41:48.452Z'
           -
             type: requisition
             valid: true
@@ -1275,8 +1275,8 @@ runnables:
             name: 'Requisition #0 [5]'
             time:
               totalTime: 1
-              startTime: '2018-08-23T21:28:37.264Z'
-              endTime: '2018-08-23T21:28:37.265Z'
+              startTime: '2018-08-24T03:41:48.452Z'
+              endTime: '2018-08-24T03:41:48.453Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1285,7 +1285,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.265Z'
+                publishTime: '2018-08-24T03:41:48.452Z'
           -
             type: requisition
             valid: true
@@ -1293,8 +1293,8 @@ runnables:
             name: 'Requisition #0 [4]'
             time:
               totalTime: 0
-              startTime: '2018-08-23T21:28:37.265Z'
-              endTime: '2018-08-23T21:28:37.265Z'
+              startTime: '2018-08-24T03:41:48.453Z'
+              endTime: '2018-08-24T03:41:48.453Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1303,7 +1303,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.265Z'
+                publishTime: '2018-08-24T03:41:48.453Z'
           -
             type: requisition
             valid: true
@@ -1311,8 +1311,8 @@ runnables:
             name: 'Requisition #0 [3]'
             time:
               totalTime: 1
-              startTime: '2018-08-23T21:28:37.265Z'
-              endTime: '2018-08-23T21:28:37.266Z'
+              startTime: '2018-08-24T03:41:48.453Z'
+              endTime: '2018-08-24T03:41:48.454Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1321,7 +1321,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.266Z'
+                publishTime: '2018-08-24T03:41:48.453Z'
           -
             type: requisition
             valid: true
@@ -1329,8 +1329,8 @@ runnables:
             name: 'Requisition #0 [2]'
             time:
               totalTime: 0
-              startTime: '2018-08-23T21:28:37.266Z'
-              endTime: '2018-08-23T21:28:37.266Z'
+              startTime: '2018-08-24T03:41:48.454Z'
+              endTime: '2018-08-24T03:41:48.454Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1339,16 +1339,16 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.266Z'
+                publishTime: '2018-08-24T03:41:48.454Z'
           -
             type: requisition
             valid: true
             tests: []
             name: 'Requisition #0 [1]'
             time:
-              totalTime: 1
-              startTime: '2018-08-23T21:28:37.266Z'
-              endTime: '2018-08-23T21:28:37.267Z'
+              totalTime: 0
+              startTime: '2018-08-24T03:41:48.454Z'
+              endTime: '2018-08-24T03:41:48.454Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1357,7 +1357,7 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:37.267Z'
+                publishTime: '2018-08-24T03:41:48.454Z'
       -
         type: runnable
         valid: true
@@ -1376,16 +1376,16 @@ runnables:
               -
                 name: 'It delayed for at least ~3 seconds'
                 valid: true
-                description: 'Expected value to be greater than ''3000''. Received ''3055'''
+                description: 'Expected value to be greater than ''3000''. Received ''3054'''
               -
                 name: 'It delayed for no more than ~3 seconds'
                 valid: true
-                description: 'Expected value to be less than ''3000''. Received ''2505'''
+                description: 'Expected value to be less than ''3000''. Received ''2504'''
             name: 'Requisition #0'
             time:
-              totalTime: 0
-              startTime: '2018-08-23T21:28:40.272Z'
-              endTime: '2018-08-23T21:28:40.272Z'
+              totalTime: 1
+              startTime: '2018-08-24T03:41:51.458Z'
+              endTime: '2018-08-24T03:41:51.459Z'
             subscriptions: []
             startEvent:
               publisher:
@@ -1394,4 +1394,4 @@ runnables:
                 type: zero-mq-pub
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-08-23T21:28:40.272Z'
+                publishTime: '2018-08-24T03:41:51.458Z'

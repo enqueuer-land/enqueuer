@@ -40,7 +40,7 @@ describe('HttpBasicAuthentication', () => {
 
         const verify = authorization.verify('Basic dXNlcjpwYXNzd29yZA');
 
-        expect(verify.every((test) => test.valid)).toBe(true);
+        expect(verify.every((test) => test.valid)).toBeTruthy();
     });
 
 
@@ -69,7 +69,29 @@ describe('HttpBasicAuthentication', () => {
 
         const verify = authorization.verify('Basic QWxhZGRpbjpPcGVuU2VzYW1l');
 
-        expect(verify.every((test) => test.valid)).toBe(true);
+        expect(verify.every((test) => test.valid)).toBeTruthy();
+    });
+
+    it('Empty authentication is falsy', () => {
+        const authentication = {
+            basic: {
+                user: 'Aladdin',
+                password: 'OpenSesame'
+            }
+        };
+        const authorization: HttpBasicAuthentication = new HttpBasicAuthentication(authentication);
+
+        const verify = authorization.verify();
+
+        expect(verify.valid).toBeFalsy();
+    });
+
+    it('Empty auth credentials', () => {
+        const authorization: HttpBasicAuthentication = new HttpBasicAuthentication({basic: ''});
+
+        const verify = authorization.verify('Basic QWxhZGRpbjpPcGVuU2VzYW1l');
+
+        expect(verify.every((test) => test.valid)).toBeFalsy();
     });
 
 });
