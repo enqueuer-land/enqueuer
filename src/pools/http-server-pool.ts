@@ -99,38 +99,6 @@ export class HttpServerPool {
         });
     }
 
-    private remove(array: number[], element: number) {
-        const index = array.indexOf(element);
-
-        if (index !== -1) {
-            array.splice(index, 1);
-        }
-    }
-
-    public closeHttpServer(port: number) {
-        Logger.debug(`Releasing http server ${port}:${this.http.ports}`);
-        this.remove(this.http.ports, port);
-        if (this.http.ports.length == 0 && this.http.server) {
-            Logger.debug('Closing http server');
-            this.http.server.close();
-            this.http.server = null;
-            this.finalizeExpress();
-        }
-
-    }
-
-    public closeHttpsServer(port: number) {
-        Logger.debug(`Releasing https server ${port}:${this.https.ports}`);
-        this.remove(this.https.ports, port);
-        if (this.https.ports.length == 0 && this.https.server) {
-            Logger.debug('Closing https server');
-            this.https.server.close();
-            this.https.server = null;
-            this.finalizeExpress();
-        }
-
-    }
-
     private initializeExpress() {
         if (!this.app) {
             this.app = express();
@@ -145,13 +113,6 @@ export class HttpServerPool {
                     next();
                 });
             });
-        }
-    }
-
-    private finalizeExpress() {
-        if (this.http.ports.length + this.https.ports.length <= 0) {
-            Logger.trace(`Finalizing express application`);
-            this.app = null;
         }
     }
 

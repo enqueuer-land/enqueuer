@@ -37,7 +37,7 @@ export class HttpServerSubscription extends Subscription {
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve) => {
-            HttpServerPool.getInstance().getApp()[this.method](this.endpoint, (request: any, responseHandler: any) => {
+            HttpServerPool.getInstance().getApp()[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
                 const payload = request.rawBody;
                 Logger.debug(`Http got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 if (isNullOrUndefined(this.response.payload)) {
@@ -61,6 +61,7 @@ export class HttpServerSubscription extends Subscription {
                 };
 
                 resolve(result);
+                next();
             });
         });
     }
@@ -77,14 +78,6 @@ export class HttpServerSubscription extends Subscription {
                 return reject(`Http server type is not known: ${this.type}`);
             }
         });
-    }
-
-    public unsubscribe() {
-        if (this.type == 'https-server') {
-            HttpServerPool.getInstance().closeHttpsServer(this.port);
-        } else {
-            HttpServerPool.getInstance().closeHttpServer(this.port);
-        }
     }
 
     public async sendResponse(): Promise<void> {

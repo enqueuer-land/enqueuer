@@ -39,7 +39,7 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
     receiveMessage() {
         return new Promise((resolve) => {
-            http_server_pool_1.HttpServerPool.getInstance().getApp()[this.method](this.endpoint, (request, responseHandler) => {
+            http_server_pool_1.HttpServerPool.getInstance().getApp()[this.method](this.endpoint, (request, responseHandler, next) => {
                 const payload = request.rawBody;
                 logger_1.Logger.debug(`Http got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 if (util_1.isNullOrUndefined(this.response.payload)) {
@@ -59,6 +59,7 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
                     body: payload
                 };
                 resolve(result);
+                next();
             });
         });
     }
@@ -76,14 +77,6 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
                 return reject(`Http server type is not known: ${this.type}`);
             }
         });
-    }
-    unsubscribe() {
-        if (this.type == 'https-server') {
-            http_server_pool_1.HttpServerPool.getInstance().closeHttpsServer(this.port);
-        }
-        else {
-            http_server_pool_1.HttpServerPool.getInstance().closeHttpServer(this.port);
-        }
     }
     sendResponse() {
         return __awaiter(this, void 0, void 0, function* () {
