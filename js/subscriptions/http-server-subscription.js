@@ -64,36 +64,25 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            let server = null;
             if (this.type == 'https-server') {
-                server = http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.credentials);
+                http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
+                    .then(() => resolve());
             }
             else if (this.type == 'http-server') {
-                server = http_server_pool_1.HttpServerPool.getInstance().getHttpServer();
+                http_server_pool_1.HttpServerPool.getInstance().getHttpServer(this.port)
+                    .then(() => resolve());
             }
             else {
-                reject(`Http server type is not known: ${this.type}`);
-                return;
+                return reject(`Http server type is not known: ${this.type}`);
             }
-            server.on('error', (err) => {
-                if (err) {
-                    reject(`Error creating ${this.type} ${err}`);
-                }
-            });
-            server.listen(this.port, (err) => {
-                if (err) {
-                    reject(`Error listening ${this.type} ${err}`);
-                }
-                resolve();
-            });
         });
     }
     unsubscribe() {
         if (this.type == 'https-server') {
-            http_server_pool_1.HttpServerPool.getInstance().closeHttpsServer();
+            http_server_pool_1.HttpServerPool.getInstance().closeHttpsServer(this.port);
         }
         else {
-            http_server_pool_1.HttpServerPool.getInstance().closeHttpServer();
+            http_server_pool_1.HttpServerPool.getInstance().closeHttpServer(this.port);
         }
     }
     sendResponse() {
@@ -114,8 +103,10 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
 };
 HttpServerSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-server'
-            || subscriptionAttributes.type === 'https-server' }),
+    conditional_injector_1.Injectable({
+        predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-server'
+            || subscriptionAttributes.type === 'https-server'
+    }),
     __metadata("design:paramtypes", [Object])
 ], HttpServerSubscription);
 exports.HttpServerSubscription = HttpServerSubscription;

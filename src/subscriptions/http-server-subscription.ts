@@ -7,12 +7,14 @@ import {HttpServerPool} from '../pools/http-server-pool';
 import {TestModel} from '../models/outputs/test-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-server'
-                                                        || subscriptionAttributes.type === 'https-server'})
+@Injectable({
+    predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-server'
+        || subscriptionAttributes.type === 'https-server'
+})
 export class HttpServerSubscription extends Subscription {
 
     private authentication: any;
-    private port: string;
+    private port: number;
     private endpoint: string;
     private method: string;
     private credentials?: string;
@@ -65,34 +67,23 @@ export class HttpServerSubscription extends Subscription {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            let server = null;
             if (this.type == 'https-server') {
-                server = HttpServerPool.getInstance().getHttpsServer(this.credentials);
+                HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
+                    .then(() => resolve());
             } else if (this.type == 'http-server') {
-                server = HttpServerPool.getInstance().getHttpServer();
+                HttpServerPool.getInstance().getHttpServer(this.port)
+                    .then(() => resolve());
             } else {
-                reject(`Http server type is not known: ${this.type}`);
-                return;
+                return reject(`Http server type is not known: ${this.type}`);
             }
-            server.on('error', (err: any) => {
-                if (err) {
-                    reject(`Error creating ${this.type} ${err}`);
-                }
-            });
-            server.listen(this.port, (err: any) => {
-                if (err) {
-                    reject(`Error listening ${this.type} ${err}`);
-                }
-                resolve();
-            });
         });
     }
 
     public unsubscribe() {
         if (this.type == 'https-server') {
-            HttpServerPool.getInstance().closeHttpsServer();
+            HttpServerPool.getInstance().closeHttpsServer(this.port);
         } else {
-            HttpServerPool.getInstance().closeHttpServer();
+            HttpServerPool.getInstance().closeHttpServer(this.port);
         }
     }
 

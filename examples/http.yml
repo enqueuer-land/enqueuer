@@ -7,7 +7,7 @@ runnables:
     publisher:
       name: publisher description
       type: http-client
-      url: http://localhost:23075/enqueuer/idStuff?query=123
+      url: http://localhost:23075/enqueuer/idStuff?query=000
       method: POST
       payload:
         enqueuer: virgs
@@ -28,7 +28,7 @@ runnables:
   subscriptions:
   - name: subscription description
     type: http-server
-    endpoint: /enqueuer/:someId
+    endpoint: /enqueuer/:firstId
     port: 23075
     method: POST
     timeout: 10000
@@ -45,18 +45,18 @@ runnables:
         expect: JSON.parse(message.body).enqueuer
         toBeEqualTo: `virgs`
       - name: Params
-        expect: params.someId
+        expect: params.firstId
         toBeEqualTo: `idStuff`
       - name: Query
         expect: query.query
-        toBeEqualTo: 123
+        toBeEqualTo: 000
 - name: requisition 1 description
   timeout: 5000
   startEvent:
     publisher:
       name: publisher description
       type: http-client
-      url: http://localhost:23075/enqueuer/idStuff?query=123
+      url: http://localhost:23075/enqueuer/idStuff?query=111
       method: POST
       payload:
         duplicated: true
@@ -73,7 +73,7 @@ runnables:
   subscriptions:
   - name: subscription description
     type: http-server
-    endpoint: /enqueuer/:someId
+    endpoint: /enqueuer/:secondId
     port: 23075
     method: POST
     timeout: 10000

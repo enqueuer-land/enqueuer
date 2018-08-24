@@ -10,11 +10,11 @@ const logger_1 = require("../loggers/logger");
 class HttpServerPool {
     constructor() {
         this.http = {
-            counter: 0,
+            ports: [],
             server: null
         };
         this.https = {
-            counter: 0,
+            ports: [],
             server: null
         };
     }
@@ -27,38 +27,95 @@ class HttpServerPool {
     getApp() {
         return this.app;
     }
-    getHttpServer() {
-        ++this.http.counter;
-        if (!this.http.server) {
-            this.initializeExpress();
-            logger_1.Logger.debug('Creating a new Http server');
-            this.http.server = http_1.default.createServer(this.app);
+    getHttpServer(port) {
+        return new Promise((resolve, reject) => {
+            logger_1.Logger.debug(`Getting a Http server ${port}`);
+            if (!this.http.server) {
+                this.initializeExpress();
+                logger_1.Logger.debug(`Creating a new Http server ${port}`);
+                const server = http_1.default.createServer(this.app);
+                this.http.server = server;
+            }
+            this.http.server.on('error', (err) => {
+                if (err) {
+                    const message = `Error creating http ${err}`;
+                    logger_1.Logger.error(message);
+                    return reject(message);
+                }
+            });
+            if (this.http.ports.filter((value) => value == port).length == 0) {
+                this.http.server.listen(port, (err) => {
+                    if (err) {
+                        const message = `Error listening http ${err}`;
+                        logger_1.Logger.error(message);
+                        return reject(message);
+                    }
+                    this.http.ports.push(port);
+                    return resolve();
+                });
+            }
+            else {
+                this.http.ports.push(port);
+                return resolve();
+            }
+        });
+    }
+    getHttpsServer(credentials, port) {
+        logger_1.Logger.debug(`Getting a Https server ${port}`);
+        return new Promise((resolve, reject) => {
+            if (!this.https.server) {
+                this.initializeExpress();
+                logger_1.Logger.debug(`Creating a new Https server ${port}`);
+                const server = https_1.default.createServer(credentials, this.app);
+                this.https.server = server;
+            }
+            this.https.server.on('error', (err) => {
+                if (err) {
+                    const message = `Error creating https ${err}`;
+                    logger_1.Logger.error(message);
+                    return reject(message);
+                }
+            });
+            if (this.https.ports.filter((value) => value == port).length == 0) {
+                this.https.server.listen(port, (err) => {
+                    if (err) {
+                        const message = `Error listening https ${err}`;
+                        logger_1.Logger.error(message);
+                        return reject(message);
+                    }
+                    this.https.ports.push(port);
+                    return resolve();
+                });
+            }
+            else {
+                this.https.ports.push(port);
+                return resolve();
+            }
+        });
+    }
+    remove(array, element) {
+        const index = array.indexOf(element);
+        if (index !== -1) {
+            array.splice(index, 1);
         }
-        return this.http.server;
     }
-    getHttpsServer(credentials) {
-        ++this.https.counter;
-        if (!this.http.server) {
-            this.initializeExpress();
-            logger_1.Logger.debug(`Creating a new Https server: ${credentials}`);
-            this.https.server = https_1.default.createServer(credentials, this.app);
+    closeHttpServer(port) {
+        logger_1.Logger.debug(`Releasing http server ${port}:${this.http.ports}`);
+        this.remove(this.http.ports, port);
+        if (this.http.ports.length == 0 && this.http.server) {
+            logger_1.Logger.debug('Closing http server');
+            this.http.server.close();
+            this.http.server = null;
+            this.finalizeExpress();
         }
-        return this.https.server;
     }
-    closeHttpServer() {
-        logger_1.Logger.debug('Closing http server');
-        this.closeServer(this.http);
-    }
-    closeHttpsServer() {
-        logger_1.Logger.debug('Closing https server');
-        this.closeServer(this.https);
-    }
-    closeServer(server) {
-        --server.counter;
-        if (server.counter == 0) {
+    closeHttpsServer(port) {
+        logger_1.Logger.debug(`Releasing https server ${port}:${this.https.ports}`);
+        this.remove(this.https.ports, port);
+        if (this.https.ports.length == 0 && this.https.server) {
             logger_1.Logger.debug('Closing https server');
-            server.server.close();
-            server.server = null;
+            this.https.server.close();
+            this.https.server = null;
             this.finalizeExpress();
         }
     }
@@ -79,7 +136,7 @@ class HttpServerPool {
         }
     }
     finalizeExpress() {
-        if (this.http.counter + this.https.counter <= 0) {
+        if (this.http.ports.length + this.https.ports.length <= 0) {
             logger_1.Logger.trace(`Finalizing express application`);
             this.app = null;
         }

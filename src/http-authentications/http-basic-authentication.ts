@@ -26,7 +26,6 @@ export class HttpBasicAuthentication extends HttpAuthentication {
             this.tests = [];
             const plainAuth = new Buffer(authorization.split(' ')[1], 'base64').toString(); //decode
             const credentials = plainAuth.split(':');
-    
             this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
             this.tests.push(this.authenticateUser(credentials[0]));
             this.tests.push(this.authenticatePassword(credentials[1]));
