@@ -55,19 +55,25 @@ export class HttpServerPool {
                     return reject(message);
                 }
             });
-            if (!this.boundPorts[port]) {
-                server.listen(port, (err: any) => {
-                    if (err) {
-                        const message = `Error listening to server ${err}`;
-                        Logger.error(message);
-                        return reject(message);
-                    }
+            try {
+                if (!this.boundPorts[port]) {
+                    server.listen(port, (err: any) => {
+                        if (err) {
+                            const message = `Error listening to server ${err}`;
+                            Logger.error(message);
+                            return reject(message);
+                        }
+                        this.boundPorts[port] = true;
+                        return resolve();
+                    });
+                } else {
                     this.boundPorts[port] = true;
                     return resolve();
-                });
-            } else {
-                this.boundPorts[port] = true;
-                return resolve();
+                }
+            } catch (err) {
+                const message = `Error in server ${err}`;
+                Logger.error(message);
+                return reject(message);
             }
         });
     }
