@@ -9,14 +9,7 @@ const http_1 = __importDefault(require("http"));
 const logger_1 = require("../loggers/logger");
 class HttpServerPool {
     constructor() {
-        this.http = {
-            ports: {},
-            server: null
-        };
-        this.https = {
-            ports: {},
-            server: null
-        };
+        this.boundPorts = [];
         this.initializeExpress();
     }
     static getInstance() {
@@ -30,47 +23,47 @@ class HttpServerPool {
     }
     getHttpServer(port) {
         logger_1.Logger.debug(`Getting a Http server ${port}`);
-        if (!this.http.server) {
+        if (!this.http) {
             logger_1.Logger.debug(`Creating a new Http server ${port}`);
             const server = http_1.default.createServer(this.app);
-            this.http.server = server;
+            this.http = server;
         }
         return this.listenToPort(this.http, port);
     }
+    getHttpsServer(credentials, port) {
+        logger_1.Logger.debug(`Getting a Https server ${port}`);
+        if (!this.https) {
+            logger_1.Logger.debug(`Creating a new Https server ${port}`);
+            const server = https_1.default.createServer(credentials, this.app);
+            this.https = server;
+        }
+        return this.listenToPort(this.https, port);
+    }
     listenToPort(server, port) {
         return new Promise((resolve, reject) => {
-            server.server.on('error', (err) => {
+            server.on('error', (err) => {
                 if (err) {
                     const message = `Error creating server ${err}`;
                     logger_1.Logger.error(message);
                     return reject(message);
                 }
             });
-            if (!server.ports[port]) {
-                server.server.listen(port, (err) => {
+            if (!this.boundPorts[port]) {
+                server.listen(port, (err) => {
                     if (err) {
                         const message = `Error listening to server ${err}`;
                         logger_1.Logger.error(message);
                         return reject(message);
                     }
-                    server.ports[port] = true;
+                    this.boundPorts[port] = true;
                     return resolve();
                 });
             }
             else {
-                server.ports[port] = true;
+                this.boundPorts[port] = true;
                 return resolve();
             }
         });
-    }
-    getHttpsServer(credentials, port) {
-        logger_1.Logger.debug(`Getting a Https server ${port}`);
-        if (!this.https.server) {
-            logger_1.Logger.debug(`Creating a new Https server ${port}`);
-            const server = https_1.default.createServer(credentials, this.app);
-            this.https.server = server;
-        }
-        return this.listenToPort(this.https, port);
     }
     initializeExpress() {
         if (!this.app) {

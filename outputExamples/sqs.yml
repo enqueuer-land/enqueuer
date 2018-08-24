@@ -10,14 +10,14 @@ runnables:
     tests:
       -
         valid: false
-        name: 'Start Event'
+        name: 'Subscriptions message receiving'
         description:
           message: 'AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
           code: AWS.SimpleQueueService.NonExistentQueue
-          time: '2018-08-24T05:37:13.187Z'
+          time: '2018-08-24T05:42:06.742Z'
           statusCode: 400
           retryable: false
-          retryDelay: 70.77040676966035
+          retryDelay: 59.120834177695805
       -
         valid: true
         name: 'No time out'
@@ -25,8 +25,8 @@ runnables:
     name: 'requisition description'
     time:
       totalTime: 97
-      startTime: '2018-08-24T05:37:13.104Z'
-      endTime: '2018-08-24T05:37:13.201Z'
+      startTime: '2018-08-24T05:42:06.647Z'
+      endTime: '2018-08-24T05:42:06.744Z'
       timeout: 5000
     subscriptions:
       -
@@ -38,17 +38,13 @@ runnables:
             name: 'Message received'
             description: 'Subscription has not received its message'
         valid: false
-        connectionTime: '2018-08-24T05:37:13.109Z'
+        connectionTime: '2018-08-24T05:42:06.653Z'
     startEvent:
       publisher:
         name: 'publisher description'
-        valid: false
+        valid: true
         type: sqs
         tests:
-          -
-            name: Published
-            valid: false
-            description: 'AWS.SimpleQueueService.NonExistentQueue: AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
           -
             name: 'Response message received'
             valid: false
