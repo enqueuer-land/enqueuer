@@ -67,11 +67,11 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         return new Promise((resolve, reject) => {
             if (this.type == 'https-server') {
                 http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
-                    .then(() => resolve());
+                    .then(() => resolve()).catch(err => reject(err));
             }
             else if (this.type == 'http-server') {
                 http_server_pool_1.HttpServerPool.getInstance().getHttpServer(this.port)
-                    .then(() => resolve());
+                    .then(() => resolve()).catch(err => reject(err));
             }
             else {
                 return reject(`Http server type is not known: ${this.type}`);

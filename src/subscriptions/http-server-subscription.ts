@@ -70,10 +70,10 @@ export class HttpServerSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             if (this.type == 'https-server') {
                 HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
-                    .then(() => resolve());
+                    .then(() => resolve()).catch(err => reject(err));
             } else if (this.type == 'http-server') {
                 HttpServerPool.getInstance().getHttpServer(this.port)
-                    .then(() => resolve());
+                    .then(() => resolve()).catch(err => reject(err));
             } else {
                 return reject(`Http server type is not known: ${this.type}`);
             }
