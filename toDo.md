@@ -33,7 +33,7 @@ enqueuer -c configFile => enqueuer configFile
 replace variables before each requisition. only this time
 verify pub/sub attributes existence and types
 summary log analyzer (percentage, counter...)
-Recreate 'Subscription Connected' test
+Daemon input adapter
 
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts

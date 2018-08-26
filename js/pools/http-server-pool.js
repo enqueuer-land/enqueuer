@@ -9,7 +9,7 @@ const http_1 = __importDefault(require("http"));
 const logger_1 = require("../loggers/logger");
 class HttpServerPool {
     constructor() {
-        this.boundPorts = [];
+        this.boundPorts = {};
         this.initializeExpress();
     }
     static getInstance() {

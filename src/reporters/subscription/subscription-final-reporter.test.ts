@@ -2,11 +2,124 @@ import {SubscriptionFinalReporter} from './subscription-final-reporter';
 
 describe('SubscriptionFinalReporter', () => {
 
-    it('No avoidable, no message, no timeout', () => {
+    it('No subscribed, no avoidable, no message, no timeout', () => {
+        const subscribed = false;
         const avoidable = false;
         const hasMessage = false;
         const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('No subscribed, no avoidable, no message, timeout', () => {
+        const subscribed = false;
+        const avoidable = false;
+        const hasMessage = false;
+        const hasTimedOut = true;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('No subscribed, no avoidable, message, no timeout', () => {
+        const subscribed = false;
+        const avoidable = false;
+        const hasMessage = true;
+        const hasTimedOut = false;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('No subscribed, no avoidable, message, timeout', () => {
+        const subscribed = false;
+        const avoidable = false;
+        const hasMessage = true;
+        const hasTimedOut = true;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('No subscribed, avoidable, no message, no timeout', () => {
+        const subscribed = false;
+        const avoidable = true;
+        const hasMessage = false;
+        const hasTimedOut = false;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('No subscribed, avoidable, no message, timeout', () => {
+        const subscribed = false;
+        const avoidable = true;
+        const hasMessage = false;
+        const hasTimedOut = true;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('No subscribed, avoidable, message, no timeout', () => {
+        const subscribed = false;
+        const avoidable = true;
+        const hasMessage = true;
+        const hasTimedOut = false;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('No subscribed, avoidable, message, timeout', () => {
+        const subscribed = false;
+        const avoidable = true;
+        const hasMessage = true;
+        const hasTimedOut = true;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+
+        const report = finalReporter.getReport();
+
+        expect(report.length).toBe(1);
+        expect(report[0].valid).toBeFalsy();
+        expect(report[0].name).toBe('Subscribed');
+    });
+
+    it('Subscribed, no avoidable, no message, no timeout', () => {
+        const subscribed = true;
+        const avoidable = false;
+        const hasMessage = false;
+        const hasTimedOut = false;
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 
@@ -15,11 +128,12 @@ describe('SubscriptionFinalReporter', () => {
         expect(report[0].name).toBe('Message received');
     });
 
-    it('No avoidable, no message, timeout', () => {
+    it('Subscribed, no avoidable, no message, timeout', () => {
+        const subscribed = true;
         const avoidable = false;
         const hasMessage = false;
         const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 
@@ -30,11 +144,12 @@ describe('SubscriptionFinalReporter', () => {
         expect(report[1].name).toBe('No time out');
     });
 
-    it('No avoidable, message, no timeout', () => {
+    it('Subscribed, no avoidable, message, no timeout', () => {
+        const subscribed = true;
         const avoidable = false;
         const hasMessage = true;
         const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 
@@ -43,11 +158,12 @@ describe('SubscriptionFinalReporter', () => {
         expect(report[0].name).toBe('Message received');
     });
 
-    it('No avoidable, message, timeout', () => {
+    it('Subscribed, no avoidable, message, timeout', () => {
+        const subscribed = true;
         const avoidable = false;
         const hasMessage = true;
         const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 
@@ -59,11 +175,12 @@ describe('SubscriptionFinalReporter', () => {
 
     });
 
-    it('Avoidable, no message, no timeout', () => {
+    it('Subscribed, avoidable, no message, no timeout', () => {
+        const subscribed = true;
         const avoidable = true;
         const hasMessage = false;
         const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 
@@ -72,11 +189,12 @@ describe('SubscriptionFinalReporter', () => {
         expect(report[0].name).toBe('Subscription avoided');
     });
 
-    it('Avoidable, no message, timeout', () => {
+    it('Subscribed, avoidable, no message, timeout', () => {
+        const subscribed = true;
         const avoidable = true;
         const hasMessage = false;
         const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 
@@ -85,11 +203,12 @@ describe('SubscriptionFinalReporter', () => {
         expect(report[0].name).toBe('Subscription avoided');
     });
 
-    it('Avoidable, message, no timeout', () => {
+    it('Subscribed, avoidable, message, no timeout', () => {
+        const subscribed = true;
         const avoidable = true;
         const hasMessage = true;
         const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 
@@ -98,11 +217,12 @@ describe('SubscriptionFinalReporter', () => {
         expect(report[0].name).toBe('Subscription avoided');
     });
 
-    it('Avoidable, message, timeout', () => {
+    it('Subscribed, avoidable, message, timeout', () => {
+        const subscribed = true;
         const avoidable = true;
         const hasMessage = true;
         const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
 
         const report = finalReporter.getReport();
 

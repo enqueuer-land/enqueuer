@@ -4,12 +4,15 @@ export class SubscriptionFinalReporter {
     private messageReceivedTestName: string = `Message received`;
     private subscriptionAvoidedTestName: string = `Subscription avoided`;
     private noTimeOutTestName: string = `No time out`;
+    private subscribedTestName: string = `Subscribed`;
 
-    private avoidable?: boolean;
+    private subscribed: boolean;
+    private avoidable: boolean;
     private hasMessage: boolean = false;
     private hasTimedOut: boolean;
 
-    constructor(avoidable: boolean, hasMessage: boolean, hasTimedOut: boolean) {
+    constructor(subscribed: boolean, avoidable: boolean, hasMessage: boolean, hasTimedOut: boolean) {
+        this.subscribed = subscribed;
         this.avoidable = avoidable;
         this.hasMessage = hasMessage;
         this.hasTimedOut = hasTimedOut;
@@ -17,6 +20,9 @@ export class SubscriptionFinalReporter {
 
     public getReport(): TestModel[] {
         let tests: TestModel[] = [];
+        if (!this.subscribed) {
+            return tests.concat(this.createNotSubscribedReport());
+        }
         if (this.avoidable) {
             tests = tests.concat(this.createAvoidableReport());
         } else {
@@ -29,6 +35,14 @@ export class SubscriptionFinalReporter {
             }
         }
         return tests;
+    }
+
+    private createNotSubscribedReport(): any {
+        return {
+            valid: false,
+            name: this.subscribedTestName,
+            description: `Subscription is not able to connect`
+        };
     }
 
     private createMessageReport(): TestModel {

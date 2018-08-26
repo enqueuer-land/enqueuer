@@ -1,17 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class SubscriptionFinalReporter {
-    constructor(avoidable, hasMessage, hasTimedOut) {
+    constructor(subscribed, avoidable, hasMessage, hasTimedOut) {
         this.messageReceivedTestName = `Message received`;
         this.subscriptionAvoidedTestName = `Subscription avoided`;
         this.noTimeOutTestName = `No time out`;
+        this.subscribedTestName = `Subscribed`;
         this.hasMessage = false;
+        this.subscribed = subscribed;
         this.avoidable = avoidable;
         this.hasMessage = hasMessage;
         this.hasTimedOut = hasTimedOut;
     }
     getReport() {
         let tests = [];
+        if (!this.subscribed) {
+            return tests.concat(this.createNotSubscribedReport());
+        }
         if (this.avoidable) {
             tests = tests.concat(this.createAvoidableReport());
         }
@@ -25,6 +30,13 @@ class SubscriptionFinalReporter {
             }
         }
         return tests;
+    }
+    createNotSubscribedReport() {
+        return {
+            valid: false,
+            name: this.subscribedTestName,
+            description: `Subscription is not able to connect`
+        };
     }
     createMessageReport() {
         if (this.hasMessage) {

@@ -7,7 +7,7 @@ export class HttpServerPool {
     private static instance: HttpServerPool;
     private app: any;
 
-    private boundPorts: boolean[] = [];
+    private boundPorts: any = {};
     private http: any;
     private https: any;
 

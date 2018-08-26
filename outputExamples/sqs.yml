@@ -1,32 +1,22 @@
 type: runnable
-valid: false
+valid: true
 tests: []
 name: 'sqs test description'
 id: sqs
 runnables:
   -
     type: requisition
-    valid: false
+    valid: true
     tests:
-      -
-        valid: false
-        name: 'Start Event'
-        description:
-          message: 'AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
-          code: AWS.SimpleQueueService.NonExistentQueue
-          time: '2018-08-24T05:55:43.884Z'
-          statusCode: 400
-          retryable: false
-          retryDelay: 33.538724567294075
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 105
-      startTime: '2018-08-24T05:55:43.782Z'
-      endTime: '2018-08-24T05:55:43.887Z'
+      totalTime: 112
+      startTime: '2018-08-26T19:37:33.930Z'
+      endTime: '2018-08-26T19:37:34.042Z'
       timeout: 5000
     subscriptions:
       -
@@ -34,22 +24,59 @@ runnables:
         type: sqs
         tests:
           -
-            valid: false
+            name: Body
+            valid: true
+            description: '''enqueuer'' does not contain ''enq'''
+          -
+            name: MessageId
+            valid: true
+            description: '''3b3a39a4-b248-4f24-916b-22895a5cf312'' is not defined'
+          -
+            name: ReceiptHandle
+            valid: true
+            description: '''3b3a39a4-b248-4f24-916b-22895a5cf312#d92a9d5f-1ac4-4dbb-8094-856613778df0'' is not defined'
+          -
+            name: MD5OfBody
+            valid: true
+            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is not defined'
+          -
+            valid: true
             name: 'Message received'
-            description: 'Subscription has not received its message'
-        valid: false
-        connectionTime: '2018-08-24T05:55:43.787Z'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-08-26T19:37:33.935Z'
     startEvent:
       publisher:
         name: 'publisher description'
-        valid: false
+        valid: true
         type: sqs
         tests:
           -
             name: Published
-            valid: false
-            description: 'AWS.SimpleQueueService.NonExistentQueue: AWS.SimpleQueueService.NonExistentQueue; see the SQS docs.'
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Request Id is all 000000'
+            valid: true
+            description: 'Expected value to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
+          -
+            name: ResponseMetadata
+            valid: true
+            description: '''[object Object]'' is not defined'
+          -
+            name: MD5
+            valid: true
+            description: '''9dea6b5787a8fcdbd8db4505e4a1958b'' is not defined'
+          -
+            name: MD5OfMessageAttributes
+            valid: true
+            description: '''d41d8cd98f00b204e9800998ecf8427e'' is not defined'
+          -
+            name: MessageId
+            valid: true
+            description: '''3b3a39a4-b248-4f24-916b-22895a5cf312'' is not defined'
           -
             name: 'Response message received'
-            valid: false
-            description: 'No response message was received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-08-26T19:37:34.033Z'

@@ -20,6 +20,7 @@ const subscription_final_reporter_1 = require("./subscription-final-reporter");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
+        this.subscribed = false;
         this.handleKillSignal = (signal) => {
             logger_1.Logger.fatal(`Handling kill signal ${signal}`);
             this.cleanUp();
@@ -68,6 +69,7 @@ class SubscriptionReporter {
                 }
                 else {
                     this.report.connectionTime = new date_controller_1.DateController().toString();
+                    this.subscribed = true;
                     resolve();
                 }
                 process.on('SIGINT', this.handleKillSignal);
@@ -103,7 +105,7 @@ class SubscriptionReporter {
         });
     }
     getReport() {
-        const finalReporter = new subscription_final_reporter_1.SubscriptionFinalReporter(this.subscription.avoid, !!this.subscription.messageReceived, !!this.subscription.timeout && this.hasTimedOut);
+        const finalReporter = new subscription_final_reporter_1.SubscriptionFinalReporter(this.subscribed, this.subscription.avoid, !!this.subscription.messageReceived, !!this.subscription.timeout && this.hasTimedOut);
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
         this.cleanUp();
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);

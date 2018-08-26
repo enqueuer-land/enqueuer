@@ -19,6 +19,7 @@ export class SubscriptionReporter {
     private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
+    private subscribed: boolean = false;
 
     constructor(subscriptionAttributes: input.SubscriptionModel) {
         this.startTime = new DateController();
@@ -63,6 +64,7 @@ export class SubscriptionReporter {
                         reject(message);
                     } else {
                         this.report.connectionTime = new DateController().toString();
+                        this.subscribed = true;
                         resolve();
                     }
 
@@ -99,7 +101,8 @@ export class SubscriptionReporter {
     }
 
     public getReport(): output.SubscriptionModel {
-        const finalReporter = new SubscriptionFinalReporter(this.subscription.avoid,
+        const finalReporter = new SubscriptionFinalReporter(this.subscribed,
+                                                            this.subscription.avoid,
                                                             !!this.subscription.messageReceived,
                                                             !!this.subscription.timeout && this.hasTimedOut);
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
