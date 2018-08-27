@@ -12,11 +12,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const id_generator_1 = require("../id-generator/id-generator");
-const json_placeholder_replacer_1 = require("json-placeholder-replacer");
-const fs_1 = __importDefault(require("fs"));
 const ajv_1 = __importDefault(require("ajv"));
+const fs_1 = __importDefault(require("fs"));
 const yaml = __importStar(require("yamljs"));
-const store_1 = require("../configurations/store");
 class RunnableParser {
     constructor() {
         const schemasPath = this.discoverSchemasFolder();
@@ -38,14 +36,13 @@ class RunnableParser {
     }
     parse(runnableMessage) {
         const parsedRunnable = this.parseToObject(runnableMessage);
-        let variablesReplaced = this.replaceVariables(parsedRunnable);
-        if (!this.validator(variablesReplaced)) {
+        if (!this.validator(parsedRunnable)) {
             this.throwError();
         }
-        if (!variablesReplaced.id) {
-            variablesReplaced.id = new id_generator_1.IdGenerator(variablesReplaced).generateId();
+        if (!parsedRunnable.id) {
+            parsedRunnable.id = new id_generator_1.IdGenerator(parsedRunnable).generateId();
         }
-        const runnableWithId = variablesReplaced;
+        const runnableWithId = parsedRunnable;
         logger_1.Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
         return runnableWithId;
     }
@@ -77,12 +74,6 @@ class RunnableParser {
     }
     readJsonSchemaFile(filename) {
         return JSON.parse(fs_1.default.readFileSync(filename).toString());
-    }
-    replaceVariables(parsedRunnable) {
-        const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
-        placeHolderReplacer
-            .addVariableMap(store_1.Store.getData());
-        return placeHolderReplacer.replace(parsedRunnable);
     }
 }
 exports.RunnableParser = RunnableParser;

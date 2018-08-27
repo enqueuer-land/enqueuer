@@ -1,12 +1,9 @@
 import {Logger} from '../loggers/logger';
 import {IdGenerator} from '../id-generator/id-generator';
-import {ValidateFunction} from 'ajv';
-import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
+import Ajv, {ValidateFunction} from 'ajv';
 import {RunnableModel} from '../models/inputs/runnable-model';
 import fs from 'fs';
-import Ajv from 'ajv';
 import * as yaml from 'yamljs';
-import {Store} from '../configurations/store';
 
 export class RunnableParser {
 
@@ -32,14 +29,13 @@ export class RunnableParser {
 
     public parse(runnableMessage: string): RunnableModel {
         const parsedRunnable = this.parseToObject(runnableMessage);
-        let variablesReplaced: any = this.replaceVariables(parsedRunnable);
-        if (!this.validator(variablesReplaced)) {
+        if (!this.validator(parsedRunnable)) {
             this.throwError();
         }
-        if (!variablesReplaced.id) {
-            variablesReplaced.id = new IdGenerator(variablesReplaced).generateId();
+        if (!parsedRunnable.id) {
+            parsedRunnable.id = new IdGenerator(parsedRunnable).generateId();
         }
-        const runnableWithId: RunnableModel = variablesReplaced as RunnableModel;
+        const runnableWithId: RunnableModel = parsedRunnable as RunnableModel;
         Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
         return runnableWithId;
     }
@@ -72,13 +68,6 @@ export class RunnableParser {
 
     private readJsonSchemaFile(filename: string) {
         return JSON.parse(fs.readFileSync(filename).toString());
-    }
-
-    private replaceVariables(parsedRunnable: {}): any {
-        const placeHolderReplacer = new JsonPlaceholderReplacer();
-        placeHolderReplacer
-            .addVariableMap(Store.getData());
-        return placeHolderReplacer.replace(parsedRunnable);
     }
 
 }
