@@ -4,7 +4,7 @@
 
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/images/fullLogo1.png "Enqueuer Logo")
 
-Quando um _servidor_ _TCP_ do seu _e-commerce_ é atingido, é necessário enviar uma informação para uma _API RESTful_ de processamento de cartões de crédito e notificar os usuários interessados através de uma publicação *AMQP*.
+Quando um _servidor_ _TCP_ seu é atingido, é necessário enviar uma informação para uma _API RESTful_ e notificar o evento através de uma publicação *AMQP*.
 
 ![readme-flow](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-flow.png "Fluxo do exemplo")
 

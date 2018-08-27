@@ -13,11 +13,10 @@ export class OnInitEventExecutor extends EventExecutor {
     }
 
     public trigger(): TestModel[] {
-        Logger.trace(`Executing onInit`);
         if (!this.initializable.onInit) {
-            Logger.trace(`No onOnInit to be played here`);
             return [];
         }
+        Logger.trace(`Executing onInit`);
         return this.execute();
     }
 

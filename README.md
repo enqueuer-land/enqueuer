@@ -5,7 +5,7 @@
 ![enqueuerlogo](https://github.com/lopidio/enqueuer/blob/develop/docs/images/fullLogo1.png "Enqueuer Logo")
 [Take a look if you prefer to read it in portuguese](/README-PT_BR.md);
 
-When your e-commerce TCP server is hit, you have to send an information to a credit card processing RESTful API and notify users about this through AMQP events.
+When a TCP server you own is hit, you have to send an information to a RESTful API and notify this using AMQP messages.
 
 ![readme-flow](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-flow.png "Flow")
 
