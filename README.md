@@ -17,8 +17,8 @@ Now, you have three options to test this **polyglot flow**:
 To use **enqueuer**, you have to:
 
 1. install it:
-
-    ```$npm install enqueuer -g```
+[![npm][npm-badge]][npm]
+    ```$npm install -g enqueuer```
     
 2. create a configuration file like this:
     ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-config.png "config-file.yml")
