@@ -15,7 +15,7 @@ Neste momento, existem três opções para testar o fluxo poligota:
 
 Para usar **enqueuer**, basta:
 1. instalar:
-[![npm][npm-badge]][npm]
+
     ```$npm install -g enqueuer```
     
 2. criar um arquivo de configuração:
