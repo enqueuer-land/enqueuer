@@ -87,6 +87,17 @@ export class HttpServerPool {
         });
     }
 
+    public closeServer(port: number) {
+        const server = this.ports[port];
+        if (server) {
+            server.close();
+            Logger.info(`Server running on ${port} is closed`);
+            delete this.ports[port];
+        } else {
+            Logger.warning(`No server running on ${port} to be closed`);
+        }
+    }
+
     private initializeExpress() {
         if (!this.app) {
             this.app = express();

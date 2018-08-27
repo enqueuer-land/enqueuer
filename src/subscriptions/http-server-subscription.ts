@@ -80,6 +80,10 @@ export class HttpServerSubscription extends Subscription {
         });
     }
 
+    public unsubscribe() {
+        HttpServerPool.getInstance().closeServer(this.port);
+    }
+
     public async sendResponse(): Promise<void> {
         if (this.responseHandler) {
             Logger.debug(`${this.type} sending response`);

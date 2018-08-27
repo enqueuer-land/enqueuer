@@ -78,6 +78,9 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
             }
         });
     }
+    unsubscribe() {
+        http_server_pool_1.HttpServerPool.getInstance().closeServer(this.port);
+    }
     sendResponse() {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.responseHandler) {

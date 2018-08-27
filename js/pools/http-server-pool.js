@@ -82,6 +82,17 @@ class HttpServerPool {
             }
         });
     }
+    closeServer(port) {
+        const server = this.ports[port];
+        if (server) {
+            server.close();
+            logger_1.Logger.info(`Server running on ${port} is closed`);
+            delete this.ports[port];
+        }
+        else {
+            logger_1.Logger.warning(`No server running on ${port} to be closed`);
+        }
+    }
     initializeExpress() {
         if (!this.app) {
             this.app = express_1.default();
