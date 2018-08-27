@@ -9,7 +9,7 @@ const http_1 = __importDefault(require("http"));
 const logger_1 = require("../loggers/logger");
 class HttpServerPool {
     constructor() {
-        this.boundPorts = {};
+        this.ports = {};
         this.initializeExpress();
     }
     static getInstance() {
@@ -22,51 +22,61 @@ class HttpServerPool {
         return this.app;
     }
     getHttpServer(port) {
-        logger_1.Logger.debug(`Getting a Http server ${port}`);
-        if (!this.http) {
-            logger_1.Logger.debug(`Creating a new Http server ${port}`);
-            const server = http_1.default.createServer(this.app);
-            this.http = server;
-        }
-        return this.listenToPort(this.http, port);
+        return new Promise((resolve, reject) => {
+            logger_1.Logger.debug(`Getting a Http server ${port}`);
+            if (!this.ports[port]) {
+                logger_1.Logger.debug(`Creating a new Http server ${port}`);
+                const server = http_1.default.createServer(this.app);
+                this.listenToPort(server, port)
+                    .then(() => {
+                    this.ports[port] = server;
+                    resolve();
+                })
+                    .catch((err) => reject(err));
+                this.ports[port] = server;
+            }
+            resolve();
+        });
     }
     getHttpsServer(credentials, port) {
-        logger_1.Logger.debug(`Getting a Https server ${port}`);
-        if (!this.https) {
-            logger_1.Logger.debug(`Creating a new Https server ${port}`);
-            const server = https_1.default.createServer(credentials, this.app);
-            this.https = server;
-        }
-        return this.listenToPort(this.https, port);
+        return new Promise((resolve, reject) => {
+            logger_1.Logger.debug(`Getting a Https server ${port}`);
+            if (!this.ports[port]) {
+                logger_1.Logger.debug(`Creating a new Https server ${port}`);
+                const server = https_1.default.createServer(credentials, this.app);
+                this.listenToPort(server, port)
+                    .then(() => {
+                    this.ports[port] = server;
+                    resolve();
+                })
+                    .catch((err) => reject(err));
+                this.ports[port] = server;
+            }
+            resolve();
+        });
     }
     listenToPort(server, port) {
         return new Promise((resolve, reject) => {
             server.on('error', (err) => {
                 if (err) {
-                    const message = `Error creating server ${err}`;
+                    const message = `Error emitted from server (${port}) ${err}`;
                     logger_1.Logger.error(message);
                     return reject(message);
                 }
             });
             try {
-                if (!this.boundPorts[port]) {
-                    server.listen(port, (err) => {
-                        if (err) {
-                            const message = `Error listening to server ${err}`;
-                            logger_1.Logger.error(message);
-                            return reject(message);
-                        }
-                        this.boundPorts[port] = true;
-                        return resolve();
-                    });
-                }
-                else {
-                    this.boundPorts[port] = true;
+                logger_1.Logger.info(`Binding server to port ${port}`);
+                server.listen(port, (err) => {
+                    if (err) {
+                        const message = `Error listening to port (${port}) ${err}`;
+                        logger_1.Logger.error(message);
+                        return reject(message);
+                    }
                     return resolve();
-                }
+                });
             }
             catch (err) {
-                const message = `Error in server ${err}`;
+                const message = `Error caught from server (${port}) ${err}`;
                 logger_1.Logger.error(message);
                 return reject(message);
             }

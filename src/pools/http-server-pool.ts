@@ -7,9 +7,7 @@ export class HttpServerPool {
     private static instance: HttpServerPool;
     private app: any;
 
-    private boundPorts: any = {};
-    private http: any;
-    private https: any;
+    private ports: any = {};
 
     constructor() {
         this.initializeExpress();
@@ -27,51 +25,62 @@ export class HttpServerPool {
     }
 
     public getHttpServer(port: number): Promise<void> {
-        Logger.debug(`Getting a Http server ${port}`);
-        if (!this.http) {
-            Logger.debug(`Creating a new Http server ${port}`);
-            const server = http.createServer(this.app);
-            this.http = server;
-        }
-        return this.listenToPort(this.http, port);
+        return new Promise((resolve, reject) => {
+            Logger.debug(`Getting a Http server ${port}`);
+            if (!this.ports[port]) {
+                Logger.debug(`Creating a new Http server ${port}`);
+                const server = http.createServer(this.app);
+                this.listenToPort(server, port)
+                    .then(() => {
+                        this.ports[port] = server;
+                        resolve();
+                    })
+                    .catch((err) => reject(err));
+                this.ports[port] = server;
+            }
+            resolve();
+        });
     }
 
     public getHttpsServer(credentials: any, port: number): Promise<void> {
-        Logger.debug(`Getting a Https server ${port}`);
-        if (!this.https) {
-            Logger.debug(`Creating a new Https server ${port}`);
-            const server = https.createServer(credentials, this.app);
-            this.https = server;
-        }
-        return this.listenToPort(this.https, port);
+        return new Promise((resolve, reject) => {
+            Logger.debug(`Getting a Https server ${port}`);
+            if (!this.ports[port]) {
+                Logger.debug(`Creating a new Https server ${port}`);
+                const server = https.createServer(credentials, this.app);
+                this.listenToPort(server, port)
+                    .then(() => {
+                        this.ports[port] = server;
+                        resolve();
+                    })
+                    .catch((err) => reject(err));
+                this.ports[port] = server;
+            }
+            resolve();
+        });
     }
 
     private listenToPort(server: any, port: number): Promise<void> {
         return new Promise((resolve, reject) => {
             server.on('error', (err: any) => {
                 if (err) {
-                    const message = `Error creating server ${err}`;
+                    const message = `Error emitted from server (${port}) ${err}`;
                     Logger.error(message);
                     return reject(message);
                 }
             });
             try {
-                if (!this.boundPorts[port]) {
-                    server.listen(port, (err: any) => {
-                        if (err) {
-                            const message = `Error listening to server ${err}`;
-                            Logger.error(message);
-                            return reject(message);
-                        }
-                        this.boundPorts[port] = true;
-                        return resolve();
-                    });
-                } else {
-                    this.boundPorts[port] = true;
+                Logger.info(`Binding server to port ${port}`);
+                server.listen(port, (err: any) => {
+                    if (err) {
+                        const message = `Error listening to port (${port}) ${err}`;
+                        Logger.error(message);
+                        return reject(message);
+                    }
                     return resolve();
-                }
+                });
             } catch (err) {
-                const message = `Error in server ${err}`;
+                const message = `Error caught from server (${port}) ${err}`;
                 Logger.error(message);
                 return reject(message);
             }

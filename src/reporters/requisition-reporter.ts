@@ -45,7 +45,7 @@ export class RequisitionReporter {
             .catch(err => {
                 const message = `Error connecting multiSubscription: ${err}`;
                 Logger.error(message);
-                this.onFinish({valid: false, description: message, name: 'Subscriptions connection'});
+                this.onFinish({valid: false, description: message, name: 'Subscriptions subscription'});
             });
     }
 

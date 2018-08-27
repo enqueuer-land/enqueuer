@@ -84,7 +84,27 @@ runnables:
       assertions:
       - name: Payload
         expectToBeTruthy: JSON.parse(message.body).duplicated
-- name: requisition 2 description
+- name: requisition 2 (different port) description
+  timeout: 5000
+  startEvent:
+    subscription:
+      name: subscription description
+      type: http-server
+      endpoint: /differentPort
+      port: 23076
+      method: POST
+      timeout: 1000
+      avoid: true
+- name: requisition 3 (check port releasing)
+  timeout: 5000
+  startEvent:
+    subscription:
+      name: subscription description
+      type: tcp-server
+      port: 23076
+      timeout: 1000
+      avoid: true
+- name: requisition https description
   timeout: 3000
   startEvent:
     publisher:
