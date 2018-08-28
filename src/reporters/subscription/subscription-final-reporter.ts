@@ -19,70 +19,72 @@ export class SubscriptionFinalReporter {
     }
 
     public getReport(): TestModel[] {
-        let tests: TestModel[] = [];
         if (!this.subscribed) {
-            return tests.concat(this.createNotSubscribedReport());
+            return this.createNotSubscribedTests();
         }
+        let tests: TestModel[] = [];
         if (this.avoidable) {
-            tests = tests.concat(this.createAvoidableReport());
+            tests = tests.concat(this.createAvoidableTests());
         } else {
-            tests = tests.concat(this.createMessageReport());
+            tests = tests.concat(this.createMessageTests());
         }
-        if (this.hasTimedOut) {
-            const timeoutReport = this.createTimeoutReport();
-            if (timeoutReport) {
-                tests = tests.concat(timeoutReport);
-            }
-        }
-        return tests;
+        return tests.concat(this.addTimeoutTests());
     }
 
-    private createNotSubscribedReport(): any {
-        return {
+    private addTimeoutTests(): TestModel[] {
+        if (this.hasTimedOut) {
+            return this.createTimeoutTests();
+        }
+        return [];
+    }
+
+    private createNotSubscribedTests(): TestModel[] {
+        return [{
             valid: false,
             name: this.subscribedTestName,
             description: `Subscription is not able to connect`
-        };
+        }];
     }
 
-    private createMessageReport(): TestModel {
+    private createMessageTests(): TestModel[] {
         if (this.hasMessage) {
-            return {
+            return [{
                 valid: true,
                 name: this.messageReceivedTestName,
                 description: `Subscription has received its message`
-            };
+            }];
         } else {
-            return {
+            return [{
                 valid: false,
                 name: this.messageReceivedTestName,
                 description: `Subscription has not received its message`
-            };
+            }];
         }
     }
-    private createTimeoutReport(): TestModel | undefined {
+    private createTimeoutTests(): TestModel[] {
         if (!this.avoidable) {
-            return {
+            return [{
                 valid: false,
                 name: this.noTimeOutTestName,
                 description: `Not avoidable Subscription has timed out`
-            };
+            }];
         }
+        return [];
     }
 
-    private createAvoidableReport() {
+    private createAvoidableTests(): TestModel[] {
         if (this.hasMessage) {
-            return {
+            return [{
                 valid: false,
                 name: this.subscriptionAvoidedTestName,
                 description: `Avoidable subscription should not receive a message`
-            };
+            }];
         } else {
-            return {
+            return [{
                 valid: true,
                 name: this.subscriptionAvoidedTestName,
                 description: `Avoidable subscription has not received a message`
-            };
+            }];
         }
     }
 }
