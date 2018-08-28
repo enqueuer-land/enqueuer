@@ -1,0 +1,71 @@
+name: http-proxy test description
+id: http-proxy
+runnables:
+- startEvent:
+    publisher:
+      name: publisher proxy
+      type: http-client
+      url: http://localhost:23085/proxy/idValue?query=proxied
+      method: PATCH
+      payload:
+        proxy: test
+      headers:
+        content-type: application/json
+      authentication:
+        basic:
+          user: user
+          password: password
+      onMessageReceived:
+        assertions:
+        - name: Status Code
+          expect: statusCode
+          toBeEqualTo: 333
+        - name: Body
+          expect: body
+          toBeEqualTo: `responsePayload`
+  subscriptions:
+  - name: proxy subscription
+    type: http-proxy
+    endpoint: /proxy/:id
+    port: 23085
+    method: PATCH
+    redirect: http://localhost:23086
+    authentication:
+      basic:
+        user: user
+        password: password
+    onMessageReceived:
+      assertions:
+      - name: Payload
+        expect: JSON.parse(message.body).proxy
+        toBeEqualTo: `test`
+      - name: Params
+        expect: params.id
+        toBeEqualTo: `idValue`
+      - name: Query
+        expect: query.query
+        toBeEqualTo: `proxied`
+  - name: real server description
+    type: http-server
+    endpoint: /proxy/:firstId
+    port: 23086
+    method: PATCH
+    timeout: 2000
+    authentication:
+      basic:
+        user: user
+        password: password
+    response:
+      status: 333
+      payload: responsePayload
+    onMessageReceived:
+      assertions:
+      - name: Payload
+        expect: JSON.parse(message.body).proxy
+        toBeEqualTo: `test`
+      - name: Params
+        expect: params.firstId
+        toBeEqualTo: `idValue`
+      - name: Query
+        expect: query.query
+        toBeEqualTo: `proxied`

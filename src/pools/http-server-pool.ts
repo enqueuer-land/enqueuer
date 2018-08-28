@@ -5,13 +5,7 @@ import {Logger} from '../loggers/logger';
 
 export class HttpServerPool {
     private static instance: HttpServerPool;
-    private app: any;
-
     private ports: any = {};
-
-    constructor() {
-        this.initializeExpress();
-    }
 
     public static getInstance(): HttpServerPool {
         if (!HttpServerPool.instance) {
@@ -20,43 +14,47 @@ export class HttpServerPool {
         return HttpServerPool.instance;
     }
 
-    public getApp(): any {
-        return this.app;
-    }
-
-    public getHttpServer(port: number): Promise<void> {
+    public getHttpServer(port: number): Promise<any> {
         return new Promise((resolve, reject) => {
-            Logger.debug(`Getting a Http server ${port}`);
+            Logger.info(`Getting a Http server ${port}`);
             if (!this.ports[port]) {
-                Logger.debug(`Creating a new Http server ${port}`);
-                const server = http.createServer(this.app);
+                Logger.info(`Creating a new Http server ${port}`);
+                const app = this.createApp();
+                const server = http.createServer(app);
                 this.listenToPort(server, port)
                     .then(() => {
-                        this.ports[port] = server;
-                        resolve();
+                        this.ports[port] = {
+                            app,
+                            server
+                        };
+                        resolve(app);
                     })
                     .catch((err) => reject(err));
-                this.ports[port] = server;
+            } else {
+                resolve(this.ports[port].app);
             }
-            resolve();
         });
     }
 
-    public getHttpsServer(credentials: any, port: number): Promise<void> {
+    public getHttpsServer(credentials: any, port: number): Promise<any> {
         return new Promise((resolve, reject) => {
-            Logger.debug(`Getting a Https server ${port}`);
+            Logger.info(`Getting a Https server ${port}`);
             if (!this.ports[port]) {
-                Logger.debug(`Creating a new Https server ${port}`);
-                const server = https.createServer(credentials, this.app);
+                Logger.info(`Creating a new Https server ${port}`);
+                const app = this.createApp();
+                const server = https.createServer(credentials, app);
                 this.listenToPort(server, port)
                     .then(() => {
-                        this.ports[port] = server;
-                        resolve();
+                        this.ports[port] = {
+                            app,
+                            server
+                        };
+                        resolve(app);
                     })
                     .catch((err) => reject(err));
-                this.ports[port] = server;
+            } else {
+                resolve(this.ports[port].app);
             }
-            resolve();
         });
     }
 
@@ -90,29 +88,29 @@ export class HttpServerPool {
     public closeServer(port: number) {
         const server = this.ports[port];
         if (server) {
-            server.close();
-            Logger.info(`Server running on ${port} is closed`);
+            server.server.close();
+            Logger.debug(`Server running on ${port} is closed`);
             delete this.ports[port];
+            Logger.debug(`Remaining http/s ports: ${Object.keys(this.ports)}`);
         } else {
             Logger.warning(`No server running on ${port} to be closed`);
         }
     }
 
-    private initializeExpress() {
-        if (!this.app) {
-            this.app = express();
-            this.app.use((req: any, res: any, next: any) => {
-                req.setEncoding('utf8');
-                req.rawBody = '';
-                req.on('data', (chunk: any) => {
-                    req.rawBody += chunk;
-                });
-                req.on('end', () => {
-                    Logger.trace(`Http(s) server got message: ${req.rawBody}`);
-                    next();
-                });
+    private createApp() {
+        const app = express();
+        app.use((req: any, res: any, next: any) => {
+            req.setEncoding('utf8');
+            req.rawBody = '';
+            req.on('data', (chunk: any) => {
+                req.rawBody += chunk;
             });
-        }
+            req.on('end', () => {
+                Logger.trace(`Http(s) server got message: ${req.rawBody}`);
+                next();
+            });
+        });
+        return app;
     }
 
 }

@@ -30,7 +30,6 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
         return new Promise((resolve, reject) => {
             this.insertAuthentication();
             const options = this.createOptions();
-            logger_1.Logger.trace(`Http-client-publisher ${JSON.stringify(options)}`);
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request_1.default(options, (error, response) => {
                 this.handleResponse(response);
@@ -46,7 +45,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
     handleResponse(response) {
         if (response) {
             this.messageReceived = response;
-            logger_1.Logger.trace(`Http requisition response: ${JSON.stringify(response)}`.substr(0, 128));
+            logger_1.Logger.trace(`Http/s requisition response: ${JSON.stringify(response)}`.substr(0, 128));
         }
         else {
             logger_1.Logger.warning(`No http requisition response`);
@@ -79,7 +78,7 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
         try {
             const parsedPayload = JSON.parse(this.payload);
             if (typeof parsedPayload === 'object') {
-                logger_1.Logger.trace(`Http payload is an object: ${this.payload}`);
+                logger_1.Logger.trace(`Http/s payload is an object: ${this.payload}`);
             }
             return this.payload;
         }

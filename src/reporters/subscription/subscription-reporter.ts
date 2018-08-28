@@ -102,9 +102,9 @@ export class SubscriptionReporter {
 
     public getReport(): output.SubscriptionModel {
         const finalReporter = new SubscriptionFinalReporter(this.subscribed,
-                                                            this.subscription.avoid,
-                                                            !!this.subscription.messageReceived,
-                                                            !!this.subscription.timeout && this.hasTimedOut);
+            this.subscription.avoid,
+            !!this.subscription.messageReceived,
+            !!this.subscription.timeout && this.hasTimedOut);
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
         this.cleanUp();
@@ -112,21 +112,27 @@ export class SubscriptionReporter {
         return this.report;
     }
 
-    private async handleMessageArrival(message: any): Promise<void> {
-        Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
+    private handleMessageArrival(message: any): Promise<void> {
+        return new Promise((resolve, reject) => {
 
-        if (!this.hasTimedOut) {
-            Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
-            this.subscription.messageReceived = message;
-            this.executeOnMessageReceivedFunction();
-            if (this.subscription.response) {
-                Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-                await this.subscription.sendResponse();
+            Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
+
+            if (!this.hasTimedOut) {
+                Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
+                this.subscription.messageReceived = message;
+                this.executeOnMessageReceivedFunction();
+                if (this.subscription.response) {
+                    Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
+                    this.subscription.sendResponse().then(() => resolve()).catch(err => reject(err));
+                } else {
+                    resolve();
+                }
+            } else {
+                Logger.info(`${this.subscription.name} has received message in a unable time`);
+                this.cleanUp();
+                resolve();
             }
-        } else {
-            Logger.info(`${this.subscription.name} has received message in a unable time`);
-        }
-        this.cleanUp();
+        });
     }
 
     private cleanUp(): void {

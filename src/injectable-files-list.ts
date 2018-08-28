@@ -11,6 +11,7 @@ import './subscriptions/kafka-subscription';
 import './subscriptions/zero-mq-sub-subscription';
 import './subscriptions/amqp-subscription';
 import './subscriptions/standard-input-subscription';
+import './subscriptions/http-proxy-subscription';
 import './subscriptions/udp-subscription';
 import './subscriptions/mqtt-subscription';
 import './subscriptions/null-subscription';

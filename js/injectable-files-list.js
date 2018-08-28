@@ -13,6 +13,7 @@ require("./subscriptions/kafka-subscription");
 require("./subscriptions/zero-mq-sub-subscription");
 require("./subscriptions/amqp-subscription");
 require("./subscriptions/standard-input-subscription");
+require("./subscriptions/http-proxy-subscription");
 require("./subscriptions/udp-subscription");
 require("./subscriptions/mqtt-subscription");
 require("./subscriptions/null-subscription");

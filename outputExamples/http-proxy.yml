@@ -1,0 +1,115 @@
+type: runnable
+valid: true
+tests: []
+name: 'http-proxy test description'
+id: http-proxy
+runnables:
+  -
+    type: requisition
+    valid: true
+    tests: []
+    name: 'Requisition #0'
+    time:
+      totalTime: 197
+      startTime: '2018-08-28T13:57:39.168Z'
+      endTime: '2018-08-28T13:57:39.365Z'
+    subscriptions:
+      -
+        name: 'proxy subscription'
+        type: http-proxy
+        tests:
+          -
+            name: '"Basic" authentication prefix'
+            valid: true
+            description: 'Prefix "Basic" was found.'
+          -
+            name: '"Basic" authentication user'
+            valid: true
+            description: 'User found'
+          -
+            name: '"Basic" authentication password'
+            valid: true
+            description: 'Password matchs'
+          -
+            name: '"Basic" authentication'
+            valid: true
+            description: 'Basic authentication is valid'
+          -
+            name: Payload
+            valid: true
+            description: 'Expected value to be equal to ''test''. Received ''test'''
+          -
+            name: Params
+            valid: true
+            description: 'Expected value to be equal to ''idValue''. Received ''idValue'''
+          -
+            name: Query
+            valid: true
+            description: 'Expected value to be equal to ''proxied''. Received ''proxied'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-08-28T13:57:39.221Z'
+      -
+        name: 'real server description'
+        type: http-server
+        tests:
+          -
+            name: '"Basic" authentication prefix'
+            valid: true
+            description: 'Prefix "Basic" was found.'
+          -
+            name: '"Basic" authentication user'
+            valid: true
+            description: 'User found'
+          -
+            name: '"Basic" authentication password'
+            valid: true
+            description: 'Password matchs'
+          -
+            name: '"Basic" authentication'
+            valid: true
+            description: 'Basic authentication is valid'
+          -
+            name: Payload
+            valid: true
+            description: 'Expected value to be equal to ''test''. Received ''test'''
+          -
+            name: Params
+            valid: true
+            description: 'Expected value to be equal to ''idValue''. Received ''idValue'''
+          -
+            name: Query
+            valid: true
+            description: 'Expected value to be equal to ''proxied''. Received ''proxied'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-08-28T13:57:39.221Z'
+    startEvent:
+      publisher:
+        name: 'publisher proxy'
+        valid: true
+        type: http-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Status Code'
+            valid: true
+            description: 'Expected value to be equal to ''333''. Received ''333'''
+          -
+            name: Body
+            valid: true
+            description: 'Expected value to be equal to ''responsePayload''. Received ''responsePayload'''
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-08-28T13:57:39.365Z'

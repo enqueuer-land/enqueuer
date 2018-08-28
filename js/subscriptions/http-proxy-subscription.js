@@ -8,70 +8,69 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const http_server_pool_1 = require("../pools/http-server-pool");
 const http_authentication_1 = require("../http-authentications/http-authentication");
-let HttpServerSubscription = class HttpServerSubscription extends subscription_1.Subscription {
+const request_1 = __importDefault(require("request"));
+let HttpProxySubscription = class HttpProxySubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.credentials = subscriptionAttributes.credentials;
         this.authentication = subscriptionAttributes.authentication;
         this.port = subscriptionAttributes.port;
         this.endpoint = subscriptionAttributes.endpoint;
+        this.redirect = subscriptionAttributes.redirect;
+        this.secureServer = this.isSecureServer();
         this.method = subscriptionAttributes.method.toLowerCase();
-        this.response = subscriptionAttributes.response || {};
-        this.response.status = this.response.status || 200;
-        if (!this.response) {
-            throw new Error(`Invalid ${this.type}: no 'response' field was given`);
-        }
     }
     receiveMessage() {
-        return new Promise((resolve) => {
-            this.app[this.method](this.endpoint, (request, responseHandler, next) => {
+        return new Promise((resolve, reject) => {
+            this.app[this.method](this.endpoint, (request, response, next) => {
                 const payload = request.rawBody;
                 logger_1.Logger.debug(`${this.type}:${this.port} got hit (${request.method}) ${this.endpoint}: ${payload}`);
-                if (!this.response.payload) {
-                    this.response.payload = payload;
-                }
-                for (const key in this.response.header) {
-                    responseHandler.header(key, this.response.header[key]);
-                }
                 let headers = {};
                 Object.keys(request.headers)
                     .forEach((header) => headers[header] = request.headers[header]);
-                this.responseHandler = responseHandler;
-                const result = {
+                this.responseHandler = response;
+                const messageReceived = {
                     headers,
                     params: request.params,
                     query: request.query,
                     body: payload
                 };
-                resolve(result);
-                next();
+                this.redirectCall(request)
+                    .then(() => {
+                    resolve(messageReceived);
+                    next();
+                })
+                    .catch(err => {
+                    reject(err);
+                    next();
+                });
             });
         });
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            if (this.type == 'https-server') {
+            if (this.secureServer) {
                 http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
                     .then((app) => {
                     this.app = app;
                     resolve();
                 }).catch(err => reject(err));
             }
-            else if (this.type == 'http-server') {
+            else {
                 http_server_pool_1.HttpServerPool.getInstance().getHttpServer(this.port)
                     .then((app) => {
                     this.app = app;
                     resolve();
                 }).catch(err => reject(err));
-            }
-            else {
-                return reject(`${this.type} type is not known`);
             }
         });
     }
@@ -104,12 +103,64 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
         }
         return [];
     }
+    redirectCall(originalRequisition) {
+        return new Promise((resolve, reject) => {
+            try {
+                const options = this.createOptions(originalRequisition);
+                logger_1.Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${options.url}`);
+                process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+                request_1.default(options, (error, response, body) => {
+                    if (error) {
+                        logger_1.Logger.error('Error redirecting call: ' + error);
+                        return reject(error);
+                    }
+                    this.response = {
+                        payload: body,
+                        status: response.statusCode
+                    };
+                    resolve();
+                });
+            }
+            catch (err) {
+                logger_1.Logger.error(`Error redirecting call to ${this.redirect}`);
+                reject(err);
+            }
+        });
+    }
+    createOptions(originalRequisition) {
+        let options = {
+            method: this.method.toLowerCase(),
+            url: this.redirect + originalRequisition.url,
+            headers: originalRequisition.headers
+        };
+        options.data = options.body = originalRequisition.rawBody;
+        return options;
+    }
+    setContentLength(value) {
+        if (Buffer.isBuffer(value)) {
+            return value.length;
+        }
+        else {
+            return Buffer.from(value, 'utf8').byteLength;
+        }
+    }
+    isSecureServer() {
+        if (this.type) {
+            if (this.type.indexOf('https') != -1) {
+                return true;
+            }
+            else if (this.type.indexOf('http') != -1) {
+                return false;
+            }
+        }
+        throw `Http server type is not known: ${this.type}`;
+    }
 };
-HttpServerSubscription = __decorate([
+HttpProxySubscription = __decorate([
     conditional_injector_1.Injectable({
-        predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-server'
-            || subscriptionAttributes.type === 'https-server'
+        predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-proxy'
+            || subscriptionAttributes.type === 'https-proxy'
     }),
     __metadata("design:paramtypes", [Object])
-], HttpServerSubscription);
-exports.HttpServerSubscription = HttpServerSubscription;
+], HttpProxySubscription);
+exports.HttpProxySubscription = HttpProxySubscription;

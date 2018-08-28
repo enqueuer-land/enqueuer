@@ -112,7 +112,7 @@ class SubscriptionReporter {
         return this.report;
     }
     handleMessageArrival(message) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
             logger_1.Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
             if (!this.hasTimedOut) {
                 logger_1.Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
@@ -120,13 +120,17 @@ class SubscriptionReporter {
                 this.executeOnMessageReceivedFunction();
                 if (this.subscription.response) {
                     logger_1.Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-                    yield this.subscription.sendResponse();
+                    this.subscription.sendResponse().then(() => resolve()).catch(err => reject(err));
+                }
+                else {
+                    resolve();
                 }
             }
             else {
                 logger_1.Logger.info(`${this.subscription.name} has received message in a unable time`);
+                this.cleanUp();
+                resolve();
             }
-            this.cleanUp();
         });
     }
     cleanUp() {
