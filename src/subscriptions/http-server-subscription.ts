@@ -18,7 +18,7 @@ export class HttpServerSubscription extends Subscription {
     private method: string;
     private credentials?: string;
     private responseHandler?: any;
-    private app: any;
+    private expressApp: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -37,7 +37,7 @@ export class HttpServerSubscription extends Subscription {
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve) => {
-            this.app[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
+            this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
                 const payload = request.rawBody;
                 Logger.debug(`${this.type}:${this.port} got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 if (!this.response.payload) {
@@ -68,26 +68,17 @@ export class HttpServerSubscription extends Subscription {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (this.type == 'https-server') {
-                HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
-                    .then((app: any) => {
-                        this.app = app;
-                        resolve();
-                    }).catch(err => reject(err));
-            } else if (this.type == 'http-server') {
-                HttpServerPool.getInstance().getHttpServer(this.port)
-                    .then((app: any) => {
-                        this.app = app;
-                        resolve();
-                    }).catch(err => reject(err));
-            } else {
-                return reject(`${this.type} type is not known`);
-            }
+            const secure = this.type == 'https-server';
+            HttpServerPool.getInstance().getApp(this.port, secure, this.credentials)
+                .then((app: any) => {
+                    this.expressApp = app;
+                    resolve();
+                }).catch(err => reject(err));
         });
     }
 
     public unsubscribe() {
-        HttpServerPool.getInstance().closeServer(this.port);
+        HttpServerPool.getInstance().releaseApp(this.port);
     }
 
     public sendResponse(): Promise<void> {

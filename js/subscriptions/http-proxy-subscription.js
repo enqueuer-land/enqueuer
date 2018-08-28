@@ -31,7 +31,7 @@ let HttpProxySubscription = class HttpProxySubscription extends subscription_1.S
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            this.app[this.method](this.endpoint, (request, response, next) => {
+            this.expressApp[this.method](this.endpoint, (request, response, next) => {
                 const payload = request.rawBody;
                 logger_1.Logger.debug(`${this.type}:${this.port} got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 let headers = {};
@@ -58,24 +58,15 @@ let HttpProxySubscription = class HttpProxySubscription extends subscription_1.S
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            if (this.secureServer) {
-                http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
-                    .then((app) => {
-                    this.app = app;
-                    resolve();
-                }).catch(err => reject(err));
-            }
-            else {
-                http_server_pool_1.HttpServerPool.getInstance().getHttpServer(this.port)
-                    .then((app) => {
-                    this.app = app;
-                    resolve();
-                }).catch(err => reject(err));
-            }
+            http_server_pool_1.HttpServerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
+                .then((app) => {
+                this.expressApp = app;
+                resolve();
+            }).catch(err => reject(err));
         });
     }
     unsubscribe() {
-        http_server_pool_1.HttpServerPool.getInstance().closeServer(this.port);
+        http_server_pool_1.HttpServerPool.getInstance().releaseApp(this.port);
     }
     sendResponse() {
         return new Promise((resolve, reject) => {
@@ -135,14 +126,6 @@ let HttpProxySubscription = class HttpProxySubscription extends subscription_1.S
         };
         options.data = options.body = originalRequisition.rawBody;
         return options;
-    }
-    setContentLength(value) {
-        if (Buffer.isBuffer(value)) {
-            return value.length;
-        }
-        else {
-            return Buffer.from(value, 'utf8').byteLength;
-        }
     }
     isSecureServer() {
         if (this.type) {

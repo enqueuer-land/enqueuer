@@ -9,7 +9,7 @@ const http_1 = __importDefault(require("http"));
 const logger_1 = require("../loggers/logger");
 class HttpServerPool {
     constructor() {
-        this.ports = {};
+        this.container = {};
     }
     static getInstance() {
         if (!HttpServerPool.instance) {
@@ -17,49 +17,53 @@ class HttpServerPool {
         }
         return HttpServerPool.instance;
     }
-    getHttpServer(port) {
+    releaseApp(port) {
+        const container = this.container[port];
+        if (container) {
+            --container.counter;
+            if (container.counter <= 0) {
+                container.server.close();
+                logger_1.Logger.debug(`Container running on ${port} is closed`);
+                delete this.container[port];
+            }
+            else {
+                logger_1.Logger.debug(`No need to close http/s server. Still ${container.counter} using it`);
+            }
+        }
+        else {
+            logger_1.Logger.warning(`No container running on ${port} to be closed`);
+        }
+        logger_1.Logger.debug(`Remaining http/s ports: ${Object.keys(this.container)}`);
+    }
+    getApp(port, secure, credentials) {
         return new Promise((resolve, reject) => {
-            logger_1.Logger.info(`Getting a Http server ${port}`);
-            if (!this.ports[port]) {
-                logger_1.Logger.info(`Creating a new Http server ${port}`);
+            logger_1.Logger.info(`Getting a Http/s server ${port}`);
+            if (!this.container[port]) {
+                logger_1.Logger.info(`Creating a new Http/s server ${port}`);
                 const app = this.createApp();
-                const server = http_1.default.createServer(app);
+                const server = this.createServer(app, secure, credentials);
                 this.listenToPort(server, port)
                     .then(() => {
-                    this.ports[port] = {
+                    this.container[port] = {
                         app,
-                        server
+                        server,
+                        counter: 0
                     };
                     resolve(app);
                 })
                     .catch((err) => reject(err));
             }
             else {
-                resolve(this.ports[port].app);
+                ++this.container[port].counter;
+                resolve(this.container[port].app);
             }
         });
     }
-    getHttpsServer(credentials, port) {
-        return new Promise((resolve, reject) => {
-            logger_1.Logger.info(`Getting a Https server ${port}`);
-            if (!this.ports[port]) {
-                logger_1.Logger.info(`Creating a new Https server ${port}`);
-                const app = this.createApp();
-                const server = https_1.default.createServer(credentials, app);
-                this.listenToPort(server, port)
-                    .then(() => {
-                    this.ports[port] = {
-                        app,
-                        server
-                    };
-                    resolve(app);
-                })
-                    .catch((err) => reject(err));
-            }
-            else {
-                resolve(this.ports[port].app);
-            }
-        });
+    createServer(app, secure, credentials) {
+        if (secure) {
+            return https_1.default.createServer(credentials, app);
+        }
+        return http_1.default.createServer(app);
     }
     listenToPort(server, port) {
         return new Promise((resolve, reject) => {
@@ -87,18 +91,6 @@ class HttpServerPool {
                 return reject(message);
             }
         });
-    }
-    closeServer(port) {
-        const server = this.ports[port];
-        if (server) {
-            server.server.close();
-            logger_1.Logger.debug(`Server running on ${port} is closed`);
-            delete this.ports[port];
-            logger_1.Logger.debug(`Remaining http/s ports: ${Object.keys(this.ports)}`);
-        }
-        else {
-            logger_1.Logger.warning(`No server running on ${port} to be closed`);
-        }
     }
     createApp() {
         const app = express_1.default();

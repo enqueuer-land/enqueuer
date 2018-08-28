@@ -30,7 +30,7 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
     receiveMessage() {
         return new Promise((resolve) => {
-            this.app[this.method](this.endpoint, (request, responseHandler, next) => {
+            this.expressApp[this.method](this.endpoint, (request, responseHandler, next) => {
                 const payload = request.rawBody;
                 logger_1.Logger.debug(`${this.type}:${this.port} got hit (${request.method}) ${this.endpoint}: ${payload}`);
                 if (!this.response.payload) {
@@ -56,27 +56,16 @@ let HttpServerSubscription = class HttpServerSubscription extends subscription_1
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            if (this.type == 'https-server') {
-                http_server_pool_1.HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
-                    .then((app) => {
-                    this.app = app;
-                    resolve();
-                }).catch(err => reject(err));
-            }
-            else if (this.type == 'http-server') {
-                http_server_pool_1.HttpServerPool.getInstance().getHttpServer(this.port)
-                    .then((app) => {
-                    this.app = app;
-                    resolve();
-                }).catch(err => reject(err));
-            }
-            else {
-                return reject(`${this.type} type is not known`);
-            }
+            const secure = this.type == 'https-server';
+            http_server_pool_1.HttpServerPool.getInstance().getApp(this.port, secure, this.credentials)
+                .then((app) => {
+                this.expressApp = app;
+                resolve();
+            }).catch(err => reject(err));
         });
     }
     unsubscribe() {
-        http_server_pool_1.HttpServerPool.getInstance().closeServer(this.port);
+        http_server_pool_1.HttpServerPool.getInstance().releaseApp(this.port);
     }
     sendResponse() {
         return new Promise((resolve, reject) => {

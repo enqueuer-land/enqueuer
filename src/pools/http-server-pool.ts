@@ -5,7 +5,7 @@ import {Logger} from '../loggers/logger';
 
 export class HttpServerPool {
     private static instance: HttpServerPool;
-    private ports: any = {};
+    private container: any = {};
 
     public static getInstance(): HttpServerPool {
         if (!HttpServerPool.instance) {
@@ -14,48 +14,52 @@ export class HttpServerPool {
         return HttpServerPool.instance;
     }
 
-    public getHttpServer(port: number): Promise<any> {
+    public releaseApp(port: number) {
+        const container = this.container[port];
+        if (container) {
+            --container.counter;
+            if (container.counter <= 0) {
+                container.server.close();
+                Logger.debug(`Container running on ${port} is closed`);
+                delete this.container[port];
+            } else {
+                Logger.debug(`No need to close http/s server. Still ${container.counter} using it`);
+            }
+        } else {
+            Logger.warning(`No container running on ${port} to be closed`);
+        }
+        Logger.debug(`Remaining http/s ports: ${Object.keys(this.container)}`);
+    }
+
+    public getApp(port: number, secure: boolean, credentials?: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            Logger.info(`Getting a Http server ${port}`);
-            if (!this.ports[port]) {
-                Logger.info(`Creating a new Http server ${port}`);
+            Logger.info(`Getting a Http/s server ${port}`);
+            if (!this.container[port]) {
+                Logger.info(`Creating a new Http/s server ${port}`);
                 const app = this.createApp();
-                const server = http.createServer(app);
+                const server = this.createServer(app, secure, credentials);
                 this.listenToPort(server, port)
                     .then(() => {
-                        this.ports[port] = {
+                        this.container[port] = {
                             app,
-                            server
+                            server,
+                            counter: 0
                         };
                         resolve(app);
                     })
                     .catch((err) => reject(err));
             } else {
-                resolve(this.ports[port].app);
+                ++this.container[port].counter;
+                resolve(this.container[port].app);
             }
         });
     }
 
-    public getHttpsServer(credentials: any, port: number): Promise<any> {
-        return new Promise((resolve, reject) => {
-            Logger.info(`Getting a Https server ${port}`);
-            if (!this.ports[port]) {
-                Logger.info(`Creating a new Https server ${port}`);
-                const app = this.createApp();
-                const server = https.createServer(credentials, app);
-                this.listenToPort(server, port)
-                    .then(() => {
-                        this.ports[port] = {
-                            app,
-                            server
-                        };
-                        resolve(app);
-                    })
-                    .catch((err) => reject(err));
-            } else {
-                resolve(this.ports[port].app);
-            }
-        });
+    private createServer(app: any, secure: boolean, credentials?: any): any {
+        if (secure) {
+            return https.createServer(credentials, app);
+        }
+        return http.createServer(app);
     }
 
     private listenToPort(server: any, port: number): Promise<void> {
@@ -83,18 +87,6 @@ export class HttpServerPool {
                 return reject(message);
             }
         });
-    }
-
-    public closeServer(port: number) {
-        const server = this.ports[port];
-        if (server) {
-            server.server.close();
-            Logger.debug(`Server running on ${port} is closed`);
-            delete this.ports[port];
-            Logger.debug(`Remaining http/s ports: ${Object.keys(this.ports)}`);
-        } else {
-            Logger.warning(`No server running on ${port} to be closed`);
-        }
     }
 
     private createApp() {

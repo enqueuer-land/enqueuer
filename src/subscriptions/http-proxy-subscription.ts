@@ -21,7 +21,7 @@ export class HttpProxySubscription extends Subscription {
     private responseHandler?: any;
     private redirect: string;
     private secureServer: boolean;
-    private app: any;
+    private expressApp: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -37,7 +37,7 @@ export class HttpProxySubscription extends Subscription {
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.app[this.method](this.endpoint, (request: any, response: any, next: any) => {
+            this.expressApp[this.method](this.endpoint, (request: any, response: any, next: any) => {
                 const payload = request.rawBody;
                 Logger.debug(`${this.type}:${this.port} got hit (${request.method}) ${this.endpoint}: ${payload}`);
 
@@ -68,24 +68,16 @@ export class HttpProxySubscription extends Subscription {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (this.secureServer) {
-                HttpServerPool.getInstance().getHttpsServer(this.credentials, this.port)
-                    .then((app: any) => {
-                        this.app = app;
-                        resolve();
-                    }).catch(err => reject(err));
-            } else {
-                HttpServerPool.getInstance().getHttpServer(this.port)
-                    .then((app: any) => {
-                        this.app = app;
-                        resolve();
-                    }).catch(err => reject(err));
-            }
+            HttpServerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
+                .then((app: any) => {
+                    this.expressApp = app;
+                    resolve();
+                }).catch(err => reject(err));
         });
     }
 
     public unsubscribe() {
-        HttpServerPool.getInstance().closeServer(this.port);
+        HttpServerPool.getInstance().releaseApp(this.port);
     }
 
     public sendResponse(): Promise<void> {
@@ -121,18 +113,17 @@ export class HttpProxySubscription extends Subscription {
                 const options = this.createOptions(originalRequisition);
                 Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${options.url}`);
                 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-                request(options,
-                    (error: any, response: any, body: string) => {
-                        if (error) {
-                            Logger.error('Error redirecting call: ' + error);
-                            return reject(error);
-                        }
-                        this.response = {
-                            payload: body,
-                            status: response.statusCode
-                        };
-                        resolve();
-                    });
+                request(options, (error: any, response: any, body: string) => {
+                    if (error) {
+                        Logger.error('Error redirecting call: ' + error);
+                        return reject(error);
+                    }
+                    this.response = {
+                        payload: body,
+                        status: response.statusCode
+                    };
+                    resolve();
+                });
 
             } catch (err) {
                 Logger.error(`Error redirecting call to ${this.redirect}`);
@@ -149,14 +140,6 @@ export class HttpProxySubscription extends Subscription {
         };
         options.data = options.body = originalRequisition.rawBody;
         return options;
-    }
-
-    private setContentLength(value: string): number {
-        if (Buffer.isBuffer(value)) {
-            return value.length;
-        } else {
-            return Buffer.from(value, 'utf8').byteLength;
-        }
     }
 
     private isSecureServer() {
