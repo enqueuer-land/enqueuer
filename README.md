@@ -17,7 +17,7 @@ Now, you have three options to test this **polyglot flow**:
 To use **enqueuer**, you have to:
 
 1. install it:
-[![npm][npm-badge]][npm]
+
     ```$npm install -g enqueuer```
     
 2. create a configuration file like this:
