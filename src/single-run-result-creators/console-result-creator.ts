@@ -4,22 +4,24 @@ import {TestModel} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import chalk from 'chalk';
 import {DateController} from '../timers/date-controller';
+import {TestsCounter} from './tests-counter';
 
-export class SummaryResultCreator implements ResultCreator {
-    private testCounter: number = 0;
+export class ConsoleResultCreator implements ResultCreator {
     private failingTests: any = [];
     private startTime: DateController;
+    private testsCounter: TestsCounter;
 
     public constructor() {
         this.startTime = new DateController();
+        this.testsCounter = new TestsCounter();
     }
 
     public addTestSuite(name: string, report: ResultModel): void {
+        this.testsCounter.addTests(report);
         this.findRequisitions(report, [name]);
     }
 
     public addError(err: any): void {
-        ++this.testCounter;
         this.failingTests.push({name: 'Error running runnable', valid: false, description: err.toString()});
     }
 
@@ -71,7 +73,6 @@ export class SummaryResultCreator implements ResultCreator {
     }
 
     private inspectInvalidTests(tests: TestModel[], hierarchy: string[]) {
-        this.testCounter += Object.keys(tests).length;
         tests
             .forEach((test: TestModel) => {
                 if (!test.valid) {
@@ -98,21 +99,14 @@ export class SummaryResultCreator implements ResultCreator {
     private printSummary() {
         const totalTime = new DateController().getTime() - this.startTime.getTime();
         console.log(chalk.white(`------------------------------`));
-        let percentage = this.calcPercentage();
-        const divisionString = `${this.testCounter - this.failingTests.length} tests passing of ${this.testCounter} total ` +
+        const percentage = this.testsCounter.getPercentage();
+        const testsNumber = this.testsCounter.getTestsNumber();
+        const divisionString = `${testsNumber - this.testsCounter.getFailingTestsNumber()} tests passing of ${testsNumber} total ` +
                                             `(${percentage}%) ran in ${totalTime}ms`;
-        console.log(this.percentageColor(percentage)(`\tTests summary \t\t ${divisionString}`));
+        console.log(this.getColor(percentage)(`\tTests summary \t\t ${divisionString}`));
     }
 
-    private calcPercentage() {
-        let percentage = Math.trunc(10000 * (this.testCounter - this.failingTests.length) / this.testCounter) / 100;
-        if (isNaN(percentage)) {
-            percentage = 0;
-        }
-        return percentage;
-    }
-
-    private percentageColor(percentage: number): Function {
+    private getColor(percentage: number): Function {
         if (percentage == 100) {
             return chalk.bgGreen.black;
         } else if (percentage > 50) {
