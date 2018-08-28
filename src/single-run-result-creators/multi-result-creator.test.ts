@@ -1,5 +1,5 @@
 import {MultiResultCreator} from "./multi-result-creator";
-import {SummaryResultCreator} from "./summary-result-creator";
+import {ConsoleResultCreator} from "./console-result-creator";
 import {FileResultCreator} from "./file-result-creator";
 
 
@@ -24,8 +24,8 @@ let constructorSummaryResultCreator = jest.fn(() => {
     }
 });
 
-jest.mock("./summary-result-creator");
-SummaryResultCreator.mockImplementation(constructorSummaryResultCreator);
+jest.mock("./console-result-creator");
+ConsoleResultCreator.mockImplementation(constructorSummaryResultCreator);
 
 
 let constructorFileResultCreator = jest.fn(() => {

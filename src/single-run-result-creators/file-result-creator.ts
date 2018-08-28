@@ -20,6 +20,7 @@ export class FileResultCreator implements ResultCreator {
         this.report.runnables.push(report);
         this.report.valid = this.report.valid && report.valid;
     }
+
     public addError(err: any): void {
         this.report.valid = false;
     }
@@ -27,6 +28,7 @@ export class FileResultCreator implements ResultCreator {
     public isValid(): boolean {
         return this.report.valid;
     }
+
     public create(): void {
         let content: any = this.report;
         if (this.report.name.endsWith('yml') || this.report.name.endsWith('yaml')) {

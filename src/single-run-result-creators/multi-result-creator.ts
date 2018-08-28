@@ -1,6 +1,6 @@
 import {ResultModel} from '../models/outputs/result-model';
 import {ResultCreator} from './result-creator';
-import {SummaryResultCreator} from './summary-result-creator';
+import {ConsoleResultCreator} from './console-result-creator';
 import {Logger} from '../loggers/logger';
 import {FileResultCreator} from './file-result-creator';
 
@@ -11,7 +11,7 @@ export class MultiResultCreator implements ResultCreator {
         if (reportName) {
             this.resultCreators.push(new FileResultCreator(reportName));
         }
-        this.resultCreators.push(new SummaryResultCreator());
+        this.resultCreators.push(new ConsoleResultCreator());
     }
 
     public addTestSuite(name: string, report: ResultModel): void {

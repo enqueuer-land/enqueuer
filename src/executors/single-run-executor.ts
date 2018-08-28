@@ -53,8 +53,6 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 if (runnable) {
                     this.runFileRunnable(fileName, this.setDefaultFileRunnableName(runnable, nameIndex))
                         .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
-                } else {
-                    resolve(this.executeSequentialMode(runnableFileNames));
                 }
             } else {
                 resolve(this.finishExecution());

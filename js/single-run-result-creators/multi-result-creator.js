@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const summary_result_creator_1 = require("./summary-result-creator");
+const console_result_creator_1 = require("./console-result-creator");
 const logger_1 = require("../loggers/logger");
 const file_result_creator_1 = require("./file-result-creator");
 class MultiResultCreator {
@@ -9,7 +9,7 @@ class MultiResultCreator {
         if (reportName) {
             this.resultCreators.push(new file_result_creator_1.FileResultCreator(reportName));
         }
-        this.resultCreators.push(new summary_result_creator_1.SummaryResultCreator());
+        this.resultCreators.push(new console_result_creator_1.ConsoleResultCreator());
     }
     addTestSuite(name, report) {
         logger_1.Logger.trace('Adding test suite');

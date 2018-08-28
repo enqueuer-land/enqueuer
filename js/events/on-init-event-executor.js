@@ -9,11 +9,10 @@ class OnInitEventExecutor extends event_executor_1.EventExecutor {
         this.addArgument(name, this.initializable);
     }
     trigger() {
-        logger_1.Logger.trace(`Executing onInit`);
         if (!this.initializable.onInit) {
-            logger_1.Logger.trace(`No onOnInit to be played here`);
             return [];
         }
+        logger_1.Logger.trace(`Executing onInit`);
         return this.execute();
     }
 }
