@@ -2,16 +2,15 @@
 import './runnables/requisition-runner';
 import './runnables/runnable-runner';
 import './subscriptions/filename-watcher-subscription';
+import './subscriptions/http-subscription';
 import './subscriptions/stomp-subscription';
 import './subscriptions/tcp-server-subscription';
 import './subscriptions/sqs-subscription';
-import './subscriptions/http-server-subscription';
 import './subscriptions/uds-subscription';
 import './subscriptions/kafka-subscription';
 import './subscriptions/zero-mq-sub-subscription';
 import './subscriptions/amqp-subscription';
 import './subscriptions/standard-input-subscription';
-import './subscriptions/http-proxy-subscription';
 import './subscriptions/udp-subscription';
 import './subscriptions/mqtt-subscription';
 import './subscriptions/null-subscription';

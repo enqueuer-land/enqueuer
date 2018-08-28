@@ -167,7 +167,7 @@ export class SubscriptionReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        Logger.trace(`Executing publisher onMessageReceivedResponse`);
+        Logger.trace(`Executing subscription onMessageReceivedResponse`);
         Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
         this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('subscription', this.subscription).trigger());

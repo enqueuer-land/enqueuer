@@ -33,7 +33,7 @@ class HttpServerPool {
         else {
             logger_1.Logger.warning(`No container running on ${port} to be closed`);
         }
-        logger_1.Logger.debug(`Remaining http/s ports: ${Object.keys(this.container)}`);
+        logger_1.Logger.debug(`Remaining http/s containers: ${Object.keys(this.container)}`);
     }
     getApp(port, secure, credentials) {
         return new Promise((resolve, reject) => {
@@ -101,7 +101,6 @@ class HttpServerPool {
                 req.rawBody += chunk;
             });
             req.on('end', () => {
-                logger_1.Logger.trace(`Http(s) server got message: ${req.rawBody}`);
                 next();
             });
         });

@@ -1,7 +1,7 @@
 type: runnable
 valid: true
 tests: []
-name: 'http-proxy test description'
+name: 'http-proxy test'
 id: http-proxy
 runnables:
   -
@@ -10,12 +10,12 @@ runnables:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 197
-      startTime: '2018-08-28T13:57:39.168Z'
-      endTime: '2018-08-28T13:57:39.365Z'
+      totalTime: 224
+      startTime: '2018-08-28T17:03:51.801Z'
+      endTime: '2018-08-28T17:03:52.025Z'
     subscriptions:
       -
-        name: 'proxy subscription'
+        name: 'proxy server'
         type: http-proxy
         tests:
           -
@@ -51,9 +51,9 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-28T13:57:39.221Z'
+        connectionTime: '2018-08-28T17:03:51.867Z'
       -
-        name: 'real server description'
+        name: 'real server'
         type: http-server
         tests:
           -
@@ -89,7 +89,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-28T13:57:39.221Z'
+        connectionTime: '2018-08-28T17:03:51.867Z'
     startEvent:
       publisher:
         name: 'publisher proxy'
@@ -112,4 +112,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-28T13:57:39.365Z'
+        publishTime: '2018-08-28T17:03:52.024Z'

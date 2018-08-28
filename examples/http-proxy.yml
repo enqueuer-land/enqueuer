@@ -1,4 +1,4 @@
-name: http-proxy test description
+name: http-proxy test
 id: http-proxy
 runnables:
 - startEvent:
@@ -24,7 +24,7 @@ runnables:
           expect: body
           toBeEqualTo: `responsePayload`
   subscriptions:
-  - name: proxy subscription
+  - name: proxy server
     type: http-proxy
     endpoint: /proxy/:id
     port: 23085
@@ -45,7 +45,7 @@ runnables:
       - name: Query
         expect: query.query
         toBeEqualTo: `proxied`
-  - name: real server description
+  - name: real server
     type: http-server
     endpoint: /proxy/:firstId
     port: 23086

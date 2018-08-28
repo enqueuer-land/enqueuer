@@ -162,7 +162,7 @@ class SubscriptionReporter {
         this.report.tests = this.report.tests.concat(new on_init_event_executor_1.OnInitEventExecutor('subscription', subscriptionAttributes).trigger());
     }
     executeOnMessageReceivedFunction() {
-        logger_1.Logger.trace(`Executing publisher onMessageReceivedResponse`);
+        logger_1.Logger.trace(`Executing subscription onMessageReceivedResponse`);
         logger_1.Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
         this.report.tests = this.report.tests.concat(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor('subscription', this.subscription).trigger());
