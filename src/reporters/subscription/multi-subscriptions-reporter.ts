@@ -3,6 +3,7 @@ import * as output from '../../models/outputs/subscription-model';
 import {SubscriptionReporter} from './subscription-reporter';
 import {Logger} from '../../loggers/logger';
 
+//TODO test it
 export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
     private subscriptionsStoppedWaitingCounter: number = 0;

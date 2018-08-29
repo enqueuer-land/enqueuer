@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
+//TODO test it
 let NullSubscription = class NullSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);

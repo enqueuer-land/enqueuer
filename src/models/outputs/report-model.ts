@@ -7,5 +7,5 @@ export interface ReportModel {
 }
 
 export function checkValidation(reportModel: ReportModel): boolean {
-    return reportModel.tests.filter((test) => !test.valid).length == 0;
+    return reportModel.tests.every((test) => test.valid);
 }

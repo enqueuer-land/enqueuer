@@ -2,7 +2,6 @@ import {ResultModel} from '../models/outputs/result-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
 
-//TODO test it
 export class TestsCounter {
     private totalTests: number = 0;
     private failingTests: number = 0;

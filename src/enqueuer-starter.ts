@@ -3,6 +3,7 @@ import {EnqueuerExecutor} from './executors/enqueuer-executor';
 import {Logger} from './loggers/logger';
 import {Container} from 'conditional-injector';
 
+//TODO try to test it
 export class EnqueuerStarter {
 
     private executor: EnqueuerExecutor;

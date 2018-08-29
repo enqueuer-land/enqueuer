@@ -12,6 +12,7 @@ const configuration_1 = require("./configurations/configuration");
 const enqueuer_executor_1 = require("./executors/enqueuer-executor");
 const logger_1 = require("./loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
+//TODO try to test it
 class EnqueuerStarter {
     constructor() {
         const configuration = new configuration_1.Configuration();

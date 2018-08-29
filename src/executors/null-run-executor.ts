@@ -13,6 +13,6 @@ export class NullRunExecutor extends EnqueuerExecutor {
     }
 
     public execute(): Promise<boolean> {
-        return Promise.reject(new Error(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`));
+        return Promise.reject(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`);
     }
 }

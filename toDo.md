@@ -24,6 +24,10 @@ verify pub/sub attributes existence and types
 summary log analyzer (percentage, counter...)
 Daemon input adapter
 
+File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
+All files                               |    33.54 |       29 |    34.62 |    33.15
+All files                               |    50.18 |    33.92 |    39.36 |    49.22
+
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts
   ● Inception test › should run enqueuer to test another enqueuer process

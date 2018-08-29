@@ -47,4 +47,20 @@ describe('Timeout', function() {
         expect(timeoutCallback).not.toBeCalled();
 
     });
+
+    test('should not clear timeout if it\'s not started', () => {
+        let timeoutCallback = jest.fn();
+        const timeout: Timeout = new Timeout(timeoutCallback);
+
+        expect(timeoutCallback).not.toBeCalled();
+
+        timeout.clear();
+
+        // Fast-forward until all timers have been executed
+        jest.runAllTimers();
+
+        expect(timeoutCallback).not.toBeCalled();
+
+    });
+
 });

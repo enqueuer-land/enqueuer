@@ -7,6 +7,7 @@ import {Injectable} from 'conditional-injector';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 
+//TODO test it
 @Injectable()
 export class RequisitionRunner extends Runner {
 

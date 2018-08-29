@@ -19,7 +19,7 @@ let NullRunExecutor = class NullRunExecutor extends enqueuer_executor_1.Enqueuer
         this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
     }
     execute() {
-        return Promise.reject(new Error(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`));
+        return Promise.reject(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`);
     }
 };
 NullRunExecutor = __decorate([

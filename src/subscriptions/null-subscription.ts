@@ -2,6 +2,7 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 
+//TODO test it
 @Injectable()
 export class NullSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {

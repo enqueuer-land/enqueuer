@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//TODO test it
 class TestsCounter {
     constructor() {
         this.totalTests = 0;

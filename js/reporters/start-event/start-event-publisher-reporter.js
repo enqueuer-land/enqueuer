@@ -25,6 +25,7 @@ const conditional_injector_1 = require("conditional-injector");
 const report_model_1 = require("../../models/outputs/report-model");
 const on_message_received_event_executor_1 = require("../../events/on-message-received-event-executor");
 const on_init_event_executor_1 = require("../../events/on-init-event-executor");
+//TODO try to test it
 let StartEventPublisherReporter = class StartEventPublisherReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
