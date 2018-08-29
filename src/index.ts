@@ -24,7 +24,7 @@ export function start(): Promise<number> {
     }
 
     return new Promise((resolve, reject) => {
-        new EnqueuerStarter()
+        new EnqueuerStarter(configuration)
             .start()
             .then(statusCode => resolve(statusCode))
             .catch(err => reject(err));

@@ -11,9 +11,7 @@ class DynamicFunctionController {
     }
     execute() {
         const createdFunction = this.createFunction();
-        if (createdFunction) {
-            return this.executeFunction(createdFunction);
-        }
+        return this.executeFunction(createdFunction);
     }
     createFunction() {
         try {

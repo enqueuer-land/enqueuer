@@ -32,7 +32,7 @@ describe('Configuration', function() {
                     "daemon": ["bla"]
                 }
         }
-        const actualInput = new Configuration({}, configurationFile).getRequisitionRunMode()["daemon"];
+        const actualInput = new Configuration({}, configurationFile).getRunMode()["daemon"];
 
         expect(actualInput).toEqual(["bla"]);
     });
@@ -43,7 +43,7 @@ describe('Configuration', function() {
                     "single-run": "bla"
                 }
         }
-        const actualInput = new Configuration({}, configurationFile).getRequisitionRunMode()["single-run"];
+        const actualInput = new Configuration({}, configurationFile).getRunMode()["single-run"];
 
         expect(actualInput).toBe("bla");
     });

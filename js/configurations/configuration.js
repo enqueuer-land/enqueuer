@@ -50,7 +50,7 @@ class Configuration {
         return (this.commandLine.logLevel) ||
             (this.configurationFile['log-level']);
     }
-    getRequisitionRunMode() {
+    getRunMode() {
         if (this.configurationFile) {
             return this.configurationFile['run-mode'];
         }

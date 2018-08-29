@@ -10,7 +10,7 @@ import {checkValidation} from '../../models/outputs/report-model';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 
-//TODO try to test it
+//TODO test it
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
     private publisher: Publisher;

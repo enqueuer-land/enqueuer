@@ -54,7 +54,7 @@ export class Configuration {
             (this.configurationFile['log-level']);
     }
 
-    public getRequisitionRunMode(): any {
+    public getRunMode(): any {
         if (this.configurationFile) {
             return this.configurationFile['run-mode'];
         }

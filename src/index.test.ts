@@ -5,53 +5,54 @@ import {Configuration} from './configurations/configuration';
 
 const statusCode = 6;
 let startMock = jest.fn(() => Promise.resolve(statusCode));
-
-jest.mock('./enqueuer-starter');
-EnqueuerStarter.mockImplementation(() => {
+let enqueuerConstructorMock = jest.fn(() => {
     return {
         start: startMock
     };
 });
 
+jest.mock('./enqueuer-starter');
+EnqueuerStarter.mockImplementation(enqueuerConstructorMock);
+
 
 let logLevelMock = jest.fn();
+const configurationConstructorReturn = {
+    getLogLevel: logLevelMock
+};
 let configurationConstructorMock = jest.fn(() => {
-    return {
-        getLogLevel: logLevelMock
-    }
+    return configurationConstructorReturn
 });
 
 jest.mock('./configurations/configuration');
 Configuration.mockImplementation(configurationConstructorMock);
 
 describe('Index', () => {
-    it('Should call configuration stuff', done => {
+    it('Should call configuration stuff', () => {
+        expect.assertions(3);
         startMock = jest.fn(() => Promise.resolve(statusCode));
-        start().then(() => {
-            expect(configurationConstructorMock).toHaveBeenCalledTimes(1);
-            expect(logLevelMock).toHaveBeenCalledTimes(1);
-            done();
-        });
+
+        expect(start()).resolves.toEqual(statusCode);
+        expect(configurationConstructorMock).toHaveBeenCalledTimes(1);
+        expect(logLevelMock).toHaveBeenCalledTimes(1);
     });
 
-    it('Should return value', done => {
+    it('Should return value', () => {
+        expect.assertions(4);
         startMock = jest.fn(() => Promise.resolve(statusCode));
-        start().then(status => {
-            expect(startMock).toHaveBeenCalledTimes(1);
-            expect(startMock).toHaveBeenCalledWith();
-            expect(status).toBe(statusCode);
-            done();
-        });
+
+        expect(start()).resolves.toEqual(statusCode);
+        expect(enqueuerConstructorMock).toHaveBeenCalledWith(configurationConstructorReturn);
+        expect(startMock).toHaveBeenCalledTimes(1);
+        expect(startMock).toHaveBeenCalledWith();
     });
 
-    it('Should reject value', done => {
+    it('Should reject value', () => {
+        expect.assertions(3);
         startMock = jest.fn(() => Promise.reject('reason'));
-        start().catch(err => {
-            expect(startMock).toHaveBeenCalledTimes(1);
-            expect(startMock).toHaveBeenCalledWith();
-            expect(err).toBe('reason');
-            done();
-        });
+
+        expect(start()).rejects.toBe('reason')
+        expect(startMock).toHaveBeenCalledTimes(1);
+        expect(startMock).toHaveBeenCalledWith();
     });
 
 });

@@ -7,7 +7,6 @@ import {Injectable} from 'conditional-injector';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 
-//TODO test it
 @Injectable()
 export class RequisitionRunner extends Runner {
 
@@ -30,7 +29,7 @@ export class RequisitionRunner extends Runner {
 
     public run(): Promise<output.RequisitionModel> {
         return new Promise((resolve) => {
-            return this.requisitionReporter.start(
+            this.requisitionReporter.start(
                 () => {
                     const report = this.requisitionReporter.getReport();
                     Logger.info(`Requisition '${this.requisitionName}' is over (${report.valid})`);

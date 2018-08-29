@@ -2,14 +2,10 @@ import {NullRunExecutor} from "./null-run-executor";
 
 describe('NullRunExecutor', () => {
 
-    it('Should reject', done => {
+    it('Should reject', () => {
         const config = {key: 'value'};
         const runner = new NullRunExecutor(config);
 
-        runner.execute()
-            .catch(err => {
-                expect(err).toBeDefined();
-                done();
-            });
+        expect(runner.execute()).rejects.toBeDefined();
     });
 });

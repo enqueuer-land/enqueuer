@@ -1,10 +1,9 @@
 import {Injectable} from 'conditional-injector';
 import {HttpAuthentication} from './http-authentication';
-import {isNullOrUndefined} from 'util';
 import {TestModel} from '../models/outputs/test-model';
 import {Logger} from '../loggers/logger';
 
-@Injectable({predicate: (authentication: any) => !isNullOrUndefined(authentication.basic)})
+@Injectable({predicate: (authentication: any) => authentication.basic})
 export class HttpBasicAuthentication extends HttpAuthentication {
 
     private user: any;

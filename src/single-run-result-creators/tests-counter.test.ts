@@ -60,7 +60,7 @@ describe('TestsCounter', () => {
     });
 
     it('Should count inner tests (inner runnable is undefined)', () => {
-        //(ResultModel | RequisitionModel)
+
         const test: ResultModel = {
             name: 'name',
             valid: true,

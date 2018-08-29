@@ -21,12 +21,15 @@ Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 replace variables before each requisition. only this time
 verify pub/sub attributes existence and types
-summary log analyzer (percentage, counter...)
+
 Daemon input adapter
+Fix stdin example test
 
 File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
 All files                               |    33.54 |       29 |    34.62 |    33.15
 All files                               |    50.18 |    33.92 |    39.36 |    49.22
+All files                               |    50.84 |    35.69 |    40.99 |    49.91
+All files                               |    51.91 |    35.69 |    42.15 |    51.01
 
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts

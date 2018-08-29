@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const http_authentication_1 = require("./http-authentication");
-const util_1 = require("util");
 const logger_1 = require("../loggers/logger");
 let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authentication_1.HttpAuthentication {
     constructor(authentication) {
@@ -90,7 +89,7 @@ let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authent
     }
 };
 HttpBasicAuthentication = __decorate([
-    conditional_injector_1.Injectable({ predicate: (authentication) => !util_1.isNullOrUndefined(authentication.basic) }),
+    conditional_injector_1.Injectable({ predicate: (authentication) => authentication.basic }),
     __metadata("design:paramtypes", [Object])
 ], HttpBasicAuthentication);
 exports.HttpBasicAuthentication = HttpBasicAuthentication;

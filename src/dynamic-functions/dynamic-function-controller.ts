@@ -3,7 +3,7 @@ import {Logger} from '../loggers/logger';
 export class DynamicFunctionController {
 
     private functionBody: string;
-    private arguments: {name: string, value: any}[] = [];
+    private arguments: { name: string, value: any }[] = [];
 
     public constructor(functionBody: string) {
         this.functionBody = functionBody;
@@ -15,9 +15,7 @@ export class DynamicFunctionController {
 
     public execute(): any {
         const createdFunction = this.createFunction();
-        if (createdFunction) {
-            return this.executeFunction(createdFunction);
-        }
+        return this.executeFunction(createdFunction);
     }
 
     private createFunction(): Function {

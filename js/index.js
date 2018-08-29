@@ -22,7 +22,7 @@ function start() {
         setLogLevel();
     }
     return new Promise((resolve, reject) => {
-        new enqueuer_starter_1.EnqueuerStarter()
+        new enqueuer_starter_1.EnqueuerStarter(configuration)
             .start()
             .then(statusCode => resolve(statusCode))
             .catch(err => reject(err));

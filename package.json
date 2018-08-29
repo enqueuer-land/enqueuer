@@ -9,7 +9,7 @@
     "unitTest": "jest --silent .test.ts",
     "inceptionTest": "jest --forceExit --silent .comp.ts",
     "integrationTest": "nqr -c enqueuer.yml --store zeroMqAddress=tcp://127.0.0.1:3000 < scripts/stdin",
-    "codeCoverage": "jest --silent --coverage",
+    "codeCoverage": "jest --detectOpenHandles --coverage",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
@@ -70,10 +70,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 10,
-        "branches": 10,
-        "functions": 10,
-        "lines": 10
+        "statements": 45,
+        "branches": 30,
+        "functions": 35,
+        "lines": 45
       }
     },
     "transform": {

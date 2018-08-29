@@ -3,7 +3,7 @@ import {PublisherModel} from "../models/inputs/publisher-model";
 
 describe('NullPublisher', () => {
 
-    it('Should reject', done => {
+    it('Should reject', () => {
         const config: PublisherModel = {
             type: 'unknown',
             name: 'unknown description'
@@ -11,10 +11,6 @@ describe('NullPublisher', () => {
 
         const runner = new NullPublisher(config);
 
-        runner.publish()
-            .catch(err => {
-                expect(err).toBeDefined();
-                done();
-            });
+        expect(runner.publish()).rejects.toBeDefined();
     });
 });
