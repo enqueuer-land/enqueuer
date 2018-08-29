@@ -65,6 +65,16 @@ describe('OnInitEventExecutor', () => {
         expect(addArgumentMock).toHaveBeenCalledWith('initializableName', initializable);
     });
 
+    it('Should return empty array if no event is passed', () => {
+        const noInit = {initializable};
+        delete initializable.onInit;
+        const eventExecutor: OnInitEventExecutor = new OnInitEventExecutor('initializableName', noInit);
+
+        const testModels = eventExecutor.trigger();
+
+        expect(testModels.length).toBe(0);
+    });
+
     it('Should add store and pass it to the script executor', () => {
         const eventExecutor: OnInitEventExecutor = new OnInitEventExecutor('initializableName', initializable);
 

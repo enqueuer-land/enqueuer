@@ -65,6 +65,26 @@ describe('OnMessageReceivedEventExecutor', () => {
         expect(addArgumentMock).toHaveBeenCalledWith('messageReceiverName', messageReceiver);
     });
 
+    it('Should return empty array if no event is passed', () => {
+        const noOnMessageReceived = {messageReceiver};
+        delete noOnMessageReceived.onMessageReceived;
+        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', noOnMessageReceived);
+
+        const testModels = eventExecutor.trigger();
+
+        expect(testModels.length).toBe(0);
+    });
+
+    it('Should return empty array if no message is received is passed', () => {
+        const noOnMessageReceived = {messageReceiver};
+        delete noOnMessageReceived.messageReceived;
+        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', noOnMessageReceived);
+
+        const testModels = eventExecutor.trigger();
+
+        expect(testModels.length).toBe(0);
+    });
+
     it('Should add message and pass it to the script executor', () => {
         const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', messageReceiver);
 

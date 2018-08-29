@@ -13,6 +13,17 @@ describe('AssertionCodeGenerator', () => {
             "                });");
     });
 
+    it('Should return field not found error', () => {
+        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('testerInstanceName');
+        const code: string = assertionCodeGenerator.generate({});
+
+        expect(code).toBe(";testerInstanceName.addTest({\n" +
+            "                    errorDescription: `Error: Test has to have a 'name' field'`,\n" +
+            "                    valid: false,\n" +
+            "                    label: 'Required field not found'\n" +
+            "                });");
+    });
+
     it('Should add error if num arguments is less than 2', () => {
         const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tester');
         const code: string = assertionCodeGenerator.generate({name: 5});
