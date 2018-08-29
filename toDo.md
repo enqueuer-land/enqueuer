@@ -23,7 +23,6 @@ replace variables before each requisition. only this time
 verify pub/sub attributes existence and types
 
 Daemon input adapter
-Fix stdin example test
 
 File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
 All files                               |    33.54 |       29 |    34.62 |    33.15

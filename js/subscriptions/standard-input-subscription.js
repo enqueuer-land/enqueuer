@@ -11,8 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
-process.stdin.setEncoding('utf8');
-process.stdin.resume();
 let StandardInputSubscription = class StandardInputSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
         super(subscriptionModel);
@@ -20,15 +18,24 @@ let StandardInputSubscription = class StandardInputSubscription extends subscrip
     receiveMessage() {
         return new Promise((resolve) => {
             let requisition = '';
-            process.stdin.on('data', (chunk) => requisition += chunk);
-            process.stdin.on('end', () => resolve(requisition));
+            if (this.isNotTestMode) {
+                process.stdin.on('data', (chunk) => requisition += chunk);
+                process.stdin.on('end', () => resolve(requisition));
+            }
         });
     }
     subscribe() {
+        if (this.isNotTestMode()) {
+            process.stdin.setEncoding('utf8');
+            process.stdin.resume();
+        }
         return Promise.resolve();
     }
     unsubscribe() {
         process.stdin.pause();
+    }
+    isNotTestMode() {
+        return !process.argv[1].toString().match('jest');
     }
 };
 StandardInputSubscription = __decorate([
