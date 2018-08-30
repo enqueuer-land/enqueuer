@@ -80,20 +80,28 @@ export class HttpServerPool {
 
     private listenToPort(server: any, port: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            server.on('error', (err: any) => {
-                if (err) {
-                    const message = `Error emitted from server (${port}) ${err}`;
-                    Logger.error(message);
-                    return reject(message);
-                }
-            });
+            // server.on('error', (err: any) => {
+            //     const message = `Error emitted from server (${port}) ${err}`;
+            //     Logger.error(message);
+            //     return reject(message);
+            // });
+            let listenAttempt = 0;
             try {
                 Logger.trace(`Binding server to port ${port}`);
                 server.listen(port, (err: any) => {
                     if (err) {
-                        const message = `Error listening to port (${port}) ${err}`;
-                        Logger.error(message);
-                        return reject(message);
+                        if (err.code === 'EADDRINUSE' && listenAttempt < 2) {
+                            ++listenAttempt;
+                            Logger.warning(`Port ${port} in use, retrying... ${listenAttempt}`);
+                                setTimeout(() => {
+                                    server.close();
+                                    resolve(this.listenToPort(server, port));
+                                }, 1000);
+                        } else {
+                            const message = `Error listening to port (${port}) ${err}`;
+                            Logger.error(message);
+                            return reject(message);
+                        }
                     }
                     Logger.debug(`Server bound to port ${port}`);
                     return resolve();
