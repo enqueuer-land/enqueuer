@@ -50,10 +50,7 @@ class MultiSubscriptionsReporter {
     haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;
         logger_1.Logger.debug(`Subscription stopped waiting ${this.subscriptionsStoppedWaitingCounter}/${this.subscriptionReporters.length}`);
-        if (this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length) {
-            return true;
-        }
-        return false;
+        return this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length;
     }
 }
 exports.MultiSubscriptionsReporter = MultiSubscriptionsReporter;

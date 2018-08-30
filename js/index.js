@@ -8,18 +8,11 @@ require("./injectable-files-list");
 function start() {
     let configuration = new configuration_1.Configuration();
     const logLevel = configuration.getLogLevel();
-    const setLogLevel = function () {
-        if (logger_1.Logger) {
-            if (configuration.isQuietMode()) {
-                logger_1.Logger.disable();
-            }
-            else {
-                logger_1.Logger.setLoggerLevel(logLevel);
-            }
+    if (logger_1.Logger && logLevel) {
+        logger_1.Logger.setLoggerLevel(logLevel);
+        if (configuration.isQuietMode()) {
+            logger_1.Logger.disable();
         }
-    };
-    if (logLevel) {
-        setLogLevel();
     }
     return new Promise((resolve, reject) => {
         new enqueuer_starter_1.EnqueuerStarter(configuration)

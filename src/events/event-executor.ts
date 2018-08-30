@@ -12,37 +12,41 @@ export abstract class EventExecutor {
     private testerInstanceName = 'tester';
     private storeInstanceName = 'store';
 
-    private arguments: {name: string, value: any}[] = [];
-    private event?: Event;
+    private arguments: { name: string, value: any }[] = [];
+    private event: Event;
 
     public constructor(event?: Event) {
-        this.event = event;
+        this.event = this.initializeEvent(event);
     }
 
     public abstract trigger(): TestModel[];
 
     protected execute(): TestModel[] {
-        if (!this.event) {
-            return [];
-        }
-        this.event = this.initializeEvent(this.event);
 
         Logger.trace(`Executing event function`);
         const eventCodeGenerator: EventCodeGenerator = new EventCodeGenerator(this.testerInstanceName,
-                                                                                this.storeInstanceName,
-                                                                                this.event);
+            this.storeInstanceName,
+            this.event);
         const code = eventCodeGenerator.generate();
         return this.runEvent(code).map(test => {
             return {name: test.label, valid: test.valid, description: test.errorDescription};
         });
     }
 
-    private initializeEvent(event: Event): Event {
-        return {
-            script: event.script || '',
-            store: event.store || {},
-            assertions: this.prepareAssertions(event.assertions || [])
+    private initializeEvent(event?: Event): Event {
+        let result: Event = {
+            script: '',
+            store: {},
+            assertions: []
         };
+        if (event) {
+            result = {
+                script: event.script || '',
+                store: event.store || {},
+                assertions: this.prepareAssertions(event.assertions || [])
+            };
+        }
+        return result;
     }
 
     private prepareAssertions(assertions: Assertion[]): Assertion[] {

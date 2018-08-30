@@ -10,13 +10,9 @@ class EventExecutor {
         this.testerInstanceName = 'tester';
         this.storeInstanceName = 'store';
         this.arguments = [];
-        this.event = event;
+        this.event = this.initializeEvent(event);
     }
     execute() {
-        if (!this.event) {
-            return [];
-        }
-        this.event = this.initializeEvent(this.event);
         logger_1.Logger.trace(`Executing event function`);
         const eventCodeGenerator = new event_code_generator_1.EventCodeGenerator(this.testerInstanceName, this.storeInstanceName, this.event);
         const code = eventCodeGenerator.generate();
@@ -25,11 +21,19 @@ class EventExecutor {
         });
     }
     initializeEvent(event) {
-        return {
-            script: event.script || '',
-            store: event.store || {},
-            assertions: this.prepareAssertions(event.assertions || [])
+        let result = {
+            script: '',
+            store: {},
+            assertions: []
         };
+        if (event) {
+            result = {
+                script: event.script || '',
+                store: event.store || {},
+                assertions: this.prepareAssertions(event.assertions || [])
+            };
+        }
+        return result;
     }
     prepareAssertions(assertions) {
         let assertionCounter = 0;

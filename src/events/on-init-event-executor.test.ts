@@ -50,7 +50,6 @@ describe('OnInitEventExecutor', () => {
                     isEqualTo: 2
                 },
                 {
-                    name: 'isDefinedName',
                     isDefined: 'x'
                 }]
             }

@@ -19,14 +19,14 @@ One of:
 Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
-replace variables before each requisition. only this time
 verify pub/sub attributes existence and types
 
 Daemon input adapter
+Load configuration file only once
 
 File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
 All files                               |    33.54 |       29 |    34.62 |    33.15
-All files                               |    51.91 |    35.69 |    42.15 |    51.01
+All files                               |    54.03 |    39.78 |     44.9 |     53.2
 
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts

@@ -9,18 +9,11 @@ export function start(): Promise<number> {
     let configuration = new Configuration();
     const logLevel = configuration.getLogLevel();
 
-    const setLogLevel = function () {
-        if (Logger) {
-            if (configuration.isQuietMode()) {
-                Logger.disable();
-            } else {
-                Logger.setLoggerLevel(logLevel);
-            }
+    if (Logger && logLevel) {
+        Logger.setLoggerLevel(logLevel);
+        if (configuration.isQuietMode()) {
+            Logger.disable();
         }
-    };
-
-    if (logLevel) {
-        setLogLevel();
     }
 
     return new Promise((resolve, reject) => {
