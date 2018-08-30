@@ -45,7 +45,10 @@ export class HttpSubscription extends Subscription {
                 .then((app: any) => {
                     this.expressApp = app;
                     resolve();
-                }).catch(err => reject(err));
+                }).catch(err => {
+                    Logger.error(`Error in ${this.type} subscription`);
+                    reject(err)
+                });
         });
     }
 

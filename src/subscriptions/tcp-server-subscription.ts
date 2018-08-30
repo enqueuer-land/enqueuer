@@ -48,18 +48,23 @@ export class TcpServerSubscription extends Subscription {
     }
 
     public subscribe(): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (this.loadStreamName) {
                 Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
                 return;
             }
 
+            try {
             this.server = net.createServer()
                 .listen(this.port, 'localhost', () => {
                     Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
                     resolve();
                 });
+            } catch (err) {
+                Logger.error(`Tcp server could not listen to port ${this.port}`);
+                reject();
+            }
         });
     }
 

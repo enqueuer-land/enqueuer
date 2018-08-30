@@ -53,17 +53,23 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         });
     }
     subscribe() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (this.loadStreamName) {
                 logger_1.Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
                 return;
             }
-            this.server = net.createServer()
-                .listen(this.port, 'localhost', () => {
-                logger_1.Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
-                resolve();
-            });
+            try {
+                this.server = net.createServer()
+                    .listen(this.port, 'localhost', () => {
+                    logger_1.Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
+                    resolve();
+                });
+            }
+            catch (err) {
+                logger_1.Logger.error(`Tcp server could not listen to port ${this.port}`);
+                reject();
+            }
         });
     }
     unsubscribe() {
