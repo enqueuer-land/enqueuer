@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition 0 description'
     time:
-      totalTime: 202
-      startTime: '2018-08-30T00:40:15.564Z'
-      endTime: '2018-08-30T00:40:15.766Z'
+      totalTime: 200
+      startTime: '2018-08-30T16:22:25.526Z'
+      endTime: '2018-08-30T16:22:25.726Z'
       timeout: 3000
     subscriptions:
       -
@@ -56,7 +56,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-30T00:40:15.614Z'
+        connectionTime: '2018-08-30T16:22:25.589Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -74,12 +74,12 @@ runnables:
           -
             name: Body
             valid: true
-            description: 'Expected value to be equal to ''responsePayload''. Received ''responsePayload'''
+            description: 'Expected value to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-30T00:40:15.766Z'
+        publishTime: '2018-08-30T16:22:25.726Z'
   -
     type: requisition
     valid: true
@@ -90,9 +90,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition 1 description'
     time:
-      totalTime: 89
-      startTime: '2018-08-30T00:40:15.767Z'
-      endTime: '2018-08-30T00:40:15.856Z'
+      totalTime: 61
+      startTime: '2018-08-30T16:22:25.727Z'
+      endTime: '2018-08-30T16:22:25.788Z'
       timeout: 5000
     subscriptions:
       -
@@ -108,7 +108,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-30T00:40:15.767Z'
+        connectionTime: '2018-08-30T16:22:25.727Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -131,7 +131,7 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-30T00:40:15.855Z'
+        publishTime: '2018-08-30T16:22:25.788Z'
   -
     type: requisition
     valid: true
@@ -142,9 +142,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition 2 (different port) description'
     time:
-      totalTime: 1003
-      startTime: '2018-08-30T00:40:15.856Z'
-      endTime: '2018-08-30T00:40:16.859Z'
+      totalTime: 1005
+      startTime: '2018-08-30T16:22:25.788Z'
+      endTime: '2018-08-30T16:22:26.793Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -157,7 +157,7 @@ runnables:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-08-30T00:40:15.856Z'
+        connectionTime: '2018-08-30T16:22:25.789Z'
   -
     type: requisition
     valid: true
@@ -169,8 +169,8 @@ runnables:
     name: 'requisition 3 (check port releasing)'
     time:
       totalTime: 1003
-      startTime: '2018-08-30T00:40:16.860Z'
-      endTime: '2018-08-30T00:40:17.863Z'
+      startTime: '2018-08-30T16:22:26.793Z'
+      endTime: '2018-08-30T16:22:27.796Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -183,7 +183,7 @@ runnables:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-08-30T00:40:16.861Z'
+        connectionTime: '2018-08-30T16:22:26.794Z'
   -
     type: requisition
     valid: true
@@ -194,9 +194,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition https description'
     time:
-      totalTime: 23
-      startTime: '2018-08-30T00:40:17.863Z'
-      endTime: '2018-08-30T00:40:17.886Z'
+      totalTime: 21
+      startTime: '2018-08-30T16:22:27.797Z'
+      endTime: '2018-08-30T16:22:27.818Z'
       timeout: 3000
     subscriptions:
       -
@@ -212,7 +212,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-08-30T00:40:17.873Z'
+        connectionTime: '2018-08-30T16:22:27.808Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -235,4 +235,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-08-30T00:40:17.885Z'
+        publishTime: '2018-08-30T16:22:27.817Z'

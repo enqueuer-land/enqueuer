@@ -9,9 +9,9 @@ import {HttpRequester} from '../publishers/http-requester';
 
 @Injectable({
     predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-proxy' ||
-                                                subscriptionAttributes.type === 'https-proxy' ||
-                                                subscriptionAttributes.type === 'http-server' ||
-                                                subscriptionAttributes.type === 'https-server'
+        subscriptionAttributes.type === 'https-proxy' ||
+        subscriptionAttributes.type === 'http-server' ||
+        subscriptionAttributes.type === 'https-server'
 })
 export class HttpSubscription extends Subscription {
 
@@ -57,6 +57,9 @@ export class HttpSubscription extends Subscription {
         if (this.responseToClientHandler) {
             try {
                 Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);
+                if (!this.proxy) {
+                    this.responseToClientHandler.header = Object.assign(this.responseToClientHandler.header, this.response.header);
+                }
                 this.responseToClientHandler.status(this.response.status).send(this.response.payload);
                 Logger.debug(`${this.type} response sent`);
                 return Promise.resolve();
@@ -78,58 +81,54 @@ export class HttpSubscription extends Subscription {
     }
 
     public receiveMessage(): Promise<any> {
+        if (this.proxy) {
+            return this.proxyServerMessageReceiving();
+        } else {
+            return this.realServerMessageReceiving();
+        }
+    }
+
+    private realServerMessageReceiving() {
+        return new Promise((resolve) => {
+            this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
+                Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
+                this.responseToClientHandler = responseHandler;
+                resolve(this.createMessageReceivedStructure(request));
+                next();
+            });
+        });
+    }
+
+    private proxyServerMessageReceiving() {
         return new Promise((resolve, reject) => {
-            if (this.proxy) {
-                this.proxyServerMessageReceiving(resolve, reject);
-            } else {
-                this.realServerMessageReceiving(resolve);
-            }
-        });
-    }
+            this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
+                this.responseToClientHandler = responseHandler;
+                Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
+                this.redirectCall(request)
+                    .then((redirectionResponse: any) => {
+                        Logger.trace(`${this.type}:${this.port} got redirection response: ${JSON.stringify(redirectionResponse, null, 2)}`);
+                        this.response = {
+                            status: redirectionResponse.statusCode,
+                            payload: redirectionResponse.body,
+                        };
+                        resolve(this.createMessageReceivedStructure(request));
+                        next();
+                    })
+                    .catch(err => {
+                        reject(err);
+                        next();
+                    });
 
-    private realServerMessageReceiving(resolve: any) {
-        this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
-            Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
-            for (const key in this.response.header) {
-                responseHandler.header(key, this.response.header[key]);
-            }
-
-            this.responseToClientHandler = responseHandler;
-            resolve(this.createMessageReceivedStructure(request));
-            next();
-        });
-    }
-
-    private proxyServerMessageReceiving(resolve: any, reject: any) {
-        this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
-            this.responseToClientHandler = responseHandler;
-            Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
-            this.redirectCall(request)
-                .then((redirectionResponse: any) => {
-                    Logger.trace(`${this.type}:${this.port} got redirection response: ${JSON.stringify(redirectionResponse, null, 2)}`);
-                    this.response = {
-                        status: redirectionResponse.statusCode,
-                        payload: redirectionResponse.body,
-                    };
-                    resolve(this.createMessageReceivedStructure(request));
-                    next();
-                })
-                .catch(err => {
-                    reject(err);
-                    next();
-                });
-
+            });
         });
     }
 
     private createMessageReceivedStructure(message: any): any {
-        const payload = message.rawBody;
-        const headers: any = message.headers;
         return {
-            headers,
+            headers: message.headers,
             params: message.params,
             query: message.query,
-            body: payload
+            body: message.rawBody
         };
     }
 
@@ -138,9 +137,9 @@ export class HttpSubscription extends Subscription {
         Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${url}`);
         return new Promise((resolve, reject) => {
             new HttpRequester(url,
-                    this.method.toLowerCase(),
-                    originalRequisition.headers,
-                    originalRequisition.rawBody)
+                this.method.toLowerCase(),
+                originalRequisition.headers,
+                originalRequisition.rawBody)
                 .request()
                 .then((response: any) => resolve(response))
                 .catch(err => reject(err));

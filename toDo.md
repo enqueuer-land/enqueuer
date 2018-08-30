@@ -26,7 +26,7 @@ Load configuration file only once
 
 File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
 All files                               |    33.54 |       29 |    34.62 |    33.15
-All files                               |    54.03 |    39.78 |     44.9 |     53.2
+All files                               |    54.37 |    40.36 |     44.9 |    53.55
 
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts

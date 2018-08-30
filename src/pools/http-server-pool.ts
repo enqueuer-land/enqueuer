@@ -14,26 +14,9 @@ export class HttpServerPool {
         return HttpServerPool.instance;
     }
 
-    public releaseApp(port: number) {
-        const container = this.container[port];
-        if (container) {
-            --container.counter;
-            if (container.counter <= 0) {
-                container.server.close();
-                Logger.debug(`Container running on ${port} is closed`);
-                delete this.container[port];
-            } else {
-                Logger.debug(`No need to close http/s server. Still ${container.counter} using it`);
-            }
-        } else {
-            Logger.warning(`No container running on ${port} to be closed`);
-        }
-        Logger.debug(`Remaining http/s containers: ${Object.keys(this.container)}`);
-    }
-
     public getApp(port: number, secure: boolean, credentials?: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            Logger.info(`Getting a Http/s server ${port}`);
+            Logger.trace(`Getting a Http/s server ${port}`);
             if (!this.container[port]) {
                 Logger.info(`Creating a new Http/s server ${port}`);
                 const app = this.createApp();
@@ -45,6 +28,7 @@ export class HttpServerPool {
                             server,
                             counter: 0
                         };
+                        Logger.info(`Http/s server ${port} ready`);
                         resolve(app);
                     })
                     .catch((err) => reject(err));
@@ -53,6 +37,26 @@ export class HttpServerPool {
                 resolve(this.container[port].app);
             }
         });
+    }
+
+    public releaseApp(port: number) {
+        return;
+        //TODO: understand why it fails to reuse the server after closing
+        // Logger.trace(`Http/s containers: ${Object.keys(this.container)}`);
+        // const container = this.container[port];
+        // if (container) {
+        //     --container.counter;
+        //     if (container.counter <= 0) {
+        //         container.server.close();
+        //         Logger.debug(`Container running on ${port} is closed`);
+        //         delete this.container[port];
+        //     } else {
+        //         Logger.debug(`No need to close http/s server. Still ${container.counter} using it`);
+        //     }
+        // } else {
+        //     Logger.warning(`No container running on ${port} to be closed`);
+        // }
+        // Logger.debug(`Remaining http/s containers: ${Object.keys(this.container)}`);
     }
 
     private createServer(app: any, secure: boolean, credentials?: any): any {
@@ -72,13 +76,14 @@ export class HttpServerPool {
                 }
             });
             try {
-                Logger.info(`Binding server to port ${port}`);
+                Logger.trace(`Binding server to port ${port}`);
                 server.listen(port, (err: any) => {
                     if (err) {
                         const message = `Error listening to port (${port}) ${err}`;
                         Logger.error(message);
                         return reject(message);
                     }
+                    Logger.debug(`Server bound to port ${port}`);
                     return resolve();
                 });
             } catch (err) {
@@ -89,7 +94,7 @@ export class HttpServerPool {
         });
     }
 
-    private createApp() {
+    private createApp(): any {
         const app = express();
         app.use((req: any, res: any, next: any) => {
             req.setEncoding('utf8');

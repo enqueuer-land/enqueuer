@@ -114,9 +114,7 @@ export class SubscriptionReporter {
 
     private handleMessageArrival(message: any): Promise<void> {
         return new Promise((resolve, reject) => {
-
-            Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 100) + '...');
-
+            Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 150) + '...');
             if (!this.hasTimedOut) {
                 Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
                 this.subscription.messageReceived = message;

@@ -24,7 +24,7 @@ runnables:
           toBeEqualTo: 321
         - name: Body
           expect: body
-          toBeEqualTo: `responsePayload`
+          toBeEqualTo: `dynamically changed payload`
   subscriptions:
   - name: subscription description
     type: http-server
@@ -40,6 +40,7 @@ runnables:
       status: 321
       payload: responsePayload
     onMessageReceived:
+      script: subscription.response.payload = 'dynamically changed payload'
       assertions:
       - name: Payload
         expect: JSON.parse(message.body).enqueuer
