@@ -35,10 +35,16 @@ export class UdpSubscription extends Subscription {
     }
 
     public subscribe(): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this.server = dgram.createSocket('udp4');
-            this.server.bind(this.port);
-            resolve();
+            try {
+                this.server.bind(this.port);
+                resolve();
+            } catch (err) {
+                const message = `Udp server could not listen to ${this.port}`;
+                Logger.error(message);
+                reject(message);
+            }
         });
     }
 

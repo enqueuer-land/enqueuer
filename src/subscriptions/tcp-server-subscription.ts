@@ -62,8 +62,9 @@ export class TcpServerSubscription extends Subscription {
                     resolve();
                 });
             } catch (err) {
-                Logger.error(`Tcp server could not listen to port ${this.port}`);
-                reject();
+                const message = `Tcp server could not listen to port ${this.port}`;
+                Logger.error(message);
+                reject(message);
             }
         });
     }

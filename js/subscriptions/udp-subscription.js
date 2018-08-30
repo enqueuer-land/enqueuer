@@ -19,6 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const dgram = __importStar(require("dgram"));
+const logger_1 = require("../loggers/logger");
 let UdpSubscription = class UdpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -39,10 +40,17 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
         });
     }
     subscribe() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this.server = dgram.createSocket('udp4');
-            this.server.bind(this.port);
-            resolve();
+            try {
+                this.server.bind(this.port);
+                resolve();
+            }
+            catch (err) {
+                const message = `Udp server could not listen to ${this.port}`;
+                logger_1.Logger.error(message);
+                reject(message);
+            }
         });
     }
     unsubscribe() {

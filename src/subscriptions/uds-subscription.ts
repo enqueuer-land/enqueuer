@@ -52,10 +52,16 @@ export class UdsSubscription extends Subscription {
                 return;
             }
             fs.unlink(this.path, () => {
-                this.server = net.createServer()
-                    .listen(this.path, () => {
-                        resolve();
-                    });
+                try {
+                    this.server = net.createServer()
+                        .listen(this.path, () => {
+                            resolve();
+                        });
+                } catch (err) {
+                    const message = `Uds server could not listen to ${this.path}`;
+                    Logger.error(message);
+                    reject(message);
+                }
             });
         });
     }

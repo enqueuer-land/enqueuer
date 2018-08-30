@@ -34,8 +34,9 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
                 this.expressApp = app;
                 resolve();
             }).catch(err => {
-                logger_1.Logger.error(`Error in ${this.type} subscription`);
-                reject(err);
+                const message = `Error in ${this.type} subscription: ${err}`;
+                logger_1.Logger.error(message);
+                reject(message);
             });
         });
     }

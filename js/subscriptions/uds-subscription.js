@@ -59,10 +59,17 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
                 return;
             }
             fs.unlink(this.path, () => {
-                this.server = net.createServer()
-                    .listen(this.path, () => {
-                    resolve();
-                });
+                try {
+                    this.server = net.createServer()
+                        .listen(this.path, () => {
+                        resolve();
+                    });
+                }
+                catch (err) {
+                    const message = `Uds server could not listen to ${this.path}`;
+                    logger_1.Logger.error(message);
+                    reject(message);
+                }
             });
         });
     }
