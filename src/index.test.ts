@@ -1,6 +1,7 @@
 import {start} from "./index";
 import {EnqueuerStarter} from './enqueuer-starter';
 import {Configuration} from './configurations/configuration';
+import {Logger} from './loggers/logger';
 
 
 const statusCode = 6;
@@ -15,25 +16,56 @@ jest.mock('./enqueuer-starter');
 EnqueuerStarter.mockImplementation(enqueuerConstructorMock);
 
 
-let logLevelMock = jest.fn();
-const configurationConstructorReturn = {
-    getLogLevel: logLevelMock
-};
-let configurationConstructorMock = jest.fn(() => {
-    return configurationConstructorReturn
+let getLogLevelMock = jest.fn(() => {
+    return 'logLevelTest';
 });
+let isQuietModeMock = jest.fn(() => true);
+let configurationConstructorReturn = {
+    getLogLevel: getLogLevelMock,
+    isQuietMode: isQuietModeMock
+};
 
 jest.mock('./configurations/configuration');
-Configuration.mockImplementation(configurationConstructorMock);
+Configuration.mockImplementation(() => configurationConstructorReturn);
+
+let setLoggerLevelMock = jest.fn();
+jest.mock('./loggers/logger');
+Logger.setLoggerLevel.mockImplementation(() => setLoggerLevelMock);
+Logger.disable.mockImplementation();
+Logger.mockImplementation(() => {});
 
 describe('Index', () => {
+    beforeEach(() => {
+
+    });
+
     it('Should call configuration stuff', () => {
         expect.assertions(3);
         startMock = jest.fn(() => Promise.resolve(statusCode));
 
         expect(start()).resolves.toEqual(statusCode);
-        expect(configurationConstructorMock).toHaveBeenCalledTimes(1);
-        expect(logLevelMock).toHaveBeenCalledTimes(1);
+        expect(Configuration).toHaveBeenCalled();
+        expect(getLogLevelMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('Should call set logger level', () => {
+        expect.assertions(3);
+        startMock = jest.fn(() => Promise.resolve(statusCode));
+
+        expect(start()).resolves.toEqual(statusCode);
+        expect(getLogLevelMock).toHaveBeenCalledTimes(2);
+        expect(Logger.setLoggerLevel).toHaveBeenCalledWith('logLevelTest');
+    });
+
+    it('Should set quiet mode', () => {
+        isQuietModeMock = jest.fn(() => true);
+
+        expect.assertions(3);
+        startMock = jest.fn(() => Promise.resolve(statusCode));
+
+        expect(start()).resolves.toEqual(statusCode);
+        expect(getLogLevelMock).toHaveBeenCalled();
+        expect(Logger.disable).toHaveBeenCalledWith();
     });
 
     it('Should return value', () => {

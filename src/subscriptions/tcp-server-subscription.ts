@@ -35,6 +35,7 @@ export class TcpServerSubscription extends Subscription {
                 this.waitForData(reject, resolve);
             } else {
                 this.server.once('connection', (stream: any) => {
+                    Logger.debug(`Tcp server got a connection`);
                     this.stream = stream;
                     this.sendGreeting();
                     this.waitForData(reject, resolve);
@@ -49,7 +50,7 @@ export class TcpServerSubscription extends Subscription {
     public subscribe(): Promise<void> {
         return new Promise((resolve) => {
             if (this.loadStreamName) {
-                Logger.debug(`Server is reusing tcp stream running on ${this.stream.localPort}`);
+                Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
                 return;
             }
@@ -60,6 +61,13 @@ export class TcpServerSubscription extends Subscription {
                     resolve();
                 });
         });
+    }
+
+    public unsubscribe() {
+        if (this.server) {
+            this.server.close();
+            this.server = null;
+        }
     }
 
     public sendResponse(): Promise<void> {

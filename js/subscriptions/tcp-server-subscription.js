@@ -42,6 +42,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             }
             else {
                 this.server.once('connection', (stream) => {
+                    logger_1.Logger.debug(`Tcp server got a connection`);
                     this.stream = stream;
                     this.sendGreeting();
                     this.waitForData(reject, resolve);
@@ -54,7 +55,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     subscribe() {
         return new Promise((resolve) => {
             if (this.loadStreamName) {
-                logger_1.Logger.debug(`Server is reusing tcp stream running on ${this.stream.localPort}`);
+                logger_1.Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
                 return;
             }
@@ -64,6 +65,12 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
                 resolve();
             });
         });
+    }
+    unsubscribe() {
+        if (this.server) {
+            this.server.close();
+            this.server = null;
+        }
     }
     sendResponse() {
         return new Promise((resolve) => {

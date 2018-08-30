@@ -4,6 +4,7 @@ import {Injectable} from 'conditional-injector';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'standard-input'})
 export class StandardInputSubscription extends Subscription {
+    private value: string = '';
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
@@ -11,28 +12,19 @@ export class StandardInputSubscription extends Subscription {
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve) => {
-            let requisition: string = '';
-            if (this.isNotTestMode) {
-                process.stdin.on('data', (chunk) => requisition += chunk);
-                process.stdin.on('end', () => resolve(requisition));
-            }
+            process.stdin.on('end', () => resolve(this.value));
         });
     }
 
     public subscribe(): Promise<void> {
-        if (this.isNotTestMode()) {
-            process.stdin.setEncoding('utf8');
-            process.stdin.resume();
-        }
+        process.stdin.setEncoding('utf8');
+        process.stdin.resume();
+        process.stdin.on('data', (chunk) => this.value += chunk);
         return Promise.resolve();
     }
 
     public unsubscribe(): void {
         process.stdin.pause();
-    }
-
-    private isNotTestMode() {
-        return !process.argv[1].toString().match('jest');
     }
 
 }
