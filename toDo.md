@@ -24,9 +24,13 @@ verify pub/sub attributes existence and types
 Daemon input adapter
 Load configuration file only once
 
-File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
-All files                               |    33.54 |       29 |    34.62 |    33.15
-All files                               |    54.37 |    40.36 |     44.9 |    53.55
+#   File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
+200 All files                               |    25.67 |    23.65 |    24.37 |    25.33 |
+225 All files                               |    30.18 |    28.25 |    27.95 |       30 |
+250 All files                               |    24.49 |    20.92 |    25.82 |    24.07 |
+275 All files                               |    32.58 |    27.89 |    33.23 |     32.4 |
+300 All files                               |    33.54 |    29.15 |    34.62 |    33.15 |
+309 All files                               |    53.67 |    40.21 |    44.51 |    52.89 |
 
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts

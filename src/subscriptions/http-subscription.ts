@@ -54,20 +54,13 @@ export class HttpSubscription extends Subscription {
     }
 
     public sendResponse(): Promise<void> {
-        if (this.responseToClientHandler) {
-            try {
-                Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);
-                if (!this.proxy) {
-                    this.responseToClientHandler.header = Object.assign(this.responseToClientHandler.header, this.response.header);
-                }
-                this.responseToClientHandler.status(this.response.status).send(this.response.payload);
-                Logger.debug(`${this.type} response sent`);
-                return Promise.resolve();
-            } catch (err) {
-                return Promise.reject(`${this.type} response back sending error: ${err}`);
-            }
-        } else {
-            return Promise.reject(`No ${this.type} response handler found`);
+        Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);
+        try {
+            this.responseToClientHandler.status(this.response.status).send(this.response.payload);
+            Logger.debug(`${this.type} response sent`);
+            return Promise.resolve();
+        } catch (err) {
+            return Promise.reject(`${this.type} response back sending error: ${err}`);
         }
     }
 

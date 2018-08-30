@@ -55,15 +55,15 @@ class HttpServerPool {
             --container.counter;
             if (container.counter <= 0) {
                 logger_1.Logger.debug(`Closing container running on ${port}. Connections: ${container.sockets.length}`);
-                container.sockets.forEach((socket) => socket.destroy());
-                container.server.close((err) => {
-                    if (err) {
-                        logger_1.Logger.warning(`Error closing http/s server running on ${port}`);
-                        throw err;
-                    }
-                    logger_1.Logger.debug(`Container running on ${port} is closed`);
-                });
-                delete this.container[port];
+                // container.sockets.forEach((socket: any) => socket.destroy());
+                // container.server.close((err: any) => {
+                //     if (err) {
+                //         Logger.warning(`Error closing http/s server running on ${port}`);
+                //         throw err;
+                //     }
+                //     Logger.debug(`Container running on ${port} is closed`);
+                // });
+                // delete this.container[port];
                 logger_1.Logger.debug(`Remaining http/s containers: ${Object.keys(this.container)}`);
             }
             else {

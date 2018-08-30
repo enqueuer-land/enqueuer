@@ -40,22 +40,14 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
         http_server_pool_1.HttpServerPool.getInstance().releaseApp(this.port);
     }
     sendResponse() {
-        if (this.responseToClientHandler) {
-            try {
-                logger_1.Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);
-                if (!this.proxy) {
-                    this.responseToClientHandler.header = Object.assign(this.responseToClientHandler.header, this.response.header);
-                }
-                this.responseToClientHandler.status(this.response.status).send(this.response.payload);
-                logger_1.Logger.debug(`${this.type} response sent`);
-                return Promise.resolve();
-            }
-            catch (err) {
-                return Promise.reject(`${this.type} response back sending error: ${err}`);
-            }
+        logger_1.Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);
+        try {
+            this.responseToClientHandler.status(this.response.status).send(this.response.payload);
+            logger_1.Logger.debug(`${this.type} response sent`);
+            return Promise.resolve();
         }
-        else {
-            return Promise.reject(`No ${this.type} response handler found`);
+        catch (err) {
+            return Promise.reject(`${this.type} response back sending error: ${err}`);
         }
     }
     onMessageReceivedTests() {
