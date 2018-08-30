@@ -1,18 +1,18 @@
 type: runnable
-valid: true
+valid: false
 tests: []
 name: 'standard-input test description'
 id: standard-input
 runnables:
   -
     type: requisition
-    valid: true
+    valid: false
     tests: []
     name: 'requisition description'
     time:
-      totalTime: 51
-      startTime: '2018-08-30T20:56:29.917Z'
-      endTime: '2018-08-30T20:56:29.968Z'
+      totalTime: 3008
+      startTime: '2018-08-30T21:58:38.750Z'
+      endTime: '2018-08-30T21:58:41.758Z'
     subscriptions: []
     startEvent:
       subscription:
@@ -20,12 +20,12 @@ runnables:
         type: standard-input
         tests:
           -
-            name: payload
-            valid: true
-            description: 'Expected value to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
-          -
-            valid: true
+            valid: false
             name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-08-30T20:56:29.923Z'
+            description: 'Subscription has not received its message'
+          -
+            valid: false
+            name: 'No time out'
+            description: 'Not avoidable Subscription has timed out'
+        valid: false
+        connectionTime: '2018-08-30T21:58:38.757Z'
