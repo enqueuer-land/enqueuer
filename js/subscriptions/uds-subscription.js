@@ -22,6 +22,7 @@ const net = __importStar(require("net"));
 const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
 const store_1 = require("../configurations/store");
+const handler_listener_1 = require("../handlers/handler-listener");
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -59,17 +60,18 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
                 return;
             }
             fs.unlink(this.path, () => {
-                try {
-                    this.server = net.createServer()
-                        .listen(this.path, () => {
-                        resolve();
-                    });
-                }
-                catch (err) {
-                    const message = `Uds server could not listen to ${this.path}`;
+                this.server = net.createServer();
+                new handler_listener_1.HandlerListener(this.server)
+                    .listen(this.path)
+                    .then(() => {
+                    logger_1.Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
+                    resolve();
+                })
+                    .catch(err => {
+                    const message = `Uds server could not listen to ${this.path}: ${err}`;
                     logger_1.Logger.error(message);
                     reject(message);
-                }
+                });
             });
         });
     }

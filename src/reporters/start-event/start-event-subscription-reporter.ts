@@ -10,6 +10,7 @@ import {Logger} from '../../loggers/logger';
 export class StartEventSubscriptionReporter extends StartEventReporter {
 
     private subscriptionReporter: SubscriptionReporter;
+    private subscribed: boolean = false;
 
     public constructor(startEvent: SubscriptionModel) {
         super();
@@ -23,11 +24,16 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
         return new Promise((resolve, reject) => {
             this.subscriptionReporter
                 .startTimeout(() => {
-                    Logger.trace(`Subscription as start event has timed out`);
-                    resolve();
+                    Logger.trace(`Subscription as start event has timed out. Subscribed: ${this.subscribed}`);
+                    if (this.subscribed) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
                 });
             this.subscriptionReporter.subscribe()
                 .then(() => {
+                    this.subscribed = true;
                     this.subscriptionReporter.receiveMessage()
                         .then(() => {
                             Logger.trace(`Subscription as start event has received its message`);
@@ -35,7 +41,10 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
                         })
                         .catch(err => reject(err));
                 })
-                .catch(err => reject(err));
+                .catch(err => {
+                    Logger.error(`Subscription as start event has failed to subscribe`);
+                    reject(err);
+                });
         });
     }
 

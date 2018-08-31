@@ -4,6 +4,7 @@ import {Injectable} from 'conditional-injector';
 import * as net from 'net';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
+import {HandlerListener} from '../handlers/handler-listener';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp-server'})
 export class TcpServerSubscription extends Subscription {
@@ -55,17 +56,18 @@ export class TcpServerSubscription extends Subscription {
                 return;
             }
 
-            try {
-            this.server = net.createServer()
-                .listen(this.port, 'localhost', () => {
+            this.server = net.createServer();
+            new HandlerListener(this.server)
+                .listen(this.port)
+                .then(() => {
                     Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
                     resolve();
+                })
+                .catch(err => {
+                    const message = `Tcp server could not listen to port ${this.port}: ${err}`;
+                    Logger.error(message);
+                    reject(message);
                 });
-            } catch (err) {
-                const message = `Tcp server could not listen to port ${this.port}`;
-                Logger.error(message);
-                reject(message);
-            }
         });
     }
 

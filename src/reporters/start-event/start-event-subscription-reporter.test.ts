@@ -43,12 +43,21 @@ describe('StartEventSubscriptionReporter', () => {
         expect(startEventArgument.subscription.name).toBe('Start event subscription');
     });
 
-    it('Sub throws timeout', done => {
+    it('Sub throws timeout - not subscribed', () => {
         startTimeoutMock = cb => cb();
 
         const startEvent: StartEventSubscriptionReporter = new StartEventSubscriptionReporter(startEventArgument);
 
-        startEvent.start().then(() => done());
+        expect(startEvent.start()).rejects.toBeUndefined();
+    });
+
+    it('Sub throws timeout - subscribed', () => {
+        subscribeMock = jest.fn(() => Promise.resolve());
+        startTimeoutMock = cb => cb();
+
+        const startEvent: StartEventSubscriptionReporter = new StartEventSubscriptionReporter(startEventArgument);
+
+        expect(startEvent.start()).resolves.toBeUndefined();
     });
 
     it('Happy path', done => {

@@ -5,6 +5,7 @@ import * as net from 'net';
 import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
+import {HandlerListener} from '../handlers/handler-listener';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'uds'})
 export class UdsSubscription extends Subscription {
@@ -52,16 +53,18 @@ export class UdsSubscription extends Subscription {
                 return;
             }
             fs.unlink(this.path, () => {
-                try {
-                    this.server = net.createServer()
-                        .listen(this.path, () => {
-                            resolve();
-                        });
-                } catch (err) {
-                    const message = `Uds server could not listen to ${this.path}`;
-                    Logger.error(message);
-                    reject(message);
-                }
+                this.server = net.createServer();
+                new HandlerListener(this.server)
+                    .listen(this.path)
+                    .then(() => {
+                        Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
+                        resolve();
+                    })
+                    .catch(err => {
+                        const message = `Uds server could not listen to ${this.path}: ${err}`;
+                        Logger.error(message);
+                        reject(message);
+                    });
             });
         });
     }

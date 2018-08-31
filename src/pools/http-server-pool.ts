@@ -2,6 +2,7 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import {Logger} from '../loggers/logger';
+import {HandlerListener} from '../handlers/handler-listener';
 
 export class HttpServerPool {
     private static instance: HttpServerPool;
@@ -52,23 +53,28 @@ export class HttpServerPool {
         if (container) {
             --container.counter;
             if (container.counter <= 0) {
-                Logger.debug(`Closing container running on ${port}. Connections: ${container.sockets.length}`);
-                // container.sockets.forEach((socket: any) => socket.destroy());
-                // container.server.close((err: any) => {
-                //     if (err) {
-                //         Logger.warning(`Error closing http/s server running on ${port}`);
-                //         throw err;
-                //     }
-                //     Logger.debug(`Container running on ${port} is closed`);
-                // });
-                // delete this.container[port];
-                Logger.debug(`Remaining http/s containers: ${Object.keys(this.container)}`);
+                this.closeContainer(port);
             } else {
                 Logger.debug(`No need to close http/s server. Still ${container.counter} using it`);
             }
         } else {
             Logger.warning(`No container running on ${port} to be closed`);
         }
+    }
+
+    private closeContainer(port: number) {
+        const container = this.container[port];
+        Logger.debug(`Closing container running on ${port}. Connections: ${container.sockets.length}`);
+        container.sockets.forEach((socket: any) => socket.destroy());
+        container.server.close((err: any) => {
+            if (err) {
+                Logger.warning(`Error closing http/s server running on ${port}`);
+                throw err;
+            }
+            Logger.debug(`Container running on ${port} is closed`);
+        });
+        delete this.container[port];
+        Logger.debug(`Remaining http/s containers: ${Object.keys(this.container)}`);
     }
 
     private createServer(app: any, secure: boolean, credentials?: any): any {
@@ -80,37 +86,17 @@ export class HttpServerPool {
 
     private listenToPort(server: any, port: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            // server.on('error', (err: any) => {
-            //     const message = `Error emitted from server (${port}) ${err}`;
-            //     Logger.error(message);
-            //     return reject(message);
-            // });
-            let listenAttempt = 0;
-            try {
-                Logger.trace(`Binding server to port ${port}`);
-                server.listen(port, (err: any) => {
-                    if (err) {
-                        if (err.code === 'EADDRINUSE' && listenAttempt < 2) {
-                            ++listenAttempt;
-                            Logger.warning(`Port ${port} in use, retrying... ${listenAttempt}`);
-                                setTimeout(() => {
-                                    server.close();
-                                    resolve(this.listenToPort(server, port));
-                                }, 1000);
-                        } else {
-                            const message = `Error listening to port (${port}) ${err}`;
-                            Logger.error(message);
-                            return reject(message);
-                        }
-                    }
-                    Logger.debug(`Server bound to port ${port}`);
-                    return resolve();
+            new HandlerListener(server)
+                .listen(port)
+                .then(() => {
+                    Logger.debug(`Http/s server is listening for clients on ${port}`);
+                    resolve();
+                })
+                .catch(err => {
+                    const message = `Http/s server could not listen to ${port}: ${err}`;
+                    Logger.error(message);
+                    reject(message);
                 });
-            } catch (err) {
-                const message = `Error caught from server (${port}) ${err}`;
-                Logger.error(message);
-                return reject(message);
-            }
         });
     }
 

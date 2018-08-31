@@ -35,6 +35,7 @@ let RequisitionRunner = class RequisitionRunner extends runner_1.Runner {
         logger_1.Logger.info(`Starting requisition '${replacedRequisition.name}'`);
     }
     run() {
+        logger_1.Logger.info(`Starting requisition '${this.requisitionName}'`);
         return new Promise((resolve) => {
             this.requisitionReporter.start(() => {
                 const report = this.requisitionReporter.getReport();

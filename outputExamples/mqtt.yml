@@ -1,12 +1,12 @@
 type: runnable
-valid: false
+valid: true
 tests: []
 name: 'mqtt test description'
 id: mqtt
 runnables:
   -
     type: requisition
-    valid: false
+    valid: true
     tests:
       -
         valid: true
@@ -14,9 +14,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 5005
-      startTime: '2018-08-30T22:06:34.427Z'
-      endTime: '2018-08-30T22:06:39.432Z'
+      totalTime: 207
+      startTime: '2018-08-31T00:17:51.615Z'
+      endTime: '2018-08-31T00:17:51.822Z'
       timeout: 8000
     subscriptions:
       -
@@ -24,15 +24,23 @@ runnables:
         type: mqtt
         tests:
           -
-            valid: false
-            name: 'Message received'
-            description: 'Subscription has not received its message'
+            name: Payload
+            valid: true
+            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
           -
-            valid: false
-            name: 'No time out'
-            description: 'Not avoidable Subscription has timed out'
-        valid: false
-        connectionTime: '2018-08-30T22:06:35.072Z'
+            name: Topic
+            valid: true
+            description: 'Expected value to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+          -
+            name: 'Beatles song'
+            valid: true
+            description: 'Expected value to be greater than ''5''. Received ''8'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-08-31T00:17:51.770Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -43,4 +51,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-08-30T22:06:35.090Z'
+        publishTime: '2018-08-31T00:17:51.814Z'

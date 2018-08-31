@@ -28,6 +28,7 @@ export class RequisitionRunner extends Runner {
     }
 
     public run(): Promise<output.RequisitionModel> {
+        Logger.info(`Starting requisition '${this.requisitionName}'`);
         return new Promise((resolve) => {
             this.requisitionReporter.start(
                 () => {

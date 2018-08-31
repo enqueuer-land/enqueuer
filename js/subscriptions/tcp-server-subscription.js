@@ -21,6 +21,7 @@ const conditional_injector_1 = require("conditional-injector");
 const net = __importStar(require("net"));
 const logger_1 = require("../loggers/logger");
 const store_1 = require("../configurations/store");
+const handler_listener_1 = require("../handlers/handler-listener");
 let TcpServerSubscription = class TcpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -59,18 +60,18 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
                 resolve();
                 return;
             }
-            try {
-                this.server = net.createServer()
-                    .listen(this.port, 'localhost', () => {
-                    logger_1.Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
-                    resolve();
-                });
-            }
-            catch (err) {
-                const message = `Tcp server could not listen to port ${this.port}`;
+            this.server = net.createServer();
+            new handler_listener_1.HandlerListener(this.server)
+                .listen(this.port)
+                .then(() => {
+                logger_1.Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
+                resolve();
+            })
+                .catch(err => {
+                const message = `Tcp server could not listen to port ${this.port}: ${err}`;
                 logger_1.Logger.error(message);
                 reject(message);
-            }
+            });
         });
     }
     unsubscribe() {

@@ -17,6 +17,7 @@ const logger_1 = require("../../loggers/logger");
 let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
+        this.subscribed = false;
         if (!startEvent.subscription.name) {
             startEvent.subscription.name = `Start event subscription`;
         }
@@ -26,11 +27,17 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
         return new Promise((resolve, reject) => {
             this.subscriptionReporter
                 .startTimeout(() => {
-                logger_1.Logger.trace(`Subscription as start event has timed out`);
-                resolve();
+                logger_1.Logger.trace(`Subscription as start event has timed out. Subscribed: ${this.subscribed}`);
+                if (this.subscribed) {
+                    resolve();
+                }
+                else {
+                    reject();
+                }
             });
             this.subscriptionReporter.subscribe()
                 .then(() => {
+                this.subscribed = true;
                 this.subscriptionReporter.receiveMessage()
                     .then(() => {
                     logger_1.Logger.trace(`Subscription as start event has received its message`);
@@ -38,7 +45,10 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
                 })
                     .catch(err => reject(err));
             })
-                .catch(err => reject(err));
+                .catch(err => {
+                logger_1.Logger.error(`Subscription as start event has failed to subscribe`);
+                reject(err);
+            });
         });
     }
     getReport() {
