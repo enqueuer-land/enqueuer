@@ -25,9 +25,6 @@ export class TcpServerSubscription extends Subscription {
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
         this.loadStreamName = subscriptionAttributes.loadStream;
-        if (this.loadStreamName) {
-            this.loadStream();
-        }
     }
 
     public receiveMessage(): Promise<any> {
@@ -49,26 +46,11 @@ export class TcpServerSubscription extends Subscription {
     }
 
     public subscribe(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            if (this.loadStreamName) {
-                Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
-                resolve();
-                return;
-            }
-
-            this.server = net.createServer();
-            new HandlerListener(this.server)
-                .listen(this.port)
-                .then(() => {
-                    Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
-                    resolve();
-                })
-                .catch(err => {
-                    const message = `Tcp server could not listen to port ${this.port}: ${err}`;
-                    Logger.error(message);
-                    reject(message);
-                });
-        });
+        if (this.loadStreamName) {
+            return this.reuseServer();
+        } else {
+            return this.createServer();
+        }
     }
 
     public unsubscribe() {
@@ -90,6 +72,37 @@ export class TcpServerSubscription extends Subscription {
         });
     }
 
+
+    private reuseServer(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            try {
+                this.loadStream();
+                Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
+                resolve();
+            } catch (err) {
+                reject(err);
+            }
+
+        });
+    }
+
+    private createServer(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.server = net.createServer();
+            new HandlerListener(this.server)
+                .listen(this.port)
+                .then(() => {
+                    Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
+                    resolve();
+                })
+                .catch(err => {
+                    const message = `Tcp server could not listen to port ${this.port}: ${err}`;
+                    Logger.error(message);
+                    reject(message);
+                });
+        });
+    }
+
     private sendGreeting() {
         if (this.greeting) {
             Logger.debug(`Tcp server (${this.stream.localPort}) sending greeting message`);
@@ -103,7 +116,7 @@ export class TcpServerSubscription extends Subscription {
         if (this.stream) {
             Logger.debug(`Server loaded tcp stream: ${this.loadStreamName} (${this.stream.localPort})`);
         } else {
-            throw new Error(`Impossible to load tcp stream: ${this.loadStreamName}`);
+            throw `Impossible to load tcp stream: ${this.loadStreamName}`;
         }
     }
 

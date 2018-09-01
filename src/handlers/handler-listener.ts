@@ -1,5 +1,6 @@
 import {Logger} from '../loggers/logger';
 
+//TODO test it
 export class HandlerListener {
     private server: any;
     private remainingAttempts: number;
@@ -38,7 +39,7 @@ export class HandlerListener {
                 }
             });
         } else {
-            reject(`No more remaining attempts to bound to handler ${handler}`);
+            reject(`Could not bind to handler ${handler}`);
         }
     }
 

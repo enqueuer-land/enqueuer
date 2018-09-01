@@ -23,10 +23,10 @@ class RequisitionReporter {
     start(onFinishCallback) {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
-        logger_1.Logger.trace('Multisubscribing');
+        logger_1.Logger.debug('Preparing subscriptions');
         this.multiSubscriptionsReporter.subscribe(() => this.onAllSubscriptionsStopWaiting())
             .then(() => {
-            logger_1.Logger.trace('Multisubscriptions are ready');
+            logger_1.Logger.info('Multisubscriptions are ready');
             this.initializeTimeout();
             this.onSubscriptionsCompleted();
         })

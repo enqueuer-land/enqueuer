@@ -2,7 +2,7 @@ import {Subscription} from './subscription';
 import {Logger} from '../loggers/logger';
 import {Container, Injectable} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {HttpServerPool} from '../pools/http-server-pool';
+import {HttpContainerPool} from '../pools/http-container-pool';
 import {TestModel} from '../models/outputs/test-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../publishers/http-requester';
@@ -41,7 +41,7 @@ export class HttpSubscription extends Subscription {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            HttpServerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
+            HttpContainerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
                 .then((app: any) => {
                     this.expressApp = app;
                     resolve();
@@ -54,7 +54,7 @@ export class HttpSubscription extends Subscription {
     }
 
     public unsubscribe() {
-        HttpServerPool.getInstance().releaseApp(this.port);
+        HttpContainerPool.getInstance().releaseApp(this.port);
     }
 
     public sendResponse(): Promise<void> {

@@ -36,11 +36,13 @@ export class RunnableRunner extends Runner {
             }
             new Timeout(() => {
                 this.sequentialRunner(promises)
-                    .then((reports: ResultModel[]) =>
-                        reports.forEach((report) => {
-                                this.report.valid = this.report.valid && report.valid;
-                                this.report.runnables.push(report);
-                            }))
+                    .then((reports: ResultModel[]) => {
+                            Logger.info(`Got runnable 'reports ${this.report.name}`);
+                            reports.forEach((report) => {
+                                    this.report.valid = this.report.valid && report.valid;
+                                    this.report.runnables.push(report);
+                                });
+                        })
                     .then( () => resolve(this.report))
                     .catch( (err: any) => {
                         Logger.error(`Error running sequentially: ${err}`);

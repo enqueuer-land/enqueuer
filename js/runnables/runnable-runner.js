@@ -36,10 +36,13 @@ let RunnableRunner = class RunnableRunner extends runner_1.Runner {
             }
             new timeout_1.Timeout(() => {
                 this.sequentialRunner(promises)
-                    .then((reports) => reports.forEach((report) => {
-                    this.report.valid = this.report.valid && report.valid;
-                    this.report.runnables.push(report);
-                }))
+                    .then((reports) => {
+                    logger_1.Logger.info(`Got runnable 'reports ${this.report.name}`);
+                    reports.forEach((report) => {
+                        this.report.valid = this.report.valid && report.valid;
+                        this.report.runnables.push(report);
+                    });
+                })
                     .then(() => resolve(this.report))
                     .catch((err) => {
                     logger_1.Logger.error(`Error running sequentially: ${err}`);

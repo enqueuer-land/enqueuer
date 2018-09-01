@@ -27,22 +27,47 @@ let RequisitionRunner = class RequisitionRunner extends runner_1.Runner {
     constructor(requisition) {
         super();
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
-        logger_1.Logger.debug(`Updating replaceable variables in requisition '${requisition.name}'`);
-        const replacedRequisition = placeHolderReplacer.addVariableMap(store_1.Store.getData())
+        logger_1.Logger.debug(`Initializing requisition '${requisition.name}'`);
+        this.requisitionModel = placeHolderReplacer.addVariableMap(store_1.Store.getData())
             .replace(requisition);
-        this.requisitionName = replacedRequisition.name;
-        this.requisitionReporter = new requisition_reporter_1.RequisitionReporter(replacedRequisition);
-        logger_1.Logger.info(`Starting requisition '${replacedRequisition.name}'`);
+        logger_1.Logger.info(`Starting requisition '${this.requisitionModel.name}'`);
     }
     run() {
-        logger_1.Logger.info(`Starting requisition '${this.requisitionName}'`);
+        logger_1.Logger.info(`Running requisition '${this.requisitionModel.name}'`);
         return new Promise((resolve) => {
-            this.requisitionReporter.start(() => {
-                const report = this.requisitionReporter.getReport();
-                logger_1.Logger.info(`Requisition '${this.requisitionName}' is over (${report.valid})`);
+            try {
+                const requisitionReporter = new requisition_reporter_1.RequisitionReporter(this.requisitionModel);
+                requisitionReporter.start(() => {
+                    const report = requisitionReporter.getReport();
+                    logger_1.Logger.info(`Requisition '${this.requisitionModel.name}' is over (${report.valid})`);
+                    resolve(report);
+                });
+            }
+            catch (err) {
+                logger_1.Logger.error(`Error running requisition '${this.requisitionModel.name}'`);
+                const report = this.createRunningError(err);
                 resolve(report);
-            });
+            }
         });
+    }
+    createRunningError(err) {
+        return {
+            type: 'requisition',
+            valid: false,
+            tests: [{
+                    valid: false,
+                    name: 'Requisition ran',
+                    description: err
+                }],
+            name: this.requisitionModel.name,
+            time: {
+                startTime: '',
+                endTime: '',
+                totalTime: 0
+            },
+            subscriptions: [],
+            startEvent: {}
+        };
     }
 };
 RequisitionRunner = __decorate([

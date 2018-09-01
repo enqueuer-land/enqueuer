@@ -32,9 +32,6 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             this.response = JSON.stringify(subscriptionAttributes.response);
         }
         this.loadStreamName = subscriptionAttributes.loadStream;
-        if (this.loadStreamName) {
-            this.loadStream();
-        }
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
@@ -54,25 +51,12 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         });
     }
     subscribe() {
-        return new Promise((resolve, reject) => {
-            if (this.loadStreamName) {
-                logger_1.Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
-                resolve();
-                return;
-            }
-            this.server = net.createServer();
-            new handler_listener_1.HandlerListener(this.server)
-                .listen(this.port)
-                .then(() => {
-                logger_1.Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
-                resolve();
-            })
-                .catch(err => {
-                const message = `Tcp server could not listen to port ${this.port}: ${err}`;
-                logger_1.Logger.error(message);
-                reject(message);
-            });
-        });
+        if (this.loadStreamName) {
+            return this.reuseServer();
+        }
+        else {
+            return this.createServer();
+        }
     }
     unsubscribe() {
         if (this.server) {
@@ -91,6 +75,34 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             }
         });
     }
+    reuseServer() {
+        return new Promise((resolve, reject) => {
+            try {
+                this.loadStream();
+                logger_1.Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
+                resolve();
+            }
+            catch (err) {
+                reject(err);
+            }
+        });
+    }
+    createServer() {
+        return new Promise((resolve, reject) => {
+            this.server = net.createServer();
+            new handler_listener_1.HandlerListener(this.server)
+                .listen(this.port)
+                .then(() => {
+                logger_1.Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
+                resolve();
+            })
+                .catch(err => {
+                const message = `Tcp server could not listen to port ${this.port}: ${err}`;
+                logger_1.Logger.error(message);
+                reject(message);
+            });
+        });
+    }
     sendGreeting() {
         if (this.greeting) {
             logger_1.Logger.debug(`Tcp server (${this.stream.localPort}) sending greeting message`);
@@ -104,7 +116,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             logger_1.Logger.debug(`Server loaded tcp stream: ${this.loadStreamName} (${this.stream.localPort})`);
         }
         else {
-            throw new Error(`Impossible to load tcp stream: ${this.loadStreamName}`);
+            throw `Impossible to load tcp stream: ${this.loadStreamName}`;
         }
     }
     waitForData(reject, resolve) {

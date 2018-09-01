@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
-const http_server_pool_1 = require("../pools/http-server-pool");
+const http_container_pool_1 = require("../pools/http-container-pool");
 const http_authentication_1 = require("../http-authentications/http-authentication");
 const http_requester_1 = require("../publishers/http-requester");
 let HttpSubscription = class HttpSubscription extends subscription_1.Subscription {
@@ -29,7 +29,7 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            http_server_pool_1.HttpServerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
+            http_container_pool_1.HttpContainerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
                 .then((app) => {
                 this.expressApp = app;
                 resolve();
@@ -41,7 +41,7 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
         });
     }
     unsubscribe() {
-        http_server_pool_1.HttpServerPool.getInstance().releaseApp(this.port);
+        http_container_pool_1.HttpContainerPool.getInstance().releaseApp(this.port);
     }
     sendResponse() {
         logger_1.Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);

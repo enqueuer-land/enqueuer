@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
+//TODO test it
 class HandlerListener {
     constructor(server, retryTimeout = 300, remainingAttempts = 3) {
         this.server = server;
@@ -36,7 +37,7 @@ class HandlerListener {
             });
         }
         else {
-            reject(`No more remaining attempts to bound to handler ${handler}`);
+            reject(`Could not bind to handler ${handler}`);
         }
     }
     handleError(err, handler, resolve, reject) {

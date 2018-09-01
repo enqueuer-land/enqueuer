@@ -24,20 +24,13 @@ Store.getData.mockImplementation(() => {
 
 
 describe('RequisitionRunner', () => {
-    it('Should replace variables and pass it to RequisitionReporter constructor', () => {
+    it('Should return requisition reporter reporter', () => {
         const requisition: RequisitionModel = {
             timeout: '<<keyName>>'
         };
 
-        new RequisitionRunner(requisition);
-
-        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({timeout: 'value'});
-    });
-
-    it('Should return requisition reporter reporter', () => {
-        const requisition: RequisitionModel = {};
-
         expect(new RequisitionRunner(requisition).run()).resolves.toBe(report);
+        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({timeout: 'value'});
         expect(startMock).toHaveBeenCalled();
     });
 

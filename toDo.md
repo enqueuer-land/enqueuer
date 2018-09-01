@@ -22,7 +22,7 @@ enqueuer -c configFile => enqueuer configFile
 verify pub/sub attributes existence and types
 
 Daemon input adapter
-Load configuration file only once
+Load configuration file only once (create two new classes: FileConfig and CommandLineConfig)
 
 #   File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
 200 All files                               |    25.67 |    23.65 |    24.37 |    25.33 |
