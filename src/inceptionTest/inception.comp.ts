@@ -97,8 +97,8 @@ describe('Inception test', () => {
     });
 
     let killThemAll = () => {
-        // beingTested.kill('SIGINT');
-        tester.kill('SIGINT');
+        beingTested.kill('SIGINT');
+        // tester.kill('SIGINT');
     };
 
     afterAll(() => {

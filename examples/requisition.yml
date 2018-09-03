@@ -8,7 +8,7 @@
         publisher:
             type: zero-mq-pub
             payload: blabla
-            topic: runnable.incrementor
+            topic: requisition.incrementor
             onInit:
                 script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
 -   name: delayed
@@ -29,6 +29,6 @@
         publisher:
             type: zero-mq-pub
             payload: blabla
-            topic: runnable.checker
+            topic: requisition.checker
             onInit:
                 script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;

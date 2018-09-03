@@ -9,6 +9,7 @@ import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-rep
 import {Container} from 'conditional-injector';
 import {TestModel} from '../models/outputs/test-model';
 import {OnInitEventExecutor} from '../events/on-init-event-executor';
+import {OnFinishEventExecutor} from '../events/on-finish-event-executor';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -20,13 +21,15 @@ export class RequisitionReporter {
     private requisitionTimeout?: number;
     private startEventDoneItsJob = false;
     private allSubscriptionsStoppedWaiting = false;
+    private requisitionAttributes: RequisitionModel;
 
     constructor(requisitionAttributes: input.RequisitionModel) {
-        this.reportGenerator = new ReportGenerator(requisitionAttributes);
-        this.executeOnInitFunction(requisitionAttributes);
-        this.startEvent = Container.subclassesOf(StartEventReporter).create(requisitionAttributes.startEvent);
-        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
-        this.requisitionTimeout = requisitionAttributes.timeout;
+        this.requisitionAttributes = requisitionAttributes;
+        this.reportGenerator = new ReportGenerator(this.requisitionAttributes);
+        this.executeOnInitFunction();
+        this.startEvent = Container.subclassesOf(StartEventReporter).create(this.requisitionAttributes.startEvent);
+        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions);
+        this.requisitionTimeout = this.requisitionAttributes.timeout;
         this.onFinishCallback = () => {
             //do nothing
         };
@@ -101,6 +104,7 @@ export class RequisitionReporter {
         this.onFinish = () => {
             //do nothing
         };
+        this.executeOnFinishFunction();
         Logger.info(`Start gathering reports`);
 
         if (error) {
@@ -113,9 +117,17 @@ export class RequisitionReporter {
         this.onFinishCallback();
     }
 
-    private executeOnInitFunction(requisitionAttributes: RequisitionModel) {
+    private executeOnInitFunction() {
         Logger.info(`Executing requisition::onInit hook function`);
-        this.reportGenerator.addTests(new OnInitEventExecutor('requisition', requisitionAttributes).trigger());
+        this.reportGenerator.addTests(new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
+    }
+
+    private executeOnFinishFunction() {
+        Logger.info(`Executing requisition::onFinish hook function`);
+
+        this.startEvent.onFinish();
+        this.multiSubscriptionsReporter.onFinish();
+        this.reportGenerator.addTests(new OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
 
 }

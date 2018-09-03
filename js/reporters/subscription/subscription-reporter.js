@@ -17,6 +17,7 @@ const report_model_1 = require("../../models/outputs/report-model");
 const on_init_event_executor_1 = require("../../events/on-init-event-executor");
 const on_message_received_event_executor_1 = require("../../events/on-message-received-event-executor");
 const subscription_final_reporter_1 = require("./subscription-final-reporter");
+const on_finish_event_executor_1 = require("../../events/on-finish-event-executor");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -110,6 +111,10 @@ class SubscriptionReporter {
         this.cleanUp();
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
+    }
+    onFinish() {
+        logger_1.Logger.trace(`Executing subscription onFinish`);
+        this.report.tests = this.report.tests.concat(new on_finish_event_executor_1.OnFinishEventExecutor('subscription', this.subscription).trigger());
     }
     handleMessageArrival(message) {
         return new Promise((resolve, reject) => {

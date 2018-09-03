@@ -9,6 +9,7 @@ import {StartEventModel} from '../../models/outputs/start-event-model';
 import {checkValidation} from '../../models/outputs/report-model';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
+import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 
 //TODO test it
 @Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
@@ -55,6 +56,10 @@ export class StartEventPublisherReporter extends StartEventReporter {
         return {
             publisher: this.report
         };
+    }
+
+    public onFinish(): void {
+        this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('publisher', this.publisher).trigger());
     }
 
     private pushResponseMessageReceivedTest() {

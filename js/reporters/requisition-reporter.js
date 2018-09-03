@@ -7,15 +7,17 @@ const timeout_1 = require("../timers/timeout");
 const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptions-reporter");
 const conditional_injector_1 = require("conditional-injector");
 const on_init_event_executor_1 = require("../events/on-init-event-executor");
+const on_finish_event_executor_1 = require("../events/on-finish-event-executor");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.startEventDoneItsJob = false;
         this.allSubscriptionsStoppedWaiting = false;
-        this.reportGenerator = new report_generator_1.ReportGenerator(requisitionAttributes);
-        this.executeOnInitFunction(requisitionAttributes);
-        this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(requisitionAttributes.startEvent);
-        this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(requisitionAttributes.subscriptions);
-        this.requisitionTimeout = requisitionAttributes.timeout;
+        this.requisitionAttributes = requisitionAttributes;
+        this.reportGenerator = new report_generator_1.ReportGenerator(this.requisitionAttributes);
+        this.executeOnInitFunction();
+        this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(this.requisitionAttributes.startEvent);
+        this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions);
+        this.requisitionTimeout = this.requisitionAttributes.timeout;
         this.onFinishCallback = () => {
             //do nothing
         };
@@ -82,6 +84,7 @@ class RequisitionReporter {
         this.onFinish = () => {
             //do nothing
         };
+        this.executeOnFinishFunction();
         logger_1.Logger.info(`Start gathering reports`);
         if (error) {
             logger_1.Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
@@ -92,9 +95,15 @@ class RequisitionReporter {
         this.reportGenerator.finish();
         this.onFinishCallback();
     }
-    executeOnInitFunction(requisitionAttributes) {
+    executeOnInitFunction() {
         logger_1.Logger.info(`Executing requisition::onInit hook function`);
-        this.reportGenerator.addTests(new on_init_event_executor_1.OnInitEventExecutor('requisition', requisitionAttributes).trigger());
+        this.reportGenerator.addTests(new on_init_event_executor_1.OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
+    }
+    executeOnFinishFunction() {
+        logger_1.Logger.info(`Executing requisition::onFinish hook function`);
+        this.startEvent.onFinish();
+        this.multiSubscriptionsReporter.onFinish();
+        this.reportGenerator.addTests(new on_finish_event_executor_1.OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

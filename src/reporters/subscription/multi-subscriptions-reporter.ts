@@ -55,6 +55,10 @@ export class MultiSubscriptionsReporter {
         return this.subscriptionReporters.map(subscription => subscription.getReport());
     }
 
+    public onFinish() {
+        this.subscriptionReporters.forEach(subscriptionHandler => subscriptionHandler.onFinish());
+    }
+
     private haveAllSubscriptionsStoppedWaiting() {
         ++this.subscriptionsStoppedWaitingCounter;
         Logger.debug(`Subscription stopped waiting ${this.subscriptionsStoppedWaitingCounter}/${this.subscriptionReporters.length}`);

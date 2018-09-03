@@ -9,9 +9,19 @@ name: publishing scenario
 #You can check them all in: /docs/tests/publishers folder.
 type: amqp
 
-#Optional. Event triggered as soon as the requisition is initialized.
+#Optional. Event triggered as soon as the publisher is initialized.
 onInit:
-  #Optional. Javascript code snippet executed as soon as the requisition is initialized.
+  #Optional. Javascript code snippet executed as soon as the publisher is initialized.
+  #Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+  script:
+    console.log('iai');
+
+  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  assertions:
+
+#Optional. Event triggered as soon as the publisher is over.
+onFinish:
+  #Optional. Javascript code snippet executed as soon as the publisher is initialized.
   #Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/assertions.yml) and store.
   script:
     console.log('iai');

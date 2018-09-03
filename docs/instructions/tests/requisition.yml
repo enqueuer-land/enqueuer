@@ -26,6 +26,16 @@ onInit:
     #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
     assertions:
 
+#Optional. Event triggered as soon as the requisition is over.
+onFinish:
+    #Optional. Javascript code snippet executed when the event is triggered.
+    #Available objects are: requisition (/docs/instructions/tests/requisition.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+    script:
+        console.log('iai');
+
+    #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+    assertions:
+
 #Defines what triggers this execution
 #Two values are mutually exclusive: publisher and subscription. At least one of them has to be defined.
 startEvent:

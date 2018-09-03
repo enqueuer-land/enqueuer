@@ -1,11 +1,11 @@
 import {SubscriptionModel} from './subscription-model';
 import {StartEventModel} from './start-event-model';
-import {Event} from '../../events/event';
+import {Finishable} from '../../events/finishable';
+import {Initializable} from '../../events/initializable';
 
-export interface RequisitionModel {
+export interface RequisitionModel extends Finishable, Initializable {
     timeout?: number;
     id?: string;
-    onInit?: Event;
     name: string;
     subscriptions: SubscriptionModel[];
     startEvent: StartEventModel;

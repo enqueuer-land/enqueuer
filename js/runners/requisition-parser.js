@@ -71,7 +71,9 @@ class RequisitionParser {
         catch (ymlErr) {
             logger_1.Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
             try {
-                return JSON.parse(message);
+                const json = JSON.parse(message);
+                logger_1.Logger.debug(`Successfully parsed message as JSON`);
+                return json;
             }
             catch (jsonErr) {
                 logger_1.Logger.warning(`Not able to parse as Json: ${jsonErr}`);

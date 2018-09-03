@@ -40,3 +40,15 @@ onMessageReceived:
   #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
   #If at least one value is defined and no message is received a failing test will be registered.
   assertions:
+
+#Optional. Event triggered as soon as the subscription is over
+onFinish:
+  #Optional. Javascript code snippet executed when the event is triggered.
+  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+  #Other objects IPC related might be available. Check (/docs/instructions/tests/subscription/) for further details
+  script:
+    console.log('iai');
+
+  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  #If at least one value is defined and no message is received a failing test will be registered.
+  assertions:

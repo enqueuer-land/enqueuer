@@ -18,6 +18,7 @@ class Subscription {
         this.response = subscriptionAttributes.response;
         this.type = subscriptionAttributes.type;
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;
+        this.onFinish = subscriptionAttributes.onFinish;
         this.avoid = subscriptionAttributes.avoid || false;
     }
     unsubscribe() {

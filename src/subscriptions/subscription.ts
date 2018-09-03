@@ -9,6 +9,7 @@ export abstract class Subscription {
     public messageReceived?: any;
     public timeout?: number;
     public onMessageReceived?: Event;
+    public onFinish?: Event;
     public response?: any;
     public type?: string;
     public avoid: boolean = false;
@@ -20,6 +21,7 @@ export abstract class Subscription {
         this.response = subscriptionAttributes.response;
         this.type = subscriptionAttributes.type;
         this.onMessageReceived = subscriptionAttributes.onMessageReceived;
+        this.onFinish = subscriptionAttributes.onFinish;
         this.avoid = subscriptionAttributes.avoid || false;
     }
 

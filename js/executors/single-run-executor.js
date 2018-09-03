@@ -35,8 +35,8 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(singleRunMode.reportName);
         this.parallelMode = !!singleRunMode.parallel;
         this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
-        this.runnableFileNames = this.getTestFiles(singleRunConfiguration.files);
-        this.totalFilesNum = this.runnableFileNames.length;
+        this.fileNames = this.getTestFiles(singleRunConfiguration.files);
+        this.totalFilesNum = this.fileNames.length;
     }
     execute() {
         if (this.totalFilesNum == 0) {
@@ -46,15 +46,15 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
             return this.executeParallelMode();
         }
         else {
-            return this.executeSequentialMode(this.runnableFileNames);
+            return this.executeSequentialMode(this.fileNames);
         }
     }
-    executeSequentialMode(runnableFileNames) {
+    executeSequentialMode(fileNames) {
         return new Promise((resolve) => {
-            const fileName = runnableFileNames.shift();
+            const fileName = fileNames.shift();
             if (fileName) {
                 this.runFile(fileName)
-                    .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
+                    .then(() => resolve(this.executeSequentialMode(fileNames)));
             }
             else {
                 resolve(this.finishExecution());
@@ -63,7 +63,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     executeParallelMode() {
         return new Promise((resolve) => {
-            Promise.all(this.runnableFileNames
+            Promise.all(this.fileNames
                 .map((fileName) => this.runFile(fileName)))
                 .then(() => resolve(this.finishExecution()));
         });

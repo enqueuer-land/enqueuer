@@ -7,6 +7,7 @@ export abstract class Publisher {
     public name: string;
     public onMessageReceived?: Event;
     public onInit?: Event;
+    public onFinish?: Event;
     public messageReceived?: any;
 
     public constructor(publisherAttributes: PublisherModel) {
@@ -14,6 +15,7 @@ export abstract class Publisher {
         this.payload = publisherAttributes.payload;
         this.name = publisherAttributes.name;
         this.onInit = publisherAttributes.onInit;
+        this.onFinish = publisherAttributes.onFinish;
         this.onMessageReceived = publisherAttributes.onMessageReceived;
     }
 

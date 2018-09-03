@@ -11,6 +11,7 @@ import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import Signals = NodeJS.Signals;
+import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 
 export class SubscriptionReporter {
 
@@ -110,6 +111,11 @@ export class SubscriptionReporter {
         this.cleanUp();
         this.report.valid = this.report.valid && checkValidation(this.report);
         return this.report;
+    }
+
+    public onFinish() {
+        Logger.trace(`Executing subscription onFinish`);
+        this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('subscription', this.subscription).trigger());
     }
 
     private handleMessageArrival(message: any): Promise<void> {

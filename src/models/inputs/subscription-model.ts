@@ -1,10 +1,10 @@
-import {Event} from '../../events/event';
+import {Finishable} from '../../events/finishable';
+import {Initializable} from '../../events/initializable';
+import {MessageReceiver} from '../../events/message-receiver';
 
-export interface SubscriptionModel {
+export interface SubscriptionModel extends Finishable, Initializable, MessageReceiver {
     type: string;
     name: string;
-    onMessageReceived?: Event;
-    onInit?: Event;
     response?: any;
     avoid?: boolean;
     timeout?: number;

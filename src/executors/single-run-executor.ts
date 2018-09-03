@@ -13,7 +13,7 @@ import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
 @Injectable({predicate: runMode => runMode['single-run']})
 export class SingleRunExecutor extends EnqueuerExecutor {
 
-    private runnableFileNames: string[];
+    private fileNames: string[];
     private multiPublisher: MultiPublisher;
     private multiResultCreator: MultiResultCreator;
     private parallelMode: boolean;
@@ -28,8 +28,8 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         this.parallelMode = !!singleRunMode.parallel;
 
         this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
-        this.runnableFileNames = this.getTestFiles(singleRunConfiguration.files);
-        this.totalFilesNum = this.runnableFileNames.length;
+        this.fileNames = this.getTestFiles(singleRunConfiguration.files);
+        this.totalFilesNum = this.fileNames.length;
     }
 
     public execute(): Promise<boolean> {
@@ -40,16 +40,16 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         if (this.parallelMode) {
             return this.executeParallelMode();
         } else {
-            return this.executeSequentialMode(this.runnableFileNames);
+            return this.executeSequentialMode(this.fileNames);
         }
     }
 
-    private executeSequentialMode(runnableFileNames: string[]): Promise<boolean> {
+    private executeSequentialMode(fileNames: string[]): Promise<boolean> {
         return new Promise((resolve) => {
-            const fileName = runnableFileNames.shift();
+            const fileName = fileNames.shift();
             if (fileName) {
                 this.runFile(fileName)
-                    .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
+                    .then(() => resolve(this.executeSequentialMode(fileNames)));
             } else {
                 resolve(this.finishExecution());
             }
@@ -58,7 +58,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     private executeParallelMode(): Promise<boolean> {
         return new Promise((resolve) => {
-            Promise.all(this.runnableFileNames
+            Promise.all(this.fileNames
                 .map((fileName: string) => this.runFile(fileName)))
                 .then(() => resolve(this.finishExecution()));
         });

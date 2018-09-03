@@ -51,6 +51,9 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
             });
         });
     }
+    onFinish() {
+        this.subscriptionReporter.onFinish();
+    }
     getReport() {
         let report = this.subscriptionReporter.getReport();
         report.valid = report.valid && report_model_1.checkValidation(report);
