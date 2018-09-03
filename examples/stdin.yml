@@ -1,14 +1,10 @@
-name: standard-input test description
-id: standard-input
-runnables:
-- name: requisition description
-  startEvent:
+startEvent:
     subscription:
-      name: subscription description
-      type: standard-input
-      timeout: 3000
-      onMessageReceived:
-        assertions:
-        - name: payload
-          expect: message
-          toBeEqualTo: `enqueuer standard-input payload`
+        name: subscription description
+        type: standard-input
+        timeout: 3000
+        onMessageReceived:
+            assertions:
+                -   name: payload
+                    expect: message
+                    toBeEqualTo: `enqueuer standard-input payload`

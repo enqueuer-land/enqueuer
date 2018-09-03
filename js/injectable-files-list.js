@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //#Auto-Generated Code
-require("./runnables/requisition-runner");
-require("./runnables/runnable-runner");
 require("./subscriptions/filename-watcher-subscription");
 require("./subscriptions/http-subscription");
 require("./subscriptions/stomp-subscription");

@@ -5,7 +5,6 @@ const report_model_1 = require("../models/outputs/report-model");
 class ReportGenerator {
     constructor(requisitionAttributes) {
         this.report = {
-            type: 'requisition',
             valid: true,
             tests: [],
             name: requisitionAttributes.name,

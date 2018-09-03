@@ -1,0 +1,29 @@
+name: examples/stdin.yml
+valid: true
+tests: []
+startEvent: {}
+requisitions:
+  -
+    valid: true
+    tests: []
+    name: 'Requisition #0'
+    time:
+      totalTime: 84
+      startTime: '2018-09-03T21:50:21.889Z'
+      endTime: '2018-09-03T21:50:21.973Z'
+    subscriptions: []
+    startEvent:
+      subscription:
+        name: 'subscription description'
+        type: standard-input
+        tests:
+          -
+            name: payload
+            valid: true
+            description: 'Expected value to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-03T21:50:21.894Z'

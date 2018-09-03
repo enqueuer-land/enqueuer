@@ -1,0 +1,34 @@
+-   name: iterations
+    iterations: 10
+    onInit:
+        store:
+            iteration: (store.iteration + 1) || 0
+            lastExecutionTime: new Date().getTime();
+    startEvent:
+        publisher:
+            type: zero-mq-pub
+            payload: blabla
+            topic: runnable.incrementor
+            onInit:
+                script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
+-   name: delayed
+    delay: 3000
+    onInit:
+        script: delayedTime = new Date().getTime() - store.lastExecutionTime;
+        assertions:
+            -   name: It was executed 10 times
+                expect: store.iteration
+                toBeEqualTo: 9
+            -   name: It delayed for at least ~3 seconds
+                expect: delayedTime + 50
+                toBeGreaterThan: 3000
+            -   name: It delayed for no more than ~3 seconds
+                expect: delayedTime - 500
+                toBeLessThan: 3000
+    startEvent:
+        publisher:
+            type: zero-mq-pub
+            payload: blabla
+            topic: runnable.checker
+            onInit:
+                script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;

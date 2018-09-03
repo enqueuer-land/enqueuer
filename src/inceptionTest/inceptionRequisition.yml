@@ -1,0 +1,39 @@
+name: runnableUds
+timeout: 5000
+startEvent:
+    publisher:
+        name: UdsPublisher
+        type: replaced
+        onInit:
+            script: publisher.type='uds';
+        path: /tmp/inUnix.sock
+        payload:
+
+            #inner requisition
+            name: innerRequisitionUds
+            startEvent:
+                publisher:
+                    name: PubsUds
+                    type: uds
+                    path: /tmp/loopUnix.sock
+                    payload: 100
+            subscriptions:
+            -   type: uds
+                name: runnableSubsUds
+                path: /tmp/loopUnix.sock
+                onMessageReceived:
+                    script: payload = Buffer.from(message).toString();
+                    assertions:
+                    -   name: Works
+                        expect: payload
+                        toBeEqualTo: 100
+
+subscriptions:
+-   type: uds
+    timeout: 5000
+    name: subscriptionUds
+    path: /tmp/outUnix.sock
+    onMessageReceived:
+        assertions:
+        -   name: Test name
+            expectToBeDefined: message

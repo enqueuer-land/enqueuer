@@ -1,20 +1,24 @@
 import {Subscription} from '../subscriptions/subscription';
 import {Logger} from '../loggers/logger';
 import {Container} from 'conditional-injector';
-import {RunnableParser} from '../runnables/runnable-parser';
+import {RequisitionParser} from '../runners/requisition-parser';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {RunnableModel} from '../models/inputs/runnable-model';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 
 export class DaemonRunInput {
 
     private type: string;
     private subscription: Subscription;
-    private runnableParser: RunnableParser;
+    private parser: RequisitionParser;
 
     constructor(input: SubscriptionModel) {
         this.type = input.type;
-        this.runnableParser = new RunnableParser();
+        this.parser = new RequisitionParser();
         this.subscription = Container.subclassesOf(Subscription).create(input);
+    }
+
+    public getType(): string {
+        return this.type;
     }
 
     public connect(): Promise<void> {
@@ -27,15 +31,15 @@ export class DaemonRunInput {
         });
     }
 
-    public receiveMessage(): Promise<RunnableModel> {
+    public receiveMessage(): Promise<RequisitionModel[]> {
         return new Promise((resolve) => {
             this.subscription.receiveMessage()
                 .then((message: string) => {
                     Logger.info(`${this.type} got a message`);
                     try {
-                        resolve(this.runnableParser.parse(message));
+                        resolve(this.parser.parse(message));
                     } catch (err) {
-                        Logger.error(`Error parsing runnable ${JSON.stringify(err)}`);
+                        Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
                     }
                 });
         });

@@ -1,0 +1,56 @@
+name: examples/https.yml
+valid: true
+tests: []
+startEvent: {}
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'Requisition #0'
+    time:
+      totalTime: 300
+      startTime: '2018-09-03T21:50:21.845Z'
+      endTime: '2018-09-03T21:50:22.145Z'
+      timeout: 3000
+    subscriptions:
+      -
+        name: 'Subscription #0'
+        type: https-server
+        tests:
+          -
+            name: 'Https payload'
+            valid: true
+            description: 'Expected value to be equal to ''works!''. Received ''works!'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-03T21:50:21.917Z'
+    startEvent:
+      publisher:
+        name: 'publisher description'
+        valid: true
+        type: https-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Status Code'
+            valid: true
+            description: 'Expected value to be equal to ''200''. Received ''200'''
+          -
+            name: Body
+            valid: true
+            description: 'Expected value to be equal to ''https''. Received ''https'''
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-09-03T21:50:22.145Z'

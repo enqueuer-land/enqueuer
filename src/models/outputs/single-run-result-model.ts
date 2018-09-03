@@ -1,6 +1,6 @@
 import {ReportModel} from './report-model';
-import {ResultModel} from './result-model';
+import {RequisitionModel} from './requisition-model';
 
 export interface SingleRunResultModel extends ReportModel {
-    runnables: ResultModel[];
+    requisitions: RequisitionModel[];
 }

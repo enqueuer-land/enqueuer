@@ -60,9 +60,9 @@ describe('Inception test', () => {
 
         const innerTest = testerReports[0];
         expect(innerTest.valid).toBeTruthy();
-        const innerReport: RequisitionModel = innerTest.runnables[0];
+        const innerReport: RequisitionModel = innerTest.requisitions[0];
 
-        expect(innerReport.name).toBe('innerRunnableUds');
+        expect(innerReport.name).toBe('innerRequisitionUds');
 
         expect(innerReport.subscriptions[0].valid).toBeTruthy();
         expect(findTest('Works', innerReport.subscriptions[0].tests)).toBeTruthy();
@@ -71,12 +71,12 @@ describe('Inception test', () => {
         expect(innerReport.startEvent.publisher).toBeDefined();
         if (innerReport.startEvent.publisher) {
             expect(innerReport.startEvent.publisher.valid).toBeTruthy();
-            expect(innerReport.startEvent.publisher.name).toBe('runnablePubsUds');
+            expect(innerReport.startEvent.publisher.name).toBe('PubsUds');
         }
 
         const outterTest = testerReports[1];
         expect(outterTest.valid).toBeTruthy();
-        const outterReport: RequisitionModel = testerReports[1].runnables[0];
+        const outterReport: RequisitionModel = testerReports[1].requisitions[0];
 
         expect(findTest('No time out', outterReport.tests)).toBeTruthy();
         expect(outterReport.name).toBe('runnableUds');
@@ -87,7 +87,7 @@ describe('Inception test', () => {
         expect(outterReport.startEvent.publisher).toBeDefined();
         if (outterReport.startEvent.publisher) {
             expect(outterReport.startEvent.publisher.valid).toBeTruthy();
-            expect(outterReport.startEvent.publisher.name).toBe('runnableUdsPublisher');
+            expect(outterReport.startEvent.publisher.name).toBe('UdsPublisher');
         }
 
         tester.on('exit', (statusCode: number) => {
@@ -97,8 +97,8 @@ describe('Inception test', () => {
     });
 
     let killThemAll = () => {
-        beingTested.kill('SIGINT');
-        // tester.kill('SIGINT');
+        // beingTested.kill('SIGINT');
+        tester.kill('SIGINT');
     };
 
     afterAll(() => {

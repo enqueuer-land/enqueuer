@@ -1,0 +1,237 @@
+name: examples/requisition.yml
+valid: true
+tests: []
+startEvent: {}
+requisitions:
+  -
+    valid: true
+    tests: []
+    name: 'iterations [10]'
+    time:
+      totalTime: 13
+      startTime: '2018-09-03T21:50:21.883Z'
+      endTime: '2018-09-03T21:50:21.896Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:21.894Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [9]'
+    time:
+      totalTime: 3
+      startTime: '2018-09-03T21:50:21.935Z'
+      endTime: '2018-09-03T21:50:21.938Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:21.937Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [8]'
+    time:
+      totalTime: 1
+      startTime: '2018-09-03T21:50:21.957Z'
+      endTime: '2018-09-03T21:50:21.958Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:21.958Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [7]'
+    time:
+      totalTime: 1
+      startTime: '2018-09-03T21:50:21.990Z'
+      endTime: '2018-09-03T21:50:21.991Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:21.991Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [6]'
+    time:
+      totalTime: 0
+      startTime: '2018-09-03T21:50:22.026Z'
+      endTime: '2018-09-03T21:50:22.026Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:22.026Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [5]'
+    time:
+      totalTime: 0
+      startTime: '2018-09-03T21:50:22.072Z'
+      endTime: '2018-09-03T21:50:22.072Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:22.072Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [4]'
+    time:
+      totalTime: 1
+      startTime: '2018-09-03T21:50:22.093Z'
+      endTime: '2018-09-03T21:50:22.094Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:22.094Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [3]'
+    time:
+      totalTime: 0
+      startTime: '2018-09-03T21:50:22.115Z'
+      endTime: '2018-09-03T21:50:22.115Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:22.115Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [2]'
+    time:
+      totalTime: 0
+      startTime: '2018-09-03T21:50:22.136Z'
+      endTime: '2018-09-03T21:50:22.136Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:22.136Z'
+  -
+    valid: true
+    tests: []
+    name: 'iterations [1]'
+    time:
+      totalTime: 0
+      startTime: '2018-09-03T21:50:22.142Z'
+      endTime: '2018-09-03T21:50:22.142Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:22.142Z'
+  -
+    valid: true
+    tests:
+      -
+        name: 'It was executed 10 times'
+        valid: true
+        description: 'Expected value to be equal to ''9''. Received ''9'''
+      -
+        name: 'It delayed for at least ~3 seconds'
+        valid: true
+        description: 'Expected value to be greater than ''3000''. Received ''3056'''
+      -
+        name: 'It delayed for no more than ~3 seconds'
+        valid: true
+        description: 'Expected value to be less than ''3000''. Received ''2506'''
+    name: delayed
+    time:
+      totalTime: 0
+      startTime: '2018-09-03T21:50:25.147Z'
+      endTime: '2018-09-03T21:50:25.147Z'
+    subscriptions: []
+    startEvent:
+      publisher:
+        name: 'Start event publisher'
+        valid: true
+        type: zero-mq-pub
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T21:50:25.147Z'

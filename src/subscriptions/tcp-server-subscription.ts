@@ -72,7 +72,6 @@ export class TcpServerSubscription extends Subscription {
         });
     }
 
-
     private reuseServer(): Promise<void> {
         return new Promise((resolve, reject) => {
             try {

@@ -1,12 +1,11 @@
 import {DateController} from '../timers/date-controller';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
+import {RequisitionModel} from '../models/outputs/requisition-model';
 import {StartEventModel} from '../models/outputs/start-event-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
-import {RequisitionModel} from '../models/outputs/requisition-model';
 import {checkValidation} from '../models/outputs/report-model';
 import {TestModel} from '../models/outputs/test-model';
-import {Logger} from '../loggers/logger';
 
 export class ReportGenerator {
 
@@ -17,7 +16,6 @@ export class ReportGenerator {
 
     public constructor(requisitionAttributes: input.RequisitionModel) {
         this.report = {
-            type: 'requisition',
             valid: true,
             tests: [],
             name: requisitionAttributes.name,

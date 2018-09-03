@@ -1,22 +1,20 @@
-type: runnable
+name: examples/kafka.yml
 valid: true
 tests: []
-name: 'kafka test description'
-id: kafka
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'requisition description'
+    name: 'Requisition #0'
     time:
-      totalTime: 254
-      startTime: '2018-09-03T02:40:36.257Z'
-      endTime: '2018-09-03T02:40:36.511Z'
+      totalTime: 268
+      startTime: '2018-09-03T21:50:21.860Z'
+      endTime: '2018-09-03T21:50:22.128Z'
       timeout: 8000
     subscriptions:
       -
@@ -48,7 +46,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.373Z'
+        connectionTime: '2018-09-03T21:50:22.003Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -67,4 +65,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-03T02:40:36.510Z'
+        publishTime: '2018-09-03T21:50:22.120Z'

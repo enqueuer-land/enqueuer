@@ -1,22 +1,20 @@
-type: runnable
+name: examples/amqp.yml
 valid: true
 tests: []
-name: 'amqp test description'
-id: amqp
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'requisition description'
+    name: 'Requisition #0'
     time:
-      totalTime: 1331
-      startTime: '2018-09-03T02:40:36.235Z'
-      endTime: '2018-09-03T02:40:37.566Z'
+      totalTime: 342
+      startTime: '2018-09-03T21:50:21.829Z'
+      endTime: '2018-09-03T21:50:22.171Z'
       timeout: 5000
     subscriptions:
       -
@@ -44,7 +42,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:37.549Z'
+        connectionTime: '2018-09-03T21:50:22.143Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -59,4 +57,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-03T02:40:37.565Z'
+        publishTime: '2018-09-03T21:50:22.169Z'

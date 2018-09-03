@@ -1,22 +1,20 @@
-type: runnable
+name: examples/parallel-sub.yml
 valid: true
 tests: []
-name: 'parallel-sub test description'
-id: parallel-sub
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'requisition description'
+    name: 'Requisition #0'
     time:
-      totalTime: 383
-      startTime: '2018-09-03T02:40:36.273Z'
-      endTime: '2018-09-03T02:40:36.656Z'
+      totalTime: 453
+      startTime: '2018-09-03T21:50:21.881Z'
+      endTime: '2018-09-03T21:50:22.334Z'
       timeout: 3000
     subscriptions: []
     startEvent:
@@ -33,4 +31,4 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.301Z'
+        connectionTime: '2018-09-03T21:50:21.926Z'

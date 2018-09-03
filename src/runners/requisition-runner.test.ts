@@ -2,6 +2,7 @@ import {RequisitionRunner} from "./requisition-runner";
 import {RequisitionModel} from "../models/inputs/requisition-model";
 import {RequisitionReporter} from "../reporters/requisition-reporter";
 import {Store} from '../configurations/store';
+import {Timeout} from '../timers/timeout';
 
 const report = "I'm a report";
 let startMock = jest.fn((cb) => cb());
@@ -22,6 +23,10 @@ Store.getData.mockImplementation(() => {
     return {keyName: 'value'}
 });
 
+jest.mock('../timers/timeout');
+Timeout.mockImplementation((cb) => {
+    return cb();
+});
 
 describe('RequisitionRunner', () => {
     it('Should return requisition reporter reporter', () => {

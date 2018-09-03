@@ -54,14 +54,17 @@ export class FilePublisher extends Publisher {
         if (!filename) {
             filename = this.filenamePrefix;
             filename += this.generateId();
-            filename += '.' + this.filenameExtension;
+            if (filename.lastIndexOf('.') == -1) {
+                filename += '.' + this.filenameExtension;
+            }
         }
         return filename;
     }
 
     private generateId() {
         try {
-            const id = this.payload.id;
+            const name = this.payload.name;
+            const id = name.substr(name.lastIndexOf('/'));
             if (id) {
                 return id;
             }

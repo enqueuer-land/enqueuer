@@ -3,12 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("../subscriptions/subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
-const runnable_parser_1 = require("../runnables/runnable-parser");
+const requisition_parser_1 = require("../runners/requisition-parser");
 class DaemonRunInput {
     constructor(input) {
         this.type = input.type;
-        this.runnableParser = new runnable_parser_1.RunnableParser();
+        this.parser = new requisition_parser_1.RequisitionParser();
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(input);
+    }
+    getType() {
+        return this.type;
     }
     connect() {
         logger_1.Logger.info(`Connecting to input ${this.type}`);
@@ -24,10 +27,10 @@ class DaemonRunInput {
                 .then((message) => {
                 logger_1.Logger.info(`${this.type} got a message`);
                 try {
-                    resolve(this.runnableParser.parse(message));
+                    resolve(this.parser.parse(message));
                 }
                 catch (err) {
-                    logger_1.Logger.error(`Error parsing runnable ${JSON.stringify(err)}`);
+                    logger_1.Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
                 }
             });
         });

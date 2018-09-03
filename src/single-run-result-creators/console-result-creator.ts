@@ -1,4 +1,3 @@
-import {ResultModel} from '../models/outputs/result-model';
 import {ResultCreator} from './result-creator';
 import {TestModel} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
@@ -16,9 +15,9 @@ export class ConsoleResultCreator implements ResultCreator {
         this.testsCounter = new TestsCounter();
     }
 
-    public addTestSuite(name: string, report: ResultModel): void {
+    public addTestSuite(name: string, report: RequisitionModel): void {
         this.testsCounter.addTests(report);
-        this.findRequisitions(report, [name]);
+        this.findRequisitions([report], [name]);
     }
 
     public addError(err: any): void {
@@ -43,21 +42,19 @@ export class ConsoleResultCreator implements ResultCreator {
         }
     }
 
-    private findRequisitions(resultModel: ResultModel, hierarchy: string[]) {
-        resultModel.runnables.forEach((runnable: ResultModel | RequisitionModel) => {
-            const levelName = hierarchy.concat(resultModel.name);
-            if (runnable.type == 'runnable') {
-                this.findRequisitions(runnable as ResultModel, levelName);
-            } else if (runnable.type == 'requisition') {
-                const requisition = runnable as RequisitionModel;
-                this.findTests(requisition, levelName.concat(requisition.name));
-            }
+    private findRequisitions(requisitions: RequisitionModel[] = [], hierarchy: string[]) {
+        requisitions.forEach((requisition: RequisitionModel) => {
+            const levelName = hierarchy.concat(requisition.name);
+            this.findRequisitions(requisition.requisitions, levelName);
+            this.findTests(requisition, levelName);
         });
     }
 
     private findTests(requisition: RequisitionModel, hierarchy: string[]) {
         this.inspectInvalidTests(requisition.tests, hierarchy);
-        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
+        if (requisition.subscriptions) {
+            requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
+        }
         const startEvent = this.detectStartEvent(requisition);
         if (startEvent) {
             this.inspectInvalidTests(startEvent.tests, hierarchy.concat(startEvent.name));

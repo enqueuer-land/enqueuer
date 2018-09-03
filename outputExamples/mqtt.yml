@@ -1,23 +1,16 @@
-type: runnable
+name: examples/mqtt.yml
 valid: true
 tests: []
-name: 'mqtt test description'
-id: mqtt
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'requisition description'
+    tests: []
+    name: 'Requisition #0'
     time:
-      totalTime: 1303
-      startTime: '2018-09-03T02:40:36.258Z'
-      endTime: '2018-09-03T02:40:37.561Z'
-      timeout: 8000
+      totalTime: 299
+      startTime: '2018-09-03T21:50:21.860Z'
+      endTime: '2018-09-03T21:50:22.159Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -40,7 +33,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:37.548Z'
+        connectionTime: '2018-09-03T21:50:22.099Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -51,4 +44,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-03T02:40:37.557Z'
+        publishTime: '2018-09-03T21:50:22.153Z'

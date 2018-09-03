@@ -1,16 +1,13 @@
 import {TestsCounter} from "./tests-counter";
-import {ResultModel} from "../models/outputs/result-model";
+import {RequisitionModel} from "../models/outputs/requisition-model";
 
 describe('TestsCounter', () => {
 
     it('Percentage should be zero when there are no tests', () => {
-        //(ResultModel | RequisitionModel)
-        const test: ResultModel = {
+        const test: RequisitionModel = {
             name: 'name',
             valid: true,
-            tests: [],
-            type: 'runnable',
-            runnables: []
+            tests: []
         };
 
         const testsCounter = new TestsCounter();
@@ -23,23 +20,16 @@ describe('TestsCounter', () => {
 
     it('Should trunc to two decimals number', () => {
         //(ResultModel | RequisitionModel)
-        const test: ResultModel = {
+        const test: RequisitionModel = {
             name: 'name',
             valid: true,
             tests: [{valid: true}],
-            type: 'runnable',
-            runnables: [{
+            requisitions: [{
                 name: 'name',
                 valid: true,
                 tests: [{valid: true}],
 
-                type: 'requisition',
                 time: {},
-                subscriptions: [{
-                    name: 'name',
-                    valid: true,
-                    tests: [{valid: true}],
-                }],
                 startEvent: {
                     publisher: {
                         name: 'name',
@@ -61,25 +51,11 @@ describe('TestsCounter', () => {
 
     it('Should count inner tests (inner runnable is undefined)', () => {
 
-        const test: ResultModel = {
+        const test: RequisitionModel = {
             name: 'name',
             valid: true,
-            tests: [{valid: true}],
-            type: 'runnable',
-            runnables: [{
-                name: 'name',
-                valid: true,
-                tests: [{valid: true}],
-
-                type: 'undefined',
-                time: {},
-                subscriptions: [{
-                    name: 'name',
-                    valid: true,
-                    tests: [{valid: true}],
-                }],
-                startEvent: {}
-            }]
+            tests: [],
+            type: 'runnable'
         };
 
         const testsCounter = new TestsCounter();
@@ -94,12 +70,11 @@ describe('TestsCounter', () => {
 
     it('Should count inner tests (start event is undefined)', () => {
         //(ResultModel | RequisitionModel)
-        const test: ResultModel = {
+        const test: RequisitionModel = {
             name: 'name',
             valid: true,
-            tests: [{valid: true}],
-            type: 'runnable',
-            runnables: [{
+            tests: [],
+            requisitions: [{
                 name: 'name',
                 valid: true,
                 tests: [{valid: true}],
@@ -125,12 +100,12 @@ describe('TestsCounter', () => {
 
     it('Should count inner tests (start event is publisher)', () => {
         //(ResultModel | RequisitionModel)
-        const test: ResultModel = {
+        const test: RequisitionModel = {
             name: 'name',
             valid: true,
-            tests: [{valid: true}],
+            tests: [],
             type: 'runnable',
-            runnables: [{
+            requisitions: [{
                 name: 'name',
                 valid: true,
                 tests: [{valid: true}],
@@ -162,18 +137,15 @@ describe('TestsCounter', () => {
     });
 
     it('Should count inner tests (start event is subscription)', () => {
-        //(ResultModel | RequisitionModel)
-        const test: ResultModel = {
+        const test: RequisitionModel = {
             name: 'name',
             valid: true,
             tests: [{valid: true}],
-            type: 'runnable',
-            runnables: [{
+            requisitions: [{
                 name: 'name',
                 valid: true,
                 tests: [{valid: true}],
 
-                type: 'requisition',
                 time: {},
                 subscriptions: [{
                     name: 'name',
@@ -195,33 +167,28 @@ describe('TestsCounter', () => {
         testsCounter.addTests(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(4);
+        expect(testsCounter.getTestsNumber()).toBe(5);
         expect(testsCounter.getPercentage()).toBe(100);
     });
 
     it('Should count really really inner tests', () => {
-        //(ResultModel | RequisitionModel)
-        const test: ResultModel = {
+        const test: RequisitionModel = {
             name: 'name',
             valid: true,
             tests: [{valid: true}],
-            type: 'runnable',
-            runnables: [{
+            requisitions: [{
                 name: 'name',
                 valid: true,
                 tests: [{valid: true}],
-                type: 'runnable',
-                runnables: [{
+                requisitions: [{
                     name: 'name',
                     valid: true,
                     tests: [{valid: true}],
-                    type: 'runnable',
-                    runnables: [{
+                    requisitions: [{
                         name: 'name',
                         valid: true,
                         tests: [{valid: true}],
 
-                        type: 'requisition',
                         time: {},
                         subscriptions: [{
                             name: 'name',
@@ -241,7 +208,6 @@ describe('TestsCounter', () => {
                         valid: true,
                         tests: [{valid: true}],
 
-                        type: 'requisition',
                         time: {},
                         subscriptions: [{
                             name: 'name',
@@ -261,7 +227,6 @@ describe('TestsCounter', () => {
                         valid: true,
                         tests: [{valid: true}],
 
-                        type: 'requisition',
                         time: {},
                         subscriptions: [{
                             name: 'name',
@@ -282,13 +247,11 @@ describe('TestsCounter', () => {
                 name: 'name',
                 valid: true,
                 tests: [{valid: true}],
-                type: 'runnable',
-                runnables: [{
+                requisitions: [{
                     name: 'name',
                     valid: true,
                     tests: [{valid: true}],
 
-                    type: 'requisition',
                     time: {},
                     subscriptions: [{
                         name: 'name',
@@ -311,7 +274,7 @@ describe('TestsCounter', () => {
         testsCounter.addTests(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(12);
+        expect(testsCounter.getTestsNumber()).toBe(16);
         expect(testsCounter.getPercentage()).toBe(100);
 
     });

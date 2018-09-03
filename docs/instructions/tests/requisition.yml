@@ -1,8 +1,16 @@
+#A file like this is what enqueuer needs to run.
 #This file defines a requisition. Every requisition has to have, at least, a start event.
+#This file tells what should be tested.
 #The start event tells if this requisition will act proactively or reactively.
 
 #Optional. Used to describe your requisition scenario
 name: Valid card scenario
+
+#Defaults to 0. Sets in milliseconds how log the test has to wait before starting.
+delay: 0
+
+#Defaults to 1. Sets how many times this test will be executed
+iterations: 3
 
 #Defaults to 0. Sets in milliseconds how log the requisition has to wait before being considered as invalid.
 #Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
@@ -10,26 +18,31 @@ timeout: 3000
 
 #Optional. Event triggered as soon as the requisition is initialized.
 onInit:
-  #Optional. Javascript code snippet executed when the event is triggered.
-  #Available objects are: requisition (/docs/instructions/tests/requisition.yml), tester (/docs/instructions/tests/assertions.yml) and store.
-  script:
-    console.log('iai');
+    #Optional. Javascript code snippet executed when the event is triggered.
+    #Available objects are: requisition (/docs/instructions/tests/requisition.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+    script:
+        console.log('iai');
 
-  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
-  assertions:
+    #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+    assertions:
 
 #Defines what triggers this execution
 #Two values are mutually exclusive: publisher and subscription. At least one of them has to be defined.
 startEvent:
 
-  #This requisition acts proactively. Enqueuer triggers it by itself.
-  #Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
-  publisher:
+    #This requisition acts proactively. Enqueuer triggers it by itself.
+    #Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
+    publisher:
 
-  #This requisition acts reactively.
-  #Enqueuer waits, as long as it's not longer than the timeout, to start listening to the subscriptions list defined.
-  subscription:
+    #This requisition acts reactively.
+    #Enqueuer waits, as long as it's not longer than the timeout, to start listening to the subscriptions list defined.
+    subscription:
 
-#Optional. Subscriptions list that have to be attended in order to consider this requisition a valid one.
-#Every supported IPC protocol is available here and you can check their values in /docs/tests/subscriptions folder.
-subscriptions: []
+    #Optional. Subscriptions list that have to be attended in order to consider this requisition a valid one.
+    #Every supported IPC protocol is available here and you can check their values in /docs/tests/subscriptions folder.
+    subscriptions: []
+
+    #Optional. Things get interesting here.
+    #It's a list of other requisitions (/docs/tests/requisition.yml).
+    #Yes, it can get really recursive.
+    requisitions: []

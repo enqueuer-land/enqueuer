@@ -21,11 +21,11 @@ const multi_publisher_1 = require("../publishers/multi-publisher");
 const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
-const runnable_runner_1 = require("../runnables/runnable-runner");
 const multi_result_creator_1 = require("../single-run-result-creators/multi-result-creator");
-const runnable_parser_1 = require("../runnables/runnable-parser");
+const requisition_parser_1 = require("../runners/requisition-parser");
 const glob = __importStar(require("glob"));
 const fs = __importStar(require("fs"));
+const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(runMode) {
         super();
@@ -51,14 +51,10 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     executeSequentialMode(runnableFileNames) {
         return new Promise((resolve) => {
-            const nameIndex = this.totalFilesNum - runnableFileNames.length;
             const fileName = runnableFileNames.shift();
             if (fileName) {
-                const runnable = this.parseFileRunnable(fileName);
-                if (runnable) {
-                    this.runFileRunnable(fileName, this.setDefaultFileRunnableName(runnable, nameIndex))
-                        .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
-                }
+                this.runFile(fileName)
+                    .then(() => resolve(this.executeSequentialMode(runnableFileNames)));
             }
             else {
                 resolve(this.finishExecution());
@@ -67,22 +63,10 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     executeParallelMode() {
         return new Promise((resolve) => {
-            Promise.all(this.runnableFileNames.map((fileName, index) => {
-                const runnable = this.parseFileRunnable(fileName);
-                if (runnable) {
-                    return this.runFileRunnable(fileName, this.setDefaultFileRunnableName(runnable, index));
-                }
-                else {
-                    return {};
-                }
-            })).then(() => resolve(this.finishExecution()));
+            Promise.all(this.runnableFileNames
+                .map((fileName) => this.runFile(fileName)))
+                .then(() => resolve(this.finishExecution()));
         });
-    }
-    setDefaultFileRunnableName(runnable, index) {
-        if (!runnable.name) {
-            runnable.name = `Runnable #${index}`;
-        }
-        return runnable;
     }
     getTestFiles(files) {
         let result = [];
@@ -94,37 +78,43 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         }
         return result;
     }
-    parseFileRunnable(fileName) {
+    sendErrorMessage(message) {
+        logger_1.Logger.error(message);
+        this.multiResultCreator.addError(message);
+        this.multiPublisher.publish(message).then().catch(console.log.bind(console));
+    }
+    runFile(filename) {
+        return new Promise((resolve) => {
+            const requisitions = this.parseFile(filename);
+            if (requisitions) {
+                new multi_requisition_runner_1.MultiRequisitionRunner(requisitions)
+                    .run()
+                    .then(report => {
+                    this.multiResultCreator.addTestSuite(filename, report);
+                    this.multiPublisher.publish(report).catch(console.log.bind(console));
+                    resolve();
+                })
+                    .catch((err) => {
+                    this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
+                    resolve();
+                });
+            }
+            else {
+                resolve();
+            }
+        });
+    }
+    parseFile(fileName) {
         try {
-            return new runnable_parser_1.RunnableParser().parse(fs.readFileSync(fileName).toString());
+            return new requisition_parser_1.RequisitionParser().parse(fs.readFileSync(fileName).toString());
         }
         catch (err) {
             this.sendErrorMessage(`Error parsing: ${fileName}: ` + err);
         }
         return undefined;
     }
-    sendErrorMessage(message) {
-        logger_1.Logger.error(message);
-        this.multiResultCreator.addError(message);
-        this.multiPublisher.publish(message).then().catch(console.log.bind(console));
-    }
-    runFileRunnable(name, runnable) {
-        return new Promise((resolve) => {
-            new runnable_runner_1.RunnableRunner(runnable)
-                .run()
-                .then(report => {
-                this.multiResultCreator.addTestSuite(name, report);
-                this.multiPublisher.publish(report).catch(console.log.bind(console));
-                resolve();
-            })
-                .catch((err) => {
-                this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
-                resolve();
-            });
-        });
-    }
     finishExecution() {
-        logger_1.Logger.info('There is no more requisition to be ran');
+        logger_1.Logger.info('There is no more files to be ran');
         this.multiResultCreator.create();
         return this.multiResultCreator.isValid();
     }

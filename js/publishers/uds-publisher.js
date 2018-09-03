@@ -24,14 +24,14 @@ const logger_1 = require("../loggers/logger");
 let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
-        if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            this.payload = JSON.stringify(this.payload);
-        }
         this.path = publisherAttributes.path;
         this.loadStream = publisherAttributes.loadStream;
         this.saveStream = publisherAttributes.saveStream;
     }
     publish() {
+        if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
+            this.payload = JSON.stringify(this.payload);
+        }
         return new Promise((resolve, reject) => {
             this.stream = this.getStream();
             this.stream.setTimeout(1000);

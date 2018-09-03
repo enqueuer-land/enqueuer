@@ -1,23 +1,16 @@
-type: runnable
+name: examples/zeromq-pubsub.yml
 valid: true
 tests: []
-name: 'zero-mq test description'
-id: zeromq-pubsub
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'requisition description'
+    tests: []
+    name: 'Requisition #0'
     time:
-      totalTime: 176
-      startTime: '2018-09-03T02:40:36.312Z'
-      endTime: '2018-09-03T02:40:36.488Z'
-      timeout: 8000
+      totalTime: 178
+      startTime: '2018-09-03T21:50:21.930Z'
+      endTime: '2018-09-03T21:50:22.108Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -40,7 +33,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.472Z'
+        connectionTime: '2018-09-03T21:50:22.096Z'
     startEvent:
       publisher:
         name: publisher
@@ -51,4 +44,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-03T02:40:36.473Z'
+        publishTime: '2018-09-03T21:50:22.096Z'

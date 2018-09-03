@@ -1,39 +1,35 @@
-name: kafka test description
-id: kafka
-runnables:
-- name: requisition description
-  timeout: 8000
-  startEvent:
+timeout: 8000
+startEvent:
     publisher:
-      type: kafka
-      name: publisher description
-      client:
-        kafkaHost: localhost:9093
-      topic: enqueuer-topic-name
-      payload: kafkaPayload
-      onMessageReceived:
-        assertions:
-        - name: kafka publish response payload
-          expectToBeDefined: `enqueuer-topic-name`
-  subscriptions:
-  - name: subscription description
+        type: kafka
+        name: publisher description
+        client:
+            kafkaHost: localhost:9093
+        topic: enqueuer-topic-name
+        payload: kafkaPayload
+        onMessageReceived:
+            assertions:
+                -   name: kafka publish response payload
+                    expectToBeDefined: `enqueuer-topic-name`
+subscriptions:
+-   name: subscription description
     type: kafka
     timeout: 2000
     client:
-      kafkaHost: localhost:9093
+        kafkaHost: localhost:9093
     options:
-      topic: enqueuer-topic-name
+        topic: enqueuer-topic-name
     onMessageReceived:
-      assertions:
-      - name: payload
-        expect: value
-        toBeEqualTo: `kafkaPayload`
-      - name: topic
-        expect: topic
-        toBeEqualTo: `enqueuer-topic-name`
-      - name: offset
-        expectToBeDefined: offset
-      - name: partition
-        expectToBeDefined: partition
-      - name: timestamp
-        expectToBeDefined: timestamp
+        assertions:
+            -   name: payload
+                expect: value
+                toBeEqualTo: `kafkaPayload`
+            -   name: topic
+                expect: topic
+                toBeEqualTo: `enqueuer-topic-name`
+            -   name: offset
+                expectToBeDefined: offset
+            -   name: partition
+                expectToBeDefined: partition
+            -   name: timestamp
+                expectToBeDefined: timestamp

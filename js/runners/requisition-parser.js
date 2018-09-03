@@ -15,12 +15,31 @@ const id_generator_1 = require("../id-generator/id-generator");
 const ajv_1 = __importDefault(require("ajv"));
 const fs_1 = __importDefault(require("fs"));
 const yaml = __importStar(require("yamljs"));
-class RunnableParser {
+class RequisitionParser {
     constructor() {
         const schemasPath = this.discoverSchemasFolder();
         this.validator = new ajv_1.default({ allErrors: true, verbose: false })
-            .addSchema(this.readJsonSchemaFile(schemasPath.concat('requisition-schema.json')))
-            .compile(this.readJsonSchemaFile(schemasPath.concat('runnable-schema.json')));
+            .compile(this.readJsonSchemaFile(schemasPath.concat('requisition-schema.json')));
+    }
+    parse(message) {
+        let parsed = this.parseToObject(message);
+        if (!Array.isArray(parsed)) {
+            parsed = [parsed];
+        }
+        parsed.forEach((requisition) => {
+            if (!this.validator(requisition)) {
+                this.throwError();
+            }
+        });
+        return this.insertIds(parsed);
+    }
+    insertIds(requisitions = []) {
+        requisitions
+            .forEach(requisition => requisition.requisitions = this.insertIds(requisition.requisitions));
+        requisitions
+            .filter((item) => !item.id)
+            .forEach((item) => item.id = new id_generator_1.IdGenerator(item).generateId());
+        return requisitions;
     }
     discoverSchemasFolder() {
         let realPath = process.argv[1];
@@ -34,37 +53,25 @@ class RunnableParser {
         const schemasPath = prefix.concat('enqueuer/schemas/');
         return schemasPath;
     }
-    parse(runnableMessage) {
-        const parsedRunnable = this.parseToObject(runnableMessage);
-        if (!this.validator(parsedRunnable)) {
-            this.throwError();
-        }
-        if (!parsedRunnable.id) {
-            parsedRunnable.id = new id_generator_1.IdGenerator(parsedRunnable).generateId();
-        }
-        const runnableWithId = parsedRunnable;
-        logger_1.Logger.info(`Message '${runnableWithId.name}' valid and associated with id ${runnableWithId.id}`);
-        return runnableWithId;
-    }
     throwError() {
         if (this.validator.errors) {
             this.validator.errors.forEach(error => {
                 logger_1.Logger.error(JSON.stringify(error));
             });
             if (this.validator.errors.length > 0) {
-                throw Error(this.validator.errors[0].dataPath);
+                throw JSON.stringify(this.validator.errors[0], null, 2);
             }
         }
-        throw Error(JSON.stringify(this.validator, null, 2));
+        throw JSON.stringify(this.validator, null, 2);
     }
-    parseToObject(runnableMessage) {
+    parseToObject(message) {
         try {
-            return yaml.parse(runnableMessage);
+            return yaml.parse(message);
         }
         catch (ymlErr) {
             logger_1.Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
             try {
-                return JSON.parse(runnableMessage);
+                return JSON.parse(message);
             }
             catch (jsonErr) {
                 logger_1.Logger.warning(`Not able to parse as Json: ${jsonErr}`);
@@ -76,4 +83,4 @@ class RunnableParser {
         return JSON.parse(fs_1.default.readFileSync(filename).toString());
     }
 }
-exports.RunnableParser = RunnableParser;
+exports.RequisitionParser = RequisitionParser;

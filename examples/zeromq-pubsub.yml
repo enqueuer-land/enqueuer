@@ -1,28 +1,23 @@
-name: zero-mq test description
-id: zeromq-pubsub
-runnables:
-- name: requisition description
-  timeout: 8000
-  startEvent:
+startEvent:
     publisher:
-      type: zero-mq-pub
-      name: publisher
-      address: <<zeroMqAddress>>
-      payload: enqueuer zeroes
-      topic: topic.enqueuer.virgs
-  subscriptions:
-  - name: subscription description
+        type: zero-mq-pub
+        name: publisher
+        address: <<zeroMqAddress>>
+        payload: enqueuer zeroes
+        topic: topic.enqueuer.virgs
+subscriptions:
+-   name: subscription description
     type: zero-mq-sub
     address: <<zeroMqAddress>>
     topic: topic.enqueuer.virgs
     onMessageReceived:
-      assertions:
-      - name: topic
-        expect: topic
-        toBeEqualTo: `topic.enqueuer.virgs`
-      - name: payload
-        expect: payload
-        toBeEqualTo: `enqueuer zeroes`
-      - name: address
-        expect: store.zeroMqAddress
-        toBeEqualTo: `<<zeroMqAddress>>`
+        assertions:
+            -   name: topic
+                expect: topic
+                toBeEqualTo: `topic.enqueuer.virgs`
+            -   name: payload
+                expect: payload
+                toBeEqualTo: `enqueuer zeroes`
+            -   name: address
+                expect: store.zeroMqAddress
+                toBeEqualTo: `<<zeroMqAddress>>`

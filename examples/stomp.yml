@@ -1,20 +1,16 @@
-name: stomp test description
-id: stomp
-runnables:
-- name: requisition description
-  timeout: 3000
-  startEvent:
+timeout: 3000
+startEvent:
     publisher:
-      name: publisher description
-      type: stomp
-      address: localhost
-      port: 61613
-      user: guest
-      password: guest
-      queue: /queue/stompQueue
-      payload: stompQueue
-  subscriptions:
-  - name: subscription description
+        name: publisher description
+        type: stomp
+        address: localhost
+        port: 61613
+        user: guest
+        password: guest
+        queue: /queue/stompQueue
+        payload: stompQueue
+subscriptions:
+-   name: subscription description
     type: stomp
     address: localhost
     port: 61613
@@ -22,7 +18,7 @@ runnables:
     password: guest
     queue: /queue/stompQueue
     onMessageReceived:
-      assertions:
-      - name: Payload
-        expect: payload
-        toBeEqualTo: `stompQueue`
+        assertions:
+            -   name: Payload
+                expect: payload
+                toBeEqualTo: `stompQueue`

@@ -6,7 +6,7 @@ class TestsCounter {
         this.failingTests = 0;
     }
     addTests(report) {
-        this.findRequisitions(report);
+        this.findRequisitions([report]);
     }
     getTestsNumber() {
         return this.totalTests;
@@ -21,21 +21,18 @@ class TestsCounter {
         }
         return percentage;
     }
-    findRequisitions(resultModel) {
-        resultModel.runnables.forEach((runnable) => {
-            if (runnable.type == 'runnable') {
-                this.findRequisitions(runnable);
-            }
-            else if (runnable.type == 'requisition') {
-                const requisition = runnable;
-                this.findTests(requisition);
-            }
+    findRequisitions(reports = []) {
+        reports.forEach((requisition) => {
+            this.findRequisitions(requisition.requisitions);
+            this.findTests(requisition);
         });
     }
     findTests(requisition) {
         this.sumTests(requisition.tests);
-        requisition.subscriptions
-            .forEach(subscription => this.sumTests(subscription.tests));
+        if (requisition.subscriptions) {
+            requisition.subscriptions
+                .forEach(subscription => this.sumTests(subscription.tests));
+        }
         const startEvent = this.detectStartEvent(requisition);
         if (startEvent) {
             this.sumTests(startEvent.tests);
@@ -46,11 +43,13 @@ class TestsCounter {
         this.totalTests += tests.length;
     }
     detectStartEvent(requisition) {
-        if (requisition.startEvent.subscription) {
-            return requisition.startEvent.subscription;
-        }
-        else if (requisition.startEvent.publisher) {
-            return requisition.startEvent.publisher;
+        if (requisition.startEvent) {
+            if (requisition.startEvent.subscription) {
+                return requisition.startEvent.subscription;
+            }
+            else if (requisition.startEvent.publisher) {
+                return requisition.startEvent.publisher;
+            }
         }
     }
 }

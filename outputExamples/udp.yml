@@ -1,18 +1,16 @@
-type: runnable
+name: examples/udp.yml
 valid: true
 tests: []
-name: 'udp test description'
-id: udp
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests: []
-    name: 'requisition description'
+    name: 'Requisition #0'
     time:
-      totalTime: 50
-      startTime: '2018-09-03T02:40:36.279Z'
-      endTime: '2018-09-03T02:40:36.329Z'
+      totalTime: 66
+      startTime: '2018-09-03T21:50:21.928Z'
+      endTime: '2018-09-03T21:50:21.994Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -31,7 +29,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.284Z'
+        connectionTime: '2018-09-03T21:50:21.937Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -42,4 +40,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-03T02:40:36.326Z'
+        publishTime: '2018-09-03T21:50:21.991Z'

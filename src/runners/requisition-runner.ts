@@ -2,18 +2,15 @@ import {Logger} from '../loggers/logger';
 import {RequisitionReporter} from '../reporters/requisition-reporter';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
-import {Runner} from './runner';
-import {Injectable} from 'conditional-injector';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
+import {Timeout} from '../timers/timeout';
 
-@Injectable()
-export class RequisitionRunner extends Runner {
+export class RequisitionRunner {
 
     private requisitionModel: input.RequisitionModel;
 
     public constructor(requisition: input.RequisitionModel) {
-        super();
         const placeHolderReplacer = new JsonPlaceholderReplacer();
         Logger.debug(`Initializing requisition '${requisition.name}'`);
         this.requisitionModel = placeHolderReplacer.addVariableMap(Store.getData())
@@ -26,13 +23,11 @@ export class RequisitionRunner extends Runner {
         Logger.info(`Running requisition '${this.requisitionModel.name}'`);
         return new Promise((resolve) => {
             try {
-                const requisitionReporter = new RequisitionReporter(this.requisitionModel);
-                requisitionReporter.start(
-                    () => {
-                        const report = requisitionReporter.getReport();
-                        Logger.info(`Requisition '${this.requisitionModel.name}' is over (${report.valid})`);
-                        resolve(report);
-                    });
+                const delay = this.requisitionModel.delay;
+                if (delay) {
+                    Logger.info(`Delaying requisition '${this.requisitionModel.name}' for ${delay}ms`);
+                }
+                this.startRequisition(resolve).start(delay || 0);
             } catch (err) {
                 Logger.error(`Error running requisition '${this.requisitionModel.name}'`);
                 const report: output.RequisitionModel = this.createRunningError(err);
@@ -41,9 +36,19 @@ export class RequisitionRunner extends Runner {
         });
     }
 
+    private startRequisition(resolve: any) {
+        return new Timeout(() => {
+            const requisitionReporter = new RequisitionReporter(this.requisitionModel);
+            requisitionReporter.start(() => {
+                const report = requisitionReporter.getReport();
+                Logger.info(`Requisition '${this.requisitionModel.name}' is over (${report.valid})`);
+                resolve(report);
+            });
+        });
+    }
+
     private createRunningError(err: any): output.RequisitionModel {
         return {
-            type: 'requisition',
             valid: false,
             tests: [{
                 valid: false,

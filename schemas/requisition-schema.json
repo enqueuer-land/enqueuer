@@ -22,6 +22,15 @@
         "anyNameOrTitle"
       ]
     },
+    "id": {
+      "type": "string"
+    },
+    "iterations": {
+      "type": ["object", "number", "string"]
+    },
+    "delay": {
+      "type": ["object", "number", "string"]
+    },
     "onInit": {
       "type": "object",
       "title": "onInit hook function",
@@ -56,6 +65,13 @@
           ]
         }
       ]
+    },
+    "requisitions": {
+      "type": "array",
+      "additionalProperties": false,
+      "items": {
+        "ref": "https://github.com/lopidio/enqueuer/requisition"
+      }
     }
   },
   "additionalProperties": false,

@@ -63,7 +63,7 @@ class RequisitionReporter {
     initializeTimeout() {
         if (this.requisitionTimeout) {
             new timeout_1.Timeout(() => {
-                logger_1.Logger.error(`Requisition timed out`);
+                logger_1.Logger.info(`Requisition timed out`);
                 this.onFinish();
             }).start(this.requisitionTimeout);
         }

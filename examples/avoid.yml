@@ -1,8 +1,6 @@
-id: avoid
-runnables:
-- startEvent:
+startEvent:
     subscription:
-      type: tcp-server
-      port: 23232
-      avoid: true
-      timeout: 2000
+        type: tcp-server
+        timeout: 2000
+        port: 23232
+        avoid: true

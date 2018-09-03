@@ -14,7 +14,7 @@ class ConsoleResultCreator {
     }
     addTestSuite(name, report) {
         this.testsCounter.addTests(report);
-        this.findRequisitions(report, [name]);
+        this.findRequisitions([report], [name]);
     }
     addError(err) {
         this.failingTests.push({ name: 'Error running runnable', valid: false, description: err.toString() });
@@ -35,21 +35,18 @@ class ConsoleResultCreator {
             });
         }
     }
-    findRequisitions(resultModel, hierarchy) {
-        resultModel.runnables.forEach((runnable) => {
-            const levelName = hierarchy.concat(resultModel.name);
-            if (runnable.type == 'runnable') {
-                this.findRequisitions(runnable, levelName);
-            }
-            else if (runnable.type == 'requisition') {
-                const requisition = runnable;
-                this.findTests(requisition, levelName.concat(requisition.name));
-            }
+    findRequisitions(requisitions = [], hierarchy) {
+        requisitions.forEach((requisition) => {
+            const levelName = hierarchy.concat(requisition.name);
+            this.findRequisitions(requisition.requisitions, levelName);
+            this.findTests(requisition, levelName);
         });
     }
     findTests(requisition, hierarchy) {
         this.inspectInvalidTests(requisition.tests, hierarchy);
-        requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
+        if (requisition.subscriptions) {
+            requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
+        }
         const startEvent = this.detectStartEvent(requisition);
         if (startEvent) {
             this.inspectInvalidTests(startEvent.tests, hierarchy.concat(startEvent.name));

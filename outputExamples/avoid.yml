@@ -1,18 +1,16 @@
-type: runnable
+name: examples/avoid.yml
 valid: true
 tests: []
-name: 'Runnable #1'
-id: avoid
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 2037
-      startTime: '2018-09-03T02:40:36.245Z'
-      endTime: '2018-09-03T02:40:38.282Z'
+      totalTime: 2057
+      startTime: '2018-09-03T21:50:21.839Z'
+      endTime: '2018-09-03T21:50:23.896Z'
     subscriptions: []
     startEvent:
       subscription:
@@ -24,4 +22,4 @@ runnables:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.301Z'
+        connectionTime: '2018-09-03T21:50:21.926Z'

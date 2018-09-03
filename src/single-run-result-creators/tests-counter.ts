@@ -1,4 +1,3 @@
-import {ResultModel} from '../models/outputs/result-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
 
@@ -6,8 +5,8 @@ export class TestsCounter {
     private totalTests: number = 0;
     private failingTests: number = 0;
 
-    public addTests(report: ResultModel): void {
-        this.findRequisitions(report);
+    public addTests(report: RequisitionModel): void {
+        this.findRequisitions([report]);
     }
 
     public getTestsNumber() {
@@ -26,21 +25,19 @@ export class TestsCounter {
         return percentage;
     }
 
-    private findRequisitions(resultModel: ResultModel) {
-        resultModel.runnables.forEach((runnable: ResultModel | RequisitionModel) => {
-            if (runnable.type == 'runnable') {
-                this.findRequisitions(runnable as ResultModel);
-            } else if (runnable.type == 'requisition') {
-                const requisition = runnable as RequisitionModel;
-                this.findTests(requisition);
-            }
+    private findRequisitions(reports: RequisitionModel[] = []) {
+        reports.forEach((requisition: RequisitionModel) => {
+            this.findRequisitions(requisition.requisitions);
+            this.findTests(requisition);
         });
     }
 
     private findTests(requisition: RequisitionModel) {
         this.sumTests(requisition.tests);
-        requisition.subscriptions
-            .forEach(subscription => this.sumTests(subscription.tests));
+        if (requisition.subscriptions) {
+            requisition.subscriptions
+                .forEach(subscription => this.sumTests(subscription.tests));
+        }
         const startEvent = this.detectStartEvent(requisition);
         if (startEvent) {
             this.sumTests(startEvent.tests);
@@ -53,10 +50,12 @@ export class TestsCounter {
     }
 
     private detectStartEvent(requisition: RequisitionModel): any {
-        if (requisition.startEvent.subscription) {
-            return requisition.startEvent.subscription;
-        } else if (requisition.startEvent.publisher) {
-            return requisition.startEvent.publisher;
+        if (requisition.startEvent) {
+            if (requisition.startEvent.subscription) {
+                return requisition.startEvent.subscription;
+            } else if (requisition.startEvent.publisher) {
+                return requisition.startEvent.publisher;
+            }
         }
     }
 }

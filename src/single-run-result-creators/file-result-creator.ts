@@ -1,8 +1,8 @@
-import {ResultModel} from '../models/outputs/result-model';
 import {ResultCreator} from './result-creator';
 import {SingleRunResultModel} from '../models/outputs/single-run-result-model';
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
+import {RequisitionModel} from '../models/outputs/requisition-model';
 
 export class FileResultCreator implements ResultCreator {
     private report: SingleRunResultModel;
@@ -12,12 +12,13 @@ export class FileResultCreator implements ResultCreator {
             name: filename,
             tests: [],
             valid: true,
-            runnables: []
+            requisitions: []
         };
 
     }
-    public addTestSuite(name: string, report: ResultModel): void {
-        this.report.runnables.push(report);
+    public addTestSuite(name: string, report: RequisitionModel): void {
+        report.name = name;
+        this.report.requisitions.push(report);
         this.report.valid = this.report.valid && report.valid;
     }
 

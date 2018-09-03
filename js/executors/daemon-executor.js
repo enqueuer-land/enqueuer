@@ -15,7 +15,7 @@ const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const configuration_1 = require("../configurations/configuration");
 const conditional_injector_1 = require("conditional-injector");
-const runnable_runner_1 = require("../runnables/runnable-runner");
+const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
 let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
@@ -42,8 +42,8 @@ let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerEx
     }
     startReader(input) {
         input.receiveMessage()
-            .then((runnable) => new runnable_runner_1.RunnableRunner(runnable).run())
-            .then((report) => this.multiPublisher.publish(JSON.stringify(report)))
+            .then((requisitions) => new multi_requisition_runner_1.MultiRequisitionRunner(requisitions, input.getType()).run())
+            .then((report) => this.multiPublisher.publish(report))
             .then(() => this.startReader(input))
             .catch((err) => {
             logger_1.Logger.error(err);

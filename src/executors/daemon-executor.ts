@@ -4,9 +4,9 @@ import {MultiPublisher} from '../publishers/multi-publisher';
 import {EnqueuerExecutor} from './enqueuer-executor';
 import {Configuration} from '../configurations/configuration';
 import {Injectable} from 'conditional-injector';
-import {RunnableModel} from '../models/inputs/runnable-model';
-import {RunnableRunner} from '../runnables/runnable-runner';
-import {ResultModel} from '../models/outputs/result-model';
+import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
+import * as input from '../models/inputs/requisition-model';
+import * as output from '../models/outputs/requisition-model';
 
 @Injectable({predicate: enqueuerConfiguration => enqueuerConfiguration['daemon']})
 export class DaemonExecutor extends EnqueuerExecutor {
@@ -42,8 +42,8 @@ export class DaemonExecutor extends EnqueuerExecutor {
 
     private startReader(input: DaemonRunInput) {
         input.receiveMessage()
-            .then( (runnable: RunnableModel) => new RunnableRunner(runnable).run())
-            .then( (report: ResultModel) => this.multiPublisher.publish(JSON.stringify(report)))
+            .then( (requisitions: input.RequisitionModel[]) => new MultiRequisitionRunner(requisitions, input.getType()).run())
+            .then( (report: output.RequisitionModel) => this.multiPublisher.publish(report))
             .then(() => this.startReader(input))
             .catch( (err) => {
                 Logger.error(err);

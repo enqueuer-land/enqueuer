@@ -15,15 +15,15 @@ export class UdsPublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            this.payload = JSON.stringify(this.payload);
-        }
         this.path = publisherAttributes.path;
         this.loadStream = publisherAttributes.loadStream;
         this.saveStream = publisherAttributes.saveStream;
     }
 
     public publish(): Promise<void> {
+        if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
+            this.payload = JSON.stringify(this.payload);
+        }
         return new Promise((resolve, reject) => {
             this.stream = this.getStream();
 

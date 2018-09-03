@@ -1,80 +1,75 @@
-name: uds test description
-id: uds
-runnables:
-- name: requisition description
-  timeout: 3000
-  startEvent:
-    publisher:
-      name: publisher description
-      type: uds
-      path: /tmp/unix.sock
-      payload: I'll be replaced in 'onInit'
-      onInit:
-        script: |-
-          payload = 'enqueuer';
-          publisher.payload = 'payload';
-        store:
-          udsPayload: `payload`
-          uds2RequisitionName: `RequisitionUds2Name`;
-          uds2Timeout: `500`
-          uds2Name: `UDS2 Name`
-      onMessageReceived:
-        assertions:
-          - name: It is bidirectional
-            expect: message
-            toBeEqualTo: `responsePayload`
-  subscriptions:
-  - name: subscription description
-    type: uds
-    path: /tmp/unix.sock
-    response: responsePayload
-    timeout: 500
-    onMessageReceived:
-      assertions:
-      - name: Message received is enqueuer
-        expect: message
-        toBeEqualTo: store.udsPayload
-- name: <<uds2Name>> description
-  startEvent:
-    publisher:
-      name: udsPublisher2 description
-      type: uds
-      path: /tmp/unix2.sock
-      payload: <<udsPayload>>
-      saveStream: udsPubStreamName
-      onInit:
-        assertions:
-        - name: Message to be published is <<udsPayload>>
-          expect: publisher.payload
-          toBeEqualTo: store.udsPayload
-  subscriptions:
-  - name: udsSubscription2 description
-    type: uds
-    path: /tmp/unix2.sock
-    saveStream: udsSubStreamName
-    onMessageReceived:
-      assertions:
-      - name: Message received is <<udsPayload>> 2
-        expect: message
-        toBeEqualTo: store.udsPayload
-    timeout: <<uds2Timeout>>
-- name: udsStreamLoader description
-  startEvent:
-    publisher:
-      name: udsStreamLoader publisher
-      type: uds
-      payload: I am still opened
-      loadStream: udsPubStreamName
-      onMessageReceived:
-      - name: Message received
-        expect: message
-        toBeEqualTo: I am still bidirectional
-  subscriptions:
-  - name: udsStreamLoader subscription
-    type: uds
-    loadStream: udsSubStreamName
-    response: I am still bidirectional
-    onMessageReceived:
-    - name: Publisher stream was still opened
-      expect: message
-      toBeEqualTo: I am still opened
+-   timeout: 3000
+    startEvent:
+        publisher:
+            name: publisher description
+            type: uds
+            path: /tmp/unix.sock
+            payload: I'll be replaced in onInit
+            onInit:
+                script: |-
+                    publisher.payload = 'enqueuer'
+                store:
+                    udsPayload: `enqueuer`
+                    uds2RequisitionName: `RequisitionUds2Name`
+                    uds2Timeout: `500`
+                    uds2Name: `UDS2 Name`
+            onMessageReceived:
+                assertions:
+                    -   name: It is bidirectional
+                        expect: message
+                        toBeEqualTo: `responsePayload`
+    subscriptions:
+    -   type: uds
+        path: /tmp/unix.sock
+        response: responsePayload
+        timeout: 500
+        onMessageReceived:
+            assertions:
+                -   name: Message received is enqueuer
+                    expect: message
+                    toBeEqualTo: store.udsPayload
+-   name: <<uds2Name>> description
+    startEvent:
+        publisher:
+            name: udsPublisher2 description
+            type: uds
+            path: /tmp/unix2.sock
+            payload: <<udsPayload>>
+            saveStream: udsPubStreamName
+            onInit:
+                assertions:
+                    -   name: Message to be published is <<udsPayload>>
+                        expect: publisher.payload
+                        toBeEqualTo: store.udsPayload
+    subscriptions:
+        -   name: udsSubscription2 description
+            type: uds
+            path: /tmp/unix2.sock
+            saveStream: udsSubStreamName
+            onMessageReceived:
+                assertions:
+                    -   name: Message received is <<udsPayload>> 2
+                        expect: message
+                        toBeEqualTo: store.udsPayload
+            timeout: <<uds2Timeout>>
+-   name: udsStreamLoader description
+    startEvent:
+        publisher:
+            name: udsStreamLoader publisher
+            type: uds
+            payload: I am still opened
+            loadStream: udsPubStreamName
+            onMessageReceived:
+                assertions:
+                    -   name: Message received
+                        expect: message
+                        toBeEqualTo: `I am still bidirectional`
+    subscriptions:
+        -   type: uds
+            loadStream: udsSubStreamName
+            response: I am still bidirectional
+            onMessageReceived:
+                assertions:
+                    -   name: Publisher stream was still opened
+                        expect: message
+                        toBeEqualTo: `I am still opened`

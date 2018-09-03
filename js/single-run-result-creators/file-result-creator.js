@@ -15,11 +15,12 @@ class FileResultCreator {
             name: filename,
             tests: [],
             valid: true,
-            runnables: []
+            requisitions: []
         };
     }
     addTestSuite(name, report) {
-        this.report.runnables.push(report);
+        report.name = name;
+        this.report.requisitions.push(report);
         this.report.valid = this.report.valid && report.valid;
     }
     addError(err) {

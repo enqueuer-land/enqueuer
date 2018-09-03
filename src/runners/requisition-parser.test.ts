@@ -1,0 +1,171 @@
+import {RequisitionParser} from "./requisition-parser";
+
+const validRunnable = [
+    {
+        timeout: 3000,
+        name: "name",
+        subscriptions: [
+            {
+                name: "name",
+                type: "uds",
+                path: "/tmp/unix.sock",
+                timeout: 500
+            }
+        ],
+        startEvent: {
+            publisher: {
+                name: "name",
+                type: "uds",
+                path: "/tmp/unix.sock",
+                payload: "{{sessionKey}}"
+            }
+        }
+    },
+    {
+        timeout: 3000,
+        name: "name",
+        subscriptions: [
+            {
+                name: "name",
+                type: "uds",
+                path: "/tmp/unix.sock",
+                timeout: 500
+            }
+        ],
+        startEvent: {
+            publisher: {
+                name: "name",
+                type: "uds",
+                path: "/tmp/unix.sock",
+                payload: "{{sessionKey}}"
+            }
+        }
+    }
+];
+const validRunnableWithId = [{
+    timeout: 3000,
+    name: "name",
+    id: "nameId",
+    subscriptions: [
+        {
+            name: "name",
+            type: "uds",
+            path: "/tmp/unix.sock",
+            timeout: 500
+        }
+    ],
+    startEvent: {
+        publisher: {
+            name: "name",
+            type: "uds",
+            path: "/tmp/unix.sock",
+            payload: "{{sessionKey}}"
+        }
+    },
+    requisitions: [{
+        timeout: 3000,
+        name: "name",
+        subscriptions: [
+            {
+                name: "name",
+                type: "uds",
+                path: "/tmp/unix.sock",
+                timeout: 500
+            }
+        ],
+        startEvent: {
+            publisher: {
+                name: "name",
+                type: "uds",
+                path: "/tmp/unix.sock",
+                payload: "{{sessionKey}}"
+            }
+        },
+        requisitions: [
+            {
+                timeout: 3000,
+                delay: 3000,
+                name: "name",
+                subscriptions: [
+                    {
+                        name: "name",
+                        type: "uds",
+                        path: "/tmp/unix.sock",
+                        timeout: 500
+                    }
+                ],
+                startEvent: {
+                    publisher: {
+                        name: "name",
+                        type: "uds",
+                        path: "/tmp/unix.sock",
+                        payload: "{{sessionKey}}"
+                    }
+                },
+                requisitions: []
+
+            }
+        ]
+    }]
+}];
+const validRunnableWithNoSubscriptions = {
+        "timeout": 3000,
+        "name": "file",
+        "iterations": "10",
+        "subscriptions": [],
+        "startEvent": {
+            "publisher": {
+                "type": "file",
+                "name": "filePublisher",
+                "payload": "filePublisher",
+                "filenamePrefix": "temp/fileTest",
+                "filenameExtension": "file",
+                "onInit": "publisher.payload=new Date().getTime();"
+            }
+        },
+        requisitions: []
+    };
+
+describe('RequisitionParser', () => {
+
+    it('Should not parse invalid json', () => {
+        const runnable = "invalidJson";
+        const parser: RequisitionParser = new RequisitionParser();
+
+        expect(() => parser.parse(runnable)).toThrow()
+    });
+
+    it('Should not parse invalid requisition', () => {
+        const runnable = "{\"invalid\": \"runnable\"}";
+        const parser: RequisitionParser = new RequisitionParser();
+
+        expect(() => parser.parse(runnable)).toThrow()
+    });
+
+    it('Should keep initial id', () => {
+        const runnableStringified: string = JSON.stringify(validRunnableWithId);
+        const parser: RequisitionParser = new RequisitionParser();
+
+        const firstModel = parser.parse(runnableStringified)[0];
+        expect(firstModel.id).toBe(validRunnableWithId[0].id);
+    });
+
+    it('Should insert id if no one is given', () => {
+        const runnableStringified: string = JSON.stringify(validRunnable);
+        const parser: RequisitionParser = new RequisitionParser();
+
+        expect(parser.parse(runnableStringified)[0].id).toBeDefined();
+    });
+
+    it('Should accept valid stringified json', () => {
+        const runnableStringified: string = JSON.stringify(validRunnableWithNoSubscriptions);
+        const parser: RequisitionParser = new RequisitionParser();
+
+        expect(parser.parse(runnableStringified)).toBeDefined();
+    });
+
+    it('Should accept runnable with no subscriptions', () => {
+        expect(new RequisitionParser().parse(JSON.stringify(validRunnableWithNoSubscriptions))).not.toBeNull();
+    });
+
+});

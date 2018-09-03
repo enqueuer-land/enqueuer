@@ -1,26 +1,24 @@
-type: runnable
+name: examples/tcp.yml
 valid: true
 tests: []
-name: 'tcp test description'
-id: tcp
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'tcp 0 requisition description'
+    name: 'Requisition #0'
     time:
-      totalTime: 126
-      startTime: '2018-09-03T02:40:36.279Z'
-      endTime: '2018-09-03T02:40:36.405Z'
+      totalTime: 184
+      startTime: '2018-09-03T21:50:21.890Z'
+      endTime: '2018-09-03T21:50:22.074Z'
       timeout: 3000
     subscriptions:
       -
-        name: 'tcp 0 subscription description'
+        name: 'Subscription #0'
         type: tcp-server
         tests:
           -
@@ -32,10 +30,10 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.301Z'
+        connectionTime: '2018-09-03T21:50:21.894Z'
     startEvent:
       publisher:
-        name: 'tcp 0 publisher description'
+        name: 'Start event publisher'
         valid: true
         type: tcp-client
         tests:
@@ -51,20 +49,19 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-03T02:40:36.405Z'
+        publishTime: '2018-09-03T21:50:22.074Z'
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'tcp 1 requisition description'
+    name: 'Requisition #1'
     time:
-      totalTime: 848
-      startTime: '2018-09-03T02:40:36.406Z'
-      endTime: '2018-09-03T02:40:37.254Z'
+      totalTime: 851
+      startTime: '2018-09-03T21:50:22.093Z'
+      endTime: '2018-09-03T21:50:22.944Z'
       timeout: 3000
     subscriptions:
       -
@@ -80,7 +77,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.406Z'
+        connectionTime: '2018-09-03T21:50:22.094Z'
     startEvent:
       publisher:
         name: 'tcp 1 publisher description'
@@ -99,20 +96,19 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-03T02:40:37.253Z'
+        publishTime: '2018-09-03T21:50:22.943Z'
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'tcp 2 requisition description'
+    name: 'Requisition #2'
     time:
-      totalTime: 1
-      startTime: '2018-09-03T02:40:37.254Z'
-      endTime: '2018-09-03T02:40:37.255Z'
+      totalTime: 2
+      startTime: '2018-09-03T21:50:22.945Z'
+      endTime: '2018-09-03T21:50:22.947Z'
       timeout: 3000
     subscriptions:
       -
@@ -128,10 +124,10 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:37.254Z'
+        connectionTime: '2018-09-03T21:50:22.946Z'
     startEvent:
       publisher:
-        name: 'tcp 2 publisher description'
+        name: 'Start event publisher'
         valid: true
         type: tcp-client
         tests:
@@ -140,11 +136,11 @@ runnables:
             valid: true
             description: 'Published successfully'
           -
-            name: 'Second message is ''enqueuer Rocks'''
+            name: 'Second message is enqueuer Rocks'
             valid: true
             description: 'Expected value to be equal to ''enqueuer Rocks''. Received ''enqueuer Rocks'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-03T02:40:37.255Z'
+        publishTime: '2018-09-03T21:50:22.947Z'

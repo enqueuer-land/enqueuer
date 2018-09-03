@@ -1,16 +1,12 @@
-name: parallel-sub test description
-id: parallel-sub
-runnables:
-- name: requisition description
-  timeout: 3000
-  startEvent:
+timeout: 3000
+startEvent:
     subscription:
-      type: tcp-server
-      name: subscription description
-      port: 23081
-      response: anyValue
-      onMessageReceived:
-        assertions:
-        - name: Paralleling
-          expect: message
-          toBeEqualTo: `anything`
+        type: tcp-server
+        name: subscription description
+        port: 23081
+        response: anyValue
+        onMessageReceived:
+            assertions:
+                -   name: Paralleling
+                    expect: message
+                    toBeEqualTo: `anything`

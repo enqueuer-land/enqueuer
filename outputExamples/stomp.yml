@@ -1,22 +1,20 @@
-type: runnable
+name: examples/stomp.yml
 valid: true
 tests: []
-name: 'stomp test description'
-id: stomp
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'requisition description'
+    name: 'Requisition #0'
     time:
-      totalTime: 1281
-      startTime: '2018-09-03T02:40:36.278Z'
-      endTime: '2018-09-03T02:40:37.559Z'
+      totalTime: 267
+      startTime: '2018-09-03T21:50:21.889Z'
+      endTime: '2018-09-03T21:50:22.156Z'
       timeout: 3000
     subscriptions:
       -
@@ -32,7 +30,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:37.539Z'
+        connectionTime: '2018-09-03T21:50:22.086Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -43,4 +41,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-03T02:40:37.556Z'
+        publishTime: '2018-09-03T21:50:22.152Z'

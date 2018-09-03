@@ -1,84 +1,73 @@
-name: tcp test description
-id: tcp
-runnables:
-- name: tcp 0 requisition description
-  timeout: 3000
-  startEvent:
-    publisher:
-      type: tcp-client
-      timeout: 1000
-      name: tcp 0 publisher description
-      timeout: 100
-      serverAddress: localhost
-      port: 23069
-      payload: Hey Jude
-      onMessageReceived:
-        assertions:
-        - name: Do not make it bad
-          expect: message.toString()
-          toBeEqualTo: `Do not make it bad`
-  subscriptions:
-  - type: tcp-server
-    port: 23069
-    name: tcp 0 subscription description
-    timeout: 1000
-    response: Do not make it bad
-    onMessageReceived:
-      assertions:
-      - name: Beatles Song
-        expect: message.toString()
-        toBeEqualTo: `Hey Jude`
-- name: tcp 1 requisition description
-  timeout: 3000
-  startEvent:
-    publisher:
-      name: tcp 1 publisher description
-      type: tcp-client
-      timeout: 800
-      serverAddress: localhost
-      port: 23070
-      payload: I do not care
-      saveStream: tcpPublisherSocket
-      onMessageReceived:
-        assertions:
-        - name: Greeting received
-          expect: message.toString()
-          toBeEqualTo: `EnqueuerRocks`
-  subscriptions:
-  - name: tcp 1 subscription description
-    type: tcp-server
-    port: 23070
-    timeout: 500
-    saveStream: tcpSubscriptionSocket
-    greeting: Enqueuer
-    response: Rocks
-    onMessageReceived:
-      assertions:
-      - name: I care
-        expect: message.toString()
-        toBeEqualTo: `I do not care`
--
-  name: tcp 2 requisition description
-  timeout: 3000
-  startEvent:
-    publisher:
-      name: tcp 2 publisher description
-      type: tcp-client
-      payload: The socket is still open
-      loadStream: tcpPublisherSocket
-      onMessageReceived:
-        assertions:
-        - name: Second message is '<<tcpPayload>>'
-          expect: message.toString()
-          toBeEqualTo: `<<tcpPayload>>`
-  subscriptions:
-  - type: tcp-server
-    name: tcp 2 subscription description
-    loadStream: tcpSubscriptionSocket
-    response: <<tcpPayload>>
-    timeout: 1000
-    onMessageReceived:
-      assertions:
-      - name: It is still open
-        expect: message.toString()
-        toBeEqualTo: `The socket is still open`
+-   timeout: 3000
+    startEvent:
+        publisher:
+            type: tcp-client
+            timeout: 1000
+            serverAddress: localhost
+            port: 23069
+            payload: Hey Jude
+            onMessageReceived: 
+                assertions: 
+                    -   name: Do not make it bad
+                        expect: message.toString()
+                        toBeEqualTo: `Do not make it bad`
+    subscriptions:
+    -   type: tcp-server
+        port: 23069
+        timeout: 1000
+        response: Do not make it bad
+        onMessageReceived: 
+            assertions: 
+                -   name: Beatles Song
+                    expect: message.toString()
+                    toBeEqualTo: `Hey Jude`
+-   timeout: 3000
+    startEvent:
+        publisher:
+            name: tcp 1 publisher description
+            type: tcp-client
+            timeout: 800
+            serverAddress: localhost
+            port: 23070
+            payload: I do not care
+            saveStream: tcpPublisherSocket
+            onMessageReceived: 
+                assertions: 
+                    -   name: Greeting received
+                        expect: message.toString()
+                        toBeEqualTo: `EnqueuerRocks`
+    subscriptions:
+    -   name: tcp 1 subscription description
+        type: tcp-server
+        port: 23070
+        timeout: 500
+        saveStream: tcpSubscriptionSocket
+        greeting: Enqueuer
+        response: Rocks
+        onMessageReceived: 
+            assertions: 
+                -   name: I care
+                    expect: message.toString()
+                    toBeEqualTo: `I do not care`
+-   timeout: 3000
+    startEvent:
+        publisher:
+            type: tcp-client
+            payload: The socket is still open
+            loadStream: tcpPublisherSocket
+            onMessageReceived:
+                assertions:
+                    -   name: Second message is <<tcpPayload>>
+                        expect: message.toString()
+                        toBeEqualTo: `<<tcpPayload>>`
+    subscriptions:
+    -   type: tcp-server
+        name: tcp 2 subscription description
+        loadStream: tcpSubscriptionSocket
+        response: <<tcpPayload>>
+        timeout: 1000
+        onMessageReceived:
+            assertions:
+                -   name: It is still open
+                    expect: message.toString()
+                    toBeEqualTo: `The socket is still open`

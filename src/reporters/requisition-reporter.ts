@@ -79,8 +79,8 @@ export class RequisitionReporter {
     private initializeTimeout() {
         if (this.requisitionTimeout) {
             new Timeout(() => {
-                Logger.error(`Requisition timed out`);
-                this.onFinish()
+                Logger.info(`Requisition timed out`);
+                this.onFinish();
             }).start(this.requisitionTimeout);
         }
     }

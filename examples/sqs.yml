@@ -1,6 +1,3 @@
-name: sqs test description
-id: sqs
-runnables:
 - name: requisition description
   timeout: 5000
   startEvent:
@@ -13,17 +10,17 @@ runnables:
         QueueUrl: http://localhost:9324/queue/enqueuerQueue
       onMessageReceived:
         assertions:
-        - name: Request Id is all 000000
-          expect: ResponseMetadata.RequestId
-          toBeEqualTo: `00000000-0000-0000-0000-000000000000`
-        - name: ResponseMetadata
-          expectToBeDefined: ResponseMetadata
-        - name: MD5
-          expectToBeDefined: MD5OfMessageBody
-        - name: MD5OfMessageAttributes
-          expectToBeDefined: MD5OfMessageAttributes
-        - name: MessageId
-          expectToBeDefined: MessageId
+            - name: Request Id is all 000000
+              expect: ResponseMetadata.RequestId
+              toBeEqualTo: `00000000-0000-0000-0000-000000000000`
+            - name: ResponseMetadata
+              expectToBeDefined: ResponseMetadata
+            - name: MD5
+              expectToBeDefined: MD5OfMessageBody
+            - name: MD5OfMessageAttributes
+              expectToBeDefined: MD5OfMessageAttributes
+            - name: MessageId
+              expectToBeDefined: MessageId
   subscriptions:
   - name: subscription description
     type: sqs
@@ -33,12 +30,12 @@ runnables:
     timeout: 3000
     onMessageReceived:
       assertions:
-      - name: Body
-        expect: Body
-        toContain: `enq`
-      - name: MessageId
-        expectToBeDefined: MessageId
-      - name: ReceiptHandle
-        expectToBeDefined: ReceiptHandle
-      - name: MD5OfBody
-        expectToBeDefined: MD5OfBody
+          - name: Body
+            expect: Body
+            toContain: `enq`
+          - name: MessageId
+            expectToBeDefined: MessageId
+          - name: ReceiptHandle
+            expectToBeDefined: ReceiptHandle
+          - name: MD5OfBody
+            expectToBeDefined: MD5OfBody

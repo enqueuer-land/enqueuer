@@ -1,11 +1,9 @@
-type: runnable
+name: examples/hooks.yml
 valid: true
 tests: []
-name: 'hooks test description'
-id: hook
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests:
       -
@@ -18,9 +16,9 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 155
-      startTime: '2018-09-03T02:40:36.247Z'
-      endTime: '2018-09-03T02:40:36.402Z'
+      totalTime: 235
+      startTime: '2018-09-03T21:50:21.840Z'
+      endTime: '2018-09-03T21:50:22.075Z'
       timeout: 2000
     subscriptions:
       -
@@ -52,7 +50,7 @@ runnables:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.301Z'
+        connectionTime: '2018-09-03T21:50:21.894Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -91,4 +89,4 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-03T02:40:36.402Z'
+        publishTime: '2018-09-03T21:50:22.074Z'

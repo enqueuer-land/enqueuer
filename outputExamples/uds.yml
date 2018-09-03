@@ -1,38 +1,36 @@
-type: runnable
+name: examples/uds.yml
 valid: true
 tests: []
-name: 'uds test description'
-id: uds
-runnables:
+startEvent: {}
+requisitions:
   -
-    type: requisition
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'requisition description'
+    name: 'Requisition #0'
     time:
-      totalTime: 127
-      startTime: '2018-09-03T02:40:36.280Z'
-      endTime: '2018-09-03T02:40:36.407Z'
+      totalTime: 149
+      startTime: '2018-09-03T21:50:21.929Z'
+      endTime: '2018-09-03T21:50:22.078Z'
       timeout: 3000
     subscriptions:
       -
-        name: 'subscription description'
+        name: 'Subscription #0'
         type: uds
         tests:
           -
             name: 'Message received is enqueuer'
             valid: true
-            description: 'Expected value to be equal to ''payload''. Received ''payload'''
+            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.320Z'
+        connectionTime: '2018-09-03T21:50:21.945Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -51,31 +49,30 @@ runnables:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-03T02:40:36.407Z'
+        publishTime: '2018-09-03T21:50:22.078Z'
   -
-    type: requisition
     valid: true
     tests: []
     name: 'UDS2 Name description'
     time:
-      totalTime: 1036
-      startTime: '2018-09-03T02:40:36.408Z'
-      endTime: '2018-09-03T02:40:37.444Z'
+      totalTime: 1039
+      startTime: '2018-09-03T21:50:22.094Z'
+      endTime: '2018-09-03T21:50:23.133Z'
     subscriptions:
       -
         name: 'udsSubscription2 description'
         type: uds
         tests:
           -
-            name: 'Message received is payload 2'
+            name: 'Message received is enqueuer 2'
             valid: true
-            description: 'Expected value to be equal to ''payload''. Received ''payload'''
+            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:36.437Z'
+        connectionTime: '2018-09-03T21:50:22.097Z'
     startEvent:
       publisher:
         name: 'udsPublisher2 description'
@@ -83,34 +80,37 @@ runnables:
         type: uds
         tests:
           -
-            name: 'Message to be published is payload'
+            name: 'Message to be published is enqueuer'
             valid: true
-            description: 'Expected value to be equal to ''payload''. Received ''payload'''
+            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-03T02:40:37.444Z'
+        publishTime: '2018-09-03T21:50:23.133Z'
   -
-    type: requisition
     valid: true
     tests: []
     name: 'udsStreamLoader description'
     time:
-      totalTime: 1
-      startTime: '2018-09-03T02:40:37.444Z'
-      endTime: '2018-09-03T02:40:37.445Z'
+      totalTime: 2
+      startTime: '2018-09-03T21:50:23.134Z'
+      endTime: '2018-09-03T21:50:23.136Z'
     subscriptions:
       -
-        name: 'udsStreamLoader subscription'
+        name: 'Subscription #0'
         type: uds
         tests:
+          -
+            name: 'Publisher stream was still opened'
+            valid: true
+            description: 'Expected value to be equal to ''I am still opened''. Received ''I am still opened'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-03T02:40:37.444Z'
+        connectionTime: '2018-09-03T21:50:23.134Z'
     startEvent:
       publisher:
         name: 'udsStreamLoader publisher'
@@ -121,4 +121,12 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-03T02:40:37.445Z'
+          -
+            name: 'Message received'
+            valid: true
+            description: 'Expected value to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-09-03T21:50:23.136Z'
