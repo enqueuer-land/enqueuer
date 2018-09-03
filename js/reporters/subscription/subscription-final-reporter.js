@@ -35,7 +35,7 @@ class SubscriptionFinalReporter {
         return [{
                 valid: false,
                 name: this.subscribedTestName,
-                description: `Subscription is not able to connect`
+                description: `Subscription is not able to subscribe`
             }];
     }
     createMessageTests() {

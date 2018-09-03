@@ -73,7 +73,6 @@ export class StartEventPublisherReporter extends StartEventReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        Logger.trace(`Executing publisher onMessageReceivedResponse`);
         this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('publisher', this.publisher).trigger());
     }
 

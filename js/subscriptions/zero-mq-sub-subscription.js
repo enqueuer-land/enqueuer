@@ -29,18 +29,25 @@ let ZeroMqSubSubscription = class ZeroMqSubSubscription extends subscription_1.S
     }
     receiveMessage() {
         return new Promise((resolve) => {
-            logger_1.Logger.trace(`ZeroMqSub waiting for a message related to topic ${this.topic}`);
+            logger_1.Logger.trace(`ZeroMqSub waiting for a message in topic ${this.topic}`);
             this.socket.on('message', (topic, message) => {
-                logger_1.Logger.debug(`ZeroMqSub received a message related to topic ${topic.toString()}`);
+                logger_1.Logger.debug(`ZeroMqSub received a message in topic ${topic.toString()}`);
                 resolve({ topic: topic, payload: message });
             });
         });
     }
     subscribe() {
-        logger_1.Logger.trace(`ZeroMqSub trying to connect to zeroMq ${this.address}`);
-        this.socket.connect(this.address).subscribe(this.topic);
-        logger_1.Logger.debug(`ZeroMqSub connected to zeroMq ${this.address}`);
-        return Promise.resolve();
+        return new Promise((resolve) => {
+            logger_1.Logger.trace(`Trying to subscribe to zeroMq ${this.address}`);
+            this.socket.on('connect', () => {
+                logger_1.Logger.debug(`Zeromq sub emitted: 'connect'`);
+                resolve();
+            });
+            this.socket
+                .monitor(150, 0)
+                .connect(this.address)
+                .subscribe(this.topic);
+        });
     }
     unsubscribe() {
         this.socket.unsubscribe(this.topic);

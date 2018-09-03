@@ -2,7 +2,7 @@ name: zero-mq test description
 id: zeromq-pubsub
 runnables:
 - name: requisition description
-  timeout: 5000
+  timeout: 8000
   startEvent:
     publisher:
       type: zero-mq-pub
@@ -25,4 +25,4 @@ runnables:
         toBeEqualTo: `enqueuer zeroes`
       - name: address
         expect: store.zeroMqAddress
-        toBeEqualTo: `tcp://127.0.0.1:3000`
+        toBeEqualTo: `<<zeroMqAddress>>`

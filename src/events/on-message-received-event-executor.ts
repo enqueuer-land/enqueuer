@@ -20,9 +20,7 @@ export class OnMessageReceivedEventExecutor extends EventExecutor {
     }
 
     public trigger(): TestModel[] {
-        Logger.trace(`Executing on message received`);
         if (!this.messageReceiver.onMessageReceived || !this.messageReceiver.messageReceived) {
-            Logger.trace(`No onMessageReceived to be played here`);
             return [];
         }
         return this.execute();

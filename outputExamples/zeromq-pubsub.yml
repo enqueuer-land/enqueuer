@@ -14,10 +14,10 @@ runnables:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 7
-      startTime: '2018-09-01T16:52:53.133Z'
-      endTime: '2018-09-01T16:52:53.140Z'
-      timeout: 5000
+      totalTime: 163
+      startTime: '2018-09-03T02:29:15.444Z'
+      endTime: '2018-09-03T02:29:15.607Z'
+      timeout: 8000
     subscriptions:
       -
         name: 'subscription description'
@@ -34,13 +34,13 @@ runnables:
           -
             name: address
             valid: true
-            description: 'Expected value to be equal to ''tcp://127.0.0.1:3000''. Received ''tcp://127.0.0.1:3000'''
+            description: 'Expected value to be equal to ''tcp://127.0.0.1:23000''. Received ''tcp://127.0.0.1:23000'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-01T16:52:53.133Z'
+        connectionTime: '2018-09-03T02:29:15.596Z'
     startEvent:
       publisher:
         name: publisher
@@ -51,4 +51,4 @@ runnables:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-01T16:52:53.136Z'
+        publishTime: '2018-09-03T02:29:15.598Z'
