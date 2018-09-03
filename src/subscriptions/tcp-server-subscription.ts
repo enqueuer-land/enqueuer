@@ -89,8 +89,7 @@ export class TcpServerSubscription extends Subscription {
     private createServer(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.server = net.createServer();
-            new HandlerListener(this.server)
-                .listen(this.port)
+            new HandlerListener(this.server).listen(this.port)
                 .then(() => {
                     Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
                     resolve();
