@@ -1,0 +1,153 @@
+name: examples/recursion.yml
+valid: true
+tests: []
+startEvent: {}
+requisitions:
+  -
+    name: 'Requisition #0'
+    valid: true
+    tests: []
+    startEvent: {}
+    requisitions:
+      -
+        name: 'Requisition #0'
+        valid: true
+        tests: []
+        startEvent: {}
+        requisitions:
+          -
+            name: 'Requisition #0'
+            valid: true
+            tests: []
+            startEvent: {}
+            requisitions:
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0'
+                time:
+                  totalTime: 69
+                  startTime: '2018-09-03T23:17:03.342Z'
+                  endTime: '2018-09-03T23:17:03.411Z'
+                subscriptions:
+                  - {name: 'subscription description', type: udp, tests: [{name: Payload, valid: true, description: 'Expected value to be equal to ''it''. Received ''it'''}, {name: 'Remote Adderss', valid: true, description: 'Expected value to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}, {valid: true, name: 'Message received', description: 'Subscription has received its message'}], valid: true, connectionTime: '2018-09-03T23:17:03.352Z'}
+                startEvent:
+                  publisher: {name: 'publisher description', valid: true, type: udp, tests: [{name: Published, valid: true, description: 'Published successfully'}], publishTime: '2018-09-03T23:17:03.401Z'}
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #1'
+                time:
+                  totalTime: 87
+                  startTime: '2018-09-03T23:17:03.425Z'
+                  endTime: '2018-09-03T23:17:03.512Z'
+                subscriptions:
+                  - {name: 'subscription description', type: udp, tests: [{name: Payload, valid: true, description: 'Expected value to be equal to ''it''. Received ''it'''}, {name: 'Remote Adderss', valid: true, description: 'Expected value to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}, {valid: true, name: 'Message received', description: 'Subscription has received its message'}], valid: true, connectionTime: '2018-09-03T23:17:03.425Z'}
+                startEvent:
+                  publisher: {name: 'publisher description', valid: true, type: udp, tests: [{name: Published, valid: true, description: 'Published successfully'}], publishTime: '2018-09-03T23:17:03.502Z'}
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0'
+            time:
+              totalTime: 34
+              startTime: '2018-09-03T23:17:03.548Z'
+              endTime: '2018-09-03T23:17:03.582Z'
+            subscriptions:
+              -
+                name: 'subscription description'
+                type: udp
+                tests:
+                  - {name: Payload, valid: true, description: 'Expected value to be equal to ''it''. Received ''it'''}
+                  - {name: 'Remote Adderss', valid: true, description: 'Expected value to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}
+                  - {valid: true, name: 'Message received', description: 'Subscription has received its message'}
+                valid: true
+                connectionTime: '2018-09-03T23:17:03.548Z'
+            startEvent:
+              publisher:
+                name: 'publisher description'
+                valid: true
+                type: udp
+                tests:
+                  - {name: Published, valid: true, description: 'Published successfully'}
+                publishTime: '2018-09-03T23:17:03.571Z'
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        time:
+          totalTime: 32
+          startTime: '2018-09-03T23:17:03.597Z'
+          endTime: '2018-09-03T23:17:03.629Z'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: udp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected value to be equal to ''it''. Received ''it'''
+              -
+                name: 'Remote Adderss'
+                valid: true
+                description: 'Expected value to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-03T23:17:03.597Z'
+        startEvent:
+          publisher:
+            name: 'publisher description'
+            valid: true
+            type: udp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-03T23:17:03.627Z'
+  -
+    valid: true
+    tests:
+      -
+        name: 'Last one was executed'
+        valid: true
+        description: '''lastExecution'' is not defined'
+    name: 'Requisition #0'
+    time:
+      totalTime: 3
+      startTime: '2018-09-03T23:17:03.643Z'
+      endTime: '2018-09-03T23:17:03.646Z'
+    subscriptions:
+      -
+        name: 'subscription description'
+        type: udp
+        tests:
+          -
+            name: Payload
+            valid: true
+            description: 'Expected value to be equal to ''it''. Received ''it'''
+          -
+            name: 'Remote Adderss'
+            valid: true
+            description: 'Expected value to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-03T23:17:03.643Z'
+    startEvent:
+      publisher:
+        name: 'publisher description'
+        valid: true
+        type: udp
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-03T23:17:03.645Z'
