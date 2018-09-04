@@ -29,34 +29,40 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
         this.saveStream = publisherAttributes.saveStream;
     }
     publish() {
-        if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            this.payload = JSON.stringify(this.payload);
-        }
+        const payload = this.stringifyPayload();
         return new Promise((resolve, reject) => {
             this.stream = this.getStream();
             this.stream.setTimeout(1000);
-            this.stream.on('timeout', () => {
-                this.persistStream();
-                resolve(this.messageReceived);
-            }).once('error', (data) => {
-                reject(data);
-            })
-                .once('end', () => {
-                logger_1.Logger.trace(`Uds publisher detected stream end`);
-                this.persistStream();
-                resolve();
-            })
-                .once('data', (msg) => {
-                logger_1.Logger.debug(`Uds publisher got message`);
-                if (this.messageReceived === null || this.messageReceived === undefined) {
-                    this.messageReceived = msg;
-                }
-                else {
-                    this.messageReceived = this.messageReceived.concat(msg);
-                }
-            });
-            this.stream.write(this.payload, () => logger_1.Logger.trace(`Uds publisher message sent: ${this.payload}`));
+            this.registerEvents(resolve, reject);
+            this.stream.write(payload, () => logger_1.Logger.trace(`Uds publisher message sent: ${payload}`));
         });
+    }
+    registerEvents(resolve, reject) {
+        this.stream.on('timeout', () => {
+            this.persistStream();
+            resolve(this.messageReceived);
+        })
+            .once('error', (data) => reject(data))
+            .once('end', () => {
+            logger_1.Logger.trace(`Uds publisher detected stream end`);
+            this.persistStream();
+            resolve();
+        })
+            .once('data', (msg) => {
+            logger_1.Logger.debug(`Uds publisher got message`);
+            if (this.messageReceived === null || this.messageReceived === undefined) {
+                this.messageReceived = msg;
+            }
+            else {
+                this.messageReceived = this.messageReceived.concat(msg);
+            }
+        });
+    }
+    stringifyPayload() {
+        if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
+            return JSON.stringify(this.payload);
+        }
+        return this.payload;
     }
     getStream() {
         if (this.loadStream) {

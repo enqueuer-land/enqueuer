@@ -10,7 +10,7 @@ export class MultiRequisitionRunner {
     private report: output.RequisitionModel;
     private requisitions: input.RequisitionModel[];
 
-    constructor(requisitions: input.RequisitionModel[], name: string = 'file collection') {
+    constructor(requisitions: input.RequisitionModel[], name: string) {
         this.requisitions = this.addDefaultNames(requisitions);
 
         this.report = {

@@ -5,7 +5,7 @@ const requisition_runner_1 = require("./requisition-runner");
 const requisition_multiplier_1 = require("./requisition-multiplier");
 //TODO test it
 class MultiRequisitionRunner {
-    constructor(requisitions, name = 'file collection') {
+    constructor(requisitions, name) {
         this.requisitions = this.addDefaultNames(requisitions);
         this.report = {
             name: name,

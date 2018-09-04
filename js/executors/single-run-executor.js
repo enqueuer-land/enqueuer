@@ -87,7 +87,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
         return new Promise((resolve) => {
             const requisitions = this.parseFile(filename);
             if (requisitions) {
-                new multi_requisition_runner_1.MultiRequisitionRunner(requisitions)
+                new multi_requisition_runner_1.MultiRequisitionRunner(requisitions, filename)
                     .run()
                     .then(report => {
                     this.multiResultCreator.addTestSuite(filename, report);
