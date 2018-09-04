@@ -1,19 +1,14 @@
 import {Command} from 'commander';
 const packageJson = require('../../package.json');
 
-
-let commandLineStore: any = {};
-let commander: any = {};
+let commander = {};
 
 const testMode = process.argv[1].toString().match('jest');
-export function commanderRefresher(newValue: any) {
-    if (testMode) {
-        commander = newValue;
-    }
-}
 
-if (!testMode) {
-    commander = new Command()
+let commandLineStore: any = {};
+
+let refreshCommander = (commandLineArguments: string[]) => {
+    let commander = new Command()
         .version(process.env.npm_package_version || packageJson.version, '-v, --version')
         .usage('-c <confif-file-path>')
         .option('-q, --quiet', 'Disable logging', false)
@@ -30,7 +25,18 @@ if (!testMode) {
                 return memo;
             },
             [])
-        .parse(process.argv);
+        .parse(commandLineArguments);
+    return commander;
+};
+
+if (!testMode) {
+    commander = refreshCommander(process.argv);
+}
+
+export function commanderRefresher(newArguments: string[]) {
+    if (testMode) {
+        commander = refreshCommander(newArguments);
+    }
 }
 
 export class CommandLineConfiguration {
@@ -61,7 +67,7 @@ export class CommandLineConfiguration {
     }
 
     public static getStore(): any {
-        return CommandLineConfiguration.getCommandLine().commandLineStore;
+        return commandLineStore;
     }
 
 }

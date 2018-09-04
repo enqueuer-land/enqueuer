@@ -2,13 +2,6 @@ import {MultiResultCreator} from "./multi-result-creator";
 import {ConsoleResultCreator} from "./console-result-creator";
 import {FileResultCreator} from "./file-result-creator";
 
-
-// addTestSuite(name: string, report: ResultModel): void;
-// addError(err: any): void;
-// isValid(): boolean;
-// create(): void;
-
-
 const addTestSuite = jest.fn();
 const addError = jest.fn();
 const isValid = jest.fn(() => true);
@@ -42,10 +35,6 @@ jest.mock("./file-result-creator");
 FileResultCreator.mockImplementation(constructorFileResultCreator);
 
 describe('MultiResultCreator', () => {
-
-    beforeEach(() => {
-
-    });
 
     it('Should create SummaryResult by default', () => {
         new MultiResultCreator();

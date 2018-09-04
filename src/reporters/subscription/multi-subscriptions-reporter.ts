@@ -3,7 +3,6 @@ import * as output from '../../models/outputs/subscription-model';
 import {SubscriptionReporter} from './subscription-reporter';
 import {Logger} from '../../loggers/logger';
 
-//TODO test it
 export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
     private subscriptionsStoppedWaitingCounter: number = 0;
@@ -55,7 +54,7 @@ export class MultiSubscriptionsReporter {
         return this.subscriptionReporters.map(subscription => subscription.getReport());
     }
 
-    public onFinish() {
+    public onFinish(): void {
         this.subscriptionReporters.forEach(subscriptionHandler => subscriptionHandler.onFinish());
     }
 

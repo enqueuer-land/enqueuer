@@ -14,8 +14,8 @@ export class FileResultCreator implements ResultCreator {
             valid: true,
             requisitions: []
         };
-
     }
+
     public addTestSuite(name: string, report: RequisitionModel): void {
         report.name = name;
         this.report.requisitions.push(report);
@@ -23,6 +23,11 @@ export class FileResultCreator implements ResultCreator {
     }
 
     public addError(err: any): void {
+        this.report.tests.push({
+            description: err,
+            valid: false,
+            name: 'Requisition ran'
+        });
         this.report.valid = false;
     }
 

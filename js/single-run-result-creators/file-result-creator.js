@@ -24,6 +24,11 @@ class FileResultCreator {
         this.report.valid = this.report.valid && report.valid;
     }
     addError(err) {
+        this.report.tests.push({
+            description: err,
+            valid: false,
+            name: 'Requisition ran'
+        });
         this.report.valid = false;
     }
     isValid() {

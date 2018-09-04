@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_reporter_1 = require("./subscription-reporter");
 const logger_1 = require("../../loggers/logger");
-//TODO test it
 class MultiSubscriptionsReporter {
     constructor(subscriptionsAttributes) {
         this.subscriptionReporters = [];

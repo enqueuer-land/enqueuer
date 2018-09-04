@@ -3,51 +3,72 @@ import {commanderRefresher, CommandLineConfiguration} from "./command-line-confi
 describe('CommandLineConfiguration', () => {
 
     it('isQuietMode', () => {
-        commanderRefresher({quiet: true});
+        commanderRefresher(['node', 'test', '-q']);
 
         expect(CommandLineConfiguration.isQuietMode()).toBeTruthy();
     });
 
     it('isNotQuietMode', () => {
-        commanderRefresher({quiet: false});
+        commanderRefresher(['node', 'test']);
 
         expect(CommandLineConfiguration.isQuietMode()).toBeFalsy();
     });
 
-    it('logLevel', () => {
-        const logLevel = 'enqueuer';
-        commanderRefresher({logLevel: logLevel});
+    it('logLevel -l', () => {
+        const logLevel = 'minusL';
+        commanderRefresher(['node', 'test', '-l', logLevel]);
+
+        expect(CommandLineConfiguration.getLogLevel()).toBe(logLevel);
+    });
+
+    it('logLevel --log-level', () => {
+        const logLevel = 'logLevel';
+        commanderRefresher(['node', 'test', '--log-level', logLevel]);
 
         expect(CommandLineConfiguration.getLogLevel()).toBe(logLevel);
     });
 
     it('undefined logLevel', () => {
-        commanderRefresher({});
+        commanderRefresher(['node', 'test']);
 
         expect(CommandLineConfiguration.getLogLevel()).toBeUndefined();
     });
 
-    it('getConfigFileName', () => {
-        const configFile = 'enqueuer';
-        commanderRefresher({configFile: configFile});
+    it('getConfigFileName -c', () => {
+        const configFile = 'minusC';
+        commanderRefresher(['node', 'test', '-c', configFile]);
+
+        expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
+    });
+
+    it('getConfigFileName --config-file', () => {
+        const configFile = 'configFile';
+        commanderRefresher(['node', 'test', '--config-file', configFile]);
 
         expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
     });
 
     it('undefined getConfigFileName', () => {
-        commanderRefresher({});
+        commanderRefresher(['node', 'test']);
 
         expect(CommandLineConfiguration.getConfigFileName()).toBeUndefined();
     });
 
-    it('getStore', () => {
+    it('getStore -s', () => {
+        const option = ['-s', '--store'];
         const store = {
             key: 'value',
-            otherKey: 10
+            'composed-name': 'stuff',
+            number: '10'
         };
-        commanderRefresher({commandLineStore: store});
+        const newArguments = ['node', 'test'];
+        Object.keys(store).forEach((key, index) => {
+            newArguments.push(option[index%option.length]);
+            newArguments.push(key + '=' + store[key]);
+        });
+        commanderRefresher(newArguments);
 
-        expect(CommandLineConfiguration.getStore()).toBe(store);
+        expect(CommandLineConfiguration.getStore()).toEqual(store);
     });
 
 });
