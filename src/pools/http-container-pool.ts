@@ -5,34 +5,36 @@ export class HttpContainerPool {
     private static instance: HttpContainerPool;
     private containers: { [propName: number]: HttpContainer } = {};
 
-    public static getInstance(): HttpContainerPool {
-        if (!HttpContainerPool.instance) {
-            HttpContainerPool.instance = new HttpContainerPool();
-        }
-        return HttpContainerPool.instance;
-    }
-
-    public getApp(port: number, secure: boolean, credentials?: any): Promise<any> {
+    public static getApp(port: number, secure: boolean = false, credentials?: any): Promise<any> {
+        const self = HttpContainerPool.getInstance();
         Logger.debug(`Getting a Http/s server ${port}`);
-        let httpContainer: HttpContainer = this.containers[port];
+        let httpContainer: HttpContainer = self.containers[port];
         if (!httpContainer) {
             Logger.info(`Creating a new Http/s server ${port}`);
             httpContainer = new HttpContainer(port, secure, credentials);
-            this.containers[port] = httpContainer;
+            self.containers[port] = httpContainer;
         } else {
             Logger.trace(`Reusing Http/s server ${port}`);
         }
         return httpContainer.acquire();
     }
 
-    public releaseApp(port: number) {
-        Logger.trace(`Current containers: {${Object.keys(this.containers)}}`);
+    public static releaseApp(port: number): void {
+        const self = HttpContainerPool.getInstance();
+        Logger.trace(`Current containers: {${Object.keys(self.containers)}}`);
         Logger.info(`Releasing (${port}) http/s container`);
-        const httpContainer = this.containers[port];
+        const httpContainer = self.containers[port];
         if (httpContainer) {
-            httpContainer.release(() => delete this.containers[port]);
+            httpContainer.release(() => delete self.containers[port]);
         } else {
-            Logger.warning(`Trying to release an unbound server (${port})`);
+            Logger.warning(`No bound http-container to be released (${port})`);
         }
+    }
+
+    private static getInstance(): HttpContainerPool {
+        if (!HttpContainerPool.instance) {
+            HttpContainerPool.instance = new HttpContainerPool();
+        }
+        return HttpContainerPool.instance;
     }
 }

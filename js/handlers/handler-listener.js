@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
-//TODO test it
 class HandlerListener {
-    constructor(server, retryTimeout = 300, remainingAttempts = 3) {
+    constructor(server, remainingAttempts = 3, retryTimeout = 300) {
         this.server = server;
-        this.retryTimeout = retryTimeout;
         this.remainingAttempts = remainingAttempts;
+        this.retryTimeout = retryTimeout;
     }
     listen(handler) {
         return new Promise((resolve, reject) => {
@@ -51,7 +50,7 @@ class HandlerListener {
             }, this.retryTimeout);
         }
         else {
-            const message = `Error listening to handler (${handler}) ${err}`;
+            const message = `Error listening to handler (${handler}) ${JSON.stringify(err)}`;
             logger_1.Logger.error(message);
             reject(message);
         }

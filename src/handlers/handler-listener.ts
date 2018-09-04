@@ -1,15 +1,14 @@
 import {Logger} from '../loggers/logger';
 
-//TODO test it
 export class HandlerListener {
     private server: any;
     private remainingAttempts: number;
     private retryTimeout: number;
 
-    public constructor(server: any, retryTimeout: number = 300, remainingAttempts: number = 3) {
+    public constructor(server: any, remainingAttempts: number = 3, retryTimeout: number = 300) {
         this.server = server;
-        this.retryTimeout = retryTimeout;
         this.remainingAttempts = remainingAttempts;
+        this.retryTimeout = retryTimeout;
     }
 
     public listen(handler: any): Promise<void> {
@@ -53,7 +52,7 @@ export class HandlerListener {
                 this.tryToListen(handler, resolve, reject);
             }, this.retryTimeout);
         } else {
-            const message = `Error listening to handler (${handler}) ${err}`;
+            const message = `Error listening to handler (${handler}) ${JSON.stringify(err)}`;
             Logger.error(message);
             reject(message);
         }

@@ -6,35 +6,37 @@ class HttpContainerPool {
     constructor() {
         this.containers = {};
     }
-    static getInstance() {
-        if (!HttpContainerPool.instance) {
-            HttpContainerPool.instance = new HttpContainerPool();
-        }
-        return HttpContainerPool.instance;
-    }
-    getApp(port, secure, credentials) {
+    static getApp(port, secure = false, credentials) {
+        const self = HttpContainerPool.getInstance();
         logger_1.Logger.debug(`Getting a Http/s server ${port}`);
-        let httpContainer = this.containers[port];
+        let httpContainer = self.containers[port];
         if (!httpContainer) {
             logger_1.Logger.info(`Creating a new Http/s server ${port}`);
             httpContainer = new http_container_1.HttpContainer(port, secure, credentials);
-            this.containers[port] = httpContainer;
+            self.containers[port] = httpContainer;
         }
         else {
             logger_1.Logger.trace(`Reusing Http/s server ${port}`);
         }
         return httpContainer.acquire();
     }
-    releaseApp(port) {
-        logger_1.Logger.trace(`Current containers: {${Object.keys(this.containers)}}`);
+    static releaseApp(port) {
+        const self = HttpContainerPool.getInstance();
+        logger_1.Logger.trace(`Current containers: {${Object.keys(self.containers)}}`);
         logger_1.Logger.info(`Releasing (${port}) http/s container`);
-        const httpContainer = this.containers[port];
+        const httpContainer = self.containers[port];
         if (httpContainer) {
-            httpContainer.release(() => delete this.containers[port]);
+            httpContainer.release(() => delete self.containers[port]);
         }
         else {
-            logger_1.Logger.warning(`Trying to release an unbound server (${port})`);
+            logger_1.Logger.warning(`No bound http-container to be released (${port})`);
         }
+    }
+    static getInstance() {
+        if (!HttpContainerPool.instance) {
+            HttpContainerPool.instance = new HttpContainerPool();
+        }
+        return HttpContainerPool.instance;
     }
 }
 exports.HttpContainerPool = HttpContainerPool;

@@ -29,7 +29,7 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
     }
     subscribe() {
         return new Promise((resolve, reject) => {
-            http_container_pool_1.HttpContainerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
+            http_container_pool_1.HttpContainerPool.getApp(this.port, this.secureServer, this.credentials)
                 .then((app) => {
                 this.expressApp = app;
                 resolve();
@@ -41,7 +41,7 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
         });
     }
     unsubscribe() {
-        http_container_pool_1.HttpContainerPool.getInstance().releaseApp(this.port);
+        http_container_pool_1.HttpContainerPool.releaseApp(this.port);
     }
     sendResponse() {
         logger_1.Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);

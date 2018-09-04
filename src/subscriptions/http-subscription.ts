@@ -41,7 +41,7 @@ export class HttpSubscription extends Subscription {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            HttpContainerPool.getInstance().getApp(this.port, this.secureServer, this.credentials)
+            HttpContainerPool.getApp(this.port, this.secureServer, this.credentials)
                 .then((app: any) => {
                     this.expressApp = app;
                     resolve();
@@ -54,7 +54,7 @@ export class HttpSubscription extends Subscription {
     }
 
     public unsubscribe() {
-        HttpContainerPool.getInstance().releaseApp(this.port);
+        HttpContainerPool.releaseApp(this.port);
     }
 
     public sendResponse(): Promise<void> {
