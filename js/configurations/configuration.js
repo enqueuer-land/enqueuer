@@ -1,75 +1,35 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger_1 = require("../loggers/logger");
-const yaml = __importStar(require("yamljs"));
-const commander_1 = require("commander");
-const packageJson = require('../../package.json');
-let configFileName = '';
-let commandLineStore = {};
-let commander = {};
-if (!process.argv[1].toString().match('jest')) {
-    commander = new commander_1.Command()
-        .version(process.env.npm_package_version || packageJson.version, '-v, --version')
-        .usage('-c <confif-file-path>')
-        .option('-q, --quiet', 'Disable logging', false)
-        .option('-l, --log-level <level>', 'Set log level')
-        .option('-c, --config-file <path>', 'Set configurationFile')
-        .option('-s, --store [store]', 'Add variables values to this session', (val, memo) => {
-        const split = val.split('=');
-        if (split.length == 2) {
-            commandLineStore[split[0]] = split[1];
-        }
-        memo.push(val);
-        return memo;
-    }, [])
-        .parse(process.argv);
-    configFileName = commander.configFile || configFileName;
-}
-let ymlFile = {};
-try {
-    ymlFile = yaml.load(configFileName);
-}
-catch (err) {
-    logger_1.Logger.error(`Impossible to read configuration file: ${configFileName} -> ${err}`);
-    ymlFile = {};
-}
+const command_line_configuration_1 = require("./command-line-configuration");
+const file_configuration_1 = require("./file-configuration");
 class Configuration {
-    constructor(commandLine = commander, configurationFile = ymlFile) {
-        this.commandLine = commandLine;
-        this.configurationFile = configurationFile;
-        this.configurationFile.store = this.configurationFile.store || {};
+    refresh() {
+        const configFileName = command_line_configuration_1.CommandLineConfiguration.getConfigFileName();
+        if (configFileName != Configuration.configFileName) {
+            file_configuration_1.FileConfiguration.reload(configFileName);
+            Configuration.configFileName = configFileName;
+        }
     }
     getLogLevel() {
-        return (this.commandLine.logLevel) ||
-            (this.configurationFile['log-level']);
+        this.refresh();
+        return command_line_configuration_1.CommandLineConfiguration.getLogLevel() ||
+            file_configuration_1.FileConfiguration.getLogLevel() ||
+            'warn';
     }
     getRunMode() {
-        if (this.configurationFile) {
-            return this.configurationFile['run-mode'];
-        }
-        return undefined;
+        this.refresh();
+        return file_configuration_1.FileConfiguration.getRunMode();
     }
     getOutputs() {
-        if (!this.configurationFile.outputs) {
-            return [];
-        }
-        return this.configurationFile.outputs;
+        this.refresh();
+        return file_configuration_1.FileConfiguration.getOutputs();
     }
     getStore() {
-        return this.configurationFile.store || {};
+        this.refresh();
+        return Object.assign({}, file_configuration_1.FileConfiguration.getStore(), command_line_configuration_1.CommandLineConfiguration.getStore());
     }
     isQuietMode() {
-        return this.commandLine.quiet || false;
-    }
-    getFile() {
-        return this.configurationFile;
+        return command_line_configuration_1.CommandLineConfiguration.isQuietMode();
     }
 }
 exports.Configuration = Configuration;

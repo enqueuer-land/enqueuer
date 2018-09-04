@@ -16,13 +16,11 @@ One of:
     - Basic Unix tools required for some tests, Git for Windows includes Git Bash and tools which can be included in the global PATH.
     - To build, launch a git shell (e.g. Cmd or PowerShell), run vcbuild.bat (to build with VS2017 you need to explicitly add a vs2017 argument), which will checkout the GYP code into build/gyp, generate uv.sln as well as the necesery related project files, and start building.
 
-Codeclimate config file
 Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 verify pub/sub attributes existence and types
 
 Daemon input adapter
-Load configuration file only once (create two new hidden classes: FileConfig and CommandLineConfig)
 
 #   File                                    |  % Stmts | % Branch |  % Funcs |  % Lines
 100 All files                               |    19.97 |    12.62 |    20.33 |    20.32 |

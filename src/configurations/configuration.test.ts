@@ -1,84 +1,92 @@
 import {Configuration} from "./configuration";
+import {FileConfiguration} from "./file-configuration";
+import {CommandLineConfiguration} from "./command-line-configuration";
 
-describe('Configuration', function() {
+jest.mock('./file-configuration');
+jest.mock('./command-line-configuration');
 
-    describe('getLogLevel', function() {
+describe('Configuration', () => {
 
-        it('should check \'LogLevel\' in command line', function() {
-            const expectedLevel = 'anyStuff';
-            const commandLine = {
-                logLevel: expectedLevel
+    it('should check \'refresh\'', () => {
+        const reloadMock = jest.fn();
+        FileConfiguration.reload.mockImplementation(reloadMock);
+
+        let configFileName = 'first';
+        CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => configFileName);
+
+
+        new Configuration().getLogLevel();
+
+        expect(reloadMock).toHaveBeenCalledWith(configFileName);
+
+        //----
+
+        configFileName = 'second';
+        CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => configFileName);
+
+        new Configuration().getLogLevel();
+
+
+        expect(reloadMock).toHaveBeenCalledWith(configFileName);
+    });
+
+    it('should check \'LogLevel\' in command line', () => {
+        const logLevel = 'commandLine';
+        CommandLineConfiguration.getLogLevel.mockImplementationOnce(() => logLevel);
+
+        expect(new Configuration().getLogLevel()).toBe(logLevel);
+    });
+
+    it('should check \'log-level\' in configuration file', () => {
+        const logLevel = 'confFile';
+        FileConfiguration.getLogLevel.mockImplementationOnce(() => logLevel);
+
+        expect(new Configuration().getLogLevel()).toBe(logLevel);
+    });
+
+    it('should check default \'log-level\'', () => {
+        expect(new Configuration().getLogLevel()).toBe('warn');
+    });
+
+    it('should getRunMode in configuration file', () => {
+        const runMode = 'confFile';
+        FileConfiguration.getRunMode.mockImplementationOnce(() => runMode);
+
+        expect(new Configuration().getRunMode()).toBe(runMode);
+    });
+
+    it('should getOutputs in configuration file', () => {
+        const outputs = 'confFile';
+        FileConfiguration.getOutputs.mockImplementationOnce(() => outputs);
+
+        expect(new Configuration().getOutputs()).toBe(outputs);
+    });
+
+    it('should merge getStore from configuration file and command line', () => {
+        CommandLineConfiguration.getStore.mockImplementationOnce(() => {
+            return {
+                commandLine: 'value'
             }
-            const actualLevel = new Configuration(commandLine).getLogLevel();
-
-            expect(actualLevel).toBe(expectedLevel);
+        });
+        FileConfiguration.getStore.mockImplementationOnce(() => {
+            return {
+                confFile: 'value'
+            }
         });
 
-        it('should check \'log-level\' in configuration file', function() {
-            const expectedLevel = 'anyStuff';
-            const configurationFile = {
-                'log-level': expectedLevel
-            }
-            const actualLevel = new Configuration({}, configurationFile).getLogLevel();
+        const expected = {
+            commandLine: 'value',
+            confFile: 'value'
+        };
 
-            expect(actualLevel).toBe(expectedLevel);
-        });
-
+        expect(new Configuration().getStore()).toEqual(expected);
     });
 
-    it('daemon run mode', function () {
-        const configurationFile = {
-                "run-mode": {
-                    "daemon": ["bla"]
-                }
-        }
-        const actualInput = new Configuration({}, configurationFile).getRunMode()["daemon"];
+    it('should check \'isQuietMode\' in command line', () => {
+        const quietMode = false;
+        CommandLineConfiguration.isQuietMode.mockImplementationOnce(() => quietMode);
 
-        expect(actualInput).toEqual(["bla"]);
-    });
-
-    it('single run mode', function () {
-        const configurationFile = {
-                "run-mode": {
-                    "single-run": "bla"
-                }
-        }
-        const actualInput = new Configuration({}, configurationFile).getRunMode()["single-run"];
-
-        expect(actualInput).toBe("bla");
-    });
-
-    it('get requisition outputs from file', function () {
-        const expectedOutput = ['someOutput'];
-        const configurationFile = {
-            outputs: expectedOutput
-        }
-
-        const actualOutput = new Configuration({}, configurationFile).getOutputs();
-
-        expect(actualOutput).toBe(expectedOutput);
-    });
-
-    it('get variables from file', function () {
-        const expectedVariable = {key: "value"};
-        const configurationFile = {
-            store: expectedVariable
-        }
-
-        const actualOutput = new Configuration({}, configurationFile).getStore();
-
-        expect(actualOutput).toBe(expectedVariable);
-    });
-
-    it('get variables from command line', function () {
-        const expectedVariable = {key: "value"};
-        const configurationFile = {
-            store: expectedVariable
-        }
-
-        const actualOutput = new Configuration({}, configurationFile).getStore();
-
-        expect(actualOutput).toBe(expectedVariable);
+        expect(new Configuration().isQuietMode()).toBe(quietMode);
     });
 
 });
