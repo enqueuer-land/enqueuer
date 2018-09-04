@@ -1,6 +1,6 @@
 import {RequisitionParser} from "./requisition-parser";
 
-const validRunnable = [
+const valid = [
     {
         timeout: 3000,
         name: "name",
@@ -42,7 +42,7 @@ const validRunnable = [
         }
     }
 ];
-const validRunnableWithId = [{
+const validWithId = [{
     timeout: 3000,
     name: "name",
     id: "nameId",
@@ -108,7 +108,7 @@ const validRunnableWithId = [{
         ]
     }]
 }];
-const validRunnableWithNoSubscriptions = {
+const validRunnable = {
         "timeout": 3000,
         "name": "file",
         "iterations": "10",
@@ -143,29 +143,29 @@ describe('RequisitionParser', () => {
     });
 
     it('Should keep initial id', () => {
-        const runnableStringified: string = JSON.stringify(validRunnableWithId);
+        const runnableStringified: string = JSON.stringify(validWithId);
         const parser: RequisitionParser = new RequisitionParser();
 
         const firstModel = parser.parse(runnableStringified)[0];
-        expect(firstModel.id).toBe(validRunnableWithId[0].id);
+        expect(firstModel.id).toBe(validWithId[0].id);
     });
 
     it('Should insert id if no one is given', () => {
-        const runnableStringified: string = JSON.stringify(validRunnable);
+        const runnableStringified: string = JSON.stringify(valid);
         const parser: RequisitionParser = new RequisitionParser();
 
         expect(parser.parse(runnableStringified)[0].id).toBeDefined();
     });
 
     it('Should accept valid stringified json', () => {
-        const runnableStringified: string = JSON.stringify(validRunnableWithNoSubscriptions);
+        const runnableStringified: string = JSON.stringify(validRunnable);
         const parser: RequisitionParser = new RequisitionParser();
 
         expect(parser.parse(runnableStringified)).toBeDefined();
     });
 
     it('Should accept runnable with no subscriptions', () => {
-        expect(new RequisitionParser().parse(JSON.stringify(validRunnableWithNoSubscriptions))).not.toBeNull();
+        expect(new RequisitionParser().parse(JSON.stringify(validRunnable))).not.toBeNull();
     });
 
 });

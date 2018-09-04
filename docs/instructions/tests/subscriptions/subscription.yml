@@ -26,8 +26,18 @@ onInit:
   script:
     console.log('iai');
 
+  #Optional. It allows to persist values to be used later
+  store:
+    #example
+    key: `value`
+
   #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  #If at least one value is defined and no message is received a failing test will be registered.
   assertions:
+    #example
+    - name: anyValue #optional
+      expect: message
+      toBeEqualTo: store.key
 
 #Optional. Event triggered when a subscription receives the message it was waiting for
 onMessageReceived:
@@ -37,18 +47,36 @@ onMessageReceived:
   script:
     console.log('iai');
 
+  #Optional. It allows to persist values to be used later
+  store:
+    #example
+    key: `value`
+
   #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
   #If at least one value is defined and no message is received a failing test will be registered.
   assertions:
+    #example
+    - name: anyValue #optional
+      expect: message
+      toBeEqualTo: store.key
 
 #Optional. Event triggered as soon as the subscription is over
 onFinish:
   #Optional. Javascript code snippet executed when the event is triggered.
   #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
-  #Other objects IPC related might be available. Check (/docs/instructions/tests/subscription/) for further details
   script:
     console.log('iai');
+
+  #Optional. It allows to persist values to be used later
+  store:
+    #example
+    key: `value`
 
   #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
   #If at least one value is defined and no message is received a failing test will be registered.
   assertions:
+    #example
+    - name: anyValue #optional
+      expect: message
+      toBeEqualTo: store.key
+

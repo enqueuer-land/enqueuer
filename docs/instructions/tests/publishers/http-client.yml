@@ -23,10 +23,19 @@ authentication:
 #Optional. Given that HTTP is a synchronous protocol, this event is triggered whenever a response is received.
 onMessageReceived:
   #Optional. Javascript code snippet executed when the event is triggered.
-  #Available objects are: publisher (/docs/instructions/tests/publisher/amqp.yml), tester (/docs/instructions/tests/assertions.yml), message, statusCode, body and store.
+  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
   script:
     console.log('iai');
+
+  #Optional. It allows to persist values to be used later
+  store:
+    #example
+    key: `value`
 
   #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
   #If at least one value is defined and no message is received a failing test will be registered.
   assertions:
+    #example
+    - name: anyValue #optional
+      expect: message
+      toBeEqualTo: store.key

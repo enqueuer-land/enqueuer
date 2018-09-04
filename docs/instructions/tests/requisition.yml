@@ -23,8 +23,18 @@ onInit:
     script:
         console.log('iai');
 
+    #Optional. It allows to persist values to be used later
+    store:
+        #example
+        key: `value`
+
     #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+    #If at least one value is defined and no message is received a failing test will be registered.
     assertions:
+            #example
+        -   name: anyValue #optional
+            expect: message
+            toBeEqualTo: store.key
 
 #Optional. Event triggered as soon as the requisition is over.
 onFinish:
@@ -33,8 +43,18 @@ onFinish:
     script:
         console.log('iai');
 
+    #Optional. It allows to persist values to be used later
+    store:
+        #example
+        key: `value`
+
     #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+    #If at least one value is defined and no message is received a failing test will be registered.
     assertions:
+            #example
+        -   name: anyValue #optional
+            expect: message
+            toBeEqualTo: store.key
 
 #Defines what triggers this execution
 #Two values are mutually exclusive: publisher and subscription. At least one of them has to be defined.

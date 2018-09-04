@@ -17,7 +17,7 @@ export class ConsoleResultCreator implements ResultCreator {
 
     public addTestSuite(name: string, report: RequisitionModel): void {
         this.testsCounter.addTests(report);
-        this.findRequisitions([report], [name]);
+        this.findRequisitions([report], []);
     }
 
     public addError(err: any): void {
@@ -51,13 +51,13 @@ export class ConsoleResultCreator implements ResultCreator {
     }
 
     private findTests(requisition: RequisitionModel, hierarchy: string[]) {
-        this.inspectInvalidTests(requisition.tests, hierarchy);
+        this.inspectTests(requisition.tests, hierarchy);
         if (requisition.subscriptions) {
-            requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
+            requisition.subscriptions.forEach(subscription => this.inspectTests(subscription.tests, hierarchy.concat(subscription.name)));
         }
         const startEvent = this.detectStartEvent(requisition);
         if (startEvent) {
-            this.inspectInvalidTests(startEvent.tests, hierarchy.concat(startEvent.name));
+            this.inspectTests(startEvent.tests, hierarchy.concat(startEvent.name));
         }
     }
 
@@ -69,9 +69,8 @@ export class ConsoleResultCreator implements ResultCreator {
         }
     }
 
-    private inspectInvalidTests(tests: TestModel[], hierarchy: string[]) {
-        tests
-            .forEach((test: TestModel) => {
+    private inspectTests(tests: TestModel[], hierarchy: string[]) {
+        tests.forEach((test: TestModel) => {
                 if (!test.valid) {
                     this.failingTests.push(Object.assign({}, test, {hierarchy: hierarchy}));
                     let message = `\t${chalk.black.bgRed('[FAIL]')} `;

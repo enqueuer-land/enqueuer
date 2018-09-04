@@ -1,6 +1,5 @@
 import {RequisitionModel} from '../models/inputs/requisition-model';
 
-//TODO test it
 export class RequisitionMultiplier {
     private requisition: RequisitionModel;
 

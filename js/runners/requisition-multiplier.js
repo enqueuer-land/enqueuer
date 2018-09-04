@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//TODO test it
 class RequisitionMultiplier {
     constructor(requisition) {
         this.requisition = requisition;

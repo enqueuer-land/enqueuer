@@ -3,7 +3,6 @@ import {EventExecutor} from './event-executor';
 import {TestModel} from '../models/outputs/test-model';
 import {Finishable} from './finishable';
 
-//TODO test it
 export class OnFinishEventExecutor extends EventExecutor {
     private finishable: Finishable;
 

@@ -11,23 +11,43 @@ type: amqp
 
 #Optional. Event triggered as soon as the publisher is initialized.
 onInit:
-  #Optional. Javascript code snippet executed as soon as the publisher is initialized.
-  #Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+  #Optional. Javascript code snippet executed when the event is triggered.
+  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
   script:
     console.log('iai');
 
+  #Optional. It allows to persist values to be used later
+  store:
+    #example
+    key: `value`
+
   #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  #If at least one value is defined and no message is received a failing test will be registered.
   assertions:
+    #example
+    - name: anyValue #optional
+      expect: message
+      toBeEqualTo: store.key
 
 #Optional. Event triggered as soon as the publisher is over.
 onFinish:
-  #Optional. Javascript code snippet executed as soon as the publisher is initialized.
-  #Available objects are: publisher (/docs/instructions/tests/publisher/publisher.yml), tester (/docs/instructions/tests/assertions.yml) and store.
+  #Optional. Javascript code snippet executed when the event is triggered.
+  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
   script:
     console.log('iai');
 
+  #Optional. It allows to persist values to be used later
+  store:
+    #example
+    key: `value`
+
   #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
+  #If at least one value is defined and no message is received a failing test will be registered.
   assertions:
+    #example
+    - name: anyValue #optional
+      expect: message
+      toBeEqualTo: store.key
 
 
 #Optional. The message itself that will be send through this IPC protocol.

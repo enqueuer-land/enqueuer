@@ -23,11 +23,7 @@ export class RequisitionRunner {
         Logger.info(`Running requisition '${this.requisitionModel.name}'`);
         return new Promise((resolve) => {
             try {
-                const delay = this.requisitionModel.delay;
-                if (delay) {
-                    Logger.info(`Delaying requisition '${this.requisitionModel.name}' for ${delay}ms`);
-                }
-                this.startRequisition(resolve).start(delay || 0);
+                this.startRequisition(resolve).start(this.requisitionModel.delay || 0);
             } catch (err) {
                 Logger.error(`Error running requisition '${this.requisitionModel.name}'`);
                 const report: output.RequisitionModel = this.createRunningError(err);

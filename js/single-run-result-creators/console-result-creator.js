@@ -14,7 +14,7 @@ class ConsoleResultCreator {
     }
     addTestSuite(name, report) {
         this.testsCounter.addTests(report);
-        this.findRequisitions([report], [name]);
+        this.findRequisitions([report], []);
     }
     addError(err) {
         this.failingTests.push({ name: 'Error running runnable', valid: false, description: err.toString() });
@@ -43,13 +43,13 @@ class ConsoleResultCreator {
         });
     }
     findTests(requisition, hierarchy) {
-        this.inspectInvalidTests(requisition.tests, hierarchy);
+        this.inspectTests(requisition.tests, hierarchy);
         if (requisition.subscriptions) {
-            requisition.subscriptions.forEach(subscription => this.inspectInvalidTests(subscription.tests, hierarchy.concat(subscription.name)));
+            requisition.subscriptions.forEach(subscription => this.inspectTests(subscription.tests, hierarchy.concat(subscription.name)));
         }
         const startEvent = this.detectStartEvent(requisition);
         if (startEvent) {
-            this.inspectInvalidTests(startEvent.tests, hierarchy.concat(startEvent.name));
+            this.inspectTests(startEvent.tests, hierarchy.concat(startEvent.name));
         }
     }
     detectStartEvent(requisition) {
@@ -60,9 +60,8 @@ class ConsoleResultCreator {
             return requisition.startEvent.publisher;
         }
     }
-    inspectInvalidTests(tests, hierarchy) {
-        tests
-            .forEach((test) => {
+    inspectTests(tests, hierarchy) {
+        tests.forEach((test) => {
             if (!test.valid) {
                 this.failingTests.push(Object.assign({}, test, { hierarchy: hierarchy }));
                 let message = `\t${chalk_1.default.black.bgRed('[FAIL]')} `;

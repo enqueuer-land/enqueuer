@@ -2,6 +2,7 @@ import {StartEventSubscriptionReporter} from './start-event-subscription-reporte
 import {SubscriptionReporter} from "../subscription/subscription-reporter";
 
 let startTimeoutMock = cb => {};
+let onFinishMock = jest.fn();
 let subscribeMock = jest.fn(() => new Promise());
 let receiveMessageMock = jest.fn(() => new Promise());
 let getReportMock;
@@ -9,6 +10,7 @@ let SubscriptionReporterMock = jest.fn(() => {
     return {
         startTimeout: startTimeoutMock,
         subscribe: subscribeMock,
+        onFinish: onFinishMock,
         receiveMessage: receiveMessageMock,
         getReport: getReportMock
     }
@@ -73,6 +75,15 @@ describe('StartEventSubscriptionReporter', () => {
             expect(startEvent.getReport().subscription.valid).toBeFalsy();
             done()
         });
+    });
+
+    it('On finish', () => {
+        const startEvent: StartEventSubscriptionReporter = new StartEventSubscriptionReporter(startEventArgument);
+
+        startEvent.onFinish();
+
+        expect(onFinishMock).toHaveBeenCalled();
+
     });
 
     it('Handling subscription failure', () => {
