@@ -5,7 +5,7 @@ const logger_1 = require("./loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 class EnqueuerStarter {
     constructor(configuration) {
-        this.executor = conditional_injector_1.Container.subclassesOf(enqueuer_executor_1.EnqueuerExecutor).create(configuration.getRunMode());
+        this.executor = conditional_injector_1.Container.subclassesOf(enqueuer_executor_1.EnqueuerExecutor).create(configuration);
     }
     start() {
         return new Promise((resolve) => {

@@ -6,11 +6,11 @@ const configuration_1 = require("./configurations/configuration");
 const logger_1 = require("./loggers/logger");
 require("./injectable-files-list");
 function start() {
-    let configuration = new configuration_1.Configuration();
-    const logLevel = configuration.getLogLevel();
+    const configuration = configuration_1.Configuration.getValues();
+    const logLevel = configuration.logLevel;
     if (logger_1.Logger && logLevel) {
         logger_1.Logger.setLoggerLevel(logLevel);
-        if (configuration.isQuietMode()) {
+        if (configuration.quiet) {
             logger_1.Logger.disable();
         }
     }
@@ -22,6 +22,9 @@ function start() {
     });
 }
 exports.start = start;
-start()
-    .then(statusCode => process.exit(statusCode))
-    .catch(console.log.bind(console));
+const testMode = process.argv[1].toString().match('jest');
+if (!testMode) {
+    start()
+        .then(statusCode => process.exit(statusCode))
+        .catch(console.log.bind(console));
+}

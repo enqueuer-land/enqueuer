@@ -18,16 +18,15 @@ jest.mock('conditional-injector');
 Container.subclassesOf.mockImplementation(containerMock);
 
 describe('EnqueuerStarter', () => {
-    const runMode = 'daemon';
     const configuration = {
-        getRunMode: () => runMode
+        runMode: 'daemon'
     };
 
     it('Should detect run mode', () => {
         new EnqueuerStarter(configuration);
 
         expect(containerMock).toHaveBeenCalledWith(EnqueuerExecutor);
-        expect(createMock).toHaveBeenCalledWith(runMode);
+        expect(createMock).toHaveBeenCalledWith(configuration);
     });
 
     it('Should translate true to 0', () => {

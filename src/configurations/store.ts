@@ -9,7 +9,7 @@ export class Store {
 
     public static getData(): any {
         if (!Store.data) {
-            Store.data = new Configuration().getStore();
+            Store.data = Configuration.getValues().store;
         }
         return Store.data;
     }

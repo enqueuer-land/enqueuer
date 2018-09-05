@@ -1,6 +1,5 @@
 import {EnqueuerExecutor} from './enqueuer-executor';
 import {MultiPublisher} from '../publishers/multi-publisher';
-import {Configuration} from '../configurations/configuration';
 import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
 import {MultiResultCreator} from '../single-run-result-creators/multi-result-creator';
@@ -9,8 +8,9 @@ import * as glob from 'glob';
 import * as fs from 'fs';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
+import {ConfigurationValues} from '../configurations/configuration-values';
 
-@Injectable({predicate: runMode => runMode['single-run']})
+@Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode['single-run'] != null})
 export class SingleRunExecutor extends EnqueuerExecutor {
 
     private fileNames: string[];
@@ -19,15 +19,15 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private parallelMode: boolean;
     private totalFilesNum: number;
 
-    constructor(runMode: any) {
+    constructor(configuration: ConfigurationValues) {
         super();
         Logger.info('Executing in Single-Run mode');
-        const singleRunMode: any = runMode['single-run'];
+        const singleRunMode: any = configuration.runMode['single-run'];
         const singleRunConfiguration = singleRunMode;
         this.multiResultCreator = new MultiResultCreator(singleRunMode.reportName);
         this.parallelMode = !!singleRunMode.parallel;
 
-        this.multiPublisher = new MultiPublisher(new Configuration().getOutputs());
+        this.multiPublisher = new MultiPublisher(configuration.outputs);
         this.fileNames = this.getTestFiles(singleRunConfiguration.files);
         this.totalFilesNum = this.fileNames.length;
     }

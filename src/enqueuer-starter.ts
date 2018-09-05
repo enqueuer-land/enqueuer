@@ -1,14 +1,14 @@
-import {Configuration} from './configurations/configuration';
 import {EnqueuerExecutor} from './executors/enqueuer-executor';
 import {Logger} from './loggers/logger';
 import {Container} from 'conditional-injector';
+import {ConfigurationValues} from './configurations/configuration-values';
 
 export class EnqueuerStarter {
 
     private executor: EnqueuerExecutor;
 
-    constructor(configuration: Configuration) {
-        this.executor = Container.subclassesOf(EnqueuerExecutor).create(configuration.getRunMode());
+    constructor(configuration: ConfigurationValues) {
+        this.executor = Container.subclassesOf(EnqueuerExecutor).create(configuration);
     }
 
     public start(): Promise<number> {

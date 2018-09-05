@@ -18,7 +18,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const multi_publisher_1 = require("../publishers/multi-publisher");
-const configuration_1 = require("../configurations/configuration");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const multi_result_creator_1 = require("../single-run-result-creators/multi-result-creator");
@@ -27,14 +26,14 @@ const glob = __importStar(require("glob"));
 const fs = __importStar(require("fs"));
 const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
-    constructor(runMode) {
+    constructor(configuration) {
         super();
         logger_1.Logger.info('Executing in Single-Run mode');
-        const singleRunMode = runMode['single-run'];
+        const singleRunMode = configuration.runMode['single-run'];
         const singleRunConfiguration = singleRunMode;
         this.multiResultCreator = new multi_result_creator_1.MultiResultCreator(singleRunMode.reportName);
         this.parallelMode = !!singleRunMode.parallel;
-        this.multiPublisher = new multi_publisher_1.MultiPublisher(new configuration_1.Configuration().getOutputs());
+        this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
         this.fileNames = this.getTestFiles(singleRunConfiguration.files);
         this.totalFilesNum = this.fileNames.length;
     }
@@ -120,7 +119,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
 };
 SingleRunExecutor = __decorate([
-    conditional_injector_1.Injectable({ predicate: runMode => runMode['single-run'] }),
+    conditional_injector_1.Injectable({ predicate: (configuration) => configuration.runMode && configuration.runMode['single-run'] != null }),
     __metadata("design:paramtypes", [Object])
 ], SingleRunExecutor);
 exports.SingleRunExecutor = SingleRunExecutor;

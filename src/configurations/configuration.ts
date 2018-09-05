@@ -1,45 +1,30 @@
-import {PublisherModel} from '../models/inputs/publisher-model';
 import {CommandLineConfiguration} from './command-line-configuration';
 import {FileConfiguration} from './file-configuration';
+import {ConfigurationValues} from './configuration-values';
 
 export class Configuration {
 
-    private static configFileName: string;
+    private static configFileName?: string;
+    private static instance: any;
 
-    private refresh() {
+    private constructor() {
+
+    }
+
+    public static getValues(): ConfigurationValues {
         const configFileName = CommandLineConfiguration.getConfigFileName();
-        if (configFileName != Configuration.configFileName) {
+        if (!Configuration.instance || configFileName != Configuration.configFileName) {
             FileConfiguration.reload(configFileName);
-            Configuration.configFileName = configFileName;
+            Configuration.instance = {
+                logLevel: CommandLineConfiguration.getLogLevel() || FileConfiguration.getLogLevel() || 'warn',
+                runMode: FileConfiguration.getRunMode(),
+                outputs: FileConfiguration.getOutputs(),
+                store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
+                quiet: CommandLineConfiguration.isQuietMode()
+            };
         }
-    }
-
-    public getLogLevel(): string {
-        this.refresh();
-        return CommandLineConfiguration.getLogLevel() ||
-                FileConfiguration.getLogLevel() ||
-                'warn';
-    }
-
-    public getRunMode(): any {
-        this.refresh();
-        return FileConfiguration.getRunMode();
-    }
-
-    public getOutputs(): PublisherModel[] {
-        this.refresh();
-        return FileConfiguration.getOutputs();
-    }
-
-    public getStore(): any {
-        this.refresh();
-        return Object.assign({},
-                                FileConfiguration.getStore(),
-                                CommandLineConfiguration.getStore());
-    }
-
-    public isQuietMode(): any {
-        return CommandLineConfiguration.isQuietMode();
+        Configuration.configFileName = configFileName;
+        return {...Configuration.instance} as ConfigurationValues;
     }
 
 }

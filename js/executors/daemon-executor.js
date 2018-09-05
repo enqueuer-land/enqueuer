@@ -13,17 +13,15 @@ const daemon_run_input_1 = require("./daemon-run-input");
 const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
-const configuration_1 = require("../configurations/configuration");
 const conditional_injector_1 = require("conditional-injector");
 const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
 let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerExecutor {
-    constructor(enqueuerConfiguration) {
+    constructor(configuration) {
         super();
+        const daemonMode = configuration.runMode.daemon;
         logger_1.Logger.info('Executing in Daemon mode');
-        const configuration = new configuration_1.Configuration();
-        this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.getOutputs());
-        this.requisitionInputs = enqueuerConfiguration['daemon']
-            .map((input) => new daemon_run_input_1.DaemonRunInput(input));
+        this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
+        this.requisitionInputs = daemonMode.map((input) => new daemon_run_input_1.DaemonRunInput(input));
     }
     execute() {
         return new Promise(() => {
@@ -52,7 +50,7 @@ let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerEx
     }
 };
 DaemonExecutor = __decorate([
-    conditional_injector_1.Injectable({ predicate: enqueuerConfiguration => enqueuerConfiguration['daemon'] }),
+    conditional_injector_1.Injectable({ predicate: (configuration) => configuration.runMode && configuration.runMode.daemon != null }),
     __metadata("design:paramtypes", [Object])
 ], DaemonExecutor);
 exports.DaemonExecutor = DaemonExecutor;

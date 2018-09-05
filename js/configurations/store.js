@@ -7,7 +7,7 @@ class Store {
     }
     static getData() {
         if (!Store.data) {
-            Store.data = new configuration_1.Configuration().getStore();
+            Store.data = configuration_1.Configuration.getValues().store;
         }
         return Store.data;
     }

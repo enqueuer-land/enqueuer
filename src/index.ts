@@ -6,12 +6,12 @@ import {Logger} from './loggers/logger';
 import './injectable-files-list';
 
 export function start(): Promise<number> {
-    let configuration = new Configuration();
-    const logLevel = configuration.getLogLevel();
+    const configuration = Configuration.getValues();
+    const logLevel = configuration.logLevel;
 
     if (Logger && logLevel) {
         Logger.setLoggerLevel(logLevel);
-        if (configuration.isQuietMode()) {
+        if (configuration.quiet) {
             Logger.disable();
         }
     }
@@ -24,6 +24,10 @@ export function start(): Promise<number> {
     });
 }
 
-start()
-    .then(statusCode => process.exit(statusCode))
-    .catch(console.log.bind(console));
+const testMode = process.argv[1].toString().match('jest');
+
+if (!testMode) {
+    start()
+        .then(statusCode => process.exit(statusCode))
+        .catch(console.log.bind(console));
+}
