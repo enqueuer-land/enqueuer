@@ -56,6 +56,21 @@ describe('HttpBasicAuthentication', () => {
     });
 
 
+    it('No basic prefix', () => {
+        const authentication = {
+            basic: {
+                user: 'user',
+                password: 'password'
+            }
+        };
+        const authorization: HttpBasicAuthentication = new HttpBasicAuthentication(authentication);
+
+        const verify = authorization.verify('WrongPrefix dXNlcjpwYXNzd29yZA');
+
+        expect(verify.filter((test) => !test.valid)[0].name).toBe('"Basic" authentication prefix');
+    });
+
+
     it('alladin:OpenSesame', () => {
         const authentication = {
             basic: {
