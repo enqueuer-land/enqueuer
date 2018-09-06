@@ -7,6 +7,11 @@ describe('HttpBasicAuthentication', () => {
     it('should inject properly', () => {
         Injectable.mockImplementation();
         expect(Injectable).toBeCalled();
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
+        const injectableOption = mockCalls[0][0];
+        expect(injectableOption.predicate({basic: 'value'})).toBeTruthy();
+        expect(injectableOption.predicate({unknown: 'value'})).toBeFalsy();
     });
 
     it('tests number', () => {

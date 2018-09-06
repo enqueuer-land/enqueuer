@@ -87,7 +87,7 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
             if (!this.response) {
                 this.persistStream();
             }
-            resolve(msg);
+            resolve({ payload: msg });
         });
     }
     sendResponse() {

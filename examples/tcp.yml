@@ -9,7 +9,7 @@
             onMessageReceived: 
                 assertions: 
                     -   name: Do not make it bad
-                        expect: message.toString()
+                        expect: payload
                         toBeEqualTo: `Do not make it bad`
     subscriptions:
     -   type: tcp-server
@@ -19,8 +19,10 @@
         onMessageReceived: 
             assertions: 
                 -   name: Beatles Song
-                    expect: message.toString()
+                    expect: payload
                     toBeEqualTo: `Hey Jude`
+                -   expect: stream.address
+                    toContain: `127.0.0.1`
 -   timeout: 3000
     startEvent:
         publisher:
@@ -34,7 +36,7 @@
             onMessageReceived: 
                 assertions: 
                     -   name: Greeting received
-                        expect: message.toString()
+                        expect: payload
                         toBeEqualTo: `EnqueuerRocks`
     subscriptions:
     -   name: tcp 1 subscription description
@@ -47,7 +49,7 @@
         onMessageReceived: 
             assertions: 
                 -   name: I care
-                    expect: message.toString()
+                    expect: payload
                     toBeEqualTo: `I do not care`
 -   timeout: 3000
     startEvent:
@@ -58,7 +60,7 @@
             onMessageReceived:
                 assertions:
                     -   name: Second message is <<tcpPayload>>
-                        expect: message.toString()
+                        expect: payload
                         toBeEqualTo: `<<tcpPayload>>`
     subscriptions:
     -   type: tcp-server
@@ -69,5 +71,5 @@
         onMessageReceived:
             assertions:
                 -   name: It is still open
-                    expect: message.toString()
+                    expect: payload
                     toBeEqualTo: `The socket is still open`

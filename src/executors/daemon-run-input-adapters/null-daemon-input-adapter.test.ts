@@ -14,11 +14,13 @@ describe('NullDaemonInputAdapter', () => {
 
     it('should be the null object implementation', () => {
         expect(Injectable).toBeCalledWith();
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
     });
 
     it('should return undefined', () => {
         const model = {type: 'unknown'};
-        expect(new NullDaemonInputAdapter(model).adapt('any')).toBeUndefined();
+        expect(() => new NullDaemonInputAdapter(model).adapt('any')).toThrow();
         expect(warningMock).toBeCalledWith(`Adapter is not being able to adapt daemon-input of ${JSON.stringify(model)}`);
     });
 });

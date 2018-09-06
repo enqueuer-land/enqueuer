@@ -65,6 +65,11 @@ describe('StartEventPublisherReporter', () => {
     it('should inject properly', () => {
         Injectable.mockImplementation();
         expect(Injectable).toHaveBeenCalledWith({predicate: expect.any(Function)});
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
+        const injectableOption = mockCalls[0][0];
+        expect(injectableOption.predicate({publisher: 'value'})).toBeTruthy();
+        expect(injectableOption.predicate({unknown: 'value'})).toBeFalsy();
     });
 
     it('Should call publisher constructor', () => {

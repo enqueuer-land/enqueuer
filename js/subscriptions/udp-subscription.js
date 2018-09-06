@@ -34,7 +34,6 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
                 reject(err);
             });
             this.server.on('message', (msg, remoteInfo) => {
-                this.remoteInfo = remoteInfo;
                 resolve({ payload: msg, remoteInfo: remoteInfo });
             });
         });

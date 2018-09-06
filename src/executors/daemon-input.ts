@@ -17,7 +17,7 @@ export class DaemonInput {
         this.type = input.type;
         this.parser = new RequisitionParser();
         this.subscription = Container.subclassesOf(Subscription).create(input);
-        this.adapter = Container.subclassesOf(DaemonInputAdapter).create(input);
+        this.adapter = Container.subclassesOf(DaemonInputAdapter).create(this.type);
     }
 
     public getType(): string {
@@ -40,9 +40,10 @@ export class DaemonInput {
                 .then((payload: any) => {
                     Logger.info(`Daemon ${this.type} got bytes`);
                     try {
-                        this.adaptMessage(payload, resolve);
+                        const message = this.adapter.adapt(payload);
+                        resolve(this.parser.parse(message));
                     } catch (err) {
-                        Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
+                        Logger.error(`Error receiving daemon input ${err}`);
                     }
                 });
         });
@@ -50,15 +51,6 @@ export class DaemonInput {
 
     public unsubscribe(): void {
         this.subscription.unsubscribe();
-    }
-
-    private adaptMessage(payload: any, resolve: any) {
-        const message = this.adapter.adapt(payload);
-        if (message) {
-            resolve(this.parser.parse(message));
-        } else {
-            Logger.warning(`Daemon input ${this.type} is not being able to adapt received message: ${Object.keys(payload)}`);
-        }
     }
 
 }

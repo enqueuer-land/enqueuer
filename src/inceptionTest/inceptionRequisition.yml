@@ -22,7 +22,7 @@ startEvent:
                 name: runnableSubsUds
                 path: /tmp/loopUnix.sock
                 onMessageReceived:
-                    script: payload = Buffer.from(message).toString();
+#                    script: payload = Buffer.from(payload).toString();
                     assertions:
                     -   name: Works
                         expect: payload

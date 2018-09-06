@@ -82,7 +82,7 @@ export class UdsSubscription extends Subscription {
             if (!this.response) {
                 this.persistStream();
             }
-            resolve(msg);
+            resolve({payload: msg});
         });
     }
 

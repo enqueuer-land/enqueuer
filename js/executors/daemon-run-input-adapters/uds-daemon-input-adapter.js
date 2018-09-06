@@ -19,12 +19,17 @@ let UdsDaemonInputAdapter = class UdsDaemonInputAdapter extends daemon_input_ada
     }
     adapt(message) {
         const payload = message.payload;
+        let stringify;
         if (payload) {
-            return this.stringify(payload);
+            stringify = this.stringify(payload);
         }
         else {
-            return this.stringify(message);
+            stringify = this.stringify(message);
         }
+        if (stringify) {
+            return stringify;
+        }
+        throw 'Uds daemon input can not adapt received message';
     }
     stringify(message) {
         const messageType = typeof (message);
@@ -37,7 +42,7 @@ let UdsDaemonInputAdapter = class UdsDaemonInputAdapter extends daemon_input_ada
     }
 };
 UdsDaemonInputAdapter = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscription) => subscription.type == 'uds' }),
+    conditional_injector_1.Injectable({ predicate: (type) => type == 'uds' }),
     __metadata("design:paramtypes", [])
 ], UdsDaemonInputAdapter);
 exports.UdsDaemonInputAdapter = UdsDaemonInputAdapter;

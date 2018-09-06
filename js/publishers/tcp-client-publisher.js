@@ -63,7 +63,7 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         stream.on('timeout', () => {
             this.finalize(stream);
             stream.removeAllListeners('data');
-            resolve(this.messageReceived);
+            resolve();
         })
             .once('error', (data) => {
             this.finalize(stream);
@@ -76,11 +76,12 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
             .on('data', (msg) => {
             logger_1.Logger.debug(`Tcp client got data '${msg.toString()}'`);
             if (this.messageReceived === null || this.messageReceived === undefined) {
-                this.messageReceived = msg;
+                this.messageReceived = {
+                    payload: '',
+                    stream: stream.address()
+                };
             }
-            else {
-                this.messageReceived += msg;
-            }
+            this.messageReceived.payload += msg;
         });
         this.write(stream);
     }

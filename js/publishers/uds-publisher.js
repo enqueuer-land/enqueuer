@@ -40,7 +40,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     registerEvents(resolve, reject) {
         this.stream.on('timeout', () => {
             this.persistStream();
-            resolve(this.messageReceived);
+            resolve();
         })
             .once('error', (data) => reject(data))
             .once('end', () => {
@@ -51,11 +51,11 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
             .once('data', (msg) => {
             logger_1.Logger.debug(`Uds publisher got message`);
             if (this.messageReceived === null || this.messageReceived === undefined) {
-                this.messageReceived = msg;
+                this.messageReceived = {
+                    payload: ''
+                };
             }
-            else {
-                this.messageReceived = this.messageReceived.concat(msg);
-            }
+            this.messageReceived.payload += msg;
         });
     }
     stringifyPayload() {

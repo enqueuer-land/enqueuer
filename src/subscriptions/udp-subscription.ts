@@ -9,7 +9,6 @@ export class UdpSubscription extends Subscription {
 
     private server: any;
     private port: number;
-    private remoteInfo?: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -27,7 +26,6 @@ export class UdpSubscription extends Subscription {
                 });
 
                 this.server.on('message', (msg: Buffer, remoteInfo: any) => {
-                    this.remoteInfo = remoteInfo;
                     resolve({payload: msg, remoteInfo: remoteInfo});
                 });
             }

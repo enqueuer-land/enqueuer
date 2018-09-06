@@ -6,8 +6,7 @@
             path: /tmp/unix.sock
             payload: I'll be replaced in onInit
             onInit:
-                script: |-
-                    publisher.payload = 'enqueuer'
+                script: publisher.payload = 'enqueuer'
                 store:
                     udsPayload: `enqueuer`
                     uds2RequisitionName: `RequisitionUds2Name`
@@ -16,7 +15,7 @@
             onMessageReceived:
                 assertions:
                     -   name: It is bidirectional
-                        expect: message
+                        expect: payload
                         toBeEqualTo: `responsePayload`
     subscriptions:
     -   type: uds
@@ -26,7 +25,7 @@
         onMessageReceived:
             assertions:
                 -   name: Message received is enqueuer
-                    expect: message
+                    expect: payload
                     toBeEqualTo: store.udsPayload
 -   name: <<uds2Name>> description
     startEvent:
@@ -49,7 +48,7 @@
             onMessageReceived:
                 assertions:
                     -   name: Message received is <<udsPayload>> 2
-                        expect: message
+                        expect: message.payload
                         toBeEqualTo: store.udsPayload
             timeout: <<uds2Timeout>>
 -   name: udsStreamLoader description
@@ -62,7 +61,7 @@
             onMessageReceived:
                 assertions:
                     -   name: Message received
-                        expect: message
+                        expect: payload
                         toBeEqualTo: `I am still bidirectional`
     subscriptions:
         -   type: uds
@@ -71,5 +70,5 @@
             onMessageReceived:
                 assertions:
                     -   name: Publisher stream was still opened
-                        expect: message
+                        expect: payload
                         toBeEqualTo: `I am still opened`

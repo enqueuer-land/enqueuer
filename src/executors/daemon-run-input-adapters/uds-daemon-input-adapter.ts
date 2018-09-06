@@ -1,9 +1,8 @@
 import {Injectable} from 'conditional-injector';
-import {DaemonInputAdapter} from "./daemon-input-adapter";
-import {SubscriptionModel} from "../../models/inputs/subscription-model";
-import {Logger} from "../../loggers/logger";
+import {DaemonInputAdapter} from './daemon-input-adapter';
+import {Logger} from '../../loggers/logger';
 
-@Injectable({predicate: (subscription: SubscriptionModel) => subscription.type == 'uds'})
+@Injectable({predicate: (type: string) => type == 'uds'})
 export class UdsDaemonInputAdapter extends DaemonInputAdapter {
 
     public constructor() {
@@ -11,13 +10,18 @@ export class UdsDaemonInputAdapter extends DaemonInputAdapter {
         Logger.trace(`Instantiating UdsDaemonInputAdapter`);
     }
 
-    public adapt(message: any): string | undefined {
+    public adapt(message: any): string {
         const payload = message.payload;
+        let stringify;
         if (payload) {
-            return this.stringify(payload);
+            stringify = this.stringify(payload);
         } else {
-            return this.stringify(message);
+            stringify = this.stringify(message);
         }
+        if (stringify) {
+            return stringify;
+        }
+        throw 'Uds daemon input can not adapt received message';
     }
 
     private stringify(message: any): string | undefined {

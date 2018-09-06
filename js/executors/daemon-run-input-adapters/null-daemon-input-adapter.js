@@ -18,8 +18,9 @@ let NullDaemonInputAdapter = class NullDaemonInputAdapter extends daemon_input_a
         this.subscription = subscription;
     }
     adapt(message) {
-        logger_1.Logger.warning(`Adapter is not being able to adapt daemon-input of ${JSON.stringify(this.subscription)}`);
-        return undefined;
+        const errorMessage = `Adapter is not being able to adapt daemon-input of ${JSON.stringify(this.subscription)}`;
+        logger_1.Logger.warning(errorMessage);
+        throw errorMessage;
     }
 };
 NullDaemonInputAdapter = __decorate([

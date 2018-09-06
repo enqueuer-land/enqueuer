@@ -1,5 +1,6 @@
 import {StartEventSubscriptionReporter} from './start-event-subscription-reporter';
 import {SubscriptionReporter} from "../subscription/subscription-reporter";
+import {Injectable} from "conditional-injector";
 
 let startTimeoutMock = cb => {};
 let onFinishMock = jest.fn();
@@ -24,6 +25,7 @@ const startEventArgument = {
         name: 'subName'
     }
 };
+jest.mock('conditional-injector');
 
 describe('StartEventSubscriptionReporter', () => {
     beforeEach(() => {
@@ -31,6 +33,17 @@ describe('StartEventSubscriptionReporter', () => {
         subscribeMock = jest.fn(() => new Promise());
         receiveMessageMock = jest.fn(() => new Promise());
     });
+
+    it('should inject properly', () => {
+        Injectable.mockImplementation();
+        expect(Injectable).toHaveBeenCalledWith({predicate: expect.any(Function)});
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
+        const injectableOption = mockCalls[0][0];
+        expect(injectableOption.predicate({subscription: 'value'})).toBeTruthy();
+        expect(injectableOption.predicate({unknown: 'value'})).toBeFalsy();
+    });
+
 
     it('Should call subReporter constructor', () => {
         new StartEventSubscriptionReporter(startEventArgument);

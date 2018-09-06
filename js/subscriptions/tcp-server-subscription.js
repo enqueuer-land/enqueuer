@@ -127,7 +127,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         });
         this.stream.once('data', (msg) => {
             logger_1.Logger.debug(`Tcp server (${this.stream.localPort}) got data ${msg}`);
-            resolve(msg);
+            resolve({ payload: msg, stream: this.stream.address() });
         });
     }
     persistStream() {

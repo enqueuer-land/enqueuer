@@ -2,12 +2,14 @@ import {HttpNoAuthentication} from './http-no-authentication';
 import {Injectable} from "conditional-injector";
 
 jest.mock('conditional-injector');
+Injectable.mockImplementation();
 
 describe('HttpNoAuthentication', () => {
 
     it('should inject properly', () => {
-        Injectable.mockImplementation();
         expect(Injectable).toHaveBeenCalledWith();
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
     });
 
     it('generate', () => {

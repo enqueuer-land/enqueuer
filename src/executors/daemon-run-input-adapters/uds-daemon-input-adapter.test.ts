@@ -3,15 +3,19 @@ import {Injectable} from "conditional-injector";
 
 jest.mock('conditional-injector');
 
+
 describe('UdsDaemonInputAdapter', () => {
 
     it('should inject properly', () => {
         Injectable.mockImplementation();
-        expect(Injectable).toBeCalled();
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
+        const injectableOption = mockCalls[0][0];
+        expect(injectableOption.predicate('uds')).toBeTruthy();
     });
 
-    it('should return undefined', () => {
-        expect(new UdsDaemonInputAdapter().adapt({unknown: ''})).toBeUndefined();
+    it('should throw exception', () => {
+        expect(() => new UdsDaemonInputAdapter().adapt({unknown: ''})).toThrow('Uds daemon input can not adapt received message');
     });
 
     it('should parse string payload', () => {

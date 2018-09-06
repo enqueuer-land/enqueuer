@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 155
-      startTime: '2018-09-06T02:38:46.593Z'
-      endTime: '2018-09-06T02:38:46.748Z'
+      totalTime: 320
+      startTime: '2018-09-06T18:26:23.448Z'
+      endTime: '2018-09-06T18:26:23.768Z'
       timeout: 3000
     subscriptions:
       -
@@ -26,11 +26,15 @@ requisitions:
             valid: true
             description: 'Expected value to be equal to ''Hey Jude''. Received ''Hey Jude'''
           -
+            name: 'Assertion #1'
+            valid: true
+            description: '''::ffff:127.0.0.1'' does not contain ''127.0.0.1'''
+          -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-06T02:38:46.603Z'
+        connectionTime: '2018-09-06T18:26:23.456Z'
     startEvent:
       publisher:
         name: 'Start event publisher'
@@ -49,7 +53,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-06T02:38:46.748Z'
+        publishTime: '2018-09-06T18:26:23.767Z'
   -
     valid: true
     tests:
@@ -59,9 +63,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #1'
     time:
-      totalTime: 843
-      startTime: '2018-09-06T02:38:46.771Z'
-      endTime: '2018-09-06T02:38:47.614Z'
+      totalTime: 885
+      startTime: '2018-09-06T18:26:23.775Z'
+      endTime: '2018-09-06T18:26:24.660Z'
       timeout: 3000
     subscriptions:
       -
@@ -77,7 +81,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-06T02:38:46.773Z'
+        connectionTime: '2018-09-06T18:26:23.776Z'
     startEvent:
       publisher:
         name: 'tcp 1 publisher description'
@@ -96,7 +100,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-06T02:38:47.614Z'
+        publishTime: '2018-09-06T18:26:24.660Z'
   -
     valid: true
     tests:
@@ -106,9 +110,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #2'
     time:
-      totalTime: 13
-      startTime: '2018-09-06T02:38:47.616Z'
-      endTime: '2018-09-06T02:38:47.629Z'
+      totalTime: 1
+      startTime: '2018-09-06T18:26:24.662Z'
+      endTime: '2018-09-06T18:26:24.663Z'
       timeout: 3000
     subscriptions:
       -
@@ -124,7 +128,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-06T02:38:47.616Z'
+        connectionTime: '2018-09-06T18:26:24.662Z'
     startEvent:
       publisher:
         name: 'Start event publisher'
@@ -143,4 +147,4 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-06T02:38:47.628Z'
+        publishTime: '2018-09-06T18:26:24.663Z'
