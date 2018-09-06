@@ -5,8 +5,8 @@ import {RequisitionParser} from '../runners/requisition-parser';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 
+//TODO test it
 export class DaemonRunInput {
-
     private type: string;
     private subscription: Subscription;
     private parser: RequisitionParser;
@@ -21,8 +21,8 @@ export class DaemonRunInput {
         return this.type;
     }
 
-    public connect(): Promise<void> {
-        Logger.info(`Connecting to input ${this.type}`);
+    public subscribe(): Promise<void> {
+        Logger.info(`Subscribing to input ${this.type}`);
 
         return new Promise((resolve, reject) => {
             this.subscription.subscribe()

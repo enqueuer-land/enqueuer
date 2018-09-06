@@ -15,7 +15,7 @@ require("./subscriptions/udp-subscription");
 require("./subscriptions/mqtt-subscription");
 require("./subscriptions/null-subscription");
 require("./executors/single-run-executor");
-require("./executors/daemon-executor");
+require("./executors/daemon-run-executor");
 require("./executors/null-run-executor");
 require("./publishers/http-client-publisher");
 require("./publishers/tcp-client-publisher");

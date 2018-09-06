@@ -15,7 +15,8 @@ const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
 const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
-let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerExecutor {
+//TODO test it
+let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
         super();
         const daemonMode = configuration.runMode.daemon;
@@ -27,7 +28,7 @@ let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerEx
         return new Promise(() => {
             this.requisitionInputs
                 .forEach((input) => {
-                input.connect()
+                input.subscribe()
                     .then(() => {
                     return this.startReader(input);
                 })
@@ -49,8 +50,8 @@ let DaemonExecutor = class DaemonExecutor extends enqueuer_executor_1.EnqueuerEx
         });
     }
 };
-DaemonExecutor = __decorate([
+DaemonRunExecutor = __decorate([
     conditional_injector_1.Injectable({ predicate: (configuration) => configuration.runMode && configuration.runMode.daemon != null }),
     __metadata("design:paramtypes", [Object])
-], DaemonExecutor);
-exports.DaemonExecutor = DaemonExecutor;
+], DaemonRunExecutor);
+exports.DaemonRunExecutor = DaemonRunExecutor;

@@ -13,7 +13,7 @@ import './subscriptions/udp-subscription';
 import './subscriptions/mqtt-subscription';
 import './subscriptions/null-subscription';
 import './executors/single-run-executor';
-import './executors/daemon-executor';
+import './executors/daemon-run-executor';
 import './executors/null-run-executor';
 import './publishers/http-client-publisher';
 import './publishers/tcp-client-publisher';

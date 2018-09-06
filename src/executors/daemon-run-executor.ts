@@ -8,8 +8,9 @@ import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
 
+//TODO test it
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
-export class DaemonExecutor extends EnqueuerExecutor {
+export class DaemonRunExecutor extends EnqueuerExecutor {
 
     private requisitionInputs: DaemonRunInput[];
     private multiPublisher: MultiPublisher;
@@ -27,7 +28,7 @@ export class DaemonExecutor extends EnqueuerExecutor {
         return new Promise(() => {
             this.requisitionInputs
                 .forEach((input: DaemonRunInput) => {
-                    input.connect()
+                    input.subscribe()
                         .then(() => {
                             return this.startReader(input);
                         })

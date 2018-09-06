@@ -35,22 +35,25 @@ let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
                 const exchange = this.connection.exchange(this.exchange, { confirm: true, passive: true });
                 logger_1.Logger.debug(`Exchange to publish: ${this.exchange} created`);
                 exchange.once('open', () => {
-                    logger_1.Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
-                    exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored, err) => {
-                        logger_1.Logger.trace(`Exchange published callback`);
-                        if (errored) {
-                            return reject(err);
-                        }
-                        logger_1.Logger.trace(`AMQP message published`);
-                        this.connection.disconnect();
-                        this.connection.end();
-                        return resolve();
-                    });
+                    this.exchangeOpen(exchange, reject, resolve);
                 });
             });
             this.connection.on('error', (err) => {
                 return reject(err);
             });
+        });
+    }
+    exchangeOpen(exchange, reject, resolve) {
+        logger_1.Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
+        exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored, err) => {
+            logger_1.Logger.trace(`Exchange published callback`);
+            if (errored) {
+                return reject(err);
+            }
+            logger_1.Logger.trace(`AMQP message published`);
+            this.connection.disconnect();
+            this.connection.end();
+            return resolve();
         });
     }
 };

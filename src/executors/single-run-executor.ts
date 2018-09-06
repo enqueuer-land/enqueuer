@@ -10,6 +10,7 @@ import {RequisitionModel} from '../models/inputs/requisition-model';
 import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
 import {ConfigurationValues} from '../configurations/configuration-values';
 
+//TODO test it
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode['single-run'] != null})
 export class SingleRunExecutor extends EnqueuerExecutor {
 

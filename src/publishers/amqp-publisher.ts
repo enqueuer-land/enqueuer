@@ -27,17 +27,7 @@ export class AmqpPublisher extends Publisher {
                 const exchange = this.connection.exchange(this.exchange, {confirm: true, passive: true});
                 Logger.debug(`Exchange to publish: ${this.exchange} created`);
                 exchange.once('open', () => {
-                    Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
-                    exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored: any, err: any) => {
-                        Logger.trace(`Exchange published callback`);
-                        if (errored) {
-                            return reject(err);
-                        }
-                        Logger.trace(`AMQP message published`);
-                        this.connection.disconnect();
-                        this.connection.end();
-                        return resolve();
-                    });
+                    this.exchangeOpen(exchange, reject, resolve);
                 });
             });
             this.connection.on('error', (err: any) => {
@@ -46,4 +36,17 @@ export class AmqpPublisher extends Publisher {
         });
     }
 
+    private exchangeOpen(exchange: any, reject: any, resolve: any) {
+        Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
+        exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored: any, err: any) => {
+            Logger.trace(`Exchange published callback`);
+            if (errored) {
+                return reject(err);
+            }
+            Logger.trace(`AMQP message published`);
+            this.connection.disconnect();
+            this.connection.end();
+            return resolve();
+        });
+    }
 }

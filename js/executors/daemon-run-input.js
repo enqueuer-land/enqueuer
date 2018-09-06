@@ -4,6 +4,7 @@ const subscription_1 = require("../subscriptions/subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const requisition_parser_1 = require("../runners/requisition-parser");
+//TODO test it
 class DaemonRunInput {
     constructor(input) {
         this.type = input.type;
@@ -13,8 +14,8 @@ class DaemonRunInput {
     getType() {
         return this.type;
     }
-    connect() {
-        logger_1.Logger.info(`Connecting to input ${this.type}`);
+    subscribe() {
+        logger_1.Logger.info(`Subscribing to input ${this.type}`);
         return new Promise((resolve, reject) => {
             this.subscription.subscribe()
                 .then(() => resolve())

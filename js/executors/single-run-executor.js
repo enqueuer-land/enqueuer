@@ -25,6 +25,7 @@ const requisition_parser_1 = require("../runners/requisition-parser");
 const glob = __importStar(require("glob"));
 const fs = __importStar(require("fs"));
 const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
+//TODO test it
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
         super();
