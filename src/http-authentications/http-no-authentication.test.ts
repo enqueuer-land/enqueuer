@@ -1,6 +1,14 @@
 import {HttpNoAuthentication} from './http-no-authentication';
+import {Injectable} from "conditional-injector";
+
+jest.mock('conditional-injector');
 
 describe('HttpNoAuthentication', () => {
+
+    it('should inject properly', () => {
+        Injectable.mockImplementation();
+        expect(Injectable).toHaveBeenCalledWith();
+    });
 
     it('generate', () => {
         const no: HttpNoAuthentication = new HttpNoAuthentication({});

@@ -1,4 +1,4 @@
-import {Container} from "conditional-injector";
+import {Container, Injectable} from "conditional-injector";
 import {StartEventPublisherReporter} from "./start-event-publisher-reporter";
 import {OnInitEventExecutor} from "../../events/on-init-event-executor";
 import {OnFinishEventExecutor} from "../../events/on-finish-event-executor";
@@ -55,9 +55,16 @@ let onMessageReceivedEventMock = jest.fn(() => {
 jest.mock('../../events/on-message-received-event-executor');
 OnMessageReceivedEventExecutor.mockImplementation((onMessageReceivedEventMock));
 
+jest.mock('conditional-injector');
+
 describe('StartEventPublisherReporter', () => {
     beforeEach(() => {
         publishMock = jest.fn(() => Promise.resolve(true));
+    });
+
+    it('should inject properly', () => {
+        Injectable.mockImplementation();
+        expect(Injectable).toHaveBeenCalledWith({predicate: expect.any(Function)});
     });
 
     it('Should call publisher constructor', () => {

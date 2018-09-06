@@ -1,4 +1,4 @@
-import {DaemonRunInput} from './daemon-run-input';
+import {DaemonInput} from './daemon-input';
 import {Logger} from '../loggers/logger';
 import {MultiPublisher} from '../publishers/multi-publisher';
 import {EnqueuerExecutor} from './enqueuer-executor';
@@ -12,7 +12,7 @@ import {ConfigurationValues} from '../configurations/configuration-values';
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
 export class DaemonRunExecutor extends EnqueuerExecutor {
 
-    private requisitionInputs: DaemonRunInput[];
+    private daemonInputs: DaemonInput[];
     private multiPublisher: MultiPublisher;
 
     public constructor(configuration: ConfigurationValues) {
@@ -21,13 +21,13 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         Logger.info('Executing in Daemon mode');
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
-        this.requisitionInputs = daemonMode.map((input: any) => new DaemonRunInput(input));
+        this.daemonInputs = daemonMode.map((input: any) => new DaemonInput(input));
     }
 
     public execute(): Promise<boolean> {
         return new Promise(() => {
-            this.requisitionInputs
-                .forEach((input: DaemonRunInput) => {
+            this.daemonInputs
+                .forEach((input: DaemonInput) => {
                     input.subscribe()
                         .then(() => {
                             return this.startReader(input);
@@ -40,7 +40,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private startReader(input: DaemonRunInput) {
+    private startReader(input: DaemonInput) {
         input.receiveMessage()
             .then( (requisitions: input.RequisitionModel[]) => new MultiRequisitionRunner(requisitions, input.getType()).run())
             .then( (report: output.RequisitionModel) => this.multiPublisher.publish(report))

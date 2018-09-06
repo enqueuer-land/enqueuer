@@ -4,12 +4,14 @@ const subscription_1 = require("../subscriptions/subscription");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const requisition_parser_1 = require("../runners/requisition-parser");
+const daemon_input_adapter_1 = require("./daemon-run-input-adapters/daemon-input-adapter");
 //TODO test it
-class DaemonRunInput {
+class DaemonInput {
     constructor(input) {
         this.type = input.type;
         this.parser = new requisition_parser_1.RequisitionParser();
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(input);
+        this.adapter = conditional_injector_1.Container.subclassesOf(daemon_input_adapter_1.DaemonInputAdapter).create(input);
     }
     getType() {
         return this.type;
@@ -25,10 +27,10 @@ class DaemonRunInput {
     receiveMessage() {
         return new Promise((resolve) => {
             this.subscription.receiveMessage()
-                .then((message) => {
-                logger_1.Logger.info(`${this.type} got a message`);
+                .then((payload) => {
+                logger_1.Logger.info(`Daemon ${this.type} got bytes`);
                 try {
-                    resolve(this.parser.parse(message));
+                    this.adaptMessage(payload, resolve);
                 }
                 catch (err) {
                     logger_1.Logger.error(`Error parsing requisition ${JSON.stringify(err)}`);
@@ -39,5 +41,14 @@ class DaemonRunInput {
     unsubscribe() {
         this.subscription.unsubscribe();
     }
+    adaptMessage(payload, resolve) {
+        const message = this.adapter.adapt(payload);
+        if (message) {
+            resolve(this.parser.parse(message));
+        }
+        else {
+            logger_1.Logger.warning(`Daemon input ${this.type} is not being able to adapt received message: ${Object.keys(payload)}`);
+        }
+    }
 }
-exports.DaemonRunInput = DaemonRunInput;
+exports.DaemonInput = DaemonInput;

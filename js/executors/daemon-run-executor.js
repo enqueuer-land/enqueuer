@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const daemon_run_input_1 = require("./daemon-run-input");
+const daemon_input_1 = require("./daemon-input");
 const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
@@ -22,11 +22,11 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         const daemonMode = configuration.runMode.daemon;
         logger_1.Logger.info('Executing in Daemon mode');
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
-        this.requisitionInputs = daemonMode.map((input) => new daemon_run_input_1.DaemonRunInput(input));
+        this.daemonInputs = daemonMode.map((input) => new daemon_input_1.DaemonInput(input));
     }
     execute() {
         return new Promise(() => {
-            this.requisitionInputs
+            this.daemonInputs
                 .forEach((input) => {
                 input.subscribe()
                     .then(() => {

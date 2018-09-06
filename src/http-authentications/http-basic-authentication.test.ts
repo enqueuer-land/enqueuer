@@ -1,6 +1,13 @@
 import {HttpBasicAuthentication} from './http-basic-authentication';
+import {Injectable} from "conditional-injector";
+
+jest.mock('conditional-injector');
 
 describe('HttpBasicAuthentication', () => {
+    it('should inject properly', () => {
+        Injectable.mockImplementation();
+        expect(Injectable).toBeCalled();
+    });
 
     it('tests number', () => {
         const authentication = {

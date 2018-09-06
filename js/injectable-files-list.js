@@ -17,6 +17,8 @@ require("./subscriptions/null-subscription");
 require("./executors/single-run-executor");
 require("./executors/daemon-run-executor");
 require("./executors/null-run-executor");
+require("./executors/daemon-run-input-adapters/null-daemon-input-adapter");
+require("./executors/daemon-run-input-adapters/uds-daemon-input-adapter");
 require("./publishers/http-client-publisher");
 require("./publishers/tcp-client-publisher");
 require("./publishers/sqs-publisher");
