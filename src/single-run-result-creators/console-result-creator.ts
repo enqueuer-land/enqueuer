@@ -4,15 +4,18 @@ import {RequisitionModel} from '../models/outputs/requisition-model';
 import chalk from 'chalk';
 import {DateController} from '../timers/date-controller';
 import {TestsCounter} from './tests-counter';
+import {Configuration} from '../configurations/configuration';
 
 export class ConsoleResultCreator implements ResultCreator {
     private failingTests: any = [];
     private startTime: DateController;
     private testsCounter: TestsCounter;
+    private loggable: boolean;
 
     public constructor() {
         this.startTime = new DateController();
         this.testsCounter = new TestsCounter();
+        this.loggable = !Configuration.getValues().quiet;
     }
 
     public addTestSuite(name: string, report: RequisitionModel): void {
@@ -75,12 +78,14 @@ export class ConsoleResultCreator implements ResultCreator {
                     this.failingTests.push(Object.assign({}, test, {hierarchy: hierarchy}));
                     let message = `\t${chalk.black.bgRed('[FAIL]')} `;
                     message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.red);
+                    message += '\n' + chalk.red(`\t\t ${test.description}`);
                     console.log(message);
-                    console.log(chalk.red(`\t\t ${test.description}`));
                 } else {
                     let message = `\t${chalk.black.bgGreen('[PASS]')} `;
                     message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.green);
-                    console.log(message);
+                    if (this.loggable) {
+                        console.log(message);
+                    }
                 }
             });
     }

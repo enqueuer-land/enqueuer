@@ -68,8 +68,13 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private getTestFiles(files: string[]): string[] {
         let result: string[] = [];
         if (files) {
-            files.forEach((file: string) => {
-                result = result.concat(glob.sync(file));
+            files.forEach((pattern: string) => {
+                const items = glob.sync(pattern);
+                if (items.length <= 0) {
+                    this.sendErrorMessage(`No file was found with: ${pattern}`);
+                } else {
+                    result = result.concat(items);
+                }
             });
             Logger.info(`Files list: ${result}`);
         }
@@ -105,7 +110,8 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     private parseFile(fileName: string): RequisitionModel[] | undefined {
         try {
-            return new RequisitionParser().parse(fs.readFileSync(fileName).toString());
+            const fileBufferContent = fs.readFileSync(fileName);
+            return new RequisitionParser().parse(fileBufferContent.toString());
         } catch (err) {
             this.sendErrorMessage(`Error parsing: ${fileName}: ` + err);
         }

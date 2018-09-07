@@ -6,11 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const date_controller_1 = require("../timers/date-controller");
 const tests_counter_1 = require("./tests-counter");
+const configuration_1 = require("../configurations/configuration");
 class ConsoleResultCreator {
     constructor() {
         this.failingTests = [];
         this.startTime = new date_controller_1.DateController();
         this.testsCounter = new tests_counter_1.TestsCounter();
+        this.loggable = !configuration_1.Configuration.getValues().quiet;
     }
     addTestSuite(name, report) {
         this.testsCounter.addTests(report);
@@ -66,13 +68,15 @@ class ConsoleResultCreator {
                 this.failingTests.push(Object.assign({}, test, { hierarchy: hierarchy }));
                 let message = `\t${chalk_1.default.black.bgRed('[FAIL]')} `;
                 message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.red);
+                message += '\n' + chalk_1.default.red(`\t\t ${test.description}`);
                 console.log(message);
-                console.log(chalk_1.default.red(`\t\t ${test.description}`));
             }
             else {
                 let message = `\t${chalk_1.default.black.bgGreen('[PASS]')} `;
                 message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.green);
-                console.log(message);
+                if (this.loggable) {
+                    console.log(message);
+                }
             }
         });
     }

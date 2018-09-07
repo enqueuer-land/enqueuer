@@ -11,9 +11,6 @@ export function start(): Promise<number> {
 
     if (Logger && logLevel) {
         Logger.setLoggerLevel(logLevel);
-        if (configuration.quiet) {
-            Logger.disable();
-        }
     }
 
     return new Promise((resolve, reject) => {

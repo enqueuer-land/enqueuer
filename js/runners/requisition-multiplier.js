@@ -6,11 +6,11 @@ class RequisitionMultiplier {
     }
     multiply() {
         const iterations = this.requisition.iterations;
-        if (!iterations || iterations == 1) {
+        if (this.requisition.iterations === undefined) {
             return [this.requisition];
         }
         let requisitions = [];
-        for (let x = iterations; x > 0; --x) {
+        for (let x = iterations || 0; x > 0; --x) {
             const clone = Object.assign({}, this.requisition);
             clone.name = clone.name + ` [${x}]`;
             requisitions = requisitions.concat(clone);

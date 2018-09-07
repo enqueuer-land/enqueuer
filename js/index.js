@@ -10,9 +10,6 @@ function start() {
     const logLevel = configuration.logLevel;
     if (logger_1.Logger && logLevel) {
         logger_1.Logger.setLoggerLevel(logLevel);
-        if (configuration.quiet) {
-            logger_1.Logger.disable();
-        }
     }
     return new Promise((resolve, reject) => {
         new enqueuer_starter_1.EnqueuerStarter(configuration)

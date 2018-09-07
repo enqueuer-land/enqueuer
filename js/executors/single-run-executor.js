@@ -71,8 +71,14 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     getTestFiles(files) {
         let result = [];
         if (files) {
-            files.forEach((file) => {
-                result = result.concat(glob.sync(file));
+            files.forEach((pattern) => {
+                const items = glob.sync(pattern);
+                if (items.length <= 0) {
+                    this.sendErrorMessage(`No file was found with: ${pattern}`);
+                }
+                else {
+                    result = result.concat(items);
+                }
             });
             logger_1.Logger.info(`Files list: ${result}`);
         }
@@ -106,7 +112,8 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
     }
     parseFile(fileName) {
         try {
-            return new requisition_parser_1.RequisitionParser().parse(fs.readFileSync(fileName).toString());
+            const fileBufferContent = fs.readFileSync(fileName);
+            return new requisition_parser_1.RequisitionParser().parse(fileBufferContent.toString());
         }
         catch (err) {
             this.sendErrorMessage(`Error parsing: ${fileName}: ` + err);

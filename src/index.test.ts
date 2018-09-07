@@ -78,15 +78,6 @@ describe('Index', () => {
         expect(Logger.setLoggerLevel).toHaveBeenCalledWith('logLevelTest');
     });
 
-    it('Should set quiet mode', () => {
-        configurationGetReturn.quiet = true;
-        remockConfiguration();
-        startMock = jest.fn(() => Promise.resolve(statusCode));
-
-        expect(start()).resolves.toEqual(statusCode);
-        expect(Logger.disable).toHaveBeenCalled();
-    });
-
     it('Should not set quiet mode', () => {
         configurationGetReturn.quiet = false;
         remockConfiguration();
