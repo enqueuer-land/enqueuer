@@ -65,19 +65,19 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private getTestFiles(files: string[]): string[] {
+    private getTestFiles(files: string[] = []): string[] {
         let result: string[] = [];
-        if (files) {
-            files.forEach((pattern: string) => {
+        files.forEach((pattern: any) => {
+            if (typeof(pattern) == 'string') {
                 const items = glob.sync(pattern);
                 if (items.length <= 0) {
                     this.sendErrorMessage(`No file was found with: ${pattern}`);
                 } else {
-                    result = result.concat(items);
+                    result = result.concat(items.sort());
                 }
-            });
-            Logger.info(`Files list: ${result}`);
-        }
+            }
+        });
+        Logger.info(`Files list: ${result}`);
         return result;
     }
 

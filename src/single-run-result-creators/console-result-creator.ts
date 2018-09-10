@@ -20,6 +20,7 @@ export class ConsoleResultCreator implements ResultCreator {
 
     public addTestSuite(name: string, report: RequisitionModel): void {
         this.testsCounter.addTests(report);
+        this.printSuiteResult(name, report);
         this.findRequisitions([report], []);
     }
 
@@ -74,20 +75,20 @@ export class ConsoleResultCreator implements ResultCreator {
 
     private inspectTests(tests: TestModel[], hierarchy: string[]) {
         tests.forEach((test: TestModel) => {
-                if (!test.valid) {
-                    this.failingTests.push(Object.assign({}, test, {hierarchy: hierarchy}));
-                    let message = `\t${chalk.black.bgRed('[FAIL]')} `;
-                    message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.red);
-                    message += '\n' + chalk.red(`\t\t ${test.description}`);
+            if (!test.valid) {
+                this.failingTests.push(Object.assign({}, test, {hierarchy: hierarchy}));
+                let message = `\t${chalk.black.bgRed('[FAIL]')} `;
+                message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.red);
+                message += '\n' + chalk.red(`\t\t ${test.description}`);
+                console.log(message);
+            }/* else {
+                let message = `\t${chalk.black.bgGreen('[PASS]')} `;
+                message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.green);
+                if (this.loggable) {
                     console.log(message);
-                } else {
-                    let message = `\t${chalk.black.bgGreen('[PASS]')} `;
-                    message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.green);
-                    if (this.loggable) {
-                        console.log(message);
-                    }
                 }
-            });
+            }*/
+        });
     }
 
     private createTestHierarchyMessage(hierarchy: string[], name: string, color: Function) {
@@ -114,5 +115,17 @@ export class ConsoleResultCreator implements ResultCreator {
             return chalk.bgYellow.black;
         }
         return chalk.bgRed.black;
+    }
+
+    private printSuiteResult(name: string, report: RequisitionModel) {
+        if (!report.valid) {
+            let message = `\t${chalk.black.bgRed('[FAIL]')} `;
+            message += chalk.red(name);
+            console.log(message);
+        } else {
+            let message = `\t${chalk.black.bgGreen('[PASS]')} `;
+            message += chalk.green(name);
+            console.log(message);
+        }
     }
 }

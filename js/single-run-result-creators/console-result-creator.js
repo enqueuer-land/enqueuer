@@ -16,6 +16,7 @@ class ConsoleResultCreator {
     }
     addTestSuite(name, report) {
         this.testsCounter.addTests(report);
+        this.printSuiteResult(name, report);
         this.findRequisitions([report], []);
     }
     addError(err) {
@@ -70,14 +71,13 @@ class ConsoleResultCreator {
                 message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.red);
                 message += '\n' + chalk_1.default.red(`\t\t ${test.description}`);
                 console.log(message);
-            }
-            else {
-                let message = `\t${chalk_1.default.black.bgGreen('[PASS]')} `;
-                message += this.createTestHierarchyMessage(hierarchy, test.name, chalk_1.default.green);
+            } /* else {
+                let message = `\t${chalk.black.bgGreen('[PASS]')} `;
+                message += this.createTestHierarchyMessage(hierarchy, test.name, chalk.green);
                 if (this.loggable) {
                     console.log(message);
                 }
-            }
+            }*/
         });
     }
     createTestHierarchyMessage(hierarchy, name, color) {
@@ -103,6 +103,18 @@ class ConsoleResultCreator {
             return chalk_1.default.bgYellow.black;
         }
         return chalk_1.default.bgRed.black;
+    }
+    printSuiteResult(name, report) {
+        if (!report.valid) {
+            let message = `\t${chalk_1.default.black.bgRed('[FAIL]')} `;
+            message += chalk_1.default.red(name);
+            console.log(message);
+        }
+        else {
+            let message = `\t${chalk_1.default.black.bgGreen('[PASS]')} `;
+            message += chalk_1.default.green(name);
+            console.log(message);
+        }
     }
 }
 exports.ConsoleResultCreator = ConsoleResultCreator;

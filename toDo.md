@@ -20,6 +20,20 @@ Inception run only one spawn mode
 enqueuer -c configFile => enqueuer configFile
 verify pub/sub attributes existence and types
 
+Combine files:
+
+        flow://files
+            -   login.yml
+            -   login.yml
+            -   dir/**/*.yml
+            -   branches:
+                store:
+                    key: value
+                    files: 
+                        -   pay1.yml
+                        -   pay2.yml
+
+
 Daemon input adapter
 
 #   File                                    |  % Stmts | % Branch |  % Funcs |  % Lines

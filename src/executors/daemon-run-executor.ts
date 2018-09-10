@@ -8,7 +8,6 @@ import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
 
-//TODO test it
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
 export class DaemonRunExecutor extends EnqueuerExecutor {
 
@@ -47,7 +46,14 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
             .then(() => this.startReader(input))
             .catch( (err) => {
                 Logger.error(err);
-                this.multiPublisher.publish(JSON.stringify(err)).then(() => this.startReader(input));
+                this.multiPublisher.publish(err)
+                    .then(() => {
+                        this.startReader(input);
+                    })
+                    .catch((err) => {
+                        Logger.error(err);
+                        this.startReader(input);
+                    });
             });
     }
 

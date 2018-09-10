@@ -68,20 +68,20 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                 .then(() => resolve(this.finishExecution()));
         });
     }
-    getTestFiles(files) {
+    getTestFiles(files = []) {
         let result = [];
-        if (files) {
-            files.forEach((pattern) => {
+        files.forEach((pattern) => {
+            if (typeof (pattern) == 'string') {
                 const items = glob.sync(pattern);
                 if (items.length <= 0) {
                     this.sendErrorMessage(`No file was found with: ${pattern}`);
                 }
                 else {
-                    result = result.concat(items);
+                    result = result.concat(items.sort());
                 }
-            });
-            logger_1.Logger.info(`Files list: ${result}`);
-        }
+            }
+        });
+        logger_1.Logger.info(`Files list: ${result}`);
         return result;
     }
     sendErrorMessage(message) {
