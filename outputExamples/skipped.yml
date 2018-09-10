@@ -1,0 +1,43 @@
+name: examples/skipped.yml
+valid: true
+tests: []
+startEvent: {}
+requisitions:
+  -
+    valid: true
+    tests: []
+    name: 'Requisition #0 [0]'
+    time:
+      totalTime: 1017
+      startTime: '2018-09-10T22:10:47.522Z'
+      endTime: '2018-09-10T22:10:48.539Z'
+    subscriptions: []
+    startEvent:
+      subscription:
+        name: 'Start event subscription'
+        type: tcp-server
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected value to be equal to ''1''. Received ''1'''
+          -
+            valid: true
+            name: 'Subscription avoided'
+            description: 'Avoidable subscription has not received a message'
+        valid: true
+        connectionTime: '2018-09-10T22:10:47.562Z'
+  -
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'Requisition skipped'
+        description: 'There is no iterations set to this requisition'
+    name: 'Requisition #0 [1]'
+    time:
+      startTime: ""
+      endTime: ""
+      totalTime: 0
+    subscriptions: []
+    startEvent: {}

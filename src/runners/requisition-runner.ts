@@ -34,12 +34,18 @@ export class RequisitionRunner {
 
     private startRequisition(resolve: any) {
         return new Timeout(() => {
-            const requisitionReporter = new RequisitionReporter(this.requisitionModel);
-            requisitionReporter.start(() => {
-                const report = requisitionReporter.getReport();
-                Logger.info(`Requisition '${this.requisitionModel.name}' is over (${report.valid})`);
-                resolve(report);
-            });
+            const shouldBeSkipped = this.requisitionModel.iterations !== undefined && this.requisitionModel.iterations <= 0;
+            if (shouldBeSkipped ) {
+                Logger.info(`Requisition will be skipped: ${this.requisitionModel.iterations}`);
+                resolve(this.createSkippedReport());
+            } else {
+                const requisitionReporter = new RequisitionReporter(this.requisitionModel);
+                requisitionReporter.start(() => {
+                    const report = requisitionReporter.getReport();
+                    Logger.info(`Requisition '${this.requisitionModel.name}' is over (${report.valid})`);
+                    resolve(report);
+                });
+            }
         });
     }
 
@@ -50,6 +56,25 @@ export class RequisitionRunner {
                 valid: false,
                 name: 'Requisition ran',
                 description: err
+            }],
+            name: this.requisitionModel.name,
+            time: {
+                startTime: '',
+                endTime: '',
+                totalTime: 0
+            },
+            subscriptions: [],
+            startEvent: {}
+        };
+    }
+
+    private createSkippedReport(): output.RequisitionModel {
+        return {
+            valid: true,
+            tests: [{
+                valid: true,
+                name: 'Requisition skipped',
+                description: 'There is no iterations set to this requisition'
             }],
             name: this.requisitionModel.name,
             time: {

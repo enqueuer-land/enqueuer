@@ -29,6 +29,22 @@ Timeout.mockImplementation((cb) => {
 });
 
 describe('RequisitionRunner', () => {
+
+    it('Should return requisition reporter skipped', done => {
+        const requisition: RequisitionModel = {
+            timeout: '<<keyName>>',
+            iterations: 0
+        };
+
+        new RequisitionRunner(requisition).run().then(report =>
+        {
+            expect(report.valid).toBeTruthy();
+            expect(report.tests[0].valid).toBeTruthy();
+            done();
+        });
+        expect(startMock).not.toHaveBeenCalled();
+    });
+
     it('Should return requisition reporter reporter', () => {
         const requisition: RequisitionModel = {
             timeout: '<<keyName>>'

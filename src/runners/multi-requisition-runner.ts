@@ -82,9 +82,16 @@ export class MultiRequisitionRunner {
     private promisifyRequisitionExecutionCall() {
         let requisitions: input.RequisitionModel[] = [];
         this.requisitions
-            .forEach(requisition => requisitions = requisitions
-                                                                .concat(new RequisitionMultiplier(requisition)
-                                                                                    .multiply()));
+            .forEach(requisition => {
+                const iterations = requisition.iterations;
+                const items = new RequisitionMultiplier(requisition).multiply();
+                if (items.length <= 0) {
+                    Logger.debug(`No result requisition after iterations evaluation: ${iterations}`);
+                } else {
+                    requisitions = requisitions.concat(items);
+                }
+            });
+
         return requisitions.map((requisition: input.RequisitionModel) => () => new RequisitionRunner(requisition).run());
     }
 

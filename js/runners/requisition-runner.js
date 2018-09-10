@@ -28,12 +28,19 @@ class RequisitionRunner {
     }
     startRequisition(resolve) {
         return new timeout_1.Timeout(() => {
-            const requisitionReporter = new requisition_reporter_1.RequisitionReporter(this.requisitionModel);
-            requisitionReporter.start(() => {
-                const report = requisitionReporter.getReport();
-                logger_1.Logger.info(`Requisition '${this.requisitionModel.name}' is over (${report.valid})`);
-                resolve(report);
-            });
+            const shouldBeSkipped = this.requisitionModel.iterations !== undefined && this.requisitionModel.iterations <= 0;
+            if (shouldBeSkipped) {
+                logger_1.Logger.info(`Requisition will be skipped: ${this.requisitionModel.iterations}`);
+                resolve(this.createSkippedReport());
+            }
+            else {
+                const requisitionReporter = new requisition_reporter_1.RequisitionReporter(this.requisitionModel);
+                requisitionReporter.start(() => {
+                    const report = requisitionReporter.getReport();
+                    logger_1.Logger.info(`Requisition '${this.requisitionModel.name}' is over (${report.valid})`);
+                    resolve(report);
+                });
+            }
         });
     }
     createRunningError(err) {
@@ -43,6 +50,24 @@ class RequisitionRunner {
                     valid: false,
                     name: 'Requisition ran',
                     description: err
+                }],
+            name: this.requisitionModel.name,
+            time: {
+                startTime: '',
+                endTime: '',
+                totalTime: 0
+            },
+            subscriptions: [],
+            startEvent: {}
+        };
+    }
+    createSkippedReport() {
+        return {
+            valid: true,
+            tests: [{
+                    valid: true,
+                    name: 'Requisition skipped',
+                    description: 'There is no iterations set to this requisition'
                 }],
             name: this.requisitionModel.name,
             time: {
