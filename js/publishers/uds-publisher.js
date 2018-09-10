@@ -50,7 +50,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
         })
             .once('data', (msg) => {
             logger_1.Logger.debug(`Uds publisher got message`);
-            if (this.messageReceived === null || this.messageReceived === undefined) {
+            if (!this.messageReceived) {
                 this.messageReceived = {
                     payload: ''
                 };

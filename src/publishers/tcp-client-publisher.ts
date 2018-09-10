@@ -72,7 +72,7 @@ export class TcpClientPublisher extends Publisher {
         })
         .on('data', (msg: Buffer) => {
             Logger.debug(`Tcp client got data '${msg.toString()}'`);
-            if (this.messageReceived === null || this.messageReceived === undefined) {
+            if (!this.messageReceived) {
                 this.messageReceived = {
                     payload: '',
                     stream: stream.address()

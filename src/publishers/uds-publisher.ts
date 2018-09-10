@@ -43,7 +43,7 @@ export class UdsPublisher extends Publisher {
         })
         .once('data', (msg: Buffer) => {
             Logger.debug(`Uds publisher got message`);
-            if (this.messageReceived === null || this.messageReceived === undefined) {
+            if (!this.messageReceived) {
                 this.messageReceived = {
                     payload: ''
                 };

@@ -75,7 +75,7 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         })
             .on('data', (msg) => {
             logger_1.Logger.debug(`Tcp client got data '${msg.toString()}'`);
-            if (this.messageReceived === null || this.messageReceived === undefined) {
+            if (!this.messageReceived) {
                 this.messageReceived = {
                     payload: '',
                     stream: stream.address()

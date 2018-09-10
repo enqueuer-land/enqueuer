@@ -14,17 +14,27 @@ const conditional_injector_1 = require("conditional-injector");
 let StandardInputSubscription = class StandardInputSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
         super(subscriptionModel);
-        this.value = '';
     }
     receiveMessage() {
         return new Promise((resolve) => {
-            process.stdin.on('end', () => resolve(this.value));
+            process.stdin.on('end', () => {
+                if (this.value) {
+                    resolve(this.value);
+                }
+            });
         });
     }
     subscribe() {
         process.stdin.setEncoding('utf8');
         process.stdin.resume();
-        process.stdin.on('data', (chunk) => this.value += chunk);
+        process.stdin.on('data', (chunk) => {
+            if (!this.value) {
+                this.value = chunk;
+            }
+            else {
+                this.value += chunk;
+            }
+        });
         return Promise.resolve();
     }
     unsubscribe() {

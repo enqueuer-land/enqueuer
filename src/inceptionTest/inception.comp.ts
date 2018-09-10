@@ -41,7 +41,7 @@ describe('Inception test', () => {
     });
 
     it('should run enqueuer to test another enqueuer process', done => {
-        jest.setTimeout(10000);
+        jest.setTimeout(15000);
 
         beingTested = spawn('nqr',  ['--config-file', 'src/inceptionTest/beingTested.yml']);
         // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
@@ -49,7 +49,7 @@ describe('Inception test', () => {
 
         tester = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/tester.yml']);
         // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
-        sleep(2500);
+        sleep(6000);
 
         const testerReports = findEveryJsonFile()
             .filter(filename => filename.indexOf('_test.') >= 0)
