@@ -2,7 +2,6 @@ import {Logger} from '../loggers/logger';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {RequisitionRunner} from './requisition-runner';
-import {RequisitionMultiplier} from './requisition-multiplier';
 
 //TODO test it
 export class MultiRequisitionRunner {
@@ -79,29 +78,17 @@ export class MultiRequisitionRunner {
         }
     }
 
-    private promisifyRequisitionExecutionCall() {
-        let requisitions: input.RequisitionModel[] = [];
-        this.requisitions
-            .forEach(requisition => {
-                const iterations = requisition.iterations;
-                const items = new RequisitionMultiplier(requisition).multiply();
-                if (items.length <= 0) {
-                    Logger.debug(`No result requisition after iterations evaluation: ${iterations}`);
-                } else {
-                    requisitions = requisitions.concat(items);
-                }
-            });
-
-        return requisitions.map((requisition: input.RequisitionModel) => () => new RequisitionRunner(requisition).run());
+    private promisifyRequisitionExecutionCall(): (() => Promise<output.RequisitionModel>)[] {
+        return this.requisitions.map((requisition: input.RequisitionModel) => () => new RequisitionRunner(requisition).run());
     }
 
     private sequentialRunner(requisitionRunFunctions: Function[]): Promise<output.RequisitionModel[]> {
         return requisitionRunFunctions.reduce((requisitionRan, runPromiseFunction) => {
             return requisitionRan
-                .then(result => {
-                    return runPromiseFunction().then(Array.prototype.concat.bind(result));
-                })
-                .catch(err => Logger.error(`Error running run promise ${err}`));
+                        .then(result => {
+                            return runPromiseFunction().then(Array.prototype.concat.bind(result));
+                        })
+                        .catch(err => Logger.error(`Error running run promise ${err}`));
         }, Promise.resolve([]));
     }
 

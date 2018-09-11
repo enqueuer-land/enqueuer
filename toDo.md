@@ -33,7 +33,20 @@ Combine files:
                         -   pay1.yml
                         -   pay2.yml
 
-
+        flow: //flowFile.yml
+            stopOnError: true
+            branches:
+            store:
+                user: guigui
+            files:
+                -
+                -
+                -
+                -
+                onError:
+                    - 
+                
+                
 Daemon input adapter
 
 #   File                                    |  % Stmts | % Branch |  % Funcs |  % Lines

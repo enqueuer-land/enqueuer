@@ -36,8 +36,7 @@ describe('RequisitionRunner', () => {
             iterations: 0
         };
 
-        new RequisitionRunner(requisition).run().then(report =>
-        {
+        new RequisitionRunner(requisition).run().then(report => {
             expect(report.valid).toBeTruthy();
             expect(report.tests[0].valid).toBeTruthy();
             done();
@@ -45,14 +44,32 @@ describe('RequisitionRunner', () => {
         expect(startMock).not.toHaveBeenCalled();
     });
 
-    it('Should return requisition reporter reporter', () => {
+    it('Should return requisition report', () => {
         const requisition: RequisitionModel = {
-            timeout: '<<keyName>>'
+            timeout: '<<keyName>>',
         };
 
         expect(new RequisitionRunner(requisition).run()).resolves.toBe(report);
-        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({timeout: 'value'});
+        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({"timeout": "value"});
         expect(startMock).toHaveBeenCalled();
+    });
+
+    it('Should return requisition report collection', () => {
+        const requisition: RequisitionModel = {
+            timeout: '<<keyName>>',
+            name: 'req name',
+            iterations: 2
+        };
+
+        expect(new RequisitionRunner(requisition).run()).resolves.toEqual({
+            "name": "req name iterator collection",
+            "requisitions": ["I'm a report", "I'm a report"],
+            "startEvent": {},
+            "subscriptions": [],
+            "tests": [],
+            "time": {"endTime": "", "startTime": "", "totalTime": 0},
+            "valid": true
+        });
     });
 
 });

@@ -1,14 +1,7 @@
 import {RequisitionModel} from "../models/inputs/requisition-model";
 import {RequisitionMultiplier} from "./requisition-multiplier";
-import {Store} from "../configurations/store";
 
 let requisition: RequisitionModel;
-
-jest.mock('../configurations/store');
-Store.getData.mockImplementation(() => {
-    return {iterations: 3}
-});
-
 
 describe('RequisitionMultiplier', () => {
     beforeEach(() => {
@@ -39,13 +32,6 @@ describe('RequisitionMultiplier', () => {
         expect(multiplied.length).toBe(requisition.iterations);
     });
 
-    it('Should replace variable', () => {
-        requisition.iterations = '<<iterations>>';
-        const multiplied = new RequisitionMultiplier(requisition).multiply();
-
-        expect(multiplied.length).toBe(3);
-    });
-
     it('Should default unknown variable', () => {
         requisition.iterations = '<<UnknownIterations>>';
         const multiplied = new RequisitionMultiplier(requisition).multiply();
@@ -62,12 +48,11 @@ describe('RequisitionMultiplier', () => {
     });
 
     it('Should set default name', () => {
-        delete requisition.iterations;
 
         const multiplied = new RequisitionMultiplier(requisition).multiply();
 
-        expect(multiplied.length).toBe(1);
-        expect(multiplied[0].name).toBe('file');
+        expect(multiplied.length).toBe(requisition.iterations);
+        expect(multiplied[0].name).toBe('file [0]');
     });
 
     it('Should default (null) iterations to 0', () => {

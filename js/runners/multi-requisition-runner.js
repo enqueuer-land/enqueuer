@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const requisition_runner_1 = require("./requisition-runner");
-const requisition_multiplier_1 = require("./requisition-multiplier");
 //TODO test it
 class MultiRequisitionRunner {
     constructor(requisitions, name) {
@@ -70,19 +69,7 @@ class MultiRequisitionRunner {
         }
     }
     promisifyRequisitionExecutionCall() {
-        let requisitions = [];
-        this.requisitions
-            .forEach(requisition => {
-            const iterations = requisition.iterations;
-            const items = new requisition_multiplier_1.RequisitionMultiplier(requisition).multiply();
-            if (items.length <= 0) {
-                logger_1.Logger.debug(`No result requisition after iterations evaluation: ${iterations}`);
-            }
-            else {
-                requisitions = requisitions.concat(items);
-            }
-        });
-        return requisitions.map((requisition) => () => new requisition_runner_1.RequisitionRunner(requisition).run());
+        return this.requisitions.map((requisition) => () => new requisition_runner_1.RequisitionRunner(requisition).run());
     }
     sequentialRunner(requisitionRunFunctions) {
         return requisitionRunFunctions.reduce((requisitionRan, runPromiseFunction) => {
