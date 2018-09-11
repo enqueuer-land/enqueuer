@@ -7,7 +7,7 @@ export class OnMessageReceivedEventExecutor extends EventExecutor {
     private messageReceiver: MessageReceiver;
 
     constructor(name: string, messageReceiver: MessageReceiver) {
-        super(messageReceiver.onMessageReceived);
+        super('onMessageReceived', messageReceiver.onMessageReceived);
         this.messageReceiver = messageReceiver;
 
         if (typeof(this.messageReceiver.messageReceived) == 'object' && !Buffer.isBuffer(this.messageReceiver.messageReceived)) {

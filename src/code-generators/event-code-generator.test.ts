@@ -26,7 +26,7 @@ describe('EventCodeGenerator', () => {
             "                        \n" +
             "                    } catch (err) {\n" +
             "                        testerName.addTest({\n" +
-            "                                errorDescription: `Error executing 'script' code: '${err}'`,\n" +
+            "                                errorDescription: `Error executing 'eventName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
             "                                label: \"Valid 'script' code\"\n" +
             "                            });\n" +
@@ -41,7 +41,7 @@ describe('EventCodeGenerator', () => {
             "                        \n" +
             "                    } catch (err) {\n" +
             "                        testerInstanceName.addTest({\n" +
-            "                                errorDescription: `Error executing 'script' code: '${err}'`,\n" +
+            "                                errorDescription: `Error executing 'eventName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
             "                                label: \"Valid 'script' code\"\n" +
             "                            });\n" +
@@ -56,7 +56,7 @@ describe('EventCodeGenerator', () => {
             "                        \n" +
             "                    } catch (err) {\n" +
             "                        testerName.addTest({\n" +
-            "                                errorDescription: `Error executing 'script' code: '${err}'`,\n" +
+            "                                errorDescription: `Error executing 'eventName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
             "                                label: \"Valid 'script' code\"\n" +
             "                            });\n" +
@@ -73,14 +73,14 @@ describe('EventCodeGenerator', () => {
     });
 
     it('Should insert script', () => {
-        const eventCodeGenerator: EventCodeGenerator = new EventCodeGenerator('testerName', 'store', event);
+        const eventCodeGenerator: EventCodeGenerator = new EventCodeGenerator('testerName', 'store', event, 'differentName');
         const code: string = eventCodeGenerator.generate();
 
         expect(code).toBe("try {\n" +
             "                        hey\n" +
             "                    } catch (err) {\n" +
             "                        testerName.addTest({\n" +
-            "                                errorDescription: `Error executing 'script' code: '${err}'`,\n" +
+            "                                errorDescription: `Error executing 'differentName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
             "                                label: \"Valid 'script' code\"\n" +
             "                            });\n" +

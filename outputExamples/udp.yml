@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 50
-      startTime: '2018-09-11T17:50:02.309Z'
-      endTime: '2018-09-11T17:50:02.359Z'
+      totalTime: 54
+      startTime: '2018-09-11T20:38:22.702Z'
+      endTime: '2018-09-11T20:38:22.756Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -19,17 +19,17 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expected value to be equal to ''it''. Received ''it'''
+            description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''
           -
             name: 'Remote Adderss'
             valid: true
-            description: 'Expected value to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
+            description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.312Z'
+        connectionTime: '2018-09-11T20:38:22.706Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -40,4 +40,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T17:50:02.351Z'
+        publishTime: '2018-09-11T20:38:22.749Z'

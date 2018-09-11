@@ -9,16 +9,16 @@ requisitions:
       -
         name: 'Requisitions exists onInit'
         valid: true
-        description: '''[object Object]'' is not defined'
+        description: '''requisition'' is not defined'
       -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 174
-      startTime: '2018-09-11T17:50:02.263Z'
-      endTime: '2018-09-11T17:50:02.437Z'
+      totalTime: 159
+      startTime: '2018-09-11T20:38:22.659Z'
+      endTime: '2018-09-11T20:38:22.818Z'
       timeout: 2000
     subscriptions:
       -
@@ -28,29 +28,29 @@ requisitions:
           -
             name: 'Subscription exists onInit'
             valid: true
-            description: '''[object Object]'' is not defined'
+            description: '''subscription'' is not defined'
           -
             name: 'Subscription name'
             valid: true
-            description: 'Expected value to be equal to ''changed''. Received ''changed'''
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
           -
             name: 'Subscription exists onMessageReceived'
             valid: true
-            description: '''[object Object]'' is not defined'
+            description: '''subscription'' is not defined'
           -
             name: 'Subscription name changed'
             valid: true
-            description: 'Expected value to be equal to ''changed''. Received ''changed'''
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: '''requisition::onInit-> publisher::onInit-> subscription::onInit'' does not contain ''subscription::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''subscription::onInit'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.313Z'
+        connectionTime: '2018-09-11T20:38:22.706Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -60,11 +60,11 @@ requisitions:
           -
             name: 'Publisher exists onInit'
             valid: true
-            description: '''[object Object]'' is not defined'
+            description: '''publisher'' is not defined'
           -
             name: 'Publisher name'
             valid: true
-            description: '''changed'' is not defined'
+            description: '''[object Object]'' is not defined'
           -
             name: Published
             valid: true
@@ -72,21 +72,21 @@ requisitions:
           -
             name: 'Publisher exists onMessageReceived'
             valid: true
-            description: '''[object Object]'' is not defined'
+            description: '''publisher'' is not defined'
           -
             name: 'Requisition onInit'
             valid: true
-            description: '''requisition::onInit-> publisher::onInit-> subscription::onInit'' does not contain ''requisition::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''requisition::onInit'''
           -
             name: 'Publisher name changed'
             valid: true
-            description: 'Expected value to be equal to ''changed''. Received ''changed'''
+            description: 'Expected ''publisher.name'' to be equal to ''changed''. Received ''changed'''
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: '''requisition::onInit-> publisher::onInit-> subscription::onInit'' does not contain ''publisher::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T17:50:02.437Z'
+        publishTime: '2018-09-11T20:38:22.817Z'

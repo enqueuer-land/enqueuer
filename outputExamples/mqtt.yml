@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 257
-      startTime: '2018-09-11T17:50:02.282Z'
-      endTime: '2018-09-11T17:50:02.539Z'
+      totalTime: 221
+      startTime: '2018-09-11T20:38:22.678Z'
+      endTime: '2018-09-11T20:38:22.899Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -19,21 +19,21 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expected value to be equal to ''enqueuer''. Received ''enqueuer'''
+            description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             name: Topic
             valid: true
-            description: 'Expected value to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+            description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
           -
             name: 'Beatles song'
             valid: true
-            description: 'Expected value to be greater than ''5''. Received ''8'''
+            description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.496Z'
+        connectionTime: '2018-09-11T20:38:22.820Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -44,4 +44,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T17:50:02.536Z'
+        publishTime: '2018-09-11T20:38:22.896Z'

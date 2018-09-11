@@ -47,7 +47,7 @@ class AssertionCodeGenerator {
         if (this.tester[assertionMethodName] !== undefined) {
             const value = assertion[assertionMethodName];
             return `;   try {
-                            ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${value});
+                            ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${value}, '${value}');
                         } ` + this.generateAssertionCodeCatch();
         }
         throw Error('One argument method');
@@ -64,7 +64,7 @@ class AssertionCodeGenerator {
         if (this.tester[assertionMethodName] !== undefined) {
             const value = assertion[assertionMethodName];
             return `;   try {
-                            ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${expect}, ${value});
+                            ${this.testerInstanceName}.${assertionMethodName}(\`${assertionName}\`, ${expect}, ${value}, '${expect}');
                         } ` + this.generateAssertionCodeCatch();
         }
         throw Error('Two arguments method');

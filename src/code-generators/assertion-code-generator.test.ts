@@ -84,7 +84,7 @@ describe('AssertionCodeGenerator', () => {
 
         const code: string = assertionCodeGenerator.generate({name: 'label name', expect: 5, toBeGreaterThan: 3});
         expect(code).toBe(";   try {\n" +
-            "                            tester.toBeGreaterThan(`label name`, 5, 3);\n" +
+            "                            tester.toBeGreaterThan(`label name`, 5, 3, '5');\n" +
             "                        } catch (err) {\n" +
             "                        tester.addTest({\n" +
             "                            errorDescription: `Error executing assertion: '${err}'`,\n" +
@@ -99,7 +99,7 @@ describe('AssertionCodeGenerator', () => {
 
         const code: string = assertionCodeGenerator.generate({name: 'label name', expectToBeDefined: 'varName'});
         expect(code).toBe(";   try {\n" +
-            "                            tester.expectToBeDefined(`label name`, varName);\n" +
+            "                            tester.expectToBeDefined(`label name`, varName, 'varName');\n" +
             "                        } catch (err) {\n" +
             "                        tester.addTest({\n" +
             "                            errorDescription: `Error executing assertion: '${err}'`,\n" +

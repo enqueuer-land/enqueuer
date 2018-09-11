@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 222
-      startTime: '2018-09-11T17:50:02.264Z'
-      endTime: '2018-09-11T17:50:02.486Z'
+      totalTime: 198
+      startTime: '2018-09-11T20:38:22.660Z'
+      endTime: '2018-09-11T20:38:22.858Z'
     subscriptions:
       -
         name: 'proxy server'
@@ -35,21 +35,21 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expected value to be equal to ''test''. Received ''test'''
+            description: 'Expected ''JSON.parse(message.body).proxy'' to be equal to ''test''. Received ''test'''
           -
             name: Params
             valid: true
-            description: 'Expected value to be equal to ''idValue''. Received ''idValue'''
+            description: 'Expected ''params.id'' to be equal to ''idValue''. Received ''idValue'''
           -
             name: Query
             valid: true
-            description: 'Expected value to be equal to ''proxied''. Received ''proxied'''
+            description: 'Expected ''query.query'' to be equal to ''proxied''. Received ''proxied'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.328Z'
+        connectionTime: '2018-09-11T20:38:22.723Z'
       -
         name: 'real server'
         type: http-server
@@ -73,21 +73,21 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expected value to be equal to ''test''. Received ''test'''
+            description: 'Expected ''JSON.parse(message.body).proxy'' to be equal to ''test''. Received ''test'''
           -
             name: Params
             valid: true
-            description: 'Expected value to be equal to ''idValue''. Received ''idValue'''
+            description: 'Expected ''params.firstId'' to be equal to ''idValue''. Received ''idValue'''
           -
             name: Query
             valid: true
-            description: 'Expected value to be equal to ''proxied''. Received ''proxied'''
+            description: 'Expected ''query.query'' to be equal to ''proxied''. Received ''proxied'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.328Z'
+        connectionTime: '2018-09-11T20:38:22.723Z'
     startEvent:
       publisher:
         name: 'publisher proxy'
@@ -101,13 +101,13 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected value to be equal to ''333''. Received ''333'''
+            description: 'Expected ''statusCode'' to be equal to ''333''. Received ''333'''
           -
             name: Body
             valid: true
-            description: 'Expected value to be equal to ''responsePayload''. Received ''responsePayload'''
+            description: 'Expected ''body'' to be equal to ''responsePayload''. Received ''responsePayload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T17:50:02.486Z'
+        publishTime: '2018-09-11T20:38:22.857Z'

@@ -6,15 +6,16 @@ const store_1 = require("../configurations/store");
 const logger_1 = require("../loggers/logger");
 const event_code_generator_1 = require("../code-generators/event-code-generator");
 class EventExecutor {
-    constructor(event) {
+    constructor(name, event) {
         this.testerInstanceName = 'tester';
         this.storeInstanceName = 'store';
         this.arguments = [];
         this.event = this.initializeEvent(event);
+        this.name = name;
     }
     execute() {
         logger_1.Logger.trace(`Executing event function`);
-        const eventCodeGenerator = new event_code_generator_1.EventCodeGenerator(this.testerInstanceName, this.storeInstanceName, this.event);
+        const eventCodeGenerator = new event_code_generator_1.EventCodeGenerator(this.testerInstanceName, this.storeInstanceName, this.event, this.name);
         const code = eventCodeGenerator.generate();
         return this.runEvent(code).map(test => {
             return { name: test.label, valid: test.valid, description: test.errorDescription };
@@ -60,7 +61,7 @@ class EventExecutor {
             dynamicFunction.execute();
         }
         catch (err) {
-            logger_1.Logger.error(`Error running event: ${err}`);
+            logger_1.Logger.error(`Error running event '${this.name}': ${err}`);
             tester.addTest({ valid: false, label: 'Event ran', errorDescription: err });
         }
         return tester.getReport();

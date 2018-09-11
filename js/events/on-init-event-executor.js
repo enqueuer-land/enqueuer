@@ -4,7 +4,7 @@ const logger_1 = require("../loggers/logger");
 const event_executor_1 = require("./event-executor");
 class OnInitEventExecutor extends event_executor_1.EventExecutor {
     constructor(name, initializable) {
-        super(initializable.onInit);
+        super('onInit', initializable.onInit);
         this.initializable = initializable;
         this.addArgument(name, this.initializable);
     }

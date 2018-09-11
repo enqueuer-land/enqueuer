@@ -74,7 +74,6 @@ class RequisitionRunner {
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
         const requisitionModel = placeHolderReplacer.addVariableMap(store_1.Store.getData())
             .replace(requisition);
-        logger_1.Logger.trace(`Requisition iterations: ${requisitionModel && requisitionModel.iterations}`);
         if (this.shouldSkipRequisition(requisition, requisitionModel)) {
             logger_1.Logger.info(`Requisition will be skipped`);
             return Promise.resolve(this.createSkippedReport(this.name));
@@ -85,7 +84,7 @@ class RequisitionRunner {
                 requisitionReporter.start(() => {
                     const report = requisitionReporter.getReport();
                     logger_1.Logger.info(`Requisition '${report.name}' is over (${report.valid})`);
-                    logger_1.Logger.debug(`Store keys: ${Object.keys(store_1.Store.getData())}`);
+                    logger_1.Logger.trace(`Store keys: ${Object.keys(store_1.Store.getData())}`);
                     resolve(report);
                 });
             }).start(requisitionModel.delay || 0);
@@ -99,6 +98,7 @@ class RequisitionRunner {
             (requisitionModel.iterations && requisitionModel.iterations <= 0);
         return requisitionModel.iterations && (definedIterationsButLessThanZero);
     }
+    //TODO remove all of default reports to their own files
     createRunningError(name, err) {
         return {
             valid: false,

@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 239
-      startTime: '2018-09-11T17:50:02.282Z'
-      endTime: '2018-09-11T17:50:02.521Z'
+      totalTime: 199
+      startTime: '2018-09-11T20:38:22.678Z'
+      endTime: '2018-09-11T20:38:22.877Z'
       timeout: 8000
     subscriptions:
       -
@@ -24,29 +24,29 @@ requisitions:
           -
             name: payload
             valid: true
-            description: 'Expected value to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
+            description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
           -
             name: topic
             valid: true
-            description: 'Expected value to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
+            description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
           -
             name: offset
             valid: true
-            description: '''154'' is not defined'
+            description: '''offset'' is not defined'
           -
             name: partition
             valid: true
-            description: '''0'' is not defined'
+            description: '''partition'' is not defined'
           -
             name: timestamp
             valid: true
-            description: '''Tue Sep 11 2018 14:50:02 GMT-0300 (Brasilia Standard Time)'' is not defined'
+            description: '''timestamp'' is not defined'
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.465Z'
+        connectionTime: '2018-09-11T20:38:22.845Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -60,9 +60,9 @@ requisitions:
           -
             name: 'kafka publish response payload'
             valid: true
-            description: '''enqueuer-topic-name'' is not defined'
+            description: '''`enqueuer-topic-name`'' is not defined'
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T17:50:02.511Z'
+        publishTime: '2018-09-11T20:38:22.870Z'

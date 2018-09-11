@@ -14,9 +14,11 @@ export abstract class EventExecutor {
 
     private arguments: { name: string, value: any }[] = [];
     private event: Event;
+    private name: string;
 
-    public constructor(event?: Event) {
+    public constructor(name: string, event?: Event) {
         this.event = this.initializeEvent(event);
+        this.name = name;
     }
 
     public abstract trigger(): TestModel[];
@@ -26,7 +28,8 @@ export abstract class EventExecutor {
         Logger.trace(`Executing event function`);
         const eventCodeGenerator: EventCodeGenerator = new EventCodeGenerator(this.testerInstanceName,
             this.storeInstanceName,
-            this.event);
+            this.event,
+            this.name);
         const code = eventCodeGenerator.generate();
         return this.runEvent(code).map(test => {
             return {name: test.label, valid: test.valid, description: test.errorDescription};
@@ -78,7 +81,7 @@ export abstract class EventExecutor {
         try {
             dynamicFunction.execute();
         } catch (err) {
-            Logger.error(`Error running event: ${err}`);
+            Logger.error(`Error running event '${this.name}': ${err}`);
             tester.addTest({valid: false, label: 'Event ran', errorDescription: err});
         }
         return tester.getReport();

@@ -9,8 +9,10 @@ export class EventCodeGenerator {
     private assertions: Assertion[];
     private script: string;
     private store: { [propName: string]: any };
+    private name: string;
 
-    public constructor(testerInstanceName: string, storeInstanceName: string, eventValue: Event) {
+    public constructor(testerInstanceName: string, storeInstanceName: string, eventValue: Event, eventName: string = 'eventName') {
+        this.name = eventName;
         this.testerInstanceName = testerInstanceName;
         this.storeInstanceName = storeInstanceName;
         this.store = eventValue.store || {};
@@ -30,7 +32,7 @@ export class EventCodeGenerator {
                         ${this.script}
                     } catch (err) {
                         ${this.testerInstanceName}.addTest({
-                                errorDescription: \`Error executing 'script' code: '\${err}'\`,
+                                errorDescription: \`Error executing '${this.name}.script' code: '\${err}'\`,
                                 valid: false,
                                 label: "Valid 'script' code"
                             });

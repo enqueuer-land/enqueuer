@@ -3,7 +3,6 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import * as net from 'net';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
-import {isNullOrUndefined} from 'util';
 import {Store} from '../configurations/store';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client'})

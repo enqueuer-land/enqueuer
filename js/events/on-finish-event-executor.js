@@ -4,7 +4,7 @@ const logger_1 = require("../loggers/logger");
 const event_executor_1 = require("./event-executor");
 class OnFinishEventExecutor extends event_executor_1.EventExecutor {
     constructor(name, finishable) {
-        super(finishable.onFinish);
+        super('onFinish', finishable.onFinish);
         this.finishable = finishable;
         this.addArgument(name, this.finishable);
     }

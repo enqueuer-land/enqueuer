@@ -21,13 +21,13 @@ describe('Tester', () => {
     it(`isNotEqualTo`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeEqualTo(`label`, 3, 5);
+        tester.toBeEqualTo(`label`, 3, 5, 'fieldName');
 
         const isNotEqualTo = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
         expect(isNotEqualTo.label).toBe(`label`);
         expect(isNotEqualTo.valid).toBeFalsy();
-        expect(isNotEqualTo.errorDescription).toEqual("Expected value to be equal to '5'. Received '3'");
+        expect(isNotEqualTo.errorDescription).toEqual("Expected 'fieldName' to be equal to '5'. Received '3'");
     });
 
     it(`isEqualTo`, () => {
@@ -44,13 +44,13 @@ describe('Tester', () => {
     it(`isNotGreaterThan`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeGreaterThan(`label`, 3, 3);
+        tester.toBeGreaterThan(`label`, 3, 3, 'otherName');
 
         const isNotGreaterThan = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
         expect(isNotGreaterThan.label).toBe(`label`);
         expect(isNotGreaterThan.valid).toBeFalsy();
-        expect(isNotGreaterThan.errorDescription).toEqual("Expected value to be greater than '3'. Received '3'");
+        expect(isNotGreaterThan.errorDescription).toEqual("Expected 'otherName' to be greater than '3'. Received '3'");
     });
 
     it(`isGreaterThan`, () => {
@@ -67,13 +67,13 @@ describe('Tester', () => {
     it(`isNotGreaterThanOrEqualTo`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeGreaterThanOrEqualTo(`label`, 3, 4);
+        tester.toBeGreaterThanOrEqualTo(`label`, 3, 4, 'gui');
 
         const isNotGreaterThanOrEqual = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
         expect(isNotGreaterThanOrEqual.label).toBe(`label`);
         expect(isNotGreaterThanOrEqual.valid).toBeFalsy();
-        expect(isNotGreaterThanOrEqual.errorDescription).toEqual("Expected value to be greater than or equal to '4'. Received '3'");
+        expect(isNotGreaterThanOrEqual.errorDescription).toEqual("Expected 'gui' to be greater than or equal to '4'. Received '3'");
     });
 
     it(`isGreaterThanOrEqualTo`, () => {
@@ -96,8 +96,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotLessThan.label).toBe(`label`);
         expect(isNotLessThan.valid).toBeFalsy();
-        expect(isNotLessThan.errorDescription).toEqual(  "Expected value to be less than '3'. Received '4'"
-        );
+        expect(isNotLessThan.errorDescription).toEqual("Expected 'value' to be less than '3'. Received '4'");
     });
 
     it(`isLessThan`, () => {
@@ -114,13 +113,13 @@ describe('Tester', () => {
     it(`isNotLessThanOrEqualTo`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeLessThanOrEqualTo(`label`, 5, 4);
+        tester.toBeLessThanOrEqualTo(`label`, 5, 4, 'var');
 
         const isNotLessThanOrEqual = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
         expect(isNotLessThanOrEqual.label).toBe(`label`);
         expect(isNotLessThanOrEqual.valid).toBeFalsy();
-        expect(isNotLessThanOrEqual.errorDescription).toEqual("Expected value to be less than or equal to '4'. Received '5'");
+        expect(isNotLessThanOrEqual.errorDescription).toEqual("Expected 'var' to be less than or equal to '4'. Received '5'");
     });
 
     it(`isLessThanOrEqualTo`, () => {
@@ -137,13 +136,13 @@ describe('Tester', () => {
     it(`isNotTruthy`, () => {
         const tester: Tester = new Tester;
 
-        tester.expectToBeTruthy(`label`, false);
+        tester.expectToBeTruthy(`label`, false, 'varName');
 
         const isNotTruthy = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
         expect(isNotTruthy.label).toBe(`label`);
         expect(isNotTruthy.valid).toBeFalsy();
-        expect(isNotTruthy.errorDescription).toEqual(`'${false}' is not true. I swear`);
+        expect(isNotTruthy.errorDescription).toEqual(`'varName' is not true. I swear`);
     });
 
     it(`isTruthy`, () => {
@@ -166,7 +165,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotFalsy.label).toBe(`label`);
         expect(isNotFalsy.valid).toBeFalsy();
-        expect(isNotFalsy.errorDescription).toEqual(`'${true}' is not false. (Oh really?)`);
+        expect(isNotFalsy.errorDescription).toEqual(`'value' is not false. (Oh really?)`);
     });
 
     it(`isFalsy`, () => {
@@ -183,13 +182,13 @@ describe('Tester', () => {
     it(`notContains`, () => {
         const tester: Tester = new Tester;
 
-        tester.toContain(`label`, "guigui", `virgs`);
+        tester.toContain(`label`, "guigui", `virgs`, 'oh yeah');
 
         const notContains = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
         expect(notContains.label).toBe(`label`);
         expect(notContains.valid).toBeFalsy();
-        expect(notContains.errorDescription).toEqual(`'guigui' does not contain 'virgs'`);
+        expect(notContains.errorDescription).toEqual(`'oh yeah' (guigui) does not contain 'virgs'`);
     });
 
     it(`contains`, () => {
@@ -206,13 +205,13 @@ describe('Tester', () => {
     it(`isNotDefined`, () => {
         const tester: Tester = new Tester;
 
-        tester.expectToBeDefined(`label`, undefined);
+        tester.expectToBeDefined(`label`, undefined, 'var');
         const isNotDefined = tester.getReport()[0];
 
         expect(tester.getReport().length).toBe(1);
         expect(isNotDefined.label).toBe(`label`);
         expect(isNotDefined.valid).toBeFalsy();
-        expect(isNotDefined.errorDescription).toEqual(`'undefined' is not defined`);
+        expect(isNotDefined.errorDescription).toEqual(`'var' is not defined`);
     });
 
     it(`isDefined`, () => {

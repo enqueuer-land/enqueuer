@@ -10,74 +10,74 @@ class Tester {
     addTest(test) {
         this.report.push(test);
     }
-    toBeEqualTo(label, actual, expected) {
+    toBeEqualTo(label, actual, expected, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: actual == expected,
-            errorDescription: `Expected value to be equal to '${expected}'. Received '${actual}'`
+            errorDescription: `Expected '${fieldName}' to be equal to '${expected}'. Received '${actual}'`
         });
     }
-    toBeGreaterThan(label, actual, expected) {
+    toBeGreaterThan(label, actual, expected, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: actual > expected,
-            errorDescription: `Expected value to be greater than '${expected}'. Received '${actual}'`
+            errorDescription: `Expected '${fieldName}' to be greater than '${expected}'. Received '${actual}'`
         });
     }
-    toBeGreaterThanOrEqualTo(label, actual, expected) {
+    toBeGreaterThanOrEqualTo(label, actual, expected, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: actual >= expected,
-            errorDescription: `Expected value to be greater than or equal to '${expected}'. Received '${actual}'`
+            errorDescription: `Expected '${fieldName}' to be greater than or equal to '${expected}'. Received '${actual}'`
         });
     }
-    toBeLessThan(label, actual, expected) {
+    toBeLessThan(label, actual, expected, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: actual < expected,
-            errorDescription: `Expected value to be less than '${expected}'. Received '${actual}'`
+            errorDescription: `Expected '${fieldName}' to be less than '${expected}'. Received '${actual}'`
         });
     }
-    toBeLessThanOrEqualTo(label, actual, expected) {
+    toBeLessThanOrEqualTo(label, actual, expected, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: actual <= expected,
-            errorDescription: `Expected value to be less than or equal to '${expected}'. Received '${actual}'`
+            errorDescription: `Expected '${fieldName}' to be less than or equal to '${expected}'. Received '${actual}'`
         });
     }
-    toContain(label, expected, toContain) {
+    toContain(label, expected, toContain, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: expected.indexOf(toContain) != -1,
-            errorDescription: `'${expected}' does not contain '${toContain}'`
+            errorDescription: `'${fieldName}' (${expected}) does not contain '${toContain}'`
         });
     }
-    expectToBeTruthy(label, expected) {
+    expectToBeTruthy(label, expected, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: !!expected,
-            errorDescription: `'${expected}' is not true. I swear`
+            errorDescription: `'${fieldName}' is not true. I swear`
         });
     }
-    expectToBeFalsy(label, expected) {
+    expectToBeFalsy(label, expected, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: !expected,
-            errorDescription: `'${expected}' is not false. (Oh really?)`
+            errorDescription: `'${fieldName}' is not false. (Oh really?)`
         });
     }
-    expectToBeDefined(label, defined) {
+    expectToBeDefined(label, defined, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: defined !== undefined,
-            errorDescription: `'${defined}' is not defined`
+            errorDescription: `'${fieldName}' is not defined`
         });
     }
-    expectToBeUndefined(label, defined) {
+    expectToBeUndefined(label, defined, fieldName = 'value') {
         this.report.push({
             label: label,
             valid: defined === undefined,
-            errorDescription: `'${defined}' is not undefined`
+            errorDescription: `'${fieldName}' is not undefined`
         });
     }
 }

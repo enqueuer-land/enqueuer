@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 178
-      startTime: '2018-09-11T17:50:02.267Z'
-      endTime: '2018-09-11T17:50:02.445Z'
+      totalTime: 162
+      startTime: '2018-09-11T20:38:22.663Z'
+      endTime: '2018-09-11T20:38:22.825Z'
       timeout: 3000
     subscriptions:
       -
@@ -40,21 +40,21 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expected value to be equal to ''virgs''. Received ''virgs'''
+            description: 'Expected ''JSON.parse(message.body).enqueuer'' to be equal to ''virgs''. Received ''virgs'''
           -
             name: Params
             valid: true
-            description: 'Expected value to be equal to ''idStuff''. Received ''idStuff'''
+            description: 'Expected ''params.firstId'' to be equal to ''idStuff''. Received ''idStuff'''
           -
             name: Query
             valid: true
-            description: 'Expected value to be equal to ''0''. Received ''000'''
+            description: 'Expected ''query.query'' to be equal to ''0''. Received ''000'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.328Z'
+        connectionTime: '2018-09-11T20:38:22.723Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -68,16 +68,16 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected value to be equal to ''321''. Received ''321'''
+            description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
           -
             name: Body
             valid: true
-            description: 'Expected value to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
+            description: 'Expected ''body'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T17:50:02.444Z'
+        publishTime: '2018-09-11T20:38:22.824Z'
   -
     valid: true
     tests:
@@ -87,9 +87,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #1'
     time:
-      totalTime: 55
-      startTime: '2018-09-11T17:50:02.447Z'
-      endTime: '2018-09-11T17:50:02.502Z'
+      totalTime: 38
+      startTime: '2018-09-11T20:38:22.827Z'
+      endTime: '2018-09-11T20:38:22.865Z'
       timeout: 5000
     subscriptions:
       -
@@ -99,13 +99,13 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: '''true'' is not true. I swear'
+            description: '''JSON.parse(message.body).duplicated'' is not true. I swear'
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.448Z'
+        connectionTime: '2018-09-11T20:38:22.830Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -119,16 +119,16 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected value to be equal to ''321''. Received ''321'''
+            description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
           -
             name: Body
             valid: true
-            description: 'Expected value to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
+            description: 'Expected ''body'' to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T17:50:02.500Z'
+        publishTime: '2018-09-11T20:38:22.865Z'
   -
     valid: true
     tests:
@@ -138,9 +138,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'requisition 2 (port 23076)'
     time:
-      totalTime: 1002
-      startTime: '2018-09-11T17:50:02.508Z'
-      endTime: '2018-09-11T17:50:03.510Z'
+      totalTime: 1000
+      startTime: '2018-09-11T20:38:22.868Z'
+      endTime: '2018-09-11T20:38:23.868Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -153,7 +153,7 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.509Z'
+        connectionTime: '2018-09-11T20:38:22.868Z'
   -
     valid: true
     tests:
@@ -163,9 +163,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'check port releasing 23076)'
     time:
-      totalTime: 1005
-      startTime: '2018-09-11T17:50:03.512Z'
-      endTime: '2018-09-11T17:50:04.517Z'
+      totalTime: 1006
+      startTime: '2018-09-11T20:38:23.870Z'
+      endTime: '2018-09-11T20:38:24.876Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -178,4 +178,4 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-09-11T17:50:03.512Z'
+        connectionTime: '2018-09-11T20:38:23.870Z'

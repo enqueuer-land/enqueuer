@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const assertion_code_generator_1 = require("./assertion-code-generator");
 const store_code_generator_1 = require("./store-code-generator");
 class EventCodeGenerator {
-    constructor(testerInstanceName, storeInstanceName, eventValue) {
+    constructor(testerInstanceName, storeInstanceName, eventValue, eventName = 'eventName') {
+        this.name = eventName;
         this.testerInstanceName = testerInstanceName;
         this.storeInstanceName = storeInstanceName;
         this.store = eventValue.store || {};
@@ -21,7 +22,7 @@ class EventCodeGenerator {
                         ${this.script}
                     } catch (err) {
                         ${this.testerInstanceName}.addTest({
-                                errorDescription: \`Error executing 'script' code: '\${err}'\`,
+                                errorDescription: \`Error executing '${this.name}.script' code: '\${err}'\`,
                                 valid: false,
                                 label: "Valid 'script' code"
                             });

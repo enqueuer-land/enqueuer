@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 300
-      startTime: '2018-09-11T17:50:02.251Z'
-      endTime: '2018-09-11T17:50:02.551Z'
+      totalTime: 244
+      startTime: '2018-09-11T20:38:22.648Z'
+      endTime: '2018-09-11T20:38:22.892Z'
       timeout: 5000
     subscriptions:
       -
@@ -24,25 +24,25 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expected value to be equal to ''a new object?''. Received ''a new object?'''
+            description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
           -
             name: Header
             valid: true
-            description: 'Expected value to be equal to ''value''. Received ''value'''
+            description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
           -
             name: 'Other Header Value'
             valid: true
-            description: 'Expected value to be equal to ''otherValue''. Received ''otherValue'''
+            description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
           -
             name: 'Routing Key'
             valid: true
-            description: 'Expected value to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
+            description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.494Z'
+        connectionTime: '2018-09-11T20:38:22.864Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -52,9 +52,9 @@ requisitions:
           -
             name: 'Assertion #0'
             valid: true
-            description: 'Expected value to be equal to ''5672''. Received ''5672'''
+            description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T17:50:02.549Z'
+        publishTime: '2018-09-11T20:38:22.889Z'

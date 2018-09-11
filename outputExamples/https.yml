@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 216
-      startTime: '2018-09-11T17:50:02.268Z'
-      endTime: '2018-09-11T17:50:02.484Z'
+      totalTime: 192
+      startTime: '2018-09-11T20:38:22.664Z'
+      endTime: '2018-09-11T20:38:22.856Z'
       timeout: 3000
     subscriptions:
       -
@@ -24,13 +24,13 @@ requisitions:
           -
             name: 'Https payload'
             valid: true
-            description: 'Expected value to be equal to ''works!''. Received ''works!'''
+            description: 'Expected ''JSON.parse(message.body).https'' to be equal to ''works!''. Received ''works!'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T17:50:02.328Z'
+        connectionTime: '2018-09-11T20:38:22.723Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -44,13 +44,13 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected value to be equal to ''200''. Received ''200'''
+            description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
           -
             name: Body
             valid: true
-            description: 'Expected value to be equal to ''https''. Received ''https'''
+            description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T17:50:02.483Z'
+        publishTime: '2018-09-11T20:38:22.856Z'

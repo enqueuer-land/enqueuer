@@ -7,7 +7,7 @@ export class OnInitEventExecutor extends EventExecutor {
     private initializable: Initializable;
 
     constructor(name: string, initializable: Initializable) {
-        super(initializable.onInit);
+        super('onInit', initializable.onInit);
         this.initializable = initializable;
         this.addArgument(name, this.initializable);
     }
