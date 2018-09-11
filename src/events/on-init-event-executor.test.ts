@@ -114,7 +114,7 @@ describe('OnInitEventExecutor', () => {
 
         eventExecutor.trigger();
 
-        expect(addTestMock).toHaveBeenCalledWith({"errorDescription": 'nqr', "label": "Event ran", "valid": false});
+        expect(addTestMock).toHaveBeenCalledWith({"errorDescription": "Error running event 'onInit': nqr", "label": "Event ran", "valid": false});
     });
 });
 

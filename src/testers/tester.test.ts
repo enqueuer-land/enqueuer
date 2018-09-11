@@ -33,7 +33,7 @@ describe('Tester', () => {
     it(`isEqualTo`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeEqualTo(`label`, 3, 3);
+        tester.toBeEqualTo(`label`, 3, 3, 'value');
 
         const equalTo = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -90,7 +90,7 @@ describe('Tester', () => {
     it(`isNotLessThan`, () => {
         const tester: Tester = new Tester;
 
-        tester.toBeLessThan(`label`, 4, 3);
+        tester.toBeLessThan(`label`, 4, 3, 'value');
 
         const isNotLessThan = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -159,7 +159,7 @@ describe('Tester', () => {
     it(`isNotFalsy`, () => {
         const tester: Tester = new Tester;
 
-        tester.expectToBeFalsy(`label`, true);
+        tester.expectToBeFalsy(`label`, true, 'value');
 
         const isNotFalsy = tester.getReport()[0];
         expect(tester.getReport().length).toBe(1);
@@ -228,7 +228,7 @@ describe('Tester', () => {
     it(`isNotUndefined`, () => {
         const tester: Tester = new Tester;
 
-        tester.expectToBeUndefined(`label`, 'value');
+        tester.expectToBeUndefined(`label`, 'value', 'value');
         const isNotUndefined = tester.getReport()[0];
 
         expect(tester.getReport().length).toBe(1);
@@ -240,7 +240,7 @@ describe('Tester', () => {
     it(`isUndefined`, () => {
         const tester: Tester = new Tester;
 
-        tester.expectToBeUndefined(`label`, undefined);
+        tester.expectToBeUndefined(`label`, undefined, 'value');
         const isUndefined = tester.getReport()[0];
 
         expect(tester.getReport().length).toBe(1);

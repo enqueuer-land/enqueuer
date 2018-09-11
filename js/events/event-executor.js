@@ -61,8 +61,9 @@ class EventExecutor {
             dynamicFunction.execute();
         }
         catch (err) {
-            logger_1.Logger.error(`Error running event '${this.name}': ${err}`);
-            tester.addTest({ valid: false, label: 'Event ran', errorDescription: err });
+            const message = `Error running event '${this.name}': ${err}`;
+            logger_1.Logger.error(message);
+            tester.addTest({ valid: false, label: 'Event ran', errorDescription: message });
         }
         return tester.getReport();
     }

@@ -12,7 +12,7 @@ export class Tester {
         this.report.push(test);
     }
 
-    public toBeEqualTo(label: string, actual: number, expected: number, fieldName: string = 'value'): void {
+    public toBeEqualTo(label: string, actual: number, expected: number, fieldName: string): void {
         this.report.push({
             label: label,
             valid: actual == expected,
@@ -20,7 +20,7 @@ export class Tester {
         });
     }
 
-    public toBeGreaterThan(label: string, actual: number, expected: number, fieldName: string = 'value'): void {
+    public toBeGreaterThan(label: string, actual: number, expected: number, fieldName: string): void {
         this.report.push({
             label: label,
             valid: actual > expected,
@@ -28,7 +28,7 @@ export class Tester {
         });
     }
 
-    public toBeGreaterThanOrEqualTo(label: string, actual: number, expected: number, fieldName: string = 'value'): void {
+    public toBeGreaterThanOrEqualTo(label: string, actual: number, expected: number, fieldName: string): void {
         this.report.push({
             label: label,
             valid: actual >= expected,
@@ -36,7 +36,7 @@ export class Tester {
         });
     }
 
-    public toBeLessThan(label: string, actual: number, expected: number, fieldName: string = 'value'): void {
+    public toBeLessThan(label: string, actual: number, expected: number, fieldName: string): void {
         this.report.push({
             label: label,
             valid: actual < expected,
@@ -44,7 +44,7 @@ export class Tester {
         });
     }
 
-    public toBeLessThanOrEqualTo(label: string, actual: number, expected: number, fieldName: string = 'value'): void {
+    public toBeLessThanOrEqualTo(label: string, actual: number, expected: number, fieldName: string): void {
         this.report.push({
             label: label,
             valid: actual <= expected,
@@ -52,7 +52,7 @@ export class Tester {
         });
     }
 
-    public toContain(label: string, expected: string, toContain: string, fieldName: string = 'value'): void {
+    public toContain(label: string, expected: string, toContain: string, fieldName: string): void {
         this.report.push({
             label: label,
             valid: expected.indexOf(toContain) != -1,
@@ -60,7 +60,7 @@ export class Tester {
         });
     }
 
-    public expectToBeTruthy(label: string, expected: any, fieldName: string = 'value'): void {
+    public expectToBeTruthy(label: string, expected: any, fieldName: string): void {
         this.report.push({
             label: label,
             valid: !!expected,
@@ -68,7 +68,7 @@ export class Tester {
         });
     }
 
-    public expectToBeFalsy(label: string, expected: any, fieldName: string = 'value'): void {
+    public expectToBeFalsy(label: string, expected: any, fieldName: string): void {
         this.report.push({
             label: label,
             valid: !expected,
@@ -76,7 +76,7 @@ export class Tester {
         });
     }
 
-    public expectToBeDefined(label: string, defined: any, fieldName: string = 'value'): void {
+    public expectToBeDefined(label: string, defined: any, fieldName: string): void {
         this.report.push({
             label: label,
             valid: defined !== undefined,
@@ -84,7 +84,7 @@ export class Tester {
         });
     }
 
-    public expectToBeUndefined(label: string, defined: any, fieldName: string = 'value'): void {
+    public expectToBeUndefined(label: string, defined: any, fieldName: string): void {
         this.report.push({
             label: label,
             valid: defined === undefined,
