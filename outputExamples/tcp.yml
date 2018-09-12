@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 149
-      startTime: '2018-09-12T20:58:46.916Z'
-      endTime: '2018-09-12T20:58:47.065Z'
+      totalTime: 366
+      startTime: '2018-09-12T21:16:42.859Z'
+      endTime: '2018-09-12T21:16:43.225Z'
       timeout: 3000
     subscriptions:
       -
@@ -34,7 +34,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-12T20:58:46.920Z'
+        connectionTime: '2018-09-12T21:16:42.882Z'
         messageReceived:
           payload:
             type: Buffer
@@ -69,13 +69,13 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-12T20:58:47.064Z'
+        publishTime: '2018-09-12T21:16:43.225Z'
         messageReceived:
           payload: 'Do not make it bad'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 50348
+            port: 50697
   -
     valid: true
     tests:
@@ -85,9 +85,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #1'
     time:
-      totalTime: 843
-      startTime: '2018-09-12T20:58:47.071Z'
-      endTime: '2018-09-12T20:58:47.914Z'
+      totalTime: 870
+      startTime: '2018-09-12T21:16:43.236Z'
+      endTime: '2018-09-12T21:16:44.106Z'
       timeout: 3000
     subscriptions:
       -
@@ -103,7 +103,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-12T20:58:47.072Z'
+        connectionTime: '2018-09-12T21:16:43.240Z'
         messageReceived:
           payload:
             type: Buffer
@@ -143,13 +143,13 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-12T20:58:47.914Z'
+        publishTime: '2018-09-12T21:16:44.106Z'
         messageReceived:
           payload: EnqueuerRocks
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 50354
+            port: 50705
   -
     valid: true
     tests:
@@ -159,9 +159,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #2'
     time:
-      totalTime: 1
-      startTime: '2018-09-12T20:58:47.916Z'
-      endTime: '2018-09-12T20:58:47.917Z'
+      totalTime: 3
+      startTime: '2018-09-12T21:16:44.109Z'
+      endTime: '2018-09-12T21:16:44.112Z'
       timeout: 3000
     subscriptions:
       -
@@ -177,7 +177,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-12T20:58:47.916Z'
+        connectionTime: '2018-09-12T21:16:44.109Z'
         messageReceived:
           payload:
             type: Buffer
@@ -206,10 +206,6 @@ requisitions:
               - 112
               - 101
               - 110
-          stream:
-            address: '::ffff:127.0.0.1'
-            family: IPv6
-            port: 23070
     startEvent:
       publisher:
         name: 'Start event publisher'
@@ -228,10 +224,6 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-12T20:58:47.917Z'
+        publishTime: '2018-09-12T21:16:44.111Z'
         messageReceived:
           payload: 'enqueuer Rocks'
-          stream:
-            address: 127.0.0.1
-            family: IPv4
-            port: 50354

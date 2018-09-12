@@ -16,13 +16,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var FilePublisher_1;
+"use strict";
 const publisher_1 = require("./publisher");
 const id_generator_1 = require("../id-generator/id-generator");
 const conditional_injector_1 = require("conditional-injector");
 const yaml = __importStar(require("yamljs"));
 const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
-let FilePublisher = class FilePublisher extends publisher_1.Publisher {
+let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.filename = publisherAttributes.filename;
@@ -30,18 +32,19 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
         this.filenameExtension = publisherAttributes.filenameExtension || 'enq';
     }
     publish() {
-        let filename = this.createFilename();
+        this.filename = this.createFilename();
         let value = this.payload;
         if (typeof (value) == 'string') {
-            value = this.stringifyPayload(value);
+            value = this.markupLanguageString(value);
         }
         else if (typeof (value) == 'object') {
-            value = this.stringifyPayload(JSON.stringify(value));
+            value = FilePublisher_1.decycle(this.payload);
+            value = this.markupLanguageString(JSON.stringify(value));
         }
-        fs.writeFileSync(filename, value);
+        fs.writeFileSync(this.filename, value);
         return Promise.resolve();
     }
-    stringifyPayload(value) {
+    markupLanguageString(value) {
         try {
             value = JSON.parse(value);
         }
@@ -49,9 +52,11 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
             logger_1.Logger.debug('Content to write to file is not parseable');
             return value;
         }
-        if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
+        if (this.filename.endsWith('yml') || this.filename.endsWith('yaml')) {
+            logger_1.Logger.debug('Stringifying file content as yaml');
             return yaml.stringify(value, 10, 2);
         }
+        logger_1.Logger.debug('Stringifying file content as JSON');
         return JSON.stringify(value, null, 2);
     }
     createFilename() {
@@ -78,8 +83,23 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
         }
         return new id_generator_1.IdGenerator(this.payload).generateId();
     }
+    static decycle(decyclable) {
+        const cache = new Map();
+        const stringified = JSON.stringify(decyclable, (key, value) => {
+            if (typeof (value) === 'object' && value !== null) {
+                if (cache.has(value)) {
+                    // Circular reference found, discard key
+                    return;
+                }
+                // Store value in our map
+                cache.set(value, true);
+            }
+            return value;
+        });
+        return JSON.parse(stringified);
+    }
 };
-FilePublisher = __decorate([
+FilePublisher = FilePublisher_1 = __decorate([
     conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'file' }),
     __metadata("design:paramtypes", [Object])
 ], FilePublisher);

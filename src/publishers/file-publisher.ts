@@ -22,19 +22,20 @@ export class FilePublisher extends Publisher {
     }
 
     public publish(): Promise<void> {
-        let filename = this.createFilename();
+        this.filename = this.createFilename();
         let value = this.payload;
         if (typeof(value) == 'string') {
-            value = this.stringifyPayload(value);
+            value = this.markupLanguageString(value);
         } else if (typeof(value) == 'object') {
-            value = this.stringifyPayload(JSON.stringify(value));
+            value = FilePublisher.decycle(this.payload);
+            value = this.markupLanguageString(JSON.stringify(value));
         }
 
-        fs.writeFileSync(filename, value);
+        fs.writeFileSync(this.filename, value);
         return Promise.resolve();
     }
 
-    private stringifyPayload(value: string) {
+    private markupLanguageString(value: string) {
         try {
             value = JSON.parse(value);
         } catch (exc) {
@@ -42,10 +43,12 @@ export class FilePublisher extends Publisher {
             return value;
         }
 
-        if (this.filenameExtension == 'yml' || this.filenameExtension == 'yaml') {
+        if (this.filename.endsWith('yml') || this.filename.endsWith('yaml')) {
+            Logger.debug('Stringifying file content as yaml');
             return yaml.stringify(value, 10, 2);
         }
 
+        Logger.debug('Stringifying file content as JSON');
         return JSON.stringify(value, null, 2);
     }
 
@@ -73,4 +76,21 @@ export class FilePublisher extends Publisher {
         }
         return new IdGenerator(this.payload).generateId();
     }
+
+    private static decycle(decyclable: any): any {
+        const cache = new Map();
+        const stringified = JSON.stringify(decyclable, (key, value) => {
+            if (typeof(value) === 'object' && value !== null) {
+                if (cache.has(value)) {
+                    // Circular reference found, discard key
+                    return;
+                }
+                // Store value in our map
+                cache.set(value, true);
+            }
+            return value;
+        });
+        return JSON.parse(stringified);
+    }
+
 }
