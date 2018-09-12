@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 37
-      startTime: '2018-09-11T21:33:21.590Z'
-      endTime: '2018-09-11T21:33:21.627Z'
+      totalTime: 74
+      startTime: '2018-09-12T20:58:46.916Z'
+      endTime: '2018-09-12T20:58:46.990Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -29,7 +29,18 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.593Z'
+        connectionTime: '2018-09-12T20:58:46.920Z'
+        messageReceived:
+          payload:
+            type: Buffer
+            data:
+              - 105
+              - 116
+          remoteInfo:
+            address: 127.0.0.1
+            family: IPv4
+            port: 55057
+            size: 2
     startEvent:
       publisher:
         name: 'publisher description'
@@ -40,4 +51,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T21:33:21.626Z'
+        publishTime: '2018-09-12T20:58:46.983Z'

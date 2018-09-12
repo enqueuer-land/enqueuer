@@ -109,6 +109,7 @@ class SubscriptionReporter {
         const finalReporter = new subscription_final_reporter_1.SubscriptionFinalReporter(this.subscribed, this.subscription.avoid, !!this.subscription.messageReceived, !!this.subscription.timeout && this.hasTimedOut);
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
         this.cleanUp();
+        this.report.messageReceived = this.subscription.messageReceived;
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
     }

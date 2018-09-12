@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 236
-      startTime: '2018-09-11T21:33:21.499Z'
-      endTime: '2018-09-11T21:33:21.735Z'
+      totalTime: 863
+      startTime: '2018-09-12T20:58:46.850Z'
+      endTime: '2018-09-12T20:58:47.713Z'
       timeout: 5000
     subscriptions:
       -
@@ -42,7 +42,35 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.705Z'
+        connectionTime: '2018-09-12T20:58:47.122Z'
+        messageReceived:
+          payload:
+            how:
+              about: 'a new object?'
+          headers:
+            key: value
+            otherKey: otherValue
+          deliveryInfo:
+            contentType: application/json
+            headers:
+              key: value
+              otherKey: otherValue
+            queue: enqueuer.queue.name
+            deliveryTag:
+              type: Buffer
+              data:
+                - 0
+                - 0
+                - 0
+                - 0
+                - 0
+                - 0
+                - 0
+                - 1
+            redelivered: false
+            exchange: enqueuer.exchange
+            routingKey: enqueuer.integration.test.routing.key
+            consumerTag: node-amqp-61664-0.170267550755685
     startEvent:
       publisher:
         name: 'publisher description'
@@ -57,4 +85,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T21:33:21.733Z'
+        publishTime: '2018-09-12T20:58:47.711Z'

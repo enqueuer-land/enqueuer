@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 116
-      startTime: '2018-09-11T21:33:21.509Z'
-      endTime: '2018-09-11T21:33:21.625Z'
+      totalTime: 101
+      startTime: '2018-09-12T20:58:46.860Z'
+      endTime: '2018-09-12T20:58:46.961Z'
       timeout: 3000
     subscriptions:
       -
@@ -24,11 +24,11 @@ requisitions:
           -
             name: 'Some time has passed'
             valid: true
-            description: 'Expected ''now'' to be greater than or equal to ''1536701601509''. Received ''1536701601625'''
+            description: 'Expected ''now'' to be greater than or equal to ''1536785926860''. Received ''1536785926961'''
           -
             name: Filename
             valid: true
-            description: '''name'' (temp/fileTest20180911183321056159_c23aaf6a.file) does not contain ''temp/'''
+            description: '''name'' (temp/fileTest20180912175846089666_a9a71027.file) does not contain ''temp/'''
           -
             name: Content
             valid: true
@@ -50,7 +50,13 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.558Z'
+        connectionTime: '2018-09-12T20:58:46.895Z'
+        messageReceived:
+          content: '1536785926860'
+          name: temp/fileTest20180912175846089666_a9a71027.file
+          size: 13
+          modified: '2018-09-12T20:58:46.897Z'
+          created: '2018-09-12T20:58:46.897Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -61,4 +67,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T21:33:21.580Z'
+        publishTime: '2018-09-12T20:58:46.897Z'

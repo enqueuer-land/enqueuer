@@ -51,6 +51,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
 
     public getReport(): StartEventModel {
         this.report.valid = this.report.valid && checkValidation(this.report);
+        this.report.messageReceived = this.publisher.messageReceived;
         this.pushResponseMessageReceivedTest();
         return {
             publisher: this.report

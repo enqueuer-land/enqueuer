@@ -26,33 +26,33 @@ requisitions:
                 tests: []
                 name: 'Requisition #0'
                 time:
-                  totalTime: 66
-                  startTime: '2018-09-11T21:33:21.546Z'
-                  endTime: '2018-09-11T21:33:21.612Z'
+                  totalTime: 77
+                  startTime: '2018-09-12T20:58:46.893Z'
+                  endTime: '2018-09-12T20:58:46.970Z'
                 subscriptions:
-                  - {name: 'subscription description', type: udp, tests: [{name: Payload, valid: true, description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''}, {name: 'Remote Adderss', valid: true, description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}, {valid: true, name: 'Message received', description: 'Subscription has received its message'}], valid: true, connectionTime: '2018-09-11T21:33:21.558Z'}
+                  - {name: 'subscription description', type: udp, tests: [{name: Payload, valid: true, description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''}, {name: 'Remote Adderss', valid: true, description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}, {valid: true, name: 'Message received', description: 'Subscription has received its message'}], valid: true, connectionTime: '2018-09-12T20:58:46.895Z', messageReceived: {payload: {type: Buffer, data: [105, 116]}, remoteInfo: {address: 127.0.0.1, family: IPv4, port: 62568, size: 2}}}
                 startEvent:
-                  publisher: {name: 'publisher description', valid: true, type: udp, tests: [{name: Published, valid: true, description: 'Published successfully'}], publishTime: '2018-09-11T21:33:21.604Z'}
+                  publisher: {name: 'publisher description', valid: true, type: udp, tests: [{name: Published, valid: true, description: 'Published successfully'}], publishTime: '2018-09-12T20:58:46.965Z'}
               -
                 valid: true
                 tests: []
                 name: 'Requisition #1'
                 time:
-                  totalTime: 32
-                  startTime: '2018-09-11T21:33:21.619Z'
-                  endTime: '2018-09-11T21:33:21.651Z'
+                  totalTime: 86
+                  startTime: '2018-09-12T20:58:46.980Z'
+                  endTime: '2018-09-12T20:58:47.066Z'
                 subscriptions:
-                  - {name: 'subscription description', type: udp, tests: [{name: Payload, valid: true, description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''}, {name: 'Remote Adderss', valid: true, description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}, {valid: true, name: 'Message received', description: 'Subscription has received its message'}], valid: true, connectionTime: '2018-09-11T21:33:21.620Z'}
+                  - {name: 'subscription description', type: udp, tests: [{name: Payload, valid: true, description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''}, {name: 'Remote Adderss', valid: true, description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}, {valid: true, name: 'Message received', description: 'Subscription has received its message'}], valid: true, connectionTime: '2018-09-12T20:58:46.981Z', messageReceived: {payload: {type: Buffer, data: [105, 116]}, remoteInfo: {address: 127.0.0.1, family: IPv4, port: 53710, size: 2}}}
                 startEvent:
-                  publisher: {name: 'publisher description', valid: true, type: udp, tests: [{name: Published, valid: true, description: 'Published successfully'}], publishTime: '2018-09-11T21:33:21.646Z'}
+                  publisher: {name: 'publisher description', valid: true, type: udp, tests: [{name: Published, valid: true, description: 'Published successfully'}], publishTime: '2018-09-12T20:58:47.055Z'}
           -
             valid: true
             tests: []
             name: 'Requisition #0'
             time:
-              totalTime: 21
-              startTime: '2018-09-11T21:33:21.665Z'
-              endTime: '2018-09-11T21:33:21.686Z'
+              totalTime: 25
+              startTime: '2018-09-12T20:58:47.071Z'
+              endTime: '2018-09-12T20:58:47.096Z'
             subscriptions:
               -
                 name: 'subscription description'
@@ -62,7 +62,10 @@ requisitions:
                   - {name: 'Remote Adderss', valid: true, description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''}
                   - {valid: true, name: 'Message received', description: 'Subscription has received its message'}
                 valid: true
-                connectionTime: '2018-09-11T21:33:21.665Z'
+                connectionTime: '2018-09-12T20:58:47.072Z'
+                messageReceived:
+                  payload: {type: Buffer, data: [105, 116]}
+                  remoteInfo: {address: 127.0.0.1, family: IPv4, port: 64694, size: 2}
             startEvent:
               publisher:
                 name: 'publisher description'
@@ -70,15 +73,15 @@ requisitions:
                 type: udp
                 tests:
                   - {name: Published, valid: true, description: 'Published successfully'}
-                publishTime: '2018-09-11T21:33:21.681Z'
+                publishTime: '2018-09-12T20:58:47.094Z'
       -
         valid: true
         tests: []
         name: 'Requisition #0'
         time:
-          totalTime: 10
-          startTime: '2018-09-11T21:33:21.688Z'
-          endTime: '2018-09-11T21:33:21.698Z'
+          totalTime: 46
+          startTime: '2018-09-12T20:58:47.100Z'
+          endTime: '2018-09-12T20:58:47.146Z'
         subscriptions:
           -
             name: 'subscription description'
@@ -97,7 +100,18 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-11T21:33:21.688Z'
+            connectionTime: '2018-09-12T20:58:47.101Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 105
+                  - 116
+              remoteInfo:
+                address: 127.0.0.1
+                family: IPv4
+                port: 51365
+                size: 2
         startEvent:
           publisher:
             name: 'publisher description'
@@ -108,7 +122,7 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-09-11T21:33:21.693Z'
+            publishTime: '2018-09-12T20:58:47.140Z'
   -
     valid: true
     tests:
@@ -118,9 +132,9 @@ requisitions:
         description: '''store.lastExecution'' is not defined'
     name: 'Requisition #0'
     time:
-      totalTime: 18
-      startTime: '2018-09-11T21:33:21.702Z'
-      endTime: '2018-09-11T21:33:21.720Z'
+      totalTime: 10
+      startTime: '2018-09-12T20:58:47.148Z'
+      endTime: '2018-09-12T20:58:47.158Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -139,7 +153,18 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.703Z'
+        connectionTime: '2018-09-12T20:58:47.149Z'
+        messageReceived:
+          payload:
+            type: Buffer
+            data:
+              - 105
+              - 116
+          remoteInfo:
+            address: 127.0.0.1
+            family: IPv4
+            port: 52387
+            size: 2
     startEvent:
       publisher:
         name: 'publisher description'
@@ -150,4 +175,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T21:33:21.718Z'
+        publishTime: '2018-09-12T20:58:47.155Z'

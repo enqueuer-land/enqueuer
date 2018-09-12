@@ -7,7 +7,6 @@ import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
-import {Store} from '../configurations/store';
 
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
 export class DaemonRunExecutor extends EnqueuerExecutor {
@@ -43,13 +42,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
     private startReader(input: DaemonInput) {
         input.receiveMessage()
             .then( (requisitions: input.RequisitionModel[]) => new MultiRequisitionRunner(requisitions, input.getType()).run())
-            .then( (report: output.RequisitionModel) => {
-                const message = {
-                    ...report,
-                    store: DaemonRunExecutor.decycle(Store.getData())
-                };
-                return this.multiPublisher.publish(message);
-            })
+            .then( (report: output.RequisitionModel) => this.multiPublisher.publish(report))
             .then(() => this.startReader(input))
             .catch( (err) => {
                 Logger.error(err);
@@ -64,19 +57,4 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
             });
     }
 
-    private static decycle(valueToStringify: any): any {
-        const cache = new Map();
-        const stringified = JSON.stringify(valueToStringify, (key, value) => {
-            if (typeof(value) === 'object' && value !== null) {
-                if (cache.has(value)) {
-                    // Circular reference found, discard key
-                    return;
-                }
-                // Store value in our map
-                cache.set(value, true);
-            }
-            return value;
-        });
-        return JSON.parse(stringified);
-    }
 }

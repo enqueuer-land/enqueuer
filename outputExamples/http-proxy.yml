@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 198
-      startTime: '2018-09-11T21:33:21.511Z'
-      endTime: '2018-09-11T21:33:21.709Z'
+      totalTime: 269
+      startTime: '2018-09-12T20:58:46.862Z'
+      endTime: '2018-09-12T20:58:47.131Z'
     subscriptions:
       -
         name: 'proxy server'
@@ -49,7 +49,20 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.581Z'
+        connectionTime: '2018-09-12T20:58:46.898Z'
+        messageReceived:
+          headers:
+            content-type: application/json
+            authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+            content-length: '16'
+            host: 'localhost:23085'
+            connection: close
+            Content-Length: 16
+          params:
+            id: idValue
+          query:
+            query: proxied
+          body: '{"proxy":"test"}'
       -
         name: 'real server'
         type: http-server
@@ -87,7 +100,19 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.581Z'
+        connectionTime: '2018-09-12T20:58:46.898Z'
+        messageReceived:
+          headers:
+            content-type: application/json
+            authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+            content-length: '16'
+            host: 'localhost:23085'
+            connection: close
+          params:
+            firstId: idValue
+          query:
+            query: proxied
+          body: '{"proxy":"test"}'
     startEvent:
       publisher:
         name: 'publisher proxy'
@@ -110,4 +135,33 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T21:33:21.708Z'
+        publishTime: '2018-09-12T20:58:47.131Z'
+        messageReceived:
+          statusCode: 333
+          body: responsePayload
+          headers:
+            x-powered-by: Express
+            content-type: 'text/html; charset=utf-8'
+            content-length: '15'
+            etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
+            date: 'Wed, 12 Sep 2018 20:58:47 GMT'
+            connection: close
+          request:
+            uri:
+              protocol: 'http:'
+              slashes: true
+              auth: null
+              host: 'localhost:23085'
+              port: '23085'
+              hostname: localhost
+              hash: null
+              search: '?query=proxied'
+              query: query=proxied
+              pathname: /proxy/idValue
+              path: '/proxy/idValue?query=proxied'
+              href: 'http://localhost:23085/proxy/idValue?query=proxied'
+            method: patch
+            headers:
+              content-type: application/json
+              authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+              Content-Length: 16

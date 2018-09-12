@@ -60,6 +60,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
     getReport() {
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
+        this.report.messageReceived = this.publisher.messageReceived;
         this.pushResponseMessageReceivedTest();
         return {
             publisher: this.report

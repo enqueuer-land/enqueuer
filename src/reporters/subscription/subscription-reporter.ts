@@ -109,6 +109,7 @@ export class SubscriptionReporter {
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
         this.cleanUp();
+        this.report.messageReceived = this.subscription.messageReceived;
         this.report.valid = this.report.valid && checkValidation(this.report);
         return this.report;
     }

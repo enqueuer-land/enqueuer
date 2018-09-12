@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 153
-      startTime: '2018-09-11T21:33:21.591Z'
-      endTime: '2018-09-11T21:33:21.744Z'
+      totalTime: 175
+      startTime: '2018-09-12T20:58:46.917Z'
+      endTime: '2018-09-12T20:58:47.092Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -33,7 +33,49 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.743Z'
+        connectionTime: '2018-09-12T20:58:47.074Z'
+        messageReceived:
+          topic:
+            type: Buffer
+            data:
+              - 116
+              - 111
+              - 112
+              - 105
+              - 99
+              - 46
+              - 101
+              - 110
+              - 113
+              - 117
+              - 101
+              - 117
+              - 101
+              - 114
+              - 46
+              - 118
+              - 105
+              - 114
+              - 103
+              - 115
+          payload:
+            type: Buffer
+            data:
+              - 101
+              - 110
+              - 113
+              - 117
+              - 101
+              - 117
+              - 101
+              - 114
+              - 32
+              - 122
+              - 101
+              - 114
+              - 111
+              - 101
+              - 115
     startEvent:
       publisher:
         name: publisher
@@ -44,4 +86,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-11T21:33:21.743Z'
+        publishTime: '2018-09-12T20:58:47.074Z'

@@ -9,16 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var DaemonRunExecutor_1;
-"use strict";
 const daemon_input_1 = require("./daemon-input");
 const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
 const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
-const store_1 = require("../configurations/store");
-let DaemonRunExecutor = DaemonRunExecutor_1 = class DaemonRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
+let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
         super();
         const daemonMode = configuration.runMode.daemon;
@@ -44,10 +41,7 @@ let DaemonRunExecutor = DaemonRunExecutor_1 = class DaemonRunExecutor extends en
     startReader(input) {
         input.receiveMessage()
             .then((requisitions) => new multi_requisition_runner_1.MultiRequisitionRunner(requisitions, input.getType()).run())
-            .then((report) => {
-            const message = Object.assign({}, report, { store: DaemonRunExecutor_1.decycle(store_1.Store.getData()) });
-            return this.multiPublisher.publish(message);
-        })
+            .then((report) => this.multiPublisher.publish(report))
             .then(() => this.startReader(input))
             .catch((err) => {
             logger_1.Logger.error(err);
@@ -61,23 +55,8 @@ let DaemonRunExecutor = DaemonRunExecutor_1 = class DaemonRunExecutor extends en
             });
         });
     }
-    static decycle(valueToStringify) {
-        const cache = new Map();
-        const stringified = JSON.stringify(valueToStringify, (key, value) => {
-            if (typeof (value) === 'object' && value !== null) {
-                if (cache.has(value)) {
-                    // Circular reference found, discard key
-                    return;
-                }
-                // Store value in our map
-                cache.set(value, true);
-            }
-            return value;
-        });
-        return JSON.parse(stringified);
-    }
 };
-DaemonRunExecutor = DaemonRunExecutor_1 = __decorate([
+DaemonRunExecutor = __decorate([
     conditional_injector_1.Injectable({ predicate: (configuration) => configuration.runMode && configuration.runMode.daemon != null }),
     __metadata("design:paramtypes", [Object])
 ], DaemonRunExecutor);

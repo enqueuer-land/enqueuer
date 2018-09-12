@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 164
-      startTime: '2018-09-11T21:33:21.514Z'
-      endTime: '2018-09-11T21:33:21.678Z'
+      totalTime: 203
+      startTime: '2018-09-12T20:58:46.865Z'
+      endTime: '2018-09-12T20:58:47.068Z'
       timeout: 3000
     subscriptions:
       -
@@ -54,7 +54,19 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.581Z'
+        connectionTime: '2018-09-12T20:58:46.898Z'
+        messageReceived:
+          headers:
+            content-type: application/json
+            authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+            content-length: '20'
+            host: 'localhost:23075'
+            connection: close
+          params:
+            firstId: idStuff
+          query:
+            query: '000'
+          body: '{"enqueuer":"virgs"}'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -77,7 +89,36 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T21:33:21.677Z'
+        publishTime: '2018-09-12T20:58:47.068Z'
+        messageReceived:
+          statusCode: 321
+          body: 'dynamically changed payload'
+          headers:
+            x-powered-by: Express
+            content-type: 'text/html; charset=utf-8'
+            content-length: '27'
+            etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
+            date: 'Wed, 12 Sep 2018 20:58:47 GMT'
+            connection: close
+          request:
+            uri:
+              protocol: 'http:'
+              slashes: true
+              auth: null
+              host: 'localhost:23075'
+              port: '23075'
+              hostname: localhost
+              hash: null
+              search: '?query=000'
+              query: query=000
+              pathname: /enqueuer/idStuff
+              path: '/enqueuer/idStuff?query=000'
+              href: 'http://localhost:23075/enqueuer/idStuff?query=000'
+            method: post
+            headers:
+              content-type: application/json
+              authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+              Content-Length: 20
   -
     valid: true
     tests:
@@ -87,9 +128,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #1'
     time:
-      totalTime: 35
-      startTime: '2018-09-11T21:33:21.680Z'
-      endTime: '2018-09-11T21:33:21.715Z'
+      totalTime: 77
+      startTime: '2018-09-12T20:58:47.071Z'
+      endTime: '2018-09-12T20:58:47.148Z'
       timeout: 5000
     subscriptions:
       -
@@ -105,7 +146,18 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.681Z'
+        connectionTime: '2018-09-12T20:58:47.072Z'
+        messageReceived:
+          headers:
+            content-type: application/json
+            content-length: '19'
+            host: 'localhost:23075'
+            connection: close
+          params:
+            secondId: idStuff
+          query:
+            query: '111'
+          body: '{"duplicated":true}'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -128,7 +180,35 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T21:33:21.714Z'
+        publishTime: '2018-09-12T20:58:47.147Z'
+        messageReceived:
+          statusCode: 321
+          body: duplicatedResponsePayload
+          headers:
+            x-powered-by: Express
+            content-type: 'text/html; charset=utf-8'
+            content-length: '25'
+            etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
+            date: 'Wed, 12 Sep 2018 20:58:47 GMT'
+            connection: close
+          request:
+            uri:
+              protocol: 'http:'
+              slashes: true
+              auth: null
+              host: 'localhost:23075'
+              port: '23075'
+              hostname: localhost
+              hash: null
+              search: '?query=111'
+              query: query=111
+              pathname: /enqueuer/idStuff
+              path: '/enqueuer/idStuff?query=111'
+              href: 'http://localhost:23075/enqueuer/idStuff?query=111'
+            method: post
+            headers:
+              content-type: application/json
+              Content-Length: 19
   -
     valid: true
     tests:
@@ -139,8 +219,8 @@ requisitions:
     name: 'requisition 2 (port 23076)'
     time:
       totalTime: 1002
-      startTime: '2018-09-11T21:33:21.717Z'
-      endTime: '2018-09-11T21:33:22.719Z'
+      startTime: '2018-09-12T20:58:47.151Z'
+      endTime: '2018-09-12T20:58:48.153Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -153,7 +233,7 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.718Z'
+        connectionTime: '2018-09-12T20:58:47.153Z'
   -
     valid: true
     tests:
@@ -163,9 +243,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'check port releasing 23076)'
     time:
-      totalTime: 1003
-      startTime: '2018-09-11T21:33:22.721Z'
-      endTime: '2018-09-11T21:33:23.724Z'
+      totalTime: 1000
+      startTime: '2018-09-12T20:58:48.156Z'
+      endTime: '2018-09-12T20:58:49.156Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -178,4 +258,4 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received a message'
         valid: true
-        connectionTime: '2018-09-11T21:33:22.721Z'
+        connectionTime: '2018-09-12T20:58:48.157Z'

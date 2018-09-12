@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 88
-      startTime: '2018-09-11T21:33:21.556Z'
-      endTime: '2018-09-11T21:33:21.644Z'
+      totalTime: 119
+      startTime: '2018-09-12T20:58:46.915Z'
+      endTime: '2018-09-12T20:58:47.034Z'
       timeout: 5000
     subscriptions:
       -
@@ -42,7 +42,12 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.559Z'
+        connectionTime: '2018-09-12T20:58:46.919Z'
+        messageReceived:
+          MessageId: 58b2444d-4fd3-46b5-8f04-1007af6644c5
+          ReceiptHandle: '58b2444d-4fd3-46b5-8f04-1007af6644c5#b68a786f-1b9d-495a-9f34-3633587eb2fc'
+          MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+          Body: enqueuer
     startEvent:
       publisher:
         name: 'publisher description'
@@ -77,4 +82,10 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T21:33:21.644Z'
+        publishTime: '2018-09-12T20:58:47.032Z'
+        messageReceived:
+          ResponseMetadata:
+            RequestId: 00000000-0000-0000-0000-000000000000
+          MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+          MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
+          MessageId: 5c69ff68-e138-48c6-bc08-a59b1734793a

@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 193
-      startTime: '2018-09-11T21:33:21.515Z'
-      endTime: '2018-09-11T21:33:21.708Z'
+      totalTime: 265
+      startTime: '2018-09-12T20:58:46.865Z'
+      endTime: '2018-09-12T20:58:47.130Z'
       timeout: 3000
     subscriptions:
       -
@@ -30,7 +30,16 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-11T21:33:21.581Z'
+        connectionTime: '2018-09-12T20:58:46.898Z'
+        messageReceived:
+          headers:
+            content-type: application/json
+            content-length: '18'
+            host: 'localhost:4430'
+            connection: close
+          params: {}
+          query: {}
+          body: '{"https":"works!"}'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -53,4 +62,32 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-11T21:33:21.707Z'
+        publishTime: '2018-09-12T20:58:47.129Z'
+        messageReceived:
+          statusCode: 200
+          body: https
+          headers:
+            x-powered-by: Express
+            content-type: 'text/html; charset=utf-8'
+            content-length: '5'
+            etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
+            date: 'Wed, 12 Sep 2018 20:58:47 GMT'
+            connection: close
+          request:
+            uri:
+              protocol: 'https:'
+              slashes: true
+              auth: null
+              host: 'localhost:4430'
+              port: '4430'
+              hostname: localhost
+              hash: null
+              search: null
+              query: null
+              pathname: /enqueuer
+              path: /enqueuer
+              href: 'https://localhost:4430/enqueuer'
+            method: post
+            headers:
+              content-type: application/json
+              Content-Length: 18
