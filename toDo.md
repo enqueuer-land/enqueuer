@@ -17,7 +17,6 @@ One of:
     - To build, launch a git shell (e.g. Cmd or PowerShell), run vcbuild.bat (to build with VS2017 you need to explicitly add a vs2017 argument), which will checkout the GYP code into build/gyp, generate uv.sln as well as the necesery related project files, and start building.
 
 Inception run only one spawn mode
-enqueuer -c configFile => enqueuer configFile
 verify pub/sub attributes existence and types
 
 Combine files:

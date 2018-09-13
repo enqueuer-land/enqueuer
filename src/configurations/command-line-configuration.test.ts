@@ -34,6 +34,20 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.getLogLevel()).toBeUndefined();
     });
 
+    it('getConfigFileName default', () => {
+        const defaultConfigFile = 'config.yml';
+        commanderRefresher(['node', 'test']);
+
+        expect(CommandLineConfiguration.getConfigFileName()).toBe(defaultConfigFile);
+    });
+
+    it('getConfigFileName <no dash>', () => {
+        const configFile = 'filename';
+        commanderRefresher(['node', 'test', '--some', 'test', configFile]);
+
+        expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
+    });
+
     it('getConfigFileName -c', () => {
         const configFile = 'minusC';
         commanderRefresher(['node', 'test', '-c', configFile]);
@@ -46,12 +60,6 @@ describe('CommandLineConfiguration', () => {
         commanderRefresher(['node', 'test', '--config-file', configFile]);
 
         expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
-    });
-
-    it('undefined getConfigFileName', () => {
-        commanderRefresher(['node', 'test']);
-
-        expect(CommandLineConfiguration.getConfigFileName()).toBeUndefined();
     });
 
     it('getStore -s', () => {

@@ -49,7 +49,18 @@ class CommandLineConfiguration {
         return CommandLineConfiguration.getCommandLine().logLevel;
     }
     static getConfigFileName() {
-        return CommandLineConfiguration.getCommandLine().configFile;
+        const commandLine = CommandLineConfiguration.getCommandLine();
+        let configFileName = commandLine.configFile;
+        if (!configFileName) {
+            const args = commandLine.args;
+            if (args && args.length > 0) {
+                configFileName = args[0];
+            }
+            else {
+                configFileName = 'config.yml';
+            }
+        }
+        return configFileName;
     }
     static getStore() {
         return commandLineStore;
