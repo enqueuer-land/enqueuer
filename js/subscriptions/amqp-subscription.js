@@ -20,13 +20,14 @@ const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
 const amqp = __importStar(require("amqp"));
+const string_random_creator_1 = require("../timers/string-random-creator");
 let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.options = subscriptionAttributes.options;
         this.exchange = subscriptionAttributes.exchange;
         this.routingKey = subscriptionAttributes.routingKey;
-        this.queueName = subscriptionAttributes.queueName;
+        this.queueName = subscriptionAttributes.queueName || new string_random_creator_1.StringRandomCreator().create(8);
     }
     receiveMessage() {
         return new Promise((resolve) => {

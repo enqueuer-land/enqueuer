@@ -1,4 +1,5 @@
 import request from 'request';
+import {Logger} from '../loggers/logger';
 
 export class HttpRequester {
     private url: string;
@@ -17,6 +18,7 @@ export class HttpRequester {
 
     public request(): Promise<any> {
         return new Promise((resolve, reject) => {
+            Logger.info(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
             const options = this.createOptions();
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request(options,

@@ -22,6 +22,7 @@ export class MultiRequisitionRunner {
     }
 
     public run(): Promise<output.RequisitionModel> {
+        Logger.info(`Running: ${this.report.name}`);
         const promises = this.promisifyRequisitionExecutionCall();
         return new Promise((resolve, reject) => {
             this.checkInnerRequisitions()

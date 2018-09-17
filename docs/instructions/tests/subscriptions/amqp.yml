@@ -20,5 +20,6 @@ exchange: enqueuer.exchange
 #Routing key to have a message published in
 routingKey: enqueuer.integration.test.routing.key
 
-#Queue to be created while enqueuer is running. It lasts as long as enqueuer.
+#Optional. Queue to be created while enqueuer is running. It lasts as long as enqueuer.
+#Defaults to a randomly created queue name
 queueName: enqueuer.queue.name

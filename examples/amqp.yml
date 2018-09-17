@@ -26,7 +26,6 @@ subscriptions:
     options:
         host: localhost
         port: 5672
-    queueName: enqueuer.queue.name
     exchange: enqueuer.exchange
     routingKey: enqueuer.integration.test.routing.#
     onMessageReceived:

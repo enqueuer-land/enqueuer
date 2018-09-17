@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const request_1 = __importDefault(require("request"));
+const logger_1 = require("../loggers/logger");
 class HttpRequester {
     constructor(url, method, headers = {}, body, timeout = 3000) {
         this.url = url;
@@ -14,6 +15,7 @@ class HttpRequester {
     }
     request() {
         return new Promise((resolve, reject) => {
+            logger_1.Logger.info(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
             const options = this.createOptions();
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request_1.default(options, (error, response) => {
