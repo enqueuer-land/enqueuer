@@ -28,7 +28,7 @@ describe('EventCodeGenerator', () => {
             "                        testerName.addTest({\n" +
             "                                errorDescription: `Error executing 'eventName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
-            "                                label: \"Valid 'script' code\"\n" +
+            "                                label: \"Valid 'script snippet' code\"\n" +
             "                            });\n" +
             "                    }\n");
     });
@@ -43,7 +43,7 @@ describe('EventCodeGenerator', () => {
             "                        testerInstanceName.addTest({\n" +
             "                                errorDescription: `Error executing 'eventName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
-            "                                label: \"Valid 'script' code\"\n" +
+            "                                label: \"Valid 'script snippet' code\"\n" +
             "                            });\n" +
             "                    }\n");
     });
@@ -58,7 +58,7 @@ describe('EventCodeGenerator', () => {
             "                        testerName.addTest({\n" +
             "                                errorDescription: `Error executing 'eventName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
-            "                                label: \"Valid 'script' code\"\n" +
+            "                                label: \"Valid 'script snippet' code\"\n" +
             "                            });\n" +
             "                    }\n" +
             "try {\n" +
@@ -67,7 +67,7 @@ describe('EventCodeGenerator', () => {
             "                        testerName.addTest({\n" +
             "                                errorDescription: `Error executing store 'value' code: '${err}'`,\n" +
             "                                valid: false,\n" +
-            "                                label: \"Valid store code\"\n" +
+            "                                label: \"Valid 'store' in event auto-generated code\"\n" +
             "                            });\n" +
             "                    }\n");
     });
@@ -82,7 +82,7 @@ describe('EventCodeGenerator', () => {
             "                        testerName.addTest({\n" +
             "                                errorDescription: `Error executing 'differentName.script' code: '${err}'`,\n" +
             "                                valid: false,\n" +
-            "                                label: \"Valid 'script' code\"\n" +
+            "                                label: \"Valid 'script snippet' code\"\n" +
             "                            });\n" +
             "                    }\n" +
             "jude\n" +

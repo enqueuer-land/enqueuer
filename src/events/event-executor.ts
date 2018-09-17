@@ -1,5 +1,5 @@
-import {Event} from './event';
-import {Assertion} from './assertion';
+import {Event} from '../models/events/event';
+import {Assertion} from '../models/events/assertion';
 import {Test} from '../testers/test';
 import {Tester} from '../testers/tester';
 import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';

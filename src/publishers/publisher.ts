@@ -1,5 +1,5 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {Event} from '../events/event';
+import {Event} from '../models/events/event';
 
 export abstract class Publisher {
     public type: string;

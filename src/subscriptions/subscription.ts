@@ -1,7 +1,7 @@
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Logger} from '../loggers/logger';
 import {TestModel} from '../models/outputs/test-model';
-import {Event} from '../events/event';
+import {Event} from '../models/events/event';
 
 export abstract class Subscription {
 

@@ -1,5 +1,4 @@
-import {MessageReceiver} from './message-receiver';
-import {Logger} from '../loggers/logger';
+import {MessageReceiver} from '../models/events/message-receiver';
 import {EventExecutor} from './event-executor';
 import {TestModel} from '../models/outputs/test-model';
 

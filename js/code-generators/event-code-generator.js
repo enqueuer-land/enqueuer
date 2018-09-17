@@ -24,7 +24,7 @@ class EventCodeGenerator {
                         ${this.testerInstanceName}.addTest({
                                 errorDescription: \`Error executing '${this.name}.script' code: '\${err}'\`,
                                 valid: false,
-                                label: "Valid 'script' code"
+                                label: "Valid 'script snippet' code"
                             });
                     }\n`;
     }

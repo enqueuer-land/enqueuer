@@ -14,7 +14,7 @@ class StoreCodeGenerator {
                         ${this.testerInstanceName}.addTest({
                                 errorDescription: \`Error executing store '${key}' code: '\${err}'\`,
                                 valid: false,
-                                label: "Valid store code"
+                                label: "Valid 'store' in event auto-generated code"
                             });
                     }\n`;
         });

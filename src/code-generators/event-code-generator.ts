@@ -1,6 +1,6 @@
-import {Event} from '../events/event';
+import {Event} from '../models/events/event';
 import {AssertionCodeGenerator} from './assertion-code-generator';
-import {Assertion} from '../events/assertion';
+import {Assertion} from '../models/events/assertion';
 import {StoreCodeGenerator} from './store-code-generator';
 
 export class EventCodeGenerator {
@@ -34,7 +34,7 @@ export class EventCodeGenerator {
                         ${this.testerInstanceName}.addTest({
                                 errorDescription: \`Error executing '${this.name}.script' code: '\${err}'\`,
                                 valid: false,
-                                label: "Valid 'script' code"
+                                label: "Valid 'script snippet' code"
                             });
                     }\n`;
     }

@@ -14,6 +14,6 @@ export class StringRandomCreator {
         }
 
         return text;
-    };
+    }
 
 }

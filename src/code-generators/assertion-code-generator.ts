@@ -1,5 +1,5 @@
 import {Tester} from '../testers/tester';
-import {Assertion} from '../events/assertion';
+import {Assertion} from '../models/events/assertion';
 
 export class AssertionCodeGenerator {
     private testerInstanceName: string;

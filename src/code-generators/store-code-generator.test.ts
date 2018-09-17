@@ -20,7 +20,7 @@ describe('StoreCodeGenerator', () => {
             '                        testerName.addTest({\n' +
             '                                errorDescription: `Error executing store \'first\' code: \'${err}\'`,\n' +
             '                                valid: false,\n' +
-            '                                label: \"Valid store code\"\n' +
+            '                                label: \"Valid \'store\' in event auto-generated code\"\n' +
             '                            });\n' +
             '                    }\n' +
             'try {\n' +
@@ -29,7 +29,7 @@ describe('StoreCodeGenerator', () => {
             '                        testerName.addTest({\n' +
             '                                errorDescription: `Error executing store \'second\' code: \'${err}\'`,\n' +
             '                                valid: false,\n' +
-            '                                label: \"Valid store code\"\n' +
+            '                                label: \"Valid \'store\' in event auto-generated code\"\n' +
             '                            });\n' +
             '                    }\n');
     });

@@ -1,6 +1,6 @@
 import {Logger} from '../loggers/logger';
 import {EventExecutor} from './event-executor';
-import {Initializable} from './initializable';
+import {Initializable} from '../models/events/initializable';
 import {TestModel} from '../models/outputs/test-model';
 
 export class OnInitEventExecutor extends EventExecutor {

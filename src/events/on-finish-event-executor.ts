@@ -1,7 +1,7 @@
 import {Logger} from '../loggers/logger';
 import {EventExecutor} from './event-executor';
 import {TestModel} from '../models/outputs/test-model';
-import {Finishable} from './finishable';
+import {Finishable} from '../models/events/finishable';
 
 export class OnFinishEventExecutor extends EventExecutor {
     private finishable: Finishable;
