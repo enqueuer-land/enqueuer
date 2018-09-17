@@ -1,39 +1,248 @@
-name: examples/mqtt.yml
-valid: false
+name: examples/requisition.yml
+valid: true
 tests: []
 startEvent: {}
 requisitions:
   -
-    valid: false
+    valid: true
     tests: []
-    name: 'Requisition #0'
+    name: 'iterations iterator collection'
     time:
-      totalTime: 5003
-      startTime: '2018-09-17T18:13:17.823Z'
-      endTime: '2018-09-17T18:13:22.826Z'
-    subscriptions:
+      startTime: '2018-09-17T19:09:52.774Z'
+      endTime: '2018-09-17T19:09:52.967Z'
+      totalTime: 193
+    subscriptions: []
+    startEvent: {}
+    requisitions:
       -
-        name: 'subscription description'
-        type: mqtt
-        tests:
-          -
-            valid: false
-            name: 'Message received'
-            description: 'Subscription has not received its message'
-          -
-            valid: false
-            name: 'No time out'
-            description: 'Not avoidable Subscription has timed out'
-        valid: false
-        connectionTime: '2018-09-17T18:13:17.975Z'
+        valid: true
+        tests: []
+        name: 'iterations [0]'
+        time:
+          totalTime: 11
+          startTime: '2018-09-17T19:09:52.774Z'
+          endTime: '2018-09-17T19:09:52.785Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.783Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [1]'
+        time:
+          totalTime: 0
+          startTime: '2018-09-17T19:09:52.814Z'
+          endTime: '2018-09-17T19:09:52.814Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.814Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [2]'
+        time:
+          totalTime: 0
+          startTime: '2018-09-17T19:09:52.826Z'
+          endTime: '2018-09-17T19:09:52.826Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.826Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [3]'
+        time:
+          totalTime: 2
+          startTime: '2018-09-17T19:09:52.844Z'
+          endTime: '2018-09-17T19:09:52.846Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.846Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [4]'
+        time:
+          totalTime: 0
+          startTime: '2018-09-17T19:09:52.880Z'
+          endTime: '2018-09-17T19:09:52.880Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.880Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [5]'
+        time:
+          totalTime: 0
+          startTime: '2018-09-17T19:09:52.906Z'
+          endTime: '2018-09-17T19:09:52.906Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.906Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [6]'
+        time:
+          totalTime: 2
+          startTime: '2018-09-17T19:09:52.942Z'
+          endTime: '2018-09-17T19:09:52.944Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.944Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [7]'
+        time:
+          totalTime: 0
+          startTime: '2018-09-17T19:09:52.950Z'
+          endTime: '2018-09-17T19:09:52.950Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.950Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [8]'
+        time:
+          totalTime: 0
+          startTime: '2018-09-17T19:09:52.958Z'
+          endTime: '2018-09-17T19:09:52.958Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.958Z'
+      -
+        valid: true
+        tests: []
+        name: 'iterations [9]'
+        time:
+          totalTime: 0
+          startTime: '2018-09-17T19:09:52.967Z'
+          endTime: '2018-09-17T19:09:52.967Z'
+        subscriptions: []
+        startEvent:
+          publisher:
+            name: 'Start event publisher'
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-17T19:09:52.967Z'
+  -
+    valid: true
+    tests:
+      -
+        name: 'It was executed 10 times'
+        valid: true
+        description: 'Expected ''store.iteration'' to be equal to ''9''. Received ''9'''
+      -
+        name: 'It delayed for at least ~3 seconds'
+        valid: true
+        description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3051'''
+      -
+        name: 'It delayed for no more than ~3 seconds'
+        valid: true
+        description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2501'''
+    name: delayed
+    time:
+      totalTime: 0
+      startTime: '2018-09-17T19:09:55.968Z'
+      endTime: '2018-09-17T19:09:55.968Z'
+    subscriptions: []
     startEvent:
       publisher:
-        name: 'publisher description'
+        name: 'Start event publisher'
         valid: true
-        type: mqtt
+        type: zero-mq-pub
         tests:
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-17T18:13:18.028Z'
+        publishTime: '2018-09-17T19:09:55.968Z'

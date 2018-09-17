@@ -48,7 +48,7 @@ describe('Inception test', () => {
         sleep(500);
 
         tester = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/tester.yml']);
-        // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
+        tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
         // sleep(6000);
 
 
@@ -107,7 +107,7 @@ describe('Inception test', () => {
 
     afterAll(() => {
         killThemAll();
-        removeEveryReportFile();
+        // removeEveryReportFile();
     });
 
 });
