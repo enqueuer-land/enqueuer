@@ -100,7 +100,6 @@ class RequisitionReporter {
         this.reportGenerator.addTests(new on_init_event_executor_1.OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
     executeOnFinishFunction() {
-        logger_1.Logger.info(`Executing requisition::onFinish hook function`);
         this.startEvent.onFinish();
         this.multiSubscriptionsReporter.onFinish();
         this.reportGenerator.addTests(new on_finish_event_executor_1.OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());

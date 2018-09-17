@@ -41,6 +41,10 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
     startReader(input) {
         input.receiveMessage()
             .then((requisitions) => new multi_requisition_runner_1.MultiRequisitionRunner(requisitions, input.getType()).run())
+            .then((report) => {
+            input.sendResponse(report);
+            return report;
+        })
             .then((report) => this.multiPublisher.publish(report))
             .then(() => this.startReader(input))
             .catch((err) => {

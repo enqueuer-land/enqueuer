@@ -11,6 +11,7 @@ export class HttpClientPublisher extends Publisher {
     private method: string;
     private headers: any;
     private authentication: any;
+    private timeout: number;
 
     constructor(publish: PublisherModel) {
         super(publish);
@@ -19,6 +20,7 @@ export class HttpClientPublisher extends Publisher {
         this.method = publish.method.toUpperCase();
         this.payload = publish.payload || '';
         this.headers = publish.headers || {};
+        this.timeout = publish.timeout || 3000;
     }
 
     public publish(): Promise<void> {
@@ -28,7 +30,8 @@ export class HttpClientPublisher extends Publisher {
             new HttpRequester(this.url,
                             this.method.toLowerCase(),
                             this.headers,
-                            this.payload)
+                            this.payload,
+                            this.timeout)
                 .request()
                 .then((response: any) => {
                     Logger.trace(`Http/s requisition response: ${JSON.stringify(response)}`.substr(0, 128));

@@ -32,7 +32,7 @@ export abstract class Subscription {
     }
 
     public async sendResponse(): Promise<void> {
-        Logger.warning(`Subscription of ${this.type} does not provide synchronous response`);
+        Logger.debug(`Subscription of ${this.type} does not provide synchronous response`);
     }
 
     public onMessageReceivedTests(): TestModel[] {

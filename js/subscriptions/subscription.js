@@ -26,7 +26,7 @@ class Subscription {
     }
     sendResponse() {
         return __awaiter(this, void 0, void 0, function* () {
-            logger_1.Logger.warning(`Subscription of ${this.type} does not provide synchronous response`);
+            logger_1.Logger.debug(`Subscription of ${this.type} does not provide synchronous response`);
         });
     }
     onMessageReceivedTests() {

@@ -5,11 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const request_1 = __importDefault(require("request"));
 class HttpRequester {
-    constructor(url, method, headers = {}, body) {
+    constructor(url, method, headers = {}, body, timeout = 3000) {
         this.url = url;
         this.method = method;
         this.headers = headers;
         this.body = body;
+        this.timeout = timeout;
     }
     request() {
         return new Promise((resolve, reject) => {
@@ -29,6 +30,7 @@ class HttpRequester {
         let options = {
             url: this.url,
             method: this.method,
+            timeout: this.timeout,
             headers: this.headers
         };
         options.data = options.body = this.handleObjectPayload();

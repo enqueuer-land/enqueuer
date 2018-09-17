@@ -22,11 +22,12 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
         this.method = publish.method.toUpperCase();
         this.payload = publish.payload || '';
         this.headers = publish.headers || {};
+        this.timeout = publish.timeout || 3000;
     }
     publish() {
         return new Promise((resolve, reject) => {
             this.insertAuthentication();
-            new http_requester_1.HttpRequester(this.url, this.method.toLowerCase(), this.headers, this.payload)
+            new http_requester_1.HttpRequester(this.url, this.method.toLowerCase(), this.headers, this.payload, this.timeout)
                 .request()
                 .then((response) => {
                 logger_1.Logger.trace(`Http/s requisition response: ${JSON.stringify(response)}`.substr(0, 128));

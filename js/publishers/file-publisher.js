@@ -53,10 +53,10 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
             return value;
         }
         if (this.filename.endsWith('yml') || this.filename.endsWith('yaml')) {
-            logger_1.Logger.debug('Stringifying file content as yaml');
+            logger_1.Logger.debug(`Stringifying file content '${this.filename}' as YML`);
             return yaml.stringify(value, 10, 2);
         }
-        logger_1.Logger.debug('Stringifying file content as JSON');
+        logger_1.Logger.debug(`Stringifying file content '${this.filename}' as JSON`);
         return JSON.stringify(value, null, 2);
     }
     createFilename() {

@@ -1,8 +1,9 @@
 name: runnableUds
-timeout: 5000
+timeout: 10000
 startEvent:
     publisher:
         name: UdsPublisher
+        timeout: 8000
         type: replaced
         onInit:
             script: publisher.type='uds';
@@ -29,12 +30,8 @@ startEvent:
                         expect: payload
                         toBeEqualTo: 100
 
-subscriptions:
--   type: uds
-    timeout: 5000
-    name: subscriptionUds
-    path: /tmp/outUnix.sock
-    onMessageReceived:
-        assertions:
-        -   name: Test name
-            expectToBeDefined: message
+        #end
+        onMessageReceived:
+            assertions:
+            -   name: Test name
+                expectToBeDefined: message

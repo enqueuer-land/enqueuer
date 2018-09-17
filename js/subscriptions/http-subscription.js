@@ -114,7 +114,7 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
         const url = this.redirect + originalRequisition.url;
         logger_1.Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${url}`);
         return new Promise((resolve, reject) => {
-            new http_requester_1.HttpRequester(url, this.method.toLowerCase(), originalRequisition.headers, originalRequisition.rawBody)
+            new http_requester_1.HttpRequester(url, this.method.toLowerCase(), originalRequisition.headers, originalRequisition.rawBody, this.timeout)
                 .request()
                 .then((response) => resolve(response))
                 .catch(err => reject(err));

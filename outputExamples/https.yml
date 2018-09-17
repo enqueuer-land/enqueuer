@@ -1,10 +1,10 @@
 name: examples/https.yml
-valid: true
+valid: false
 tests: []
 startEvent: {}
 requisitions:
   -
-    valid: true
+    valid: false
     tests:
       -
         valid: true
@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 529
-      startTime: '2018-09-12T21:16:42.791Z'
-      endTime: '2018-09-12T21:16:43.320Z'
+      totalTime: 58
+      startTime: '2018-09-17T16:34:47.785Z'
+      endTime: '2018-09-17T16:34:47.843Z'
       timeout: 3000
     subscriptions:
       -
@@ -30,7 +30,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-12T21:16:42.912Z'
+        connectionTime: '2018-09-17T16:34:47.800Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -43,7 +43,7 @@ requisitions:
     startEvent:
       publisher:
         name: 'publisher description'
-        valid: true
+        valid: false
         type: https-client
         tests:
           -
@@ -52,26 +52,27 @@ requisitions:
             description: 'Published successfully'
           -
             name: 'Status Code'
-            valid: true
-            description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
+            valid: false
+            description: 'Expected ''statusCode'' to be equal to ''200''. Received ''404'''
           -
             name: Body
-            valid: true
-            description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
+            valid: false
+            description: "Expected 'body' to be equal to 'https'. Received '<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /enqueuer</pre>\n</body>\n</html>\n'"
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-12T21:16:43.314Z'
+        publishTime: '2018-09-17T16:34:47.839Z'
         messageReceived:
-          statusCode: 200
-          body: https
+          statusCode: 404
+          body: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /enqueuer</pre>\n</body>\n</html>\n"
           headers:
             x-powered-by: Express
+            content-security-policy: 'default-src ''self'''
+            x-content-type-options: nosniff
             content-type: 'text/html; charset=utf-8'
-            content-length: '5'
-            etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-            date: 'Wed, 12 Sep 2018 21:16:43 GMT'
+            content-length: '148'
+            date: 'Mon, 17 Sep 2018 16:34:47 GMT'
             connection: close
           request:
             uri:

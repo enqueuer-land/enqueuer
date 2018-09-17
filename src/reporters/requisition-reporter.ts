@@ -123,8 +123,6 @@ export class RequisitionReporter {
     }
 
     private executeOnFinishFunction() {
-        Logger.info(`Executing requisition::onFinish hook function`);
-
         this.startEvent.onFinish();
         this.multiSubscriptionsReporter.onFinish();
         this.reportGenerator.addTests(new OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());

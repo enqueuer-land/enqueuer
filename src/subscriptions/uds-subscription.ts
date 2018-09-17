@@ -72,16 +72,12 @@ export class UdsSubscription extends Subscription {
     private waitForData(resolve: any) {
         this.stream.once('end', () => {
             Logger.debug(`Uds server detected stream's end`);
-            this.persistStream();
             resolve();
             return;
         });
 
         this.stream.on('data', (msg: any) => {
             Logger.debug(`Uds server got data`);
-            if (!this.response) {
-                this.persistStream();
-            }
             resolve({payload: msg});
         });
     }
@@ -90,9 +86,9 @@ export class UdsSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             if (this.stream) {
                 Logger.debug(`Uds server sending response`);
-                this.stream.write(this.response, () => {
+                const response = this.stringifyPayload(this.response);
+                this.stream.write(response, () => {
                     Logger.debug(`Uds server response sent`);
-                    this.persistStream();
                     resolve();
                 });
             } else {
@@ -101,6 +97,17 @@ export class UdsSubscription extends Subscription {
                 reject(message);
             }
         });
+    }
+
+    public unsubscribe() {
+        this.persistStream();
+    }
+
+    private stringifyPayload(payload: any): string | Buffer {
+        if (typeof(payload) != 'string' && !Buffer.isBuffer(payload)) {
+            return JSON.stringify(payload);
+        }
+        return payload;
     }
 
     private persistStream() {

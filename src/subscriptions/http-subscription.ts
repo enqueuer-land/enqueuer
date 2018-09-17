@@ -136,7 +136,8 @@ export class HttpSubscription extends Subscription {
             new HttpRequester(url,
                 this.method.toLowerCase(),
                 originalRequisition.headers,
-                originalRequisition.rawBody)
+                originalRequisition.rawBody,
+                this.timeout)
                 .request()
                 .then((response: any) => resolve(response))
                 .catch(err => reject(err));

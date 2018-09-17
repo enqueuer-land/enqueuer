@@ -12,11 +12,13 @@ export class UdsPublisher extends Publisher {
     private saveStream: any;
     private loadStream: string;
     private stream: any;
+    private timeout: number;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
         this.path = publisherAttributes.path;
         this.loadStream = publisherAttributes.loadStream;
+        this.timeout = publisherAttributes.timeout || 1000;
         this.saveStream = publisherAttributes.saveStream;
     }
 
@@ -25,13 +27,17 @@ export class UdsPublisher extends Publisher {
         return new Promise((resolve, reject) => {
             this.stream = this.getStream();
             this.stream.setTimeout(1000);
-            this.registerEvents(resolve, reject);
-            this.stream.write(payload, () => Logger.trace(`Uds publisher message sent: ${payload}`));
+            this.stream.write(payload, () => {
+                Logger.trace(`Uds publisher message sent: ${payload}`);
+                this.registerEvents(resolve, reject);
+            });
         });
     }
 
     private registerEvents(resolve: any, reject: any) {
+        this.stream.setTimeout(this.timeout);
         this.stream.on('timeout', () => {
+            Logger.trace(`Uds publisher detected timeout`);
             this.persistStream();
             resolve();
         })
@@ -42,13 +48,14 @@ export class UdsPublisher extends Publisher {
             resolve();
         })
         .once('data', (msg: Buffer) => {
-            Logger.debug(`Uds publisher got message`);
+            Logger.trace(`Uds publisher got message: ${msg}`);
             if (!this.messageReceived) {
                 this.messageReceived = {
                     payload: ''
                 };
             }
             this.messageReceived.payload += msg;
+            resolve();
         });
     }
 
@@ -80,8 +87,9 @@ export class UdsPublisher extends Publisher {
             this.stream.removeAllListeners('end');
             if (this.saveStream) {
                 Store.getData()[this.saveStream] = this.stream;
-                Logger.debug(`Uds publisher saved stream`);
+                Logger.debug(`Uds publisher stream saved`);
             } else {
+                Logger.debug(`Uds publisher stream closed`);
                 this.stream.end();
             }
         }

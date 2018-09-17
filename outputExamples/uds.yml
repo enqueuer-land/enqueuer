@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 282
-      startTime: '2018-09-12T21:16:42.946Z'
-      endTime: '2018-09-12T21:16:43.228Z'
+      totalTime: 11
+      startTime: '2018-09-17T17:43:58.545Z'
+      endTime: '2018-09-17T17:43:58.556Z'
       timeout: 3000
     subscriptions:
       -
@@ -30,7 +30,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-12T21:16:42.985Z'
+        connectionTime: '2018-09-17T17:43:58.548Z'
         messageReceived:
           payload:
             type: Buffer
@@ -61,121 +61,6 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-12T21:16:43.228Z'
+        publishTime: '2018-09-17T17:43:58.555Z'
         messageReceived:
           payload: responsePayload
-  -
-    valid: true
-    tests: []
-    name: 'UDS2 Name description'
-    time:
-      totalTime: 1035
-      startTime: '2018-09-12T21:16:43.237Z'
-      endTime: '2018-09-12T21:16:44.272Z'
-    subscriptions:
-      -
-        name: 'udsSubscription2 description'
-        type: uds
-        tests:
-          -
-            name: 'Message received is enqueuer 2'
-            valid: true
-            description: 'Expected ''message.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-12T21:16:43.243Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 101
-              - 110
-              - 113
-              - 117
-              - 101
-              - 117
-              - 101
-              - 114
-    startEvent:
-      publisher:
-        name: 'udsPublisher2 description'
-        valid: true
-        type: uds
-        tests:
-          -
-            name: 'Message to be published is enqueuer'
-            valid: true
-            description: 'Expected ''publisher.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-12T21:16:44.272Z'
-  -
-    valid: true
-    tests: []
-    name: 'udsStreamLoader description'
-    time:
-      totalTime: 6
-      startTime: '2018-09-12T21:16:44.275Z'
-      endTime: '2018-09-12T21:16:44.281Z'
-    subscriptions:
-      -
-        name: 'Subscription #0'
-        type: uds
-        tests:
-          -
-            name: 'Publisher stream was still opened'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''I am still opened''. Received ''I am still opened'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-12T21:16:44.275Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 73
-              - 32
-              - 97
-              - 109
-              - 32
-              - 115
-              - 116
-              - 105
-              - 108
-              - 108
-              - 32
-              - 111
-              - 112
-              - 101
-              - 110
-              - 101
-              - 100
-    startEvent:
-      publisher:
-        name: 'udsStreamLoader publisher'
-        valid: true
-        type: uds
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Message received'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-12T21:16:44.280Z'
-        messageReceived:
-          payload: 'I am still bidirectional'

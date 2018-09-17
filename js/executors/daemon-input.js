@@ -42,5 +42,13 @@ class DaemonInput {
     unsubscribe() {
         this.subscription.unsubscribe();
     }
+    sendResponse(report) {
+        this.subscription.response = report;
+        this.subscription.sendResponse()
+            .catch((err) => {
+            logger_1.Logger.warning(`Error responding daemon input: ${err}`);
+        });
+        this.subscription.response = null;
+    }
 }
 exports.DaemonInput = DaemonInput;

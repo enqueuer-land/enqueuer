@@ -49,7 +49,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
                 this.report.publishTime = new date_controller_1.DateController().toString();
                 this.report.tests.push({ name: 'Published', valid: true, description: 'Published successfully' });
                 this.executeOnMessageReceivedFunction();
-                return resolve();
+                resolve();
             })
                 .catch((err) => {
                 logger_1.Logger.error(err);
@@ -59,9 +59,8 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         });
     }
     getReport() {
-        this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
-        this.report.messageReceived = this.publisher.messageReceived;
         this.pushResponseMessageReceivedTest();
+        this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return {
             publisher: this.report
         };
@@ -70,6 +69,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
         this.report.tests = this.report.tests.concat(new on_finish_event_executor_1.OnFinishEventExecutor('publisher', this.publisher).trigger());
     }
     pushResponseMessageReceivedTest() {
+        this.report.messageReceived = this.publisher.messageReceived;
         if (this.publisher.onMessageReceived && this.publisher.onMessageReceived.assertions) {
             let responseTest = {
                 name: 'Response message received',

@@ -26,6 +26,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
         super(publisherAttributes);
         this.path = publisherAttributes.path;
         this.loadStream = publisherAttributes.loadStream;
+        this.timeout = publisherAttributes.timeout || 1000;
         this.saveStream = publisherAttributes.saveStream;
     }
     publish() {
@@ -33,12 +34,16 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
         return new Promise((resolve, reject) => {
             this.stream = this.getStream();
             this.stream.setTimeout(1000);
-            this.registerEvents(resolve, reject);
-            this.stream.write(payload, () => logger_1.Logger.trace(`Uds publisher message sent: ${payload}`));
+            this.stream.write(payload, () => {
+                logger_1.Logger.trace(`Uds publisher message sent: ${payload}`);
+                this.registerEvents(resolve, reject);
+            });
         });
     }
     registerEvents(resolve, reject) {
+        this.stream.setTimeout(this.timeout);
         this.stream.on('timeout', () => {
+            logger_1.Logger.trace(`Uds publisher detected timeout`);
             this.persistStream();
             resolve();
         })
@@ -49,13 +54,14 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
             resolve();
         })
             .once('data', (msg) => {
-            logger_1.Logger.debug(`Uds publisher got message`);
+            logger_1.Logger.trace(`Uds publisher got message: ${msg}`);
             if (!this.messageReceived) {
                 this.messageReceived = {
                     payload: ''
                 };
             }
             this.messageReceived.payload += msg;
+            resolve();
         });
     }
     stringifyPayload() {
@@ -85,9 +91,10 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
             this.stream.removeAllListeners('end');
             if (this.saveStream) {
                 store_1.Store.getData()[this.saveStream] = this.stream;
-                logger_1.Logger.debug(`Uds publisher saved stream`);
+                logger_1.Logger.debug(`Uds publisher stream saved`);
             }
             else {
+                logger_1.Logger.debug(`Uds publisher stream closed`);
                 this.stream.end();
             }
         }

@@ -1,4 +1,3 @@
-import {Logger} from '../loggers/logger';
 import request from 'request';
 
 export class HttpRequester {
@@ -6,12 +5,14 @@ export class HttpRequester {
     private method: string;
     private headers: any;
     private body: any;
+    private timeout: number;
 
-    constructor(url: string, method: string, headers: any = {}, body: any) {
+    constructor(url: string, method: string, headers: any = {}, body: any, timeout: number = 3000) {
         this.url = url;
         this.method = method;
         this.headers = headers;
         this.body = body;
+        this.timeout = timeout;
     }
 
     public request(): Promise<any> {
@@ -33,6 +34,7 @@ export class HttpRequester {
         let options: any = {
             url: this.url,
             method: this.method,
+            timeout: this.timeout,
             headers: this.headers
         };
         options.data = options.body = this.handleObjectPayload();

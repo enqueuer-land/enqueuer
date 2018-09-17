@@ -80,15 +80,14 @@ export class SubscriptionReporter {
         });
     }
 
-    public async receiveMessage(): Promise<any> {
+    public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message: any) => {
                     Logger.debug(`${this.subscription.name} received its message`);
                     if (message !== null || message !== undefined) {
-                        this.handleMessageArrival(message)
-                            .then(() => Logger.debug(`${this.subscription.name} handled message arrival`))
-                            .then(() => resolve(message));
+                        this.handleMessageArrival(message);
+                        this.sendSyncResponse(resolve, message, reject);
                     } else {
                         Logger.warning(`${this.subscription.name} message is null or undefined`);
                     }
@@ -99,6 +98,20 @@ export class SubscriptionReporter {
                     reject(err);
                 });
         });
+    }
+
+    private sendSyncResponse(resolve: any, message: any, reject: any) {
+        if (this.subscription.response) {
+            Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
+            this.subscription.sendResponse()
+                .then(() => resolve(message))
+                .catch(err => {
+                    Logger.warning(`Error ${this.subscription.type} synchronous response sending: ${err}`);
+                    reject(err);
+                });
+        } else {
+            resolve();
+        }
     }
 
     public getReport(): output.SubscriptionModel {
@@ -119,25 +132,17 @@ export class SubscriptionReporter {
         this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('subscription', this.subscription).trigger());
     }
 
-    private handleMessageArrival(message: any): Promise<void> {
-        return new Promise((resolve, reject) => {
-            Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 150) + '...');
-            if (!this.hasTimedOut) {
-                Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
-                this.subscription.messageReceived = message;
-                this.executeOnMessageReceivedFunction();
-                if (this.subscription.response) {
-                    Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-                    this.subscription.sendResponse().then(() => resolve()).catch(err => reject(err));
-                } else {
-                    resolve();
-                }
-            } else {
-                Logger.info(`${this.subscription.name} has received message in a unable time`);
-                this.cleanUp();
-                resolve();
-            }
-        });
+    private handleMessageArrival(message: any) {
+        Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 150) + '...');
+        if (!this.hasTimedOut) {
+            Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
+            this.subscription.messageReceived = message;
+            this.executeOnMessageReceivedFunction();
+        } else {
+            Logger.info(`${this.subscription.name} has received message in a unable time`);
+            this.cleanUp();
+        }
+        Logger.debug(`${this.subscription.name} handled message arrival`);
     }
 
     private cleanUp(): void {

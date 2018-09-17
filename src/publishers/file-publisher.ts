@@ -44,11 +44,11 @@ export class FilePublisher extends Publisher {
         }
 
         if (this.filename.endsWith('yml') || this.filename.endsWith('yaml')) {
-            Logger.debug('Stringifying file content as yaml');
+            Logger.debug(`Stringifying file content '${this.filename}' as YML`);
             return yaml.stringify(value, 10, 2);
         }
 
-        Logger.debug('Stringifying file content as JSON');
+        Logger.debug(`Stringifying file content '${this.filename}' as JSON`);
         return JSON.stringify(value, null, 2);
     }
 
