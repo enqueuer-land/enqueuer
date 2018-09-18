@@ -1,4 +1,4 @@
-import {DateController} from '../timers/date-controller';
+import {DateController} from './date-controller';
 import hash from 'object-hash';
 
 export class IdGenerator {

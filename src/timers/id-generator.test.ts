@@ -1,5 +1,5 @@
 import {IdGenerator} from "./id-generator";
-import {DateController} from "../timers/date-controller";
+import {DateController} from "./date-controller";
 var hash = require('object-hash');
 
 jest.mock("../timers/date-controller");

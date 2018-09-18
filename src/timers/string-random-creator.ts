@@ -1,4 +1,3 @@
-//TODO test it and move to id-generator folder
 export class StringRandomCreator {
 
     private possible: string;
@@ -10,7 +9,7 @@ export class StringRandomCreator {
     public create = (length: number): string => {
         let text = '';
 
-        for (let i = 0; i < length; i++) {
+        for (let i = length; i > 0; --i) {
             text += this.possible.charAt(Math.floor(Math.random() * this.possible.length));
         }
 

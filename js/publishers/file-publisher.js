@@ -19,7 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var FilePublisher_1;
 "use strict";
 const publisher_1 = require("./publisher");
-const id_generator_1 = require("../id-generator/id-generator");
+const id_generator_1 = require("../timers/id-generator");
 const conditional_injector_1 = require("conditional-injector");
 const yaml = __importStar(require("yamljs"));
 const fs = __importStar(require("fs"));

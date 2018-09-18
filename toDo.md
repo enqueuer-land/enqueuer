@@ -60,6 +60,8 @@ Daemon input adapter
 275 All files                               |    32.58 |    27.89 |    33.23 |     32.4 |
 300 All files                               |    33.54 |    29.15 |    34.62 |    33.15 |
 324 All files                               |     52.9 |    40.99 |    43.99 |    52.28 |
+350 All files                               |    66.14 |    57.06 |    59.76 |    65.68 |
+
 
 Summary to look like this?
  FAIL  src/inceptionTest/inception.comp.ts

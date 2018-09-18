@@ -11,7 +11,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
-const id_generator_1 = require("../id-generator/id-generator");
+const id_generator_1 = require("../timers/id-generator");
 const ajv_1 = __importDefault(require("ajv"));
 const fs_1 = __importDefault(require("fs"));
 const yaml = __importStar(require("yamljs"));

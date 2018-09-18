@@ -1,5 +1,5 @@
 import {Logger} from '../loggers/logger';
-import {IdGenerator} from '../id-generator/id-generator';
+import {IdGenerator} from '../timers/id-generator';
 import Ajv, {ValidateFunction} from 'ajv';
 import fs from 'fs';
 import * as yaml from 'yamljs';

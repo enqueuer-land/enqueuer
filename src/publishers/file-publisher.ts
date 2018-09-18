@@ -1,8 +1,7 @@
 import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {IdGenerator} from '../id-generator/id-generator';
+import {IdGenerator} from '../timers/id-generator';
 import {Injectable} from 'conditional-injector';
-import {isNullOrUndefined} from 'util';
 import * as yaml from 'yamljs';
 import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
