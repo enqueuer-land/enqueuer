@@ -22,7 +22,9 @@ export class ZeroMqSubSubscription extends Subscription {
             Logger.trace(`ZeroMqSub waiting for a message in topic ${this.topic}`);
             this.socket.on('message', (topic: Buffer, message: Buffer) => {
                 Logger.debug(`ZeroMqSub received a message in topic ${topic.toString()}`);
-
+                this.socket.unsubscribe(this.topic);
+                this.socket.disconnect(this.address);
+                this.socket.close();
                 resolve({topic: topic, payload: message});
             });
         });
@@ -42,12 +44,6 @@ export class ZeroMqSubSubscription extends Subscription {
                 .subscribe(this.topic);
         });
 
-    }
-
-    public unsubscribe(): void {
-        this.socket.unsubscribe(this.topic);
-        this.socket.disconnect(this.address);
-        this.socket.close();
     }
 
 }

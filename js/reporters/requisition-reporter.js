@@ -93,7 +93,12 @@ class RequisitionReporter {
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
-        this.onFinishCallback();
+        this.multiSubscriptionsReporter.unsubscribe()
+            .then(() => this.onFinishCallback())
+            .catch((err) => {
+            logger_1.Logger.warning(`Error unsubscribing to subscription: ${err}`);
+            this.onFinishCallback();
+        });
     }
     executeOnInitFunction() {
         logger_1.Logger.info(`Executing requisition::onInit hook function`);

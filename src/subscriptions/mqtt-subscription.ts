@@ -51,7 +51,7 @@ export class MqttSubscription extends Subscription {
         });
     }
 
-    public unsubscribe(): void {
+    public async unsubscribe(): Promise<void> {
         if (this.client) {
             this.client.unsubscribe(this.topic);
             this.client.end(true);

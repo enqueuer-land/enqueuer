@@ -1,77 +1,39 @@
-name: examples/kafka.yml
-valid: true
+name: examples/mqtt.yml
+valid: false
 tests: []
 startEvent: {}
 requisitions:
   -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
+    valid: false
+    tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 584
-      startTime: '2018-09-12T21:16:42.816Z'
-      endTime: '2018-09-12T21:16:43.400Z'
-      timeout: 8000
+      totalTime: 5004
+      startTime: '2018-09-18T21:36:18.066Z'
+      endTime: '2018-09-18T21:36:23.070Z'
     subscriptions:
       -
         name: 'subscription description'
-        type: kafka
+        type: mqtt
         tests:
           -
-            name: payload
-            valid: true
-            description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
-          -
-            name: topic
-            valid: true
-            description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
-          -
-            name: offset
-            valid: true
-            description: '''offset'' is not defined'
-          -
-            name: partition
-            valid: true
-            description: '''partition'' is not defined'
-          -
-            name: timestamp
-            valid: true
-            description: '''timestamp'' is not defined'
-          -
-            valid: true
+            valid: false
             name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-12T21:16:43.308Z'
-        messageReceived:
-          topic: enqueuer-topic-name
-          value: kafkaPayload
-          offset: 184
-          partition: 0
-          highWaterOffset: 185
-          key: null
-          timestamp: '2018-09-12T21:16:43.311Z'
+            description: 'Subscription has not received its message'
+          -
+            valid: false
+            name: 'No time out'
+            description: 'Not avoidable Subscription has timed out'
+        valid: false
+        connectionTime: '2018-09-18T21:36:18.123Z'
     startEvent:
       publisher:
         name: 'publisher description'
         valid: true
-        type: kafka
+        type: mqtt
         tests:
           -
             name: Published
             valid: true
             description: 'Published successfully'
-          -
-            name: 'kafka publish response payload'
-            valid: true
-            description: '''`enqueuer-topic-name`'' is not defined'
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-12T21:16:43.388Z'
-        messageReceived: '{"enqueuer-topic-name":{"0":184}}'
+        publishTime: '2018-09-18T21:36:18.148Z'

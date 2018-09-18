@@ -31,9 +31,11 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.server.on('error', (err) => {
+                this.server.close();
                 reject(err);
             });
             this.server.on('message', (msg, remoteInfo) => {
+                this.server.close();
                 resolve({ payload: msg, remoteInfo: remoteInfo });
             });
         });
@@ -51,11 +53,6 @@ let UdpSubscription = class UdpSubscription extends subscription_1.Subscription 
                 reject(message);
             }
         });
-    }
-    unsubscribe() {
-        if (this.server) {
-            this.server.close();
-        }
     }
 };
 UdpSubscription = __decorate([

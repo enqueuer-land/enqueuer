@@ -114,7 +114,12 @@ export class RequisitionReporter {
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
-        this.onFinishCallback();
+        this.multiSubscriptionsReporter.unsubscribe()
+            .then(() => this.onFinishCallback())
+            .catch((err) => {
+                Logger.warning(`Error unsubscribing to subscription: ${err}`);
+                this.onFinishCallback();
+            });
     }
 
     private executeOnInitFunction() {

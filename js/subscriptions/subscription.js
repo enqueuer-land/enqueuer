@@ -22,7 +22,9 @@ class Subscription {
         this.avoid = subscriptionAttributes.avoid || false;
     }
     unsubscribe() {
-        //do nothing
+        return __awaiter(this, void 0, void 0, function* () {
+            //do nothing
+        });
     }
     sendResponse() {
         return __awaiter(this, void 0, void 0, function* () {

@@ -127,6 +127,12 @@ export class SubscriptionReporter {
         return this.report;
     }
 
+    public async unsubscribe(): Promise<void> {
+        if (this.subscribed) {
+            return this.subscription.unsubscribe();
+        }
+    }
+
     public onFinish() {
         Logger.trace(`Executing subscription onFinish`);
         this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('subscription', this.subscription).trigger());

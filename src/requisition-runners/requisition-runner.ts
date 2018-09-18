@@ -62,8 +62,8 @@ export class RequisitionRunner {
             const first = iteratorReport.requisitions[0];
             const last = iteratorReport.requisitions[iteratorReport.requisitions.length - 1];
             if (first && first.time && last && last.time) {
-                const startTime = new DateController(new Date(first.time.startTime));
-                const endTime = new DateController(new Date(last.time.endTime));
+                const startTime = new DateController(new Date(first.time.startTime as string));
+                const endTime = new DateController(new Date(last.time.endTime as string));
                 const totalTime = endTime.getTime() - startTime.getTime();
                 iteratorReport.time = {
                     startTime: startTime.toString(),

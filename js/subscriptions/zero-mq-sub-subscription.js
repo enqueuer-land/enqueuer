@@ -32,6 +32,9 @@ let ZeroMqSubSubscription = class ZeroMqSubSubscription extends subscription_1.S
             logger_1.Logger.trace(`ZeroMqSub waiting for a message in topic ${this.topic}`);
             this.socket.on('message', (topic, message) => {
                 logger_1.Logger.debug(`ZeroMqSub received a message in topic ${topic.toString()}`);
+                this.socket.unsubscribe(this.topic);
+                this.socket.disconnect(this.address);
+                this.socket.close();
                 resolve({ topic: topic, payload: message });
             });
         });
@@ -48,11 +51,6 @@ let ZeroMqSubSubscription = class ZeroMqSubSubscription extends subscription_1.S
                 .connect(this.address)
                 .subscribe(this.topic);
         });
-    }
-    unsubscribe() {
-        this.socket.unsubscribe(this.topic);
-        this.socket.disconnect(this.address);
-        this.socket.close();
     }
 };
 ZeroMqSubSubscription = __decorate([

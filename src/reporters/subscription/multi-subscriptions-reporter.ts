@@ -50,6 +50,10 @@ export class MultiSubscriptionsReporter {
         });
     }
 
+    public async unsubscribe(): Promise<void[]> {
+        return Promise.all(this.subscriptionReporters.map(subscription => subscription.unsubscribe()));
+    }
+
     public getReport(): output.SubscriptionModel[] {
         return this.subscriptionReporters.map(subscription => subscription.getReport());
     }

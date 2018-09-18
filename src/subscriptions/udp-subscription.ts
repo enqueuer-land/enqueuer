@@ -22,10 +22,12 @@ export class UdpSubscription extends Subscription {
     public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
                 this.server.on('error', (err: any) => {
+                    this.server.close();
                     reject(err);
                 });
 
                 this.server.on('message', (msg: Buffer, remoteInfo: any) => {
+                    this.server.close();
                     resolve({payload: msg, remoteInfo: remoteInfo});
                 });
             }
@@ -44,12 +46,6 @@ export class UdpSubscription extends Subscription {
                 reject(message);
             }
         });
-    }
-
-    public unsubscribe(): void {
-        if (this.server) {
-            this.server.close();
-        }
     }
 
 }

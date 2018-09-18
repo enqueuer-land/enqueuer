@@ -68,7 +68,7 @@ export class KafkaSubscription extends Subscription {
         });
     }
 
-    public unsubscribe() {
+    public async unsubscribe(): Promise<void> {
         this.client.close();
     }
 

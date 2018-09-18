@@ -49,7 +49,7 @@ export class StompSubscription extends Subscription {
 
     }
 
-    public unsubscribe(): void {
+    public async unsubscribe(): Promise<void> {
         this.client.unsubscribe(this.queue);
     }
 

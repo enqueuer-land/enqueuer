@@ -54,7 +54,7 @@ export class AmqpSubscription extends Subscription {
         });
     }
 
-    public unsubscribe(): void {
+    public async unsubscribe(): Promise<void> {
         if (this.connection) {
             this.connection.disconnect();
         }

@@ -33,7 +33,7 @@ export class StandardInputSubscription extends Subscription {
         return Promise.resolve();
     }
 
-    public unsubscribe(): void {
+    public async unsubscribe(): Promise<void> {
         process.stdin.pause();
     }
 

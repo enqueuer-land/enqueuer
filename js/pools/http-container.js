@@ -33,16 +33,19 @@ class HttpContainer {
     }
     release(onClose) {
         --this.counter;
-        if (this.counter <= 0) {
+        if (this.counter == 0) {
             logger_1.Logger.debug(`Closing container ${this.port}`);
             this.sockets.forEach((socket) => socket.destroy());
             this.server.close((err) => {
                 if (err) {
-                    throw err;
+                    throw `Error closing server ${this.port}: ${err}`;
                 }
                 logger_1.Logger.debug(`Container ${this.port} is closed`);
                 onClose();
             });
+        }
+        else if (this.counter < 0) {
+            onClose();
         }
     }
     listenToPort() {

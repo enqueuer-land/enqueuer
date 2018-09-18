@@ -32,18 +32,20 @@ export class HttpContainer {
         });
     }
 
-    public release(onClose: () => boolean) {
+    public release(onClose: () => void) {
         --this.counter;
-        if (this.counter <= 0) {
+        if (this.counter == 0) {
             Logger.debug(`Closing container ${this.port}`);
             this.sockets.forEach((socket: any) => socket.destroy());
             this.server.close((err: any) => {
                 if (err) {
-                    throw err;
+                    throw `Error closing server ${this.port}: ${err}`;
                 }
                 Logger.debug(`Container ${this.port} is closed`);
                 onClose();
             });
+        } else if (this.counter < 0) {
+            onClose();
         }
     }
 

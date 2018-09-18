@@ -104,7 +104,7 @@ export class UdsSubscription extends Subscription {
         });
     }
 
-    public unsubscribe() {
+    public async unsubscribe(): Promise<void> {
         this.persistStream();
     }
 

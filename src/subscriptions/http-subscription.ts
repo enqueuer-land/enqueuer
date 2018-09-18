@@ -53,8 +53,8 @@ export class HttpSubscription extends Subscription {
             });
     }
 
-    public unsubscribe() {
-        HttpContainerPool.releaseApp(this.port);
+    public async unsubscribe(): Promise<void> {
+        return HttpContainerPool.releaseApp(this.port);
     }
 
     public sendResponse(): Promise<void> {

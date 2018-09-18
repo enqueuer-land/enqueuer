@@ -53,7 +53,7 @@ export class TcpServerSubscription extends Subscription {
         }
     }
 
-    public unsubscribe() {
+    public async unsubscribe(): Promise<void> {
         if (this.server) {
             this.server.close();
             this.server = null;

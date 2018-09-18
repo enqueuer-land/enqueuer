@@ -19,16 +19,22 @@ export class HttpContainerPool {
         return httpContainer.acquire();
     }
 
-    public static releaseApp(port: number): void {
-        const self = HttpContainerPool.getInstance();
-        Logger.trace(`Current containers: {${Object.keys(self.containers)}}`);
-        Logger.info(`Releasing (${port}) http/s container`);
-        const httpContainer = self.containers[port];
-        if (httpContainer) {
-            httpContainer.release(() => delete self.containers[port]);
-        } else {
-            Logger.warning(`No bound http-container to be released (${port})`);
-        }
+    public static releaseApp(port: number): Promise<void> {
+        return new Promise((resolve) => {
+            const self = HttpContainerPool.getInstance();
+            Logger.trace(`Current containers: {${Object.keys(self.containers)}}`);
+            Logger.info(`Releasing (${port}) http/s container`);
+            const httpContainer = self.containers[port];
+            if (httpContainer) {
+                httpContainer.release(() => {
+                    delete self.containers[port];
+                    resolve();
+                });
+            } else {
+                Logger.warning(`No bound http-container to be released (${port})`);
+                resolve();
+            }
+        });
     }
 
     private static getInstance(): HttpContainerPool {
