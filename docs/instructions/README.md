@@ -7,7 +7,7 @@ After installation, you can use ```enqueuer``` or ```nqr``` interchangeably. The
 ###### If you need some help:
 
     $ nqr -h
-        Usage: nqr -c <confif-file-path>
+        Usage: nqr [options] <confif-file-path>
         Options:
             -v, --version             output the version number
             -q, --quiet               Disable logging

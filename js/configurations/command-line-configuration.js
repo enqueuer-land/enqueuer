@@ -8,7 +8,7 @@ let commandLineStore = {};
 let refreshCommander = (commandLineArguments) => {
     let commander = new commander_1.Command()
         .version(process.env.npm_package_version || packageJson.version, '-v, --version')
-        .usage('-c <confif-file-path>')
+        .usage('[options] <confif-file-path>')
         .option('-q, --quiet', 'Disable logging', false)
         .option('-l, --log-level <level>', 'Set log level')
         .option('-c, --config-file <path>', 'Set configurationFile')

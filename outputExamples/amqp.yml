@@ -5,17 +5,12 @@ startEvent: {}
 requisitions:
   -
     valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
+    tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 643
-      startTime: '2018-09-12T21:16:42.770Z'
-      endTime: '2018-09-12T21:16:43.413Z'
-      timeout: 5000
+      totalTime: 42
+      startTime: '2018-09-18T20:47:38.677Z'
+      endTime: '2018-09-18T20:47:38.719Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -42,7 +37,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-12T21:16:43.290Z'
+        connectionTime: '2018-09-18T20:47:38.705Z'
         messageReceived:
           payload:
             how:
@@ -55,7 +50,7 @@ requisitions:
             headers:
               key: value
               otherKey: otherValue
-            queue: enqueuer.queue.name
+            queue: ln9oaPSU
             deliveryTag:
               type: Buffer
               data:
@@ -70,7 +65,7 @@ requisitions:
             redelivered: false
             exchange: enqueuer.exchange
             routingKey: enqueuer.integration.test.routing.key
-            consumerTag: node-amqp-66377-0.06400222829946234
+            consumerTag: node-amqp-54227-0.6842902734648972
     startEvent:
       publisher:
         name: 'publisher description'
@@ -85,4 +80,79 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-12T21:16:43.407Z'
+        publishTime: '2018-09-18T20:47:38.715Z'
+  -
+    valid: true
+    tests: []
+    name: 'Default exchange'
+    time:
+      totalTime: 14
+      startTime: '2018-09-18T20:47:38.720Z'
+      endTime: '2018-09-18T20:47:38.734Z'
+    subscriptions:
+      -
+        name: 'Subscription #0'
+        type: amqp
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-18T20:47:38.726Z'
+        messageReceived:
+          payload:
+            data:
+              type: Buffer
+              data:
+                - 100
+                - 101
+                - 102
+                - 97
+                - 117
+                - 108
+                - 116
+                - 32
+                - 101
+                - 120
+                - 99
+                - 104
+                - 97
+                - 110
+                - 103
+                - 101
+            contentType: application/octet-stream
+          headers: {}
+          deliveryInfo:
+            contentType: application/octet-stream
+            queue: enqueuer.default.exchange
+            deliveryTag:
+              type: Buffer
+              data:
+                - 0
+                - 0
+                - 0
+                - 0
+                - 0
+                - 0
+                - 0
+                - 1
+            redelivered: false
+            exchange: ""
+            routingKey: enqueuer.default.exchange
+            consumerTag: node-amqp-54227-0.3598744886719836
+    startEvent:
+      publisher:
+        name: 'publisher description'
+        valid: true
+        type: amqp
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-18T20:47:38.732Z'

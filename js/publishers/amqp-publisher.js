@@ -24,7 +24,7 @@ let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
         this.options = publish.options;
-        this.exchange = publish.exchange;
+        this.exchangeName = publish.exchange;
         this.routingKey = publish.routingKey;
         this.messageOptions = publish.messageOptions || {};
     }
@@ -32,8 +32,8 @@ let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
         return new Promise((resolve, reject) => {
             this.connection = amqp.createConnection(this.options);
             this.connection.once('ready', () => {
-                const exchange = this.connection.exchange(this.exchange, { confirm: true, passive: true });
-                logger_1.Logger.debug(`Exchange to publish: ${this.exchange} created`);
+                const exchange = this.createExchange();
+                logger_1.Logger.debug(`Exchange to publish: '${this.exchangeName || 'default'}' created`);
                 exchange.once('open', () => {
                     this.exchangeOpen(exchange, reject, resolve);
                 });
@@ -43,17 +43,20 @@ let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
             });
         });
     }
+    createExchange() {
+        return this.connection.exchange(this.exchangeName || '', { confirm: true, passive: true });
+    }
     exchangeOpen(exchange, reject, resolve) {
-        logger_1.Logger.debug(`Exchange ${this.exchange} is opened, publishing to routingKey ${this.routingKey}`);
+        logger_1.Logger.debug(`Exchange '${this.exchangeName || 'default'}' is opened, publishing to routingKey ${this.routingKey}`);
         exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored, err) => {
             logger_1.Logger.trace(`Exchange published callback`);
+            this.connection.disconnect();
+            this.connection.end();
             if (errored) {
                 return reject(err);
             }
             logger_1.Logger.trace(`AMQP message published`);
-            this.connection.disconnect();
-            this.connection.end();
-            return resolve();
+            resolve();
         });
     }
 };

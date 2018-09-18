@@ -1,44 +1,65 @@
-timeout: 5000
-startEvent:
-    publisher:
+-   startEvent:
+        publisher:
+            type: amqp
+            name: publisher description
+            payload:
+                how:
+                    about: a new object?
+            options:
+                host: localhost
+                port: 5672
+            exchange: enqueuer.exchange
+            messageOptions:
+                headers:
+                    key: value
+                    otherKey: otherValue
+            routingKey: enqueuer.integration.test.routing.key
+            onInit:
+                assertions:
+                -   expect: publisher.options.port
+                    toBeEqualTo: 5672
+    subscriptions:
+    -   name: subscription description
         type: amqp
-        name: publisher description
-        payload:
-            how:
-                about: a new object?
+        timeout: 3000
         options:
             host: localhost
             port: 5672
         exchange: enqueuer.exchange
-        messageOptions:
-            headers:
-                key: value
-                otherKey: otherValue
-        routingKey: enqueuer.integration.test.routing.key
-        onInit:
+        routingKey: enqueuer.integration.test.routing.#
+        onMessageReceived:
             assertions:
-            -   expect: publisher.options.port
-                toBeEqualTo: 5672
-subscriptions:
--   name: subscription description
-    type: amqp
-    timeout: 3000
-    options:
-        host: localhost
-        port: 5672
-    exchange: enqueuer.exchange
-    routingKey: enqueuer.integration.test.routing.#
-    onMessageReceived:
-        assertions:
-        -   name: Payload
-            expect: payload.how.about
-            toBeEqualTo: `a new object?`
-        -   name: Header
-            expect: headers.key
-            toBeEqualTo: `value`
-        -   name: Other Header Value
-            expect: headers.otherKey
-            toBeEqualTo: `otherValue`
-        -   name: Routing Key
-            expect: deliveryInfo.routingKey
-            toBeEqualTo: `enqueuer.integration.test.routing.key`
+            -   name: Payload
+                expect: payload.how.about
+                toBeEqualTo: `a new object?`
+            -   name: Header
+                expect: headers.key
+                toBeEqualTo: `value`
+            -   name: Other Header Value
+                expect: headers.otherKey
+                toBeEqualTo: `otherValue`
+            -   name: Routing Key
+                expect: deliveryInfo.routingKey
+                toBeEqualTo: `enqueuer.integration.test.routing.key`
+-   name: Default exchange
+    startEvent:
+        publisher:
+            type: amqp
+            name: publisher description
+            payload: default exchange
+            options:
+                host: localhost
+                port: 5672
+            routingKey: enqueuer.default.exchange
+    subscriptions:
+    -   type: amqp
+        timeout: 3000
+        options:
+            host: localhost
+            port: 5672
+        queueName: enqueuer.default.exchange
+        onMessageReceived:
+            script: data = Buffer.from(message.payload.data).toString();
+            assertions:
+                -   expect: data
+                    toBeEqualTo: `default exchange`

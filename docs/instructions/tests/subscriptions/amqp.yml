@@ -14,10 +14,10 @@ messageOptions:
     key: value
     otherKey: otherValue
 
-#Exchange name to have a message published in
+#Optional. Exchange name to have a message published in. If a value is set, a 'routingKey' has to be set as well.
 exchange: enqueuer.exchange
 
-#Routing key to have a message published in
+#Optional. Routing key to have a message published in. If a value is set, a 'exchange' has to be set as well.
 routingKey: enqueuer.integration.test.routing.key
 
 #Optional. Queue to be created while enqueuer is running. It lasts as long as enqueuer.

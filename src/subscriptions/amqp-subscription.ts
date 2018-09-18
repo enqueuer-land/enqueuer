@@ -35,12 +35,19 @@ export class AmqpSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             this.connection.once('ready', () => {
                 this.connection.queue(this.queueName, (queue: any) => {
-                    Logger.debug(`Amqp subscription binding ${this.queueName} to exchange ${this.exchange} and routingKey ${this.routingKey}`);
-                    queue.bind(this.exchange, this.routingKey, () => {
-                        Logger.debug(`Queue ${this.queueName} bound. Subscribing`);
-                        queue.subscribe((message: any, headers: any, deliveryInfo: any) => this.gotMessage(message, headers, deliveryInfo));
+                    queue.subscribe((message: any, headers: any, deliveryInfo: any) => this.gotMessage(message, headers, deliveryInfo));
+                    if (this.exchange && this.routingKey) {
+                        Logger.debug(`Amqp subscription binding ${this.queueName} to exchange: ${this.exchange} and routingKey: ${this.routingKey}`);
+                        queue.bind(this.exchange, this.routingKey, () => {
+                            Logger.debug(`Queue ${this.queueName} bound`);
+                            resolve();
+                        });
+                    } else if (this.queueName) {
+                        Logger.debug(`Queue ${this.queueName} bound to the default exchange`);
                         resolve();
-                    });
+                    } else {
+                        reject(`Impossible to subscribe: ${this.queueName}:${this.exchange}:${this.routingKey}`);
+                    }
                 });
             });
             this.connection.on('error', (err: any) => reject(err));

@@ -9,15 +9,16 @@ run-mode:
   #             At the end of execution, a status code is returned:
   #               0, if everything is ok; or
   #               1, if there is at least one invalid thing.
+  # You can use this one as example: /enqueuer.yml
   single-run:
     #Used to describe your config test scenario
     name: examples
 
     #requisition files name or glob
     files:
-    - 1.yml
-    - 2.yml
-    - *.json
+      - 1.yml
+      - 2.yml
+      - *.json
 
     #Optional. A single file with the whole execution report is generated. Every test of every input file will be there.
     reportName: singleRunOutput.yml #outputExamples/singleRunOutput.json
@@ -30,18 +31,18 @@ run-mode:
 
   # daemon mode: it will run indefinitely. Endlessly. As a service.
   #         When running in daemon mode it will be waiting for test values (/docs/tests/test.yml) from those mechanisms inputs listed. One after the other.
-  #         Every supported IPC protocol is available here and you can check their values in /docs/tests/subscriptions folder.
+  #         Two IPC protocols are currently supported: http-server and uds. You can find an example of both right below
+  # You can use this one as example: /daemon.yml
   daemon:
-    #Receives test from uds connections
+    #Accepts uds requisitions
     - type: uds
       path: /tmp/inUnix.sock
-    #Receives test from tcp connections
-    - type: tcp
-      port: 23075
-    #Receives test from mqtt connections
-    - type: mqtt
-      brokerAddress: mqtt://localhost:1883
-      topic: enqueuer/input
+
+    #Accepts http requisitions
+    - type: http-server
+      endpoint: /any #defaults to /requisitions
+      port: 8080 #defaults to 23023
+      method: PUT #defaults to POST
 
 #Optional. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
 log-level: trace
@@ -49,10 +50,9 @@ log-level: trace
 #Optional. A single file for each input is generated and every test of it will be there.
 #Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
 outputs:
-  -
-    type: file
-    filenamePrefix: outputExamples/
-    filenameExtension: yml #json
+  -  type: file
+     filenamePrefix: outputExamples/
+     filenameExtension: yml #json
 
 #Optional
 store:
