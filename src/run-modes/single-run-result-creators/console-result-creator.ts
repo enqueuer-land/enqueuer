@@ -1,10 +1,10 @@
 import {ResultCreator} from './result-creator';
-import {TestModel} from '../models/outputs/test-model';
-import {RequisitionModel} from '../models/outputs/requisition-model';
+import {TestModel} from '../../models/outputs/test-model';
+import {RequisitionModel} from '../../models/outputs/requisition-model';
 import chalk from 'chalk';
-import {DateController} from '../timers/date-controller';
+import {DateController} from '../../timers/date-controller';
 import {TestsCounter} from './tests-counter';
-import {Configuration} from '../configurations/configuration';
+import {Configuration} from '../../configurations/configuration';
 
 export class ConsoleResultCreator implements ResultCreator {
     private failingTests: any = [];

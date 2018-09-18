@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const enqueuer_executor_1 = require("./executors/enqueuer-executor");
+const enqueuer_executor_1 = require("./run-modes/enqueuer-executor");
 const logger_1 = require("./loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 class EnqueuerStarter {

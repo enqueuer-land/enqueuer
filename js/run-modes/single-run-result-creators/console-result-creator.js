@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
-const date_controller_1 = require("../timers/date-controller");
+const date_controller_1 = require("../../timers/date-controller");
 const tests_counter_1 = require("./tests-counter");
-const configuration_1 = require("../configurations/configuration");
+const configuration_1 = require("../../configurations/configuration");
 class ConsoleResultCreator {
     constructor() {
         this.failingTests = [];

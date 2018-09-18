@@ -1,12 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //Auto-Generated Code
-require("./executors/daemon-run-executor");
-require("./executors/daemon-run-input-adapters/http-daemon-input");
-require("./executors/daemon-run-input-adapters/null-daemon-input");
-require("./executors/daemon-run-input-adapters/uds-daemon-input");
-require("./executors/null-run-executor");
-require("./executors/single-run-executor");
 require("./http-authentications/http-basic-authentication");
 require("./http-authentications/http-no-authentication");
 require("./publishers/amqp-publisher");
@@ -25,6 +19,12 @@ require("./publishers/zero-mq-pub-publisher");
 require("./reporters/start-event/start-event-null-reporter");
 require("./reporters/start-event/start-event-publisher-reporter");
 require("./reporters/start-event/start-event-subscription-reporter");
+require("./run-modes/daemon-run-executor");
+require("./run-modes/daemon-run-input-adapters/http-daemon-input");
+require("./run-modes/daemon-run-input-adapters/null-daemon-input");
+require("./run-modes/daemon-run-input-adapters/uds-daemon-input");
+require("./run-modes/null-run-executor");
+require("./run-modes/single-run-executor");
 require("./subscriptions/amqp-subscription");
 require("./subscriptions/filename-watcher-subscription");
 require("./subscriptions/http-subscription");

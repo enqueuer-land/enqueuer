@@ -22,7 +22,7 @@ const daemon_input_1 = require("./daemon-input");
 const handler_listener_1 = require("../../handlers/handler-listener");
 const net = __importStar(require("net"));
 const fs = __importStar(require("fs"));
-const requisition_parser_1 = require("../../runners/requisition-parser");
+const requisition_parser_1 = require("../../requisition-runners/requisition-parser");
 let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();

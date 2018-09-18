@@ -83,6 +83,7 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
         }
         return new id_generator_1.IdGenerator(this.payload).generateId();
     }
+    //TODO create a class to do this
     static decycle(decyclable) {
         const cache = new Map();
         const stringified = JSON.stringify(decyclable, (key, value) => {

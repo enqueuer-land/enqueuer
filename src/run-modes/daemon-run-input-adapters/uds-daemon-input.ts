@@ -5,7 +5,7 @@ import {DaemonInputRequisition} from './daemon-input-requisition';
 import {HandlerListener} from '../../handlers/handler-listener';
 import * as net from 'net';
 import * as fs from 'fs';
-import {RequisitionParser} from '../../runners/requisition-parser';
+import {RequisitionParser} from '../../requisition-runners/requisition-parser';
 
 @Injectable({predicate: (daemonInput: any) => daemonInput.type == 'uds'})
 export class UdsDaemonInput extends DaemonInput {

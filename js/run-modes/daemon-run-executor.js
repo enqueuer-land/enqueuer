@@ -14,7 +14,7 @@ const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
-const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
+const multi_requisition_runner_1 = require("../requisition-runners/multi-requisition-runner");
 let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
         super();

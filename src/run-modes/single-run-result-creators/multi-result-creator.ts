@@ -1,8 +1,8 @@
 import {ResultCreator} from './result-creator';
 import {ConsoleResultCreator} from './console-result-creator';
-import {Logger} from '../loggers/logger';
+import {Logger} from '../../loggers/logger';
 import {FileResultCreator} from './file-result-creator';
-import {RequisitionModel} from '../models/outputs/requisition-model';
+import {RequisitionModel} from '../../models/outputs/requisition-model';
 
 export class MultiResultCreator implements ResultCreator {
     private resultCreators: ResultCreator[] = [];

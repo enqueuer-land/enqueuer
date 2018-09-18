@@ -1,6 +1,6 @@
 import {Container} from 'conditional-injector';
 import {EnqueuerStarter} from "./enqueuer-starter";
-import {EnqueuerExecutor} from "./executors/enqueuer-executor";
+import {EnqueuerExecutor} from "./run-modes/enqueuer-executor";
 
 let executorMock = jest.fn(() => Promise.resolve(true));
 let createMock = jest.fn(() => {

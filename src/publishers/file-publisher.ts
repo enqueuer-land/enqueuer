@@ -76,6 +76,7 @@ export class FilePublisher extends Publisher {
         return new IdGenerator(this.payload).generateId();
     }
 
+    //TODO create a class to do this
     private static decycle(decyclable: any): any {
         const cache = new Map();
         const stringified = JSON.stringify(decyclable, (key, value) => {

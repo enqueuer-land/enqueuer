@@ -1,8 +1,7 @@
 import {FileResultCreator} from "./file-result-creator";
-import {FilePublisher} from '../publishers/file-publisher';
+import {FilePublisher} from '../../publishers/file-publisher';
 
-
-jest.mock("../publishers/file-publisher");
+jest.mock("../../publishers/file-publisher");
 const filePublisherSyncMock = jest.fn(() => {
     return {
         publish: () => Promise.resolve()

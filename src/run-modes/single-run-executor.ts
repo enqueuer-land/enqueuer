@@ -2,12 +2,12 @@ import {EnqueuerExecutor} from './enqueuer-executor';
 import {MultiPublisher} from '../publishers/multi-publisher';
 import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
-import {MultiResultCreator} from '../single-run-result-creators/multi-result-creator';
-import {RequisitionParser} from '../runners/requisition-parser';
+import {MultiResultCreator} from './single-run-result-creators/multi-result-creator';
+import {RequisitionParser} from '../requisition-runners/requisition-parser';
 import * as glob from 'glob';
 import * as fs from 'fs';
 import {RequisitionModel} from '../models/inputs/requisition-model';
-import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
+import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
 import {ConfigurationValues} from '../configurations/configuration-values';
 
 //TODO test it

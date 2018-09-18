@@ -3,7 +3,7 @@ import {Logger} from '../loggers/logger';
 import {MultiPublisher} from '../publishers/multi-publisher';
 import {EnqueuerExecutor} from './enqueuer-executor';
 import {Container, Injectable} from 'conditional-injector';
-import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
+import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
 import {DaemonInputRequisition} from './daemon-run-input-adapters/daemon-input-requisition';

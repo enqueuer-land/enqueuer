@@ -1,4 +1,4 @@
-import {RequisitionModel} from '../models/outputs/requisition-model';
+import {RequisitionModel} from '../../models/outputs/requisition-model';
 
 export interface ResultCreator {
     addTestSuite(name: string, report: RequisitionModel): void;

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");
 const prettyjson_1 = __importDefault(require("prettyjson"));
+const logger_1 = require("../loggers/logger");
 const options = {
     defaultIndentation: 4,
     keysColor: 'white',
@@ -23,10 +24,45 @@ const options = {
 let StandardOutputPublisher = class StandardOutputPublisher extends publisher_1.Publisher {
     constructor(publisherProperties) {
         super(publisherProperties);
+        this.pretty = !!publisherProperties.pretty;
     }
     publish() {
-        console.log(prettyjson_1.default.render(JSON.parse(this.payload), options));
+        logger_1.Logger.trace(`StandardOutputPublisher prettyfy: ${this.pretty}`);
+        if (typeof (this.payload) === 'object') {
+            this.payload = this.stringify(this.payload);
+        }
+        if (!this.pretty) {
+            console.log(this.payload);
+        }
+        else {
+            console.log(this.prettyfy());
+        }
         return Promise.resolve();
+    }
+    prettyfy() {
+        try {
+            const parsed = JSON.parse(this.payload);
+            return prettyjson_1.default.render(parsed, options);
+        }
+        catch (err) {
+            logger_1.Logger.debug(`${this.type} can not prettyfy string`);
+            return this.payload;
+        }
+    }
+    stringify(payload) {
+        const cache = new Map();
+        const stringified = JSON.stringify(payload, (key, value) => {
+            if (typeof (value) === 'object' && value !== null) {
+                if (cache.has(value)) {
+                    // Circular reference found, discard key
+                    return;
+                }
+                // Store value in our map
+                cache.set(value, true);
+            }
+            return value;
+        });
+        return stringified;
     }
 };
 StandardOutputPublisher = __decorate([

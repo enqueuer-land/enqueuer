@@ -1,8 +1,8 @@
 import {ResultCreator} from './result-creator';
-import {SingleRunResultModel} from '../models/outputs/single-run-result-model';
-import {RequisitionModel} from '../models/outputs/requisition-model';
-import {Logger} from '../loggers/logger';
-import {FilePublisher} from '../publishers/file-publisher';
+import {SingleRunResultModel} from '../../models/outputs/single-run-result-model';
+import {RequisitionModel} from '../../models/outputs/requisition-model';
+import {Logger} from '../../loggers/logger';
+import {FilePublisher} from '../../publishers/file-publisher';
 
 export class FileResultCreator implements ResultCreator {
     private report: SingleRunResultModel;

@@ -1,9 +1,9 @@
 import {Container, Injectable} from "conditional-injector";
 import {MultiPublisher} from "../publishers/multi-publisher";
 import {DaemonRunExecutor} from "./daemon-run-executor";
-import {MultiRequisitionRunner} from "../runners/multi-requisition-runner";
+import {MultiRequisitionRunner} from "../requisition-runners/multi-requisition-runner";
 
-jest.mock("../runners/multi-requisition-runner");
+jest.mock("../requisition-runners/multi-requisition-runner");
 jest.mock('../publishers/multi-publisher');
 jest.mock('./daemon-run-input-adapters/daemon-input');
 

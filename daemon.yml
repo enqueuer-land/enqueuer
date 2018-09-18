@@ -1,8 +1,14 @@
 run-mode:
     daemon:
+        -   type: uds
+            path: /tmp/inUnix.sock
         -   type: http-server
 #            endpoint: /enqueuer
 #            port: 23023
 #            method: POST
 
-log-level: info
+outputs:
+    -   type: standard-output
+        pretty: true
+
+log-level: trace

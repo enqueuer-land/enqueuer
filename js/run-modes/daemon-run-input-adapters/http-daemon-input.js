@@ -13,7 +13,7 @@ const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
 const http_container_pool_1 = require("../../pools/http-container-pool");
-const requisition_parser_1 = require("../../runners/requisition-parser");
+const requisition_parser_1 = require("../../requisition-runners/requisition-parser");
 let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();

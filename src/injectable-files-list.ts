@@ -1,10 +1,4 @@
 //Auto-Generated Code
-import './executors/daemon-run-executor';
-import './executors/daemon-run-input-adapters/http-daemon-input';
-import './executors/daemon-run-input-adapters/null-daemon-input';
-import './executors/daemon-run-input-adapters/uds-daemon-input';
-import './executors/null-run-executor';
-import './executors/single-run-executor';
 import './http-authentications/http-basic-authentication';
 import './http-authentications/http-no-authentication';
 import './publishers/amqp-publisher';
@@ -23,6 +17,12 @@ import './publishers/zero-mq-pub-publisher';
 import './reporters/start-event/start-event-null-reporter';
 import './reporters/start-event/start-event-publisher-reporter';
 import './reporters/start-event/start-event-subscription-reporter';
+import './run-modes/daemon-run-executor';
+import './run-modes/daemon-run-input-adapters/http-daemon-input';
+import './run-modes/daemon-run-input-adapters/null-daemon-input';
+import './run-modes/daemon-run-input-adapters/uds-daemon-input';
+import './run-modes/null-run-executor';
+import './run-modes/single-run-executor';
 import './subscriptions/amqp-subscription';
 import './subscriptions/filename-watcher-subscription';
 import './subscriptions/http-subscription';

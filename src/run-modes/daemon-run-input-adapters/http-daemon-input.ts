@@ -2,7 +2,7 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../../loggers/logger';
 import {DaemonInput} from './daemon-input';
 import {HttpContainerPool} from '../../pools/http-container-pool';
-import {RequisitionParser} from '../../runners/requisition-parser';
+import {RequisitionParser} from '../../requisition-runners/requisition-parser';
 import {DaemonInputRequisition} from './daemon-input-requisition';
 
 @Injectable({predicate: (daemonInput: any) => daemonInput.type === 'http-server'})

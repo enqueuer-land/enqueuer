@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const console_result_creator_1 = require("./console-result-creator");
-const logger_1 = require("../loggers/logger");
+const logger_1 = require("../../loggers/logger");
 const file_result_creator_1 = require("./file-result-creator");
 class MultiResultCreator {
     constructor(reportName) {

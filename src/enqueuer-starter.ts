@@ -1,4 +1,4 @@
-import {EnqueuerExecutor} from './executors/enqueuer-executor';
+import {EnqueuerExecutor} from './run-modes/enqueuer-executor';
 import {Logger} from './loggers/logger';
 import {Container} from 'conditional-injector';
 import {ConfigurationValues} from './configurations/configuration-values';

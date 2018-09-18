@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger_1 = require("../loggers/logger");
-const file_publisher_1 = require("../publishers/file-publisher");
+const logger_1 = require("../../loggers/logger");
+const file_publisher_1 = require("../../publishers/file-publisher");
 class FileResultCreator {
     constructor(filename) {
         this.report = {

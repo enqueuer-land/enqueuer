@@ -20,11 +20,11 @@ const enqueuer_executor_1 = require("./enqueuer-executor");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
-const multi_result_creator_1 = require("../single-run-result-creators/multi-result-creator");
-const requisition_parser_1 = require("../runners/requisition-parser");
+const multi_result_creator_1 = require("./single-run-result-creators/multi-result-creator");
+const requisition_parser_1 = require("../requisition-runners/requisition-parser");
 const glob = __importStar(require("glob"));
 const fs = __importStar(require("fs"));
-const multi_requisition_runner_1 = require("../runners/multi-requisition-runner");
+const multi_requisition_runner_1 = require("../requisition-runners/multi-requisition-runner");
 //TODO test it
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
