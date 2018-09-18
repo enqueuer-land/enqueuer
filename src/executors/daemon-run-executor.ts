@@ -1,12 +1,12 @@
-import {DaemonInput} from './daemon-input';
+import {DaemonInput} from './daemon-run-input-adapters/daemon-input';
 import {Logger} from '../loggers/logger';
 import {MultiPublisher} from '../publishers/multi-publisher';
 import {EnqueuerExecutor} from './enqueuer-executor';
-import {Injectable} from 'conditional-injector';
+import {Container, Injectable} from 'conditional-injector';
 import {MultiRequisitionRunner} from '../runners/multi-requisition-runner';
-import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
+import {DaemonInputRequisition} from './daemon-run-input-adapters/daemon-input-requisition';
 
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
 export class DaemonRunExecutor extends EnqueuerExecutor {
@@ -20,7 +20,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         Logger.info('Executing in Daemon mode');
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
-        this.daemonInputs = daemonMode.map((input: any) => new DaemonInput(input));
+        this.daemonInputs = daemonMode.map((input: any) => Container.subclassesOf(DaemonInput).create(input));
     }
 
     public execute(): Promise<boolean> {
@@ -28,12 +28,10 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
             this.daemonInputs
                 .forEach((input: DaemonInput) => {
                     input.subscribe()
-                        .then(() => {
-                            return this.startReader(input);
-                        })
-                        .catch( (err: string) => {
+                        .then(() => this.startReader(input))
+                        .catch( (err: any) => {
                             Logger.error(err);
-                            input.unsubscribe();
+                            input.unsubscribe().catch();
                         });
                 });
         });
@@ -41,24 +39,21 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
     private startReader(input: DaemonInput) {
         input.receiveMessage()
-            .then( (requisitions: input.RequisitionModel[]) => new MultiRequisitionRunner(requisitions, input.getType()).run())
-            .then( (report: output.RequisitionModel) => {
-                input.sendResponse(report);
-                return report;
-            })
-            .then( (report: output.RequisitionModel) => this.multiPublisher.publish(report))
-            .then(() => this.startReader(input))
+            .then((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition))
             .catch( (err) => {
                 Logger.error(err);
-                this.multiPublisher.publish(err)
-                    .then(() => {
-                        this.startReader(input);
-                    })
-                    .catch((err) => {
-                        Logger.error(err);
-                        this.startReader(input);
-                    });
+                input.sendResponse(err).catch(console.log.bind(console));
+                this.multiPublisher.publish(err).catch(console.log.bind(console));
+                this.startReader(input);
             });
     }
 
+    private handleRequisitionReceived(message: DaemonInputRequisition) {
+        return new MultiRequisitionRunner(message.input, message.type).run()
+            .then( (report: output.RequisitionModel) => message.output = report)
+            .then( () => message.daemon.sendResponse(message))
+            .then(() => message.daemon.cleanUp())
+            .then( () => this.multiPublisher.publish(message.output))
+            .then(() => this.startReader(message.daemon));
+    }
 }

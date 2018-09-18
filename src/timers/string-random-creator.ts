@@ -1,3 +1,4 @@
+//TODO test it and move to id-generator folder
 export class StringRandomCreator {
 
     private possible: string;

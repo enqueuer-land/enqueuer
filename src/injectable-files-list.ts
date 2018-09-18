@@ -1,8 +1,8 @@
 //Auto-Generated Code
 import './executors/daemon-run-executor';
-import './executors/daemon-run-input-adapters/http-daemon-input-adapter';
-import './executors/daemon-run-input-adapters/null-daemon-input-adapter';
-import './executors/daemon-run-input-adapters/uds-daemon-input-adapter';
+import './executors/daemon-run-input-adapters/http-daemon-input';
+import './executors/daemon-run-input-adapters/null-daemon-input';
+import './executors/daemon-run-input-adapters/uds-daemon-input';
 import './executors/null-run-executor';
 import './executors/single-run-executor';
 import './http-authentications/http-basic-authentication';

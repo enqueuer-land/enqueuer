@@ -66,16 +66,18 @@ class RequisitionParser {
     }
     parseToObject(message) {
         try {
-            return yaml.parse(message);
+            const yamlObject = yaml.parse(message);
+            logger_1.Logger.debug(`Successfully parsed message as YML`);
+            return yamlObject;
         }
         catch (ymlErr) {
-            logger_1.Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
             try {
                 const json = JSON.parse(message);
                 logger_1.Logger.debug(`Successfully parsed message as JSON`);
                 return json;
             }
             catch (jsonErr) {
+                logger_1.Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
                 logger_1.Logger.warning(`Not able to parse as Json: ${jsonErr}`);
                 throw Error(JSON.stringify({ ymlError: ymlErr, jsonError: jsonErr.toString() }));
             }

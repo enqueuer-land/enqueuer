@@ -10,7 +10,7 @@ function findEveryTsFile(path) {
         const stat = fs.lstatSync(filename);
         if (stat.isDirectory()) {
             files.concat(findEveryTsFile(filename + '/'));
-        } else if (filename.indexOf('.ts') >= 0) {
+        } else if (filename.endsWith('.ts')) {
             files.push(filename);
         }
     }

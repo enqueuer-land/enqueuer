@@ -77,13 +77,13 @@ export class SubscriptionFinalReporter {
             return [{
                 valid: false,
                 name: this.subscriptionAvoidedTestName,
-                description: `Avoidable subscription should not receive a message`
+                description: `Avoidable subscription should not receive messages`
             }];
         } else {
             return [{
                 valid: true,
                 name: this.subscriptionAvoidedTestName,
-                description: `Avoidable subscription has not received a message`
+                description: `Avoidable subscription has not received any message`
             }];
         }
     }

@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 //Auto-Generated Code
 require("./executors/daemon-run-executor");
-require("./executors/daemon-run-input-adapters/http-daemon-input-adapter");
-require("./executors/daemon-run-input-adapters/null-daemon-input-adapter");
-require("./executors/daemon-run-input-adapters/uds-daemon-input-adapter");
+require("./executors/daemon-run-input-adapters/http-daemon-input");
+require("./executors/daemon-run-input-adapters/null-daemon-input");
+require("./executors/daemon-run-input-adapters/uds-daemon-input");
 require("./executors/null-run-executor");
 require("./executors/single-run-executor");
 require("./http-authentications/http-basic-authentication");

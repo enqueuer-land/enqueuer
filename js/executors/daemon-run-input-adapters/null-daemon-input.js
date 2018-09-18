@@ -10,22 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
-const daemon_input_adapter_1 = require("./daemon-input-adapter");
 const logger_1 = require("../../loggers/logger");
-let NullDaemonInputAdapter = class NullDaemonInputAdapter extends daemon_input_adapter_1.DaemonInputAdapter {
-    constructor(subscription) {
+const daemon_input_1 = require("./daemon-input");
+let NullDaemonInput = class NullDaemonInput extends daemon_input_1.DaemonInput {
+    constructor(daemonInput) {
         super();
-        logger_1.Logger.warning(`Instantiating unknown daemon input adapter from"${JSON.stringify(subscription)}`);
-        this.subscription = subscription;
+        logger_1.Logger.warning(`Instantiating unknown daemon input from "${JSON.stringify(daemonInput)}`);
+        this.daemonInput = daemonInput;
     }
-    adapt(message) {
-        const errorMessage = `Adapter is not being able to adapt daemon-input of ${JSON.stringify(this.subscription)}`;
-        logger_1.Logger.warning(errorMessage);
-        throw errorMessage;
+    subscribe() {
+        return Promise.reject(`Impossible to subscribe to an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
+    }
+    receiveMessage() {
+        return Promise.reject(`Impossible to receive message from an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
+    }
+    unsubscribe() {
+        return Promise.reject(`Impossible to unsubscribe to an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
+    }
+    cleanUp() {
+        return Promise.reject(`Impossible to clean up an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
     }
 };
-NullDaemonInputAdapter = __decorate([
+NullDaemonInput = __decorate([
     conditional_injector_1.Injectable(),
     __metadata("design:paramtypes", [Object])
-], NullDaemonInputAdapter);
-exports.NullDaemonInputAdapter = NullDaemonInputAdapter;
+], NullDaemonInput);
+exports.NullDaemonInput = NullDaemonInput;

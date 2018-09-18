@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const daemon_input_1 = require("./daemon-input");
+const daemon_input_1 = require("./daemon-run-input-adapters/daemon-input");
 const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
@@ -21,43 +21,38 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         const daemonMode = configuration.runMode.daemon;
         logger_1.Logger.info('Executing in Daemon mode');
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
-        this.daemonInputs = daemonMode.map((input) => new daemon_input_1.DaemonInput(input));
+        this.daemonInputs = daemonMode.map((input) => conditional_injector_1.Container.subclassesOf(daemon_input_1.DaemonInput).create(input));
     }
     execute() {
         return new Promise(() => {
             this.daemonInputs
                 .forEach((input) => {
                 input.subscribe()
-                    .then(() => {
-                    return this.startReader(input);
-                })
+                    .then(() => this.startReader(input))
                     .catch((err) => {
                     logger_1.Logger.error(err);
-                    input.unsubscribe();
+                    input.unsubscribe().catch();
                 });
             });
         });
     }
     startReader(input) {
         input.receiveMessage()
-            .then((requisitions) => new multi_requisition_runner_1.MultiRequisitionRunner(requisitions, input.getType()).run())
-            .then((report) => {
-            input.sendResponse(report);
-            return report;
-        })
-            .then((report) => this.multiPublisher.publish(report))
-            .then(() => this.startReader(input))
+            .then((requisition) => this.handleRequisitionReceived(requisition))
             .catch((err) => {
             logger_1.Logger.error(err);
-            this.multiPublisher.publish(err)
-                .then(() => {
-                this.startReader(input);
-            })
-                .catch((err) => {
-                logger_1.Logger.error(err);
-                this.startReader(input);
-            });
+            input.sendResponse(err).catch(console.log.bind(console));
+            this.multiPublisher.publish(err).catch(console.log.bind(console));
+            this.startReader(input);
         });
+    }
+    handleRequisitionReceived(message) {
+        return new multi_requisition_runner_1.MultiRequisitionRunner(message.input, message.type).run()
+            .then((report) => message.output = report)
+            .then(() => message.daemon.sendResponse(message))
+            .then(() => message.daemon.cleanUp())
+            .then(() => this.multiPublisher.publish(message.output))
+            .then(() => this.startReader(message.daemon));
     }
 };
 DaemonRunExecutor = __decorate([
