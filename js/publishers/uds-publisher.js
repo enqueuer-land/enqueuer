@@ -74,7 +74,8 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
         if (this.loadStream) {
             const storedStream = store_1.Store.getData()[this.loadStream];
             if (!storedStream) {
-                throw new Error(`There is no uds stream able to be loaded named ${this.loadStream}`);
+                logger_1.Logger.error(`There is no uds stream able to be loaded named ${this.loadStream}`);
+                return net.createConnection(this.path);
             }
             logger_1.Logger.debug(`Uds publisher is reusing stream: ${this.loadStream}`);
             return storedStream;

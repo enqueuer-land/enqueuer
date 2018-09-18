@@ -70,7 +70,8 @@ export class UdsPublisher extends Publisher {
         if (this.loadStream) {
             const storedStream = Store.getData()[this.loadStream];
             if (!storedStream) {
-                throw new Error(`There is no uds stream able to be loaded named ${this.loadStream}`);
+                Logger.error(`There is no uds stream able to be loaded named ${this.loadStream}`);
+                return net.createConnection(this.path);
             }
             Logger.debug(`Uds publisher is reusing stream: ${this.loadStream}`);
             return storedStream;

@@ -31,6 +31,7 @@ class DaemonInput {
                 logger_1.Logger.info(`Daemon ${this.type} got bytes`);
                 try {
                     const message = this.adapter.adapt(payload);
+                    logger_1.Logger.trace(`Message from ${this.type}: ${message}`);
                     resolve(this.parser.parse(message));
                 }
                 catch (err) {

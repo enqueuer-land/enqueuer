@@ -54,24 +54,28 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
                 logger_1.Logger.debug(`Server is trying to reuse uds stream: ${this.loadStream}`);
                 this.stream = store_1.Store.getData()[this.loadStream];
                 if (!this.stream) {
-                    reject(`No uds stream able for being reused`);
+                    logger_1.Logger.error(`No uds stream able for being reused`);
+                    return this.createServer(resolve, reject);
                 }
                 resolve();
                 return;
             }
-            fs.unlink(this.path, () => {
-                this.server = net.createServer();
-                new handler_listener_1.HandlerListener(this.server)
-                    .listen(this.path)
-                    .then(() => {
-                    logger_1.Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
-                    resolve();
-                })
-                    .catch(err => {
-                    const message = `Uds server could not listen to ${this.path}: ${err}`;
-                    logger_1.Logger.error(message);
-                    reject(message);
-                });
+            this.createServer(resolve, reject);
+        });
+    }
+    createServer(resolve, reject) {
+        fs.unlink(this.path, () => {
+            this.server = net.createServer();
+            new handler_listener_1.HandlerListener(this.server)
+                .listen(this.path)
+                .then(() => {
+                logger_1.Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
+                resolve();
+            })
+                .catch(err => {
+                const message = `Uds server could not listen to ${this.path}: ${err}`;
+                logger_1.Logger.error(message);
+                reject(message);
             });
         });
     }

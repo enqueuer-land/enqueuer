@@ -79,7 +79,10 @@ export class TcpServerSubscription extends Subscription {
                 Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
             } catch (err) {
-                reject(err);
+                Logger.error(err);
+                this.createServer()
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
             }
 
         });

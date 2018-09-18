@@ -12,20 +12,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const daemon_input_adapter_1 = require("./daemon-input-adapter");
 const logger_1 = require("../../loggers/logger");
-let NullDaemonInputAdapter = class NullDaemonInputAdapter extends daemon_input_adapter_1.DaemonInputAdapter {
-    constructor(subscription) {
+let HttpDaemonInputAdapter = class HttpDaemonInputAdapter extends daemon_input_adapter_1.DaemonInputAdapter {
+    constructor() {
         super();
-        logger_1.Logger.warning(`Instantiating unknown daemon input adapter from"${JSON.stringify(subscription)}`);
-        this.subscription = subscription;
+        logger_1.Logger.trace(`Instantiating HttpDaemonInputAdapter`);
     }
     adapt(message) {
-        const errorMessage = `Adapter is not being able to adapt daemon-input of ${JSON.stringify(this.subscription)}`;
-        logger_1.Logger.warning(errorMessage);
-        throw errorMessage;
+        const payload = message.body;
+        return this.stringify(payload);
+    }
+    stringify(message) {
+        const messageType = typeof (message);
+        if (messageType == 'string') {
+            return message;
+        }
+        else if (Buffer.isBuffer(message)) {
+            return Buffer.from(message).toString();
+        }
+        else {
+            return JSON.stringify(message);
+        }
     }
 };
-NullDaemonInputAdapter = __decorate([
-    conditional_injector_1.Injectable(),
-    __metadata("design:paramtypes", [Object])
-], NullDaemonInputAdapter);
-exports.NullDaemonInputAdapter = NullDaemonInputAdapter;
+HttpDaemonInputAdapter = __decorate([
+    conditional_injector_1.Injectable({
+        predicate: (type) => type === 'http-proxy' ||
+            type === 'https-proxy' ||
+            type === 'http-server' ||
+            type === 'https-server'
+    }),
+    __metadata("design:paramtypes", [])
+], HttpDaemonInputAdapter);
+exports.HttpDaemonInputAdapter = HttpDaemonInputAdapter;

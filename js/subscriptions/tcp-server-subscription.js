@@ -83,7 +83,10 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
                 resolve();
             }
             catch (err) {
-                reject(err);
+                logger_1.Logger.error(err);
+                this.createServer()
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
             }
         });
     }

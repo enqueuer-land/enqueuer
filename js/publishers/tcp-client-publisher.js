@@ -37,24 +37,33 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
     publish() {
         return new Promise((resolve, reject) => {
             if (this.loadStream) {
-                logger_1.Logger.debug('Client is trying to reuse tcp stream');
-                if (!this.loadedStream) {
-                    return new Error(`There is no tcp stream able to be loaded named ${this.loadStream}`);
-                }
-                logger_1.Logger.debug('Client is reusing tcp stream');
-                this.publishData(this.loadedStream, resolve, reject);
+                this.sendReusingStream(resolve, reject);
             }
             else {
-                const stream = new net.Socket();
-                logger_1.Logger.debug('Tcp client trying to connect');
-                stream.connect(this.port, this.serverAddress, () => {
-                    logger_1.Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
-                    this.publishData(stream, resolve, reject);
-                });
-                stream.on('error', (error) => {
-                    reject(error);
-                });
+                this.sendCreatingStream(resolve, reject);
             }
+        });
+    }
+    sendReusingStream(resolve, reject) {
+        logger_1.Logger.debug('Client is trying to reuse tcp stream');
+        if (!this.loadedStream) {
+            logger_1.Logger.error(`There is no tcp stream able to be loaded named ${this.loadStream}`);
+            this.sendCreatingStream(resolve, reject);
+        }
+        else {
+            logger_1.Logger.debug('Client is reusing tcp stream');
+            this.publishData(this.loadedStream, resolve, reject);
+        }
+    }
+    sendCreatingStream(resolve, reject) {
+        const stream = new net.Socket();
+        logger_1.Logger.debug('Tcp client trying to connect');
+        stream.connect(this.port, this.serverAddress, () => {
+            logger_1.Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
+            this.publishData(stream, resolve, reject);
+        });
+        stream.on('error', (error) => {
+            reject(error);
         });
     }
     publishData(stream, resolve, reject) {

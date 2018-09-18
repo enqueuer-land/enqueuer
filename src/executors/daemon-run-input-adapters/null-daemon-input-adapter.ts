@@ -9,6 +9,7 @@ export class NullDaemonInputAdapter extends DaemonInputAdapter {
 
     public constructor(subscription: SubscriptionModel) {
         super();
+        Logger.warning(`Instantiating unknown daemon input adapter from"${JSON.stringify(subscription)}`);
         this.subscription = subscription;
     }
 

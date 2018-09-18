@@ -30,26 +30,35 @@ export class TcpClientPublisher extends Publisher {
 
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
-
             if (this.loadStream) {
-                Logger.debug('Client is trying to reuse tcp stream');
-                if (!this.loadedStream) {
-                    return new Error(`There is no tcp stream able to be loaded named ${this.loadStream}`);
-                }
-                Logger.debug('Client is reusing tcp stream');
-                this.publishData(this.loadedStream, resolve, reject);
+                this.sendReusingStream(resolve, reject);
             } else {
-                const stream = new net.Socket();
-                Logger.debug('Tcp client trying to connect');
-                stream.connect(this.port, this.serverAddress, () => {
-                    Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
-                    this.publishData(stream, resolve, reject);
-                });
-                stream.on('error', (error) => {
-                    reject(error);
-                });
+                this.sendCreatingStream(resolve, reject);
             }
 
+        });
+    }
+
+    private sendReusingStream(resolve: any, reject: any) {
+        Logger.debug('Client is trying to reuse tcp stream');
+        if (!this.loadedStream) {
+            Logger.error(`There is no tcp stream able to be loaded named ${this.loadStream}`);
+            this.sendCreatingStream(resolve, reject);
+        } else {
+            Logger.debug('Client is reusing tcp stream');
+            this.publishData(this.loadedStream, resolve, reject);
+        }
+    }
+
+    private sendCreatingStream(resolve: any, reject: any) {
+        const stream = new net.Socket();
+        Logger.debug('Tcp client trying to connect');
+        stream.connect(this.port, this.serverAddress, () => {
+            Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
+            this.publishData(stream, resolve, reject);
+        });
+        stream.on('error', (error) => {
+            reject(error);
         });
     }
 
