@@ -1,39 +1,77 @@
-name: examples/mqtt.yml
-valid: false
+name: examples/kafka.yml
+valid: true
 tests: []
 startEvent: {}
 requisitions:
   -
-    valid: false
-    tests: []
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 5004
-      startTime: '2018-09-18T21:36:18.066Z'
-      endTime: '2018-09-18T21:36:23.070Z'
+      totalTime: 193
+      startTime: '2018-09-18T22:31:35.475Z'
+      endTime: '2018-09-18T22:31:35.668Z'
+      timeout: 8000
     subscriptions:
       -
         name: 'subscription description'
-        type: mqtt
+        type: kafka
         tests:
           -
-            valid: false
-            name: 'Message received'
-            description: 'Subscription has not received its message'
+            name: payload
+            valid: true
+            description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
           -
-            valid: false
-            name: 'No time out'
-            description: 'Not avoidable Subscription has timed out'
-        valid: false
-        connectionTime: '2018-09-18T21:36:18.123Z'
+            name: topic
+            valid: true
+            description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
+          -
+            name: offset
+            valid: true
+            description: '''offset'' is not defined'
+          -
+            name: partition
+            valid: true
+            description: '''partition'' is not defined'
+          -
+            name: timestamp
+            valid: true
+            description: '''timestamp'' is not defined'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-18T22:31:35.641Z'
+        messageReceived:
+          topic: enqueuer-topic-name
+          value: kafkaPayload
+          offset: 234
+          partition: 0
+          highWaterOffset: 235
+          key: null
+          timestamp: '2018-09-18T22:31:35.643Z'
     startEvent:
       publisher:
         name: 'publisher description'
         valid: true
-        type: mqtt
+        type: kafka
         tests:
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-18T21:36:18.148Z'
+          -
+            name: 'kafka publish response payload'
+            valid: true
+            description: '''`enqueuer-topic-name`'' is not defined'
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-09-18T22:31:35.662Z'
+        messageReceived: '{"enqueuer-topic-name":{"0":234}}'

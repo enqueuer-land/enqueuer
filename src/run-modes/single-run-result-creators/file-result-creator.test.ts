@@ -16,7 +16,7 @@ describe('FileResultCreator', () => {
         const creator = new FileResultCreator(filename);
         creator.create();
 
-        const expected = {"filename": "filename", "name": "filename", "type": "file"};
+        const expected = {"filename": "filename", "name": "filename", "pretty": true, "type": "file"};
 
         expect(filePublisherSyncMock).toHaveBeenCalledWith(expected);
     });

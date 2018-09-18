@@ -27,7 +27,6 @@ let StandardOutputPublisher = class StandardOutputPublisher extends publisher_1.
         this.pretty = !!publisherProperties.pretty;
     }
     publish() {
-        logger_1.Logger.trace(`StandardOutputPublisher prettyfy: ${this.pretty}`);
         if (typeof (this.payload) === 'object') {
             this.payload = this.stringify(this.payload);
         }

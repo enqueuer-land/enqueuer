@@ -1,4 +1,4 @@
-name: examples/http.yml
+name: examples/https.yml
 valid: true
 tests: []
 startEvent: {}
@@ -12,66 +12,39 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 70
-      startTime: '2018-09-18T21:35:48.971Z'
-      endTime: '2018-09-18T21:35:49.041Z'
+      totalTime: 193
+      startTime: '2018-09-18T22:31:35.459Z'
+      endTime: '2018-09-18T22:31:35.652Z'
       timeout: 3000
     subscriptions:
       -
-        name: 'subscription description'
-        type: http-server
+        name: 'Subscription #0'
+        type: https-server
         tests:
           -
-            name: '"Basic" authentication prefix'
+            name: 'Https payload'
             valid: true
-            description: 'Prefix "Basic" was found.'
-          -
-            name: '"Basic" authentication user'
-            valid: true
-            description: 'User found'
-          -
-            name: '"Basic" authentication password'
-            valid: true
-            description: 'Password matchs'
-          -
-            name: '"Basic" authentication'
-            valid: true
-            description: 'Basic authentication is valid'
-          -
-            name: Payload
-            valid: true
-            description: 'Expected ''JSON.parse(message.body).enqueuer'' to be equal to ''virgs''. Received ''virgs'''
-          -
-            name: Params
-            valid: true
-            description: 'Expected ''params.firstId'' to be equal to ''idStuff''. Received ''idStuff'''
-          -
-            name: Query
-            valid: true
-            description: 'Expected ''query.query'' to be equal to ''0''. Received ''000'''
+            description: 'Expected ''JSON.parse(message.body).https'' to be equal to ''works!''. Received ''works!'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-18T21:35:48.972Z'
+        connectionTime: '2018-09-18T22:31:35.519Z'
         messageReceived:
           headers:
             content-type: application/json
-            authorization: 'Basic dXNlcjpwYXNzd29yZA=='
-            content-length: '20'
-            host: 'localhost:23075'
+            content-length: '18'
+            host: 'localhost:4430'
             connection: close
-          params:
-            firstId: idStuff
-          query:
-            query: '000'
-          body: '{"enqueuer":"virgs"}'
+          params: {}
+          query: {}
+          body: '{"https":"works!"}'
     startEvent:
       publisher:
         name: 'publisher description'
         valid: true
-        type: http-client
+        type: https-client
         tests:
           -
             name: Published
@@ -80,182 +53,41 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
+            description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
           -
             name: Body
             valid: true
-            description: 'Expected ''body'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
+            description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-18T21:35:49.039Z'
+        publishTime: '2018-09-18T22:31:35.651Z'
         messageReceived:
-          statusCode: 321
-          body: 'dynamically changed payload'
+          statusCode: 200
+          body: https
           headers:
             x-powered-by: Express
             content-type: 'text/html; charset=utf-8'
-            content-length: '27'
-            etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-            date: 'Tue, 18 Sep 2018 21:35:49 GMT'
+            content-length: '5'
+            etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
+            date: 'Tue, 18 Sep 2018 22:31:35 GMT'
             connection: close
           request:
             uri:
-              protocol: 'http:'
+              protocol: 'https:'
               slashes: true
               auth: null
-              host: 'localhost:23075'
-              port: '23075'
+              host: 'localhost:4430'
+              port: '4430'
               hostname: localhost
               hash: null
-              search: '?query=000'
-              query: query=000
-              pathname: /enqueuer/idStuff
-              path: '/enqueuer/idStuff?query=000'
-              href: 'http://localhost:23075/enqueuer/idStuff?query=000'
+              search: null
+              query: null
+              pathname: /enqueuer
+              path: /enqueuer
+              href: 'https://localhost:4430/enqueuer'
             method: post
             headers:
               content-type: application/json
-              authorization: 'Basic dXNlcjpwYXNzd29yZA=='
-              Content-Length: 20
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #1'
-    time:
-      totalTime: 19
-      startTime: '2018-09-18T21:35:49.044Z'
-      endTime: '2018-09-18T21:35:49.063Z'
-      timeout: 5000
-    subscriptions:
-      -
-        name: 'subscription description'
-        type: http-server
-        tests:
-          -
-            name: Payload
-            valid: true
-            description: '''JSON.parse(message.body).duplicated'' is not true. I swear'
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-18T21:35:49.044Z'
-        messageReceived:
-          headers:
-            content-type: application/json
-            content-length: '19'
-            host: 'localhost:23075'
-            connection: close
-          params:
-            secondId: idStuff
-          query:
-            query: '111'
-          body: '{"duplicated":true}'
-    startEvent:
-      publisher:
-        name: 'publisher description'
-        valid: true
-        type: http-client
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Status Code'
-            valid: true
-            description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
-          -
-            name: Body
-            valid: true
-            description: 'Expected ''body'' to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-18T21:35:49.063Z'
-        messageReceived:
-          statusCode: 321
-          body: duplicatedResponsePayload
-          headers:
-            x-powered-by: Express
-            content-type: 'text/html; charset=utf-8'
-            content-length: '25'
-            etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-            date: 'Tue, 18 Sep 2018 21:35:49 GMT'
-            connection: close
-          request:
-            uri:
-              protocol: 'http:'
-              slashes: true
-              auth: null
-              host: 'localhost:23075'
-              port: '23075'
-              hostname: localhost
-              hash: null
-              search: '?query=111'
-              query: query=111
-              pathname: /enqueuer/idStuff
-              path: '/enqueuer/idStuff?query=111'
-              href: 'http://localhost:23075/enqueuer/idStuff?query=111'
-            method: post
-            headers:
-              content-type: application/json
-              Content-Length: 19
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'requisition 2 (port 23076)'
-    time:
-      totalTime: 1005
-      startTime: '2018-09-18T21:35:49.065Z'
-      endTime: '2018-09-18T21:35:50.070Z'
-      timeout: 5000
-    subscriptions: []
-    startEvent:
-      subscription:
-        name: 'subscription description'
-        type: http-server
-        tests:
-          -
-            valid: true
-            name: 'Subscription avoided'
-            description: 'Avoidable subscription has not received any message'
-        valid: true
-        connectionTime: '2018-09-18T21:35:49.065Z'
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'check port releasing 23076)'
-    time:
-      totalTime: 1005
-      startTime: '2018-09-18T21:35:50.072Z'
-      endTime: '2018-09-18T21:35:51.077Z'
-      timeout: 5000
-    subscriptions: []
-    startEvent:
-      subscription:
-        name: 'same port subscription'
-        type: tcp-server
-        tests:
-          -
-            valid: true
-            name: 'Subscription avoided'
-            description: 'Avoidable subscription has not received any message'
-        valid: true
-        connectionTime: '2018-09-18T21:35:50.073Z'
+              Content-Length: 18

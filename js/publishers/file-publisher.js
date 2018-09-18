@@ -27,24 +27,25 @@ const logger_1 = require("../loggers/logger");
 let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
+        this.pretty = false;
+        this.pretty = !!publisherAttributes.pretty;
         this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
         this.filenameExtension = publisherAttributes.filenameExtension || 'enq';
     }
     publish() {
-        this.filename = this.createFilename();
+        const filename = this.createFilename();
         let value = this.payload;
-        if (typeof (value) == 'string') {
-            value = this.markupLanguageString(value);
+        if (this.pretty && typeof (value) == 'string') {
+            value = this.markupLanguageString(value, filename);
         }
-        else if (typeof (value) == 'object') {
-            value = FilePublisher_1.decycle(this.payload);
-            value = this.markupLanguageString(JSON.stringify(value));
+        else if (typeof (value) === 'object') {
+            value = this.markupLanguageString(FilePublisher_1.decycle(value), filename);
         }
-        fs.writeFileSync(this.filename, value);
+        fs.writeFileSync(filename, value);
         return Promise.resolve();
     }
-    markupLanguageString(value) {
+    markupLanguageString(value, filename) {
         try {
             value = JSON.parse(value);
         }
@@ -52,11 +53,11 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
             logger_1.Logger.debug('Content to write to file is not parseable');
             return value;
         }
-        if (this.filename.endsWith('yml') || this.filename.endsWith('yaml')) {
-            logger_1.Logger.debug(`Stringifying file content '${this.filename}' as YML`);
+        if (filename.endsWith('yml') || filename.endsWith('yaml')) {
+            logger_1.Logger.debug(`Stringifying file content '${filename}' as YML`);
             return yaml.stringify(value, 10, 2);
         }
-        logger_1.Logger.debug(`Stringifying file content '${this.filename}' as JSON`);
+        logger_1.Logger.debug(`Stringifying file content '${filename}' as JSON`);
         return JSON.stringify(value, null, 2);
     }
     createFilename() {
@@ -72,6 +73,7 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
     }
     generateId() {
         try {
+            //gets everything after last slash
             const name = this.payload.name;
             const id = name.substr(name.lastIndexOf('/'));
             if (id) {
@@ -79,9 +81,8 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
             }
         }
         catch (exc) {
-            //do nothing
+            return new id_generator_1.IdGenerator(this.payload).generateId();
         }
-        return new id_generator_1.IdGenerator(this.payload).generateId();
     }
     //TODO create a class to do this
     static decycle(decyclable) {
@@ -97,7 +98,7 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
             }
             return value;
         });
-        return JSON.parse(stringified);
+        return stringified;
     }
 };
 FilePublisher = FilePublisher_1 = __decorate([

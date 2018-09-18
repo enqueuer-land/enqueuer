@@ -39,6 +39,7 @@ export class FileResultCreator implements ResultCreator {
         const filePublisherAttributes = {
             type: 'file',
             name: this.report.name,
+            pretty: true,
             filename: this.report.name
         };
 

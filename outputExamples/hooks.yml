@@ -1,4 +1,4 @@
-name: examples/file.yml
+name: examples/hooks.yml
 valid: true
 tests: []
 startEvent: {}
@@ -7,64 +7,102 @@ requisitions:
     valid: true
     tests:
       -
+        name: 'Requisitions exists onInit'
+        valid: true
+        description: '''requisition'' is not defined'
+      -
         valid: true
         name: 'No time out'
         description: 'Requisition has not timed out'
-    name: 'Requisition #0'
+    name: 'requisition description'
     time:
-      totalTime: 62
-      startTime: '2018-09-18T21:35:40.141Z'
-      endTime: '2018-09-18T21:35:40.203Z'
-      timeout: 3000
+      totalTime: 170
+      startTime: '2018-09-18T22:31:35.454Z'
+      endTime: '2018-09-18T22:31:35.624Z'
+      timeout: 2000
     subscriptions:
       -
         name: 'subscription description'
-        type: file-system-watcher
+        type: tcp-server
         tests:
           -
-            name: 'Some time has passed'
+            name: 'Subscription exists onInit'
             valid: true
-            description: 'Expected ''now'' to be greater than or equal to ''1537306495846''. Received ''1537306540202'''
+            description: '''subscription'' is not defined'
           -
-            name: Filename
+            name: 'Subscription name'
             valid: true
-            description: '''name'' (temp/fileTest20180918183455091849_5445727b.file) does not contain ''temp/'''
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
           -
-            name: Content
+            name: 'Subscription exists onMessageReceived'
             valid: true
-            description: '''content'' is not defined'
+            description: '''subscription'' is not defined'
           -
-            name: Created
+            name: 'Subscription name changed'
             valid: true
-            description: '''created'' is not defined'
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
           -
-            name: Modified
+            name: 'Subscription onInit executed'
             valid: true
-            description: '''modified'' is not defined'
-          -
-            name: Size
-            valid: true
-            description: 'Expected ''size'' to be greater than ''0''. Received ''13'''
+            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''subscription::onInit'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-18T21:35:40.142Z'
+        connectionTime: '2018-09-18T22:31:35.503Z'
         messageReceived:
-          content: '1537306495846'
-          name: temp/fileTest20180918183455091849_5445727b.file
-          size: 13
-          modified: '2018-09-18T21:34:55.919Z'
-          created: '2018-09-18T21:34:55.919Z'
+          payload:
+            type: Buffer
+            data:
+              - 105
+              - 116
+          stream:
+            address: '::ffff:127.0.0.1'
+            family: IPv6
+            port: 23080
     startEvent:
       publisher:
         name: 'publisher description'
         valid: true
-        type: file
+        type: tcp-client
         tests:
+          -
+            name: 'Publisher exists onInit'
+            valid: true
+            description: '''publisher'' is not defined'
+          -
+            name: 'Publisher name'
+            valid: true
+            description: '''[object Object]'' is not defined'
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-18T21:35:40.144Z'
+          -
+            name: 'Publisher exists onMessageReceived'
+            valid: true
+            description: '''publisher'' is not defined'
+          -
+            name: 'Requisition onInit'
+            valid: true
+            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''requisition::onInit'''
+          -
+            name: 'Publisher name changed'
+            valid: true
+            description: 'Expected ''publisher.name'' to be equal to ''changed''. Received ''changed'''
+          -
+            name: 'Publisher onInit executed'
+            valid: true
+            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''publisher::onInit'''
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-09-18T22:31:35.623Z'
+        messageReceived:
+          payload: 'hook response'
+          stream:
+            address: 127.0.0.1
+            family: IPv4
+            port: 56167

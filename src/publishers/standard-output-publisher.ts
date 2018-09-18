@@ -20,7 +20,6 @@ export class StandardOutputPublisher extends Publisher {
     }
 
     public publish(): Promise<void> {
-        Logger.trace(`StandardOutputPublisher prettyfy: ${this.pretty}`);
         if (typeof(this.payload) === 'object') {
             this.payload = this.stringify(this.payload);
         }

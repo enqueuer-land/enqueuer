@@ -31,6 +31,7 @@ class FileResultCreator {
         const filePublisherAttributes = {
             type: 'file',
             name: this.report.name,
+            pretty: true,
             filename: this.report.name
         };
         const filePublisher = new file_publisher_1.FilePublisher(filePublisherAttributes);

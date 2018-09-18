@@ -9,32 +9,33 @@ import {Logger} from '../loggers/logger';
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'file'})
 export class FilePublisher extends Publisher {
 
-    private filename: string;
-    private filenamePrefix: string;
-    private filenameExtension: string;
+    private readonly filename: string;
+    private readonly filenamePrefix: string;
+    private readonly filenameExtension: string;
+    private readonly pretty: boolean = false;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
+        this.pretty = !!publisherAttributes.pretty;
         this.filename = publisherAttributes.filename;
         this.filenamePrefix = publisherAttributes.filenamePrefix;
         this.filenameExtension = publisherAttributes.filenameExtension || 'enq';
     }
 
     public publish(): Promise<void> {
-        this.filename = this.createFilename();
+        const filename = this.createFilename();
         let value = this.payload;
-        if (typeof(value) == 'string') {
-            value = this.markupLanguageString(value);
-        } else if (typeof(value) == 'object') {
-            value = FilePublisher.decycle(this.payload);
-            value = this.markupLanguageString(JSON.stringify(value));
+        if (this.pretty && typeof(value) == 'string') {
+            value = this.markupLanguageString(value, filename);
+        } else if (typeof(value) === 'object') {
+            value = this.markupLanguageString(FilePublisher.decycle(value), filename);
         }
 
-        fs.writeFileSync(this.filename, value);
+        fs.writeFileSync(filename, value);
         return Promise.resolve();
     }
 
-    private markupLanguageString(value: string) {
+    private markupLanguageString(value: string, filename: any) {
         try {
             value = JSON.parse(value);
         } catch (exc) {
@@ -42,12 +43,12 @@ export class FilePublisher extends Publisher {
             return value;
         }
 
-        if (this.filename.endsWith('yml') || this.filename.endsWith('yaml')) {
-            Logger.debug(`Stringifying file content '${this.filename}' as YML`);
+        if (filename.endsWith('yml') || filename.endsWith('yaml')) {
+            Logger.debug(`Stringifying file content '${filename}' as YML`);
             return yaml.stringify(value, 10, 2);
         }
 
-        Logger.debug(`Stringifying file content '${this.filename}' as JSON`);
+        Logger.debug(`Stringifying file content '${filename}' as JSON`);
         return JSON.stringify(value, null, 2);
     }
 
@@ -65,19 +66,20 @@ export class FilePublisher extends Publisher {
 
     private generateId() {
         try {
+            //gets everything after last slash
             const name = this.payload.name;
             const id = name.substr(name.lastIndexOf('/'));
             if (id) {
                 return id;
             }
+
         } catch (exc) {
-            //do nothing
+            return new IdGenerator(this.payload).generateId();
         }
-        return new IdGenerator(this.payload).generateId();
     }
 
     //TODO create a class to do this
-    private static decycle(decyclable: any): any {
+    private static decycle(decyclable: any): string {
         const cache = new Map();
         const stringified = JSON.stringify(decyclable, (key, value) => {
             if (typeof(value) === 'object' && value !== null) {
@@ -90,7 +92,7 @@ export class FilePublisher extends Publisher {
             }
             return value;
         });
-        return JSON.parse(stringified);
+        return stringified;
     }
 
 }
