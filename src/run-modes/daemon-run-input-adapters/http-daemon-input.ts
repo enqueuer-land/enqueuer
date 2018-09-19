@@ -17,7 +17,6 @@ export class HttpDaemonInput extends DaemonInput {
     public constructor(daemonInput: any) {
         super();
 
-        Logger.trace(`Instantiating HttpDaemonInputAdapter`);
         this.type = daemonInput.type;
         this.port = daemonInput.port || 23023;
         this.endpoint = daemonInput.endpoint || '/requisitions';
@@ -30,6 +29,7 @@ export class HttpDaemonInput extends DaemonInput {
             HttpContainerPool.getApp(this.port)
                 .then((app: any) => {
                     this.registerMessageEvent(app);
+                    Logger.info(`Waiting for http requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
                     resolve();
                 }).catch(err => {
                 const message = `Error in HttpDaemonInput subscription: ${err}`;

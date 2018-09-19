@@ -22,7 +22,7 @@ const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const http_container_pool_1 = require("../pools/http-container-pool");
 const http_authentication_1 = require("../http-authentications/http-authentication");
-const http_requester_1 = require("../publishers/http-requester");
+const http_requester_1 = require("../pools/http-requester");
 let HttpSubscription = class HttpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);

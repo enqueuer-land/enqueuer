@@ -17,7 +17,6 @@ const requisition_parser_1 = require("../../requisition-runners/requisition-pars
 let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();
-        logger_1.Logger.trace(`Instantiating HttpDaemonInputAdapter`);
         this.type = daemonInput.type;
         this.port = daemonInput.port || 23023;
         this.endpoint = daemonInput.endpoint || '/requisitions';
@@ -29,6 +28,7 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
             http_container_pool_1.HttpContainerPool.getApp(this.port)
                 .then((app) => {
                 this.registerMessageEvent(app);
+                logger_1.Logger.info(`Waiting for http requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
                 resolve();
             }).catch(err => {
                 const message = `Error in HttpDaemonInput subscription: ${err}`;

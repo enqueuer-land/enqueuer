@@ -19,8 +19,6 @@ export class UdsDaemonInput extends DaemonInput {
         this.type = daemonInput.type;
         this.path = daemonInput.path;
         this.parser = new RequisitionParser();
-
-        Logger.trace(`Instantiating UdsDaemonInput`);
     }
 
     public subscribe(): Promise<void> {
@@ -30,7 +28,7 @@ export class UdsDaemonInput extends DaemonInput {
                 new HandlerListener(this.server)
                     .listen(this.path)
                     .then(() => {
-                        Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
+                        Logger.info(`Waiting for Uds requisitions: ${this.path}`);
                         resolve();
                     })
                     .catch(err => {

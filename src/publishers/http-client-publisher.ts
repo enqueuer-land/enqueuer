@@ -3,7 +3,7 @@ import {Logger} from '../loggers/logger';
 import {Container, Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
-import {HttpRequester} from './http-requester';
+import {HttpRequester} from '../pools/http-requester';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'http-client' || publishRequisition.type === 'https-client'})
 export class HttpClientPublisher extends Publisher {

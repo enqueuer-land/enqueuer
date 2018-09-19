@@ -12,11 +12,15 @@ export class HttpContainerPool {
         if (!httpContainer) {
             Logger.info(`Creating a new Http/s server ${port}`);
             httpContainer = new HttpContainer(port, secure, credentials);
-            self.containers[port] = httpContainer;
+            return httpContainer.acquire()
+                .then((app: any) => {
+                    self.containers[port] = httpContainer;
+                    return app;
+                });
         } else {
             Logger.trace(`Reusing Http/s server ${port}`);
+            return httpContainer.acquire();
         }
-        return httpContainer.acquire();
     }
 
     public static releaseApp(port: number): Promise<void> {

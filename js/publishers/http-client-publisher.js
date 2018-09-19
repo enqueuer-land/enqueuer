@@ -13,7 +13,7 @@ const publisher_1 = require("./publisher");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const http_authentication_1 = require("../http-authentications/http-authentication");
-const http_requester_1 = require("./http-requester");
+const http_requester_1 = require("../pools/http-requester");
 let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);

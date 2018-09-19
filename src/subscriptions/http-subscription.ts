@@ -5,7 +5,7 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {HttpContainerPool} from '../pools/http-container-pool';
 import {TestModel} from '../models/outputs/test-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
-import {HttpRequester} from '../publishers/http-requester';
+import {HttpRequester} from '../pools/http-requester';
 
 @Injectable({
     predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-proxy' ||

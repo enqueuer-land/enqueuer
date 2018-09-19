@@ -24,6 +24,7 @@ describe('HttpContainerPool', () => {
     beforeEach(() => {
         acquireMock.mockClear();
         releaseMock.mockClear();
+        constructorHttpContainer.mockClear();
     });
 
     it('create new App', done => {
@@ -34,7 +35,7 @@ describe('HttpContainerPool', () => {
         const appPromise = HttpContainerPool.getApp(port, secure, credentials);
 
         appPromise.then((some) => {
-            expect(some).toBe('acquireReturn');
+            expect(some).toEqual('acquireReturn');
             done();
         });
         expect(constructorHttpContainer).toHaveBeenCalledWith(port, secure, credentials);
@@ -47,15 +48,16 @@ describe('HttpContainerPool', () => {
         const secure = true;
         const credentials = {key: 'value'};
 
-        HttpContainerPool.getApp(port, secure, credentials);
-        const appPromise = HttpContainerPool.getApp(port, secure, credentials);
+        HttpContainerPool.getApp(port, secure, credentials).then(() => {
+            const appPromise = HttpContainerPool.getApp(port, secure, credentials);
 
-        appPromise.then((some) => {
-            expect(some).toBe('acquireReturn');
-            done();
+            appPromise.then((some) => {
+                expect(some).toBe('acquireReturn');
+                done();
+            });
+            expect(constructorHttpContainer).toHaveBeenCalledTimes(1);
+            expect(acquireMock).toHaveBeenCalledTimes(2);
         });
-        expect(constructorHttpContainer).toHaveBeenCalledTimes(1);
-        expect(acquireMock).toHaveBeenCalledTimes(2);
     });
 
     it('release App', done => {

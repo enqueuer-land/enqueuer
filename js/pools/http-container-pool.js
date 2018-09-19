@@ -13,12 +13,16 @@ class HttpContainerPool {
         if (!httpContainer) {
             logger_1.Logger.info(`Creating a new Http/s server ${port}`);
             httpContainer = new http_container_1.HttpContainer(port, secure, credentials);
-            self.containers[port] = httpContainer;
+            return httpContainer.acquire()
+                .then((app) => {
+                self.containers[port] = httpContainer;
+                return app;
+            });
         }
         else {
             logger_1.Logger.trace(`Reusing Http/s server ${port}`);
+            return httpContainer.acquire();
         }
-        return httpContainer.acquire();
     }
     static releaseApp(port) {
         return new Promise((resolve) => {

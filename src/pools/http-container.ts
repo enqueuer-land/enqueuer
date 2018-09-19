@@ -21,13 +21,17 @@ export class HttpContainer {
 
     public acquire(): Promise<any> {
         return new Promise((resolve, reject) => {
-            ++this.counter;
-            if (this.counter == 1) {
-                this.listenToPort()
-                    .then(() => resolve(this.app))
-                    .catch((err) => reject(err));
-            } else {
-                resolve(this.app);
+            try {
+                ++this.counter;
+                if (this.counter == 1) {
+                    this.listenToPort()
+                        .then(() => resolve(this.app))
+                        .catch((err) => reject(err));
+                } else {
+                    resolve(this.app);
+                }
+            } catch (err) {
+                reject(err);
             }
         });
     }
