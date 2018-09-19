@@ -87,7 +87,7 @@ describe('Inception test', () => {
 
             const testerReports = {};
             findEveryJsonFile()
-                .filter(filename => filename.indexOf('_test.') >= 0)
+                .filter(filename => filename.indexOf('_test.json') >= 0)
                 .forEach(filename => {
                     testerReports[filename] = JSON.parse(fs.readFileSync(filename).toString())
                 });
