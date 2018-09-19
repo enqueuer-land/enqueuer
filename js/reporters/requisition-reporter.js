@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const report_generator_1 = require("./report-generator");
 const logger_1 = require("../loggers/logger");
@@ -83,23 +91,25 @@ class RequisitionReporter {
         }
     }
     onFinish(error) {
-        this.onFinish = () => {
-            //do nothing
-        };
-        this.executeOnFinishFunction();
-        logger_1.Logger.info(`Start gathering reports`);
-        if (error) {
-            logger_1.Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
-            this.reportGenerator.addError(error);
-        }
-        this.reportGenerator.setStartEventReport(this.startEvent.getReport());
-        this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
-        this.reportGenerator.finish();
-        this.multiSubscriptionsReporter.unsubscribe()
-            .then(() => this.onFinishCallback())
-            .catch((err) => {
-            logger_1.Logger.warning(`Error unsubscribing to subscription: ${err}`);
-            this.onFinishCallback();
+        return __awaiter(this, void 0, void 0, function* () {
+            this.onFinish = () => __awaiter(this, void 0, void 0, function* () {
+                //do nothing
+            });
+            yield this.executeOnFinishFunction();
+            logger_1.Logger.info(`Start gathering reports`);
+            if (error) {
+                logger_1.Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
+                this.reportGenerator.addError(error);
+            }
+            this.reportGenerator.setStartEventReport(this.startEvent.getReport());
+            this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
+            this.reportGenerator.finish();
+            this.multiSubscriptionsReporter.unsubscribe()
+                .then(() => this.onFinishCallback())
+                .catch((err) => {
+                logger_1.Logger.warning(`Error unsubscribing to subscription: ${err}`);
+                this.onFinishCallback();
+            });
         });
     }
     executeOnInitFunction() {
@@ -107,9 +117,11 @@ class RequisitionReporter {
         this.reportGenerator.addTests(new on_init_event_executor_1.OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
     executeOnFinishFunction() {
-        this.startEvent.onFinish();
-        this.multiSubscriptionsReporter.onFinish();
-        this.reportGenerator.addTests(new on_finish_event_executor_1.OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
+        return __awaiter(this, void 0, void 0, function* () {
+            this.multiSubscriptionsReporter.onFinish();
+            this.reportGenerator.addTests(new on_finish_event_executor_1.OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
+            return this.startEvent.onFinish();
+        });
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

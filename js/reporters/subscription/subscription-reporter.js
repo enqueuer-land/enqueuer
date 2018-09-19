@@ -73,8 +73,8 @@ class SubscriptionReporter {
                     this.subscribed = true;
                     resolve();
                 }
-                process.on('SIGINT', (signal) => this.handleKillSignal(signal));
-                process.on('SIGTERM', (signal) => this.handleKillSignal(signal));
+                process.once('SIGINT', (signal) => this.handleKillSignal(signal));
+                process.once('SIGTERM', (signal) => this.handleKillSignal(signal));
             })
                 .catch((err) => {
                 logger_1.Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
@@ -96,8 +96,8 @@ class SubscriptionReporter {
                 }
             })
                 .catch((err) => {
+                this.subscription.unsubscribe().catch(console.log.bind(console));
                 logger_1.Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
-                this.subscription.unsubscribe();
                 reject(err);
             });
         });
@@ -126,6 +126,9 @@ class SubscriptionReporter {
     }
     unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {
+            process.removeListener('SIGINT', (signal) => this.handleKillSignal(signal));
+            process.removeListener('SIGTERM', (signal) => this.handleKillSignal(signal));
+            logger_1.Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
             if (this.subscribed) {
                 return this.subscription.unsubscribe();
             }
@@ -149,22 +152,14 @@ class SubscriptionReporter {
         logger_1.Logger.debug(`${this.subscription.name} handled message arrival`);
     }
     cleanUp() {
-        process.removeListener('SIGINT', this.handleKillSignal);
-        process.removeListener('SIGTERM', this.handleKillSignal);
+        process.removeListener('SIGINT', (signal) => this.handleKillSignal(signal));
+        process.removeListener('SIGTERM', (signal) => this.handleKillSignal(signal));
         this.cleanUp = () => {
             //do nothing
         };
-        logger_1.Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
-        try {
-            this.subscription.unsubscribe();
-        }
-        catch (err) {
-            logger_1.Logger.error(err);
-        }
         if (this.timeOut) {
             this.timeOut.clear();
         }
-        logger_1.Logger.debug(`Subscription ${this.subscription.type} unsubscribed`);
     }
     initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {

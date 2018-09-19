@@ -102,11 +102,11 @@ export class RequisitionReporter {
         }
     }
 
-    private onFinish(error?: TestModel): void {
-        this.onFinish = () => {
+    private async onFinish(error?: TestModel): Promise<void> {
+        this.onFinish = async (): Promise<void> => {
             //do nothing
         };
-        this.executeOnFinishFunction();
+        await this.executeOnFinishFunction();
         Logger.info(`Start gathering reports`);
 
         if (error) {
@@ -129,10 +129,10 @@ export class RequisitionReporter {
         this.reportGenerator.addTests(new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
 
-    private executeOnFinishFunction() {
-        this.startEvent.onFinish();
+    private async executeOnFinishFunction(): Promise<void> {
         this.multiSubscriptionsReporter.onFinish();
         this.reportGenerator.addTests(new OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
+        return this.startEvent.onFinish();
     }
 
 }

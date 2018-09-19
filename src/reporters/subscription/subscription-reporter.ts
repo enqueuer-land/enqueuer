@@ -69,8 +69,8 @@ export class SubscriptionReporter {
                         resolve();
                     }
 
-                    process.on('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
-                    process.on('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
+                    process.once('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
+                    process.once('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
 
                 })
                 .catch((err: any) => {
@@ -93,8 +93,8 @@ export class SubscriptionReporter {
                     }
                 })
                 .catch((err: any) => {
+                    this.subscription.unsubscribe().catch(console.log.bind(console));
                     Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
-                    this.subscription.unsubscribe();
                     reject(err);
                 });
         });
@@ -128,6 +128,10 @@ export class SubscriptionReporter {
     }
 
     public async unsubscribe(): Promise<void> {
+        process.removeListener('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
+        process.removeListener('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
+
+        Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
         if (this.subscribed) {
             return this.subscription.unsubscribe();
         }
@@ -152,22 +156,15 @@ export class SubscriptionReporter {
     }
 
     private cleanUp(): void {
-        process.removeListener('SIGINT', this.handleKillSignal);
-        process.removeListener('SIGTERM', this.handleKillSignal);
+        process.removeListener('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
+        process.removeListener('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
 
         this.cleanUp = () => {
             //do nothing
         };
-        Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
-        try {
-            this.subscription.unsubscribe();
-        } catch (err) {
-            Logger.error(err);
-        }
         if (this.timeOut) {
             this.timeOut.clear();
         }
-        Logger.debug(`Subscription ${this.subscription.type} unsubscribed`);
     }
 
     private initializeTimeout() {
