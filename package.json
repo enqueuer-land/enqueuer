@@ -8,7 +8,7 @@
     "test": "npm run codeCoverage && npm run singleRunTest && npm run daemonRunTest",
     "unitTest": "jest --silent .test.ts",
     "daemonRunTest": "jest --forceExit --silent .comp.ts",
-    "singleRunTest": "nqr enqueuer.yml --store zeroMqAddress=tcp://127.0.0.1:3000 < scripts/stdin",
+    "singleRunTest": "nqr conf/singleRun.yml --store zeroMqAddress=tcp://127.0.0.1:3000 < scripts/stdin",
     "codeCoverage": "jest --detectOpenHandles --coverage",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",

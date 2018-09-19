@@ -9,7 +9,7 @@ run-mode:
   #             At the end of execution, a status code is returned:
   #               0, if everything is ok; or
   #               1, if there is at least one invalid thing.
-  # You can use this one as example: /enqueuer.yml
+  # You can use this one as example: /singleRun.yml
   single-run:
     #Used to describe your config test scenario
     name: examples
@@ -32,7 +32,7 @@ run-mode:
   # daemon mode: it will run indefinitely. Endlessly. As a service.
   #         When running in daemon mode it will be waiting for test values (/docs/tests/test.yml) from those mechanisms inputs listed. One after the other.
   #         Some IPC protocols are currently supported: http-server, tcp and uds. You can find an example of both right below
-  # You can use this one as example: /daemon.yml
+  # You can use this one as example: /daemonRun.yml
   daemon:
     #Accepts uds requisitions
     - type: uds
