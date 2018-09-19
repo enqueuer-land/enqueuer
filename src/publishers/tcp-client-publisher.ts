@@ -92,7 +92,7 @@ export class TcpClientPublisher extends Publisher {
     }
 
     private write(stream: any) {
-        stream.write(this.payload, () => {
+        stream.write(this.stringifyPayload(), () => {
             if (this.saveStream) {
                 Logger.debug(`Persisting publisher stream ${this.saveStream}`);
                 Store.getData()[this.saveStream] = stream;
@@ -104,5 +104,12 @@ export class TcpClientPublisher extends Publisher {
         if (!this.saveStream) {
             stream.end();
         }
+    }
+
+    private stringifyPayload() {
+        if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
+            return JSON.stringify(this.payload);
+        }
+        return this.payload;
     }
 }

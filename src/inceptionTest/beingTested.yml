@@ -1,9 +1,14 @@
 run-mode:
   daemon:
     - type: uds
+    - type: tcp
+    - type: http-server
 
 outputs:
   - type: file
-    filename: src/inceptionTest/inner_test.json
+    filenamePrefix: src/inceptionTest/
+    filenameExtension: _test.json
+    pretty: true
 
-log-level: trace
+
+log-level: debug

@@ -25,6 +25,7 @@ const fs = __importStar(require("fs"));
 let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();
+        this.subscribed = false;
         this.type = daemonInput.type;
         this.path = daemonInput.path || '/tmp/enqueuer.requisitions';
         this.streamDaemon = new stream_daemon_input_1.StreamDaemonInput(this.path);
@@ -32,6 +33,7 @@ let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
     subscribe() {
         return this.streamDaemon.subscribe()
             .then(() => {
+            this.subscribed = true;
             logger_1.Logger.info(`Waiting for UDS requisitions: ${this.path}`);
         });
     }
@@ -45,6 +47,9 @@ let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
         });
     }
     unsubscribe() {
+        if (!this.subscribed) {
+            return Promise.resolve();
+        }
         return new Promise((resolve) => {
             fs.unlink(this.path, () => {
                 resolve(this.streamDaemon.unsubscribe());

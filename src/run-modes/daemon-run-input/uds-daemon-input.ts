@@ -11,6 +11,7 @@ export class UdsDaemonInput extends DaemonInput {
     private path: string;
     private type: string;
     private streamDaemon: StreamDaemonInput;
+    private subscribed: boolean = false;
 
     public constructor(daemonInput: any) {
         super();
@@ -22,6 +23,7 @@ export class UdsDaemonInput extends DaemonInput {
     public subscribe(): Promise<void> {
         return this.streamDaemon.subscribe()
             .then(() => {
+                this.subscribed = true;
                 Logger.info(`Waiting for UDS requisitions: ${this.path}`);
             });
     }
@@ -37,6 +39,10 @@ export class UdsDaemonInput extends DaemonInput {
     }
 
     public unsubscribe(): Promise<void> {
+        if (!this.subscribed) {
+            return Promise.resolve();
+        }
+
         return new Promise((resolve) => {
             fs.unlink(this.path, () => {
                 resolve(this.streamDaemon.unsubscribe());

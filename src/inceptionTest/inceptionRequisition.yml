@@ -1,37 +1,64 @@
-name: runnableUds
-timeout: 10000
-startEvent:
-    publisher:
-        name: UdsPublisher
-        timeout: 8000
-        type: replaced
-        onInit:
-            script: publisher.type='uds';
-        path: /tmp/enqueuer.requisitions
-        payload:
+-   name: Daemon UDS
+    timeout: 10000
+    startEvent:
+        publisher:
+            type: uds
+            path: /tmp/enqueuer.requisitions
+            onMessageReceived:
+                assertions:
+                -   name: Test name
+                    expectToBeDefined: message
+            payload:
 
-            #inner requisition
-            name: innerRequisitionUds
-            startEvent:
-                publisher:
-                    name: PubsUds
-                    type: uds
-                    path: /tmp/loopUnix.sock
-                    payload: 100
-            subscriptions:
-            -   type: uds
-                name: runnableSubsUds
-                path: /tmp/loopUnix.sock
-                onMessageReceived:
-                    store:
-                        innerPayload: payload
-                    assertions:
-                    -   name: Works
-                        expect: payload
-                        toBeEqualTo: 100
+                #inner requisition
+                startEvent:
+                    subscription:
+                        type: tcp-server
+                        timeout: 20
+                        port: 23070
+                        avoid: true
 
-        #end
-        onMessageReceived:
-            assertions:
-            -   name: Test name
-                expectToBeDefined: message
+                #end
+-   name: Daemon HTTP
+    timeout: 10000
+    startEvent:
+        publisher:
+            type: http-client
+            url: http://localhost:23023/requisitions
+            method: POST
+            onMessageReceived:
+                assertions:
+                -   name: Test name
+                    expectToBeDefined: message
+            payload:
+
+                #inner requisition
+                startEvent:
+                    subscription:
+                        type: tcp-server
+                        timeout: 20
+                        port: 23071
+                        avoid: true
+
+                #end
+-   name: Daemon TCP
+    timeout: 10000
+    startEvent:
+        publisher:
+            type: tcp-client
+            port: 23022
+            onMessageReceived:
+                assertions:
+                -   name: Test name
+                    expectToBeDefined: message
+            payload:
+
+                #inner requisition
+                startEvent:
+                    subscription:
+                        type: tcp-server
+                        timeout: 20
+                        port: 23072
+                        avoid: true
+
+                #end

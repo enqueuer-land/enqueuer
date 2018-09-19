@@ -58,7 +58,10 @@ export class FilePublisher extends Publisher {
             filename = this.filenamePrefix;
             filename += this.generateId();
             if (filename.lastIndexOf('.') == -1) {
-                filename += '.' + this.filenameExtension;
+                if (this.filenameExtension.lastIndexOf('.') == -1) {
+                    filename += '.';
+                }
+                filename += this.filenameExtension;
             }
         }
         return filename;
@@ -68,7 +71,7 @@ export class FilePublisher extends Publisher {
         try {
             //gets everything after last slash
             const name = this.payload.name;
-            const id = name.substr(name.lastIndexOf('/'));
+            const id = name.substring(name.lastIndexOf('/'));
             if (id) {
                 return id;
             }

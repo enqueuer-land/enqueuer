@@ -95,7 +95,7 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         this.write(stream);
     }
     write(stream) {
-        stream.write(this.payload, () => {
+        stream.write(this.stringifyPayload(), () => {
             if (this.saveStream) {
                 logger_1.Logger.debug(`Persisting publisher stream ${this.saveStream}`);
                 store_1.Store.getData()[this.saveStream] = stream;
@@ -106,6 +106,12 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
         if (!this.saveStream) {
             stream.end();
         }
+    }
+    stringifyPayload() {
+        if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
+            return JSON.stringify(this.payload);
+        }
+        return this.payload;
     }
 };
 TcpClientPublisher = __decorate([
