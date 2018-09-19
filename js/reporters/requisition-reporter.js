@@ -104,12 +104,9 @@ class RequisitionReporter {
             this.reportGenerator.setStartEventReport(this.startEvent.getReport());
             this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
             this.reportGenerator.finish();
-            this.multiSubscriptionsReporter.unsubscribe()
-                .then(() => this.onFinishCallback())
-                .catch((err) => {
-                logger_1.Logger.warning(`Error unsubscribing to subscription: ${err}`);
-                this.onFinishCallback();
-            });
+            yield this.startEvent.unsubscribe();
+            yield this.multiSubscriptionsReporter.unsubscribe();
+            this.onFinishCallback();
         });
     }
     executeOnInitFunction() {
@@ -117,11 +114,9 @@ class RequisitionReporter {
         this.reportGenerator.addTests(new on_init_event_executor_1.OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
     executeOnFinishFunction() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.multiSubscriptionsReporter.onFinish();
-            this.reportGenerator.addTests(new on_finish_event_executor_1.OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
-            return this.startEvent.onFinish();
-        });
+        this.multiSubscriptionsReporter.onFinish();
+        this.reportGenerator.addTests(new on_finish_event_executor_1.OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
+        this.startEvent.onFinish();
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

@@ -60,8 +60,10 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
         });
     }
     onFinish() {
+        this.subscriptionReporter.onFinish();
+    }
+    unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.subscriptionReporter.onFinish();
             return this.subscriptionReporter.unsubscribe();
         });
     }

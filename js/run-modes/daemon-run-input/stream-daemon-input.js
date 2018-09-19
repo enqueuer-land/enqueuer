@@ -34,8 +34,10 @@ class StreamDaemonInput {
         });
     }
     unsubscribe() {
-        this.server.close();
-        delete this.server;
+        if (this.server) {
+            this.server.close();
+            delete this.server;
+        }
         return Promise.resolve();
     }
     cleanUp() {

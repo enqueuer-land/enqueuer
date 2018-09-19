@@ -48,8 +48,11 @@ export class StartEventSubscriptionReporter extends StartEventReporter {
         });
     }
 
-    public async onFinish(): Promise<void> {
+    public onFinish(): void {
         this.subscriptionReporter.onFinish();
+    }
+
+    public async unsubscribe(): Promise<void> {
         return this.subscriptionReporter.unsubscribe();
     }
 

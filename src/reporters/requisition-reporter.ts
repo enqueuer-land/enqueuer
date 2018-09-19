@@ -116,12 +116,11 @@ export class RequisitionReporter {
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());
         this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
         this.reportGenerator.finish();
-        this.multiSubscriptionsReporter.unsubscribe()
-            .then(() => this.onFinishCallback())
-            .catch((err) => {
-                Logger.warning(`Error unsubscribing to subscription: ${err}`);
-                this.onFinishCallback();
-            });
+
+        await this.startEvent.unsubscribe();
+        await this.multiSubscriptionsReporter.unsubscribe();
+
+        this.onFinishCallback();
     }
 
     private executeOnInitFunction() {
@@ -129,10 +128,10 @@ export class RequisitionReporter {
         this.reportGenerator.addTests(new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
 
-    private async executeOnFinishFunction(): Promise<void> {
+    private executeOnFinishFunction(): void {
         this.multiSubscriptionsReporter.onFinish();
         this.reportGenerator.addTests(new OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
-        return this.startEvent.onFinish();
+        this.startEvent.onFinish();
     }
 
 }

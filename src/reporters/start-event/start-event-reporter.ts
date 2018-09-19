@@ -4,7 +4,12 @@ export abstract class StartEventReporter {
     abstract start(): Promise<void>;
     abstract getReport(): StartEventModel;
 
-    public async onFinish(): Promise<void> {
+    public onFinish(): void {
         //hook method
     }
+
+    public async unsubscribe(): Promise<void> {
+        //hook method
+    }
+
 }

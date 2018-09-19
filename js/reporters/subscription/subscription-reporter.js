@@ -22,14 +22,6 @@ class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
         this.subscribed = false;
-        this.handleKillSignal = (signal) => {
-            logger_1.Logger.fatal(`Handling kill signal ${signal}`);
-            this.cleanUp();
-            new timeout_1.Timeout(() => {
-                logger_1.Logger.fatal('Adios muchachos');
-                process.exit(1);
-            }).start(2000);
-        };
         this.startTime = new date_controller_1.DateController();
         this.report = {
             name: subscriptionAttributes.name,
@@ -40,6 +32,7 @@ class SubscriptionReporter {
         this.executeOnInitFunction(subscriptionAttributes);
         logger_1.Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = conditional_injector_1.Container.subclassesOf(subscription_1.Subscription).create(subscriptionAttributes);
+        this.killListener = (signal) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
     }
     startTimeout(onTimeOutCallback) {
         this.subscription.messageReceived = undefined;
@@ -53,7 +46,6 @@ class SubscriptionReporter {
                 this.hasTimedOut = true;
                 onTimeOutCallback();
             }
-            this.cleanUp();
         });
     }
     subscribe() {
@@ -73,8 +65,8 @@ class SubscriptionReporter {
                     this.subscribed = true;
                     resolve();
                 }
-                process.once('SIGINT', (signal) => this.handleKillSignal(signal));
-                process.once('SIGTERM', (signal) => this.handleKillSignal(signal));
+                process.once('SIGINT', this.killListener)
+                    .once('SIGTERM', this.killListener);
             })
                 .catch((err) => {
                 logger_1.Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
@@ -86,6 +78,9 @@ class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message) => {
+                // if (this.timeOut) {
+                //     this.timeOut.clear();
+                // }
                 logger_1.Logger.debug(`${this.subscription.name} received its message`);
                 if (message !== null || message !== undefined) {
                     this.handleMessageArrival(message);
@@ -119,15 +114,14 @@ class SubscriptionReporter {
     getReport() {
         const finalReporter = new subscription_final_reporter_1.SubscriptionFinalReporter(this.subscribed, this.subscription.avoid, !!this.subscription.messageReceived, !!this.subscription.timeout && this.hasTimedOut);
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
-        this.cleanUp();
         this.report.messageReceived = this.subscription.messageReceived;
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);
         return this.report;
     }
     unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {
-            process.removeListener('SIGINT', (signal) => this.handleKillSignal(signal));
-            process.removeListener('SIGTERM', (signal) => this.handleKillSignal(signal));
+            process.removeListener('SIGINT', this.killListener)
+                .removeListener('SIGTERM', this.killListener);
             logger_1.Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
             if (this.subscribed) {
                 return this.subscription.unsubscribe();
@@ -147,19 +141,8 @@ class SubscriptionReporter {
         }
         else {
             logger_1.Logger.info(`${this.subscription.name} has received message in a unable time`);
-            this.cleanUp();
         }
         logger_1.Logger.debug(`${this.subscription.name} handled message arrival`);
-    }
-    cleanUp() {
-        process.removeListener('SIGINT', (signal) => this.handleKillSignal(signal));
-        process.removeListener('SIGTERM', (signal) => this.handleKillSignal(signal));
-        this.cleanUp = () => {
-            //do nothing
-        };
-        if (this.timeOut) {
-            this.timeOut.clear();
-        }
     }
     initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
@@ -176,6 +159,13 @@ class SubscriptionReporter {
         logger_1.Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
         this.report.tests = this.report.tests.concat(new on_message_received_event_executor_1.OnMessageReceivedEventExecutor('subscription', this.subscription).trigger());
+    }
+    handleKillSignal(signal, type) {
+        return __awaiter(this, void 0, void 0, function* () {
+            logger_1.Logger.fatal(`Subscription reporter '${type}' handling kill signal ${signal}`);
+            yield this.unsubscribe();
+            logger_1.Logger.fatal(`Subscription reporter '${type}' unsubscribed`);
+        });
     }
 }
 exports.SubscriptionReporter = SubscriptionReporter;

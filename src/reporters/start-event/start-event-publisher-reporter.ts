@@ -57,7 +57,7 @@ export class StartEventPublisherReporter extends StartEventReporter {
         };
     }
 
-    public async onFinish(): Promise<void> {
+    public onFinish(): void {
         this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('publisher', this.publisher).trigger());
     }
 

@@ -12,9 +12,11 @@ import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-e
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import Signals = NodeJS.Signals;
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
+import SignalsListener = NodeJS.SignalsListener;
 
 export class SubscriptionReporter {
 
+    private killListener: SignalsListener;
     private subscription: Subscription;
     private report: output.SubscriptionModel;
     private startTime: DateController;
@@ -34,6 +36,7 @@ export class SubscriptionReporter {
         this.executeOnInitFunction(subscriptionAttributes);
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
+        this.killListener = (signal: Signals) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
     }
 
     public startTimeout(onTimeOutCallback: Function) {
@@ -48,7 +51,6 @@ export class SubscriptionReporter {
                 this.hasTimedOut = true;
                 onTimeOutCallback();
             }
-            this.cleanUp();
         });
     }
 
@@ -69,8 +71,8 @@ export class SubscriptionReporter {
                         resolve();
                     }
 
-                    process.once('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
-                    process.once('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
+                    process.once('SIGINT', this.killListener)
+                            .once('SIGTERM', this.killListener);
 
                 })
                 .catch((err: any) => {
@@ -84,6 +86,10 @@ export class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message: any) => {
+                    // if (this.timeOut) {
+                    //     this.timeOut.clear();
+                    // }
+
                     Logger.debug(`${this.subscription.name} received its message`);
                     if (message !== null || message !== undefined) {
                         this.handleMessageArrival(message);
@@ -121,15 +127,14 @@ export class SubscriptionReporter {
             !!this.subscription.timeout && this.hasTimedOut);
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
-        this.cleanUp();
         this.report.messageReceived = this.subscription.messageReceived;
         this.report.valid = this.report.valid && checkValidation(this.report);
         return this.report;
     }
 
     public async unsubscribe(): Promise<void> {
-        process.removeListener('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
-        process.removeListener('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
+        process.removeListener('SIGINT', this.killListener)
+                .removeListener('SIGTERM', this.killListener);
 
         Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
         if (this.subscribed) {
@@ -150,21 +155,8 @@ export class SubscriptionReporter {
             this.executeOnMessageReceivedFunction();
         } else {
             Logger.info(`${this.subscription.name} has received message in a unable time`);
-            this.cleanUp();
         }
         Logger.debug(`${this.subscription.name} handled message arrival`);
-    }
-
-    private cleanUp(): void {
-        process.removeListener('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
-        process.removeListener('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
-
-        this.cleanUp = () => {
-            //do nothing
-        };
-        if (this.timeOut) {
-            this.timeOut.clear();
-        }
     }
 
     private initializeTimeout() {
@@ -186,13 +178,10 @@ export class SubscriptionReporter {
         this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('subscription', this.subscription).trigger());
     }
 
-    private handleKillSignal = (signal: Signals): void => {
-        Logger.fatal(`Handling kill signal ${signal}`);
-        this.cleanUp();
-        new Timeout(() => {
-            Logger.fatal('Adios muchachos');
-            process.exit(1);
-        }).start(2000);
+    private async handleKillSignal(signal: Signals, type: string): Promise<void> {
+        Logger.fatal(`Subscription reporter '${type}' handling kill signal ${signal}`);
+        await this.unsubscribe();
+        Logger.fatal(`Subscription reporter '${type}' unsubscribed`);
     }
 
 }

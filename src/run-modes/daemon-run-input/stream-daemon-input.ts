@@ -34,8 +34,10 @@ export class StreamDaemonInput {
     }
 
     public unsubscribe(): Promise<void> {
-        this.server.close();
-        delete this.server;
+        if (this.server) {
+            this.server.close();
+            delete this.server;
+        }
         return Promise.resolve();
     }
 

@@ -8,6 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const daemon_input_1 = require("./daemon-run-input/daemon-input");
 const logger_1 = require("../loggers/logger");
@@ -19,6 +27,7 @@ const console_result_creator_1 = require("./single-run-result-creators/console-r
 let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
         super();
+        this.reject = () => { };
         const daemonMode = configuration.runMode.daemon;
         logger_1.Logger.info('Executing in Daemon mode');
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
@@ -29,24 +38,23 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
     }
     execute() {
         return new Promise((resolve, reject) => {
+            this.reject = reject;
             this.daemonInputs
                 .forEach((input) => {
                 input.subscribe()
                     .then(() => this.startReader(input))
-                    .catch((err) => {
-                    this.unsubscribe(err, input, reject);
-                });
+                    .catch((err) => this.unsubscribe(err, input));
             });
         });
     }
-    unsubscribe(err, input, reject) {
+    unsubscribe(err, input) {
         logger_1.Logger.error(`Unsubscribing from daemon input: ${err}`);
         input.unsubscribe().catch((err) => logger_1.Logger.warning(`Error unsubscribing to input: ${err}`));
         --this.daemonInputsLength;
         if (this.daemonInputsLength <= 0) {
             const message = `Daemon mode has no input able to listen from`;
             logger_1.Logger.fatal(message);
-            reject(message);
+            this.reject(message);
         }
     }
     startReader(input) {
@@ -73,9 +81,11 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
             .then(() => this.startReader(message.daemon));
     }
     handleKillSignal(handleKillSignal) {
-        logger_1.Logger.fatal(`Daemon runner handling kill signal ${handleKillSignal}`);
-        this.daemonInputs.forEach((input) => {
-            input.unsubscribe().catch(console.log.bind(console));
+        return __awaiter(this, void 0, void 0, function* () {
+            const message = `Daemon runner handling kill signal ${handleKillSignal}`;
+            logger_1.Logger.fatal(message);
+            yield Promise.all(this.daemonInputs.map((input) => input.unsubscribe()));
+            this.reject(message);
         });
     }
 };
