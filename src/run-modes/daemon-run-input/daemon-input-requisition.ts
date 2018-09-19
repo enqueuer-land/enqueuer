@@ -4,7 +4,7 @@ import {DaemonInput} from './daemon-input';
 
 export interface DaemonInputRequisition {
     type: string;
-    daemon: DaemonInput;
+    daemon?: DaemonInput;
     input: input.RequisitionModel[];
     output?: output.RequisitionModel;
 

@@ -1,4 +1,4 @@
-import {DaemonInput} from './daemon-run-input-adapters/daemon-input';
+import {DaemonInput} from './daemon-run-input/daemon-input';
 import {Logger} from '../loggers/logger';
 import {MultiPublisher} from '../publishers/multi-publisher';
 import {EnqueuerExecutor} from './enqueuer-executor';
@@ -6,12 +6,12 @@ import {Container, Injectable} from 'conditional-injector';
 import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
-import {DaemonInputRequisition} from './daemon-run-input-adapters/daemon-input-requisition';
+import {DaemonInputRequisition} from './daemon-run-input/daemon-input-requisition';
 import {ConsoleResultCreator} from './single-run-result-creators/console-result-creator';
+import Signals = NodeJS.Signals;
 
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
 export class DaemonRunExecutor extends EnqueuerExecutor {
-
     private daemonInputs: DaemonInput[];
     private multiPublisher: MultiPublisher;
     private daemonInputsLength: number;
@@ -24,6 +24,8 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         this.multiPublisher = new MultiPublisher(configuration.outputs);
         this.daemonInputs = daemonMode.map((input: any) => Container.subclassesOf(DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
+        process.on('SIGINT', (handleKillSignal: Signals) => this.handleKillSignal(handleKillSignal));
+        process.on('SIGTERM', (handleKillSignal: Signals) => this.handleKillSignal(handleKillSignal));
     }
 
     public execute(): Promise<boolean> {
@@ -50,15 +52,17 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         }
     }
 
-    private startReader(input: DaemonInput) {
-        input.receiveMessage()
-            .then((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition))
-            .catch( (err) => {
-                Logger.error(err);
-                input.sendResponse(err).catch(console.log.bind(console));
-                this.multiPublisher.publish(err).catch(console.log.bind(console));
-                this.startReader(input);
-            });
+    private startReader(input?: DaemonInput) {
+        if (input) {
+            input.receiveMessage()
+                .then((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition))
+                .catch( (err) => {
+                    Logger.error(err);
+                    input.sendResponse(err).catch(console.log.bind(console));
+                    this.multiPublisher.publish(err).catch(console.log.bind(console));
+                    this.startReader(input);
+                });
+        }
     }
 
     private handleRequisitionReceived(message: DaemonInputRequisition) {
@@ -67,9 +71,17 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
             .then( (report: output.RequisitionModel) => message.output = report)
             .then( () => message.output && resultCreator.addTestSuite(message.type, message.output))
             .then( () => resultCreator.create())
-            .then( () => message.daemon.sendResponse(message))
-            .then(() => message.daemon.cleanUp())
+            .then( () => message.daemon && message.daemon.sendResponse(message))
+            .then(() => message.daemon && message.daemon.cleanUp())
             .then( () => this.multiPublisher.publish(message.output))
             .then(() => this.startReader(message.daemon));
     }
+
+    private handleKillSignal(handleKillSignal: Signals): any {
+        Logger.fatal(`Daemon runner handling kill signal ${handleKillSignal}`);
+        this.daemonInputs.forEach((input) => {
+           input.unsubscribe().catch(console.log.bind(console));
+        });
+    }
+
 }

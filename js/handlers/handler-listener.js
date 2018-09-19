@@ -30,7 +30,7 @@ class HandlerListener {
                     this.handleError(err, handler, resolve, reject);
                 }
                 else {
-                    logger_1.Logger.info(`Server bound to (${handler})`);
+                    logger_1.Logger.debug(`Server bound to (${handler})`);
                     resolve();
                 }
             });

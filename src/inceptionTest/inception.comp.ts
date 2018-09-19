@@ -95,18 +95,12 @@ describe('Inception test', () => {
                 expect(outterReport.startEvent.publisher.name).toBe('UdsPublisher');
                 expect(findTest('Response message received', outterReport.startEvent.publisher.tests)).toBeTruthy();
             }
-
+            beingTested.kill('SIGINT');
             done();
         });
     });
 
-    let killThemAll = () => {
-        beingTested.kill('SIGINT');
-        // tester.kill('SIGINT');
-    };
-
     afterAll(() => {
-        killThemAll();
         removeEveryReportFile();
     });
 

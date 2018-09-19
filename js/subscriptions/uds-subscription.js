@@ -52,6 +52,9 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
                     this.server = null;
                     this.stream = stream;
                     this.waitForData(resolve);
+                    if (fs.existsSync(this.path)) {
+                        fs.unlinkSync(this.path);
+                    }
                 });
             }
         });
@@ -72,19 +75,17 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
         });
     }
     createServer(resolve, reject) {
-        fs.unlink(this.path, () => {
-            this.server = net.createServer();
-            new handler_listener_1.HandlerListener(this.server)
-                .listen(this.path)
-                .then(() => {
-                logger_1.Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
-                resolve();
-            })
-                .catch(err => {
-                const message = `Uds server could not listen to ${this.path}: ${err}`;
-                logger_1.Logger.error(message);
-                reject(message);
-            });
+        this.server = net.createServer();
+        new handler_listener_1.HandlerListener(this.server)
+            .listen(this.path)
+            .then(() => {
+            logger_1.Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
+            resolve();
+        })
+            .catch(err => {
+            const message = `Uds server could not listen to ${this.path}: ${err}`;
+            logger_1.Logger.error(message);
+            reject(message);
         });
     }
     waitForData(resolve) {
@@ -117,6 +118,9 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
     }
     unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {
+            if (this.server && fs.existsSync(this.path)) {
+                fs.unlinkSync(this.path);
+            }
             this.persistStream();
         });
     }

@@ -1,7 +1,9 @@
 run-mode:
     daemon:
         -   type: uds
-            path: /tmp/inUnix.sock
+#            path: /tmp/enqueuer.requisitions
+        -   type: tcp
+#            port: 23022
         -   type: http-server
 #            endpoint: /requisitions
 #            port: 23023
@@ -11,4 +13,4 @@ run-mode:
 #    -   type: standard-output
 #        pretty: true
 
-log-level: info
+log-level: debug

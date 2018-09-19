@@ -73,8 +73,8 @@ class SubscriptionReporter {
                     this.subscribed = true;
                     resolve();
                 }
-                process.on('SIGINT', this.handleKillSignal);
-                process.on('SIGTERM', this.handleKillSignal);
+                process.on('SIGINT', (signal) => this.handleKillSignal(signal));
+                process.on('SIGTERM', (signal) => this.handleKillSignal(signal));
             })
                 .catch((err) => {
                 logger_1.Logger.error(`${this.subscription.name} is unable to connect: ${err}`);

@@ -5,8 +5,7 @@ import {MultiRequisitionRunner} from "../requisition-runners/multi-requisition-r
 
 jest.mock("../requisition-runners/multi-requisition-runner");
 jest.mock('../publishers/multi-publisher');
-jest.mock('./daemon-run-input-adapters/daemon-input');
-
+jest.mock('./daemon-run-input/daemon-input');
 
 let subscribeMock = jest.fn(() => Promise.resolve(true));
 let createMock = jest.fn(() => {

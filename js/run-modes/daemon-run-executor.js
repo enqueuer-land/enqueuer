@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const daemon_input_1 = require("./daemon-run-input-adapters/daemon-input");
+const daemon_input_1 = require("./daemon-run-input/daemon-input");
 const logger_1 = require("../loggers/logger");
 const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
@@ -24,6 +24,8 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
         this.daemonInputs = daemonMode.map((input) => conditional_injector_1.Container.subclassesOf(daemon_input_1.DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
+        process.on('SIGINT', (handleKillSignal) => this.handleKillSignal(handleKillSignal));
+        process.on('SIGTERM', (handleKillSignal) => this.handleKillSignal(handleKillSignal));
     }
     execute() {
         return new Promise((resolve, reject) => {
@@ -48,14 +50,16 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         }
     }
     startReader(input) {
-        input.receiveMessage()
-            .then((requisition) => this.handleRequisitionReceived(requisition))
-            .catch((err) => {
-            logger_1.Logger.error(err);
-            input.sendResponse(err).catch(console.log.bind(console));
-            this.multiPublisher.publish(err).catch(console.log.bind(console));
-            this.startReader(input);
-        });
+        if (input) {
+            input.receiveMessage()
+                .then((requisition) => this.handleRequisitionReceived(requisition))
+                .catch((err) => {
+                logger_1.Logger.error(err);
+                input.sendResponse(err).catch(console.log.bind(console));
+                this.multiPublisher.publish(err).catch(console.log.bind(console));
+                this.startReader(input);
+            });
+        }
     }
     handleRequisitionReceived(message) {
         const resultCreator = new console_result_creator_1.ConsoleResultCreator();
@@ -63,10 +67,16 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
             .then((report) => message.output = report)
             .then(() => message.output && resultCreator.addTestSuite(message.type, message.output))
             .then(() => resultCreator.create())
-            .then(() => message.daemon.sendResponse(message))
-            .then(() => message.daemon.cleanUp())
+            .then(() => message.daemon && message.daemon.sendResponse(message))
+            .then(() => message.daemon && message.daemon.cleanUp())
             .then(() => this.multiPublisher.publish(message.output))
             .then(() => this.startReader(message.daemon));
+    }
+    handleKillSignal(handleKillSignal) {
+        logger_1.Logger.fatal(`Daemon runner handling kill signal ${handleKillSignal}`);
+        this.daemonInputs.forEach((input) => {
+            input.unsubscribe().catch(console.log.bind(console));
+        });
     }
 };
 DaemonRunExecutor = __decorate([

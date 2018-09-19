@@ -69,8 +69,8 @@ export class SubscriptionReporter {
                         resolve();
                     }
 
-                    process.on('SIGINT', this.handleKillSignal);
-                    process.on('SIGTERM', this.handleKillSignal);
+                    process.on('SIGINT', (signal: Signals) => this.handleKillSignal(signal));
+                    process.on('SIGTERM', (signal: Signals) => this.handleKillSignal(signal));
 
                 })
                 .catch((err: any) => {

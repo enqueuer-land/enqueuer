@@ -36,6 +36,9 @@ export class UdsSubscription extends Subscription {
                     this.server = null;
                     this.stream = stream;
                     this.waitForData(resolve);
+                    if (fs.existsSync(this.path)) {
+                        fs.unlinkSync(this.path);
+                    }
                 });
             }
         });
@@ -58,20 +61,18 @@ export class UdsSubscription extends Subscription {
     }
 
     private createServer(resolve: any, reject: any) {
-        fs.unlink(this.path, () => {
-            this.server = net.createServer();
-            new HandlerListener(this.server)
-                .listen(this.path)
-                .then(() => {
-                    Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
-                    resolve();
-                })
-                .catch(err => {
-                    const message = `Uds server could not listen to ${this.path}: ${err}`;
-                    Logger.error(message);
-                    reject(message);
-                });
-        });
+        this.server = net.createServer();
+        new HandlerListener(this.server)
+            .listen(this.path)
+            .then(() => {
+                Logger.debug(`Uds server is listening for uds clients on ${this.path}`);
+                resolve();
+            })
+            .catch(err => {
+                const message = `Uds server could not listen to ${this.path}: ${err}`;
+                Logger.error(message);
+                reject(message);
+            });
     }
 
     private waitForData(resolve: any) {
@@ -105,6 +106,9 @@ export class UdsSubscription extends Subscription {
     }
 
     public async unsubscribe(): Promise<void> {
+        if (this.server && fs.existsSync(this.path)) {
+            fs.unlinkSync(this.path);
+        }
         this.persistStream();
     }
 

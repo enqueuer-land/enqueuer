@@ -8,13 +8,11 @@ let closeMock = jest.fn();
 
 const warningMock = jest.fn();
 const traceMock = jest.fn();
-const infoMock = jest.fn();
 const debugMock = jest.fn();
 const errorMock = jest.fn();
 jest.mock("../loggers/logger");
 Logger.warning.mockImplementation(warningMock);
 Logger.trace.mockImplementation(traceMock);
-Logger.info.mockImplementation(infoMock);
 Logger.debug.mockImplementation(debugMock);
 Logger.error.mockImplementation(errorMock);
 
@@ -55,7 +53,6 @@ describe('HandleListener', () => {
                 expect(listenMock).toHaveBeenCalledWith(handler, expect.any(Function));
                 expect(onErrorMock).toHaveBeenCalledTimes(1);
                 expect(setTimeout).toHaveBeenCalledTimes(0);
-                expect(infoMock).toHaveBeenCalledTimes(1);
                 done();
             });
     });

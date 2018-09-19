@@ -29,7 +29,7 @@ export class HttpDaemonInput extends DaemonInput {
             HttpContainerPool.getApp(this.port)
                 .then((app: any) => {
                     this.registerMessageEvent(app);
-                    Logger.info(`Waiting for http requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
+                    Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
                     resolve();
                 }).catch(err => {
                 const message = `Error in HttpDaemonInput subscription: ${err}`;
@@ -44,8 +44,7 @@ export class HttpDaemonInput extends DaemonInput {
     }
 
     public unsubscribe(): Promise<void> {
-        HttpContainerPool.releaseApp(this.port);
-        return Promise.resolve();
+        return HttpContainerPool.releaseApp(this.port);
     }
 
     public cleanUp(): Promise<void> {

@@ -11,7 +11,7 @@ export class HandlerListener {
         this.retryTimeout = retryTimeout;
     }
 
-    public listen(handler: any): Promise<void> {
+    public listen(handler: number | string): Promise<void> {
         return new Promise((resolve, reject) => {
             Logger.trace(`Binding server to ${handler}`);
             this.server.on('error', (err: any) => {
@@ -27,13 +27,13 @@ export class HandlerListener {
         });
     }
 
-    private tryToListen(handler: any, resolve: any, reject: any) {
+    private tryToListen(handler: number | string, resolve: any, reject: any) {
         if (this.remainingAttempts > 0) {
             this.server.listen(handler, (err: any) => {
                 if (err) {
                     this.handleError(err, handler, resolve, reject);
                 } else {
-                    Logger.info(`Server bound to (${handler})`);
+                    Logger.debug(`Server bound to (${handler})`);
                     resolve();
                 }
             });
@@ -42,7 +42,7 @@ export class HandlerListener {
         }
     }
 
-    private handleError(err: any, handler: any, resolve: any, reject: any) {
+    private handleError(err: any, handler: number | string, resolve: any, reject: any) {
         if (err.code === 'EADDRINUSE') {
             --this.remainingAttempts;
             Logger.warning(`Handler ${handler} is in use, retrying more ${this.remainingAttempts} times...`);

@@ -31,12 +31,17 @@ run-mode:
 
   # daemon mode: it will run indefinitely. Endlessly. As a service.
   #         When running in daemon mode it will be waiting for test values (/docs/tests/test.yml) from those mechanisms inputs listed. One after the other.
-  #         Two IPC protocols are currently supported: http-server and uds. You can find an example of both right below
+  #         Some IPC protocols are currently supported: http-server, tcp and uds. You can find an example of both right below
   # You can use this one as example: /daemon.yml
   daemon:
     #Accepts uds requisitions
     - type: uds
-      path: /tmp/inUnix.sock
+      path: /tmp/in.sock #defaults to /tmp/enqueuer.requisitions
+
+    #Accepts tcp requisitions
+    - type: tcp
+      port: 8081 #defaults to23022
+
 
     #Accepts http requisitions
     - type: http-server
