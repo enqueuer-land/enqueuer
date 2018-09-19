@@ -23,19 +23,29 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         logger_1.Logger.info('Executing in Daemon mode');
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
         this.daemonInputs = daemonMode.map((input) => conditional_injector_1.Container.subclassesOf(daemon_input_1.DaemonInput).create(input));
+        this.daemonInputsLength = this.daemonInputs.length;
     }
     execute() {
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             this.daemonInputs
                 .forEach((input) => {
                 input.subscribe()
                     .then(() => this.startReader(input))
                     .catch((err) => {
-                    logger_1.Logger.error(err);
-                    input.unsubscribe().catch();
+                    this.unsubscribe(err, input, reject);
                 });
             });
         });
+    }
+    unsubscribe(err, input, reject) {
+        logger_1.Logger.error(`Unsubscribing from daemon input: ${err}`);
+        input.unsubscribe().catch((err) => logger_1.Logger.warning(`Error unsubscribing to input: ${err}`));
+        --this.daemonInputsLength;
+        if (this.daemonInputsLength <= 0) {
+            const message = `Daemon mode has no input able to listen from`;
+            logger_1.Logger.fatal(message);
+            reject(message);
+        }
     }
     startReader(input) {
         input.receiveMessage()

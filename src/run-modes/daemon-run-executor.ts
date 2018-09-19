@@ -14,6 +14,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
     private daemonInputs: DaemonInput[];
     private multiPublisher: MultiPublisher;
+    private daemonInputsLength: number;
 
     public constructor(configuration: ConfigurationValues) {
         super();
@@ -22,20 +23,31 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
         this.daemonInputs = daemonMode.map((input: any) => Container.subclassesOf(DaemonInput).create(input));
+        this.daemonInputsLength = this.daemonInputs.length;
     }
 
     public execute(): Promise<boolean> {
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             this.daemonInputs
                 .forEach((input: DaemonInput) => {
                     input.subscribe()
                         .then(() => this.startReader(input))
                         .catch( (err: any) => {
-                            Logger.error(err);
-                            input.unsubscribe().catch();
+                            this.unsubscribe(err, input, reject);
                         });
                 });
         });
+    }
+
+    private unsubscribe(err: any, input: DaemonInput, reject: any) {
+        Logger.error(`Unsubscribing from daemon input: ${err}`);
+        input.unsubscribe().catch((err) => Logger.warning(`Error unsubscribing to input: ${err}`));
+        --this.daemonInputsLength;
+        if (this.daemonInputsLength <= 0) {
+            const message = `Daemon mode has no input able to listen from`;
+            Logger.fatal(message);
+            reject(message);
+        }
     }
 
     private startReader(input: DaemonInput) {
