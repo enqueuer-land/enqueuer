@@ -2,19 +2,12 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
 const id_generator_1 = require("../timers/id-generator");
 const ajv_1 = __importDefault(require("ajv"));
 const fs_1 = __importDefault(require("fs"));
-const yaml = __importStar(require("yamljs"));
+const yaml_object_notation_1 = require("../object-notations/yaml-object-notation");
 class RequisitionParser {
     constructor() {
         const schemasPath = this.discoverSchemasFolder();
@@ -66,7 +59,7 @@ class RequisitionParser {
     }
     parseToObject(message) {
         try {
-            const yamlObject = yaml.parse(message);
+            const yamlObject = new yaml_object_notation_1.YamlObjectNotation().parse(message);
             logger_1.Logger.debug(`Successfully parsed message as YML`);
             return yamlObject;
         }

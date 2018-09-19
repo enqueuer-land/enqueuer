@@ -16,15 +16,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var FilePublisher_1;
-"use strict";
 const publisher_1 = require("./publisher");
 const id_generator_1 = require("../timers/id-generator");
 const conditional_injector_1 = require("conditional-injector");
-const yaml = __importStar(require("yamljs"));
 const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
-let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Publisher {
+const yaml_object_notation_1 = require("../object-notations/yaml-object-notation");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
+let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.pretty = false;
@@ -36,29 +35,29 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
     publish() {
         const filename = this.createFilename();
         let value = this.payload;
-        if (this.pretty && typeof (value) == 'string') {
-            value = this.markupLanguageString(value, filename);
+        if (typeof (value) === 'object') {
+            value = new javascript_object_notation_1.JavascriptObjectNotation().stringify(value);
         }
-        else if (typeof (value) === 'object') {
-            value = this.markupLanguageString(FilePublisher_1.decycle(value), filename);
+        if (this.pretty) {
+            value = this.markupLanguageString(value, filename);
         }
         fs.writeFileSync(filename, value);
         return Promise.resolve();
     }
     markupLanguageString(value, filename) {
         try {
-            value = JSON.parse(value);
+            const parsed = new javascript_object_notation_1.JavascriptObjectNotation().parse(value);
+            if (filename.endsWith('yml') || filename.endsWith('yaml')) {
+                logger_1.Logger.debug(`Stringifying file content '${filename}' as YML`);
+                return new yaml_object_notation_1.YamlObjectNotation().stringify(parsed);
+            }
+            logger_1.Logger.debug(`Stringifying file content '${filename}' as JSON`);
+            return new javascript_object_notation_1.JavascriptObjectNotation().stringify(parsed);
         }
         catch (exc) {
             logger_1.Logger.debug('Content to write to file is not parseable');
             return value;
         }
-        if (filename.endsWith('yml') || filename.endsWith('yaml')) {
-            logger_1.Logger.debug(`Stringifying file content '${filename}' as YML`);
-            return yaml.stringify(value, 10, 2);
-        }
-        logger_1.Logger.debug(`Stringifying file content '${filename}' as JSON`);
-        return JSON.stringify(value, null, 2);
     }
     createFilename() {
         let filename = this.filename;
@@ -87,24 +86,8 @@ let FilePublisher = FilePublisher_1 = class FilePublisher extends publisher_1.Pu
             return new id_generator_1.IdGenerator(this.payload).generateId();
         }
     }
-    //TODO create a class to do this
-    static decycle(decyclable) {
-        const cache = new Map();
-        const stringified = JSON.stringify(decyclable, (key, value) => {
-            if (typeof (value) === 'object' && value !== null) {
-                if (cache.has(value)) {
-                    // Circular reference found, discard key
-                    return;
-                }
-                // Store value in our map
-                cache.set(value, true);
-            }
-            return value;
-        });
-        return stringified;
-    }
 };
-FilePublisher = FilePublisher_1 = __decorate([
+FilePublisher = __decorate([
     conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'file' }),
     __metadata("design:paramtypes", [Object])
 ], FilePublisher);

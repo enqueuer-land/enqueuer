@@ -1,6 +1,6 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
-import * as yaml from 'yamljs';
 import {Logger} from '../loggers/logger';
+import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 
 export class FileConfiguration {
     private static DEFAULT_FILENAME = 'enqueuer.yml';
@@ -9,7 +9,7 @@ export class FileConfiguration {
     private configurationFile: any;
 
     private constructor(filename: string) {
-        this.configurationFile = yaml.load(filename);
+        this.configurationFile = new YamlObjectNotation().loadFromFileSync(filename);
     }
 
     public static reload(filename: string): boolean {

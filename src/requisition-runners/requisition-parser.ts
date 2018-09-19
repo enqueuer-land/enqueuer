@@ -2,8 +2,8 @@ import {Logger} from '../loggers/logger';
 import {IdGenerator} from '../timers/id-generator';
 import Ajv, {ValidateFunction} from 'ajv';
 import fs from 'fs';
-import * as yaml from 'yamljs';
 import {RequisitionModel} from '../models/inputs/requisition-model';
+import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 
 export class RequisitionParser {
 
@@ -63,7 +63,7 @@ export class RequisitionParser {
 
     private parseToObject(message: string) {
         try {
-            const yamlObject = yaml.parse(message);
+            const yamlObject = new YamlObjectNotation().parse(message);
             Logger.debug(`Successfully parsed message as YML`);
             return yamlObject;
         } catch (ymlErr) {
