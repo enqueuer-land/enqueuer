@@ -15,6 +15,7 @@ const multi_publisher_1 = require("../publishers/multi-publisher");
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
 const multi_requisition_runner_1 = require("../requisition-runners/multi-requisition-runner");
+const console_result_creator_1 = require("./single-run-result-creators/console-result-creator");
 let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
         super();
@@ -47,8 +48,11 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         });
     }
     handleRequisitionReceived(message) {
+        const resultCreator = new console_result_creator_1.ConsoleResultCreator();
         return new multi_requisition_runner_1.MultiRequisitionRunner(message.input, message.type).run()
             .then((report) => message.output = report)
+            .then(() => message.output && resultCreator.addTestSuite(message.type, message.output))
+            .then(() => resultCreator.create())
             .then(() => message.daemon.sendResponse(message))
             .then(() => message.daemon.cleanUp())
             .then(() => this.multiPublisher.publish(message.output))

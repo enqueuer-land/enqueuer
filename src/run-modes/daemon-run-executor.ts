@@ -7,6 +7,7 @@ import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-r
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
 import {DaemonInputRequisition} from './daemon-run-input-adapters/daemon-input-requisition';
+import {ConsoleResultCreator} from './single-run-result-creators/console-result-creator';
 
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
 export class DaemonRunExecutor extends EnqueuerExecutor {
@@ -49,8 +50,11 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
     }
 
     private handleRequisitionReceived(message: DaemonInputRequisition) {
+        const resultCreator = new ConsoleResultCreator();
         return new MultiRequisitionRunner(message.input, message.type).run()
             .then( (report: output.RequisitionModel) => message.output = report)
+            .then( () => message.output && resultCreator.addTestSuite(message.type, message.output))
+            .then( () => resultCreator.create())
             .then( () => message.daemon.sendResponse(message))
             .then(() => message.daemon.cleanUp())
             .then( () => this.multiPublisher.publish(message.output))
