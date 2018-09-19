@@ -82,8 +82,10 @@ export class RequisitionReporter {
     private initializeTimeout() {
         if (this.requisitionTimeout) {
             new Timeout(() => {
-                Logger.info(`Requisition timed out`);
-                this.onFinish();
+                if (!this.startEventDoneItsJob || !this.allSubscriptionsStoppedWaiting) {
+                    Logger.info(`Requisition timed out`);
+                    this.onFinish();
+                }
             }).start(this.requisitionTimeout);
         }
     }
@@ -123,7 +125,7 @@ export class RequisitionReporter {
     }
 
     private executeOnInitFunction() {
-        Logger.info(`Executing requisition::onInit hook function`);
+        Logger.debug(`Executing requisition::onInit hook function`);
         this.reportGenerator.addTests(new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
 

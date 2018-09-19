@@ -31,7 +31,7 @@ class MultiRequisitionRunner {
     runRequisition(promises, resolve, reject) {
         this.sequentialRunner(promises)
             .then((reports) => {
-            logger_1.Logger.info(`Got requisitions reports ${this.report.name}`);
+            logger_1.Logger.debug(`Got requisitions reports from: ${this.report.name}`);
             reports.forEach((report) => {
                 this.report.valid = this.report.valid && report.valid;
                 if (this.report.requisitions) {

@@ -138,7 +138,7 @@ class SubscriptionReporter {
     handleMessageArrival(message) {
         logger_1.Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 150) + '...');
         if (!this.hasTimedOut) {
-            logger_1.Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
+            logger_1.Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
             this.subscription.messageReceived = message;
             this.executeOnMessageReceivedFunction();
         }
@@ -154,7 +154,7 @@ class SubscriptionReporter {
         this.cleanUp = () => {
             //do nothing
         };
-        logger_1.Logger.info(`Unsubscribing subscription ${this.subscription.type}`);
+        logger_1.Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
         try {
             this.subscription.unsubscribe();
         }
@@ -164,7 +164,7 @@ class SubscriptionReporter {
         if (this.timeOut) {
             this.timeOut.clear();
         }
-        logger_1.Logger.info(`Subscription ${this.subscription.type} unsubscribed`);
+        logger_1.Logger.debug(`Subscription ${this.subscription.type} unsubscribed`);
     }
     initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
@@ -173,7 +173,7 @@ class SubscriptionReporter {
         }
     }
     executeOnInitFunction(subscriptionAttributes) {
-        logger_1.Logger.info(`Executing subscription::onInit hook function`);
+        logger_1.Logger.debug(`Executing subscription::onInit hook function`);
         this.report.tests = this.report.tests.concat(new on_init_event_executor_1.OnInitEventExecutor('subscription', subscriptionAttributes).trigger());
     }
     executeOnMessageReceivedFunction() {

@@ -141,7 +141,7 @@ export class SubscriptionReporter {
     private handleMessageArrival(message: any) {
         Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 150) + '...');
         if (!this.hasTimedOut) {
-            Logger.info(`${this.subscription.name} stop waiting because it has received its message`);
+            Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
             this.subscription.messageReceived = message;
             this.executeOnMessageReceivedFunction();
         } else {
@@ -158,7 +158,7 @@ export class SubscriptionReporter {
         this.cleanUp = () => {
             //do nothing
         };
-        Logger.info(`Unsubscribing subscription ${this.subscription.type}`);
+        Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
         try {
             this.subscription.unsubscribe();
         } catch (err) {
@@ -167,7 +167,7 @@ export class SubscriptionReporter {
         if (this.timeOut) {
             this.timeOut.clear();
         }
-        Logger.info(`Subscription ${this.subscription.type} unsubscribed`);
+        Logger.debug(`Subscription ${this.subscription.type} unsubscribed`);
     }
 
     private initializeTimeout() {
@@ -178,7 +178,7 @@ export class SubscriptionReporter {
     }
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
-        Logger.info(`Executing subscription::onInit hook function`);
+        Logger.debug(`Executing subscription::onInit hook function`);
         this.report.tests = this.report.tests.concat(new OnInitEventExecutor('subscription', subscriptionAttributes).trigger());
     }
 

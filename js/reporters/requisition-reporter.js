@@ -65,8 +65,10 @@ class RequisitionReporter {
     initializeTimeout() {
         if (this.requisitionTimeout) {
             new timeout_1.Timeout(() => {
-                logger_1.Logger.info(`Requisition timed out`);
-                this.onFinish();
+                if (!this.startEventDoneItsJob || !this.allSubscriptionsStoppedWaiting) {
+                    logger_1.Logger.info(`Requisition timed out`);
+                    this.onFinish();
+                }
             }).start(this.requisitionTimeout);
         }
     }
@@ -101,7 +103,7 @@ class RequisitionReporter {
         });
     }
     executeOnInitFunction() {
-        logger_1.Logger.info(`Executing requisition::onInit hook function`);
+        logger_1.Logger.debug(`Executing requisition::onInit hook function`);
         this.reportGenerator.addTests(new on_init_event_executor_1.OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
     }
     executeOnFinishFunction() {
