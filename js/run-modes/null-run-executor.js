@@ -12,11 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let NullRunExecutor = class NullRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(enqueuerConfiguration) {
         super();
         logger_1.Logger.info('Executing in Not-Identified mode');
-        this.enqueuerConfiguration = JSON.stringify(enqueuerConfiguration, null, 2);
+        this.enqueuerConfiguration = new javascript_object_notation_1.JavascriptObjectNotation().stringify(enqueuerConfiguration);
     }
     execute() {
         return Promise.reject(`Impossible to execute new executor from: ${this.enqueuerConfiguration}`);

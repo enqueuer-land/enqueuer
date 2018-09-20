@@ -8,6 +8,7 @@ const id_generator_1 = require("../timers/id-generator");
 const ajv_1 = __importDefault(require("ajv"));
 const fs_1 = __importDefault(require("fs"));
 const yaml_object_notation_1 = require("../object-notations/yaml-object-notation");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 class RequisitionParser {
     constructor() {
         const schemasPath = this.discoverSchemasFolder();
@@ -49,13 +50,13 @@ class RequisitionParser {
     throwError() {
         if (this.validator.errors) {
             this.validator.errors.forEach(error => {
-                logger_1.Logger.error(JSON.stringify(error));
+                logger_1.Logger.error(new javascript_object_notation_1.JavascriptObjectNotation().stringify(error));
             });
             if (this.validator.errors.length > 0) {
-                throw JSON.stringify(this.validator.errors[0], null, 2);
+                throw new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.validator.errors[0]);
             }
         }
-        throw JSON.stringify(this.validator, null, 2);
+        throw new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.validator);
     }
     parseToObject(message) {
         try {
@@ -65,19 +66,19 @@ class RequisitionParser {
         }
         catch (ymlErr) {
             try {
-                const json = JSON.parse(message);
+                const json = new javascript_object_notation_1.JavascriptObjectNotation().parse(message);
                 logger_1.Logger.debug(`Successfully parsed message as JSON`);
                 return json;
             }
             catch (jsonErr) {
                 logger_1.Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
                 logger_1.Logger.warning(`Not able to parse as Json: ${jsonErr}`);
-                throw Error(JSON.stringify({ ymlError: ymlErr, jsonError: jsonErr.toString() }));
+                throw Error(new javascript_object_notation_1.JavascriptObjectNotation().stringify({ ymlError: ymlErr, jsonError: jsonErr.toString() }));
             }
         }
     }
     readJsonSchemaFile(filename) {
-        return JSON.parse(fs_1.default.readFileSync(filename).toString());
+        return new javascript_object_notation_1.JavascriptObjectNotation().parse(fs_1.default.readFileSync(filename).toString());
     }
 }
 exports.RequisitionParser = RequisitionParser;

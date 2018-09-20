@@ -20,6 +20,7 @@ const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const AWS = __importStar(require("aws-sdk"));
 const logger_1 = require("../loggers/logger");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let SqsSubscription = class SqsSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
         super(subscriptionModel);
@@ -29,13 +30,13 @@ let SqsSubscription = class SqsSubscription extends subscription_1.Subscription 
     receiveMessage() {
         return new Promise((resolve, reject) => {
             this.sqs.receiveMessage(this.params, (err, data) => {
-                logger_1.Logger.trace(`SQS got data: ${JSON.stringify(data, null, 2)}`);
+                logger_1.Logger.trace(`SQS got data: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(data)}`);
                 if (err) {
                     logger_1.Logger.error('Error receiving message from SQS');
                     return reject(err);
                 }
                 else if (data.Messages && data.Messages.length > 0) {
-                    const stringifiedMessage = JSON.stringify(data.Messages[0], null, 2);
+                    const stringifiedMessage = new javascript_object_notation_1.JavascriptObjectNotation().stringify(data.Messages[0]);
                     logger_1.Logger.debug('SQS got a message: ' + stringifiedMessage);
                     return resolve(data.Messages[0]);
                 }

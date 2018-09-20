@@ -20,6 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 const Stomp = require('stomp-client');
 let StompSubscription = class StompSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
@@ -34,7 +35,7 @@ let StompSubscription = class StompSubscription extends subscription_1.Subscript
         return new Promise((resolve, reject) => {
             logger_1.Logger.trace(`Stomp waiting for a message related to queue ${this.queue}`);
             this.client.subscribe(this.queue, (message, headers) => {
-                logger_1.Logger.trace(`Stomp message received header ${JSON.stringify(headers, null, 2)}`);
+                logger_1.Logger.trace(`Stomp message received header ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(headers)}`);
                 resolve({ payload: message, headers: headers });
             });
             this.client.once('error', (err) => {

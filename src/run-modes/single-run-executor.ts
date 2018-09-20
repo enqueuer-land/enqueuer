@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
 import {ConfigurationValues} from '../configurations/configuration-values';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 //TODO test it
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode['single-run'] != null})
@@ -99,7 +100,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                         resolve();
                     })
                     .catch((err) => {
-                        this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
+                        this.sendErrorMessage(`Single-run error reported: ${new JavascriptObjectNotation().stringify(err)}`);
                         resolve();
                     });
             } else {

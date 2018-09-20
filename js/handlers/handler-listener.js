@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../loggers/logger");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 class HandlerListener {
     constructor(server, remainingAttempts = 3, retryTimeout = 300) {
         this.server = server;
@@ -50,7 +51,7 @@ class HandlerListener {
             }, this.retryTimeout);
         }
         else {
-            const message = `Error listening to handler (${handler}) ${JSON.stringify(err)}`;
+            const message = `Error listening to handler (${handler}) ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(err)}`;
             logger_1.Logger.error(message);
             reject(message);
         }

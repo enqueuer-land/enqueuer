@@ -3,6 +3,7 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {KafkaClient, Consumer, Offset, Message} from 'kafka-node';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'kafka'})
 export class KafkaSubscription extends Subscription {
@@ -26,7 +27,7 @@ export class KafkaSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             const consumer = this.createConsumer();
             consumer.on('message', (message: Message) => {
-                Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
+                Logger.trace('Kafka message data: ' + new JavascriptObjectNotation().stringify(message));
                 resolve(message);
                 consumer.close(() => {
                     Logger.trace('Kafka consumer is closed');
@@ -34,7 +35,7 @@ export class KafkaSubscription extends Subscription {
             });
 
             consumer.on('error', (error: any) => {
-                Logger.error('Kafka error message data: ' + JSON.stringify(error, null, 2));
+                Logger.error('Kafka error message data: ' + new JavascriptObjectNotation().stringify(error));
                 reject(error);
                 consumer.close(() => {
                     Logger.trace('Kafka consumer is closed');
@@ -48,7 +49,7 @@ export class KafkaSubscription extends Subscription {
         try {
             return this.fetchOffset();
         } catch (exc) {
-            Logger.error(`Error connecting kafka ${JSON.stringify(exc, null, 2)}`);
+            Logger.error(`Error connecting kafka ${new JavascriptObjectNotation().stringify(exc)}`);
             throw exc;
         }
     }
@@ -57,7 +58,7 @@ export class KafkaSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             this.offset.fetchLatestOffsets([this.options.topic], (error: any, offsets: any) => {
                 if (error) {
-                    Logger.error(`Error fetching kafka topic ${JSON.stringify(error, null, 2)}`);
+                    Logger.error(`Error fetching kafka topic ${new JavascriptObjectNotation().stringify(error)}`);
                     reject(error);
                 } else {
                     this.latestOffset = offsets[this.options.topic][0];

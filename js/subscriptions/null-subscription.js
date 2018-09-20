@@ -19,16 +19,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let NullSubscription = class NullSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
     }
     subscribe() {
-        return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
+        return Promise.reject(`Undefined subscription: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this)}`);
     }
     receiveMessage() {
         return __awaiter(this, void 0, void 0, function* () {
-            return Promise.reject(`Undefined subscription: ${JSON.stringify(this)}`);
+            return Promise.reject(`Undefined subscription: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this)}`);
         });
     }
 };

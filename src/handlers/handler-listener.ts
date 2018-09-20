@@ -1,4 +1,5 @@
 import {Logger} from '../loggers/logger';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 export class HandlerListener {
     private server: any;
@@ -52,7 +53,7 @@ export class HandlerListener {
                 this.tryToListen(handler, resolve, reject);
             }, this.retryTimeout);
         } else {
-            const message = `Error listening to handler (${handler}) ${JSON.stringify(err)}`;
+            const message = `Error listening to handler (${handler}) ${new JavascriptObjectNotation().stringify(err)}`;
             Logger.error(message);
             reject(message);
         }

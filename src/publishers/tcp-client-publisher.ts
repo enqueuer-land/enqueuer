@@ -4,6 +4,7 @@ import * as net from 'net';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client'})
 export class TcpClientPublisher extends Publisher {
@@ -108,7 +109,7 @@ export class TcpClientPublisher extends Publisher {
 
     private stringifyPayload() {
         if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            return JSON.stringify(this.payload);
+            return new JavascriptObjectNotation().stringify(this.payload);
         }
         return this.payload;
     }

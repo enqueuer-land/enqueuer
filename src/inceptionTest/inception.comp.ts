@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import * as fs from 'fs';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 let findEveryJsonFile = (): string[] => {
     let files = [];
@@ -89,7 +90,7 @@ describe('Inception test', () => {
             findEveryJsonFile()
                 .filter(filename => filename.indexOf('_test.json') >= 0)
                 .forEach(filename => {
-                    testerReports[filename] = JSON.parse(fs.readFileSync(filename).toString())
+                    testerReports[filename] = new JavascriptObjectNotation().loadFromFileSync(filename);
                 });
 
             console.log(Object.keys(testerReports));

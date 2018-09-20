@@ -12,23 +12,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
+const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
 let NullDaemonInput = class NullDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();
-        logger_1.Logger.warning(`Instantiating unknown daemon input from "${JSON.stringify(daemonInput)}`);
+        logger_1.Logger.warning(`Instantiating unknown` +
+            `daemon input: "${new javascript_object_notation_1.JavascriptObjectNotation().stringify(daemonInput)}`);
         this.daemonInput = daemonInput;
     }
     subscribe() {
-        return Promise.reject(`Impossible to subscribe to an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
+        return Promise.reject(`Impossible to subscribe to an unknown ` +
+            `daemon input: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.daemonInput)}`);
     }
     receiveMessage() {
-        return Promise.reject(`Impossible to receive message from an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
+        return Promise.reject(`Impossible to receive message from an unknown ` +
+            `daemon input: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.daemonInput)}`);
     }
     unsubscribe() {
-        return Promise.reject(`Impossible to unsubscribe to an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
+        return Promise.reject(`Impossible to unsubscribe to an unknown ` +
+            `daemon input: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.daemonInput)}`);
     }
     cleanUp() {
-        return Promise.reject(`Impossible to clean up an unknown daemon input: ${JSON.stringify(this.daemonInput)}`);
+        return Promise.reject(`Impossible to clean up an unknown ` +
+            `daemon input: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.daemonInput)}`);
     }
 };
 NullDaemonInput = __decorate([

@@ -25,6 +25,7 @@ const requisition_parser_1 = require("../requisition-runners/requisition-parser"
 const glob = __importStar(require("glob"));
 const fs = __importStar(require("fs"));
 const multi_requisition_runner_1 = require("../requisition-runners/multi-requisition-runner");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 //TODO test it
 let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
@@ -101,7 +102,7 @@ let SingleRunExecutor = class SingleRunExecutor extends enqueuer_executor_1.Enqu
                     resolve();
                 })
                     .catch((err) => {
-                    this.sendErrorMessage(`Single-run error reported: ${JSON.stringify(err, null, 2)}`);
+                    this.sendErrorMessage(`Single-run error reported: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(err)}`);
                     resolve();
                 });
             }

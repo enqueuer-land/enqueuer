@@ -51,7 +51,10 @@ describe('AssertionCodeGenerator', () => {
         const code: string = assertionCodeGenerator.generate({name: 5, unknown: 3});
 
         expect(code).toBe(";tester.addTest({\n" +
-            "                    errorDescription: `Tester class does not recognize the pattern '[\"unknown\"]'`,\n" +
+            "                    errorDescription: `Tester class does not recognize the pattern '\n" +
+            "                                [\n" +
+            "  \"unknown\"\n" +
+            "]'`,\n" +
             "                    valid: false,\n" +
             "                    label: 'Known assertion method'\n" +
             "                });");
@@ -62,7 +65,11 @@ describe('AssertionCodeGenerator', () => {
         const code: string = assertionCodeGenerator.generate({name: 5, expect: 3, third: 3});
 
         expect(code).toBe(";tester.addTest({\n" +
-            "                    errorDescription: `Tester class does not recognize the pattern '[\"expect\",\"third\"]'`,\n" +
+            "                    errorDescription: `Tester class does not recognize the pattern '\n" +
+            "                                [\n" +
+            "  \"expect\",\n" +
+            "  \"third\"\n" +
+            "]'`,\n" +
             "                    valid: false,\n" +
             "                    label: 'Known assertion method'\n" +
             "                });");

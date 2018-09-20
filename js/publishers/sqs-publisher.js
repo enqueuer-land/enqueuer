@@ -20,6 +20,7 @@ const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
 const AWS = __importStar(require("aws-sdk"));
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let SqsPublisher = class SqsPublisher extends publisher_1.Publisher {
     constructor(publisherProperties) {
         super(publisherProperties);
@@ -36,7 +37,7 @@ let SqsPublisher = class SqsPublisher extends publisher_1.Publisher {
                 }
                 else {
                     this.messageReceived = data;
-                    logger_1.Logger.trace(`SQS send message result: ${JSON.stringify(data).substr(0, 128)}...`);
+                    logger_1.Logger.trace(`SQS send message result: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(data)}`);
                     return resolve();
                 }
             });

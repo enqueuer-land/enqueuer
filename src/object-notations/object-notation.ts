@@ -1,6 +1,6 @@
 export abstract class ObjectNotation {
     public abstract parse(value: string): object;
-    public abstract stringify(value: object): string | undefined;
+    public abstract stringify(value: object, space: number): string | undefined;
     public abstract loadFromFileSync(filename: string): object;
 
     public static decycle(value: object): object {

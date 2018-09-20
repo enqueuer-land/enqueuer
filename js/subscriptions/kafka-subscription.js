@@ -21,6 +21,7 @@ const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
 const kafka_node_1 = require("kafka-node");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
         super(subscriptionModel);
@@ -34,14 +35,14 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
         return new Promise((resolve, reject) => {
             const consumer = this.createConsumer();
             consumer.on('message', (message) => {
-                logger_1.Logger.trace('Kafka message data: ' + JSON.stringify(message, null, 2));
+                logger_1.Logger.trace('Kafka message data: ' + new javascript_object_notation_1.JavascriptObjectNotation().stringify(message));
                 resolve(message);
                 consumer.close(() => {
                     logger_1.Logger.trace('Kafka consumer is closed');
                 });
             });
             consumer.on('error', (error) => {
-                logger_1.Logger.error('Kafka error message data: ' + JSON.stringify(error, null, 2));
+                logger_1.Logger.error('Kafka error message data: ' + new javascript_object_notation_1.JavascriptObjectNotation().stringify(error));
                 reject(error);
                 consumer.close(() => {
                     logger_1.Logger.trace('Kafka consumer is closed');
@@ -54,7 +55,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
             return this.fetchOffset();
         }
         catch (exc) {
-            logger_1.Logger.error(`Error connecting kafka ${JSON.stringify(exc, null, 2)}`);
+            logger_1.Logger.error(`Error connecting kafka ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(exc)}`);
             throw exc;
         }
     }
@@ -62,7 +63,7 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
         return new Promise((resolve, reject) => {
             this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => {
                 if (error) {
-                    logger_1.Logger.error(`Error fetching kafka topic ${JSON.stringify(error, null, 2)}`);
+                    logger_1.Logger.error(`Error fetching kafka topic ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(error)}`);
                     reject(error);
                 }
                 else {

@@ -1,5 +1,6 @@
 import {StartEventReporter} from './start-event-reporter';
 import {Injectable} from 'conditional-injector';
+import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
 
 @Injectable()
 export class StartEventNullReporter extends StartEventReporter {
@@ -12,10 +13,10 @@ export class StartEventNullReporter extends StartEventReporter {
     }
 
     public start(): Promise<void> {
-        return Promise.reject(`No StartEvent type was found: ${JSON.stringify(this, null, 2)}`);
+        return Promise.reject(`No StartEvent type was found: ${new JavascriptObjectNotation().stringify(this)}`);
     }
 
     public getReport(): any {
-        return `No StartEvent type was found: ${JSON.stringify(this, null, 2)}`;
+        return `No StartEvent type was found: ${new JavascriptObjectNotation().stringify(this)}`;
     }
 }

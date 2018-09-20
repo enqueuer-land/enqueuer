@@ -13,6 +13,7 @@ const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../loggers/logger");
 const kafka_node_1 = require("kafka-node");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let KafkaPublisher = class KafkaPublisher extends publisher_1.Publisher {
     constructor(publisherProperties) {
         super(publisherProperties);
@@ -29,18 +30,18 @@ let KafkaPublisher = class KafkaPublisher extends publisher_1.Publisher {
             logger_1.Logger.trace(`Kafka publisher is ready`);
             producer.send(this.kafkaPayload, (err, data) => {
                 if (err) {
-                    logger_1.Logger.error(`Error sending kafka message ${JSON.stringify(err, null, 2)}`);
+                    logger_1.Logger.error(`Error sending kafka message ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(err)}`);
                     return reject(err);
                 }
-                logger_1.Logger.trace(`Kafka publish message data ${JSON.stringify(data, null, 2)}`);
-                this.messageReceived = JSON.stringify(data);
+                logger_1.Logger.trace(`Kafka publish message data ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(data)}`);
+                this.messageReceived = new javascript_object_notation_1.JavascriptObjectNotation().stringify(data);
                 producer.close();
                 this.client.close();
                 resolve();
             });
             // });
             producer.on('error', (err) => {
-                logger_1.Logger.error(`Error on publishing kafka message ${JSON.stringify(err, null, 2)}`);
+                logger_1.Logger.error(`Error on publishing kafka message ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(err)}`);
                 producer.close();
                 this.client.close();
                 return reject(err);

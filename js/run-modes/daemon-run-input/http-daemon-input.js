@@ -14,6 +14,7 @@ const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
 const http_container_pool_1 = require("../../pools/http-container-pool");
 const requisition_parser_1 = require("../../requisition-runners/requisition-parser");
+const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
 let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();
@@ -52,7 +53,7 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
             status: 200,
             payload: message.output
         };
-        logger_1.Logger.trace(`${this.type} sending requisition response: ${JSON.stringify(response, null, 2)}`);
+        logger_1.Logger.trace(`${this.type} sending requisition response: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(response)}`);
         try {
             message.responseHandler.status(response.status).send(response.payload);
             logger_1.Logger.debug(`${this.type} requisition response sent`);

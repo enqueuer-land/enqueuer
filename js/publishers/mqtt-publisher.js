@@ -20,6 +20,7 @@ const publisher_1 = require("./publisher");
 const logger_1 = require("../loggers/logger");
 const conditional_injector_1 = require("conditional-injector");
 const mqtt = __importStar(require("mqtt"));
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let MqttPublisher = class MqttPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
@@ -33,7 +34,7 @@ let MqttPublisher = class MqttPublisher extends publisher_1.Publisher {
                 .then(client => {
                 logger_1.Logger.debug(`Mqtt publishing in ${this.brokerAddress} - ${this.topic}: ${this.payload}`
                     .substr(0, 100).concat('...'));
-                const toPublish = typeof this.payload == 'object' ? JSON.stringify(this.payload, null, 3) : this.payload;
+                const toPublish = typeof this.payload == 'object' ? new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.payload) : this.payload;
                 client.publish(this.topic, toPublish, (err) => {
                     if (err) {
                         logger_1.Logger.error(`Error publishing in ${this.brokerAddress} - ${this.topic}: ${err}`);

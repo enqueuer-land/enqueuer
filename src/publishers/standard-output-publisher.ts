@@ -3,6 +3,7 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import prettyjson from 'prettyjson';
 import {Logger} from '../loggers/logger';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 const options = {
     defaultIndentation: 4,
@@ -21,7 +22,7 @@ export class StandardOutputPublisher extends Publisher {
 
     public publish(): Promise<void> {
         if (typeof(this.payload) === 'object') {
-            this.payload = this.stringify(this.payload);
+            this.payload = new JavascriptObjectNotation().stringify(this.payload);
         }
         if (!this.pretty) {
             console.log(this.payload);
@@ -33,27 +34,11 @@ export class StandardOutputPublisher extends Publisher {
 
     private prettyfy(): any {
         try {
-            const parsed = JSON.parse(this.payload);
+            const parsed = new JavascriptObjectNotation().parse(this.payload);
             return prettyjson.render(parsed, options);
         } catch (err) {
             Logger.debug(`${this.type} can not prettyfy string`);
             return this.payload;
         }
-    }
-
-    private stringify(payload: any): string {
-        const cache = new Map();
-        const stringified = JSON.stringify(payload, (key, value) => {
-            if (typeof(value) === 'object' && value !== null) {
-                if (cache.has(value)) {
-                    // Circular reference found, discard key
-                    return;
-                }
-                // Store value in our map
-                cache.set(value, true);
-            }
-            return value;
-        });
-        return stringified;
     }
 }

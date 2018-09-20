@@ -13,9 +13,9 @@ class JavascriptObjectNotation extends object_notation_1.ObjectNotation {
     parse(value) {
         return JSON.parse(value);
     }
-    stringify(value) {
+    stringify(value, space = 2) {
         try {
-            return JSON.stringify(object_notation_1.ObjectNotation.decycle(value), null, 2);
+            return JSON.stringify(object_notation_1.ObjectNotation.decycle(value), null, space);
         }
         catch (err) {
             /*nothing*/

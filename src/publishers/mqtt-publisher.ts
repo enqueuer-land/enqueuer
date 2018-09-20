@@ -3,6 +3,7 @@ import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as mqtt from 'mqtt';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'mqtt'})
 export class MqttPublisher extends Publisher {
@@ -23,7 +24,7 @@ export class MqttPublisher extends Publisher {
                 .then(client => {
                     Logger.debug(`Mqtt publishing in ${this.brokerAddress} - ${this.topic}: ${this.payload}`
                         .substr(0, 100).concat('...'));
-                    const toPublish = typeof this.payload == 'object' ? JSON.stringify(this.payload, null, 3) : this.payload;
+                    const toPublish = typeof this.payload == 'object' ? new JavascriptObjectNotation().stringify(this.payload) : this.payload;
                     client.publish(this.topic, toPublish, (err: any) => {
                         if (err) {
                             Logger.error(`Error publishing in ${this.brokerAddress} - ${this.topic}: ${err}`);

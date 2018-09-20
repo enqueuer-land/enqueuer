@@ -4,6 +4,7 @@ import {DaemonInput} from './daemon-input';
 import {HttpContainerPool} from '../../pools/http-container-pool';
 import {RequisitionParser} from '../../requisition-runners/requisition-parser';
 import {DaemonInputRequisition} from './daemon-input-requisition';
+import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (daemonInput: any) => daemonInput.type === 'http-server'})
 export class HttpDaemonInput extends DaemonInput {
@@ -58,7 +59,7 @@ export class HttpDaemonInput extends DaemonInput {
             payload: message.output
         };
 
-        Logger.trace(`${this.type} sending requisition response: ${JSON.stringify(response, null, 2)}`);
+        Logger.trace(`${this.type} sending requisition response: ${new JavascriptObjectNotation().stringify(response)}`);
         try {
             message.responseHandler.status(response.status).send(response.payload);
             Logger.debug(`${this.type} requisition response sent`);

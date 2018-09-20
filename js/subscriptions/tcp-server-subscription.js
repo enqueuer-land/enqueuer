@@ -30,6 +30,7 @@ const net = __importStar(require("net"));
 const logger_1 = require("../loggers/logger");
 const store_1 = require("../configurations/store");
 const handler_listener_1 = require("../handlers/handler-listener");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let TcpServerSubscription = class TcpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -37,7 +38,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         this.saveStream = subscriptionAttributes.saveStream;
         this.greeting = subscriptionAttributes.greeting;
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = JSON.stringify(subscriptionAttributes.response);
+            this.response = new javascript_object_notation_1.JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
         this.loadStreamName = subscriptionAttributes.loadStream;
     }

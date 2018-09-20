@@ -23,6 +23,7 @@ const conditional_injector_1 = require("conditional-injector");
 const http_container_pool_1 = require("../pools/http-container-pool");
 const http_authentication_1 = require("../http-authentications/http-authentication");
 const http_requester_1 = require("../pools/http-requester");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let HttpSubscription = class HttpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
@@ -54,7 +55,7 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
         });
     }
     sendResponse() {
-        logger_1.Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response, null, 2)}`);
+        logger_1.Logger.trace(`${this.type} sending response: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.response)}`);
         try {
             this.responseToClientHandler.status(this.response.status).send(this.response.payload);
             logger_1.Logger.debug(`${this.type} response sent`);
@@ -66,7 +67,7 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
     }
     onMessageReceivedTests() {
         if (this.authentication && this.messageReceived) {
-            logger_1.Logger.debug(`${this.type} authenticating message with ${JSON.stringify(Object.keys(this.authentication))}`);
+            logger_1.Logger.debug(`${this.type} authenticating message with ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(Object.keys(this.authentication))}`);
             const verifier = conditional_injector_1.Container.subclassesOf(http_authentication_1.HttpAuthentication).create(this.authentication);
             return verifier.verify(this.messageReceived.headers.authorization);
         }
@@ -97,7 +98,8 @@ let HttpSubscription = class HttpSubscription extends subscription_1.Subscriptio
                 logger_1.Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
                 this.redirectCall(request)
                     .then((redirectionResponse) => {
-                    logger_1.Logger.trace(`${this.type}:${this.port} got redirection response: ${JSON.stringify(redirectionResponse, null, 2)}`);
+                    logger_1.Logger.trace(`${this.type}:${this.port} got redirection response: ` +
+                        `${new javascript_object_notation_1.JavascriptObjectNotation().stringify(redirectionResponse)}`);
                     this.response = {
                         status: redirectionResponse.statusCode,
                         payload: redirectionResponse.body,

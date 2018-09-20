@@ -13,9 +13,9 @@ class YamlObjectNotation extends object_notation_1.ObjectNotation {
     parse(value) {
         return yaml.parse(value);
     }
-    stringify(value) {
+    stringify(value, space = 2) {
         try {
-            return yaml.stringify(object_notation_1.ObjectNotation.decycle(value), 10, 2);
+            return yaml.stringify(object_notation_1.ObjectNotation.decycle(value), 10, space);
         }
         catch (err) {
             /*nothing*/

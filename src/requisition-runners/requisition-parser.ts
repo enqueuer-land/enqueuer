@@ -4,6 +4,7 @@ import Ajv, {ValidateFunction} from 'ajv';
 import fs from 'fs';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 export class RequisitionParser {
 
@@ -16,7 +17,7 @@ export class RequisitionParser {
     }
 
     public parse(message: string): RequisitionModel[] {
-        let parsed = this.parseToObject(message);
+        let parsed: any = this.parseToObject(message);
         if (!Array.isArray(parsed)) {
             parsed = [parsed];
         }
@@ -52,13 +53,13 @@ export class RequisitionParser {
     private throwError() {
         if (this.validator.errors) {
             this.validator.errors.forEach(error => {
-                Logger.error(JSON.stringify(error));
+                Logger.error(new JavascriptObjectNotation().stringify(error) as string);
             });
             if (this.validator.errors.length > 0) {
-                throw JSON.stringify(this.validator.errors[0], null, 2);
+                throw new JavascriptObjectNotation().stringify(this.validator.errors[0]);
             }
         }
-        throw JSON.stringify(this.validator, null, 2);
+        throw new JavascriptObjectNotation().stringify(this.validator);
     }
 
     private parseToObject(message: string) {
@@ -68,19 +69,19 @@ export class RequisitionParser {
             return yamlObject;
         } catch (ymlErr) {
             try {
-                const json = JSON.parse(message);
+                const json = new JavascriptObjectNotation().parse(message);
                 Logger.debug(`Successfully parsed message as JSON`);
                 return json;
             } catch (jsonErr) {
                 Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
                 Logger.warning(`Not able to parse as Json: ${jsonErr}`);
-                throw Error(JSON.stringify({ymlError: ymlErr, jsonError: jsonErr.toString()}));
+                throw Error(new JavascriptObjectNotation().stringify({ymlError: ymlErr, jsonError: jsonErr.toString()}));
             }
         }
     }
 
     private readJsonSchemaFile(filename: string) {
-        return JSON.parse(fs.readFileSync(filename).toString());
+        return new JavascriptObjectNotation().parse(fs.readFileSync(filename).toString());
     }
 
 }

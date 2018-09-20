@@ -127,7 +127,7 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
     }
     stringifyPayload(payload) {
         if (typeof (payload) != 'string' && !Buffer.isBuffer(payload)) {
-            return JSON.stringify(payload);
+            return new javascript_object_notation_1.JavascriptObjectNotation().stringify(payload);
         }
         return payload;
     }

@@ -115,7 +115,7 @@ export class UdsSubscription extends Subscription {
 
     private stringifyPayload(payload: any): string | Buffer {
         if (typeof(payload) != 'string' && !Buffer.isBuffer(payload)) {
-            return JSON.stringify(payload);
+            return new JavascriptObjectNotation().stringify(payload) as string;
         }
         return payload;
     }

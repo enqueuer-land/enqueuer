@@ -3,6 +3,7 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {KafkaClient, Producer} from 'kafka-node';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'kafka'})
 export class KafkaPublisher extends Publisher {
@@ -26,11 +27,11 @@ export class KafkaPublisher extends Publisher {
                 Logger.trace(`Kafka publisher is ready`);
                     producer.send(this.kafkaPayload, (err: any, data: {}) => {
                     if (err) {
-                        Logger.error(`Error sending kafka message ${JSON.stringify(err, null, 2)}`);
+                        Logger.error(`Error sending kafka message ${new JavascriptObjectNotation().stringify(err)}`);
                         return reject(err);
                     }
-                    Logger.trace(`Kafka publish message data ${JSON.stringify(data, null, 2)}`);
-                    this.messageReceived = JSON.stringify(data);
+                    Logger.trace(`Kafka publish message data ${new JavascriptObjectNotation().stringify(data)}`);
+                    this.messageReceived = new JavascriptObjectNotation().stringify(data);
                     producer.close();
                     this.client.close();
                     resolve();
@@ -38,7 +39,7 @@ export class KafkaPublisher extends Publisher {
             // });
 
             producer.on('error', (err: any) => {
-                Logger.error(`Error on publishing kafka message ${JSON.stringify(err, null, 2)}`);
+                Logger.error(`Error on publishing kafka message ${new JavascriptObjectNotation().stringify(err)}`);
                 producer.close();
                 this.client.close();
                 return reject(err);

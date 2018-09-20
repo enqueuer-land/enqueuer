@@ -5,6 +5,7 @@ import * as net from 'net';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp-server'})
 export class TcpServerSubscription extends Subscription {
@@ -22,7 +23,7 @@ export class TcpServerSubscription extends Subscription {
         this.saveStream = subscriptionAttributes.saveStream;
         this.greeting = subscriptionAttributes.greeting;
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = JSON.stringify(subscriptionAttributes.response);
+            this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
         this.loadStreamName = subscriptionAttributes.loadStream;
     }

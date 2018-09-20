@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tester_1 = require("../testers/tester");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 class AssertionCodeGenerator {
     constructor(testerInstanceName) {
         this.tester = new tester_1.Tester();
@@ -20,7 +21,8 @@ class AssertionCodeGenerator {
         }
         catch (err) {
             return `;${this.testerInstanceName}.addTest({
-                    errorDescription: \`Tester class does not recognize the pattern '${JSON.stringify(Object.keys(assertion))}'\`,
+                    errorDescription: \`Tester class does not recognize the pattern '
+                                ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(Object.keys(assertion))}'\`,
                     valid: false,
                     label: 'Known assertion method'
                 });`;

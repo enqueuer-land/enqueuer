@@ -7,9 +7,9 @@ export class JavascriptObjectNotation extends ObjectNotation {
         return JSON.parse(value);
     }
 
-    public stringify(value: object): string | undefined {
+    public stringify(value: object, space: number = 2): string | undefined {
         try {
-            return JSON.stringify(ObjectNotation.decycle(value), null, 2);
+            return JSON.stringify(ObjectNotation.decycle(value), null, space);
         } catch (err) {
             /*nothing*/
         }
