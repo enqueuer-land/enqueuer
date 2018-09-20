@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const handler_listener_1 = require("../../handlers/handler-listener");
 const net = __importStar(require("net"));
 const requisition_parser_1 = require("../../requisition-runners/requisition-parser");
+const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
 //TODO test it
 class StreamDaemonInput {
     constructor(handler) {
@@ -26,7 +27,7 @@ class StreamDaemonInput {
                 stream.on('data', (msg) => {
                     resolve({
                         type: 'stream',
-                        input: this.parser.parse(this.adapt(msg)),
+                        input: this.parser.parse(this.stringifyPayloadReceived(msg.payload || msg)),
                         stream: stream
                     });
                 });
@@ -43,13 +44,13 @@ class StreamDaemonInput {
     cleanUp() {
         return Promise.resolve();
     }
-    sendResponse(message) {
+    sendResponse(requisition) {
         return new Promise((resolve, reject) => {
-            if (message.stream) {
-                const response = this.stringifyPayloadToSend(message.output);
-                message.stream.write(response, () => {
-                    message.stream.end();
-                    message.stream = null;
+            if (requisition.stream) {
+                const message = this.stringifyPayloadToSend(requisition.output);
+                requisition.stream.write(message, () => {
+                    requisition.stream.end();
+                    requisition.stream = null;
                     resolve();
                 });
             }
@@ -59,34 +60,18 @@ class StreamDaemonInput {
             }
         });
     }
-    adapt(message) {
-        const payload = message.payload;
-        let stringify;
-        if (payload) {
-            stringify = this.stringifyPayloadReceived(payload);
-        }
-        else {
-            stringify = this.stringifyPayloadReceived(message);
-        }
-        if (stringify) {
-            return stringify;
-        }
-        throw 'Daemon input can not adapt received message';
-    }
     stringifyPayloadReceived(message) {
         const messageType = typeof (message);
         if (messageType == 'string') {
             return message;
         }
-        else if (Buffer.isBuffer(message)) {
-            return Buffer.from(message).toString();
-        }
+        return Buffer.from(message).toString();
     }
     stringifyPayloadToSend(payload) {
-        if (typeof (payload) != 'string' && !Buffer.isBuffer(payload)) {
-            return JSON.stringify(payload);
+        if (typeof (payload) == 'string' || Buffer.isBuffer(payload)) {
+            return payload;
         }
-        return payload;
+        return new javascript_object_notation_1.JavascriptObjectNotation().stringify(payload);
     }
 }
 exports.StreamDaemonInput = StreamDaemonInput;

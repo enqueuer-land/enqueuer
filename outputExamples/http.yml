@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 184
-      startTime: '2018-09-19T23:56:00.405Z'
-      endTime: '2018-09-19T23:56:00.589Z'
+      totalTime: 169
+      startTime: '2018-09-20T00:37:04.518Z'
+      endTime: '2018-09-20T00:37:04.687Z'
       timeout: 3000
     subscriptions:
       -
@@ -54,19 +54,19 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-19T23:56:00.470Z'
+        connectionTime: '2018-09-20T00:37:04.573Z'
         messageReceived:
           headers:
             content-type: application/json
             authorization: 'Basic dXNlcjpwYXNzd29yZA=='
-            content-length: '20'
+            content-length: '25'
             host: 'localhost:23075'
             connection: close
           params:
             firstId: idStuff
           query:
             query: '000'
-          body: '{"enqueuer":"virgs"}'
+          body: "{\n  \"enqueuer\": \"virgs\"\n}"
     startEvent:
       publisher:
         name: 'publisher description'
@@ -89,7 +89,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-19T23:56:00.589Z'
+        publishTime: '2018-09-20T00:37:04.686Z'
         messageReceived:
           statusCode: 321
           body: 'dynamically changed payload'
@@ -98,7 +98,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '27'
             etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-            date: 'Wed, 19 Sep 2018 23:56:00 GMT'
+            date: 'Thu, 20 Sep 2018 00:37:04 GMT'
             connection: close
           request:
             uri:
@@ -118,7 +118,7 @@ requisitions:
             headers:
               content-type: application/json
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
-              Content-Length: 20
+              Content-Length: 25
   -
     valid: true
     tests:
@@ -128,9 +128,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #1'
     time:
-      totalTime: 36
-      startTime: '2018-09-19T23:56:00.593Z'
-      endTime: '2018-09-19T23:56:00.629Z'
+      totalTime: 35
+      startTime: '2018-09-20T00:37:04.691Z'
+      endTime: '2018-09-20T00:37:04.726Z'
       timeout: 5000
     subscriptions:
       -
@@ -146,18 +146,18 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-19T23:56:00.594Z'
+        connectionTime: '2018-09-20T00:37:04.691Z'
         messageReceived:
           headers:
             content-type: application/json
-            content-length: '19'
+            content-length: '24'
             host: 'localhost:23075'
             connection: close
           params:
             secondId: idStuff
           query:
             query: '111'
-          body: '{"duplicated":true}'
+          body: "{\n  \"duplicated\": true\n}"
     startEvent:
       publisher:
         name: 'publisher description'
@@ -180,7 +180,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-19T23:56:00.629Z'
+        publishTime: '2018-09-20T00:37:04.726Z'
         messageReceived:
           statusCode: 321
           body: duplicatedResponsePayload
@@ -189,7 +189,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '25'
             etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-            date: 'Wed, 19 Sep 2018 23:56:00 GMT'
+            date: 'Thu, 20 Sep 2018 00:37:04 GMT'
             connection: close
           request:
             uri:
@@ -208,7 +208,7 @@ requisitions:
             method: post
             headers:
               content-type: application/json
-              Content-Length: 19
+              Content-Length: 24
   -
     valid: true
     tests:
@@ -218,9 +218,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'requisition 2 (port 23076)'
     time:
-      totalTime: 1004
-      startTime: '2018-09-19T23:56:00.637Z'
-      endTime: '2018-09-19T23:56:01.641Z'
+      totalTime: 1005
+      startTime: '2018-09-20T00:37:04.729Z'
+      endTime: '2018-09-20T00:37:05.734Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -233,7 +233,7 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-09-19T23:56:00.637Z'
+        connectionTime: '2018-09-20T00:37:04.730Z'
   -
     valid: true
     tests:
@@ -243,9 +243,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'check port releasing (23076)'
     time:
-      totalTime: 1003
-      startTime: '2018-09-19T23:56:01.643Z'
-      endTime: '2018-09-19T23:56:02.646Z'
+      totalTime: 1002
+      startTime: '2018-09-20T00:37:05.736Z'
+      endTime: '2018-09-20T00:37:06.738Z'
       timeout: 5000
     subscriptions: []
     startEvent:
@@ -258,4 +258,4 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-09-19T23:56:01.643Z'
+        connectionTime: '2018-09-20T00:37:05.736Z'

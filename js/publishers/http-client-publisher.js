@@ -30,7 +30,6 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
             new http_requester_1.HttpRequester(this.url, this.method.toLowerCase(), this.headers, this.payload, this.timeout)
                 .request()
                 .then((response) => {
-                logger_1.Logger.trace(`Http/s requisition response: ${JSON.stringify(response)}`.substr(0, 128));
                 this.messageReceived = response;
                 resolve();
             })

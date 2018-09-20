@@ -23,6 +23,13 @@ describe('YamlObjectNotation', () => {
         expect(stringified).toBe(expected)
     });
 
+    test('should stringify undefined objects', () => {
+        const stringified = new YamlObjectNotation().stringify(undefined);
+
+        expect(stringified).toBeUndefined();
+    });
+
+
     test('should parse', () => {
         const value =    "firstLevel:\n" +
                          "  secondLevel: value\n";

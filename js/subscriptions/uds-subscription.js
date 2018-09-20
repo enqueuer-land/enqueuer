@@ -31,12 +31,13 @@ const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
 const store_1 = require("../configurations/store");
 const handler_listener_1 = require("../handlers/handler-listener");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.path = subscriptionAttributes.path;
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = JSON.stringify(subscriptionAttributes.response);
+            this.response = new javascript_object_notation_1.JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
         this.loadStream = subscriptionAttributes.loadStream;
         this.saveStream = subscriptionAttributes.saveStream;

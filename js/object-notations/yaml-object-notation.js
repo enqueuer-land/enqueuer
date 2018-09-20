@@ -14,7 +14,12 @@ class YamlObjectNotation extends object_notation_1.ObjectNotation {
         return yaml.parse(value);
     }
     stringify(value) {
-        return yaml.stringify(object_notation_1.ObjectNotation.decycle(value), 10, 2);
+        try {
+            return yaml.stringify(object_notation_1.ObjectNotation.decycle(value), 10, 2);
+        }
+        catch (err) {
+            /*nothing*/
+        }
     }
     loadFromFileSync(filename) {
         return yaml.load(filename);

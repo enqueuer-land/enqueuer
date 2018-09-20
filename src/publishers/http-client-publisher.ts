@@ -34,7 +34,6 @@ export class HttpClientPublisher extends Publisher {
                             this.timeout)
                 .request()
                 .then((response: any) => {
-                    Logger.trace(`Http/s requisition response: ${JSON.stringify(response)}`.substr(0, 128));
                     this.messageReceived = response;
                     resolve();
                 })

@@ -14,14 +14,20 @@ describe('JavascriptObjectNotation', () => {
     test('should stringify', () => {
         const value = {firstLevel: {secondLevel: 'value'}};
         const expected =    '{\n' +
-                            '  "firstLevel": {\n' +
-                            '    "secondLevel": "value"\n' +
-                            '  }\n' +
-                            '}';
+            '  "firstLevel": {\n' +
+            '    "secondLevel": "value"\n' +
+            '  }\n' +
+            '}';
 
         const stringified = new JavascriptObjectNotation().stringify(value);
 
         expect(stringified).toBe(expected)
+    });
+
+    test('should stringify undefined objects', () => {
+        const stringified = new JavascriptObjectNotation().stringify(undefined);
+
+        expect(stringified).toBeUndefined();
     });
 
     test('should stringify cycle reference', () => {

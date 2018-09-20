@@ -10,6 +10,7 @@ import {Container} from 'conditional-injector';
 import {TestModel} from '../models/outputs/test-model';
 import {OnInitEventExecutor} from '../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../events/on-finish-event-executor';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -39,16 +40,17 @@ export class RequisitionReporter {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
         Logger.debug('Preparing subscriptions');
-        this.multiSubscriptionsReporter.subscribe(() => this.onAllSubscriptionsStopWaiting())
+        this.multiSubscriptionsReporter
+            .subscribe(() => this.onAllSubscriptionsStopWaiting())
             .then(() => {
                 Logger.info('Multisubscriptions are ready');
                 this.initializeTimeout();
-                this.onSubscriptionsCompleted();
+                return this.onSubscriptionsCompleted();
             })
             .catch(err => {
                 const message = `Error connecting multiSubscription: ${err}`;
                 Logger.error(message);
-                this.onFinish({valid: false, description: message, name: 'Subscriptions subscription'});
+                return this.onFinish({valid: false, description: message, name: 'Subscriptions subscription'});
             });
     }
 
@@ -56,7 +58,7 @@ export class RequisitionReporter {
         return this.reportGenerator.getReport();
     }
 
-    private onSubscriptionsCompleted() {
+    private onSubscriptionsCompleted(): void {
         this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
             .catch(err => {
@@ -66,15 +68,15 @@ export class RequisitionReporter {
             });
         Logger.debug('Triggering start event');
         this.startEvent.start()
-            .then(() => {
+            .then(async () => {
                 Logger.debug('Start event triggered');
                 this.startEventDoneItsJob = true;
-                this.tryToFinishExecution();
+                await this.tryToFinishExecution();
             })
-            .catch(err => {
+            .catch(async err => {
                 const message = `Error triggering startEvent: ${err}`;
                 Logger.error(message);
-                this.onFinish({valid: false, description: err, name: 'Start Event'});
+                await this.onFinish({valid: false, description: err, name: 'Start Event'});
             });
 
     }
@@ -90,15 +92,15 @@ export class RequisitionReporter {
         }
     }
 
-    private onAllSubscriptionsStopWaiting(): void {
+    private async onAllSubscriptionsStopWaiting(): Promise<void> {
         Logger.info('All subscriptions have done their job');
         this.allSubscriptionsStoppedWaiting = true;
-        this.tryToFinishExecution();
+        await this.tryToFinishExecution();
     }
 
-    private tryToFinishExecution() {
+    private async tryToFinishExecution() {
         if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
-            this.onFinish();
+            await this.onFinish();
         }
     }
 
@@ -110,7 +112,7 @@ export class RequisitionReporter {
         Logger.info(`Start gathering reports`);
 
         if (error) {
-            Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
+            Logger.debug(`Requisition error collected: ${new JavascriptObjectNotation().stringify(error)}`);
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setStartEventReport(this.startEvent.getReport());

@@ -2,6 +2,7 @@ import {DaemonInputRequisition} from './daemon-input-requisition';
 import {HandlerListener} from '../../handlers/handler-listener';
 import * as net from 'net';
 import {RequisitionParser} from '../../requisition-runners/requisition-parser';
+import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
 
 //TODO test it
 export class StreamDaemonInput {
@@ -25,7 +26,7 @@ export class StreamDaemonInput {
                 stream.on('data', (msg: any) => {
                     resolve({
                         type: 'stream',
-                        input: this.parser.parse(this.adapt(msg)),
+                        input: this.parser.parse(this.stringifyPayloadReceived(msg.payload || msg)),
                         stream: stream
                     });
                 });
@@ -45,13 +46,13 @@ export class StreamDaemonInput {
         return Promise.resolve();
     }
 
-    public sendResponse(message: DaemonInputRequisition): Promise<void> {
+    public sendResponse(requisition: DaemonInputRequisition): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (message.stream) {
-                const response = this.stringifyPayloadToSend(message.output);
-                message.stream.write(response, () => {
-                    message.stream.end();
-                    message.stream = null;
+            if (requisition.stream) {
+                const message = this.stringifyPayloadToSend(requisition.output);
+                requisition.stream.write(message, () => {
+                    requisition.stream.end();
+                    requisition.stream = null;
                     resolve();
                 });
             } else {
@@ -61,33 +62,18 @@ export class StreamDaemonInput {
         });
     }
 
-    public adapt(message: any): string {
-        const payload = message.payload;
-        let stringify;
-        if (payload) {
-            stringify = this.stringifyPayloadReceived(payload);
-        } else {
-            stringify = this.stringifyPayloadReceived(message);
-        }
-        if (stringify) {
-            return stringify;
-        }
-        throw 'Daemon input can not adapt received message';
-    }
-
-    private stringifyPayloadReceived(message: any): string | undefined {
+    private stringifyPayloadReceived(message: string | Buffer): string {
         const messageType = typeof(message);
         if (messageType == 'string') {
-            return message;
-        } else if (Buffer.isBuffer(message)) {
-            return Buffer.from(message).toString();
+            return message as string;
         }
+        return Buffer.from(message as Buffer).toString();
     }
 
     private stringifyPayloadToSend(payload: any): string | Buffer {
-        if (typeof(payload) != 'string' && !Buffer.isBuffer(payload)) {
-            return JSON.stringify(payload);
+        if (typeof(payload) == 'string' || Buffer.isBuffer(payload)) {
+            return payload;
         }
-        return payload;
+        return new JavascriptObjectNotation().stringify(payload) as string;
     }
 }

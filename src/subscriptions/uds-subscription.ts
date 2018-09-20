@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'uds'})
 export class UdsSubscription extends Subscription {
@@ -20,7 +21,7 @@ export class UdsSubscription extends Subscription {
         super(subscriptionAttributes);
         this.path = subscriptionAttributes.path;
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = JSON.stringify(subscriptionAttributes.response);
+            this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
         this.loadStream = subscriptionAttributes.loadStream;
         this.saveStream = subscriptionAttributes.saveStream;

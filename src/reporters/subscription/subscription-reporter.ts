@@ -13,6 +13,7 @@ import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import Signals = NodeJS.Signals;
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import SignalsListener = NodeJS.SignalsListener;
+import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
 
 export class SubscriptionReporter {
 
@@ -148,7 +149,7 @@ export class SubscriptionReporter {
     }
 
     private handleMessageArrival(message: any) {
-        Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 150) + '...');
+        Logger.debug(`${this.subscription.name} message: ${new JavascriptObjectNotation().stringify(message)}`.substr(0, 150) + '...');
         if (!this.hasTimedOut) {
             Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
             this.subscription.messageReceived = message;

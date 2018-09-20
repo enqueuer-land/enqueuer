@@ -3,6 +3,7 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as dgram from 'dgram';
 import {Logger} from '../loggers/logger';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'udp'})
 export class UdpSubscription extends Subscription {
@@ -15,7 +16,7 @@ export class UdpSubscription extends Subscription {
         this.port = subscriptionAttributes.port;
 
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = JSON.stringify(subscriptionAttributes.response);
+            this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
     }
 

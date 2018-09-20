@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 223
-      startTime: '2018-09-19T23:56:00.401Z'
-      endTime: '2018-09-19T23:56:00.624Z'
+      totalTime: 203
+      startTime: '2018-09-20T00:37:04.515Z'
+      endTime: '2018-09-20T00:37:04.718Z'
     subscriptions:
       -
         name: 'proxy server'
@@ -49,20 +49,20 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-19T23:56:00.470Z'
+        connectionTime: '2018-09-20T00:37:04.573Z'
         messageReceived:
           headers:
             content-type: application/json
             authorization: 'Basic dXNlcjpwYXNzd29yZA=='
-            content-length: '16'
+            content-length: '21'
             host: 'localhost:23085'
             connection: close
-            Content-Length: 16
+            Content-Length: 21
           params:
             id: idValue
           query:
             query: proxied
-          body: '{"proxy":"test"}'
+          body: "{\n  \"proxy\": \"test\"\n}"
       -
         name: 'real server'
         type: http-server
@@ -100,19 +100,19 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-19T23:56:00.470Z'
+        connectionTime: '2018-09-20T00:37:04.573Z'
         messageReceived:
           headers:
             content-type: application/json
             authorization: 'Basic dXNlcjpwYXNzd29yZA=='
-            content-length: '16'
+            content-length: '21'
             host: 'localhost:23085'
             connection: close
           params:
             firstId: idValue
           query:
             query: proxied
-          body: '{"proxy":"test"}'
+          body: "{\n  \"proxy\": \"test\"\n}"
     startEvent:
       publisher:
         name: 'publisher proxy'
@@ -135,7 +135,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-19T23:56:00.624Z'
+        publishTime: '2018-09-20T00:37:04.718Z'
         messageReceived:
           statusCode: 333
           body: responsePayload
@@ -144,7 +144,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Wed, 19 Sep 2018 23:56:00 GMT'
+            date: 'Thu, 20 Sep 2018 00:37:04 GMT'
             connection: close
           request:
             uri:
@@ -164,4 +164,4 @@ requisitions:
             headers:
               content-type: application/json
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
-              Content-Length: 16
+              Content-Length: 21

@@ -14,7 +14,12 @@ class JavascriptObjectNotation extends object_notation_1.ObjectNotation {
         return JSON.parse(value);
     }
     stringify(value) {
-        return JSON.stringify(object_notation_1.ObjectNotation.decycle(value), null, 2);
+        try {
+            return JSON.stringify(object_notation_1.ObjectNotation.decycle(value), null, 2);
+        }
+        catch (err) {
+            /*nothing*/
+        }
     }
     loadFromFileSync(filename) {
         return this.parse(fs.readFileSync(filename).toString());

@@ -6,8 +6,12 @@ export class YamlObjectNotation extends ObjectNotation {
         return yaml.parse(value);
     }
 
-    public stringify(value: object): string {
-        return yaml.stringify(ObjectNotation.decycle(value), 10, 2);
+    public stringify(value: object): string | undefined {
+        try {
+            return yaml.stringify(ObjectNotation.decycle(value), 10, 2);
+        } catch (err) {
+            /*nothing*/
+        }
     }
 
     public loadFromFileSync(filename: string): object {

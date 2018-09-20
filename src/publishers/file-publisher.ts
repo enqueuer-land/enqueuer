@@ -6,8 +6,7 @@ import * as yaml from 'yamljs';
 import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
-import {ObjectNotation} from "../object-notations/object-notation";
-import {JavascriptObjectNotation} from "../object-notations/javascript-object-notation";
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'file'})
 export class FilePublisher extends Publisher {

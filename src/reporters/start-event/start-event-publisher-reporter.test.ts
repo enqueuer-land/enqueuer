@@ -78,6 +78,15 @@ describe('StartEventPublisherReporter', () => {
         expect(publisherMock).toHaveBeenCalledWith(startEventArgument.publisher);
     });
 
+    it('Should set default name', () => {
+        const noName = {
+            publisher: {}
+        };
+        const report = new StartEventPublisherReporter(noName).getReport();
+
+        expect(report.publisher.name).toBe('Start event publisher');
+    });
+
     it('Should execute onInit', () => {
         new StartEventPublisherReporter(startEventArgument);
 

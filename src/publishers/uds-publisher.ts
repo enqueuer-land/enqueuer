@@ -4,6 +4,7 @@ import * as net from 'net';
 import {Injectable} from 'conditional-injector';
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
+import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'uds'})
 export class UdsPublisher extends Publisher {
@@ -61,7 +62,7 @@ export class UdsPublisher extends Publisher {
 
     private stringifyPayload() {
         if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            return JSON.stringify(this.payload);
+            return new JavascriptObjectNotation().stringify(this.payload);
         }
         return this.payload;
     }

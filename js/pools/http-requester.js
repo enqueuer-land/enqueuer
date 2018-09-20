@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const request_1 = __importDefault(require("request"));
 const logger_1 = require("../loggers/logger");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 class HttpRequester {
     constructor(url, method, headers = {}, body, timeout = 3000) {
         this.url = url;
@@ -54,14 +55,14 @@ class HttpRequester {
             return undefined;
         }
         try {
-            JSON.parse(this.body);
+            new javascript_object_notation_1.JavascriptObjectNotation().parse(this.body);
             return this.body;
         }
         catch (exc) {
             //do nothing
         }
         if (typeof (this.body) != 'string') {
-            this.body = JSON.stringify(this.body);
+            this.body = new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.body);
         }
         return this.body;
     }

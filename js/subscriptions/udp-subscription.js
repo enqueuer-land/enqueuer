@@ -20,12 +20,13 @@ const subscription_1 = require("./subscription");
 const conditional_injector_1 = require("conditional-injector");
 const dgram = __importStar(require("dgram"));
 const logger_1 = require("../loggers/logger");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let UdpSubscription = class UdpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
         this.port = subscriptionAttributes.port;
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = JSON.stringify(subscriptionAttributes.response);
+            this.response = new javascript_object_notation_1.JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
     }
     receiveMessage() {

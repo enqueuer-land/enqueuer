@@ -16,6 +16,7 @@ const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptio
 const conditional_injector_1 = require("conditional-injector");
 const on_init_event_executor_1 = require("../events/on-init-event-executor");
 const on_finish_event_executor_1 = require("../events/on-finish-event-executor");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.startEventDoneItsJob = false;
@@ -34,16 +35,17 @@ class RequisitionReporter {
         this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
         logger_1.Logger.debug('Preparing subscriptions');
-        this.multiSubscriptionsReporter.subscribe(() => this.onAllSubscriptionsStopWaiting())
+        this.multiSubscriptionsReporter
+            .subscribe(() => this.onAllSubscriptionsStopWaiting())
             .then(() => {
             logger_1.Logger.info('Multisubscriptions are ready');
             this.initializeTimeout();
-            this.onSubscriptionsCompleted();
+            return this.onSubscriptionsCompleted();
         })
             .catch(err => {
             const message = `Error connecting multiSubscription: ${err}`;
             logger_1.Logger.error(message);
-            this.onFinish({ valid: false, description: message, name: 'Subscriptions subscription' });
+            return this.onFinish({ valid: false, description: message, name: 'Subscriptions subscription' });
         });
     }
     getReport() {
@@ -59,16 +61,16 @@ class RequisitionReporter {
         });
         logger_1.Logger.debug('Triggering start event');
         this.startEvent.start()
-            .then(() => {
+            .then(() => __awaiter(this, void 0, void 0, function* () {
             logger_1.Logger.debug('Start event triggered');
             this.startEventDoneItsJob = true;
-            this.tryToFinishExecution();
-        })
-            .catch(err => {
+            yield this.tryToFinishExecution();
+        }))
+            .catch((err) => __awaiter(this, void 0, void 0, function* () {
             const message = `Error triggering startEvent: ${err}`;
             logger_1.Logger.error(message);
-            this.onFinish({ valid: false, description: err, name: 'Start Event' });
-        });
+            yield this.onFinish({ valid: false, description: err, name: 'Start Event' });
+        }));
     }
     initializeTimeout() {
         if (this.requisitionTimeout) {
@@ -81,14 +83,18 @@ class RequisitionReporter {
         }
     }
     onAllSubscriptionsStopWaiting() {
-        logger_1.Logger.info('All subscriptions have done their job');
-        this.allSubscriptionsStoppedWaiting = true;
-        this.tryToFinishExecution();
+        return __awaiter(this, void 0, void 0, function* () {
+            logger_1.Logger.info('All subscriptions have done their job');
+            this.allSubscriptionsStoppedWaiting = true;
+            yield this.tryToFinishExecution();
+        });
     }
     tryToFinishExecution() {
-        if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
-            this.onFinish();
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
+                yield this.onFinish();
+            }
+        });
     }
     onFinish(error) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -98,7 +104,7 @@ class RequisitionReporter {
             yield this.executeOnFinishFunction();
             logger_1.Logger.info(`Start gathering reports`);
             if (error) {
-                logger_1.Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
+                logger_1.Logger.debug(`Requisition error collected: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(error)}`);
                 this.reportGenerator.addError(error);
             }
             this.reportGenerator.setStartEventReport(this.startEvent.getReport());

@@ -21,6 +21,7 @@ const net = __importStar(require("net"));
 const conditional_injector_1 = require("conditional-injector");
 const store_1 = require("../configurations/store");
 const logger_1 = require("../loggers/logger");
+const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
@@ -66,7 +67,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     }
     stringifyPayload() {
         if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            return JSON.stringify(this.payload);
+            return new javascript_object_notation_1.JavascriptObjectNotation().stringify(this.payload);
         }
         return this.payload;
     }

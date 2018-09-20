@@ -32,6 +32,11 @@ describe('NullDaemonInput', () => {
         expect(new NullDaemonInput(model).cleanUp('any')).rejects.toBeDefined();
     });
 
+    it('should reject to "receiveMessage"', () => {
+        const model = {type: 'unknown'};
+        expect(new NullDaemonInput(model).receiveMessage()).rejects.toBeDefined();
+    });
+
     it('should reject to "unsubscribe"', () => {
         const model = {type: 'unknown'};
         expect(new NullDaemonInput(model).unsubscribe('any')).rejects.toBeDefined();

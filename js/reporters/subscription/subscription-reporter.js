@@ -18,6 +18,7 @@ const on_init_event_executor_1 = require("../../events/on-init-event-executor");
 const on_message_received_event_executor_1 = require("../../events/on-message-received-event-executor");
 const subscription_final_reporter_1 = require("./subscription-final-reporter");
 const on_finish_event_executor_1 = require("../../events/on-finish-event-executor");
+const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
 class SubscriptionReporter {
     constructor(subscriptionAttributes) {
         this.hasTimedOut = false;
@@ -133,7 +134,7 @@ class SubscriptionReporter {
         this.report.tests = this.report.tests.concat(new on_finish_event_executor_1.OnFinishEventExecutor('subscription', this.subscription).trigger());
     }
     handleMessageArrival(message) {
-        logger_1.Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message)}`.substr(0, 150) + '...');
+        logger_1.Logger.debug(`${this.subscription.name} message: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(message)}`.substr(0, 150) + '...');
         if (!this.hasTimedOut) {
             logger_1.Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
             this.subscription.messageReceived = message;
