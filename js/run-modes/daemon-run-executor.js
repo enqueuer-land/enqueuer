@@ -43,9 +43,12 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
             this.reject = reject;
             this.daemonInputs
                 .forEach((input) => {
-                input.subscribe()
-                    .then(() => this.startReader(input))
-                    .catch((err) => this.unsubscribe(err, input));
+                try {
+                    input.subscribe((requisition) => this.handleRequisitionReceived(requisition));
+                }
+                catch (err) {
+                    this.unsubscribe(err, input);
+                }
             });
         });
     }
@@ -59,34 +62,21 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
             this.reject(message);
         }
     }
-    startReader(input) {
-        input.receiveMessage()
-            .then((requisition) => this.handleRequisitionReceived(requisition))
-            .catch((err) => {
-            logger_1.Logger.error(err);
-            input.sendResponse(err).catch(console.log.bind(console));
-            this.multiPublisher.publish(err).catch(console.log.bind(console));
-            this.startReader(input);
-        });
-    }
     handleRequisitionReceived(message) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let requisitionModels;
-            try {
-                requisitionModels = this.parser.parse(message.input);
-            }
-            catch (err) {
-                message.output = err;
-                return this.publishError(message);
-            }
-            return this.runRequisition(requisitionModels, message);
-        });
+        let requisitionModels;
+        try {
+            requisitionModels = this.parser.parse(message.input);
+        }
+        catch (err) {
+            message.output = err;
+            return this.publishError(message);
+        }
+        return this.runRequisition(requisitionModels, message);
     }
     publishError(message) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.sendResponse(message)
-                .then(() => this.multiPublisher.publish(message.output))
-                .then(() => this.startReader(message.daemon));
+                .then(() => this.multiPublisher.publish(message.output));
         });
     }
     runRequisition(requisitionModels, message) {
@@ -95,14 +85,13 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
                 .then((report) => message.output = report)
                 .then(() => this.registerTest(message))
                 .then(() => this.sendResponse(message))
-                .then(() => this.multiPublisher.publish(message.output))
-                .then(() => this.startReader(message.daemon));
+                .then(() => this.multiPublisher.publish(message.output));
         });
     }
     sendResponse(message) {
         return __awaiter(this, void 0, void 0, function* () {
             yield message.daemon.sendResponse(message);
-            yield message.daemon.cleanUp();
+            yield message.daemon.cleanUp(message);
         });
     }
     registerTest(message) {

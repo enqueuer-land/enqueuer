@@ -37,9 +37,6 @@ export class UdsSubscription extends Subscription {
                     this.server = null;
                     this.stream = stream;
                     this.waitForData(resolve);
-                    if (fs.existsSync(this.path)) {
-                        fs.unlinkSync(this.path);
-                    }
                 });
             }
         });

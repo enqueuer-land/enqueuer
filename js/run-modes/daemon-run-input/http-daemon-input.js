@@ -22,28 +22,30 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
         this.endpoint = daemonInput.endpoint || '/requisitions';
         this.method = daemonInput.method || 'post';
     }
-    subscribe() {
-        return new Promise((resolve, reject) => {
-            http_container_pool_1.HttpContainerPool.getApp(this.port)
-                .then((app) => {
-                this.registerMessageEvent(app);
-                logger_1.Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
-                resolve();
-            }).catch(err => {
-                const message = `Error in HttpDaemonInput subscription: ${err}`;
-                logger_1.Logger.error(message);
-                reject(message);
+    subscribe(onMessageReceived) {
+        http_container_pool_1.HttpContainerPool.getApp(this.port)
+            .then((app) => {
+            logger_1.Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
+            app[this.method](this.endpoint, (request, responseHandler) => {
+                logger_1.Logger.debug(`HttpDaemonInput:${this.port} got message (${this.method}) ${this.endpoint}: ${request.rawBody}`);
+                let result = {
+                    type: this.type,
+                    daemon: this,
+                    input: request.rawBody,
+                    responseHandler: responseHandler
+                };
+                onMessageReceived(result);
             });
+        }).catch(err => {
+            const message = `Error in HttpDaemonInput subscription: ${err}`;
+            logger_1.Logger.error(message);
+            throw message;
         });
-    }
-    receiveMessage() {
-        return new Promise((resolve) => this.messageReceiverResolver = resolve);
     }
     unsubscribe() {
         return http_container_pool_1.HttpContainerPool.releaseApp(this.port);
     }
-    cleanUp() {
-        this.messageReceiverResolver = null;
+    cleanUp(requisition) {
         return Promise.resolve();
     }
     sendResponse(message) {
@@ -60,23 +62,6 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
         catch (err) {
             return Promise.reject(`${this.type} response back sending error: ${err}`);
         }
-    }
-    registerMessageEvent(app) {
-        app[this.method](this.endpoint, (request, responseHandler) => {
-            logger_1.Logger.debug(`HttpDaemonInput:${this.port} got message (${this.method}) ${this.endpoint}: ${request.rawBody}`);
-            let result = {
-                type: this.type,
-                daemon: this,
-                input: request.rawBody,
-                responseHandler: responseHandler
-            };
-            if (this.messageReceiverResolver) {
-                this.messageReceiverResolver(result);
-            }
-            else {
-                logger_1.Logger.warning(`No ${this.type} messageReceiver resolver to handle message`);
-            }
-        });
     }
 };
 HttpDaemonInput = __decorate([

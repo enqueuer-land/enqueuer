@@ -62,26 +62,26 @@ describe('DaemonRunExecutor', () => {
         expect(createMock).toBeCalledWith(daemonConfiguration.runMode.daemon[0]);
         expect(createMock).toBeCalledWith(daemonConfiguration.runMode.daemon[1]);
     });
-
-    it('execute subscription fail', ()=> {
-        expect.assertions(3);
-        let unsubscribeMock = jest.fn(() => {
-            expect(unsubscribeMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
-        });
-        let subscribeMock = jest.fn()
-            .mockImplementation(() => Promise.reject('reason'));
-        createMock.mockImplementation(() =>
-        {
-            return {
-                unsubscribe: unsubscribeMock,
-                subscribe: subscribeMock
-            }
-        });
-
-        new DaemonRunExecutor(daemonConfiguration).execute();
-        expect(subscribeMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
-    });
-
+    //
+    // it('execute subscription fail', ()=> {
+    //     expect.assertions(3);
+    //     let unsubscribeMock = jest.fn(() => {
+    //         expect(unsubscribeMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
+    //     });
+    //     let subscribeMock = jest.fn()
+    //         .mockImplementation(() => Promise.reject('reason'));
+    //     createMock.mockImplementation(() =>
+    //     {
+    //         return {
+    //             unsubscribe: unsubscribeMock,
+    //             subscribe: subscribeMock
+    //         }
+    //     });
+    //
+    //     new DaemonRunExecutor(daemonConfiguration).execute();
+    //     expect(subscribeMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
+    // });
+    //
     // it('run - fail', done => {
     //     expect.assertions(3);
     //     createMock.mockImplementation(() =>

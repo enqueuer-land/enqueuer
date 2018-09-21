@@ -75,16 +75,16 @@ describe('Inception test', () => {
         jest.setTimeout(15000);
 
         let beingTestedLog = '';
-        beingTested = spawn('nqr',  ['--config-file', 'src/inception-test/beingTested.yml']);
+        beingTested = spawn('nqr',  ['src/inception-test/beingTested.yml']);
         beingTested.stdout.on('data', (data: string) => beingTestedLog += data);
         sleep(500);
 
-        tester = spawn('enqueuer',  ['--config-file', 'src/inception-test/tester.yml']);
+        tester = spawn('enqueuer',  ['src/inception-test/tester.yml']);
         // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
 
         tester.on('exit', (statusCode: number) => {
             beingTested.kill('SIGINT');
-            console.log('beingTested: ' + beingTested);
+            console.log('beingTested: ' + beingTestedLog);
 
             expect(statusCode).toBe(0);
 

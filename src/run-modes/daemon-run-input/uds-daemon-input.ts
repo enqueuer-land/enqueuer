@@ -2,63 +2,52 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../../loggers/logger';
 import {DaemonInput} from './daemon-input';
 import {DaemonInputRequisition} from './daemon-input-requisition';
-import {StreamDaemonInput} from './stream-daemon-input';
-import {RequisitionModel} from '../../models/inputs/requisition-model';
-import * as fs from 'fs';
+import {StreamInputHandler} from '../../handlers/stream-input-handler';
 
 //TODO test it
 @Injectable({predicate: (daemonInput: any) => daemonInput.type == 'uds'})
 export class UdsDaemonInput extends DaemonInput {
-    private path: string;
-    private type: string;
-    private streamDaemon: StreamDaemonInput;
-    private subscribed: boolean = false;
+    private readonly path: string;
+    private readonly type: string;
+    private streamHandler: StreamInputHandler;
+    // private subscribed: boolean = false;
 
     public constructor(daemonInput: any) {
         super();
         this.type = daemonInput.type;
         this.path = daemonInput.path || '/tmp/enqueuer.requisitions';
-        this.streamDaemon = new StreamDaemonInput(this.path);
+        this.streamHandler = new StreamInputHandler(this.path);
     }
 
-    public subscribe(): Promise<void> {
-        return this.streamDaemon.subscribe()
-            .then(() => {
-                this.subscribed = true;
-                Logger.info(`Waiting for UDS requisitions: ${this.path}`);
-            });
-    }
-
-    public receiveMessage(): Promise<DaemonInputRequisition> {
-        return this.streamDaemon.receiveMessage()
-            .then((input: string) => {
-                Logger.debug(`UDS daemon server got data`);
-                return {
-                    type: this.type,
-                    daemon: this,
-                    input: input
-                };
-            });
-    }
-
-    public unsubscribe(): Promise<void> {
-        if (!this.subscribed) {
-            return Promise.resolve();
-        }
-
-        return new Promise((resolve) => {
-            fs.unlink(this.path, () => {
-                resolve(this.streamDaemon.unsubscribe());
+    public async subscribe(onMessageReceived: (requisition: DaemonInputRequisition) => void): Promise<void> {
+        await this.streamHandler.subscribe((data: any) => {
+            Logger.debug(`UDS daemon server got data`);
+            onMessageReceived({
+                type: this.type,
+                daemon: this,
+                input: data.message,
+                stream: data.stream
             });
         });
+        Logger.info(`Waiting for UDS requisitions: ${this.path}`);
+        // this.subscribed = true;
     }
 
-    public async cleanUp(): Promise<void> {
-        /* do nothing */
+    public async unsubscribe(): Promise<void> {
+        Logger.info(`Releasing ${this.path} server`);
+        await this.streamHandler.unsubscribe();
+        // if (this.subscribed && fs.existsSync(this.path)) {
+        //     fs.unlinkSync(this.path);
+        // }
+        // console.log('HERE3: ' + fs.existsSync(this.path))
+    }
+
+    public async cleanUp(requisition: DaemonInputRequisition): Promise<void> {
+        return this.streamHandler.close(requisition.stream);
     }
 
     public sendResponse(message: DaemonInputRequisition): Promise<void> {
-        return this.streamDaemon.sendResponse(message.output)
+        return this.streamHandler.sendResponse(message.stream, message.output)
             .then(() => Logger.debug(`UDS daemon server response sent`));
     }
 }

@@ -31,7 +31,14 @@ class HandlerListener {
                     this.handleError(err, handler, resolve, reject);
                 }
                 else {
-                    logger_1.Logger.debug(`Server bound to (${handler})`);
+                    const address = this.server.address();
+                    if (!handler && address) {
+                        const port = address.port;
+                        logger_1.Logger.info(`No specified handler. Server is bound to (${port})`);
+                    }
+                    else {
+                        logger_1.Logger.debug(`Server is bound to (${handler})`);
+                    }
                     resolve();
                 }
             });

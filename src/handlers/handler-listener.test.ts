@@ -24,6 +24,7 @@ const createServerMock = () => {
         on: onErrorMock,
         listen: listenMock,
         close: closeMock,
+        address: jest.fn(),
     };
 };
 

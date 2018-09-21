@@ -38,9 +38,11 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
             this.reject = reject;
             this.daemonInputs
                 .forEach((input: DaemonInput) => {
-                    input.subscribe()
-                        .then(() => this.startReader(input))
-                        .catch((err: any) => this.unsubscribe(err, input));
+                    try {
+                        input.subscribe((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition));
+                    } catch (err) {
+                        this.unsubscribe(err, input);
+                    }
                 });
         });
     }
@@ -56,18 +58,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         }
     }
 
-    private startReader(input: DaemonInput) {
-        input.receiveMessage()
-            .then((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition))
-            .catch((err) => {
-                Logger.error(err);
-                input.sendResponse(err).catch(console.log.bind(console));
-                this.multiPublisher.publish(err).catch(console.log.bind(console));
-                this.startReader(input);
-            });
-    }
-
-    private async handleRequisitionReceived(message: DaemonInputRequisition) {
+    private handleRequisitionReceived(message: DaemonInputRequisition) {
         let requisitionModels;
         try {
             requisitionModels = this.parser.parse(message.input);
@@ -80,8 +71,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
     private async publishError(message: DaemonInputRequisition) {
         return this.sendResponse(message)
-            .then(() => this.multiPublisher.publish(message.output))
-            .then(() => this.startReader(message.daemon));
+            .then(() => this.multiPublisher.publish(message.output));
     }
 
     private async runRequisition(requisitionModels: RequisitionModel[], message: DaemonInputRequisition) {
@@ -89,13 +79,12 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
             .then((report: output.RequisitionModel) => message.output = report)
             .then(() => this.registerTest(message))
             .then(() => this.sendResponse(message))
-            .then(() => this.multiPublisher.publish(message.output))
-            .then(() => this.startReader(message.daemon));
+            .then(() => this.multiPublisher.publish(message.output));
     }
 
     private async sendResponse(message: DaemonInputRequisition) {
         await message.daemon.sendResponse(message);
-        await message.daemon.cleanUp();
+        await message.daemon.cleanUp(message);
     }
 
     private registerTest(message: DaemonInputRequisition) {

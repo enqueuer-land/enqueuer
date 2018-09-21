@@ -20,40 +20,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
-const stream_daemon_input_1 = require("./stream-daemon-input");
+const stream_input_handler_1 = require("../../handlers/stream-input-handler");
 //TODO test it
 let TcpDaemonInput = class TcpDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();
         this.type = daemonInput.type;
         this.port = daemonInput.port || 23022;
-        this.streamDaemon = new stream_daemon_input_1.StreamDaemonInput(this.port);
+        this.streamHandler = new stream_input_handler_1.StreamInputHandler(this.port);
     }
-    subscribe() {
-        return this.streamDaemon.subscribe()
-            .then(() => logger_1.Logger.info(`Waiting for TCP requisitions: ${this.port}`));
-    }
-    receiveMessage() {
-        return this.streamDaemon.receiveMessage()
-            .then((input) => {
-            logger_1.Logger.debug(`TCP daemon server got data`);
-            return {
-                type: this.type,
-                daemon: this,
-                input: input
-            };
+    subscribe(onMessageReceived) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.streamHandler.subscribe((data) => {
+                logger_1.Logger.debug(`TCP daemon server got data`);
+                onMessageReceived({
+                    type: this.type,
+                    daemon: this,
+                    input: data.message,
+                    stream: data.stream
+                });
+            });
+            logger_1.Logger.info(`Waiting for TCP requisitions: ${this.port}`);
         });
     }
     unsubscribe() {
-        return this.streamDaemon.unsubscribe();
+        logger_1.Logger.info(`Releasing ${this.port} server`);
+        return this.streamHandler.unsubscribe();
     }
-    cleanUp() {
+    cleanUp(requisition) {
         return __awaiter(this, void 0, void 0, function* () {
-            /* do nothing */
+            return this.streamHandler.close(requisition.stream);
         });
     }
     sendResponse(message) {
-        return this.streamDaemon.sendResponse(message.output)
+        return this.streamHandler.sendResponse(message.stream, message.output)
             .then(() => logger_1.Logger.debug(`TCP daemon server response sent`));
     }
 };

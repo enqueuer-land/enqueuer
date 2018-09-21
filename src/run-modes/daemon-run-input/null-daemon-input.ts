@@ -15,14 +15,9 @@ export class NullDaemonInput extends DaemonInput {
         this.daemonInput = daemonInput;
     }
 
-    public subscribe(): Promise<void> {
-        return Promise.reject(`Impossible to subscribe to an unknown ` +
-                    `daemon input: ${new JavascriptObjectNotation().stringify(this.daemonInput)}`);
-    }
-
-    public receiveMessage(): Promise<DaemonInputRequisition> {
-        return Promise.reject(`Impossible to receive message from an unknown ` +
-                    `daemon input: ${new JavascriptObjectNotation().stringify(this.daemonInput)}`);
+    public async subscribe(onMessageReceived: (requisition: DaemonInputRequisition) => void): Promise<void> {
+        throw `Impossible to subscribe to an unknown ` +
+                    `daemon input: ${new JavascriptObjectNotation().stringify(this.daemonInput)}`;
     }
 
     public unsubscribe(): Promise<void> {

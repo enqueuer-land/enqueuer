@@ -16,63 +16,52 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
-const stream_daemon_input_1 = require("./stream-daemon-input");
-const fs = __importStar(require("fs"));
+const stream_input_handler_1 = require("../../handlers/stream-input-handler");
 //TODO test it
 let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
+    // private subscribed: boolean = false;
     constructor(daemonInput) {
         super();
-        this.subscribed = false;
         this.type = daemonInput.type;
         this.path = daemonInput.path || '/tmp/enqueuer.requisitions';
-        this.streamDaemon = new stream_daemon_input_1.StreamDaemonInput(this.path);
+        this.streamHandler = new stream_input_handler_1.StreamInputHandler(this.path);
     }
-    subscribe() {
-        return this.streamDaemon.subscribe()
-            .then(() => {
-            this.subscribed = true;
+    subscribe(onMessageReceived) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.streamHandler.subscribe((data) => {
+                logger_1.Logger.debug(`UDS daemon server got data`);
+                onMessageReceived({
+                    type: this.type,
+                    daemon: this,
+                    input: data.message,
+                    stream: data.stream
+                });
+            });
             logger_1.Logger.info(`Waiting for UDS requisitions: ${this.path}`);
-        });
-    }
-    receiveMessage() {
-        return this.streamDaemon.receiveMessage()
-            .then((input) => {
-            logger_1.Logger.debug(`UDS daemon server got data`);
-            return {
-                type: this.type,
-                daemon: this,
-                input: input
-            };
+            // this.subscribed = true;
         });
     }
     unsubscribe() {
-        if (!this.subscribed) {
-            return Promise.resolve();
-        }
-        return new Promise((resolve) => {
-            fs.unlink(this.path, () => {
-                resolve(this.streamDaemon.unsubscribe());
-            });
+        return __awaiter(this, void 0, void 0, function* () {
+            logger_1.Logger.info(`Releasing ${this.path} server`);
+            yield this.streamHandler.unsubscribe();
+            // if (this.subscribed && fs.existsSync(this.path)) {
+            //     fs.unlinkSync(this.path);
+            // }
+            // console.log('HERE3: ' + fs.existsSync(this.path))
         });
     }
-    cleanUp() {
+    cleanUp(requisition) {
         return __awaiter(this, void 0, void 0, function* () {
-            /* do nothing */
+            return this.streamHandler.close(requisition.stream);
         });
     }
     sendResponse(message) {
-        return this.streamDaemon.sendResponse(message.output)
+        return this.streamHandler.sendResponse(message.stream, message.output)
             .then(() => logger_1.Logger.debug(`UDS daemon server response sent`));
     }
 };

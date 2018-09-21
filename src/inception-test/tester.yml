@@ -3,6 +3,9 @@ run-mode:
     reportName: src/inception-test/singleRunInceptionReport.json
     files:
       - src/inception-test/inceptionRequisition.yml
+      - src/inception-test/inceptionRequisition.yml
+
+    parallel: true
 
 outputs:
   - type: file

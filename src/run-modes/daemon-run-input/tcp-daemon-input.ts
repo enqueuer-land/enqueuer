@@ -2,7 +2,7 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../../loggers/logger';
 import {DaemonInput} from './daemon-input';
 import {DaemonInputRequisition} from './daemon-input-requisition';
-import {StreamDaemonInput} from './stream-daemon-input';
+import {StreamInputHandler} from '../../handlers/stream-input-handler';
 import {RequisitionModel} from '../../models/inputs/requisition-model';
 
 //TODO test it
@@ -10,42 +10,39 @@ import {RequisitionModel} from '../../models/inputs/requisition-model';
 export class TcpDaemonInput extends DaemonInput {
     private port: number;
     private type: string;
-    private streamDaemon: StreamDaemonInput;
+    private streamHandler: StreamInputHandler;
 
     public constructor(daemonInput: any) {
         super();
         this.type = daemonInput.type;
         this.port = daemonInput.port || 23022;
-        this.streamDaemon = new StreamDaemonInput(this.port);
+        this.streamHandler = new StreamInputHandler(this.port);
     }
 
-    public subscribe(): Promise<void> {
-        return this.streamDaemon.subscribe()
-            .then(() => Logger.info(`Waiting for TCP requisitions: ${this.port}`));
-    }
-
-    public receiveMessage(): Promise<DaemonInputRequisition> {
-        return this.streamDaemon.receiveMessage()
-            .then((input: string) => {
-                Logger.debug(`TCP daemon server got data`);
-                return {
-                    type: this.type,
-                    daemon: this,
-                    input: input
-                };
+    public async subscribe(onMessageReceived: (requisition: DaemonInputRequisition) => void): Promise<void> {
+        await this.streamHandler.subscribe((data: any) => {
+            Logger.debug(`TCP daemon server got data`);
+            onMessageReceived({
+                type: this.type,
+                daemon: this,
+                input: data.message,
+                stream: data.stream
             });
+        });
+        Logger.info(`Waiting for TCP requisitions: ${this.port}`);
     }
 
     public unsubscribe(): Promise<void> {
-        return this.streamDaemon.unsubscribe();
+        Logger.info(`Releasing ${this.port} server`);
+        return this.streamHandler.unsubscribe();
     }
 
-    public async cleanUp(): Promise<void> {
-        /* do nothing */
+    public async cleanUp(requisition: DaemonInputRequisition): Promise<void> {
+        return this.streamHandler.close(requisition.stream);
     }
 
     public sendResponse(message: DaemonInputRequisition): Promise<void> {
-        return this.streamDaemon.sendResponse(message.output)
+        return this.streamHandler.sendResponse(message.stream, message.output)
             .then(() => Logger.debug(`TCP daemon server response sent`));
     }
 }

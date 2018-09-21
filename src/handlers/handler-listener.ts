@@ -5,6 +5,7 @@ export class HandlerListener {
     private server: any;
     private remainingAttempts: number;
     private retryTimeout: number;
+    private handler: number | string = '';
 
     public constructor(server: any, remainingAttempts: number = 3, retryTimeout: number = 300) {
         this.server = server;
@@ -34,7 +35,13 @@ export class HandlerListener {
                 if (err) {
                     this.handleError(err, handler, resolve, reject);
                 } else {
-                    Logger.debug(`Server bound to (${handler})`);
+                    const address = this.server.address();
+                    if (!handler && address) {
+                        this.handler = address.port;
+                        Logger.info(`No specified handler. Server is bound to (${this.handler})`);
+                    } else {
+                        Logger.debug(`Server is bound to (${this.handler})`);
+                    }
                     resolve();
                 }
             });
@@ -57,5 +64,9 @@ export class HandlerListener {
             Logger.error(message);
             reject(message);
         }
+    }
+
+    public getHandler(): string | number {
+        return this.handler;
     }
 }
