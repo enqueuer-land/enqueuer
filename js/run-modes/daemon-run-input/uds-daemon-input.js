@@ -23,7 +23,6 @@ const daemon_input_1 = require("./daemon-input");
 const stream_input_handler_1 = require("../../handlers/stream-input-handler");
 //TODO test it
 let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
-    // private subscribed: boolean = false;
     constructor(daemonInput) {
         super();
         this.type = daemonInput.type;
@@ -42,17 +41,12 @@ let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
                 });
             });
             logger_1.Logger.info(`Waiting for UDS requisitions: ${this.path}`);
-            // this.subscribed = true;
         });
     }
     unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {
-            logger_1.Logger.info(`Releasing ${this.path} server`);
+            logger_1.Logger.debug(`Releasing ${this.path} server`);
             yield this.streamHandler.unsubscribe();
-            // if (this.subscribed && fs.existsSync(this.path)) {
-            //     fs.unlinkSync(this.path);
-            // }
-            // console.log('HERE3: ' + fs.existsSync(this.path))
         });
     }
     cleanUp(requisition) {

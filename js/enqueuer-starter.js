@@ -11,6 +11,7 @@ class EnqueuerStarter {
         return new Promise((resolve) => {
             this.executor.execute()
                 .then((valid) => {
+                logger_1.Logger.info(`Hope you had a great time`);
                 logger_1.Logger.info('Enqueuer execution is over (' + valid + ')');
                 resolve(valid ? 0 : 1);
             })

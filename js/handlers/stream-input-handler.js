@@ -29,15 +29,18 @@ class StreamInputHandler {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.handlerListener.listen(this.handler)
                 .then(() => {
+                this.handler = this.handlerListener.getHandler();
                 this.server.on('connection', (stream) => {
                     stream.on('data', (msg) => onMessageReceived({
                         message: this.stringifyPayloadReceived(msg.payload || msg),
                         stream: stream
                     }));
                 });
-            })
-                .catch(console.log.bind(console));
+            });
         });
+    }
+    getHandler() {
+        return this.handler;
     }
     unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {

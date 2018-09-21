@@ -4,6 +4,7 @@ const logger_1 = require("../loggers/logger");
 const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 class HandlerListener {
     constructor(server, remainingAttempts = 3, retryTimeout = 300) {
+        this.handler = '';
         this.server = server;
         this.remainingAttempts = remainingAttempts;
         this.retryTimeout = retryTimeout;
@@ -33,11 +34,11 @@ class HandlerListener {
                 else {
                     const address = this.server.address();
                     if (!handler && address) {
-                        const port = address.port;
-                        logger_1.Logger.info(`No specified handler. Server is bound to (${port})`);
+                        this.handler = address.port;
+                        logger_1.Logger.info(`No specified handler. Server is bound to (${this.handler})`);
                     }
                     else {
-                        logger_1.Logger.debug(`Server is bound to (${handler})`);
+                        logger_1.Logger.debug(`Server is bound to (${this.handler})`);
                     }
                     resolve();
                 }
@@ -62,6 +63,9 @@ class HandlerListener {
             logger_1.Logger.error(message);
             reject(message);
         }
+    }
+    getHandler() {
+        return this.handler;
     }
 }
 exports.HandlerListener = HandlerListener;

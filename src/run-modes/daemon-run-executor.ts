@@ -18,7 +18,8 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
     private multiPublisher: MultiPublisher;
     private daemonInputsLength: number;
     private parser: RequisitionParser;
-    private reject: (reason?: any) => void = () => {/*do nothing*/};
+    private reject?: (reason?: any) => void;
+    private resolve?: (value: boolean) => void;
 
     public constructor(configuration: ConfigurationValues) {
         super();
@@ -36,14 +37,13 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
     public execute(): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.reject = reject;
-            this.daemonInputs
-                .forEach((input: DaemonInput) => {
-                    try {
-                        input.subscribe((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition));
-                    } catch (err) {
-                        this.unsubscribe(err, input);
-                    }
-                });
+            this.resolve = resolve;
+            const onMessageReceived = (requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition);
+            Promise.all(this.daemonInputs
+                        .map((input: DaemonInput) => input
+                                    .subscribe(onMessageReceived)
+                                    .catch((err) => this.unsubscribe(err, input)))
+                ).then(() => this.daemonInputsLength > 0 && Logger.info(`Hit me!`));
         });
     }
 
@@ -54,7 +54,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         if (this.daemonInputsLength <= 0) {
             const message = `Daemon mode has no input able to listen from`;
             Logger.fatal(message);
-            this.reject(message);
+            this.reject && this.reject(message);
         }
     }
 
@@ -97,9 +97,9 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
     private async handleKillSignal(handleKillSignal: Signals): Promise<any> {
         const message = `Daemon runner handling kill signal ${handleKillSignal}`;
-        Logger.fatal(message);
+        Logger.info(message);
         await Promise.all(this.daemonInputs.map((input) => input.unsubscribe()));
-        this.reject(message);
+        this.resolve && this.resolve(true);
     }
 
 }

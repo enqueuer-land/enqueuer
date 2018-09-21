@@ -10,7 +10,6 @@ export class UdsDaemonInput extends DaemonInput {
     private readonly path: string;
     private readonly type: string;
     private streamHandler: StreamInputHandler;
-    // private subscribed: boolean = false;
 
     public constructor(daemonInput: any) {
         super();
@@ -30,16 +29,11 @@ export class UdsDaemonInput extends DaemonInput {
             });
         });
         Logger.info(`Waiting for UDS requisitions: ${this.path}`);
-        // this.subscribed = true;
     }
 
     public async unsubscribe(): Promise<void> {
-        Logger.info(`Releasing ${this.path} server`);
+        Logger.debug(`Releasing ${this.path} server`);
         await this.streamHandler.unsubscribe();
-        // if (this.subscribed && fs.existsSync(this.path)) {
-        //     fs.unlinkSync(this.path);
-        // }
-        // console.log('HERE3: ' + fs.existsSync(this.path))
     }
 
     public async cleanUp(requisition: DaemonInputRequisition): Promise<void> {

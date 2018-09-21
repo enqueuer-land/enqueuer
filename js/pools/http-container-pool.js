@@ -11,7 +11,7 @@ class HttpContainerPool {
         logger_1.Logger.debug(`Getting a Http/s server ${port}`);
         let httpContainer = self.containers[port];
         if (!httpContainer) {
-            logger_1.Logger.info(`Creating a new Http/s server ${port}`);
+            logger_1.Logger.debug(`Creating a new Http/s server ${port}`);
             httpContainer = new http_container_1.HttpContainer(port, secure, credentials);
             return httpContainer.acquire()
                 .then((app) => {
@@ -28,7 +28,7 @@ class HttpContainerPool {
         return new Promise((resolve) => {
             const self = HttpContainerPool.getInstance();
             logger_1.Logger.trace(`Current containers: {${Object.keys(self.containers)}}`);
-            logger_1.Logger.info(`Releasing (${port}) http/s container`);
+            logger_1.Logger.debug(`Releasing (${port}) http/s container`);
             const httpContainer = self.containers[port];
             if (httpContainer) {
                 httpContainer.release(() => {

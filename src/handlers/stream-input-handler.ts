@@ -24,8 +24,7 @@ export class StreamInputHandler {
                         stream: stream
                     }));
                 });
-            })
-            .catch(console.log.bind(console));
+            });
     }
 
     public getHandler(): string | number {

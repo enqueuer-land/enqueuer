@@ -8,6 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../../loggers/logger");
@@ -23,23 +31,25 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
         this.method = daemonInput.method || 'post';
     }
     subscribe(onMessageReceived) {
-        http_container_pool_1.HttpContainerPool.getApp(this.port)
-            .then((app) => {
-            logger_1.Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
-            app[this.method](this.endpoint, (request, responseHandler) => {
-                logger_1.Logger.debug(`HttpDaemonInput:${this.port} got message (${this.method}) ${this.endpoint}: ${request.rawBody}`);
-                let result = {
-                    type: this.type,
-                    daemon: this,
-                    input: request.rawBody,
-                    responseHandler: responseHandler
-                };
-                onMessageReceived(result);
+        return __awaiter(this, void 0, void 0, function* () {
+            return http_container_pool_1.HttpContainerPool.getApp(this.port)
+                .then((app) => {
+                logger_1.Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
+                app[this.method](this.endpoint, (request, responseHandler) => {
+                    logger_1.Logger.debug(`HttpDaemonInput:${this.port} got message (${this.method}) ${this.endpoint}: ${request.rawBody}`);
+                    let result = {
+                        type: this.type,
+                        daemon: this,
+                        input: request.rawBody,
+                        responseHandler: responseHandler
+                    };
+                    onMessageReceived(result);
+                });
+            }).catch(err => {
+                const message = `Error in HttpDaemonInput subscription: ${err}`;
+                logger_1.Logger.error(message);
+                throw message;
             });
-        }).catch(err => {
-            const message = `Error in HttpDaemonInput subscription: ${err}`;
-            logger_1.Logger.error(message);
-            throw message;
         });
     }
     unsubscribe() {

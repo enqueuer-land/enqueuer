@@ -33,7 +33,7 @@ export class TcpDaemonInput extends DaemonInput {
     }
 
     public unsubscribe(): Promise<void> {
-        Logger.info(`Releasing ${this.port} server`);
+        Logger.debug(`Releasing ${this.port} server`);
         return this.streamHandler.unsubscribe();
     }
 

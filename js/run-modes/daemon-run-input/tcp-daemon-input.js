@@ -44,7 +44,7 @@ let TcpDaemonInput = class TcpDaemonInput extends daemon_input_1.DaemonInput {
         });
     }
     unsubscribe() {
-        logger_1.Logger.info(`Releasing ${this.port} server`);
+        logger_1.Logger.debug(`Releasing ${this.port} server`);
         return this.streamHandler.unsubscribe();
     }
     cleanUp(requisition) {
