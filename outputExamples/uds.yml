@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 51
-      startTime: '2018-09-20T01:33:00.103Z'
-      endTime: '2018-09-20T01:33:00.154Z'
+      totalTime: 78
+      startTime: '2018-09-21T02:22:54.238Z'
+      endTime: '2018-09-21T02:22:54.316Z'
       timeout: 3000
     subscriptions:
       -
@@ -30,7 +30,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-20T01:33:00.106Z'
+        connectionTime: '2018-09-21T02:22:54.239Z'
         messageReceived:
           payload:
             type: Buffer
@@ -61,7 +61,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-20T01:33:00.154Z'
+        publishTime: '2018-09-21T02:22:54.315Z'
         messageReceived:
           payload: responsePayload
   -
@@ -69,9 +69,9 @@ requisitions:
     tests: []
     name: 'UDS2 Name description'
     time:
-      totalTime: 1028
-      startTime: '2018-09-20T01:33:00.172Z'
-      endTime: '2018-09-20T01:33:01.200Z'
+      totalTime: 1033
+      startTime: '2018-09-21T02:22:54.353Z'
+      endTime: '2018-09-21T02:22:55.386Z'
     subscriptions:
       -
         name: 'udsSubscription2 description'
@@ -86,7 +86,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-20T01:33:00.172Z'
+        connectionTime: '2018-09-21T02:22:54.353Z'
         messageReceived:
           payload:
             type: Buffer
@@ -113,15 +113,15 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-20T01:33:01.199Z'
+        publishTime: '2018-09-21T02:22:55.386Z'
   -
     valid: true
     tests: []
     name: 'udsStreamLoader description'
     time:
       totalTime: 1
-      startTime: '2018-09-20T01:33:01.202Z'
-      endTime: '2018-09-20T01:33:01.203Z'
+      startTime: '2018-09-21T02:22:55.389Z'
+      endTime: '2018-09-21T02:22:55.390Z'
     subscriptions:
       -
         name: 'Subscription #0'
@@ -136,7 +136,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-20T01:33:01.202Z'
+        connectionTime: '2018-09-21T02:22:55.389Z'
         messageReceived:
           payload:
             type: Buffer
@@ -176,6 +176,6 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-20T01:33:01.203Z'
+        publishTime: '2018-09-21T02:22:55.390Z'
         messageReceived:
           payload: 'I am still bidirectional'

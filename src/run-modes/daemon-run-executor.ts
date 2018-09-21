@@ -9,12 +9,15 @@ import {ConfigurationValues} from '../configurations/configuration-values';
 import {DaemonInputRequisition} from './daemon-run-input/daemon-input-requisition';
 import {ConsoleResultCreator} from './single-run-result-creators/console-result-creator';
 import Signals = NodeJS.Signals;
+import {RequisitionParser} from '../requisition-runners/requisition-parser';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
 export class DaemonRunExecutor extends EnqueuerExecutor {
     private daemonInputs: DaemonInput[];
     private multiPublisher: MultiPublisher;
     private daemonInputsLength: number;
+    private parser: RequisitionParser;
     private reject: (reason?: any) => void = () => {/*do nothing*/};
 
     public constructor(configuration: ConfigurationValues) {
@@ -25,6 +28,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         this.multiPublisher = new MultiPublisher(configuration.outputs);
         this.daemonInputs = daemonMode.map((input: any) => Container.subclassesOf(DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
+        this.parser = new RequisitionParser();
         process.on('SIGINT', (handleKillSignal: Signals) => this.handleKillSignal(handleKillSignal));
         process.on('SIGTERM', (handleKillSignal: Signals) => this.handleKillSignal(handleKillSignal));
     }
@@ -36,7 +40,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
                 .forEach((input: DaemonInput) => {
                     input.subscribe()
                         .then(() => this.startReader(input))
-                        .catch( (err: any) => this.unsubscribe(err, input));
+                        .catch((err: any) => this.unsubscribe(err, input));
                 });
         });
     }
@@ -52,29 +56,54 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         }
     }
 
-    private startReader(input?: DaemonInput) {
-        if (input) {
-            input.receiveMessage()
-                .then((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition))
-                .catch( (err) => {
-                    Logger.error(err);
-                    input.sendResponse(err).catch(console.log.bind(console));
-                    this.multiPublisher.publish(err).catch(console.log.bind(console));
-                    this.startReader(input);
-                });
-        }
+    private startReader(input: DaemonInput) {
+        input.receiveMessage()
+            .then((requisition: DaemonInputRequisition) => this.handleRequisitionReceived(requisition))
+            .catch((err) => {
+                Logger.error(err);
+                input.sendResponse(err).catch(console.log.bind(console));
+                this.multiPublisher.publish(err).catch(console.log.bind(console));
+                this.startReader(input);
+            });
     }
 
-    private handleRequisitionReceived(message: DaemonInputRequisition) {
-        const resultCreator = new ConsoleResultCreator();
-        return new MultiRequisitionRunner(message.input, message.type).run()
-            .then( (report: output.RequisitionModel) => message.output = report)
-            .then( () => message.output && resultCreator.addTestSuite(message.type, message.output))
-            .then( () => resultCreator.create())
-            .then( () => message.daemon && message.daemon.sendResponse(message))
-            .then(() => message.daemon && message.daemon.cleanUp())
-            .then( () => this.multiPublisher.publish(message.output))
+    private async handleRequisitionReceived(message: DaemonInputRequisition) {
+        let requisitionModels;
+        try {
+            requisitionModels = this.parser.parse(message.input);
+        } catch (err) {
+            message.output = err;
+            return this.publishError(message);
+        }
+        return this.runRequisition(requisitionModels, message);
+    }
+
+    private async publishError(message: DaemonInputRequisition) {
+        return this.sendResponse(message)
+            .then(() => this.multiPublisher.publish(message.output))
             .then(() => this.startReader(message.daemon));
+    }
+
+    private async runRequisition(requisitionModels: RequisitionModel[], message: DaemonInputRequisition) {
+        return new MultiRequisitionRunner(requisitionModels, message.type).run()
+            .then((report: output.RequisitionModel) => message.output = report)
+            .then(() => this.registerTest(message))
+            .then(() => this.sendResponse(message))
+            .then(() => this.multiPublisher.publish(message.output))
+            .then(() => this.startReader(message.daemon));
+    }
+
+    private async sendResponse(message: DaemonInputRequisition) {
+        await message.daemon.sendResponse(message);
+        await message.daemon.cleanUp();
+    }
+
+    private registerTest(message: DaemonInputRequisition) {
+        if (message.output) {
+            const resultCreator = new ConsoleResultCreator();
+            resultCreator.addTestSuite(message.type, message.output);
+            resultCreator.create();
+        }
     }
 
     private async handleKillSignal(handleKillSignal: Signals): Promise<any> {

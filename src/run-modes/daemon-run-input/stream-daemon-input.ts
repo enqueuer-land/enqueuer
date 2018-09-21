@@ -1,18 +1,16 @@
-import {DaemonInputRequisition} from './daemon-input-requisition';
 import {HandlerListener} from '../../handlers/handler-listener';
 import * as net from 'net';
-import {RequisitionParser} from '../../requisition-runners/requisition-parser';
 import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
+import {RequisitionModel} from '../../models/inputs/requisition-model';
 
 //TODO test it
 export class StreamDaemonInput {
     private handler: string | number;
     private server: net.Server;
-    private parser: RequisitionParser;
+    private stream: any;
 
     public constructor(handler: string | number) {
         this.handler = handler;
-        this.parser = new RequisitionParser();
         this.server = net.createServer();
     }
 
@@ -20,16 +18,11 @@ export class StreamDaemonInput {
         return new HandlerListener(this.server).listen(this.handler);
     }
 
-    public receiveMessage(): Promise<DaemonInputRequisition> {
+    public receiveMessage(): Promise<string> {
         return new Promise((resolve) => {
             this.server.on('connection', (stream: any) => {
-                stream.on('data', (msg: any) => {
-                    resolve({
-                        type: 'stream',
-                        input: this.parser.parse(this.stringifyPayloadReceived(msg.payload || msg)),
-                        stream: stream
-                    });
-                });
+                this.stream = stream;
+                stream.on('data', (msg: any) => resolve(this.stringifyPayloadReceived(msg.payload || msg)));
             });
         });
     }
@@ -42,23 +35,14 @@ export class StreamDaemonInput {
         return Promise.resolve();
     }
 
-    public cleanUp(): Promise<void> {
-        return Promise.resolve();
-    }
-
-    public sendResponse(requisition: DaemonInputRequisition): Promise<void> {
-        return new Promise((resolve, reject) => {
-            if (requisition.stream) {
-                const message = this.stringifyPayloadToSend(requisition.output);
-                requisition.stream.write(message, () => {
-                    requisition.stream.end();
-                    requisition.stream = null;
-                    resolve();
-                });
-            } else {
-                const message = `No daemon response was sent because stream is null`;
-                reject(message);
-            }
+    public sendResponse(message: any): Promise<void> {
+        return new Promise((resolve) => {
+            const strMsg = this.stringifyPayloadToSend(message);
+            this.stream.write(strMsg, () => {
+                this.stream.end();
+                this.stream = null;
+                resolve();
+            });
         });
     }
 

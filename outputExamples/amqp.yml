@@ -8,9 +8,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 615
-      startTime: '2018-09-20T01:33:00.032Z'
-      endTime: '2018-09-20T01:33:00.647Z'
+      totalTime: 806
+      startTime: '2018-09-21T02:22:54.145Z'
+      endTime: '2018-09-21T02:22:54.951Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -37,7 +37,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-20T01:33:00.250Z'
+        connectionTime: '2018-09-21T02:22:54.428Z'
         messageReceived:
           payload:
             how:
@@ -50,7 +50,7 @@ requisitions:
             headers:
               key: value
               otherKey: otherValue
-            queue: bHK9Hc6f
+            queue: pu476wf1
             deliveryTag:
               type: Buffer
               data:
@@ -65,7 +65,7 @@ requisitions:
             redelivered: false
             exchange: enqueuer.exchange
             routingKey: enqueuer.integration.test.routing.key
-            consumerTag: node-amqp-57401-0.6962083770735332
+            consumerTag: node-amqp-53037-0.6502007758890813
     startEvent:
       publisher:
         name: 'publisher description'
@@ -80,15 +80,15 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-20T01:33:00.646Z'
+        publishTime: '2018-09-21T02:22:54.949Z'
   -
     valid: true
     tests: []
     name: 'Default exchange'
     time:
       totalTime: 22
-      startTime: '2018-09-20T01:33:00.649Z'
-      endTime: '2018-09-20T01:33:00.671Z'
+      startTime: '2018-09-21T02:22:54.952Z'
+      endTime: '2018-09-21T02:22:54.974Z'
     subscriptions:
       -
         name: 'Subscription #0'
@@ -103,7 +103,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-20T01:33:00.661Z'
+        connectionTime: '2018-09-21T02:22:54.964Z'
         messageReceived:
           payload:
             data:
@@ -144,7 +144,7 @@ requisitions:
             redelivered: false
             exchange: ""
             routingKey: enqueuer.default.exchange
-            consumerTag: node-amqp-57401-0.9393451309326695
+            consumerTag: node-amqp-53037-0.7723197080521578
     startEvent:
       publisher:
         name: 'publisher description'
@@ -155,4 +155,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-20T01:33:00.670Z'
+        publishTime: '2018-09-21T02:22:54.973Z'

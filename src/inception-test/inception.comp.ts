@@ -6,7 +6,7 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 
 let findEveryJsonFile = (): string[] => {
     let files = [];
-    const path = 'src/inceptionTest/';
+    const path = 'src/inception-test/';
     const dirContent = fs.readdirSync(path);
     for (let i = 0; i < dirContent.length; i++) {
         const filename = path + dirContent[i];
@@ -74,15 +74,17 @@ describe('Inception test', () => {
     it('should run enqueuer to test another enqueuer process', done => {
         jest.setTimeout(15000);
 
-        beingTested = spawn('nqr',  ['--config-file', 'src/inceptionTest/beingTested.yml']);
-        // beingTested.stdout.on('data', (data: string) => console.log('beingTested: ' + data));
+        let beingTestedLog = '';
+        beingTested = spawn('nqr',  ['--config-file', 'src/inception-test/beingTested.yml']);
+        beingTested.stdout.on('data', (data: string) => beingTestedLog += data);
         sleep(500);
 
-        tester = spawn('enqueuer',  ['--config-file', 'src/inceptionTest/tester.yml']);
+        tester = spawn('enqueuer',  ['--config-file', 'src/inception-test/tester.yml']);
         // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
 
         tester.on('exit', (statusCode: number) => {
             beingTested.kill('SIGINT');
+            console.log('beingTested: ' + beingTested);
 
             expect(statusCode).toBe(0);
 
@@ -96,10 +98,10 @@ describe('Inception test', () => {
             console.log(Object.keys(testerReports));
             expect(Object.keys(testerReports).length).toBe(4);
 
-            testDaemonReport(testerReports['src/inceptionTest/tcp_test.json']);
-            testDaemonReport(testerReports['src/inceptionTest/uds_test.json']);
-            testDaemonReport(testerReports['src/inceptionTest/http-server_test.json']);
-            testSingleRunReport(testerReports['src/inceptionTest/outter_test.json']);
+            testDaemonReport(testerReports['src/inception-test/tcp_test.json']);
+            testDaemonReport(testerReports['src/inception-test/uds_test.json']);
+            testDaemonReport(testerReports['src/inception-test/http-server_test.json']);
+            testSingleRunReport(testerReports['src/inception-test/outter_test.json']);
 
             expect(fs.existsSync('/tmp/enqueuer.requisitions')).toBeFalsy();
             done();

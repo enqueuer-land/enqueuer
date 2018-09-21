@@ -13,7 +13,6 @@ const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
 const http_container_pool_1 = require("../../pools/http-container-pool");
-const requisition_parser_1 = require("../../requisition-runners/requisition-parser");
 const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
 let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
@@ -22,7 +21,6 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
         this.port = daemonInput.port || 23023;
         this.endpoint = daemonInput.endpoint || '/requisitions';
         this.method = daemonInput.method || 'post';
-        this.parser = new requisition_parser_1.RequisitionParser();
     }
     subscribe() {
         return new Promise((resolve, reject) => {
@@ -69,7 +67,7 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
             let result = {
                 type: this.type,
                 daemon: this,
-                input: this.parser.parse(request.rawBody),
+                input: request.rawBody,
                 responseHandler: responseHandler
             };
             if (this.messageReceiverResolver) {

@@ -9,13 +9,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const handler_listener_1 = require("../../handlers/handler-listener");
 const net = __importStar(require("net"));
-const requisition_parser_1 = require("../../requisition-runners/requisition-parser");
 const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
 //TODO test it
 class StreamDaemonInput {
     constructor(handler) {
         this.handler = handler;
-        this.parser = new requisition_parser_1.RequisitionParser();
         this.server = net.createServer();
     }
     subscribe() {
@@ -24,13 +22,8 @@ class StreamDaemonInput {
     receiveMessage() {
         return new Promise((resolve) => {
             this.server.on('connection', (stream) => {
-                stream.on('data', (msg) => {
-                    resolve({
-                        type: 'stream',
-                        input: this.parser.parse(this.stringifyPayloadReceived(msg.payload || msg)),
-                        stream: stream
-                    });
-                });
+                this.stream = stream;
+                stream.on('data', (msg) => resolve(this.stringifyPayloadReceived(msg.payload || msg)));
             });
         });
     }
@@ -41,23 +34,14 @@ class StreamDaemonInput {
         }
         return Promise.resolve();
     }
-    cleanUp() {
-        return Promise.resolve();
-    }
-    sendResponse(requisition) {
-        return new Promise((resolve, reject) => {
-            if (requisition.stream) {
-                const message = this.stringifyPayloadToSend(requisition.output);
-                requisition.stream.write(message, () => {
-                    requisition.stream.end();
-                    requisition.stream = null;
-                    resolve();
-                });
-            }
-            else {
-                const message = `No daemon response was sent because stream is null`;
-                reject(message);
-            }
+    sendResponse(message) {
+        return new Promise((resolve) => {
+            const strMsg = this.stringifyPayloadToSend(message);
+            this.stream.write(strMsg, () => {
+                this.stream.end();
+                this.stream = null;
+                resolve();
+            });
         });
     }
     stringifyPayloadReceived(message) {

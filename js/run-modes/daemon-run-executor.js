@@ -24,6 +24,7 @@ const enqueuer_executor_1 = require("./enqueuer-executor");
 const conditional_injector_1 = require("conditional-injector");
 const multi_requisition_runner_1 = require("../requisition-runners/multi-requisition-runner");
 const console_result_creator_1 = require("./single-run-result-creators/console-result-creator");
+const requisition_parser_1 = require("../requisition-runners/requisition-parser");
 let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.EnqueuerExecutor {
     constructor(configuration) {
         super();
@@ -33,6 +34,7 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         this.multiPublisher = new multi_publisher_1.MultiPublisher(configuration.outputs);
         this.daemonInputs = daemonMode.map((input) => conditional_injector_1.Container.subclassesOf(daemon_input_1.DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
+        this.parser = new requisition_parser_1.RequisitionParser();
         process.on('SIGINT', (handleKillSignal) => this.handleKillSignal(handleKillSignal));
         process.on('SIGTERM', (handleKillSignal) => this.handleKillSignal(handleKillSignal));
     }
@@ -58,27 +60,57 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         }
     }
     startReader(input) {
-        if (input) {
-            input.receiveMessage()
-                .then((requisition) => this.handleRequisitionReceived(requisition))
-                .catch((err) => {
-                logger_1.Logger.error(err);
-                input.sendResponse(err).catch(console.log.bind(console));
-                this.multiPublisher.publish(err).catch(console.log.bind(console));
-                this.startReader(input);
-            });
-        }
+        input.receiveMessage()
+            .then((requisition) => this.handleRequisitionReceived(requisition))
+            .catch((err) => {
+            logger_1.Logger.error(err);
+            input.sendResponse(err).catch(console.log.bind(console));
+            this.multiPublisher.publish(err).catch(console.log.bind(console));
+            this.startReader(input);
+        });
     }
     handleRequisitionReceived(message) {
-        const resultCreator = new console_result_creator_1.ConsoleResultCreator();
-        return new multi_requisition_runner_1.MultiRequisitionRunner(message.input, message.type).run()
-            .then((report) => message.output = report)
-            .then(() => message.output && resultCreator.addTestSuite(message.type, message.output))
-            .then(() => resultCreator.create())
-            .then(() => message.daemon && message.daemon.sendResponse(message))
-            .then(() => message.daemon && message.daemon.cleanUp())
-            .then(() => this.multiPublisher.publish(message.output))
-            .then(() => this.startReader(message.daemon));
+        return __awaiter(this, void 0, void 0, function* () {
+            let requisitionModels;
+            try {
+                requisitionModels = this.parser.parse(message.input);
+            }
+            catch (err) {
+                message.output = err;
+                return this.publishError(message);
+            }
+            return this.runRequisition(requisitionModels, message);
+        });
+    }
+    publishError(message) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.sendResponse(message)
+                .then(() => this.multiPublisher.publish(message.output))
+                .then(() => this.startReader(message.daemon));
+        });
+    }
+    runRequisition(requisitionModels, message) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new multi_requisition_runner_1.MultiRequisitionRunner(requisitionModels, message.type).run()
+                .then((report) => message.output = report)
+                .then(() => this.registerTest(message))
+                .then(() => this.sendResponse(message))
+                .then(() => this.multiPublisher.publish(message.output))
+                .then(() => this.startReader(message.daemon));
+        });
+    }
+    sendResponse(message) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield message.daemon.sendResponse(message);
+            yield message.daemon.cleanUp();
+        });
+    }
+    registerTest(message) {
+        if (message.output) {
+            const resultCreator = new console_result_creator_1.ConsoleResultCreator();
+            resultCreator.addTestSuite(message.type, message.output);
+            resultCreator.create();
+        }
     }
     handleKillSignal(handleKillSignal) {
         return __awaiter(this, void 0, void 0, function* () {

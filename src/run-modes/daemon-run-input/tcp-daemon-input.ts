@@ -3,6 +3,7 @@ import {Logger} from '../../loggers/logger';
 import {DaemonInput} from './daemon-input';
 import {DaemonInputRequisition} from './daemon-input-requisition';
 import {StreamDaemonInput} from './stream-daemon-input';
+import {RequisitionModel} from '../../models/inputs/requisition-model';
 
 //TODO test it
 @Injectable({predicate: (daemonInput: any) => daemonInput.type == 'tcp'})
@@ -25,11 +26,13 @@ export class TcpDaemonInput extends DaemonInput {
 
     public receiveMessage(): Promise<DaemonInputRequisition> {
         return this.streamDaemon.receiveMessage()
-            .then((requisition: DaemonInputRequisition) => {
-                Logger.debug(`TCP server got data`);
-                requisition.type = this.type;
-                requisition.daemon = this;
-                return requisition;
+            .then((input: string) => {
+                Logger.debug(`TCP daemon server got data`);
+                return {
+                    type: this.type,
+                    daemon: this,
+                    input: input
+                };
             });
     }
 
@@ -37,12 +40,12 @@ export class TcpDaemonInput extends DaemonInput {
         return this.streamDaemon.unsubscribe();
     }
 
-    public cleanUp(): Promise<void> {
-        return this.streamDaemon.cleanUp();
+    public async cleanUp(): Promise<void> {
+        /* do nothing */
     }
 
     public sendResponse(message: DaemonInputRequisition): Promise<void> {
-        return this.streamDaemon.sendResponse(message)
+        return this.streamDaemon.sendResponse(message.output)
             .then(() => Logger.debug(`TCP daemon server response sent`));
     }
 }

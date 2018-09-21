@@ -82,47 +82,47 @@ describe('DaemonRunExecutor', () => {
         expect(subscribeMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
     });
 
-    it('run - fail', done => {
-        expect.assertions(3);
-        createMock.mockImplementation(() =>
-        {
-            return {
-                sendResponse: () => Promise.resolve(),
-                subscribe: () => Promise.resolve(),
-                receiveMessage: () => {
-                    return new Promise(resolve => resolve(['requisition']));
-                }
-            }
-        });
-
-        const runMock = jest.fn(() => Promise.reject('runMock rejected'));
-        let multiRequisitionRunnerMock = jest.fn(() => {
-            return {
-                run: runMock
-            }
-        });
-        MultiRequisitionRunner.mockImplementation(multiRequisitionRunnerMock);
-
-        let calls = 0;
-        const publishMock = jest.fn(() => {
-            ++calls;
-            if (calls >= daemonConfiguration.runMode.daemon.length) {
-                expect(publishMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
-                expect(publishMock).toHaveBeenCalledWith('runMock rejected');
-                expect(runMock).toHaveBeenCalledTimes(2);
-
-                done();
-            }
-            return new Promise(() => {});
-        });
-        MultiPublisher.mockImplementation(() => {
-            return {
-                publish: publishMock
-            }
-        });
-
-
-        new DaemonRunExecutor(daemonConfiguration).execute();
-    });
+    // it('run - fail', done => {
+    //     expect.assertions(3);
+    //     createMock.mockImplementation(() =>
+    //     {
+    //         return {
+    //             sendResponse: () => Promise.resolve(),
+    //             subscribe: () => Promise.resolve(),
+    //             receiveMessage: () => {
+    //                 return new Promise(resolve => resolve(['requisition']));
+    //             }
+    //         }
+    //     });
+    //
+    //     const runMock = jest.fn(() => Promise.reject('runMock rejected'));
+    //     let multiRequisitionRunnerMock = jest.fn(() => {
+    //         return {
+    //             run: runMock
+    //         }
+    //     });
+    //     MultiRequisitionRunner.mockImplementation(multiRequisitionRunnerMock);
+    //
+    //     let calls = 0;
+    //     const publishMock = jest.fn(() => {
+    //         ++calls;
+    //         if (calls >= daemonConfiguration.runMode.daemon.length) {
+    //             expect(publishMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
+    //             expect(publishMock).toHaveBeenCalledWith('runMock rejected');
+    //             expect(runMock).toHaveBeenCalledTimes(2);
+    //
+    //             done();
+    //         }
+    //         return new Promise(() => {});
+    //     });
+    //     MultiPublisher.mockImplementation(() => {
+    //         return {
+    //             publish: publishMock
+    //         }
+    //     });
+    //
+    //
+    //     new DaemonRunExecutor(daemonConfiguration).execute();
+    // });
 
 });

@@ -2,7 +2,6 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../../loggers/logger';
 import {DaemonInput} from './daemon-input';
 import {HttpContainerPool} from '../../pools/http-container-pool';
-import {RequisitionParser} from '../../requisition-runners/requisition-parser';
 import {DaemonInputRequisition} from './daemon-input-requisition';
 import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
 
@@ -11,7 +10,6 @@ export class HttpDaemonInput extends DaemonInput {
     private port: number;
     private endpoint: string;
     private method: string;
-    private parser: RequisitionParser;
     private type: string;
     private messageReceiverResolver: any;
 
@@ -22,7 +20,6 @@ export class HttpDaemonInput extends DaemonInput {
         this.port = daemonInput.port || 23023;
         this.endpoint = daemonInput.endpoint || '/requisitions';
         this.method = daemonInput.method || 'post';
-        this.parser = new RequisitionParser();
     }
 
     public subscribe(): Promise<void> {
@@ -75,7 +72,7 @@ export class HttpDaemonInput extends DaemonInput {
             let result: DaemonInputRequisition = {
                 type: this.type,
                 daemon: this,
-                input: this.parser.parse(request.rawBody),
+                input: request.rawBody,
                 responseHandler: responseHandler
             };
             if (this.messageReceiverResolver) {
