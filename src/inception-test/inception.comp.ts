@@ -1,8 +1,11 @@
-import { spawn } from 'child_process';
+import {spawn} from 'child_process';
 import * as fs from 'fs';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ConfigurationValues} from "../configurations/configuration-values";
+import {EnqueuerStarter} from "../enqueuer-starter";
+import '../injectable-files-list'
 
 let findEveryJsonFile = (): string[] => {
     let files = [];
@@ -32,6 +35,27 @@ let sleep = (millisecondsToWait: number): void => {
 const findTest = (label: string, tests: TestModel[]): TestModel | undefined => {
     return tests.find((test) => test.name == label);
 };
+
+const testerConfiguration: ConfigurationValues = {
+    logLevel: 'warn',
+    runMode: {
+        'single-run': {
+            reportName: "src/inception-test/singleRunInceptionReport.json",
+            files: [
+                "src/inception-test/inceptionRequisition.yml",
+                "src/inception-test/inceptionRequisition.yml"
+            ],
+            parallel: true
+        }
+    },
+    outputs: [
+        {
+            "type": "file",
+            "filename": "src/inception-test/outter_test.json"
+        }
+    ],
+    quiet: false
+}
 
 describe('Inception test', () => {
     let beingTested: any;
@@ -75,37 +99,44 @@ describe('Inception test', () => {
         jest.setTimeout(15000);
 
         let beingTestedLog = '';
-        beingTested = spawn('nqr',  ['src/inception-test/beingTested.yml']);
+        beingTested = spawn('nqr', ['src/inception-test/beingTested.yml']);
         beingTested.stdout.on('data', (data: string) => beingTestedLog += data);
         sleep(500);
 
+        // new EnqueuerStarter(testerConfiguration)
+        //     .start()
+        //     .then((statusCode: number) => {
+
         tester = spawn('enqueuer',  ['src/inception-test/tester.yml']);
         // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
-
         tester.on('exit', (statusCode: number) => {
-            beingTested.kill('SIGINT');
-            console.log('beingTested: ' + beingTestedLog);
+                expect(statusCode).toBe(0);
 
-            expect(statusCode).toBe(0);
+                const testerReports = {};
+                findEveryJsonFile()
+                    .filter(filename => filename.indexOf('_test.json') >= 0)
+                    .forEach(filename => {
+                        testerReports[filename] = new JavascriptObjectNotation().loadFromFileSync(filename);
+                    });
 
-            const testerReports = {};
-            findEveryJsonFile()
-                .filter(filename => filename.indexOf('_test.json') >= 0)
-                .forEach(filename => {
-                    testerReports[filename] = new JavascriptObjectNotation().loadFromFileSync(filename);
-                });
+                console.log(Object.keys(testerReports));
+                expect(Object.keys(testerReports).length).toBe(4);
 
-            console.log(Object.keys(testerReports));
-            expect(Object.keys(testerReports).length).toBe(4);
+                testDaemonReport(testerReports['src/inception-test/tcp_test.json']);
+                testDaemonReport(testerReports['src/inception-test/uds_test.json']);
+                testDaemonReport(testerReports['src/inception-test/http-server_test.json']);
+                testSingleRunReport(testerReports['src/inception-test/outter_test.json']);
 
-            testDaemonReport(testerReports['src/inception-test/tcp_test.json']);
-            testDaemonReport(testerReports['src/inception-test/uds_test.json']);
-            testDaemonReport(testerReports['src/inception-test/http-server_test.json']);
-            testSingleRunReport(testerReports['src/inception-test/outter_test.json']);
+                beingTested.kill('SIGINT');
+            });
 
+        beingTested.on('exit', (statusCode: number) => {
             expect(fs.existsSync('/tmp/enqueuer.requisitions')).toBeFalsy();
+            console.log('beingTested: ' + beingTestedLog);
+            expect(statusCode).toEqual(0);
             done();
         });
+
     });
 
     afterAll(() => {

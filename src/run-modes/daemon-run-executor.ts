@@ -54,7 +54,9 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         if (this.daemonInputsLength <= 0) {
             const message = `Daemon mode has no input able to listen from`;
             Logger.fatal(message);
-            this.reject && this.reject(message);
+            if (this.reject) {
+                this.reject(message);
+            }
         }
     }
 
@@ -99,7 +101,9 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         const message = `Daemon runner handling kill signal ${handleKillSignal}`;
         Logger.info(message);
         await Promise.all(this.daemonInputs.map((input) => input.unsubscribe()));
-        this.resolve && this.resolve(true);
+        if (this.resolve) {
+            this.resolve(true);
+        }
     }
 
 }

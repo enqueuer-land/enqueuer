@@ -1,31 +1,52 @@
 name: examples/mqtt.yml
-valid: false
+valid: true
 tests: []
 startEvent: {}
 requisitions:
   -
-    valid: false
+    valid: true
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 5007
-      startTime: '2018-09-21T17:00:18.638Z'
-      endTime: '2018-09-21T17:00:23.645Z'
+      totalTime: 1140
+      startTime: '2018-09-21T19:01:05.932Z'
+      endTime: '2018-09-21T19:01:07.072Z'
     subscriptions:
       -
         name: 'subscription description'
         type: mqtt
         tests:
           -
-            valid: false
-            name: 'Message received'
-            description: 'Subscription has not received its message'
+            name: Payload
+            valid: true
+            description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
-            valid: false
-            name: 'No time out'
-            description: 'Not avoidable Subscription has timed out'
-        valid: false
-        connectionTime: '2018-09-21T17:00:19.170Z'
+            name: Topic
+            valid: true
+            description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+          -
+            name: 'Beatles song'
+            valid: true
+            description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-21T19:01:07.046Z'
+        messageReceived:
+          topic: enqueuer/integration/public/test
+          payload:
+            type: Buffer
+            data:
+              - 101
+              - 110
+              - 113
+              - 117
+              - 101
+              - 117
+              - 101
+              - 114
     startEvent:
       publisher:
         name: 'publisher description'
@@ -36,4 +57,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-21T17:00:19.188Z'
+        publishTime: '2018-09-21T19:01:07.067Z'
