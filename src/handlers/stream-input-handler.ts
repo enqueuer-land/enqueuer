@@ -4,8 +4,8 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 
 //TODO test it
 export class StreamInputHandler {
-    private readonly server: net.Server;
     private readonly handlerListener: HandlerListener;
+    private server: net.Server;
     private handler: string | number;
 
     public constructor(handler: string | number) {
