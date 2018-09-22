@@ -22,7 +22,6 @@ const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
 const http_container_pool_1 = require("../../pools/http-container-pool");
 const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
-//TODO test it
 let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();
@@ -33,7 +32,7 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     }
     subscribe(onMessageReceived) {
         return __awaiter(this, void 0, void 0, function* () {
-            return http_container_pool_1.HttpContainerPool.getApp(this.port)
+            http_container_pool_1.HttpContainerPool.getApp(this.port)
                 .then((app) => {
                 logger_1.Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
                 app[this.method](this.endpoint, (request, responseHandler) => {
@@ -60,23 +59,19 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
         return Promise.resolve();
     }
     sendResponse(message) {
-        const response = {
-            status: 200,
-            payload: message.output
-        };
-        logger_1.Logger.trace(`${this.type} sending requisition response: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(response)}`);
-        try {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = {
+                status: 200,
+                payload: message.output
+            };
+            logger_1.Logger.trace(`${this.type} sending requisition response: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(response)}`);
             message.responseHandler.status(response.status).send(response.payload);
             logger_1.Logger.debug(`${this.type} requisition response sent`);
-            return Promise.resolve();
-        }
-        catch (err) {
-            return Promise.reject(`${this.type} response back sending error: ${err}`);
-        }
+        });
     }
 };
 HttpDaemonInput = __decorate([
-    conditional_injector_1.Injectable({ predicate: (daemonInput) => daemonInput.type === 'http-server' }),
+    conditional_injector_1.Injectable({ predicate: (daemonInput) => daemonInput.type === 'http-server' || daemonInput.type === 'http' }),
     __metadata("design:paramtypes", [Object])
 ], HttpDaemonInput);
 exports.HttpDaemonInput = HttpDaemonInput;

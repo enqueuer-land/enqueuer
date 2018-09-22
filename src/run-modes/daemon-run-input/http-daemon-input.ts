@@ -5,8 +5,7 @@ import {HttpContainerPool} from '../../pools/http-container-pool';
 import {DaemonInputRequisition} from './daemon-input-requisition';
 import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
 
-//TODO test it
-@Injectable({predicate: (daemonInput: any) => daemonInput.type === 'http-server'})
+@Injectable({predicate: (daemonInput: any) => daemonInput.type === 'http-server' || daemonInput.type === 'http'})
 export class HttpDaemonInput extends DaemonInput {
     private port: number;
     private endpoint: string;
@@ -23,7 +22,7 @@ export class HttpDaemonInput extends DaemonInput {
     }
 
     public async subscribe(onMessageReceived: (requisition: DaemonInputRequisition) => void): Promise<void> {
-        return HttpContainerPool.getApp(this.port)
+        HttpContainerPool.getApp(this.port)
             .then((app: any) => {
                 Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
                 app[this.method](this.endpoint, (request: any, responseHandler: any) => {
@@ -51,20 +50,15 @@ export class HttpDaemonInput extends DaemonInput {
         return Promise.resolve();
     }
 
-    public sendResponse(message: DaemonInputRequisition): Promise<void> {
+    public async sendResponse(message: DaemonInputRequisition): Promise<void> {
         const response = {
             status: 200,
             payload: message.output
         };
 
         Logger.trace(`${this.type} sending requisition response: ${new JavascriptObjectNotation().stringify(response)}`);
-        try {
-            message.responseHandler.status(response.status).send(response.payload);
-            Logger.debug(`${this.type} requisition response sent`);
-            return Promise.resolve();
-        } catch (err) {
-            return Promise.reject(`${this.type} response back sending error: ${err}`);
-        }
+        message.responseHandler.status(response.status).send(response.payload);
+        Logger.debug(`${this.type} requisition response sent`);
     }
 
 }
