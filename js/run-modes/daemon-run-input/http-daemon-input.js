@@ -22,6 +22,7 @@ const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
 const http_container_pool_1 = require("../../pools/http-container-pool");
 const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
+//TODO test it
 let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();

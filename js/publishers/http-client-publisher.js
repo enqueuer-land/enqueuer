@@ -50,7 +50,10 @@ let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publishe
     }
 };
 HttpClientPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'http-client' || publishRequisition.type === 'https-client' }),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'http-client' ||
+            publishRequisition.type === 'http' ||
+            publishRequisition.type === 'https' ||
+            publishRequisition.type === 'https-client' }),
     __metadata("design:paramtypes", [Object])
 ], HttpClientPublisher);
 exports.HttpClientPublisher = HttpClientPublisher;

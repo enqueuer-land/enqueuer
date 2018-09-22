@@ -146,7 +146,7 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
     }
 };
 UdsSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'uds' }),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'uds' || subscriptionAttributes.type === 'uds-server' }),
     __metadata("design:paramtypes", [Object])
 ], UdsSubscription);
 exports.UdsSubscription = UdsSubscription;

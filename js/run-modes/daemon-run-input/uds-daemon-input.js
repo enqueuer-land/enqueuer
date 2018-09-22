@@ -21,7 +21,6 @@ const conditional_injector_1 = require("conditional-injector");
 const logger_1 = require("../../loggers/logger");
 const daemon_input_1 = require("./daemon-input");
 const stream_input_handler_1 = require("../../handlers/stream-input-handler");
-//TODO test it
 let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
     constructor(daemonInput) {
         super();
@@ -55,8 +54,10 @@ let UdsDaemonInput = class UdsDaemonInput extends daemon_input_1.DaemonInput {
         });
     }
     sendResponse(message) {
-        return this.streamHandler.sendResponse(message.stream, message.output)
-            .then(() => logger_1.Logger.debug(`UDS daemon server response sent`));
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.streamHandler.sendResponse(message.stream, message.output);
+            logger_1.Logger.debug(`UDS daemon server response sent`);
+        });
     }
 };
 UdsDaemonInput = __decorate([

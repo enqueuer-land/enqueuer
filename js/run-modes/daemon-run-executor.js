@@ -34,8 +34,8 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
         this.daemonInputs = daemonMode.map((input) => conditional_injector_1.Container.subclassesOf(daemon_input_1.DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
         this.parser = new requisition_parser_1.RequisitionParser();
-        process.on('SIGINT', (handleKillSignal) => this.handleKillSignal(handleKillSignal));
-        process.on('SIGTERM', (handleKillSignal) => this.handleKillSignal(handleKillSignal));
+        process.on('SIGINT', (handleKillSignal) => this.handleKillSignal());
+        process.on('SIGTERM', (handleKillSignal) => this.handleKillSignal());
     }
     execute() {
         return new Promise((resolve, reject) => {
@@ -99,10 +99,9 @@ let DaemonRunExecutor = class DaemonRunExecutor extends enqueuer_executor_1.Enqu
             resultCreator.create();
         }
     }
-    handleKillSignal(handleKillSignal) {
+    handleKillSignal() {
         return __awaiter(this, void 0, void 0, function* () {
-            const message = `Daemon runner handling kill signal ${handleKillSignal}`;
-            logger_1.Logger.info(message);
+            logger_1.Logger.info(`Daemon runner is finishing`);
             yield Promise.all(this.daemonInputs.map((input) => input.unsubscribe()));
             if (this.resolve) {
                 this.resolve(true);

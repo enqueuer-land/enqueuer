@@ -12,6 +12,8 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
     predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-proxy' ||
         subscriptionAttributes.type === 'https-proxy' ||
         subscriptionAttributes.type === 'http-server' ||
+        subscriptionAttributes.type === 'http' ||
+        subscriptionAttributes.type === 'https' ||
         subscriptionAttributes.type === 'https-server'
 })
 export class HttpSubscription extends Subscription {

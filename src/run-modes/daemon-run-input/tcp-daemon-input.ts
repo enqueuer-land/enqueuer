@@ -5,7 +5,6 @@ import {DaemonInputRequisition} from './daemon-input-requisition';
 import {StreamInputHandler} from '../../handlers/stream-input-handler';
 import {RequisitionModel} from '../../models/inputs/requisition-model';
 
-//TODO test it
 @Injectable({predicate: (daemonInput: any) => daemonInput.type == 'tcp'})
 export class TcpDaemonInput extends DaemonInput {
     private port: number;
@@ -41,8 +40,8 @@ export class TcpDaemonInput extends DaemonInput {
         return this.streamHandler.close(requisition.stream);
     }
 
-    public sendResponse(message: DaemonInputRequisition): Promise<void> {
-        return this.streamHandler.sendResponse(message.stream, message.output)
-            .then(() => Logger.debug(`TCP daemon server response sent`));
+    public async sendResponse(message: DaemonInputRequisition): Promise<void> {
+        await this.streamHandler.sendResponse(message.stream, message.output);
+        Logger.debug(`TCP daemon server response sent`);
     }
 }

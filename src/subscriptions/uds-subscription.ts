@@ -8,7 +8,7 @@ import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'uds'})
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'uds' || subscriptionAttributes.type === 'uds-server'})
 export class UdsSubscription extends Subscription {
 
     private server: any;

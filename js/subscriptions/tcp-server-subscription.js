@@ -157,7 +157,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     }
 };
 TcpServerSubscription = __decorate([
-    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'tcp-server' }),
+    conditional_injector_1.Injectable({ predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'tcp' || subscriptionAttributes.type === 'tcp-server' }),
     __metadata("design:paramtypes", [Object])
 ], TcpServerSubscription);
 exports.TcpServerSubscription = TcpServerSubscription;

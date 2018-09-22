@@ -5,7 +5,10 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'http-client' || publishRequisition.type === 'https-client'})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'http-client' ||
+                                                        publishRequisition.type === 'http' ||
+                                                        publishRequisition.type === 'https' ||
+                                                        publishRequisition.type === 'https-client'})
 export class HttpClientPublisher extends Publisher {
     private url: string;
     private method: string;

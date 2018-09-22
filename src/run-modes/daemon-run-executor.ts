@@ -30,8 +30,8 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         this.daemonInputs = daemonMode.map((input: any) => Container.subclassesOf(DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
         this.parser = new RequisitionParser();
-        process.on('SIGINT', (handleKillSignal: Signals) => this.handleKillSignal(handleKillSignal));
-        process.on('SIGTERM', (handleKillSignal: Signals) => this.handleKillSignal(handleKillSignal));
+        process.on('SIGINT', (handleKillSignal: Signals) => this.handleKillSignal());
+        process.on('SIGTERM', (handleKillSignal: Signals) => this.handleKillSignal());
     }
 
     public execute(): Promise<boolean> {
@@ -97,9 +97,8 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         }
     }
 
-    private async handleKillSignal(handleKillSignal: Signals): Promise<any> {
-        const message = `Daemon runner handling kill signal ${handleKillSignal}`;
-        Logger.info(message);
+    private async handleKillSignal(): Promise<any> {
+        Logger.info(`Daemon runner is finishing`);
         await Promise.all(this.daemonInputs.map((input) => input.unsubscribe()));
         if (this.resolve) {
             this.resolve(true);

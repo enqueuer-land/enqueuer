@@ -7,7 +7,7 @@ import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp-server'})
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'tcp' || subscriptionAttributes.type === 'tcp-server'})
 export class TcpServerSubscription extends Subscription {
 
     private server: any;

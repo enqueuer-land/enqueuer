@@ -6,7 +6,7 @@ import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client'})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client' || publishRequisition.type === 'tcp'})
 export class TcpClientPublisher extends Publisher {
 
     private serverAddress: string;

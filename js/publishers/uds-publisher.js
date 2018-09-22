@@ -104,7 +104,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     }
 };
 UdsPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'uds' }),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'uds' || publishRequisition.type === 'uds-client' }),
     __metadata("design:paramtypes", [Object])
 ], UdsPublisher);
 exports.UdsPublisher = UdsPublisher;

@@ -116,7 +116,7 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
     }
 };
 TcpClientPublisher = __decorate([
-    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'tcp-client' }),
+    conditional_injector_1.Injectable({ predicate: (publishRequisition) => publishRequisition.type === 'tcp-client' || publishRequisition.type === 'tcp' }),
     __metadata("design:paramtypes", [Object])
 ], TcpClientPublisher);
 exports.TcpClientPublisher = TcpClientPublisher;

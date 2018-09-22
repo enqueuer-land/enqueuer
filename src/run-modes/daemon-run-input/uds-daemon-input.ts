@@ -4,7 +4,6 @@ import {DaemonInput} from './daemon-input';
 import {DaemonInputRequisition} from './daemon-input-requisition';
 import {StreamInputHandler} from '../../handlers/stream-input-handler';
 
-//TODO test it
 @Injectable({predicate: (daemonInput: any) => daemonInput.type == 'uds'})
 export class UdsDaemonInput extends DaemonInput {
     private readonly path: string;
@@ -40,8 +39,8 @@ export class UdsDaemonInput extends DaemonInput {
         return this.streamHandler.close(requisition.stream);
     }
 
-    public sendResponse(message: DaemonInputRequisition): Promise<void> {
-        return this.streamHandler.sendResponse(message.stream, message.output)
-            .then(() => Logger.debug(`UDS daemon server response sent`));
+    public async sendResponse(message: DaemonInputRequisition): Promise<void> {
+        await this.streamHandler.sendResponse(message.stream, message.output);
+        Logger.debug(`UDS daemon server response sent`);
     }
 }

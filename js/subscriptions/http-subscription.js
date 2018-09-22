@@ -155,6 +155,8 @@ HttpSubscription = __decorate([
         predicate: (subscriptionAttributes) => subscriptionAttributes.type === 'http-proxy' ||
             subscriptionAttributes.type === 'https-proxy' ||
             subscriptionAttributes.type === 'http-server' ||
+            subscriptionAttributes.type === 'http' ||
+            subscriptionAttributes.type === 'https' ||
             subscriptionAttributes.type === 'https-server'
     }),
     __metadata("design:paramtypes", [Object])

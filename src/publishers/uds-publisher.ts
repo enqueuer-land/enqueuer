@@ -6,7 +6,7 @@ import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'uds'})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'uds' || publishRequisition.type === 'uds-client'})
 export class UdsPublisher extends Publisher {
 
     private path: string;

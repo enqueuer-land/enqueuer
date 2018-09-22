@@ -5,6 +5,7 @@ import {HttpContainerPool} from '../../pools/http-container-pool';
 import {DaemonInputRequisition} from './daemon-input-requisition';
 import {JavascriptObjectNotation} from '../../object-notations/javascript-object-notation';
 
+//TODO test it
 @Injectable({predicate: (daemonInput: any) => daemonInput.type === 'http-server'})
 export class HttpDaemonInput extends DaemonInput {
     private port: number;
