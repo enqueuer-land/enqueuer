@@ -18,7 +18,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const handler_listener_1 = require("./handler-listener");
 const net = __importStar(require("net"));
 const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
-//TODO test it
 class StreamInputHandler {
     constructor(handler) {
         this.server = net.createServer();
@@ -27,7 +26,7 @@ class StreamInputHandler {
     }
     subscribe(onMessageReceived) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.handlerListener.listen(this.handler)
+            return this.handlerListener.listen(this.handler)
                 .then(() => {
                 this.handler = this.handlerListener.getHandler();
                 this.server.on('connection', (stream) => {
@@ -51,9 +50,14 @@ class StreamInputHandler {
         });
     }
     sendResponse(stream, message) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const strMsg = this.stringifyPayloadToSend(message);
-            stream.write(strMsg, () => resolve());
+            try {
+                stream.write(strMsg, () => resolve());
+            }
+            catch (err) {
+                reject(`Error sending input handler: ${err}`);
+            }
         });
     }
     close(stream) {

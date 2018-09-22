@@ -59,7 +59,7 @@ const testerConfiguration: ConfigurationValues = {
 
 describe('Inception test', () => {
     let beingTested: any;
-    let tester: any;
+    let second: any;
 
     beforeAll(() => {
         removeEveryReportFile();
@@ -107,9 +107,9 @@ describe('Inception test', () => {
         //     .start()
         //     .then((statusCode: number) => {
 
-        tester = spawn('enqueuer',  ['src/inception-test/tester.yml']);
+        second = spawn('enqueuer',  ['src/inception-test/tester.yml']);
         // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
-        tester.on('exit', (statusCode: number) => {
+        second.on('exit', (statusCode: number) => {
                 expect(statusCode).toBe(0);
 
                 const testerReports = {};
@@ -139,7 +139,26 @@ describe('Inception test', () => {
 
     });
 
-    afterAll(() => {
+    it('Should quit second daemon properly', done => {
+        jest.setTimeout(15000);
+
+        const first = spawn('nqr', ['src/inception-test/beingTested.yml']);
+        sleep(500);
+
+        second = spawn('enqueuer',  ['src/inception-test/beingTested.yml']);
+        second.on('exit', (statusCode: number) => {
+            expect(statusCode).toBe(255);
+            first.kill('SIGINT');
+        });
+
+        first.on('exit', (statusCode: number) => {
+            expect(statusCode).toEqual(0);
+            done();
+        });
+
+    });
+
+    afterEach(() => {
         removeEveryReportFile();
     });
 

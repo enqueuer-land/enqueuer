@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -8,7 +16,6 @@ const express_1 = __importDefault(require("express"));
 const https_1 = __importDefault(require("https"));
 const http_1 = __importDefault(require("http"));
 const handler_listener_1 = require("../handlers/handler-listener");
-//TODO test it
 class HttpContainer {
     constructor(port, secure, credentials) {
         this.counter = 0;
@@ -19,21 +26,12 @@ class HttpContainer {
         this.handleNewSocketConnections();
     }
     acquire() {
-        return new Promise((resolve, reject) => {
-            try {
-                ++this.counter;
-                if (this.counter == 1) {
-                    this.listenToPort()
-                        .then(() => resolve(this.app))
-                        .catch((err) => reject(err));
-                }
-                else {
-                    resolve(this.app);
-                }
+        return __awaiter(this, void 0, void 0, function* () {
+            ++this.counter;
+            if (this.counter == 1) {
+                yield new handler_listener_1.HandlerListener(this.server).listen(this.port);
             }
-            catch (err) {
-                reject(err);
-            }
+            return this.app;
         });
     }
     release(onClose) {
@@ -52,21 +50,6 @@ class HttpContainer {
         else if (this.counter < 0) {
             onClose();
         }
-    }
-    listenToPort() {
-        return new Promise((resolve, reject) => {
-            new handler_listener_1.HandlerListener(this.server)
-                .listen(this.port)
-                .then(() => {
-                logger_1.Logger.debug(`Http/s server is listening for clients on ${this.port}`);
-                resolve();
-            })
-                .catch(err => {
-                const message = `Http/s server could not listen to ${this.port}: ${err}`;
-                logger_1.Logger.error(message);
-                reject(message);
-            });
-        });
     }
     handleNewSocketConnections() {
         this.server.on('connection', (socket) => {

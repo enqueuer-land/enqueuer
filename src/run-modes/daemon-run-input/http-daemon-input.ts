@@ -22,7 +22,7 @@ export class HttpDaemonInput extends DaemonInput {
     }
 
     public async subscribe(onMessageReceived: (requisition: DaemonInputRequisition) => void): Promise<void> {
-        HttpContainerPool.getApp(this.port)
+        return HttpContainerPool.getApp(this.port)
             .then((app: any) => {
                 Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
                 app[this.method](this.endpoint, (request: any, responseHandler: any) => {

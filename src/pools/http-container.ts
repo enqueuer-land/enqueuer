@@ -4,7 +4,6 @@ import https from 'https';
 import http from 'http';
 import {HandlerListener} from '../handlers/handler-listener';
 
-//TODO test it
 export class HttpContainer {
     private port: number;
     private server: any;
@@ -19,21 +18,12 @@ export class HttpContainer {
         this.handleNewSocketConnections();
     }
 
-    public acquire(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            try {
-                ++this.counter;
-                if (this.counter == 1) {
-                    this.listenToPort()
-                        .then(() => resolve(this.app))
-                        .catch((err) => reject(err));
-                } else {
-                    resolve(this.app);
-                }
-            } catch (err) {
-                reject(err);
-            }
-        });
+    public async acquire(): Promise<any> {
+        ++this.counter;
+        if (this.counter == 1) {
+            await new HandlerListener(this.server).listen(this.port);
+        }
+        return this.app;
     }
 
     public release(onClose: () => void) {
@@ -51,22 +41,6 @@ export class HttpContainer {
         } else if (this.counter < 0) {
             onClose();
         }
-    }
-
-    private listenToPort(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            new HandlerListener(this.server)
-                .listen(this.port)
-                .then(() => {
-                    Logger.debug(`Http/s server is listening for clients on ${this.port}`);
-                    resolve();
-                })
-                .catch(err => {
-                    const message = `Http/s server could not listen to ${this.port}: ${err}`;
-                    Logger.error(message);
-                    reject(message);
-                });
-        });
     }
 
     private handleNewSocketConnections() {

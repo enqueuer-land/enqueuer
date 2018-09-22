@@ -32,7 +32,7 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     }
     subscribe(onMessageReceived) {
         return __awaiter(this, void 0, void 0, function* () {
-            http_container_pool_1.HttpContainerPool.getApp(this.port)
+            return http_container_pool_1.HttpContainerPool.getApp(this.port)
                 .then((app) => {
                 logger_1.Logger.info(`Waiting for HTTP requisitions: (${this.method.toUpperCase()}) - http://localhost:${this.port}${this.endpoint}`);
                 app[this.method](this.endpoint, (request, responseHandler) => {

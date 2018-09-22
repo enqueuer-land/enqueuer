@@ -54,6 +54,7 @@ describe('HandleListener', () => {
                 expect(listenMock).toHaveBeenCalledWith(handler, expect.any(Function));
                 expect(onErrorMock).toHaveBeenCalledTimes(1);
                 expect(setTimeout).toHaveBeenCalledTimes(0);
+                expect(listener.getHandler()).toBe('');
                 done();
             });
     });

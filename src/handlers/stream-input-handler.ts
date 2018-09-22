@@ -2,7 +2,6 @@ import {HandlerListener} from './handler-listener';
 import * as net from 'net';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
-//TODO test it
 export class StreamInputHandler {
     private readonly handlerListener: HandlerListener;
     private server: net.Server;
@@ -15,7 +14,7 @@ export class StreamInputHandler {
     }
 
     public async subscribe(onMessageReceived: (requisition: any) => void): Promise<void> {
-        await this.handlerListener.listen(this.handler)
+        return this.handlerListener.listen(this.handler)
             .then(() => {
                 this.handler = this.handlerListener.getHandler();
                 this.server.on('connection', (stream: any) => {
@@ -39,9 +38,13 @@ export class StreamInputHandler {
     }
 
     public sendResponse(stream: any, message: any): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const strMsg = this.stringifyPayloadToSend(message);
-            stream.write(strMsg, () => resolve());
+            try {
+                stream.write(strMsg, () => resolve());
+            } catch (err) {
+                reject(`Error sending input handler: ${err}`);
+            }
         });
     }
 
