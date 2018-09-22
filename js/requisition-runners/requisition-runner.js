@@ -7,6 +7,7 @@ const store_1 = require("../configurations/store");
 const timeout_1 = require("../timers/timeout");
 const requisition_multiplier_1 = require("./requisition-multiplier");
 const date_controller_1 = require("../timers/date-controller");
+const requisition_default_reports_1 = require("../models-defaults/outputs/requisition-default-reports");
 class RequisitionRunner {
     constructor(requisition) {
         this.requisitions = [];
@@ -26,7 +27,7 @@ class RequisitionRunner {
             return this.startRequisition(this.requisitions[0]);
         }
         else {
-            return new Promise((resolve) => this.startIterator(this.createIteratorReport(this.name), resolve));
+            return new Promise((resolve) => this.startIterator(requisition_default_reports_1.RequisitionDefaultReports.createIteratorReport(this.name), resolve));
         }
     }
     startIterator(iteratorReport, resolve) {
@@ -42,7 +43,7 @@ class RequisitionRunner {
             }
             catch (err) {
                 logger_1.Logger.error(`Error running requisition '${requisition.name}'`);
-                const report = this.createRunningError(requisition.name, err);
+                const report = requisition_default_reports_1.RequisitionDefaultReports.createRunningError(requisition.name, err);
                 if (iteratorReport.requisitions) {
                     iteratorReport.requisitions.push(report);
                 }
@@ -76,7 +77,7 @@ class RequisitionRunner {
             .replace(requisition);
         if (this.shouldSkipRequisition(requisition, requisitionModel)) {
             logger_1.Logger.info(`Requisition will be skipped`);
-            return Promise.resolve(this.createSkippedReport(this.name));
+            return Promise.resolve(requisition_default_reports_1.RequisitionDefaultReports.createSkippedReport(this.name));
         }
         return new Promise((resolve) => {
             new timeout_1.Timeout(() => {
@@ -97,58 +98,6 @@ class RequisitionRunner {
         const definedIterationsButLessThanZero = typeof (requisitionModel.iterations) != 'number' ||
             (requisitionModel.iterations && requisitionModel.iterations <= 0);
         return requisitionModel.iterations && (definedIterationsButLessThanZero);
-    }
-    //TODO remove all of default reports to their own files
-    createRunningError(name, err) {
-        return {
-            valid: false,
-            tests: [{
-                    valid: false,
-                    name: 'Requisition ran',
-                    description: err
-                }],
-            name: name,
-            time: {
-                startTime: '',
-                endTime: '',
-                totalTime: 0
-            },
-            subscriptions: [],
-            startEvent: {}
-        };
-    }
-    createSkippedReport(name) {
-        return {
-            valid: true,
-            tests: [{
-                    valid: true,
-                    name: 'Requisition skipped',
-                    description: 'There is no iterations set to this requisition'
-                }],
-            name: name,
-            time: {
-                startTime: new date_controller_1.DateController().toString(),
-                endTime: new date_controller_1.DateController().toString(),
-                totalTime: 0
-            },
-            subscriptions: [],
-            startEvent: {}
-        };
-    }
-    createIteratorReport(name) {
-        return {
-            valid: true,
-            tests: [],
-            name: name + ' iterator collection',
-            time: {
-                startTime: '',
-                endTime: '',
-                totalTime: 0
-            },
-            subscriptions: [],
-            startEvent: {},
-            requisitions: []
-        };
     }
 }
 exports.RequisitionRunner = RequisitionRunner;

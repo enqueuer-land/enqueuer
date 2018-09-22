@@ -7,48 +7,9 @@ requisitions:
     valid: true
     tests: []
     name: 'Requisition #0 iterator collection'
-    time:
-      startTime: '2018-09-22T18:48:10.696Z'
-      endTime: '2018-09-22T18:48:11.705Z'
-      totalTime: 1009
     subscriptions: []
     startEvent: {}
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0 [0]'
-        time:
-          totalTime: 1009
-          startTime: '2018-09-22T18:48:10.696Z'
-          endTime: '2018-09-22T18:48:11.705Z'
-        subscriptions: []
-        startEvent:
-          subscription:
-            name: 'Start event subscription'
-            type: tcp-server
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''store.executions'' to be equal to ''1''. Received ''1'''
-              -
-                valid: true
-                name: 'Subscription avoided'
-                description: 'Avoidable subscription has not received any message'
-            valid: true
-            connectionTime: '2018-09-22T18:48:10.728Z'
-      -
-        valid: true
-        tests:
-          -
-            valid: true
-            name: 'Requisition skipped'
-            description: 'There is no iterations set to this requisition'
-        name: 'Requisition #0'
-        time:
-          startTime: '2018-09-22T18:48:11.705Z'
-          endTime: '2018-09-22T18:48:11.705Z'
-          totalTime: 0
-        subscriptions: []
-        startEvent: {}
+    time:
+      startTime: '2018-09-22T21:17:45.762Z'
+      endTime: '2018-09-22T21:17:45.762Z'
+      totalTime: 0
