@@ -8,6 +8,7 @@ const timeout_1 = require("../timers/timeout");
 const requisition_multiplier_1 = require("./requisition-multiplier");
 const date_controller_1 = require("../timers/date-controller");
 const requisition_default_reports_1 = require("../models-defaults/outputs/requisition-default-reports");
+const file_content_map_creator_1 = require("../configurations/file-content-map-creator");
 class RequisitionRunner {
     constructor(requisition) {
         this.requisitions = [];
@@ -72,8 +73,12 @@ class RequisitionRunner {
         }
     }
     startRequisition(requisition) {
+        const fileMapCreator = new file_content_map_creator_1.FileContentMapCreator();
+        fileMapCreator.createMap(requisition);
         const placeHolderReplacer = new json_placeholder_replacer_1.JsonPlaceholderReplacer();
-        const requisitionModel = placeHolderReplacer.addVariableMap(store_1.Store.getData())
+        const requisitionModel = placeHolderReplacer
+            .addVariableMap(fileMapCreator.getMap())
+            .addVariableMap(store_1.Store.getData())
             .replace(requisition);
         if (this.shouldSkipRequisition(requisition, requisitionModel)) {
             logger_1.Logger.info(`Requisition will be skipped`);

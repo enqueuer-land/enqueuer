@@ -1,4 +1,4 @@
-name: examples/udp.yml
+name: examples/store.yml
 valid: true
 tests: []
 startEvent: {}
@@ -8,28 +8,24 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 52
-      startTime: '2018-09-23T17:59:26.392Z'
-      endTime: '2018-09-23T17:59:26.444Z'
+      totalTime: 59
+      startTime: '2018-09-23T17:59:26.365Z'
+      endTime: '2018-09-23T17:59:26.424Z'
     subscriptions:
       -
-        name: 'subscription description'
+        name: 'Subscription #0'
         type: udp
         tests:
           -
             name: Payload
             valid: true
-            description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''
-          -
-            name: 'Remote Adderss'
-            valid: true
-            description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
+            description: 'Expected ''store.value'' to be equal to ''1''. Received ''1'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-23T17:59:26.395Z'
+        connectionTime: '2018-09-23T17:59:26.370Z'
         messageReceived:
           payload:
             type: Buffer
@@ -39,7 +35,7 @@ requisitions:
           remoteInfo:
             address: 127.0.0.1
             family: IPv4
-            port: 52436
+            port: 55131
             size: 2
     startEvent:
       publisher:
@@ -51,4 +47,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-23T17:59:26.441Z'
+        publishTime: '2018-09-23T17:59:26.408Z'

@@ -8,6 +8,7 @@ import {Timeout} from '../timers/timeout';
 import {RequisitionMultiplier} from './requisition-multiplier';
 import {DateController} from '../timers/date-controller';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
+import {FileContentMapCreator} from '../configurations/file-content-map-creator';
 
 export class RequisitionRunner {
 
@@ -76,9 +77,13 @@ export class RequisitionRunner {
     }
 
     private startRequisition(requisition: input.RequisitionModel): Promise<output.RequisitionModel> {
+        const fileMapCreator = new FileContentMapCreator();
+        fileMapCreator.createMap(requisition);
         const placeHolderReplacer = new JsonPlaceholderReplacer();
-        const requisitionModel = placeHolderReplacer.addVariableMap(Store.getData())
-            .replace(requisition) as input.RequisitionModel;
+        const requisitionModel = placeHolderReplacer
+                                    .addVariableMap(fileMapCreator.getMap())
+                                    .addVariableMap(Store.getData())
+                                    .replace(requisition) as input.RequisitionModel;
         if (this.shouldSkipRequisition(requisition, requisitionModel)) {
             Logger.info(`Requisition will be skipped`);
             return Promise.resolve(RequisitionDefaultReports.createSkippedReport(this.name));

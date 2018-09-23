@@ -16,9 +16,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 233
-      startTime: '2018-09-22T21:17:45.778Z'
-      endTime: '2018-09-22T21:17:46.011Z'
+      totalTime: 214
+      startTime: '2018-09-23T17:59:26.330Z'
+      endTime: '2018-09-23T17:59:26.544Z'
       timeout: 2000
     subscriptions:
       -
@@ -50,7 +50,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-22T21:17:45.832Z'
+        connectionTime: '2018-09-23T17:59:26.370Z'
         messageReceived:
           payload:
             type: Buffer
@@ -74,7 +74,11 @@ requisitions:
           -
             name: 'Publisher name'
             valid: true
-            description: '''[object Object]'' is not defined'
+            description: '''publisher.name'' is not defined'
+          -
+            name: 'Assertion #2'
+            valid: true
+            description: '''publisher'' is not defined'
           -
             name: Published
             valid: true
@@ -99,10 +103,10 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-22T21:17:46.011Z'
+        publishTime: '2018-09-23T17:59:26.543Z'
         messageReceived:
           payload: 'hook response'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 52372
+            port: 55224

@@ -22,8 +22,8 @@ startEvent:
                 -   name: Publisher exists onInit
                     expectToBeDefined: publisher
                 -   name: Publisher name
-                    expect: publisher.name
-                    expectToBeDefined: publisher
+                    expectToBeDefined: publisher.name
+                -   expectToBeDefined: publisher
         onMessageReceived:
             store:
                 sequence: store.sequence + `-> publisher::onMessageReceived`

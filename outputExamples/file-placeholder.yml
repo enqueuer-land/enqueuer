@@ -1,4 +1,4 @@
-name: examples/https.yml
+name: examples/file-placeholder.yml
 valid: true
 tests: []
 startEvent: {}
@@ -12,19 +12,23 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 260
-      startTime: '2018-09-23T17:59:26.332Z'
-      endTime: '2018-09-23T17:59:26.592Z'
-      timeout: 3000
+      totalTime: 222
+      startTime: '2018-09-23T17:59:26.326Z'
+      endTime: '2018-09-23T17:59:26.548Z'
+      timeout: 10000
     subscriptions:
       -
         name: 'Subscription #0'
-        type: https-server
+        type: http-server
         tests:
           -
-            name: 'Https payload'
+            name: fileRead
             valid: true
-            description: 'Expected ''JSON.parse(message.body).https'' to be equal to ''works!''. Received ''works!'''
+            description: 'Expected ''JSON.parse(message.body).key'' to be equal to ''value''. Received ''value'''
+          -
+            name: 'code loaded'
+            valid: true
+            description: 'Expected ''doubleValue'' to be equal to ''200''. Received ''200'''
           -
             valid: true
             name: 'Message received'
@@ -33,61 +37,55 @@ requisitions:
         connectionTime: '2018-09-23T17:59:26.384Z'
         messageReceived:
           headers:
-            content-type: application/json
-            content-length: '23'
-            host: 'localhost:4430'
+            content-length: '53'
+            host: 'localhost:23075'
             connection: close
           params: {}
           query: {}
-          body: "{\n  \"https\": \"works!\"\n}"
+          body: "{\n  \"key\": \"value\",\n  \"valueToBeMultipliedBy2\": 100\n}"
     startEvent:
       publisher:
-        name: 'publisher description'
+        name: 'Start event publisher'
         valid: true
-        type: https-client
+        type: http-client
         tests:
           -
             name: Published
             valid: true
             description: 'Published successfully'
           -
-            name: 'Status Code'
+            name: fileRead
             valid: true
-            description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
-          -
-            name: Body
-            valid: true
-            description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
+            description: 'Expected ''JSON.parse(message.body).key'' to be equal to ''value''. Received ''value'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-23T17:59:26.592Z'
+        publishTime: '2018-09-23T17:59:26.548Z'
         messageReceived:
           statusCode: 200
-          body: https
+          body: '{"key":"value"}'
           headers:
             x-powered-by: Express
-            content-type: 'text/html; charset=utf-8'
-            content-length: '5'
-            etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
+            content-type: 'application/json; charset=utf-8'
+            content-length: '15'
+            etag: 'W/"f-IoRYCVqVAgcPwRPZlQQiam/5Cpo"'
             date: 'Sun, 23 Sep 2018 17:59:26 GMT'
             connection: close
           request:
             uri:
-              protocol: 'https:'
+              protocol: 'http:'
               slashes: true
               auth: null
-              host: 'localhost:4430'
-              port: '4430'
+              host: 'localhost:23075'
+              port: '23075'
               hostname: localhost
               hash: null
               search: null
               query: null
-              pathname: /enqueuer
-              path: /enqueuer
-              href: 'https://localhost:4430/enqueuer'
+              pathname: /file/replace
+              path: /file/replace
+              href: 'http://localhost:23075/file/replace'
             method: post
             headers:
-              content-type: application/json
-              Content-Length: 23
+              Content-Length: 53
