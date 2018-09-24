@@ -27,7 +27,7 @@ describe('JavascriptObjectNotation', () => {
     test('should stringify undefined objects', () => {
         const stringified = new JavascriptObjectNotation().stringify(undefined);
 
-        expect(stringified).toBeUndefined();
+        expect(stringified).toBe('{}');
     });
 
     test('should stringify cycle reference', () => {

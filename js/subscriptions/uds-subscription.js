@@ -63,8 +63,10 @@ let UdsSubscription = class UdsSubscription extends subscription_1.Subscription 
                 logger_1.Logger.debug(`Server is trying to reuse uds stream: ${this.loadStream}`);
                 this.stream = store_1.Store.getData()[this.loadStream];
                 if (!this.stream) {
-                    logger_1.Logger.error(`No uds stream able for being reused`);
-                    return this.createServer(resolve, reject);
+                    const message = `No uds stream able for being reused`;
+                    logger_1.Logger.error(message);
+                    reject(message);
+                    return;
                 }
                 resolve();
                 return;

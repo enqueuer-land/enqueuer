@@ -7,19 +7,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const object_notation_1 = require("./object-notation");
 const yaml = __importStar(require("yamljs"));
-class YamlObjectNotation extends object_notation_1.ObjectNotation {
+const object_decycler_1 = require("./object-decycler");
+class YamlObjectNotation {
     parse(value) {
         return yaml.parse(value);
     }
     stringify(value, space = 2) {
-        try {
-            return yaml.stringify(object_notation_1.ObjectNotation.decycle(value), 10, space);
-        }
-        catch (err) {
-            /*nothing*/
-        }
+        return yaml.stringify(new object_decycler_1.ObjectDecycler().decycle(value || {}), 10, space);
     }
     loadFromFileSync(filename) {
         return yaml.load(filename);

@@ -62,6 +62,8 @@ describe('Inception test', () => {
     let second: any;
 
     beforeAll(() => {
+        if (fs.existsSync('/tmp/enqueuer.requisitions'))
+            fs.unlinkSync('/tmp/enqueuer.requisitions');
         removeEveryReportFile();
     });
 

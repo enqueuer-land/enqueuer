@@ -1,17 +1,14 @@
 import {ObjectNotation} from './object-notation';
 import * as yaml from 'yamljs';
+import {ObjectDecycler} from './object-decycler';
 
-export class YamlObjectNotation extends ObjectNotation {
+export class YamlObjectNotation implements ObjectNotation {
     public parse(value: string): object {
         return yaml.parse(value);
     }
 
-    public stringify(value: object, space: number = 2): string | undefined {
-        try {
-            return yaml.stringify(ObjectNotation.decycle(value), 10, space);
-        } catch (err) {
-            /*nothing*/
-        }
+    public stringify(value: object, space: number = 2): string {
+        return yaml.stringify(new ObjectDecycler().decycle(value || {}), 10, space);
     }
 
     public loadFromFileSync(filename: string): object {

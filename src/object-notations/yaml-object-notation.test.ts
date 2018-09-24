@@ -26,9 +26,8 @@ describe('YamlObjectNotation', () => {
     test('should stringify undefined objects', () => {
         const stringified = new YamlObjectNotation().stringify(undefined);
 
-        expect(stringified).toBeUndefined();
+        expect(stringified).toBe('{}');
     });
-
 
     test('should parse', () => {
         const value =    "firstLevel:\n" +

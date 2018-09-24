@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 273
-      startTime: '2018-09-23T17:59:26.345Z'
-      endTime: '2018-09-23T17:59:26.618Z'
+      totalTime: 205
+      startTime: '2018-09-24T00:01:45.790Z'
+      endTime: '2018-09-24T00:01:45.995Z'
       timeout: 8000
     subscriptions:
       -
@@ -46,15 +46,15 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-23T17:59:26.573Z'
+        connectionTime: '2018-09-24T00:01:45.962Z'
         messageReceived:
           topic: enqueuer-topic-name
           value: kafkaPayload
-          offset: 37
+          offset: 40
           partition: 0
-          highWaterOffset: 38
+          highWaterOffset: 41
           key: null
-          timestamp: '2018-09-23T17:59:26.575Z'
+          timestamp: '2018-09-24T00:01:45.963Z'
     startEvent:
       publisher:
         name: 'publisher description'
@@ -73,5 +73,5 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-23T17:59:26.615Z'
-        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 37\n  }\n}"
+        publishTime: '2018-09-24T00:01:45.991Z'
+        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 40\n  }\n}"

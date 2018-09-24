@@ -12,9 +12,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 222
-      startTime: '2018-09-23T17:59:26.326Z'
-      endTime: '2018-09-23T17:59:26.548Z'
+      totalTime: 170
+      startTime: '2018-09-24T00:01:45.770Z'
+      endTime: '2018-09-24T00:01:45.940Z'
       timeout: 10000
     subscriptions:
       -
@@ -22,23 +22,27 @@ requisitions:
         type: http-server
         tests:
           -
-            name: fileRead
+            name: 'fileRead (.json)'
             valid: true
             description: 'Expected ''JSON.parse(message.body).key'' to be equal to ''value''. Received ''value'''
           -
-            name: 'code loaded'
+            name: 'fileRead (.js)'
             valid: true
             description: 'Expected ''doubleValue'' to be equal to ''200''. Received ''200'''
+          -
+            name: 'fileRead (.csv)'
+            valid: true
+            description: 'Expected ''store.csv[0].title'' to be equal to ''virgs''. Received ''virgs'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-23T17:59:26.384Z'
+        connectionTime: '2018-09-24T00:01:45.835Z'
         messageReceived:
           headers:
             content-length: '53'
-            host: 'localhost:23075'
+            host: 'localhost:23065'
             connection: close
           params: {}
           query: {}
@@ -54,14 +58,14 @@ requisitions:
             valid: true
             description: 'Published successfully'
           -
-            name: fileRead
+            name: 'fileRead (yml)'
             valid: true
             description: 'Expected ''JSON.parse(message.body).key'' to be equal to ''value''. Received ''value'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-23T17:59:26.548Z'
+        publishTime: '2018-09-24T00:01:45.940Z'
         messageReceived:
           statusCode: 200
           body: '{"key":"value"}'
@@ -70,22 +74,22 @@ requisitions:
             content-type: 'application/json; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-IoRYCVqVAgcPwRPZlQQiam/5Cpo"'
-            date: 'Sun, 23 Sep 2018 17:59:26 GMT'
+            date: 'Mon, 24 Sep 2018 00:01:45 GMT'
             connection: close
           request:
             uri:
               protocol: 'http:'
               slashes: true
               auth: null
-              host: 'localhost:23075'
-              port: '23075'
+              host: 'localhost:23065'
+              port: '23065'
               hostname: localhost
               hash: null
               search: null
               query: null
               pathname: /file/replace
               path: /file/replace
-              href: 'http://localhost:23075/file/replace'
+              href: 'http://localhost:23065/file/replace'
             method: post
             headers:
               Content-Length: 53

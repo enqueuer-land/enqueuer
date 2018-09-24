@@ -1,5 +1,6 @@
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
+import {DelimiterSeparatedValueObjectNotation} from '../object-notations/delimiter-separated-value-object-notation';
 import * as fs from 'fs';
 
 export class FileContentMapCreator {
@@ -18,7 +19,7 @@ export class FileContentMapCreator {
         return this.map;
     }
 
-    private checkChildren = (node: any) => {
+    private checkChildren(node: any): void {
         for (const key in node) {
             const attribute = node[key];
             if (typeof attribute == 'object') {
@@ -39,15 +40,18 @@ export class FileContentMapCreator {
         });
     }
 
-    private insertIntoMap(tag: string) {
-        if (!this.map[tag]) {
-            const filename = tag.substring(tag.indexOf('://') + 3);
-            if (tag.startsWith('json://')) {
-                this.map[tag] = new JavascriptObjectNotation().loadFromFileSync(filename);
-            } else if (tag.startsWith('yaml://')) {
-                this.map[tag] = new YamlObjectNotation().loadFromFileSync(filename);
-            } else {
-                this.map[tag] = fs.readFileSync(filename).toString();
+    private insertIntoMap(key: string) {
+        if (!this.map[key]) {
+            const separator = key.indexOf('://');
+            const tag = key.substring(0, separator);
+            const filename = key.substring(separator + 3);
+            switch (tag) {
+                case 'json': this.map[key] = new JavascriptObjectNotation().loadFromFileSync(filename); break;
+                case 'yml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
+                case 'yaml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
+                case 'csv': this.map[key] = new DelimiterSeparatedValueObjectNotation().loadFromFileSync(filename); break;
+                case 'tsv': this.map[key] = new DelimiterSeparatedValueObjectNotation('\t').loadFromFileSync(filename); break;
+                default: this.map[key] = fs.readFileSync(filename).toString();
             }
         }
     }

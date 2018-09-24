@@ -1,19 +1,23 @@
+onInit:
+    script: csv = <<csv://misc/file-content.csv>>
+    store:
+        csv: csv
 timeout: 10000
 startEvent:
     publisher:
         type: http-client
-        url: http://localhost:23075/file/replace
+        url: http://localhost:23065/file/replace
         method: POST
         payload: <<json://misc/file-content.json>>
         onMessageReceived:
             assertions:
-                -   name: fileRead
+                -   name: fileRead (yml)
                     expect: JSON.parse(message.body).key
                     toBeEqualTo: publisher.payload.key
 subscriptions:
     -   type: http-server
         endpoint: /file/replace
-        port: 23075
+        port: 23065
         method: POST
         response:
             status: 200
@@ -21,9 +25,13 @@ subscriptions:
         onMessageReceived:
             script: <<file://misc/file-code.js>>
             assertions:
-                -   name: fileRead
+                -   name: fileRead (.json)
                     expect: JSON.parse(message.body).key
                     toBeEqualTo: subscription.response.payload.key
-                -   name: code loaded
+                -   name: fileRead (.js)
                     expect: doubleValue
                     toBeEqualTo: JSON.parse(message.body).valueToBeMultipliedBy2 * 2
+                -   name: fileRead (.csv)
+                    expect: store.csv[0].title
+                    toBeEqualTo: `virgs`
+

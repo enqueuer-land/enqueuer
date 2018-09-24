@@ -9,21 +9,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
 const yaml_object_notation_1 = require("../object-notations/yaml-object-notation");
+const delimiter_separated_value_object_notation_1 = require("../object-notations/delimiter-separated-value-object-notation");
 const fs = __importStar(require("fs"));
 class FileContentMapCreator {
     constructor() {
         this.map = {};
-        this.checkChildren = (node) => {
-            for (const key in node) {
-                const attribute = node[key];
-                if (typeof attribute == 'object') {
-                    this.checkChildren(attribute);
-                }
-                else {
-                    this.replaceValue(attribute.toString());
-                }
-            }
-        };
     }
     createMap(value) {
         if (typeof value == 'string') {
@@ -36,6 +26,17 @@ class FileContentMapCreator {
     getMap() {
         return this.map;
     }
+    checkChildren(node) {
+        for (const key in node) {
+            const attribute = node[key];
+            if (typeof attribute == 'object') {
+                this.checkChildren(attribute);
+            }
+            else {
+                this.replaceValue(attribute.toString());
+            }
+        }
+    }
     replaceValue(node) {
         const angleBrackets = /<<[\w\s]+:\/\/[^>>]+>>/g;
         const curlyBrackets = /{{[\w\s]+:\/\/[^}}]+}}/g;
@@ -45,17 +46,28 @@ class FileContentMapCreator {
             this.insertIntoMap(key);
         });
     }
-    insertIntoMap(tag) {
-        if (!this.map[tag]) {
-            const filename = tag.substring(tag.indexOf('://') + 3);
-            if (tag.startsWith('json://')) {
-                this.map[tag] = new javascript_object_notation_1.JavascriptObjectNotation().loadFromFileSync(filename);
-            }
-            else if (tag.startsWith('yaml://')) {
-                this.map[tag] = new yaml_object_notation_1.YamlObjectNotation().loadFromFileSync(filename);
-            }
-            else {
-                this.map[tag] = fs.readFileSync(filename).toString();
+    insertIntoMap(key) {
+        if (!this.map[key]) {
+            const separator = key.indexOf('://');
+            const tag = key.substring(0, separator);
+            const filename = key.substring(separator + 3);
+            switch (tag) {
+                case 'json':
+                    this.map[key] = new javascript_object_notation_1.JavascriptObjectNotation().loadFromFileSync(filename);
+                    break;
+                case 'yml':
+                    this.map[key] = new yaml_object_notation_1.YamlObjectNotation().loadFromFileSync(filename);
+                    break;
+                case 'yaml':
+                    this.map[key] = new yaml_object_notation_1.YamlObjectNotation().loadFromFileSync(filename);
+                    break;
+                case 'csv':
+                    this.map[key] = new delimiter_separated_value_object_notation_1.DelimiterSeparatedValueObjectNotation().loadFromFileSync(filename);
+                    break;
+                case 'tsv':
+                    this.map[key] = new delimiter_separated_value_object_notation_1.DelimiterSeparatedValueObjectNotation('\t').loadFromFileSync(filename);
+                    break;
+                default: this.map[key] = fs.readFileSync(filename).toString();
             }
         }
     }

@@ -33,7 +33,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     publish() {
         const payload = this.stringifyPayload();
         return new Promise((resolve, reject) => {
-            this.stream = this.getStream();
+            this.stream = this.getStream(reject);
             this.stream.setTimeout(1000);
             this.stream.write(payload, () => {
                 logger_1.Logger.trace(`Uds publisher message sent: ${payload}`);
@@ -63,6 +63,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
             }
             this.messageReceived.payload += msg;
             resolve();
+            this.persistStream();
         });
     }
     stringifyPayload() {
@@ -71,12 +72,11 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
         }
         return this.payload;
     }
-    getStream() {
+    getStream(reject) {
         if (this.loadStream) {
             const storedStream = store_1.Store.getData()[this.loadStream];
             if (!storedStream) {
-                logger_1.Logger.error(`There is no uds stream able to be loaded named ${this.loadStream}`);
-                return net.createConnection(this.path);
+                reject(`There is no uds stream able to be loaded named ${this.loadStream}`);
             }
             logger_1.Logger.debug(`Uds publisher is reusing stream: ${this.loadStream}`);
             return storedStream;
@@ -93,7 +93,7 @@ let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
             this.stream.removeAllListeners('end');
             if (this.saveStream) {
                 store_1.Store.getData()[this.saveStream] = this.stream;
-                logger_1.Logger.debug(`Uds publisher stream saved`);
+                logger_1.Logger.debug(`Uds publisher stream '${this.saveStream}' saved`);
             }
             else {
                 logger_1.Logger.debug(`Uds publisher stream closed`);

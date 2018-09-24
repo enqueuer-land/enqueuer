@@ -7,19 +7,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const object_notation_1 = require("./object-notation");
 const fs = __importStar(require("fs"));
-class JavascriptObjectNotation extends object_notation_1.ObjectNotation {
+const object_decycler_1 = require("./object-decycler");
+class JavascriptObjectNotation {
     parse(value) {
         return JSON.parse(value);
     }
     stringify(value, space = 2) {
-        try {
-            return JSON.stringify(object_notation_1.ObjectNotation.decycle(value), null, space);
-        }
-        catch (err) {
-            /*nothing*/
-        }
+        return JSON.stringify(new object_decycler_1.ObjectDecycler().decycle(value || {}), null, space);
     }
     loadFromFileSync(filename) {
         return this.parse(fs.readFileSync(filename).toString());
