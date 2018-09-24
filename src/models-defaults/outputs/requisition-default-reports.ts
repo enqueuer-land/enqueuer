@@ -16,7 +16,8 @@ export class RequisitionDefaultReports {
                 startTime: new DateController().toString(),
                 endTime: new DateController().toString(),
                 totalTime: 0
-            }
+            },
+            requisitions: []
         };
     }
 

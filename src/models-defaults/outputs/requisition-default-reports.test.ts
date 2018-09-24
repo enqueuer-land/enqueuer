@@ -12,7 +12,8 @@ describe('RequisitionDefaultReports', () => {
             publishers: [],
             "subscriptions": [],
             "tests": [],
-            "valid": true
+            "valid": true,
+            requisitions: []
         });
     });
 
@@ -27,7 +28,8 @@ describe('RequisitionDefaultReports', () => {
             publishers: [],
             "subscriptions": [],
             "tests": [{"description": 'err', "name": "Requisition ran", "valid": false}],
-            "valid": false
+            "valid": false,
+            requisitions: []
         });
     });
 
@@ -46,7 +48,8 @@ describe('RequisitionDefaultReports', () => {
                     "name": "Requisition skipped",
                     "valid": true
                 }],
-                "valid": true
+                "valid": true,
+                requisitions: []
             }
         );
     });

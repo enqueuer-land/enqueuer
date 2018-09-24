@@ -22,12 +22,8 @@ export class RequisitionReporter {
     private allPublishersPublished = false;
     private allSubscriptionsStoppedWaiting = false;
     private requisitionAttributes: RequisitionModel;
-    [propName: string]: any;
 
     constructor(requisitionAttributes: input.RequisitionModel) {
-        Object.keys(requisitionAttributes).forEach(key => {
-            this[key] = requisitionAttributes[key];
-        });
         this.requisitionAttributes = requisitionAttributes;
         this.reportGenerator = new ReportGenerator(this.requisitionAttributes);
         this.executeOnInitFunction();

@@ -14,7 +14,8 @@ class RequisitionDefaultReports {
                 startTime: new date_controller_1.DateController().toString(),
                 endTime: new date_controller_1.DateController().toString(),
                 totalTime: 0
-            }
+            },
+            requisitions: []
         };
     }
     static createRunningError(name, err) {

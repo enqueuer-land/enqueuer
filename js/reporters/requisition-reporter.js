@@ -20,9 +20,6 @@ class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.allPublishersPublished = false;
         this.allSubscriptionsStoppedWaiting = false;
-        Object.keys(requisitionAttributes).forEach(key => {
-            this[key] = requisitionAttributes[key];
-        });
         this.requisitionAttributes = requisitionAttributes;
         this.reportGenerator = new report_generator_1.ReportGenerator(this.requisitionAttributes);
         this.executeOnInitFunction();

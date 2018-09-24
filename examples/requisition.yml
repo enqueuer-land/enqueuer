@@ -4,10 +4,14 @@
         store:
             iteration: (store.iteration + 1) || 0
             lastExecutionTime: new Date().getTime();
+        assertions:
+            -   expectToBeUndefined: requisition.hakunaMatata
 -   name: delayed
     delay: 3000
+    anyStuff: anyValue
     onInit:
-        script: delayedTime = new Date().getTime() - store.lastExecutionTime;
+        script: |-
+            delayedTime = new Date().getTime() - store.lastExecutionTime;
         assertions:
             -   name: It was executed 10 times
                 expect: store.iteration
@@ -18,3 +22,5 @@
             -   name: It delayed for no more than ~3 seconds
                 expect: delayedTime - 500
                 toBeLessThan: 3000
+            -   expect: requisition.anyStuff
+                toBeEqualTo: `anyValue`

@@ -1,25 +1,30 @@
-csv: <<csv://misc/file-content.csv>>
-tsv: <<tsv://misc/file-content.tsv>>
-json: <<json://misc/file-content.json>>
-yml: <<yaml://misc/file-content.yml>>
-onInit:
-    script: double = <<file://misc/file-code.js>>
-    store:
-        scriptResult: double(20);
-onFinish:
-    assertions:
-        -   name: fileRead (yml)
-            expect: requisition.yml.key
-            toBeEqualTo: `value`
-        -   name: fileRead (.json)
-            expect: requisition.json.key
-            toBeEqualTo: `value`
-        -   name: fileRead (.csv)
-            expect: requisition.csv[1].title
-            toBeEqualTo: `secondRow`
-        -   name: fileRead (.tsv)
-            expect: requisition.tsv[0].title
-            toBeEqualTo: `virgs`
-        -   name: fileRead (.js)
-            expect: store.scriptResult
-            toBeEqualTo: 40
+-   csv: <<csv://misc/file-content.csv>>
+    tsv: <<tsv://misc/file-content.tsv>>
+    json: <<json://misc/file-content.json>>
+    yml: <<yaml://misc/file-content.yml>>
+    onInit:
+        script: double = <<file://misc/file-code.js>>
+        store:
+            scriptResult: double(20);
+    onFinish:
+        assertions:
+            -   name: fileRead (yml)
+                expect: requisition.yml.key
+                toBeEqualTo: `value`
+            -   name: fileRead (.json)
+                expect: requisition.json.key
+                toBeEqualTo: `value`
+            -   name: fileRead (.csv)
+                expect: requisition.csv[1].title
+                toBeEqualTo: `secondRow`
+            -   name: fileRead (.tsv)
+                expect: requisition.tsv[0].title
+                toBeEqualTo: `virgs`
+            -   name: fileRead (.js)
+                expect: store.scriptResult
+                toBeEqualTo: 40
+
+-   onInit:
+        assertions:
+            -   name: it's not stored
+                expectToBeUndefined: requisition.yml

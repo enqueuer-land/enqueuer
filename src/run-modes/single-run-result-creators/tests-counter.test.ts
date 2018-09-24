@@ -15,7 +15,7 @@ describe('TestsCounter', () => {
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
         expect(testsCounter.getTestsNumber()).toBe(0);
-        expect(testsCounter.getPercentage()).toBe(0);
+        expect(testsCounter.getPercentage()).toBe(100);
     });
 
     it('Should trunc to two decimals number', () => {
@@ -60,7 +60,7 @@ describe('TestsCounter', () => {
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
         expect(testsCounter.getTestsNumber()).toBe(0);
-        expect(testsCounter.getPercentage()).toBe(0);
+        expect(testsCounter.getPercentage()).toBe(100);
     });
 
 

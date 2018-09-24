@@ -25,7 +25,7 @@ export class TestsCounter {
     public getPercentage(): number {
         let percentage = Math.trunc(10000 * (this.totalTests - this.failingTests) / this.totalTests) / 100;
         if (isNaN(percentage)) {
-            percentage = 0;
+            percentage = 100;
         }
         return percentage;
     }
