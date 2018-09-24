@@ -5,7 +5,7 @@ import {RequisitionModel} from '../models/outputs/requisition-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {checkValidation} from '../models/outputs/report-model';
 import {TestModel} from '../models/outputs/test-model';
-import {PublisherModel} from "../models/outputs/publisher-model";
+import {PublisherModel} from '../models/outputs/publisher-model';
 
 export class ReportGenerator {
 

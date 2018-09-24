@@ -1,6 +1,5 @@
 -   publishers:
         -   type: amqp
-            name: publisher description
             payload:
                 how:
                     about: a new object?
@@ -17,6 +16,13 @@
                 assertions:
                 -   expect: publisher.options.port
                     toBeEqualTo: 5672
+        -   type: amqp
+            name: default exchange
+            payload: default exchange
+            options:
+                host: localhost
+                port: 5672
+            routingKey: enqueuer.default.exchange
     subscriptions:
         -   name: subscription description
             type: amqp
@@ -40,16 +46,6 @@
                 -   name: Routing Key
                     expect: deliveryInfo.routingKey
                     toBeEqualTo: `enqueuer.integration.test.routing.key`
--   name: Default exchange
-    publishers:
-        -   type: amqp
-            name: publisher description
-            payload: default exchange
-            options:
-                host: localhost
-                port: 5672
-            routingKey: enqueuer.default.exchange
-    subscriptions:
         -   type: amqp
             timeout: 3000
             options:

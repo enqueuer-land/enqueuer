@@ -56,23 +56,15 @@ onFinish:
             expect: message
             toBeEqualTo: store.key
 
-#Defines what triggers this execution
-#Two values are mutually exclusive: publisher and subscription. At least one of them has to be defined.
-startEvent:
+#Enqueuer publishes every item of this list by itself.
+#Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
+publishers: []
 
-    #This requisition acts proactively. Enqueuer triggers it by itself.
-    #Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
-    publisher:
+#Optional. Subscriptions list that have to be attended in order to consider this requisition a valid one.
+#Every supported IPC protocol is available here and you can check their values in /docs/tests/subscriptions folder.
+subscriptions: []
 
-    #This requisition acts reactively.
-    #Enqueuer waits, as long as it's not longer than the timeout, to start listening to the subscriptions list defined.
-    subscription:
-
-    #Optional. Subscriptions list that have to be attended in order to consider this requisition a valid one.
-    #Every supported IPC protocol is available here and you can check their values in /docs/tests/subscriptions folder.
-    subscriptions: []
-
-    #Optional. Things get interesting here.
-    #It's a list of other requisitions (/docs/tests/requisition.yml).
-    #Yes, it can get really recursive.
-    requisitions: []
+#Optional. Things get really interesting here.
+#It's a list of other requisitions (/docs/tests/requisition.yml).
+#Yes, it can get really recursive.
+requisitions: []

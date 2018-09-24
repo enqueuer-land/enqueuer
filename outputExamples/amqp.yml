@@ -7,9 +7,9 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 601
-      startTime: '2018-09-24T15:46:34.642Z'
-      endTime: '2018-09-24T15:46:35.243Z'
+      totalTime: 243
+      startTime: '2018-09-24T15:56:28.433Z'
+      endTime: '2018-09-24T15:56:28.676Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -36,7 +36,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T15:46:34.835Z'
+        connectionTime: '2018-09-24T15:56:28.630Z'
         messageReceived:
           payload:
             how:
@@ -49,7 +49,7 @@ requisitions:
             headers:
               key: value
               otherKey: otherValue
-            queue: pdRFYJ14
+            queue: ATys5zbM
             deliveryTag:
               type: Buffer
               data:
@@ -64,33 +64,9 @@ requisitions:
             redelivered: false
             exchange: enqueuer.exchange
             routingKey: enqueuer.integration.test.routing.key
-            consumerTag: node-amqp-80421-0.30554787683182694
-    publishers:
+            consumerTag: node-amqp-82861-0.7431220072428499
       -
-        name: 'publisher description'
-        valid: true
-        type: amqp
-        tests:
-          -
-            name: 'Assertion #0'
-            valid: true
-            description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T15:46:35.241Z'
-  -
-    valid: true
-    tests: []
-    name: 'Default exchange'
-    time:
-      totalTime: 20
-      startTime: '2018-09-24T15:46:35.245Z'
-      endTime: '2018-09-24T15:46:35.265Z'
-    subscriptions:
-      -
-        name: 'Subscription #0'
+        name: 'Subscription #1'
         type: amqp
         tests:
           -
@@ -102,7 +78,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T15:46:35.258Z'
+        connectionTime: '2018-09-24T15:56:28.627Z'
         messageReceived:
           payload:
             data:
@@ -143,10 +119,24 @@ requisitions:
             redelivered: false
             exchange: ""
             routingKey: enqueuer.default.exchange
-            consumerTag: node-amqp-80421-0.5582667965787975
+            consumerTag: node-amqp-82861-0.047416471915957326
     publishers:
       -
-        name: 'publisher description'
+        name: 'Publisher #0'
+        valid: true
+        type: amqp
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-24T15:56:28.675Z'
+      -
+        name: 'default exchange'
         valid: true
         type: amqp
         tests:
@@ -154,4 +144,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-24T15:46:35.264Z'
+        publishTime: '2018-09-24T15:56:28.672Z'

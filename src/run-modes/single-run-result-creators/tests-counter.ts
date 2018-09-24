@@ -11,7 +11,7 @@ export class TestsCounter {
 
     //TODO test it
     public addTest(test: TestModel): void {
-        this.sumTests([test])
+        this.sumTests([test]);
     }
 
     public getTestsNumber() {

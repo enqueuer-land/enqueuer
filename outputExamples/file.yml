@@ -11,9 +11,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 110
-      startTime: '2018-09-24T15:46:34.654Z'
-      endTime: '2018-09-24T15:46:34.764Z'
+      totalTime: 109
+      startTime: '2018-09-24T15:56:28.445Z'
+      endTime: '2018-09-24T15:56:28.554Z'
       timeout: 3000
     subscriptions:
       -
@@ -23,11 +23,11 @@ requisitions:
           -
             name: 'Some time has passed'
             valid: true
-            description: 'Expected ''now'' to be greater than or equal to ''1537803994654''. Received ''1537803994764'''
+            description: 'Expected ''now'' to be greater than or equal to ''1537804588445''. Received ''1537804588553'''
           -
             name: Filename
             valid: true
-            description: '''name'' (temp/fileTest20180924124634069713_d9792e95.file) does not contain ''temp/'''
+            description: '''name'' (temp/fileTest20180924125628048807_d11eb6b2.file) does not contain ''temp/'''
           -
             name: Content
             valid: true
@@ -49,13 +49,13 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T15:46:34.695Z'
+        connectionTime: '2018-09-24T15:56:28.486Z'
         messageReceived:
-          content: '1537803994654'
-          name: temp/fileTest20180924124634069713_d9792e95.file
+          content: '1537804588445'
+          name: temp/fileTest20180924125628048807_d11eb6b2.file
           size: 13
-          modified: '2018-09-24T15:46:34.698Z'
-          created: '2018-09-24T15:46:34.698Z'
+          modified: '2018-09-24T15:56:28.489Z'
+          created: '2018-09-24T15:56:28.489Z'
     publishers:
       -
         name: 'publisher description'
@@ -66,4 +66,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-24T15:46:34.709Z'
+        publishTime: '2018-09-24T15:56:28.502Z'
