@@ -11,7 +11,7 @@ export class RequisitionDefaultReports {
             tests: tests,
             name: name,
             subscriptions: [],
-            startEvent: {},
+            publishers: [],
             time: {
                 startTime: new DateController().toString(),
                 endTime: new DateController().toString(),

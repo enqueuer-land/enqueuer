@@ -6,9 +6,8 @@ onInit:
     assertions:
         -   name: Requisitions exists onInit
             expectToBeDefined: requisition
-startEvent:
-    publisher:
-        name: publisher description
+publishers:
+    -   name: publisher description
         type: tcp-client
         timeout: 2000
         serverAddress: localhost
@@ -40,27 +39,27 @@ startEvent:
                     expect: store.sequence
                     toContain: `publisher::onInit`
 subscriptions:
--   name: subscription description
-    type: tcp-server
-    port: 23080
-    response: hook response
-    onInit:
-        script: subscription.name = 'changed';
-        store:
-            sequence: store.sequence + `-> subscription::onInit`
-        assertions:
-            -   name: Subscription exists onInit
-                expectToBeDefined: subscription
-            -   name: Subscription name
-                expect: subscription.name
-                toBeEqualTo: `changed`
-    onMessageReceived:
-        assertions:
-            -   name: Subscription exists onMessageReceived
-                expectToBeDefined: subscription
-            -   name: Subscription name changed
-                expect: subscription.name
-                toBeEqualTo: `changed`
-            -   name: Subscription onInit executed
-                expect: store.sequence
-                toContain: `subscription::onInit`
+    -   name: subscription description
+        type: tcp-server
+        port: 23080
+        response: hook response
+        onInit:
+            script: subscription.name = 'changed';
+            store:
+                sequence: store.sequence + `-> subscription::onInit`
+            assertions:
+                -   name: Subscription exists onInit
+                    expectToBeDefined: subscription
+                -   name: Subscription name
+                    expect: subscription.name
+                    toBeEqualTo: `changed`
+        onMessageReceived:
+            assertions:
+                -   name: Subscription exists onMessageReceived
+                    expectToBeDefined: subscription
+                -   name: Subscription name changed
+                    expect: subscription.name
+                    toBeEqualTo: `changed`
+                -   name: Subscription onInit executed
+                    expect: store.sequence
+                    toContain: `subscription::onInit`

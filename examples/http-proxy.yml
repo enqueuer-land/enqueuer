@@ -1,6 +1,5 @@
-startEvent:
-    publisher:
-        name: publisher proxy
+publishers:
+    -   name: publisher proxy
         type: http-client
         url: http://localhost:23085/proxy/idValue?query=proxied
         method: PATCH
@@ -21,48 +20,48 @@ startEvent:
                     expect: body
                     toBeEqualTo: `responsePayload`
 subscriptions:
--   name: proxy server
-    type: http-proxy
-    endpoint: /proxy/:id
-    port: 23085
-    method: PATCH
-    redirect: http://localhost:23086
-    authentication:
-        basic:
-            user: user
-            password: password
-    onMessageReceived:
-        assertions:
-            -   name: Payload
-                expect: JSON.parse(message.body).proxy
-                toBeEqualTo: `test`
-            -   name: Params
-                expect: params.id
-                toBeEqualTo: `idValue`
-            -   name: Query
-                expect: query.query
-                toBeEqualTo: `proxied`
--   name: real server
-    type: http-server
-    endpoint: /proxy/:firstId
-    port: 23086
-    method: PATCH
-    timeout: 2000
-    authentication:
-        basic:
-            user: user
-            password: password
-    response:
-          status: 333
-          payload: responsePayload
-    onMessageReceived:
-        assertions:
-            -   name: Payload
-                expect: JSON.parse(message.body).proxy
-                toBeEqualTo: `test`
-            -   name: Params
-                expect: params.firstId
-                toBeEqualTo: `idValue`
-            -   name: Query
-                expect: query.query
-                toBeEqualTo: `proxied`
+    -   name: proxy server
+        type: http-proxy
+        endpoint: /proxy/:id
+        port: 23085
+        method: PATCH
+        redirect: http://localhost:23086
+        authentication:
+            basic:
+                user: user
+                password: password
+        onMessageReceived:
+            assertions:
+                -   name: Payload
+                    expect: JSON.parse(message.body).proxy
+                    toBeEqualTo: `test`
+                -   name: Params
+                    expect: params.id
+                    toBeEqualTo: `idValue`
+                -   name: Query
+                    expect: query.query
+                    toBeEqualTo: `proxied`
+    -   name: real server
+        type: http-server
+        endpoint: /proxy/:firstId
+        port: 23086
+        method: PATCH
+        timeout: 2000
+        authentication:
+            basic:
+                user: user
+                password: password
+        response:
+              status: 333
+              payload: responsePayload
+        onMessageReceived:
+            assertions:
+                -   name: Payload
+                    expect: JSON.parse(message.body).proxy
+                    toBeEqualTo: `test`
+                -   name: Params
+                    expect: params.firstId
+                    toBeEqualTo: `idValue`
+                -   name: Query
+                    expect: query.query
+                    toBeEqualTo: `proxied`

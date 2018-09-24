@@ -4,7 +4,6 @@ import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 import {ConfigurationValues} from "../configurations/configuration-values";
-import {EnqueuerStarter} from "../enqueuer-starter";
 import '../injectable-files-list'
 
 let findEveryJsonFile = (): string[] => {
@@ -72,11 +71,10 @@ describe('Inception test', () => {
         const innerRequisition: RequisitionModel = innerTest.requisitions[0];
 
         expect(innerRequisition.valid).toBeTruthy();
-        expect(innerRequisition.startEvent.publisher).toBeUndefined();
-        if (innerRequisition.startEvent.subscription) {
-            expect(innerRequisition.startEvent.subscription.valid).toBeTruthy();
-            expect(innerRequisition.startEvent.subscription.name).toBeDefined();
-            expect(innerRequisition.startEvent.subscription.tests[0].valid).toBeTruthy();
+        if (innerRequisition.subscriptions[0]) {
+            expect(innerRequisition.subscriptions[0].valid).toBeTruthy();
+            expect(innerRequisition.subscriptions[0].name).toBeDefined();
+            expect(innerRequisition.subscriptions[0].tests[0].valid).toBeTruthy();
         }
     };
 
@@ -87,11 +85,11 @@ describe('Inception test', () => {
             expect(findTest('No time out', requisition.tests)).toBeTruthy();
             expect(requisition.name).toBeDefined();
 
-            expect(requisition.startEvent.publisher).toBeDefined();
-            if (requisition.startEvent.publisher) {
-                expect(requisition.startEvent.publisher.valid).toBeTruthy();
-                expect(requisition.startEvent.publisher.name).toBe('Start event publisher');
-                expect(findTest('Response message received', requisition.startEvent.publisher.tests)).toBeTruthy();
+            expect(requisition.publishers).toBeDefined();
+            if (requisition.publishers[0]) {
+                expect(requisition.publishers[0].valid).toBeTruthy();
+                expect(requisition.publishers[0].name).toBe('Publisher #0');
+                expect(findTest('Response message received', requisition.publishers[0].tests)).toBeTruthy();
             }
         });
 

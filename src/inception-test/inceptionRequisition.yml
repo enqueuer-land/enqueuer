@@ -1,8 +1,7 @@
 -   name: Daemon UDS
     timeout: 10000
-    startEvent:
-        publisher:
-            type: uds
+    publishers:
+        -   type: uds
             path: /tmp/enqueuer.requisitions
             onMessageReceived:
                 assertions:
@@ -11,9 +10,8 @@
             payload:
 
                 #inner requisition
-                startEvent:
-                    subscription:
-                        type: tcp-server
+                subscriptions:
+                    -   type: tcp-server
                         timeout: 20
                         #port: auto generated free one
                         avoid: true
@@ -21,9 +19,8 @@
                 #end
 -   name: Daemon HTTP
     timeout: 10000
-    startEvent:
-        publisher:
-            type: http-client
+    publishers:
+        -   type: http-client
             url: http://localhost:23023/requisitions
             method: POST
             onMessageReceived:
@@ -33,9 +30,8 @@
             payload:
 
                 #inner requisition
-                startEvent:
-                    subscription:
-                        type: tcp-server
+                subscriptions:
+                    -   type: tcp-server
                         timeout: 20
                         #port: auto generated free one
                         avoid: true
@@ -43,9 +39,8 @@
                 #end
 -   name: Daemon TCP
     timeout: 10000
-    startEvent:
-        publisher:
-            type: tcp-client
+    publishers:
+        -   type: tcp-client
             port: 23022
             serverAddress: localhost
             onMessageReceived:
@@ -55,9 +50,8 @@
             payload:
 
                 #inner requisition
-                startEvent:
-                    subscription:
-                        type: tcp-server
+                subscriptions:
+                    -   type: tcp-server
                         timeout: 20
                         #port: auto generated free one
                         avoid: true

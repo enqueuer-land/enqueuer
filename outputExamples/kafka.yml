@@ -1,7 +1,6 @@
 name: examples/kafka.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
@@ -12,9 +11,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 427
-      startTime: '2018-09-24T14:51:29.301Z'
-      endTime: '2018-09-24T14:51:29.728Z'
+      totalTime: 189
+      startTime: '2018-09-24T15:46:34.673Z'
+      endTime: '2018-09-24T15:46:34.862Z'
       timeout: 8000
     subscriptions:
       -
@@ -46,17 +45,17 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.556Z'
+        connectionTime: '2018-09-24T15:46:34.842Z'
         messageReceived:
           topic: enqueuer-topic-name
           value: kafkaPayload
-          offset: 43
+          offset: 46
           partition: 0
-          highWaterOffset: 44
+          highWaterOffset: 47
           key: null
-          timestamp: '2018-09-24T14:51:29.559Z'
-    startEvent:
-      publisher:
+          timestamp: '2018-09-24T15:46:34.843Z'
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: kafka
@@ -73,5 +72,5 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:29.727Z'
-        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 43\n  }\n}"
+        publishTime: '2018-09-24T15:46:34.860Z'
+        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 46\n  }\n}"

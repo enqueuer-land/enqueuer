@@ -5,8 +5,13 @@ export class TestsCounter {
     private totalTests: number = 0;
     private failingTests: number = 0;
 
-    public addTests(report: RequisitionModel): void {
+    public addRequisitionTest(report: RequisitionModel): void {
         this.findRequisitions([report]);
+    }
+
+    //TODO test it
+    public addTest(test: TestModel): void {
+        this.sumTests([test])
     }
 
     public getTestsNumber() {
@@ -38,9 +43,9 @@ export class TestsCounter {
             requisition.subscriptions
                 .forEach(subscription => this.sumTests(subscription.tests));
         }
-        const startEvent = this.detectStartEvent(requisition);
-        if (startEvent) {
-            this.sumTests(startEvent.tests);
+        if (requisition.publishers) {
+            requisition.publishers
+                .forEach(publisher => this.sumTests(publisher.tests));
         }
     }
 
@@ -49,13 +54,4 @@ export class TestsCounter {
         this.totalTests += tests.length;
     }
 
-    private detectStartEvent(requisition: RequisitionModel): any {
-        if (requisition.startEvent) {
-            if (requisition.startEvent.subscription) {
-                return requisition.startEvent.subscription;
-            } else if (requisition.startEvent.publisher) {
-                return requisition.startEvent.publisher;
-            }
-        }
-    }
 }

@@ -9,7 +9,7 @@ class RequisitionDefaultReports {
             tests: tests,
             name: name,
             subscriptions: [],
-            startEvent: {},
+            publishers: [],
             time: {
                 startTime: new date_controller_1.DateController().toString(),
                 endTime: new date_controller_1.DateController().toString(),

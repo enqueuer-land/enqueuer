@@ -6,7 +6,6 @@ requisitions:
     name: examples/file-placeholder.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -25,26 +24,25 @@ requisitions:
             description: 'Expected ''store.csv[0].title'' to be equal to ''virgs''. Received ''virgs'''
         name: 'Requisition #0'
         time:
-          totalTime: 47
-          startTime: '2018-09-24T14:51:29.281Z'
-          endTime: '2018-09-24T14:51:29.328Z'
+          totalTime: 42
+          startTime: '2018-09-24T15:46:34.654Z'
+          endTime: '2018-09-24T15:46:34.696Z'
         subscriptions: []
-        startEvent: {}
+        publishers: []
   -
     name: examples/skipped.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
         tests: []
         name: 'Requisition #0 iterator collection'
         subscriptions: []
-        startEvent: {}
+        publishers: []
         time:
-          startTime: '2018-09-24T14:51:29.266Z'
-          endTime: '2018-09-24T14:51:29.266Z'
+          startTime: '2018-09-24T15:46:34.639Z'
+          endTime: '2018-09-24T15:46:34.639Z'
           totalTime: 0
       -
         valid: true
@@ -56,26 +54,25 @@ requisitions:
         name: 'Requisition #1'
         time:
           totalTime: 1
-          startTime: '2018-09-24T14:51:29.372Z'
-          endTime: '2018-09-24T14:51:29.373Z'
+          startTime: '2018-09-24T15:46:34.726Z'
+          endTime: '2018-09-24T15:46:34.727Z'
         subscriptions: []
-        startEvent: {}
+        publishers: []
   -
     name: examples/store.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
         tests: []
         name: 'Requisition #0'
         time:
-          totalTime: 29
-          startTime: '2018-09-24T14:51:29.321Z'
-          endTime: '2018-09-24T14:51:29.350Z'
+          totalTime: 4
+          startTime: '2018-09-24T15:46:34.722Z'
+          endTime: '2018-09-24T15:46:34.726Z'
         subscriptions: []
-        startEvent: {}
+        publishers: []
       -
         valid: true
         tests:
@@ -85,11 +82,11 @@ requisitions:
             description: 'Expected ''123'' to be equal to ''123''. Received ''123'''
         name: 'Requisition #1'
         time:
-          totalTime: 1
-          startTime: '2018-09-24T14:51:29.372Z'
-          endTime: '2018-09-24T14:51:29.373Z'
+          totalTime: 0
+          startTime: '2018-09-24T15:46:34.729Z'
+          endTime: '2018-09-24T15:46:34.729Z'
         subscriptions: []
-        startEvent: {}
+        publishers: []
       -
         valid: true
         tests:
@@ -99,16 +96,154 @@ requisitions:
             description: 'Expected ''124'' to be equal to ''124''. Received ''124'''
         name: 'Requisition #2'
         time:
-          totalTime: 0
-          startTime: '2018-09-24T14:51:29.374Z'
-          endTime: '2018-09-24T14:51:29.374Z'
+          totalTime: 1
+          startTime: '2018-09-24T15:46:34.741Z'
+          endTime: '2018-09-24T15:46:34.742Z'
         subscriptions: []
-        startEvent: {}
+        publishers: []
+  -
+    name: examples/recursion.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        name: 'Requisition #0'
+        valid: true
+        tests: []
+        requisitions:
+          -
+            name: 'Requisition #0'
+            valid: true
+            tests: []
+            requisitions:
+              -
+                name: 'Requisition #0'
+                valid: true
+                tests: []
+                requisitions:
+                  - {valid: true, tests: [], name: 'Requisition #0', time: {totalTime: 7, startTime: '2018-09-24T15:46:34.690Z', endTime: '2018-09-24T15:46:34.697Z'}, subscriptions: [], publishers: []}
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0'
+                time:
+                  totalTime: 1
+                  startTime: '2018-09-24T15:46:34.726Z'
+                  endTime: '2018-09-24T15:46:34.727Z'
+                subscriptions: []
+                publishers: []
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0'
+            time:
+              totalTime: 1
+              startTime: '2018-09-24T15:46:34.729Z'
+              endTime: '2018-09-24T15:46:34.730Z'
+            subscriptions: []
+            publishers: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'Last one was executed'
+            valid: true
+            description: '''store.lastExecution'' is not defined'
+        name: 'Requisition #0'
+        time:
+          totalTime: 1
+          startTime: '2018-09-24T15:46:34.741Z'
+          endTime: '2018-09-24T15:46:34.742Z'
+        subscriptions: []
+        publishers: []
+  -
+    name: examples/stdin.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        time:
+          totalTime: 53
+          startTime: '2018-09-24T15:46:34.693Z'
+          endTime: '2018-09-24T15:46:34.746Z'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: standard-input
+            tests:
+              -
+                name: payload
+                valid: true
+                description: 'Expected ''message'' to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-24T15:46:34.695Z'
+            messageReceived: 'enqueuer standard-input payload'
+        publishers: []
+  -
+    name: examples/udp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        time:
+          totalTime: 29
+          startTime: '2018-09-24T15:46:34.722Z'
+          endTime: '2018-09-24T15:46:34.751Z'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: udp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''
+              -
+                name: 'Remote Adderss'
+                valid: true
+                description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-24T15:46:34.726Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 105
+                  - 116
+              remoteInfo:
+                address: 127.0.0.1
+                family: IPv4
+                port: 58379
+                size: 2
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: udp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-24T15:46:34.744Z'
   -
     name: examples/file.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -119,9 +254,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #0'
         time:
-          totalTime: 113
-          startTime: '2018-09-24T14:51:29.281Z'
-          endTime: '2018-09-24T14:51:29.394Z'
+          totalTime: 110
+          startTime: '2018-09-24T15:46:34.654Z'
+          endTime: '2018-09-24T15:46:34.764Z'
           timeout: 3000
         subscriptions:
           -
@@ -131,11 +266,11 @@ requisitions:
               -
                 name: 'Some time has passed'
                 valid: true
-                description: 'Expected ''now'' to be greater than or equal to ''1537800689281''. Received ''1537800689393'''
+                description: 'Expected ''now'' to be greater than or equal to ''1537803994654''. Received ''1537803994764'''
               -
                 name: Filename
                 valid: true
-                description: '''name'' (temp/fileTest20180924115129032953_08aec6e1.file) does not contain ''temp/'''
+                description: '''name'' (temp/fileTest20180924124634069713_d9792e95.file) does not contain ''temp/'''
               -
                 name: Content
                 valid: true
@@ -157,15 +292,15 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.327Z'
+            connectionTime: '2018-09-24T15:46:34.695Z'
             messageReceived:
-              content: '1537800689281'
-              name: temp/fileTest20180924115129032953_08aec6e1.file
+              content: '1537803994654'
+              name: temp/fileTest20180924124634069713_d9792e95.file
               size: 13
-              modified: '2018-09-24T14:51:29.330Z'
-              created: '2018-09-24T14:51:29.330Z'
-        startEvent:
-          publisher:
+              modified: '2018-09-24T15:46:34.698Z'
+              created: '2018-09-24T15:46:34.698Z'
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: file
@@ -174,157 +309,11 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.350Z'
-  -
-    name: examples/stdin.yml
-    valid: true
-    tests: []
-    startEvent: {}
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        time:
-          totalTime: 77
-          startTime: '2018-09-24T14:51:29.320Z'
-          endTime: '2018-09-24T14:51:29.397Z'
-        subscriptions: []
-        startEvent:
-          subscription:
-            name: 'subscription description'
-            type: standard-input
-            tests:
-              -
-                name: payload
-                valid: true
-                description: 'Expected ''message'' to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-09-24T14:51:29.328Z'
-            messageReceived: 'enqueuer standard-input payload'
-  -
-    name: examples/udp.yml
-    valid: true
-    tests: []
-    startEvent: {}
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        time:
-          totalTime: 79
-          startTime: '2018-09-24T14:51:29.322Z'
-          endTime: '2018-09-24T14:51:29.401Z'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: udp
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''
-              -
-                name: 'Remote Adderss'
-                valid: true
-                description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-09-24T14:51:29.327Z'
-            messageReceived:
-              payload:
-                type: Buffer
-                data:
-                  - 105
-                  - 116
-              remoteInfo:
-                address: 127.0.0.1
-                family: IPv4
-                port: 64596
-                size: 2
-        startEvent:
-          publisher:
-            name: 'publisher description'
-            valid: true
-            type: udp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.396Z'
-  -
-    name: examples/recursion.yml
-    valid: true
-    tests: []
-    startEvent: {}
-    requisitions:
-      -
-        name: 'Requisition #0'
-        valid: true
-        tests: []
-        startEvent: {}
-        requisitions:
-          -
-            name: 'Requisition #0'
-            valid: true
-            tests: []
-            startEvent: {}
-            requisitions:
-              -
-                name: 'Requisition #0'
-                valid: true
-                tests: []
-                startEvent: {}
-                requisitions:
-                  - {valid: true, tests: [], name: 'Requisition #0', time: {totalTime: 14, startTime: '2018-09-24T14:51:29.316Z', endTime: '2018-09-24T14:51:29.330Z'}, subscriptions: [], startEvent: {}}
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0'
-                time:
-                  totalTime: 1
-                  startTime: '2018-09-24T14:51:29.372Z'
-                  endTime: '2018-09-24T14:51:29.373Z'
-                subscriptions: []
-                startEvent: {}
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0'
-            time:
-              totalTime: 0
-              startTime: '2018-09-24T14:51:29.387Z'
-              endTime: '2018-09-24T14:51:29.387Z'
-            subscriptions: []
-            startEvent: {}
-      -
-        valid: true
-        tests:
-          -
-            name: 'Last one was executed'
-            valid: true
-            description: '''store.lastExecution'' is not defined'
-        name: 'Requisition #0'
-        time:
-          totalTime: 0
-          startTime: '2018-09-24T14:51:29.412Z'
-          endTime: '2018-09-24T14:51:29.412Z'
-        subscriptions: []
-        startEvent: {}
+            publishTime: '2018-09-24T15:46:34.709Z'
   -
     name: examples/sqs.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -335,9 +324,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 131
-          startTime: '2018-09-24T14:51:29.320Z'
-          endTime: '2018-09-24T14:51:29.451Z'
+          totalTime: 100
+          startTime: '2018-09-24T15:46:34.693Z'
+          endTime: '2018-09-24T15:46:34.793Z'
           timeout: 5000
         subscriptions:
           -
@@ -365,14 +354,14 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.327Z'
+            connectionTime: '2018-09-24T15:46:34.695Z'
             messageReceived:
-              MessageId: 43e8dae4-d180-4c42-b96a-e8e392830813
-              ReceiptHandle: '43e8dae4-d180-4c42-b96a-e8e392830813#7fc152dc-cb32-4585-b50d-4b3e2ed9a76b'
+              MessageId: 361c82bc-3958-4c3e-a013-e5e124232f76
+              ReceiptHandle: '361c82bc-3958-4c3e-a013-e5e124232f76#09b78717-a120-4e0f-975f-f9f844709ba1'
               MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
               Body: enqueuer
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: sqs
@@ -405,18 +394,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.450Z'
+            publishTime: '2018-09-24T15:46:34.790Z'
             messageReceived:
               ResponseMetadata:
                 RequestId: 00000000-0000-0000-0000-000000000000
               MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
               MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
-              MessageId: de3341cc-fad7-45cc-864f-e315d632fc1e
+              MessageId: f66d37fa-86c8-408b-8bae-159713bbaf92
   -
     name: examples/hooks.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -431,9 +419,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 213
-          startTime: '2018-09-24T14:51:29.282Z'
-          endTime: '2018-09-24T14:51:29.495Z'
+          totalTime: 164
+          startTime: '2018-09-24T15:46:34.655Z'
+          endTime: '2018-09-24T15:46:34.819Z'
           timeout: 2000
         subscriptions:
           -
@@ -459,13 +447,13 @@ requisitions:
               -
                 name: 'Subscription onInit executed'
                 valid: true
-                description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''subscription::onInit'''
+                description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''subscription::onInit'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.328Z'
+            connectionTime: '2018-09-24T15:46:34.696Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -476,8 +464,8 @@ requisitions:
                 address: '::ffff:127.0.0.1'
                 family: IPv6
                 port: 23080
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: tcp-client
@@ -505,7 +493,7 @@ requisitions:
               -
                 name: 'Requisition onInit'
                 valid: true
-                description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''requisition::onInit'''
+                description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''requisition::onInit'''
               -
                 name: 'Publisher name changed'
                 valid: true
@@ -513,113 +501,22 @@ requisitions:
               -
                 name: 'Publisher onInit executed'
                 valid: true
-                description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''publisher::onInit'''
+                description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''publisher::onInit'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.495Z'
+            publishTime: '2018-09-24T15:46:34.819Z'
             messageReceived:
               payload: 'hook response'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 62079
-  -
-    name: examples/zeromq-pubsub.yml
-    valid: true
-    tests: []
-    startEvent: {}
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        time:
-          totalTime: 179
-          startTime: '2018-09-24T14:51:29.324Z'
-          endTime: '2018-09-24T14:51:29.503Z'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: zero-mq-sub
-            tests:
-              -
-                name: topic
-                valid: true
-                description: 'Expected ''topic'' to be equal to ''topic.enqueuer.virgs''. Received ''topic.enqueuer.virgs'''
-              -
-                name: payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''enqueuer zeroes''. Received ''enqueuer zeroes'''
-              -
-                name: address
-                valid: true
-                description: 'Expected ''store.zeroMqAddress'' to be equal to ''tcp://127.0.0.1:3000''. Received ''tcp://127.0.0.1:3000'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-09-24T14:51:29.489Z'
-            messageReceived:
-              topic:
-                type: Buffer
-                data:
-                  - 116
-                  - 111
-                  - 112
-                  - 105
-                  - 99
-                  - 46
-                  - 101
-                  - 110
-                  - 113
-                  - 117
-                  - 101
-                  - 117
-                  - 101
-                  - 114
-                  - 46
-                  - 118
-                  - 105
-                  - 114
-                  - 103
-                  - 115
-              payload:
-                type: Buffer
-                data:
-                  - 101
-                  - 110
-                  - 113
-                  - 117
-                  - 101
-                  - 117
-                  - 101
-                  - 114
-                  - 32
-                  - 122
-                  - 101
-                  - 114
-                  - 111
-                  - 101
-                  - 115
-        startEvent:
-          publisher:
-            name: publisher
-            valid: true
-            type: zero-mq-pub
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.490Z'
+                port: 62904
   -
     name: examples/uds.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -630,9 +527,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #0'
         time:
-          totalTime: 95
-          startTime: '2018-09-24T14:51:29.322Z'
-          endTime: '2018-09-24T14:51:29.417Z'
+          totalTime: 46
+          startTime: '2018-09-24T15:46:34.723Z'
+          endTime: '2018-09-24T15:46:34.769Z'
           timeout: 3000
         subscriptions:
           -
@@ -648,7 +545,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.328Z'
+            connectionTime: '2018-09-24T15:46:34.726Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -661,8 +558,8 @@ requisitions:
                   - 117
                   - 101
                   - 114
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: uds
@@ -679,7 +576,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.417Z'
+            publishTime: '2018-09-24T15:46:34.769Z'
             messageReceived:
               payload: responsePayload
       -
@@ -687,9 +584,9 @@ requisitions:
         tests: []
         name: 'UDS2 Name saver'
         time:
-          totalTime: 56
-          startTime: '2018-09-24T14:51:29.453Z'
-          endTime: '2018-09-24T14:51:29.509Z'
+          totalTime: 52
+          startTime: '2018-09-24T15:46:34.777Z'
+          endTime: '2018-09-24T15:46:34.829Z'
         subscriptions:
           -
             name: 'udsSubscription2 description'
@@ -704,7 +601,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.454Z'
+            connectionTime: '2018-09-24T15:46:34.777Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -717,8 +614,8 @@ requisitions:
                   - 117
                   - 101
                   - 114
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'udsPublisher2 description'
             valid: true
             type: uds
@@ -731,7 +628,7 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.509Z'
+            publishTime: '2018-09-24T15:46:34.829Z'
             messageReceived:
               payload: '{}'
       -
@@ -739,9 +636,9 @@ requisitions:
         tests: []
         name: 'udsStreamLoader description'
         time:
-          totalTime: 9
-          startTime: '2018-09-24T14:51:29.511Z'
-          endTime: '2018-09-24T14:51:29.520Z'
+          totalTime: 7
+          startTime: '2018-09-24T15:46:34.830Z'
+          endTime: '2018-09-24T15:46:34.837Z'
         subscriptions:
           -
             name: 'Subscription #0'
@@ -756,7 +653,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.511Z'
+            connectionTime: '2018-09-24T15:46:34.830Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -778,8 +675,8 @@ requisitions:
                   - 110
                   - 101
                   - 100
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'udsStreamLoader publisher'
             valid: true
             type: uds
@@ -796,14 +693,13 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.520Z'
+            publishTime: '2018-09-24T15:46:34.837Z'
             messageReceived:
               payload: 'I am still bidirectional'
   -
     name: examples/https.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -814,9 +710,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #0'
         time:
-          totalTime: 241
-          startTime: '2018-09-24T14:51:29.287Z'
-          endTime: '2018-09-24T14:51:29.528Z'
+          totalTime: 186
+          startTime: '2018-09-24T15:46:34.660Z'
+          endTime: '2018-09-24T15:46:34.846Z'
           timeout: 3000
         subscriptions:
           -
@@ -832,7 +728,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.357Z'
+            connectionTime: '2018-09-24T15:46:34.710Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -842,8 +738,8 @@ requisitions:
               params: {}
               query: {}
               body: "{\n  \"https\": \"works!\"\n}"
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: https-client
@@ -864,7 +760,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.527Z'
+            publishTime: '2018-09-24T15:46:34.845Z'
             messageReceived:
               statusCode: 200
               body: https
@@ -873,7 +769,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '5'
                 etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-                date: 'Mon, 24 Sep 2018 14:51:29 GMT'
+                date: 'Mon, 24 Sep 2018 15:46:34 GMT'
                 connection: close
               request:
                 uri:
@@ -897,16 +793,15 @@ requisitions:
     name: examples/http-proxy.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
         tests: []
         name: 'Requisition #0'
         time:
-          totalTime: 256
-          startTime: '2018-09-24T14:51:29.283Z'
-          endTime: '2018-09-24T14:51:29.539Z'
+          totalTime: 192
+          startTime: '2018-09-24T15:46:34.656Z'
+          endTime: '2018-09-24T15:46:34.848Z'
         subscriptions:
           -
             name: 'proxy server'
@@ -945,7 +840,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.357Z'
+            connectionTime: '2018-09-24T15:46:34.710Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -996,7 +891,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.357Z'
+            connectionTime: '2018-09-24T15:46:34.710Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1009,8 +904,8 @@ requisitions:
               query:
                 query: proxied
               body: "{\n  \"proxy\": \"test\"\n}"
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher proxy'
             valid: true
             type: http-client
@@ -1031,7 +926,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.538Z'
+            publishTime: '2018-09-24T15:46:34.847Z'
             messageReceived:
               statusCode: 333
               body: responsePayload
@@ -1040,7 +935,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '15'
                 etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-                date: 'Mon, 24 Sep 2018 14:51:29 GMT'
+                date: 'Mon, 24 Sep 2018 15:46:34 GMT'
                 connection: close
               request:
                 uri:
@@ -1062,250 +957,9 @@ requisitions:
                   authorization: 'Basic dXNlcjpwYXNzd29yZA=='
                   Content-Length: 21
   -
-    name: examples/stomp.yml
-    valid: true
-    tests: []
-    startEvent: {}
-    requisitions:
-      -
-        valid: true
-        tests:
-          -
-            valid: true
-            name: 'No time out'
-            description: 'Requisition has not timed out'
-        name: 'Requisition #0'
-        time:
-          totalTime: 230
-          startTime: '2018-09-24T14:51:29.320Z'
-          endTime: '2018-09-24T14:51:29.550Z'
-          timeout: 3000
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: stomp
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-09-24T14:51:29.461Z'
-            messageReceived:
-              payload: stompQueue
-              headers:
-                destination: /queue/stompQueue
-                message-id: Q_/queue/stompQueue@@session-s0sgjWz3wVsRLDMXi0P_Cw@@1
-                redelivered: 'false'
-                content-length: '10'
-        startEvent:
-          publisher:
-            name: 'publisher description'
-            valid: true
-            type: stomp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.544Z'
-  -
-    name: examples/mqtt.yml
-    valid: true
-    tests: []
-    startEvent: {}
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        time:
-          totalTime: 267
-          startTime: '2018-09-24T14:51:29.302Z'
-          endTime: '2018-09-24T14:51:29.569Z'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: mqtt
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-              -
-                name: Topic
-                valid: true
-                description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
-              -
-                name: 'Beatles song'
-                valid: true
-                description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-09-24T14:51:29.497Z'
-            messageReceived:
-              topic: enqueuer/integration/public/test
-              payload:
-                type: Buffer
-                data:
-                  - 101
-                  - 110
-                  - 113
-                  - 117
-                  - 101
-                  - 117
-                  - 101
-                  - 114
-        startEvent:
-          publisher:
-            name: 'publisher description'
-            valid: true
-            type: mqtt
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.549Z'
-  -
-    name: examples/amqp.yml
-    valid: true
-    tests: []
-    startEvent: {}
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        time:
-          totalTime: 344
-          startTime: '2018-09-24T14:51:29.270Z'
-          endTime: '2018-09-24T14:51:29.614Z'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: amqp
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
-              -
-                name: Header
-                valid: true
-                description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
-              -
-                name: 'Other Header Value'
-                valid: true
-                description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
-              -
-                name: 'Routing Key'
-                valid: true
-                description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-09-24T14:51:29.517Z'
-            messageReceived:
-              payload:
-                how:
-                  about: 'a new object?'
-              headers:
-                key: value
-                otherKey: otherValue
-              deliveryInfo:
-                contentType: application/json
-                headers:
-                  key: value
-                  otherKey: otherValue
-                queue: U7P92Rft
-                deliveryTag:
-                  type: Buffer
-                  data: [0, 0, 0, 0, 0, 0, 0, 1]
-                redelivered: false
-                exchange: enqueuer.exchange
-                routingKey: enqueuer.integration.test.routing.key
-                consumerTag: node-amqp-67808-0.5708811062590022
-        startEvent:
-          publisher:
-            name: 'publisher description'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.611Z'
-      -
-        valid: true
-        tests: []
-        name: 'Default exchange'
-        time:
-          totalTime: 31
-          startTime: '2018-09-24T14:51:29.617Z'
-          endTime: '2018-09-24T14:51:29.648Z'
-        subscriptions:
-          -
-            name: 'Subscription #0'
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-09-24T14:51:29.634Z'
-            messageReceived:
-              payload:
-                data:
-                  type: Buffer
-                  data: [100, 101, 102, 97, 117, 108, 116, 32, 101, 120, 99, 104, 97, 110, 103, 101]
-                contentType: application/octet-stream
-              headers: {}
-              deliveryInfo:
-                contentType: application/octet-stream
-                queue: enqueuer.default.exchange
-                deliveryTag:
-                  type: Buffer
-                  data: [0, 0, 0, 0, 0, 0, 0, 1]
-                redelivered: false
-                exchange: ""
-                routingKey: enqueuer.default.exchange
-                consumerTag: node-amqp-67808-0.562869759222578
-        startEvent:
-          publisher:
-            name: 'publisher description'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-09-24T14:51:29.647Z'
-  -
     name: examples/kafka.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -1316,9 +970,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #0'
         time:
-          totalTime: 427
-          startTime: '2018-09-24T14:51:29.301Z'
-          endTime: '2018-09-24T14:51:29.728Z'
+          totalTime: 189
+          startTime: '2018-09-24T15:46:34.673Z'
+          endTime: '2018-09-24T15:46:34.862Z'
           timeout: 8000
         subscriptions:
           -
@@ -1350,17 +1004,17 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.556Z'
+            connectionTime: '2018-09-24T15:46:34.842Z'
             messageReceived:
               topic: enqueuer-topic-name
               value: kafkaPayload
-              offset: 43
+              offset: 46
               partition: 0
-              highWaterOffset: 44
+              highWaterOffset: 47
               key: null
-              timestamp: '2018-09-24T14:51:29.559Z'
-        startEvent:
-          publisher:
+              timestamp: '2018-09-24T15:46:34.843Z'
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: kafka
@@ -1377,13 +1031,101 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.727Z'
-            messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 43\n  }\n}"
+            publishTime: '2018-09-24T15:46:34.860Z'
+            messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 46\n  }\n}"
+  -
+    name: examples/zeromq-pubsub.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        time:
+          totalTime: 151
+          startTime: '2018-09-24T15:46:34.725Z'
+          endTime: '2018-09-24T15:46:34.876Z'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: zero-mq-sub
+            tests:
+              -
+                name: topic
+                valid: true
+                description: 'Expected ''topic'' to be equal to ''topic.enqueuer.virgs''. Received ''topic.enqueuer.virgs'''
+              -
+                name: payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''enqueuer zeroes''. Received ''enqueuer zeroes'''
+              -
+                name: address
+                valid: true
+                description: 'Expected ''store.zeroMqAddress'' to be equal to ''tcp://127.0.0.1:3000''. Received ''tcp://127.0.0.1:3000'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-24T15:46:34.874Z'
+            messageReceived:
+              topic:
+                type: Buffer
+                data:
+                  - 116
+                  - 111
+                  - 112
+                  - 105
+                  - 99
+                  - 46
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+                  - 46
+                  - 118
+                  - 105
+                  - 114
+                  - 103
+                  - 115
+              payload:
+                type: Buffer
+                data:
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+                  - 32
+                  - 122
+                  - 101
+                  - 114
+                  - 111
+                  - 101
+                  - 115
+        publishers:
+          -
+            name: publisher
+            valid: true
+            type: zero-mq-pub
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-24T15:46:34.875Z'
   -
     name: examples/parallel-sub.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -1394,13 +1136,12 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #0'
         time:
-          totalTime: 453
-          startTime: '2018-09-24T14:51:29.316Z'
-          endTime: '2018-09-24T14:51:29.769Z'
+          totalTime: 454
+          startTime: '2018-09-24T15:46:34.689Z'
+          endTime: '2018-09-24T15:46:35.143Z'
           timeout: 3000
-        subscriptions: []
-        startEvent:
-          subscription:
+        subscriptions:
+          -
             name: 'subscription description'
             type: tcp-server
             tests:
@@ -1413,7 +1154,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.372Z'
+            connectionTime: '2018-09-24T15:46:34.696Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1430,11 +1171,11 @@ requisitions:
                 address: '::ffff:127.0.0.1'
                 family: IPv6
                 port: 23081
+        publishers: []
   -
     name: examples/parallel-pub.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -1445,13 +1186,13 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'requisition description'
         time:
-          totalTime: 4
-          startTime: '2018-09-24T14:51:29.767Z'
-          endTime: '2018-09-24T14:51:29.771Z'
+          totalTime: 3
+          startTime: '2018-09-24T15:46:35.141Z'
+          endTime: '2018-09-24T15:46:35.144Z'
           timeout: 3000
         subscriptions: []
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: tcp-client
@@ -1468,18 +1209,77 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.770Z'
+            publishTime: '2018-09-24T15:46:35.144Z'
             messageReceived:
               payload: anyValue
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 62095
+                port: 62918
   -
-    name: examples/tcp.yml
+    name: examples/mqtt.yml
     valid: true
     tests: []
-    startEvent: {}
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        time:
+          totalTime: 565
+          startTime: '2018-09-24T15:46:34.674Z'
+          endTime: '2018-09-24T15:46:35.239Z'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: mqtt
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+              -
+                name: Topic
+                valid: true
+                description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+              -
+                name: 'Beatles song'
+                valid: true
+                description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-24T15:46:34.818Z'
+            messageReceived:
+              topic: enqueuer/integration/public/test
+              payload:
+                type: Buffer
+                data:
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: mqtt
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-24T15:46:35.236Z'
+  -
+    name: examples/stomp.yml
+    valid: true
+    tests: []
     requisitions:
       -
         valid: true
@@ -1490,9 +1290,186 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #0'
         time:
-          totalTime: 176
-          startTime: '2018-09-24T14:51:29.321Z'
-          endTime: '2018-09-24T14:51:29.497Z'
+          totalTime: 535
+          startTime: '2018-09-24T15:46:34.721Z'
+          endTime: '2018-09-24T15:46:35.256Z'
+          timeout: 3000
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: stomp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-24T15:46:35.233Z'
+            messageReceived:
+              payload: stompQueue
+              headers:
+                destination: /queue/stompQueue
+                message-id: Q_/queue/stompQueue@@session-bWPPM5g2FlKH7uQ7VMtqpg@@1
+                redelivered: 'false'
+                content-length: '10'
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: stomp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-24T15:46:35.255Z'
+  -
+    name: examples/amqp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        time:
+          totalTime: 601
+          startTime: '2018-09-24T15:46:34.642Z'
+          endTime: '2018-09-24T15:46:35.243Z'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: amqp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
+              -
+                name: Header
+                valid: true
+                description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
+              -
+                name: 'Other Header Value'
+                valid: true
+                description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
+              -
+                name: 'Routing Key'
+                valid: true
+                description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-24T15:46:34.835Z'
+            messageReceived:
+              payload:
+                how:
+                  about: 'a new object?'
+              headers:
+                key: value
+                otherKey: otherValue
+              deliveryInfo:
+                contentType: application/json
+                headers:
+                  key: value
+                  otherKey: otherValue
+                queue: pdRFYJ14
+                deliveryTag:
+                  type: Buffer
+                  data: [0, 0, 0, 0, 0, 0, 0, 1]
+                redelivered: false
+                exchange: enqueuer.exchange
+                routingKey: enqueuer.integration.test.routing.key
+                consumerTag: node-amqp-80421-0.30554787683182694
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-24T15:46:35.241Z'
+      -
+        valid: true
+        tests: []
+        name: 'Default exchange'
+        time:
+          totalTime: 20
+          startTime: '2018-09-24T15:46:35.245Z'
+          endTime: '2018-09-24T15:46:35.265Z'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-09-24T15:46:35.258Z'
+            messageReceived:
+              payload:
+                data:
+                  type: Buffer
+                  data: [100, 101, 102, 97, 117, 108, 116, 32, 101, 120, 99, 104, 97, 110, 103, 101]
+                contentType: application/octet-stream
+              headers: {}
+              deliveryInfo:
+                contentType: application/octet-stream
+                queue: enqueuer.default.exchange
+                deliveryTag:
+                  type: Buffer
+                  data: [0, 0, 0, 0, 0, 0, 0, 1]
+                redelivered: false
+                exchange: ""
+                routingKey: enqueuer.default.exchange
+                consumerTag: node-amqp-80421-0.5582667965787975
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-09-24T15:46:35.264Z'
+  -
+    name: examples/tcp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        time:
+          totalTime: 99
+          startTime: '2018-09-24T15:46:34.722Z'
+          endTime: '2018-09-24T15:46:34.821Z'
           timeout: 3000
         subscriptions:
           -
@@ -1512,7 +1489,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.328Z'
+            connectionTime: '2018-09-24T15:46:34.726Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1529,9 +1506,9 @@ requisitions:
                 address: '::ffff:127.0.0.1'
                 family: IPv6
                 port: 23069
-        startEvent:
-          publisher:
-            name: 'Start event publisher'
+        publishers:
+          -
+            name: 'Publisher #0'
             valid: true
             type: tcp-client
             tests:
@@ -1547,13 +1524,13 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.496Z'
+            publishTime: '2018-09-24T15:46:34.821Z'
             messageReceived:
               payload: 'Do not make it bad'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 62080
+                port: 62906
       -
         valid: true
         tests:
@@ -1563,9 +1540,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #1'
         time:
-          totalTime: 846
-          startTime: '2018-09-24T14:51:29.505Z'
-          endTime: '2018-09-24T14:51:30.351Z'
+          totalTime: 826
+          startTime: '2018-09-24T15:46:34.826Z'
+          endTime: '2018-09-24T15:46:35.652Z'
           timeout: 3000
         subscriptions:
           -
@@ -1581,7 +1558,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.506Z'
+            connectionTime: '2018-09-24T15:46:34.826Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1603,8 +1580,8 @@ requisitions:
                 address: '::ffff:127.0.0.1'
                 family: IPv6
                 port: 23070
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'tcp 1 publisher description'
             valid: true
             type: tcp-client
@@ -1621,13 +1598,13 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:30.351Z'
+            publishTime: '2018-09-24T15:46:35.652Z'
             messageReceived:
               payload: EnqueuerRocks
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 62088
+                port: 62913
       -
         valid: true
         tests:
@@ -1638,8 +1615,8 @@ requisitions:
         name: 'Requisition #2'
         time:
           totalTime: 1
-          startTime: '2018-09-24T14:51:30.353Z'
-          endTime: '2018-09-24T14:51:30.354Z'
+          startTime: '2018-09-24T15:46:35.655Z'
+          endTime: '2018-09-24T15:46:35.656Z'
           timeout: 3000
         subscriptions:
           -
@@ -1655,7 +1632,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:30.353Z'
+            connectionTime: '2018-09-24T15:46:35.655Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1684,9 +1661,9 @@ requisitions:
                   - 112
                   - 101
                   - 110
-        startEvent:
-          publisher:
-            name: 'Start event publisher'
+        publishers:
+          -
+            name: 'Publisher #0'
             valid: true
             type: tcp-client
             tests:
@@ -1702,27 +1679,25 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:30.353Z'
+            publishTime: '2018-09-24T15:46:35.656Z'
             messageReceived:
               payload: 'enqueuer Rocks'
   -
     name: examples/avoid.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
         tests: []
         name: 'Requisition #0'
         time:
-          totalTime: 2051
-          startTime: '2018-09-24T14:51:29.280Z'
-          endTime: '2018-09-24T14:51:31.331Z'
-        subscriptions: []
-        startEvent:
-          subscription:
-            name: 'Start event subscription'
+          totalTime: 2006
+          startTime: '2018-09-24T15:46:34.652Z'
+          endTime: '2018-09-24T15:46:36.658Z'
+        subscriptions:
+          -
+            name: 'Subscription #0'
             type: tcp-server
             tests:
               -
@@ -1730,12 +1705,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.372Z'
+            connectionTime: '2018-09-24T15:46:34.696Z'
+        publishers: []
   -
     name: examples/http.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
@@ -1746,9 +1721,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #0'
         time:
-          totalTime: 214
-          startTime: '2018-09-24T14:51:29.286Z'
-          endTime: '2018-09-24T14:51:29.500Z'
+          totalTime: 164
+          startTime: '2018-09-24T15:46:34.659Z'
+          endTime: '2018-09-24T15:46:34.823Z'
           timeout: 3000
         subscriptions:
           -
@@ -1788,7 +1763,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.357Z'
+            connectionTime: '2018-09-24T15:46:34.710Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1801,8 +1776,8 @@ requisitions:
               query:
                 query: '000'
               body: "{\n  \"enqueuer\": \"virgs\"\n}"
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: http-client
@@ -1823,7 +1798,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.500Z'
+            publishTime: '2018-09-24T15:46:34.823Z'
             messageReceived:
               statusCode: 321
               body: 'dynamically changed payload'
@@ -1832,7 +1807,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '27'
                 etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-                date: 'Mon, 24 Sep 2018 14:51:29 GMT'
+                date: 'Mon, 24 Sep 2018 15:46:34 GMT'
                 connection: close
               request:
                 uri:
@@ -1862,9 +1837,9 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'Requisition #1'
         time:
-          totalTime: 47
-          startTime: '2018-09-24T14:51:29.505Z'
-          endTime: '2018-09-24T14:51:29.552Z'
+          totalTime: 28
+          startTime: '2018-09-24T15:46:34.826Z'
+          endTime: '2018-09-24T15:46:34.854Z'
           timeout: 5000
         subscriptions:
           -
@@ -1880,7 +1855,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.506Z'
+            connectionTime: '2018-09-24T15:46:34.827Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1892,8 +1867,8 @@ requisitions:
               query:
                 query: '111'
               body: "{\n  \"duplicated\": true\n}"
-        startEvent:
-          publisher:
+        publishers:
+          -
             name: 'publisher description'
             valid: true
             type: http-client
@@ -1914,7 +1889,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-09-24T14:51:29.552Z'
+            publishTime: '2018-09-24T15:46:34.854Z'
             messageReceived:
               statusCode: 321
               body: duplicatedResponsePayload
@@ -1923,7 +1898,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '25'
                 etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-                date: 'Mon, 24 Sep 2018 14:51:29 GMT'
+                date: 'Mon, 24 Sep 2018 15:46:34 GMT'
                 connection: close
               request:
                 uri:
@@ -1953,12 +1928,11 @@ requisitions:
         name: 'requisition 2 (port 23076)'
         time:
           totalTime: 1001
-          startTime: '2018-09-24T14:51:29.574Z'
-          endTime: '2018-09-24T14:51:30.575Z'
+          startTime: '2018-09-24T15:46:34.857Z'
+          endTime: '2018-09-24T15:46:35.858Z'
           timeout: 5000
-        subscriptions: []
-        startEvent:
-          subscription:
+        subscriptions:
+          -
             name: 'subscription description'
             type: http-server
             tests:
@@ -1967,7 +1941,8 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-09-24T14:51:29.574Z'
+            connectionTime: '2018-09-24T15:46:34.857Z'
+        publishers: []
       -
         valid: true
         tests:
@@ -1977,13 +1952,12 @@ requisitions:
             description: 'Requisition has not timed out'
         name: 'check port releasing (23076)'
         time:
-          totalTime: 1002
-          startTime: '2018-09-24T14:51:30.578Z'
-          endTime: '2018-09-24T14:51:31.580Z'
+          totalTime: 1000
+          startTime: '2018-09-24T15:46:35.860Z'
+          endTime: '2018-09-24T15:46:36.860Z'
           timeout: 5000
-        subscriptions: []
-        startEvent:
-          subscription:
+        subscriptions:
+          -
             name: 'same port subscription'
             type: tcp-server
             tests:
@@ -1992,22 +1966,22 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-09-24T14:51:30.578Z'
+            connectionTime: '2018-09-24T15:46:35.860Z'
+        publishers: []
   -
     name: examples/requisition.yml
     valid: true
     tests: []
-    startEvent: {}
     requisitions:
       -
         valid: true
         tests: []
         name: 'iterations iterator collection'
         subscriptions: []
-        startEvent: {}
+        publishers: []
         time:
-          startTime: '2018-09-24T14:51:29.266Z'
-          endTime: '2018-09-24T14:51:29.266Z'
+          startTime: '2018-09-24T15:46:34.638Z'
+          endTime: '2018-09-24T15:46:34.638Z'
           totalTime: 0
       -
         valid: true
@@ -2027,7 +2001,7 @@ requisitions:
         name: delayed
         time:
           totalTime: 0
-          startTime: '2018-09-24T14:51:32.518Z'
-          endTime: '2018-09-24T14:51:32.518Z'
+          startTime: '2018-09-24T15:46:37.836Z'
+          endTime: '2018-09-24T15:46:37.836Z'
         subscriptions: []
-        startEvent: {}
+        publishers: []

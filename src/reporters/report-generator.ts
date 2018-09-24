@@ -2,10 +2,10 @@ import {DateController} from '../timers/date-controller';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
-import {StartEventModel} from '../models/outputs/start-event-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {checkValidation} from '../models/outputs/report-model';
 import {TestModel} from '../models/outputs/test-model';
+import {PublisherModel} from "../models/outputs/publisher-model";
 
 export class ReportGenerator {
 
@@ -25,7 +25,7 @@ export class ReportGenerator {
                 totalTime: 0
             },
             subscriptions: [],
-            startEvent: {}
+            publishers: []
         };
     }
 
@@ -34,17 +34,14 @@ export class ReportGenerator {
         this.timeout = timeout;
     }
 
-    public setStartEventReport(startEventReports: StartEventModel): void {
-        this.report.startEvent = startEventReports;
-        if (this.report.startEvent.publisher) {
-            this.report.valid = this.report.valid && this.report.startEvent.publisher.valid;
-        }
-        if (this.report.startEvent.subscription) {
-            this.report.valid = this.report.valid && this.report.startEvent.subscription.valid;
-        }
+    public setPublishersReport(publishersReport: PublisherModel[]): void {
+        this.report.publishers = publishersReport;
+        this.report.publishers.forEach(publisher => {
+            this.report.valid = this.report.valid && publisher.valid;
+        });
     }
 
-    public setSubscriptionReport(subscriptionReport: SubscriptionModel[]): void {
+    public setSubscriptionsReport(subscriptionReport: SubscriptionModel[]): void {
         this.report.subscriptions = subscriptionReport;
         this.report.subscriptions.forEach(subscriptionReport => {
             this.report.valid = this.report.valid && subscriptionReport.valid;

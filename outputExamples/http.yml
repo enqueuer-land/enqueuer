@@ -1,7 +1,6 @@
 name: examples/http.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
@@ -12,9 +11,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 214
-      startTime: '2018-09-24T14:51:29.286Z'
-      endTime: '2018-09-24T14:51:29.500Z'
+      totalTime: 164
+      startTime: '2018-09-24T15:46:34.659Z'
+      endTime: '2018-09-24T15:46:34.823Z'
       timeout: 3000
     subscriptions:
       -
@@ -54,7 +53,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.357Z'
+        connectionTime: '2018-09-24T15:46:34.710Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -67,8 +66,8 @@ requisitions:
           query:
             query: '000'
           body: "{\n  \"enqueuer\": \"virgs\"\n}"
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: http-client
@@ -89,7 +88,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:29.500Z'
+        publishTime: '2018-09-24T15:46:34.823Z'
         messageReceived:
           statusCode: 321
           body: 'dynamically changed payload'
@@ -98,7 +97,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '27'
             etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-            date: 'Mon, 24 Sep 2018 14:51:29 GMT'
+            date: 'Mon, 24 Sep 2018 15:46:34 GMT'
             connection: close
           request:
             uri:
@@ -128,9 +127,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #1'
     time:
-      totalTime: 47
-      startTime: '2018-09-24T14:51:29.505Z'
-      endTime: '2018-09-24T14:51:29.552Z'
+      totalTime: 28
+      startTime: '2018-09-24T15:46:34.826Z'
+      endTime: '2018-09-24T15:46:34.854Z'
       timeout: 5000
     subscriptions:
       -
@@ -146,7 +145,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.506Z'
+        connectionTime: '2018-09-24T15:46:34.827Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -158,8 +157,8 @@ requisitions:
           query:
             query: '111'
           body: "{\n  \"duplicated\": true\n}"
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: http-client
@@ -180,7 +179,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:29.552Z'
+        publishTime: '2018-09-24T15:46:34.854Z'
         messageReceived:
           statusCode: 321
           body: duplicatedResponsePayload
@@ -189,7 +188,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '25'
             etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-            date: 'Mon, 24 Sep 2018 14:51:29 GMT'
+            date: 'Mon, 24 Sep 2018 15:46:34 GMT'
             connection: close
           request:
             uri:
@@ -219,12 +218,11 @@ requisitions:
     name: 'requisition 2 (port 23076)'
     time:
       totalTime: 1001
-      startTime: '2018-09-24T14:51:29.574Z'
-      endTime: '2018-09-24T14:51:30.575Z'
+      startTime: '2018-09-24T15:46:34.857Z'
+      endTime: '2018-09-24T15:46:35.858Z'
       timeout: 5000
-    subscriptions: []
-    startEvent:
-      subscription:
+    subscriptions:
+      -
         name: 'subscription description'
         type: http-server
         tests:
@@ -233,7 +231,8 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.574Z'
+        connectionTime: '2018-09-24T15:46:34.857Z'
+    publishers: []
   -
     valid: true
     tests:
@@ -243,13 +242,12 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'check port releasing (23076)'
     time:
-      totalTime: 1002
-      startTime: '2018-09-24T14:51:30.578Z'
-      endTime: '2018-09-24T14:51:31.580Z'
+      totalTime: 1000
+      startTime: '2018-09-24T15:46:35.860Z'
+      endTime: '2018-09-24T15:46:36.860Z'
       timeout: 5000
-    subscriptions: []
-    startEvent:
-      subscription:
+    subscriptions:
+      -
         name: 'same port subscription'
         type: tcp-server
         tests:
@@ -258,4 +256,5 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-09-24T14:51:30.578Z'
+        connectionTime: '2018-09-24T15:46:35.860Z'
+    publishers: []

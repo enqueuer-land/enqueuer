@@ -1,7 +1,6 @@
 name: examples/stomp.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
@@ -12,9 +11,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 230
-      startTime: '2018-09-24T14:51:29.320Z'
-      endTime: '2018-09-24T14:51:29.550Z'
+      totalTime: 535
+      startTime: '2018-09-24T15:46:34.721Z'
+      endTime: '2018-09-24T15:46:35.256Z'
       timeout: 3000
     subscriptions:
       -
@@ -30,16 +29,16 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.461Z'
+        connectionTime: '2018-09-24T15:46:35.233Z'
         messageReceived:
           payload: stompQueue
           headers:
             destination: /queue/stompQueue
-            message-id: Q_/queue/stompQueue@@session-s0sgjWz3wVsRLDMXi0P_Cw@@1
+            message-id: Q_/queue/stompQueue@@session-bWPPM5g2FlKH7uQ7VMtqpg@@1
             redelivered: 'false'
             content-length: '10'
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: stomp
@@ -48,4 +47,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-24T14:51:29.544Z'
+        publishTime: '2018-09-24T15:46:35.255Z'

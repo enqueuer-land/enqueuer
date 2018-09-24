@@ -1,9 +1,8 @@
 delay: 500
 name: requisition description
 timeout: 3000
-startEvent:
-    publisher:
-        name: publisher description
+publishers:
+    -   name: publisher description
         type: tcp-client
         serverAddress: localhost
         port: 23081

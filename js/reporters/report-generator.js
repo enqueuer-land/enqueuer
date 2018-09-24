@@ -14,23 +14,20 @@ class ReportGenerator {
                 totalTime: 0
             },
             subscriptions: [],
-            startEvent: {}
+            publishers: []
         };
     }
     start(timeout) {
         this.startTime = new date_controller_1.DateController();
         this.timeout = timeout;
     }
-    setStartEventReport(startEventReports) {
-        this.report.startEvent = startEventReports;
-        if (this.report.startEvent.publisher) {
-            this.report.valid = this.report.valid && this.report.startEvent.publisher.valid;
-        }
-        if (this.report.startEvent.subscription) {
-            this.report.valid = this.report.valid && this.report.startEvent.subscription.valid;
-        }
+    setPublishersReport(publishersReport) {
+        this.report.publishers = publishersReport;
+        this.report.publishers.forEach(publisher => {
+            this.report.valid = this.report.valid && publisher.valid;
+        });
     }
-    setSubscriptionReport(subscriptionReport) {
+    setSubscriptionsReport(subscriptionReport) {
         this.report.subscriptions = subscriptionReport;
         this.report.subscriptions.forEach(subscriptionReport => {
             this.report.valid = this.report.valid && subscriptionReport.valid;

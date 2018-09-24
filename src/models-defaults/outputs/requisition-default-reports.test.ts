@@ -9,7 +9,7 @@ describe('RequisitionDefaultReports', () => {
         delete report.time;
         expect(report).toEqual({
             "name": "g iterator collection",
-            "startEvent": {},
+            publishers: [],
             "subscriptions": [],
             "tests": [],
             "valid": true
@@ -24,7 +24,7 @@ describe('RequisitionDefaultReports', () => {
         delete report.time;
         expect(report).toEqual({
             "name": "lopidio",
-            "startEvent": {},
+            publishers: [],
             "subscriptions": [],
             "tests": [{"description": 'err', "name": "Requisition ran", "valid": false}],
             "valid": false
@@ -39,7 +39,7 @@ describe('RequisitionDefaultReports', () => {
         delete report.time;
         expect(report).toEqual({
                 "name": "virgs",
-                "startEvent": {},
+                publishers: [],
                 "subscriptions": [],
                 "tests": [{
                     "description": "There is no iterations set to this requisition",

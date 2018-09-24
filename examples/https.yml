@@ -1,7 +1,6 @@
 timeout: 3000
-startEvent:
-    publisher:
-        name: publisher description
+publishers:
+    -   name: publisher description
         type: https-client
         url: https://localhost:4430/enqueuer
         method: POST

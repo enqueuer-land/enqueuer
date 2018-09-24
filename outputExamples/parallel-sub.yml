@@ -1,7 +1,6 @@
 name: examples/parallel-sub.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
@@ -12,13 +11,12 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 453
-      startTime: '2018-09-24T14:51:29.316Z'
-      endTime: '2018-09-24T14:51:29.769Z'
+      totalTime: 454
+      startTime: '2018-09-24T15:46:34.689Z'
+      endTime: '2018-09-24T15:46:35.143Z'
       timeout: 3000
-    subscriptions: []
-    startEvent:
-      subscription:
+    subscriptions:
+      -
         name: 'subscription description'
         type: tcp-server
         tests:
@@ -31,7 +29,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.372Z'
+        connectionTime: '2018-09-24T15:46:34.696Z'
         messageReceived:
           payload:
             type: Buffer
@@ -48,3 +46,4 @@ requisitions:
             address: '::ffff:127.0.0.1'
             family: IPv6
             port: 23081
+    publishers: []

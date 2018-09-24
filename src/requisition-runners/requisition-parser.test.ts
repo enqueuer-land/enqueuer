@@ -12,14 +12,12 @@ const valid = [
                 timeout: 500
             }
         ],
-        startEvent: {
-            publisher: {
-                name: "name",
-                type: "uds",
-                path: "/tmp/unix.sock",
-                payload: "{{sessionKey}}"
-            }
-        }
+        publishers: [{
+            name: "name",
+            type: "uds",
+            path: "/tmp/unix.sock",
+            payload: "{{sessionKey}}"
+        }]
     },
     {
         timeout: 3000,
@@ -32,14 +30,17 @@ const valid = [
                 timeout: 500
             }
         ],
-        startEvent: {
-            publisher: {
-                name: "name",
-                type: "uds",
-                path: "/tmp/unix.sock",
-                payload: "{{sessionKey}}"
-            }
-        }
+        publishers: [{
+            name: "name",
+            type: "uds",
+            path: "/tmp/unix.sock",
+            payload: "{{sessionKey}}"
+        },{
+            name: "name",
+            type: "uds",
+            path: "/tmp/unix.sock",
+            payload: "{{sessionKey}}"
+        }]
     }
 ];
 const validWithId = [{
@@ -54,14 +55,12 @@ const validWithId = [{
             timeout: 500
         }
     ],
-    startEvent: {
-        publisher: {
-            name: "name",
-            type: "uds",
-            path: "/tmp/unix.sock",
-            payload: "{{sessionKey}}"
-        }
-    },
+    publishers: [{
+        name: "name",
+        type: "uds",
+        path: "/tmp/unix.sock",
+        payload: "{{sessionKey}}"
+    }],
     requisitions: [{
         timeout: 3000,
         name: "name",
@@ -73,14 +72,12 @@ const validWithId = [{
                 timeout: 500
             }
         ],
-        startEvent: {
-            publisher: {
-                name: "name",
-                type: "uds",
-                path: "/tmp/unix.sock",
-                payload: "{{sessionKey}}"
-            }
-        },
+    publishers: [{
+        name: "name",
+        type: "uds",
+        path: "/tmp/unix.sock",
+        payload: "{{sessionKey}}"
+    }],
         requisitions: [
             {
                 timeout: 3000,
@@ -94,14 +91,12 @@ const validWithId = [{
                         timeout: 500
                     }
                 ],
-                startEvent: {
-                    publisher: {
-                        name: "name",
-                        type: "uds",
-                        path: "/tmp/unix.sock",
-                        payload: "{{sessionKey}}"
-                    }
-                },
+                publishers: [{
+                    name: "name",
+                    type: "uds",
+                    path: "/tmp/unix.sock",
+                    payload: "{{sessionKey}}"
+                }],
                 requisitions: []
 
             }
@@ -113,16 +108,14 @@ const validRunnable = {
         "name": "file",
         "iterations": "10",
         "subscriptions": [],
-        "startEvent": {
-            "publisher": {
-                "type": "file",
-                "name": "filePublisher",
-                "payload": "filePublisher",
-                "filenamePrefix": "temp/fileTest",
-                "filenameExtension": "file",
-                "onInit": "publisher.payload=new Date().getTime();"
-            }
-        },
+        "publishers": [{
+            "type": "file",
+            "name": "filePublisher",
+            "payload": "filePublisher",
+            "filenamePrefix": "temp/fileTest",
+            "filenameExtension": "file",
+            "onInit": "publisher.payload=new Date().getTime();"
+        }],
         requisitions: []
     };
 

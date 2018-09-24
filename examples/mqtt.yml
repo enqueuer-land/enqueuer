@@ -1,6 +1,5 @@
-startEvent:
-    publisher:
-        type: mqtt
+publishers:
+    -   type: mqtt
         name: publisher description
         brokerAddress: mqtt://localhost
         payload: enqueuer
@@ -8,20 +7,20 @@ startEvent:
         options:
             clientId: enqueuerPublishOptionsExampleIdDifferent2313
 subscriptions:
--   name: subscription description
-    type: mqtt
-    brokerAddress: mqtt://localhost
-    topic: '#'
-    timeout: 5000
-    onMessageReceived:
-        script: payload = Buffer.from(message.payload);
-        assertions:
-            -   name: Payload
-                expect: payload
-                toBeEqualTo: `enqueuer`
-            -   name: Topic
-                expect: topic
-                toBeEqualTo: `enqueuer/integration/public/test`
-            -   name: Beatles song
-                expect: payload.length
-                toBeGreaterThan: 5
+    -   name: subscription description
+        type: mqtt
+        brokerAddress: mqtt://localhost
+        topic: '#'
+        timeout: 5000
+        onMessageReceived:
+            script: payload = Buffer.from(message.payload);
+            assertions:
+                -   name: Payload
+                    expect: payload
+                    toBeEqualTo: `enqueuer`
+                -   name: Topic
+                    expect: topic
+                    toBeEqualTo: `enqueuer/integration/public/test`
+                -   name: Beatles song
+                    expect: payload.length
+                    toBeGreaterThan: 5

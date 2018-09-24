@@ -15,12 +15,14 @@ class ConsoleResultCreator {
         this.loggable = !configuration_1.Configuration.getValues().quiet;
     }
     addTestSuite(name, report) {
-        this.testsCounter.addTests(report);
+        this.testsCounter.addRequisitionTest(report);
         this.printSuiteResult(name, report);
         this.findRequisitions([report], []);
     }
     addError(err) {
-        this.failingTests.push({ name: 'Error running runnable', valid: false, description: err.toString() });
+        const test = { name: 'Error running runnable', valid: false, description: err.toString() };
+        this.testsCounter.addTest(test);
+        this.failingTests.push(test);
     }
     isValid() {
         return this.failingTests.length == 0;
@@ -50,17 +52,8 @@ class ConsoleResultCreator {
         if (requisition.subscriptions) {
             requisition.subscriptions.forEach(subscription => this.inspectTests(subscription.tests, hierarchy.concat(subscription.name)));
         }
-        const startEvent = this.detectStartEvent(requisition);
-        if (startEvent) {
-            this.inspectTests(startEvent.tests, hierarchy.concat(startEvent.name));
-        }
-    }
-    detectStartEvent(requisition) {
-        if (requisition.startEvent.subscription) {
-            return requisition.startEvent.subscription;
-        }
-        else if (requisition.startEvent.publisher) {
-            return requisition.startEvent.publisher;
+        if (requisition.publishers) {
+            requisition.publishers.forEach(publisher => this.inspectTests(publisher.tests, hierarchy.concat(publisher.name)));
         }
     }
     inspectTests(tests, hierarchy) {

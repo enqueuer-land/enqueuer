@@ -1,21 +1,20 @@
-startEvent:
-    publisher:
-        type: udp
+publishers:
+    -   type: udp
         name: publisher description
         serverAddress: localhost
         port: 23071
         payload: it
 subscriptions:
--   name: subscription description
-    type: udp
-    port: 23071
-    timeout: 500
-    onMessageReceived:
-        script: payload = Buffer.from(message.payload);
-        assertions:
-            -   name: Payload
-                expect: payload
-                toBeEqualTo: `it`
-            -   name: Remote Adderss
-                expect: remoteInfo.address
-                toBeEqualTo: `127.0.0.1`
+    -   name: subscription description
+        type: udp
+        port: 23071
+        timeout: 500
+        onMessageReceived:
+            script: payload = Buffer.from(message.payload);
+            assertions:
+                -   name: Payload
+                    expect: payload
+                    toBeEqualTo: `it`
+                -   name: Remote Adderss
+                    expect: remoteInfo.address
+                    toBeEqualTo: `127.0.0.1`

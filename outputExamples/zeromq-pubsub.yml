@@ -1,16 +1,15 @@
 name: examples/zeromq-pubsub.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 179
-      startTime: '2018-09-24T14:51:29.324Z'
-      endTime: '2018-09-24T14:51:29.503Z'
+      totalTime: 151
+      startTime: '2018-09-24T15:46:34.725Z'
+      endTime: '2018-09-24T15:46:34.876Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -33,7 +32,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.489Z'
+        connectionTime: '2018-09-24T15:46:34.874Z'
         messageReceived:
           topic:
             type: Buffer
@@ -76,8 +75,8 @@ requisitions:
               - 111
               - 101
               - 115
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: publisher
         valid: true
         type: zero-mq-pub
@@ -86,4 +85,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-24T14:51:29.490Z'
+        publishTime: '2018-09-24T15:46:34.875Z'

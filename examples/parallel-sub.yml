@@ -1,7 +1,6 @@
 timeout: 3000
-startEvent:
-    subscription:
-        type: tcp-server
+subscriptions:
+    -   type: tcp-server
         name: subscription description
         port: 23081
         response: anyValue

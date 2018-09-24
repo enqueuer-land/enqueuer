@@ -19,13 +19,15 @@ export class ConsoleResultCreator implements ResultCreator {
     }
 
     public addTestSuite(name: string, report: RequisitionModel): void {
-        this.testsCounter.addTests(report);
+        this.testsCounter.addRequisitionTest(report);
         this.printSuiteResult(name, report);
         this.findRequisitions([report], []);
     }
 
     public addError(err: any): void {
-        this.failingTests.push({name: 'Error running runnable', valid: false, description: err.toString()});
+        const test = {name: 'Error running runnable', valid: false, description: err.toString()};
+        this.testsCounter.addTest(test);
+        this.failingTests.push(test);
     }
 
     public isValid(): boolean {
@@ -59,17 +61,8 @@ export class ConsoleResultCreator implements ResultCreator {
         if (requisition.subscriptions) {
             requisition.subscriptions.forEach(subscription => this.inspectTests(subscription.tests, hierarchy.concat(subscription.name)));
         }
-        const startEvent = this.detectStartEvent(requisition);
-        if (startEvent) {
-            this.inspectTests(startEvent.tests, hierarchy.concat(startEvent.name));
-        }
-    }
-
-    private detectStartEvent(requisition: RequisitionModel): any {
-        if (requisition.startEvent.subscription) {
-            return requisition.startEvent.subscription;
-        } else if (requisition.startEvent.publisher) {
-            return requisition.startEvent.publisher;
+        if (requisition.publishers) {
+            requisition.publishers.forEach(publisher => this.inspectTests(publisher.tests, hierarchy.concat(publisher.name)));
         }
     }
 

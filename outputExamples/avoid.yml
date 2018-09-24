@@ -1,20 +1,18 @@
 name: examples/avoid.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 2051
-      startTime: '2018-09-24T14:51:29.280Z'
-      endTime: '2018-09-24T14:51:31.331Z'
-    subscriptions: []
-    startEvent:
-      subscription:
-        name: 'Start event subscription'
+      totalTime: 2006
+      startTime: '2018-09-24T15:46:34.652Z'
+      endTime: '2018-09-24T15:46:36.658Z'
+    subscriptions:
+      -
+        name: 'Subscription #0'
         type: tcp-server
         tests:
           -
@@ -22,4 +20,5 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.372Z'
+        connectionTime: '2018-09-24T15:46:34.696Z'
+    publishers: []

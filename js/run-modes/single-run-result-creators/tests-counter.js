@@ -5,8 +5,12 @@ class TestsCounter {
         this.totalTests = 0;
         this.failingTests = 0;
     }
-    addTests(report) {
+    addRequisitionTest(report) {
         this.findRequisitions([report]);
+    }
+    //TODO test it
+    addTest(test) {
+        this.sumTests([test]);
     }
     getTestsNumber() {
         return this.totalTests;
@@ -33,24 +37,14 @@ class TestsCounter {
             requisition.subscriptions
                 .forEach(subscription => this.sumTests(subscription.tests));
         }
-        const startEvent = this.detectStartEvent(requisition);
-        if (startEvent) {
-            this.sumTests(startEvent.tests);
+        if (requisition.publishers) {
+            requisition.publishers
+                .forEach(publisher => this.sumTests(publisher.tests));
         }
     }
     sumTests(tests) {
         this.failingTests += tests.filter(test => !test.valid).length;
         this.totalTests += tests.length;
-    }
-    detectStartEvent(requisition) {
-        if (requisition.startEvent) {
-            if (requisition.startEvent.subscription) {
-                return requisition.startEvent.subscription;
-            }
-            else if (requisition.startEvent.publisher) {
-                return requisition.startEvent.publisher;
-            }
-        }
     }
 }
 exports.TestsCounter = TestsCounter;

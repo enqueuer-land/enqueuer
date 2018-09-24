@@ -1,7 +1,6 @@
 name: examples/hooks.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
@@ -16,9 +15,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 213
-      startTime: '2018-09-24T14:51:29.282Z'
-      endTime: '2018-09-24T14:51:29.495Z'
+      totalTime: 164
+      startTime: '2018-09-24T15:46:34.655Z'
+      endTime: '2018-09-24T15:46:34.819Z'
       timeout: 2000
     subscriptions:
       -
@@ -44,13 +43,13 @@ requisitions:
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''subscription::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''subscription::onInit'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.328Z'
+        connectionTime: '2018-09-24T15:46:34.696Z'
         messageReceived:
           payload:
             type: Buffer
@@ -61,8 +60,8 @@ requisitions:
             address: '::ffff:127.0.0.1'
             family: IPv6
             port: 23080
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: tcp-client
@@ -90,7 +89,7 @@ requisitions:
           -
             name: 'Requisition onInit'
             valid: true
-            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''requisition::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''requisition::onInit'''
           -
             name: 'Publisher name changed'
             valid: true
@@ -98,15 +97,15 @@ requisitions:
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: '''store.sequence'' (requisition::onInit-> publisher::onInit-> subscription::onInit) does not contain ''publisher::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:29.495Z'
+        publishTime: '2018-09-24T15:46:34.819Z'
         messageReceived:
           payload: 'hook response'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 62079
+            port: 62904

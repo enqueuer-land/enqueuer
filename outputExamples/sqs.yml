@@ -1,7 +1,6 @@
 name: examples/sqs.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
@@ -12,9 +11,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'requisition description'
     time:
-      totalTime: 131
-      startTime: '2018-09-24T14:51:29.320Z'
-      endTime: '2018-09-24T14:51:29.451Z'
+      totalTime: 100
+      startTime: '2018-09-24T15:46:34.693Z'
+      endTime: '2018-09-24T15:46:34.793Z'
       timeout: 5000
     subscriptions:
       -
@@ -42,14 +41,14 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.327Z'
+        connectionTime: '2018-09-24T15:46:34.695Z'
         messageReceived:
-          MessageId: 43e8dae4-d180-4c42-b96a-e8e392830813
-          ReceiptHandle: '43e8dae4-d180-4c42-b96a-e8e392830813#7fc152dc-cb32-4585-b50d-4b3e2ed9a76b'
+          MessageId: 361c82bc-3958-4c3e-a013-e5e124232f76
+          ReceiptHandle: '361c82bc-3958-4c3e-a013-e5e124232f76#09b78717-a120-4e0f-975f-f9f844709ba1'
           MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
           Body: enqueuer
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: sqs
@@ -82,10 +81,10 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:29.450Z'
+        publishTime: '2018-09-24T15:46:34.790Z'
         messageReceived:
           ResponseMetadata:
             RequestId: 00000000-0000-0000-0000-000000000000
           MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
           MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
-          MessageId: de3341cc-fad7-45cc-864f-e315d632fc1e
+          MessageId: f66d37fa-86c8-408b-8bae-159713bbaf92

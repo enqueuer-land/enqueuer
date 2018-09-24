@@ -1,7 +1,6 @@
 -   timeout: 3000
-    startEvent:
-        publisher:
-            name: publisher description
+    publishers:
+        -   name: publisher description
             type: http-client
             url: 'http://localhost:23075/enqueuer/idStuff?query=000'
             method: POST
@@ -49,9 +48,8 @@
                         expect: query.query
                         toBeEqualTo: 0
 -   timeout: 5000
-    startEvent:
-        publisher:
-            name: 'publisher description'
+    publishers:
+        -   name: 'publisher description'
             type: http-client
             url: 'http://localhost:23075/enqueuer/idStuff?query=111'
             method: POST
@@ -83,9 +81,8 @@
                         expectToBeTruthy: JSON.parse(message.body).duplicated
 -   name: requisition 2 (port 23076)
     timeout: 5000
-    startEvent:
-        subscription:
-            name: subscription description
+    subscriptions:
+        -   name: subscription description
             type: http-server
             endpoint: /differentPort
             port: 23076
@@ -94,9 +91,8 @@
             avoid: true
 -   name: check port releasing (23076)
     timeout: 5000
-    startEvent:
-        subscription:
-            name: same port subscription
+    subscriptions:
+        -   name: same port subscription
             type: tcp-server
             port: 23076
             timeout: 1000

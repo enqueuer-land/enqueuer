@@ -1,7 +1,6 @@
 name: examples/tcp.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
@@ -12,9 +11,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #0'
     time:
-      totalTime: 176
-      startTime: '2018-09-24T14:51:29.321Z'
-      endTime: '2018-09-24T14:51:29.497Z'
+      totalTime: 99
+      startTime: '2018-09-24T15:46:34.722Z'
+      endTime: '2018-09-24T15:46:34.821Z'
       timeout: 3000
     subscriptions:
       -
@@ -34,7 +33,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.328Z'
+        connectionTime: '2018-09-24T15:46:34.726Z'
         messageReceived:
           payload:
             type: Buffer
@@ -51,9 +50,9 @@ requisitions:
             address: '::ffff:127.0.0.1'
             family: IPv6
             port: 23069
-    startEvent:
-      publisher:
-        name: 'Start event publisher'
+    publishers:
+      -
+        name: 'Publisher #0'
         valid: true
         type: tcp-client
         tests:
@@ -69,13 +68,13 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:29.496Z'
+        publishTime: '2018-09-24T15:46:34.821Z'
         messageReceived:
           payload: 'Do not make it bad'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 62080
+            port: 62906
   -
     valid: true
     tests:
@@ -85,9 +84,9 @@ requisitions:
         description: 'Requisition has not timed out'
     name: 'Requisition #1'
     time:
-      totalTime: 846
-      startTime: '2018-09-24T14:51:29.505Z'
-      endTime: '2018-09-24T14:51:30.351Z'
+      totalTime: 826
+      startTime: '2018-09-24T15:46:34.826Z'
+      endTime: '2018-09-24T15:46:35.652Z'
       timeout: 3000
     subscriptions:
       -
@@ -103,7 +102,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.506Z'
+        connectionTime: '2018-09-24T15:46:34.826Z'
         messageReceived:
           payload:
             type: Buffer
@@ -125,8 +124,8 @@ requisitions:
             address: '::ffff:127.0.0.1'
             family: IPv6
             port: 23070
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'tcp 1 publisher description'
         valid: true
         type: tcp-client
@@ -143,13 +142,13 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:30.351Z'
+        publishTime: '2018-09-24T15:46:35.652Z'
         messageReceived:
           payload: EnqueuerRocks
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 62088
+            port: 62913
   -
     valid: true
     tests:
@@ -160,8 +159,8 @@ requisitions:
     name: 'Requisition #2'
     time:
       totalTime: 1
-      startTime: '2018-09-24T14:51:30.353Z'
-      endTime: '2018-09-24T14:51:30.354Z'
+      startTime: '2018-09-24T15:46:35.655Z'
+      endTime: '2018-09-24T15:46:35.656Z'
       timeout: 3000
     subscriptions:
       -
@@ -177,7 +176,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:30.353Z'
+        connectionTime: '2018-09-24T15:46:35.655Z'
         messageReceived:
           payload:
             type: Buffer
@@ -206,9 +205,9 @@ requisitions:
               - 112
               - 101
               - 110
-    startEvent:
-      publisher:
-        name: 'Start event publisher'
+    publishers:
+      -
+        name: 'Publisher #0'
         valid: true
         type: tcp-client
         tests:
@@ -224,6 +223,6 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-24T14:51:30.353Z'
+        publishTime: '2018-09-24T15:46:35.656Z'
         messageReceived:
           payload: 'enqueuer Rocks'

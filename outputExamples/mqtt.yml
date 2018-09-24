@@ -1,16 +1,15 @@
 name: examples/mqtt.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 267
-      startTime: '2018-09-24T14:51:29.302Z'
-      endTime: '2018-09-24T14:51:29.569Z'
+      totalTime: 565
+      startTime: '2018-09-24T15:46:34.674Z'
+      endTime: '2018-09-24T15:46:35.239Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -33,7 +32,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.497Z'
+        connectionTime: '2018-09-24T15:46:34.818Z'
         messageReceived:
           topic: enqueuer/integration/public/test
           payload:
@@ -47,8 +46,8 @@ requisitions:
               - 117
               - 101
               - 114
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: mqtt
@@ -57,4 +56,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-24T14:51:29.549Z'
+        publishTime: '2018-09-24T15:46:35.236Z'

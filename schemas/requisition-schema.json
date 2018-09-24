@@ -52,30 +52,6 @@
         "type": "object"
       }
     },
-    "startEvent": {
-      "type": "object",
-      "properties": {
-        "subscription": {
-          "type": "object"
-        },
-        "publisher": {
-          "type": "object"
-        }
-      },
-      "additionalProperties": false,
-      "oneOf": [
-        {
-          "required": [
-            "subscription"
-          ]
-        },
-        {
-          "required": [
-            "publisher"
-          ]
-        }
-      ]
-    },
     "requisitions": {
       "type": "array",
       "additionalProperties": false,

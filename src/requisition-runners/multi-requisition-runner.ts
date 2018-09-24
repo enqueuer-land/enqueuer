@@ -16,7 +16,6 @@ export class MultiRequisitionRunner {
             name: name,
             valid: true,
             tests: [],
-            startEvent: {},
             requisitions: []
         };
     }

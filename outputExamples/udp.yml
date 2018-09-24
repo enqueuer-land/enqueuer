@@ -1,16 +1,15 @@
 name: examples/udp.yml
 valid: true
 tests: []
-startEvent: {}
 requisitions:
   -
     valid: true
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 79
-      startTime: '2018-09-24T14:51:29.322Z'
-      endTime: '2018-09-24T14:51:29.401Z'
+      totalTime: 29
+      startTime: '2018-09-24T15:46:34.722Z'
+      endTime: '2018-09-24T15:46:34.751Z'
     subscriptions:
       -
         name: 'subscription description'
@@ -29,7 +28,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-24T14:51:29.327Z'
+        connectionTime: '2018-09-24T15:46:34.726Z'
         messageReceived:
           payload:
             type: Buffer
@@ -39,10 +38,10 @@ requisitions:
           remoteInfo:
             address: 127.0.0.1
             family: IPv4
-            port: 64596
+            port: 58379
             size: 2
-    startEvent:
-      publisher:
+    publishers:
+      -
         name: 'publisher description'
         valid: true
         type: udp
@@ -51,4 +50,4 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-09-24T14:51:29.396Z'
+        publishTime: '2018-09-24T15:46:34.744Z'

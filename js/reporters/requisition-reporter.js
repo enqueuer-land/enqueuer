@@ -10,22 +10,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const report_generator_1 = require("./report-generator");
 const logger_1 = require("../loggers/logger");
-const start_event_reporter_1 = require("./start-event/start-event-reporter");
 const timeout_1 = require("../timers/timeout");
 const multi_subscriptions_reporter_1 = require("./subscription/multi-subscriptions-reporter");
-const conditional_injector_1 = require("conditional-injector");
 const on_init_event_executor_1 = require("../events/on-init-event-executor");
 const on_finish_event_executor_1 = require("../events/on-finish-event-executor");
 const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
+const multi_publishers_reporter_1 = require("./publishers/multi-publishers-reporter");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
-        this.startEventDoneItsJob = false;
+        this.allPublishersPublished = false;
         this.allSubscriptionsStoppedWaiting = false;
         this.requisitionAttributes = requisitionAttributes;
         this.reportGenerator = new report_generator_1.ReportGenerator(this.requisitionAttributes);
         this.executeOnInitFunction();
-        this.startEvent = conditional_injector_1.Container.subclassesOf(start_event_reporter_1.StartEventReporter).create(this.requisitionAttributes.startEvent);
         this.multiSubscriptionsReporter = new multi_subscriptions_reporter_1.MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions);
+        this.multiPublishersReporter = new multi_publishers_reporter_1.MultiPublishersReporter(this.requisitionAttributes.publishers);
         this.requisitionTimeout = this.requisitionAttributes.timeout;
         this.onFinishCallback = () => {
             //do nothing
@@ -54,32 +53,31 @@ class RequisitionReporter {
     onSubscriptionsCompleted() {
         this.multiSubscriptionsReporter.receiveMessage()
             .then(() => this.onAllSubscriptionsStopWaiting())
-            .catch(err => {
+            .catch((err) => __awaiter(this, void 0, void 0, function* () {
             const message = `Error receiving message in multiSubscription: ${err}`;
             logger_1.Logger.error(message);
-            this.onFinish({ valid: false, description: err, name: 'Subscriptions message receiving' });
-        });
-        logger_1.Logger.debug('Triggering start event');
-        this.startEvent.start()
+            yield this.onFinish({ valid: false, description: err, name: 'Subscriptions message receiving' });
+        }));
+        this.multiPublishersReporter.publish()
             .then(() => __awaiter(this, void 0, void 0, function* () {
-            logger_1.Logger.debug('Start event triggered');
-            this.startEventDoneItsJob = true;
+            logger_1.Logger.info('Publishers published');
+            this.allPublishersPublished = true;
             yield this.tryToFinishExecution();
         }))
             .catch((err) => __awaiter(this, void 0, void 0, function* () {
-            const message = `Error triggering startEvent: ${err}`;
+            const message = `Error publishing publication: ${err}`;
             logger_1.Logger.error(message);
-            yield this.onFinish({ valid: false, description: err, name: 'Start Event' });
+            yield this.onFinish({ valid: false, description: err, name: 'Publishers publication' });
         }));
     }
     initializeTimeout() {
         if (this.requisitionTimeout) {
-            new timeout_1.Timeout(() => {
-                if (!this.startEventDoneItsJob || !this.allSubscriptionsStoppedWaiting) {
+            new timeout_1.Timeout(() => __awaiter(this, void 0, void 0, function* () {
+                if (!this.allPublishersPublished || !this.allSubscriptionsStoppedWaiting) {
                     logger_1.Logger.info(`Requisition timed out`);
-                    this.onFinish();
+                    yield this.onFinish();
                 }
-            }).start(this.requisitionTimeout);
+            })).start(this.requisitionTimeout);
         }
     }
     onAllSubscriptionsStopWaiting() {
@@ -91,7 +89,7 @@ class RequisitionReporter {
     }
     tryToFinishExecution() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.startEventDoneItsJob && this.allSubscriptionsStoppedWaiting) {
+            if (this.allPublishersPublished && this.allSubscriptionsStoppedWaiting) {
                 yield this.onFinish();
             }
         });
@@ -107,10 +105,9 @@ class RequisitionReporter {
                 logger_1.Logger.debug(`Requisition error collected: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(error)}`);
                 this.reportGenerator.addError(error);
             }
-            this.reportGenerator.setStartEventReport(this.startEvent.getReport());
-            this.reportGenerator.setSubscriptionReport(this.multiSubscriptionsReporter.getReport());
+            this.reportGenerator.setPublishersReport(this.multiPublishersReporter.getReport());
+            this.reportGenerator.setSubscriptionsReport(this.multiSubscriptionsReporter.getReport());
             this.reportGenerator.finish();
-            yield this.startEvent.unsubscribe();
             yield this.multiSubscriptionsReporter.unsubscribe();
             this.onFinishCallback();
         });
@@ -122,7 +119,7 @@ class RequisitionReporter {
     executeOnFinishFunction() {
         this.multiSubscriptionsReporter.onFinish();
         this.reportGenerator.addTests(new on_finish_event_executor_1.OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
-        this.startEvent.onFinish();
+        this.multiPublishersReporter.onFinish();
     }
 }
 exports.RequisitionReporter = RequisitionReporter;

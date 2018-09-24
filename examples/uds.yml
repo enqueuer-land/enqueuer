@@ -1,7 +1,6 @@
 -   timeout: 3000
-    startEvent:
-        publisher:
-            name: publisher description
+    publishers:
+        -   name: publisher description
             type: uds
             path: /tmp/unix.sock
             timeout: 2000
@@ -19,19 +18,18 @@
                         expect: payload
                         toBeEqualTo: `responsePayload`
     subscriptions:
-    -   type: uds
-        path: /tmp/unix.sock
-        response: responsePayload
-        timeout: 500
-        onMessageReceived:
-            assertions:
-                -   name: Message received is enqueuer
-                    expect: payload
-                    toBeEqualTo: store.udsPayload
+        -   type: uds
+            path: /tmp/unix.sock
+            response: responsePayload
+            timeout: 500
+            onMessageReceived:
+                assertions:
+                    -   name: Message received is enqueuer
+                        expect: payload
+                        toBeEqualTo: store.udsPayload
 -   name: <<uds2Name>> saver
-    startEvent:
-        publisher:
-            name: udsPublisher2 description
+    publishers:
+        -   name: udsPublisher2 description
             type: uds
             path: /tmp/unix2.sock
             payload: <<udsPayload>>
@@ -53,9 +51,8 @@
                         toBeEqualTo: store.udsPayload
             timeout: <<uds2Timeout>>
 -   name: udsStreamLoader description
-    startEvent:
-        publisher:
-            name: udsStreamLoader publisher
+    publishers:
+        -   name: udsStreamLoader publisher
             type: uds
             timeout: 2000
             payload: I am still opened

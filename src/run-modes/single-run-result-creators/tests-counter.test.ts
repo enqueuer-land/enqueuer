@@ -11,7 +11,7 @@ describe('TestsCounter', () => {
         };
 
         const testsCounter = new TestsCounter();
-        testsCounter.addTests(test);
+        testsCounter.addRequisitionTest(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
         expect(testsCounter.getTestsNumber()).toBe(0);
@@ -19,7 +19,6 @@ describe('TestsCounter', () => {
     });
 
     it('Should trunc to two decimals number', () => {
-        //(ResultModel | RequisitionModel)
         const test: RequisitionModel = {
             name: 'name',
             valid: true,
@@ -30,19 +29,17 @@ describe('TestsCounter', () => {
                 tests: [{valid: true}],
 
                 time: {},
-                startEvent: {
-                    publisher: {
-                        name: 'name',
-                        valid: true,
-                        tests: [{valid: false}],
+                publishers: [{
+                    name: 'name',
+                    valid: true,
+                    tests: [{valid: false}],
 
-                    }
-                }
+                }]
             }]
         };
 
         const testsCounter = new TestsCounter();
-        testsCounter.addTests(test);
+        testsCounter.addRequisitionTest(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(1);
         expect(testsCounter.getTestsNumber()).toBe(3);
@@ -59,7 +56,7 @@ describe('TestsCounter', () => {
         };
 
         const testsCounter = new TestsCounter();
-        testsCounter.addTests(test);
+        testsCounter.addRequisitionTest(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
         expect(testsCounter.getTestsNumber()).toBe(0);
@@ -68,7 +65,7 @@ describe('TestsCounter', () => {
 
 
 
-    it('Should count inner tests (start event is undefined)', () => {
+    it('Should count inner tests (no publishers)', () => {
         //(ResultModel | RequisitionModel)
         const test: RequisitionModel = {
             name: 'name',
@@ -85,20 +82,19 @@ describe('TestsCounter', () => {
                     name: 'name',
                     valid: true,
                     tests: [{valid: true}],
-                }],
-                startEvent: {}
+                }]
             }]
         };
 
         const testsCounter = new TestsCounter();
-        testsCounter.addTests(test);
+        testsCounter.addRequisitionTest(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
         expect(testsCounter.getTestsNumber()).toBe(2);
         expect(testsCounter.getPercentage()).toBe(100);
     });
 
-    it('Should count inner tests (start event is publisher)', () => {
+    it('Should count inner tests (publishers)', () => {
         //(ResultModel | RequisitionModel)
         const test: RequisitionModel = {
             name: 'name',
@@ -117,57 +113,20 @@ describe('TestsCounter', () => {
                     valid: true,
                     tests: [{valid: true}],
                 }],
-                startEvent: {
-                    publisher: {
-                        name: 'name',
-                        valid: true,
-                        tests: [{valid: true}],
-
-                    }
-                }
-            }]
-        };
-
-        const testsCounter = new TestsCounter();
-        testsCounter.addTests(test);
-
-        expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(3);
-        expect(testsCounter.getPercentage()).toBe(100);
-    });
-
-    it('Should count inner tests (start event is subscription)', () => {
-        const test: RequisitionModel = {
-            name: 'name',
-            valid: true,
-            tests: [{valid: true}],
-            requisitions: [{
-                name: 'name',
-                valid: true,
-                tests: [{valid: true}],
-
-                time: {},
-                subscriptions: [{
+                publishers: [{
                     name: 'name',
                     valid: true,
                     tests: [{valid: true}],
-                }],
-                startEvent: {
-                    subscription: {
-                        name: 'name',
-                        valid: true,
-                        tests: [{valid: true}, {valid: true}],
 
-                    }
-                }
+                }]
             }]
         };
 
         const testsCounter = new TestsCounter();
-        testsCounter.addTests(test);
+        testsCounter.addRequisitionTest(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(5);
+        expect(testsCounter.getTestsNumber()).toBe(3);
         expect(testsCounter.getPercentage()).toBe(100);
     });
 
@@ -195,14 +154,12 @@ describe('TestsCounter', () => {
                             valid: true,
                             tests: [{valid: true}],
                         }],
-                        startEvent: {
-                            publisher: {
-                                name: 'name',
-                                valid: true,
-                                tests: [{valid: true}],
+                        publishers: [{
+                            name: 'name',
+                            valid: true,
+                            tests: [{valid: true}],
 
-                            }
-                        }
+                        }]
                     },{
                         name: 'name',
                         valid: true,
@@ -214,14 +171,12 @@ describe('TestsCounter', () => {
                             valid: true,
                             tests: [{valid: true}],
                         }],
-                        startEvent: {
-                            publisher: {
-                                name: 'name',
-                                valid: true,
-                                tests: [{valid: true}],
+                        publishers: [{
+                            name: 'name',
+                            valid: true,
+                            tests: [{valid: true}],
 
-                            }
-                        }
+                        }]
                     },{
                         name: 'name',
                         valid: true,
@@ -233,14 +188,12 @@ describe('TestsCounter', () => {
                             valid: true,
                             tests: [{valid: true}],
                         }],
-                        startEvent: {
-                            publisher: {
-                                name: 'name',
-                                valid: true,
-                                tests: [{valid: true}],
+                        publishers: [{
+                            name: 'name',
+                            valid: true,
+                            tests: [{valid: true}],
 
-                            }
-                        }
+                        }]
                     }]
                 }]
             }, {
@@ -258,20 +211,18 @@ describe('TestsCounter', () => {
                         valid: true,
                         tests: [{valid: true}],
                     }],
-                    startEvent: {
-                        publisher: {
-                            name: 'name',
-                            valid: true,
-                            tests: [{valid: true}],
+                    publishers: [{
+                        name: 'name',
+                        valid: true,
+                        tests: [{valid: true}],
 
-                        }
-                    }
+                    }]
                 }]
             }]
         };
 
         const testsCounter = new TestsCounter();
-        testsCounter.addTests(test);
+        testsCounter.addRequisitionTest(test);
 
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
         expect(testsCounter.getTestsNumber()).toBe(16);
