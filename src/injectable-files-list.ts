@@ -1,5 +1,6 @@
 //Auto-Generated Code
 import './http-authentications/http-basic-authentication';
+import './http-authentications/http-bearer-authentication';
 import './http-authentications/http-no-authentication';
 import './publishers/amqp-publisher';
 import './publishers/file-publisher';
