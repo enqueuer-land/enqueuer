@@ -16,11 +16,19 @@ requisitions:
       -
         name: 'fileRead (.csv)'
         valid: true
-        description: 'Expected ''store.csv[0].title'' to be equal to ''virgs''. Received ''virgs'''
+        description: 'Expected ''store.csv.title'' to be equal to ''secondRow''. Received ''secondRow'''
+      -
+        name: 'fileRead (.tsv)'
+        valid: true
+        description: 'Expected ''store.tsv.title'' to be equal to ''virgs''. Received ''virgs'''
+      -
+        name: 'fileRead (.js)'
+        valid: true
+        description: 'Expected ''store.scriptResult'' to be equal to ''40''. Received ''40'''
     name: 'Requisition #0'
     time:
-      totalTime: 43
-      startTime: '2018-09-24T15:56:28.445Z'
-      endTime: '2018-09-24T15:56:28.488Z'
+      totalTime: 2
+      startTime: '2018-09-24T18:11:33.967Z'
+      endTime: '2018-09-24T18:11:33.969Z'
     subscriptions: []
     publishers: []

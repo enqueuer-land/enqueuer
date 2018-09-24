@@ -47,6 +47,18 @@ describe('DelimiterSeparatedValueObjectNotation', () => {
         expect(parsed).toEqual(expected)
     });
 
+    test('should parse with given delimiter and no header as default', () => {
+        const value = 'a1\ta2\ta3\r\n' +
+            'b1\tb2\tb3';
+        const expected = [
+            ["a1", "a2", "a3"],
+            ["b1", "b2", "b3"]];
+
+        const parsed = new DelimiterSeparatedValueObjectNotation('\t', false).parse(value);
+
+        expect(parsed).toEqual(expected)
+    });
+
     test('should stringify with default header (true) and delimiter (;) value', () => {
         const value = [
             {"title1": "a1", "title2": "a2", "title3": "a3"},

@@ -60,6 +60,7 @@ let HttpDaemonInput = class HttpDaemonInput extends daemon_input_1.DaemonInput {
     }
     sendResponse(message) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Logger.trace(`${this.type} response to send: ${message.output}`);
             const response = {
                 status: 200,
                 payload: message.output

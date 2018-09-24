@@ -14,8 +14,8 @@
             routingKey: enqueuer.integration.test.routing.key
             onInit:
                 assertions:
-                -   expect: publisher.options.port
-                    toBeEqualTo: 5672
+                    -   expect: publisher.options.port
+                        toBeEqualTo: 5672
         -   type: amqp
             name: default exchange
             payload: default exchange
@@ -34,18 +34,18 @@
             routingKey: enqueuer.integration.test.routing.#
             onMessageReceived:
                 assertions:
-                -   name: Payload
-                    expect: payload.how.about
-                    toBeEqualTo: `a new object?`
-                -   name: Header
-                    expect: headers.key
-                    toBeEqualTo: `value`
-                -   name: Other Header Value
-                    expect: headers.otherKey
-                    toBeEqualTo: `otherValue`
-                -   name: Routing Key
-                    expect: deliveryInfo.routingKey
-                    toBeEqualTo: `enqueuer.integration.test.routing.key`
+                    -   name: Payload
+                        expect: payload.how.about
+                        toBeEqualTo: `a new object?`
+                    -   name: Header
+                        expect: headers.key
+                        toBeEqualTo: `value`
+                    -   name: Other Header Value
+                        expect: headers.otherKey
+                        toBeEqualTo: `otherValue`
+                    -   name: Routing Key
+                        expect: deliveryInfo.routingKey
+                        toBeEqualTo: `enqueuer.integration.test.routing.key`
         -   type: amqp
             timeout: 3000
             options:
