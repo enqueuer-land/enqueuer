@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 //Auto-Generated Code
 require("./http-authentications/http-basic-authentication");
+require("./http-authentications/http-bearer-authentication");
 require("./http-authentications/http-no-authentication");
 require("./publishers/amqp-publisher");
 require("./publishers/file-publisher");
