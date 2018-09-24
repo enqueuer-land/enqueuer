@@ -1,5 +1,6 @@
 import {TestsCounter} from "./tests-counter";
 import {RequisitionModel} from "../../models/outputs/requisition-model";
+import {TestModel} from "../../models/outputs/test-model";
 
 describe('TestsCounter', () => {
 
@@ -61,6 +62,25 @@ describe('TestsCounter', () => {
         expect(testsCounter.getFailingTestsNumber()).toBe(0);
         expect(testsCounter.getTestsNumber()).toBe(0);
         expect(testsCounter.getPercentage()).toBe(100);
+    });
+
+
+    it('Should add test', () => {
+
+        const test: TestModel = {
+            name: 'name',
+            description: 'name',
+            valid: true,
+        };
+
+        const testsCounter = new TestsCounter();
+        testsCounter.addTest(test);
+        test.valid = false;
+        testsCounter.addTest(test);
+
+        expect(testsCounter.getFailingTestsNumber()).toBe(1);
+        expect(testsCounter.getTestsNumber()).toBe(2);
+        expect(testsCounter.getPercentage()).toBe(50);
     });
 
 

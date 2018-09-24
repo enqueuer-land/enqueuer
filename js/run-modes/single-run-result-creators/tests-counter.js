@@ -8,7 +8,6 @@ class TestsCounter {
     addRequisitionTest(report) {
         this.findRequisitions([report]);
     }
-    //TODO test it
     addTest(test) {
         this.sumTests([test]);
     }

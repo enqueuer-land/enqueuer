@@ -2,16 +2,12 @@
     publishers:
         -   name: publisher description
             type: http-client
-            url: 'http://localhost:23075/enqueuer/idStuff?query=000'
+            url: http://localhost:23075/enqueuer/idStuff?query=000
             method: POST
             payload:
                 enqueuer: virgs
             headers:
                 content-type: application/json
-            authentication:
-                basic:
-                    user: user
-                    password: password
             onMessageReceived:
                 assertions:
                     -   name: 'Status Code'
@@ -22,16 +18,12 @@
                         toBeEqualTo: `dynamically changed payload`
     subscriptions:
         -
-            name: 'subscription description'
+            name: subscription description
             type: http-server
-            endpoint: '/enqueuer/:firstId'
+            endpoint: /enqueuer/:firstId
             port: 23075
             method: POST
             timeout: 10000
-            authentication:
-                basic:
-                    user: user
-                    password: password
             response:
                 status: 321
                 payload: responsePayload
@@ -49,9 +41,9 @@
                         toBeEqualTo: 0
 -   timeout: 5000
     publishers:
-        -   name: 'publisher description'
+        -   name: publisher description
             type: http-client
-            url: 'http://localhost:23075/enqueuer/idStuff?query=111'
+            url: http://localhost:23075/enqueuer/idStuff?query=111
             method: POST
             payload:
                 duplicated: true
@@ -59,16 +51,15 @@
                 content-type: application/json
             onMessageReceived:
                 assertions:
-                    -   name: 'Status Code'
+                    -   name: Status Code
                         expect: statusCode
                         toBeEqualTo: 321
                     -   name: Body
                         expect: body
                         toBeEqualTo: `duplicatedResponsePayload`
     subscriptions:
-        -   name: 'subscription description'
-            type: http-server
-            endpoint: '/enqueuer/:secondId'
+        -   type: http-server
+            endpoint: /enqueuer/:secondId
             port: 23075
             method: POST
             timeout: 10000

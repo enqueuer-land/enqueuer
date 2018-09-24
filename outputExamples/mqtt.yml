@@ -1,16 +1,16 @@
 {
   "name": "examples/mqtt.yml",
-  "valid": true,
+  "valid": false,
   "tests": [],
   "requisitions": [
     {
-      "valid": true,
+      "valid": false,
       "tests": [],
       "name": "Requisition #0",
       "time": {
-        "totalTime": 188,
-        "startTime": "2018-09-24T21:14:57.226Z",
-        "endTime": "2018-09-24T21:14:57.414Z"
+        "totalTime": 5001,
+        "startTime": "2018-09-24T21:36:48.593Z",
+        "endTime": "2018-09-24T21:36:53.594Z"
       },
       "subscriptions": [
         {
@@ -18,44 +18,18 @@
           "type": "mqtt",
           "tests": [
             {
-              "name": "Payload",
-              "valid": true,
-              "description": "Expected 'payload' to be equal to 'enqueuer'. Received 'enqueuer'"
-            },
-            {
-              "name": "Topic",
-              "valid": true,
-              "description": "Expected 'topic' to be equal to 'enqueuer/integration/public/test'. Received 'enqueuer/integration/public/test'"
-            },
-            {
-              "name": "Beatles song",
-              "valid": true,
-              "description": "Expected 'payload.length' to be greater than '5'. Received '8'"
-            },
-            {
-              "valid": true,
+              "valid": false,
               "name": "Message received",
-              "description": "Subscription has received its message"
+              "description": "Subscription has not received its message"
+            },
+            {
+              "valid": false,
+              "name": "No time out",
+              "description": "Not avoidable Subscription has timed out"
             }
           ],
-          "valid": true,
-          "connectionTime": "2018-09-24T21:14:57.381Z",
-          "messageReceived": {
-            "topic": "enqueuer/integration/public/test",
-            "payload": {
-              "type": "Buffer",
-              "data": [
-                101,
-                110,
-                113,
-                117,
-                101,
-                117,
-                101,
-                114
-              ]
-            }
-          }
+          "valid": false,
+          "connectionTime": "2018-09-24T21:36:48.731Z"
         }
       ],
       "publishers": [
@@ -70,7 +44,7 @@
               "description": "Published successfully"
             }
           ],
-          "publishTime": "2018-09-24T21:14:57.407Z"
+          "publishTime": "2018-09-24T21:36:48.761Z"
         }
       ]
     }

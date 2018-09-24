@@ -9,7 +9,6 @@ export class TestsCounter {
         this.findRequisitions([report]);
     }
 
-    //TODO test it
     public addTest(test: TestModel): void {
         this.sumTests([test]);
     }
