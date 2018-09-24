@@ -7,89 +7,21 @@ requisitions:
     valid: true
     tests:
       -
+        name: 'fileRead (yml)'
         valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
+        description: 'Expected ''store.yml.key'' to be equal to ''value''. Received ''value'''
+      -
+        name: 'fileRead (.json)'
+        valid: true
+        description: 'Expected ''store.json.key'' to be equal to ''value''. Received ''value'''
+      -
+        name: 'fileRead (.csv)'
+        valid: true
+        description: 'Expected ''store.csv[0].title'' to be equal to ''virgs''. Received ''virgs'''
     name: 'Requisition #0'
     time:
-      totalTime: 170
-      startTime: '2018-09-24T00:01:45.770Z'
-      endTime: '2018-09-24T00:01:45.940Z'
-      timeout: 10000
-    subscriptions:
-      -
-        name: 'Subscription #0'
-        type: http-server
-        tests:
-          -
-            name: 'fileRead (.json)'
-            valid: true
-            description: 'Expected ''JSON.parse(message.body).key'' to be equal to ''value''. Received ''value'''
-          -
-            name: 'fileRead (.js)'
-            valid: true
-            description: 'Expected ''doubleValue'' to be equal to ''200''. Received ''200'''
-          -
-            name: 'fileRead (.csv)'
-            valid: true
-            description: 'Expected ''store.csv[0].title'' to be equal to ''virgs''. Received ''virgs'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T00:01:45.835Z'
-        messageReceived:
-          headers:
-            content-length: '53'
-            host: 'localhost:23065'
-            connection: close
-          params: {}
-          query: {}
-          body: "{\n  \"key\": \"value\",\n  \"valueToBeMultipliedBy2\": 100\n}"
-    startEvent:
-      publisher:
-        name: 'Start event publisher'
-        valid: true
-        type: http-client
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'fileRead (yml)'
-            valid: true
-            description: 'Expected ''JSON.parse(message.body).key'' to be equal to ''value''. Received ''value'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T00:01:45.940Z'
-        messageReceived:
-          statusCode: 200
-          body: '{"key":"value"}'
-          headers:
-            x-powered-by: Express
-            content-type: 'application/json; charset=utf-8'
-            content-length: '15'
-            etag: 'W/"f-IoRYCVqVAgcPwRPZlQQiam/5Cpo"'
-            date: 'Mon, 24 Sep 2018 00:01:45 GMT'
-            connection: close
-          request:
-            uri:
-              protocol: 'http:'
-              slashes: true
-              auth: null
-              host: 'localhost:23065'
-              port: '23065'
-              hostname: localhost
-              hash: null
-              search: null
-              query: null
-              pathname: /file/replace
-              path: /file/replace
-              href: 'http://localhost:23065/file/replace'
-            method: post
-            headers:
-              Content-Length: 53
+      totalTime: 53
+      startTime: '2018-09-24T02:28:58.622Z'
+      endTime: '2018-09-24T02:28:58.675Z'
+    subscriptions: []
+    startEvent: {}

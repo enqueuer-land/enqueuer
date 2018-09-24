@@ -13,17 +13,17 @@ describe('StartEventNullReporter', function() {
     });
 
 
-    it('should return rejected promise in start', () => {
-        const nullHandler: StartEventNullReporter = new StartEventNullReporter('argument');
+    it('should resolve promise in start', () => {
+        const nullHandler: StartEventNullReporter = new StartEventNullReporter();
 
-        expect(nullHandler.start()).rejects.toMatch('argument');
+        expect(nullHandler.start()).resolves.toBeUndefined();
     });
 
-    it('should return constructor\'s argument in the error errorDescription', () => {
-        const nullHandler: StartEventNullReporter = new StartEventNullReporter('argument');
+    it('should resolve report', () => {
+        const nullHandler: StartEventNullReporter = new StartEventNullReporter();
 
         const report = nullHandler.getReport();
-        expect(report).toMatch('argument')
+        expect(report).toEqual({});
     });
 
 });

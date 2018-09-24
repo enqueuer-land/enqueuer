@@ -11,17 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const start_event_reporter_1 = require("./start-event-reporter");
 const conditional_injector_1 = require("conditional-injector");
-const javascript_object_notation_1 = require("../../object-notations/javascript-object-notation");
 let StartEventNullReporter = class StartEventNullReporter extends start_event_reporter_1.StartEventReporter {
     constructor(startEvent) {
         super();
         this.startEvent = startEvent;
     }
     start() {
-        return Promise.reject(`No StartEvent type was found: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this)}`);
+        return Promise.resolve();
     }
     getReport() {
-        return `No StartEvent type was found: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(this)}`;
+        return {};
     }
 };
 StartEventNullReporter = __decorate([

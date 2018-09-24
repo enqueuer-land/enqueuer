@@ -1,19 +1,12 @@
-iterations: <<skipped>>
-startEvent:
-    subscription:
-        type: tcp-server
-        timeout: 1000
-        port: 23233
-        avoid: true
-        onInit:
-            script: |-
-                if (!store.executions) {
-                    store.executions = 0;
-                }
-                ++store.executions;
-            assertions:
-                -   expect: store.executions
-                    toBeEqualTo: 1
-        onFinish:
-            store:
-                skipped: 0
+-   iterations: <<skipped>>
+    onInit:
+        script: |-
+            if (!store.executions) {
+                store.executions = 0;
+            }
+            store.skipped = 0;
+            ++store.executions;
+-   onInit:
+        assertions:
+            -   expect: store.executions
+                toBeEqualTo: 1

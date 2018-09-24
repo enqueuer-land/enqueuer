@@ -11,7 +11,7 @@ import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-e
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 
-@Injectable({predicate: (startEvent: any) => startEvent.publisher != null})
+@Injectable({predicate: (startEvent: any) => startEvent && startEvent.publisher != null})
 export class StartEventPublisherReporter extends StartEventReporter {
     private publisher: Publisher;
     private report: output.PublisherModel;

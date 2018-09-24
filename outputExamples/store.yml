@@ -8,43 +8,36 @@ requisitions:
     tests: []
     name: 'Requisition #0'
     time:
-      totalTime: 54
-      startTime: '2018-09-24T00:01:45.816Z'
-      endTime: '2018-09-24T00:01:45.870Z'
-    subscriptions:
+      totalTime: 21
+      startTime: '2018-09-24T02:28:58.671Z'
+      endTime: '2018-09-24T02:28:58.692Z'
+    subscriptions: []
+    startEvent: {}
+  -
+    valid: true
+    tests:
       -
-        name: 'Subscription #0'
-        type: udp
-        tests:
-          -
-            name: Payload
-            valid: true
-            description: 'Expected ''store.value'' to be equal to ''1''. Received ''1'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
+        name: Payload
         valid: true
-        connectionTime: '2018-09-24T00:01:45.820Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 105
-              - 116
-          remoteInfo:
-            address: 127.0.0.1
-            family: IPv4
-            port: 56381
-            size: 2
-    startEvent:
-      publisher:
-        name: 'publisher description'
+        description: 'Expected ''123'' to be equal to ''123''. Received ''123'''
+    name: 'Requisition #1'
+    time:
+      totalTime: 2
+      startTime: '2018-09-24T02:28:58.711Z'
+      endTime: '2018-09-24T02:28:58.713Z'
+    subscriptions: []
+    startEvent: {}
+  -
+    valid: true
+    tests:
+      -
+        name: Payload
         valid: true
-        type: udp
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T00:01:45.861Z'
+        description: 'Expected ''124'' to be equal to ''124''. Received ''124'''
+    name: 'Requisition #2'
+    time:
+      totalTime: 0
+      startTime: '2018-09-24T02:28:58.716Z'
+      endTime: '2018-09-24T02:28:58.716Z'
+    subscriptions: []
+    startEvent: {}

@@ -4,13 +4,6 @@
         store:
             iteration: (store.iteration + 1) || 0
             lastExecutionTime: new Date().getTime();
-    startEvent:
-        publisher:
-            type: zero-mq-pub
-            payload: blabla
-            topic: requisition.incrementor
-            onInit:
-                script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;
 -   name: delayed
     delay: 3000
     onInit:
@@ -25,10 +18,3 @@
             -   name: It delayed for no more than ~3 seconds
                 expect: delayedTime - 500
                 toBeLessThan: 3000
-    startEvent:
-        publisher:
-            type: zero-mq-pub
-            payload: blabla
-            topic: requisition.checker
-            onInit:
-                script: publisher.address = 'tcp://127.0.0.1:3333' + store.iteration;

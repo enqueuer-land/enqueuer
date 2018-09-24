@@ -76,7 +76,7 @@ let StartEventSubscriptionReporter = class StartEventSubscriptionReporter extend
     }
 };
 StartEventSubscriptionReporter = __decorate([
-    conditional_injector_1.Injectable({ predicate: (startEvent) => startEvent.subscription }),
+    conditional_injector_1.Injectable({ predicate: (startEvent) => startEvent && startEvent.subscription }),
     __metadata("design:paramtypes", [Object])
 ], StartEventSubscriptionReporter);
 exports.StartEventSubscriptionReporter = StartEventSubscriptionReporter;

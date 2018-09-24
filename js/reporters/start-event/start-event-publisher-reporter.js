@@ -91,7 +91,7 @@ let StartEventPublisherReporter = class StartEventPublisherReporter extends star
     }
 };
 StartEventPublisherReporter = __decorate([
-    conditional_injector_1.Injectable({ predicate: (startEvent) => startEvent.publisher != null }),
+    conditional_injector_1.Injectable({ predicate: (startEvent) => startEvent && startEvent.publisher != null }),
     __metadata("design:paramtypes", [Object])
 ], StartEventPublisherReporter);
 exports.StartEventPublisherReporter = StartEventPublisherReporter;

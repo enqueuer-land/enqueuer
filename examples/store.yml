@@ -1,22 +1,14 @@
-onInit:
-    store:
-        value: 0
-startEvent:
-    publisher:
-        type: udp
-        name: publisher description
-        serverAddress: localhost
-        port: 23068
-        payload: it
-        onInit:
-            store:
-                value: ++store.value
-subscriptions:
--   type: udp
-    port: 23068
-    timeout: 500
-    onFinish:
+-   onInit:
+        store:
+            value: 123
+-   onFinish:
+        script: ++store.value
         assertions:
             -   name: Payload
-                expect: store.value
-                toBeEqualTo: 1
+                expect: <<value>>
+                toBeEqualTo: 123
+-   onFinish:
+        assertions:
+            -   name: Payload
+                expect: <<value>>
+                toBeEqualTo: 124
