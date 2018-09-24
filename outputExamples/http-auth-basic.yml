@@ -1,5 +1,5 @@
 {
-  "name": "examples/http-auth-bearer.yml",
+  "name": "examples/http-auth-basic.yml",
   "valid": true,
   "tests": [],
   "requisitions": [
@@ -14,9 +14,9 @@
       ],
       "name": "Requisition #0",
       "time": {
-        "totalTime": 156,
-        "startTime": "2018-09-24T22:06:42.834Z",
-        "endTime": "2018-09-24T22:06:42.990Z",
+        "totalTime": 157,
+        "startTime": "2018-09-24T22:06:42.832Z",
+        "endTime": "2018-09-24T22:06:42.989Z",
         "timeout": 3000
       },
       "subscriptions": [
@@ -25,24 +25,29 @@
           "type": "http-server",
           "tests": [
             {
-              "name": "\"Bearer\" authentication prefix",
+              "name": "\"Basic\" authentication prefix",
               "valid": true,
-              "description": "Prefix \"Bearer\" was found."
+              "description": "Prefix \"Basic\" was found."
             },
             {
-              "name": "\"Bearer\" authentication token",
+              "name": "\"Basic\" authentication user",
               "valid": true,
-              "description": "Token match"
+              "description": "User found"
             },
             {
-              "name": "\"Bearer\" authentication",
+              "name": "\"Basic\" authentication password",
               "valid": true,
-              "description": "Bearer authentication is valid"
+              "description": "Password match"
+            },
+            {
+              "name": "\"Basic\" authentication",
+              "valid": true,
+              "description": "Basic authentication is valid"
             },
             {
               "name": "Payload",
               "valid": true,
-              "description": "Expected 'message.body' to be equal to 'Rech'. Received 'Rech'"
+              "description": "Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'"
             },
             {
               "valid": true,
@@ -55,14 +60,14 @@
           "messageReceived": {
             "headers": {
               "content-type": "application/json",
-              "authorization": "Bearer bearerToken",
-              "content-length": "4",
-              "host": "localhost:23075",
+              "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+              "content-length": "10",
+              "host": "localhost:23068",
               "connection": "close"
             },
             "params": {},
             "query": {},
-            "body": "Rech"
+            "body": "basic auth"
           }
         }
       ],
@@ -78,9 +83,9 @@
               "description": "Published successfully"
             },
             {
-              "name": "Body",
+              "name": "Assertion #0",
               "valid": true,
-              "description": "Expected 'body' to be equal to 'responsePayload'. Received 'responsePayload'"
+              "description": "Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'"
             },
             {
               "name": "Response message received",
@@ -88,15 +93,15 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2018-09-24T22:06:42.990Z",
+          "publishTime": "2018-09-24T22:06:42.988Z",
           "messageReceived": {
-            "statusCode": 321,
-            "body": "responsePayload",
+            "statusCode": 200,
+            "body": "basic auth response",
             "headers": {
               "x-powered-by": "Express",
               "content-type": "text/html; charset=utf-8",
-              "content-length": "15",
-              "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
+              "content-length": "19",
+              "etag": "W/\"13-nGN7LEwCUKXpQoLxNqKZXSglYNc\"",
               "date": "Mon, 24 Sep 2018 22:06:42 GMT",
               "connection": "close"
             },
@@ -105,21 +110,21 @@
                 "protocol": "http:",
                 "slashes": true,
                 "auth": null,
-                "host": "localhost:23075",
-                "port": "23075",
+                "host": "localhost:23068",
+                "port": "23068",
                 "hostname": "localhost",
                 "hash": null,
                 "search": null,
                 "query": null,
-                "pathname": "/bearer",
-                "path": "/bearer",
-                "href": "http://localhost:23075/bearer"
+                "pathname": "/basic",
+                "path": "/basic",
+                "href": "http://localhost:23068/basic"
               },
               "method": "post",
               "headers": {
                 "content-type": "application/json",
-                "authorization": "Bearer bearerToken",
-                "Content-Length": 4
+                "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                "Content-Length": 10
               }
             }
           }

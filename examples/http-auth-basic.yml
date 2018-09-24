@@ -1,7 +1,7 @@
 timeout: 3000
 publishers:
     -   type: http-client
-        url: http://localhost:23075/basic
+        url: http://localhost:23068/basic
         method: POST
         payload: basic auth
         headers:
@@ -17,7 +17,7 @@ publishers:
 subscriptions:
     -   type: http-server
         endpoint: /basic
-        port: 23075
+        port: 23068
         method: POST
         timeout: 10000
         authentication:

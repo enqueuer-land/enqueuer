@@ -10,7 +10,7 @@
                 content-type: application/json
             onMessageReceived:
                 assertions:
-                    -   name: 'Status Code'
+                    -   name: Status Code
                         expect: statusCode
                         toBeEqualTo: 321
                     -   name: Body
