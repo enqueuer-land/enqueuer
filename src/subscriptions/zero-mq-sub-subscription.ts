@@ -6,14 +6,10 @@ import * as zmq from 'zeromq';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'zero-mq-sub'})
 export class ZeroMqSubSubscription extends Subscription {
-    private address: string;
-    private topic: string;
     private socket: zmq.Socket;
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
-        this.address = subscriptionModel.address;
-        this.topic = subscriptionModel.topic;
         this.socket = zmq.socket('sub');
     }
 

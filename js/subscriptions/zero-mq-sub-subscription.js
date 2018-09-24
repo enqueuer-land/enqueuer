@@ -23,8 +23,6 @@ const zmq = __importStar(require("zeromq"));
 let ZeroMqSubSubscription = class ZeroMqSubSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
         super(subscriptionModel);
-        this.address = subscriptionModel.address;
-        this.topic = subscriptionModel.topic;
         this.socket = zmq.socket('sub');
     }
     receiveMessage() {

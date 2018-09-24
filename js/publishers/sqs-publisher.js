@@ -30,7 +30,7 @@ let SqsPublisher = class SqsPublisher extends publisher_1.Publisher {
     }
     publish() {
         return new Promise((resolve, reject) => {
-            this.sqsSend.sendMessage(this.params, (err, data) => {
+            this.sqsSend.sendMessage(this.messageParams, (err, data) => {
                 if (err) {
                     logger_1.Logger.error('Error publishing to SQS');
                     return reject(err);

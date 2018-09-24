@@ -27,10 +27,8 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
         this.pretty = false;
-        this.pretty = !!publisherAttributes.pretty;
-        this.filename = publisherAttributes.filename;
-        this.filenamePrefix = publisherAttributes.filenamePrefix;
-        this.filenameExtension = publisherAttributes.filenameExtension || 'enq';
+        this.pretty = !!this.pretty;
+        this.filenameExtension = this.filenameExtension || 'enq';
     }
     publish() {
         const filename = this.createFilename();

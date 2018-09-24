@@ -128,11 +128,10 @@ describe('RequisitionParser', () => {
         expect(() => parser.parse(runnable)).toThrow()
     });
 
-    it('Should not parse invalid requisition', () => {
-        const runnable = "{\"invalid\": \"runnable\"}";
+    it('Should not parse empty requisition', () => {
         const parser: RequisitionParser = new RequisitionParser();
 
-        expect(() => parser.parse(runnable)).toThrow()
+        expect(() => parser.parse()).toThrow()
     });
 
     it('Should keep initial id', () => {

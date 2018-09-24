@@ -23,8 +23,6 @@ const zmq = __importStar(require("zeromq"));
 let ZeroMqPubPublisher = class ZeroMqPubPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
-        this.address = publish.address;
-        this.topic = publish.topic;
         this.socket = zmq.socket('pub');
         this.socket
             .monitor(150, 0)

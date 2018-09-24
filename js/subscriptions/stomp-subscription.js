@@ -25,11 +25,6 @@ const Stomp = require('stomp-client');
 let StompSubscription = class StompSubscription extends subscription_1.Subscription {
     constructor(subscriptionModel) {
         super(subscriptionModel);
-        this.address = subscriptionModel.address;
-        this.port = subscriptionModel.port;
-        this.user = subscriptionModel.user;
-        this.password = subscriptionModel.password;
-        this.queue = subscriptionModel.queue;
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {

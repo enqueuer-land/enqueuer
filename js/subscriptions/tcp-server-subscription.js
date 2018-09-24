@@ -34,17 +34,13 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 let TcpServerSubscription = class TcpServerSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.port = subscriptionAttributes.port;
-        this.saveStream = subscriptionAttributes.saveStream;
-        this.greeting = subscriptionAttributes.greeting;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = new javascript_object_notation_1.JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
-        this.loadStreamName = subscriptionAttributes.loadStream;
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            if (this.loadStreamName) {
+            if (this.loadStream) {
                 this.waitForData(reject, resolve);
             }
             else {
@@ -60,7 +56,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
         });
     }
     subscribe() {
-        if (this.loadStreamName) {
+        if (this.loadStream) {
             return this.reuseServer();
         }
         else {
@@ -89,7 +85,7 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
     reuseServer() {
         return new Promise((resolve, reject) => {
             try {
-                this.loadStream();
+                this.tryToLoadStream();
                 logger_1.Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
             }
@@ -122,14 +118,14 @@ let TcpServerSubscription = class TcpServerSubscription extends subscription_1.S
             this.stream.write(this.greeting);
         }
     }
-    loadStream() {
-        logger_1.Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);
-        this.stream = store_1.Store.getData()[this.loadStreamName];
+    tryToLoadStream() {
+        logger_1.Logger.debug(`Server is loading tcp stream: ${this.loadStream}`);
+        this.stream = store_1.Store.getData()[this.loadStream];
         if (this.stream) {
-            logger_1.Logger.debug(`Server loaded tcp stream: ${this.loadStreamName} (${this.stream.localPort})`);
+            logger_1.Logger.debug(`Server loaded tcp stream: ${this.loadStream} (${this.stream.localPort})`);
         }
         else {
-            throw `Impossible to load tcp stream: ${this.loadStreamName}`;
+            throw `Impossible to load tcp stream: ${this.loadStream}`;
         }
     }
     waitForData(reject, resolve) {

@@ -9,19 +9,17 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'sqs'})
 export class SqsSubscription extends Subscription {
 
-    private params: ReceiveMessageRequest;
     private sqs: AWS.SQS;
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
 
         this.sqs = new AWS.SQS(subscriptionModel.awsConfiguration);
-        this.params = subscriptionModel.messageParams;
     }
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.sqs.receiveMessage(this.params, (err: AWS.AWSError, data: ReceiveMessageResult) => {
+            this.sqs.receiveMessage(this.messageParams, (err: AWS.AWSError, data: ReceiveMessageResult) => {
                 Logger.trace(`SQS got data: ${new JavascriptObjectNotation().stringify(data)}`);
                 if (err) {
                     Logger.error('Error receiving message from SQS');

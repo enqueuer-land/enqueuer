@@ -6,14 +6,9 @@ import * as zmq from 'zeromq';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'zero-mq-pub'})
 export class ZeroMqPubPublisher extends Publisher {
-    private address: string;
-    private topic: string;
-    private socket: zmq.Socket;
 
     constructor(publish: PublisherModel) {
         super(publish);
-        this.address = publish.address;
-        this.topic = publish.topic;
         this.socket = zmq.socket('pub');
         this.socket
             .monitor(150, 0)

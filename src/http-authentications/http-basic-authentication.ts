@@ -85,7 +85,7 @@ export class HttpBasicAuthentication extends HttpAuthentication {
         };
         if (pass == this.password) {
             test.valid = true;
-            test.description = `Password matchs`;
+            test.description = `Password match`;
         }
         return test;
     }

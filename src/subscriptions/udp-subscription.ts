@@ -9,11 +9,9 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 export class UdpSubscription extends Subscription {
 
     private server: any;
-    private port: number;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.port = subscriptionAttributes.port;
 
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);

@@ -17,12 +17,10 @@ const http_requester_1 = require("../pools/http-requester");
 let HttpClientPublisher = class HttpClientPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
-        this.url = publish.url;
-        this.authentication = publish.authentication;
         this.method = publish.method.toUpperCase();
-        this.payload = publish.payload || '';
-        this.headers = publish.headers || {};
-        this.timeout = publish.timeout || 3000;
+        this.payload = this.payload || '';
+        this.headers = this.headers || {};
+        this.timeout = this.timeout || 3000;
     }
     publish() {
         return new Promise((resolve, reject) => {

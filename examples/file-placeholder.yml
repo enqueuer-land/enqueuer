@@ -1,29 +1,24 @@
+csv: <<csv://misc/file-content.csv>>
+tsv: <<tsv://misc/file-content.tsv>>
+json: <<json://misc/file-content.json>>
+yml: <<yaml://misc/file-content.yml>>
 onInit:
-    script: |-
-        csv = <<csv://misc/file-content.csv>>
-        tsv = <<tsv://misc/file-content.tsv>>
-        json = <<json://misc/file-content.json>>
-        yml = <<yaml://misc/file-content.yml>>
-        double = <<file://misc/file-code.js>>
+    script: double = <<file://misc/file-code.js>>
     store:
-        csv: csv[1]
-        tsv: tsv[0]
-        json: json
-        yml: yml
         scriptResult: double(20);
 onFinish:
     assertions:
         -   name: fileRead (yml)
-            expect: store.yml.key
+            expect: requisition.yml.key
             toBeEqualTo: `value`
         -   name: fileRead (.json)
-            expect: store.json.key
+            expect: requisition.json.key
             toBeEqualTo: `value`
         -   name: fileRead (.csv)
-            expect: store.csv.title
+            expect: requisition.csv[1].title
             toBeEqualTo: `secondRow`
         -   name: fileRead (.tsv)
-            expect: store.tsv.title
+            expect: requisition.tsv[0].title
             toBeEqualTo: `virgs`
         -   name: fileRead (.js)
             expect: store.scriptResult

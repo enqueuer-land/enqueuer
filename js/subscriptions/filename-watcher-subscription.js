@@ -32,7 +32,6 @@ const glob = __importStar(require("glob"));
 let FileSystemWatcherSubscription = class FileSystemWatcherSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.fileNamePattern = subscriptionAttributes.fileNamePattern;
         this.options = subscriptionAttributes.options || { nodir: true };
         if (!this.fileNamePattern) {
             throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' field`);

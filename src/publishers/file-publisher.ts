@@ -11,17 +11,12 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'file'})
 export class FilePublisher extends Publisher {
 
-    private readonly filename: string;
-    private readonly filenamePrefix: string;
-    private readonly filenameExtension: string;
     private readonly pretty: boolean = false;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this.pretty = !!publisherAttributes.pretty;
-        this.filename = publisherAttributes.filename;
-        this.filenamePrefix = publisherAttributes.filenamePrefix;
-        this.filenameExtension = publisherAttributes.filenameExtension || 'enq';
+        this.pretty = !!this.pretty;
+        this.filenameExtension = this.filenameExtension || 'enq';
     }
 
     public publish(): Promise<void> {

@@ -25,14 +25,10 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
-        this.serverAddress = publisherAttributes.serverAddress;
-        this.port = publisherAttributes.port;
-        this.saveStream = publisherAttributes.saveStream;
-        this.loadStream = publisherAttributes.loadStream;
-        this.timeout = publisherAttributes.timeout || 1000;
-        if (publisherAttributes.loadStream) {
+        this.timeout = this.timeout || 1000;
+        if (this.loadStream) {
             logger_1.Logger.debug(`Loading tcp client: ${this.loadStream}`);
-            this.loadedStream = store_1.Store.getData()[publisherAttributes.loadStream];
+            this.loadedStream = store_1.Store.getData()[this.loadStream];
         }
     }
     publish() {

@@ -4,7 +4,6 @@ import {TestModel} from '../models/outputs/test-model';
 import {Event} from '../models/events/event';
 
 export abstract class Subscription {
-
     public name: string;
     public messageReceived?: any;
     public timeout?: number;
@@ -14,15 +13,12 @@ export abstract class Subscription {
     public type?: string;
     public avoid: boolean = false;
 
+    [propName: string]: any;
     protected constructor(subscriptionAttributes: SubscriptionModel) {
-        this.messageReceived = subscriptionAttributes.messageReceived;
+        Object.keys(subscriptionAttributes).forEach(key => {
+            this[key] = subscriptionAttributes[key];
+        });
         this.name = subscriptionAttributes.name;
-        this.timeout = subscriptionAttributes.timeout;
-        this.response = subscriptionAttributes.response;
-        this.type = subscriptionAttributes.type;
-        this.onMessageReceived = subscriptionAttributes.onMessageReceived;
-        this.onFinish = subscriptionAttributes.onFinish;
-        this.avoid = subscriptionAttributes.avoid || false;
     }
 
     public abstract subscribe(): Promise<void>;

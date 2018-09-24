@@ -12,19 +12,13 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 export class UdsSubscription extends Subscription {
 
     private server: any;
-    private path: string;
     private stream?: any;
-    private saveStream: any;
-    private loadStream: string;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.path = subscriptionAttributes.path;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
-        this.loadStream = subscriptionAttributes.loadStream;
-        this.saveStream = subscriptionAttributes.saveStream;
     }
 
     public receiveMessage(): Promise<any> {

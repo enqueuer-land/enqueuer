@@ -83,7 +83,7 @@ let HttpBasicAuthentication = class HttpBasicAuthentication extends http_authent
         };
         if (pass == this.password) {
             test.valid = true;
-            test.description = `Password matchs`;
+            test.description = `Password match`;
         }
         return test;
     }

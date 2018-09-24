@@ -7,13 +7,8 @@ import * as dgram from 'dgram';
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'udp'})
 export class UdpPublisher extends Publisher {
 
-    private serverAddress: string;
-    private port: number;
-
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this.serverAddress = publisherAttributes.serverAddress;
-        this.port = publisherAttributes.port;
     }
 
     public publish(): Promise<void> {

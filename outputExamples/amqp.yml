@@ -1,147 +1,187 @@
-name: examples/amqp.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests: []
-    name: 'Requisition #0'
-    time:
-      totalTime: 243
-      startTime: '2018-09-24T15:56:28.433Z'
-      endTime: '2018-09-24T15:56:28.676Z'
-    subscriptions:
-      -
-        name: 'subscription description'
-        type: amqp
-        tests:
-          -
-            name: Payload
-            valid: true
-            description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
-          -
-            name: Header
-            valid: true
-            description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
-          -
-            name: 'Other Header Value'
-            valid: true
-            description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
-          -
-            name: 'Routing Key'
-            valid: true
-            description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.630Z'
-        messageReceived:
-          payload:
-            how:
-              about: 'a new object?'
-          headers:
-            key: value
-            otherKey: otherValue
-          deliveryInfo:
-            contentType: application/json
-            headers:
-              key: value
-              otherKey: otherValue
-            queue: ATys5zbM
-            deliveryTag:
-              type: Buffer
-              data:
-                - 0
-                - 0
-                - 0
-                - 0
-                - 0
-                - 0
-                - 0
-                - 1
-            redelivered: false
-            exchange: enqueuer.exchange
-            routingKey: enqueuer.integration.test.routing.key
-            consumerTag: node-amqp-82861-0.7431220072428499
-      -
-        name: 'Subscription #1'
-        type: amqp
-        tests:
-          -
-            name: 'Assertion #0'
-            valid: true
-            description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.627Z'
-        messageReceived:
-          payload:
-            data:
-              type: Buffer
-              data:
-                - 100
-                - 101
-                - 102
-                - 97
-                - 117
-                - 108
-                - 116
-                - 32
-                - 101
-                - 120
-                - 99
-                - 104
-                - 97
-                - 110
-                - 103
-                - 101
-            contentType: application/octet-stream
-          headers: {}
-          deliveryInfo:
-            contentType: application/octet-stream
-            queue: enqueuer.default.exchange
-            deliveryTag:
-              type: Buffer
-              data:
-                - 0
-                - 0
-                - 0
-                - 0
-                - 0
-                - 0
-                - 0
-                - 1
-            redelivered: false
-            exchange: ""
-            routingKey: enqueuer.default.exchange
-            consumerTag: node-amqp-82861-0.047416471915957326
-    publishers:
-      -
-        name: 'Publisher #0'
-        valid: true
-        type: amqp
-        tests:
-          -
-            name: 'Assertion #0'
-            valid: true
-            description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T15:56:28.675Z'
-      -
-        name: 'default exchange'
-        valid: true
-        type: amqp
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T15:56:28.672Z'
+{
+  "name": "examples/amqp.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 684,
+        "startTime": "2018-09-24T19:33:21.451Z",
+        "endTime": "2018-09-24T19:33:22.135Z"
+      },
+      "subscriptions": [
+        {
+          "name": "subscription description",
+          "type": "amqp",
+          "tests": [
+            {
+              "name": "Payload",
+              "valid": true,
+              "description": "Expected 'payload.how.about' to be equal to 'a new object?'. Received 'a new object?'"
+            },
+            {
+              "name": "Header",
+              "valid": true,
+              "description": "Expected 'headers.key' to be equal to 'value'. Received 'value'"
+            },
+            {
+              "name": "Other Header Value",
+              "valid": true,
+              "description": "Expected 'headers.otherKey' to be equal to 'otherValue'. Received 'otherValue'"
+            },
+            {
+              "name": "Routing Key",
+              "valid": true,
+              "description": "Expected 'deliveryInfo.routingKey' to be equal to 'enqueuer.integration.test.routing.key'. Received 'enqueuer.integration.test.routing.key'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:22.114Z",
+          "messageReceived": {
+            "payload": {
+              "how": {
+                "about": "a new object?"
+              }
+            },
+            "headers": {
+              "key": "value",
+              "otherKey": "otherValue"
+            },
+            "deliveryInfo": {
+              "contentType": "application/json",
+              "headers": {
+                "key": "value",
+                "otherKey": "otherValue"
+              },
+              "queue": "IthCr5WZ",
+              "deliveryTag": {
+                "type": "Buffer",
+                "data": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              "redelivered": false,
+              "exchange": "enqueuer.exchange",
+              "routingKey": "enqueuer.integration.test.routing.key",
+              "consumerTag": "node-amqp-25730-0.4256645971774824"
+            }
+          }
+        },
+        {
+          "name": "Subscription #1",
+          "type": "amqp",
+          "tests": [
+            {
+              "name": "Assertion #0",
+              "valid": true,
+              "description": "Expected 'data' to be equal to 'default exchange'. Received 'default exchange'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:22.112Z",
+          "messageReceived": {
+            "payload": {
+              "data": {
+                "type": "Buffer",
+                "data": [
+                  100,
+                  101,
+                  102,
+                  97,
+                  117,
+                  108,
+                  116,
+                  32,
+                  101,
+                  120,
+                  99,
+                  104,
+                  97,
+                  110,
+                  103,
+                  101
+                ]
+              },
+              "contentType": "application/octet-stream"
+            },
+            "headers": {},
+            "deliveryInfo": {
+              "contentType": "application/octet-stream",
+              "queue": "enqueuer.default.exchange",
+              "deliveryTag": {
+                "type": "Buffer",
+                "data": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              "redelivered": false,
+              "exchange": "",
+              "routingKey": "enqueuer.default.exchange",
+              "consumerTag": "node-amqp-25730-0.5967361304152099"
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "Publisher #0",
+          "valid": true,
+          "type": "amqp",
+          "tests": [
+            {
+              "name": "Assertion #0",
+              "valid": true,
+              "description": "Expected 'publisher.options.port' to be equal to '5672'. Received '5672'"
+            },
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:22.134Z"
+        },
+        {
+          "name": "default exchange",
+          "valid": true,
+          "type": "amqp",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:22.133Z"
+        }
+      ]
+    }
+  ]
+}

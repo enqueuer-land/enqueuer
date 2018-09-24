@@ -1,43 +1,58 @@
-name: examples/parallel-pub.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'requisition description'
-    time:
-      totalTime: 4
-      startTime: '2018-09-24T15:56:28.932Z'
-      endTime: '2018-09-24T15:56:28.936Z'
-      timeout: 3000
-    subscriptions: []
-    publishers:
-      -
-        name: 'publisher description'
-        valid: true
-        type: tcp-client
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Back and forth'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''anyValue''. Received ''anyValue'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:28.935Z'
-        messageReceived:
-          payload: anyValue
-          stream:
-            address: 127.0.0.1
-            family: IPv4
-            port: 63162
+{
+  "name": "examples/parallel-pub.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "requisition description",
+      "time": {
+        "totalTime": 3,
+        "startTime": "2018-09-24T19:33:21.948Z",
+        "endTime": "2018-09-24T19:33:21.951Z",
+        "timeout": 3000
+      },
+      "subscriptions": [],
+      "publishers": [
+        {
+          "name": "publisher description",
+          "valid": true,
+          "type": "tcp-client",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Back and forth",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'anyValue'. Received 'anyValue'"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.951Z",
+          "messageReceived": {
+            "payload": "anyValue",
+            "stream": {
+              "address": "127.0.0.1",
+              "family": "IPv4",
+              "port": 50487
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -27,11 +27,6 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 let HttpSubscription = class HttpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.credentials = subscriptionAttributes.credentials;
-        this.authentication = subscriptionAttributes.authentication;
-        this.port = subscriptionAttributes.port;
-        this.endpoint = subscriptionAttributes.endpoint;
-        this.redirect = subscriptionAttributes.redirect;
         this.secureServer = this.isSecureServer();
         this.proxy = this.isProxyServer();
         this.method = subscriptionAttributes.method.toLowerCase();

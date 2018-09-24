@@ -1,36 +1,47 @@
-name: examples/requisition.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests: []
-    name: 'iterations iterator collection'
-    subscriptions: []
-    publishers: []
-    time:
-      startTime: '2018-09-24T15:56:28.429Z'
-      endTime: '2018-09-24T15:56:28.429Z'
-      totalTime: 0
-  -
-    valid: true
-    tests:
-      -
-        name: 'It was executed 10 times'
-        valid: true
-        description: 'Expected ''store.iteration'' to be equal to ''9''. Received ''9'''
-      -
-        name: 'It delayed for at least ~3 seconds'
-        valid: true
-        description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3052'''
-      -
-        name: 'It delayed for no more than ~3 seconds'
-        valid: true
-        description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2502'''
-    name: delayed
-    time:
-      totalTime: 0
-      startTime: '2018-09-24T15:56:31.631Z'
-      endTime: '2018-09-24T15:56:31.631Z'
-    subscriptions: []
-    publishers: []
+{
+  "name": "examples/requisition.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [],
+      "name": "iterations iterator collection",
+      "subscriptions": [],
+      "publishers": [],
+      "time": {
+        "startTime": "2018-09-24T19:33:21.447Z",
+        "endTime": "2018-09-24T19:33:21.447Z",
+        "totalTime": 0
+      }
+    },
+    {
+      "valid": true,
+      "tests": [
+        {
+          "name": "It was executed 10 times",
+          "valid": true,
+          "description": "Expected 'store.iteration' to be equal to '9'. Received '9'"
+        },
+        {
+          "name": "It delayed for at least ~3 seconds",
+          "valid": true,
+          "description": "Expected 'delayedTime + 50' to be greater than '3000'. Received '3052'"
+        },
+        {
+          "name": "It delayed for no more than ~3 seconds",
+          "valid": true,
+          "description": "Expected 'delayedTime - 500' to be less than '3000'. Received '2502'"
+        }
+      ],
+      "name": "delayed",
+      "time": {
+        "totalTime": 0,
+        "startTime": "2018-09-24T19:33:24.640Z",
+        "endTime": "2018-09-24T19:33:24.640Z"
+      },
+      "subscriptions": [],
+      "publishers": []
+    }
+  ]
+}

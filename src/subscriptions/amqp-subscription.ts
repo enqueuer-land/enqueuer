@@ -9,17 +9,11 @@ import {StringRandomCreator} from '../timers/string-random-creator';
 export class AmqpSubscription extends Subscription {
 
     private connection: any;
-    private options: any;
-    private exchange: string;
-    private routingKey: string;
     private queueName: string;
     private messageReceiverPromiseResolver?: (value?: (PromiseLike<any> | any)) => void;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.options = subscriptionAttributes.options;
-        this.exchange = subscriptionAttributes.exchange;
-        this.routingKey = subscriptionAttributes.routingKey;
         this.queueName = subscriptionAttributes.queueName || new StringRandomCreator().create(8);
     }
 

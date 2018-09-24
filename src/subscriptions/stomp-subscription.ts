@@ -7,20 +7,10 @@ const Stomp = require('stomp-client');
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'stomp'})
 export class StompSubscription extends Subscription {
-    private queue: string;
-    private password: string;
-    private user: string;
-    private port: string;
-    private address: string;
     private client: any;
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
-        this.address = subscriptionModel.address;
-        this.port = subscriptionModel.port;
-        this.user = subscriptionModel.user;
-        this.password = subscriptionModel.password;
-        this.queue = subscriptionModel.queue;
     }
 
     public receiveMessage(): Promise<any> {

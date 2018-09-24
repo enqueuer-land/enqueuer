@@ -25,10 +25,7 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 let UdsPublisher = class UdsPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
-        this.path = publisherAttributes.path;
-        this.loadStream = publisherAttributes.loadStream;
-        this.timeout = publisherAttributes.timeout || 1000;
-        this.saveStream = publisherAttributes.saveStream;
+        this.timeout = this.timeout || 1000;
     }
     publish() {
         const payload = this.stringifyPayload();

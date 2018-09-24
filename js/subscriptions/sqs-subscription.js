@@ -25,11 +25,10 @@ let SqsSubscription = class SqsSubscription extends subscription_1.Subscription 
     constructor(subscriptionModel) {
         super(subscriptionModel);
         this.sqs = new AWS.SQS(subscriptionModel.awsConfiguration);
-        this.params = subscriptionModel.messageParams;
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
-            this.sqs.receiveMessage(this.params, (err, data) => {
+            this.sqs.receiveMessage(this.messageParams, (err, data) => {
                 logger_1.Logger.trace(`SQS got data: ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(data)}`);
                 if (err) {
                     logger_1.Logger.error('Error receiving message from SQS');

@@ -32,9 +32,6 @@ const string_random_creator_1 = require("../timers/string-random-creator");
 let AmqpSubscription = class AmqpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.options = subscriptionAttributes.options;
-        this.exchange = subscriptionAttributes.exchange;
-        this.routingKey = subscriptionAttributes.routingKey;
         this.queueName = subscriptionAttributes.queueName || new string_random_creator_1.StringRandomCreator().create(8);
     }
     receiveMessage() {

@@ -7,16 +7,11 @@ import * as mqtt from 'mqtt';
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'mqtt'})
 export class MqttSubscription extends Subscription {
 
-    private brokerAddress: string;
-    private topic: string;
     private client: any;
-    private options: any;
     private messageReceivedResolver?: (value?: (PromiseLike<any> | any)) => void;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.brokerAddress = subscriptionAttributes.brokerAddress;
-        this.topic = subscriptionAttributes.topic;
         this.options = subscriptionAttributes.options || {};
         this.options.connectTimeout = this.options.connectTimeout || 10 * 1000;
     }

@@ -16,11 +16,6 @@ const Stomp = require('stomp-client');
 let StompPublisher = class StompPublisher extends publisher_1.Publisher {
     constructor(publisherProperties) {
         super(publisherProperties);
-        this.address = publisherProperties.address;
-        this.port = publisherProperties.port;
-        this.user = publisherProperties.user;
-        this.password = publisherProperties.password;
-        this.queue = publisherProperties.queue;
     }
     publish() {
         return new Promise((resolve, reject) => {

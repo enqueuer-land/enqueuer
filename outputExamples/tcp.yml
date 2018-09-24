@@ -1,228 +1,293 @@
-name: examples/tcp.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #0'
-    time:
-      totalTime: 131
-      startTime: '2018-09-24T15:56:28.485Z'
-      endTime: '2018-09-24T15:56:28.616Z'
-      timeout: 3000
-    subscriptions:
-      -
-        name: 'Subscription #0'
-        type: tcp-server
-        tests:
-          -
-            name: 'Beatles Song'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''Hey Jude''. Received ''Hey Jude'''
-          -
-            name: 'Assertion #1'
-            valid: true
-            description: '''stream.address'' (::ffff:127.0.0.1) does not contain ''127.0.0.1'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.487Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 72
-              - 101
-              - 121
-              - 32
-              - 74
-              - 117
-              - 100
-              - 101
-          stream:
-            address: '::ffff:127.0.0.1'
-            family: IPv6
-            port: 23069
-    publishers:
-      -
-        name: 'Publisher #0'
-        valid: true
-        type: tcp-client
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Do not make it bad'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''Do not make it bad''. Received ''Do not make it bad'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:28.616Z'
-        messageReceived:
-          payload: 'Do not make it bad'
-          stream:
-            address: 127.0.0.1
-            family: IPv4
-            port: 63148
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #1'
-    time:
-      totalTime: 829
-      startTime: '2018-09-24T15:56:28.620Z'
-      endTime: '2018-09-24T15:56:29.449Z'
-      timeout: 3000
-    subscriptions:
-      -
-        name: 'tcp 1 subscription description'
-        type: tcp-server
-        tests:
-          -
-            name: 'I care'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''I do not care''. Received ''I do not care'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.621Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 73
-              - 32
-              - 100
-              - 111
-              - 32
-              - 110
-              - 111
-              - 116
-              - 32
-              - 99
-              - 97
-              - 114
-              - 101
-          stream:
-            address: '::ffff:127.0.0.1'
-            family: IPv6
-            port: 23070
-    publishers:
-      -
-        name: 'tcp 1 publisher description'
-        valid: true
-        type: tcp-client
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Greeting received'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''EnqueuerRocks''. Received ''EnqueuerRocks'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:29.449Z'
-        messageReceived:
-          payload: EnqueuerRocks
-          stream:
-            address: 127.0.0.1
-            family: IPv4
-            port: 63156
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #2'
-    time:
-      totalTime: 2
-      startTime: '2018-09-24T15:56:29.451Z'
-      endTime: '2018-09-24T15:56:29.453Z'
-      timeout: 3000
-    subscriptions:
-      -
-        name: 'tcp 2 subscription description'
-        type: tcp-server
-        tests:
-          -
-            name: 'It is still open'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''The socket is still open''. Received ''The socket is still open'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:29.452Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 84
-              - 104
-              - 101
-              - 32
-              - 115
-              - 111
-              - 99
-              - 107
-              - 101
-              - 116
-              - 32
-              - 105
-              - 115
-              - 32
-              - 115
-              - 116
-              - 105
-              - 108
-              - 108
-              - 32
-              - 111
-              - 112
-              - 101
-              - 110
-    publishers:
-      -
-        name: 'Publisher #0'
-        valid: true
-        type: tcp-client
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Second message is enqueuer Rocks'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''enqueuer Rocks''. Received ''enqueuer Rocks'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:29.453Z'
-        messageReceived:
-          payload: 'enqueuer Rocks'
+{
+  "name": "examples/tcp.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 91,
+        "startTime": "2018-09-24T19:33:21.536Z",
+        "endTime": "2018-09-24T19:33:21.627Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "Subscription #0",
+          "type": "tcp-server",
+          "tests": [
+            {
+              "name": "Beatles Song",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'Hey Jude'. Received 'Hey Jude'"
+            },
+            {
+              "name": "Assertion #1",
+              "valid": true,
+              "description": "'stream.address' (::ffff:127.0.0.1) does not contain '127.0.0.1'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.540Z",
+          "messageReceived": {
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                72,
+                101,
+                121,
+                32,
+                74,
+                117,
+                100,
+                101
+              ]
+            },
+            "stream": {
+              "address": "::ffff:127.0.0.1",
+              "family": "IPv6",
+              "port": 23069
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "Publisher #0",
+          "valid": true,
+          "type": "tcp-client",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Do not make it bad",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'Do not make it bad'. Received 'Do not make it bad'"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.626Z",
+          "messageReceived": {
+            "payload": "Do not make it bad",
+            "stream": {
+              "address": "127.0.0.1",
+              "family": "IPv4",
+              "port": 50477
+            }
+          }
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "Requisition #1",
+      "time": {
+        "totalTime": 822,
+        "startTime": "2018-09-24T19:33:21.631Z",
+        "endTime": "2018-09-24T19:33:22.453Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "tcp 1 subscription description",
+          "type": "tcp-server",
+          "tests": [
+            {
+              "name": "I care",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'I do not care'. Received 'I do not care'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.631Z",
+          "messageReceived": {
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                73,
+                32,
+                100,
+                111,
+                32,
+                110,
+                111,
+                116,
+                32,
+                99,
+                97,
+                114,
+                101
+              ]
+            },
+            "stream": {
+              "address": "::ffff:127.0.0.1",
+              "family": "IPv6",
+              "port": 23070
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "tcp 1 publisher description",
+          "valid": true,
+          "type": "tcp-client",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Greeting received",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'EnqueuerRocks'. Received 'EnqueuerRocks'"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:22.452Z",
+          "messageReceived": {
+            "payload": "EnqueuerRocks",
+            "stream": {
+              "address": "127.0.0.1",
+              "family": "IPv4",
+              "port": 50483
+            }
+          }
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "Requisition #2",
+      "time": {
+        "totalTime": 1,
+        "startTime": "2018-09-24T19:33:22.455Z",
+        "endTime": "2018-09-24T19:33:22.456Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "tcp 2 subscription description",
+          "type": "tcp-server",
+          "tests": [
+            {
+              "name": "It is still open",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'The socket is still open'. Received 'The socket is still open'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:22.455Z",
+          "messageReceived": {
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                84,
+                104,
+                101,
+                32,
+                115,
+                111,
+                99,
+                107,
+                101,
+                116,
+                32,
+                105,
+                115,
+                32,
+                115,
+                116,
+                105,
+                108,
+                108,
+                32,
+                111,
+                112,
+                101,
+                110
+              ]
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "Publisher #0",
+          "valid": true,
+          "type": "tcp-client",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Second message is enqueuer Rocks",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'enqueuer Rocks'. Received 'enqueuer Rocks'"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:22.456Z",
+          "messageReceived": {
+            "payload": "enqueuer Rocks"
+          }
+        }
+      ]
+    }
+  ]
+}

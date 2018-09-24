@@ -22,7 +22,7 @@ export class SqsPublisher extends Publisher {
 
     public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.sqsSend.sendMessage(this.params, (err: AWS.AWSError, data: SendMessageResult) => {
+            this.sqsSend.sendMessage(this.messageParams, (err: AWS.AWSError, data: SendMessageResult) => {
                 if (err) {
                     Logger.error('Error publishing to SQS');
                     return reject(err);

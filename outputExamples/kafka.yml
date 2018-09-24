@@ -1,76 +1,99 @@
-name: examples/kafka.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #0'
-    time:
-      totalTime: 201
-      startTime: '2018-09-24T15:56:28.463Z'
-      endTime: '2018-09-24T15:56:28.664Z'
-      timeout: 8000
-    subscriptions:
-      -
-        name: 'subscription description'
-        type: kafka
-        tests:
-          -
-            name: payload
-            valid: true
-            description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
-          -
-            name: topic
-            valid: true
-            description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
-          -
-            name: offset
-            valid: true
-            description: '''offset'' is not defined'
-          -
-            name: partition
-            valid: true
-            description: '''partition'' is not defined'
-          -
-            name: timestamp
-            valid: true
-            description: '''timestamp'' is not defined'
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.637Z'
-        messageReceived:
-          topic: enqueuer-topic-name
-          value: kafkaPayload
-          offset: 49
-          partition: 0
-          highWaterOffset: 50
-          key: null
-          timestamp: '2018-09-24T15:56:28.638Z'
-    publishers:
-      -
-        name: 'publisher description'
-        valid: true
-        type: kafka
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'kafka publish response payload'
-            valid: true
-            description: '''`enqueuer-topic-name`'' is not defined'
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:28.660Z'
-        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 49\n  }\n}"
+{
+  "name": "examples/kafka.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 182,
+        "startTime": "2018-09-24T19:33:21.483Z",
+        "endTime": "2018-09-24T19:33:21.665Z",
+        "timeout": 8000
+      },
+      "subscriptions": [
+        {
+          "name": "subscription description",
+          "type": "kafka",
+          "tests": [
+            {
+              "name": "payload",
+              "valid": true,
+              "description": "Expected 'value' to be equal to 'kafkaPayload'. Received 'kafkaPayload'"
+            },
+            {
+              "name": "topic",
+              "valid": true,
+              "description": "Expected 'topic' to be equal to 'enqueuer-topic-name'. Received 'enqueuer-topic-name'"
+            },
+            {
+              "name": "offset",
+              "valid": true,
+              "description": "'offset' is not defined"
+            },
+            {
+              "name": "partition",
+              "valid": true,
+              "description": "'partition' is not defined"
+            },
+            {
+              "name": "timestamp",
+              "valid": true,
+              "description": "'timestamp' is not defined"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.644Z",
+          "messageReceived": {
+            "topic": "enqueuer-topic-name",
+            "value": "kafkaPayload",
+            "offset": 59,
+            "partition": 0,
+            "highWaterOffset": 60,
+            "key": null,
+            "timestamp": "2018-09-24T19:33:21.646Z"
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "publisher description",
+          "valid": true,
+          "type": "kafka",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "kafka publish response payload",
+              "valid": true,
+              "description": "'`enqueuer-topic-name`' is not defined"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.663Z",
+          "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 59\n  }\n}"
+        }
+      ]
+    }
+  ]
+}

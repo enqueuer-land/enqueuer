@@ -24,9 +24,7 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 let MqttPublisher = class MqttPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
-        this.brokerAddress = publish.brokerAddress;
-        this.topic = publish.topic;
-        this.options = publish.options || {};
+        this.options = this.options || {};
     }
     publish() {
         return new Promise((resolve, reject) => {

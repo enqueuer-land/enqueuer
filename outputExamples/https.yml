@@ -1,92 +1,118 @@
-name: examples/https.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #0'
-    time:
-      totalTime: 191
-      startTime: '2018-09-24T15:56:28.450Z'
-      endTime: '2018-09-24T15:56:28.641Z'
-      timeout: 3000
-    subscriptions:
-      -
-        name: 'Subscription #0'
-        type: https-server
-        tests:
-          -
-            name: 'Https payload'
-            valid: true
-            description: 'Expected ''JSON.parse(message.body).https'' to be equal to ''works!''. Received ''works!'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.503Z'
-        messageReceived:
-          headers:
-            content-type: application/json
-            content-length: '23'
-            host: 'localhost:4430'
-            connection: close
-          params: {}
-          query: {}
-          body: "{\n  \"https\": \"works!\"\n}"
-    publishers:
-      -
-        name: 'publisher description'
-        valid: true
-        type: https-client
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Status Code'
-            valid: true
-            description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
-          -
-            name: Body
-            valid: true
-            description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:28.640Z'
-        messageReceived:
-          statusCode: 200
-          body: https
-          headers:
-            x-powered-by: Express
-            content-type: 'text/html; charset=utf-8'
-            content-length: '5'
-            etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-            date: 'Mon, 24 Sep 2018 15:56:28 GMT'
-            connection: close
-          request:
-            uri:
-              protocol: 'https:'
-              slashes: true
-              auth: null
-              host: 'localhost:4430'
-              port: '4430'
-              hostname: localhost
-              hash: null
-              search: null
-              query: null
-              pathname: /enqueuer
-              path: /enqueuer
-              href: 'https://localhost:4430/enqueuer'
-            method: post
-            headers:
-              content-type: application/json
-              Content-Length: 23
+{
+  "name": "examples/https.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 178,
+        "startTime": "2018-09-24T19:33:21.470Z",
+        "endTime": "2018-09-24T19:33:21.648Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "Subscription #0",
+          "type": "https-server",
+          "tests": [
+            {
+              "name": "Https payload",
+              "valid": true,
+              "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.527Z",
+          "messageReceived": {
+            "headers": {
+              "content-type": "application/json",
+              "content-length": "23",
+              "host": "localhost:4430",
+              "connection": "close"
+            },
+            "params": {},
+            "query": {},
+            "body": "{\n  \"https\": \"works!\"\n}"
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "publisher description",
+          "valid": true,
+          "type": "https-client",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Status Code",
+              "valid": true,
+              "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
+            },
+            {
+              "name": "Body",
+              "valid": true,
+              "description": "Expected 'body' to be equal to 'https'. Received 'https'"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.648Z",
+          "messageReceived": {
+            "statusCode": 200,
+            "body": "https",
+            "headers": {
+              "x-powered-by": "Express",
+              "content-type": "text/html; charset=utf-8",
+              "content-length": "5",
+              "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
+              "date": "Mon, 24 Sep 2018 19:33:21 GMT",
+              "connection": "close"
+            },
+            "request": {
+              "uri": {
+                "protocol": "https:",
+                "slashes": true,
+                "auth": null,
+                "host": "localhost:4430",
+                "port": "4430",
+                "hostname": "localhost",
+                "hash": null,
+                "search": null,
+                "query": null,
+                "pathname": "/enqueuer",
+                "path": "/enqueuer",
+                "href": "https://localhost:4430/enqueuer"
+              },
+              "method": "post",
+              "headers": {
+                "content-type": "application/json",
+                "Content-Length": 23
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

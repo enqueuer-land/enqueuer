@@ -23,9 +23,6 @@ const amqp = __importStar(require("amqp"));
 let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
     constructor(publish) {
         super(publish);
-        this.options = publish.options;
-        this.exchangeName = publish.exchange;
-        this.routingKey = publish.routingKey;
         this.messageOptions = publish.messageOptions || {};
     }
     publish() {
@@ -33,7 +30,7 @@ let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
             this.connection = amqp.createConnection(this.options);
             this.connection.once('ready', () => {
                 const exchange = this.createExchange();
-                logger_1.Logger.debug(`Exchange to publish: '${this.exchangeName || 'default'}' created`);
+                logger_1.Logger.debug(`Exchange to publish: '${this.exchange || 'default'}' created`);
                 exchange.once('open', () => {
                     this.exchangeOpen(exchange, reject, resolve);
                 });
@@ -44,10 +41,10 @@ let AmqpPublisher = class AmqpPublisher extends publisher_1.Publisher {
         });
     }
     createExchange() {
-        return this.connection.exchange(this.exchangeName || '', { confirm: true, passive: true });
+        return this.connection.exchange(this.exchange || '', { confirm: true, passive: true });
     }
     exchangeOpen(exchange, reject, resolve) {
-        logger_1.Logger.debug(`Exchange '${this.exchangeName || 'default'}' is opened, publishing to routingKey ${this.routingKey}`);
+        logger_1.Logger.debug(`Exchange '${this.exchange || 'default'}' is opened, publishing to routingKey ${this.routingKey}`);
         exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored, err) => {
             logger_1.Logger.trace(`Exchange published callback`);
             this.connection.disconnect();

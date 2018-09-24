@@ -6,20 +6,9 @@ const Stomp = require('stomp-client');
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'stomp'})
 export class StompPublisher extends Publisher {
-    private queue: string;
-    private password: string;
-    private user: string;
-    private port: string;
-    private address: string;
 
     public constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);
-
-        this.address = publisherProperties.address;
-        this.port = publisherProperties.port;
-        this.user = publisherProperties.user;
-        this.password = publisherProperties.password;
-        this.queue = publisherProperties.queue;
     }
 
     public publish(): Promise<void> {

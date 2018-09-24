@@ -9,18 +9,11 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'uds' || publishRequisition.type === 'uds-client'})
 export class UdsPublisher extends Publisher {
 
-    private path: string;
-    private saveStream: any;
-    private loadStream: string;
     private stream: any;
-    private timeout: number;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this.path = publisherAttributes.path;
-        this.loadStream = publisherAttributes.loadStream;
-        this.timeout = publisherAttributes.timeout || 1000;
-        this.saveStream = publisherAttributes.saveStream;
+        this.timeout = this.timeout || 1000;
     }
 
     public publish(): Promise<void> {

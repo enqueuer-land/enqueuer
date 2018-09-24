@@ -22,8 +22,12 @@ export class RequisitionReporter {
     private allPublishersPublished = false;
     private allSubscriptionsStoppedWaiting = false;
     private requisitionAttributes: RequisitionModel;
+    [propName: string]: any;
 
     constructor(requisitionAttributes: input.RequisitionModel) {
+        Object.keys(requisitionAttributes).forEach(key => {
+            this[key] = requisitionAttributes[key];
+        });
         this.requisitionAttributes = requisitionAttributes;
         this.reportGenerator = new ReportGenerator(this.requisitionAttributes);
         this.executeOnInitFunction();
@@ -49,7 +53,7 @@ export class RequisitionReporter {
             .catch(err => {
                 const message = `Error connecting multiSubscription: ${err}`;
                 Logger.error(message);
-                return this.onFinish({valid: false, description: message, name: 'Subscriptions subscription'});
+                return this.onRequisitionFinish({valid: false, description: message, name: 'Subscriptions subscription'});
             });
     }
 
@@ -63,7 +67,7 @@ export class RequisitionReporter {
             .catch(async err => {
                 const message = `Error receiving message in multiSubscription: ${err}`;
                 Logger.error(message);
-                await this.onFinish({valid: false, description: err, name: 'Subscriptions message receiving'});
+                await this.onRequisitionFinish({valid: false, description: err, name: 'Subscriptions message receiving'});
             });
         this.multiPublishersReporter.publish()
             .then(async () => {
@@ -74,7 +78,7 @@ export class RequisitionReporter {
             .catch(async err => {
                 const message = `Error publishing publication: ${err}`;
                 Logger.error(message);
-                await this.onFinish({valid: false, description: err, name: 'Publishers publication'});
+                await this.onRequisitionFinish({valid: false, description: err, name: 'Publishers publication'});
             });
     }
 
@@ -83,7 +87,7 @@ export class RequisitionReporter {
             new Timeout(async () => {
                 if (!this.allPublishersPublished || !this.allSubscriptionsStoppedWaiting) {
                     Logger.info(`Requisition timed out`);
-                    await this.onFinish();
+                    await this.onRequisitionFinish();
                 }
             }).start(this.requisitionTimeout);
         }
@@ -97,12 +101,12 @@ export class RequisitionReporter {
 
     private async tryToFinishExecution() {
         if (this.allPublishersPublished && this.allSubscriptionsStoppedWaiting) {
-            await this.onFinish();
+            await this.onRequisitionFinish();
         }
     }
 
-    private async onFinish(error?: TestModel): Promise<void> {
-        this.onFinish = async (): Promise<void> => {
+    private async onRequisitionFinish(error?: TestModel): Promise<void> {
+        this.onRequisitionFinish = async (): Promise<void> => {
             //do nothing
         };
         await this.executeOnFinishFunction();

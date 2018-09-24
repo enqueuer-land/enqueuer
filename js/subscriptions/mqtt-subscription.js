@@ -31,8 +31,6 @@ const mqtt = __importStar(require("mqtt"));
 let MqttSubscription = class MqttSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.brokerAddress = subscriptionAttributes.brokerAddress;
-        this.topic = subscriptionAttributes.topic;
         this.options = subscriptionAttributes.options || {};
         this.options.connectTimeout = this.options.connectTimeout || 10 * 1000;
     }

@@ -1,34 +1,45 @@
-name: examples/file-placeholder.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests:
-      -
-        name: 'fileRead (yml)'
-        valid: true
-        description: 'Expected ''store.yml.key'' to be equal to ''value''. Received ''value'''
-      -
-        name: 'fileRead (.json)'
-        valid: true
-        description: 'Expected ''store.json.key'' to be equal to ''value''. Received ''value'''
-      -
-        name: 'fileRead (.csv)'
-        valid: true
-        description: 'Expected ''store.csv.title'' to be equal to ''secondRow''. Received ''secondRow'''
-      -
-        name: 'fileRead (.tsv)'
-        valid: true
-        description: 'Expected ''store.tsv.title'' to be equal to ''virgs''. Received ''virgs'''
-      -
-        name: 'fileRead (.js)'
-        valid: true
-        description: 'Expected ''store.scriptResult'' to be equal to ''40''. Received ''40'''
-    name: 'Requisition #0'
-    time:
-      totalTime: 2
-      startTime: '2018-09-24T18:11:33.967Z'
-      endTime: '2018-09-24T18:11:33.969Z'
-    subscriptions: []
-    publishers: []
+{
+  "name": "examples/file-placeholder.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [
+        {
+          "name": "fileRead (yml)",
+          "valid": true,
+          "description": "Expected 'requisition.yml.key' to be equal to 'value'. Received 'value'"
+        },
+        {
+          "name": "fileRead (.json)",
+          "valid": true,
+          "description": "Expected 'requisition.json.key' to be equal to 'value'. Received 'value'"
+        },
+        {
+          "name": "fileRead (.csv)",
+          "valid": true,
+          "description": "Expected 'requisition.csv[1].title' to be equal to 'secondRow'. Received 'secondRow'"
+        },
+        {
+          "name": "fileRead (.tsv)",
+          "valid": true,
+          "description": "Expected 'requisition.tsv[0].title' to be equal to 'virgs'. Received 'virgs'"
+        },
+        {
+          "name": "fileRead (.js)",
+          "valid": true,
+          "description": "Expected 'store.scriptResult' to be equal to '40'. Received '40'"
+        }
+      ],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 48,
+        "startTime": "2018-09-24T19:33:21.464Z",
+        "endTime": "2018-09-24T19:33:21.512Z"
+      },
+      "subscriptions": [],
+      "publishers": []
+    }
+  ]
+}

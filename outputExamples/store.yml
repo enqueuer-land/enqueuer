@@ -1,42 +1,55 @@
-name: examples/store.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests: []
-    name: 'Requisition #0'
-    time:
-      totalTime: 17
-      startTime: '2018-09-24T15:56:28.485Z'
-      endTime: '2018-09-24T15:56:28.502Z'
-    subscriptions: []
-    publishers: []
-  -
-    valid: true
-    tests:
-      -
-        name: Payload
-        valid: true
-        description: 'Expected ''123'' to be equal to ''123''. Received ''123'''
-    name: 'Requisition #1'
-    time:
-      totalTime: 2
-      startTime: '2018-09-24T15:56:28.516Z'
-      endTime: '2018-09-24T15:56:28.518Z'
-    subscriptions: []
-    publishers: []
-  -
-    valid: true
-    tests:
-      -
-        name: Payload
-        valid: true
-        description: 'Expected ''124'' to be equal to ''124''. Received ''124'''
-    name: 'Requisition #2'
-    time:
-      totalTime: 0
-      startTime: '2018-09-24T15:56:28.531Z'
-      endTime: '2018-09-24T15:56:28.531Z'
-    subscriptions: []
-    publishers: []
+{
+  "name": "examples/store.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 4,
+        "startTime": "2018-09-24T19:33:21.536Z",
+        "endTime": "2018-09-24T19:33:21.540Z"
+      },
+      "subscriptions": [],
+      "publishers": []
+    },
+    {
+      "valid": true,
+      "tests": [
+        {
+          "name": "Payload",
+          "valid": true,
+          "description": "Expected '123' to be equal to '123'. Received '123'"
+        }
+      ],
+      "name": "Requisition #1",
+      "time": {
+        "totalTime": 0,
+        "startTime": "2018-09-24T19:33:21.543Z",
+        "endTime": "2018-09-24T19:33:21.543Z"
+      },
+      "subscriptions": [],
+      "publishers": []
+    },
+    {
+      "valid": true,
+      "tests": [
+        {
+          "name": "Payload",
+          "valid": true,
+          "description": "Expected '124' to be equal to '124'. Received '124'"
+        }
+      ],
+      "name": "Requisition #2",
+      "time": {
+        "totalTime": 0,
+        "startTime": "2018-09-24T19:33:21.555Z",
+        "endTime": "2018-09-24T19:33:21.555Z"
+      },
+      "subscriptions": [],
+      "publishers": []
+    }
+  ]
+}

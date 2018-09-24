@@ -8,12 +8,8 @@ import * as glob from 'glob';
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'file-system-watcher'})
 export class FileSystemWatcherSubscription extends Subscription {
 
-    private fileNamePattern: string;
-    private options: any;
-
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.fileNamePattern = subscriptionAttributes.fileNamePattern;
         this.options = subscriptionAttributes.options || {nodir: true};
         if (!this.fileNamePattern) {
             throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' field`);

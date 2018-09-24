@@ -1,28 +1,37 @@
-name: examples/skipped.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests: []
-    name: 'Requisition #0 iterator collection'
-    subscriptions: []
-    publishers: []
-    time:
-      startTime: '2018-09-24T15:56:28.429Z'
-      endTime: '2018-09-24T15:56:28.429Z'
-      totalTime: 0
-  -
-    valid: true
-    tests:
-      -
-        name: 'Assertion #0'
-        valid: true
-        description: 'Expected ''store.executions'' to be equal to ''1''. Received ''1'''
-    name: 'Requisition #1'
-    time:
-      totalTime: 1
-      startTime: '2018-09-24T15:56:28.517Z'
-      endTime: '2018-09-24T15:56:28.518Z'
-    subscriptions: []
-    publishers: []
+{
+  "name": "examples/skipped.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [],
+      "name": "Requisition #0 iterator collection",
+      "subscriptions": [],
+      "publishers": [],
+      "time": {
+        "startTime": "2018-09-24T19:33:21.447Z",
+        "endTime": "2018-09-24T19:33:21.447Z",
+        "totalTime": 0
+      }
+    },
+    {
+      "valid": true,
+      "tests": [
+        {
+          "name": "Assertion #0",
+          "valid": true,
+          "description": "Expected 'store.executions' to be equal to '1'. Received '1'"
+        }
+      ],
+      "name": "Requisition #1",
+      "time": {
+        "totalTime": 1,
+        "startTime": "2018-09-24T19:33:21.540Z",
+        "endTime": "2018-09-24T19:33:21.541Z"
+      },
+      "subscriptions": [],
+      "publishers": []
+    }
+  ]
+}

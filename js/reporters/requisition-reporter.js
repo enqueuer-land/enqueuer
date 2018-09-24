@@ -20,6 +20,9 @@ class RequisitionReporter {
     constructor(requisitionAttributes) {
         this.allPublishersPublished = false;
         this.allSubscriptionsStoppedWaiting = false;
+        Object.keys(requisitionAttributes).forEach(key => {
+            this[key] = requisitionAttributes[key];
+        });
         this.requisitionAttributes = requisitionAttributes;
         this.reportGenerator = new report_generator_1.ReportGenerator(this.requisitionAttributes);
         this.executeOnInitFunction();
@@ -44,7 +47,7 @@ class RequisitionReporter {
             .catch(err => {
             const message = `Error connecting multiSubscription: ${err}`;
             logger_1.Logger.error(message);
-            return this.onFinish({ valid: false, description: message, name: 'Subscriptions subscription' });
+            return this.onRequisitionFinish({ valid: false, description: message, name: 'Subscriptions subscription' });
         });
     }
     getReport() {
@@ -56,7 +59,7 @@ class RequisitionReporter {
             .catch((err) => __awaiter(this, void 0, void 0, function* () {
             const message = `Error receiving message in multiSubscription: ${err}`;
             logger_1.Logger.error(message);
-            yield this.onFinish({ valid: false, description: err, name: 'Subscriptions message receiving' });
+            yield this.onRequisitionFinish({ valid: false, description: err, name: 'Subscriptions message receiving' });
         }));
         this.multiPublishersReporter.publish()
             .then(() => __awaiter(this, void 0, void 0, function* () {
@@ -67,7 +70,7 @@ class RequisitionReporter {
             .catch((err) => __awaiter(this, void 0, void 0, function* () {
             const message = `Error publishing publication: ${err}`;
             logger_1.Logger.error(message);
-            yield this.onFinish({ valid: false, description: err, name: 'Publishers publication' });
+            yield this.onRequisitionFinish({ valid: false, description: err, name: 'Publishers publication' });
         }));
     }
     initializeTimeout() {
@@ -75,7 +78,7 @@ class RequisitionReporter {
             new timeout_1.Timeout(() => __awaiter(this, void 0, void 0, function* () {
                 if (!this.allPublishersPublished || !this.allSubscriptionsStoppedWaiting) {
                     logger_1.Logger.info(`Requisition timed out`);
-                    yield this.onFinish();
+                    yield this.onRequisitionFinish();
                 }
             })).start(this.requisitionTimeout);
         }
@@ -90,13 +93,13 @@ class RequisitionReporter {
     tryToFinishExecution() {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.allPublishersPublished && this.allSubscriptionsStoppedWaiting) {
-                yield this.onFinish();
+                yield this.onRequisitionFinish();
             }
         });
     }
-    onFinish(error) {
+    onRequisitionFinish(error) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.onFinish = () => __awaiter(this, void 0, void 0, function* () {
+            this.onRequisitionFinish = () => __awaiter(this, void 0, void 0, function* () {
                 //do nothing
             });
             yield this.executeOnFinishFunction();

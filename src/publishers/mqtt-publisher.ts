@@ -7,15 +7,10 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'mqtt'})
 export class MqttPublisher extends Publisher {
-    private brokerAddress: string;
-    private topic: string;
-    private options: any;
 
     public constructor(publish: PublisherModel) {
         super(publish);
-        this.brokerAddress = publish.brokerAddress;
-        this.topic = publish.topic;
-        this.options = publish.options || {};
+        this.options = this.options || {};
     }
 
     public publish(): Promise<void> {

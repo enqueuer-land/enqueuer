@@ -1,53 +1,72 @@
-name: examples/udp.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests: []
-    name: 'Requisition #0'
-    time:
-      totalTime: 44
-      startTime: '2018-09-24T15:56:28.513Z'
-      endTime: '2018-09-24T15:56:28.557Z'
-    subscriptions:
-      -
-        name: 'subscription description'
-        type: udp
-        tests:
-          -
-            name: Payload
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''
-          -
-            name: 'Remote Adderss'
-            valid: true
-            description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.517Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 105
-              - 116
-          remoteInfo:
-            address: 127.0.0.1
-            family: IPv4
-            port: 52473
-            size: 2
-    publishers:
-      -
-        name: 'publisher description'
-        valid: true
-        type: udp
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T15:56:28.555Z'
+{
+  "name": "examples/udp.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 24,
+        "startTime": "2018-09-24T19:33:21.537Z",
+        "endTime": "2018-09-24T19:33:21.561Z"
+      },
+      "subscriptions": [
+        {
+          "name": "subscription description",
+          "type": "udp",
+          "tests": [
+            {
+              "name": "Payload",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'it'. Received 'it'"
+            },
+            {
+              "name": "Remote Adderss",
+              "valid": true,
+              "description": "Expected 'remoteInfo.address' to be equal to '127.0.0.1'. Received '127.0.0.1'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.540Z",
+          "messageReceived": {
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                105,
+                116
+              ]
+            },
+            "remoteInfo": {
+              "address": "127.0.0.1",
+              "family": "IPv4",
+              "port": 55044,
+              "size": 2
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "publisher description",
+          "valid": true,
+          "type": "udp",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.556Z"
+        }
+      ]
+    }
+  ]
+}

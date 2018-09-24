@@ -24,7 +24,6 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 let UdpSubscription = class UdpSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.port = subscriptionAttributes.port;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = new javascript_object_notation_1.JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }

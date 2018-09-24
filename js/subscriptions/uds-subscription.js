@@ -35,12 +35,9 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 let UdsSubscription = class UdsSubscription extends subscription_1.Subscription {
     constructor(subscriptionAttributes) {
         super(subscriptionAttributes);
-        this.path = subscriptionAttributes.path;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = new javascript_object_notation_1.JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
-        this.loadStream = subscriptionAttributes.loadStream;
-        this.saveStream = subscriptionAttributes.saveStream;
     }
     receiveMessage() {
         return new Promise((resolve) => {

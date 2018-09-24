@@ -1,69 +1,91 @@
-name: examples/file.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #0'
-    time:
-      totalTime: 109
-      startTime: '2018-09-24T15:56:28.445Z'
-      endTime: '2018-09-24T15:56:28.554Z'
-      timeout: 3000
-    subscriptions:
-      -
-        name: 'subscription description'
-        type: file-system-watcher
-        tests:
-          -
-            name: 'Some time has passed'
-            valid: true
-            description: 'Expected ''now'' to be greater than or equal to ''1537804588445''. Received ''1537804588553'''
-          -
-            name: Filename
-            valid: true
-            description: '''name'' (temp/fileTest20180924125628048807_d11eb6b2.file) does not contain ''temp/'''
-          -
-            name: Content
-            valid: true
-            description: '''content'' is not defined'
-          -
-            name: Created
-            valid: true
-            description: '''created'' is not defined'
-          -
-            name: Modified
-            valid: true
-            description: '''modified'' is not defined'
-          -
-            name: Size
-            valid: true
-            description: 'Expected ''size'' to be greater than ''0''. Received ''13'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.486Z'
-        messageReceived:
-          content: '1537804588445'
-          name: temp/fileTest20180924125628048807_d11eb6b2.file
-          size: 13
-          modified: '2018-09-24T15:56:28.489Z'
-          created: '2018-09-24T15:56:28.489Z'
-    publishers:
-      -
-        name: 'publisher description'
-        valid: true
-        type: file
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T15:56:28.502Z'
+{
+  "name": "examples/file.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 113,
+        "startTime": "2018-09-24T19:33:21.465Z",
+        "endTime": "2018-09-24T19:33:21.578Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "subscription description",
+          "type": "file-system-watcher",
+          "tests": [
+            {
+              "name": "Some time has passed",
+              "valid": true,
+              "description": "Expected 'now' to be greater than or equal to '1537817601465'. Received '1537817601577'"
+            },
+            {
+              "name": "Filename",
+              "valid": true,
+              "description": "'name' (temp/fileTest20180924163321051352_65445037.file) does not contain 'temp/'"
+            },
+            {
+              "name": "Content",
+              "valid": true,
+              "description": "'content' is not defined"
+            },
+            {
+              "name": "Created",
+              "valid": true,
+              "description": "'created' is not defined"
+            },
+            {
+              "name": "Modified",
+              "valid": true,
+              "description": "'modified' is not defined"
+            },
+            {
+              "name": "Size",
+              "valid": true,
+              "description": "Expected 'size' to be greater than '0'. Received '13'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.511Z",
+          "messageReceived": {
+            "content": "1537817601465",
+            "name": "temp/fileTest20180924163321051352_65445037.file",
+            "size": 13,
+            "modified": "2018-09-24T19:33:21.514Z",
+            "created": "2018-09-24T19:33:21.514Z"
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "publisher description",
+          "valid": true,
+          "type": "file",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.526Z"
+        }
+      ]
+    }
+  ]
+}

@@ -12,14 +12,10 @@ const logger_1 = require("../loggers/logger");
 class Subscription {
     constructor(subscriptionAttributes) {
         this.avoid = false;
-        this.messageReceived = subscriptionAttributes.messageReceived;
+        Object.keys(subscriptionAttributes).forEach(key => {
+            this[key] = subscriptionAttributes[key];
+        });
         this.name = subscriptionAttributes.name;
-        this.timeout = subscriptionAttributes.timeout;
-        this.response = subscriptionAttributes.response;
-        this.type = subscriptionAttributes.type;
-        this.onMessageReceived = subscriptionAttributes.onMessageReceived;
-        this.onFinish = subscriptionAttributes.onFinish;
-        this.avoid = subscriptionAttributes.avoid || false;
     }
     unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {

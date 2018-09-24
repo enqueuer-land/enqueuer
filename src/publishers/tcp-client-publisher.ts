@@ -9,23 +9,14 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client' || publishRequisition.type === 'tcp'})
 export class TcpClientPublisher extends Publisher {
 
-    private serverAddress: string;
-    private port: number;
-    private saveStream: string;
-    private loadStream: string;
     private loadedStream: any;
-    private timeout: number;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this.serverAddress = publisherAttributes.serverAddress;
-        this.port = publisherAttributes.port;
-        this.saveStream = publisherAttributes.saveStream;
-        this.loadStream = publisherAttributes.loadStream;
-        this.timeout = publisherAttributes.timeout || 1000;
-        if (publisherAttributes.loadStream) {
+        this.timeout = this.timeout || 1000;
+        if (this.loadStream) {
             Logger.debug(`Loading tcp client: ${this.loadStream}`);
-            this.loadedStream = Store.getData()[publisherAttributes.loadStream];
+            this.loadedStream = Store.getData()[this.loadStream];
         }
     }
 

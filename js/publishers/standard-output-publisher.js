@@ -25,7 +25,7 @@ const options = {
 let StandardOutputPublisher = class StandardOutputPublisher extends publisher_1.Publisher {
     constructor(publisherProperties) {
         super(publisherProperties);
-        this.pretty = !!publisherProperties.pretty;
+        this.pretty = !!this.pretty;
     }
     publish() {
         if (typeof (this.payload) === 'object') {

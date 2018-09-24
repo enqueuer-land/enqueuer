@@ -1,63 +1,82 @@
-name: examples/recursion.yml
-valid: true
-tests: []
-requisitions:
-  -
-    name: 'Requisition #0'
-    valid: true
-    tests: []
-    requisitions:
-      -
-        name: 'Requisition #0'
-        valid: true
-        tests: []
-        requisitions:
-          -
-            name: 'Requisition #0'
-            valid: true
-            tests: []
-            requisitions:
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0'
-                time:
-                  totalTime: 9
-                  startTime: '2018-09-24T15:56:28.480Z'
-                  endTime: '2018-09-24T15:56:28.489Z'
-                subscriptions: []
-                publishers: []
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0'
-            time:
-              totalTime: 2
-              startTime: '2018-09-24T15:56:28.516Z'
-              endTime: '2018-09-24T15:56:28.518Z'
-            subscriptions: []
-            publishers: []
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        time:
-          totalTime: 0
-          startTime: '2018-09-24T15:56:28.531Z'
-          endTime: '2018-09-24T15:56:28.531Z'
-        subscriptions: []
-        publishers: []
-  -
-    valid: true
-    tests:
-      -
-        name: 'Last one was executed'
-        valid: true
-        description: '''store.lastExecution'' is not defined'
-    name: 'Requisition #0'
-    time:
-      totalTime: 0
-      startTime: '2018-09-24T15:56:28.533Z'
-      endTime: '2018-09-24T15:56:28.533Z'
-    subscriptions: []
-    publishers: []
+{
+  "name": "examples/recursion.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "name": "Requisition #0",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "name": "Requisition #0",
+          "valid": true,
+          "tests": [],
+          "requisitions": [
+            {
+              "name": "Requisition #0",
+              "valid": true,
+              "tests": [],
+              "requisitions": [
+                {
+                  "valid": true,
+                  "tests": [],
+                  "name": "Requisition #0",
+                  "time": {
+                    "totalTime": 14,
+                    "startTime": "2018-09-24T19:33:21.500Z",
+                    "endTime": "2018-09-24T19:33:21.514Z"
+                  },
+                  "subscriptions": [],
+                  "publishers": []
+                }
+              ]
+            },
+            {
+              "valid": true,
+              "tests": [],
+              "name": "Requisition #0",
+              "time": {
+                "totalTime": 1,
+                "startTime": "2018-09-24T19:33:21.540Z",
+                "endTime": "2018-09-24T19:33:21.541Z"
+              },
+              "subscriptions": [],
+              "publishers": []
+            }
+          ]
+        },
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "time": {
+            "totalTime": 0,
+            "startTime": "2018-09-24T19:33:21.543Z",
+            "endTime": "2018-09-24T19:33:21.543Z"
+          },
+          "subscriptions": [],
+          "publishers": []
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "tests": [
+        {
+          "name": "Last one was executed",
+          "valid": true,
+          "description": "'store.lastExecution' is not defined"
+        }
+      ],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 0,
+        "startTime": "2018-09-24T19:33:21.555Z",
+        "endTime": "2018-09-24T19:33:21.555Z"
+      },
+      "subscriptions": [],
+      "publishers": []
+    }
+  ]
+}

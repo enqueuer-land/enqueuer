@@ -18,13 +18,7 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 })
 export class HttpSubscription extends Subscription {
 
-    private authentication: any;
-    private port: number;
-    private endpoint: string;
-    private method: string;
-    private credentials?: string;
     private responseToClientHandler?: any;
-    private redirect: string;
     private secureServer: boolean;
     private expressApp: any;
     private proxy: boolean;
@@ -32,11 +26,6 @@ export class HttpSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
 
-        this.credentials = subscriptionAttributes.credentials;
-        this.authentication = subscriptionAttributes.authentication;
-        this.port = subscriptionAttributes.port;
-        this.endpoint = subscriptionAttributes.endpoint;
-        this.redirect = subscriptionAttributes.redirect;
         this.secureServer = this.isSecureServer();
         this.proxy = this.isProxyServer();
         this.method = subscriptionAttributes.method.toLowerCase();

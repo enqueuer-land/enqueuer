@@ -11,26 +11,18 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 export class TcpServerSubscription extends Subscription {
 
     private server: any;
-    private port: number;
-    private saveStream?: string;
-    private loadStreamName: string;
-    private greeting: string;
-    private stream?: any;
+    private stream: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.port = subscriptionAttributes.port;
-        this.saveStream = subscriptionAttributes.saveStream;
-        this.greeting = subscriptionAttributes.greeting;
         if (typeof subscriptionAttributes.response != 'string') {
             this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
         }
-        this.loadStreamName = subscriptionAttributes.loadStream;
     }
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
-            if (this.loadStreamName) {
+            if (this.loadStream) {
                 this.waitForData(reject, resolve);
             } else {
                 this.server.once('connection', (stream: any) => {
@@ -47,7 +39,7 @@ export class TcpServerSubscription extends Subscription {
     }
 
     public subscribe(): Promise<void> {
-        if (this.loadStreamName) {
+        if (this.loadStream) {
             return this.reuseServer();
         } else {
             return this.createServer();
@@ -76,7 +68,7 @@ export class TcpServerSubscription extends Subscription {
     private reuseServer(): Promise<void> {
         return new Promise((resolve, reject) => {
             try {
-                this.loadStream();
+                this.tryToLoadStream();
                 Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
                 resolve();
             } catch (err) {
@@ -112,13 +104,13 @@ export class TcpServerSubscription extends Subscription {
         }
     }
 
-    private loadStream() {
-        Logger.debug(`Server is loading tcp stream: ${this.loadStreamName}`);
-        this.stream = Store.getData()[this.loadStreamName];
+    private tryToLoadStream() {
+        Logger.debug(`Server is loading tcp stream: ${this.loadStream}`);
+        this.stream = Store.getData()[this.loadStream];
         if (this.stream) {
-            Logger.debug(`Server loaded tcp stream: ${this.loadStreamName} (${this.stream.localPort})`);
+            Logger.debug(`Server loaded tcp stream: ${this.loadStream} (${this.stream.localPort})`);
         } else {
-            throw `Impossible to load tcp stream: ${this.loadStreamName}`;
+            throw `Impossible to load tcp stream: ${this.loadStream}`;
         }
     }
 

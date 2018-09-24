@@ -10,20 +10,13 @@ import {HttpRequester} from '../pools/http-requester';
                                                         publishRequisition.type === 'https' ||
                                                         publishRequisition.type === 'https-client'})
 export class HttpClientPublisher extends Publisher {
-    private url: string;
-    private method: string;
-    private headers: any;
-    private authentication: any;
-    private timeout: number;
 
     constructor(publish: PublisherModel) {
         super(publish);
-        this.url = publish.url;
-        this.authentication = publish.authentication;
         this.method = publish.method.toUpperCase();
-        this.payload = publish.payload || '';
-        this.headers = publish.headers || {};
-        this.timeout = publish.timeout || 3000;
+        this.payload = this.payload || '';
+        this.headers = this.headers || {};
+        this.timeout = this.timeout || 3000;
     }
 
     public publish(): Promise<void> {

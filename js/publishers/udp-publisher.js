@@ -23,8 +23,6 @@ const dgram = __importStar(require("dgram"));
 let UdpPublisher = class UdpPublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
-        this.serverAddress = publisherAttributes.serverAddress;
-        this.port = publisherAttributes.port;
     }
     publish() {
         return new Promise((resolve, reject) => {

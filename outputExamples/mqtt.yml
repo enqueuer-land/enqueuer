@@ -1,59 +1,78 @@
-name: examples/mqtt.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests: []
-    name: 'Requisition #0'
-    time:
-      totalTime: 187
-      startTime: '2018-09-24T15:56:28.464Z'
-      endTime: '2018-09-24T15:56:28.651Z'
-    subscriptions:
-      -
-        name: 'subscription description'
-        type: mqtt
-        tests:
-          -
-            name: Payload
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            name: Topic
-            valid: true
-            description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
-          -
-            name: 'Beatles song'
-            valid: true
-            description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.613Z'
-        messageReceived:
-          topic: enqueuer/integration/public/test
-          payload:
-            type: Buffer
-            data:
-              - 101
-              - 110
-              - 113
-              - 117
-              - 101
-              - 117
-              - 101
-              - 114
-    publishers:
-      -
-        name: 'publisher description'
-        valid: true
-        type: mqtt
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T15:56:28.643Z'
+{
+  "name": "examples/mqtt.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 647,
+        "startTime": "2018-09-24T19:33:21.483Z",
+        "endTime": "2018-09-24T19:33:22.130Z"
+      },
+      "subscriptions": [
+        {
+          "name": "subscription description",
+          "type": "mqtt",
+          "tests": [
+            {
+              "name": "Payload",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+            },
+            {
+              "name": "Topic",
+              "valid": true,
+              "description": "Expected 'topic' to be equal to 'enqueuer/integration/public/test'. Received 'enqueuer/integration/public/test'"
+            },
+            {
+              "name": "Beatles song",
+              "valid": true,
+              "description": "Expected 'payload.length' to be greater than '5'. Received '8'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:22.110Z",
+          "messageReceived": {
+            "topic": "enqueuer/integration/public/test",
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                101,
+                110,
+                113,
+                117,
+                101,
+                117,
+                101,
+                114
+              ]
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "publisher description",
+          "valid": true,
+          "type": "mqtt",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:22.126Z"
+        }
+      ]
+    }
+  ]
+}

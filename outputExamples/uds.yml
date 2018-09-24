@@ -1,182 +1,237 @@
-name: examples/uds.yml
-valid: true
-tests: []
-requisitions:
-  -
-    valid: true
-    tests:
-      -
-        valid: true
-        name: 'No time out'
-        description: 'Requisition has not timed out'
-    name: 'Requisition #0'
-    time:
-      totalTime: 47
-      startTime: '2018-09-24T15:56:28.514Z'
-      endTime: '2018-09-24T15:56:28.561Z'
-      timeout: 3000
-    subscriptions:
-      -
-        name: 'Subscription #0'
-        type: uds
-        tests:
-          -
-            name: 'Message received is enqueuer'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.518Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 101
-              - 110
-              - 113
-              - 117
-              - 101
-              - 117
-              - 101
-              - 114
-    publishers:
-      -
-        name: 'publisher description'
-        valid: true
-        type: uds
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'It is bidirectional'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''responsePayload''. Received ''responsePayload'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:28.561Z'
-        messageReceived:
-          payload: responsePayload
-  -
-    valid: true
-    tests: []
-    name: 'UDS2 Name saver'
-    time:
-      totalTime: 39
-      startTime: '2018-09-24T15:56:28.584Z'
-      endTime: '2018-09-24T15:56:28.623Z'
-    subscriptions:
-      -
-        name: 'udsSubscription2 description'
-        type: uds
-        tests:
-          -
-            name: 'Message received is enqueuer 2'
-            valid: true
-            description: 'Expected ''message.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.584Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 101
-              - 110
-              - 113
-              - 117
-              - 101
-              - 117
-              - 101
-              - 114
-    publishers:
-      -
-        name: 'udsPublisher2 description'
-        valid: true
-        type: uds
-        tests:
-          -
-            name: 'Message to be published is enqueuer'
-            valid: true
-            description: 'Expected ''publisher.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-        publishTime: '2018-09-24T15:56:28.623Z'
-        messageReceived:
-          payload: '{}'
-  -
-    valid: true
-    tests: []
-    name: 'udsStreamLoader description'
-    time:
-      totalTime: 8
-      startTime: '2018-09-24T15:56:28.625Z'
-      endTime: '2018-09-24T15:56:28.633Z'
-    subscriptions:
-      -
-        name: 'Subscription #0'
-        type: uds
-        tests:
-          -
-            name: 'Publisher stream was still opened'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''I am still opened''. Received ''I am still opened'''
-          -
-            valid: true
-            name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-09-24T15:56:28.625Z'
-        messageReceived:
-          payload:
-            type: Buffer
-            data:
-              - 73
-              - 32
-              - 97
-              - 109
-              - 32
-              - 115
-              - 116
-              - 105
-              - 108
-              - 108
-              - 32
-              - 111
-              - 112
-              - 101
-              - 110
-              - 101
-              - 100
-    publishers:
-      -
-        name: 'udsStreamLoader publisher'
-        valid: true
-        type: uds
-        tests:
-          -
-            name: Published
-            valid: true
-            description: 'Published successfully'
-          -
-            name: 'Message received'
-            valid: true
-            description: 'Expected ''payload'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
-          -
-            name: 'Response message received'
-            valid: true
-            description: 'Response message was received'
-        publishTime: '2018-09-24T15:56:28.633Z'
-        messageReceived:
-          payload: 'I am still bidirectional'
+{
+  "name": "examples/uds.yml",
+  "valid": true,
+  "tests": [],
+  "requisitions": [
+    {
+      "valid": true,
+      "tests": [
+        {
+          "valid": true,
+          "name": "No time out",
+          "description": "Requisition has not timed out"
+        }
+      ],
+      "name": "Requisition #0",
+      "time": {
+        "totalTime": 45,
+        "startTime": "2018-09-24T19:33:21.537Z",
+        "endTime": "2018-09-24T19:33:21.582Z",
+        "timeout": 3000
+      },
+      "subscriptions": [
+        {
+          "name": "Subscription #0",
+          "type": "uds",
+          "tests": [
+            {
+              "name": "Message received is enqueuer",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.540Z",
+          "messageReceived": {
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                101,
+                110,
+                113,
+                117,
+                101,
+                117,
+                101,
+                114
+              ]
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "publisher description",
+          "valid": true,
+          "type": "uds",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "It is bidirectional",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'responsePayload'. Received 'responsePayload'"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.582Z",
+          "messageReceived": {
+            "payload": "responsePayload"
+          }
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "tests": [],
+      "name": "UDS2 Name saver",
+      "time": {
+        "totalTime": 34,
+        "startTime": "2018-09-24T19:33:21.600Z",
+        "endTime": "2018-09-24T19:33:21.634Z"
+      },
+      "subscriptions": [
+        {
+          "name": "udsSubscription2 description",
+          "type": "uds",
+          "tests": [
+            {
+              "name": "Message received is enqueuer 2",
+              "valid": true,
+              "description": "Expected 'message.payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.600Z",
+          "messageReceived": {
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                101,
+                110,
+                113,
+                117,
+                101,
+                117,
+                101,
+                114
+              ]
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "udsPublisher2 description",
+          "valid": true,
+          "type": "uds",
+          "tests": [
+            {
+              "name": "Message to be published is enqueuer",
+              "valid": true,
+              "description": "Expected 'publisher.payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+            },
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.633Z",
+          "messageReceived": {
+            "payload": "{}"
+          }
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "tests": [],
+      "name": "udsStreamLoader description",
+      "time": {
+        "totalTime": 5,
+        "startTime": "2018-09-24T19:33:21.635Z",
+        "endTime": "2018-09-24T19:33:21.640Z"
+      },
+      "subscriptions": [
+        {
+          "name": "Subscription #0",
+          "type": "uds",
+          "tests": [
+            {
+              "name": "Publisher stream was still opened",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'I am still opened'. Received 'I am still opened'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
+            }
+          ],
+          "valid": true,
+          "connectionTime": "2018-09-24T19:33:21.635Z",
+          "messageReceived": {
+            "payload": {
+              "type": "Buffer",
+              "data": [
+                73,
+                32,
+                97,
+                109,
+                32,
+                115,
+                116,
+                105,
+                108,
+                108,
+                32,
+                111,
+                112,
+                101,
+                110,
+                101,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "udsStreamLoader publisher",
+          "valid": true,
+          "type": "uds",
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            },
+            {
+              "name": "Message received",
+              "valid": true,
+              "description": "Expected 'payload' to be equal to 'I am still bidirectional'. Received 'I am still bidirectional'"
+            },
+            {
+              "name": "Response message received",
+              "valid": true,
+              "description": "Response message was received"
+            }
+          ],
+          "publishTime": "2018-09-24T19:33:21.640Z",
+          "messageReceived": {
+            "payload": "I am still bidirectional"
+          }
+        }
+      ]
+    }
+  ]
+}

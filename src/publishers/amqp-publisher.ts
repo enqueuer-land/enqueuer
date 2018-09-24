@@ -7,16 +7,10 @@ import * as amqp from 'amqp';
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'amqp'})
 export class AmqpPublisher extends Publisher {
     private connection: any;
-    private options: any;
-    private exchangeName: string;
-    private routingKey: string;
     private messageOptions: any;
 
     constructor(publish: PublisherModel) {
         super(publish);
-        this.options = publish.options;
-        this.exchangeName = publish.exchange;
-        this.routingKey = publish.routingKey;
         this.messageOptions = publish.messageOptions || {};
     }
 
@@ -25,7 +19,7 @@ export class AmqpPublisher extends Publisher {
             this.connection = amqp.createConnection(this.options);
             this.connection.once('ready', () => {
                 const exchange = this.createExchange();
-                Logger.debug(`Exchange to publish: '${this.exchangeName || 'default'}' created`);
+                Logger.debug(`Exchange to publish: '${this.exchange || 'default'}' created`);
                 exchange.once('open', () => {
                     this.exchangeOpen(exchange, reject, resolve);
                 });
@@ -37,11 +31,11 @@ export class AmqpPublisher extends Publisher {
     }
 
     private createExchange() {
-        return this.connection.exchange(this.exchangeName || '', {confirm: true, passive: true});
+        return this.connection.exchange(this.exchange || '', {confirm: true, passive: true});
     }
 
     private exchangeOpen(exchange: any, reject: any, resolve: any) {
-        Logger.debug(`Exchange '${this.exchangeName || 'default'}' is opened, publishing to routingKey ${this.routingKey}`);
+        Logger.debug(`Exchange '${this.exchange || 'default'}' is opened, publishing to routingKey ${this.routingKey}`);
         exchange.publish(this.routingKey, this.payload, this.messageOptions, (errored: any, err: any) => {
             Logger.trace(`Exchange published callback`);
             this.connection.disconnect();
