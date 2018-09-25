@@ -20,7 +20,6 @@ services:
   - rabbitmq
 
 before_install:
-  - echo '--skip-all-optional-dependencies' | npm install
   - mkdir temp
   - wget -O temp/kafka_2.11-1.0.0.tgz https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz
   - cd temp
@@ -34,6 +33,10 @@ before_install:
   - temp/kafka_2.11-1.0.0/bin/kafka-topics.sh --create --topic enqueuer-topic-name --zookeeper localhost:2181 --partitions 3 --replication-factor 1 #We have to give some time for broker and zookeeper
   - sudo rabbitmq-plugins enable rabbitmq_mqtt
   - sudo rabbitmq-plugins enable rabbitmq_stomp
+
+
+install:
+  - echo '--skip-all-optional-dependencies' | npm install
 
 script:
   - npm run lint
