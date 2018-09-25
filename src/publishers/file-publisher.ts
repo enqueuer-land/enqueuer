@@ -7,6 +7,7 @@ import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import * as path from 'path';
 
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'file'})
 export class FilePublisher extends Publisher {
@@ -20,7 +21,7 @@ export class FilePublisher extends Publisher {
     }
 
     public publish(): Promise<void> {
-        const filename = this.createFilename();
+        const filename = this.getFileName();
         let value = this.payload;
 
         if (typeof(value) === 'object') {
@@ -51,30 +52,25 @@ export class FilePublisher extends Publisher {
         }
     }
 
-    private createFilename() {
-        let filename = this.filename;
-        if (!filename) {
-            filename = this.filenamePrefix;
-            filename += this.generateId();
-            if (filename.lastIndexOf('.') == -1) {
-                if (this.filenameExtension.lastIndexOf('.') == -1) {
-                    filename += '.';
-                }
-                filename += this.filenameExtension;
-            }
+    private getFileName() {
+        if (this.filename) {
+            return this.filename;
         }
-        return filename;
+        return this.createFileName();
+    }
+
+    private createFileName() {
+        let filename = this.filenamePrefix + this.generateId();
+        const needsToInsertDot = filename.lastIndexOf('.') == -1 && this.filenameExtension.lastIndexOf('.') == -1;
+        if (needsToInsertDot) {
+            filename += '.';
+        }
+        return filename + this.filenameExtension;
     }
 
     private generateId() {
         try {
-            //gets everything after last slash
-            const name = this.payload.name;
-            const id = name.substring(name.lastIndexOf('/'));
-            if (id) {
-                return id;
-            }
-
+            return path.parse(this.payload.name).name;
         } catch (exc) {
             return new IdGenerator(this.payload).generateId();
         }

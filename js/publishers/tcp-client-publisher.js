@@ -66,14 +66,23 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
     publishData(stream, resolve, reject) {
         logger_1.Logger.debug(`Tcp client publishing`);
         stream.setTimeout(this.timeout);
+        stream.once('error', (data) => {
+            this.finalize(stream);
+            reject(data);
+        });
+        stream.write(this.stringifyPayload(), () => {
+            this.registerEvents(stream, resolve);
+            if (this.saveStream) {
+                logger_1.Logger.debug(`Persisting publisher stream ${this.saveStream}`);
+                store_1.Store.getData()[this.saveStream] = stream;
+            }
+        });
+    }
+    registerEvents(stream, resolve) {
         stream.on('timeout', () => {
             this.finalize(stream);
             stream.removeAllListeners('data');
             resolve();
-        })
-            .once('error', (data) => {
-            this.finalize(stream);
-            reject(data);
         })
             .once('end', () => {
             this.finalize(stream);
@@ -88,15 +97,6 @@ let TcpClientPublisher = class TcpClientPublisher extends publisher_1.Publisher 
                 };
             }
             this.messageReceived.payload += msg;
-        });
-        this.write(stream);
-    }
-    write(stream) {
-        stream.write(this.stringifyPayload(), () => {
-            if (this.saveStream) {
-                logger_1.Logger.debug(`Persisting publisher stream ${this.saveStream}`);
-                store_1.Store.getData()[this.saveStream] = stream;
-            }
         });
     }
     finalize(stream) {

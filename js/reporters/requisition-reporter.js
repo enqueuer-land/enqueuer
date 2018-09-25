@@ -18,7 +18,7 @@ const javascript_object_notation_1 = require("../object-notations/javascript-obj
 const multi_publishers_reporter_1 = require("./publishers/multi-publishers-reporter");
 class RequisitionReporter {
     constructor(requisitionAttributes) {
-        this.allPublishersPublished = false;
+        this.publisersDoneTheirJob = false;
         this.allSubscriptionsStoppedWaiting = false;
         this.requisitionAttributes = requisitionAttributes;
         this.reportGenerator = new report_generator_1.ReportGenerator(this.requisitionAttributes);
@@ -61,7 +61,7 @@ class RequisitionReporter {
         this.multiPublishersReporter.publish()
             .then(() => __awaiter(this, void 0, void 0, function* () {
             logger_1.Logger.info('Publishers published');
-            this.allPublishersPublished = true;
+            this.publisersDoneTheirJob = true;
             yield this.tryToFinishExecution();
         }))
             .catch((err) => __awaiter(this, void 0, void 0, function* () {
@@ -73,7 +73,7 @@ class RequisitionReporter {
     initializeTimeout() {
         if (this.requisitionTimeout) {
             new timeout_1.Timeout(() => __awaiter(this, void 0, void 0, function* () {
-                if (!this.allPublishersPublished || !this.allSubscriptionsStoppedWaiting) {
+                if (!this.publisersDoneTheirJob || !this.allSubscriptionsStoppedWaiting) {
                     logger_1.Logger.info(`Requisition timed out`);
                     yield this.onRequisitionFinish();
                 }
@@ -89,7 +89,7 @@ class RequisitionReporter {
     }
     tryToFinishExecution() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.allPublishersPublished && this.allSubscriptionsStoppedWaiting) {
+            if (this.publisersDoneTheirJob && this.allSubscriptionsStoppedWaiting) {
                 yield this.onRequisitionFinish();
             }
         });

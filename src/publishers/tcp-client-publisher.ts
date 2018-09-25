@@ -57,14 +57,24 @@ export class TcpClientPublisher extends Publisher {
     private publishData(stream: any, resolve: (value?: (PromiseLike<any> | any)) => void, reject: (reason?: any) => void) {
         Logger.debug(`Tcp client publishing`);
         stream.setTimeout(this.timeout);
+        stream.once('error', (data: any) => {
+            this.finalize(stream);
+            reject(data);
+        });
+        stream.write(this.stringifyPayload(), () => {
+            this.registerEvents(stream, resolve);
+            if (this.saveStream) {
+                Logger.debug(`Persisting publisher stream ${this.saveStream}`);
+                Store.getData()[this.saveStream] = stream;
+            }
+        });
+    }
+
+    private registerEvents(stream: any, resolve: (value?: (PromiseLike<any> | any)) => void) {
         stream.on('timeout', () => {
             this.finalize(stream);
             stream.removeAllListeners('data');
             resolve();
-        })
-        .once('error', (data: any) => {
-            this.finalize(stream);
-            reject(data);
         })
         .once('end', () => {
             this.finalize(stream);
@@ -79,16 +89,6 @@ export class TcpClientPublisher extends Publisher {
                 };
             }
             this.messageReceived.payload += msg;
-        });
-        this.write(stream);
-    }
-
-    private write(stream: any) {
-        stream.write(this.stringifyPayload(), () => {
-            if (this.saveStream) {
-                Logger.debug(`Persisting publisher stream ${this.saveStream}`);
-                Store.getData()[this.saveStream] = stream;
-            }
         });
     }
 

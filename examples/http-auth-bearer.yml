@@ -1,7 +1,7 @@
 timeout: 3000
 publishers:
     -   type: http-client
-        url: http://localhost:23075/bearer
+        url: http://localhost:23067/bearer
         method: POST
         payload: Rech
         headers:
@@ -17,7 +17,7 @@ publishers:
 subscriptions:
     -   type: http-server
         endpoint: /bearer
-        port: 23075
+        port: 23067
         method: POST
         timeout: 10000
         authentication:

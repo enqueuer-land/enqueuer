@@ -23,28 +23,32 @@ export class KafkaPublisher extends Publisher {
         return new Promise((resolve, reject) => {
             const producer = new Producer(this.client);
             Logger.trace(`Waiting for kafka publisher client connection`);
-            // producer.on('ready', () => {
-                Logger.trace(`Kafka publisher is ready`);
-                    producer.send(this.kafkaPayload, (err: any, data: {}) => {
-                    if (err) {
-                        Logger.error(`Error sending kafka message ${new JavascriptObjectNotation().stringify(err)}`);
-                        return reject(err);
-                    }
-                    Logger.trace(`Kafka publish message data ${new JavascriptObjectNotation().stringify(data)}`);
-                    this.messageReceived = new JavascriptObjectNotation().stringify(data);
-                    producer.close();
-                    this.client.close();
-                    resolve();
-                });
-            // });
-
-            producer.on('error', (err: any) => {
+            producer.on('error', async (err: any) => {
                 Logger.error(`Error on publishing kafka message ${new JavascriptObjectNotation().stringify(err)}`);
                 producer.close();
                 this.client.close();
-                return reject(err);
+                reject(err);
             });
+
+            Logger.trace(`Kafka publisher is ready`);
+            producer.send(this.kafkaPayload, async (err, data) => {
+                if (err) {
+                    Logger.error(`Error sending kafka message ${new JavascriptObjectNotation().stringify(err)}`);
+                    reject(err);
+                } else {
+                    producer.close();
+                    this.onSend(data, resolve);
+                }
+            });
+
         });
+    }
+
+    private onSend(data: any, resolve: any) {
+        Logger.trace(`Kafka publish message data ${new JavascriptObjectNotation().stringify(data)}`);
+        this.messageReceived = new JavascriptObjectNotation().stringify(data);
+        this.client.close();
+        resolve();
     }
 
 }

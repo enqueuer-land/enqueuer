@@ -1,7 +1,6 @@
 timeout: 8000
 publishers:
     -   type: kafka
-        name: publisher description
         client:
             kafkaHost: localhost:9093
         topic: enqueuer-topic-name
@@ -11,8 +10,7 @@ publishers:
                 -   name: kafka publish response payload
                     expectToBeDefined: `enqueuer-topic-name`
 subscriptions:
-    -   name: subscription description
-        type: kafka
+    -   type: kafka
         timeout: 2000
         client:
             kafkaHost: localhost:9093

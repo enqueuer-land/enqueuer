@@ -60,7 +60,7 @@ describe('MultiPublishersReporter', () => {
         expect(PublisherReporter).toHaveBeenCalledTimes(0);
     });
 
-    it('should handle fail success', done => {
+    it('should handle success', done => {
         publish.mockImplementation(() => Promise.resolve());
         recreateMock();
 
@@ -72,6 +72,16 @@ describe('MultiPublishersReporter', () => {
             });
 
         expect(publish).toHaveBeenCalledTimes(publishers.length);
+    });
+
+    it('should handle be success when no publisher is given', done => {
+        new MultiPublishersReporter()
+            .publish()
+            .then(() => {
+                done();
+            });
+
+        expect(publish).toHaveBeenCalledTimes(0);
     });
 
     it('should handle fail publishing', done => {

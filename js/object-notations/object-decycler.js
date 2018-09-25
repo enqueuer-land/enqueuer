@@ -6,18 +6,29 @@ class ObjectDecycler {
         this.circularReplacer = circularReplacer;
     }
     decycle(value) {
-        const stringified = JSON.stringify(value, (key, value) => {
-            if (typeof (value) === 'object' && value !== null) {
-                if (this.cache.has(value)) {
-                    // Circular reference found, discard key
-                    return this.circularReplacer;
-                }
-                // Store value in our map
-                this.cache.set(value, true);
-            }
-            return value;
-        });
+        const stringified = JSON.stringify(value, (key, value) => this.jsonStringifyReplacer(key, value));
         return JSON.parse(stringified);
+    }
+    isObject(value) {
+        return typeof (value) === 'object';
+    }
+    isNotNull(value) {
+        return value !== null;
+    }
+    register(value) {
+        this.cache.set(value, true);
+    }
+    isRegistered(value) {
+        return this.cache.has(value);
+    }
+    jsonStringifyReplacer(key, value) {
+        if (this.isObject(value) && this.isNotNull(value)) {
+            if (this.isRegistered(value)) {
+                return this.circularReplacer;
+            }
+            this.register(value);
+        }
+        return value;
     }
 }
 exports.ObjectDecycler = ObjectDecycler;

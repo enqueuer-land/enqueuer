@@ -23,6 +23,7 @@ const fs = __importStar(require("fs"));
 const logger_1 = require("../loggers/logger");
 const yaml_object_notation_1 = require("../object-notations/yaml-object-notation");
 const javascript_object_notation_1 = require("../object-notations/javascript-object-notation");
+const path = __importStar(require("path"));
 let FilePublisher = class FilePublisher extends publisher_1.Publisher {
     constructor(publisherAttributes) {
         super(publisherAttributes);
@@ -31,7 +32,7 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
         this.filenameExtension = this.filenameExtension || 'enq';
     }
     publish() {
-        const filename = this.createFilename();
+        const filename = this.getFileName();
         let value = this.payload;
         if (typeof (value) === 'object') {
             value = new javascript_object_notation_1.JavascriptObjectNotation().stringify(value);
@@ -57,28 +58,23 @@ let FilePublisher = class FilePublisher extends publisher_1.Publisher {
             return value;
         }
     }
-    createFilename() {
-        let filename = this.filename;
-        if (!filename) {
-            filename = this.filenamePrefix;
-            filename += this.generateId();
-            if (filename.lastIndexOf('.') == -1) {
-                if (this.filenameExtension.lastIndexOf('.') == -1) {
-                    filename += '.';
-                }
-                filename += this.filenameExtension;
-            }
+    getFileName() {
+        if (this.filename) {
+            return this.filename;
         }
-        return filename;
+        return this.createFileName();
+    }
+    createFileName() {
+        let filename = this.filenamePrefix + this.generateId();
+        const needsToInsertDot = filename.lastIndexOf('.') == -1 && this.filenameExtension.lastIndexOf('.') == -1;
+        if (needsToInsertDot) {
+            filename += '.';
+        }
+        return filename + this.filenameExtension;
     }
     generateId() {
         try {
-            //gets everything after last slash
-            const name = this.payload.name;
-            const id = name.substring(name.lastIndexOf('/'));
-            if (id) {
-                return id;
-            }
+            return path.parse(this.payload.name).name;
         }
         catch (exc) {
             return new id_generator_1.IdGenerator(this.payload).generateId();

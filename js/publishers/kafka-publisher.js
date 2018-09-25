@@ -8,6 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const publisher_1 = require("./publisher");
 const conditional_injector_1 = require("conditional-injector");
@@ -26,27 +34,30 @@ let KafkaPublisher = class KafkaPublisher extends publisher_1.Publisher {
         return new Promise((resolve, reject) => {
             const producer = new kafka_node_1.Producer(this.client);
             logger_1.Logger.trace(`Waiting for kafka publisher client connection`);
-            // producer.on('ready', () => {
-            logger_1.Logger.trace(`Kafka publisher is ready`);
-            producer.send(this.kafkaPayload, (err, data) => {
-                if (err) {
-                    logger_1.Logger.error(`Error sending kafka message ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(err)}`);
-                    return reject(err);
-                }
-                logger_1.Logger.trace(`Kafka publish message data ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(data)}`);
-                this.messageReceived = new javascript_object_notation_1.JavascriptObjectNotation().stringify(data);
-                producer.close();
-                this.client.close();
-                resolve();
-            });
-            // });
-            producer.on('error', (err) => {
+            producer.on('error', (err) => __awaiter(this, void 0, void 0, function* () {
                 logger_1.Logger.error(`Error on publishing kafka message ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(err)}`);
                 producer.close();
                 this.client.close();
-                return reject(err);
-            });
+                reject(err);
+            }));
+            logger_1.Logger.trace(`Kafka publisher is ready`);
+            producer.send(this.kafkaPayload, (err, data) => __awaiter(this, void 0, void 0, function* () {
+                if (err) {
+                    logger_1.Logger.error(`Error sending kafka message ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(err)}`);
+                    reject(err);
+                }
+                else {
+                    producer.close();
+                    this.onSend(data, resolve);
+                }
+            }));
         });
+    }
+    onSend(data, resolve) {
+        logger_1.Logger.trace(`Kafka publish message data ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(data)}`);
+        this.messageReceived = new javascript_object_notation_1.JavascriptObjectNotation().stringify(data);
+        this.client.close();
+        resolve();
     }
 };
 KafkaPublisher = __decorate([

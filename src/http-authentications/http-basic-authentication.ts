@@ -22,12 +22,18 @@ export class HttpBasicAuthentication extends HttpAuthentication {
 
     public verify(authorization: string): TestModel[] {
         try {
+            const splittedAuthorization = authorization.split(' ');
+            const prefix = splittedAuthorization[0];
+            const codedUserColonPass = splittedAuthorization[1];
+
+            const decodedUserColonPass = Buffer.from(codedUserColonPass, 'base64').toString();
+            const credentials = decodedUserColonPass.split(':');
+            const plainUser = credentials[0];
+            const plainPass = credentials[1];
             this.tests = [];
-            const plainAuth = Buffer.from(authorization.split(' ')[1], 'base64').toString(); //decode
-            const credentials = plainAuth.split(':');
-            this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
-            this.tests.push(this.authenticateUser(credentials[0]));
-            this.tests.push(this.authenticatePassword(credentials[1]));
+            this.tests.push(this.authenticatePrefix(prefix));
+            this.tests.push(this.authenticateUser(plainUser));
+            this.tests.push(this.authenticatePassword(plainPass));
         } catch (err) {
             Logger.error(`Error trying to authenticate: ${err}`);
         }

@@ -51,32 +51,50 @@ let KafkaSubscription = class KafkaSubscription extends subscription_1.Subscript
         });
     }
     subscribe() {
-        try {
-            return this.fetchOffset();
-        }
-        catch (exc) {
-            logger_1.Logger.error(`Error connecting kafka ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(exc)}`);
-            throw exc;
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            const objectNotation = new javascript_object_notation_1.JavascriptObjectNotation();
+            try {
+                this.client.on('error', (err) => {
+                    const message = `Error subscribing to kafka ${objectNotation.stringify(err)}`;
+                    logger_1.Logger.error(message);
+                    throw message;
+                });
+                return yield this.fetchOffset();
+            }
+            catch (exc) {
+                const message = `Error connecting kafka ${objectNotation.stringify(exc)}`;
+                logger_1.Logger.error(message);
+                throw message;
+            }
+        });
     }
     fetchOffset() {
+        logger_1.Logger.debug(`Fetching kafka subscription offset`);
         return new Promise((resolve, reject) => {
-            this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => {
-                if (error) {
-                    logger_1.Logger.error(`Error fetching kafka topic ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(error)}`);
-                    reject(error);
-                }
-                else {
-                    this.latestOffset = offsets[this.options.topic][0];
-                    logger_1.Logger.trace('Kafka offset fetched');
-                    resolve();
-                }
-            });
+            try {
+                this.offset.fetchLatestOffsets([this.options.topic], (error, offsets) => __awaiter(this, void 0, void 0, function* () {
+                    if (error) {
+                        logger_1.Logger.error(`Error fetching kafka topic ${new javascript_object_notation_1.JavascriptObjectNotation().stringify(error)}`);
+                        reject(error);
+                    }
+                    else {
+                        this.latestOffset = offsets[this.options.topic][0];
+                        logger_1.Logger.trace('Kafka offset fetched');
+                        this.ableToUnsubscribe = true;
+                        resolve();
+                    }
+                }));
+            }
+            catch (err) {
+                reject(err);
+            }
         });
     }
     unsubscribe() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.client.close();
+            if (this.ableToUnsubscribe) {
+                this.client.close();
+            }
         });
     }
     createConsumer() {

@@ -33,43 +33,44 @@ class RequisitionRunner {
     }
     startIterator(iteratorReport, resolve) {
         const requisition = this.requisitions.shift();
-        if (requisition) {
-            try {
-                this.startRequisition(requisition).then(report => {
-                    if (iteratorReport.requisitions) {
-                        iteratorReport.requisitions.push(report);
-                    }
-                    this.startIterator(iteratorReport, resolve);
-                });
-            }
-            catch (err) {
-                logger_1.Logger.error(`Error running requisition '${requisition.name}'`);
-                const report = requisition_default_reports_1.RequisitionDefaultReports.createRunningError(requisition.name, err);
-                if (iteratorReport.requisitions) {
-                    iteratorReport.requisitions.push(report);
-                }
-                this.startIterator(iteratorReport, resolve);
-            }
-        }
-        else {
+        if (!requisition) {
             this.adjustIteratorReportTimeValues(iteratorReport);
             resolve(iteratorReport);
+            return;
+        }
+        try {
+            this.startRequisition(requisition).then(report => {
+                this.addReport(iteratorReport, report);
+                this.startIterator(iteratorReport, resolve);
+            });
+        }
+        catch (err) {
+            logger_1.Logger.error(`Error running requisition '${requisition.name}'`);
+            const report = requisition_default_reports_1.RequisitionDefaultReports.createRunningError(requisition.name, err);
+            this.addReport(iteratorReport, report);
+            this.startIterator(iteratorReport, resolve);
+        }
+    }
+    addReport(iteratorReport, report) {
+        if (iteratorReport.requisitions) {
+            iteratorReport.requisitions.push(report);
         }
     }
     adjustIteratorReportTimeValues(iteratorReport) {
-        if (iteratorReport.requisitions) {
-            const first = iteratorReport.requisitions[0];
-            const last = iteratorReport.requisitions[iteratorReport.requisitions.length - 1];
-            if (first && first.time && last && last.time) {
-                const startTime = new date_controller_1.DateController(new Date(first.time.startTime));
-                const endTime = new date_controller_1.DateController(new Date(last.time.endTime));
-                const totalTime = endTime.getTime() - startTime.getTime();
-                iteratorReport.time = {
-                    startTime: startTime.toString(),
-                    endTime: endTime.toString(),
-                    totalTime: totalTime
-                };
-            }
+        if (!iteratorReport.requisitions) {
+            return;
+        }
+        const first = iteratorReport.requisitions[0];
+        const last = iteratorReport.requisitions[iteratorReport.requisitions.length - 1];
+        if (first && first.time && last && last.time) {
+            const startTime = new date_controller_1.DateController(new Date(first.time.startTime));
+            const endTime = new date_controller_1.DateController(new Date(last.time.endTime));
+            const totalTime = endTime.getTime() - startTime.getTime();
+            iteratorReport.time = {
+                startTime: startTime.toString(),
+                endTime: endTime.toString(),
+                totalTime: totalTime
+            };
         }
     }
     startRequisition(requisition) {
@@ -84,6 +85,9 @@ class RequisitionRunner {
             logger_1.Logger.info(`Requisition will be skipped`);
             return Promise.resolve(requisition_default_reports_1.RequisitionDefaultReports.createSkippedReport(this.name));
         }
+        return this.startRequisitionReporter(requisitionModel);
+    }
+    startRequisitionReporter(requisitionModel) {
         return new Promise((resolve) => {
             new timeout_1.Timeout(() => {
                 const requisitionReporter = new requisition_reporter_1.RequisitionReporter(requisitionModel);

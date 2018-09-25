@@ -45,32 +45,47 @@ export class KafkaSubscription extends Subscription {
         });
     }
 
-    public subscribe(): Promise<void> {
+    public async subscribe(): Promise<void> {
+        const objectNotation = new JavascriptObjectNotation();
         try {
-            return this.fetchOffset();
+            this.client.on('error', (err: any) => {
+                const message = `Error subscribing to kafka ${objectNotation.stringify(err)}`;
+                Logger.error(message);
+                throw message;
+            });
+            return await this.fetchOffset();
         } catch (exc) {
-            Logger.error(`Error connecting kafka ${new JavascriptObjectNotation().stringify(exc)}`);
-            throw exc;
+            const message = `Error connecting kafka ${objectNotation.stringify(exc)}`;
+            Logger.error(message);
+            throw message;
         }
     }
 
     private fetchOffset(): Promise<void> {
+        Logger.debug(`Fetching kafka subscription offset`);
         return new Promise((resolve, reject) => {
-            this.offset.fetchLatestOffsets([this.options.topic], (error: any, offsets: any) => {
-                if (error) {
-                    Logger.error(`Error fetching kafka topic ${new JavascriptObjectNotation().stringify(error)}`);
-                    reject(error);
-                } else {
-                    this.latestOffset = offsets[this.options.topic][0];
-                    Logger.trace('Kafka offset fetched');
-                    resolve();
-                }
-            });
+            try {
+                this.offset.fetchLatestOffsets([this.options.topic], async (error: any, offsets: any) => {
+                    if (error) {
+                        Logger.error(`Error fetching kafka topic ${new JavascriptObjectNotation().stringify(error)}`);
+                        reject(error);
+                    } else {
+                        this.latestOffset = offsets[this.options.topic][0];
+                        Logger.trace('Kafka offset fetched');
+                        this.ableToUnsubscribe = true;
+                        resolve();
+                    }
+                });
+            } catch (err) {
+                reject(err);
+            }
         });
     }
 
     public async unsubscribe(): Promise<void> {
-        this.client.close();
+        if (this.ableToUnsubscribe) {
+            this.client.close();
+        }
     }
 
     private createConsumer() {

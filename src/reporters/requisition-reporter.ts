@@ -19,7 +19,7 @@ export class RequisitionReporter {
     private multiPublishersReporter: MultiPublishersReporter;
     private onFinishCallback: RequisitionRunnerCallback;
     private requisitionTimeout?: number;
-    private allPublishersPublished = false;
+    private publisersDoneTheirJob = false;
     private allSubscriptionsStoppedWaiting = false;
     private requisitionAttributes: RequisitionModel;
 
@@ -68,7 +68,7 @@ export class RequisitionReporter {
         this.multiPublishersReporter.publish()
             .then(async () => {
                 Logger.info('Publishers published');
-                this.allPublishersPublished = true;
+                this.publisersDoneTheirJob = true;
                 await this.tryToFinishExecution();
             })
             .catch(async err => {
@@ -81,7 +81,7 @@ export class RequisitionReporter {
     private initializeTimeout() {
         if (this.requisitionTimeout) {
             new Timeout(async () => {
-                if (!this.allPublishersPublished || !this.allSubscriptionsStoppedWaiting) {
+                if (!this.publisersDoneTheirJob || !this.allSubscriptionsStoppedWaiting) {
                     Logger.info(`Requisition timed out`);
                     await this.onRequisitionFinish();
                 }
@@ -96,7 +96,7 @@ export class RequisitionReporter {
     }
 
     private async tryToFinishExecution() {
-        if (this.allPublishersPublished && this.allSubscriptionsStoppedWaiting) {
+        if (this.publisersDoneTheirJob && this.allSubscriptionsStoppedWaiting) {
             await this.onRequisitionFinish();
         }
     }

@@ -14,14 +14,14 @@
       ],
       "name": "Requisition #0",
       "time": {
-        "totalTime": 171,
-        "startTime": "2018-09-24T22:06:42.852Z",
-        "endTime": "2018-09-24T22:06:43.023Z",
+        "totalTime": 213,
+        "startTime": "2018-09-25T01:50:52.157Z",
+        "endTime": "2018-09-25T01:50:52.370Z",
         "timeout": 8000
       },
       "subscriptions": [
         {
-          "name": "subscription description",
+          "name": "Subscription #0",
           "type": "kafka",
           "tests": [
             {
@@ -56,21 +56,21 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2018-09-24T22:06:43.003Z",
+          "connectionTime": "2018-09-25T01:50:52.346Z",
           "messageReceived": {
             "topic": "enqueuer-topic-name",
             "value": "kafkaPayload",
-            "offset": 70,
+            "offset": 72,
             "partition": 0,
-            "highWaterOffset": 71,
+            "highWaterOffset": 73,
             "key": null,
-            "timestamp": "2018-09-24T22:06:43.006Z"
+            "timestamp": "2018-09-25T01:50:52.347Z"
           }
         }
       ],
       "publishers": [
         {
-          "name": "publisher description",
+          "name": "Publisher #0",
           "valid": true,
           "type": "kafka",
           "tests": [
@@ -90,8 +90,8 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2018-09-24T22:06:43.020Z",
-          "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 70\n  }\n}"
+          "publishTime": "2018-09-25T01:50:52.367Z",
+          "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 72\n  }\n}"
         }
       ]
     }
