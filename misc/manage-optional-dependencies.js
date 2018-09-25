@@ -22,26 +22,42 @@ const optionalDependencies = [
 ];
 
 var toInstall = [];
+
+const install = function () {
+    const packages = toInstall.join(' ');
+    console.log('Installing: ' + packages);
+    rl.close();
+    exec('npm install ' + packages, function (error, stdout, stderr) {
+        if (error) {
+            console.log('Errored: ' + error);
+            console.log(stderr);
+        }
+        console.log(stdout);
+        process.exit(0);
+    });
+};
+
 const askDependency = function(dependencies)
 {
     if (!dependencies.length) {
-        console.log('No more dependency remaining');
-        console.log('Installing: ' + toInstall.join(' '));
-        rl.close();
-        // process.exit(exec('npm install ' + toInstall.join(' ')));
-        return;
-    }
-    rl.question("Will '"+dependencies[0].ipc+"' be needed? (yes/no) ", function (answer) {
-        if (answer === '--skip-all-optional-dependencies') {
+        if ( toInstall.length > 0) {
+            install();
+        } else {
             process.exit(0);
-            return;
-        } else if (isAffirmative(answer)) {
-            console.log('Adding: ' + dependencies[0].ipc);
-            toInstall.push(dependencies[0].package + '@' + dependencies[0].version);
         }
-        dependencies.shift();
-        askDependency(dependencies);
-    });
+    } else {
+        rl.question("Will '"+dependencies[0].ipc+"' be needed? (yes/no) ", function (answer) {
+            if (answer === '--skip-all-optional-dependencies') {
+                process.exit(0);
+                return;
+            } else if (isAffirmative(answer)) {
+                console.log('Adding: ' + dependencies[0].ipc);
+                toInstall.push(dependencies[0].package + '@' + dependencies[0].version);
+            }
+            dependencies.shift();
+            askDependency(dependencies);
+        });
+    }
 };
 
 askDependency(optionalDependencies.concat([]));
