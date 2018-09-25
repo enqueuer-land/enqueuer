@@ -43,7 +43,7 @@ const askDependency = function(dependencies)
     });
 };
 
-if (fs.existsSync('temp')) //travis created stuff
+if (fs.existsSync('/home/travis/')) //travis created stuff
     askDependency(optionalDependencies.concat([]));
 
 
