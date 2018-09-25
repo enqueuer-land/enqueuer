@@ -1,49 +1,38 @@
 {
   "name": "examples/amqp.yml",
-  "valid": false,
+  "valid": true,
   "tests": [],
   "requisitions": [
     {
-      "valid": false,
-      "tests": [
-        {
-          "valid": false,
-          "name": "Publishers publication",
-          "description": "Undefined publishing type to publish: 'amqp'"
-        }
-      ],
+      "valid": true,
+      "tests": [],
       "name": "creating exchange",
       "subscriptions": [],
       "publishers": [
         {
           "name": "Publisher #0",
-          "valid": false,
+          "valid": true,
           "type": "amqp",
           "tests": [
             {
               "name": "Published",
-              "valid": false,
-              "description": "Undefined publishing type to publish: 'amqp'"
+              "valid": true,
+              "description": "Published successfully"
             }
-          ]
+          ],
+          "publishTime": "2018-09-25T19:30:36.742Z"
         }
       ],
       "time": {
-        "startTime": "2018-09-25T16:17:54.243Z",
-        "endTime": "2018-09-25T16:17:54.247Z",
-        "totalTime": 4
+        "startTime": "2018-09-25T19:30:36.513Z",
+        "endTime": "2018-09-25T19:30:36.742Z",
+        "totalTime": 229
       },
       "requisitions": []
     },
     {
-      "valid": false,
-      "tests": [
-        {
-          "valid": false,
-          "name": "Subscriptions subscription",
-          "description": "Error connecting multiSubscription: Undefined subscription: 'amqp'"
-        }
-      ],
+      "valid": true,
+      "tests": [],
       "name": "using just created exchange",
       "subscriptions": [
         {
@@ -51,12 +40,69 @@
           "type": "amqp",
           "tests": [
             {
-              "valid": false,
-              "name": "Subscribed",
-              "description": "Subscription is not able to subscribe"
+              "name": "Payload",
+              "valid": true,
+              "description": "Expected 'payload.how.about' to be equal to 'a new object?'. Received 'a new object?'"
+            },
+            {
+              "name": "Header",
+              "valid": true,
+              "description": "Expected 'headers.key' to be equal to 'value'. Received 'value'"
+            },
+            {
+              "name": "Other Header Value",
+              "valid": true,
+              "description": "Expected 'headers.otherKey' to be equal to 'otherValue'. Received 'otherValue'"
+            },
+            {
+              "name": "Routing Key",
+              "valid": true,
+              "description": "Expected 'deliveryInfo.routingKey' to be equal to 'enqueuer.integration.test.routing.key'. Received 'enqueuer.integration.test.routing.key'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
             }
           ],
-          "valid": false
+          "valid": true,
+          "connectionTime": "2018-09-25T19:30:36.773Z",
+          "messageReceived": {
+            "payload": {
+              "how": {
+                "about": "a new object?"
+              }
+            },
+            "headers": {
+              "key": "value",
+              "otherKey": "otherValue"
+            },
+            "deliveryInfo": {
+              "contentType": "application/json",
+              "headers": {
+                "key": "value",
+                "otherKey": "otherValue"
+              },
+              "queue": "SWAQcjkw",
+              "deliveryTag": {
+                "type": "Buffer",
+                "data": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              "redelivered": false,
+              "exchange": "enqueuer.exchange",
+              "routingKey": "enqueuer.integration.test.routing.key",
+              "consumerTag": "node-amqp-40426-0.3955223972148538"
+            }
+          }
         }
       ],
       "publishers": [
@@ -69,26 +115,26 @@
               "name": "Assertion #0",
               "valid": true,
               "description": "Expected 'publisher.options.port' to be equal to '5672'. Received '5672'"
+            },
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
             }
-          ]
+          ],
+          "publishTime": "2018-09-25T19:30:36.780Z"
         }
       ],
       "time": {
-        "startTime": "2018-09-25T16:17:54.251Z",
-        "endTime": "2018-09-25T16:17:54.252Z",
-        "totalTime": 1
+        "startTime": "2018-09-25T19:30:36.747Z",
+        "endTime": "2018-09-25T19:30:36.782Z",
+        "totalTime": 35
       },
       "requisitions": []
     },
     {
-      "valid": false,
-      "tests": [
-        {
-          "valid": false,
-          "name": "Subscriptions subscription",
-          "description": "Error connecting multiSubscription: Undefined subscription: 'amqp'"
-        }
-      ],
+      "valid": true,
+      "tests": [],
       "name": "default exhange",
       "subscriptions": [
         {
@@ -96,12 +142,66 @@
           "type": "amqp",
           "tests": [
             {
-              "valid": false,
-              "name": "Subscribed",
-              "description": "Subscription is not able to subscribe"
+              "name": "Assertion #0",
+              "valid": true,
+              "description": "Expected 'data' to be equal to 'default exchange'. Received 'default exchange'"
+            },
+            {
+              "valid": true,
+              "name": "Message received",
+              "description": "Subscription has received its message"
             }
           ],
-          "valid": false
+          "valid": true,
+          "connectionTime": "2018-09-25T19:30:36.791Z",
+          "messageReceived": {
+            "payload": {
+              "data": {
+                "type": "Buffer",
+                "data": [
+                  100,
+                  101,
+                  102,
+                  97,
+                  117,
+                  108,
+                  116,
+                  32,
+                  101,
+                  120,
+                  99,
+                  104,
+                  97,
+                  110,
+                  103,
+                  101
+                ]
+              },
+              "contentType": "application/octet-stream"
+            },
+            "headers": {},
+            "deliveryInfo": {
+              "contentType": "application/octet-stream",
+              "queue": "enqueuer.default.exchange",
+              "deliveryTag": {
+                "type": "Buffer",
+                "data": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              "redelivered": false,
+              "exchange": "",
+              "routingKey": "enqueuer.default.exchange",
+              "consumerTag": "node-amqp-40426-0.3398978499179963"
+            }
+          }
         }
       ],
       "publishers": [
@@ -109,13 +209,20 @@
           "name": "Publisher #0",
           "valid": true,
           "type": "amqp",
-          "tests": []
+          "tests": [
+            {
+              "name": "Published",
+              "valid": true,
+              "description": "Published successfully"
+            }
+          ],
+          "publishTime": "2018-09-25T19:30:36.798Z"
         }
       ],
       "time": {
-        "startTime": "2018-09-25T16:17:54.254Z",
-        "endTime": "2018-09-25T16:17:54.254Z",
-        "totalTime": 0
+        "startTime": "2018-09-25T19:30:36.785Z",
+        "endTime": "2018-09-25T19:30:36.798Z",
+        "totalTime": 13
       },
       "requisitions": []
     }

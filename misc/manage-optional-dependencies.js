@@ -2,6 +2,7 @@
 const readline = require('readline');
 const packageJson = require('../package.json');
 const fs = require('fs');
+const exec = require('child_process').exec;
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -21,29 +22,22 @@ const optionalDependencies = [
     { ipc: 'zeroMq', package: 'zeromq', version: '^4.6.0'}
 ];
 
-var installThemAll = function () {
-    for (var index = 0; index < optionalDependencies.length; ++index) {
-        console.log('Adding ' + optionalDependencies[index].ipc);
-        packageJson.dependencies[optionalDependencies[index].package] = optionalDependencies[index].version;
-    }
-    fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
-    process.exit(0);
-};
+var toInstall = [];
 const askDependency = function(dependencies)
 {
     if (!dependencies.length) {
         console.log('No more dependency remaining');
+        console.log('Installing: ' + toInstall.join(' '));
         rl.close();
-        fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
-        process.exit(0);
+        process.exit(exec('npm install ' + toInstall.join(' ')));
     }
     rl.question("Will '"+dependencies[0].ipc+"' be needed? (yes/no) ", function (answer) {
-        if (answer === '--install-all-optional-dependencies') {
-            installThemAll();
+        if (answer === '--skip-all-optional-dependencies') {
+            process.exit(0);
             return;
         } else if (isAffirmative(answer)) {
             console.log('Adding: ' + dependencies[0].ipc);
-            packageJson.dependencies[dependencies[0].package] = dependencies[0].version;
+            toInstall.push(optionalDependencies[index].package + '@' + optionalDependencies[index].version);
         }
         dependencies.shift();
         askDependency(dependencies);
