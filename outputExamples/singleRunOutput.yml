@@ -41,9 +41,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.656Z",
-            "endTime": "2018-09-25T14:49:25.702Z",
-            "totalTime": 46
+            "startTime": "2018-09-25T16:01:16.932Z",
+            "endTime": "2018-09-25T16:01:16.988Z",
+            "totalTime": 56
           },
           "requisitions": []
         },
@@ -60,8 +60,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.736Z",
-            "endTime": "2018-09-25T14:49:25.737Z",
+            "startTime": "2018-09-25T16:01:17.016Z",
+            "endTime": "2018-09-25T16:01:17.017Z",
             "totalTime": 1
           },
           "requisitions": []
@@ -80,9 +80,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.692Z",
-            "endTime": "2018-09-25T14:49:25.725Z",
-            "totalTime": 33
+            "startTime": "2018-09-25T16:01:16.979Z",
+            "endTime": "2018-09-25T16:01:17.010Z",
+            "totalTime": 31
           },
           "requisitions": [
             {
@@ -92,8 +92,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.692Z",
-                "endTime": "2018-09-25T14:49:25.702Z",
+                "startTime": "2018-09-25T16:01:16.979Z",
+                "endTime": "2018-09-25T16:01:16.989Z",
                 "totalTime": 10
               },
               "requisitions": []
@@ -111,8 +111,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.720Z",
-                "endTime": "2018-09-25T14:49:25.720Z",
+                "startTime": "2018-09-25T16:01:17.005Z",
+                "endTime": "2018-09-25T16:01:17.005Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -130,8 +130,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.725Z",
-                "endTime": "2018-09-25T14:49:25.725Z",
+                "startTime": "2018-09-25T16:01:17.010Z",
+                "endTime": "2018-09-25T16:01:17.010Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -149,8 +149,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.725Z",
-                "endTime": "2018-09-25T14:49:25.725Z",
+                "startTime": "2018-09-25T16:01:17.010Z",
+                "endTime": "2018-09-25T16:01:17.010Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -168,8 +168,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.725Z",
-                "endTime": "2018-09-25T14:49:25.725Z",
+                "startTime": "2018-09-25T16:01:17.010Z",
+                "endTime": "2018-09-25T16:01:17.010Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -189,9 +189,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.737Z",
-            "endTime": "2018-09-25T14:49:25.737Z",
-            "totalTime": 0
+            "startTime": "2018-09-25T16:01:17.016Z",
+            "endTime": "2018-09-25T16:01:17.017Z",
+            "totalTime": 1
           },
           "requisitions": []
         }
@@ -209,8 +209,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.697Z",
-            "endTime": "2018-09-25T14:49:25.702Z",
+            "startTime": "2018-09-25T16:01:17.012Z",
+            "endTime": "2018-09-25T16:01:17.017Z",
             "totalTime": 5
           },
           "requisitions": []
@@ -228,9 +228,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.736Z",
-            "endTime": "2018-09-25T14:49:25.737Z",
-            "totalTime": 1
+            "startTime": "2018-09-25T16:01:17.022Z",
+            "endTime": "2018-09-25T16:01:17.022Z",
+            "totalTime": 0
           },
           "requisitions": []
         },
@@ -247,8 +247,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.742Z",
-            "endTime": "2018-09-25T14:49:25.742Z",
+            "startTime": "2018-09-25T16:01:17.037Z",
+            "endTime": "2018-09-25T16:01:17.037Z",
             "totalTime": 0
           },
           "requisitions": []
@@ -256,92 +256,86 @@
       ]
     },
     {
-      "name": "examples/file.yml",
+      "name": "examples/recursion.yml",
       "valid": true,
       "tests": [],
       "requisitions": [
         {
+          "name": "Requisition #0",
+          "valid": true,
+          "tests": [],
+          "requisitions": [
+            {
+              "name": "Requisition #0",
+              "valid": true,
+              "tests": [],
+              "requisitions": [
+                {
+                  "name": "Requisition #0",
+                  "valid": true,
+                  "tests": [],
+                  "requisitions": [
+                    {
+                      "valid": true,
+                      "tests": [],
+                      "name": "Requisition #0",
+                      "subscriptions": [],
+                      "publishers": [],
+                      "time": {
+                        "startTime": "2018-09-25T16:01:16.978Z",
+                        "endTime": "2018-09-25T16:01:16.989Z",
+                        "totalTime": 11
+                      },
+                      "requisitions": []
+                    }
+                  ]
+                },
+                {
+                  "valid": true,
+                  "tests": [],
+                  "name": "Requisition #0",
+                  "subscriptions": [],
+                  "publishers": [],
+                  "time": {
+                    "startTime": "2018-09-25T16:01:17.016Z",
+                    "endTime": "2018-09-25T16:01:17.017Z",
+                    "totalTime": 1
+                  },
+                  "requisitions": []
+                }
+              ]
+            },
+            {
+              "valid": true,
+              "tests": [],
+              "name": "Requisition #0",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T16:01:17.023Z",
+                "endTime": "2018-09-25T16:01:17.023Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            }
+          ]
+        },
+        {
           "valid": true,
           "tests": [
             {
+              "name": "Last one was executed",
               "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
+              "description": "'store.lastExecution' is not defined"
             }
           ],
           "name": "Requisition #0",
-          "subscriptions": [
-            {
-              "name": "subscription description",
-              "type": "file-system-watcher",
-              "tests": [
-                {
-                  "name": "Some time has passed",
-                  "valid": true,
-                  "description": "Expected 'now' to be greater than or equal to '1537886965656'. Received '1537886965764'"
-                },
-                {
-                  "name": "Filename",
-                  "valid": true,
-                  "description": "'name' (temp/fileTest20180925114925070340_7fb41dc7.file) does not contain 'temp/'"
-                },
-                {
-                  "name": "Content",
-                  "valid": true,
-                  "description": "'content' is not defined"
-                },
-                {
-                  "name": "Created",
-                  "valid": true,
-                  "description": "'created' is not defined"
-                },
-                {
-                  "name": "Modified",
-                  "valid": true,
-                  "description": "'modified' is not defined"
-                },
-                {
-                  "name": "Size",
-                  "valid": true,
-                  "description": "Expected 'size' to be greater than '0'. Received '13'"
-                },
-                {
-                  "valid": true,
-                  "name": "Message received",
-                  "description": "Subscription has received its message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.701Z",
-              "messageReceived": {
-                "content": "1537886965656",
-                "name": "temp/fileTest20180925114925070340_7fb41dc7.file",
-                "size": 13,
-                "modified": "2018-09-25T14:49:25.704Z",
-                "created": "2018-09-25T14:49:25.704Z"
-              }
-            }
-          ],
-          "publishers": [
-            {
-              "name": "publisher description",
-              "valid": true,
-              "type": "file",
-              "tests": [
-                {
-                  "name": "Published",
-                  "valid": true,
-                  "description": "Published successfully"
-                }
-              ],
-              "publishTime": "2018-09-25T14:49:25.718Z"
-            }
-          ],
+          "subscriptions": [],
+          "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.656Z",
-            "endTime": "2018-09-25T14:49:25.765Z",
-            "totalTime": 109,
-            "timeout": 3000
+            "startTime": "2018-09-25T16:01:17.037Z",
+            "endTime": "2018-09-25T16:01:17.037Z",
+            "totalTime": 0
           },
           "requisitions": []
         }
@@ -373,15 +367,15 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.701Z",
+              "connectionTime": "2018-09-25T16:01:16.987Z",
               "messageReceived": "enqueuer standard-input payload"
             }
           ],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.696Z",
-            "endTime": "2018-09-25T14:49:25.768Z",
-            "totalTime": 72
+            "startTime": "2018-09-25T16:01:16.983Z",
+            "endTime": "2018-09-25T16:01:17.040Z",
+            "totalTime": 57
           },
           "requisitions": []
         }
@@ -418,7 +412,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.701Z",
+              "connectionTime": "2018-09-25T16:01:17.017Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -430,7 +424,7 @@
                 "remoteInfo": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 53518,
+                  "port": 56856,
                   "size": 2
                 }
               }
@@ -448,99 +442,105 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.767Z"
+              "publishTime": "2018-09-25T16:01:17.039Z"
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.698Z",
-            "endTime": "2018-09-25T14:49:25.772Z",
-            "totalTime": 74
+            "startTime": "2018-09-25T16:01:17.013Z",
+            "endTime": "2018-09-25T16:01:17.046Z",
+            "totalTime": 33
           },
           "requisitions": []
         }
       ]
     },
     {
-      "name": "examples/recursion.yml",
+      "name": "examples/file.yml",
       "valid": true,
       "tests": [],
       "requisitions": [
         {
-          "name": "Requisition #0",
-          "valid": true,
-          "tests": [],
-          "requisitions": [
-            {
-              "name": "Requisition #0",
-              "valid": true,
-              "tests": [],
-              "requisitions": [
-                {
-                  "name": "Requisition #0",
-                  "valid": true,
-                  "tests": [],
-                  "requisitions": [
-                    {
-                      "valid": true,
-                      "tests": [],
-                      "name": "Requisition #0",
-                      "subscriptions": [],
-                      "publishers": [],
-                      "time": {
-                        "startTime": "2018-09-25T14:49:25.691Z",
-                        "endTime": "2018-09-25T14:49:25.702Z",
-                        "totalTime": 11
-                      },
-                      "requisitions": []
-                    }
-                  ]
-                },
-                {
-                  "valid": true,
-                  "tests": [],
-                  "name": "Requisition #0",
-                  "subscriptions": [],
-                  "publishers": [],
-                  "time": {
-                    "startTime": "2018-09-25T14:49:25.736Z",
-                    "endTime": "2018-09-25T14:49:25.737Z",
-                    "totalTime": 1
-                  },
-                  "requisitions": []
-                }
-              ]
-            },
-            {
-              "valid": true,
-              "tests": [],
-              "name": "Requisition #0",
-              "subscriptions": [],
-              "publishers": [],
-              "time": {
-                "startTime": "2018-09-25T14:49:25.756Z",
-                "endTime": "2018-09-25T14:49:25.757Z",
-                "totalTime": 1
-              },
-              "requisitions": []
-            }
-          ]
-        },
-        {
           "valid": true,
           "tests": [
             {
-              "name": "Last one was executed",
               "valid": true,
-              "description": "'store.lastExecution' is not defined"
+              "name": "No time out",
+              "description": "Requisition has not timed out"
             }
           ],
           "name": "Requisition #0",
-          "subscriptions": [],
-          "publishers": [],
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "file-system-watcher",
+              "tests": [
+                {
+                  "name": "Some time has passed",
+                  "valid": true,
+                  "description": "Expected 'now' to be greater than or equal to '1537891276932'. Received '1537891277059'"
+                },
+                {
+                  "name": "Filename",
+                  "valid": true,
+                  "description": "'name' (temp/fileTest20180925130116099040_8d2d5aba.file) does not contain 'temp/'"
+                },
+                {
+                  "name": "Content",
+                  "valid": true,
+                  "description": "'content' is not defined"
+                },
+                {
+                  "name": "Created",
+                  "valid": true,
+                  "description": "'created' is not defined"
+                },
+                {
+                  "name": "Modified",
+                  "valid": true,
+                  "description": "'modified' is not defined"
+                },
+                {
+                  "name": "Size",
+                  "valid": true,
+                  "description": "Expected 'size' to be greater than '0'. Received '13'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T16:01:16.987Z",
+              "messageReceived": {
+                "content": "1537891276932",
+                "name": "temp/fileTest20180925130116099040_8d2d5aba.file",
+                "size": 13,
+                "modified": "2018-09-25T16:01:16.991Z",
+                "created": "2018-09-25T16:01:16.991Z"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "file",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T16:01:17.003Z"
+            }
+          ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.779Z",
-            "endTime": "2018-09-25T14:49:25.779Z",
-            "totalTime": 0
+            "startTime": "2018-09-25T16:01:16.932Z",
+            "endTime": "2018-09-25T16:01:17.059Z",
+            "totalTime": 127,
+            "timeout": 3000
           },
           "requisitions": []
         }
@@ -593,10 +593,10 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.701Z",
+              "connectionTime": "2018-09-25T16:01:16.987Z",
               "messageReceived": {
-                "MessageId": "c1d815ba-305a-4225-8be6-fd5141a34c70",
-                "ReceiptHandle": "c1d815ba-305a-4225-8be6-fd5141a34c70#4873f2d6-6ff9-4c15-927b-1b03f7af3736",
+                "MessageId": "274cd1e9-728a-4395-a06e-3f7d387b35f6",
+                "ReceiptHandle": "274cd1e9-728a-4395-a06e-3f7d387b35f6#cb49c76e-a143-4a9b-9854-90b49f366870",
                 "MD5OfBody": "9dea6b5787a8fcdbd8db4505e4a1958b",
                 "Body": "enqueuer"
               }
@@ -644,21 +644,21 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.816Z",
+              "publishTime": "2018-09-25T16:01:17.089Z",
               "messageReceived": {
                 "ResponseMetadata": {
                   "RequestId": "00000000-0000-0000-0000-000000000000"
                 },
                 "MD5OfMessageBody": "9dea6b5787a8fcdbd8db4505e4a1958b",
                 "MD5OfMessageAttributes": "d41d8cd98f00b204e9800998ecf8427e",
-                "MessageId": "59f55603-8203-4fe3-b346-9b3105d6885b"
+                "MessageId": "8aad890e-b927-40bf-85f2-c0c8804dbd12"
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.696Z",
-            "endTime": "2018-09-25T14:49:25.816Z",
-            "totalTime": 120,
+            "startTime": "2018-09-25T16:01:16.983Z",
+            "endTime": "2018-09-25T16:01:17.090Z",
+            "totalTime": 107,
             "timeout": 5000
           },
           "requisitions": []
@@ -722,7 +722,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.702Z",
+              "connectionTime": "2018-09-25T16:01:16.988Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -791,22 +791,153 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.833Z",
+              "publishTime": "2018-09-25T16:01:17.128Z",
               "messageReceived": {
                 "payload": "hook response",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 58766
+                  "port": 59352
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.657Z",
-            "endTime": "2018-09-25T14:49:25.834Z",
-            "totalTime": 177,
+            "startTime": "2018-09-25T16:01:16.934Z",
+            "endTime": "2018-09-25T16:01:17.128Z",
+            "totalTime": 194,
             "timeout": 2000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/http-auth-bearer.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "http-server",
+              "tests": [
+                {
+                  "name": "\"Bearer\" authentication prefix",
+                  "valid": true,
+                  "description": "Prefix \"Bearer\" was found."
+                },
+                {
+                  "name": "\"Bearer\" authentication token",
+                  "valid": true,
+                  "description": "Token match"
+                },
+                {
+                  "name": "\"Bearer\" authentication",
+                  "valid": true,
+                  "description": "Bearer authentication is valid"
+                },
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'message.body' to be equal to 'Rech'. Received 'Rech'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T16:01:17.004Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "authorization": "Bearer bearerToken",
+                  "content-length": "4",
+                  "host": "localhost:23067",
+                  "connection": "close"
+                },
+                "params": {},
+                "query": {},
+                "body": "Rech"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "http-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Body",
+                  "valid": true,
+                  "description": "Expected 'body' to be equal to 'responsePayload'. Received 'responsePayload'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T16:01:17.134Z",
+              "messageReceived": {
+                "statusCode": 321,
+                "body": "responsePayload",
+                "headers": {
+                  "x-powered-by": "Express",
+                  "content-type": "text/html; charset=utf-8",
+                  "content-length": "15",
+                  "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
+                  "date": "Tue, 25 Sep 2018 16:01:17 GMT",
+                  "connection": "close"
+                },
+                "request": {
+                  "uri": {
+                    "protocol": "http:",
+                    "slashes": true,
+                    "auth": null,
+                    "host": "localhost:23067",
+                    "port": "23067",
+                    "hostname": "localhost",
+                    "hash": null,
+                    "search": null,
+                    "query": null,
+                    "pathname": "/bearer",
+                    "path": "/bearer",
+                    "href": "http://localhost:23067/bearer"
+                  },
+                  "method": "post",
+                  "headers": {
+                    "content-type": "application/json",
+                    "authorization": "Bearer bearerToken",
+                    "Content-Length": 4
+                  }
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T16:01:16.938Z",
+            "endTime": "2018-09-25T16:01:17.134Z",
+            "totalTime": 196,
+            "timeout": 3000
           },
           "requisitions": []
         }
@@ -864,7 +995,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "connectionTime": "2018-09-25T16:01:17.004Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -901,7 +1032,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.837Z",
+              "publishTime": "2018-09-25T16:01:17.135Z",
               "messageReceived": {
                 "statusCode": 200,
                 "body": "basic auth response",
@@ -910,7 +1041,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "19",
                   "etag": "W/\"13-nGN7LEwCUKXpQoLxNqKZXSglYNc\"",
-                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "date": "Tue, 25 Sep 2018 16:01:17 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -939,140 +1070,9 @@
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.657Z",
-            "endTime": "2018-09-25T14:49:25.837Z",
-            "totalTime": 180,
-            "timeout": 3000
-          },
-          "requisitions": []
-        }
-      ]
-    },
-    {
-      "name": "examples/http-auth-bearer.yml",
-      "valid": true,
-      "tests": [],
-      "requisitions": [
-        {
-          "valid": true,
-          "tests": [
-            {
-              "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
-            }
-          ],
-          "name": "Requisition #0",
-          "subscriptions": [
-            {
-              "name": "Subscription #0",
-              "type": "http-server",
-              "tests": [
-                {
-                  "name": "\"Bearer\" authentication prefix",
-                  "valid": true,
-                  "description": "Prefix \"Bearer\" was found."
-                },
-                {
-                  "name": "\"Bearer\" authentication token",
-                  "valid": true,
-                  "description": "Token match"
-                },
-                {
-                  "name": "\"Bearer\" authentication",
-                  "valid": true,
-                  "description": "Bearer authentication is valid"
-                },
-                {
-                  "name": "Payload",
-                  "valid": true,
-                  "description": "Expected 'message.body' to be equal to 'Rech'. Received 'Rech'"
-                },
-                {
-                  "valid": true,
-                  "name": "Message received",
-                  "description": "Subscription has received its message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.719Z",
-              "messageReceived": {
-                "headers": {
-                  "content-type": "application/json",
-                  "authorization": "Bearer bearerToken",
-                  "content-length": "4",
-                  "host": "localhost:23067",
-                  "connection": "close"
-                },
-                "params": {},
-                "query": {},
-                "body": "Rech"
-              }
-            }
-          ],
-          "publishers": [
-            {
-              "name": "Publisher #0",
-              "valid": true,
-              "type": "http-client",
-              "tests": [
-                {
-                  "name": "Published",
-                  "valid": true,
-                  "description": "Published successfully"
-                },
-                {
-                  "name": "Body",
-                  "valid": true,
-                  "description": "Expected 'body' to be equal to 'responsePayload'. Received 'responsePayload'"
-                },
-                {
-                  "name": "Response message received",
-                  "valid": true,
-                  "description": "Response message was received"
-                }
-              ],
-              "publishTime": "2018-09-25T14:49:25.839Z",
-              "messageReceived": {
-                "statusCode": 321,
-                "body": "responsePayload",
-                "headers": {
-                  "x-powered-by": "Express",
-                  "content-type": "text/html; charset=utf-8",
-                  "content-length": "15",
-                  "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
-                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
-                  "connection": "close"
-                },
-                "request": {
-                  "uri": {
-                    "protocol": "http:",
-                    "slashes": true,
-                    "auth": null,
-                    "host": "localhost:23067",
-                    "port": "23067",
-                    "hostname": "localhost",
-                    "hash": null,
-                    "search": null,
-                    "query": null,
-                    "pathname": "/bearer",
-                    "path": "/bearer",
-                    "href": "http://localhost:23067/bearer"
-                  },
-                  "method": "post",
-                  "headers": {
-                    "content-type": "application/json",
-                    "authorization": "Bearer bearerToken",
-                    "Content-Length": 4
-                  }
-                }
-              }
-            }
-          ],
-          "time": {
-            "startTime": "2018-09-25T14:49:25.660Z",
-            "endTime": "2018-09-25T14:49:25.839Z",
-            "totalTime": 179,
+            "startTime": "2018-09-25T16:01:16.934Z",
+            "endTime": "2018-09-25T16:01:17.135Z",
+            "totalTime": 201,
             "timeout": 3000
           },
           "requisitions": []
@@ -1111,7 +1111,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.702Z",
+              "connectionTime": "2018-09-25T16:01:17.017Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -1151,16 +1151,16 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.784Z",
+              "publishTime": "2018-09-25T16:01:17.064Z",
               "messageReceived": {
                 "payload": "responsePayload"
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.698Z",
-            "endTime": "2018-09-25T14:49:25.784Z",
-            "totalTime": 86,
+            "startTime": "2018-09-25T16:01:17.014Z",
+            "endTime": "2018-09-25T16:01:17.065Z",
+            "totalTime": 51,
             "timeout": 3000
           },
           "requisitions": []
@@ -1186,7 +1186,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.795Z",
+              "connectionTime": "2018-09-25T16:01:17.091Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -1221,16 +1221,16 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.846Z",
+              "publishTime": "2018-09-25T16:01:17.142Z",
               "messageReceived": {
                 "payload": "{}"
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.794Z",
-            "endTime": "2018-09-25T14:49:25.846Z",
-            "totalTime": 52
+            "startTime": "2018-09-25T16:01:17.091Z",
+            "endTime": "2018-09-25T16:01:17.142Z",
+            "totalTime": 51
           },
           "requisitions": []
         },
@@ -1255,7 +1255,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.847Z",
+              "connectionTime": "2018-09-25T16:01:17.144Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -1304,16 +1304,16 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.852Z",
+              "publishTime": "2018-09-25T16:01:17.151Z",
               "messageReceived": {
                 "payload": "I am still bidirectional"
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.847Z",
-            "endTime": "2018-09-25T14:49:25.852Z",
-            "totalTime": 5
+            "startTime": "2018-09-25T16:01:17.144Z",
+            "endTime": "2018-09-25T16:01:17.152Z",
+            "totalTime": 8
           },
           "requisitions": []
         }
@@ -1351,7 +1351,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "connectionTime": "2018-09-25T16:01:17.004Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -1392,7 +1392,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.860Z",
+              "publishTime": "2018-09-25T16:01:17.160Z",
               "messageReceived": {
                 "statusCode": 200,
                 "body": "https",
@@ -1401,7 +1401,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "5",
                   "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
-                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "date": "Tue, 25 Sep 2018 16:01:17 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -1429,9 +1429,9 @@
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.662Z",
-            "endTime": "2018-09-25T14:49:25.860Z",
-            "totalTime": 198,
+            "startTime": "2018-09-25T16:01:16.940Z",
+            "endTime": "2018-09-25T16:01:17.160Z",
+            "totalTime": 220,
             "timeout": 3000
           },
           "requisitions": []
@@ -1494,7 +1494,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "connectionTime": "2018-09-25T16:01:17.004Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -1559,7 +1559,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "connectionTime": "2018-09-25T16:01:17.004Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -1605,7 +1605,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.861Z",
+              "publishTime": "2018-09-25T16:01:17.161Z",
               "messageReceived": {
                 "statusCode": 333,
                 "body": "responsePayload",
@@ -1614,7 +1614,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "15",
                   "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
-                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "date": "Tue, 25 Sep 2018 16:01:17 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -1643,109 +1643,9 @@
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.661Z",
-            "endTime": "2018-09-25T14:49:25.861Z",
-            "totalTime": 200
-          },
-          "requisitions": []
-        }
-      ]
-    },
-    {
-      "name": "examples/kafka.yml",
-      "valid": true,
-      "tests": [],
-      "requisitions": [
-        {
-          "valid": true,
-          "tests": [
-            {
-              "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
-            }
-          ],
-          "name": "Requisition #0",
-          "subscriptions": [
-            {
-              "name": "Subscription #0",
-              "type": "kafka",
-              "tests": [
-                {
-                  "name": "Assertion #0",
-                  "valid": true,
-                  "description": "Expected 'value' to be equal to 'kafkaPayload'. Received 'kafkaPayload'"
-                },
-                {
-                  "name": "Assertion #1",
-                  "valid": true,
-                  "description": "Expected 'topic' to be equal to 'enqueuer-topic-name'. Received 'enqueuer-topic-name'"
-                },
-                {
-                  "name": "Assertion #2",
-                  "valid": true,
-                  "description": "'offset' is not defined"
-                },
-                {
-                  "name": "Assertion #3",
-                  "valid": true,
-                  "description": "'partition' is not defined"
-                },
-                {
-                  "name": "Assertion #4",
-                  "valid": true,
-                  "description": "'timestamp' is not defined"
-                },
-                {
-                  "valid": true,
-                  "name": "Message received",
-                  "description": "Subscription has received its message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.856Z",
-              "messageReceived": {
-                "topic": "enqueuer-topic-name",
-                "value": "kafkaPayload",
-                "offset": 100,
-                "partition": 0,
-                "highWaterOffset": 101,
-                "key": null,
-                "timestamp": "2018-09-25T14:49:25.858Z"
-              }
-            }
-          ],
-          "publishers": [
-            {
-              "name": "Publisher #0",
-              "valid": true,
-              "type": "kafka",
-              "tests": [
-                {
-                  "name": "Published",
-                  "valid": true,
-                  "description": "Published successfully"
-                },
-                {
-                  "name": "kafka publish response payload",
-                  "valid": true,
-                  "description": "'JSON.parse(message)[\"enqueuer-topic-name\"]' is not defined"
-                },
-                {
-                  "name": "Response message received",
-                  "valid": true,
-                  "description": "Response message was received"
-                }
-              ],
-              "publishTime": "2018-09-25T14:49:25.884Z",
-              "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 100\n  }\n}"
-            }
-          ],
-          "time": {
-            "startTime": "2018-09-25T14:49:25.675Z",
-            "endTime": "2018-09-25T14:49:25.884Z",
-            "totalTime": 209,
-            "timeout": 8000
+            "startTime": "2018-09-25T16:01:16.939Z",
+            "endTime": "2018-09-25T16:01:17.161Z",
+            "totalTime": 222
           },
           "requisitions": []
         }
@@ -1787,7 +1687,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.879Z",
+              "connectionTime": "2018-09-25T16:01:17.165Z",
               "messageReceived": {
                 "topic": {
                   "type": "Buffer",
@@ -1849,138 +1749,13 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.880Z"
+              "publishTime": "2018-09-25T16:01:17.166Z"
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.735Z",
-            "endTime": "2018-09-25T14:49:25.886Z",
-            "totalTime": 151
-          },
-          "requisitions": []
-        }
-      ]
-    },
-    {
-      "name": "examples/parallel-sub.yml",
-      "valid": true,
-      "tests": [],
-      "requisitions": [
-        {
-          "valid": true,
-          "tests": [
-            {
-              "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
-            }
-          ],
-          "name": "Requisition #0",
-          "subscriptions": [
-            {
-              "name": "subscription description",
-              "type": "tcp-server",
-              "tests": [
-                {
-                  "name": "Paralleling",
-                  "valid": true,
-                  "description": "Expected 'payload' to be equal to 'anything'. Received 'anything'"
-                },
-                {
-                  "valid": true,
-                  "name": "Message received",
-                  "description": "Subscription has received its message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.702Z",
-              "messageReceived": {
-                "payload": {
-                  "type": "Buffer",
-                  "data": [
-                    97,
-                    110,
-                    121,
-                    116,
-                    104,
-                    105,
-                    110,
-                    103
-                  ]
-                },
-                "stream": {
-                  "address": "::ffff:127.0.0.1",
-                  "family": "IPv6",
-                  "port": 23081
-                }
-              }
-            }
-          ],
-          "publishers": [],
-          "time": {
-            "startTime": "2018-09-25T14:49:25.691Z",
-            "endTime": "2018-09-25T14:49:26.143Z",
-            "totalTime": 452,
-            "timeout": 3000
-          },
-          "requisitions": []
-        }
-      ]
-    },
-    {
-      "name": "examples/parallel-pub.yml",
-      "valid": true,
-      "tests": [],
-      "requisitions": [
-        {
-          "valid": true,
-          "tests": [
-            {
-              "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
-            }
-          ],
-          "name": "requisition description",
-          "subscriptions": [],
-          "publishers": [
-            {
-              "name": "publisher description",
-              "valid": true,
-              "type": "tcp-client",
-              "tests": [
-                {
-                  "name": "Published",
-                  "valid": true,
-                  "description": "Published successfully"
-                },
-                {
-                  "name": "Back and forth",
-                  "valid": true,
-                  "description": "Expected 'payload' to be equal to 'anyValue'. Received 'anyValue'"
-                },
-                {
-                  "name": "Response message received",
-                  "valid": true,
-                  "description": "Response message was received"
-                }
-              ],
-              "publishTime": "2018-09-25T14:49:26.144Z",
-              "messageReceived": {
-                "payload": "anyValue",
-                "stream": {
-                  "address": "127.0.0.1",
-                  "family": "IPv4",
-                  "port": 58779
-                }
-              }
-            }
-          ],
-          "time": {
-            "startTime": "2018-09-25T14:49:26.140Z",
-            "endTime": "2018-09-25T14:49:26.144Z",
-            "totalTime": 4,
-            "timeout": 3000
+            "startTime": "2018-09-25T16:01:17.015Z",
+            "endTime": "2018-09-25T16:01:17.171Z",
+            "totalTime": 156
           },
           "requisitions": []
         }
@@ -2018,12 +1793,12 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:26.542Z",
+              "connectionTime": "2018-09-25T16:01:17.104Z",
               "messageReceived": {
                 "payload": "stompQueue",
                 "headers": {
                   "destination": "/queue/stompQueue",
-                  "message-id": "Q_/queue/stompQueue@@session-dvOZYRnwb6eOSd71T-HW7w@@1",
+                  "message-id": "Q_/queue/stompQueue@@session-xF3ez5LcZEK30cw6LPCbGQ@@1",
                   "redelivered": "false",
                   "content-length": "10"
                 }
@@ -2042,13 +1817,13 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:26.568Z"
+              "publishTime": "2018-09-25T16:01:17.167Z"
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.696Z",
-            "endTime": "2018-09-25T14:49:26.569Z",
-            "totalTime": 873,
+            "startTime": "2018-09-25T16:01:16.983Z",
+            "endTime": "2018-09-25T16:01:17.175Z",
+            "totalTime": 192,
             "timeout": 3000
           },
           "requisitions": []
@@ -2091,7 +1866,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:26.551Z",
+              "connectionTime": "2018-09-25T16:01:17.131Z",
               "messageReceived": {
                 "topic": "enqueuer/integration/public/test",
                 "payload": {
@@ -2122,13 +1897,113 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:26.572Z"
+              "publishTime": "2018-09-25T16:01:17.168Z"
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.676Z",
-            "endTime": "2018-09-25T14:49:26.576Z",
-            "totalTime": 900
+            "startTime": "2018-09-25T16:01:16.962Z",
+            "endTime": "2018-09-25T16:01:17.176Z",
+            "totalTime": 214
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/kafka.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "kafka",
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'value' to be equal to 'kafkaPayload'. Received 'kafkaPayload'"
+                },
+                {
+                  "name": "Assertion #1",
+                  "valid": true,
+                  "description": "Expected 'topic' to be equal to 'enqueuer-topic-name'. Received 'enqueuer-topic-name'"
+                },
+                {
+                  "name": "Assertion #2",
+                  "valid": true,
+                  "description": "'offset' is not defined"
+                },
+                {
+                  "name": "Assertion #3",
+                  "valid": true,
+                  "description": "'partition' is not defined"
+                },
+                {
+                  "name": "Assertion #4",
+                  "valid": true,
+                  "description": "'timestamp' is not defined"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T16:01:17.157Z",
+              "messageReceived": {
+                "topic": "enqueuer-topic-name",
+                "value": "kafkaPayload",
+                "offset": 102,
+                "partition": 0,
+                "highWaterOffset": 103,
+                "key": null,
+                "timestamp": "2018-09-25T16:01:17.158Z"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "kafka",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "kafka publish response payload",
+                  "valid": true,
+                  "description": "'JSON.parse(message)[\"enqueuer-topic-name\"]' is not defined"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T16:01:17.183Z",
+              "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 102\n  }\n}"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T16:01:16.962Z",
+            "endTime": "2018-09-25T16:01:17.186Z",
+            "totalTime": 224,
+            "timeout": 8000
           },
           "requisitions": []
         }
@@ -2142,10 +2017,37 @@
         {
           "valid": true,
           "tests": [],
-          "name": "Requisition #0",
+          "name": "creating exchange",
+          "subscriptions": [],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "amqp",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T16:01:17.166Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T16:01:16.928Z",
+            "endTime": "2018-09-25T16:01:17.166Z",
+            "totalTime": 238
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [],
+          "name": "using just created exchange",
           "subscriptions": [
             {
-              "name": "subscription description",
+              "name": "Subscription #0",
               "type": "amqp",
               "tests": [
                 {
@@ -2175,7 +2077,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:26.556Z",
+              "connectionTime": "2018-09-25T16:01:17.191Z",
               "messageReceived": {
                 "payload": {
                   "how": {
@@ -2192,7 +2094,7 @@
                     "key": "value",
                     "otherKey": "otherValue"
                   },
-                  "queue": "xeqyFyix",
+                  "queue": "CtZ3RTdD",
                   "deliveryTag": {
                     "type": "Buffer",
                     "data": [
@@ -2209,12 +2111,45 @@
                   "redelivered": false,
                   "exchange": "enqueuer.exchange",
                   "routingKey": "enqueuer.integration.test.routing.key",
-                  "consumerTag": "node-amqp-46026-0.8476876202837329"
+                  "consumerTag": "node-amqp-51303-0.48320282655856284"
                 }
               }
-            },
+            }
+          ],
+          "publishers": [
             {
-              "name": "Subscription #1",
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "amqp",
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'publisher.options.port' to be equal to '5672'. Received '5672'"
+                },
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T16:01:17.199Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T16:01:17.172Z",
+            "endTime": "2018-09-25T16:01:17.199Z",
+            "totalTime": 27
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [],
+          "name": "default exhange",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
               "type": "amqp",
               "tests": [
                 {
@@ -2229,7 +2164,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:26.554Z",
+              "connectionTime": "2018-09-25T16:01:17.207Z",
               "messageReceived": {
                 "payload": {
                   "data": {
@@ -2275,7 +2210,7 @@
                   "redelivered": false,
                   "exchange": "",
                   "routingKey": "enqueuer.default.exchange",
-                  "consumerTag": "node-amqp-46026-0.8597352137959471"
+                  "consumerTag": "node-amqp-51303-0.3398561576490804"
                 }
               }
             }
@@ -2287,36 +2222,143 @@
               "type": "amqp",
               "tests": [
                 {
-                  "name": "Assertion #0",
-                  "valid": true,
-                  "description": "Expected 'publisher.options.port' to be equal to '5672'. Received '5672'"
-                },
-                {
                   "name": "Published",
                   "valid": true,
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:26.582Z"
-            },
+              "publishTime": "2018-09-25T16:01:17.213Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T16:01:17.201Z",
+            "endTime": "2018-09-25T16:01:17.213Z",
+            "totalTime": 12
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/parallel-sub.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
             {
-              "name": "default exchange",
               "valid": true,
-              "type": "amqp",
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "name": "Paralleling",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'anything'. Received 'anything'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T16:01:16.988Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    97,
+                    110,
+                    121,
+                    116,
+                    104,
+                    105,
+                    110,
+                    103
+                  ]
+                },
+                "stream": {
+                  "address": "::ffff:127.0.0.1",
+                  "family": "IPv6",
+                  "port": 23081
+                }
+              }
+            }
+          ],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T16:01:16.978Z",
+            "endTime": "2018-09-25T16:01:17.430Z",
+            "totalTime": 452,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/parallel-pub.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "requisition description",
+          "subscriptions": [],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "tcp-client",
               "tests": [
                 {
                   "name": "Published",
                   "valid": true,
                   "description": "Published successfully"
+                },
+                {
+                  "name": "Back and forth",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'anyValue'. Received 'anyValue'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:26.579Z"
+              "publishTime": "2018-09-25T16:01:17.430Z",
+              "messageReceived": {
+                "payload": "anyValue",
+                "stream": {
+                  "address": "127.0.0.1",
+                  "family": "IPv4",
+                  "port": 59371
+                }
+              }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.643Z",
-            "endTime": "2018-09-25T14:49:26.583Z",
-            "totalTime": 940
+            "startTime": "2018-09-25T16:01:17.428Z",
+            "endTime": "2018-09-25T16:01:17.430Z",
+            "totalTime": 2,
+            "timeout": 3000
           },
           "requisitions": []
         }
@@ -2359,7 +2401,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.702Z",
+              "connectionTime": "2018-09-25T16:01:17.017Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -2404,21 +2446,21 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.835Z",
+              "publishTime": "2018-09-25T16:01:17.129Z",
               "messageReceived": {
                 "payload": "Do not make it bad",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 58767
+                  "port": 59353
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.697Z",
-            "endTime": "2018-09-25T14:49:25.835Z",
-            "totalTime": 138,
+            "startTime": "2018-09-25T16:01:17.013Z",
+            "endTime": "2018-09-25T16:01:17.130Z",
+            "totalTime": 117,
             "timeout": 3000
           },
           "requisitions": []
@@ -2450,7 +2492,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.844Z",
+              "connectionTime": "2018-09-25T16:01:17.139Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -2500,21 +2542,21 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:26.663Z",
+              "publishTime": "2018-09-25T16:01:17.965Z",
               "messageReceived": {
                 "payload": "EnqueuerRocks",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 58775
+                  "port": 59363
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.843Z",
-            "endTime": "2018-09-25T14:49:26.663Z",
-            "totalTime": 820,
+            "startTime": "2018-09-25T16:01:17.139Z",
+            "endTime": "2018-09-25T16:01:17.965Z",
+            "totalTime": 826,
             "timeout": 3000
           },
           "requisitions": []
@@ -2546,7 +2588,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:26.665Z",
+              "connectionTime": "2018-09-25T16:01:17.968Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -2602,15 +2644,15 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:26.667Z",
+              "publishTime": "2018-09-25T16:01:17.969Z",
               "messageReceived": {
                 "payload": "enqueuer Rocks"
               }
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:26.665Z",
-            "endTime": "2018-09-25T14:49:26.667Z",
+            "startTime": "2018-09-25T16:01:17.967Z",
+            "endTime": "2018-09-25T16:01:17.969Z",
             "totalTime": 2,
             "timeout": 3000
           },
@@ -2639,14 +2681,14 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.702Z"
+              "connectionTime": "2018-09-25T16:01:16.988Z"
             }
           ],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.654Z",
-            "endTime": "2018-09-25T14:49:27.654Z",
-            "totalTime": 2000
+            "startTime": "2018-09-25T16:01:16.929Z",
+            "endTime": "2018-09-25T16:01:18.935Z",
+            "totalTime": 2006
           },
           "requisitions": []
         }
@@ -2694,7 +2736,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "connectionTime": "2018-09-25T16:01:17.004Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -2739,7 +2781,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.840Z",
+              "publishTime": "2018-09-25T16:01:17.136Z",
               "messageReceived": {
                 "statusCode": 321,
                 "body": "dynamically changed payload",
@@ -2748,7 +2790,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "27",
                   "etag": "W/\"1b-e5esTWfu+XftewZ5g2Tclr7ClTo\"",
-                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "date": "Tue, 25 Sep 2018 16:01:17 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -2776,9 +2818,9 @@
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.661Z",
-            "endTime": "2018-09-25T14:49:25.840Z",
-            "totalTime": 179,
+            "startTime": "2018-09-25T16:01:16.940Z",
+            "endTime": "2018-09-25T16:01:17.136Z",
+            "totalTime": 196,
             "timeout": 3000
           },
           "requisitions": []
@@ -2810,7 +2852,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.844Z",
+              "connectionTime": "2018-09-25T16:01:17.139Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -2855,7 +2897,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-09-25T14:49:25.865Z",
+              "publishTime": "2018-09-25T16:01:17.169Z",
               "messageReceived": {
                 "statusCode": 321,
                 "body": "duplicatedResponsePayload",
@@ -2864,7 +2906,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "25",
                   "etag": "W/\"19-yZRAgggcER0sMyRTVBBpErTPT/A\"",
-                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "date": "Tue, 25 Sep 2018 16:01:17 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -2892,9 +2934,9 @@
             }
           ],
           "time": {
-            "startTime": "2018-09-25T14:49:25.843Z",
-            "endTime": "2018-09-25T14:49:25.866Z",
-            "totalTime": 23,
+            "startTime": "2018-09-25T16:01:17.139Z",
+            "endTime": "2018-09-25T16:01:17.170Z",
+            "totalTime": 31,
             "timeout": 5000
           },
           "requisitions": []
@@ -2921,14 +2963,14 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:25.869Z"
+              "connectionTime": "2018-09-25T16:01:17.173Z"
             }
           ],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.868Z",
-            "endTime": "2018-09-25T14:49:26.872Z",
-            "totalTime": 1004,
+            "startTime": "2018-09-25T16:01:17.173Z",
+            "endTime": "2018-09-25T16:01:18.178Z",
+            "totalTime": 1005,
             "timeout": 5000
           },
           "requisitions": []
@@ -2955,14 +2997,14 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T14:49:26.874Z"
+              "connectionTime": "2018-09-25T16:01:18.180Z"
             }
           ],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:26.874Z",
-            "endTime": "2018-09-25T14:49:27.877Z",
-            "totalTime": 1003,
+            "startTime": "2018-09-25T16:01:18.180Z",
+            "endTime": "2018-09-25T16:01:19.182Z",
+            "totalTime": 1002,
             "timeout": 5000
           },
           "requisitions": []
@@ -2981,9 +3023,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:25.691Z",
-            "endTime": "2018-09-25T14:49:25.850Z",
-            "totalTime": 159
+            "startTime": "2018-09-25T16:01:16.979Z",
+            "endTime": "2018-09-25T16:01:17.149Z",
+            "totalTime": 170
           },
           "requisitions": [
             {
@@ -2999,9 +3041,9 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.691Z",
-                "endTime": "2018-09-25T14:49:25.702Z",
-                "totalTime": 11
+                "startTime": "2018-09-25T16:01:16.979Z",
+                "endTime": "2018-09-25T16:01:16.989Z",
+                "totalTime": 10
               },
               "requisitions": []
             },
@@ -3018,8 +3060,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.736Z",
-                "endTime": "2018-09-25T14:49:25.737Z",
+                "startTime": "2018-09-25T16:01:17.016Z",
+                "endTime": "2018-09-25T16:01:17.017Z",
                 "totalTime": 1
               },
               "requisitions": []
@@ -3037,8 +3079,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.742Z",
-                "endTime": "2018-09-25T14:49:25.742Z",
+                "startTime": "2018-09-25T16:01:17.022Z",
+                "endTime": "2018-09-25T16:01:17.022Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -3056,8 +3098,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.756Z",
-                "endTime": "2018-09-25T14:49:25.757Z",
+                "startTime": "2018-09-25T16:01:17.036Z",
+                "endTime": "2018-09-25T16:01:17.037Z",
                 "totalTime": 1
               },
               "requisitions": []
@@ -3075,8 +3117,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.779Z",
-                "endTime": "2018-09-25T14:49:25.779Z",
+                "startTime": "2018-09-25T16:01:17.060Z",
+                "endTime": "2018-09-25T16:01:17.060Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -3094,9 +3136,9 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.794Z",
-                "endTime": "2018-09-25T14:49:25.795Z",
-                "totalTime": 1
+                "startTime": "2018-09-25T16:01:17.091Z",
+                "endTime": "2018-09-25T16:01:17.091Z",
+                "totalTime": 0
               },
               "requisitions": []
             },
@@ -3113,8 +3155,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.828Z",
-                "endTime": "2018-09-25T14:49:25.828Z",
+                "startTime": "2018-09-25T16:01:17.123Z",
+                "endTime": "2018-09-25T16:01:17.123Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -3132,9 +3174,9 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.843Z",
-                "endTime": "2018-09-25T14:49:25.844Z",
-                "totalTime": 1
+                "startTime": "2018-09-25T16:01:17.139Z",
+                "endTime": "2018-09-25T16:01:17.139Z",
+                "totalTime": 0
               },
               "requisitions": []
             },
@@ -3151,8 +3193,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.847Z",
-                "endTime": "2018-09-25T14:49:25.847Z",
+                "startTime": "2018-09-25T16:01:17.144Z",
+                "endTime": "2018-09-25T16:01:17.144Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -3170,8 +3212,8 @@
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2018-09-25T14:49:25.850Z",
-                "endTime": "2018-09-25T14:49:25.850Z",
+                "startTime": "2018-09-25T16:01:17.149Z",
+                "endTime": "2018-09-25T16:01:17.149Z",
                 "totalTime": 0
               },
               "requisitions": []
@@ -3189,12 +3231,12 @@
             {
               "name": "It delayed for at least ~3 seconds",
               "valid": true,
-              "description": "Expected 'delayedTime + 50' to be greater than '3000'. Received '3052'"
+              "description": "Expected 'delayedTime + 50' to be greater than '3000'. Received '3050'"
             },
             {
               "name": "It delayed for no more than ~3 seconds",
               "valid": true,
-              "description": "Expected 'delayedTime - 500' to be less than '3000'. Received '2502'"
+              "description": "Expected 'delayedTime - 500' to be less than '3000'. Received '2500'"
             },
             {
               "name": "Assertion #3",
@@ -3206,8 +3248,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2018-09-25T14:49:28.852Z",
-            "endTime": "2018-09-25T14:49:28.852Z",
+            "startTime": "2018-09-25T16:01:20.149Z",
+            "endTime": "2018-09-25T16:01:20.149Z",
             "totalTime": 0
           },
           "requisitions": []

@@ -9,9 +9,11 @@ export class AmqpPublisher extends Publisher {
     private connection: any;
     private messageOptions: any;
 
-    constructor(publish: PublisherModel) {
-        super(publish);
-        this.messageOptions = publish.messageOptions || {};
+    constructor(publisher: PublisherModel) {
+        super(publisher);
+        this.messageOptions = publisher.messageOptions || {};
+        this.exchangeOptions = publisher.exchangeOptions || {};
+        this.exchangeOptions.confirm = true;
     }
 
     public publish(): Promise<void> {
@@ -31,7 +33,7 @@ export class AmqpPublisher extends Publisher {
     }
 
     private getExchange() {
-        return this.connection.exchange(this.exchange || '', {confirm: true, passive: true});
+        return this.connection.exchange(this.exchange || '', this.exchangeOptions);
     }
 
     private exchangeOpen(exchange: any, reject: any, resolve: any) {
