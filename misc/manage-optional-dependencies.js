@@ -28,7 +28,8 @@ const askDependency = function(dependencies)
         console.log('No more dependency remaining');
         console.log('Installing: ' + toInstall.join(' '));
         rl.close();
-        process.exit(exec('npm install ' + toInstall.join(' ')));
+        // process.exit(exec('npm install ' + toInstall.join(' ')));
+        return;
     }
     rl.question("Will '"+dependencies[0].ipc+"' be needed? (yes/no) ", function (answer) {
         if (answer === '--skip-all-optional-dependencies') {
@@ -36,7 +37,7 @@ const askDependency = function(dependencies)
             return;
         } else if (isAffirmative(answer)) {
             console.log('Adding: ' + dependencies[0].ipc);
-            toInstall.push(optionalDependencies[0].package + '@' + optionalDependencies[0].version);
+            toInstall.push(dependencies[0].package + '@' + dependencies[0].version);
         }
         dependencies.shift();
         askDependency(dependencies);
