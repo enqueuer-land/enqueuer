@@ -18,18 +18,26 @@ export class MultiSubscriptionsReporter {
         }
     }
 
-    public subscribe(stoppedWaitingCallback: Function): Promise<void[]> {
+    public subscribe(stoppedWaitingCallback: Function): Promise<{}[]> {
         return Promise.all(this.subscriptionReporters.map(
-            subscriptionHandler => {
-                    subscriptionHandler.startTimeout(() => {
-                        if (this.haveAllSubscriptionsStoppedWaiting()) {
-                            Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
-                            return Promise.resolve(stoppedWaitingCallback());
-                        }
-                    });
-                    return subscriptionHandler.subscribe();
+            subscription => this.promisifySubscription(subscription, stoppedWaitingCallback)
+                    ));
+    }
+
+    private promisifySubscription(subscription: SubscriptionReporter, stoppedWaitingCallback: Function) {
+        return new Promise((resolve, reject) => {
+            subscription.startTimeout(() => {
+                if (this.haveAllSubscriptionsStoppedWaiting()) {
+                    Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
+                    reject(`Subscription has timed out`);
+                    stoppedWaitingCallback();
                 }
-            ));
+            });
+            subscription
+                .subscribe()
+                .then(() => resolve())
+                .catch((err) => reject(err));
+        });
     }
 
     public receiveMessage(): Promise<void> {

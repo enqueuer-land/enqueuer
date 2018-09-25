@@ -24,15 +24,22 @@ class MultiSubscriptionsReporter {
         }
     }
     subscribe(stoppedWaitingCallback) {
-        return Promise.all(this.subscriptionReporters.map(subscriptionHandler => {
-            subscriptionHandler.startTimeout(() => {
+        return Promise.all(this.subscriptionReporters.map(subscription => this.promisifySubscription(subscription, stoppedWaitingCallback)));
+    }
+    promisifySubscription(subscription, stoppedWaitingCallback) {
+        return new Promise((resolve, reject) => {
+            subscription.startTimeout(() => {
                 if (this.haveAllSubscriptionsStoppedWaiting()) {
                     logger_1.Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
-                    return Promise.resolve(stoppedWaitingCallback());
+                    reject(`Subscription has timed out`);
+                    stoppedWaitingCallback();
                 }
             });
-            return subscriptionHandler.subscribe();
-        }));
+            subscription
+                .subscribe()
+                .then(() => resolve())
+                .catch((err) => reject(err));
+        });
     }
     receiveMessage() {
         return new Promise((resolve, reject) => {
