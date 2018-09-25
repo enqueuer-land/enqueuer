@@ -6,7 +6,9 @@ import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {checkValidation} from '../models/outputs/report-model';
 import {TestModel} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
+import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 
+//TODO test it
 export class ReportGenerator {
 
     private startTime?: DateController;
@@ -15,18 +17,7 @@ export class ReportGenerator {
     private report: output.RequisitionModel;
 
     public constructor(requisitionAttributes: input.RequisitionModel) {
-        this.report = {
-            valid: true,
-            tests: [],
-            name: requisitionAttributes.name,
-            time: {
-                startTime: '',
-                endTime: '',
-                totalTime: 0
-            },
-            subscriptions: [],
-            publishers: []
-        };
+        this.report = RequisitionDefaultReports.createDefaultReport(requisitionAttributes.name);
     }
 
     public start(timeout?: number) {
@@ -36,16 +27,12 @@ export class ReportGenerator {
 
     public setPublishersReport(publishersReport: PublisherModel[]): void {
         this.report.publishers = publishersReport;
-        this.report.publishers.forEach(publisher => {
-            this.report.valid = this.report.valid && publisher.valid;
-        });
+        this.report.valid = this.report.valid && publishersReport.every(report => report.valid);
     }
 
     public setSubscriptionsReport(subscriptionReport: SubscriptionModel[]): void {
         this.report.subscriptions = subscriptionReport;
-        this.report.subscriptions.forEach(subscriptionReport => {
-            this.report.valid = this.report.valid && subscriptionReport.valid;
-        });
+        this.report.valid = this.report.valid && subscriptionReport.every(report => report.valid);
     }
 
     public getReport(): RequisitionModel {

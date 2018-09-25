@@ -2,20 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const date_controller_1 = require("../timers/date-controller");
 const report_model_1 = require("../models/outputs/report-model");
+const requisition_default_reports_1 = require("../models-defaults/outputs/requisition-default-reports");
+//TODO test it
 class ReportGenerator {
     constructor(requisitionAttributes) {
-        this.report = {
-            valid: true,
-            tests: [],
-            name: requisitionAttributes.name,
-            time: {
-                startTime: '',
-                endTime: '',
-                totalTime: 0
-            },
-            subscriptions: [],
-            publishers: []
-        };
+        this.report = requisition_default_reports_1.RequisitionDefaultReports.createDefaultReport(requisitionAttributes.name);
     }
     start(timeout) {
         this.startTime = new date_controller_1.DateController();
@@ -23,15 +14,11 @@ class ReportGenerator {
     }
     setPublishersReport(publishersReport) {
         this.report.publishers = publishersReport;
-        this.report.publishers.forEach(publisher => {
-            this.report.valid = this.report.valid && publisher.valid;
-        });
+        this.report.valid = this.report.valid && publishersReport.every(report => report.valid);
     }
     setSubscriptionsReport(subscriptionReport) {
         this.report.subscriptions = subscriptionReport;
-        this.report.subscriptions.forEach(subscriptionReport => {
-            this.report.valid = this.report.valid && subscriptionReport.valid;
-        });
+        this.report.valid = this.report.valid && subscriptionReport.every(report => report.valid);
     }
     getReport() {
         this.report.valid = this.report.valid && report_model_1.checkValidation(this.report);

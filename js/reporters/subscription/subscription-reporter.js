@@ -56,18 +56,7 @@ class SubscriptionReporter {
             logger_1.Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
             this.subscription.subscribe()
                 .then(() => {
-                if (this.hasTimedOut) {
-                    const message = `Ignoring subscription ${this.subscription.name} because it has timed out`;
-                    logger_1.Logger.error(message);
-                    reject(message);
-                }
-                else {
-                    this.report.connectionTime = new date_controller_1.DateController().toString();
-                    this.subscribed = true;
-                    resolve();
-                }
-                process.once('SIGINT', this.killListener)
-                    .once('SIGTERM', this.killListener);
+                this.handleSubscription(reject, resolve);
             })
                 .catch((err) => {
                 logger_1.Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
@@ -79,9 +68,6 @@ class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message) => {
-                // if (this.timeOut) {
-                //     this.timeOut.clear();
-                // }
                 logger_1.Logger.debug(`${this.subscription.name} received its message`);
                 if (message !== null || message !== undefined) {
                     this.handleMessageArrival(message);
@@ -97,6 +83,20 @@ class SubscriptionReporter {
                 reject(err);
             });
         });
+    }
+    handleSubscription(reject, resolve) {
+        if (this.hasTimedOut) {
+            const message = `Ignoring subscription '${this.subscription.name}' subscription because it has timed out`;
+            logger_1.Logger.error(message);
+            reject(message);
+        }
+        else {
+            this.report.connectionTime = new date_controller_1.DateController().toString();
+            this.subscribed = true;
+            resolve();
+        }
+        process.once('SIGINT', this.killListener)
+            .once('SIGTERM', this.killListener);
     }
     sendSyncResponse(resolve, message, reject) {
         if (this.subscription.response) {

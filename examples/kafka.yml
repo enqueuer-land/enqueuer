@@ -8,7 +8,7 @@ publishers:
         onMessageReceived:
             assertions:
                 -   name: kafka publish response payload
-                    expectToBeDefined: `enqueuer-topic-name`
+                    expectToBeDefined: JSON.parse(message)["enqueuer-topic-name"]
 subscriptions:
     -   type: kafka
         timeout: 2000
@@ -18,15 +18,10 @@ subscriptions:
             topic: enqueuer-topic-name
         onMessageReceived:
             assertions:
-                -   name: payload
-                    expect: value
+                -   expect: value
                     toBeEqualTo: `kafkaPayload`
-                -   name: topic
-                    expect: topic
+                -   expect: topic
                     toBeEqualTo: `enqueuer-topic-name`
-                -   name: offset
-                    expectToBeDefined: offset
-                -   name: partition
-                    expectToBeDefined: partition
-                -   name: timestamp
-                    expectToBeDefined: timestamp
+                -   expectToBeDefined: offset
+                -   expectToBeDefined: partition
+                -   expectToBeDefined: timestamp

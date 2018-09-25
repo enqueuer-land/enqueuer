@@ -62,19 +62,7 @@ export class SubscriptionReporter {
             Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
             this.subscription.subscribe()
                 .then(() => {
-                    if (this.hasTimedOut) {
-                        const message = `Ignoring subscription ${this.subscription.name} because it has timed out`;
-                        Logger.error(message);
-                        reject(message);
-                    } else {
-                        this.report.connectionTime = new DateController().toString();
-                        this.subscribed = true;
-                        resolve();
-                    }
-
-                    process.once('SIGINT', this.killListener)
-                            .once('SIGTERM', this.killListener);
-
+                    this.handleSubscription(reject, resolve);
                 })
                 .catch((err: any) => {
                     Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
@@ -87,10 +75,6 @@ export class SubscriptionReporter {
         return new Promise((resolve, reject) => {
             this.subscription.receiveMessage()
                 .then((message: any) => {
-                    // if (this.timeOut) {
-                    //     this.timeOut.clear();
-                    // }
-
                     Logger.debug(`${this.subscription.name} received its message`);
                     if (message !== null || message !== undefined) {
                         this.handleMessageArrival(message);
@@ -105,6 +89,20 @@ export class SubscriptionReporter {
                     reject(err);
                 });
         });
+    }
+
+    private handleSubscription(reject: any, resolve: any) {
+        if (this.hasTimedOut) {
+            const message = `Ignoring subscription '${this.subscription.name}' subscription because it has timed out`;
+            Logger.error(message);
+            reject(message);
+        } else {
+            this.report.connectionTime = new DateController().toString();
+            this.subscribed = true;
+            resolve();
+        }
+        process.once('SIGINT', this.killListener)
+            .once('SIGTERM', this.killListener);
     }
 
     private sendSyncResponse(resolve: any, message: any, reject: any) {

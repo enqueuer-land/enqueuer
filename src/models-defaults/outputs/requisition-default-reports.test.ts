@@ -1,6 +1,22 @@
 import {RequisitionDefaultReports} from "./requisition-default-reports";
 
 describe('RequisitionDefaultReports', () => {
+    it('default', () => {
+        const report = RequisitionDefaultReports.createDefaultReport('g');
+        expect(report.time.startTime).toBeDefined();
+        expect(report.time.endTime).toBeDefined();
+        expect(report.time.totalTime).toBeLessThan(1000);
+        delete report.time;
+        expect(report).toEqual({
+            "name": "g",
+            publishers: [],
+            "subscriptions": [],
+            "tests": [],
+            "valid": true,
+            requisitions: []
+        });
+    });
+
     it('createIteratorReport', () => {
         const report = RequisitionDefaultReports.createIteratorReport('g');
         expect(report.time.startTime).toBeDefined();

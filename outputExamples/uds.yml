@@ -13,12 +13,6 @@
         }
       ],
       "name": "Requisition #0",
-      "time": {
-        "totalTime": 50,
-        "startTime": "2018-09-25T02:39:31.006Z",
-        "endTime": "2018-09-25T02:39:31.056Z",
-        "timeout": 3000
-      },
       "subscriptions": [
         {
           "name": "Subscription #0",
@@ -36,7 +30,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2018-09-25T02:39:31.009Z",
+          "connectionTime": "2018-09-25T03:50:29.067Z",
           "messageReceived": {
             "payload": {
               "type": "Buffer",
@@ -76,22 +70,24 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2018-09-25T02:39:31.055Z",
+          "publishTime": "2018-09-25T03:50:29.105Z",
           "messageReceived": {
             "payload": "responsePayload"
           }
         }
-      ]
+      ],
+      "time": {
+        "totalTime": 41,
+        "startTime": "2018-09-25T03:50:29.064Z",
+        "endTime": "2018-09-25T03:50:29.105Z",
+        "timeout": 3000
+      },
+      "requisitions": []
     },
     {
       "valid": true,
       "tests": [],
       "name": "UDS2 Name saver",
-      "time": {
-        "totalTime": 55,
-        "startTime": "2018-09-25T02:39:31.066Z",
-        "endTime": "2018-09-25T02:39:31.121Z"
-      },
       "subscriptions": [
         {
           "name": "udsSubscription2 description",
@@ -109,7 +105,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2018-09-25T02:39:31.067Z",
+          "connectionTime": "2018-09-25T03:50:29.123Z",
           "messageReceived": {
             "payload": {
               "type": "Buffer",
@@ -144,22 +140,23 @@
               "description": "Published successfully"
             }
           ],
-          "publishTime": "2018-09-25T02:39:31.121Z",
+          "publishTime": "2018-09-25T03:50:29.168Z",
           "messageReceived": {
             "payload": "{}"
           }
         }
-      ]
+      ],
+      "time": {
+        "totalTime": 45,
+        "startTime": "2018-09-25T03:50:29.123Z",
+        "endTime": "2018-09-25T03:50:29.168Z"
+      },
+      "requisitions": []
     },
     {
       "valid": true,
       "tests": [],
       "name": "udsStreamLoader description",
-      "time": {
-        "totalTime": 8,
-        "startTime": "2018-09-25T02:39:31.123Z",
-        "endTime": "2018-09-25T02:39:31.131Z"
-      },
       "subscriptions": [
         {
           "name": "Subscription #0",
@@ -177,7 +174,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2018-09-25T02:39:31.123Z",
+          "connectionTime": "2018-09-25T03:50:29.169Z",
           "messageReceived": {
             "payload": {
               "type": "Buffer",
@@ -226,12 +223,18 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2018-09-25T02:39:31.131Z",
+          "publishTime": "2018-09-25T03:50:29.178Z",
           "messageReceived": {
             "payload": "I am still bidirectional"
           }
         }
-      ]
+      ],
+      "time": {
+        "totalTime": 9,
+        "startTime": "2018-09-25T03:50:29.169Z",
+        "endTime": "2018-09-25T03:50:29.178Z"
+      },
+      "requisitions": []
     }
   ]
 }

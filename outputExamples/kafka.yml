@@ -13,39 +13,33 @@
         }
       ],
       "name": "Requisition #0",
-      "time": {
-        "totalTime": 204,
-        "startTime": "2018-09-25T02:39:30.960Z",
-        "endTime": "2018-09-25T02:39:31.164Z",
-        "timeout": 8000
-      },
       "subscriptions": [
         {
           "name": "Subscription #0",
           "type": "kafka",
           "tests": [
             {
-              "name": "payload",
+              "name": "Assertion #0",
               "valid": true,
               "description": "Expected 'value' to be equal to 'kafkaPayload'. Received 'kafkaPayload'"
             },
             {
-              "name": "topic",
+              "name": "Assertion #1",
               "valid": true,
               "description": "Expected 'topic' to be equal to 'enqueuer-topic-name'. Received 'enqueuer-topic-name'"
             },
             {
-              "name": "offset",
+              "name": "Assertion #2",
               "valid": true,
               "description": "'offset' is not defined"
             },
             {
-              "name": "partition",
+              "name": "Assertion #3",
               "valid": true,
               "description": "'partition' is not defined"
             },
             {
-              "name": "timestamp",
+              "name": "Assertion #4",
               "valid": true,
               "description": "'timestamp' is not defined"
             },
@@ -56,15 +50,15 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2018-09-25T02:39:31.134Z",
+          "connectionTime": "2018-09-25T03:50:29.183Z",
           "messageReceived": {
             "topic": "enqueuer-topic-name",
             "value": "kafkaPayload",
-            "offset": 75,
+            "offset": 97,
             "partition": 0,
-            "highWaterOffset": 76,
+            "highWaterOffset": 98,
             "key": null,
-            "timestamp": "2018-09-25T02:39:31.136Z"
+            "timestamp": "2018-09-25T03:50:29.185Z"
           }
         }
       ],
@@ -82,7 +76,7 @@
             {
               "name": "kafka publish response payload",
               "valid": true,
-              "description": "'`enqueuer-topic-name`' is not defined"
+              "description": "'JSON.parse(message)[\"enqueuer-topic-name\"]' is not defined"
             },
             {
               "name": "Response message received",
@@ -90,10 +84,17 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2018-09-25T02:39:31.164Z",
-          "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 75\n  }\n}"
+          "publishTime": "2018-09-25T03:50:29.204Z",
+          "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 97\n  }\n}"
         }
-      ]
+      ],
+      "time": {
+        "totalTime": 191,
+        "startTime": "2018-09-25T03:50:29.017Z",
+        "endTime": "2018-09-25T03:50:29.208Z",
+        "timeout": 8000
+      },
+      "requisitions": []
     }
   ]
 }
