@@ -4,6 +4,2137 @@
   "valid": true,
   "requisitions": [
     {
+      "name": "examples/file-placeholder.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "fileRead (yml)",
+              "valid": true,
+              "description": "Expected 'requisition.yml.key' to be equal to 'value'. Received 'value'"
+            },
+            {
+              "name": "fileRead (.json)",
+              "valid": true,
+              "description": "Expected 'requisition.json.key' to be equal to 'value'. Received 'value'"
+            },
+            {
+              "name": "fileRead (.csv)",
+              "valid": true,
+              "description": "Expected 'requisition.csv[1].title' to be equal to 'secondRow'. Received 'secondRow'"
+            },
+            {
+              "name": "fileRead (.tsv)",
+              "valid": true,
+              "description": "Expected 'requisition.tsv[0].title' to be equal to 'virgs'. Received 'virgs'"
+            },
+            {
+              "name": "fileRead (.js)",
+              "valid": true,
+              "description": "Expected 'store.scriptResult' to be equal to '40'. Received '40'"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.656Z",
+            "endTime": "2018-09-25T14:49:25.702Z",
+            "totalTime": 46
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "it's not stored",
+              "valid": true,
+              "description": "'requisition.yml' is not undefined"
+            }
+          ],
+          "name": "Requisition #1",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.736Z",
+            "endTime": "2018-09-25T14:49:25.737Z",
+            "totalTime": 1
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/skipped.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0 iterator collection",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.692Z",
+            "endTime": "2018-09-25T14:49:25.725Z",
+            "totalTime": 33
+          },
+          "requisitions": [
+            {
+              "valid": true,
+              "tests": [],
+              "name": "Requisition #0 [0]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.692Z",
+                "endTime": "2018-09-25T14:49:25.702Z",
+                "totalTime": 10
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Requisition skipped",
+                  "description": "There is no iterations set to this requisition"
+                }
+              ],
+              "name": "Requisition #0",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.720Z",
+                "endTime": "2018-09-25T14:49:25.720Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Requisition skipped",
+                  "description": "There is no iterations set to this requisition"
+                }
+              ],
+              "name": "Requisition #0",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.725Z",
+                "endTime": "2018-09-25T14:49:25.725Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Requisition skipped",
+                  "description": "There is no iterations set to this requisition"
+                }
+              ],
+              "name": "Requisition #0",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.725Z",
+                "endTime": "2018-09-25T14:49:25.725Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Requisition skipped",
+                  "description": "There is no iterations set to this requisition"
+                }
+              ],
+              "name": "Requisition #0",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.725Z",
+                "endTime": "2018-09-25T14:49:25.725Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            }
+          ]
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "Assertion #0",
+              "valid": true,
+              "description": "Expected 'store.executions' to be equal to '1'. Received '1'"
+            }
+          ],
+          "name": "Requisition #1",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.737Z",
+            "endTime": "2018-09-25T14:49:25.737Z",
+            "totalTime": 0
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/store.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.697Z",
+            "endTime": "2018-09-25T14:49:25.702Z",
+            "totalTime": 5
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "Payload",
+              "valid": true,
+              "description": "Expected '123' to be equal to '123'. Received '123'"
+            }
+          ],
+          "name": "Requisition #1",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.736Z",
+            "endTime": "2018-09-25T14:49:25.737Z",
+            "totalTime": 1
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "Payload",
+              "valid": true,
+              "description": "Expected '124' to be equal to '124'. Received '124'"
+            }
+          ],
+          "name": "Requisition #2",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.742Z",
+            "endTime": "2018-09-25T14:49:25.742Z",
+            "totalTime": 0
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/file.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "file-system-watcher",
+              "tests": [
+                {
+                  "name": "Some time has passed",
+                  "valid": true,
+                  "description": "Expected 'now' to be greater than or equal to '1537886965656'. Received '1537886965764'"
+                },
+                {
+                  "name": "Filename",
+                  "valid": true,
+                  "description": "'name' (temp/fileTest20180925114925070340_7fb41dc7.file) does not contain 'temp/'"
+                },
+                {
+                  "name": "Content",
+                  "valid": true,
+                  "description": "'content' is not defined"
+                },
+                {
+                  "name": "Created",
+                  "valid": true,
+                  "description": "'created' is not defined"
+                },
+                {
+                  "name": "Modified",
+                  "valid": true,
+                  "description": "'modified' is not defined"
+                },
+                {
+                  "name": "Size",
+                  "valid": true,
+                  "description": "Expected 'size' to be greater than '0'. Received '13'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.701Z",
+              "messageReceived": {
+                "content": "1537886965656",
+                "name": "temp/fileTest20180925114925070340_7fb41dc7.file",
+                "size": 13,
+                "modified": "2018-09-25T14:49:25.704Z",
+                "created": "2018-09-25T14:49:25.704Z"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "file",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.718Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.656Z",
+            "endTime": "2018-09-25T14:49:25.765Z",
+            "totalTime": 109,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/stdin.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "standard-input",
+              "tests": [
+                {
+                  "name": "payload",
+                  "valid": true,
+                  "description": "Expected 'message' to be equal to 'enqueuer standard-input payload'. Received 'enqueuer standard-input payload'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.701Z",
+              "messageReceived": "enqueuer standard-input payload"
+            }
+          ],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.696Z",
+            "endTime": "2018-09-25T14:49:25.768Z",
+            "totalTime": 72
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/udp.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "udp",
+              "tests": [
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'it'. Received 'it'"
+                },
+                {
+                  "name": "Remote Adderss",
+                  "valid": true,
+                  "description": "Expected 'remoteInfo.address' to be equal to '127.0.0.1'. Received '127.0.0.1'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.701Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    105,
+                    116
+                  ]
+                },
+                "remoteInfo": {
+                  "address": "127.0.0.1",
+                  "family": "IPv4",
+                  "port": 53518,
+                  "size": 2
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "udp",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.767Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.698Z",
+            "endTime": "2018-09-25T14:49:25.772Z",
+            "totalTime": 74
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/recursion.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "name": "Requisition #0",
+          "valid": true,
+          "tests": [],
+          "requisitions": [
+            {
+              "name": "Requisition #0",
+              "valid": true,
+              "tests": [],
+              "requisitions": [
+                {
+                  "name": "Requisition #0",
+                  "valid": true,
+                  "tests": [],
+                  "requisitions": [
+                    {
+                      "valid": true,
+                      "tests": [],
+                      "name": "Requisition #0",
+                      "subscriptions": [],
+                      "publishers": [],
+                      "time": {
+                        "startTime": "2018-09-25T14:49:25.691Z",
+                        "endTime": "2018-09-25T14:49:25.702Z",
+                        "totalTime": 11
+                      },
+                      "requisitions": []
+                    }
+                  ]
+                },
+                {
+                  "valid": true,
+                  "tests": [],
+                  "name": "Requisition #0",
+                  "subscriptions": [],
+                  "publishers": [],
+                  "time": {
+                    "startTime": "2018-09-25T14:49:25.736Z",
+                    "endTime": "2018-09-25T14:49:25.737Z",
+                    "totalTime": 1
+                  },
+                  "requisitions": []
+                }
+              ]
+            },
+            {
+              "valid": true,
+              "tests": [],
+              "name": "Requisition #0",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.756Z",
+                "endTime": "2018-09-25T14:49:25.757Z",
+                "totalTime": 1
+              },
+              "requisitions": []
+            }
+          ]
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "Last one was executed",
+              "valid": true,
+              "description": "'store.lastExecution' is not defined"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.779Z",
+            "endTime": "2018-09-25T14:49:25.779Z",
+            "totalTime": 0
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/sqs.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "requisition description",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "sqs",
+              "tests": [
+                {
+                  "name": "Body",
+                  "valid": true,
+                  "description": "'Body' (enqueuer) does not contain 'enq'"
+                },
+                {
+                  "name": "MessageId",
+                  "valid": true,
+                  "description": "'MessageId' is not defined"
+                },
+                {
+                  "name": "ReceiptHandle",
+                  "valid": true,
+                  "description": "'ReceiptHandle' is not defined"
+                },
+                {
+                  "name": "MD5OfBody",
+                  "valid": true,
+                  "description": "'MD5OfBody' is not defined"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.701Z",
+              "messageReceived": {
+                "MessageId": "c1d815ba-305a-4225-8be6-fd5141a34c70",
+                "ReceiptHandle": "c1d815ba-305a-4225-8be6-fd5141a34c70#4873f2d6-6ff9-4c15-927b-1b03f7af3736",
+                "MD5OfBody": "9dea6b5787a8fcdbd8db4505e4a1958b",
+                "Body": "enqueuer"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "sqs",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Request Id is all 000000",
+                  "valid": true,
+                  "description": "Expected 'ResponseMetadata.RequestId' to be equal to '00000000-0000-0000-0000-000000000000'. Received '00000000-0000-0000-0000-000000000000'"
+                },
+                {
+                  "name": "ResponseMetadata",
+                  "valid": true,
+                  "description": "'ResponseMetadata' is not defined"
+                },
+                {
+                  "name": "MD5",
+                  "valid": true,
+                  "description": "'MD5OfMessageBody' is not defined"
+                },
+                {
+                  "name": "MD5OfMessageAttributes",
+                  "valid": true,
+                  "description": "'MD5OfMessageAttributes' is not defined"
+                },
+                {
+                  "name": "MessageId",
+                  "valid": true,
+                  "description": "'MessageId' is not defined"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.816Z",
+              "messageReceived": {
+                "ResponseMetadata": {
+                  "RequestId": "00000000-0000-0000-0000-000000000000"
+                },
+                "MD5OfMessageBody": "9dea6b5787a8fcdbd8db4505e4a1958b",
+                "MD5OfMessageAttributes": "d41d8cd98f00b204e9800998ecf8427e",
+                "MessageId": "59f55603-8203-4fe3-b346-9b3105d6885b"
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.696Z",
+            "endTime": "2018-09-25T14:49:25.816Z",
+            "totalTime": 120,
+            "timeout": 5000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/hooks.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "Requisitions exists onInit",
+              "valid": true,
+              "description": "'requisition' is not defined"
+            },
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "requisition description",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "name": "Subscription exists onInit",
+                  "valid": true,
+                  "description": "'subscription' is not defined"
+                },
+                {
+                  "name": "Subscription name",
+                  "valid": true,
+                  "description": "Expected 'subscription.name' to be equal to 'changed'. Received 'changed'"
+                },
+                {
+                  "name": "Subscription exists onMessageReceived",
+                  "valid": true,
+                  "description": "'subscription' is not defined"
+                },
+                {
+                  "name": "Subscription name changed",
+                  "valid": true,
+                  "description": "Expected 'subscription.name' to be equal to 'changed'. Received 'changed'"
+                },
+                {
+                  "name": "Subscription onInit executed",
+                  "valid": true,
+                  "description": "'store.sequence' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain 'subscription::onInit'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.702Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    105,
+                    116
+                  ]
+                },
+                "stream": {
+                  "address": "::ffff:127.0.0.1",
+                  "family": "IPv6",
+                  "port": 23080
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "tcp-client",
+              "tests": [
+                {
+                  "name": "Publisher exists onInit",
+                  "valid": true,
+                  "description": "'publisher' is not defined"
+                },
+                {
+                  "name": "Publisher name",
+                  "valid": true,
+                  "description": "'publisher.name' is not defined"
+                },
+                {
+                  "name": "Assertion #2",
+                  "valid": true,
+                  "description": "'publisher' is not defined"
+                },
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Publisher exists onMessageReceived",
+                  "valid": true,
+                  "description": "'publisher' is not defined"
+                },
+                {
+                  "name": "Requisition onInit",
+                  "valid": true,
+                  "description": "'store.sequence' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain 'requisition::onInit'"
+                },
+                {
+                  "name": "Publisher name changed",
+                  "valid": true,
+                  "description": "Expected 'publisher.name' to be equal to 'changed'. Received 'changed'"
+                },
+                {
+                  "name": "Publisher onInit executed",
+                  "valid": true,
+                  "description": "'store.sequence' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain 'publisher::onInit'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.833Z",
+              "messageReceived": {
+                "payload": "hook response",
+                "stream": {
+                  "address": "127.0.0.1",
+                  "family": "IPv4",
+                  "port": 58766
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.657Z",
+            "endTime": "2018-09-25T14:49:25.834Z",
+            "totalTime": 177,
+            "timeout": 2000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/http-auth-basic.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "http-server",
+              "tests": [
+                {
+                  "name": "\"Basic\" authentication prefix",
+                  "valid": true,
+                  "description": "Prefix \"Basic\" was found."
+                },
+                {
+                  "name": "\"Basic\" authentication user",
+                  "valid": true,
+                  "description": "User found"
+                },
+                {
+                  "name": "\"Basic\" authentication password",
+                  "valid": true,
+                  "description": "Password match"
+                },
+                {
+                  "name": "\"Basic\" authentication",
+                  "valid": true,
+                  "description": "Basic authentication is valid"
+                },
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                  "content-length": "10",
+                  "host": "localhost:23068",
+                  "connection": "close"
+                },
+                "params": {},
+                "query": {},
+                "body": "basic auth"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "http-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.837Z",
+              "messageReceived": {
+                "statusCode": 200,
+                "body": "basic auth response",
+                "headers": {
+                  "x-powered-by": "Express",
+                  "content-type": "text/html; charset=utf-8",
+                  "content-length": "19",
+                  "etag": "W/\"13-nGN7LEwCUKXpQoLxNqKZXSglYNc\"",
+                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "connection": "close"
+                },
+                "request": {
+                  "uri": {
+                    "protocol": "http:",
+                    "slashes": true,
+                    "auth": null,
+                    "host": "localhost:23068",
+                    "port": "23068",
+                    "hostname": "localhost",
+                    "hash": null,
+                    "search": null,
+                    "query": null,
+                    "pathname": "/basic",
+                    "path": "/basic",
+                    "href": "http://localhost:23068/basic"
+                  },
+                  "method": "post",
+                  "headers": {
+                    "content-type": "application/json",
+                    "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                    "Content-Length": 10
+                  }
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.657Z",
+            "endTime": "2018-09-25T14:49:25.837Z",
+            "totalTime": 180,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/http-auth-bearer.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "http-server",
+              "tests": [
+                {
+                  "name": "\"Bearer\" authentication prefix",
+                  "valid": true,
+                  "description": "Prefix \"Bearer\" was found."
+                },
+                {
+                  "name": "\"Bearer\" authentication token",
+                  "valid": true,
+                  "description": "Token match"
+                },
+                {
+                  "name": "\"Bearer\" authentication",
+                  "valid": true,
+                  "description": "Bearer authentication is valid"
+                },
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'message.body' to be equal to 'Rech'. Received 'Rech'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "authorization": "Bearer bearerToken",
+                  "content-length": "4",
+                  "host": "localhost:23067",
+                  "connection": "close"
+                },
+                "params": {},
+                "query": {},
+                "body": "Rech"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "http-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Body",
+                  "valid": true,
+                  "description": "Expected 'body' to be equal to 'responsePayload'. Received 'responsePayload'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.839Z",
+              "messageReceived": {
+                "statusCode": 321,
+                "body": "responsePayload",
+                "headers": {
+                  "x-powered-by": "Express",
+                  "content-type": "text/html; charset=utf-8",
+                  "content-length": "15",
+                  "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
+                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "connection": "close"
+                },
+                "request": {
+                  "uri": {
+                    "protocol": "http:",
+                    "slashes": true,
+                    "auth": null,
+                    "host": "localhost:23067",
+                    "port": "23067",
+                    "hostname": "localhost",
+                    "hash": null,
+                    "search": null,
+                    "query": null,
+                    "pathname": "/bearer",
+                    "path": "/bearer",
+                    "href": "http://localhost:23067/bearer"
+                  },
+                  "method": "post",
+                  "headers": {
+                    "content-type": "application/json",
+                    "authorization": "Bearer bearerToken",
+                    "Content-Length": 4
+                  }
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.660Z",
+            "endTime": "2018-09-25T14:49:25.839Z",
+            "totalTime": 179,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/uds.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "uds",
+              "tests": [
+                {
+                  "name": "Message received is enqueuer",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.702Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    101,
+                    110,
+                    113,
+                    117,
+                    101,
+                    117,
+                    101,
+                    114
+                  ]
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "uds",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "It is bidirectional",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'responsePayload'. Received 'responsePayload'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.784Z",
+              "messageReceived": {
+                "payload": "responsePayload"
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.698Z",
+            "endTime": "2018-09-25T14:49:25.784Z",
+            "totalTime": 86,
+            "timeout": 3000
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [],
+          "name": "UDS2 Name saver",
+          "subscriptions": [
+            {
+              "name": "udsSubscription2 description",
+              "type": "uds",
+              "tests": [
+                {
+                  "name": "Message received is enqueuer 2",
+                  "valid": true,
+                  "description": "Expected 'message.payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.795Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    101,
+                    110,
+                    113,
+                    117,
+                    101,
+                    117,
+                    101,
+                    114
+                  ]
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "udsPublisher2 description",
+              "valid": true,
+              "type": "uds",
+              "tests": [
+                {
+                  "name": "Message to be published is enqueuer",
+                  "valid": true,
+                  "description": "Expected 'publisher.payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+                },
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.846Z",
+              "messageReceived": {
+                "payload": "{}"
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.794Z",
+            "endTime": "2018-09-25T14:49:25.846Z",
+            "totalTime": 52
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [],
+          "name": "udsStreamLoader description",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "uds",
+              "tests": [
+                {
+                  "name": "Publisher stream was still opened",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'I am still opened'. Received 'I am still opened'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.847Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    73,
+                    32,
+                    97,
+                    109,
+                    32,
+                    115,
+                    116,
+                    105,
+                    108,
+                    108,
+                    32,
+                    111,
+                    112,
+                    101,
+                    110,
+                    101,
+                    100
+                  ]
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "udsStreamLoader publisher",
+              "valid": true,
+              "type": "uds",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Message received",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'I am still bidirectional'. Received 'I am still bidirectional'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.852Z",
+              "messageReceived": {
+                "payload": "I am still bidirectional"
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.847Z",
+            "endTime": "2018-09-25T14:49:25.852Z",
+            "totalTime": 5
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/https.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "https-server",
+              "tests": [
+                {
+                  "name": "Https payload",
+                  "valid": true,
+                  "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "content-length": "23",
+                  "host": "localhost:4430",
+                  "connection": "close"
+                },
+                "params": {},
+                "query": {},
+                "body": "{\n  \"https\": \"works!\"\n}"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "https-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Status Code",
+                  "valid": true,
+                  "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
+                },
+                {
+                  "name": "Body",
+                  "valid": true,
+                  "description": "Expected 'body' to be equal to 'https'. Received 'https'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.860Z",
+              "messageReceived": {
+                "statusCode": 200,
+                "body": "https",
+                "headers": {
+                  "x-powered-by": "Express",
+                  "content-type": "text/html; charset=utf-8",
+                  "content-length": "5",
+                  "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
+                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "connection": "close"
+                },
+                "request": {
+                  "uri": {
+                    "protocol": "https:",
+                    "slashes": true,
+                    "auth": null,
+                    "host": "localhost:4430",
+                    "port": "4430",
+                    "hostname": "localhost",
+                    "hash": null,
+                    "search": null,
+                    "query": null,
+                    "pathname": "/enqueuer",
+                    "path": "/enqueuer",
+                    "href": "https://localhost:4430/enqueuer"
+                  },
+                  "method": "post",
+                  "headers": {
+                    "content-type": "application/json",
+                    "Content-Length": 23
+                  }
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.662Z",
+            "endTime": "2018-09-25T14:49:25.860Z",
+            "totalTime": 198,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/http-proxy.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "proxy server",
+              "type": "http-proxy",
+              "tests": [
+                {
+                  "name": "\"Basic\" authentication prefix",
+                  "valid": true,
+                  "description": "Prefix \"Basic\" was found."
+                },
+                {
+                  "name": "\"Basic\" authentication user",
+                  "valid": true,
+                  "description": "User found"
+                },
+                {
+                  "name": "\"Basic\" authentication password",
+                  "valid": true,
+                  "description": "Password match"
+                },
+                {
+                  "name": "\"Basic\" authentication",
+                  "valid": true,
+                  "description": "Basic authentication is valid"
+                },
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'JSON.parse(message.body).proxy' to be equal to 'test'. Received 'test'"
+                },
+                {
+                  "name": "Params",
+                  "valid": true,
+                  "description": "Expected 'params.id' to be equal to 'idValue'. Received 'idValue'"
+                },
+                {
+                  "name": "Query",
+                  "valid": true,
+                  "description": "Expected 'query.query' to be equal to 'proxied'. Received 'proxied'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                  "content-length": "21",
+                  "host": "localhost:23085",
+                  "connection": "close",
+                  "Content-Length": 21
+                },
+                "params": {
+                  "id": "idValue"
+                },
+                "query": {
+                  "query": "proxied"
+                },
+                "body": "{\n  \"proxy\": \"test\"\n}"
+              }
+            },
+            {
+              "name": "real server",
+              "type": "http-server",
+              "tests": [
+                {
+                  "name": "\"Basic\" authentication prefix",
+                  "valid": true,
+                  "description": "Prefix \"Basic\" was found."
+                },
+                {
+                  "name": "\"Basic\" authentication user",
+                  "valid": true,
+                  "description": "User found"
+                },
+                {
+                  "name": "\"Basic\" authentication password",
+                  "valid": true,
+                  "description": "Password match"
+                },
+                {
+                  "name": "\"Basic\" authentication",
+                  "valid": true,
+                  "description": "Basic authentication is valid"
+                },
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'JSON.parse(message.body).proxy' to be equal to 'test'. Received 'test'"
+                },
+                {
+                  "name": "Params",
+                  "valid": true,
+                  "description": "Expected 'params.firstId' to be equal to 'idValue'. Received 'idValue'"
+                },
+                {
+                  "name": "Query",
+                  "valid": true,
+                  "description": "Expected 'query.query' to be equal to 'proxied'. Received 'proxied'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                  "content-length": "21",
+                  "host": "localhost:23085",
+                  "connection": "close"
+                },
+                "params": {
+                  "firstId": "idValue"
+                },
+                "query": {
+                  "query": "proxied"
+                },
+                "body": "{\n  \"proxy\": \"test\"\n}"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher proxy",
+              "valid": true,
+              "type": "http-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Status Code",
+                  "valid": true,
+                  "description": "Expected 'statusCode' to be equal to '333'. Received '333'"
+                },
+                {
+                  "name": "Body",
+                  "valid": true,
+                  "description": "Expected 'body' to be equal to 'responsePayload'. Received 'responsePayload'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.861Z",
+              "messageReceived": {
+                "statusCode": 333,
+                "body": "responsePayload",
+                "headers": {
+                  "x-powered-by": "Express",
+                  "content-type": "text/html; charset=utf-8",
+                  "content-length": "15",
+                  "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
+                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "connection": "close"
+                },
+                "request": {
+                  "uri": {
+                    "protocol": "http:",
+                    "slashes": true,
+                    "auth": null,
+                    "host": "localhost:23085",
+                    "port": "23085",
+                    "hostname": "localhost",
+                    "hash": null,
+                    "search": "?query=proxied",
+                    "query": "query=proxied",
+                    "pathname": "/proxy/idValue",
+                    "path": "/proxy/idValue?query=proxied",
+                    "href": "http://localhost:23085/proxy/idValue?query=proxied"
+                  },
+                  "method": "patch",
+                  "headers": {
+                    "content-type": "application/json",
+                    "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                    "Content-Length": 21
+                  }
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.661Z",
+            "endTime": "2018-09-25T14:49:25.861Z",
+            "totalTime": 200
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/kafka.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "kafka",
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'value' to be equal to 'kafkaPayload'. Received 'kafkaPayload'"
+                },
+                {
+                  "name": "Assertion #1",
+                  "valid": true,
+                  "description": "Expected 'topic' to be equal to 'enqueuer-topic-name'. Received 'enqueuer-topic-name'"
+                },
+                {
+                  "name": "Assertion #2",
+                  "valid": true,
+                  "description": "'offset' is not defined"
+                },
+                {
+                  "name": "Assertion #3",
+                  "valid": true,
+                  "description": "'partition' is not defined"
+                },
+                {
+                  "name": "Assertion #4",
+                  "valid": true,
+                  "description": "'timestamp' is not defined"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.856Z",
+              "messageReceived": {
+                "topic": "enqueuer-topic-name",
+                "value": "kafkaPayload",
+                "offset": 100,
+                "partition": 0,
+                "highWaterOffset": 101,
+                "key": null,
+                "timestamp": "2018-09-25T14:49:25.858Z"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "kafka",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "kafka publish response payload",
+                  "valid": true,
+                  "description": "'JSON.parse(message)[\"enqueuer-topic-name\"]' is not defined"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.884Z",
+              "messageReceived": "{\n  \"enqueuer-topic-name\": {\n    \"0\": 100\n  }\n}"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.675Z",
+            "endTime": "2018-09-25T14:49:25.884Z",
+            "totalTime": 209,
+            "timeout": 8000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/zeromq-pubsub.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "zero-mq-sub",
+              "tests": [
+                {
+                  "name": "topic",
+                  "valid": true,
+                  "description": "Expected 'topic' to be equal to 'topic.enqueuer.virgs'. Received 'topic.enqueuer.virgs'"
+                },
+                {
+                  "name": "payload",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'enqueuer zeroes'. Received 'enqueuer zeroes'"
+                },
+                {
+                  "name": "address",
+                  "valid": true,
+                  "description": "Expected 'store.zeroMqAddress' to be equal to 'tcp://127.0.0.1:3000'. Received 'tcp://127.0.0.1:3000'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.879Z",
+              "messageReceived": {
+                "topic": {
+                  "type": "Buffer",
+                  "data": [
+                    116,
+                    111,
+                    112,
+                    105,
+                    99,
+                    46,
+                    101,
+                    110,
+                    113,
+                    117,
+                    101,
+                    117,
+                    101,
+                    114,
+                    46,
+                    118,
+                    105,
+                    114,
+                    103,
+                    115
+                  ]
+                },
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    101,
+                    110,
+                    113,
+                    117,
+                    101,
+                    117,
+                    101,
+                    114,
+                    32,
+                    122,
+                    101,
+                    114,
+                    111,
+                    101,
+                    115
+                  ]
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher",
+              "valid": true,
+              "type": "zero-mq-pub",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.880Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.735Z",
+            "endTime": "2018-09-25T14:49:25.886Z",
+            "totalTime": 151
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/parallel-sub.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "name": "Paralleling",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'anything'. Received 'anything'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.702Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    97,
+                    110,
+                    121,
+                    116,
+                    104,
+                    105,
+                    110,
+                    103
+                  ]
+                },
+                "stream": {
+                  "address": "::ffff:127.0.0.1",
+                  "family": "IPv6",
+                  "port": 23081
+                }
+              }
+            }
+          ],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.691Z",
+            "endTime": "2018-09-25T14:49:26.143Z",
+            "totalTime": 452,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/parallel-pub.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "requisition description",
+          "subscriptions": [],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "tcp-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Back and forth",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'anyValue'. Received 'anyValue'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:26.144Z",
+              "messageReceived": {
+                "payload": "anyValue",
+                "stream": {
+                  "address": "127.0.0.1",
+                  "family": "IPv4",
+                  "port": 58779
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:26.140Z",
+            "endTime": "2018-09-25T14:49:26.144Z",
+            "totalTime": 4,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/stomp.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "stomp",
+              "tests": [
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'stompQueue'. Received 'stompQueue'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:26.542Z",
+              "messageReceived": {
+                "payload": "stompQueue",
+                "headers": {
+                  "destination": "/queue/stompQueue",
+                  "message-id": "Q_/queue/stompQueue@@session-dvOZYRnwb6eOSd71T-HW7w@@1",
+                  "redelivered": "false",
+                  "content-length": "10"
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "stomp",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:26.568Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.696Z",
+            "endTime": "2018-09-25T14:49:26.569Z",
+            "totalTime": 873,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/mqtt.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "mqtt",
+              "tests": [
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'enqueuer'. Received 'enqueuer'"
+                },
+                {
+                  "name": "Topic",
+                  "valid": true,
+                  "description": "Expected 'topic' to be equal to 'enqueuer/integration/public/test'. Received 'enqueuer/integration/public/test'"
+                },
+                {
+                  "name": "Beatles song",
+                  "valid": true,
+                  "description": "Expected 'payload.length' to be greater than '5'. Received '8'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:26.551Z",
+              "messageReceived": {
+                "topic": "enqueuer/integration/public/test",
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    101,
+                    110,
+                    113,
+                    117,
+                    101,
+                    117,
+                    101,
+                    114
+                  ]
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "mqtt",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:26.572Z"
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.676Z",
+            "endTime": "2018-09-25T14:49:26.576Z",
+            "totalTime": 900
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
       "name": "examples/amqp.yml",
       "valid": true,
       "tests": [],
@@ -44,7 +2175,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T13:20:51.851Z",
+              "connectionTime": "2018-09-25T14:49:26.556Z",
               "messageReceived": {
                 "payload": {
                   "how": {
@@ -61,7 +2192,7 @@
                     "key": "value",
                     "otherKey": "otherValue"
                   },
-                  "queue": "6sb0zxEL",
+                  "queue": "xeqyFyix",
                   "deliveryTag": {
                     "type": "Buffer",
                     "data": [
@@ -78,7 +2209,7 @@
                   "redelivered": false,
                   "exchange": "enqueuer.exchange",
                   "routingKey": "enqueuer.integration.test.routing.key",
-                  "consumerTag": "node-amqp-25565-0.16727753999269002"
+                  "consumerTag": "node-amqp-46026-0.8476876202837329"
                 }
               }
             },
@@ -98,7 +2229,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-09-25T13:20:51.849Z",
+              "connectionTime": "2018-09-25T14:49:26.554Z",
               "messageReceived": {
                 "payload": {
                   "data": {
@@ -144,7 +2275,7 @@
                   "redelivered": false,
                   "exchange": "",
                   "routingKey": "enqueuer.default.exchange",
-                  "consumerTag": "node-amqp-25565-0.0639262079904599"
+                  "consumerTag": "node-amqp-46026-0.8597352137959471"
                 }
               }
             }
@@ -166,7 +2297,7 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T13:20:51.863Z"
+              "publishTime": "2018-09-25T14:49:26.582Z"
             },
             {
               "name": "default exchange",
@@ -179,13 +2310,905 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2018-09-25T13:20:51.860Z"
+              "publishTime": "2018-09-25T14:49:26.579Z"
             }
           ],
           "time": {
-            "startTime": "2018-09-25T13:20:51.828Z",
-            "endTime": "2018-09-25T13:20:51.866Z",
-            "totalTime": 38
+            "startTime": "2018-09-25T14:49:25.643Z",
+            "endTime": "2018-09-25T14:49:26.583Z",
+            "totalTime": 940
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/tcp.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "name": "Beatles Song",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'Hey Jude'. Received 'Hey Jude'"
+                },
+                {
+                  "name": "Assertion #1",
+                  "valid": true,
+                  "description": "'stream.address' (::ffff:127.0.0.1) does not contain '127.0.0.1'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.702Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    72,
+                    101,
+                    121,
+                    32,
+                    74,
+                    117,
+                    100,
+                    101
+                  ]
+                },
+                "stream": {
+                  "address": "::ffff:127.0.0.1",
+                  "family": "IPv6",
+                  "port": 23069
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "tcp-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Do not make it bad",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'Do not make it bad'. Received 'Do not make it bad'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.835Z",
+              "messageReceived": {
+                "payload": "Do not make it bad",
+                "stream": {
+                  "address": "127.0.0.1",
+                  "family": "IPv4",
+                  "port": 58767
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.697Z",
+            "endTime": "2018-09-25T14:49:25.835Z",
+            "totalTime": 138,
+            "timeout": 3000
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #1",
+          "subscriptions": [
+            {
+              "name": "tcp 1 subscription description",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "name": "I care",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'I do not care'. Received 'I do not care'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.844Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    73,
+                    32,
+                    100,
+                    111,
+                    32,
+                    110,
+                    111,
+                    116,
+                    32,
+                    99,
+                    97,
+                    114,
+                    101
+                  ]
+                },
+                "stream": {
+                  "address": "::ffff:127.0.0.1",
+                  "family": "IPv6",
+                  "port": 23070
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "tcp 1 publisher description",
+              "valid": true,
+              "type": "tcp-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Greeting received",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'EnqueuerRocks'. Received 'EnqueuerRocks'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:26.663Z",
+              "messageReceived": {
+                "payload": "EnqueuerRocks",
+                "stream": {
+                  "address": "127.0.0.1",
+                  "family": "IPv4",
+                  "port": 58775
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.843Z",
+            "endTime": "2018-09-25T14:49:26.663Z",
+            "totalTime": 820,
+            "timeout": 3000
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #2",
+          "subscriptions": [
+            {
+              "name": "tcp 2 subscription description",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "name": "It is still open",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'The socket is still open'. Received 'The socket is still open'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:26.665Z",
+              "messageReceived": {
+                "payload": {
+                  "type": "Buffer",
+                  "data": [
+                    84,
+                    104,
+                    101,
+                    32,
+                    115,
+                    111,
+                    99,
+                    107,
+                    101,
+                    116,
+                    32,
+                    105,
+                    115,
+                    32,
+                    115,
+                    116,
+                    105,
+                    108,
+                    108,
+                    32,
+                    111,
+                    112,
+                    101,
+                    110
+                  ]
+                }
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "Publisher #0",
+              "valid": true,
+              "type": "tcp-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Second message is enqueuer Rocks",
+                  "valid": true,
+                  "description": "Expected 'payload' to be equal to 'enqueuer Rocks'. Received 'enqueuer Rocks'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:26.667Z",
+              "messageReceived": {
+                "payload": "enqueuer Rocks"
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:26.665Z",
+            "endTime": "2018-09-25T14:49:26.667Z",
+            "totalTime": 2,
+            "timeout": 3000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/avoid.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Subscription avoided",
+                  "description": "Avoidable subscription has not received any message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.702Z"
+            }
+          ],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.654Z",
+            "endTime": "2018-09-25T14:49:27.654Z",
+            "totalTime": 2000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/http.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #0",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "http-server",
+              "tests": [
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "Expected 'JSON.parse(message.body).enqueuer' to be equal to 'virgs'. Received 'virgs'"
+                },
+                {
+                  "name": "Params",
+                  "valid": true,
+                  "description": "Expected 'params.firstId' to be equal to 'idStuff'. Received 'idStuff'"
+                },
+                {
+                  "name": "Query",
+                  "valid": true,
+                  "description": "Expected 'query.query' to be equal to '0'. Received '000'"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.719Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "content-length": "25",
+                  "host": "localhost:23075",
+                  "connection": "close"
+                },
+                "params": {
+                  "firstId": "idStuff"
+                },
+                "query": {
+                  "query": "000"
+                },
+                "body": "{\n  \"enqueuer\": \"virgs\"\n}"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "http-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Status Code",
+                  "valid": true,
+                  "description": "Expected 'statusCode' to be equal to '321'. Received '321'"
+                },
+                {
+                  "name": "Body",
+                  "valid": true,
+                  "description": "Expected 'body' to be equal to 'dynamically changed payload'. Received 'dynamically changed payload'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.840Z",
+              "messageReceived": {
+                "statusCode": 321,
+                "body": "dynamically changed payload",
+                "headers": {
+                  "x-powered-by": "Express",
+                  "content-type": "text/html; charset=utf-8",
+                  "content-length": "27",
+                  "etag": "W/\"1b-e5esTWfu+XftewZ5g2Tclr7ClTo\"",
+                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "connection": "close"
+                },
+                "request": {
+                  "uri": {
+                    "protocol": "http:",
+                    "slashes": true,
+                    "auth": null,
+                    "host": "localhost:23075",
+                    "port": "23075",
+                    "hostname": "localhost",
+                    "hash": null,
+                    "search": "?query=000",
+                    "query": "query=000",
+                    "pathname": "/enqueuer/idStuff",
+                    "path": "/enqueuer/idStuff?query=000",
+                    "href": "http://localhost:23075/enqueuer/idStuff?query=000"
+                  },
+                  "method": "post",
+                  "headers": {
+                    "content-type": "application/json",
+                    "Content-Length": 25
+                  }
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.661Z",
+            "endTime": "2018-09-25T14:49:25.840Z",
+            "totalTime": 179,
+            "timeout": 3000
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "Requisition #1",
+          "subscriptions": [
+            {
+              "name": "Subscription #0",
+              "type": "http-server",
+              "tests": [
+                {
+                  "name": "Payload",
+                  "valid": true,
+                  "description": "'JSON.parse(message.body).duplicated' is not true. I swear"
+                },
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.844Z",
+              "messageReceived": {
+                "headers": {
+                  "content-type": "application/json",
+                  "content-length": "24",
+                  "host": "localhost:23075",
+                  "connection": "close"
+                },
+                "params": {
+                  "secondId": "idStuff"
+                },
+                "query": {
+                  "query": "111"
+                },
+                "body": "{\n  \"duplicated\": true\n}"
+              }
+            }
+          ],
+          "publishers": [
+            {
+              "name": "publisher description",
+              "valid": true,
+              "type": "http-client",
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                },
+                {
+                  "name": "Status Code",
+                  "valid": true,
+                  "description": "Expected 'statusCode' to be equal to '321'. Received '321'"
+                },
+                {
+                  "name": "Body",
+                  "valid": true,
+                  "description": "Expected 'body' to be equal to 'duplicatedResponsePayload'. Received 'duplicatedResponsePayload'"
+                },
+                {
+                  "name": "Response message received",
+                  "valid": true,
+                  "description": "Response message was received"
+                }
+              ],
+              "publishTime": "2018-09-25T14:49:25.865Z",
+              "messageReceived": {
+                "statusCode": 321,
+                "body": "duplicatedResponsePayload",
+                "headers": {
+                  "x-powered-by": "Express",
+                  "content-type": "text/html; charset=utf-8",
+                  "content-length": "25",
+                  "etag": "W/\"19-yZRAgggcER0sMyRTVBBpErTPT/A\"",
+                  "date": "Tue, 25 Sep 2018 14:49:25 GMT",
+                  "connection": "close"
+                },
+                "request": {
+                  "uri": {
+                    "protocol": "http:",
+                    "slashes": true,
+                    "auth": null,
+                    "host": "localhost:23075",
+                    "port": "23075",
+                    "hostname": "localhost",
+                    "hash": null,
+                    "search": "?query=111",
+                    "query": "query=111",
+                    "pathname": "/enqueuer/idStuff",
+                    "path": "/enqueuer/idStuff?query=111",
+                    "href": "http://localhost:23075/enqueuer/idStuff?query=111"
+                  },
+                  "method": "post",
+                  "headers": {
+                    "content-type": "application/json",
+                    "Content-Length": 24
+                  }
+                }
+              }
+            }
+          ],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.843Z",
+            "endTime": "2018-09-25T14:49:25.866Z",
+            "totalTime": 23,
+            "timeout": 5000
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "requisition 2 (port 23076)",
+          "subscriptions": [
+            {
+              "name": "subscription description",
+              "type": "http-server",
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Subscription avoided",
+                  "description": "Avoidable subscription has not received any message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:25.869Z"
+            }
+          ],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.868Z",
+            "endTime": "2018-09-25T14:49:26.872Z",
+            "totalTime": 1004,
+            "timeout": 5000
+          },
+          "requisitions": []
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "valid": true,
+              "name": "No time out",
+              "description": "Requisition has not timed out"
+            }
+          ],
+          "name": "check port releasing (23076)",
+          "subscriptions": [
+            {
+              "name": "same port subscription",
+              "type": "tcp-server",
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Subscription avoided",
+                  "description": "Avoidable subscription has not received any message"
+                }
+              ],
+              "valid": true,
+              "connectionTime": "2018-09-25T14:49:26.874Z"
+            }
+          ],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:26.874Z",
+            "endTime": "2018-09-25T14:49:27.877Z",
+            "totalTime": 1003,
+            "timeout": 5000
+          },
+          "requisitions": []
+        }
+      ]
+    },
+    {
+      "name": "examples/requisition.yml",
+      "valid": true,
+      "tests": [],
+      "requisitions": [
+        {
+          "valid": true,
+          "tests": [],
+          "name": "iterations iterator collection",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:25.691Z",
+            "endTime": "2018-09-25T14:49:25.850Z",
+            "totalTime": 159
+          },
+          "requisitions": [
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [0]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.691Z",
+                "endTime": "2018-09-25T14:49:25.702Z",
+                "totalTime": 11
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [1]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.736Z",
+                "endTime": "2018-09-25T14:49:25.737Z",
+                "totalTime": 1
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [2]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.742Z",
+                "endTime": "2018-09-25T14:49:25.742Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [3]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.756Z",
+                "endTime": "2018-09-25T14:49:25.757Z",
+                "totalTime": 1
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [4]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.779Z",
+                "endTime": "2018-09-25T14:49:25.779Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [5]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.794Z",
+                "endTime": "2018-09-25T14:49:25.795Z",
+                "totalTime": 1
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [6]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.828Z",
+                "endTime": "2018-09-25T14:49:25.828Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [7]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.843Z",
+                "endTime": "2018-09-25T14:49:25.844Z",
+                "totalTime": 1
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [8]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.847Z",
+                "endTime": "2018-09-25T14:49:25.847Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "'requisition.hakunaMatata' is not undefined"
+                }
+              ],
+              "name": "iterations [9]",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2018-09-25T14:49:25.850Z",
+                "endTime": "2018-09-25T14:49:25.850Z",
+                "totalTime": 0
+              },
+              "requisitions": []
+            }
+          ]
+        },
+        {
+          "valid": true,
+          "tests": [
+            {
+              "name": "It was executed 10 times",
+              "valid": true,
+              "description": "Expected 'store.iteration' to be equal to '9'. Received '9'"
+            },
+            {
+              "name": "It delayed for at least ~3 seconds",
+              "valid": true,
+              "description": "Expected 'delayedTime + 50' to be greater than '3000'. Received '3052'"
+            },
+            {
+              "name": "It delayed for no more than ~3 seconds",
+              "valid": true,
+              "description": "Expected 'delayedTime - 500' to be less than '3000'. Received '2502'"
+            },
+            {
+              "name": "Assertion #3",
+              "valid": true,
+              "description": "Expected 'requisition.anyStuff' to be equal to 'anyValue'. Received 'anyValue'"
+            }
+          ],
+          "name": "delayed",
+          "subscriptions": [],
+          "publishers": [],
+          "time": {
+            "startTime": "2018-09-25T14:49:28.852Z",
+            "endTime": "2018-09-25T14:49:28.852Z",
+            "totalTime": 0
           },
           "requisitions": []
         }

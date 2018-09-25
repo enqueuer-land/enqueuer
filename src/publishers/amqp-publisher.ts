@@ -18,7 +18,7 @@ export class AmqpPublisher extends Publisher {
         return new Promise((resolve, reject) => {
             this.connection = amqp.createConnection(this.options);
             this.connection.once('ready', () => {
-                const exchange = this.createExchange();
+                const exchange = this.getExchange();
                 Logger.debug(`Exchange to publish: '${this.exchange || 'default'}' created`);
                 exchange.once('open', () => {
                     this.exchangeOpen(exchange, reject, resolve);
@@ -30,7 +30,7 @@ export class AmqpPublisher extends Publisher {
         });
     }
 
-    private createExchange() {
+    private getExchange() {
         return this.connection.exchange(this.exchange || '', {confirm: true, passive: true});
     }
 

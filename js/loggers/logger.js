@@ -44,10 +44,22 @@ if (process.argv[1].toString().match('jest')) {
     console.log = function () {
         //empty
     };
-    Logger.trace = () => { };
-    Logger.debug = () => { };
-    Logger.info = () => { };
-    Logger.warning = () => { };
-    Logger.error = () => { };
-    Logger.fatal = () => { };
+    Logger.trace = () => {
+        /*do nothing*/
+    };
+    Logger.debug = () => {
+        /*do nothing*/
+    };
+    Logger.info = () => {
+        /*do nothing*/
+    };
+    Logger.warning = () => {
+        /*do nothing*/
+    };
+    Logger.error = () => {
+        /*do nothing*/
+    };
+    Logger.fatal = () => {
+        /*do nothing*/
+    };
 }

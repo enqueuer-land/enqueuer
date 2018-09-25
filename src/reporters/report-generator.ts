@@ -7,10 +7,9 @@ import {TestModel} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 
-//TODO test it
 export class ReportGenerator {
 
-    private startTime?: DateController;
+    private startTime: DateController = new DateController();
     private timeout?: number;
 
     private report: output.RequisitionModel;
@@ -57,42 +56,34 @@ export class ReportGenerator {
     }
 
     private addTimesReport(): void {
-        if (this.startTime) {
-            let timesReport = this.generateTimesReport();
-            if (timesReport) {
-                this.report.time = timesReport;
-                const timeoutTest = this.createTimeoutTest(timesReport);
-                if (timeoutTest) {
-                    this.report.tests.push(timeoutTest);
-                }
-            }
+        let timesReport = this.generateTimesReport();
+        this.report.time = timesReport;
+        if (this.timeout) {
+            this.report.time.timeout = this.timeout;
+            const timeoutTest = this.createTimeoutTest(this.report.time);
+            this.report.tests.push(timeoutTest);
         }
     }
 
     private generateTimesReport() {
-        if (this.startTime) {
-            const endDate = new DateController();
-            return {
-                startTime: this.startTime.toString(),
-                endTime: endDate.toString(),
-                totalTime: endDate.getTime() - this.startTime.getTime(),
-                timeout: this.timeout
-            };
-        }
+        const endDate = new DateController();
+        return {
+            startTime: this.startTime.toString(),
+            endTime: endDate.toString(),
+            totalTime: endDate.getTime() - this.startTime.getTime()
+        };
     }
 
-    private createTimeoutTest(timesReport: any): TestModel | undefined {
-        if (this.timeout) {
-            const timeoutTest: TestModel = {
-                valid: false,
-                name: 'No time out',
-                description: `Requisition has timed out: ${timesReport.totalTime} > ${this.timeout}`
-            };
-            if (timesReport.totalTime <= this.timeout) {
-                timeoutTest.valid = true;
-                timeoutTest.description = 'Requisition has not timed out';
-            }
-            return timeoutTest;
+    private createTimeoutTest(timesReport: any): TestModel {
+        const timeoutTest: TestModel = {
+            valid: false,
+            name: 'No time out',
+            description: `Requisition has timed out: ${timesReport.totalTime} > ${this.timeout}`
+        };
+        if (timesReport.totalTime <= timesReport.timeout) {
+            timeoutTest.valid = true;
+            timeoutTest.description = 'Requisition has not timed out';
         }
+        return timeoutTest;
     }
 }
