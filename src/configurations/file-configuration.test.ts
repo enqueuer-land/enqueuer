@@ -2,7 +2,7 @@ import {FileConfiguration} from "./file-configuration";
 import * as yaml from 'yamljs';
 
 jest.mock('yamljs');
-let fileLoadMock = jest.fn();
+let fileLoadMock = jest.fn(() => true);
 yaml.load.mockImplementation(fileLoadMock);
 
 describe('FileConfiguration', () => {
@@ -10,18 +10,15 @@ describe('FileConfiguration', () => {
     it('Reload file - success', () => {
         const filename = 'filename';
 
-        const reload = FileConfiguration.reload(filename);
-
-        expect(reload).toBeTruthy();
-        expect(fileLoadMock).toHaveBeenCalledWith(filename);
+        expect(() => FileConfiguration.reload(filename)).not.toThrow();
     });
 
     it('Reload file - fail', () => {
         yaml.load.mockImplementation(() => {throw 'error'});
 
-        const reload = FileConfiguration.reload('pointless');
+        const filename = 'filename';
 
-        expect(reload).toBeFalsy();
+        expect(() => FileConfiguration.reload(filename)).toThrow();
     });
 
     it('getLogLevel', () => {

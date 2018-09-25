@@ -1,5 +1,4 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {Logger} from '../loggers/logger';
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 
 export class FileConfiguration {
@@ -12,17 +11,12 @@ export class FileConfiguration {
         this.configurationFile = new YamlObjectNotation().loadFromFileSync(filename);
     }
 
-    public static reload(filename: string): boolean {
+    public static reload(filename: string) {
         try {
             FileConfiguration.instance = new FileConfiguration(filename);
-            return true;
         } catch (err) {
-            FileConfiguration.instance = {
-                configurationFile: {}
-            };
-            Logger.error(`Error loading configuration file '${filename}': ${err}`);
+            throw (`Error loading configuration file: ${err}`);
         }
-        return false;
     }
 
     public static getLogLevel(): string {

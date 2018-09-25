@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger_1 = require("../loggers/logger");
 const yaml_object_notation_1 = require("../object-notations/yaml-object-notation");
 class FileConfiguration {
     constructor(filename) {
@@ -9,15 +8,10 @@ class FileConfiguration {
     static reload(filename) {
         try {
             FileConfiguration.instance = new FileConfiguration(filename);
-            return true;
         }
         catch (err) {
-            FileConfiguration.instance = {
-                configurationFile: {}
-            };
-            logger_1.Logger.error(`Error loading configuration file '${filename}': ${err}`);
+            throw (`Error loading configuration file: ${err}`);
         }
-        return false;
     }
     static getLogLevel() {
         return FileConfiguration.getConfigurationFile()['log-level'];

@@ -6,11 +6,18 @@ class Store {
         //private
     }
     static getData() {
-        if (!Store.data) {
-            Store.data = configuration_1.Configuration.getValues().store;
+        if (!Store.data || Object.keys(Store.data).length == 0) {
+            try {
+                Store.data = configuration_1.Configuration.getValues().store;
+            }
+            catch (err) {
+                /*
+                    do nothing
+                 */
+            }
         }
         return Store.data;
     }
 }
-Store.data = null;
+Store.data = {};
 exports.Store = Store;

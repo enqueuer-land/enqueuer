@@ -14,31 +14,6 @@ class Logger {
             Logger.getLogger().level = level;
         }
     }
-    static disable() {
-        console.log = function () {
-            //empty
-        };
-        Logger.logger = {
-            trace(message) {
-                //empty
-            },
-            debug(message) {
-                //empty
-            },
-            info(message) {
-                //empty
-            },
-            warning(message) {
-                //empty
-            },
-            error(message) {
-                //empty
-            },
-            fatal(message) {
-                //empty
-            }
-        };
-    }
     static trace(message) {
         Logger.getLogger().trace(message);
     }
@@ -66,5 +41,13 @@ class Logger {
 }
 exports.Logger = Logger;
 if (process.argv[1].toString().match('jest')) {
-    Logger.disable();
+    console.log = function () {
+        //empty
+    };
+    Logger.trace = () => { };
+    Logger.debug = () => { };
+    Logger.info = () => { };
+    Logger.warning = () => { };
+    Logger.error = () => { };
+    Logger.fatal = () => { };
 }

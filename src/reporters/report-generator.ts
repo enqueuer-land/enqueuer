@@ -3,7 +3,6 @@ import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
-import {checkValidation} from '../models/outputs/report-model';
 import {TestModel} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
@@ -27,16 +26,16 @@ export class ReportGenerator {
 
     public setPublishersReport(publishersReport: PublisherModel[]): void {
         this.report.publishers = publishersReport;
-        this.report.valid = this.report.valid && publishersReport.every(report => report.valid);
     }
 
     public setSubscriptionsReport(subscriptionReport: SubscriptionModel[]): void {
         this.report.subscriptions = subscriptionReport;
-        this.report.valid = this.report.valid && subscriptionReport.every(report => report.valid);
     }
 
     public getReport(): RequisitionModel {
-        this.report.valid = this.report.valid && checkValidation(this.report);
+        this.report.valid = (this.report.subscriptions || []).every(report => report.valid) &&
+                            (this.report.publishers || []).every(report => report.valid) &&
+                            this.report.tests.every(report => report.valid);
         return this.report;
     }
 
@@ -59,19 +58,31 @@ export class ReportGenerator {
 
     private addTimesReport(): void {
         if (this.startTime) {
-            let timesReport: any = {};
-            const endDate = new DateController();
-            timesReport.totalTime = endDate.getTime() - this.startTime.getTime();
-            timesReport.startTime = this.startTime.toString();
-            timesReport.endTime = endDate.toString();
-            this.addTimeoutReport(timesReport);
-            this.report.time = timesReport;
+            let timesReport = this.generateTimesReport();
+            if (timesReport) {
+                this.report.time = timesReport;
+                const timeoutTest = this.createTimeoutTest(timesReport);
+                if (timeoutTest) {
+                    this.report.tests.push(timeoutTest);
+                }
+            }
         }
     }
 
-    private addTimeoutReport(timesReport: any) {
+    private generateTimesReport() {
+        if (this.startTime) {
+            const endDate = new DateController();
+            return {
+                startTime: this.startTime.toString(),
+                endTime: endDate.toString(),
+                totalTime: endDate.getTime() - this.startTime.getTime(),
+                timeout: this.timeout
+            };
+        }
+    }
+
+    private createTimeoutTest(timesReport: any): TestModel | undefined {
         if (this.timeout) {
-            timesReport.timeout = this.timeout;
             const timeoutTest: TestModel = {
                 valid: false,
                 name: 'No time out',
@@ -81,7 +92,7 @@ export class ReportGenerator {
                 timeoutTest.valid = true;
                 timeoutTest.description = 'Requisition has not timed out';
             }
-            this.report.tests.push(timeoutTest);
+            return timeoutTest;
         }
     }
 }

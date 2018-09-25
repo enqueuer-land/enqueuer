@@ -5,20 +5,22 @@ import {Configuration} from './configurations/configuration';
 import {Logger} from './loggers/logger';
 import './injectable-files-list';
 
-export function start(): Promise<number> {
-    const configuration = Configuration.getValues();
-    const logLevel = configuration.logLevel;
+export async function start(): Promise<number> {
+    try {
+        Logger.setLoggerLevel('warn');
 
-    if (Logger && logLevel) {
-        Logger.setLoggerLevel(logLevel);
+        const configuration = Configuration.getValues();
+        const logLevel = configuration.logLevel;
+
+        if (Logger && logLevel) {
+            Logger.setLoggerLevel(logLevel);
+        }
+
+        return await new EnqueuerStarter(configuration).start();
+    } catch (err) {
+        Logger.fatal(err);
+        return 2;
     }
-
-    return new Promise((resolve, reject) => {
-        new EnqueuerStarter(configuration)
-            .start()
-            .then(statusCode => resolve(statusCode))
-            .catch(err => reject(err));
-    });
 }
 
 const testMode = process.argv[1].toString().match('jest');

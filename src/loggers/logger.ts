@@ -10,31 +10,6 @@ export class Logger {
         }
     }
 
-    public static disable(): void {
-        console.log = function() {
-            //empty
-        };
-        Logger.logger = {
-            trace(message: string) {
-                //empty
-            },
-            debug(message: string) {
-                //empty
-            },
-            info(message: string) {
-                //empty
-            },
-            warning(message: string) {
-                //empty
-            },
-            error(message: string) {
-                //empty
-            },
-            fatal(message: string) {
-                //empty
-            }
-        };
-    }
     public static trace(message: string) {
         Logger.getLogger().trace(message);
     }
@@ -62,5 +37,25 @@ export class Logger {
 }
 
 if (process.argv[1].toString().match('jest')) {
-    Logger.disable();
+    console.log = function() {
+        //empty
+    };
+    Logger.trace = () => {
+        /*do nothing*/
+    };
+    Logger.debug = () => {
+        /*do nothing*/
+    };
+    Logger.info = () => {
+        /*do nothing*/
+    };
+    Logger.warning = () => {
+        /*do nothing*/
+    };
+    Logger.error = () => {
+        /*do nothing*/
+    };
+    Logger.fatal = () => {
+        /*do nothing*/
+    };
 }

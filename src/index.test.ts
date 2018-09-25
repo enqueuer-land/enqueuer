@@ -47,7 +47,6 @@ EnqueuerStarter.mockImplementation(enqueuerConstructorMock);
 let setLoggerLevelMock = jest.fn();
 jest.mock('./loggers/logger');
 Logger.setLoggerLevel.mockImplementation(() => setLoggerLevelMock);
-Logger.disable.mockImplementation();
 Logger.mockImplementation(() => {});
 
 describe('Index', () => {
@@ -59,7 +58,6 @@ describe('Index', () => {
     afterEach(() => {
         Configuration.getValues.mockClear();
         Configuration.getValues.mockReset();
-        Logger.disable.mockClear();
     });
 
     it('Should call configuration stuff', () => {
@@ -84,7 +82,6 @@ describe('Index', () => {
         startMock = jest.fn(() => Promise.resolve(statusCode));
 
         expect(start()).resolves.toEqual(statusCode);
-        expect(Logger.disable).not.toHaveBeenCalled();
     });
 
     it('Should return value', () => {
@@ -98,10 +95,10 @@ describe('Index', () => {
     });
 
     it('Should reject value', () => {
-        expect.assertions(3);
+        expect.assertions(2);
         startMock = jest.fn(() => Promise.reject('reason'));
 
-        expect(start()).rejects.toBe('reason')
+        expect(start()).rejects.toBe('reason');
         expect(startMock).toHaveBeenCalledTimes(1);
         expect(startMock).toHaveBeenCalledWith();
     });
