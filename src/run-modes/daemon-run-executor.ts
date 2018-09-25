@@ -101,7 +101,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
     private async handleKillSignal(): Promise<any> {
         Logger.info(`Daemon runner is finishing`);
-        await Promise.all(this.daemonInputs.map((input) => input.unsubscribe()));
+        await Promise.all(this.daemonInputs.map((input) => input.unsubscribe().catch((err) => Logger.warning(err))));
         if (this.resolve) {
             this.resolve(true);
         }
