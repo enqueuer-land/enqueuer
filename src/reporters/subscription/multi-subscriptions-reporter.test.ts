@@ -92,69 +92,84 @@ describe('MultiSubscriptionsReporter', () => {
         expect(onFinishMock).toHaveBeenCalledTimes(2);
     });
 
-    it('Sub throws timeout - not subscribed', () => {
-        startTimeoutMock = jest.fn((cb: any) => {
-            cb()
-        });
+    it('Sub throws timeout - not subscribed', done => {
+        startTimeoutMock = jest.fn((cb: any) => cb());
         const timeoutCb = jest.fn();
 
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
-        expect(multi.subscribe(timeoutCb)).resolves.toBeDefined();
-        expect(startTimeoutMock).toHaveBeenCalled();
-        expect(timeoutCb).toHaveBeenCalled();
+        multi.subscribe(timeoutCb).catch(() => {
+            expect(startTimeoutMock).toHaveBeenCalled();
+            expect(timeoutCb).toHaveBeenCalled();
+            done();
+        });
     });
 
-    it('Sub subscribed', () => {
+    it('Sub subscribed', done => {
         subscribeMock = jest.fn(() => Promise.resolve());
         let timeoutCb = jest.fn();
 
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
-        expect(multi.subscribe(timeoutCb)).resolves.toBeDefined();
-        expect(startTimeoutMock).toHaveBeenCalled();
-        expect(timeoutCb).not.toHaveBeenCalled();
+        multi.subscribe(timeoutCb).then(() => {
+            expect(startTimeoutMock).toHaveBeenCalled();
+            expect(timeoutCb).not.toHaveBeenCalled();
+            done();
+        });
     });
 
 
-    it('Handling receiveMessage no subscription', () => {
+    it('Handling receiveMessage no subscription', done => {
         const multi = new MultiSubscriptionsReporter([]);
 
-        const receiveMessagePromise = multi.receiveMessage();
-        expect(receiveMessagePromise).resolves.toBeDefined();
-        expect(receiveMessagePromise).rejects.toBeUndefined();
+        multi.receiveMessage().then(() => {
+            done();
+        });
     });
 
-    it('Handling receiveMessage failure', () => {
-        expect.assertions(0);
+    it('Handling receiveMessage failure', done => {
+        expect.assertions(1);
         receiveMessageMock = jest.fn(() => Promise.reject('errDesc'));
 
-        const multi = new MultiSubscriptionsReporter([]);
-        const receiveMessagePromise = multi.receiveMessage();
+        new MultiSubscriptionsReporter([{}]).receiveMessage().catch((err) => {
+            expect(err).toBe('errDesc');
+            done();
+        });
 
-        expect(receiveMessagePromise).rejects.toBe('errDesc')
     });
 
-    it('Handling receiveMessage success', () => {
-        expect.assertions(1);
+    it('Handling receiveMessage success', done => {
+        expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
-        const multi = new MultiSubscriptionsReporter([]);
-        const receiveMessagePromise = multi.receiveMessage();
+        new MultiSubscriptionsReporter([{}]).receiveMessage().then(() =>{
+            done();
+        })
 
-        expect(receiveMessagePromise).resolves.toBeDefined();
     });
 
-    it('Handling receiveMessage success', () => {
-        expect.assertions(1);
-        startTimeoutMock.mockImplementationOnce((cb: any) => cb());
+    it('Should receiveMessage be success when there is no subscription', done => {
+        expect.assertions(0);
+        receiveMessageMock = jest.fn(() => Promise.resolve());
+
+        new MultiSubscriptionsReporter([]).receiveMessage().then(() =>{
+            done();
+        })
+
+    });
+
+    it('Handling happy path', done => {
+        expect.assertions(0);
+        subscribeMock = jest.fn(() => Promise.resolve());
         receiveMessageMock.mockImplementationOnce(() => Promise.resolve());
 
-        const multi = new MultiSubscriptionsReporter([]);
-        multi.subscribe(() => {});
-        const receiveMessagePromise = multi.receiveMessage();
+        const multi = new MultiSubscriptionsReporter([{}]);
+        multi.subscribe(() => {}).then(() => {
+            multi.receiveMessage().then(() => {
+                done();
+            });
 
-        expect(receiveMessagePromise).resolves.toBeDefined();
+        });
     });
 
 });

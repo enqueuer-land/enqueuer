@@ -16,29 +16,31 @@ const createMock = jest.fn(() => {
 });
 
 const publishMock = jest.fn(() => {
-    return Promise.reject("error")
+    return Promise.resolve("error")
 });
 
 describe("MultiPublisher", () => {
 
 
-    it("Publishes to every output", () => {
+    it("Publishes to every output", done => {
         const outputType: PublisherModel[] = [{type: "enqueuerTest"},
                                                 {type: "enqueuerAnotherTest"},
                                                 {type: "enqueuerAnotherTestJustOneMore"}];
-        var message = "someMessage";
+        const message = "someMessage";
         const multiPublisher = new MultiPublisher(outputType);
 
 
-        multiPublisher.publish(message);
+        multiPublisher.publish(message).then(() => {
+            expect(getMock).toHaveBeenCalledTimes(outputType.length);
+            expect(getMock).toBeCalledWith(Publisher);
+            expect(createMock).toHaveBeenCalledTimes(outputType.length);
+            outputType.forEach(outputType => {
+                expect(createMock).toBeCalledWith(outputType);
+            });
+            expect(publishMock).toHaveBeenCalledTimes(outputType.length);
+            done();
+        });
 
 
-        expect(getMock).toHaveBeenCalledTimes(outputType.length);
-        expect(getMock).toBeCalledWith(Publisher);
-        expect(createMock).toHaveBeenCalledTimes(outputType.length);
-        outputType.forEach(outputType => {
-            expect(createMock).toBeCalledWith(outputType);
-        })
-        expect(publishMock).toHaveBeenCalledTimes(outputType.length);
     })
-})
+});

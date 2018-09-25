@@ -54,21 +54,25 @@ describe('RequisitionRunner', () => {
         expect(startMock).toHaveBeenCalled();
     });
 
-    it('Should return requisition report collection', () => {
+    it('Should return requisition report collection', done => {
         const requisition: RequisitionModel = {
             timeout: '<<keyName>>',
             name: 'req name',
             iterations: 2
         };
 
-        expect(new RequisitionRunner(requisition).run()).resolves.toEqual({
-            "name": "req name iterator collection",
-            "requisitions": ["I'm a report", "I'm a report"],
-            "startEvent": {},
-            "subscriptions": [],
-            "tests": [],
-            "time": {"endTime": "", "startTime": "", "totalTime": 0},
-            "valid": true
+        new RequisitionRunner(requisition).run().then((report) => {
+            expect(report.time).toBeDefined();
+            delete report.time;
+            expect(report).toEqual({
+                "name": "req name iterator collection",
+                "requisitions": ["I'm a report", "I'm a report"],
+                "publishers": [],
+                "subscriptions": [],
+                "tests": [],
+                "valid": true
+            });
+            done();
         });
     });
 

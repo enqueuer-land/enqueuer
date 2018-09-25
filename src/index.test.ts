@@ -95,10 +95,10 @@ describe('Index', () => {
     });
 
     it('Should reject value', () => {
-        expect.assertions(2);
+        expect.assertions(3);
         startMock = jest.fn(() => Promise.reject('reason'));
 
-        expect(start()).rejects.toBe('reason');
+        expect(start()).resolves.toBe(2);
         expect(startMock).toHaveBeenCalledTimes(1);
         expect(startMock).toHaveBeenCalledWith();
     });
