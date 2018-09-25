@@ -36,7 +36,7 @@ const askDependency = function(dependencies)
             return;
         } else if (isAffirmative(answer)) {
             console.log('Adding: ' + dependencies[0].ipc);
-            toInstall.push(optionalDependencies[index].package + '@' + optionalDependencies[index].version);
+            toInstall.push(optionalDependencies[0].package + '@' + optionalDependencies[0].version);
         }
         dependencies.shift();
         askDependency(dependencies);
