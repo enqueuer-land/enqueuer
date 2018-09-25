@@ -43,7 +43,7 @@ const askDependency = function(dependencies)
     });
 };
 
-if (!fs.existsSync('../package.json'))
+if (fs.existsSync('temp')) //travis created stuff
     askDependency(optionalDependencies.concat([]));
 
 
