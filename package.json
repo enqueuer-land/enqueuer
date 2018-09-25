@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node js/index.js",
     "prepublishOnly": "npm run clean && npm run build",
-    "postinstall": "node misc/manage-optional-dependencies",
+    "install": "node misc/manage-optional-dependencies",
     "test": "npm run codeCoverage && npm run singleRunTest && npm run daemonRunTest",
     "unitTest": "jest --silent .test.ts",
     "daemonRunTest": "jest --detectOpenHandles --forceExit .comp.ts",
