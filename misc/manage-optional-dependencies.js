@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const readline = require('readline');
-const packageJson = require('../package.json');
 const fs = require('fs');
 const exec = require('child_process').exec;
 
@@ -44,6 +43,7 @@ const askDependency = function(dependencies)
     });
 };
 
-askDependency(optionalDependencies.concat([]));
+if (!fs.existsSync('../package.json'))
+    askDependency(optionalDependencies.concat([]));
 
 
