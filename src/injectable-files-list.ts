@@ -1,37 +1,181 @@
 //Auto-Generated Code
-import './http-authentications/http-basic-authentication';
-import './http-authentications/http-bearer-authentication';
-import './http-authentications/http-no-authentication';
-import './publishers/amqp-publisher';
-import './publishers/file-publisher';
-import './publishers/http-client-publisher';
-import './publishers/kafka-publisher';
-import './publishers/mqtt-publisher';
-import './publishers/null-publisher';
-import './publishers/sqs-publisher';
-import './publishers/standard-output-publisher';
-import './publishers/stomp-publisher';
-import './publishers/tcp-client-publisher';
-import './publishers/udp-publisher';
-import './publishers/uds-publisher';
-import './publishers/zero-mq-pub-publisher';
-import './run-modes/daemon-run-executor';
-import './run-modes/daemon-run-input/http-daemon-input';
-import './run-modes/daemon-run-input/null-daemon-input';
-import './run-modes/daemon-run-input/tcp-daemon-input';
-import './run-modes/daemon-run-input/uds-daemon-input';
-import './run-modes/null-run-executor';
-import './run-modes/single-run-executor';
-import './subscriptions/amqp-subscription';
-import './subscriptions/filename-watcher-subscription';
-import './subscriptions/http-subscription';
-import './subscriptions/kafka-subscription';
-import './subscriptions/mqtt-subscription';
-import './subscriptions/null-subscription';
-import './subscriptions/sqs-subscription';
-import './subscriptions/standard-input-subscription';
-import './subscriptions/stomp-subscription';
-import './subscriptions/tcp-server-subscription';
-import './subscriptions/udp-subscription';
-import './subscriptions/uds-subscription';
-import './subscriptions/zero-mq-sub-subscription';
+try {
+  require('./http-authentications/http-basic-authentication');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./http-authentications/http-bearer-authentication');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./http-authentications/http-no-authentication');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/amqp-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/file-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/http-client-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/kafka-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/mqtt-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/null-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/sqs-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/standard-output-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/stomp-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/tcp-client-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/udp-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/uds-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/zero-mq-pub-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./run-modes/daemon-run-executor');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./run-modes/daemon-run-input/http-daemon-input');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./run-modes/daemon-run-input/null-daemon-input');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./run-modes/daemon-run-input/tcp-daemon-input');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./run-modes/daemon-run-input/uds-daemon-input');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./run-modes/null-run-executor');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./run-modes/single-run-executor');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/amqp-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/filename-watcher-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/http-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/kafka-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/mqtt-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/null-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/sqs-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/standard-input-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/stomp-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/tcp-server-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/udp-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/uds-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/zero-mq-sub-subscription');
+} catch (err) {
+  /* do nothing*/
+}

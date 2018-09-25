@@ -20,7 +20,7 @@ services:
   - rabbitmq
 
 before_install:
-  - npm install
+  - echo '--install-all-optional-dependencies' | npm install
   - mkdir temp
   - wget -O temp/kafka_2.11-1.0.0.tgz https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz
   - cd temp
@@ -38,7 +38,7 @@ before_install:
 script:
   - npm run lint
   - npm run build
-  - npm link
+  - echo '--install-all-optional-dependencies' | npm link
   - npm run codeCoverage
   - npm run singleRunTest
   - npm run daemonRunTest

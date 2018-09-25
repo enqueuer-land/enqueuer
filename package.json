@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node js/index.js",
+    "prepublishOnly": "npm run all",
+    "preinstall": "node misc/manage-optional-dependencies",
     "test": "npm run codeCoverage && npm run singleRunTest && npm run daemonRunTest",
     "unitTest": "jest --silent .test.ts",
     "daemonRunTest": "jest --detectOpenHandles --forceExit .comp.ts",
@@ -12,7 +14,7 @@
     "codeCoverage": "jest --detectOpenHandles --coverage --silent",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
-    "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
+    "all": "npm run clean && npm run lint && npm run build && echo '--install-all-optional-dependencies' | npm link && npm run test",
     "build": "node misc/generate-injectables-list.js src/injectable-files-list.ts src && tsc"
   },
   "repository": {
@@ -27,22 +29,15 @@
   },
   "dependencies": {
     "ajv": "^6.5.3",
-    "amqp": "^0.2.7",
-    "aws-sdk": "^2.318.0",
     "chalk": "^2.4.1",
     "commander": "^2.18.0",
     "conditional-injector": "^1.0.10",
-    "express": "^4.16.3",
     "glob": "^7.1.3",
     "json-placeholder-replacer": "^1.0.21",
-    "kafka-node": "^3.0.1",
     "log4js": "^3.0.5",
-    "mqtt": "^2.18.8",
     "object-hash": "^1.3.0",
     "prettyjson": "^1.2.1",
-    "stomp-client": "^0.9.0",
-    "yamljs": "^0.3.0",
-    "zeromq": "^4.6.0"
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/amqp": "^0.2.4",
@@ -56,6 +51,13 @@
     "@types/request": "^2.47.1",
     "@types/yamljs": "^0.2.30",
     "@types/zeromq": "^4.6.1",
+    "amqp": "^0.2.7",
+    "express": "^4.16.3",
+    "kafka-node": "^3.0.1",
+    "mqtt": "^2.18.8",
+    "stomp-client": "^0.9.0",
+    "zeromq": "^4.6.0",
+    "aws-sdk": "^2.318.0",
     "jest": "^23.6.0",
     "ts-jest": "23.1.4",
     "ts-node": "^7.0.1",

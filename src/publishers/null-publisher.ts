@@ -5,7 +5,7 @@ import {Injectable} from 'conditional-injector';
 export class NullPublisher extends Publisher {
 
     public publish(): Promise<void> {
-        return Promise.reject(`Undefined publishing type to publish event: ${this.type}`);
+        return Promise.reject(`Undefined publishing type to publish: '${this.type}'`);
     }
 
 }

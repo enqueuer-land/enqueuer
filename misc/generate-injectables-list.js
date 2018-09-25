@@ -31,13 +31,14 @@ typescriptFiles = findEveryTsFile(srcFolder);
 
 //Checks if file has "@Injectable" decorator
 injectableCode = typescriptFiles.filter(function (filename) {
-                                    return filename.indexOf('test') == -1;
+                                    return filename.indexOf('test') === -1;
                                 }).filter(function (filename) {
                                     return fs.readFileSync(filename).indexOf('@Injectable') >= 0;
                                 }).map(function (filename) {
-                                    filename = 'import \'' + filename;
-                                    filename = filename.replace('src', '.');
-                                    return filename.replace('.ts', '\';');
+                                    var code = 'try {\n  ';
+                                    code += 'require(\'' + filename;
+                                    code += '\n} catch (err) {\n  /* do nothing*/\n}';
+                                    return code.replace('src', '.').replace('.ts', '\');');
                                 }).join('\n');
 
 

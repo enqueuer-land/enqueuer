@@ -1,10 +1,10 @@
 {
   "name": "examples/stdin.yml",
-  "valid": true,
+  "valid": false,
   "tests": [],
   "requisitions": [
     {
-      "valid": true,
+      "valid": false,
       "tests": [],
       "name": "Requisition #0",
       "subscriptions": [
@@ -13,26 +13,25 @@
           "type": "standard-input",
           "tests": [
             {
-              "name": "payload",
-              "valid": true,
-              "description": "Expected 'message' to be equal to 'enqueuer standard-input payload'. Received 'enqueuer standard-input payload'"
+              "valid": false,
+              "name": "Message received",
+              "description": "Subscription has not received its message"
             },
             {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
+              "valid": false,
+              "name": "No time out",
+              "description": "Not avoidable Subscription has timed out"
             }
           ],
-          "valid": true,
-          "connectionTime": "2018-09-25T16:01:16.987Z",
-          "messageReceived": "enqueuer standard-input payload"
+          "valid": false,
+          "connectionTime": "2018-09-25T16:10:46.236Z"
         }
       ],
       "publishers": [],
       "time": {
-        "startTime": "2018-09-25T16:01:16.983Z",
-        "endTime": "2018-09-25T16:01:17.040Z",
-        "totalTime": 57
+        "startTime": "2018-09-25T16:10:46.229Z",
+        "endTime": "2018-09-25T16:10:49.232Z",
+        "totalTime": 3003
       },
       "requisitions": []
     }
