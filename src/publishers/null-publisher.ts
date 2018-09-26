@@ -6,8 +6,8 @@ import {DependencyManager} from '../configurations/dependency-manager';
 export class NullPublisher extends Publisher {
 
     public publish(): Promise<void> {
-        return Promise.reject(`Undefined publishing: '${this.type}'. Trying installing one of: ${new DependencyManager()
-            .listAvailable()} with 'nqr -i $(protocol)'`);
+        return Promise.reject(`Undefined publisher: '${this.type}'. Trying installing one of: ${new DependencyManager()
+            .listAvailable().join('; ')} with 'nqr -i $(protocol)'`);
     }
 
 }
