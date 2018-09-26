@@ -6,7 +6,6 @@ let commander = {};
 const testMode = process.argv[1].toString().match('jest');
 
 let commandLineStore: any = {};
-let libsToInstall: any = [];
 
 let refreshCommander = (commandLineArguments: string[]) => {
     let commander = new Command()
@@ -25,12 +24,6 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 return memo;
             }, [])
         .option('-l, --list-available-libraries', 'list available libraries', false)
-        .option('-i, --install-library <library>', 'install library',
-            (val: string, memo: string[]) => {
-                libsToInstall.push(val);
-                memo.push(val);
-                return memo;
-            }, [])
         .parse(commandLineArguments);
     return commander;
 };
@@ -42,7 +35,6 @@ if (!testMode) {
 export function commanderRefresher(newArguments: string[]) {
     if (testMode) {
         commandLineStore = {};
-        libsToInstall = [];
         commander = refreshCommander(newArguments);
     }
 }
@@ -86,10 +78,6 @@ export class CommandLineConfiguration {
 
     public static getStore(): any {
         return commandLineStore;
-    }
-
-    public static getLibrariesToInstall(): string[] {
-        return libsToInstall;
     }
 
     public static requestToListAvailableLibraries(): boolean {

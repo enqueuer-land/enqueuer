@@ -107,34 +107,6 @@ describe('Index', () => {
         });
     });
 
-    it('Should try to install lib - success', done => {
-        CommandLineConfiguration.getLibrariesToInstall.mockImplementationOnce(() => ['amqp', 'mqtt']);
-        const tryToInstall = jest.fn(() => Promise.resolve());
-        DependencyManager.mockImplementationOnce(() => {
-            return {
-                tryToInstall: tryToInstall
-            }
-        });
-        start().then((statusCode) => {
-            expect(statusCode).toBe(0);
-            expect(tryToInstall).toBeCalledWith(['amqp', 'mqtt']);
-            done();
-        });
-    });
-    it('Should try to install lib - fail', done => {
-        CommandLineConfiguration.getLibrariesToInstall.mockImplementationOnce(() => ['amqp', 'mqtt']);
-        const tryToInstall = jest.fn(() => Promise.reject());
-        DependencyManager.mockImplementationOnce(() => {
-            return {
-                tryToInstall: tryToInstall
-            }
-        });
-        start().catch((statusCode) => {
-            expect(statusCode).toBe(1);
-            done();
-        });
-    });
-
     it('Should list available libraries value', done => {
         const listAvailable = jest.fn(() => []);
         CommandLineConfiguration.requestToListAvailableLibraries.mockImplementationOnce(() => true);

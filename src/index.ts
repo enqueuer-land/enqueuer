@@ -8,21 +8,11 @@ import './injectable-files-list';
 
 export async function start(): Promise<number> {
         Logger.setLoggerLevel('info');
-        const librariesToInstall = CommandLineConfiguration.getLibrariesToInstall();
         const dependencyManager = new DependencyManager();
         if (CommandLineConfiguration.requestToListAvailableLibraries()) {
             console.log(`Available dependencies: ${dependencyManager.listAvailable().join('; ')}`);
             return 0;
-        } else if (librariesToInstall && librariesToInstall.length > 0) {
-            console.log(`Installing dependencies`);
-            await dependencyManager.tryToInstall(librariesToInstall).catch((error) => {
-                Logger.error(error);
-                throw 1;
-            });
-            console.log(`Dependencies were installed`);
-            return 0;
         } else {
-
             const configuration = Configuration.getValues();
             const logLevel = configuration.logLevel;
 

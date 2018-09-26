@@ -74,24 +74,6 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.requestToListAvailableLibraries()).toBeTruthy();
     });
 
-    it('install library -i', () => {
-        commanderRefresher(['node', 'test', '-i', 'amqp']);
-
-        expect(CommandLineConfiguration.getLibrariesToInstall()).toEqual(['amqp'])
-    });
-
-    it('install library -i multiple', () => {
-        commanderRefresher(['node', 'test', '-i', 'amqp', '-i', 'mqtt']);
-
-        expect(CommandLineConfiguration.getLibrariesToInstall()).toEqual(['amqp', 'mqtt']);
-    });
-
-    it('install library --install-library', () => {
-        commanderRefresher(['node', 'test', '--install-library', 'amqp', '-i', 'mqtt']);
-
-        expect(CommandLineConfiguration.getLibrariesToInstall()).toEqual(['amqp', 'mqtt']);
-    });
-
     it('getStore -s', () => {
         const option = ['-s', '--store'];
         const store = {
