@@ -136,7 +136,7 @@ describe('Index', () => {
     });
 
     it('Should list available libraries value', done => {
-        const listAvailable = jest.fn();
+        const listAvailable = jest.fn(() => []);
         CommandLineConfiguration.requestToListAvailableLibraries.mockImplementationOnce(() => true);
         DependencyManager.mockImplementationOnce(() => {
             return {
