@@ -1,7 +1,7 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {DependencyManager} from '../configurations/dependency-manager';
 
 @Injectable()
 export class NullSubscription extends Subscription {
@@ -10,7 +10,8 @@ export class NullSubscription extends Subscription {
     }
 
     public subscribe(): Promise<void> {
-        return Promise.reject(`Undefined subscription: '${this.type}'`);
+        return Promise.reject(`Undefined subscription: '${this.type}'. Trying installing one of: ${new DependencyManager()
+                                                                    .listAvailable()} with 'nqr -i $(protocol)'`);
     }
 
     public async receiveMessage(): Promise<any> {

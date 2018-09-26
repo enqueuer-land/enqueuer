@@ -3,6 +3,13 @@ import {start} from "./index";
 import {EnqueuerStarter} from './enqueuer-starter';
 import {Logger} from './loggers/logger';
 import {ConfigurationValues} from "./configurations/configuration-values";
+import {CommandLineConfiguration} from "./configurations/command-line-configuration";
+import {DependencyManager} from "./configurations/dependency-manager";
+jest.mock('./configurations/dependency-manager');
+jest.mock('./configurations/command-line-configuration');
+jest.mock('./configurations/configuration');
+jest.mock('./enqueuer-starter');
+jest.mock('./loggers/logger');
 
 let configurationGetReturn: ConfigurationValues = {
         logLevel: 'logLevelTest',
@@ -21,7 +28,6 @@ let configurationGetReturn: ConfigurationValues = {
     }
 ;
 
-jest.mock('./configurations/configuration');
 
 let getValuesMock;
 const remockConfiguration = (values = configurationGetReturn) => {
@@ -31,7 +37,6 @@ const remockConfiguration = (values = configurationGetReturn) => {
     Configuration.getValues.mockImplementationOnce(getValuesMock);
 };
 
-
 const statusCode = 6;
 let startMock = jest.fn(() => Promise.resolve(statusCode));
 let enqueuerConstructorMock = jest.fn(() => {
@@ -40,12 +45,9 @@ let enqueuerConstructorMock = jest.fn(() => {
     };
 });
 
-jest.mock('./enqueuer-starter');
 EnqueuerStarter.mockImplementation(enqueuerConstructorMock);
 
-
 let setLoggerLevelMock = jest.fn();
-jest.mock('./loggers/logger');
 Logger.setLoggerLevel.mockImplementation(() => setLoggerLevelMock);
 Logger.mockImplementation(() => {});
 
@@ -94,13 +96,58 @@ describe('Index', () => {
         expect(startMock).toHaveBeenCalledWith();
     });
 
-    it('Should reject value', () => {
-        expect.assertions(3);
+    it('Should reject value', done => {
         startMock = jest.fn(() => Promise.reject('reason'));
 
-        expect(start()).resolves.toBe(2);
-        expect(startMock).toHaveBeenCalledTimes(1);
-        expect(startMock).toHaveBeenCalledWith();
+        start().catch(status => {
+            expect(status).toBe(1);
+            expect(startMock).toHaveBeenCalledTimes(1);
+            expect(startMock).toHaveBeenCalledWith();
+            done();
+        });
+    });
+
+    it('Should try to install lib - success', done => {
+        CommandLineConfiguration.getLibrariesToInstall.mockImplementationOnce(() => ['amqp', 'mqtt']);
+        const tryToInstall = jest.fn(() => Promise.resolve());
+        DependencyManager.mockImplementationOnce(() => {
+            return {
+                tryToInstall: tryToInstall
+            }
+        });
+        start().then((statusCode) => {
+            expect(statusCode).toBe(0);
+            expect(tryToInstall).toBeCalledWith(['amqp', 'mqtt']);
+            done();
+        });
+    });
+    it('Should try to install lib - fail', done => {
+        CommandLineConfiguration.getLibrariesToInstall.mockImplementationOnce(() => ['amqp', 'mqtt']);
+        const tryToInstall = jest.fn(() => Promise.reject());
+        DependencyManager.mockImplementationOnce(() => {
+            return {
+                tryToInstall: tryToInstall
+            }
+        });
+        start().catch((statusCode) => {
+            expect(statusCode).toBe(1);
+            done();
+        });
+    });
+
+    it('Should list available libraries value', done => {
+        const listAvailable = jest.fn();
+        CommandLineConfiguration.requestToListAvailableLibraries.mockImplementationOnce(() => true);
+        DependencyManager.mockImplementationOnce(() => {
+            return {
+                listAvailable: listAvailable
+            }
+        });
+        start().then((statusCode) => {
+            expect(statusCode).toBe(0);
+            expect(listAvailable).toBeCalled();
+            done();
+        });
     });
 
 });

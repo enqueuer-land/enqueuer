@@ -21,7 +21,7 @@ describe('FileConfiguration', () => {
         expect(() => FileConfiguration.reload(filename)).toThrow();
     });
 
-    it('getLogLevel', () => {
+    it('getVerbosity', () => {
         const logLevel = 'enqueuer';
         fileLoadMock = jest.fn(() => {
             return {

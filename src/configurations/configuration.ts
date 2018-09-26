@@ -16,7 +16,7 @@ export class Configuration {
         if (!Configuration.instance || configFileName != Configuration.configFileName) {
             FileConfiguration.reload(configFileName);
             Configuration.instance = {
-                logLevel: CommandLineConfiguration.getLogLevel() || FileConfiguration.getLogLevel() || 'warn',
+                logLevel: CommandLineConfiguration.getVerbosity() || FileConfiguration.getLogLevel() || 'warn',
                 runMode: FileConfiguration.getRunMode(),
                 outputs: FileConfiguration.getOutputs(),
                 store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),

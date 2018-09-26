@@ -42,8 +42,8 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
             Promise.all(this.daemonInputs
                         .map((input: DaemonInput) => input
                                     .subscribe(onMessageReceived)
-                                    .catch((err) => this.unsubscribe(err, input)))
-                ).then(() => this.daemonInputsLength > 0 && Logger.info(`Hit me!`));
+                                    .catch((err) => this.unsubscribe(err, input))))
+                        .then(() => this.daemonInputsLength > 0 && Logger.info(`Hit me!`));
         });
     }
 

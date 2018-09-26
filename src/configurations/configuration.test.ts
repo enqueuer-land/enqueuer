@@ -47,14 +47,14 @@ describe('Configuration', () => {
 
     it('should check \'LogLevel\' in command line', () => {
         const logLevel = 'commandLine';
-        CommandLineConfiguration.getLogLevel.mockImplementationOnce(() => logLevel);
+        CommandLineConfiguration.getVerbosity.mockImplementationOnce(() => logLevel);
 
         expect(Configuration.getValues().logLevel).toBe(logLevel);
     });
 
     it('should check \'log-level\' in configuration file', () => {
         const logLevel = 'confFile';
-        CommandLineConfiguration.getLogLevel.mockImplementation(() => {});
+        CommandLineConfiguration.getVerbosity.mockImplementation(() => {});
         FileConfiguration.getLogLevel.mockImplementationOnce(() => logLevel);
 
         expect(Configuration.getValues().logLevel).toBe(logLevel);

@@ -54,7 +54,7 @@ const testerConfiguration: ConfigurationValues = {
         }
     ],
     quiet: false
-}
+};
 
 describe('Inception test', () => {
     let beingTested: any;

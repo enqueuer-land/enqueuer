@@ -34,10 +34,6 @@ before_install:
   - sudo rabbitmq-plugins enable rabbitmq_mqtt
   - sudo rabbitmq-plugins enable rabbitmq_stomp
 
-
-install:
-  - echo '--skip-all-optional-dependencies' | npm install
-
 script:
   - npm run lint
   - npm run build

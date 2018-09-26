@@ -6,7 +6,7 @@ export class Logger {
 
     public static setLoggerLevel(level?: string): void {
         if (level) {
-            Logger.getLogger().level = level;
+            Logger.getLogger().level = level.toLowerCase();
         }
     }
 

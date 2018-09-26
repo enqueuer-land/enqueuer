@@ -6,13 +6,14 @@ let commander = {};
 const testMode = process.argv[1].toString().match('jest');
 
 let commandLineStore: any = {};
+let libsToInstall: any = [];
 
 let refreshCommander = (commandLineArguments: string[]) => {
     let commander = new Command()
         .version(process.env.npm_package_version || packageJson.version, '-v, --version')
         .usage('[options] <confif-file-path>')
         .option('-q, --quiet', 'Disable logging', false)
-        .option('-l, --log-level <level>', 'Set log level')
+        .option('-b, --verbosity <level>', 'Set verbosity [trace, debug, info, warn, error, fatal]')
         .option('-c, --config-file <path>', 'Set configurationFile')
         .option('-s, --store [store]', 'Add variables values to this session',
             (val: string, memo: string[]) => {
@@ -20,11 +21,16 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 if (split.length == 2) {
                     commandLineStore[split[0]] = split[1];
                 }
-
                 memo.push(val);
                 return memo;
-            },
-            [])
+            }, [])
+        .option('-l, --list-available-libraries', 'List available libraries', false)
+        .option('-i, --install-library <library>', 'Install library',
+            (val: string, memo: string[]) => {
+                libsToInstall.push(val);
+                memo.push(val);
+                return memo;
+            }, [])
         .parse(commandLineArguments);
     return commander;
 };
@@ -35,6 +41,8 @@ if (!testMode) {
 
 export function commanderRefresher(newArguments: string[]) {
     if (testMode) {
+        commandLineStore = {};
+        libsToInstall = [];
         commander = refreshCommander(newArguments);
     }
 }
@@ -58,8 +66,8 @@ export class CommandLineConfiguration {
         return CommandLineConfiguration.getCommandLine().quiet;
     }
 
-    public static getLogLevel(): string {
-        return CommandLineConfiguration.getCommandLine().logLevel;
+    public static getVerbosity(): string {
+        return CommandLineConfiguration.getCommandLine().verbosity;
     }
 
     public static getConfigFileName(): string {
@@ -78,6 +86,14 @@ export class CommandLineConfiguration {
 
     public static getStore(): any {
         return commandLineStore;
+    }
+
+    public static getLibrariesToInstall(): string[] {
+        return libsToInstall;
+    }
+
+    public static requestToListAvailableLibraries(): boolean {
+        return CommandLineConfiguration.getCommandLine().listAvailableLibraries;
     }
 
 }

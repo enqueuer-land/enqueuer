@@ -14,24 +14,24 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.isQuietMode()).toBeFalsy();
     });
 
-    it('logLevel -l', () => {
+    it('verbosity -b', () => {
         const logLevel = 'minusL';
-        commanderRefresher(['node', 'test', '-l', logLevel]);
+        commanderRefresher(['node', 'test', '-b', logLevel]);
 
-        expect(CommandLineConfiguration.getLogLevel()).toBe(logLevel);
+        expect(CommandLineConfiguration.getVerbosity()).toBe(logLevel);
     });
 
-    it('logLevel --log-level', () => {
-        const logLevel = 'logLevel';
-        commanderRefresher(['node', 'test', '--log-level', logLevel]);
+    it('verbosity --verbosity', () => {
+        const logLevel = 'verbosity';
+        commanderRefresher(['node', 'test', '--verbosity', logLevel]);
 
-        expect(CommandLineConfiguration.getLogLevel()).toBe(logLevel);
+        expect(CommandLineConfiguration.getVerbosity()).toBe(logLevel);
     });
 
     it('undefined logLevel', () => {
         commanderRefresher(['node', 'test']);
 
-        expect(CommandLineConfiguration.getLogLevel()).toBeUndefined();
+        expect(CommandLineConfiguration.getVerbosity()).toBeUndefined();
     });
 
     it('getConfigFileName default', () => {
@@ -60,6 +60,36 @@ describe('CommandLineConfiguration', () => {
         commanderRefresher(['node', 'test', '--config-file', configFile]);
 
         expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
+    });
+
+    it('list libraries -l', () => {
+        commanderRefresher(['node', 'test', '-l']);
+
+        expect(CommandLineConfiguration.requestToListAvailableLibraries()).toBeTruthy();
+    });
+
+    it('list libraries --list-available-libraries', () => {
+        commanderRefresher(['node', 'test', '--list-available-libraries']);
+
+        expect(CommandLineConfiguration.requestToListAvailableLibraries()).toBeTruthy();
+    });
+
+    it('install library -i', () => {
+        commanderRefresher(['node', 'test', '-i', 'amqp']);
+
+        expect(CommandLineConfiguration.getLibrariesToInstall()).toEqual(['amqp'])
+    });
+
+    it('install library -i multiple', () => {
+        commanderRefresher(['node', 'test', '-i', 'amqp', '-i', 'mqtt']);
+
+        expect(CommandLineConfiguration.getLibrariesToInstall()).toEqual(['amqp', 'mqtt']);
+    });
+
+    it('install library --install-library', () => {
+        commanderRefresher(['node', 'test', '--install-library', 'amqp', '-i', 'mqtt']);
+
+        expect(CommandLineConfiguration.getLibrariesToInstall()).toEqual(['amqp', 'mqtt']);
     });
 
     it('getStore -s', () => {
