@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const readline = require('readline');
-const fs = require('fs');
 const exec = require('child_process').exec;
 
 const rl = readline.createInterface({
@@ -32,34 +31,45 @@ const install = function () {
             console.log('Errored: ' + error);
             console.log(stderr);
         }
-        console.log(stdout);
         process.exit(0);
     });
 };
 
-const askDependency = function(dependencies)
+var timeout;
+var currentDependency;
+const askDependency = function()
 {
-    if (!dependencies.length) {
+    currentDependency = optionalDependencies[0];
+    optionalDependencies.shift();
+    if (!optionalDependencies.length) {
         if ( toInstall.length > 0) {
             install();
         } else {
             process.exit(0);
         }
     } else {
-        rl.question("Will '"+dependencies[0].ipc+"' be needed? (yes/no) ", function (answer) {
-            if (answer === '--skip-all-optional-dependencies') {
-                process.exit(0);
-                return;
-            } else if (isAffirmative(answer)) {
-                console.log('Adding: ' + dependencies[0].ipc);
-                toInstall.push(dependencies[0].package + '@' + dependencies[0].version);
-            }
-            dependencies.shift();
-            askDependency(dependencies);
-        });
+        timeout = setTimeout(function() {
+            console.log('Took to long to reply. Assuming you don\'t need \''+currentDependency.ipc+'\'. Be faster next time');
+            askDependency();
+        }, 5000);
+
+        console.log("Will '"+currentDependency.ipc+"' be needed? (yes/no) ");
+        rl.prompt(true);
     }
 };
 
-askDependency(optionalDependencies.concat([]));
+rl.on("line", function (answer) {
+    if (answer === '--skip-all-optional-dependencies') {
+        process.exit(0);
+        return;
+    } else if (isAffirmative(answer)) {
+        console.log('Adding: ' + currentDependency.ipc);
+        toInstall.push(currentDependency.package + '@' + currentDependency.version);
+    }
+    clearTimeout(timeout);
+    askDependency();
+});
+
+askDependency();
 
 
