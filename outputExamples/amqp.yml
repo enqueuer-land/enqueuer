@@ -1,38 +1,49 @@
 {
   "name": "examples/amqp.yml",
-  "valid": true,
+  "valid": false,
   "tests": [],
   "requisitions": [
     {
-      "valid": true,
-      "tests": [],
+      "valid": false,
+      "tests": [
+        {
+          "valid": false,
+          "name": "Publishers publication",
+          "description": "Undefined publishing: 'amqp'. Trying installing one of: amqp,kafka-node,mqtt,aws-sdk,stomp-client,zeromq with 'nqr -i $(protocol)'"
+        }
+      ],
       "name": "creating exchange",
       "subscriptions": [],
       "publishers": [
         {
           "name": "Publisher #0",
-          "valid": true,
+          "valid": false,
           "type": "amqp",
           "tests": [
             {
               "name": "Published",
-              "valid": true,
-              "description": "Published successfully"
+              "valid": false,
+              "description": "Undefined publishing: 'amqp'. Trying installing one of: amqp,kafka-node,mqtt,aws-sdk,stomp-client,zeromq with 'nqr -i $(protocol)'"
             }
-          ],
-          "publishTime": "2018-09-26T18:10:14.626Z"
+          ]
         }
       ],
       "time": {
-        "startTime": "2018-09-26T18:10:14.412Z",
-        "endTime": "2018-09-26T18:10:14.626Z",
-        "totalTime": 214
+        "startTime": "2018-09-26T18:21:18.219Z",
+        "endTime": "2018-09-26T18:21:18.294Z",
+        "totalTime": 75
       },
       "requisitions": []
     },
     {
-      "valid": true,
-      "tests": [],
+      "valid": false,
+      "tests": [
+        {
+          "valid": false,
+          "name": "Subscriptions subscription",
+          "description": "Error connecting multiSubscription: Undefined subscription: 'amqp'. Trying installing one of: amqp,kafka-node,mqtt,aws-sdk,stomp-client,zeromq with 'nqr -i $(protocol)'"
+        }
+      ],
       "name": "using just created exchange",
       "subscriptions": [
         {
@@ -40,69 +51,12 @@
           "type": "amqp",
           "tests": [
             {
-              "name": "Payload",
-              "valid": true,
-              "description": "Expected 'payload.how.about' to be equal to 'a new object?'. Received 'a new object?'"
-            },
-            {
-              "name": "Header",
-              "valid": true,
-              "description": "Expected 'headers.key' to be equal to 'value'. Received 'value'"
-            },
-            {
-              "name": "Other Header Value",
-              "valid": true,
-              "description": "Expected 'headers.otherKey' to be equal to 'otherValue'. Received 'otherValue'"
-            },
-            {
-              "name": "Routing Key",
-              "valid": true,
-              "description": "Expected 'deliveryInfo.routingKey' to be equal to 'enqueuer.integration.test.routing.key'. Received 'enqueuer.integration.test.routing.key'"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
+              "valid": false,
+              "name": "Subscribed",
+              "description": "Subscription is not able to subscribe"
             }
           ],
-          "valid": true,
-          "connectionTime": "2018-09-26T18:10:14.655Z",
-          "messageReceived": {
-            "payload": {
-              "how": {
-                "about": "a new object?"
-              }
-            },
-            "headers": {
-              "key": "value",
-              "otherKey": "otherValue"
-            },
-            "deliveryInfo": {
-              "contentType": "application/json",
-              "headers": {
-                "key": "value",
-                "otherKey": "otherValue"
-              },
-              "queue": "HBitvBSb",
-              "deliveryTag": {
-                "type": "Buffer",
-                "data": [
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  1
-                ]
-              },
-              "redelivered": false,
-              "exchange": "enqueuer.exchange",
-              "routingKey": "enqueuer.integration.test.routing.key",
-              "consumerTag": "node-amqp-65429-0.7492671772095434"
-            }
-          }
+          "valid": false
         }
       ],
       "publishers": [
@@ -115,26 +69,26 @@
               "name": "Assertion #0",
               "valid": true,
               "description": "Expected 'publisher.options.port' to be equal to '5672'. Received '5672'"
-            },
-            {
-              "name": "Published",
-              "valid": true,
-              "description": "Published successfully"
             }
-          ],
-          "publishTime": "2018-09-26T18:10:14.662Z"
+          ]
         }
       ],
       "time": {
-        "startTime": "2018-09-26T18:10:14.632Z",
-        "endTime": "2018-09-26T18:10:14.665Z",
-        "totalTime": 33
+        "startTime": "2018-09-26T18:21:18.306Z",
+        "endTime": "2018-09-26T18:21:18.309Z",
+        "totalTime": 3
       },
       "requisitions": []
     },
     {
-      "valid": true,
-      "tests": [],
+      "valid": false,
+      "tests": [
+        {
+          "valid": false,
+          "name": "Subscriptions subscription",
+          "description": "Error connecting multiSubscription: Undefined subscription: 'amqp'. Trying installing one of: amqp,kafka-node,mqtt,aws-sdk,stomp-client,zeromq with 'nqr -i $(protocol)'"
+        }
+      ],
       "name": "default exhange",
       "subscriptions": [
         {
@@ -142,66 +96,12 @@
           "type": "amqp",
           "tests": [
             {
-              "name": "Assertion #0",
-              "valid": true,
-              "description": "Expected 'data' to be equal to 'default exchange'. Received 'default exchange'"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
+              "valid": false,
+              "name": "Subscribed",
+              "description": "Subscription is not able to subscribe"
             }
           ],
-          "valid": true,
-          "connectionTime": "2018-09-26T18:10:14.676Z",
-          "messageReceived": {
-            "payload": {
-              "data": {
-                "type": "Buffer",
-                "data": [
-                  100,
-                  101,
-                  102,
-                  97,
-                  117,
-                  108,
-                  116,
-                  32,
-                  101,
-                  120,
-                  99,
-                  104,
-                  97,
-                  110,
-                  103,
-                  101
-                ]
-              },
-              "contentType": "application/octet-stream"
-            },
-            "headers": {},
-            "deliveryInfo": {
-              "contentType": "application/octet-stream",
-              "queue": "enqueuer.default.exchange",
-              "deliveryTag": {
-                "type": "Buffer",
-                "data": [
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  1
-                ]
-              },
-              "redelivered": false,
-              "exchange": "",
-              "routingKey": "enqueuer.default.exchange",
-              "consumerTag": "node-amqp-65429-0.7958953966000406"
-            }
-          }
+          "valid": false
         }
       ],
       "publishers": [
@@ -209,20 +109,13 @@
           "name": "Publisher #0",
           "valid": true,
           "type": "amqp",
-          "tests": [
-            {
-              "name": "Published",
-              "valid": true,
-              "description": "Published successfully"
-            }
-          ],
-          "publishTime": "2018-09-26T18:10:14.684Z"
+          "tests": []
         }
       ],
       "time": {
-        "startTime": "2018-09-26T18:10:14.667Z",
-        "endTime": "2018-09-26T18:10:14.684Z",
-        "totalTime": 17
+        "startTime": "2018-09-26T18:21:18.323Z",
+        "endTime": "2018-09-26T18:21:18.324Z",
+        "totalTime": 1
       },
       "requisitions": []
     }

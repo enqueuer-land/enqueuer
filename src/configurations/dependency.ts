@@ -1,5 +1,4 @@
 import {exec} from 'child_process';
-import {Logger} from '../loggers/logger';
 
 export class Dependency {
     private readonly packageName: string;
@@ -19,15 +18,15 @@ export class Dependency {
     }
 
     public install(): Promise<void> {
-        Logger.info(`Installing ${this.display()} dependency`);
+        console.log(`Installing ${this.display()} dependency`);
         return new Promise((resolve, reject) => {
             exec(`npm install ${this.display()}`,
                 (error: any, stdout: string, stderr: string) => {
                 if (error) {
-                    Logger.error(`Error installing ${this.packageName}: ${stderr}`);
+                    console.error(`Error installing ${this.packageName}: ${stderr}`);
                     reject(error);
                 } else {
-                    Logger.info(`${this.packageName} installed`);
+                    console.log(`${this.packageName} installed`);
                     resolve();
                 }
             });

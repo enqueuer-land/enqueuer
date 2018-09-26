@@ -1,5 +1,4 @@
 import {Dependency} from './dependency';
-import {Logger} from '../loggers/logger';
 const packageJson = require('../../package.json');
 
 export class DependencyManager {
@@ -37,7 +36,7 @@ export class DependencyManager {
             if (find) {
                 return find.install();
             } else {
-                Logger.info(`Library is not available for installing`);
+                console.warn(`Library '${lib}' is not available for installing`);
             }
         }));
     }

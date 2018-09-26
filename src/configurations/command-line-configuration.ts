@@ -12,10 +12,10 @@ let refreshCommander = (commandLineArguments: string[]) => {
     let commander = new Command()
         .version(process.env.npm_package_version || packageJson.version, '-v, --version')
         .usage('[options] <confif-file-path>')
-        .option('-q, --quiet', 'Disable logging', false)
-        .option('-b, --verbosity <level>', 'Set verbosity [trace, debug, info, warn, error, fatal]')
-        .option('-c, --config-file <path>', 'Set configurationFile')
-        .option('-s, --store [store]', 'Add variables values to this session',
+        .option('-q, --quiet', 'disable logging', false)
+        .option('-b, --verbosity <level>', 'set verbosity [trace, debug, info, warn, error, fatal]')
+        .option('-c, --config-file <path>', 'set configurationFile')
+        .option('-s, --store [store]', 'add variables values to this session',
             (val: string, memo: string[]) => {
                 const split = val.split('=');
                 if (split.length == 2) {
@@ -24,8 +24,8 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 memo.push(val);
                 return memo;
             }, [])
-        .option('-l, --list-available-libraries', 'List available libraries', false)
-        .option('-i, --install-library <library>', 'Install library',
+        .option('-l, --list-available-libraries', 'list available libraries', false)
+        .option('-i, --install-library <library>', 'install library',
             (val: string, memo: string[]) => {
                 libsToInstall.push(val);
                 memo.push(val);

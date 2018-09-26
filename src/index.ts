@@ -11,14 +11,15 @@ export async function start(): Promise<number> {
         const librariesToInstall = CommandLineConfiguration.getLibrariesToInstall();
         const dependencyManager = new DependencyManager();
         if (CommandLineConfiguration.requestToListAvailableLibraries()) {
-            Logger.info(`Available dependencies: ${dependencyManager.listAvailable()}`);
+            console.log(`Available dependencies: ${dependencyManager.listAvailable().join('; ')}`);
             return 0;
         } else if (librariesToInstall && librariesToInstall.length > 0) {
+            console.log(`Installing dependencies`);
             await dependencyManager.tryToInstall(librariesToInstall).catch((error) => {
                 Logger.error(error);
                 throw 1;
             });
-            Logger.info(`Dependencies were installed`);
+            console.log(`Dependencies were installed`);
             return 0;
         } else {
 
