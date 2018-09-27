@@ -18,7 +18,7 @@ To use **enqueuer**, you have to:
 
 1. install it:
 
-    ```$npm install -g enqueuer```
+    ```$npm install enqueuer --no-optional --global```
     
 2. create a configuration file like this:
     ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-config.png "config-file.yml")

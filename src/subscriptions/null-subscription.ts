@@ -11,7 +11,7 @@ export class NullSubscription extends Subscription {
 
     public subscribe(): Promise<void> {
         return Promise.reject(`Undefined subscription: '${this.type}'. Trying installing one of: ${new DependencyManager()
-                                                                    .listAvailable().join('; ')} with 'nqr -i $(protocol)'`);
+                                                                    .listAvailable().join('; ')} with 'npm install $(protocol) --no-optional'`);
     }
 
     public async receiveMessage(): Promise<any> {

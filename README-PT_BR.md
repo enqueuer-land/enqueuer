@@ -16,7 +16,7 @@ Neste momento, existem três opções para testar o fluxo poligota:
 Para usar **enqueuer**, basta:
 1. instalar:
 
-    ```$npm install -g enqueuer```
+    ```$npm install enqueuer --no-optional --global```
     
 2. criar um arquivo de configuração:
     ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-config.png "config-file.yml")
