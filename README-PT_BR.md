@@ -27,4 +27,11 @@ Para usar **enqueuer**, basta:
 4. executar:
     ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-result.png "example result")
         
+#### O que faz
+É uma ferramenta de testes de integração para microserviços que contempla uma vasta gama de protocolos (HTTP, AMQP, MQTT etc.) e fornece as seguintes funcionalidades:
+1) Inicia a requisição
+2) Mocka serviços dependentes
+3) Testa o conteúdo das mensagens
+4) CLI facilmente adicionada as pipelines de integração contínua
+
 Para mais detalhes, considere dar uma olhada nas [instruções](https://github.com/lopidio/enqueuer/tree/develop/docs/instructions "instructions")

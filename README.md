@@ -29,5 +29,12 @@ To use **enqueuer**, you have to:
 4. execute it:
     ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-result.png "executing")
     
+
+#### What it does
+It is a microservice integration testing tool that supports a range of protocols (HTTP, AMQP, MQTT etc.) and provides the following capabilities:
+1) Initiates requests
+2) Mock depended services
+3) Assert against payload and message content
+4) CLI easily added to CI pipelines
     
 Consider reading the [instructions](https://github.com/lopidio/enqueuer/tree/develop/docs/instructions "instructions") for further details
