@@ -4,8 +4,9 @@
             if (!store.executions) {
                 store.executions = 0;
             }
-            store.skipped = 0;
             ++store.executions;
+        store:
+            skipped: 0
 -   onInit:
         assertions:
             -   expect: store.executions

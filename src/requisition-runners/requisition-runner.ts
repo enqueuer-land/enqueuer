@@ -113,10 +113,9 @@ export class RequisitionRunner {
         if (!requisitionModel || !requisition) {
             return true;
         }
-
-        const definedButLessThanZero = (requisitionModel.iterations && requisitionModel.iterations <= 0);
-        const invalidIterations = typeof(requisitionModel.iterations) != 'number' || definedButLessThanZero;
-        return requisitionModel.iterations && (invalidIterations);
+        const definedButLessThanZero = (requisitionModel.iterations !== undefined && requisitionModel.iterations <= 0);
+        const definedButInvalid = requisitionModel.iterations !== undefined && typeof(requisitionModel.iterations) != 'number';
+        return definedButInvalid || definedButLessThanZero;
     }
 
 }
