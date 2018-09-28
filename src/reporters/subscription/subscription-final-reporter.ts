@@ -66,7 +66,7 @@ export class SubscriptionFinalReporter {
             return [{
                 valid: false,
                 name: this.noTimeOutTestName,
-                description: `Not avoidable Subscription has timed out`
+                description: `Not avoidable subscription has timed out`
             }];
         }
         return [];

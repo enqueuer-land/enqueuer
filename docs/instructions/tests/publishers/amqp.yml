@@ -16,6 +16,8 @@ messageOptions:
 
 #Optional. Accepted values defined here: https://github.com/postwait/node-amqp#connectionexchangename-options-opencallback
 exchangeOptions:
+    passive: true
+    confirm: true #Enqueuer needs this value to be true so it is able to know when a publisher is done. So it sets this value to be always true
 
 #Optional. Exchange name to have a message published in
 #If no value is given, it will be published in the default exchange

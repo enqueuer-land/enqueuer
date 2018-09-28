@@ -1,34 +1,25 @@
-{
-  "name": "examples/avoid.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [],
-      "name": "Requisition #0",
-      "subscriptions": [
-        {
-          "name": "Subscription #0",
-          "type": "tcp-server",
-          "tests": [
-            {
-              "valid": true,
-              "name": "Subscription avoided",
-              "description": "Avoidable subscription has not received any message"
-            }
-          ],
-          "valid": true,
-          "connectionTime": "2018-09-28T19:26:03.279Z"
-        }
-      ],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.220Z",
-        "endTime": "2018-09-28T19:26:05.223Z",
-        "totalTime": 2003
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/avoid.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests: []
+    name: 'Requisition #0'
+    subscriptions:
+      -
+        name: 'Subscription #0'
+        type: tcp-server
+        tests:
+          -
+            valid: true
+            name: 'Subscription avoided'
+            description: 'Avoidable subscription has not received any message'
+        valid: true
+        connectionTime: '2018-09-28T23:14:33.708Z'
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.631Z'
+      endTime: '2018-09-28T23:14:35.632Z'
+      totalTime: 2001
+    requisitions: []

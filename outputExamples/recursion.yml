@@ -1,86 +1,67 @@
-{
-  "name": "examples/recursion.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "name": "Requisition #0",
-      "valid": true,
-      "tests": [],
-      "requisitions": [
-        {
-          "name": "Requisition #0",
-          "valid": true,
-          "tests": [],
-          "requisitions": [
-            {
-              "name": "Requisition #0",
-              "valid": true,
-              "tests": [],
-              "requisitions": [
-                {
-                  "valid": true,
-                  "tests": [],
-                  "name": "Requisition #0",
-                  "subscriptions": [],
-                  "publishers": [],
-                  "time": {
-                    "startTime": "2018-09-28T19:26:03.266Z",
-                    "endTime": "2018-09-28T19:26:03.279Z",
-                    "totalTime": 13
-                  },
-                  "requisitions": []
-                }
-              ]
-            },
-            {
-              "valid": true,
-              "tests": [],
-              "name": "Requisition #0",
-              "subscriptions": [],
-              "publishers": [],
-              "time": {
-                "startTime": "2018-09-28T19:26:03.303Z",
-                "endTime": "2018-09-28T19:26:03.304Z",
-                "totalTime": 1
-              },
-              "requisitions": []
-            }
-          ]
-        },
-        {
-          "valid": true,
-          "tests": [],
-          "name": "Requisition #0",
-          "subscriptions": [],
-          "publishers": [],
-          "time": {
-            "startTime": "2018-09-28T19:26:03.320Z",
-            "endTime": "2018-09-28T19:26:03.320Z",
-            "totalTime": 0
-          },
-          "requisitions": []
-        }
-      ]
-    },
-    {
-      "valid": true,
-      "tests": [
-        {
-          "name": "Last one was executed",
-          "valid": true,
-          "description": "'store.lastExecution' is not defined"
-        }
-      ],
-      "name": "Requisition #0",
-      "subscriptions": [],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.335Z",
-        "endTime": "2018-09-28T19:26:03.335Z",
-        "totalTime": 0
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/recursion.yml
+valid: true
+tests: []
+requisitions:
+  -
+    name: 'Requisition #0'
+    valid: true
+    tests: []
+    requisitions:
+      -
+        name: 'Requisition #0'
+        valid: true
+        tests: []
+        requisitions:
+          -
+            name: 'Requisition #0'
+            valid: true
+            tests: []
+            requisitions:
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-09-28T23:14:33.680Z'
+                  endTime: '2018-09-28T23:14:33.708Z'
+                  totalTime: 28
+                requisitions: []
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-09-28T23:14:33.733Z'
+              endTime: '2018-09-28T23:14:33.734Z'
+              totalTime: 1
+            requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-09-28T23:14:33.739Z'
+          endTime: '2018-09-28T23:14:33.739Z'
+          totalTime: 0
+        requisitions: []
+  -
+    valid: true
+    tests:
+      -
+        name: 'Last one was executed'
+        valid: true
+        description: '''store.lastExecution'' is not defined'
+    name: 'Requisition #0'
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.750Z'
+      endTime: '2018-09-28T23:14:33.751Z'
+      totalTime: 1
+    requisitions: []

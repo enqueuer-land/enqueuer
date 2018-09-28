@@ -1,6 +1,7 @@
 #A publisher action is triggered by enqueuer itself.
 #Enqueuer executes it and asserts on the response it gets from doing it.
 #Optional. Every publisher has its own properties. But they all have these properties defined here.
+#Variable replacements are available here. (/docs/instructions/variables.yml)
 
 #Used to describe the publisher scenario
 name: publishing scenario
@@ -9,47 +10,12 @@ name: publishing scenario
 #You can check them all in: /docs/tests/publishers folder.
 type: amqp
 
-#Optional. Event triggered as soon as the publisher is initialized.
-onInit:
-  #Optional. Javascript code snippet executed when the event is triggered.
-  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
-  script:
-    console.log('iai');
-
-  #Optional. It allows to persist values to be used later
-  store:
-    #example
-    key: `value`
-
-  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
-  #If at least one value is defined and no message is received a failing test will be registered.
-  assertions:
-    #example
-    - name: anyValue #optional
-      expect: message
-      toBeEqualTo: store.key
-
-#Optional. Event triggered as soon as the publisher is over.
-onFinish:
-  #Optional. Javascript code snippet executed when the event is triggered.
-  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
-  script:
-    console.log('iai');
-
-  #Optional. It allows to persist values to be used later
-  store:
-    #example
-    key: `value`
-
-  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
-  #If at least one value is defined and no message is received a failing test will be registered.
-  assertions:
-    #example
-    - name: anyValue #optional
-      expect: message
-      toBeEqualTo: store.key
-
-
 #Optional. The message itself that will be send through this IPC protocol.
 #It can be strings, numbers, boolean or even whole objects.
 payload: value
+
+#Check the list of events here: /docs/instructions/events.yml
+#Optional. Event triggered as soon as the publisher is initialized.
+onInit:
+#Optional. Event triggered as soon as the publisher is over
+onFinish:

@@ -1,136 +1,107 @@
-{
-  "name": "examples/http-auth-basic.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [
-        {
-          "valid": true,
-          "name": "No time out",
-          "description": "Requisition has not timed out"
-        }
-      ],
-      "name": "Requisition #0",
-      "subscriptions": [
-        {
-          "name": "Subscription #0",
-          "type": "http-server",
-          "tests": [
-            {
-              "name": "\"Basic\" authentication prefix",
-              "valid": true,
-              "description": "Prefix \"Basic\" was found."
-            },
-            {
-              "name": "\"Basic\" authentication user",
-              "valid": true,
-              "description": "User found"
-            },
-            {
-              "name": "\"Basic\" authentication password",
-              "valid": true,
-              "description": "Password match"
-            },
-            {
-              "name": "\"Basic\" authentication",
-              "valid": true,
-              "description": "Basic authentication is valid"
-            },
-            {
-              "name": "Payload",
-              "valid": true,
-              "description": "Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
-            }
-          ],
-          "valid": true,
-          "connectionTime": "2018-09-28T19:26:03.294Z",
-          "messageReceived": {
-            "headers": {
-              "content-type": "application/json",
-              "authorization": "Basic dXNlcjpwYXNzd29yZA==",
-              "content-length": "10",
-              "host": "localhost:23068",
-              "connection": "close"
-            },
-            "params": {},
-            "query": {},
-            "body": "basic auth"
-          }
-        }
-      ],
-      "publishers": [
-        {
-          "name": "Publisher #0",
-          "valid": true,
-          "type": "http-client",
-          "tests": [
-            {
-              "name": "Published",
-              "valid": true,
-              "description": "Published successfully"
-            },
-            {
-              "name": "Assertion #0",
-              "valid": true,
-              "description": "Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'"
-            },
-            {
-              "name": "Response message received",
-              "valid": true,
-              "description": "Response message was received"
-            }
-          ],
-          "publishTime": "2018-09-28T19:26:03.403Z",
-          "messageReceived": {
-            "statusCode": 200,
-            "body": "basic auth response",
-            "headers": {
-              "x-powered-by": "Express",
-              "content-type": "text/html; charset=utf-8",
-              "content-length": "19",
-              "etag": "W/\"13-nGN7LEwCUKXpQoLxNqKZXSglYNc\"",
-              "date": "Fri, 28 Sep 2018 19:26:03 GMT",
-              "connection": "close"
-            },
-            "request": {
-              "uri": {
-                "protocol": "http:",
-                "slashes": true,
-                "auth": null,
-                "host": "localhost:23068",
-                "port": "23068",
-                "hostname": "localhost",
-                "hash": null,
-                "search": null,
-                "query": null,
-                "pathname": "/basic",
-                "path": "/basic",
-                "href": "http://localhost:23068/basic"
-              },
-              "method": "post",
-              "headers": {
-                "content-type": "application/json",
-                "authorization": "Basic dXNlcjpwYXNzd29yZA==",
-                "Content-Length": 10
-              }
-            }
-          }
-        }
-      ],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.224Z",
-        "endTime": "2018-09-28T19:26:03.404Z",
-        "totalTime": 180,
-        "timeout": 3000
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/http-auth-basic.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'Requisition #0'
+    subscriptions:
+      -
+        name: 'Subscription #0'
+        type: http-server
+        tests:
+          -
+            name: '"Basic" authentication prefix'
+            valid: true
+            description: 'Prefix "Basic" was found.'
+          -
+            name: '"Basic" authentication user'
+            valid: true
+            description: 'User found'
+          -
+            name: '"Basic" authentication password'
+            valid: true
+            description: 'Password match'
+          -
+            name: '"Basic" authentication'
+            valid: true
+            description: 'Basic authentication is valid'
+          -
+            name: Payload
+            valid: true
+            description: 'Expected ''message.body'' to be equal to ''basic auth''. Received ''basic auth'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-28T23:14:33.724Z'
+        messageReceived:
+          headers:
+            content-type: application/json
+            authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+            content-length: '10'
+            host: 'localhost:23068'
+            connection: close
+          params: {}
+          query: {}
+          body: 'basic auth'
+    publishers:
+      -
+        name: 'Publisher #0'
+        valid: true
+        type: http-client
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''body'' to be equal to ''basic auth response''. Received ''basic auth response'''
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-09-28T23:14:33.842Z'
+        messageReceived:
+          statusCode: 200
+          body: 'basic auth response'
+          headers:
+            x-powered-by: Express
+            content-type: 'text/html; charset=utf-8'
+            content-length: '19'
+            etag: 'W/"13-nGN7LEwCUKXpQoLxNqKZXSglYNc"'
+            date: 'Fri, 28 Sep 2018 23:14:33 GMT'
+            connection: close
+          request:
+            uri:
+              protocol: 'http:'
+              slashes: true
+              auth: null
+              host: 'localhost:23068'
+              port: '23068'
+              hostname: localhost
+              hash: null
+              search: null
+              query: null
+              pathname: /basic
+              path: /basic
+              href: 'http://localhost:23068/basic'
+            method: post
+            headers:
+              content-type: application/json
+              authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+              Content-Length: 10
+    time:
+      startTime: '2018-09-28T23:14:33.636Z'
+      endTime: '2018-09-28T23:14:33.842Z'
+      totalTime: 206
+      timeout: 3000
+    requisitions: []

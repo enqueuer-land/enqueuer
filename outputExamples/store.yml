@@ -1,58 +1,45 @@
-{
-  "name": "examples/store.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [],
-      "name": "Requisition #0",
-      "subscriptions": [],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.271Z",
-        "endTime": "2018-09-28T19:26:03.279Z",
-        "totalTime": 8
-      },
-      "requisitions": []
-    },
-    {
-      "valid": true,
-      "tests": [
-        {
-          "name": "Payload",
-          "valid": true,
-          "description": "Expected '123' to be equal to '123'. Received '123'"
-        }
-      ],
-      "name": "Requisition #1",
-      "subscriptions": [],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.303Z",
-        "endTime": "2018-09-28T19:26:03.304Z",
-        "totalTime": 1
-      },
-      "requisitions": []
-    },
-    {
-      "valid": true,
-      "tests": [
-        {
-          "name": "Payload",
-          "valid": true,
-          "description": "Expected '124' to be equal to '124'. Received '124'"
-        }
-      ],
-      "name": "Requisition #2",
-      "subscriptions": [],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.306Z",
-        "endTime": "2018-09-28T19:26:03.307Z",
-        "totalTime": 1
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/store.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests: []
+    name: 'Requisition #0'
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.690Z'
+      endTime: '2018-09-28T23:14:33.708Z'
+      totalTime: 18
+    requisitions: []
+  -
+    valid: true
+    tests:
+      -
+        name: Payload
+        valid: true
+        description: 'Expected ''123'' to be equal to ''123''. Received ''123'''
+    name: 'Requisition #1'
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.733Z'
+      endTime: '2018-09-28T23:14:33.734Z'
+      totalTime: 1
+    requisitions: []
+  -
+    valid: true
+    tests:
+      -
+        name: Payload
+        valid: true
+        description: 'Expected ''124'' to be equal to ''124''. Received ''124'''
+    name: 'Requisition #2'
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.738Z'
+      endTime: '2018-09-28T23:14:33.738Z'
+      totalTime: 0
+    requisitions: []

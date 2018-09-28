@@ -3,8 +3,8 @@ import {IdGenerator} from '../timers/id-generator';
 import Ajv, {ValidateFunction} from 'ajv';
 import fs from 'fs';
 import {RequisitionModel} from '../models/inputs/requisition-model';
-import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
 
 export class RequisitionParser {
 
@@ -17,7 +17,7 @@ export class RequisitionParser {
     }
 
     public parse(message: string): RequisitionModel[] {
-        let parsed: any = this.parseToObject(message);
+        let parsed: any = new MultipleObjectNotation().parse(message);
         if (!Array.isArray(parsed)) {
             parsed = [parsed];
         }
@@ -60,24 +60,6 @@ export class RequisitionParser {
             }
         }
         throw new JavascriptObjectNotation().stringify(this.validator);
-    }
-
-    private parseToObject(message: string) {
-        try {
-            const yamlObject = new YamlObjectNotation().parse(message);
-            Logger.debug(`Successfully parsed message as YML`);
-            return yamlObject;
-        } catch (ymlErr) {
-            try {
-                const json = new JavascriptObjectNotation().parse(message);
-                Logger.debug(`Successfully parsed message as JSON`);
-                return json;
-            } catch (jsonErr) {
-                Logger.warning(`Not able to parse as Yaml: ${ymlErr}`);
-                Logger.warning(`Not able to parse as Json: ${jsonErr}`);
-                throw Error(new JavascriptObjectNotation().stringify({ymlError: ymlErr, jsonError: jsonErr.toString()}));
-            }
-        }
     }
 
     private readJsonSchemaFile(filename: string) {

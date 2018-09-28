@@ -1,6 +1,7 @@
 #A subscription is an "under demand"event. It means that it is not triggered by enqueuer itself.
 #Rather than that, enqueuer waits on an external trigger and asserts on the message that flew through it.
 #Every subscription has its own properties. But they all have these properties defined here.
+#Variable replacements are available here. (/docs/instructions/variables.yml)
 
 #Optional. Used to describe the subscription scenario
 name: subscription scenario
@@ -19,64 +20,10 @@ avoid: false
 #Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
 timeout: 3000
 
-#Optional. Event triggered as soon as the requisition is initialized.
+#Check the list of events here: /docs/instructions/events.yml
+#Optional. Event triggered as soon as the subscription is initialized.
 onInit:
-  #Optional. Javascript code snippet executed when the event is triggered.
-  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
-  script:
-    console.log('iai');
-
-  #Optional. It allows to persist values to be used later
-  store:
-    #example
-    key: `value`
-
-  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
-  #If at least one value is defined and no message is received a failing test will be registered.
-  assertions:
-    #example
-    - name: anyValue #optional
-      expect: message
-      toBeEqualTo: store.key
-
 #Optional. Event triggered when a subscription receives the message it was waiting for
 onMessageReceived:
-  #Optional. Javascript code snippet executed when the event is triggered.
-  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml), message and store.
-  #Other objects IPC related might be available. Check (/docs/instructions/tests/subscription/) for further details
-  script:
-    console.log('iai');
-
-  #Optional. It allows to persist values to be used later
-  store:
-    #example
-    key: `value`
-
-  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
-  #If at least one value is defined and no message is received a failing test will be registered.
-  assertions:
-    #example
-    - name: anyValue #optional
-      expect: message
-      toBeEqualTo: store.key
-
 #Optional. Event triggered as soon as the subscription is over
 onFinish:
-  #Optional. Javascript code snippet executed when the event is triggered.
-  #Available objects are: subscription (/docs/instructions/tests/subscription/subscription.yml), tester (/docs/instructions/tests/assertions.yml) and store.
-  script:
-    console.log('iai');
-
-  #Optional. It allows to persist values to be used later
-  store:
-    #example
-    key: `value`
-
-  #Optional. Array of assertions (/docs/instructions/tests/assertions.yml)
-  #If at least one value is defined and no message is received a failing test will be registered.
-  assertions:
-    #example
-    - name: anyValue #optional
-      expect: message
-      toBeEqualTo: store.key
-

@@ -12,11 +12,8 @@ import * as path from 'path';
 @Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'file'})
 export class FilePublisher extends Publisher {
 
-    private readonly pretty: boolean = false;
-
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this.pretty = !!this.pretty;
         this.filenameExtension = this.filenameExtension || 'enq';
     }
 

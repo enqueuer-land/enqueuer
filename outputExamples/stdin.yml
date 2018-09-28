@@ -1,40 +1,30 @@
-{
-  "name": "examples/stdin.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [],
-      "name": "Requisition #0",
-      "subscriptions": [
-        {
-          "name": "subscription description",
-          "type": "standard-input",
-          "tests": [
-            {
-              "name": "payload",
-              "valid": true,
-              "description": "Expected 'message' to be equal to 'enqueuer standard-input payload'. Received 'enqueuer standard-input payload'"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
-            }
-          ],
-          "valid": true,
-          "connectionTime": "2018-09-28T19:26:03.277Z",
-          "messageReceived": "enqueuer standard-input payload"
-        }
-      ],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.269Z",
-        "endTime": "2018-09-28T19:26:03.322Z",
-        "totalTime": 53
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/stdin.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests: []
+    name: 'Requisition #0'
+    subscriptions:
+      -
+        name: 'subscription description'
+        type: standard-input
+        tests:
+          -
+            name: payload
+            valid: true
+            description: 'Expected ''message'' to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-28T23:14:33.707Z'
+        messageReceived: 'enqueuer standard-input payload'
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.688Z'
+      endTime: '2018-09-28T23:14:33.753Z'
+      totalTime: 65
+    requisitions: []

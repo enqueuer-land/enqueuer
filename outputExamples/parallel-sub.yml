@@ -1,66 +1,50 @@
-{
-  "name": "examples/parallel-sub.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [
-        {
-          "valid": true,
-          "name": "No time out",
-          "description": "Requisition has not timed out"
-        }
-      ],
-      "name": "Requisition #0",
-      "subscriptions": [
-        {
-          "name": "subscription description",
-          "type": "tcp-server",
-          "tests": [
-            {
-              "name": "Paralleling",
-              "valid": true,
-              "description": "Expected 'payload' to be equal to 'anything'. Received 'anything'"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
-            }
-          ],
-          "valid": true,
-          "connectionTime": "2018-09-28T19:26:03.279Z",
-          "messageReceived": {
-            "payload": {
-              "type": "Buffer",
-              "data": [
-                97,
-                110,
-                121,
-                116,
-                104,
-                105,
-                110,
-                103
-              ]
-            },
-            "stream": {
-              "address": "::ffff:127.0.0.1",
-              "family": "IPv6",
-              "port": 23081
-            }
-          }
-        }
-      ],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.265Z",
-        "endTime": "2018-09-28T19:26:03.723Z",
-        "totalTime": 458,
-        "timeout": 3000
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/parallel-sub.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'Requisition #0'
+    subscriptions:
+      -
+        name: 'subscription description'
+        type: tcp-server
+        tests:
+          -
+            name: Paralleling
+            valid: true
+            description: 'Expected ''payload'' to be equal to ''anything''. Received ''anything'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-28T23:14:33.708Z'
+        messageReceived:
+          payload:
+            type: Buffer
+            data:
+              - 97
+              - 110
+              - 121
+              - 116
+              - 104
+              - 105
+              - 110
+              - 103
+          stream:
+            address: '::ffff:127.0.0.1'
+            family: IPv6
+            port: 23081
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.680Z'
+      endTime: '2018-09-28T23:14:34.130Z'
+      totalTime: 450
+      timeout: 3000
+    requisitions: []

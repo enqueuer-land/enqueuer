@@ -1,11 +1,24 @@
 import {FileConfiguration} from "./file-configuration";
+import {MultipleObjectNotation} from "../object-notations/multiple-object-notation";
 import * as yaml from 'yamljs';
 
-jest.mock('yamljs');
+jest.mock('../object-notations/multiple-object-notation');
 let fileLoadMock = jest.fn(() => true);
-yaml.load.mockImplementation(fileLoadMock);
 
 describe('FileConfiguration', () => {
+    beforeEach(() => {
+        MultipleObjectNotation.mockImplementationOnce(() => {
+            return {
+                loadFromFileSync: fileLoadMock
+            }
+        });
+
+    });
+
+    afterEach(() => {
+        fileLoadMock.mockClear();
+        MultipleObjectNotation.mockClear();
+    });
 
     it('Reload file - success', () => {
         const filename = 'filename';
@@ -14,7 +27,7 @@ describe('FileConfiguration', () => {
     });
 
     it('Reload file - fail', () => {
-        yaml.load.mockImplementation(() => {throw 'error'});
+        fileLoadMock.mockImplementation(() => {throw 'error'});
 
         const filename = 'filename';
 
@@ -23,14 +36,12 @@ describe('FileConfiguration', () => {
 
     it('getVerbosity', () => {
         const logLevel = 'enqueuer';
-        fileLoadMock = jest.fn(() => {
+        fileLoadMock.mockImplementation(() => {
             return {
                 'log-level': logLevel
             }
         });
-        yaml.load.mockImplementation(fileLoadMock);
         FileConfiguration.reload('itDoesNotMatter');
-
 
         expect(FileConfiguration.getLogLevel()).toBe(logLevel);
     });
@@ -42,7 +53,6 @@ describe('FileConfiguration', () => {
                 'run-mode': runMode
             }
         });
-        yaml.load.mockImplementation(fileLoadMock);
         FileConfiguration.reload('itDoesNotMatter');
 
 
@@ -56,7 +66,6 @@ describe('FileConfiguration', () => {
                 'outputs': outputs
             }
         });
-        yaml.load.mockImplementation(fileLoadMock);
         FileConfiguration.reload('itDoesNotMatter');
 
 
@@ -68,7 +77,6 @@ describe('FileConfiguration', () => {
             return {
             }
         });
-        yaml.load.mockImplementation(fileLoadMock);
         FileConfiguration.reload('itDoesNotMatter');
 
 
@@ -86,7 +94,6 @@ describe('FileConfiguration', () => {
                 'store': store
             }
         });
-        yaml.load.mockImplementation(fileLoadMock);
         FileConfiguration.reload('itDoesNotMatter');
 
 
@@ -98,7 +105,6 @@ describe('FileConfiguration', () => {
             return {
             }
         });
-        yaml.load.mockImplementation(fileLoadMock);
         FileConfiguration.reload('itDoesNotMatter');
 
 

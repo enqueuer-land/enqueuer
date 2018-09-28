@@ -1,65 +1,50 @@
-{
-  "name": "examples/file-placeholder.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [
-        {
-          "name": "fileRead (yml)",
-          "valid": true,
-          "description": "Expected 'requisition.yml.key' to be equal to 'value'. Received 'value'"
-        },
-        {
-          "name": "fileRead (.json)",
-          "valid": true,
-          "description": "Expected 'requisition.json.key' to be equal to 'value'. Received 'value'"
-        },
-        {
-          "name": "fileRead (.csv)",
-          "valid": true,
-          "description": "Expected 'requisition.csv[1].title' to be equal to 'secondRow'. Received 'secondRow'"
-        },
-        {
-          "name": "fileRead (.tsv)",
-          "valid": true,
-          "description": "Expected 'requisition.tsv[0].title' to be equal to 'virgs'. Received 'virgs'"
-        },
-        {
-          "name": "fileRead (.js)",
-          "valid": true,
-          "description": "Expected 'store.scriptResult' to be equal to '40'. Received '40'"
-        }
-      ],
-      "name": "Requisition #0",
-      "subscriptions": [],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.222Z",
-        "endTime": "2018-09-28T19:26:03.279Z",
-        "totalTime": 57
-      },
-      "requisitions": []
-    },
-    {
-      "valid": true,
-      "tests": [
-        {
-          "name": "it's not stored",
-          "valid": true,
-          "description": "'requisition.yml' is not undefined"
-        }
-      ],
-      "name": "Requisition #1",
-      "subscriptions": [],
-      "publishers": [],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.303Z",
-        "endTime": "2018-09-28T19:26:03.304Z",
-        "totalTime": 1
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/file-placeholder.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        name: 'fileRead (yml)'
+        valid: true
+        description: 'Expected ''requisition.yml.key'' to be equal to ''value''. Received ''value'''
+      -
+        name: 'fileRead (.json)'
+        valid: true
+        description: 'Expected ''requisition.json.key'' to be equal to ''value''. Received ''value'''
+      -
+        name: 'fileRead (.csv)'
+        valid: true
+        description: 'Expected ''requisition.csv[1].title'' to be equal to ''secondRow''. Received ''secondRow'''
+      -
+        name: 'fileRead (.tsv)'
+        valid: true
+        description: 'Expected ''requisition.tsv[0].title'' to be equal to ''virgs''. Received ''virgs'''
+      -
+        name: 'fileRead (.js)'
+        valid: true
+        description: 'Expected ''store.scriptResult'' to be equal to ''40''. Received ''40'''
+    name: 'Requisition #0'
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.633Z'
+      endTime: '2018-09-28T23:14:33.708Z'
+      totalTime: 75
+    requisitions: []
+  -
+    valid: true
+    tests:
+      -
+        name: 'it''s not stored'
+        valid: true
+        description: '''requisition.yml'' is not undefined'
+    name: 'Requisition #1'
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-09-28T23:14:33.733Z'
+      endTime: '2018-09-28T23:14:33.734Z'
+      totalTime: 1
+    requisitions: []

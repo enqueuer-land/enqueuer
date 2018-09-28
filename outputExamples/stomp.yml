@@ -1,69 +1,51 @@
-{
-  "name": "examples/stomp.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [
-        {
-          "valid": true,
-          "name": "No time out",
-          "description": "Requisition has not timed out"
-        }
-      ],
-      "name": "Requisition #0",
-      "subscriptions": [
-        {
-          "name": "subscription description",
-          "type": "stomp",
-          "tests": [
-            {
-              "name": "Payload",
-              "valid": true,
-              "description": "Expected 'payload' to be equal to 'stompQueue'. Received 'stompQueue'"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
-            }
-          ],
-          "valid": true,
-          "connectionTime": "2018-09-28T19:26:03.382Z",
-          "messageReceived": {
-            "payload": "stompQueue",
-            "headers": {
-              "destination": "/queue/stompQueue",
-              "message-id": "Q_/queue/stompQueue@@session-kntXFAPBVdO_r89XTym0aw@@1",
-              "redelivered": "false",
-              "content-length": "10"
-            }
-          }
-        }
-      ],
-      "publishers": [
-        {
-          "name": "publisher description",
-          "valid": true,
-          "type": "stomp",
-          "tests": [
-            {
-              "name": "Published",
-              "valid": true,
-              "description": "Published successfully"
-            }
-          ],
-          "publishTime": "2018-09-28T19:26:03.438Z"
-        }
-      ],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.270Z",
-        "endTime": "2018-09-28T19:26:03.455Z",
-        "totalTime": 185,
-        "timeout": 3000
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/stomp.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'Requisition #0'
+    subscriptions:
+      -
+        name: 'subscription description'
+        type: stomp
+        tests:
+          -
+            name: Payload
+            valid: true
+            description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-28T23:14:34.638Z'
+        messageReceived:
+          payload: stompQueue
+          headers:
+            destination: /queue/stompQueue
+            message-id: Q_/queue/stompQueue@@session-hMStGmOyB5cibYnQ4oxoiA@@1
+            redelivered: 'false'
+            content-length: '10'
+    publishers:
+      -
+        name: 'publisher description'
+        valid: true
+        type: stomp
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-09-28T23:14:34.656Z'
+    time:
+      startTime: '2018-09-28T23:14:33.689Z'
+      endTime: '2018-09-28T23:14:34.660Z'
+      totalTime: 971
+      timeout: 3000
+    requisitions: []

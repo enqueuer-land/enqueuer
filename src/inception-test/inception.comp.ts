@@ -99,7 +99,7 @@ describe('Inception test', () => {
         jest.setTimeout(15000);
 
         let beingTestedLog = '';
-        beingTested = spawn('nqr', ['src/inception-test/beingTested.yml']);
+        beingTested = spawn('nqr', ['src/inception-test/conf/beingTested.yml']);
         beingTested.stdout.on('data', (data: string) => beingTestedLog += data);
         sleep(500);
 
@@ -107,7 +107,7 @@ describe('Inception test', () => {
         //     .start()
         //     .then((statusCode: number) => {
 
-        second = spawn('enqueuer',  ['src/inception-test/tester.yml']);
+        second = spawn('enqueuer',  ['src/inception-test/conf/tester.json']);
         // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
         second.on('exit', (statusCode: number) => {
                 expect(statusCode).toBe(0);
@@ -142,10 +142,10 @@ describe('Inception test', () => {
     it('Should quit second daemon properly', done => {
         jest.setTimeout(15000);
 
-        const first = spawn('nqr', ['src/inception-test/beingTested.yml']);
+        const first = spawn('nqr', ['src/inception-test/conf/beingTested.yml']);
         sleep(500);
 
-        second = spawn('enqueuer',  ['src/inception-test/beingTested.yml']);
+        second = spawn('enqueuer',  ['src/inception-test/conf/beingTested.yml']);
         second.on('exit', (statusCode: number) => {
             expect(statusCode).toBe(255);
             first.kill('SIGINT');

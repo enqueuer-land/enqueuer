@@ -1,119 +1,91 @@
-{
-  "name": "examples/sqs.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [
-        {
-          "valid": true,
-          "name": "No time out",
-          "description": "Requisition has not timed out"
-        }
-      ],
-      "name": "requisition description",
-      "subscriptions": [
-        {
-          "name": "subscription description",
-          "type": "sqs",
-          "tests": [
-            {
-              "name": "Body",
-              "valid": true,
-              "description": "'Body' (enqueuer) does not contain 'enq'"
-            },
-            {
-              "name": "MessageId",
-              "valid": true,
-              "description": "'MessageId' is not defined"
-            },
-            {
-              "name": "ReceiptHandle",
-              "valid": true,
-              "description": "'ReceiptHandle' is not defined"
-            },
-            {
-              "name": "MD5OfBody",
-              "valid": true,
-              "description": "'MD5OfBody' is not defined"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
-            }
-          ],
-          "valid": true,
-          "connectionTime": "2018-09-28T19:26:03.277Z",
-          "messageReceived": {
-            "MessageId": "69fa2d51-e6a6-4b3c-9c43-0d2b24b09900",
-            "ReceiptHandle": "69fa2d51-e6a6-4b3c-9c43-0d2b24b09900#e82faa5b-6c6b-4da5-9673-2843514934b1",
-            "MD5OfBody": "9dea6b5787a8fcdbd8db4505e4a1958b",
-            "Body": "enqueuer"
-          }
-        }
-      ],
-      "publishers": [
-        {
-          "name": "publisher description",
-          "valid": true,
-          "type": "sqs",
-          "tests": [
-            {
-              "name": "Published",
-              "valid": true,
-              "description": "Published successfully"
-            },
-            {
-              "name": "Request Id is all 000000",
-              "valid": true,
-              "description": "Expected 'ResponseMetadata.RequestId' to be equal to '00000000-0000-0000-0000-000000000000'. Received '00000000-0000-0000-0000-000000000000'"
-            },
-            {
-              "name": "ResponseMetadata",
-              "valid": true,
-              "description": "'ResponseMetadata' is not defined"
-            },
-            {
-              "name": "MD5",
-              "valid": true,
-              "description": "'MD5OfMessageBody' is not defined"
-            },
-            {
-              "name": "MD5OfMessageAttributes",
-              "valid": true,
-              "description": "'MD5OfMessageAttributes' is not defined"
-            },
-            {
-              "name": "MessageId",
-              "valid": true,
-              "description": "'MessageId' is not defined"
-            },
-            {
-              "name": "Response message received",
-              "valid": true,
-              "description": "Response message was received"
-            }
-          ],
-          "publishTime": "2018-09-28T19:26:03.363Z",
-          "messageReceived": {
-            "ResponseMetadata": {
-              "RequestId": "00000000-0000-0000-0000-000000000000"
-            },
-            "MD5OfMessageBody": "9dea6b5787a8fcdbd8db4505e4a1958b",
-            "MD5OfMessageAttributes": "d41d8cd98f00b204e9800998ecf8427e",
-            "MessageId": "59563709-4da0-48df-8a7e-20815206b6a0"
-          }
-        }
-      ],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.269Z",
-        "endTime": "2018-09-28T19:26:03.363Z",
-        "totalTime": 94,
-        "timeout": 5000
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/sqs.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'requisition description'
+    subscriptions:
+      -
+        name: 'subscription description'
+        type: sqs
+        tests:
+          -
+            name: Body
+            valid: true
+            description: '''Body'' (enqueuer) does not contain ''enq'''
+          -
+            name: MessageId
+            valid: true
+            description: '''MessageId'' is not defined'
+          -
+            name: ReceiptHandle
+            valid: true
+            description: '''ReceiptHandle'' is not defined'
+          -
+            name: MD5OfBody
+            valid: true
+            description: '''MD5OfBody'' is not defined'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-28T23:14:33.707Z'
+        messageReceived:
+          MessageId: 111b079a-c4f2-4a5c-b9e3-80d552fa1673
+          ReceiptHandle: '111b079a-c4f2-4a5c-b9e3-80d552fa1673#164f5c4b-912b-4178-b1f7-885784c562dc'
+          MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+          Body: enqueuer
+    publishers:
+      -
+        name: 'publisher description'
+        valid: true
+        type: sqs
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Request Id is all 000000'
+            valid: true
+            description: 'Expected ''ResponseMetadata.RequestId'' to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
+          -
+            name: ResponseMetadata
+            valid: true
+            description: '''ResponseMetadata'' is not defined'
+          -
+            name: MD5
+            valid: true
+            description: '''MD5OfMessageBody'' is not defined'
+          -
+            name: MD5OfMessageAttributes
+            valid: true
+            description: '''MD5OfMessageAttributes'' is not defined'
+          -
+            name: MessageId
+            valid: true
+            description: '''MessageId'' is not defined'
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-09-28T23:14:33.796Z'
+        messageReceived:
+          ResponseMetadata:
+            RequestId: 00000000-0000-0000-0000-000000000000
+          MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+          MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
+          MessageId: 4938f2a2-dd1a-4d03-9d87-cda08e3e990a
+    time:
+      startTime: '2018-09-28T23:14:33.688Z'
+      endTime: '2018-09-28T23:14:33.797Z'
+      totalTime: 109
+      timeout: 5000
+    requisitions: []

@@ -60,6 +60,8 @@ outputs:
      filenameExtension: yml #json
 
 #Optional
+#Sometimes you want to persist values across multiple requisitions.
+#This is why you have a 'store' session. These values defined below would be available to every requisition/publisher/subscription from the beginning to the end.
 store:
   #Variables key and their value
   #Below, a 'tcpKey' key is defined with the value 'tcp value'.

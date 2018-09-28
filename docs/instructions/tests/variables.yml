@@ -1,0 +1,31 @@
+#To give you even more power and flexibility, enqueuer allows you to use values that will be defined later.
+#That's why there is a 'store' field and you'll see a lot of '<<' and '{{' being used in the examples files.
+#It works as simple as this:
+
+variableName: <<valueToBeDefinedLater>>
+
+#Every time enqueuer sees these kinds of notations, it searches in its store for a thing like:
+valueToBeDefinedLater: `value`
+
+#Then, when enqueuer parses the original map, it gets translated to this:
+variableName: `value`
+
+#There are a few ways to introduce a value in store.
+#1 - through the configuration file's store field (/docs/instructions/config-file.yml)
+#2 - through a command line argument `nqr --store key=value`
+#3 - dynamically set it through an event's store field (/docs/instructions/tests/events.yml)
+
+#Other really nice feature is to be able to insert file content in a requisition/publisher/subscription field.
+fileContent: <<json://path/to/file.json>>
+
+#Doing this way, enqueuer will read the file and parse its content as a JSON object.
+#Other parseable values are these ones:
+csv: <<csv://misc/file-content.csv>>
+tsv: <<tsv://misc/file-content.tsv>>
+json: <<json://misc/file-content.json>>
+yml: <<yaml://misc/file-content.yml>>
+regularFile: <<file://misc/file-content.yml>>
+
+#You can even read java script code and insert it into a 'script' field in an event field. You have no limit.
+#Check /examples/file-placeholder.yml test to get a full picture of it.
+#Good luck!

@@ -1,0 +1,35 @@
+#A file like this is what enqueuer needs to run.
+#This file defines a requisition. It tells what and how test stuff.
+#Variable replacements are available here. (/docs/instructions/variables.yml)
+
+#Optional. Used to describe your requisition scenario
+name: Valid card scenario
+
+#Optional. Defaults to 0. Sets in milliseconds how log the test has to wait before starting.
+delay: 0
+
+#Optional. Defaults to 1. Sets how many times this test will be executed
+iterations: 3
+
+#Optional. Defaults to 0. Sets in milliseconds how log the requisition has to wait before being considered as invalid.
+#Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
+timeout: 3000
+
+#Check the list of events here: /docs/instructions/events.yml
+#Optional. Event triggered as soon as the requisition is initialized.
+onInit:
+#Optional. Event triggered as soon as the requisition is over
+onFinish:
+
+#Optional. Enqueuer publishes every item of this list by itself.
+#Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
+publishers: []
+
+#Optional. Subscriptions list that have to be attended in order to consider this requisition a valid one.
+#Every supported IPC protocol is available here and you can check their values in /docs/tests/subscriptions folder.
+subscriptions: []
+
+#Optional. Things get really interesting here.
+#It's a list of other requisitions (/docs/tests/requisitions.yml).
+#Yes, it can get really recursive.
+requisitions: []

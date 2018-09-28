@@ -1,147 +1,112 @@
-{
-  "name": "examples/hooks.yml",
-  "valid": true,
-  "tests": [],
-  "requisitions": [
-    {
-      "valid": true,
-      "tests": [
-        {
-          "name": "Requisitions exists onInit",
-          "valid": true,
-          "description": "'requisition' is not defined"
-        },
-        {
-          "valid": true,
-          "name": "No time out",
-          "description": "Requisition has not timed out"
-        }
-      ],
-      "name": "requisition description",
-      "subscriptions": [
-        {
-          "name": "subscription description",
-          "type": "tcp-server",
-          "tests": [
-            {
-              "name": "Subscription exists onInit",
-              "valid": true,
-              "description": "'subscription' is not defined"
-            },
-            {
-              "name": "Subscription name",
-              "valid": true,
-              "description": "Expected 'subscription.name' to be equal to 'changed'. Received 'changed'"
-            },
-            {
-              "name": "Subscription exists onMessageReceived",
-              "valid": true,
-              "description": "'subscription' is not defined"
-            },
-            {
-              "name": "Subscription name changed",
-              "valid": true,
-              "description": "Expected 'subscription.name' to be equal to 'changed'. Received 'changed'"
-            },
-            {
-              "name": "Subscription onInit executed",
-              "valid": true,
-              "description": "'store.sequence' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain 'subscription::onInit'"
-            },
-            {
-              "valid": true,
-              "name": "Message received",
-              "description": "Subscription has received its message"
-            }
-          ],
-          "valid": true,
-          "connectionTime": "2018-09-28T19:26:03.279Z",
-          "messageReceived": {
-            "payload": {
-              "type": "Buffer",
-              "data": [
-                105,
-                116
-              ]
-            },
-            "stream": {
-              "address": "::ffff:127.0.0.1",
-              "family": "IPv6",
-              "port": 23080
-            }
-          }
-        }
-      ],
-      "publishers": [
-        {
-          "name": "publisher description",
-          "valid": true,
-          "type": "tcp-client",
-          "tests": [
-            {
-              "name": "Publisher exists onInit",
-              "valid": true,
-              "description": "'publisher' is not defined"
-            },
-            {
-              "name": "Publisher name",
-              "valid": true,
-              "description": "'publisher.name' is not defined"
-            },
-            {
-              "name": "Assertion #2",
-              "valid": true,
-              "description": "'publisher' is not defined"
-            },
-            {
-              "name": "Published",
-              "valid": true,
-              "description": "Published successfully"
-            },
-            {
-              "name": "Publisher exists onMessageReceived",
-              "valid": true,
-              "description": "'publisher' is not defined"
-            },
-            {
-              "name": "Requisition onInit",
-              "valid": true,
-              "description": "'store.sequence' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain 'requisition::onInit'"
-            },
-            {
-              "name": "Publisher name changed",
-              "valid": true,
-              "description": "Expected 'publisher.name' to be equal to 'changed'. Received 'changed'"
-            },
-            {
-              "name": "Publisher onInit executed",
-              "valid": true,
-              "description": "'store.sequence' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain 'publisher::onInit'"
-            },
-            {
-              "name": "Response message received",
-              "valid": true,
-              "description": "Response message was received"
-            }
-          ],
-          "publishTime": "2018-09-28T19:26:03.400Z",
-          "messageReceived": {
-            "payload": "hook response",
-            "stream": {
-              "address": "127.0.0.1",
-              "family": "IPv4",
-              "port": 54351
-            }
-          }
-        }
-      ],
-      "time": {
-        "startTime": "2018-09-28T19:26:03.224Z",
-        "endTime": "2018-09-28T19:26:03.400Z",
-        "totalTime": 176,
-        "timeout": 2000
-      },
-      "requisitions": []
-    }
-  ]
-}
+name: examples/hooks.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        name: 'Requisitions exists onInit'
+        valid: true
+        description: '''requisition'' is not defined'
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'requisition description'
+    subscriptions:
+      -
+        name: 'subscription description'
+        type: tcp-server
+        tests:
+          -
+            name: 'Subscription exists onInit'
+            valid: true
+            description: '''subscription'' is not defined'
+          -
+            name: 'Subscription name'
+            valid: true
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
+          -
+            name: 'Subscription exists onMessageReceived'
+            valid: true
+            description: '''subscription'' is not defined'
+          -
+            name: 'Subscription name changed'
+            valid: true
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
+          -
+            name: 'Subscription onInit executed'
+            valid: true
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''subscription::onInit'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-09-28T23:14:33.708Z'
+        messageReceived:
+          payload:
+            type: Buffer
+            data:
+              - 105
+              - 116
+          stream:
+            address: '::ffff:127.0.0.1'
+            family: IPv6
+            port: 23080
+    publishers:
+      -
+        name: 'publisher description'
+        valid: true
+        type: tcp-client
+        tests:
+          -
+            name: 'Publisher exists onInit'
+            valid: true
+            description: '''publisher'' is not defined'
+          -
+            name: 'Publisher name'
+            valid: true
+            description: '''publisher.name'' is not defined'
+          -
+            name: 'Assertion #2'
+            valid: true
+            description: '''publisher'' is not defined'
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Publisher exists onMessageReceived'
+            valid: true
+            description: '''publisher'' is not defined'
+          -
+            name: 'Requisition onInit'
+            valid: true
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''requisition::onInit'''
+          -
+            name: 'Publisher name changed'
+            valid: true
+            description: 'Expected ''publisher.name'' to be equal to ''changed''. Received ''changed'''
+          -
+            name: 'Publisher onInit executed'
+            valid: true
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''publisher::onInit'''
+          -
+            name: 'Response message received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-09-28T23:14:33.830Z'
+        messageReceived:
+          payload: 'hook response'
+          stream:
+            address: 127.0.0.1
+            family: IPv4
+            port: 60938
+    time:
+      startTime: '2018-09-28T23:14:33.636Z'
+      endTime: '2018-09-28T23:14:33.831Z'
+      totalTime: 195
+      timeout: 2000
+    requisitions: []
