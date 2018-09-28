@@ -14,6 +14,9 @@ export class AmqpPublisher extends Publisher {
         this.messageOptions = publisher.messageOptions || {};
         this.exchangeOptions = publisher.exchangeOptions || {};
         this.exchangeOptions.confirm = true;
+        if (this.exchangeOptions.passive === undefined) {
+            this.exchangeOptions.passive = true;
+        }
     }
 
     public publish(): Promise<void> {
