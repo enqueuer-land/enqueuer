@@ -4,6 +4,7 @@
 
 After installation, you can use ```enqueuer``` or ```nqr``` interchangeably. They mean the same thing.
 Adopting --no-optional flag, you download enqueuer with no additional dependencies. As raw as possible.
+So you don't have to deal with a whole bunch of stuff you will not need.
 
 ###### If you need some help:
 
@@ -38,7 +39,6 @@ If you want to know more about them, [click here](https://github.com/lopidio/enq
 
 #### Installing new protocols
 If installed using '--no-optional' flag, enqueuer is installed with just a few protocols.
-So you don't have to deal with a whole bunch of unnecessary stuff.
 But do not worry, you can add some protocols after installation.
 
 ##### To see the available ones:

@@ -37,7 +37,7 @@ before_install:
 script:
   - npm run lint
   - npm run build
-  - echo '--install-all-optional-dependencies' | npm link
+  - npm link
   - npm run codeCoverage
   - npm run singleRunTest
   - npm run daemonRunTest

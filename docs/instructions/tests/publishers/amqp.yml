@@ -8,14 +8,17 @@ options:
   host: localhost
   port: 5672
 
-#Accepted values defined here: https://github.com/postwait/node-amqp#exchangepublishroutingkey-message-options-callback
+#Optional. Accepted values defined here: https://github.com/postwait/node-amqp#exchangepublishroutingkey-message-options-callback
 messageOptions:
   headers:
     key: value
     otherKey: otherValue
 
+#Optional. Accepted values defined here: https://github.com/postwait/node-amqp#connectionexchangename-options-opencallback
+exchangeOptions:
+
 #Optional. Exchange name to have a message published in
-#If no value is given, it will publish in the default exchange
+#If no value is given, it will be published in the default exchange
 exchange: enqueuer.exchange
 
 #Routing key to have a message published in
