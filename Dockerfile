@@ -1,23 +1,18 @@
-FROM node:carbon
+FROM rabbitmq:3.6-alpine
 
-# Create app directory
-WORKDIR /home/enqueuer
+RUN apk add --update nodejs-current nodejs-npm openjdk8 make gcc g++ python
+RUN npm install -g n
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
-COPY tsconfig.json ./tsconfig.json
-COPY src ./src
-COPY scripts ./scripts
-COPY schemas ./schemas
-COPY conf/enqueuerExample.yml /home/enqueuer/enqueuer.yml
 
-RUN npm install typescript -g
-RUN npm install
-RUN ./scripts/generate-injectables-list.sh src/injectable-files-list.ts src
-RUN tsc
-RUN npm link
-#EXPOSE 8080
+RUN wget -O /usr/local/kafka_2.11-1.0.0.tgz https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz
+RUN tar -xvzf /usr/local/kafka_2.11-1.0.0.tgz
 
-CMD [ "enqueuer" ]
+RUN wget -O /usr/local/elasticmq-server-0.13.11.jar https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.13.11.jar
+
+RUN rabbitmq-plugins enable --offline rabbitmq_mqtt rabbitmq_stomp
+
+ADD ./misc /config
+
+COPY ./misc/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+
+ENTRYPOINT [ "/config/docker-init.sh" ]
