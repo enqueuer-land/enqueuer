@@ -1,7 +1,5 @@
-import {IdGenerator} from "./id-generator";
 import {DateController} from "./date-controller";
 import {StringRandomCreator} from "./string-random-creator";
-var hash = require('object-hash');
 
 jest.mock("../timers/date-controller");
 DateController.mockImplementation(() => {

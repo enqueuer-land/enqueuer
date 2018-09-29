@@ -1,6 +1,7 @@
 import {IdGenerator} from "./id-generator";
 import {DateController} from "./date-controller";
-var hash = require('object-hash');
+import * as crypto from 'crypto'
+import {JavascriptObjectNotation} from "../object-notations/javascript-object-notation";
 
 jest.mock("../timers/date-controller");
 DateController.mockImplementation(() => {
@@ -15,9 +16,34 @@ describe('IdGenerator', () => {
 
     it('generateId', () => {
         const text: string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+        const hash = crypto.createHash('sha256');
+        hash.update(text, 'utf8');
+        const coded: string = hash.digest('base64');
+
         const idGenerator: IdGenerator = new IdGenerator(text);
         const expected =  new DateController().getStringOnlyNumbers() + "_" +
-            hash(text).substr(0, 8);
+            coded.substr(0, 8);
+
+        let generatedId = idGenerator.generateId();
+
+        expect(generatedId).toBe(expected);
+    });
+
+    it('generateId of objects', () => {
+        const value = {
+            deep: {
+                deeper: {
+                    deepest: true
+                }
+            }
+        };
+        const hash = crypto.createHash('sha256');
+        hash.update(new JavascriptObjectNotation().stringify(value), 'utf8');
+        const coded: string = hash.digest('base64');
+
+        const idGenerator: IdGenerator = new IdGenerator(value);
+        const expected =  new DateController().getStringOnlyNumbers() + "_" +
+            coded.substr(0, 8);
 
         let generatedId = idGenerator.generateId();
 

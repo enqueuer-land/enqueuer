@@ -7,7 +7,6 @@ import {Logger} from '../loggers/logger';
 export class HttpBearerAuthentication extends HttpAuthentication {
 
     private token: any;
-    private tests: TestModel[] = [];
 
     public constructor(authentication: any) {
         super();
@@ -19,27 +18,27 @@ export class HttpBearerAuthentication extends HttpAuthentication {
     }
 
     public verify(authorization: string): TestModel[] {
+        const tests = [];
         try {
-            this.tests = [];
             const token = authorization.split(' ')[1];
-            this.tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
-            this.tests.push(this.authenticateToken(token));
+            tests.push(this.authenticatePrefix(authorization.split(' ')[0]));
+            tests.push(this.authenticateToken(token));
         } catch (err) {
             Logger.error(`Error trying to authenticate: ${err}`);
         }
-        this.tests.push(this.bearerAuthentication());
+        tests.push(this.bearerAuthentication(tests));
 
-        return this.tests;
+        return tests;
     }
 
-    private bearerAuthentication() {
+    private bearerAuthentication(tests: TestModel[]) {
         let test = {
             name: '"Bearer" authentication',
             valid: false,
             description: 'Fail to authenticate \'Bearer\' authentication'
         };
-        if (this.tests.length > 0) {
-            if (this.tests.every(test => test.valid)) {
+        if (tests.length > 0) {
+            if (tests.every(test => test.valid)) {
                 test.valid = true;
                 test.description = `Bearer authentication is valid`;
             }
