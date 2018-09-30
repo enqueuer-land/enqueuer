@@ -131,7 +131,7 @@ describe('HandleListener', () => {
 
         listenMock.mockImplementationOnce((argHandler, cb) => {
             return cb({
-                code: 'EADDRINUSE'
+                code: HandlerListener.ADDRESS_IN_USE
             })
         });
         listenMock.mockImplementationOnce((argHandler, cb) => {
@@ -190,7 +190,7 @@ describe('HandleListener', () => {
 
         for (let i = 0; i < numAttempts; ++i) {
             listenMock.mockImplementationOnce((argHandler, cb) => cb({
-                code: 'EADDRINUSE'
+                code: HandlerListener.ADDRESS_IN_USE
             }));
         }
 

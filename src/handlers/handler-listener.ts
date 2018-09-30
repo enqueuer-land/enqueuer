@@ -2,6 +2,8 @@ import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 export class HandlerListener {
+    public static ADDRESS_IN_USE = 'EADDRINUSE';
+
     private server: any;
     private remainingAttempts: number;
     private retryTimeout: number;
@@ -51,12 +53,14 @@ export class HandlerListener {
     }
 
     private handleError(err: any, handler: number | string, resolve: any, reject: any) {
-        if (err.code === 'EADDRINUSE') {
+        if (err.code === HandlerListener.ADDRESS_IN_USE) {
             --this.remainingAttempts;
-            Logger.warning(`Handler ${handler} is in use, retrying more ${this.remainingAttempts} times...`);
+            Logger.warning(`Handler ${handler} is busy.`+
+                ` Waiting for ${this.retryTimeout}ms before trying again for ${this.remainingAttempts} more times...`);
             setTimeout(() => {
                 Logger.debug(`Closing server`);
                 this.server.close();
+                this.retryTimeout *= 2;
                 this.tryToListen(handler, resolve, reject);
             }, this.retryTimeout);
         } else {

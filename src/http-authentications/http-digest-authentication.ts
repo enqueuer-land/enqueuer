@@ -47,19 +47,13 @@ export class HttpDigestAuthentication extends HttpAuthentication {
 
     public verify(authorization: string): TestModel[] {
         const tests: TestModel[] = [];
-        try {
-            const parts = authorization.split(' ');
-            tests.push(this.checkDigestPrefix(parts[0]));
-            const params = parts.slice(1).join(' ');
-            const tokens = params.split(/,(?=(?:[^"]|"[^"]*")*$)/) || [];
-            const essentialFields = this.buildEssentialFields();
-            tokens.forEach((token) => tests.push(this.analyzeToken(token, essentialFields)));
-            tests.push(this.checkEssentialFieldsMissingInAuthorization(essentialFields));
-
-        } catch (err) {
-            Logger.error(`Error trying to authenticate: ${err}`);
-        }
-
+        const parts = authorization.split(' ');
+        tests.push(this.checkDigestPrefix(parts[0]));
+        const params = parts.slice(1).join(' ');
+        const tokens = params.split(/,(?=(?:[^"]|"[^"]*")*$)/) || [];
+        const essentialFields = this.buildEssentialFields();
+        tokens.forEach((token) => tests.push(this.analyzeToken(token, essentialFields)));
+        tests.push(this.checkEssentialFieldsMissingInAuthorization(essentialFields));
         return tests;
     }
 
@@ -179,11 +173,11 @@ export class HttpDigestAuthentication extends HttpAuthentication {
     }
 
     private checkEssentialFieldsMissingInAuthorization(selfCopy: any) {
-        const notUsedKeys = Object.keys(selfCopy);
+        const notUsedKeys = Object.keys(selfCopy) || [];
         let test = {
             name: 'Every field was found',
             valid: false,
-            description: `Keys '${notUsedKeys}' were not found in authorization`
+            description: `Keys '${notUsedKeys.join('; ')}' were not found in authorization`
         };
         if (notUsedKeys.length == 0) {
             test.valid = true;
