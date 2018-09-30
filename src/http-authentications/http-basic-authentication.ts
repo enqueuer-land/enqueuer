@@ -65,7 +65,7 @@ export class HttpBasicAuthentication extends HttpAuthentication {
         };
         if (prefix == 'Basic') {
             test.valid = true;
-            test.description = `Prefix "Basic" was found.`;
+            test.description = `Prefix "Basic" was found`;
         }
         return test;
     }

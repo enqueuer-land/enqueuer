@@ -1,5 +1,5 @@
 import {DateController} from './date-controller';
-import * as crypto from 'crypto'
+import {createHash } from 'crypto';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 export class IdGenerator {
@@ -15,12 +15,11 @@ export class IdGenerator {
     }
 
     public generateId(): string {
-        const hash = crypto.createHash('sha256');
+        const hash = createHash('sha256');
         hash.update(this.value, 'utf8');
         const coded = hash.digest('base64');
         return new DateController().getStringOnlyNumbers() +
                 '_' +
                 coded.substr(0, 8);
     }
-
 }

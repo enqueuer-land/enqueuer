@@ -14,11 +14,24 @@ headers:
   content-type: application/json
 
 #Optional. Automatically sets the 'authorization' header value following authentication specification.
+#All of them (basic, digest, bearer) are mutually exclusive
 authentication:
-  #'basic' is the only authentication method currently supported
   basic:
     user: user
     password: password
+  digest:
+    username: guest
+    password: guest
+    realm: nqrRealm
+    method: GET
+    uri: /bearer
+    opaque: opaque
+    nonce: 58bac26865505
+    nonceCount: 00000001
+    clientNonce: 72ae56dde9406045
+    qop: auth
+  bearer:
+    token: bearerToken
 
 #Check the list of events here: /docs/instructions/events.yml
 #Optional. Given that HTTP is a synchronous protocol, this event is triggered whenever a response is received.

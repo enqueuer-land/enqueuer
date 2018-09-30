@@ -2,6 +2,7 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 import {DelimiterSeparatedValueObjectNotation} from '../object-notations/delimiter-separated-value-object-notation';
 import * as fs from 'fs';
+import {Logger} from '../loggers/logger';
 
 export class FileContentMapCreator {
 
@@ -41,18 +42,23 @@ export class FileContentMapCreator {
     }
 
     private insertIntoMap(key: string) {
-        if (!this.map[key]) {
-            const separator = key.indexOf('://');
-            const tag = key.substring(0, separator);
-            const filename = key.substring(separator + 3);
-            switch (tag) {
-                case 'json': this.map[key] = new JavascriptObjectNotation().loadFromFileSync(filename); break;
-                case 'yml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
-                case 'yaml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
-                case 'csv': this.map[key] = new DelimiterSeparatedValueObjectNotation().loadFromFileSync(filename); break;
-                case 'tsv': this.map[key] = new DelimiterSeparatedValueObjectNotation('\t').loadFromFileSync(filename); break;
-                default: this.map[key] = fs.readFileSync(filename).toString();
+        try {
+            if (!this.map[key]) {
+                const separator = key.indexOf('://');
+                const tag = key.substring(0, separator);
+                const filename = key.substring(separator + 3);
+                switch (tag) {
+                    case 'json': this.map[key] = new JavascriptObjectNotation().loadFromFileSync(filename); break;
+                    case 'yml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
+                    case 'yaml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
+                    case 'csv': this.map[key] = new DelimiterSeparatedValueObjectNotation().loadFromFileSync(filename); break;
+                    case 'tsv': this.map[key] = new DelimiterSeparatedValueObjectNotation('\t').loadFromFileSync(filename); break;
+                    default: this.map[key] = fs.readFileSync(filename).toString();
+                }
             }
+        } catch (err) {
+            Logger.warning(err.toString());
+            this.map[key] = err.toString();
         }
     }
 

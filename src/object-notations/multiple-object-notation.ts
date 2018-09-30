@@ -1,8 +1,8 @@
 import {ObjectNotation} from './object-notation';
 import * as fs from 'fs';
-import {YamlObjectNotation} from "./yaml-object-notation";
-import {JavascriptObjectNotation} from "./javascript-object-notation";
-import {Logger} from "../loggers/logger";
+import {YamlObjectNotation} from './yaml-object-notation';
+import {JavascriptObjectNotation} from './javascript-object-notation';
+import {Logger} from '../loggers/logger';
 
 export class MultipleObjectNotation implements ObjectNotation {
 

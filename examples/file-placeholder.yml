@@ -2,6 +2,7 @@
     tsv: <<tsv://misc/file-content.tsv>>
     json: <<json://misc/file-content.json>>
     yml: <<yaml://misc/file-content.yml>>
+    fileNotFound: <<file://not/found.file>>
     onInit:
         script: double = <<file://misc/file-code.js>>
         store:
@@ -20,6 +21,9 @@
             -   name: fileRead (.tsv)
                 expect: requisition.tsv[0].title
                 toBeEqualTo: `virgs`
+            -   name: file not found
+                expect: requisition.fileNotFound
+                toBeEqualTo: `Error: ENOENT: no such file or directory, open 'not/found.file'`
             -   name: fileRead (.js)
                 expect: store.scriptResult
                 toBeEqualTo: 40

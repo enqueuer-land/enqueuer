@@ -10,6 +10,11 @@ try {
   /* do nothing*/
 }
 try {
+  require('./http-authentications/http-digest-authentication');
+} catch (err) {
+  /* do nothing*/
+}
+try {
   require('./http-authentications/http-no-authentication');
 } catch (err) {
   /* do nothing*/

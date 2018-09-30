@@ -10,6 +10,29 @@ jest.mock('../object-notations/delimiter-separated-value-object-notation');
 jest.mock('fs');
 describe('FileContentMapCreator', () => {
 
+    it('Handle file not found', () => {
+        const loadFromFileSyncMock = jest.fn(() => {throw 'err'});
+        JavascriptObjectNotation.mockImplementationOnce(() => {
+            return {
+                loadFromFileSync: loadFromFileSyncMock
+            }
+        });
+
+        const tag = 'json';
+        const filename = 'examples/file-content.json';
+        const replaceableKey = tag + '://' + filename;
+        const requisition = {value: '<<' + replaceableKey + '>>'};
+
+
+        const fileMap = new FileContentMapCreator();
+        fileMap.createMap(requisition);
+
+        const expected = {};
+        expected[replaceableKey] = 'err';
+        expect(fileMap.getMap()).toEqual(expected);
+        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
+    });
+
     it('Load json tag', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);

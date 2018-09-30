@@ -22,8 +22,24 @@ response:
 
 #Optional. Automatically verifies 'authorization' header value following authentication specification.
 #So additional tests will be added to the report depending on which authorization is being used
+#All of them (basic, digest, bearer) are mutually exclusive
 authentication:
-  #'basic' is the only authentication method currently supported
   basic:
     user: user
     password: password
+  basic:
+    user: user
+    password: password
+  digest:
+    username: guest
+    password: guest
+    realm: nqrRealm
+    method: GET
+    uri: /bearer
+    opaque: opaque
+    nonce: 58bac26865505
+    nonceCount: 00000001
+    clientNonce: 72ae56dde9406045
+    qop: auth
+  bearer:
+    token: bearerToken
