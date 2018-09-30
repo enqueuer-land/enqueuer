@@ -1,4 +1,4 @@
-name: examples/http-auth-bearer.yml
+name: examples/http-auth-digest.yml
 valid: true
 tests: []
 requisitions:
@@ -16,17 +16,41 @@ requisitions:
         type: http-server
         tests:
           -
-            name: '"Bearer" authentication prefix'
+            name: '"Digest" authentication prefix'
             valid: true
-            description: 'Prefix "Bearer" was found.'
+            description: 'Prefix "Digest" was found'
           -
-            name: '"Bearer" authentication token'
+            name: '"username" value does not match'
             valid: true
-            description: 'Token match'
+            description: 'Calculated "username" value matches'
           -
-            name: '"Bearer" authentication'
+            name: '"realm" value does not match'
             valid: true
-            description: 'Bearer authentication is valid'
+            description: 'Calculated "realm" value matches'
+          -
+            name: '"nonce" value does not match'
+            valid: true
+            description: 'Calculated "nonce" value matches'
+          -
+            name: '"uri" value does not match'
+            valid: true
+            description: 'Calculated "uri" value matches'
+          -
+            name: '"algorithm" value does not match'
+            valid: true
+            description: 'Calculated "algorithm" value matches'
+          -
+            name: '"Response" authentication value'
+            valid: true
+            description: 'Calculated "response" value matches'
+          -
+            name: '"opaque" value does not match'
+            valid: true
+            description: 'Calculated "opaque" value matches'
+          -
+            name: 'Every field was found'
+            valid: true
+            description: 'Every field was found'
           -
             name: Payload
             valid: true
@@ -36,11 +60,11 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-30T03:21:19.926Z'
+        connectionTime: '2018-09-30T03:21:20.204Z'
         messageReceived:
           headers:
             content-type: application/json
-            authorization: 'Bearer bearerToken'
+            authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/bearer", algorithm="MD5", response="4ba72b6a8e430d43aca8822090e8202d", opaque="opaque"'
             content-length: '4'
             host: 'localhost:23067'
             connection: close
@@ -65,7 +89,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-30T03:21:20.085Z'
+        publishTime: '2018-09-30T03:21:20.217Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -93,11 +117,11 @@ requisitions:
             method: post
             headers:
               content-type: application/json
-              authorization: 'Bearer bearerToken'
+              authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/bearer", algorithm="MD5", response="4ba72b6a8e430d43aca8822090e8202d", opaque="opaque"'
               Content-Length: 4
     time:
       startTime: '2018-09-30T03:21:19.836Z'
-      endTime: '2018-09-30T03:21:20.085Z'
-      totalTime: 249
+      endTime: '2018-09-30T03:21:20.218Z'
+      totalTime: 382
       timeout: 3000
     requisitions: []
