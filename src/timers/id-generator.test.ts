@@ -18,7 +18,7 @@ describe('IdGenerator', () => {
         const text: string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
         const hash = createHash('sha256');
         hash.update(text, 'utf8');
-        const coded: string = hash.digest('base64');
+        const coded: string = hash.digest('hex');
 
         const idGenerator: IdGenerator = new IdGenerator(text);
         const expected =  new DateController().getStringOnlyNumbers() + "_" +
@@ -39,7 +39,7 @@ describe('IdGenerator', () => {
         };
         const hash = createHash('sha256');
         hash.update(new JavascriptObjectNotation().stringify(value), 'utf8');
-        const coded: string = hash.digest('base64');
+        const coded: string = hash.digest('hex');
 
         const idGenerator: IdGenerator = new IdGenerator(value);
         const expected =  new DateController().getStringOnlyNumbers() + "_" +

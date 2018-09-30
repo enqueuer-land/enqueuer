@@ -17,7 +17,7 @@ export class IdGenerator {
     public generateId(): string {
         const hash = createHash('sha256');
         hash.update(this.value, 'utf8');
-        const coded = hash.digest('base64');
+        const coded = hash.digest('hex');
         return new DateController().getStringOnlyNumbers() +
                 '_' +
                 coded.substr(0, 8);
