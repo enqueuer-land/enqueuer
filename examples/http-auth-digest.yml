@@ -1,7 +1,7 @@
 timeout: 3000
 publishers:
     -   type: http-client
-        url: http://localhost:23067/bearer
+        url: http://localhost:23067/digest
         method: POST
         payload: Rech
         headers:
@@ -12,7 +12,7 @@ publishers:
                 password: guest
                 realm: nqrRealm
                 method: GET
-                uri: /bearer
+                uri: /digest
                 opaque: opaque
                 nonce: 58bac26865505
                 nonceCount: 00000001
@@ -25,7 +25,7 @@ publishers:
                     toBeEqualTo: `responsePayload`
 subscriptions:
     -   type: http-server
-        endpoint: /bearer
+        endpoint: /digest
         port: 23067
         method: POST
         timeout: 10000
@@ -35,7 +35,7 @@ subscriptions:
                 password: guest
                 realm: nqrRealm
                 method: GET
-                uri: /bearer
+                uri: /digest
                 opaque: opaque
                 nonce: 58bac26865505
                 nonceCount: 00000001

@@ -60,11 +60,11 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-09-30T03:55:09.110Z'
+        connectionTime: '2018-10-01T13:23:10.544Z'
         messageReceived:
           headers:
             content-type: application/json
-            authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/bearer", algorithm="MD5", response="4ba72b6a8e430d43aca8822090e8202d", opaque="opaque"'
+            authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
             content-length: '4'
             host: 'localhost:23067'
             connection: close
@@ -89,7 +89,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-09-30T03:55:09.115Z'
+        publishTime: '2018-10-01T13:23:10.653Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -98,7 +98,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Sun, 30 Sep 2018 03:55:09 GMT'
+            date: 'Mon, 01 Oct 2018 13:23:10 GMT'
             connection: close
           request:
             uri:
@@ -111,17 +111,17 @@ requisitions:
               hash: null
               search: null
               query: null
-              pathname: /bearer
-              path: /bearer
-              href: 'http://localhost:23067/bearer'
+              pathname: /digest
+              path: /digest
+              href: 'http://localhost:23067/digest'
             method: post
             headers:
               content-type: application/json
-              authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/bearer", algorithm="MD5", response="4ba72b6a8e430d43aca8822090e8202d", opaque="opaque"'
+              authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
               Content-Length: 4
     time:
-      startTime: '2018-09-30T03:55:08.136Z'
-      endTime: '2018-09-30T03:55:09.116Z'
-      totalTime: 980
+      startTime: '2018-10-01T13:23:10.146Z'
+      endTime: '2018-10-01T13:23:10.653Z'
+      totalTime: 507
       timeout: 3000
     requisitions: []

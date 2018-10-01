@@ -1,8 +1,7 @@
 import {Injectable} from 'conditional-injector';
 import {HttpAuthentication} from './http-authentication';
 import {TestModel} from '../models/outputs/test-model';
-import {Logger} from '../loggers/logger';
-import {createHash } from 'crypto';
+import {createHash} from 'crypto';
 
 @Injectable({predicate: (authentication: any) => authentication.digest})
 export class HttpDigestAuthentication extends HttpAuthentication {
