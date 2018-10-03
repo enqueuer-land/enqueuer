@@ -17,27 +17,17 @@ notifications:
     on_failure: always
 
 services:
-  - rabbitmq
+  - docker
 
 before_install:
-  - mkdir temp
-  - wget -O temp/kafka_2.11-1.0.0.tgz https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz
-  - cd temp
-  - tar -xvzf kafka_2.11-1.0.0.tgz
-  - cd kafka_2.11-1.0.0
-  - bin/zookeeper-server-start.sh config/zookeeper.properties &
-  - bin/kafka-server-start.sh ../../misc/server.properties &
-  - cd ../../
-  - wget -O temp/elasticmq-server-0.13.11.jar https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.13.11.jar
-  - java -Dconfig.file=misc/elasticMq.conf -jar temp/elasticmq-server-0.13.11.jar &
-  - temp/kafka_2.11-1.0.0/bin/kafka-topics.sh --create --topic enqueuer-topic-name --zookeeper localhost:2181 --partitions 3 --replication-factor 1 #We have to give some time for broker and zookeeper
-  - sudo rabbitmq-plugins enable rabbitmq_mqtt
-  - sudo rabbitmq-plugins enable rabbitmq_stomp
+  - docker pull enqueuer/enqueuer:dev
+  - docker run --rm -itd -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash
+  - docker ps -a
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; ls -la; ls -la src/; whoami"
 
 script:
-  - npm run lint
-  - npm run build
-  - npm link
-  - npm run codeCoverage
-  - npm run singleRunTest
-  - npm run daemonRunTest
+  - docker exec enqueuer /bin/bash -c "npm install zeromq@5.0.0"
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm install; npm run build; npm link"
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run codeCoverage"
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run singleRunTest"
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run daemonRunTest"

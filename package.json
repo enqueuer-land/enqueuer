@@ -16,7 +16,8 @@
     "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
     "build": "node misc/generate-injectables-list.js src/injectable-files-list.ts src && tsc",
     "docker-build": "docker build -t enqueuer/enqueuer:dev .",
-    "docker-run": "docker run --cpus 2 --rm -it -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash",
+    "docker-run": "docker run --cpus 2 --rm -itd -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash",
+    "docker-expose-brokers": "docker run --cpus 2 --rm -itd -p 9092:9092 -p 9093:9093 -p 5672:5672 -p 1883:1883 -p 3000:3000 -p 9324:9324 -p 61613:61613 -p 23000:23000 -p 2181:2181 -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash",
     "docker-test": "docker run --cpus 2 --rm -it -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash -c 'cd enqueuer; node js/index.js conf/singleRun.yml --store zeroMqAddress=tcp://127.0.0.1:3000 < misc/stdin'"
   },
   "repository": {

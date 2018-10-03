@@ -1,5 +1,4 @@
 #!/bin/bash
-
 rabbitmq-server start &
 status=$?
 if [ $status -ne 0 ]; then
@@ -8,7 +7,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Start the first process
-java -Dconfig.file=/config/elasticMq.conf -jar /usr/local/elasticmq-server-0.13.11.jar &
+java -Dconfig.file=/config/elasticMq.conf -jar /elasticmq-server-0.13.11.jar &
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start elasticMq: $status"
