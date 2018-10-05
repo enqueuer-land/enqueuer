@@ -23,11 +23,11 @@ before_install:
   - docker pull enqueuer/enqueuer:dev
   - docker run --rm -itd -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash
   - docker ps -a
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; ls -la; ls -la src/; whoami"
 
 script:
-  - docker exec enqueuer /bin/bash -c "npm install zeromq@5.0.0"
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm install; npm run build; npm link"
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm install"
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run lint"
+  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run build; npm link"
   - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run codeCoverage"
   - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run singleRunTest"
   - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run daemonRunTest"
