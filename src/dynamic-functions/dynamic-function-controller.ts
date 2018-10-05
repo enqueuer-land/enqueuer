@@ -2,11 +2,12 @@ import {Logger} from '../loggers/logger';
 
 export class DynamicFunctionController {
 
-    private functionBody: string;
+    private readonly functionBody: string;
     private arguments: { name: string, value: any }[] = [];
 
     public constructor(functionBody: string) {
         this.functionBody = functionBody;
+        this.addArgument('require', require);
     }
 
     public addArgument(name: string, value: any): void {
