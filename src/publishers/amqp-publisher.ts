@@ -3,10 +3,12 @@ import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
 import * as amqp from 'amqp';
-import {ProtocolsManager} from '../configurations/protocols-manager';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (publish: any) => ProtocolsManager
-        .insertPublisherProtocol('amqp', [], 'amqp')
+const protocol = ProtocolManager.getInstance()
+    .insertPublisherProtocol('amqp', [], 'amqp');
+
+@Injectable({predicate: (publish: any) => protocol
         .matchesRatingAtLeast(publish.type, 95)})
 export class AmqpPublisher extends Publisher {
     private connection: any;

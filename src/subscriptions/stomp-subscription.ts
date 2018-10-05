@@ -3,9 +3,15 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolManager} from '../configurations/protocol-manager';
 const Stomp = require('stomp-client');
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'stomp'})
+const protocol = ProtocolManager
+    .getInstance()
+    .insertSubscriptionProtocol('stomp',
+        [],
+        'stomp-client');
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class StompSubscription extends Subscription {
     private client: any;
 

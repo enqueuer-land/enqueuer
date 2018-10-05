@@ -2,11 +2,17 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as AWS from 'aws-sdk';
-import {ReceiveMessageRequest, ReceiveMessageResult} from 'aws-sdk/clients/sqs';
+import {ReceiveMessageResult} from 'aws-sdk/clients/sqs';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'sqs'})
+const protocol = ProtocolManager
+    .getInstance()
+    .insertSubscriptionProtocol('sqs',
+        [],
+        'aws-sdk');
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class SqsSubscription extends Subscription {
 
     private sqs: AWS.SQS;

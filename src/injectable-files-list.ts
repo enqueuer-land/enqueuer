@@ -80,7 +80,7 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/zero-mq-pub-publisher');
+  require('./publishers/zeromq-publisher');
 } catch (err) {
   /* do nothing*/
 }
@@ -180,7 +180,7 @@ try {
   /* do nothing*/
 }
 try {
-  require('./subscriptions/zero-mq-sub-subscription');
+  require('./subscriptions/zeromq-subscription');
 } catch (err) {
   /* do nothing*/
 }

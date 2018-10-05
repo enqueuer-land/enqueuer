@@ -4,7 +4,7 @@ import {Injectable} from 'conditional-injector';
 import prettyjson from 'prettyjson';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolsManager} from '../configurations/protocols-manager';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
 const options = {
     defaultIndentation: 4,
@@ -12,8 +12,10 @@ const options = {
     dashColor: 'grey'
   };
 
-@Injectable({predicate: (publish: any) => ProtocolsManager
-        .insertPublisherProtocol('stdout', ['standard-output'])
+const protocol = ProtocolManager.getInstance()
+    .insertPublisherProtocol('stdout', ['standard-output']);
+
+@Injectable({predicate: (publish: any) => protocol
         .matchesRatingAtLeast(publish.type, 95)})
 export class StandardOutputPublisher extends Publisher {
 

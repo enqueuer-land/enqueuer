@@ -7,8 +7,13 @@ import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'uds' || subscriptionAttributes.type === 'uds-server'})
+const protocol = ProtocolManager
+    .getInstance()
+    .insertSubscriptionProtocol('uds',
+        ['uds-server']);
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class UdsSubscription extends Subscription {
 
     private server: any;

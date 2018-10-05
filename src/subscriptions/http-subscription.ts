@@ -7,15 +7,14 @@ import {TestModel} from '../models/outputs/test-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({
-    predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'http-proxy' ||
-        subscriptionAttributes.type === 'https-proxy' ||
-        subscriptionAttributes.type === 'http-server' ||
-        subscriptionAttributes.type === 'http' ||
-        subscriptionAttributes.type === 'https' ||
-        subscriptionAttributes.type === 'https-server'
-})
+const protocol = ProtocolManager
+    .getInstance()
+    .insertSubscriptionProtocol('http',
+        ['https', 'http-proxy', 'https-proxy', 'http-server', 'https-server'],
+        'express');
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 100)})
 export class HttpSubscription extends Subscription {
 
     private responseToClientHandler?: any;

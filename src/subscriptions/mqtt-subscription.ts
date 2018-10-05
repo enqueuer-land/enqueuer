@@ -3,8 +3,14 @@ import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import * as mqtt from 'mqtt';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'mqtt'})
+const protocol = ProtocolManager
+    .getInstance()
+    .insertSubscriptionProtocol('mqtt',
+        [],
+        'mqtt');
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class MqttSubscription extends Subscription {
 
     private client: any;

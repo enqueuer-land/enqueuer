@@ -4,8 +4,12 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as fs from 'fs';
 import * as glob from 'glob';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'file-system-watcher'})
+const protocol = ProtocolManager.getInstance()
+    .insertSubscriptionProtocol('file',
+        ['file-system-watcher', 'file-watcher']);
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class FileSystemWatcherSubscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {

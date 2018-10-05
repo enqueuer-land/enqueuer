@@ -44,4 +44,5 @@ describe('StringMatcher', () => {
 
         expect(matches[0]).toEqual({target: 'sealed', rating: 80});
     });
+
 });

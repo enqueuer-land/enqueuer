@@ -4,8 +4,7 @@ import {EnqueuerStarter} from './enqueuer-starter';
 import {Logger} from './loggers/logger';
 import {ConfigurationValues} from "./configurations/configuration-values";
 import {CommandLineConfiguration} from "./configurations/command-line-configuration";
-import {ProtocolsManager} from "./configurations/protocols-manager";
-jest.mock('./configurations/protocols-manager');
+import {ProtocolManager} from "./configurations/protocol-manager";
 jest.mock('./configurations/command-line-configuration');
 jest.mock('./configurations/configuration');
 jest.mock('./enqueuer-starter');
@@ -108,16 +107,9 @@ describe('Index', () => {
     });
 
     it('Should list available libraries value', done => {
-        const listAvailable = jest.fn(() => []);
         CommandLineConfiguration.requestToListAvailableProtocols.mockImplementationOnce(() => true);
-        ProtocolsManager.mockImplementationOnce(() => {
-            return {
-                listAvailable: listAvailable
-            }
-        });
         start().then((statusCode) => {
             expect(statusCode).toBe(0);
-            expect(listAvailable).toBeCalled();
             done();
         });
     });

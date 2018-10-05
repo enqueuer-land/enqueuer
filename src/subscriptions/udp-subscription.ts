@@ -4,8 +4,13 @@ import {Injectable} from 'conditional-injector';
 import * as dgram from 'dgram';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'udp'})
+const protocol = ProtocolManager
+    .getInstance()
+    .insertSubscriptionProtocol('udp',
+        ['udp-server']);
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class UdpSubscription extends Subscription {
 
     private server: any;

@@ -8,10 +8,12 @@ import {Logger} from '../loggers/logger';
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 import * as path from 'path';
-import {ProtocolsManager} from '../configurations/protocols-manager';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (publish: any) => ProtocolsManager
-        .insertPublisherProtocol('file')
+const protocol = ProtocolManager.getInstance()
+    .insertPublisherProtocol('file');
+
+@Injectable({predicate: (publish: any) => protocol
         .matchesRatingAtLeast(publish.type, 95)})
 export class FilePublisher extends Publisher {
 

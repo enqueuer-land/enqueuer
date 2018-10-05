@@ -4,11 +4,17 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {KafkaClient, Consumer, Offset, Message} from 'kafka-node';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'kafka'})
+const protocol = ProtocolManager
+    .getInstance()
+    .insertSubscriptionProtocol('kafka',
+            [],
+        'kafka-node');
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class KafkaSubscription extends Subscription {
 
-    private client: KafkaClient;
+    private readonly client: KafkaClient;
     private options: any;
     private offset: Offset;
     private latestOffset?: number;

@@ -3,12 +3,14 @@ import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as zmq from 'zeromq';
-import {ProtocolsManager} from '../configurations/protocols-manager';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (publish: any) => ProtocolsManager
-        .insertPublisherProtocol('zeromq', ['zero-mq-pub'], 'zeromq')
+const protocol = ProtocolManager.getInstance()
+    .insertPublisherProtocol('zeromq', ['zero-mq-pub'], 'zeromq');
+
+@Injectable({predicate: (publish: any) => protocol
         .matchesRatingAtLeast(publish.type, 95)})
-export class ZeroMqPubPublisher extends Publisher {
+export class ZeromqPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {
         super(publish);

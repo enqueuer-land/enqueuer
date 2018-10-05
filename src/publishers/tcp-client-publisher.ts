@@ -5,14 +5,13 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolsManager} from '../configurations/protocols-manager';
+import {ProtocolManager} from '../configurations/protocol-manager';
 
-@Injectable({predicate: (publish: any) => ProtocolsManager
-        .insertPublisherProtocol('tcp', ['tcp-client'])
-        .matchesRatingAtLeast(publish.type, 95)})
+const protocol = ProtocolManager.getInstance().insertPublisherProtocol('tcp', ['tcp-client']);
+@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
 export class TcpClientPublisher extends Publisher {
 
-    private loadedStream: any;
+    private readonly loadedStream: any;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);

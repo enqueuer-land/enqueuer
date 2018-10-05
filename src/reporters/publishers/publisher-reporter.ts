@@ -11,8 +11,8 @@ import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {PublisherModel} from '../../models/outputs/publisher-model';
 
 export class PublisherReporter {
+    private readonly report: output.PublisherModel;
     private publisher: Publisher;
-    private report: output.PublisherModel;
 
     constructor(publisher: input.PublisherModel) {
         this.report = {
@@ -22,7 +22,7 @@ export class PublisherReporter {
             tests: []
         };
         this.executeOnInitFunction(publisher);
-        Logger.debug(`Instantiating publisher from '${publisher.type}'`);
+        Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
         this.publisher = Container.subclassesOf(Publisher).create(publisher);
     }
 

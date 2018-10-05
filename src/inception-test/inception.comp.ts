@@ -112,7 +112,7 @@ describe('Inception test', () => {
         second.on('exit', (statusCode: number) => {
                 expect(statusCode).toBe(0);
 
-                const testerReports = {};
+                const testerReports: any = {};
                 findEveryJsonFile()
                     .filter(filename => filename.indexOf('_test.json') >= 0)
                     .forEach(filename => {
