@@ -40,15 +40,15 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-05T23:11:56.739Z'
+        connectionTime: '2018-10-05T23:25:24.885Z'
         messageReceived:
           topic: enqueuer-topic-name
           value: kafkaPayload
-          offset: 11
+          offset: 12
           partition: 0
-          highWaterOffset: 12
+          highWaterOffset: 13
           key: null
-          timestamp: '2018-10-05T23:11:56.742Z'
+          timestamp: '2018-10-05T23:25:24.887Z'
     publishers:
       -
         name: 'Publisher #0'
@@ -67,11 +67,11 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-05T23:11:56.775Z'
-        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 11\n  }\n}"
+        publishTime: '2018-10-05T23:25:24.905Z'
+        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 12\n  }\n}"
     time:
-      startTime: '2018-10-05T23:11:56.469Z'
-      endTime: '2018-10-05T23:11:56.782Z'
-      totalTime: 313
+      startTime: '2018-10-05T23:25:24.682Z'
+      endTime: '2018-10-05T23:25:24.907Z'
+      totalTime: 225
       timeout: 8000
     requisitions: []

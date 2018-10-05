@@ -11,19 +11,20 @@ export class StringMatcher {
     }
 
     private compareTwoStrings(first: string, second: string): number {
-        if (!first.length && !second.length) {
+        const bothAreEmpty = first.length == 0 && second.length == 0;
+        const bothAreInsensitiveEqual = first.toUpperCase() === second.toUpperCase();
+        if (bothAreEmpty || bothAreInsensitiveEqual) {
             return 100;
         }
-        if (!first.length || !second.length) {
+        const justOneIsEmpty = first.length == 0 || second.length == 0;
+        const sameSizeAndNotEqual = first.length === 1 && second.length === 1;
+        if (justOneIsEmpty || sameSizeAndNotEqual) {
             return 0;
         }
-        if (first.toUpperCase() === second.toUpperCase()) {
-            return 100;
-        }
-        if (first.length === 1 && second.length === 1) {
-            return 0;
-        }
+        return this.doTheMath(first, second);
+    }
 
+    private doTheMath(first: string, second: string) {
         const pairs1 = this.wordLetterPairs(first);
         const pairs2 = this.wordLetterPairs(second);
         const union = pairs1.length + pairs2.length;
@@ -57,7 +58,9 @@ export class StringMatcher {
     }
 
     private wordLetterPairs(str: string) {
-        const pairs = str.toUpperCase().split(' ').map((str) => this.letterPairs(str));
+        const pairs = str.toUpperCase()
+            .split(' ')
+            .map((str) => this.letterPairs(str));
         return this.flattenDeep(pairs);
     }
 }
