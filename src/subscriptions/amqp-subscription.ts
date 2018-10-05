@@ -4,7 +4,7 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Logger} from '../loggers/logger';
 import * as amqp from 'amqp';
 import {StringRandomCreator} from '../strings/string-random-creator';
-import {ProtocolManager} from '../configurations/protocol-manager';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager.getInstance().insertSubscriptionProtocol('amqp', [], 'amqp');
 @Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})

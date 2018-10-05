@@ -4,7 +4,7 @@ import {Container, Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
-import {ProtocolManager} from '../configurations/protocol-manager';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager
     .getInstance()

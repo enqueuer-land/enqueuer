@@ -5,7 +5,7 @@ import {Logger} from '../loggers/logger';
 import {SendMessageRequest, SendMessageResult} from 'aws-sdk/clients/sqs';
 import * as AWS from 'aws-sdk';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolManager} from '../configurations/protocol-manager';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('sqs', [], 'aws-sdk');

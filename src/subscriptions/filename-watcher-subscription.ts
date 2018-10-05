@@ -4,7 +4,7 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as fs from 'fs';
 import * as glob from 'glob';
-import {ProtocolManager} from '../configurations/protocol-manager';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager.getInstance()
     .insertSubscriptionProtocol('file',

@@ -8,7 +8,7 @@ import {Logger} from '../loggers/logger';
 import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 import * as path from 'path';
-import {ProtocolManager} from '../configurations/protocol-manager';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('file');

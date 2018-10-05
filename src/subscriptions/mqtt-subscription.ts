@@ -3,7 +3,7 @@ import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import * as mqtt from 'mqtt';
-import {ProtocolManager} from '../configurations/protocol-manager';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager
     .getInstance()

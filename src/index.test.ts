@@ -4,7 +4,7 @@ import {EnqueuerStarter} from './enqueuer-starter';
 import {Logger} from './loggers/logger';
 import {ConfigurationValues} from "./configurations/configuration-values";
 import {CommandLineConfiguration} from "./configurations/command-line-configuration";
-import {ProtocolManager} from "./configurations/protocol-manager";
+import {ProtocolManager} from "./protocols/protocol-manager";
 jest.mock('./configurations/command-line-configuration');
 jest.mock('./configurations/configuration');
 jest.mock('./enqueuer-starter');

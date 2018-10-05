@@ -4,7 +4,7 @@ import {EnqueuerStarter} from './enqueuer-starter';
 import {Configuration} from './configurations/configuration';
 import {Logger} from './loggers/logger';
 import {CommandLineConfiguration} from './configurations/command-line-configuration';
-import {ProtocolManager} from './configurations/protocol-manager';
+import {ProtocolManager} from './protocols/protocol-manager';
 
 export async function start(): Promise<number> {
         Logger.setLoggerLevel('info');

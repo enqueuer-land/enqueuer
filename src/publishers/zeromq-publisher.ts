@@ -3,7 +3,7 @@ import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as zmq from 'zeromq';
-import {ProtocolManager} from '../configurations/protocol-manager';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('zeromq', ['zero-mq-pub'], 'zeromq');
