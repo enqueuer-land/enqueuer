@@ -4,7 +4,8 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import * as zmq from 'zeromq';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'zero-mq-sub'})
+@Injectable({predicate: (subscriptionModel: any) => subscriptionModel.type === 'zero-mq-sub'
+                                                    || subscriptionModel.type === 'zeromq'})
 export class ZeroMqSubSubscription extends Subscription {
     private socket: zmq.Socket;
 

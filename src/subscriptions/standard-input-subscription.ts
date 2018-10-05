@@ -2,7 +2,8 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 
-@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'standard-input'})
+@Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'standard-input'
+                                                        || subscriptionAttributes.type === 'stdin'})
 export class StandardInputSubscription extends Subscription {
     private value?: string;
 

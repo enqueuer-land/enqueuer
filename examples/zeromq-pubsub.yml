@@ -1,12 +1,13 @@
 publishers:
-    -   type: zero-mq-pub
+    -   type: zeromq
         name: publisher
         address: <<zeroMqAddress>>
         payload: enqueuer zeroes
         topic: topic.enqueuer.virgs
 subscriptions:
     -   name: subscription description
-        type: zero-mq-sub
+        type: zeromq
+        timeout: 1000
         address: <<zeroMqAddress>>
         topic: topic.enqueuer.virgs
         onMessageReceived:

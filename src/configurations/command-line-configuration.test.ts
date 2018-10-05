@@ -62,16 +62,16 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
     });
 
-    it('list libraries -l', () => {
+    it('list protocols -l', () => {
         commanderRefresher(['node', 'test', '-l']);
 
-        expect(CommandLineConfiguration.requestToListAvailableLibraries()).toBeTruthy();
+        expect(CommandLineConfiguration.requestToListAvailableProtocols()).toBeTruthy();
     });
 
-    it('list libraries --list-available-libraries', () => {
-        commanderRefresher(['node', 'test', '--list-available-libraries']);
+    it('list libraries --list-available-protocols', () => {
+        commanderRefresher(['node', 'test', '--list-available-protocols']);
 
-        expect(CommandLineConfiguration.requestToListAvailableLibraries()).toBeTruthy();
+        expect(CommandLineConfiguration.requestToListAvailableProtocols()).toBeTruthy();
     });
 
     it('getStore -s', () => {

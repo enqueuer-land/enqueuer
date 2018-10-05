@@ -80,13 +80,15 @@ export class RequisitionRunner {
     }
 
     private startRequisition(requisition: input.RequisitionModel): Promise<output.RequisitionModel> {
+        const placeHolderReplacer = new JsonPlaceholderReplacer();
         const fileMapCreator = new FileContentMapCreator();
         fileMapCreator.createMap(requisition);
-        const placeHolderReplacer = new JsonPlaceholderReplacer();
-        const requisitionModel = placeHolderReplacer
-                                    .addVariableMap(fileMapCreator.getMap())
-                                    .addVariableMap(Store.getData())
-                                    .replace(requisition) as input.RequisitionModel;
+        let requisitionModel = placeHolderReplacer
+            .addVariableMap(fileMapCreator.getMap())
+            .replace(requisition) as input.RequisitionModel;
+        requisitionModel = placeHolderReplacer
+            .addVariableMap(Store.getData())
+            .replace(requisitionModel) as input.RequisitionModel;
         if (this.shouldSkipRequisition(requisition, requisitionModel)) {
             Logger.info(`Requisition will be skipped`);
             return Promise.resolve(RequisitionDefaultReports.createSkippedReport(this.name));

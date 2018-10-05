@@ -2,21 +2,25 @@
 #Currently, there are three events available:
 #Variable replacements are available here. (/docs/instructions/variables.yml)
 
-onInit: #Available in requisitions, publishers and subscriptions. It gets executed as soon as the field is initialized
-onFinish: #Available in requisitions, publishers and subscriptions. It gets executed when the field is about to finish
-onMessageReceived: #Available in subscriptions and in some synchronous publishers (http, kafka, tcp, uds etc.). It gets executed when the field receives a message.
+#Available objects are:
+    #subscription (/docs/instructions/tests/subscriptions/subscription.yml) in a subscription field;
+    #publisher (/docs/instructions/tests/publishers/publisher.yml) in a publisher field;
+    #requisition (/docs/instructions/tests/requisitions.yml) in a requisition field;
+
+#Available in requisitions, publishers and subscriptions. It gets executed as soon as the field is initialized
+onInit:
+
+#Available in requisitions, publishers and subscriptions. It gets executed when the field is about to finish
+onFinish:
+
+#Available in every subscriptions and in synchronous publishers (http, kafka, tcp, uds etc.). It gets executed when the field receives a message.
+#An additional 'message' object is available having all of its attributes.
+onMessageReceived:
 
 #Every event object has 3 children:
-#1 - script: Javascript code snippet executed when the event is triggered.
-
-#2 - store: data to be persisted to be used in later requisitions/publishers/subscriptions
-    #Optional. Javascript code snippet executed when the event is triggered.
-    #Available objects are:
-        #subscription (/docs/instructions/tests/subscriptions/subscription.yml) in a subscription field;
-        #publisher (/docs/instructions/tests/publishers/publisher.yml) in a publisher field;
-        #requisition (/docs/instructions/tests/requisitions.yml) in a requisition field;
-
-#3 - assertions: array of assertions (/docs/instructions/tests/assertions.yml)
+script: Javascript code snippet executed when the event is triggered.
+store: data to be persisted
+assertions: array of assertions (/docs/instructions/tests/assertions.yml)
 
 #--------
 #Below, an onMessageReceived event is defined as an example.

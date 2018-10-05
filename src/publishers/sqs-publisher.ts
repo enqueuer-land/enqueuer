@@ -24,8 +24,7 @@ export class SqsPublisher extends Publisher {
         return new Promise((resolve, reject) => {
             this.sqsSend.sendMessage(this.messageParams, (err: AWS.AWSError, data: SendMessageResult) => {
                 if (err) {
-                    Logger.error('Error publishing to SQS');
-                    return reject(err);
+                    return reject(`Error publishing to SQS: ${err}`);
                 } else {
                     this.messageReceived = data;
                     Logger.trace(`SQS send message result: ${new JavascriptObjectNotation().stringify(data)}`);

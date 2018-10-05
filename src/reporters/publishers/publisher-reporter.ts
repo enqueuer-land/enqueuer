@@ -57,7 +57,10 @@ export class PublisherReporter {
 
     private pushResponseMessageReceivedTest() {
         this.report.messageReceived = this.publisher.messageReceived;
-        if (this.publisher.onMessageReceived && this.publisher.onMessageReceived.assertions) {
+        const publisherHasAssertions = this.publisher.onMessageReceived &&
+                                        this.publisher.onMessageReceived.assertions &&
+                                        this.publisher.onMessageReceived.assertions.length > 0;
+        if (publisherHasAssertions) {
             let responseTest = {
                 name: 'Response message received',
                 valid: false,

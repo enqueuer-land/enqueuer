@@ -1,4 +1,4 @@
-import {DateController} from "./date-controller";
+import {DateController} from "../timers/date-controller";
 import {StringRandomCreator} from "./string-random-creator";
 
 jest.mock("../timers/date-controller");

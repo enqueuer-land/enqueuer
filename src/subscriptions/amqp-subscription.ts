@@ -3,7 +3,7 @@ import {Injectable} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Logger} from '../loggers/logger';
 import * as amqp from 'amqp';
-import {StringRandomCreator} from '../timers/string-random-creator';
+import {StringRandomCreator} from '../strings/string-random-creator';
 
 @Injectable({predicate: (subscriptionAttributes: any) => subscriptionAttributes.type === 'amqp'})
 export class AmqpSubscription extends Subscription {

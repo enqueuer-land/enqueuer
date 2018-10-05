@@ -18,7 +18,7 @@ So you don't have to deal with a whole bunch of stuff you will not need.
       -b, --verbosity <level>          set verbosity [trace, debug, info, warn, error, fatal]
       -c, --config-file <path>         set configurationFile
       -s, --store [store]              add variables values to this session (default: )
-      -l, --list-available-libraries   list available libraries
+      -l, --list-available-protocols   list available protocols
       -h, --help                       output usage information
 
 ###### Run it:

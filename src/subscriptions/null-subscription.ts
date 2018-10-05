@@ -1,7 +1,7 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
-import {DependencyManager} from '../configurations/dependency-manager';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
 @Injectable()
 export class NullSubscription extends Subscription {
@@ -10,8 +10,8 @@ export class NullSubscription extends Subscription {
     }
 
     public subscribe(): Promise<void> {
-        return Promise.reject(`Undefined subscription: '${this.type}'. Trying installing one of: ${new DependencyManager()
-                                                                    .listAvailable().join('; ')} with 'npm install $(protocol) --no-optional'`);
+        new ProtocolsManager().suggestSubscriptionBasedOn(this.type);
+        return Promise.reject(`Undefined subscription: '${this.type}'`);
     }
 
     public async receiveMessage(): Promise<any> {

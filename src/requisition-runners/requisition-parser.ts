@@ -1,4 +1,4 @@
-import {IdGenerator} from '../timers/id-generator';
+import {IdGenerator} from '../strings/id-generator';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
 

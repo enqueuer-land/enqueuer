@@ -22,8 +22,12 @@ timeout: 3000
 
 #Check the list of events here: /docs/instructions/events.yml
 #Optional. Event triggered as soon as the subscription is initialized.
+#A 'subscription' object is available having all of its attributes.
 onInit:
 #Optional. Event triggered when a subscription receives the message it was waiting for
+#A 'subscription' object is available having all of its attributes.
+#A 'message' object is available having all of its attributes.
 onMessageReceived:
 #Optional. Event triggered as soon as the subscription is over
+#A 'subscription' object is available having all of its attributes.
 onFinish:

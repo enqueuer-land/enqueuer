@@ -11,7 +11,7 @@ export abstract class Publisher {
     public messageReceived?: any;
 
     [propName: string]: any;
-    public constructor(publisherAttributes: PublisherModel) {
+    protected constructor(publisherAttributes: PublisherModel) {
         Object.keys(publisherAttributes).forEach(key => {
             this[key] = publisherAttributes[key];
         });

@@ -5,9 +5,9 @@ import http from 'http';
 import {HandlerListener} from '../handlers/handler-listener';
 
 export class HttpContainer {
-    private port: number;
+    private readonly port: number;
+    private readonly app: any;
     private server: any;
-    private app: any;
     private counter: number = 0;
     private sockets: Set<any> = new Set();
 

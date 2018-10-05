@@ -3,13 +3,13 @@ import {EnqueuerStarter} from './enqueuer-starter';
 import {Configuration} from './configurations/configuration';
 import {Logger} from './loggers/logger';
 import {CommandLineConfiguration} from './configurations/command-line-configuration';
-import {DependencyManager} from './configurations/dependency-manager';
+import {ProtocolsManager} from './configurations/protocols-manager';
 import './injectable-files-list';
 
 export async function start(): Promise<number> {
         Logger.setLoggerLevel('info');
-        const dependencyManager = new DependencyManager();
-        if (CommandLineConfiguration.requestToListAvailableLibraries()) {
+        const dependencyManager = new ProtocolsManager();
+        if (CommandLineConfiguration.requestToListAvailableProtocols()) {
             console.log(`Available dependencies: ${dependencyManager.listAvailable().join('; ')}`);
             return 0;
         } else {

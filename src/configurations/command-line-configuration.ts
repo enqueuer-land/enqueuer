@@ -23,7 +23,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 memo.push(val);
                 return memo;
             }, [])
-        .option('-l, --list-available-libraries', 'list available libraries', false)
+        .option('-l, --list-available-protocols', 'list available protocols', false)
         .parse(commandLineArguments);
     return commander;
 };
@@ -80,8 +80,8 @@ export class CommandLineConfiguration {
         return commandLineStore;
     }
 
-    public static requestToListAvailableLibraries(): boolean {
-        return CommandLineConfiguration.getCommandLine().listAvailableLibraries;
+    public static requestToListAvailableProtocols(): boolean {
+        return CommandLineConfiguration.getCommandLine().listAvailableProtocols;
     }
 
 }

@@ -9,7 +9,7 @@ requisitions:
     subscriptions:
       -
         name: 'subscription description'
-        type: zero-mq-sub
+        type: zeromq
         tests:
           -
             name: topic
@@ -28,7 +28,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-01T13:23:10.409Z'
+        connectionTime: '2018-10-05T16:13:02.416Z'
         messageReceived:
           topic:
             type: Buffer
@@ -75,15 +75,15 @@ requisitions:
       -
         name: publisher
         valid: true
-        type: zero-mq-pub
+        type: zeromq
         tests:
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-01T13:23:10.413Z'
+        publishTime: '2018-10-05T16:13:02.416Z'
     time:
-      startTime: '2018-10-01T13:23:10.240Z'
-      endTime: '2018-10-01T13:23:10.470Z'
-      totalTime: 230
+      startTime: '2018-10-05T16:13:02.264Z'
+      endTime: '2018-10-05T16:13:02.418Z'
+      totalTime: 154
     requisitions: []

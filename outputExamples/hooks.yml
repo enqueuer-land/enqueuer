@@ -8,7 +8,7 @@ requisitions:
       -
         name: 'Requisitions exists onInit'
         valid: true
-        description: '''requisition'' is not defined'
+        description: '''requisition'' is defined'
       -
         valid: true
         name: 'No time out'
@@ -22,7 +22,7 @@ requisitions:
           -
             name: 'Subscription exists onInit'
             valid: true
-            description: '''subscription'' is not defined'
+            description: '''subscription'' is defined'
           -
             name: 'Subscription name'
             valid: true
@@ -30,7 +30,7 @@ requisitions:
           -
             name: 'Subscription exists onMessageReceived'
             valid: true
-            description: '''subscription'' is not defined'
+            description: '''subscription'' is defined'
           -
             name: 'Subscription name changed'
             valid: true
@@ -38,13 +38,13 @@ requisitions:
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''subscription::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) contains ''subscription::onInit'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-01T13:23:10.254Z'
+        connectionTime: '2018-10-05T16:13:02.236Z'
         messageReceived:
           payload:
             type: Buffer
@@ -64,15 +64,15 @@ requisitions:
           -
             name: 'Publisher exists onInit'
             valid: true
-            description: '''publisher'' is not defined'
+            description: '''publisher'' is defined'
           -
             name: 'Publisher name'
             valid: true
-            description: '''publisher.name'' is not defined'
+            description: '''publisher.name'' is defined'
           -
             name: 'Assertion #2'
             valid: true
-            description: '''publisher'' is not defined'
+            description: '''publisher'' is defined'
           -
             name: Published
             valid: true
@@ -80,11 +80,11 @@ requisitions:
           -
             name: 'Publisher exists onMessageReceived'
             valid: true
-            description: '''publisher'' is not defined'
+            description: '''publisher'' is defined'
           -
             name: 'Requisition onInit'
             valid: true
-            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''requisition::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) contains ''requisition::onInit'''
           -
             name: 'Publisher name changed'
             valid: true
@@ -92,21 +92,21 @@ requisitions:
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) does not contain ''publisher::onInit'''
+            description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) contains ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-01T13:23:10.514Z'
+        publishTime: '2018-10-05T16:13:02.348Z'
         messageReceived:
           payload: 'hook response'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 44428
+            port: 59361
     time:
-      startTime: '2018-10-01T13:23:10.139Z'
-      endTime: '2018-10-01T13:23:10.514Z'
-      totalTime: 375
+      startTime: '2018-10-05T16:13:02.183Z'
+      endTime: '2018-10-05T16:13:02.348Z'
+      totalTime: 165
       timeout: 2000
     requisitions: []

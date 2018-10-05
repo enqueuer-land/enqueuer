@@ -32,7 +32,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-01T13:23:10.289Z'
+        connectionTime: '2018-10-05T16:13:02.251Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -66,7 +66,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-01T13:23:10.538Z'
+        publishTime: '2018-10-05T16:13:02.355Z'
         messageReceived:
           statusCode: 321
           body: 'dynamically changed payload'
@@ -75,7 +75,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '27'
             etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-            date: 'Mon, 01 Oct 2018 13:23:10 GMT'
+            date: 'Fri, 05 Oct 2018 16:13:02 GMT'
             connection: close
           request:
             uri:
@@ -96,9 +96,9 @@ requisitions:
               content-type: application/json
               Content-Length: 25
     time:
-      startTime: '2018-10-01T13:23:10.147Z'
-      endTime: '2018-10-01T13:23:10.539Z'
-      totalTime: 392
+      startTime: '2018-10-05T16:13:02.188Z'
+      endTime: '2018-10-05T16:13:02.355Z'
+      totalTime: 167
       timeout: 3000
     requisitions: []
   -
@@ -117,13 +117,13 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: '''JSON.parse(message.body).duplicated'' is not true. I swear'
+            description: '''JSON.parse(message.body).duplicated'' is true'
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-01T13:23:10.543Z'
+        connectionTime: '2018-10-05T16:13:02.358Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -157,7 +157,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-01T13:23:10.651Z'
+        publishTime: '2018-10-05T16:13:02.389Z'
         messageReceived:
           statusCode: 321
           body: duplicatedResponsePayload
@@ -166,7 +166,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '25'
             etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-            date: 'Mon, 01 Oct 2018 13:23:10 GMT'
+            date: 'Fri, 05 Oct 2018 16:13:02 GMT'
             connection: close
           request:
             uri:
@@ -187,9 +187,9 @@ requisitions:
               content-type: application/json
               Content-Length: 24
     time:
-      startTime: '2018-10-01T13:23:10.542Z'
-      endTime: '2018-10-01T13:23:10.652Z'
-      totalTime: 110
+      startTime: '2018-10-05T16:13:02.358Z'
+      endTime: '2018-10-05T16:13:02.389Z'
+      totalTime: 31
       timeout: 5000
     requisitions: []
   -
@@ -210,12 +210,12 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-10-01T13:23:10.660Z'
+        connectionTime: '2018-10-05T16:13:02.391Z'
     publishers: []
     time:
-      startTime: '2018-10-01T13:23:10.660Z'
-      endTime: '2018-10-01T13:23:11.661Z'
-      totalTime: 1001
+      startTime: '2018-10-05T16:13:02.391Z'
+      endTime: '2018-10-05T16:13:03.394Z'
+      totalTime: 1003
       timeout: 5000
     requisitions: []
   -
@@ -236,11 +236,11 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-10-01T13:23:11.664Z'
+        connectionTime: '2018-10-05T16:13:03.396Z'
     publishers: []
     time:
-      startTime: '2018-10-01T13:23:11.664Z'
-      endTime: '2018-10-01T13:23:12.665Z'
-      totalTime: 1001
+      startTime: '2018-10-05T16:13:03.396Z'
+      endTime: '2018-10-05T16:13:04.396Z'
+      totalTime: 1000
       timeout: 5000
     requisitions: []

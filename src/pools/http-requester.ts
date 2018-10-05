@@ -3,11 +3,11 @@ import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
 export class HttpRequester {
-    private url: string;
-    private method: string;
-    private headers: any;
+    private readonly url: string;
+    private readonly method: string;
+    private readonly headers: any;
+    private readonly timeout: number;
     private body: any;
-    private timeout: number;
 
     constructor(url: string, method: string, headers: any = {}, body: any, timeout: number = 3000) {
         this.url = url;

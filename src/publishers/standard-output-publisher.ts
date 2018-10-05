@@ -11,7 +11,8 @@ const options = {
     dashColor: 'grey'
   };
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'standard-output'})
+@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'standard-output'
+|| publishRequisition.type === 'stdout'})
 export class StandardOutputPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {

@@ -18,23 +18,23 @@ requisitions:
           -
             name: 'Some time has passed'
             valid: true
-            description: 'Expected ''now'' to be greater than or equal to ''1538279708130''. Received ''1538400190327'''
+            description: 'Expected ''now'' to be greater than or equal to ''1538755982182''. Received ''1538755982303'''
           -
             name: Filename
             valid: true
-            description: '''name'' (temp/fileTest20180930005508019591_c4d616d9.file) does not contain ''temp/'''
+            description: '''name'' (temp/fileTest20181005131302023727_aad71a67.file) contains ''temp/'''
           -
             name: Content
             valid: true
-            description: '''content'' is not defined'
+            description: '''content'' is defined'
           -
             name: Created
             valid: true
-            description: '''created'' is not defined'
+            description: '''created'' is defined'
           -
             name: Modified
             valid: true
-            description: '''modified'' is not defined'
+            description: '''modified'' is defined'
           -
             name: Size
             valid: true
@@ -44,13 +44,13 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-01T13:23:10.251Z'
+        connectionTime: '2018-10-05T16:13:02.234Z'
         messageReceived:
-          content: '1538279708130'
-          name: temp/fileTest20180930005508019591_c4d616d9.file
+          content: '1538755982182'
+          name: temp/fileTest20181005131302023727_aad71a67.file
           size: 13
-          modified: '2018-09-30T03:55:08.000Z'
-          created: '2018-09-30T03:55:08.000Z'
+          modified: '2018-10-05T16:13:02.238Z'
+          created: '2018-10-05T16:13:02.238Z'
     publishers:
       -
         name: 'publisher description'
@@ -61,10 +61,10 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-01T13:23:10.284Z'
+        publishTime: '2018-10-05T16:13:02.250Z'
     time:
-      startTime: '2018-10-01T13:23:10.137Z'
-      endTime: '2018-10-01T13:23:10.328Z'
-      totalTime: 191
+      startTime: '2018-10-05T16:13:02.182Z'
+      endTime: '2018-10-05T16:13:02.304Z'
+      totalTime: 122
       timeout: 3000
     requisitions: []

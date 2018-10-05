@@ -4,7 +4,8 @@ import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as zmq from 'zeromq';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'zero-mq-pub'})
+@Injectable({predicate: (publish: any) => publish.type === 'zero-mq-pub'
+                        || publish.type === 'zeromq'})
 export class ZeroMqPubPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {

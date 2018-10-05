@@ -1,7 +1,7 @@
 import {IdGenerator} from "./id-generator";
-import {DateController} from "./date-controller";
 import {createHash } from "crypto"
 import {JavascriptObjectNotation} from "../object-notations/javascript-object-notation";
+import {DateController} from "../timers/date-controller";
 
 jest.mock("../timers/date-controller");
 DateController.mockImplementation(() => {

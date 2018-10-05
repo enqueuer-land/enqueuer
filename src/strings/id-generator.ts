@@ -1,4 +1,4 @@
-import {DateController} from './date-controller';
+import {DateController} from '../timers/date-controller';
 import {createHash } from 'crypto';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
 
