@@ -1,5 +1,4 @@
 #!/bin/bash
-
 rabbitmq-server start &
 status=$?
 if [ $status -ne 0 ]; then
@@ -8,7 +7,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Start the first process
-java -Dconfig.file=/config/elasticMq.conf -jar /usr/local/elasticmq-server-0.13.11.jar &
+java -Dconfig.file=/config/elasticMq.conf -jar /elasticmq-server-0.13.11.jar &
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start elasticMq: $status"
@@ -23,6 +22,7 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
+
 /kafka_2.11-1.0.0/bin/kafka-server-start.sh /config/server.properties &
 status=$?
 if [ $status -ne 0 ]; then
@@ -30,10 +30,20 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
-sleep 3 && /kafka_2.11-1.0.0/bin/kafka-topics.sh --create --topic enqueuer-topic-name --zookeeper localhost:2181 --partitions 3 --replication-factor 1
-status=$?
-if [ $status -ne 0 ]; then
-  echo "Failed to create kafka-topics: $status"
+retry=0
+while true; do
+  /kafka_2.11-1.0.0/bin/kafka-topics.sh --create --topic enqueuer-topic-name --zookeeper localhost:2181 --partitions 3 --replication-factor 1
+  if [ $? -eq 0 ] || [ $retry -gt 10 ]; then
+    break;
+  fi
+  echo "================= INFO Retry number $retry"
+  ((retry++))
+  sleep 1s
+done
+
+/kafka_2.11-1.0.0/bin/kafka-topics.sh --list --zookeeper localhost:2181 | grep "enqueuer-topic-name"
+if [ $? -ne 0 ]; then
+  echo "Failed to create kafka-topics: $?"
   exit $status
 fi
 
