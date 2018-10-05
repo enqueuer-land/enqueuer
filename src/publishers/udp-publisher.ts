@@ -3,8 +3,11 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import * as dgram from 'dgram';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'udp'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('udp', ['udp-client'])
+        .matchesRatingAtLeast(publish.type, 95)})
 export class UdpPublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {

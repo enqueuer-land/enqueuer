@@ -1,24 +1,10 @@
 name: examples/sqs.yml
-valid: false
+valid: true
 tests: []
 requisitions:
   -
-    valid: false
+    valid: true
     tests:
-      -
-        valid: false
-        name: 'Subscriptions message receiving'
-        description:
-          message: 'connect ECONNREFUSED 127.0.0.1:9324'
-          errno: ECONNREFUSED
-          code: NetworkingError
-          syscall: connect
-          address: 127.0.0.1
-          port: 9324
-          region: us-west-2
-          hostname: localhost
-          retryable: true
-          time: '2018-10-05T16:13:02.481Z'
       -
         valid: true
         name: 'No time out'
@@ -30,24 +16,76 @@ requisitions:
         type: sqs
         tests:
           -
-            valid: false
+            name: Body
+            valid: true
+            description: '''Body'' (enqueuer) contains ''enq'''
+          -
+            name: MessageId
+            valid: true
+            description: '''MessageId'' is defined'
+          -
+            name: ReceiptHandle
+            valid: true
+            description: '''ReceiptHandle'' is defined'
+          -
+            name: MD5OfBody
+            valid: true
+            description: '''MD5OfBody'' is defined'
+          -
+            valid: true
             name: 'Message received'
-            description: 'Subscription has not received its message'
-        valid: false
-        connectionTime: '2018-10-05T16:13:02.234Z'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-10-05T21:18:47.685Z'
+        messageReceived:
+          MessageId: a1675610-c0bb-43cf-894d-05f473aaa41d
+          ReceiptHandle: 'a1675610-c0bb-43cf-894d-05f473aaa41d#47bf6a71-b95d-4e3d-92a6-efcc40e25f76'
+          MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+          Body: enqueuer
     publishers:
       -
         name: 'publisher description'
-        valid: false
+        valid: true
         type: sqs
         tests:
           -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'Request Id is all 000000'
+            valid: true
+            description: 'Expected ''ResponseMetadata.RequestId'' to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
+          -
+            name: ResponseMetadata
+            valid: true
+            description: '''ResponseMetadata'' is defined'
+          -
+            name: MD5
+            valid: true
+            description: '''MD5OfMessageBody'' is defined'
+          -
+            name: MD5OfMessageAttributes
+            valid: true
+            description: '''MD5OfMessageAttributes'' is defined'
+          -
+            name: MessageId
+            valid: true
+            description: '''MessageId'' is defined'
+          -
             name: 'Response message received'
-            valid: false
-            description: 'No response message was received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-10-05T21:18:47.804Z'
+        messageReceived:
+          ResponseMetadata:
+            RequestId: 00000000-0000-0000-0000-000000000000
+          MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+          MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
+          MessageId: fe8578b4-a1f0-4106-8e88-f9760d55a501
     time:
-      startTime: '2018-10-05T16:13:02.229Z'
-      endTime: '2018-10-05T16:13:02.482Z'
-      totalTime: 253
+      startTime: '2018-10-05T21:18:47.679Z'
+      endTime: '2018-10-05T21:18:47.804Z'
+      totalTime: 125
       timeout: 5000
     requisitions: []

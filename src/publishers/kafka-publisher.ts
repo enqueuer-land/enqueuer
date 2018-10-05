@@ -4,11 +4,14 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {KafkaClient, Producer} from 'kafka-node';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'kafka'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('kafka', [], 'kafka-node')
+        .matchesRatingAtLeast(publish.type, 95)})
 export class KafkaPublisher extends Publisher {
-    private kafkaPayload: [{ topic: string; messages: string }];
-    private client: KafkaClient;
+    private readonly kafkaPayload: [{ topic: string; messages: string }];
+    private readonly client: KafkaClient;
 
     constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);

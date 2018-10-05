@@ -5,8 +5,11 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'tcp-client' || publishRequisition.type === 'tcp'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('tcp', ['tcp-client'])
+        .matchesRatingAtLeast(publish.type, 95)})
 export class TcpClientPublisher extends Publisher {
 
     private loadedStream: any;

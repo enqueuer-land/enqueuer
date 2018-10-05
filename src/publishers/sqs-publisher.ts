@@ -5,8 +5,11 @@ import {Logger} from '../loggers/logger';
 import {SendMessageRequest, SendMessageResult} from 'aws-sdk/clients/sqs';
 import * as AWS from 'aws-sdk';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'sqs'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('sqs', [], 'aws-sdk')
+        .matchesRatingAtLeast(publish.type, 95)})
 export class SqsPublisher extends Publisher {
 
     private sqsSend: AWS.SQS;

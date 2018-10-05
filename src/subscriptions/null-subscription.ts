@@ -10,7 +10,7 @@ export class NullSubscription extends Subscription {
     }
 
     public subscribe(): Promise<void> {
-        new ProtocolsManager().suggestSubscriptionBasedOn(this.type);
+        ProtocolsManager.suggestSubscriptionBasedOn(this.type);
         return Promise.reject(`Undefined subscription: '${this.type}'`);
     }
 

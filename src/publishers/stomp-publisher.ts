@@ -2,9 +2,12 @@ import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 const Stomp = require('stomp-client');
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'stomp'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('stomp', [], 'stomp-client')
+        .matchesRatingAtLeast(publish.type, 95)})
 export class StompPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {

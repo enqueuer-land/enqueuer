@@ -1,14 +1,10 @@
 name: examples/kafka.yml
-valid: false
+valid: true
 tests: []
 requisitions:
   -
-    valid: false
+    valid: true
     tests:
-      -
-        valid: false
-        name: 'Subscriptions subscription'
-        description: 'Error connecting multiSubscription: Subscription has timed out'
       -
         valid: true
         name: 'No time out'
@@ -20,23 +16,62 @@ requisitions:
         type: kafka
         tests:
           -
-            valid: false
-            name: Subscribed
-            description: 'Subscription is not able to subscribe'
-        valid: false
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
+          -
+            name: 'Assertion #1'
+            valid: true
+            description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
+          -
+            name: 'Assertion #2'
+            valid: true
+            description: '''offset'' is defined'
+          -
+            name: 'Assertion #3'
+            valid: true
+            description: '''partition'' is defined'
+          -
+            name: 'Assertion #4'
+            valid: true
+            description: '''timestamp'' is defined'
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-10-05T21:18:47.877Z'
+        messageReceived:
+          topic: enqueuer-topic-name
+          value: kafkaPayload
+          offset: 0
+          partition: 0
+          highWaterOffset: 1
+          key: null
+          timestamp: '2018-10-05T21:18:47.879Z'
     publishers:
       -
         name: 'Publisher #0'
-        valid: false
+        valid: true
         type: kafka
         tests:
           -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+          -
+            name: 'kafka publish response payload'
+            valid: true
+            description: '''JSON.parse(message)["enqueuer-topic-name"]'' is defined'
+          -
             name: 'Response message received'
-            valid: false
-            description: 'No response message was received'
+            valid: true
+            description: 'Response message was received'
+        publishTime: '2018-10-05T21:18:47.974Z'
+        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 0\n  }\n}"
     time:
-      startTime: '2018-10-05T16:13:02.208Z'
-      endTime: '2018-10-05T16:13:04.213Z'
-      totalTime: 2005
+      startTime: '2018-10-05T21:18:47.656Z'
+      endTime: '2018-10-05T21:18:47.974Z'
+      totalTime: 318
       timeout: 8000
     requisitions: []

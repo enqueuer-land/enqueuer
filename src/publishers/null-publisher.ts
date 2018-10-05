@@ -6,7 +6,7 @@ import {ProtocolsManager} from '../configurations/protocols-manager';
 export class NullPublisher extends Publisher {
 
     public publish(): Promise<void> {
-        new ProtocolsManager().suggestPublisherBasedOn(this.type);
+        ProtocolsManager.suggestPublisherBasedOn(this.type);
         return Promise.reject(`Undefined publisher: '${this.type}'`);
     }
 }

@@ -8,9 +8,9 @@ import './injectable-files-list';
 
 export async function start(): Promise<number> {
         Logger.setLoggerLevel('info');
-        const dependencyManager = new ProtocolsManager();
+        const protocolsManager = new ProtocolsManager();
         if (CommandLineConfiguration.requestToListAvailableProtocols()) {
-            console.log(`Available dependencies: ${dependencyManager.listAvailable().join('; ')}`);
+            console.log(`Available protocols: \n\t${protocolsManager.listAvailable().join('\n\t')}`);
             return 0;
         } else {
             const configuration = Configuration.getValues();

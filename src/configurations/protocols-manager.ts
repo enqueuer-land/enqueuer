@@ -1,166 +1,51 @@
 import {Logger} from '../loggers/logger';
-import {Match, StringMatcher} from '../strings/string-matcher';
+import {Protocol} from './protocol';
+import '../injectable-files-list';
 
-const packageJson = require('../../package.json');
-
-export type Library = {
-    name: string;
-    version: string;
-};
-
-export type Protocol = {
-    alternativeNames?: string[];
-    library?: Library;
-};
-
-export type ProtocolGroup = {
-    [propName: string]: Protocol;
-};
-
+//TODO test it
 export class ProtocolsManager {
-
-    public static readonly subscriptionsGroup: ProtocolGroup = {
-        amqp: {
-            library: ProtocolsManager.getDependency('amqp')
-        },
-        file: {},
-        http: {
-            alternativeNames: ['http-proxy', 'https-proxy', 'http-server', 'https-server', 'http', 'https'],
-            library: ProtocolsManager.getDependency('express')
-        },
-        kafka: {
-            library: ProtocolsManager.getDependency('kafka-node')
-        },
-        mqtt: {
-            library: ProtocolsManager.getDependency('mqtt')
-        },
-        sqs: {
-            library: ProtocolsManager.getDependency('aws-sdk')
-        },
-        stdin: {
-            alternativeNames: ['standard-input']
-        },
-        stomp: {
-            library: ProtocolsManager.getDependency('stomp-client')
-        },
-        tcp: {},
-        udp: {},
-        uds: {},
-        zeromq: {
-            alternativeNames: ['zero-mq-sub'],
-            library: ProtocolsManager.getDependency('zeromq')
-        }
-    };
-
-    public static readonly publishersGroup: ProtocolGroup = {
-        amqp: {
-            library: ProtocolsManager.getDependency('amqp')
-        },
-        file: {},
-        http: {
-            alternativeNames: ['http', 'https', 'http-client', 'https-client']
-        },
-        kafka: {
-            library: ProtocolsManager.getDependency('kafka-node')
-        },
-        mqtt: {
-            library: ProtocolsManager.getDependency('mqtt')
-        },
-        sqs: {
-            library: ProtocolsManager.getDependency('aws-sdk')
-        },
-        stdout: {
-            alternativeNames: ['standard-output']
-        },
-        stomp: {
-            library: ProtocolsManager.getDependency('stomp-client')
-        },
-        tcp: {},
-        udp: {},
-        uds: {},
-        zeromq: {
-            alternativeNames: ['zero-mq-sub'],
-            library: ProtocolsManager.getDependency('zeromq')
-        }
-    };
-
-    public findLibraryFromName(name: string, group: ProtocolGroup): Library | undefined {
-        const protocol = this.findProtocolFromName(name, group);
-        if (protocol && group[protocol]) {
-            return group[protocol].library;
-        }
-    }
-
-    public findProtocolFromName(name: string, group: ProtocolGroup): string | undefined {
-        return Object.keys(group)
-            .find(key => {
-                if (key == name) {
-                    return true;
-                }
-                return (group[key].alternativeNames || [])
-                    .some(alternativeName => alternativeName == name);
-            });
-    }
-
+    private static publishers: Protocol[] = [];
+    private static subscriptions: Protocol[] = [];
     public listAvailable(): string[] {
-        return [...new Set([...Object.keys(ProtocolsManager.subscriptionsGroup),
-                                    ...Object.keys(ProtocolsManager.publishersGroup)])].sort();
+        return [...new Set([...ProtocolsManager.subscriptions.map(protocol => protocol.getName()),
+                                    ...ProtocolsManager.publishers.map(protocol => protocol.getName())])]
+                .sort();
     }
 
-    public suggestSubscriptionBasedOn(type?: string): number {
-        return this.suggestBasedOnGroup(ProtocolsManager.subscriptionsGroup, type);
+    public static insertPublisherProtocol(name: string, alternativeNames: string[] = [], libraryName?: string ): Protocol {
+        const protocol = new Protocol(name, alternativeNames, libraryName);
+        ProtocolsManager.publishers.push(protocol);
+        return protocol;
     }
 
-    public suggestPublisherBasedOn(type: string): number {
-        return this.suggestBasedOnGroup(ProtocolsManager.publishersGroup, type);
+    public static insertSubscriptionProtocol(name: string, alternativeNames: string[] = [], libraryName?: string ): Protocol {
+        const protocol = new Protocol(name, alternativeNames, libraryName);
+        ProtocolsManager.subscriptions.push(protocol);
+        return protocol;
     }
 
-    private suggestBasedOnGroup(group: ProtocolGroup, type?: string): number {
-        const available: Set<string> = new Set();
-        Object.keys(group).forEach(key => {
-            available.add(key);
-            (group[key].alternativeNames || []).forEach(name => available.add(name));
-        });
+    public static suggestSubscriptionBasedOn(type?: string): void {
+        ProtocolsManager.suggestBasedOnGroup(ProtocolsManager.subscriptions, type as string);
+    }
 
-        let libraries: Set<Library> = new Set();
-        let matches: Match[] = new StringMatcher().sortBestMatches(type as string, Array.from(available));
-        matches
+    public static suggestPublisherBasedOn(type: string): void {
+        ProtocolsManager.suggestBasedOnGroup(ProtocolsManager.publishers, type);
+    }
+
+    private static suggestBasedOnGroup(protocols: Protocol[], name: string): void {
+        const ratingSortedProtocols = protocols
+            .sort((first, second) => first.getBestRating(name).rating
+                                                - second.getBestRating(name).rating);
+
+        ratingSortedProtocols
             .filter((value, index) => index <= 2)
-            .forEach((match: Match) => {
-                Logger.warning(`${match.rating}% sure you meant '${match.target}'`);
-                const library = this.findLibraryFromName(match.target, group);
-                if (library) {
-                    libraries.add(library);
+            .forEach((protocol) => {
+                const bestRating = protocol.getBestRating(name);
+                if (bestRating.rating > 50) {
+                    Logger.warning(`${bestRating.rating}% sure you meant '${bestRating.target}'`);
+                    protocol.suggestInstallation();
                 }
             });
-
-        libraries.forEach(library => this.suggestInstallation(library));
-        return libraries.size;
     }
 
-    private suggestInstallation(library: Library) {
-        if (!ProtocolsManager.isLibraryInstalled(library.name)) {
-            Logger.warning(`Library '${library.name}' is not installed. ` +
-                `If you want to, install it using: 'npm install ${library.name}@${library.version} --no-optional'`);
-        }
-    }
-
-    private static isLibraryInstalled(name: string): boolean {
-        try {
-            require.resolve(name);
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    public static getDependency(name: string): Library | undefined {
-        const dependencies = packageJson.dependencies[name] || packageJson.optionalDependencies[name];
-        if (dependencies) {
-            return {
-                name: name,
-                version: dependencies
-            };
-        }
-    }
 }

@@ -3,9 +3,11 @@ import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as zmq from 'zeromq';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
-@Injectable({predicate: (publish: any) => publish.type === 'zero-mq-pub'
-                        || publish.type === 'zeromq'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('zeromq', ['zero-mq-pub'], 'zeromq')
+        .matchesRatingAtLeast(publish.type, 95)})
 export class ZeroMqPubPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {

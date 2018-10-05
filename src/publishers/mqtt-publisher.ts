@@ -4,8 +4,11 @@ import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as mqtt from 'mqtt';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'mqtt'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('mqtt', [], 'mqtt')
+        .matchesRatingAtLeast(publish.type, 95)})
 export class MqttPublisher extends Publisher {
 
     public constructor(publish: PublisherModel) {

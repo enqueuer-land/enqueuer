@@ -4,6 +4,7 @@ import {Injectable} from 'conditional-injector';
 import prettyjson from 'prettyjson';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
 const options = {
     defaultIndentation: 4,
@@ -11,8 +12,9 @@ const options = {
     dashColor: 'grey'
   };
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'standard-output'
-|| publishRequisition.type === 'stdout'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('stdout', ['standard-output'])
+        .matchesRatingAtLeast(publish.type, 95)})
 export class StandardOutputPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {

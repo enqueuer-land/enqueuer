@@ -5,8 +5,11 @@ import {Injectable} from 'conditional-injector';
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {ProtocolsManager} from '../configurations/protocols-manager';
 
-@Injectable({predicate: (publishRequisition: any) => publishRequisition.type === 'uds' || publishRequisition.type === 'uds-client'})
+@Injectable({predicate: (publish: any) => ProtocolsManager
+        .insertPublisherProtocol('uds', ['uds-client'])
+        .matchesRatingAtLeast(publish.type, 95)})
 export class UdsPublisher extends Publisher {
 
     private stream: any;

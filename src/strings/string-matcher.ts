@@ -12,13 +12,13 @@ export class StringMatcher {
 
     private compareTwoStrings(first: string, second: string): number {
         if (!first.length && !second.length) {
-            return 1;
+            return 100;
         }
         if (!first.length || !second.length) {
             return 0;
         }
         if (first.toUpperCase() === second.toUpperCase()) {
-            return 1;
+            return 100;
         }
         if (first.length === 1 && second.length === 1) {
             return 0;

@@ -29,9 +29,10 @@ describe('StringMatcher', () => {
     });
 
     it('assigns a similarity rating to each string passed in the array', function () {
-        const matches = new StringMatcher().sortBestMatches('healed', ['mailed', 'edward', 'sealed', 'theatre']);
+        const matches = new StringMatcher().sortBestMatches('healed', ['healed', 'mailed', 'edward', 'sealed', 'theatre']);
 
         expect(matches).toEqual([
+            {"rating": 100, "target": "healed"},
             {"rating": 80, "target": "sealed"},
             {"rating": 40, "target": "mailed"},
             {"rating": 36, "target": "theatre"},
