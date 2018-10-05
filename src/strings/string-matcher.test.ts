@@ -45,4 +45,28 @@ describe('StringMatcher', () => {
         expect(matches[0]).toEqual({target: 'sealed', rating: 80});
     });
 
+    it("both are empty", function () {
+        const matches = new StringMatcher().sortBestMatches('', ['']);
+
+        expect(matches[0].rating).toBe(100);
+    });
+
+    it("just first is empty", function () {
+        const matches = new StringMatcher().sortBestMatches('', ['notEmpty']);
+
+        expect(matches[0].rating).toBe(0);
+    });
+
+    it("just second is empty", function () {
+        const matches = new StringMatcher().sortBestMatches('notEmpty', ['']);
+
+        expect(matches[0].rating).toBe(0);
+    });
+
+    it("both one letter and different", function () {
+        const matches = new StringMatcher().sortBestMatches('a', ['b']);
+
+        expect(matches[0].rating).toBe(0);
+    });
+
 });

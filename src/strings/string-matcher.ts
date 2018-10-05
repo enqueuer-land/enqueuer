@@ -11,17 +11,27 @@ export class StringMatcher {
     }
 
     private compareTwoStrings(first: string, second: string): number {
+        if (this.checkPrematureSuccess(first, second)) {
+            return 100;
+        } else if (this.checkPrematureFailure(first, second)) {
+            return 0;
+        } else {
+            return this.doTheMath(first, second);
+        }
+    }
+
+    private checkPrematureSuccess(first: string, second: string): boolean {
         const bothAreEmpty = first.length == 0 && second.length == 0;
         const bothAreInsensitiveEqual = first.toUpperCase() === second.toUpperCase();
-        if (bothAreEmpty || bothAreInsensitiveEqual) {
-            return 100;
-        }
-        const justOneIsEmpty = first.length == 0 || second.length == 0;
-        const sameSizeAndNotEqual = first.length === 1 && second.length === 1;
-        if (justOneIsEmpty || sameSizeAndNotEqual) {
-            return 0;
-        }
-        return this.doTheMath(first, second);
+        return bothAreEmpty || bothAreInsensitiveEqual
+    }
+
+    private checkPrematureFailure(first: string, second: string): boolean {
+        const justFirstIsEmpty = first.length == 0 && second.length > 0;
+        const justSecondIsEmpty = first.length > 0 && second.length == 0;
+        const justOneIsEmpty = justFirstIsEmpty || justSecondIsEmpty;
+        const sizeOneAndNotEqual = first.length === 1 && second.length === 1 && first.toUpperCase() != second.toUpperCase();
+        return justOneIsEmpty || sizeOneAndNotEqual;
     }
 
     private doTheMath(first: string, second: string) {
