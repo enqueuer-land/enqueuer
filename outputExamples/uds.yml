@@ -18,13 +18,13 @@ requisitions:
           -
             name: 'Message received is enqueuer'
             valid: true
-            description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+            description: 'Expected ''enqueuer'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-05T23:48:42.927Z'
+        connectionTime: '2018-10-06T00:29:52.266Z'
         messageReceived:
           payload:
             type: Buffer
@@ -50,18 +50,18 @@ requisitions:
           -
             name: 'It is bidirectional'
             valid: true
-            description: 'Expected ''payload'' to be equal to ''responsePayload''. Received ''responsePayload'''
+            description: 'Expected ''responsePayload'' to be equal to ''responsePayload''. Received ''responsePayload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-05T23:48:42.982Z'
+        publishTime: '2018-10-06T00:29:52.347Z'
         messageReceived:
           payload: responsePayload
     time:
-      startTime: '2018-10-05T23:48:42.925Z'
-      endTime: '2018-10-05T23:48:42.983Z'
-      totalTime: 58
+      startTime: '2018-10-06T00:29:52.262Z'
+      endTime: '2018-10-06T00:29:52.348Z'
+      totalTime: 86
       timeout: 3000
     requisitions: []
   -
@@ -76,13 +76,13 @@ requisitions:
           -
             name: 'Message received is enqueuer 2'
             valid: true
-            description: 'Expected ''message.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+            description: 'Expected ''enqueuer'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-05T23:48:43.000Z'
+        connectionTime: '2018-10-06T00:29:52.374Z'
         messageReceived:
           payload:
             type: Buffer
@@ -104,18 +104,18 @@ requisitions:
           -
             name: 'Message to be published is enqueuer'
             valid: true
-            description: 'Expected ''publisher.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+            description: 'Expected ''enqueuer'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-05T23:48:43.053Z'
+        publishTime: '2018-10-06T00:29:52.435Z'
         messageReceived:
           payload: '{}'
     time:
-      startTime: '2018-10-05T23:48:43.000Z'
-      endTime: '2018-10-05T23:48:43.053Z'
-      totalTime: 53
+      startTime: '2018-10-06T00:29:52.374Z'
+      endTime: '2018-10-06T00:29:52.435Z'
+      totalTime: 61
     requisitions: []
   -
     valid: true
@@ -129,13 +129,13 @@ requisitions:
           -
             name: 'Publisher stream was still opened'
             valid: true
-            description: 'Expected ''payload'' to be equal to ''I am still opened''. Received ''I am still opened'''
+            description: 'Expected ''I am still opened'' to be equal to ''I am still opened''. Received ''I am still opened'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-05T23:48:43.056Z'
+        connectionTime: '2018-10-06T00:29:52.437Z'
         messageReceived:
           payload:
             type: Buffer
@@ -170,16 +170,16 @@ requisitions:
           -
             name: 'Message received'
             valid: true
-            description: 'Expected ''payload'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
+            description: 'Expected ''I am still bidirectional'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-05T23:48:43.066Z'
+        publishTime: '2018-10-06T00:29:52.442Z'
         messageReceived:
           payload: 'I am still bidirectional'
     time:
-      startTime: '2018-10-05T23:48:43.056Z'
-      endTime: '2018-10-05T23:48:43.066Z'
-      totalTime: 10
+      startTime: '2018-10-06T00:29:52.437Z'
+      endTime: '2018-10-06T00:29:52.442Z'
+      totalTime: 5
     requisitions: []

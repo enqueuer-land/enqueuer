@@ -142,7 +142,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotTruthy.label).toBe(`label`);
         expect(isNotTruthy.valid).toBeFalsy();
-        expect(isNotTruthy.errorDescription).toEqual(`'varName' is not true. I swear`);
+        expect(isNotTruthy.errorDescription).toEqual(`Expect 'varName' to be true`);
     });
 
     it(`isTruthy`, () => {
@@ -165,7 +165,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotFalsy.label).toBe(`label`);
         expect(isNotFalsy.valid).toBeFalsy();
-        expect(isNotFalsy.errorDescription).toEqual(`'value' is not false. (Oh really?)`);
+        expect(isNotFalsy.errorDescription).toEqual(`Expect 'value' to be false`);
     });
 
     it(`isFalsy`, () => {
@@ -188,7 +188,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(notContains.label).toBe(`label`);
         expect(notContains.valid).toBeFalsy();
-        expect(notContains.errorDescription).toEqual(`'oh yeah' (guigui) does not contain 'virgs'`);
+        expect(notContains.errorDescription).toEqual(`Expecting 'oh yeah' (guigui) to contain 'virgs'`);
     });
 
     it(`contains`, () => {
@@ -211,7 +211,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotDefined.label).toBe(`label`);
         expect(isNotDefined.valid).toBeFalsy();
-        expect(isNotDefined.errorDescription).toEqual(`'var' is not defined`);
+        expect(isNotDefined.errorDescription).toEqual(`Expect 'var' to be defined`);
     });
 
     it(`isDefined`, () => {
@@ -234,7 +234,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotUndefined.label).toBe(`label`);
         expect(isNotUndefined.valid).toBeFalsy();
-        expect(isNotUndefined.errorDescription).toEqual(`'value' is not undefined`);
+        expect(isNotUndefined.errorDescription).toEqual(`Expect 'value' to be undefined`);
     });
 
     it(`isUndefined`, () => {

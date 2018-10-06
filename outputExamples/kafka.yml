@@ -18,37 +18,37 @@ requisitions:
           -
             name: 'Assertion #0'
             valid: true
-            description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
+            description: 'Expected ''kafkaPayload'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
           -
             name: 'Assertion #1'
             valid: true
-            description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
+            description: 'Expected ''enqueuer-topic-name'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
           -
             name: 'Assertion #2'
             valid: true
-            description: '''offset'' is defined'
+            description: 'Expect ''14'' to be defined'
           -
             name: 'Assertion #3'
             valid: true
-            description: '''partition'' is defined'
+            description: 'Expect ''0'' to be defined'
           -
             name: 'Assertion #4'
             valid: true
-            description: '''timestamp'' is defined'
+            description: 'Expect ''Fri Oct 05 2018 21:29:52 GMT-0300 (Brasilia Standard Time)'' to be defined'
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-05T23:48:43.072Z'
+        connectionTime: '2018-10-06T00:29:52.446Z'
         messageReceived:
           topic: enqueuer-topic-name
           value: kafkaPayload
-          offset: 13
+          offset: 14
           partition: 0
-          highWaterOffset: 14
+          highWaterOffset: 15
           key: null
-          timestamp: '2018-10-05T23:48:43.074Z'
+          timestamp: '2018-10-06T00:29:52.448Z'
     publishers:
       -
         name: 'Publisher #0'
@@ -62,16 +62,16 @@ requisitions:
           -
             name: 'kafka publish response payload'
             valid: true
-            description: '''JSON.parse(message)["enqueuer-topic-name"]'' is defined'
+            description: 'Expect ''[object Object]'' to be defined'
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-05T23:48:43.095Z'
-        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 13\n  }\n}"
+        publishTime: '2018-10-06T00:29:52.466Z'
+        messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 14\n  }\n}"
     time:
-      startTime: '2018-10-05T23:48:42.866Z'
-      endTime: '2018-10-05T23:48:43.098Z'
-      totalTime: 232
+      startTime: '2018-10-06T00:29:52.234Z'
+      endTime: '2018-10-06T00:29:52.471Z'
+      totalTime: 237
       timeout: 8000
     requisitions: []

@@ -1,6 +1,6 @@
 name: outputExamples/singleRunOutput.yml
 tests: []
-valid: true
+valid: false
 requisitions:
   -
     name: examples/crypto-require.yml
@@ -13,14 +13,14 @@ requisitions:
           -
             name: 'Assertion #0'
             valid: true
-            description: 'Expected ''requisition.toEncrypt'' to be equal to ''7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0''. Received ''7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0'''
+            description: 'Expected ''7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0'' to be equal to ''7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0''. Received ''7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0'''
         name: 'Testing Script Loading'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.835Z'
-          endTime: '2018-10-05T23:48:42.896Z'
-          totalTime: 61
+          startTime: '2018-10-06T00:29:52.202Z'
+          endTime: '2018-10-06T00:29:52.266Z'
+          totalTime: 64
         requisitions: []
   -
     name: examples/file-placeholder.yml
@@ -33,34 +33,34 @@ requisitions:
           -
             name: 'fileRead (yml)'
             valid: true
-            description: 'Expected ''requisition.yml.key'' to be equal to ''I''m persisted in singleRun file''. Received ''I''m persisted in singleRun file'''
+            description: 'Expected ''I''m persisted in singleRun file'' to be equal to ''I''m persisted in singleRun file''. Received ''I''m persisted in singleRun file'''
           -
             name: 'fileRead (.json)'
             valid: true
-            description: 'Expected ''requisition.json.key'' to be equal to ''value''. Received ''value'''
+            description: 'Expected ''value'' to be equal to ''value''. Received ''value'''
           -
             name: 'fileRead (.csv)'
             valid: true
-            description: 'Expected ''requisition.csv[1].title'' to be equal to ''secondRow''. Received ''secondRow'''
+            description: 'Expected ''secondRow'' to be equal to ''secondRow''. Received ''secondRow'''
           -
             name: 'fileRead (.tsv)'
             valid: true
-            description: 'Expected ''requisition.tsv[0].title'' to be equal to ''virgs''. Received ''virgs'''
+            description: 'Expected ''virgs'' to be equal to ''virgs''. Received ''virgs'''
           -
             name: 'file not found'
             valid: true
-            description: 'Expected ''requisition.fileNotFound'' to be equal to ''Error: ENOENT: no such file or directory, open ''not/found.file''''. Received ''Error: ENOENT: no such file or directory, open ''not/found.file'''''
+            description: 'Expected ''Error: ENOENT: no such file or directory, open ''not/found.file'''' to be equal to ''Error: ENOENT: no such file or directory, open ''not/found.file''''. Received ''Error: ENOENT: no such file or directory, open ''not/found.file'''''
           -
             name: 'fileRead (.js)'
             valid: true
-            description: 'Expected ''store.scriptResult'' to be equal to ''40''. Received ''40'''
+            description: 'Expected ''40'' to be equal to ''40''. Received ''40'''
         name: 'Requisition #0'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.835Z'
-          endTime: '2018-10-05T23:48:42.896Z'
-          totalTime: 61
+          startTime: '2018-10-06T00:29:52.202Z'
+          endTime: '2018-10-06T00:29:52.267Z'
+          totalTime: 65
         requisitions: []
       -
         valid: true
@@ -68,14 +68,14 @@ requisitions:
           -
             name: 'it''s not stored'
             valid: true
-            description: '''requisition.yml'' is undefined'
+            description: 'Expect ''undefined'' to be undefined'
         name: 'Requisition #1'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.925Z'
-          endTime: '2018-10-05T23:48:42.927Z'
-          totalTime: 2
+          startTime: '2018-10-06T00:29:52.296Z'
+          endTime: '2018-10-06T00:29:52.297Z'
+          totalTime: 1
         requisitions: []
   -
     name: examples/skipped.yml
@@ -89,9 +89,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.883Z'
-          endTime: '2018-10-05T23:48:42.918Z'
-          totalTime: 35
+          startTime: '2018-10-06T00:29:52.251Z'
+          endTime: '2018-10-06T00:29:52.291Z'
+          totalTime: 40
         requisitions:
           -
             valid: true
@@ -100,9 +100,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.883Z'
-              endTime: '2018-10-05T23:48:42.896Z'
-              totalTime: 13
+              startTime: '2018-10-06T00:29:52.251Z'
+              endTime: '2018-10-06T00:29:52.267Z'
+              totalTime: 16
             requisitions: []
           -
             valid: true
@@ -115,8 +115,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.912Z'
-              endTime: '2018-10-05T23:48:42.912Z'
+              startTime: '2018-10-06T00:29:52.283Z'
+              endTime: '2018-10-06T00:29:52.283Z'
               totalTime: 0
             requisitions: []
           -
@@ -130,8 +130,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.918Z'
-              endTime: '2018-10-05T23:48:42.918Z'
+              startTime: '2018-10-06T00:29:52.291Z'
+              endTime: '2018-10-06T00:29:52.291Z'
               totalTime: 0
             requisitions: []
           -
@@ -145,8 +145,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.918Z'
-              endTime: '2018-10-05T23:48:42.918Z'
+              startTime: '2018-10-06T00:29:52.291Z'
+              endTime: '2018-10-06T00:29:52.291Z'
               totalTime: 0
             requisitions: []
           -
@@ -160,8 +160,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.918Z'
-              endTime: '2018-10-05T23:48:42.918Z'
+              startTime: '2018-10-06T00:29:52.291Z'
+              endTime: '2018-10-06T00:29:52.291Z'
               totalTime: 0
             requisitions: []
       -
@@ -170,14 +170,14 @@ requisitions:
           -
             name: 'Assertion #0'
             valid: true
-            description: 'Expected ''store.executions'' to be equal to ''1''. Received ''1'''
+            description: 'Expected ''1'' to be equal to ''1''. Received ''1'''
         name: 'Requisition #1'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.925Z'
-          endTime: '2018-10-05T23:48:42.927Z'
-          totalTime: 2
+          startTime: '2018-10-06T00:29:52.296Z'
+          endTime: '2018-10-06T00:29:52.297Z'
+          totalTime: 1
         requisitions: []
   -
     name: examples/store.yml
@@ -191,9 +191,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.890Z'
-          endTime: '2018-10-05T23:48:42.896Z'
-          totalTime: 6
+          startTime: '2018-10-06T00:29:52.259Z'
+          endTime: '2018-10-06T00:29:52.267Z'
+          totalTime: 8
         requisitions: []
       -
         valid: true
@@ -206,9 +206,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.925Z'
-          endTime: '2018-10-05T23:48:42.927Z'
-          totalTime: 2
+          startTime: '2018-10-06T00:29:52.296Z'
+          endTime: '2018-10-06T00:29:52.297Z'
+          totalTime: 1
         requisitions: []
       -
         valid: true
@@ -221,67 +221,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.932Z'
-          endTime: '2018-10-05T23:48:42.932Z'
+          startTime: '2018-10-06T00:29:52.299Z'
+          endTime: '2018-10-06T00:29:52.299Z'
           totalTime: 0
-        requisitions: []
-  -
-    name: examples/recursion.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        name: 'Requisition #0'
-        valid: true
-        tests: []
-        requisitions:
-          -
-            name: 'Requisition #0'
-            valid: true
-            tests: []
-            requisitions:
-              -
-                name: 'Requisition #0'
-                valid: true
-                tests: []
-                requisitions:
-                  - {valid: true, tests: [], name: 'Requisition #0', subscriptions: [], publishers: [], time: {startTime: '2018-10-05T23:48:42.883Z', endTime: '2018-10-05T23:48:42.896Z', totalTime: 13}, requisitions: []}
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0'
-                subscriptions: []
-                publishers: []
-                time:
-                  startTime: '2018-10-05T23:48:42.925Z'
-                  endTime: '2018-10-05T23:48:42.927Z'
-                  totalTime: 2
-                requisitions: []
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0'
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2018-10-05T23:48:42.934Z'
-              endTime: '2018-10-05T23:48:42.934Z'
-              totalTime: 0
-            requisitions: []
-      -
-        valid: true
-        tests:
-          -
-            name: 'Last one was executed'
-            valid: true
-            description: '''store.lastExecution'' is defined'
-        name: 'Requisition #0'
-        subscriptions: []
-        publishers: []
-        time:
-          startTime: '2018-10-05T23:48:42.947Z'
-          endTime: '2018-10-05T23:48:42.948Z'
-          totalTime: 1
         requisitions: []
   -
     name: examples/file.yml
@@ -304,33 +246,33 @@ requisitions:
               -
                 name: 'Some time has passed'
                 valid: true
-                description: 'Expected ''now'' to be greater than or equal to ''1538783322836''. Received ''1538783322955'''
+                description: 'Expected ''1538785792321'' to be greater than or equal to ''1538783322836''. Received ''1538785792321'''
               -
                 name: Filename
                 valid: true
-                description: '''name'' (temp/fileTest20181005204842089753_7d907302.file) contains ''temp/'''
+                description: 'Expecting ''temp/fileTest20181005204842089753_7d907302.file'' (temp/fileTest20181005204842089753_7d907302.file) to contain ''temp/'''
               -
                 name: Content
                 valid: true
-                description: '''content'' is defined'
+                description: 'Expect ''1538783322836'' to be defined'
               -
                 name: Created
                 valid: true
-                description: '''created'' is defined'
+                description: 'Expect ''Fri Oct 05 2018 20:48:42 GMT-0300 (Brasilia Standard Time)'' to be defined'
               -
                 name: Modified
                 valid: true
-                description: '''modified'' is defined'
+                description: 'Expect ''Fri Oct 05 2018 20:48:42 GMT-0300 (Brasilia Standard Time)'' to be defined'
               -
                 name: Size
                 valid: true
-                description: 'Expected ''size'' to be greater than ''0''. Received ''13'''
+                description: 'Expected ''13'' to be greater than ''0''. Received ''13'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.894Z'
+            connectionTime: '2018-10-06T00:29:52.265Z'
             messageReceived:
               content: '1538783322836'
               name: temp/fileTest20181005204842089753_7d907302.file
@@ -347,43 +289,12 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:42.911Z'
+            publishTime: '2018-10-06T00:29:52.281Z'
         time:
-          startTime: '2018-10-05T23:48:42.836Z'
-          endTime: '2018-10-05T23:48:42.956Z'
-          totalTime: 120
+          startTime: '2018-10-06T00:29:52.203Z'
+          endTime: '2018-10-06T00:29:52.322Z'
+          totalTime: 119
           timeout: 3000
-        requisitions: []
-  -
-    name: examples/stdin.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: standard-input
-            tests:
-              -
-                name: payload
-                valid: true
-                description: 'Expected ''message'' to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-05T23:48:42.894Z'
-            messageReceived: 'enqueuer standard-input payload'
-        publishers: []
-        time:
-          startTime: '2018-10-05T23:48:42.888Z'
-          endTime: '2018-10-05T23:48:42.961Z'
-          totalTime: 73
         requisitions: []
   -
     name: examples/udp.yml
@@ -402,17 +313,17 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''
+                description: 'Expected ''it'' to be equal to ''it''. Received ''it'''
               -
                 name: 'Remote Adderss'
                 valid: true
-                description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
+                description: 'Expected ''127.0.0.1'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.926Z'
+            connectionTime: '2018-10-06T00:29:52.265Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -422,7 +333,7 @@ requisitions:
               remoteInfo:
                 address: 127.0.0.1
                 family: IPv4
-                port: 61349
+                port: 65026
                 size: 2
         publishers:
           -
@@ -434,11 +345,69 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:42.960Z'
+            publishTime: '2018-10-06T00:29:52.326Z'
         time:
-          startTime: '2018-10-05T23:48:42.923Z'
-          endTime: '2018-10-05T23:48:42.966Z'
-          totalTime: 43
+          startTime: '2018-10-06T00:29:52.260Z'
+          endTime: '2018-10-06T00:29:52.332Z'
+          totalTime: 72
+        requisitions: []
+  -
+    name: examples/recursion.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        name: 'Requisition #0'
+        valid: true
+        tests: []
+        requisitions:
+          -
+            name: 'Requisition #0'
+            valid: true
+            tests: []
+            requisitions:
+              -
+                name: 'Requisition #0'
+                valid: true
+                tests: []
+                requisitions:
+                  - {valid: true, tests: [], name: 'Requisition #0', subscriptions: [], publishers: [], time: {startTime: '2018-10-06T00:29:52.251Z', endTime: '2018-10-06T00:29:52.267Z', totalTime: 16}, requisitions: []}
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-06T00:29:52.296Z'
+                  endTime: '2018-10-06T00:29:52.297Z'
+                  totalTime: 1
+                requisitions: []
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-06T00:29:52.317Z'
+              endTime: '2018-10-06T00:29:52.317Z'
+              totalTime: 0
+            requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'Last one was executed'
+            valid: true
+            description: 'Expect ''lastExecution'' to be defined'
+        name: 'Requisition #0'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-06T00:29:52.341Z'
+          endTime: '2018-10-06T00:29:52.341Z'
+          totalTime: 0
         requisitions: []
   -
     name: examples/sqs.yml
@@ -461,28 +430,28 @@ requisitions:
               -
                 name: Body
                 valid: true
-                description: '''Body'' (enqueuer) contains ''enq'''
+                description: 'Expecting ''enqueuer'' (enqueuer) to contain ''enq'''
               -
                 name: MessageId
                 valid: true
-                description: '''MessageId'' is defined'
+                description: 'Expect ''665d3b60-8f09-41b8-be14-18cf30d060df'' to be defined'
               -
                 name: ReceiptHandle
                 valid: true
-                description: '''ReceiptHandle'' is defined'
+                description: 'Expect ''665d3b60-8f09-41b8-be14-18cf30d060df#d505278b-cddc-446c-9610-43886ff7f325'' to be defined'
               -
                 name: MD5OfBody
                 valid: true
-                description: '''MD5OfBody'' is defined'
+                description: 'Expect ''9dea6b5787a8fcdbd8db4505e4a1958b'' to be defined'
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.894Z'
+            connectionTime: '2018-10-06T00:29:52.265Z'
             messageReceived:
-              MessageId: f6a8100b-845f-4168-8f11-851a4ee5163a
-              ReceiptHandle: 'f6a8100b-845f-4168-8f11-851a4ee5163a#5ec956b9-c456-4b29-9a4d-9d844af87527'
+              MessageId: 665d3b60-8f09-41b8-be14-18cf30d060df
+              ReceiptHandle: '665d3b60-8f09-41b8-be14-18cf30d060df#d505278b-cddc-446c-9610-43886ff7f325'
               MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
               Body: enqueuer
         publishers:
@@ -498,38 +467,38 @@ requisitions:
               -
                 name: 'Request Id is all 000000'
                 valid: true
-                description: 'Expected ''ResponseMetadata.RequestId'' to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
+                description: 'Expected ''00000000-0000-0000-0000-000000000000'' to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
               -
                 name: ResponseMetadata
                 valid: true
-                description: '''ResponseMetadata'' is defined'
+                description: 'Expect ''[object Object]'' to be defined'
               -
                 name: MD5
                 valid: true
-                description: '''MD5OfMessageBody'' is defined'
+                description: 'Expect ''9dea6b5787a8fcdbd8db4505e4a1958b'' to be defined'
               -
                 name: MD5OfMessageAttributes
                 valid: true
-                description: '''MD5OfMessageAttributes'' is defined'
+                description: 'Expect ''d41d8cd98f00b204e9800998ecf8427e'' to be defined'
               -
                 name: MessageId
                 valid: true
-                description: '''MessageId'' is defined'
+                description: 'Expect ''6b1f8019-5049-4a78-8621-735fe56ea229'' to be defined'
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.016Z'
+            publishTime: '2018-10-06T00:29:52.393Z'
             messageReceived:
               ResponseMetadata:
                 RequestId: 00000000-0000-0000-0000-000000000000
               MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
               MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
-              MessageId: 2b4afaaa-a2e9-4daf-a4cb-3d228bd8ded5
+              MessageId: 6b1f8019-5049-4a78-8621-735fe56ea229
         time:
-          startTime: '2018-10-05T23:48:42.888Z'
-          endTime: '2018-10-05T23:48:43.019Z'
-          totalTime: 131
+          startTime: '2018-10-06T00:29:52.254Z'
+          endTime: '2018-10-06T00:29:52.393Z'
+          totalTime: 139
           timeout: 5000
         requisitions: []
   -
@@ -543,7 +512,7 @@ requisitions:
           -
             name: 'Requisitions exists onInit'
             valid: true
-            description: '''requisition'' is defined'
+            description: 'Expect ''[object Object]'' to be defined'
           -
             valid: true
             name: 'No time out'
@@ -557,29 +526,29 @@ requisitions:
               -
                 name: 'Subscription exists onInit'
                 valid: true
-                description: '''subscription'' is defined'
+                description: 'Expect ''[object Object]'' to be defined'
               -
                 name: 'Subscription name'
                 valid: true
-                description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
+                description: 'Expected ''changed'' to be equal to ''changed''. Received ''changed'''
               -
                 name: 'Subscription exists onMessageReceived'
                 valid: true
-                description: '''subscription'' is defined'
+                description: 'Expect ''[object Object]'' to be defined'
               -
                 name: 'Subscription name changed'
                 valid: true
-                description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
+                description: 'Expected ''changed'' to be equal to ''changed''. Received ''changed'''
               -
                 name: 'Subscription onInit executed'
                 valid: true
-                description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) contains ''subscription::onInit'''
+                description: 'Expecting ''requisition::onInit-> subscription::onInit-> publisher::onInit'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''subscription::onInit'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.896Z'
+            connectionTime: '2018-10-06T00:29:52.266Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -599,15 +568,15 @@ requisitions:
               -
                 name: 'Publisher exists onInit'
                 valid: true
-                description: '''publisher'' is defined'
+                description: 'Expect ''[object Object]'' to be defined'
               -
                 name: 'Publisher name'
                 valid: true
-                description: '''publisher.name'' is defined'
+                description: 'Expect ''changed'' to be defined'
               -
                 name: 'Assertion #2'
                 valid: true
-                description: '''publisher'' is defined'
+                description: 'Expect ''[object Object]'' to be defined'
               -
                 name: Published
                 valid: true
@@ -615,34 +584,34 @@ requisitions:
               -
                 name: 'Publisher exists onMessageReceived'
                 valid: true
-                description: '''publisher'' is defined'
+                description: 'Expect ''[object Object]'' to be defined'
               -
                 name: 'Requisition onInit'
                 valid: true
-                description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) contains ''requisition::onInit'''
+                description: 'Expecting ''requisition::onInit-> subscription::onInit-> publisher::onInit'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''requisition::onInit'''
               -
                 name: 'Publisher name changed'
                 valid: true
-                description: 'Expected ''publisher.name'' to be equal to ''changed''. Received ''changed'''
+                description: 'Expected ''changed'' to be equal to ''changed''. Received ''changed'''
               -
                 name: 'Publisher onInit executed'
                 valid: true
-                description: '''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) contains ''publisher::onInit'''
+                description: 'Expecting ''requisition::onInit-> subscription::onInit-> publisher::onInit'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''publisher::onInit'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.035Z'
+            publishTime: '2018-10-06T00:29:52.414Z'
             messageReceived:
               payload: 'hook response'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 56470
+                port: 56694
         time:
-          startTime: '2018-10-05T23:48:42.837Z'
-          endTime: '2018-10-05T23:48:43.036Z'
-          totalTime: 199
+          startTime: '2018-10-06T00:29:52.204Z'
+          endTime: '2018-10-06T00:29:52.414Z'
+          totalTime: 210
           timeout: 2000
         requisitions: []
   -
@@ -678,13 +647,13 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''message.body'' to be equal to ''Rech''. Received ''Rech'''
+                description: 'Expected ''Rech'' to be equal to ''Rech''. Received ''Rech'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.912Z'
+            connectionTime: '2018-10-06T00:29:52.283Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -708,12 +677,12 @@ requisitions:
               -
                 name: Body
                 valid: true
-                description: 'Expected ''body'' to be equal to ''responsePayload''. Received ''responsePayload'''
+                description: 'Expected ''responsePayload'' to be equal to ''responsePayload''. Received ''responsePayload'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.041Z'
+            publishTime: '2018-10-06T00:29:52.419Z'
             messageReceived:
               statusCode: 321
               body: responsePayload
@@ -722,7 +691,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '15'
                 etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-                date: 'Fri, 05 Oct 2018 23:48:43 GMT'
+                date: 'Sat, 06 Oct 2018 00:29:52 GMT'
                 connection: close
               request:
                 uri:
@@ -744,9 +713,9 @@ requisitions:
                   authorization: 'Bearer bearerToken'
                   Content-Length: 4
         time:
-          startTime: '2018-10-05T23:48:42.841Z'
-          endTime: '2018-10-05T23:48:43.041Z'
-          totalTime: 200
+          startTime: '2018-10-06T00:29:52.208Z'
+          endTime: '2018-10-06T00:29:52.419Z'
+          totalTime: 211
           timeout: 3000
         requisitions: []
   -
@@ -786,13 +755,13 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''message.body'' to be equal to ''basic auth''. Received ''basic auth'''
+                description: 'Expected ''basic auth'' to be equal to ''basic auth''. Received ''basic auth'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.912Z'
+            connectionTime: '2018-10-06T00:29:52.283Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -816,12 +785,12 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: 'Expected ''body'' to be equal to ''basic auth response''. Received ''basic auth response'''
+                description: 'Expected ''basic auth response'' to be equal to ''basic auth response''. Received ''basic auth response'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.043Z'
+            publishTime: '2018-10-06T00:29:52.421Z'
             messageReceived:
               statusCode: 200
               body: 'basic auth response'
@@ -830,7 +799,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '19'
                 etag: 'W/"13-nGN7LEwCUKXpQoLxNqKZXSglYNc"'
-                date: 'Fri, 05 Oct 2018 23:48:43 GMT'
+                date: 'Sat, 06 Oct 2018 00:29:52 GMT'
                 connection: close
               request:
                 uri:
@@ -852,9 +821,9 @@ requisitions:
                   authorization: 'Basic dXNlcjpwYXNzd29yZA=='
                   Content-Length: 10
         time:
-          startTime: '2018-10-05T23:48:42.838Z'
-          endTime: '2018-10-05T23:48:43.043Z'
-          totalTime: 205
+          startTime: '2018-10-06T00:29:52.205Z'
+          endTime: '2018-10-06T00:29:52.422Z'
+          totalTime: 217
           timeout: 3000
         requisitions: []
   -
@@ -878,13 +847,13 @@ requisitions:
               -
                 name: 'Message received is enqueuer'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+                description: 'Expected ''enqueuer'' to be equal to ''enqueuer''. Received ''enqueuer'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.927Z'
+            connectionTime: '2018-10-06T00:29:52.266Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -910,18 +879,18 @@ requisitions:
               -
                 name: 'It is bidirectional'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''responsePayload''. Received ''responsePayload'''
+                description: 'Expected ''responsePayload'' to be equal to ''responsePayload''. Received ''responsePayload'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:42.982Z'
+            publishTime: '2018-10-06T00:29:52.347Z'
             messageReceived:
               payload: responsePayload
         time:
-          startTime: '2018-10-05T23:48:42.925Z'
-          endTime: '2018-10-05T23:48:42.983Z'
-          totalTime: 58
+          startTime: '2018-10-06T00:29:52.262Z'
+          endTime: '2018-10-06T00:29:52.348Z'
+          totalTime: 86
           timeout: 3000
         requisitions: []
       -
@@ -936,13 +905,13 @@ requisitions:
               -
                 name: 'Message received is enqueuer 2'
                 valid: true
-                description: 'Expected ''message.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+                description: 'Expected ''enqueuer'' to be equal to ''enqueuer''. Received ''enqueuer'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.000Z'
+            connectionTime: '2018-10-06T00:29:52.374Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -964,18 +933,18 @@ requisitions:
               -
                 name: 'Message to be published is enqueuer'
                 valid: true
-                description: 'Expected ''publisher.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+                description: 'Expected ''enqueuer'' to be equal to ''enqueuer''. Received ''enqueuer'''
               -
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:43.053Z'
+            publishTime: '2018-10-06T00:29:52.435Z'
             messageReceived:
               payload: '{}'
         time:
-          startTime: '2018-10-05T23:48:43.000Z'
-          endTime: '2018-10-05T23:48:43.053Z'
-          totalTime: 53
+          startTime: '2018-10-06T00:29:52.374Z'
+          endTime: '2018-10-06T00:29:52.435Z'
+          totalTime: 61
         requisitions: []
       -
         valid: true
@@ -989,13 +958,13 @@ requisitions:
               -
                 name: 'Publisher stream was still opened'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''I am still opened''. Received ''I am still opened'''
+                description: 'Expected ''I am still opened'' to be equal to ''I am still opened''. Received ''I am still opened'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.056Z'
+            connectionTime: '2018-10-06T00:29:52.437Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1030,18 +999,18 @@ requisitions:
               -
                 name: 'Message received'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
+                description: 'Expected ''I am still bidirectional'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.066Z'
+            publishTime: '2018-10-06T00:29:52.442Z'
             messageReceived:
               payload: 'I am still bidirectional'
         time:
-          startTime: '2018-10-05T23:48:43.056Z'
-          endTime: '2018-10-05T23:48:43.066Z'
-          totalTime: 10
+          startTime: '2018-10-06T00:29:52.437Z'
+          endTime: '2018-10-06T00:29:52.442Z'
+          totalTime: 5
         requisitions: []
   -
     name: examples/https.yml
@@ -1064,13 +1033,13 @@ requisitions:
               -
                 name: 'Https payload'
                 valid: true
-                description: 'Expected ''JSON.parse(message.body).https'' to be equal to ''works!''. Received ''works!'''
+                description: 'Expected ''works!'' to be equal to ''works!''. Received ''works!'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.912Z'
+            connectionTime: '2018-10-06T00:29:52.283Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1093,16 +1062,16 @@ requisitions:
               -
                 name: 'Status Code'
                 valid: true
-                description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
+                description: 'Expected ''200'' to be equal to ''200''. Received ''200'''
               -
                 name: Body
                 valid: true
-                description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
+                description: 'Expected ''https'' to be equal to ''https''. Received ''https'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.076Z'
+            publishTime: '2018-10-06T00:29:52.450Z'
             messageReceived:
               statusCode: 200
               body: https
@@ -1111,7 +1080,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '5'
                 etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-                date: 'Fri, 05 Oct 2018 23:48:43 GMT'
+                date: 'Sat, 06 Oct 2018 00:29:52 GMT'
                 connection: close
               request:
                 uri:
@@ -1132,9 +1101,9 @@ requisitions:
                   content-type: application/json
                   Content-Length: 23
         time:
-          startTime: '2018-10-05T23:48:42.845Z'
-          endTime: '2018-10-05T23:48:43.077Z'
-          totalTime: 232
+          startTime: '2018-10-06T00:29:52.211Z'
+          endTime: '2018-10-06T00:29:52.450Z'
+          totalTime: 239
           timeout: 3000
         requisitions: []
   -
@@ -1170,21 +1139,21 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''JSON.parse(message.body).proxy'' to be equal to ''test''. Received ''test'''
+                description: 'Expected ''test'' to be equal to ''test''. Received ''test'''
               -
                 name: Params
                 valid: true
-                description: 'Expected ''params.id'' to be equal to ''idValue''. Received ''idValue'''
+                description: 'Expected ''idValue'' to be equal to ''idValue''. Received ''idValue'''
               -
                 name: Query
                 valid: true
-                description: 'Expected ''query.query'' to be equal to ''proxied''. Received ''proxied'''
+                description: 'Expected ''proxied'' to be equal to ''proxied''. Received ''proxied'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.912Z'
+            connectionTime: '2018-10-06T00:29:52.283Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1221,21 +1190,21 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''JSON.parse(message.body).proxy'' to be equal to ''test''. Received ''test'''
+                description: 'Expected ''test'' to be equal to ''test''. Received ''test'''
               -
                 name: Params
                 valid: true
-                description: 'Expected ''params.firstId'' to be equal to ''idValue''. Received ''idValue'''
+                description: 'Expected ''idValue'' to be equal to ''idValue''. Received ''idValue'''
               -
                 name: Query
                 valid: true
-                description: 'Expected ''query.query'' to be equal to ''proxied''. Received ''proxied'''
+                description: 'Expected ''proxied'' to be equal to ''proxied''. Received ''proxied'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.912Z'
+            connectionTime: '2018-10-06T00:29:52.283Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1261,16 +1230,16 @@ requisitions:
               -
                 name: 'Status Code'
                 valid: true
-                description: 'Expected ''statusCode'' to be equal to ''333''. Received ''333'''
+                description: 'Expected ''333'' to be equal to ''333''. Received ''333'''
               -
                 name: Body
                 valid: true
-                description: 'Expected ''body'' to be equal to ''responsePayload''. Received ''responsePayload'''
+                description: 'Expected ''responsePayload'' to be equal to ''responsePayload''. Received ''responsePayload'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.079Z'
+            publishTime: '2018-10-06T00:29:52.451Z'
             messageReceived:
               statusCode: 333
               body: responsePayload
@@ -1279,7 +1248,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '15'
                 etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-                date: 'Fri, 05 Oct 2018 23:48:43 GMT'
+                date: 'Sat, 06 Oct 2018 00:29:52 GMT'
                 connection: close
               request:
                 uri:
@@ -1301,9 +1270,9 @@ requisitions:
                   authorization: 'Basic dXNlcjpwYXNzd29yZA=='
                   Content-Length: 21
         time:
-          startTime: '2018-10-05T23:48:42.843Z'
-          endTime: '2018-10-05T23:48:43.080Z'
-          totalTime: 237
+          startTime: '2018-10-06T00:29:52.209Z'
+          endTime: '2018-10-06T00:29:52.452Z'
+          totalTime: 243
         requisitions: []
   -
     name: examples/kafka.yml
@@ -1326,37 +1295,37 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
+                description: 'Expected ''kafkaPayload'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
               -
                 name: 'Assertion #1'
                 valid: true
-                description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
+                description: 'Expected ''enqueuer-topic-name'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
               -
                 name: 'Assertion #2'
                 valid: true
-                description: '''offset'' is defined'
+                description: 'Expect ''14'' to be defined'
               -
                 name: 'Assertion #3'
                 valid: true
-                description: '''partition'' is defined'
+                description: 'Expect ''0'' to be defined'
               -
                 name: 'Assertion #4'
                 valid: true
-                description: '''timestamp'' is defined'
+                description: 'Expect ''Fri Oct 05 2018 21:29:52 GMT-0300 (Brasilia Standard Time)'' to be defined'
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.072Z'
+            connectionTime: '2018-10-06T00:29:52.446Z'
             messageReceived:
               topic: enqueuer-topic-name
               value: kafkaPayload
-              offset: 13
+              offset: 14
               partition: 0
-              highWaterOffset: 14
+              highWaterOffset: 15
               key: null
-              timestamp: '2018-10-05T23:48:43.074Z'
+              timestamp: '2018-10-06T00:29:52.448Z'
         publishers:
           -
             name: 'Publisher #0'
@@ -1370,17 +1339,17 @@ requisitions:
               -
                 name: 'kafka publish response payload'
                 valid: true
-                description: '''JSON.parse(message)["enqueuer-topic-name"]'' is defined'
+                description: 'Expect ''[object Object]'' to be defined'
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.095Z'
-            messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 13\n  }\n}"
+            publishTime: '2018-10-06T00:29:52.466Z'
+            messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 14\n  }\n}"
         time:
-          startTime: '2018-10-05T23:48:42.866Z'
-          endTime: '2018-10-05T23:48:43.098Z'
-          totalTime: 232
+          startTime: '2018-10-06T00:29:52.234Z'
+          endTime: '2018-10-06T00:29:52.471Z'
+          totalTime: 237
           timeout: 8000
         requisitions: []
   -
@@ -1440,13 +1409,13 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''message.body'' to be equal to ''Rech''. Received ''Rech'''
+                description: 'Expected ''Rech'' to be equal to ''Rech''. Received ''Rech'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.193Z'
+            connectionTime: '2018-10-06T00:29:52.567Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1470,12 +1439,12 @@ requisitions:
               -
                 name: Body
                 valid: true
-                description: 'Expected ''body'' to be equal to ''responsePayload''. Received ''responsePayload'''
+                description: 'Expected ''responsePayload'' to be equal to ''responsePayload''. Received ''responsePayload'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.197Z'
+            publishTime: '2018-10-06T00:29:52.573Z'
             messageReceived:
               statusCode: 321
               body: responsePayload
@@ -1484,7 +1453,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '15'
                 etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-                date: 'Fri, 05 Oct 2018 23:48:43 GMT'
+                date: 'Sat, 06 Oct 2018 00:29:52 GMT'
                 connection: close
               request:
                 uri:
@@ -1506,10 +1475,272 @@ requisitions:
                   authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
                   Content-Length: 4
         time:
-          startTime: '2018-10-05T23:48:42.842Z'
-          endTime: '2018-10-05T23:48:43.197Z'
-          totalTime: 355
+          startTime: '2018-10-06T00:29:52.208Z'
+          endTime: '2018-10-06T00:29:52.573Z'
+          totalTime: 365
           timeout: 3000
+        requisitions: []
+  -
+    name: examples/stomp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: stomp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''stompQueue'' to be equal to ''stompQueue''. Received ''stompQueue'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-06T00:29:52.642Z'
+            messageReceived:
+              payload: stompQueue
+              headers:
+                destination: /queue/stompQueue
+                message-id: Q_/queue/stompQueue@@session-9uokM1EUd462_zgOp2mYgQ@@1
+                redelivered: 'false'
+                content-length: '10'
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: stomp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-06T00:29:52.657Z'
+        time:
+          startTime: '2018-10-06T00:29:52.258Z'
+          endTime: '2018-10-06T00:29:52.659Z'
+          totalTime: 401
+          timeout: 3000
+        requisitions: []
+  -
+    name: examples/mqtt.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: mqtt
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''enqueuer'' to be equal to ''enqueuer''. Received ''enqueuer'''
+              -
+                name: Topic
+                valid: true
+                description: 'Expected ''enqueuer/integration/public/test'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+              -
+                name: 'Beatles song'
+                valid: true
+                description: 'Expected ''8'' to be greater than ''5''. Received ''8'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-06T00:29:52.643Z'
+            messageReceived:
+              topic: enqueuer/integration/public/test
+              payload:
+                type: Buffer
+                data:
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: mqtt
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-06T00:29:52.658Z'
+        time:
+          startTime: '2018-10-06T00:29:52.235Z'
+          endTime: '2018-10-06T00:29:52.661Z'
+          totalTime: 426
+        requisitions: []
+  -
+    name: examples/amqp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'creating exchange'
+        subscriptions: []
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-06T00:29:52.648Z'
+        time:
+          startTime: '2018-10-06T00:29:52.198Z'
+          endTime: '2018-10-06T00:29:52.648Z'
+          totalTime: 450
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'using just created exchange'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: amqp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''a new object?'' to be equal to ''a new object?''. Received ''a new object?'''
+              -
+                name: Header
+                valid: true
+                description: 'Expected ''value'' to be equal to ''value''. Received ''value'''
+              -
+                name: 'Other Header Value'
+                valid: true
+                description: 'Expected ''otherValue'' to be equal to ''otherValue''. Received ''otherValue'''
+              -
+                name: 'Routing Key'
+                valid: true
+                description: 'Expected ''enqueuer.integration.test.routing.key'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-06T00:29:52.664Z'
+            messageReceived:
+              payload:
+                how:
+                  about: 'a new object?'
+              headers:
+                key: value
+                otherKey: otherValue
+              deliveryInfo:
+                contentType: application/json
+                headers:
+                  key: value
+                  otherKey: otherValue
+                queue: 2hDz4Vl9
+                deliveryTag:
+                  type: Buffer
+                  data: [0, 0, 0, 0, 0, 0, 0, 1]
+                redelivered: false
+                exchange: enqueuer.exchange
+                routingKey: enqueuer.integration.test.routing.key
+                consumerTag: node-amqp-33862-0.9689389979295648
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''5672'' to be equal to ''5672''. Received ''5672'''
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-06T00:29:52.669Z'
+        time:
+          startTime: '2018-10-06T00:29:52.650Z'
+          endTime: '2018-10-06T00:29:52.670Z'
+          totalTime: 20
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'default exhange'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''default exchange'' to be equal to ''default exchange''. Received ''default exchange'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-06T00:29:52.685Z'
+            messageReceived:
+              payload:
+                data:
+                  type: Buffer
+                  data: [100, 101, 102, 97, 117, 108, 116, 32, 101, 120, 99, 104, 97, 110, 103, 101]
+                contentType: application/octet-stream
+              headers: {}
+              deliveryInfo:
+                contentType: application/octet-stream
+                queue: enqueuer.default.exchange
+                deliveryTag:
+                  type: Buffer
+                  data: [0, 0, 0, 0, 0, 0, 0, 1]
+                redelivered: false
+                exchange: ""
+                routingKey: enqueuer.default.exchange
+                consumerTag: node-amqp-33862-0.7432803202360148
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-06T00:29:52.692Z'
+        time:
+          startTime: '2018-10-06T00:29:52.672Z'
+          endTime: '2018-10-06T00:29:52.693Z'
+          totalTime: 21
         requisitions: []
   -
     name: examples/parallel-sub.yml
@@ -1532,13 +1763,13 @@ requisitions:
               -
                 name: Paralleling
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''anything''. Received ''anything'''
+                description: 'Expected ''anything'' to be equal to ''anything''. Received ''anything'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.896Z'
+            connectionTime: '2018-10-06T00:29:52.266Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1557,8 +1788,8 @@ requisitions:
                 port: 23081
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.883Z'
-          endTime: '2018-10-05T23:48:43.330Z'
+          startTime: '2018-10-06T00:29:52.251Z'
+          endTime: '2018-10-06T00:29:52.698Z'
           totalTime: 447
           timeout: 3000
         requisitions: []
@@ -1589,285 +1820,23 @@ requisitions:
               -
                 name: 'Back and forth'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''anyValue''. Received ''anyValue'''
+                description: 'Expected ''anyValue'' to be equal to ''anyValue''. Received ''anyValue'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.331Z'
+            publishTime: '2018-10-06T00:29:52.699Z'
             messageReceived:
               payload: anyValue
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 56484
+                port: 56714
         time:
-          startTime: '2018-10-05T23:48:43.328Z'
-          endTime: '2018-10-05T23:48:43.331Z'
-          totalTime: 3
+          startTime: '2018-10-06T00:29:52.689Z'
+          endTime: '2018-10-06T00:29:52.699Z'
+          totalTime: 10
           timeout: 3000
-        requisitions: []
-  -
-    name: examples/stomp.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        valid: true
-        tests:
-          -
-            valid: true
-            name: 'No time out'
-            description: 'Requisition has not timed out'
-        name: 'Requisition #0'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: stomp
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-05T23:48:43.596Z'
-            messageReceived:
-              payload: stompQueue
-              headers:
-                destination: /queue/stompQueue
-                message-id: Q_/queue/stompQueue@@session-wGAI-7qnahZZUmVh88Eq5A@@1
-                redelivered: 'false'
-                content-length: '10'
-        publishers:
-          -
-            name: 'publisher description'
-            valid: true
-            type: stomp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:43.612Z'
-        time:
-          startTime: '2018-10-05T23:48:42.890Z'
-          endTime: '2018-10-05T23:48:43.613Z'
-          totalTime: 723
-          timeout: 3000
-        requisitions: []
-  -
-    name: examples/mqtt.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: mqtt
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-              -
-                name: Topic
-                valid: true
-                description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
-              -
-                name: 'Beatles song'
-                valid: true
-                description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-05T23:48:43.603Z'
-            messageReceived:
-              topic: enqueuer/integration/public/test
-              payload:
-                type: Buffer
-                data:
-                  - 101
-                  - 110
-                  - 113
-                  - 117
-                  - 101
-                  - 117
-                  - 101
-                  - 114
-        publishers:
-          -
-            name: 'publisher description'
-            valid: true
-            type: mqtt
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:43.615Z'
-        time:
-          startTime: '2018-10-05T23:48:42.866Z'
-          endTime: '2018-10-05T23:48:43.617Z'
-          totalTime: 751
-        requisitions: []
-  -
-    name: examples/amqp.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'creating exchange'
-        subscriptions: []
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:43.604Z'
-        time:
-          startTime: '2018-10-05T23:48:42.832Z'
-          endTime: '2018-10-05T23:48:43.605Z'
-          totalTime: 773
-        requisitions: []
-      -
-        valid: true
-        tests: []
-        name: 'using just created exchange'
-        subscriptions:
-          -
-            name: 'Subscription #0'
-            type: amqp
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
-              -
-                name: Header
-                valid: true
-                description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
-              -
-                name: 'Other Header Value'
-                valid: true
-                description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
-              -
-                name: 'Routing Key'
-                valid: true
-                description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-05T23:48:43.621Z'
-            messageReceived:
-              payload:
-                how:
-                  about: 'a new object?'
-              headers:
-                key: value
-                otherKey: otherValue
-              deliveryInfo:
-                contentType: application/json
-                headers:
-                  key: value
-                  otherKey: otherValue
-                queue: cjNr0HLc
-                deliveryTag:
-                  type: Buffer
-                  data: [0, 0, 0, 0, 0, 0, 0, 1]
-                redelivered: false
-                exchange: enqueuer.exchange
-                routingKey: enqueuer.integration.test.routing.key
-                consumerTag: node-amqp-29397-0.15237535556735105
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:43.627Z'
-        time:
-          startTime: '2018-10-05T23:48:43.606Z'
-          endTime: '2018-10-05T23:48:43.629Z'
-          totalTime: 23
-        requisitions: []
-      -
-        valid: true
-        tests: []
-        name: 'default exhange'
-        subscriptions:
-          -
-            name: 'Subscription #0'
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-05T23:48:43.637Z'
-            messageReceived:
-              payload:
-                data:
-                  type: Buffer
-                  data: [100, 101, 102, 97, 117, 108, 116, 32, 101, 120, 99, 104, 97, 110, 103, 101]
-                contentType: application/octet-stream
-              headers: {}
-              deliveryInfo:
-                contentType: application/octet-stream
-                queue: enqueuer.default.exchange
-                deliveryTag:
-                  type: Buffer
-                  data: [0, 0, 0, 0, 0, 0, 0, 1]
-                redelivered: false
-                exchange: ""
-                routingKey: enqueuer.default.exchange
-                consumerTag: node-amqp-29397-0.8691594244384369
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-05T23:48:43.642Z'
-        time:
-          startTime: '2018-10-05T23:48:43.631Z'
-          endTime: '2018-10-05T23:48:43.643Z'
-          totalTime: 12
         requisitions: []
   -
     name: examples/tcp.yml
@@ -1890,17 +1859,17 @@ requisitions:
               -
                 name: 'Beatles Song'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''Hey Jude''. Received ''Hey Jude'''
+                description: 'Expected ''Hey Jude'' to be equal to ''Hey Jude''. Received ''Hey Jude'''
               -
                 name: 'Assertion #1'
                 valid: true
-                description: '''stream.address'' (::ffff:127.0.0.1) contains ''127.0.0.1'''
+                description: 'Expecting ''::ffff:127.0.0.1'' (::ffff:127.0.0.1) to contain ''127.0.0.1'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.896Z'
+            connectionTime: '2018-10-06T00:29:52.266Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1930,22 +1899,22 @@ requisitions:
               -
                 name: 'Do not make it bad'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''Do not make it bad''. Received ''Do not make it bad'''
+                description: 'Expected ''Do not make it bad'' to be equal to ''Do not make it bad''. Received ''Do not make it bad'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.038Z'
+            publishTime: '2018-10-06T00:29:52.415Z'
             messageReceived:
               payload: 'Do not make it bad'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 56471
+                port: 56695
         time:
-          startTime: '2018-10-05T23:48:42.891Z'
-          endTime: '2018-10-05T23:48:43.038Z'
-          totalTime: 147
+          startTime: '2018-10-06T00:29:52.259Z'
+          endTime: '2018-10-06T00:29:52.416Z'
+          totalTime: 157
           timeout: 3000
         requisitions: []
       -
@@ -1964,13 +1933,13 @@ requisitions:
               -
                 name: 'I care'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''I do not care''. Received ''I do not care'''
+                description: 'Expected ''I do not care'' to be equal to ''I do not care''. Received ''I do not care'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.050Z'
+            connectionTime: '2018-10-06T00:29:52.432Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -2005,22 +1974,22 @@ requisitions:
               -
                 name: 'Greeting received'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''EnqueuerRocks''. Received ''EnqueuerRocks'''
+                description: 'Expected ''EnqueuerRocks'' to be equal to ''EnqueuerRocks''. Received ''EnqueuerRocks'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.873Z'
+            publishTime: '2018-10-06T00:29:53.256Z'
             messageReceived:
               payload: EnqueuerRocks
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 56479
+                port: 56703
         time:
-          startTime: '2018-10-05T23:48:43.049Z'
-          endTime: '2018-10-05T23:48:43.874Z'
-          totalTime: 825
+          startTime: '2018-10-06T00:29:52.429Z'
+          endTime: '2018-10-06T00:29:53.257Z'
+          totalTime: 828
           timeout: 3000
         requisitions: []
       -
@@ -2039,13 +2008,13 @@ requisitions:
               -
                 name: 'It is still open'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''The socket is still open''. Received ''The socket is still open'''
+                description: 'Expected ''The socket is still open'' to be equal to ''The socket is still open''. Received ''The socket is still open'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.877Z'
+            connectionTime: '2018-10-06T00:29:53.260Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -2087,18 +2056,18 @@ requisitions:
               -
                 name: 'Second message is enqueuer Rocks'
                 valid: true
-                description: 'Expected ''payload'' to be equal to ''enqueuer Rocks''. Received ''enqueuer Rocks'''
+                description: 'Expected ''enqueuer Rocks'' to be equal to ''enqueuer Rocks''. Received ''enqueuer Rocks'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.878Z'
+            publishTime: '2018-10-06T00:29:53.261Z'
             messageReceived:
               payload: 'enqueuer Rocks'
         time:
-          startTime: '2018-10-05T23:48:43.877Z'
-          endTime: '2018-10-05T23:48:43.878Z'
-          totalTime: 1
+          startTime: '2018-10-06T00:29:53.259Z'
+          endTime: '2018-10-06T00:29:53.261Z'
+          totalTime: 2
           timeout: 3000
         requisitions: []
   -
@@ -2120,12 +2089,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.896Z'
+            connectionTime: '2018-10-06T00:29:52.266Z'
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.833Z'
-          endTime: '2018-10-05T23:48:44.838Z'
-          totalTime: 2005
+          startTime: '2018-10-06T00:29:52.199Z'
+          endTime: '2018-10-06T00:29:54.205Z'
+          totalTime: 2006
         requisitions: []
   -
     name: examples/http.yml
@@ -2148,21 +2117,21 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''JSON.parse(message.body).enqueuer'' to be equal to ''virgs''. Received ''virgs'''
+                description: 'Expected ''virgs'' to be equal to ''virgs''. Received ''virgs'''
               -
                 name: Params
                 valid: true
-                description: 'Expected ''params.firstId'' to be equal to ''idStuff''. Received ''idStuff'''
+                description: 'Expected ''idStuff'' to be equal to ''idStuff''. Received ''idStuff'''
               -
                 name: Query
                 valid: true
-                description: 'Expected ''query.query'' to be equal to ''0''. Received ''000'''
+                description: 'Expected ''000'' to be equal to ''0''. Received ''000'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:42.912Z'
+            connectionTime: '2018-10-06T00:29:52.283Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -2187,16 +2156,16 @@ requisitions:
               -
                 name: 'Status Code'
                 valid: true
-                description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
+                description: 'Expected ''321'' to be equal to ''321''. Received ''321'''
               -
                 name: Body
                 valid: true
-                description: 'Expected ''body'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
+                description: 'Expected ''dynamically changed payload'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.045Z'
+            publishTime: '2018-10-06T00:29:52.417Z'
             messageReceived:
               statusCode: 321
               body: 'dynamically changed payload'
@@ -2205,7 +2174,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '27'
                 etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-                date: 'Fri, 05 Oct 2018 23:48:43 GMT'
+                date: 'Sat, 06 Oct 2018 00:29:52 GMT'
                 connection: close
               request:
                 uri:
@@ -2226,9 +2195,9 @@ requisitions:
                   content-type: application/json
                   Content-Length: 25
         time:
-          startTime: '2018-10-05T23:48:42.844Z'
-          endTime: '2018-10-05T23:48:43.045Z'
-          totalTime: 201
+          startTime: '2018-10-06T00:29:52.210Z'
+          endTime: '2018-10-06T00:29:52.418Z'
+          totalTime: 208
           timeout: 3000
         requisitions: []
       -
@@ -2247,13 +2216,13 @@ requisitions:
               -
                 name: Payload
                 valid: true
-                description: '''JSON.parse(message.body).duplicated'' is true'
+                description: 'Expect ''true'' to be true'
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.050Z'
+            connectionTime: '2018-10-06T00:29:52.432Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -2278,16 +2247,16 @@ requisitions:
               -
                 name: 'Status Code'
                 valid: true
-                description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
+                description: 'Expected ''321'' to be equal to ''321''. Received ''321'''
               -
                 name: Body
                 valid: true
-                description: 'Expected ''body'' to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
+                description: 'Expected ''duplicatedResponsePayload'' to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
               -
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-05T23:48:43.085Z'
+            publishTime: '2018-10-06T00:29:52.457Z'
             messageReceived:
               statusCode: 321
               body: duplicatedResponsePayload
@@ -2296,7 +2265,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '25'
                 etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-                date: 'Fri, 05 Oct 2018 23:48:43 GMT'
+                date: 'Sat, 06 Oct 2018 00:29:52 GMT'
                 connection: close
               request:
                 uri:
@@ -2317,9 +2286,9 @@ requisitions:
                   content-type: application/json
                   Content-Length: 24
         time:
-          startTime: '2018-10-05T23:48:43.049Z'
-          endTime: '2018-10-05T23:48:43.085Z'
-          totalTime: 36
+          startTime: '2018-10-06T00:29:52.430Z'
+          endTime: '2018-10-06T00:29:52.458Z'
+          totalTime: 28
           timeout: 5000
         requisitions: []
       -
@@ -2340,12 +2309,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-10-05T23:48:43.086Z'
+            connectionTime: '2018-10-06T00:29:52.460Z'
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:43.086Z'
-          endTime: '2018-10-05T23:48:44.087Z'
-          totalTime: 1001
+          startTime: '2018-10-06T00:29:52.460Z'
+          endTime: '2018-10-06T00:29:53.465Z'
+          totalTime: 1005
           timeout: 5000
         requisitions: []
       -
@@ -2366,13 +2335,43 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-10-05T23:48:44.090Z'
+            connectionTime: '2018-10-06T00:29:53.468Z'
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:44.090Z'
-          endTime: '2018-10-05T23:48:45.091Z'
-          totalTime: 1001
+          startTime: '2018-10-06T00:29:53.467Z'
+          endTime: '2018-10-06T00:29:54.469Z'
+          totalTime: 1002
           timeout: 5000
+        requisitions: []
+  -
+    name: examples/stdin.yml
+    valid: false
+    tests: []
+    requisitions:
+      -
+        valid: false
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: standard-input
+            tests:
+              -
+                valid: false
+                name: 'Message received'
+                description: 'Subscription has not received its message'
+              -
+                valid: false
+                name: 'No time out'
+                description: 'Not avoidable subscription has timed out'
+            valid: false
+            connectionTime: '2018-10-06T00:29:52.265Z'
+        publishers: []
+        time:
+          startTime: '2018-10-06T00:29:52.255Z'
+          endTime: '2018-10-06T00:29:55.259Z'
+          totalTime: 3004
         requisitions: []
   -
     name: examples/requisition.yml
@@ -2386,9 +2385,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:42.883Z'
-          endTime: '2018-10-05T23:48:43.050Z'
-          totalTime: 167
+          startTime: '2018-10-06T00:29:52.251Z'
+          endTime: '2018-10-06T00:29:52.440Z'
+          totalTime: 189
         requisitions:
           -
             valid: true
@@ -2396,14 +2395,14 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [0]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.883Z'
-              endTime: '2018-10-05T23:48:42.896Z'
-              totalTime: 13
+              startTime: '2018-10-06T00:29:52.251Z'
+              endTime: '2018-10-06T00:29:52.267Z'
+              totalTime: 16
             requisitions: []
           -
             valid: true
@@ -2411,14 +2410,14 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [1]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.925Z'
-              endTime: '2018-10-05T23:48:42.927Z'
-              totalTime: 2
+              startTime: '2018-10-06T00:29:52.296Z'
+              endTime: '2018-10-06T00:29:52.297Z'
+              totalTime: 1
             requisitions: []
           -
             valid: true
@@ -2426,13 +2425,13 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [2]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.932Z'
-              endTime: '2018-10-05T23:48:42.932Z'
+              startTime: '2018-10-06T00:29:52.299Z'
+              endTime: '2018-10-06T00:29:52.299Z'
               totalTime: 0
             requisitions: []
           -
@@ -2441,13 +2440,13 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [3]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.934Z'
-              endTime: '2018-10-05T23:48:42.934Z'
+              startTime: '2018-10-06T00:29:52.317Z'
+              endTime: '2018-10-06T00:29:52.317Z'
               totalTime: 0
             requisitions: []
           -
@@ -2456,14 +2455,14 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [4]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.947Z'
-              endTime: '2018-10-05T23:48:42.948Z'
-              totalTime: 1
+              startTime: '2018-10-06T00:29:52.341Z'
+              endTime: '2018-10-06T00:29:52.341Z'
+              totalTime: 0
             requisitions: []
           -
             valid: true
@@ -2471,14 +2470,14 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [5]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.959Z'
-              endTime: '2018-10-05T23:48:42.959Z'
-              totalTime: 0
+              startTime: '2018-10-06T00:29:52.359Z'
+              endTime: '2018-10-06T00:29:52.374Z'
+              totalTime: 15
             requisitions: []
           -
             valid: true
@@ -2486,13 +2485,13 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [6]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.976Z'
-              endTime: '2018-10-05T23:48:42.976Z'
+              startTime: '2018-10-06T00:29:52.407Z'
+              endTime: '2018-10-06T00:29:52.407Z'
               totalTime: 0
             requisitions: []
           -
@@ -2501,13 +2500,28 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [7]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:42.999Z'
-              endTime: '2018-10-05T23:48:43.000Z'
+              startTime: '2018-10-06T00:29:52.428Z'
+              endTime: '2018-10-06T00:29:52.432Z'
+              totalTime: 4
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''undefined'' to be undefined'
+            name: 'iterations [8]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-06T00:29:52.436Z'
+              endTime: '2018-10-06T00:29:52.437Z'
               totalTime: 1
             requisitions: []
           -
@@ -2516,29 +2530,14 @@ requisitions:
               -
                 name: 'Assertion #0'
                 valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
-            name: 'iterations [8]'
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2018-10-05T23:48:43.031Z'
-              endTime: '2018-10-05T23:48:43.031Z'
-              totalTime: 0
-            requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: '''requisition.hakunaMatata'' is undefined'
+                description: 'Expect ''undefined'' to be undefined'
             name: 'iterations [9]'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-05T23:48:43.048Z'
-              endTime: '2018-10-05T23:48:43.050Z'
-              totalTime: 2
+              startTime: '2018-10-06T00:29:52.440Z'
+              endTime: '2018-10-06T00:29:52.440Z'
+              totalTime: 0
             requisitions: []
       -
         valid: true
@@ -2546,24 +2545,24 @@ requisitions:
           -
             name: 'It was executed 10 times'
             valid: true
-            description: 'Expected ''store.iteration'' to be equal to ''9''. Received ''9'''
+            description: 'Expected ''9'' to be equal to ''9''. Received ''9'''
           -
             name: 'It delayed for at least ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3055'''
+            description: 'Expected ''3052'' to be greater than ''3000''. Received ''3052'''
           -
             name: 'It delayed for no more than ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2505'''
+            description: 'Expected ''2502'' to be less than ''3000''. Received ''2502'''
           -
             name: 'Assertion #3'
             valid: true
-            description: 'Expected ''requisition.anyStuff'' to be equal to ''anyValue''. Received ''anyValue'''
+            description: 'Expected ''anyValue'' to be equal to ''anyValue''. Received ''anyValue'''
         name: delayed
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-05T23:48:46.053Z'
-          endTime: '2018-10-05T23:48:46.053Z'
+          startTime: '2018-10-06T00:29:55.442Z'
+          endTime: '2018-10-06T00:29:55.442Z'
           totalTime: 0
         requisitions: []
