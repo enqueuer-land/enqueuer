@@ -13,7 +13,7 @@ const protocol = ProtocolManager
     .getInstance()
     .insertSubscriptionProtocol('uds',
         ['uds-server']);
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class UdsSubscription extends Subscription {
 
     private server: any;

@@ -16,7 +16,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('stdout', ['standard-output']);
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class StandardOutputPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {

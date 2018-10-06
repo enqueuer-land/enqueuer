@@ -9,7 +9,7 @@ import {ProtocolManager} from '../protocols/protocol-manager';
 const protocol = ProtocolManager.getInstance()
     .insertSubscriptionProtocol('file',
         ['file-system-watcher', 'file-watcher']);
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class FileSystemWatcherSubscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {

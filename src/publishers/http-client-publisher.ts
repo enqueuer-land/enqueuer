@@ -10,7 +10,7 @@ const protocol = ProtocolManager
     .getInstance()
     .insertPublisherProtocol('http', ['http-client', 'https', 'https-client']);
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class HttpClientPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {

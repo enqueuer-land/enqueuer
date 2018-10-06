@@ -14,7 +14,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('file');
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class FilePublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {

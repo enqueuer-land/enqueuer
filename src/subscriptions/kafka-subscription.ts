@@ -11,7 +11,7 @@ const protocol = ProtocolManager
     .insertSubscriptionProtocol('kafka',
             [],
         'kafka-node');
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class KafkaSubscription extends Subscription {
 
     private readonly client: KafkaClient;

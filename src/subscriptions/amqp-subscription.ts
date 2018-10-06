@@ -7,7 +7,7 @@ import {StringRandomCreator} from '../strings/string-random-creator';
 import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager.getInstance().insertSubscriptionProtocol('amqp', [], 'amqp');
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class AmqpSubscription extends Subscription {
 
     private readonly queueName: string;

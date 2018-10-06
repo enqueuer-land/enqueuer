@@ -12,7 +12,7 @@ const protocol = ProtocolManager
     .getInstance()
     .insertSubscriptionProtocol('tcp',
         ['tcp-server']);
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class TcpServerSubscription extends Subscription {
 
     private server: any;

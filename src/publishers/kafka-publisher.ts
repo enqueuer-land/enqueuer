@@ -10,7 +10,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('kafka', [], 'kafka-node');
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class KafkaPublisher extends Publisher {
     private readonly kafkaPayload: [{ topic: string; messages: string }];
     private readonly client: KafkaClient;

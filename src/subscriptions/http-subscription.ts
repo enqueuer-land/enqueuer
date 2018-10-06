@@ -14,7 +14,7 @@ const protocol = ProtocolManager
     .insertSubscriptionProtocol('http',
         ['https', 'http-proxy', 'https-proxy', 'http-server', 'https-server'],
         'express');
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 100)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 100)})
 export class HttpSubscription extends Subscription {
 
     private responseToClientHandler?: any;

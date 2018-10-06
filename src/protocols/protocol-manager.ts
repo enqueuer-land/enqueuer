@@ -1,6 +1,16 @@
 import {Logger} from '../loggers/logger';
 import {Protocol} from './protocol';
 import '../injectable-files-list';
+import prettyjson from 'prettyjson';
+
+//TODO unify these value in a single file
+const options = {
+    defaultIndentation: 4,
+    inlineArrays: true,
+    emptyArrayMsg: '(empty)',
+    keysColor: 'green',
+    dashColor: 'grey'
+};
 
 //TODO test it
 export class ProtocolManager {
@@ -21,9 +31,13 @@ export class ProtocolManager {
     }
 
     public printAvailable(): void {
-        console.log(`Available protocols:`);
-        console.log(`\tPublishers: \n\t\t${this.publishers.map(publisher => publisher.getName()).sort().join('\n\t\t')}`);
-        console.log(`\tSubscriptions: \n\t\t${this.subscriptions.map(publisher => publisher.getName()).sort().join('\n\t\t')}`);
+        const printable = {
+            Protocols: {
+                Publishers: this.publishers,
+                Subscriptions: this.subscriptions
+            }
+        };
+        console.log(prettyjson.render(printable, options));
     }
 
     public insertPublisherProtocol(name: string, alternativeNames: string[] = [], libraryName?: string ): Protocol {

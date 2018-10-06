@@ -9,7 +9,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('stomp', [], 'stomp-client');
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class StompPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {

@@ -10,7 +10,7 @@ const protocol = ProtocolManager
     .insertSubscriptionProtocol('mqtt',
         [],
         'mqtt');
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class MqttSubscription extends Subscription {
 
     private client: any;

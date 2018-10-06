@@ -11,7 +11,7 @@ const protocol = ProtocolManager
     .insertSubscriptionProtocol('stomp',
         [],
         'stomp-client');
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class StompSubscription extends Subscription {
     private client: any;
 

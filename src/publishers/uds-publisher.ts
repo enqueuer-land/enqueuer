@@ -11,7 +11,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('uds', ['uds-client']);
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class UdsPublisher extends Publisher {
 
     private stream: any;

@@ -12,7 +12,7 @@ const protocol = ProtocolManager
     .insertSubscriptionProtocol('sqs',
         [],
         'aws-sdk');
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class SqsSubscription extends Subscription {
 
     private sqs: AWS.SQS;

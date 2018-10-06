@@ -9,7 +9,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('udp', ['udp-client']);
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class UdpPublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {

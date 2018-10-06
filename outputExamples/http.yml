@@ -18,21 +18,21 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expected ''virgs'' to be equal to ''virgs''. Received ''virgs'''
+            description: 'Expected ''JSON.parse(message.body).enqueuer'' to be equal to ''virgs''. Received ''virgs'''
           -
             name: Params
             valid: true
-            description: 'Expected ''idStuff'' to be equal to ''idStuff''. Received ''idStuff'''
+            description: 'Expected ''params.firstId'' to be equal to ''idStuff''. Received ''idStuff'''
           -
             name: Query
             valid: true
-            description: 'Expected ''000'' to be equal to ''0''. Received ''000'''
+            description: 'Expected ''query.query'' to be equal to ''0''. Received ''000'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-06T00:29:52.283Z'
+        connectionTime: '2018-10-06T23:53:22.418Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -57,16 +57,16 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected ''321'' to be equal to ''321''. Received ''321'''
+            description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
           -
             name: Body
             valid: true
-            description: 'Expected ''dynamically changed payload'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
+            description: 'Expected ''body'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-06T00:29:52.417Z'
+        publishTime: '2018-10-06T23:53:22.611Z'
         messageReceived:
           statusCode: 321
           body: 'dynamically changed payload'
@@ -75,7 +75,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '27'
             etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-            date: 'Sat, 06 Oct 2018 00:29:52 GMT'
+            date: 'Sat, 06 Oct 2018 23:53:22 GMT'
             connection: close
           request:
             uri:
@@ -96,9 +96,9 @@ requisitions:
               content-type: application/json
               Content-Length: 25
     time:
-      startTime: '2018-10-06T00:29:52.210Z'
-      endTime: '2018-10-06T00:29:52.418Z'
-      totalTime: 208
+      startTime: '2018-10-06T23:53:22.338Z'
+      endTime: '2018-10-06T23:53:22.611Z'
+      totalTime: 273
       timeout: 3000
     requisitions: []
   -
@@ -117,13 +117,13 @@ requisitions:
           -
             name: Payload
             valid: true
-            description: 'Expect ''true'' to be true'
+            description: 'Expect ''JSON.parse(message.body).duplicated'' to be true'
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-06T00:29:52.432Z'
+        connectionTime: '2018-10-06T23:53:22.616Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -148,16 +148,16 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected ''321'' to be equal to ''321''. Received ''321'''
+            description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
           -
             name: Body
             valid: true
-            description: 'Expected ''duplicatedResponsePayload'' to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
+            description: 'Expected ''body'' to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-06T00:29:52.457Z'
+        publishTime: '2018-10-06T23:53:22.648Z'
         messageReceived:
           statusCode: 321
           body: duplicatedResponsePayload
@@ -166,7 +166,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '25'
             etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-            date: 'Sat, 06 Oct 2018 00:29:52 GMT'
+            date: 'Sat, 06 Oct 2018 23:53:22 GMT'
             connection: close
           request:
             uri:
@@ -187,9 +187,9 @@ requisitions:
               content-type: application/json
               Content-Length: 24
     time:
-      startTime: '2018-10-06T00:29:52.430Z'
-      endTime: '2018-10-06T00:29:52.458Z'
-      totalTime: 28
+      startTime: '2018-10-06T23:53:22.615Z'
+      endTime: '2018-10-06T23:53:22.648Z'
+      totalTime: 33
       timeout: 5000
     requisitions: []
   -
@@ -210,11 +210,11 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-10-06T00:29:52.460Z'
+        connectionTime: '2018-10-06T23:53:22.651Z'
     publishers: []
     time:
-      startTime: '2018-10-06T00:29:52.460Z'
-      endTime: '2018-10-06T00:29:53.465Z'
+      startTime: '2018-10-06T23:53:22.650Z'
+      endTime: '2018-10-06T23:53:23.655Z'
       totalTime: 1005
       timeout: 5000
     requisitions: []
@@ -236,11 +236,11 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-10-06T00:29:53.468Z'
+        connectionTime: '2018-10-06T23:53:23.658Z'
     publishers: []
     time:
-      startTime: '2018-10-06T00:29:53.467Z'
-      endTime: '2018-10-06T00:29:54.469Z'
-      totalTime: 1002
+      startTime: '2018-10-06T23:53:23.658Z'
+      endTime: '2018-10-06T23:53:24.659Z'
+      totalTime: 1001
       timeout: 5000
     requisitions: []

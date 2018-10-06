@@ -18,13 +18,13 @@ requisitions:
           -
             name: 'Https payload'
             valid: true
-            description: 'Expected ''works!'' to be equal to ''works!''. Received ''works!'''
+            description: 'Expected ''JSON.parse(message.body).https'' to be equal to ''works!''. Received ''works!'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-06T00:29:52.283Z'
+        connectionTime: '2018-10-06T23:53:22.418Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -47,16 +47,16 @@ requisitions:
           -
             name: 'Status Code'
             valid: true
-            description: 'Expected ''200'' to be equal to ''200''. Received ''200'''
+            description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
           -
             name: Body
             valid: true
-            description: 'Expected ''https'' to be equal to ''https''. Received ''https'''
+            description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-06T00:29:52.450Z'
+        publishTime: '2018-10-06T23:53:22.631Z'
         messageReceived:
           statusCode: 200
           body: https
@@ -65,7 +65,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '5'
             etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-            date: 'Sat, 06 Oct 2018 00:29:52 GMT'
+            date: 'Sat, 06 Oct 2018 23:53:22 GMT'
             connection: close
           request:
             uri:
@@ -86,8 +86,8 @@ requisitions:
               content-type: application/json
               Content-Length: 23
     time:
-      startTime: '2018-10-06T00:29:52.211Z'
-      endTime: '2018-10-06T00:29:52.450Z'
-      totalTime: 239
+      startTime: '2018-10-06T23:53:22.338Z'
+      endTime: '2018-10-06T23:53:22.631Z'
+      totalTime: 293
       timeout: 3000
     requisitions: []

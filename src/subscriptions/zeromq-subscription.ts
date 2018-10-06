@@ -10,7 +10,7 @@ const protocol = ProtocolManager
     .insertSubscriptionProtocol('zeromq',
         ['zeromq-sub'],
         'zeromq');
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class ZeromqSubscription extends Subscription {
     private socket: zmq.Socket;
 

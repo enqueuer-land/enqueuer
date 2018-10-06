@@ -10,7 +10,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('mqtt', [], 'mqtt');
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class MqttPublisher extends Publisher {
 
     public constructor(publish: PublisherModel) {

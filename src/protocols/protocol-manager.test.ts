@@ -11,7 +11,7 @@ describe('ProtocolManager', () => {
         ProtocolManager.getInstance().insertPublisherProtocol('amqp');
         ProtocolManager.getInstance().insertSubscriptionProtocol('amqp', ['IEI', 'AMQP']);
         ProtocolManager.getInstance().printAvailable();
-        expect(logMock).toHaveBeenCalledTimes(3);
+        expect(logMock).toHaveBeenCalledTimes(1);
     });
 
 

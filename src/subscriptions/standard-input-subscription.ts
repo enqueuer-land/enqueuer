@@ -7,7 +7,7 @@ const protocol = ProtocolManager
     .getInstance()
     .insertSubscriptionProtocol('stdin',
         ['standard-input']);
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class StandardInputSubscription extends Subscription {
     private value?: string;
 

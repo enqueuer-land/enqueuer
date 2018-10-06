@@ -9,7 +9,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('zeromq', ['zero-mq-pub'], 'zeromq');
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class ZeromqPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {

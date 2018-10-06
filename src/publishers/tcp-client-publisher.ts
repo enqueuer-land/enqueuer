@@ -8,7 +8,7 @@ import {JavascriptObjectNotation} from '../object-notations/javascript-object-no
 import {ProtocolManager} from '../protocols/protocol-manager';
 
 const protocol = ProtocolManager.getInstance().insertPublisherProtocol('tcp', ['tcp-client']);
-@Injectable({predicate: (publish: any) => protocol.matchesRatingAtLeast(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
 export class TcpClientPublisher extends Publisher {
 
     private readonly loadedStream: any;

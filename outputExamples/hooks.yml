@@ -8,7 +8,7 @@ requisitions:
       -
         name: 'Requisitions exists onInit'
         valid: true
-        description: 'Expect ''[object Object]'' to be defined'
+        description: 'Expect ''requisition'' to be defined'
       -
         valid: true
         name: 'No time out'
@@ -22,29 +22,29 @@ requisitions:
           -
             name: 'Subscription exists onInit'
             valid: true
-            description: 'Expect ''[object Object]'' to be defined'
+            description: 'Expect ''subscription'' to be defined'
           -
             name: 'Subscription name'
             valid: true
-            description: 'Expected ''changed'' to be equal to ''changed''. Received ''changed'''
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
           -
             name: 'Subscription exists onMessageReceived'
             valid: true
-            description: 'Expect ''[object Object]'' to be defined'
+            description: 'Expect ''subscription'' to be defined'
           -
             name: 'Subscription name changed'
             valid: true
-            description: 'Expected ''changed'' to be equal to ''changed''. Received ''changed'''
+            description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
           -
             name: 'Subscription onInit executed'
             valid: true
-            description: 'Expecting ''requisition::onInit-> subscription::onInit-> publisher::onInit'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''subscription::onInit'''
+            description: 'Expecting ''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''subscription::onInit'''
           -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-06T00:29:52.266Z'
+        connectionTime: '2018-10-06T23:53:22.400Z'
         messageReceived:
           payload:
             type: Buffer
@@ -64,15 +64,15 @@ requisitions:
           -
             name: 'Publisher exists onInit'
             valid: true
-            description: 'Expect ''[object Object]'' to be defined'
+            description: 'Expect ''publisher'' to be defined'
           -
             name: 'Publisher name'
             valid: true
-            description: 'Expect ''changed'' to be defined'
+            description: 'Expect ''publisher.name'' to be defined'
           -
             name: 'Assertion #2'
             valid: true
-            description: 'Expect ''[object Object]'' to be defined'
+            description: 'Expect ''publisher'' to be defined'
           -
             name: Published
             valid: true
@@ -80,33 +80,33 @@ requisitions:
           -
             name: 'Publisher exists onMessageReceived'
             valid: true
-            description: 'Expect ''[object Object]'' to be defined'
+            description: 'Expect ''publisher'' to be defined'
           -
             name: 'Requisition onInit'
             valid: true
-            description: 'Expecting ''requisition::onInit-> subscription::onInit-> publisher::onInit'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''requisition::onInit'''
+            description: 'Expecting ''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''requisition::onInit'''
           -
             name: 'Publisher name changed'
             valid: true
-            description: 'Expected ''changed'' to be equal to ''changed''. Received ''changed'''
+            description: 'Expected ''publisher.name'' to be equal to ''changed''. Received ''changed'''
           -
             name: 'Publisher onInit executed'
             valid: true
-            description: 'Expecting ''requisition::onInit-> subscription::onInit-> publisher::onInit'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''publisher::onInit'''
+            description: 'Expecting ''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''publisher::onInit'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-06T00:29:52.414Z'
+        publishTime: '2018-10-06T23:53:22.603Z'
         messageReceived:
           payload: 'hook response'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 56694
+            port: 60171
     time:
-      startTime: '2018-10-06T00:29:52.204Z'
-      endTime: '2018-10-06T00:29:52.414Z'
-      totalTime: 210
+      startTime: '2018-10-06T23:53:22.331Z'
+      endTime: '2018-10-06T23:53:22.604Z'
+      totalTime: 273
       timeout: 2000
     requisitions: []

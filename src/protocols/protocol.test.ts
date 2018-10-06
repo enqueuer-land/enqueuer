@@ -3,17 +3,17 @@ import {Protocol} from "./protocol";
 describe('Protocol', () => {
 
     it('namesMatchExactly name', () => {
-        const match = new Protocol('gui').matchesRatingAtLeast('gui', 100);
+        const match = new Protocol('gui').matches('gui');
         expect(match).toBeTruthy();
     });
 
     it('namesMatch alternative', () => {
-        const match = new Protocol('', ['gui']).matchesRatingAtLeast('gui', 100);
+        const match = new Protocol('', ['gui']).matches('gui');
         expect(match).toBeTruthy();
     });
 
     it('names dont Match alternative', () => {
-        const match = new Protocol('', ['']).matchesRatingAtLeast('gui', 100);
+        const match = new Protocol('', ['']).matches('gui', 100);
         expect(match).toBeFalsy();
     });
 

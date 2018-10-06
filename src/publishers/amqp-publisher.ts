@@ -9,7 +9,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('amqp', [], 'amqp');
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class AmqpPublisher extends Publisher {
     private connection: any;
     private readonly messageOptions: any;

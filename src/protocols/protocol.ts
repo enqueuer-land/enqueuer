@@ -15,20 +15,15 @@ export class Protocol {
     public constructor(name: string, alternativeNames: string[] = [], libraryName?: string) {
         this.name = name;
         const uniqueAlternativeNames = new Set(alternativeNames);
-        uniqueAlternativeNames.add(name);
         this.alternativeNames = Array.from(uniqueAlternativeNames);
         this.library = Protocol.getDependency(libraryName);
     }
 
-    public getName() {
-        return this.name;
-    }
-
     public getBestRating(name: string): Match {
-        return new StringMatcher().sortBestMatches(name, this.alternativeNames)[0];
+        return new StringMatcher().sortBestMatches(name, this.alternativeNames.concat(this.name))[0];
     }
 
-    public matchesRatingAtLeast(name: string, minimumRating: number): boolean {
+    public matches(name: string, minimumRating: number = 100): boolean {
         return this.getBestRating(name).rating >= minimumRating;
     }
 

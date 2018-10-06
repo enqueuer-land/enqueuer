@@ -11,7 +11,7 @@ const protocol = ProtocolManager.getInstance()
     .insertPublisherProtocol('sqs', [], 'aws-sdk');
 
 @Injectable({predicate: (publish: any) => protocol
-        .matchesRatingAtLeast(publish.type, 95)})
+        .matches(publish.type, 95)})
 export class SqsPublisher extends Publisher {
 
     private sqsSend: AWS.SQS;
