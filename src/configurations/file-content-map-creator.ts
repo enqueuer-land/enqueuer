@@ -8,12 +8,8 @@ export class FileContentMapCreator {
 
     private map: any = {};
 
-    public createMap(value: object | string) {
-        if (typeof value == 'string') {
-            this.checkChildren(new Json().parse(value as string));
-        } else {
-            this.checkChildren(value);
-        }
+    public createMap(value: object) {
+        this.checkChildren(value);
     }
 
     public getMap(): {} {
