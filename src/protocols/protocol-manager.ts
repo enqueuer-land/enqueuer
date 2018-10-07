@@ -29,14 +29,12 @@ export class ProtocolManager {
         return ProtocolManager.instance;
     }
 
-    public printAvailable(): void {
-        const printable = {
-            protocols: {
-                publishers: this.prettyfy(this.publishers),
-                subscriptions: this.prettyfy(this.subscriptions)
-            }
-        };
-        console.log(prettyjson.render(printable, options));
+    public describeProtocols(protocol: true | string): void {
+        if (typeof(protocol) == 'string') {
+            this.printDeepDescription(protocol as string);
+        } else {
+            this.printShallowDescription();
+        }
     }
 
     public insertPublisher(protocol: Protocol): void {
@@ -59,6 +57,8 @@ export class ProtocolManager {
         const ratingSortedProtocols = protocols
             .sort((first, second) => second.getBestRating(name).rating
                                                 - first.getBestRating(name).rating);
+
+        Logger.warning(`Unknown protocol '${name}'`);
         ratingSortedProtocols
             .filter((value, index) => index <= 2)
             .forEach((protocol) => {
@@ -67,16 +67,35 @@ export class ProtocolManager {
                     Logger.warning(`${bestRating.rating}% sure you meant '${bestRating.target}'`);
                     protocol.suggestInstallation();
                 } else if (bestRating.rating > 10) {
-                    Logger.warning(`There is a tiny ${bestRating.rating}% possibility you tried to type '${bestRating.target}'`);
+                    Logger.warning(`There is a tiny possibility (${bestRating.rating}%) you tried to type '${bestRating.target}'`);
                 }
             });
     }
 
-    private prettyfy(protocols: Protocol[]): {} {
+    private printShallowDescription(): void {
+        const printable = {
+            protocols: {
+                publishers: this.publishers.map(protocol => protocol.getName()),
+                subscriptions: this.subscriptions.map(protocol => protocol.getName())
+            }
+        };
+        console.log(prettyjson.render(printable, options));
+    }
+
+    private printDeepDescription(protocolToDescribe: string): void {
         const result: any = {};
-        protocols.forEach(protocol => {
-           result[protocol.getName()] =  protocol.getProperties();
-        });
-        return result;
+        let tolerance = 10;
+        const checkDescriptionInsertion = (protocol: Protocol) => {
+            if (protocol.matches(protocolToDescribe, tolerance)) {
+                result[protocol.getName()] =  protocol.getProperties();
+            }
+        };
+        this.publishers.map(checkDescriptionInsertion);
+        this.subscriptions.map(checkDescriptionInsertion);
+        if ((Object.keys(result)).length == 0) {
+            console.log('Not supported protocol');
+        } else {
+            console.log(prettyjson.render(result, options));
+        }
     }
 }

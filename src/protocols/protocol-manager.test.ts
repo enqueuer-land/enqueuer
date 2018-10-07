@@ -8,9 +8,9 @@ let logMock = jest.fn();
 global.console = {log: logMock};
 describe('ProtocolManager', () => {
 
-    it('printAvailable', () => {
+    it('describeProtocols', () => {
         ProtocolManager.getInstance().insertPublisher(new Protocol('amqp'));
-        ProtocolManager.getInstance().printAvailable();
+        ProtocolManager.getInstance().describeProtocols();
         expect(logMock).toHaveBeenCalledTimes(1);
     });
 

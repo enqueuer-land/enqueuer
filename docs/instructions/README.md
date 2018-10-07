@@ -13,13 +13,14 @@ So you don't have to deal with a whole bunch of stuff you will not need.
     
     Options:
     
-      -v, --version                    output the version number
-      -q, --quiet                      disable logging
-      -b, --verbosity <level>          set verbosity [trace, debug, info, warn, error, fatal]
-      -c, --config-file <path>         set configurationFile
-      -s, --store [store]              add variables values to this session (default: )
-      -l, --list-available-protocols   list available protocols
-      -h, --help                       output usage information
+      -v, --version                           output the version number
+      -q, --quiet                             disable logging
+      -b, --verbosity <level>                 set verbosity [trace, debug, info, warn, error, fatal]
+      -c, --config-file <path>                set configurationFile
+      -s, --store [store]                     add variables values to this session (default: )
+      -p, --protocols-description [protocol]  describe protocols
+      -h, --help                              output usage information
+
 
 ###### Run it:
 
@@ -41,11 +42,25 @@ If you want to know more about them, [click here](https://github.com/lopidio/enq
 If installed using '--no-optional' flag, enqueuer is installed with just a few protocols.
 But do not worry, you can add some protocols after installation.
 
-##### To see the available ones:
+##### To see available protocols
 
-    $ nqr -l
-    Available dependencies: amqp; kafka-node; mqtt; aws-sdk; stomp-client; zeromq
+    $ nqr -p
+    protocols: 
+        publishers:    amqp, file, http, kafka, mqtt, sqs, stdout, stomp, tcp, udp, uds, zeromq
+        subscriptions: amqp, file, http, kafka, mqtt, sqs, stdin, stomp, tcp, udp, uds, zeromq
+    
+
+##### To see deeper details:
+
+    $ nqr -p mqtt
+    mqtt: 
+        alternativeNames: 
+            -
+        library: 
+            name:      mqtt
+            installed: true
+            version:   ^2.18.8
 
 ##### And then install the ones you desire:
     
-    $ npm install amqp@^0.2.7 express@^4.16.3 --no-optional
+    $ npm install mqtt@^2.18.8 --no-optional

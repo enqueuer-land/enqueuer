@@ -47,13 +47,11 @@ export class Protocol {
         return this;
     }
 
-    //TODO test it
     public registerAsPublisher(): Protocol {
         ProtocolManager.getInstance().insertPublisher(this);
         return this;
     }
 
-    //TODO test it
     public registerAsSubscription(): Protocol {
         ProtocolManager.getInstance().insertSubscription(this);
         return this;

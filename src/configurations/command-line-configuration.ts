@@ -23,7 +23,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 memo.push(val);
                 return memo;
             }, [])
-        .option('-l, --list-available-protocols', 'list available protocols', false)
+        .option('-p, --protocols-description [protocol]', 'describe protocols')
         .parse(commandLineArguments);
     return commander;
 };
@@ -80,8 +80,8 @@ export class CommandLineConfiguration {
         return commandLineStore;
     }
 
-    public static requestToListAvailableProtocols(): boolean {
-        return CommandLineConfiguration.getCommandLine().listAvailableProtocols;
+    public static describeProtocols(): string | undefined | true {
+        return CommandLineConfiguration.getCommandLine().protocolsDescription;
     }
 
 }

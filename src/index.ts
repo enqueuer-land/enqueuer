@@ -7,23 +7,24 @@ import {CommandLineConfiguration} from './configurations/command-line-configurat
 import {ProtocolManager} from './protocols/protocol-manager';
 
 export async function start(): Promise<number> {
-        Logger.setLoggerLevel('info');
-        if (CommandLineConfiguration.requestToListAvailableProtocols()) {
-            ProtocolManager.getInstance().printAvailable();
-            return 0;
-        } else {
-            const configuration = Configuration.getValues();
-            const logLevel = configuration.logLevel;
+    Logger.setLoggerLevel('info');
+    const protocolToDescribe = CommandLineConfiguration.describeProtocols();
+    if (protocolToDescribe) {
+        ProtocolManager.getInstance().describeProtocols(protocolToDescribe);
+        return 0;
+    } else {
+        const configuration = Configuration.getValues();
+        const logLevel = configuration.logLevel;
 
-            if (Logger && logLevel) {
-                Logger.setLoggerLevel(logLevel);
-            }
-
-            return await new EnqueuerStarter(configuration).start().catch((error) => {
-                Logger.fatal(error);
-                throw 1;
-            });
+        if (Logger && logLevel) {
+            Logger.setLoggerLevel(logLevel);
         }
+
+        return await new EnqueuerStarter(configuration).start().catch((error) => {
+            Logger.fatal(error);
+            throw 1;
+        });
+    }
 }
 
 const testMode = process.argv[1].toString().match('jest');

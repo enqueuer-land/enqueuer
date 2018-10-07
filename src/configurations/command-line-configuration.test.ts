@@ -62,16 +62,28 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
     });
 
-    it('list protocols -l', () => {
-        commanderRefresher(['node', 'test', '-l']);
+    it('describe protocols -p', () => {
+        commanderRefresher(['node', 'test', '-p']);
 
-        expect(CommandLineConfiguration.requestToListAvailableProtocols()).toBeTruthy();
+        expect(CommandLineConfiguration.describeProtocols()).toBeTruthy();
     });
 
-    it('list libraries --list-available-protocols', () => {
-        commanderRefresher(['node', 'test', '--list-available-protocols']);
+    it('no describe protocols', () => {
+        commanderRefresher(['node', 'test']);
 
-        expect(CommandLineConfiguration.requestToListAvailableProtocols()).toBeTruthy();
+        expect(CommandLineConfiguration.describeProtocols()).toBeUndefined();
+    });
+
+    it('describe mqtt protocol -p', () => {
+        commanderRefresher(['node', 'test', '-p', 'mqtt']);
+
+        expect(CommandLineConfiguration.describeProtocols()).toBe('mqtt');
+    });
+
+    it('describe mqtt protocol --protocolsDescription', () => {
+        commanderRefresher(['node', 'test', '-p', 'mqtt']);
+
+        expect(CommandLineConfiguration.describeProtocols()).toBe('mqtt');
     });
 
     it('getStore -s', () => {
