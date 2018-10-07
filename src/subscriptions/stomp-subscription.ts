@@ -2,7 +2,7 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const Stomp = require('stomp-client');
@@ -23,7 +23,7 @@ export class StompSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             Logger.trace(`Stomp waiting for a message related to queue ${this.queue}`);
             this.client.subscribe(this.queue, (message: string, headers: {}) => {
-                Logger.trace(`Stomp message received header ${new JavascriptObjectNotation().stringify(headers)}`);
+                Logger.trace(`Stomp message received header ${new Json().stringify(headers)}`);
                 resolve({payload: message, headers: headers});
             });
             this.client.once('error', (err: any) => {

@@ -1,6 +1,6 @@
 import {DateController} from '../timers/date-controller';
 import {createHash } from 'crypto';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 
 export class IdGenerator {
 
@@ -8,7 +8,7 @@ export class IdGenerator {
 
     public constructor(value: any) {
         if (typeof(value) !== 'string') {
-            this.value = new JavascriptObjectNotation().stringify(value);
+            this.value = new Json().stringify(value);
         } else {
             this.value = value as string;
         }

@@ -1,4 +1,4 @@
-import {JavascriptObjectNotation} from "./javascript-object-notation";
+import {Json} from "./json";
 import * as fs from "fs";
 
 jest.mock("fs");
@@ -9,7 +9,7 @@ fs.readFileSync.mockImplementation(() => Buffer.from('{\n' +
     '}'));
 
 
-describe('JavascriptObjectNotation', () => {
+describe('Json', () => {
 
     test('should stringify', () => {
         const value = {firstLevel: {secondLevel: 'value'}};
@@ -19,13 +19,13 @@ describe('JavascriptObjectNotation', () => {
             '  }\n' +
             '}';
 
-        const stringified = new JavascriptObjectNotation().stringify(value);
+        const stringified = new Json().stringify(value);
 
         expect(stringified).toBe(expected)
     });
 
     test('should stringify undefined objects', () => {
-        const stringified = new JavascriptObjectNotation().stringify(undefined);
+        const stringified = new Json().stringify(undefined);
 
         expect(stringified).toBe('{}');
     });
@@ -39,7 +39,7 @@ describe('JavascriptObjectNotation', () => {
                             '  }\n' +
                             '}';
 
-        const stringified = new JavascriptObjectNotation().stringify(value);
+        const stringified = new Json().stringify(value);
 
         expect(stringified).toBe(expected)
     });
@@ -52,7 +52,7 @@ describe('JavascriptObjectNotation', () => {
             '}';
         const expected = {firstLevel: {secondLevel: 'value'}};
 
-        const parsed = new JavascriptObjectNotation().parse(value);
+        const parsed = new Json().parse(value);
 
         expect(parsed).toEqual(expected)
     });
@@ -60,7 +60,7 @@ describe('JavascriptObjectNotation', () => {
     test('should load from file', () => {
         const expected = {firstLevel: {secondLevel: 'value'}};
 
-        const loaded = new JavascriptObjectNotation().loadFromFileSync('bla');
+        const loaded = new Json().loadFromFileSync('bla');
 
         expect(loaded).toEqual(expected)
     });

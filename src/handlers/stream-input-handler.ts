@@ -1,6 +1,6 @@
 import {HandlerListener} from './handler-listener';
 import * as net from 'net';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 
 export class StreamInputHandler {
     private readonly handlerListener: HandlerListener;
@@ -65,6 +65,6 @@ export class StreamInputHandler {
         if (typeof(payload) == 'string' || Buffer.isBuffer(payload)) {
             return payload;
         }
-        return new JavascriptObjectNotation().stringify(payload) as string;
+        return new Json().stringify(payload) as string;
     }
 }

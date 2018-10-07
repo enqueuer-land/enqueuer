@@ -4,7 +4,7 @@ import * as net from 'net';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('tcp')
@@ -105,7 +105,7 @@ export class TcpClientPublisher extends Publisher {
 
     private stringifyPayload() {
         if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            return new JavascriptObjectNotation().stringify(this.payload);
+            return new Json().stringify(this.payload);
         }
         return this.payload;
     }

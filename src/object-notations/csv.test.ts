@@ -1,23 +1,23 @@
-import {DelimiterSeparatedValueObjectNotation} from "./delimiter-separated-value-object-notation";
+import {Csv} from "./csv";
 import * as fs from "fs";
 
 jest.mock("fs");
-describe('DelimiterSeparatedValueObjectNotation', () => {
+describe('Csv', () => {
 
     test('should stringify undefined objects', () => {
-        const stringified = new DelimiterSeparatedValueObjectNotation().stringify(undefined);
+        const stringified = new Csv().stringify(undefined);
 
         expect(stringified).toBe('{}');
     });
 
     test('should parse empty objects', () => {
-        const stringified = new DelimiterSeparatedValueObjectNotation().parse({});
+        const stringified = new Csv().parse({});
 
         expect(stringified).toEqual([]);
     });
 
     test('should parse empty lines', () => {
-        const stringified = new DelimiterSeparatedValueObjectNotation().parse('\n');
+        const stringified = new Csv().parse('\n');
 
         expect(stringified).toEqual([]);
     });
@@ -30,7 +30,7 @@ describe('DelimiterSeparatedValueObjectNotation', () => {
             {"title1": "a1", "title2": "a2", "title3": "a3"},
             {"title1": "b1", "title2": "b2", "title3": "b3"}];
 
-        const parsed = new DelimiterSeparatedValueObjectNotation().parse(value);
+        const parsed = new Csv().parse(value);
 
         expect(parsed).toEqual(expected)
     });
@@ -42,7 +42,7 @@ describe('DelimiterSeparatedValueObjectNotation', () => {
             ["a1", "a2", "a3"],
             ["b1", "b2", "b3"]];
 
-        const parsed = new DelimiterSeparatedValueObjectNotation('.', false).parse(value);
+        const parsed = new Csv('.', false).parse(value);
 
         expect(parsed).toEqual(expected)
     });
@@ -54,7 +54,7 @@ describe('DelimiterSeparatedValueObjectNotation', () => {
             ["a1", "a2", "a3"],
             ["b1", "b2", "b3"]];
 
-        const parsed = new DelimiterSeparatedValueObjectNotation('\t', false).parse(value);
+        const parsed = new Csv('\t', false).parse(value);
 
         expect(parsed).toEqual(expected)
     });
@@ -67,7 +67,7 @@ describe('DelimiterSeparatedValueObjectNotation', () => {
 a1;a2;a3\r\n\
 b1;b2;b3";
 
-        const parsed = new DelimiterSeparatedValueObjectNotation().stringify(value);
+        const parsed = new Csv().stringify(value);
 
         expect(parsed).toEqual(expected)
     });
@@ -80,7 +80,7 @@ b1;b2;b3";
         const expected = "0\t1\tfalse\r\n\
 b1\tb2\tb3";
 
-        const parsed = new DelimiterSeparatedValueObjectNotation('\t', false).stringify(value);
+        const parsed = new Csv('\t', false).stringify(value);
 
         expect(parsed).toEqual(expected)
     });
@@ -90,7 +90,7 @@ b1\tb2\tb3";
         value[0][0] = value;
 
 
-        const stringified = new DelimiterSeparatedValueObjectNotation(';', false).stringify(value);
+        const stringified = new Csv(';', false).stringify(value);
 
         expect(stringified).toBe("[CYCLIC REFERENCE]");
     });
@@ -112,7 +112,7 @@ b1\tb2\tb3";
                 "name": "paul mccartney"
             }];
 
-        const loaded = new DelimiterSeparatedValueObjectNotation().loadFromFileSync(fileContent);
+        const loaded = new Csv().loadFromFileSync(fileContent);
 
         expect(loaded).toEqual(expected)
     });

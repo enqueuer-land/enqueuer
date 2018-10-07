@@ -2,7 +2,7 @@ import {ObjectNotation} from './object-notation';
 import * as fs from 'fs';
 import {ObjectDecycler} from './object-decycler';
 
-export class DelimiterSeparatedValueObjectNotation implements ObjectNotation {
+export class Csv implements ObjectNotation {
     private delimiter: string;
     private header: boolean;
 

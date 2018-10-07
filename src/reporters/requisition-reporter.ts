@@ -8,7 +8,7 @@ import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-rep
 import {TestModel} from '../models/outputs/test-model';
 import {OnInitEventExecutor} from '../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../events/on-finish-event-executor';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
 
 export type RequisitionRunnerCallback = () => void;
@@ -109,7 +109,7 @@ export class RequisitionReporter {
         Logger.info(`Start gathering reports`);
 
         if (error) {
-            Logger.debug(`Requisition error collected: ${new JavascriptObjectNotation().stringify(error)}`);
+            Logger.debug(`Requisition error collected: ${new Json().stringify(error)}`);
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setPublishersReport(this.multiPublishersReporter.getReport());

@@ -1,6 +1,6 @@
 import {Tester} from '../testers/tester';
 import {Assertion} from '../models/events/assertion';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 
 export class AssertionCodeGenerator {
     private testerInstanceName: string;
@@ -26,7 +26,7 @@ export class AssertionCodeGenerator {
         } catch (err) {
             return `;${this.testerInstanceName}.addTest({
                     errorDescription: \`Tester class does not recognize the pattern '
-                                ${new JavascriptObjectNotation().stringify(Object.keys(assertion))}'\`,
+                                ${new Json().stringify(Object.keys(assertion))}'\`,
                     valid: false,
                     label: 'Known assertion method'
                 });`;

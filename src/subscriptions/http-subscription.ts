@@ -6,7 +6,7 @@ import {HttpContainerPool} from '../pools/http-container-pool';
 import {TestModel} from '../models/outputs/test-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('http')
@@ -49,7 +49,7 @@ export class HttpSubscription extends Subscription {
     }
 
     public sendResponse(): Promise<void> {
-        Logger.trace(`${this.type} sending response: ${new JavascriptObjectNotation().stringify(this.response)}`);
+        Logger.trace(`${this.type} sending response: ${new Json().stringify(this.response)}`);
         try {
             this.responseToClientHandler.status(this.response.status).send(this.response.payload);
             Logger.debug(`${this.type} response sent`);
@@ -61,7 +61,7 @@ export class HttpSubscription extends Subscription {
 
     public onMessageReceivedTests(): TestModel[] {
         if (this.authentication && this.messageReceived) {
-            Logger.debug(`${this.type} authenticating message with ${new JavascriptObjectNotation().stringify(Object.keys(this.authentication))}`);
+            Logger.debug(`${this.type} authenticating message with ${new Json().stringify(Object.keys(this.authentication))}`);
             const verifier = Container.subclassesOf(HttpAuthentication).create(this.authentication);
             return verifier.verify(this.messageReceived.headers.authorization);
         }
@@ -95,7 +95,7 @@ export class HttpSubscription extends Subscription {
                 this.redirectCall(request)
                     .then((redirectionResponse: any) => {
                         Logger.trace(`${this.type}:${this.port} got redirection response: ` +
-                                    `${new JavascriptObjectNotation().stringify(redirectionResponse)}`);
+                                    `${new Json().stringify(redirectionResponse)}`);
                         this.response = {
                             status: redirectionResponse.statusCode,
                             payload: redirectionResponse.body,

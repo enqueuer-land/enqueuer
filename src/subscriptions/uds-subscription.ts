@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('uds')
@@ -22,7 +22,7 @@ export class UdsSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
+            this.response = new Json().stringify(subscriptionAttributes.response);
         }
     }
 
@@ -113,7 +113,7 @@ export class UdsSubscription extends Subscription {
 
     private stringifyPayload(payload: any): string | Buffer {
         if (typeof(payload) != 'string' && !Buffer.isBuffer(payload)) {
-            return new JavascriptObjectNotation().stringify(payload) as string;
+            return new Json().stringify(payload) as string;
         }
         return payload;
     }

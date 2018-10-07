@@ -1,18 +1,18 @@
 import {FileContentMapCreator} from "./file-content-map-creator";
-import {JavascriptObjectNotation} from "../object-notations/javascript-object-notation";
-import {YamlObjectNotation} from "../object-notations/yaml-object-notation";
+import {Json} from "../object-notations/json";
+import {Yaml} from "../object-notations/yaml";
 import * as fs from 'fs';
-import {DelimiterSeparatedValueObjectNotation} from "../object-notations/delimiter-separated-value-object-notation";
+import {Csv} from "../object-notations/csv";
 
-jest.mock('../object-notations/javascript-object-notation');
-jest.mock('../object-notations/yaml-object-notation');
-jest.mock('../object-notations/delimiter-separated-value-object-notation');
+jest.mock('../object-notations/json');
+jest.mock('../object-notations/yaml');
+jest.mock('../object-notations/csv');
 jest.mock('fs');
 describe('FileContentMapCreator', () => {
 
     it('Handle file not found', () => {
         const loadFromFileSyncMock = jest.fn(() => {throw 'err'});
-        JavascriptObjectNotation.mockImplementationOnce(() => {
+        Json.mockImplementationOnce(() => {
             return {
                 loadFromFileSync: loadFromFileSyncMock
             }
@@ -36,7 +36,7 @@ describe('FileContentMapCreator', () => {
     it('Load json tag', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
-        JavascriptObjectNotation.mockImplementationOnce(() => {
+        Json.mockImplementationOnce(() => {
             return {
                 loadFromFileSync: loadFromFileSyncMock
             }
@@ -60,7 +60,7 @@ describe('FileContentMapCreator', () => {
     it('Load yaml tag', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
-        YamlObjectNotation.mockImplementationOnce(() => {
+        Yaml.mockImplementationOnce(() => {
             return {
                 loadFromFileSync: loadFromFileSyncMock
             }
@@ -84,7 +84,7 @@ describe('FileContentMapCreator', () => {
     it('Load yml tag', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
-        YamlObjectNotation.mockImplementationOnce(() => {
+        Yaml.mockImplementationOnce(() => {
             return {
                 loadFromFileSync: loadFromFileSyncMock
             }
@@ -108,7 +108,7 @@ describe('FileContentMapCreator', () => {
     it('Load csv tag', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
-        DelimiterSeparatedValueObjectNotation.mockImplementationOnce(() => {
+        Csv.mockImplementationOnce(() => {
             return {
                 loadFromFileSync: loadFromFileSyncMock
             }
@@ -137,7 +137,7 @@ describe('FileContentMapCreator', () => {
                 loadFromFileSync: loadFromFileSyncMock
             }
         });
-        DelimiterSeparatedValueObjectNotation.mockImplementationOnce(delimiterConstructor);
+        Csv.mockImplementationOnce(delimiterConstructor);
 
         const tag = 'tsv';
         const filename = 'examples/file-content.yml';
@@ -178,7 +178,7 @@ describe('FileContentMapCreator', () => {
     it('Load each key just once', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
-        YamlObjectNotation.mockImplementationOnce(() => {
+        Yaml.mockImplementationOnce(() => {
             return {
                 loadFromFileSync: loadFromFileSyncMock
             }

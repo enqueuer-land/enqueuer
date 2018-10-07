@@ -3,7 +3,7 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import prettyjson from 'prettyjson';
 import {Logger} from '../loggers/logger';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const options = {
@@ -26,7 +26,7 @@ export class StandardOutputPublisher extends Publisher {
 
     public publish(): Promise<void> {
         if (typeof(this.payload) === 'object') {
-            this.payload = new JavascriptObjectNotation().stringify(this.payload);
+            this.payload = new Json().stringify(this.payload);
         }
         if (!this.pretty) {
             console.log(this.payload);
@@ -38,7 +38,7 @@ export class StandardOutputPublisher extends Publisher {
 
     private prettyfy(): any {
         try {
-            const parsed = new JavascriptObjectNotation().parse(this.payload);
+            const parsed = new Json().parse(this.payload);
             return prettyjson.render(parsed, options);
         } catch (err) {
             Logger.debug(`${this.type} can not prettyfy string`);

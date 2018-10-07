@@ -83,15 +83,21 @@ export class ProtocolManager {
     }
 
     private printDeepDescription(protocolToDescribe: string): void {
-        const result: any = {};
-        let tolerance = 10;
-        const checkDescriptionInsertion = (protocol: Protocol) => {
-            if (protocol.matches(protocolToDescribe, tolerance)) {
-                result[protocol.getName()] =  protocol.getProperties();
-            }
+        const result: any = {
+            publishers: {},
+            subscriptions: {}
         };
-        this.publishers.map(checkDescriptionInsertion);
-        this.subscriptions.map(checkDescriptionInsertion);
+        let tolerance = 20;
+        this.publishers.map((protocol: Protocol) => {
+            if (protocol.matches(protocolToDescribe, tolerance)) {
+                result.publishers[protocol.getName()] =  protocol.getProperties();
+            }
+        });
+        this.subscriptions.map((protocol: Protocol) => {
+            if (protocol.matches(protocolToDescribe, tolerance)) {
+                result.subscriptions[protocol.getName()] =  protocol.getProperties();
+            }
+        });
         if ((Object.keys(result)).length == 0) {
             console.log('Not supported protocol');
         } else {

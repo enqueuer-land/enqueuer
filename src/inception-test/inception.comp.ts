@@ -2,7 +2,7 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {ConfigurationValues} from "../configurations/configuration-values";
 import '../injectable-files-list'
 
@@ -116,7 +116,7 @@ describe('Inception test', () => {
                 findEveryJsonFile()
                     .filter(filename => filename.indexOf('_test.json') >= 0)
                     .forEach(filename => {
-                        testerReports[filename] = new JavascriptObjectNotation().loadFromFileSync(filename);
+                        testerReports[filename] = new Json().loadFromFileSync(filename);
                     });
 
                 console.log(Object.keys(testerReports));

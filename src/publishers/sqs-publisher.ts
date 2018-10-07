@@ -4,7 +4,7 @@ import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {SendMessageRequest, SendMessageResult} from 'aws-sdk/clients/sqs';
 import * as AWS from 'aws-sdk';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('sqs')
@@ -32,7 +32,7 @@ export class SqsPublisher extends Publisher {
                     return reject(`Error publishing to SQS: ${err}`);
                 } else {
                     this.messageReceived = data;
-                    Logger.trace(`SQS send message result: ${new JavascriptObjectNotation().stringify(data)}`);
+                    Logger.trace(`SQS send message result: ${new Json().stringify(data)}`);
                     return resolve();
                 }
             });

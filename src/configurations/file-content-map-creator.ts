@@ -1,6 +1,6 @@
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {YamlObjectNotation} from '../object-notations/yaml-object-notation';
-import {DelimiterSeparatedValueObjectNotation} from '../object-notations/delimiter-separated-value-object-notation';
+import {Json} from '../object-notations/json';
+import {Yaml} from '../object-notations/yaml';
+import {Csv} from '../object-notations/csv';
 import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
 
@@ -10,7 +10,7 @@ export class FileContentMapCreator {
 
     public createMap(value: object | string) {
         if (typeof value == 'string') {
-            this.checkChildren(new JavascriptObjectNotation().parse(value as string));
+            this.checkChildren(new Json().parse(value as string));
         } else {
             this.checkChildren(value);
         }
@@ -48,11 +48,11 @@ export class FileContentMapCreator {
                 const tag = key.substring(0, separator);
                 const filename = key.substring(separator + 3);
                 switch (tag) {
-                    case 'json': this.map[key] = new JavascriptObjectNotation().loadFromFileSync(filename); break;
-                    case 'yml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
-                    case 'yaml': this.map[key] = new YamlObjectNotation().loadFromFileSync(filename); break;
-                    case 'csv': this.map[key] = new DelimiterSeparatedValueObjectNotation().loadFromFileSync(filename); break;
-                    case 'tsv': this.map[key] = new DelimiterSeparatedValueObjectNotation('\t').loadFromFileSync(filename); break;
+                    case 'json': this.map[key] = new Json().loadFromFileSync(filename); break;
+                    case 'yml': this.map[key] = new Yaml().loadFromFileSync(filename); break;
+                    case 'yaml': this.map[key] = new Yaml().loadFromFileSync(filename); break;
+                    case 'csv': this.map[key] = new Csv().loadFromFileSync(filename); break;
+                    case 'tsv': this.map[key] = new Csv('\t').loadFromFileSync(filename); break;
                     default: this.map[key] = fs.readFileSync(filename).toString();
                 }
             }

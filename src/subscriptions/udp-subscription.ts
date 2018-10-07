@@ -3,7 +3,7 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as dgram from 'dgram';
 import {Logger} from '../loggers/logger';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('udp')
@@ -19,7 +19,7 @@ export class UdpSubscription extends Subscription {
         super(subscriptionAttributes);
 
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
+            this.response = new Json().stringify(subscriptionAttributes.response);
         }
     }
 

@@ -1,7 +1,7 @@
 import {EnqueuerExecutor} from './enqueuer-executor';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 
 @Injectable()
 export class NullRunExecutor extends EnqueuerExecutor {
@@ -10,7 +10,7 @@ export class NullRunExecutor extends EnqueuerExecutor {
     constructor(enqueuerConfiguration: any) {
         super();
         Logger.info('Executing in Not-Identified mode');
-        this.enqueuerConfiguration = new JavascriptObjectNotation().stringify(enqueuerConfiguration) as string;
+        this.enqueuerConfiguration = new Json().stringify(enqueuerConfiguration) as string;
     }
 
     public execute(): Promise<boolean> {

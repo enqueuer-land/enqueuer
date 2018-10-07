@@ -1,13 +1,13 @@
-import {YamlObjectNotation} from "./yaml-object-notation";
+import {Yaml} from "./yaml";
 
-describe('YamlObjectNotation', () => {
+describe('Yaml', () => {
 
     test('should stringify', () => {
         const value = {firstLevel: {secondLevel: 'value'}};
         const expected =    "firstLevel:\n" +
                             "  secondLevel: value\n";
 
-        const stringified = new YamlObjectNotation().stringify(value);
+        const stringified = new Yaml().stringify(value);
 
         expect(stringified).toBe(expected)
     });
@@ -18,13 +18,13 @@ describe('YamlObjectNotation', () => {
         const expected =    "firstLevel:\n" +
                             "  secondLevel: {}\n";
 
-        const stringified = new YamlObjectNotation().stringify(value);
+        const stringified = new Yaml().stringify(value);
 
         expect(stringified).toBe(expected)
     });
 
     test('should stringify undefined objects', () => {
-        const stringified = new YamlObjectNotation().stringify(undefined);
+        const stringified = new Yaml().stringify(undefined);
 
         expect(stringified).toBe('{}');
     });
@@ -34,7 +34,7 @@ describe('YamlObjectNotation', () => {
                          "  secondLevel: value\n";
         const expected = {firstLevel: {secondLevel: 'value'}};
 
-        const parsed = new YamlObjectNotation().parse(value);
+        const parsed = new Yaml().parse(value);
 
         expect(parsed).toEqual(expected)
     });

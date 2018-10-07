@@ -12,6 +12,7 @@ type Library = {
 export class Protocol {
     private readonly name: string;
     private alternativeNames: string[] = [];
+    private usage?: string;
     private library?: Library;
 
     public constructor(name: string) {
@@ -33,7 +34,15 @@ export class Protocol {
                 version: this.library.version
             };
         }
+        if (this.usage) {
+            properties.usage = this.usage;
+        }
         return properties;
+    }
+
+    public addUsage(usage: string): Protocol {
+        this.usage = usage;
+        return this;
     }
 
     public addAlternativeName(...alternativeNames: string[]): Protocol {

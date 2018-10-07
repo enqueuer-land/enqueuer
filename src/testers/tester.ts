@@ -12,11 +12,11 @@ export class Tester {
         this.report.push(test);
     }
 
-    private addTestModel(label: string, valid: boolean, description: string): void {
+    private addTestModel(label: string, valid: boolean, errorDescription: string): void {
         this.report.push({
             label: label,
             valid: valid,
-            errorDescription: description
+            errorDescription: errorDescription
         });
     }
 

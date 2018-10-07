@@ -4,7 +4,7 @@ import * as net from 'net';
 import {Injectable} from 'conditional-injector';
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('uds')
@@ -61,7 +61,7 @@ export class UdsPublisher extends Publisher {
 
     private stringifyPayload() {
         if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            return new JavascriptObjectNotation().stringify(this.payload);
+            return new Json().stringify(this.payload);
         }
         return this.payload;
     }

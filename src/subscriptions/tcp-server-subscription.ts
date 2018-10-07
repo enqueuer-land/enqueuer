@@ -5,7 +5,7 @@ import * as net from 'net';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
-import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
+import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('tcp')
@@ -21,7 +21,7 @@ export class TcpServerSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = new JavascriptObjectNotation().stringify(subscriptionAttributes.response);
+            this.response = new Json().stringify(subscriptionAttributes.response);
         }
     }
 

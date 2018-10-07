@@ -1,6 +1,6 @@
 import {IdGenerator} from "./id-generator";
 import {createHash } from "crypto"
-import {JavascriptObjectNotation} from "../object-notations/javascript-object-notation";
+import {Json} from "../object-notations/json";
 import {DateController} from "../timers/date-controller";
 
 jest.mock("../timers/date-controller");
@@ -38,7 +38,7 @@ describe('IdGenerator', () => {
             }
         };
         const hash = createHash('sha256');
-        hash.update(new JavascriptObjectNotation().stringify(value), 'utf8');
+        hash.update(new Json().stringify(value), 'utf8');
         const coded: string = hash.digest('hex');
 
         const idGenerator: IdGenerator = new IdGenerator(value);
