@@ -5,13 +5,13 @@ import {Injectable} from 'conditional-injector';
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager.getInstance()
-    .insertPublisherProtocol('uds', ['uds-client']);
+const protocol = new Protocol('uds')
+    .addAlternativeName('uds-client')
+    .registerAsPublisher();
 
-@Injectable({predicate: (publish: any) => protocol
-        .matches(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class UdsPublisher extends Publisher {
 
     private stream: any;

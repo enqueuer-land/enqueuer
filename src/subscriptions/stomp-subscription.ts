@@ -3,15 +3,15 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
+
 const Stomp = require('stomp-client');
 
-const protocol = ProtocolManager
-    .getInstance()
-    .insertSubscriptionProtocol('stomp',
-        [],
-        'stomp-client');
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
+const protocol = new Protocol('stomp')
+    .setLibrary('stomp-client')
+    .registerAsSubscription();
+
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class StompSubscription extends Subscription {
     private client: any;
 

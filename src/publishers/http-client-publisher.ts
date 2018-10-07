@@ -4,13 +4,12 @@ import {Container, Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager
-    .getInstance()
-    .insertPublisherProtocol('http', ['http-client', 'https', 'https-client']);
-@Injectable({predicate: (publish: any) => protocol
-        .matches(publish.type, 95)})
+const protocol = new Protocol('http').addAlternativeName('http-client', 'https', 'https-client')
+    .registerAsPublisher();
+
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class HttpClientPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {

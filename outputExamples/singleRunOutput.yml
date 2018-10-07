@@ -18,9 +18,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.329Z'
-          endTime: '2018-10-06T23:53:22.400Z'
-          totalTime: 71
+          startTime: '2018-10-07T16:25:03.279Z'
+          endTime: '2018-10-07T16:25:03.348Z'
+          totalTime: 69
         requisitions: []
   -
     name: examples/file-placeholder.yml
@@ -58,9 +58,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.329Z'
-          endTime: '2018-10-06T23:53:22.401Z'
-          totalTime: 72
+          startTime: '2018-10-07T16:25:03.280Z'
+          endTime: '2018-10-07T16:25:03.348Z'
+          totalTime: 68
         requisitions: []
       -
         valid: true
@@ -73,8 +73,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.430Z'
-          endTime: '2018-10-06T23:53:22.430Z'
+          startTime: '2018-10-07T16:25:03.383Z'
+          endTime: '2018-10-07T16:25:03.383Z'
           totalTime: 0
         requisitions: []
   -
@@ -89,9 +89,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.383Z'
-          endTime: '2018-10-06T23:53:22.425Z'
-          totalTime: 42
+          startTime: '2018-10-07T16:25:03.335Z'
+          endTime: '2018-10-07T16:25:03.375Z'
+          totalTime: 40
         requisitions:
           -
             valid: true
@@ -100,9 +100,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.383Z'
-              endTime: '2018-10-06T23:53:22.401Z'
-              totalTime: 18
+              startTime: '2018-10-07T16:25:03.335Z'
+              endTime: '2018-10-07T16:25:03.348Z'
+              totalTime: 13
             requisitions: []
           -
             valid: true
@@ -115,8 +115,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.419Z'
-              endTime: '2018-10-06T23:53:22.419Z'
+              startTime: '2018-10-07T16:25:03.369Z'
+              endTime: '2018-10-07T16:25:03.369Z'
               totalTime: 0
             requisitions: []
           -
@@ -130,8 +130,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.425Z'
-              endTime: '2018-10-06T23:53:22.425Z'
+              startTime: '2018-10-07T16:25:03.374Z'
+              endTime: '2018-10-07T16:25:03.374Z'
               totalTime: 0
             requisitions: []
           -
@@ -145,8 +145,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.425Z'
-              endTime: '2018-10-06T23:53:22.425Z'
+              startTime: '2018-10-07T16:25:03.374Z'
+              endTime: '2018-10-07T16:25:03.374Z'
               totalTime: 0
             requisitions: []
           -
@@ -160,8 +160,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.425Z'
-              endTime: '2018-10-06T23:53:22.425Z'
+              startTime: '2018-10-07T16:25:03.375Z'
+              endTime: '2018-10-07T16:25:03.375Z'
               totalTime: 0
             requisitions: []
       -
@@ -175,8 +175,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.430Z'
-          endTime: '2018-10-06T23:53:22.430Z'
+          startTime: '2018-10-07T16:25:03.383Z'
+          endTime: '2018-10-07T16:25:03.383Z'
           totalTime: 0
         requisitions: []
   -
@@ -191,9 +191,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.392Z'
-          endTime: '2018-10-06T23:53:22.401Z'
-          totalTime: 9
+          startTime: '2018-10-07T16:25:03.341Z'
+          endTime: '2018-10-07T16:25:03.348Z'
+          totalTime: 7
         requisitions: []
       -
         valid: true
@@ -206,8 +206,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.430Z'
-          endTime: '2018-10-06T23:53:22.430Z'
+          startTime: '2018-10-07T16:25:03.383Z'
+          endTime: '2018-10-07T16:25:03.383Z'
           totalTime: 0
         requisitions: []
       -
@@ -221,8 +221,66 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.433Z'
-          endTime: '2018-10-06T23:53:22.433Z'
+          startTime: '2018-10-07T16:25:03.388Z'
+          endTime: '2018-10-07T16:25:03.389Z'
+          totalTime: 1
+        requisitions: []
+  -
+    name: examples/recursion.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        name: 'Requisition #0'
+        valid: true
+        tests: []
+        requisitions:
+          -
+            name: 'Requisition #0'
+            valid: true
+            tests: []
+            requisitions:
+              -
+                name: 'Requisition #0'
+                valid: true
+                tests: []
+                requisitions:
+                  - {valid: true, tests: [], name: 'Requisition #0', subscriptions: [], publishers: [], time: {startTime: '2018-10-07T16:25:03.334Z', endTime: '2018-10-07T16:25:03.348Z', totalTime: 14}, requisitions: []}
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-07T16:25:03.383Z'
+                  endTime: '2018-10-07T16:25:03.383Z'
+                  totalTime: 0
+                requisitions: []
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-07T16:25:03.391Z'
+              endTime: '2018-10-07T16:25:03.391Z'
+              totalTime: 0
+            requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'Last one was executed'
+            valid: true
+            description: 'Expect ''store.lastExecution'' to be defined'
+        name: 'Requisition #0'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-07T16:25:03.413Z'
+          endTime: '2018-10-07T16:25:03.413Z'
           totalTime: 0
         requisitions: []
   -
@@ -246,11 +304,11 @@ requisitions:
               -
                 name: 'Some time has passed'
                 valid: true
-                description: 'Expected ''now'' to be greater than or equal to ''1538870002329''. Received ''1538870002468'''
+                description: 'Expected ''now'' to be greater than or equal to ''1538929491023''. Received ''1538929503417'''
               -
                 name: Filename
                 valid: true
-                description: 'Expecting ''name'' (temp/fileTest20181006205322040223_a231d8c6.file) to contain ''temp/'''
+                description: 'Expecting ''name'' (temp/fileTest20181007132451009692_a7a76201.file) to contain ''temp/'''
               -
                 name: Content
                 valid: true
@@ -272,13 +330,13 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.399Z'
+            connectionTime: '2018-10-07T16:25:03.346Z'
             messageReceived:
-              content: '1538870002329'
-              name: temp/fileTest20181006205322040223_a231d8c6.file
+              content: '1538929491023'
+              name: temp/fileTest20181007132451009692_a7a76201.file
               size: 13
-              modified: '2018-10-06T23:53:22.402Z'
-              created: '2018-10-06T23:53:22.402Z'
+              modified: '2018-10-07T16:24:51.097Z'
+              created: '2018-10-07T16:24:51.097Z'
         publishers:
           -
             name: 'publisher description'
@@ -289,70 +347,12 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:22.415Z'
+            publishTime: '2018-10-07T16:25:03.367Z'
         time:
-          startTime: '2018-10-06T23:53:22.329Z'
-          endTime: '2018-10-06T23:53:22.469Z'
-          totalTime: 140
+          startTime: '2018-10-07T16:25:03.282Z'
+          endTime: '2018-10-07T16:25:03.418Z'
+          totalTime: 136
           timeout: 3000
-        requisitions: []
-  -
-    name: examples/recursion.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        name: 'Requisition #0'
-        valid: true
-        tests: []
-        requisitions:
-          -
-            name: 'Requisition #0'
-            valid: true
-            tests: []
-            requisitions:
-              -
-                name: 'Requisition #0'
-                valid: true
-                tests: []
-                requisitions:
-                  - {valid: true, tests: [], name: 'Requisition #0', subscriptions: [], publishers: [], time: {startTime: '2018-10-06T23:53:22.382Z', endTime: '2018-10-06T23:53:22.401Z', totalTime: 19}, requisitions: []}
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0'
-                subscriptions: []
-                publishers: []
-                time:
-                  startTime: '2018-10-06T23:53:22.430Z'
-                  endTime: '2018-10-06T23:53:22.430Z'
-                  totalTime: 0
-                requisitions: []
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0'
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2018-10-06T23:53:22.460Z'
-              endTime: '2018-10-06T23:53:22.461Z'
-              totalTime: 1
-            requisitions: []
-      -
-        valid: true
-        tests:
-          -
-            name: 'Last one was executed'
-            valid: true
-            description: 'Expect ''store.lastExecution'' to be defined'
-        name: 'Requisition #0'
-        subscriptions: []
-        publishers: []
-        time:
-          startTime: '2018-10-06T23:53:22.474Z'
-          endTime: '2018-10-06T23:53:22.474Z'
-          totalTime: 0
         requisitions: []
   -
     name: examples/stdin.yml
@@ -377,13 +377,13 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.399Z'
+            connectionTime: '2018-10-07T16:25:03.346Z'
             messageReceived: 'enqueuer standard-input payload'
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.390Z'
-          endTime: '2018-10-06T23:53:22.478Z'
-          totalTime: 88
+          startTime: '2018-10-07T16:25:03.339Z'
+          endTime: '2018-10-07T16:25:03.421Z'
+          totalTime: 82
         requisitions: []
   -
     name: examples/udp.yml
@@ -412,7 +412,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.399Z'
+            connectionTime: '2018-10-07T16:25:03.346Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -422,7 +422,7 @@ requisitions:
               remoteInfo:
                 address: 127.0.0.1
                 family: IPv4
-                port: 52316
+                port: 60610
                 size: 2
         publishers:
           -
@@ -434,11 +434,11 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:22.477Z'
+            publishTime: '2018-10-07T16:25:03.420Z'
         time:
-          startTime: '2018-10-06T23:53:22.394Z'
-          endTime: '2018-10-06T23:53:22.495Z'
-          totalTime: 101
+          startTime: '2018-10-07T16:25:03.342Z'
+          endTime: '2018-10-07T16:25:03.426Z'
+          totalTime: 84
         requisitions: []
   -
     name: examples/sqs.yml
@@ -479,10 +479,10 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.399Z'
+            connectionTime: '2018-10-07T16:25:03.346Z'
             messageReceived:
-              MessageId: 899bf86c-948f-4509-8f1f-fbe9ba925d37
-              ReceiptHandle: '899bf86c-948f-4509-8f1f-fbe9ba925d37#9c950916-368d-455b-9653-d931e68cd173'
+              MessageId: 66d9a1fa-9e20-4be4-bc5b-fa9371578128
+              ReceiptHandle: '66d9a1fa-9e20-4be4-bc5b-fa9371578128#afd630d7-3a8d-4fd6-91ac-bc1bb4c7c7a4'
               MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
               Body: enqueuer
         publishers:
@@ -519,17 +519,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.583Z'
+            publishTime: '2018-10-07T16:25:03.492Z'
             messageReceived:
               ResponseMetadata:
                 RequestId: 00000000-0000-0000-0000-000000000000
               MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
               MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
-              MessageId: 2de09e46-76da-44b7-9fd4-5ca00bbf03e5
+              MessageId: 8d8386cc-8f83-4774-a945-e46ef76767d3
         time:
-          startTime: '2018-10-06T23:53:22.390Z'
-          endTime: '2018-10-06T23:53:22.586Z'
-          totalTime: 196
+          startTime: '2018-10-07T16:25:03.338Z'
+          endTime: '2018-10-07T16:25:03.492Z'
+          totalTime: 154
           timeout: 5000
         requisitions: []
   -
@@ -579,7 +579,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.400Z'
+            connectionTime: '2018-10-07T16:25:03.348Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -632,17 +632,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.603Z'
+            publishTime: '2018-10-07T16:25:03.524Z'
             messageReceived:
               payload: 'hook response'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 60171
+                port: 63076
         time:
-          startTime: '2018-10-06T23:53:22.331Z'
-          endTime: '2018-10-06T23:53:22.604Z'
-          totalTime: 273
+          startTime: '2018-10-07T16:25:03.284Z'
+          endTime: '2018-10-07T16:25:03.524Z'
+          totalTime: 240
           timeout: 2000
         requisitions: []
   -
@@ -688,7 +688,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.418Z'
+            connectionTime: '2018-10-07T16:25:03.368Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -717,7 +717,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.607Z'
+            publishTime: '2018-10-07T16:25:03.534Z'
             messageReceived:
               statusCode: 200
               body: 'basic auth response'
@@ -726,7 +726,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '19'
                 etag: 'W/"13-nGN7LEwCUKXpQoLxNqKZXSglYNc"'
-                date: 'Sat, 06 Oct 2018 23:53:22 GMT'
+                date: 'Sun, 07 Oct 2018 16:25:03 GMT'
                 connection: close
               request:
                 uri:
@@ -748,9 +748,9 @@ requisitions:
                   authorization: 'Basic dXNlcjpwYXNzd29yZA=='
                   Content-Length: 10
         time:
-          startTime: '2018-10-06T23:53:22.332Z'
-          endTime: '2018-10-06T23:53:22.607Z'
-          totalTime: 275
+          startTime: '2018-10-07T16:25:03.285Z'
+          endTime: '2018-10-07T16:25:03.534Z'
+          totalTime: 249
           timeout: 3000
         requisitions: []
   -
@@ -792,7 +792,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.418Z'
+            connectionTime: '2018-10-07T16:25:03.368Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -821,7 +821,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.609Z'
+            publishTime: '2018-10-07T16:25:03.537Z'
             messageReceived:
               statusCode: 321
               body: responsePayload
@@ -830,7 +830,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '15'
                 etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-                date: 'Sat, 06 Oct 2018 23:53:22 GMT'
+                date: 'Sun, 07 Oct 2018 16:25:03 GMT'
                 connection: close
               request:
                 uri:
@@ -852,9 +852,9 @@ requisitions:
                   authorization: 'Bearer bearerToken'
                   Content-Length: 4
         time:
-          startTime: '2018-10-06T23:53:22.335Z'
-          endTime: '2018-10-06T23:53:22.610Z'
-          totalTime: 275
+          startTime: '2018-10-07T16:25:03.290Z'
+          endTime: '2018-10-07T16:25:03.537Z'
+          totalTime: 247
           timeout: 3000
         requisitions: []
   -
@@ -884,7 +884,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.400Z'
+            connectionTime: '2018-10-07T16:25:03.383Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -915,13 +915,13 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.513Z'
+            publishTime: '2018-10-07T16:25:03.455Z'
             messageReceived:
               payload: responsePayload
         time:
-          startTime: '2018-10-06T23:53:22.395Z'
-          endTime: '2018-10-06T23:53:22.514Z'
-          totalTime: 119
+          startTime: '2018-10-07T16:25:03.382Z'
+          endTime: '2018-10-07T16:25:03.456Z'
+          totalTime: 74
           timeout: 3000
         requisitions: []
       -
@@ -942,7 +942,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.551Z'
+            connectionTime: '2018-10-07T16:25:03.466Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -969,13 +969,13 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:22.619Z'
+            publishTime: '2018-10-07T16:25:03.552Z'
             messageReceived:
               payload: '{}'
         time:
-          startTime: '2018-10-06T23:53:22.550Z'
-          endTime: '2018-10-06T23:53:22.619Z'
-          totalTime: 69
+          startTime: '2018-10-07T16:25:03.465Z'
+          endTime: '2018-10-07T16:25:03.553Z'
+          totalTime: 88
         requisitions: []
       -
         valid: true
@@ -995,7 +995,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.621Z'
+            connectionTime: '2018-10-07T16:25:03.555Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1035,13 +1035,13 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.626Z'
+            publishTime: '2018-10-07T16:25:03.562Z'
             messageReceived:
               payload: 'I am still bidirectional'
         time:
-          startTime: '2018-10-06T23:53:22.621Z'
-          endTime: '2018-10-06T23:53:22.627Z'
-          totalTime: 6
+          startTime: '2018-10-07T16:25:03.555Z'
+          endTime: '2018-10-07T16:25:03.562Z'
+          totalTime: 7
         requisitions: []
   -
     name: examples/https.yml
@@ -1070,7 +1070,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.418Z'
+            connectionTime: '2018-10-07T16:25:03.368Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1102,7 +1102,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.631Z'
+            publishTime: '2018-10-07T16:25:03.585Z'
             messageReceived:
               statusCode: 200
               body: https
@@ -1111,7 +1111,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '5'
                 etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-                date: 'Sat, 06 Oct 2018 23:53:22 GMT'
+                date: 'Sun, 07 Oct 2018 16:25:03 GMT'
                 connection: close
               request:
                 uri:
@@ -1132,9 +1132,9 @@ requisitions:
                   content-type: application/json
                   Content-Length: 23
         time:
-          startTime: '2018-10-06T23:53:22.338Z'
-          endTime: '2018-10-06T23:53:22.631Z'
-          totalTime: 293
+          startTime: '2018-10-07T16:25:03.294Z'
+          endTime: '2018-10-07T16:25:03.585Z'
+          totalTime: 291
           timeout: 3000
         requisitions: []
   -
@@ -1184,7 +1184,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.418Z'
+            connectionTime: '2018-10-07T16:25:03.368Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1235,7 +1235,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.418Z'
+            connectionTime: '2018-10-07T16:25:03.368Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1270,7 +1270,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.639Z'
+            publishTime: '2018-10-07T16:25:03.588Z'
             messageReceived:
               statusCode: 333
               body: responsePayload
@@ -1279,7 +1279,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '15'
                 etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-                date: 'Sat, 06 Oct 2018 23:53:22 GMT'
+                date: 'Sun, 07 Oct 2018 16:25:03 GMT'
                 connection: close
               request:
                 uri:
@@ -1301,9 +1301,122 @@ requisitions:
                   authorization: 'Basic dXNlcjpwYXNzd29yZA=='
                   Content-Length: 21
         time:
-          startTime: '2018-10-06T23:53:22.337Z'
-          endTime: '2018-10-06T23:53:22.639Z'
-          totalTime: 302
+          startTime: '2018-10-07T16:25:03.292Z'
+          endTime: '2018-10-07T16:25:03.588Z'
+          totalTime: 296
+        requisitions: []
+  -
+    name: examples/stomp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: stomp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-07T16:25:03.500Z'
+            messageReceived:
+              payload: stompQueue
+              headers:
+                destination: /queue/stompQueue
+                message-id: Q_/queue/stompQueue@@session-EjywOQbw-sfa0ycRgKhGFw@@1
+                redelivered: 'false'
+                content-length: '10'
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: stomp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-07T16:25:03.591Z'
+        time:
+          startTime: '2018-10-07T16:25:03.340Z'
+          endTime: '2018-10-07T16:25:03.603Z'
+          totalTime: 263
+          timeout: 3000
+        requisitions: []
+  -
+    name: examples/mqtt.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: mqtt
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+              -
+                name: Topic
+                valid: true
+                description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+              -
+                name: 'Beatles song'
+                valid: true
+                description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-07T16:25:03.527Z'
+            messageReceived:
+              topic: enqueuer/integration/public/test
+              payload:
+                type: Buffer
+                data:
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: mqtt
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-07T16:25:03.594Z'
+        time:
+          startTime: '2018-10-07T16:25:03.316Z'
+          endTime: '2018-10-07T16:25:03.606Z'
+          totalTime: 290
         requisitions: []
   -
     name: examples/kafka.yml
@@ -1348,15 +1461,15 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.634Z'
+            connectionTime: '2018-10-07T16:25:03.579Z'
             messageReceived:
               topic: enqueuer-topic-name
               value: kafkaPayload
-              offset: 15
+              offset: 19
               partition: 0
-              highWaterOffset: 16
+              highWaterOffset: 20
               key: null
-              timestamp: '2018-10-06T23:53:22.637Z'
+              timestamp: '2018-10-07T16:25:03.582Z'
         publishers:
           -
             name: 'Publisher #0'
@@ -1375,12 +1488,12 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.665Z'
-            messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 15\n  }\n}"
+            publishTime: '2018-10-07T16:25:03.624Z'
+            messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 19\n  }\n}"
         time:
-          startTime: '2018-10-06T23:53:22.364Z'
-          endTime: '2018-10-06T23:53:22.666Z'
-          totalTime: 302
+          startTime: '2018-10-07T16:25:03.315Z'
+          endTime: '2018-10-07T16:25:03.636Z'
+          totalTime: 321
           timeout: 8000
         requisitions: []
   -
@@ -1446,7 +1559,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.700Z'
+            connectionTime: '2018-10-07T16:25:03.645Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1475,7 +1588,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.707Z'
+            publishTime: '2018-10-07T16:25:03.653Z'
             messageReceived:
               statusCode: 321
               body: responsePayload
@@ -1484,7 +1597,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '15'
                 etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-                date: 'Sat, 06 Oct 2018 23:53:22 GMT'
+                date: 'Sun, 07 Oct 2018 16:25:03 GMT'
                 connection: close
               request:
                 uri:
@@ -1506,10 +1619,159 @@ requisitions:
                   authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
                   Content-Length: 4
         time:
-          startTime: '2018-10-06T23:53:22.336Z'
-          endTime: '2018-10-06T23:53:22.708Z'
-          totalTime: 372
+          startTime: '2018-10-07T16:25:03.291Z'
+          endTime: '2018-10-07T16:25:03.653Z'
+          totalTime: 362
           timeout: 3000
+        requisitions: []
+  -
+    name: examples/amqp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'creating exchange'
+        subscriptions: []
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-07T16:25:03.598Z'
+        time:
+          startTime: '2018-10-07T16:25:03.276Z'
+          endTime: '2018-10-07T16:25:03.598Z'
+          totalTime: 322
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'using just created exchange'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: amqp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
+              -
+                name: Header
+                valid: true
+                description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
+              -
+                name: 'Other Header Value'
+                valid: true
+                description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
+              -
+                name: 'Routing Key'
+                valid: true
+                description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-07T16:25:03.655Z'
+            messageReceived:
+              payload:
+                how:
+                  about: 'a new object?'
+              headers:
+                key: value
+                otherKey: otherValue
+              deliveryInfo:
+                contentType: application/json
+                headers:
+                  key: value
+                  otherKey: otherValue
+                queue: y67bASHS
+                deliveryTag:
+                  type: Buffer
+                  data: [0, 0, 0, 0, 0, 0, 0, 1]
+                redelivered: false
+                exchange: enqueuer.exchange
+                routingKey: enqueuer.integration.test.routing.key
+                consumerTag: node-amqp-92154-0.7104806324314279
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-07T16:25:03.676Z'
+        time:
+          startTime: '2018-10-07T16:25:03.613Z'
+          endTime: '2018-10-07T16:25:03.678Z'
+          totalTime: 65
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'default exhange'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-07T16:25:03.689Z'
+            messageReceived:
+              payload:
+                data:
+                  type: Buffer
+                  data: [100, 101, 102, 97, 117, 108, 116, 32, 101, 120, 99, 104, 97, 110, 103, 101]
+                contentType: application/octet-stream
+              headers: {}
+              deliveryInfo:
+                contentType: application/octet-stream
+                queue: enqueuer.default.exchange
+                deliveryTag:
+                  type: Buffer
+                  data: [0, 0, 0, 0, 0, 0, 0, 1]
+                redelivered: false
+                exchange: ""
+                routingKey: enqueuer.default.exchange
+                consumerTag: node-amqp-92154-0.1802148911960717
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-07T16:25:03.707Z'
+        time:
+          startTime: '2018-10-07T16:25:03.680Z'
+          endTime: '2018-10-07T16:25:03.707Z'
+          totalTime: 27
         requisitions: []
   -
     name: examples/parallel-sub.yml
@@ -1538,7 +1800,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.400Z'
+            connectionTime: '2018-10-07T16:25:03.348Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1557,9 +1819,9 @@ requisitions:
                 port: 23081
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.382Z'
-          endTime: '2018-10-06T23:53:22.825Z'
-          totalTime: 443
+          startTime: '2018-10-07T16:25:03.334Z'
+          endTime: '2018-10-07T16:25:03.783Z'
+          totalTime: 449
           timeout: 3000
         requisitions: []
   -
@@ -1594,16 +1856,16 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.825Z'
+            publishTime: '2018-10-07T16:25:03.784Z'
             messageReceived:
               payload: anyValue
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 60185
+                port: 63096
         time:
-          startTime: '2018-10-06T23:53:22.823Z'
-          endTime: '2018-10-06T23:53:22.826Z'
+          startTime: '2018-10-07T16:25:03.781Z'
+          endTime: '2018-10-07T16:25:03.784Z'
           totalTime: 3
           timeout: 3000
         requisitions: []
@@ -1638,7 +1900,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.400Z'
+            connectionTime: '2018-10-07T16:25:03.348Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1673,17 +1935,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.605Z'
+            publishTime: '2018-10-07T16:25:03.526Z'
             messageReceived:
               payload: 'Do not make it bad'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 60172
+                port: 63077
         time:
-          startTime: '2018-10-06T23:53:22.393Z'
-          endTime: '2018-10-06T23:53:22.605Z'
-          totalTime: 212
+          startTime: '2018-10-07T16:25:03.342Z'
+          endTime: '2018-10-07T16:25:03.526Z'
+          totalTime: 184
           timeout: 3000
         requisitions: []
       -
@@ -1708,7 +1970,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.616Z'
+            connectionTime: '2018-10-07T16:25:03.548Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1748,17 +2010,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:23.430Z'
+            publishTime: '2018-10-07T16:25:04.371Z'
             messageReceived:
               payload: EnqueuerRocks
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 60180
+                port: 63087
         time:
-          startTime: '2018-10-06T23:53:22.614Z'
-          endTime: '2018-10-06T23:53:23.430Z'
-          totalTime: 816
+          startTime: '2018-10-07T16:25:03.545Z'
+          endTime: '2018-10-07T16:25:04.372Z'
+          totalTime: 827
           timeout: 3000
         requisitions: []
       -
@@ -1783,7 +2045,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:23.433Z'
+            connectionTime: '2018-10-07T16:25:04.375Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -1830,276 +2092,14 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:23.434Z'
+            publishTime: '2018-10-07T16:25:04.376Z'
             messageReceived:
               payload: 'enqueuer Rocks'
         time:
-          startTime: '2018-10-06T23:53:23.433Z'
-          endTime: '2018-10-06T23:53:23.434Z'
-          totalTime: 1
+          startTime: '2018-10-07T16:25:04.375Z'
+          endTime: '2018-10-07T16:25:04.377Z'
+          totalTime: 2
           timeout: 3000
-        requisitions: []
-  -
-    name: examples/stomp.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        valid: true
-        tests:
-          -
-            valid: true
-            name: 'No time out'
-            description: 'Requisition has not timed out'
-        name: 'Requisition #0'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: stomp
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-06T23:53:23.476Z'
-            messageReceived:
-              payload: stompQueue
-              headers:
-                destination: /queue/stompQueue
-                message-id: Q_/queue/stompQueue@@session-PNR0XL_fewCCAo4aorbWNw@@1
-                redelivered: 'false'
-                content-length: '10'
-        publishers:
-          -
-            name: 'publisher description'
-            valid: true
-            type: stomp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:23.500Z'
-        time:
-          startTime: '2018-10-06T23:53:22.391Z'
-          endTime: '2018-10-06T23:53:23.502Z'
-          totalTime: 1111
-          timeout: 3000
-        requisitions: []
-  -
-    name: examples/mqtt.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0'
-        subscriptions:
-          -
-            name: 'subscription description'
-            type: mqtt
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
-              -
-                name: Topic
-                valid: true
-                description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
-              -
-                name: 'Beatles song'
-                valid: true
-                description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-06T23:53:23.490Z'
-            messageReceived:
-              topic: enqueuer/integration/public/test
-              payload:
-                type: Buffer
-                data:
-                  - 101
-                  - 110
-                  - 113
-                  - 117
-                  - 101
-                  - 117
-                  - 101
-                  - 114
-        publishers:
-          -
-            name: 'publisher description'
-            valid: true
-            type: mqtt
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:23.501Z'
-        time:
-          startTime: '2018-10-06T23:53:22.365Z'
-          endTime: '2018-10-06T23:53:23.504Z'
-          totalTime: 1139
-        requisitions: []
-  -
-    name: examples/amqp.yml
-    valid: true
-    tests: []
-    requisitions:
-      -
-        valid: true
-        tests: []
-        name: 'creating exchange'
-        subscriptions: []
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:23.489Z'
-        time:
-          startTime: '2018-10-06T23:53:22.326Z'
-          endTime: '2018-10-06T23:53:23.489Z'
-          totalTime: 1163
-        requisitions: []
-      -
-        valid: true
-        tests: []
-        name: 'using just created exchange'
-        subscriptions:
-          -
-            name: 'Subscription #0'
-            type: amqp
-            tests:
-              -
-                name: Payload
-                valid: true
-                description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
-              -
-                name: Header
-                valid: true
-                description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
-              -
-                name: 'Other Header Value'
-                valid: true
-                description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
-              -
-                name: 'Routing Key'
-                valid: true
-                description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-06T23:53:23.507Z'
-            messageReceived:
-              payload:
-                how:
-                  about: 'a new object?'
-              headers:
-                key: value
-                otherKey: otherValue
-              deliveryInfo:
-                contentType: application/json
-                headers:
-                  key: value
-                  otherKey: otherValue
-                queue: ebMMClz6
-                deliveryTag:
-                  type: Buffer
-                  data: [0, 0, 0, 0, 0, 0, 0, 1]
-                redelivered: false
-                exchange: enqueuer.exchange
-                routingKey: enqueuer.integration.test.routing.key
-                consumerTag: node-amqp-59055-0.7876559120881284
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:23.513Z'
-        time:
-          startTime: '2018-10-06T23:53:23.492Z'
-          endTime: '2018-10-06T23:53:23.513Z'
-          totalTime: 21
-        requisitions: []
-      -
-        valid: true
-        tests: []
-        name: 'default exhange'
-        subscriptions:
-          -
-            name: 'Subscription #0'
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-10-06T23:53:23.526Z'
-            messageReceived:
-              payload:
-                data:
-                  type: Buffer
-                  data: [100, 101, 102, 97, 117, 108, 116, 32, 101, 120, 99, 104, 97, 110, 103, 101]
-                contentType: application/octet-stream
-              headers: {}
-              deliveryInfo:
-                contentType: application/octet-stream
-                queue: enqueuer.default.exchange
-                deliveryTag:
-                  type: Buffer
-                  data: [0, 0, 0, 0, 0, 0, 0, 1]
-                redelivered: false
-                exchange: ""
-                routingKey: enqueuer.default.exchange
-                consumerTag: node-amqp-59055-0.9837732234736527
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-10-06T23:53:23.532Z'
-        time:
-          startTime: '2018-10-06T23:53:23.515Z'
-          endTime: '2018-10-06T23:53:23.533Z'
-          totalTime: 18
         requisitions: []
   -
     name: examples/avoid.yml
@@ -2120,12 +2120,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.400Z'
+            connectionTime: '2018-10-07T16:25:03.348Z'
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.326Z'
-          endTime: '2018-10-06T23:53:24.333Z'
-          totalTime: 2007
+          startTime: '2018-10-07T16:25:03.277Z'
+          endTime: '2018-10-07T16:25:05.280Z'
+          totalTime: 2003
         requisitions: []
   -
     name: examples/http.yml
@@ -2162,7 +2162,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.418Z'
+            connectionTime: '2018-10-07T16:25:03.368Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -2196,7 +2196,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.611Z'
+            publishTime: '2018-10-07T16:25:03.539Z'
             messageReceived:
               statusCode: 321
               body: 'dynamically changed payload'
@@ -2205,7 +2205,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '27'
                 etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-                date: 'Sat, 06 Oct 2018 23:53:22 GMT'
+                date: 'Sun, 07 Oct 2018 16:25:03 GMT'
                 connection: close
               request:
                 uri:
@@ -2226,9 +2226,9 @@ requisitions:
                   content-type: application/json
                   Content-Length: 25
         time:
-          startTime: '2018-10-06T23:53:22.338Z'
-          endTime: '2018-10-06T23:53:22.611Z'
-          totalTime: 273
+          startTime: '2018-10-07T16:25:03.293Z'
+          endTime: '2018-10-07T16:25:03.540Z'
+          totalTime: 247
           timeout: 3000
         requisitions: []
       -
@@ -2253,7 +2253,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.616Z'
+            connectionTime: '2018-10-07T16:25:03.548Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -2287,7 +2287,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2018-10-06T23:53:22.648Z'
+            publishTime: '2018-10-07T16:25:03.611Z'
             messageReceived:
               statusCode: 321
               body: duplicatedResponsePayload
@@ -2296,7 +2296,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '25'
                 etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-                date: 'Sat, 06 Oct 2018 23:53:22 GMT'
+                date: 'Sun, 07 Oct 2018 16:25:03 GMT'
                 connection: close
               request:
                 uri:
@@ -2317,9 +2317,9 @@ requisitions:
                   content-type: application/json
                   Content-Length: 24
         time:
-          startTime: '2018-10-06T23:53:22.615Z'
-          endTime: '2018-10-06T23:53:22.648Z'
-          totalTime: 33
+          startTime: '2018-10-07T16:25:03.547Z'
+          endTime: '2018-10-07T16:25:03.612Z'
+          totalTime: 65
           timeout: 5000
         requisitions: []
       -
@@ -2340,12 +2340,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-10-06T23:53:22.651Z'
+            connectionTime: '2018-10-07T16:25:03.615Z'
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.650Z'
-          endTime: '2018-10-06T23:53:23.655Z'
-          totalTime: 1005
+          startTime: '2018-10-07T16:25:03.614Z'
+          endTime: '2018-10-07T16:25:04.616Z'
+          totalTime: 1002
           timeout: 5000
         requisitions: []
       -
@@ -2366,12 +2366,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2018-10-06T23:53:23.658Z'
+            connectionTime: '2018-10-07T16:25:04.618Z'
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:23.658Z'
-          endTime: '2018-10-06T23:53:24.659Z'
-          totalTime: 1001
+          startTime: '2018-10-07T16:25:04.618Z'
+          endTime: '2018-10-07T16:25:05.618Z'
+          totalTime: 1000
           timeout: 5000
         requisitions: []
   -
@@ -2386,9 +2386,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:22.383Z'
-          endTime: '2018-10-06T23:53:22.621Z'
-          totalTime: 238
+          startTime: '2018-10-07T16:25:03.335Z'
+          endTime: '2018-10-07T16:25:03.548Z'
+          totalTime: 213
         requisitions:
           -
             valid: true
@@ -2401,9 +2401,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.383Z'
-              endTime: '2018-10-06T23:53:22.401Z'
-              totalTime: 18
+              startTime: '2018-10-07T16:25:03.335Z'
+              endTime: '2018-10-07T16:25:03.348Z'
+              totalTime: 13
             requisitions: []
           -
             valid: true
@@ -2416,8 +2416,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.430Z'
-              endTime: '2018-10-06T23:53:22.430Z'
+              startTime: '2018-10-07T16:25:03.383Z'
+              endTime: '2018-10-07T16:25:03.383Z'
               totalTime: 0
             requisitions: []
           -
@@ -2431,9 +2431,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.433Z'
-              endTime: '2018-10-06T23:53:22.433Z'
-              totalTime: 0
+              startTime: '2018-10-07T16:25:03.388Z'
+              endTime: '2018-10-07T16:25:03.389Z'
+              totalTime: 1
             requisitions: []
           -
             valid: true
@@ -2446,8 +2446,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.461Z'
-              endTime: '2018-10-06T23:53:22.461Z'
+              startTime: '2018-10-07T16:25:03.391Z'
+              endTime: '2018-10-07T16:25:03.391Z'
               totalTime: 0
             requisitions: []
           -
@@ -2461,8 +2461,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.474Z'
-              endTime: '2018-10-06T23:53:22.474Z'
+              startTime: '2018-10-07T16:25:03.413Z'
+              endTime: '2018-10-07T16:25:03.413Z'
               totalTime: 0
             requisitions: []
           -
@@ -2476,8 +2476,8 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.506Z'
-              endTime: '2018-10-06T23:53:22.506Z'
+              startTime: '2018-10-07T16:25:03.420Z'
+              endTime: '2018-10-07T16:25:03.420Z'
               totalTime: 0
             requisitions: []
           -
@@ -2491,9 +2491,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.549Z'
-              endTime: '2018-10-06T23:53:22.551Z'
-              totalTime: 2
+              startTime: '2018-10-07T16:25:03.442Z'
+              endTime: '2018-10-07T16:25:03.442Z'
+              totalTime: 0
             requisitions: []
           -
             valid: true
@@ -2506,9 +2506,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.600Z'
-              endTime: '2018-10-06T23:53:22.600Z'
-              totalTime: 0
+              startTime: '2018-10-07T16:25:03.464Z'
+              endTime: '2018-10-07T16:25:03.466Z'
+              totalTime: 2
             requisitions: []
           -
             valid: true
@@ -2521,9 +2521,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.614Z'
-              endTime: '2018-10-06T23:53:22.616Z'
-              totalTime: 2
+              startTime: '2018-10-07T16:25:03.520Z'
+              endTime: '2018-10-07T16:25:03.520Z'
+              totalTime: 0
             requisitions: []
           -
             valid: true
@@ -2536,9 +2536,9 @@ requisitions:
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-06T23:53:22.621Z'
-              endTime: '2018-10-06T23:53:22.621Z'
-              totalTime: 0
+              startTime: '2018-10-07T16:25:03.543Z'
+              endTime: '2018-10-07T16:25:03.548Z'
+              totalTime: 5
             requisitions: []
       -
         valid: true
@@ -2550,11 +2550,11 @@ requisitions:
           -
             name: 'It delayed for at least ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3053'''
+            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3061'''
           -
             name: 'It delayed for no more than ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2503'''
+            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2511'''
           -
             name: 'Assertion #3'
             valid: true
@@ -2563,7 +2563,7 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-06T23:53:25.624Z'
-          endTime: '2018-10-06T23:53:25.624Z'
+          startTime: '2018-10-07T16:25:06.555Z'
+          endTime: '2018-10-07T16:25:06.555Z'
           totalTime: 0
         requisitions: []

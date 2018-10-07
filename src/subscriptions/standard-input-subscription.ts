@@ -1,13 +1,13 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager
-    .getInstance()
-    .insertSubscriptionProtocol('stdin',
-        ['standard-input']);
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
+const protocol = new Protocol('stdin')
+    .addAlternativeName('standard-input')
+    .registerAsSubscription();
+
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class StandardInputSubscription extends Subscription {
     private value?: string;
 

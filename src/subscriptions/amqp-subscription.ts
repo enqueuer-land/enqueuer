@@ -4,10 +4,11 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Logger} from '../loggers/logger';
 import * as amqp from 'amqp';
 import {StringRandomCreator} from '../strings/string-random-creator';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager.getInstance().insertSubscriptionProtocol('amqp', [], 'amqp');
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
+const protocol = new Protocol('amqp').setLibrary('amqp').registerAsSubscription();
+
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class AmqpSubscription extends Subscription {
 
     private readonly queueName: string;

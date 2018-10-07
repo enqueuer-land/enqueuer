@@ -3,13 +3,13 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import * as dgram from 'dgram';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager.getInstance()
-    .insertPublisherProtocol('udp', ['udp-client']);
+const protocol = new Protocol('udp')
+    .addAlternativeName('udp-client')
+    .registerAsPublisher();
 
-@Injectable({predicate: (publish: any) => protocol
-        .matches(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class UdpPublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {

@@ -4,13 +4,12 @@ import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as mqtt from 'mqtt';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager.getInstance()
-    .insertPublisherProtocol('mqtt', [], 'mqtt');
+const protocol = new Protocol('mqtt').setLibrary('mqtt')
+    .registerAsPublisher();
 
-@Injectable({predicate: (publish: any) => protocol
-        .matches(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class MqttPublisher extends Publisher {
 
     public constructor(publish: PublisherModel) {

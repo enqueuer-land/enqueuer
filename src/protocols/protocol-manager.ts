@@ -3,11 +3,10 @@ import {Protocol} from './protocol';
 import '../injectable-files-list';
 import prettyjson from 'prettyjson';
 
-//TODO unify these value in a single file
 const options = {
     defaultIndentation: 4,
     inlineArrays: true,
-    emptyArrayMsg: '(empty)',
+    emptyArrayMsg: '-',
     keysColor: 'green',
     dashColor: 'grey'
 };
@@ -32,24 +31,20 @@ export class ProtocolManager {
 
     public printAvailable(): void {
         const printable = {
-            Protocols: {
-                Publishers: this.publishers,
-                Subscriptions: this.subscriptions
+            protocols: {
+                publishers: this.prettyfy(this.publishers),
+                subscriptions: this.prettyfy(this.subscriptions)
             }
         };
         console.log(prettyjson.render(printable, options));
     }
 
-    public insertPublisherProtocol(name: string, alternativeNames: string[] = [], libraryName?: string ): Protocol {
-        const protocol = new Protocol(name, alternativeNames, libraryName);
+    public insertPublisher(protocol: Protocol): void {
         this.publishers.push(protocol);
-        return protocol;
     }
 
-    public insertSubscriptionProtocol(name: string, alternativeNames: string[] = [], libraryName?: string ): Protocol {
-        const protocol = new Protocol(name, alternativeNames, libraryName);
+    public insertSubscription(protocol: Protocol): void {
         this.subscriptions.push(protocol);
-        return protocol;
     }
 
     public suggestSimilarSubscriptions(type?: string): void {
@@ -77,4 +72,11 @@ export class ProtocolManager {
             });
     }
 
+    private prettyfy(protocols: Protocol[]): {} {
+        const result: any = {};
+        protocols.forEach(protocol => {
+           result[protocol.getName()] =  protocol.getProperties();
+        });
+        return result;
+    }
 }

@@ -2,14 +2,14 @@ import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 const Stomp = require('stomp-client');
 
-const protocol = ProtocolManager.getInstance()
-    .insertPublisherProtocol('stomp', [], 'stomp-client');
+const protocol = new Protocol('stomp')
+    .setLibrary('stomp-client')
+    .registerAsPublisher();
 
-@Injectable({predicate: (publish: any) => protocol
-        .matches(publish.type, 95)})
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class StompPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {

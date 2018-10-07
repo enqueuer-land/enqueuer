@@ -4,13 +4,13 @@ import {Injectable} from 'conditional-injector';
 import * as dgram from 'dgram';
 import {Logger} from '../loggers/logger';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager
-    .getInstance()
-    .insertSubscriptionProtocol('udp',
-        ['udp-server']);
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
+const protocol = new Protocol('udp')
+    .addAlternativeName('udp-server')
+    .registerAsSubscription();
+
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class UdpSubscription extends Subscription {
 
     private server: any;

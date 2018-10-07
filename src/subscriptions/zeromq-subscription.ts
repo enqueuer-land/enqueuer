@@ -3,14 +3,13 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import * as zmq from 'zeromq';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager
-    .getInstance()
-    .insertSubscriptionProtocol('zeromq',
-        ['zeromq-sub'],
-        'zeromq');
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
+const protocol = new Protocol('zeromq')
+    .addAlternativeName('zeromq-sub')
+    .setLibrary('zeromq')
+    .registerAsSubscription();
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class ZeromqSubscription extends Subscription {
     private socket: zmq.Socket;
 

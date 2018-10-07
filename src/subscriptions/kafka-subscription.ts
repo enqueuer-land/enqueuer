@@ -2,16 +2,15 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
-import {KafkaClient, Consumer, Offset, Message} from 'kafka-node';
+import {Consumer, KafkaClient, Message, Offset} from 'kafka-node';
 import {JavascriptObjectNotation} from '../object-notations/javascript-object-notation';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {Protocol} from '../protocols/protocol';
 
-const protocol = ProtocolManager
-    .getInstance()
-    .insertSubscriptionProtocol('kafka',
-            [],
-        'kafka-node');
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type, 95)})
+const protocol = new Protocol('kafka')
+    .setLibrary('kafka-node')
+    .registerAsSubscription();
+
+@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class KafkaSubscription extends Subscription {
 
     private readonly client: KafkaClient;
