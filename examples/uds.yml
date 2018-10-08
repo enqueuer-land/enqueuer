@@ -10,7 +10,7 @@
                 store:
                     udsPayload: `enqueuer`
                     uds2RequisitionName: `RequisitionUds2Name`
-                    uds2Timeout: `500`
+                    uds2Timeout: `2000`
                     uds2Name: `UDS2 Name`
             onMessageReceived:
                 assertions:
@@ -21,7 +21,7 @@
         -   type: uds
             path: /tmp/unix.sock
             response: responsePayload
-            timeout: 500
+            timeout: 2000
             onMessageReceived:
                 assertions:
                     -   name: Message received is enqueuer

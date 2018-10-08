@@ -11,7 +11,7 @@ publishers:
                     expectToBeDefined: JSON.parse(message)["enqueuer-topic-name"]
 subscriptions:
     -   type: kafka
-        timeout: 2000
+        timeout: 4000
         client:
             kafkaHost: localhost:9093
         options:
