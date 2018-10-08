@@ -29,11 +29,13 @@ export class ProtocolManager {
     }
 
     public describeProtocols(protocol: true | string): void {
+        let result;
         if (typeof(protocol) == 'string') {
-            this.printDeepDescription(protocol as string);
+            result = this.createDeepDescription(protocol as string);
         } else {
-            this.printShallowDescription();
+            result = this.createShallowDescription();
         }
+        console.log(prettyjson.render(result, options));
     }
 
     public insertPublisher(protocol: Protocol): void {
@@ -60,28 +62,19 @@ export class ProtocolManager {
         Logger.warning(`Unknown protocol '${name}'`);
         ratingSortedProtocols
             .filter((value, index) => index <= 2)
-            .forEach((protocol) => {
-                const bestRating = protocol.getBestRating(name);
-                if (bestRating.rating > 50) {
-                    Logger.warning(`${bestRating.rating}% sure you meant '${bestRating.target}'`);
-                    protocol.suggestInstallation();
-                } else if (bestRating.rating > 10) {
-                    Logger.warning(`There is a tiny possibility (${bestRating.rating}%) you tried to type '${bestRating.target}'`);
-                }
-            });
+            .forEach((protocol) => protocol.printTip(name));
     }
 
-    private printShallowDescription(): void {
-        const printable = {
+    private createShallowDescription(): {} {
+        return {
             protocols: {
                 publishers: this.publishers.map(protocol => protocol.getName()),
                 subscriptions: this.subscriptions.map(protocol => protocol.getName())
             }
         };
-        console.log(prettyjson.render(printable, options));
     }
 
-    private printDeepDescription(protocolToDescribe: string): void {
+    private createDeepDescription(protocolToDescribe: string): {} {
         const result: any = {
             publishers: {},
             subscriptions: {}
@@ -97,10 +90,6 @@ export class ProtocolManager {
                 result.subscriptions[protocol.getName()] = protocol.getDescription();
             }
         });
-        if ((Object.keys(result)).length == 0) {
-            console.log('Not supported protocol');
-        } else {
-            console.log(prettyjson.render(result, options));
-        }
+        return result;
     }
 }

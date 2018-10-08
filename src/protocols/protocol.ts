@@ -1,18 +1,17 @@
 import {Match, StringMatcher} from '../strings/string-matcher';
 import {Logger} from '../loggers/logger';
 import {ProtocolManager} from './protocol-manager';
-import {Documentation} from './documentation';
 const packageJson = require('../../package.json');
 
 type Library = {
     name: string;
     version?: string;
+    installed: boolean;
 };
 
 export class Protocol {
     private readonly name: string;
-    private alternativeNames: string[] = [];
-    private documentation?: Documentation;
+    private alternativeNames?: string[];
     private library?: Library;
 
     public constructor(name: string) {
@@ -24,35 +23,30 @@ export class Protocol {
     }
 
     public getDescription() {
-        let properties: any = {
-            alternativeNames: this.alternativeNames
-        };
-        if (this.library) {
-            properties.library = {
-                name: this.library.name,
-                installed: this.isLibraryInstalled(),
-                version: this.library.version
-            };
+        let properties: any = {};
+        if (this.alternativeNames) {
+            properties.alternativeNames = this.alternativeNames;
         }
-        if (this.documentation) {
-            properties.documentation = this.documentation;
+        if (this.library) {
+            properties.library = this.library;
         }
         return properties;
     }
 
-    public setDocumentation(documentation: Documentation): Protocol {
-        this.documentation = documentation;
-        return this;
-    }
-
     public addAlternativeName(...alternativeNames: string[]): Protocol {
-        const uniqueAlternativeNames = new Set(this.alternativeNames.concat(alternativeNames));
+        let uniqueAlternativeNames;
+        if (this.alternativeNames) {
+            uniqueAlternativeNames = new Set(this.alternativeNames.concat(alternativeNames));
+
+        } else {
+            uniqueAlternativeNames = new Set(alternativeNames);
+        }
         this.alternativeNames = Array.from(uniqueAlternativeNames);
         return this;
     }
 
     public setLibrary(libraryName: string): Protocol {
-        this.library = Protocol.getDependency(libraryName);
+        this.library = this.createLibrary(libraryName);
         return this;
     }
 
@@ -67,17 +61,27 @@ export class Protocol {
     }
 
     public getBestRating(name: string): Match {
-        return new StringMatcher().sortBestMatches(name, this.alternativeNames.concat(this.name))[0];
+        return new StringMatcher().sortBestMatches(name, [this.name].concat(this.alternativeNames || []))[0];
     }
 
     public matches(name: string, errorTolerancePct: number = 0): boolean {
         return this.getBestRating(name).rating >= 100 - errorTolerancePct;
     }
 
-    public suggestInstallation(): boolean {
+    public printTip(name: string) {
+        const bestRating = this.getBestRating(name);
+        if (bestRating.rating > 50) {
+            Logger.warning(`${bestRating.rating}% sure you meant '${bestRating.target}'`);
+            this.suggestInstallation();
+        } else if (bestRating.rating > 10) {
+            Logger.warning(`There is a tiny possibility (${bestRating.rating}%) you tried to type '${bestRating.target}'`);
+        }
+    }
+
+    private suggestInstallation(): boolean {
         if (this.library) {
             const packageDisplay = `${this.library.name}@${this.library.version}`;
-            if (!this.isLibraryInstalled()) {
+            if (!this.library.installed) {
                 const installationString = `npm install ${packageDisplay} --no-optional`;
                 Logger.warning(`Library '${this.library.name}' is not installed. ` +
                     `If you want to, install it using: ${installationString}`);
@@ -89,27 +93,25 @@ export class Protocol {
         return false;
     }
 
-    public isLibraryInstalled(): boolean {
+    private isLibraryInstalled(libraryName: string): boolean {
         try {
-            if (this.library) {
-                require.resolve(this.library.name);
-                return true;
-            }
+            require.resolve(libraryName);
+            return true;
         } catch (e) {
             /* do nothing */
         }
         return false;
     }
 
-    private static getDependency(name?: string): Library | undefined {
-        if (name) {
-            const dependencies = packageJson.dependencies[name] || packageJson.optionalDependencies[name];
-            if (dependencies) {
-                return {
-                    name: name,
-                    version: dependencies
-                };
-            }
+    private createLibrary(name: string): Library | undefined {
+        const dependencies = packageJson.dependencies[name] || packageJson.optionalDependencies[name];
+        if (dependencies) {
+            return {
+                name: name,
+                version: dependencies,
+                installed: this.isLibraryInstalled(name)
+            };
         }
     }
+
 }

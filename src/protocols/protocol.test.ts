@@ -1,5 +1,4 @@
 import {Protocol} from "./protocol";
-import {Documentation} from "./documentation";
 
 describe('Protocol', () => {
 
@@ -24,8 +23,15 @@ describe('Protocol', () => {
         expect(match).toBeFalsy();
     });
 
+    it('alternative names are unique', () => {
+        const match = new Protocol('one').addAlternativeName('one', 'two').addAlternativeName('two', 'three');
+        // @ts-ignore
+        expect(match.alternativeNames).toEqual(["one", "two", "three"]);
+    });
+
     it('isLibraryInstalled', () => {
-        const available = new Protocol('').setLibrary('express').isLibraryInstalled();
+        // @ts-ignore
+        const available = new Protocol('').setLibrary('express').library.installed;
         expect(available).toBeTruthy();
     });
 
@@ -48,7 +54,6 @@ describe('Protocol', () => {
         const property = new Protocol('')
             .addAlternativeName('alternativeName')
             .setLibrary('express')
-            .setDocumentation(new Documentation())
             .getDescription();
         expect(property).toEqual({
             alternativeNames: ["alternativeName"],
@@ -56,8 +61,7 @@ describe('Protocol', () => {
                 name: "express",
                 version: expect.any(String),
                 installed: expect.any(Boolean)
-            },
-            documentation: expect.any(Documentation)
+            }
         });
     });
 

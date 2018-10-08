@@ -4,44 +4,9 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
 import * as amqp from 'amqp';
 import {Protocol} from '../protocols/protocol';
-import {Documentation} from '../protocols/documentation';
 
-const messageOptions = new Documentation()
-    .setOptional(true)
-    .setReference('https://github.com/postwait/node-amqp#exchangepublishroutingkey-message-options-callbac');
-const exchangeOptions = new Documentation()
-    .setOptional(true)
-    .setReference('https://github.com/postwait/node-amqp#connectionexchangename-options-opencallback');
-const host = new Documentation()
-    .setOptional(true)
-    .setDescription('Host address')
-    .setDefaultValue('localhost');
-const port = new Documentation()
-    .setOptional(true)
-    .setDescription('Host port')
-    .setDefaultValue(5672);
-const options = new Documentation()
-    .setOptional(true)
-    .setDescription('Connection options')
-    .addChild('host', host)
-    .addChild('port', port)
-    .setReference('https://github.com/postwait/node-amqp#connection-options-and-url');
-const routingKey = new Documentation()
-    .setDescription('Routing key to have a message published in')
-    .setExample('enqueuer.integration.test.routing.key');
-const exchange = new Documentation()
-    .setOptional(true)
-    .setDescription('Routing key to have a message published in. If no value is given, it will be published in the \'default exchange\'')
-    .setExample('enqueuer.exchange');
-const amqpDocumentation = new Documentation()
-    .addChild('messageOptions', messageOptions)
-    .addChild('exchangeOptions', exchangeOptions)
-    .addChild('exchange', exchange)
-    .addChild('options', options)
-    .addChild('routingKey', routingKey);
 const protocol = new Protocol('amqp')
     .setLibrary('amqp')
-    .setDocumentation(amqpDocumentation)
     .registerAsPublisher();
 
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})

@@ -5,43 +5,9 @@ import {Logger} from '../loggers/logger';
 import * as amqp from 'amqp';
 import {StringRandomCreator} from '../strings/string-random-creator';
 import {Protocol} from '../protocols/protocol';
-import {Documentation} from '../protocols/documentation';
 
-const host = new Documentation()
-    .setOptional(true)
-    .setDescription('Host address')
-    .setDefaultValue('localhost');
-const port = new Documentation()
-    .setOptional(true)
-    .setDescription('Host port')
-    .setDefaultValue(5672);
-const options = new Documentation()
-    .setOptional(true)
-    .setDescription('Connection options')
-    .addChild('host', host)
-    .addChild('port', port)
-    .setReference('https://github.com/postwait/node-amqp#connection-options-and-url');
-const queueName = new Documentation()
-    .setOptional(true)
-    .setDescription('Queue to be created while enqueuer is running. It lasts as long as enqueuer.')
-    .setDefaultValue('Randomly created name')
-    .setExample('enqueuer.queue.name');
-const routingKey = new Documentation()
-    .setOptional(true)
-    .setDescription('Routing key to have a message published in. If a value is set, a \'exchange\' has to be set as well.')
-    .setExample('enqueuer.integration.#');
-const exchange = new Documentation()
-    .setOptional(true)
-    .setDescription('Exchange name to have a message published in. If a value is set, a \'routingKey\' has to be set as well.')
-    .setExample('enqueuer.exchange');
-const amqpDocumentation = new Documentation()
-    .addChild('options', options)
-    .addChild('queueName', queueName)
-    .addChild('exchange', exchange)
-    .addChild('routingKey', routingKey);
 const protocol = new Protocol('amqp')
     .setLibrary('amqp')
-    .setDocumentation(amqpDocumentation)
     .registerAsSubscription();
 
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
