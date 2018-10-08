@@ -1,4 +1,4 @@
-#Every subscription has its own properties. But they all have properties defined in /docs/subscriptions/subscription.yml
+#Every subscription has its own properties. But they all have properties defined in /docs/instructions/subscription.yml
 
 #IPC protocol type. It has to be 'http-server' or 'https-server.
 type: http-client
@@ -24,9 +24,6 @@ response:
 #So additional tests will be added to the report depending on which authorization is being used
 #All of them (basic, digest, bearer) are mutually exclusive
 authentication:
-  basic:
-    user: user
-    password: password
   basic:
     user: user
     password: password

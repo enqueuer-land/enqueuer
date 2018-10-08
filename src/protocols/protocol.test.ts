@@ -1,5 +1,5 @@
 import {Protocol} from "./protocol";
-// jest.mock('./protocol-manager');
+import {Documentation} from "./documentation";
 
 describe('Protocol', () => {
 
@@ -45,10 +45,19 @@ describe('Protocol', () => {
     });
 
     it('get property', () => {
-        const property = new Protocol('').addAlternativeName('alternativeName').setLibrary('express').getProperties();
+        const property = new Protocol('')
+            .addAlternativeName('alternativeName')
+            .setLibrary('express')
+            .setDocumentation(new Documentation())
+            .getDescription();
         expect(property).toEqual({
-            "alternativeNames": ["alternativeName"],
-            "library": {"name": "express", "version": expect.any(String), installed: expect.any(Boolean)}
+            alternativeNames: ["alternativeName"],
+            library: {
+                name: "express",
+                version: expect.any(String),
+                installed: expect.any(Boolean)
+            },
+            documentation: expect.any(Documentation)
         });
     });
 

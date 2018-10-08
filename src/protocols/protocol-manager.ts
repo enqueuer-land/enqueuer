@@ -4,14 +4,13 @@ import '../injectable-files-list';
 import prettyjson from 'prettyjson';
 
 const options = {
-    defaultIndentation: 4,
+    defaultIndentation: 8,
     inlineArrays: true,
     emptyArrayMsg: '-',
     keysColor: 'green',
     dashColor: 'grey'
 };
 
-//TODO test it
 export class ProtocolManager {
     private static instance: ProtocolManager;
 
@@ -90,12 +89,12 @@ export class ProtocolManager {
         let tolerance = 20;
         this.publishers.map((protocol: Protocol) => {
             if (protocol.matches(protocolToDescribe, tolerance)) {
-                result.publishers[protocol.getName()] =  protocol.getProperties();
+                result.publishers[protocol.getName()] = protocol.getDescription();
             }
         });
         this.subscriptions.map((protocol: Protocol) => {
             if (protocol.matches(protocolToDescribe, tolerance)) {
-                result.subscriptions[protocol.getName()] =  protocol.getProperties();
+                result.subscriptions[protocol.getName()] = protocol.getDescription();
             }
         });
         if ((Object.keys(result)).length == 0) {

@@ -1,7 +1,7 @@
 import {Match, StringMatcher} from '../strings/string-matcher';
 import {Logger} from '../loggers/logger';
 import {ProtocolManager} from './protocol-manager';
-
+import {Documentation} from './documentation';
 const packageJson = require('../../package.json');
 
 type Library = {
@@ -12,7 +12,7 @@ type Library = {
 export class Protocol {
     private readonly name: string;
     private alternativeNames: string[] = [];
-    private usage?: string;
+    private documentation?: Documentation;
     private library?: Library;
 
     public constructor(name: string) {
@@ -23,7 +23,7 @@ export class Protocol {
         return this.name;
     }
 
-    public getProperties() {
+    public getDescription() {
         let properties: any = {
             alternativeNames: this.alternativeNames
         };
@@ -34,14 +34,14 @@ export class Protocol {
                 version: this.library.version
             };
         }
-        if (this.usage) {
-            properties.usage = this.usage;
+        if (this.documentation) {
+            properties.documentation = this.documentation;
         }
         return properties;
     }
 
-    public addUsage(usage: string): Protocol {
-        this.usage = usage;
+    public setDocumentation(documentation: Documentation): Protocol {
+        this.documentation = documentation;
         return this;
     }
 

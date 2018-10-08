@@ -5,8 +5,44 @@ import {Logger} from '../loggers/logger';
 import * as amqp from 'amqp';
 import {StringRandomCreator} from '../strings/string-random-creator';
 import {Protocol} from '../protocols/protocol';
+import {Documentation} from '../protocols/documentation';
 
-const protocol = new Protocol('amqp').setLibrary('amqp').registerAsSubscription();
+const host = new Documentation()
+    .setOptional(true)
+    .setDescription('Host address')
+    .setDefaultValue('localhost');
+const port = new Documentation()
+    .setOptional(true)
+    .setDescription('Host port')
+    .setDefaultValue(5672);
+const options = new Documentation()
+    .setOptional(true)
+    .setDescription('Connection options')
+    .addChild('host', host)
+    .addChild('port', port)
+    .setReference('https://github.com/postwait/node-amqp#connection-options-and-url');
+const queueName = new Documentation()
+    .setOptional(true)
+    .setDescription('Queue to be created while enqueuer is running. It lasts as long as enqueuer.')
+    .setDefaultValue('Randomly created name')
+    .setExample('enqueuer.queue.name');
+const routingKey = new Documentation()
+    .setOptional(true)
+    .setDescription('Routing key to have a message published in. If a value is set, a \'exchange\' has to be set as well.')
+    .setExample('enqueuer.integration.#');
+const exchange = new Documentation()
+    .setOptional(true)
+    .setDescription('Exchange name to have a message published in. If a value is set, a \'routingKey\' has to be set as well.')
+    .setExample('enqueuer.exchange');
+const amqpDocumentation = new Documentation()
+    .addChild('options', options)
+    .addChild('queueName', queueName)
+    .addChild('exchange', exchange)
+    .addChild('routingKey', routingKey);
+const protocol = new Protocol('amqp')
+    .setLibrary('amqp')
+    .setDocumentation(amqpDocumentation)
+    .registerAsSubscription();
 
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class AmqpSubscription extends Subscription {
@@ -31,21 +67,7 @@ export class AmqpSubscription extends Subscription {
         this.connection = amqp.createConnection(this.options);
         return new Promise((resolve, reject) => {
             this.connection.once('ready', () => {
-                this.connection.queue(this.queueName, (queue: any) => {
-                    queue.subscribe((message: any, headers: any, deliveryInfo: any) => this.gotMessage(message, headers, deliveryInfo));
-                    if (this.exchange && this.routingKey) {
-                        Logger.debug(`Amqp subscription binding ${this.queueName} to exchange: ${this.exchange} and routingKey: ${this.routingKey}`);
-                        queue.bind(this.exchange, this.routingKey, () => {
-                            Logger.debug(`Queue ${this.queueName} bound`);
-                            resolve();
-                        });
-                    } else if (this.queueName) {
-                        Logger.debug(`Queue ${this.queueName} bound to the default exchange`);
-                        resolve();
-                    } else {
-                        reject(`Impossible to subscribe: ${this.queueName}:${this.exchange}:${this.routingKey}`);
-                    }
-                });
+                this.connectionReady(resolve, reject);
             });
             this.connection.on('error', (err: any) => reject(err));
         });
@@ -56,6 +78,28 @@ export class AmqpSubscription extends Subscription {
             this.connection.disconnect();
         }
         delete this.connection;
+    }
+
+    private connectionReady(resolve: any, reject: any) {
+        this.connection.queue(this.queueName, (queue: any) => {
+            queue.subscribe((message: any, headers: any, deliveryInfo: any) => this.gotMessage(message, headers, deliveryInfo));
+            if (this.exchange && this.routingKey) {
+                this.bind(queue, resolve);
+            } else if (this.queueName) {
+                Logger.debug(`Queue ${this.queueName} bound to the default exchange`);
+                resolve();
+            } else {
+                reject(`Impossible to subscribe: ${this.queueName}:${this.exchange}:${this.routingKey}`);
+            }
+        });
+    }
+
+    private bind(queue: any, resolve: any) {
+        Logger.debug(`Amqp subscription binding ${this.queueName} to exchange: ${this.exchange} and routingKey: ${this.routingKey}`);
+        queue.bind(this.exchange, this.routingKey, () => {
+            Logger.debug(`Queue ${this.queueName} bound`);
+            resolve();
+        });
     }
 
     private gotMessage(message: any, headers: any, deliveryInfo: any) {
