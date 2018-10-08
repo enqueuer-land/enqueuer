@@ -57,7 +57,7 @@ export class SubscriptionReporter {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.trace(`Starting ${this.subscription.name} timer`);
+            Logger.trace(`Starting ${this.subscription.name} time out`);
             this.initializeTimeout();
             Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
             this.subscription.subscribe()

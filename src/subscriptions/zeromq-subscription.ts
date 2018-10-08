@@ -9,6 +9,7 @@ const protocol = new Protocol('zeromq')
     .addAlternativeName('zeromq-sub')
     .setLibrary('zeromq')
     .registerAsSubscription();
+
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class ZeromqSubscription extends Subscription {
     private socket: zmq.Socket;
@@ -16,19 +17,6 @@ export class ZeromqSubscription extends Subscription {
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
         this.socket = zmq.socket('sub');
-    }
-
-    public receiveMessage(): Promise<any> {
-        return new Promise((resolve) => {
-            Logger.trace(`ZeroMqSub waiting for a message in topic ${this.topic}`);
-            this.socket.on('message', (topic: Buffer, message: Buffer) => {
-                Logger.debug(`ZeroMqSub received a message in topic ${topic.toString()}`);
-                this.socket.unsubscribe(this.topic);
-                this.socket.disconnect(this.address);
-                this.socket.close();
-                resolve({topic: topic, payload: message});
-            });
-        });
     }
 
     public subscribe(): Promise<void> {
@@ -45,6 +33,19 @@ export class ZeromqSubscription extends Subscription {
                 .subscribe(this.topic);
         });
 
+    }
+
+    public receiveMessage(): Promise<any> {
+        return new Promise((resolve) => {
+            Logger.trace(`ZeroMqSub waiting for a message in topic ${this.topic}`);
+            this.socket.on('message', (topic: Buffer, message: Buffer) => {
+                Logger.debug(`ZeroMqSub received a message in topic ${topic.toString()}`);
+                this.socket.unsubscribe(this.topic);
+                this.socket.disconnect(this.address);
+                this.socket.close();
+                resolve({topic: topic, payload: message});
+            });
+        });
     }
 
 }

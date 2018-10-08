@@ -24,6 +24,7 @@ export class PublisherReporter {
         this.executeOnInitFunction(publisher);
         Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
         this.publisher = Container.subclassesOf(Publisher).create(publisher);
+        Logger.debug(`Publisher '${publisher.type}' instantiated`);
     }
 
     public publish(): Promise<void> {
