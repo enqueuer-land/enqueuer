@@ -4,7 +4,7 @@ import '../injectable-files-list';
 import prettyjson from 'prettyjson';
 
 const options = {
-    defaultIndentation: 8,
+    defaultIndentation: 4,
     inlineArrays: true,
     emptyArrayMsg: '-',
     keysColor: 'green',

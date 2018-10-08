@@ -52,14 +52,76 @@ But do not worry, you can add some protocols after installation.
 
 ##### To see deeper details:
 
-    $ nqr -p mqtt
-    mqtt: 
-        alternativeNames: 
-            -
-        library: 
-            name:      mqtt
-            installed: true
-            version:   ^2.18.8
+      $ nqr -p amqp
+      publishers: 
+          amqp: 
+              alternativeNames: 
+                  -
+              library: 
+                  name:      amqp
+                  installed: true
+                  version:   ^0.2.7
+              documentation: 
+                  messageOptions: 
+                      optional:  true
+                      reference: https://github.com/postwait/node-amqp#exchangepublishroutingkey-message-options-callbac
+                  exchangeOptions: 
+                      optional:  true
+                      reference: https://github.com/postwait/node-amqp#connectionexchangename-options-opencallback
+                  exchange: 
+                      optional:    true
+                      description: Routing key to have a message published in. If no value is given, it will be published in the 'default exchange'
+                      example:     enqueuer.exchange
+                  options: 
+                      optional:    true
+                      description: Connection options
+                      host: 
+                          optional:     true
+                          description:  Host address
+                          defaultValue: localhost
+                      port: 
+                          optional:     true
+                          description:  Host port
+                          defaultValue: 5672
+                      reference:   https://github.com/postwait/node-amqp#connection-options-and-url
+                  routingKey: 
+                      description: Routing key to have a message published in
+                      example:     enqueuer.integration.test.routing.key
+      subscriptions: 
+          amqp: 
+              alternativeNames: 
+                  -
+              library: 
+                  name:      amqp
+                  installed: true
+                  version:   ^0.2.7
+              documentation: 
+                  options: 
+                      optional:    true
+                      description: Connection options
+                      host: 
+                          optional:     true
+                          description:  Host address
+                          defaultValue: localhost
+                      port: 
+                          optional:     true
+                          description:  Host port
+                          defaultValue: 5672
+                      reference:   https://github.com/postwait/node-amqp#connection-options-and-url
+                  queueName: 
+                      optional:     true
+                      description:  Queue to be created while enqueuer is running. It lasts as long as enqueuer.
+                      defaultValue: Randomly created name
+                      example:      enqueuer.queue.name
+                  exchange: 
+                      optional:    true
+                      description: Exchange name to have a message published in. If a value is set, a 'routingKey' has to be set as well.
+                      example:     enqueuer.exchange
+                  routingKey: 
+                      optional:    true
+                      description: Routing key to have a message published in. If a value is set, a 'exchange' has to be set as well.
+                      example:     enqueuer.integration.#
+
 
 ##### And then install the ones you desire:
     
