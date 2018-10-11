@@ -1,13 +1,12 @@
-run-mode:
-    daemon:
-        -   type: uds
-#            path: /tmp/enqueuer.requisitions
-        -   type: tcp
-#            port: 23022
-        -   type: http-server
-#            endpoint: /requisitions
-#            port: 23023
-#            method: POST
+daemon:
+    -   type: uds
+#        path: /tmp/enqueuer.requisitions
+    -   type: tcp
+#        port: 23022
+    -   type: http-server
+#        endpoint: /requisitions
+#        port: 23023
+#        method: POST
 
 #outputs:
 #    -   type: standard-output

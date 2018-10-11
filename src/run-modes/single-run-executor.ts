@@ -8,11 +8,12 @@ import * as glob from 'glob';
 import * as fs from 'fs';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
-import {ConfigurationValues} from '../configurations/configuration-values';
+import {ConfigurationValues, SingleRunMode} from '../configurations/configuration-values';
 import {Json} from '../object-notations/json';
 
 //TODO test it
-@Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode['single-run'] != null})
+@Injectable({predicate: (configuration: ConfigurationValues) => configuration['single-run'] != null
+        || (configuration.runMode != null && configuration.runMode['single-run'] != null)})
 export class SingleRunExecutor extends EnqueuerExecutor {
 
     private readonly fileNames: string[];
@@ -23,13 +24,16 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     constructor(configuration: ConfigurationValues) {
         super();
-        Logger.info('Executing in Single-Run mode');
-        const singleRunMode: any = configuration.runMode['single-run'];
+        let singleRunMode: SingleRunMode = configuration['single-run'];
+        if (singleRunMode === undefined) {
+            singleRunMode = configuration.runMode['single-run'];
+        }
+
         this.multiResultCreator = new MultiResultCreator(singleRunMode.reportName);
         this.parallelMode = !!singleRunMode.parallel;
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
-        this.fileNames = this.getTestFiles(configuration);
+        this.fileNames = this.getTestFiles(configuration, singleRunMode.files);
         this.totalFilesNum = this.fileNames.length;
     }
 
@@ -65,12 +69,11 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private getTestFiles(configuration: ConfigurationValues): string[] {
+    private getTestFiles(configuration: ConfigurationValues, singleRunFiles: string[]): string[] {
         let files: string[] = configuration.addSingleRunIgnore;
 
         if (files.length == 0) {
-            const singleRunMode: any = configuration.runMode['single-run'];
-            files = configuration.addSingleRun.concat(singleRunMode.files);
+            files = configuration.addSingleRun.concat(singleRunFiles);
         }
 
         let result: string[] = [];

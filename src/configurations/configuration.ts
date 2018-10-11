@@ -1,6 +1,6 @@
 import {CommandLineConfiguration} from './command-line-configuration';
 import {FileConfiguration} from './file-configuration';
-import {ConfigurationValues} from './configuration-values';
+import {ConfigurationValues, DaemonMode, SingleRunMode} from './configuration-values';
 
 export class Configuration {
 
@@ -18,6 +18,8 @@ export class Configuration {
             Configuration.instance = {
                 logLevel: CommandLineConfiguration.getVerbosity() || FileConfiguration.getLogLevel() || 'warn',
                 runMode: FileConfiguration.getRunMode(),
+                daemon: FileConfiguration.getDaemon(),
+                'single-run': FileConfiguration.getSingleRun(),
                 outputs: FileConfiguration.getOutputs(),
                 store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
                 quiet: CommandLineConfiguration.isQuietMode(),

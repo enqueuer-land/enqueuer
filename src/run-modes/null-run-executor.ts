@@ -5,7 +5,7 @@ import {Json} from '../object-notations/json';
 
 @Injectable()
 export class NullRunExecutor extends EnqueuerExecutor {
-    private enqueuerConfiguration: string;
+    private readonly enqueuerConfiguration: string;
 
     constructor(enqueuerConfiguration: any) {
         super();

@@ -5,14 +5,14 @@ import {EnqueuerExecutor} from './enqueuer-executor';
 import {Container, Injectable} from 'conditional-injector';
 import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
 import * as output from '../models/outputs/requisition-model';
-import {ConfigurationValues} from '../configurations/configuration-values';
+import {ConfigurationValues, DaemonMode} from '../configurations/configuration-values';
 import {DaemonInputRequisition} from './daemon-run-input/daemon-input-requisition';
 import {ConsoleResultCreator} from './single-run-result-creators/console-result-creator';
-import Signals = NodeJS.Signals;
 import {RequisitionParser} from '../requisition-runners/requisition-parser';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 
-@Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode.daemon != null})
+@Injectable({predicate: (configuration: ConfigurationValues) => configuration.daemon != null ||
+        (configuration.runMode && configuration.runMode.daemon != null)})
 export class DaemonRunExecutor extends EnqueuerExecutor {
     private daemonInputs: DaemonInput[];
     private multiPublisher: MultiPublisher;
@@ -23,15 +23,18 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
     public constructor(configuration: ConfigurationValues) {
         super();
-        const daemonMode = configuration.runMode.daemon;
+        let daemonMode: DaemonMode = configuration.daemon;
+        if (!daemonMode) {
+            daemonMode = configuration.runMode.daemon;
+        }
         Logger.info('Executing in Daemon mode');
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
         this.daemonInputs = daemonMode.map((input: any) => Container.subclassesOf(DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
         this.parser = new RequisitionParser();
-        process.on('SIGINT', (handleKillSignal: Signals) => this.handleKillSignal());
-        process.on('SIGTERM', (handleKillSignal: Signals) => this.handleKillSignal());
+        process.on('SIGINT', () => this.handleKillSignal());
+        process.on('SIGTERM', () => this.handleKillSignal());
     }
 
     public execute(): Promise<boolean> {

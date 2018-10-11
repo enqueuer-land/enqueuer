@@ -27,6 +27,15 @@ export class FileConfiguration {
         return FileConfiguration.getConfigurationFile()['run-mode'];
     }
 
+    public static getDaemon() {
+        return FileConfiguration.getConfigurationFile()['daemon'];
+
+    }
+
+    public static getSingleRun() {
+        return FileConfiguration.getConfigurationFile()['single-run'];
+    }
+
     public static getOutputs(): PublisherModel[] {
         return FileConfiguration.getConfigurationFile().outputs || [];
     }
