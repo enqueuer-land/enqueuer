@@ -98,9 +98,9 @@ export class RequisitionRunner {
 
     private startRequisitionReporter(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
         return new Promise((resolve) => {
+            const requisitionReporter = new RequisitionReporter(requisitionModel);
             new Timeout(() => {
 
-                const requisitionReporter = new RequisitionReporter(requisitionModel);
                 requisitionReporter.start(() => {
                     const report = requisitionReporter.getReport();
                     Logger.info(`Requisition '${report.name}' is over (${report.valid})`);

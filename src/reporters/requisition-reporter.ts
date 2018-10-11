@@ -18,10 +18,10 @@ export class RequisitionReporter {
     private multiSubscriptionsReporter: MultiSubscriptionsReporter;
     private multiPublishersReporter: MultiPublishersReporter;
     private onFinishCallback: RequisitionRunnerCallback;
-    private requisitionTimeout?: number;
-    private publisersDoneTheirJob = false;
+    private readonly requisitionTimeout?: number;
+    private publishersDoneTheirJob = false;
     private allSubscriptionsStoppedWaiting = false;
-    private requisitionAttributes: RequisitionModel;
+    private readonly requisitionAttributes: RequisitionModel;
 
     constructor(requisitionAttributes: input.RequisitionModel) {
         this.requisitionAttributes = requisitionAttributes;
@@ -33,10 +33,10 @@ export class RequisitionReporter {
         this.onFinishCallback = () => {
             //do nothing
         };
+        this.reportGenerator.start(this.requisitionTimeout);
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
-        this.reportGenerator.start(this.requisitionTimeout);
         this.onFinishCallback = onFinishCallback;
         Logger.debug('Preparing subscriptions');
         this.multiSubscriptionsReporter
@@ -68,7 +68,7 @@ export class RequisitionReporter {
         this.multiPublishersReporter.publish()
             .then(async () => {
                 Logger.info('Publishers published');
-                this.publisersDoneTheirJob = true;
+                this.publishersDoneTheirJob = true;
                 await this.tryToFinishExecution();
             })
             .catch(async err => {
@@ -81,7 +81,7 @@ export class RequisitionReporter {
     private initializeTimeout() {
         if (this.requisitionTimeout) {
             new Timeout(async () => {
-                if (!this.publisersDoneTheirJob || !this.allSubscriptionsStoppedWaiting) {
+                if (!this.publishersDoneTheirJob || !this.allSubscriptionsStoppedWaiting) {
                     Logger.info(`Requisition timed out`);
                     await this.onRequisitionFinish();
                 }
@@ -96,7 +96,7 @@ export class RequisitionReporter {
     }
 
     private async tryToFinishExecution() {
-        if (this.publisersDoneTheirJob && this.allSubscriptionsStoppedWaiting) {
+        if (this.publishersDoneTheirJob && this.allSubscriptionsStoppedWaiting) {
             await this.onRequisitionFinish();
         }
     }

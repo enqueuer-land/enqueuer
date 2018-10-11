@@ -9,7 +9,7 @@
 -   name: delayed
     delay: 3000
     anyStuff: anyValue
-    onInit:
+    onFinish:
         script: |-
             delayedTime = new Date().getTime() - store.lastExecutionTime;
         assertions:

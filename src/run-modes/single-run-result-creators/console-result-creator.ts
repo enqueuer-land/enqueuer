@@ -96,7 +96,7 @@ export class ConsoleResultCreator implements ResultCreator {
         console.log(chalk.white(`------------------------------`));
         const percentage = this.testsCounter.getPercentage();
         const testsNumber = this.testsCounter.getTestsNumber();
-        const divisionString = `${testsNumber - this.testsCounter.getFailingTestsNumber()} tests passing of ${testsNumber} total ` +
+        const divisionString = `${this.testsCounter.getPassingTestsNumber()} tests passing of ${testsNumber} total ` +
                                             `(${percentage}%) ran in ${totalTime}ms`;
         console.log(this.getColor(percentage)(`\tTests summary \t\t ${divisionString}`));
     }

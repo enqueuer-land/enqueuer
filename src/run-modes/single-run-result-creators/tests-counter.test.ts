@@ -83,7 +83,24 @@ describe('TestsCounter', () => {
         expect(testsCounter.getPercentage()).toBe(50);
     });
 
+    it('Should get passing tests', () => {
 
+        const test: TestModel = {
+            name: 'name',
+            description: 'name',
+            valid: true,
+        };
+
+        const testsCounter = new TestsCounter();
+        testsCounter.addTest(test);
+        test.valid = false;
+        testsCounter.addTest(test);
+
+        expect(testsCounter.getFailingTestsNumber()).toBe(1);
+        expect(testsCounter.getPassingTestsNumber()).toBe(1);
+        expect(testsCounter.getTestsNumber()).toBe(2);
+        expect(testsCounter.getPercentage()).toBe(50);
+    });
 
     it('Should count inner tests (no publishers)', () => {
         //(ResultModel | RequisitionModel)
