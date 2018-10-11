@@ -13,14 +13,15 @@ So you don't have to deal with a whole bunch of stuff you will not need.
     
     Options:
     
-      -v, --version                           output the version number
-      -q, --quiet                             disable logging
-      -b, --verbosity <level>                 set verbosity [trace, debug, info, warn, error, fatal]
-      -c, --config-file <path>                set configurationFile
-      -s, --store [store]                     add variables values to this session (default: )
-      -p, --protocols-description [protocol]  describe protocols
-      -h, --help                              output usage information
-
+      -v, --version                                output the version number
+      -q, --quiet                                  disable logging
+      -b, --verbosity <level>                      set verbosity [trace, debug, info, warn, error, fatal]
+      -c, --config-file <path>                     set configurationFile
+      -s, --store [store]                          add variables values to this session (default: )
+      -a, --add-file-single-run <file>             add file to be tested in single-run (default: )
+      -A, --add-file-and-ignore-single-run <file>  add file to be tested and ignore the ones set in single-run   (default: )
+      -p, --protocols-description [protocol]       describe protocols
+      -h, --help                                   output usage information
 
 ###### Run it:
 
