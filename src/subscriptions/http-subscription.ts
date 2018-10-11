@@ -17,10 +17,10 @@ const protocol = new Protocol('http')
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class HttpSubscription extends Subscription {
 
+    private readonly proxy: boolean;
     private responseToClientHandler?: any;
     private secureServer: boolean;
     private expressApp: any;
-    private proxy: boolean;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -51,6 +51,9 @@ export class HttpSubscription extends Subscription {
     public sendResponse(): Promise<void> {
         Logger.trace(`${this.type} sending response: ${new Json().stringify(this.response)}`);
         try {
+            Object.keys(this.response.headers || {}).forEach(key => {
+                this.responseToClientHandler.header(key, this.response.headers[key]);
+            });
             this.responseToClientHandler.status(this.response.status).send(this.response.payload);
             Logger.debug(`${this.type} response sent`);
             return Promise.resolve();

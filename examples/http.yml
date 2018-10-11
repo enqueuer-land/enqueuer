@@ -8,6 +8,7 @@
                 enqueuer: virgs
             headers:
                 content-type: application/json
+                nqr: publisher
             onMessageReceived:
                 assertions:
                     -   name: Status Code
@@ -16,19 +17,24 @@
                     -   name: Body
                         expect: body
                         toBeEqualTo: `dynamically changed payload`
+                    -   name: Header
+                        expect: headers.nqr
+                        toBeEqualTo: `subscription`
     subscriptions:
-        -
-            name: subscription description
+        -   name: subscription description
             type: http-server
             endpoint: /enqueuer/:firstId
             port: 23075
             method: POST
             timeout: 10000
             response:
+                headers:
+                    nqr: subscription
                 status: 321
                 payload: responsePayload
             onMessageReceived:
-                script: subscription.response.payload = 'dynamically changed payload'
+                script: |-
+                    subscription.response.payload = 'dynamically changed payload'
                 assertions:
                     -   name: Payload
                         expect: JSON.parse(message.body).enqueuer
@@ -39,6 +45,9 @@
                     -   name: Query
                         expect: query.query
                         toBeEqualTo: 0
+                    -   name: Header
+                        expect: headers.nqr
+                        toBeEqualTo: `publisher`
 -   timeout: 5000
     publishers:
         -   name: publisher description

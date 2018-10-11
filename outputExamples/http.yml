@@ -28,14 +28,19 @@ requisitions:
             valid: true
             description: 'Expected ''query.query'' to be equal to ''0''. Received ''000'''
           -
+            name: Header
+            valid: true
+            description: 'Expected ''headers.nqr'' to be equal to ''publisher''. Received ''publisher'''
+          -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-11T20:09:48.121Z'
+        connectionTime: '2018-10-11T21:05:03.084Z'
         messageReceived:
           headers:
             content-type: application/json
+            nqr: publisher
             content-length: '25'
             host: 'localhost:23075'
             connection: close
@@ -63,10 +68,14 @@ requisitions:
             valid: true
             description: 'Expected ''body'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
           -
+            name: Header
+            valid: true
+            description: 'Expected ''headers.nqr'' to be equal to ''subscription''. Received ''subscription'''
+          -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-11T20:09:48.243Z'
+        publishTime: '2018-10-11T21:05:03.211Z'
         messageReceived:
           statusCode: 321
           body: 'dynamically changed payload'
@@ -74,10 +83,11 @@ requisitions:
             x-powered-by: Express
             access-control-allow-origin: '*'
             access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+            nqr: subscription
             content-type: 'text/html; charset=utf-8'
             content-length: '27'
             etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-            date: 'Thu, 11 Oct 2018 20:09:48 GMT'
+            date: 'Thu, 11 Oct 2018 21:05:03 GMT'
             connection: close
           request:
             uri:
@@ -96,11 +106,12 @@ requisitions:
             method: post
             headers:
               content-type: application/json
+              nqr: publisher
               Content-Length: 25
     time:
-      startTime: '2018-10-11T20:09:48.043Z'
-      endTime: '2018-10-11T20:09:48.244Z'
-      totalTime: 201
+      startTime: '2018-10-11T21:05:03.003Z'
+      endTime: '2018-10-11T21:05:03.211Z'
+      totalTime: 208
       timeout: 3000
     requisitions: []
   -
@@ -125,7 +136,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-11T20:09:48.247Z'
+        connectionTime: '2018-10-11T21:05:03.218Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -159,7 +170,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-11T20:09:48.275Z'
+        publishTime: '2018-10-11T21:05:03.250Z'
         messageReceived:
           statusCode: 321
           body: duplicatedResponsePayload
@@ -170,7 +181,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '25'
             etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-            date: 'Thu, 11 Oct 2018 20:09:48 GMT'
+            date: 'Thu, 11 Oct 2018 21:05:03 GMT'
             connection: close
           request:
             uri:
@@ -191,9 +202,9 @@ requisitions:
               content-type: application/json
               Content-Length: 24
     time:
-      startTime: '2018-10-11T20:09:48.244Z'
-      endTime: '2018-10-11T20:09:48.275Z'
-      totalTime: 31
+      startTime: '2018-10-11T21:05:03.212Z'
+      endTime: '2018-10-11T21:05:03.250Z'
+      totalTime: 38
       timeout: 5000
     requisitions: []
   -
@@ -214,12 +225,12 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-10-11T20:09:48.286Z'
+        connectionTime: '2018-10-11T21:05:03.258Z'
     publishers: []
     time:
-      startTime: '2018-10-11T20:09:48.276Z'
-      endTime: '2018-10-11T20:09:49.287Z'
-      totalTime: 1011
+      startTime: '2018-10-11T21:05:03.250Z'
+      endTime: '2018-10-11T21:05:04.262Z'
+      totalTime: 1012
       timeout: 5000
     requisitions: []
   -
@@ -240,15 +251,15 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-10-11T20:09:49.290Z'
+        connectionTime: '2018-10-11T21:05:04.263Z'
     publishers: []
     time:
-      startTime: '2018-10-11T20:09:49.288Z'
-      endTime: '2018-10-11T20:09:50.292Z'
-      totalTime: 1004
+      startTime: '2018-10-11T21:05:04.263Z'
+      endTime: '2018-10-11T21:05:05.265Z'
+      totalTime: 1002
       timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-11T20:09:48.013Z'
-  endTime: '2018-10-11T20:09:50.292Z'
-  totalTime: 2279
+  startTime: '2018-10-11T21:05:02.972Z'
+  endTime: '2018-10-11T21:05:05.265Z'
+  totalTime: 2293
