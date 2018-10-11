@@ -11,8 +11,7 @@ export class ReportGenerator {
 
     private startTime: DateController = new DateController();
     private timeout?: number;
-
-    private report: output.RequisitionModel;
+    private readonly report: output.RequisitionModel;
 
     public constructor(requisitionAttributes: input.RequisitionModel) {
         this.report = RequisitionDefaultReports.createDefaultReport(requisitionAttributes.name);

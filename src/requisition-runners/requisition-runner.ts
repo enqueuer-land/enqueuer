@@ -103,7 +103,7 @@ export class RequisitionRunner {
 
                 requisitionReporter.start(() => {
                     const report = requisitionReporter.getReport();
-                    Logger.info(`Requisition '${report.name}' is over (${report.valid})`);
+                    Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
                     Logger.trace(`Store keys: ${Object.keys(Store.getData())}`);
                     resolve(report);
                 });
