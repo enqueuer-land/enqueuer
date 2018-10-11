@@ -71,6 +71,11 @@ export class HttpContainer {
             req.on('end', () => {
                 next();
             });
+            // import bodyParser from 'body-parser';
+            // app.use(bodyParser.urlencoded({ extended: false }));
+            // app.use(bodyParser.json({ type: 'application/json' }));
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         });
         return app;
     }

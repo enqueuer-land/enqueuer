@@ -40,7 +40,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-11T17:12:48.322Z'
+        connectionTime: '2018-10-11T20:09:48.121Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -69,16 +69,18 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-11T17:12:48.445Z'
+        publishTime: '2018-10-11T20:09:48.240Z'
         messageReceived:
           statusCode: 200
           body: 'basic auth response'
           headers:
             x-powered-by: Express
+            access-control-allow-origin: '*'
+            access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
             content-type: 'text/html; charset=utf-8'
             content-length: '19'
             etag: 'W/"13-nGN7LEwCUKXpQoLxNqKZXSglYNc"'
-            date: 'Thu, 11 Oct 2018 17:12:48 GMT'
+            date: 'Thu, 11 Oct 2018 20:09:48 GMT'
             connection: close
           request:
             uri:
@@ -100,12 +102,12 @@ requisitions:
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
               Content-Length: 10
     time:
-      startTime: '2018-10-11T17:12:48.237Z'
-      endTime: '2018-10-11T17:12:48.445Z'
-      totalTime: 208
+      startTime: '2018-10-11T20:09:48.037Z'
+      endTime: '2018-10-11T20:09:48.240Z'
+      totalTime: 203
       timeout: 3000
     requisitions: []
 time:
-  startTime: '2018-10-11T17:12:48.195Z'
-  endTime: '2018-10-11T17:12:48.445Z'
-  totalTime: 250
+  startTime: '2018-10-11T20:09:48.006Z'
+  endTime: '2018-10-11T20:09:48.240Z'
+  totalTime: 234

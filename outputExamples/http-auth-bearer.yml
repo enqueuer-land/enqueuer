@@ -36,7 +36,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-11T17:12:48.322Z'
+        connectionTime: '2018-10-11T20:09:48.121Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -65,16 +65,18 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-11T17:12:48.442Z'
+        publishTime: '2018-10-11T20:09:48.242Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
           headers:
             x-powered-by: Express
+            access-control-allow-origin: '*'
+            access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Thu, 11 Oct 2018 17:12:48 GMT'
+            date: 'Thu, 11 Oct 2018 20:09:48 GMT'
             connection: close
           request:
             uri:
@@ -96,12 +98,12 @@ requisitions:
               authorization: 'Bearer bearerToken'
               Content-Length: 4
     time:
-      startTime: '2018-10-11T17:12:48.237Z'
-      endTime: '2018-10-11T17:12:48.443Z'
-      totalTime: 206
+      startTime: '2018-10-11T20:09:48.038Z'
+      endTime: '2018-10-11T20:09:48.242Z'
+      totalTime: 204
       timeout: 3000
     requisitions: []
 time:
-  startTime: '2018-10-11T17:12:48.198Z'
-  endTime: '2018-10-11T17:12:48.443Z'
-  totalTime: 245
+  startTime: '2018-10-11T20:09:48.007Z'
+  endTime: '2018-10-11T20:09:48.242Z'
+  totalTime: 235
