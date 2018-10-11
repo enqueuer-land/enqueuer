@@ -20,7 +20,9 @@ export class Configuration {
                 runMode: FileConfiguration.getRunMode(),
                 outputs: FileConfiguration.getOutputs(),
                 store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
-                quiet: CommandLineConfiguration.isQuietMode()
+                quiet: CommandLineConfiguration.isQuietMode(),
+                addSingleRun: CommandLineConfiguration.singleRunFiles(),
+                addSingleRunIgnore: CommandLineConfiguration.singleRunFilesIgnoring()
             };
         }
         Configuration.configFileName = configFileName;

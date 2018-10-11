@@ -86,6 +86,25 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.describeProtocols()).toBe('mqtt');
     });
 
+    it('no single run file', () => {
+        commanderRefresher(['node', 'test']);
+
+        expect(CommandLineConfiguration.singleRunFiles()).toEqual([]);
+        expect(CommandLineConfiguration.singleRunFilesIgnoring()).toEqual([]);
+    });
+
+    it('add single run file', () => {
+        commanderRefresher(['node', 'test', '-a', 'file', '--add-file-single-run', 'file2']);
+
+        expect(CommandLineConfiguration.singleRunFiles()).toEqual(['file', 'file2']);
+    });
+
+    it('add single run file ignoring', () => {
+        commanderRefresher(['node', 'test', '-A', 'file', '--add-file-and-ignore-single-run', 'file2']);
+
+        expect(CommandLineConfiguration.singleRunFilesIgnoring()).toEqual(['file', 'file2']);
+    });
+
     it('getStore -s', () => {
         const option = ['-s', '--store'];
         const store = {

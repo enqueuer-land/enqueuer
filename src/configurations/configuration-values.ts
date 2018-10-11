@@ -15,4 +15,6 @@ export interface ConfigurationValues {
     outputs: PublisherModel[];
     store: any;
     quiet: boolean;
+    addSingleRun: string[];
+    addSingleRunIgnore: string[];
 }

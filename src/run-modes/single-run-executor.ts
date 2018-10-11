@@ -15,22 +15,21 @@ import {Json} from '../object-notations/json';
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.runMode && configuration.runMode['single-run'] != null})
 export class SingleRunExecutor extends EnqueuerExecutor {
 
-    private fileNames: string[];
+    private readonly fileNames: string[];
+    private readonly parallelMode: boolean;
+    private readonly totalFilesNum: number;
     private multiPublisher: MultiPublisher;
     private multiResultCreator: MultiResultCreator;
-    private parallelMode: boolean;
-    private totalFilesNum: number;
 
     constructor(configuration: ConfigurationValues) {
         super();
         Logger.info('Executing in Single-Run mode');
         const singleRunMode: any = configuration.runMode['single-run'];
-        const singleRunConfiguration = singleRunMode;
         this.multiResultCreator = new MultiResultCreator(singleRunMode.reportName);
         this.parallelMode = !!singleRunMode.parallel;
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
-        this.fileNames = this.getTestFiles(singleRunConfiguration.files);
+        this.fileNames = this.getTestFiles(configuration);
         this.totalFilesNum = this.fileNames.length;
     }
 
@@ -66,7 +65,14 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private getTestFiles(files: string[] = []): string[] {
+    private getTestFiles(configuration: ConfigurationValues): string[] {
+        let files: string[] = configuration.addSingleRunIgnore;
+
+        if (files.length == 0) {
+            const singleRunMode: any = configuration.runMode['single-run'];
+            files = configuration.addSingleRun.concat(singleRunMode.files);
+        }
+
         let result: string[] = [];
         files.forEach((pattern: any) => {
             if (typeof(pattern) == 'string') {

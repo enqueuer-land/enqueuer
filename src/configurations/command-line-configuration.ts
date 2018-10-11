@@ -6,6 +6,8 @@ let commander = {};
 const testMode = process.argv[1].toString().match('jest');
 
 let commandLineStore: any = {};
+let singleRunFiles: string[] = [];
+let singleRunFilesIgnoring: string[] = [];
 
 let refreshCommander = (commandLineArguments: string[]) => {
     let commander = new Command()
@@ -23,6 +25,10 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 memo.push(val);
                 return memo;
             }, [])
+        .option('-a, --add-file-single-run <file>', 'add file to be tested in single-run',
+            (val: string) => singleRunFiles.push(val), [])
+        .option('-A, --add-file-and-ignore-single-run <file>', 'add file to be tested and ignore the ones set in single-run  ',
+            (val: string) => singleRunFilesIgnoring.push(val), [])
         .option('-p, --protocols-description [protocol]', 'describe protocols')
         .parse(commandLineArguments);
     return commander;
@@ -82,6 +88,14 @@ export class CommandLineConfiguration {
 
     public static describeProtocols(): string | undefined | true {
         return CommandLineConfiguration.getCommandLine().protocolsDescription;
+    }
+
+    public static singleRunFiles(): string[] {
+        return singleRunFiles;
+    }
+
+    public static singleRunFilesIgnoring(): string[] {
+        return singleRunFilesIgnoring;
     }
 
 }
