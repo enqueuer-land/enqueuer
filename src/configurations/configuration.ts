@@ -2,7 +2,6 @@ import {CommandLineConfiguration} from './command-line-configuration';
 import {FileConfiguration} from './file-configuration';
 import {ConfigurationValues, DaemonMode, SingleRunMode} from './configuration-values';
 
-//TODO clean it up
 export class Configuration {
 
     private static configFileName?: string;
@@ -17,10 +16,11 @@ export class Configuration {
         const isNotLoadedYet = !Configuration.instance;
         const fileNameHasChanged = configFileName != Configuration.configFileName;
 
-        if (configFileName !== undefined && (isNotLoadedYet || fileNameHasChanged)) {
-            Configuration.instance = this.readFromFile(configFileName);
-        } else if (isNotLoadedYet) {
+        if (isNotLoadedYet) {
             Configuration.instance = Configuration.default();
+        }
+        if (configFileName !== undefined && fileNameHasChanged) {
+            Configuration.instance = this.readFromFile(configFileName);
         }
         return {...Configuration.instance} as ConfigurationValues;
     }
