@@ -42,6 +42,7 @@ export class HandlerListener {
                         this.handler = address.port;
                         Logger.info(`No specified handler. Server is bound to (${this.handler})`);
                     } else {
+                        this.handler = handler;
                         Logger.debug(`Server is bound to (${this.handler})`);
                     }
                     resolve();

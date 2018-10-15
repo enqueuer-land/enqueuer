@@ -19,8 +19,8 @@ export class HttpContainer {
     }
 
     public async acquire(): Promise<any> {
-        ++this.counter;
-        if (this.counter == 1) {
+        if (this.counter == 0) {
+            ++this.counter;
             await new HandlerListener(this.server).listen(this.port);
         }
         return this.app;
@@ -28,6 +28,7 @@ export class HttpContainer {
 
     public release(onClose: () => void) {
         --this.counter;
+        Logger.debug(`Releasing container ${this.port} (${this.counter})`);
         if (this.counter == 0) {
             Logger.debug(`Closing container ${this.port}`);
             this.sockets.forEach((socket: any) => socket.destroy());
@@ -38,7 +39,7 @@ export class HttpContainer {
                 Logger.debug(`Container ${this.port} is closed`);
                 onClose();
             });
-        } else if (this.counter < 0) {
+        } else {
             onClose();
         }
     }

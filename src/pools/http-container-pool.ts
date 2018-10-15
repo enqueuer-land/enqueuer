@@ -3,7 +3,7 @@ import {HttpContainer} from './http-container';
 
 export class HttpContainerPool {
     private static instance: HttpContainerPool;
-    private containers: { [propName: number]: HttpContainer } = {};
+    private containers: { [propName: number]: HttpContainer} = {};
 
     public static getApp(port: number, secure: boolean = false, credentials?: any): Promise<any> {
         const self = HttpContainerPool.getInstance();
@@ -12,11 +12,8 @@ export class HttpContainerPool {
         if (!httpContainer) {
             Logger.debug(`Creating a new Http/s server ${port}`);
             httpContainer = new HttpContainer(port, secure, credentials);
-            return httpContainer.acquire()
-                .then((app: any) => {
-                    self.containers[port] = httpContainer;
-                    return app;
-                });
+            self.containers[port] = httpContainer;
+            return httpContainer.acquire();
         } else {
             Logger.trace(`Reusing Http/s server ${port}`);
             return httpContainer.acquire();
@@ -32,10 +29,11 @@ export class HttpContainerPool {
             if (httpContainer) {
                 httpContainer.release(() => {
                     delete self.containers[port];
+                    Logger.debug(`Http container (${port}) is closed`);
                     resolve();
                 });
             } else {
-                Logger.warning(`No bound http-container to be released (${port})`);
+                Logger.info(`No bound http-container to be released (${port})`);
                 resolve();
             }
         });

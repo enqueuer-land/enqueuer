@@ -67,7 +67,7 @@ export class RequisitionReporter {
             });
         this.multiPublishersReporter.publish()
             .then(async () => {
-                Logger.info('Publishers published');
+                Logger.info('Publishers have done their job');
                 this.publishersDoneTheirJob = true;
                 await this.tryToFinishExecution();
             })
@@ -118,6 +118,7 @@ export class RequisitionReporter {
 
         await this.multiSubscriptionsReporter.unsubscribe();
 
+        Logger.debug(`Subscriptions unsubscribed`);
         this.onFinishCallback();
     }
 

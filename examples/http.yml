@@ -1,28 +1,35 @@
 -   timeout: 3000
     publishers:
-        -   name: publisher description
-            type: http-client
-            url: http://localhost:23075/enqueuer/idStuff?query=000
-            method: POST
-            payload:
-                enqueuer: virgs
-            headers:
-                content-type: application/json
-                nqr: publisher
-            onMessageReceived:
-                assertions:
-                    -   name: Status Code
-                        expect: statusCode
-                        toBeEqualTo: 321
-                    -   name: Body
-                        expect: body
-                        toBeEqualTo: `dynamically changed payload`
-                    -   name: Header
-                        expect: headers.nqr
-                        toBeEqualTo: `subscription`
+    -   type: http-client
+        url: http://localhost:23075/enqueuer/idStuff?query=2345
+        method: POST
+        payload:
+            enqueuer: virgs
+        headers:
+            content-type: application/json
+            nqr: publisher
+        onMessageReceived:
+            assertions:
+            -   name: Status Code
+                expect: statusCode
+                toBeEqualTo: 321
+            -   name: Body
+                expect: body
+                toBeEqualTo: `dynamically changed payload`
+            -   name: Header
+                expect: headers.nqr
+                toBeEqualTo: `subscription`
+    -   type: http
+        url: http://localhost:23075/samePort
+        method: POST
+        payload: virgs
+        onMessageReceived:
+            assertions:
+            -   name: Status Code
+                expect: statusCode
+                toBeEqualTo: 444
     subscriptions:
-        -   name: subscription description
-            type: http-server
+        -   type: http-server
             endpoint: /enqueuer/:firstId
             port: 23075
             method: POST
@@ -44,10 +51,25 @@
                         toBeEqualTo: `idStuff`
                     -   name: Query
                         expect: query.query
-                        toBeEqualTo: 0
+                        toBeEqualTo: 2345
                     -   name: Header
                         expect: headers.nqr
                         toBeEqualTo: `publisher`
+        -   name: same port
+            type: http
+            endpoint: /samePort
+            port: 23075
+            method: POST
+            response:
+                status: 444
+                payload: blah
+        -   name: yet another, but avoidable
+            type: http
+            endpoint: /avoidable
+            port: 23075
+            method: POST
+            avoid: true
+            timeout: 300
 -   timeout: 5000
     publishers:
         -   name: publisher description

@@ -1,10 +1,9 @@
 import {HttpContainerPool} from "./http-container-pool";
 import {HttpContainer} from "./http-container";
-import {HttpContainer} from "./http-container";
 import {Logger} from "../loggers/logger";
 
 let acquireMock = jest.fn(() => Promise.resolve('acquireReturn'));
-let releaseMock = jest.fn();
+let releaseMock = jest.fn((cb) => cb());
 
 jest.mock("./http-container");
 let constructorHttpContainer = jest.fn(() => {
@@ -63,20 +62,23 @@ describe('HttpContainerPool', () => {
     it('release App', done => {
         const port = 987;
 
-        HttpContainerPool.getApp(port).then(() => {
-            HttpContainerPool.releaseApp(port);
-            expect(releaseMock).toHaveBeenCalledTimes(1);
-            done();
-        });
+        HttpContainerPool.getApp(port)
+            .then(() => HttpContainerPool.releaseApp(port))
+            .then(() => {
+                expect(releaseMock).toHaveBeenCalledTimes(1);
+                done();
+            });
 
     });
 
-    it('release non existent App', () => {
-        const port = 32456;
-        HttpContainerPool.releaseApp(port);
+    it('release non existent App', done => {
+        const port = 3245612;
+        HttpContainerPool.releaseApp(port).then(() => {
 
-        expect(releaseMock).not.toHaveBeenCalled();
-        expect(warningLogMock).toHaveBeenCalledWith(`No bound http-container to be released (${port})`);
+            expect(releaseMock).not.toHaveBeenCalled();
+            done();
+        });
+
     });
 
 });

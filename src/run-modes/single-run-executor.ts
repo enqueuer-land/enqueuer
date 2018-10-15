@@ -24,10 +24,10 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     constructor(configuration: ConfigurationValues) {
         super();
         let singleRunMode: SingleRunMode = configuration['single-run'];
-        const singleRunFiles = singleRunMode.files ? singleRunMode.files : [];
+        const singleRunFiles = singleRunMode && singleRunMode.files ? singleRunMode.files : [];
 
-        this.multiResultCreator = new MultiResultCreator(singleRunMode.reportName);
-        this.parallelMode = !!singleRunMode.parallel;
+        this.multiResultCreator = new MultiResultCreator(singleRunMode ? singleRunMode.reportName : undefined);
+        this.parallelMode = singleRunMode ? !!singleRunMode.parallel : false;
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
         this.fileNames = this.getTestFiles(configuration, singleRunFiles);

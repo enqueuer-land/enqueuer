@@ -44,7 +44,7 @@ export class HttpSubscription extends Subscription {
             });
     }
 
-    public async unsubscribe(): Promise<void> {
+    public unsubscribe(): Promise<void> {
         return HttpContainerPool.releaseApp(this.port);
     }
 
@@ -85,7 +85,7 @@ export class HttpSubscription extends Subscription {
                 Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
                 this.responseToClientHandler = responseHandler;
                 resolve(this.createMessageReceivedStructure(request));
-                next();
+                // next(); //breaks two endpoints same port test
             });
         });
     }
