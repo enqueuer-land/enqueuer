@@ -25,23 +25,23 @@ describe('Configuration', () => {
         CommandLineConfiguration.getConfigFileName.mockReset();
 
         const reloadMock = jest.fn();
-        FileConfiguration.reload.mockImplementation(reloadMock);
-        
+        FileConfiguration.load.mockImplementation(reloadMock);
+
         let configFileName = 'first';
         CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => configFileName);
-        
+
         Configuration.getValues();
-        
+
         expect(reloadMock).toHaveBeenCalledWith(configFileName);
-        
+
         //----
 
         configFileName = 'second';
         CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => configFileName);
 
         Configuration.getValues();
-        
-        
+
+
         expect(reloadMock).toHaveBeenCalledWith(configFileName);
     });
 
@@ -64,13 +64,6 @@ describe('Configuration', () => {
         expect(Configuration.getValues().logLevel).toBe('warn');
     });
 
-    it('should getRunMode in configuration file', () => {
-        const runMode = 'confFile';
-        FileConfiguration.getRunMode.mockImplementationOnce(() => runMode);
-
-        expect(Configuration.getValues().runMode).toBe(runMode);
-    });
-
     it('should getOutputs in configuration file', () => {
         const outputs = 'confFile';
         FileConfiguration.getOutputs.mockImplementationOnce(() => outputs);
@@ -79,12 +72,12 @@ describe('Configuration', () => {
     });
 
     it('should merge getStore from configuration file and command line', () => {
-        CommandLineConfiguration.getStore.mockImplementationOnce(() => {
+        CommandLineConfiguration.getStore.mockImplementation(() => {
             return {
                 commandLine: 'value'
             }
         });
-        FileConfiguration.getStore.mockImplementationOnce(() => {
+        FileConfiguration.getStore.mockImplementation(() => {
             return {
                 confFile: 'value'
             }
@@ -100,7 +93,7 @@ describe('Configuration', () => {
 
     it('should check \'isQuietMode\' in command line', () => {
         const quietMode = false;
-        CommandLineConfiguration.isQuietMode.mockImplementationOnce(() => quietMode);
+        CommandLineConfiguration.isQuietMode.mockImplementation(() => quietMode);
 
         expect(Configuration.getValues().quiet).toBe(quietMode);
     });
@@ -119,7 +112,7 @@ describe('Configuration', () => {
         const attributes = Configuration.getValues();
 
         expect(previousValue.store).toEqual(changed);
-        expect(attributes.store).toEqual(original);
+        expect(attributes.store.original).toEqual(original.original);
     });
 
     it('should avoid refreshing', () => {
@@ -128,7 +121,7 @@ describe('Configuration', () => {
         CommandLineConfiguration.getConfigFileName.mockImplementation(() => filename);
 
         const reloadMock = jest.fn();
-        FileConfiguration.reload.mockImplementation(reloadMock);
+        FileConfiguration.load.mockImplementation(reloadMock);
 
         Configuration.getValues();
         Configuration.getValues();

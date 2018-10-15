@@ -1,7 +1,7 @@
 #This file tells how enqueuer should be executed
 
 #execution mode
-#two modes are mutually exclusive 'single-run' and 'daemon'. At least one of them has to be defined
+#two modes are mutually exclusive 'single-run' (default) and 'daemon'.
 # single-run mode: executes a single time. This is the one that has to be used when your goal is to integrate your pipeline.
 #             It runs, at the same time, every file (/docs/tests/test.yml) listed in 'files' field or that matches 'file' value.
 #             Once them all are ran, enqueuer ends its execution, compiles a summary and saves it in a file defined in 'reportName'.
@@ -9,7 +9,7 @@
 #               0, if everything is ok; or
 #               1, if there is at least one invalid thing.
 # You can use this one as example: /singleRun.yml
-single-run:
+single-run: #(default)
   #Used to describe your config test scenario
   name: examples
 

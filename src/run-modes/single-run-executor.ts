@@ -12,8 +12,7 @@ import {ConfigurationValues, SingleRunMode} from '../configurations/configuratio
 import {Json} from '../object-notations/json';
 
 //TODO test it
-@Injectable({predicate: (configuration: ConfigurationValues) => configuration['single-run'] != null
-        || (configuration.runMode != null && configuration.runMode['single-run'] != null)})
+@Injectable()
 export class SingleRunExecutor extends EnqueuerExecutor {
 
     private readonly fileNames: string[];
@@ -25,15 +24,13 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     constructor(configuration: ConfigurationValues) {
         super();
         let singleRunMode: SingleRunMode = configuration['single-run'];
-        if (singleRunMode === undefined) {
-            singleRunMode = configuration.runMode['single-run'];
-        }
+        const singleRunFiles = singleRunMode.files ? singleRunMode.files : [];
 
         this.multiResultCreator = new MultiResultCreator(singleRunMode.reportName);
         this.parallelMode = !!singleRunMode.parallel;
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);
-        this.fileNames = this.getTestFiles(configuration, singleRunMode.files);
+        this.fileNames = this.getTestFiles(configuration, singleRunFiles);
         this.totalFilesNum = this.fileNames.length;
     }
 

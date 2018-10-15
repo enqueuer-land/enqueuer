@@ -9,7 +9,7 @@ So you don't have to deal with a whole bunch of stuff you will not need.
 ###### If you need some help:
 
     $ nqr -h
-    Usage: nqr [options] <confif-file-path>
+    Usage: nqr [options] [config-file-path]
     
     Options:
     

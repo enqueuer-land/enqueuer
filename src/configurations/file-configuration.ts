@@ -1,53 +1,47 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
+import {DaemonMode, SingleRunMode} from './configuration-values';
 
 export class FileConfiguration {
-    private static DEFAULT_FILENAME = 'enqueuer.yml';
     private static instance: any;
 
-    private configurationFile: any;
-
-    private constructor(filename: string) {
-        this.configurationFile = new MultipleObjectNotation().loadFromFileSync(filename);
+    private constructor() {
+        /* do nothing */
     }
 
-    public static reload(filename: string) {
+    public static load(filename: string): void {
         try {
-            FileConfiguration.instance = new FileConfiguration(filename);
+            FileConfiguration.instance = new MultipleObjectNotation().loadFromFileSync(filename);
         } catch (err) {
             throw (`Error loading configuration file: ${err}`);
         }
     }
 
     public static getLogLevel(): string {
-        return FileConfiguration.getConfigurationFile()['log-level'];
+        return FileConfiguration.instance['log-level'];
     }
 
-    public static getRunMode(): any {
-        return FileConfiguration.getConfigurationFile()['run-mode'];
+    public static getDaemon(): DaemonMode {
+        const runMode = FileConfiguration.instance['run-mode'];
+        if (runMode) {
+            return runMode.daemon;
+        }
+        return FileConfiguration.instance['daemon'];
     }
 
-    public static getDaemon() {
-        return FileConfiguration.getConfigurationFile()['daemon'];
-
-    }
-
-    public static getSingleRun() {
-        return FileConfiguration.getConfigurationFile()['single-run'];
+    public static getSingleRun(): SingleRunMode {
+        const runMode = FileConfiguration.instance['run-mode'];
+        if (runMode) {
+            return runMode['single-run'];
+        }
+        return FileConfiguration.instance['single-run'];
     }
 
     public static getOutputs(): PublisherModel[] {
-        return FileConfiguration.getConfigurationFile().outputs || [];
+        return FileConfiguration.instance.outputs;
     }
 
     public static getStore(): any {
-        return FileConfiguration.getConfigurationFile().store || {};
-    }
-
-    private static getConfigurationFile(): any {
-        if (!FileConfiguration.instance) {
-            FileConfiguration.reload(FileConfiguration.DEFAULT_FILENAME);
-        }
-        return FileConfiguration.instance.configurationFile;
+        return FileConfiguration.instance.store;
     }
 }

@@ -11,8 +11,7 @@ import {ConsoleResultCreator} from './single-run-result-creators/console-result-
 import {RequisitionParser} from '../requisition-runners/requisition-parser';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 
-@Injectable({predicate: (configuration: ConfigurationValues) => configuration.daemon != null ||
-        (configuration.runMode && configuration.runMode.daemon != null)})
+@Injectable({predicate: (configuration: ConfigurationValues) => configuration.daemon !== undefined})
 export class DaemonRunExecutor extends EnqueuerExecutor {
     private daemonInputs: DaemonInput[];
     private multiPublisher: MultiPublisher;
@@ -24,9 +23,6 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
     public constructor(configuration: ConfigurationValues) {
         super();
         let daemonMode: DaemonMode = configuration.daemon;
-        if (!daemonMode) {
-            daemonMode = configuration.runMode.daemon;
-        }
         Logger.info('Executing in Daemon mode');
 
         this.multiPublisher = new MultiPublisher(configuration.outputs);

@@ -15,19 +15,19 @@ publishers:
                     expect: body
                     toBeEqualTo: `responsePayload`
 subscriptions:
-    -   type: http-server
-        endpoint: /bearer
-        port: 23067
-        method: POST
-        timeout: 10000
-        authentication:
-            bearer:
-                token: bearerToken
-        response:
+-   type: http-server
+    endpoint: /bearer
+    port: 23067
+    method: POST
+    timeout: 10000
+    authentication:
+        bearer:
+            token: bearerToken
+    response:
             status: 321
             payload: responsePayload
-        onMessageReceived:
-            assertions:
-                -   name: Payload
-                    expect: message.body
-                    toBeEqualTo: `Rech`
+    onMessageReceived:
+        assertions:
+            -   name: Payload
+                expect: message.body
+                toBeEqualTo: `Rech`

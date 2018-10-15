@@ -110,11 +110,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./run-modes/null-run-executor');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./run-modes/single-run-executor');
 } catch (err) {
   /* do nothing*/

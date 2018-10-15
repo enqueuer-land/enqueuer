@@ -68,18 +68,16 @@ export class CommandLineConfiguration {
         return CommandLineConfiguration.getCommandLine().verbosity;
     }
 
-    public static getConfigFileName(): string {
+    public static getConfigFileName(): string | undefined {
         const commandLine = CommandLineConfiguration.getCommandLine();
         let configFileName = commandLine.configFile;
-        if (!configFileName) {
-            const args = commandLine.args;
-            if (args && args.length > 0) {
-                configFileName = args[0];
-            } else {
-                configFileName = 'config.yml';
-            }
+        if (configFileName) {
+            return configFileName;
         }
-        return configFileName;
+        const args = commandLine.args;
+        if (args && args.length > 0) {
+            return args[0];
+        }
     }
 
     public static getStore(): any {

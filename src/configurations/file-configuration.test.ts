@@ -1,6 +1,5 @@
 import {FileConfiguration} from "./file-configuration";
 import {MultipleObjectNotation} from "../object-notations/multiple-object-notation";
-import * as yaml from 'yamljs';
 
 jest.mock('../object-notations/multiple-object-notation');
 let fileLoadMock = jest.fn(() => true);
@@ -23,7 +22,7 @@ describe('FileConfiguration', () => {
     it('Reload file - success', () => {
         const filename = 'filename';
 
-        expect(() => FileConfiguration.reload(filename)).not.toThrow();
+        expect(() => FileConfiguration.load(filename)).not.toThrow();
     });
 
     it('Reload file - fail', () => {
@@ -31,7 +30,7 @@ describe('FileConfiguration', () => {
 
         const filename = 'filename';
 
-        expect(() => FileConfiguration.reload(filename)).toThrow();
+        expect(() => FileConfiguration.load(filename)).toThrow();
     });
 
     it('getVerbosity', () => {
@@ -41,22 +40,61 @@ describe('FileConfiguration', () => {
                 'log-level': logLevel
             }
         });
-        FileConfiguration.reload('itDoesNotMatter');
+        FileConfiguration.load('itDoesNotMatter');
 
         expect(FileConfiguration.getLogLevel()).toBe(logLevel);
     });
 
-    it('getRunMode', () => {
-        const runMode = 'enqueuer';
+    it('getDaemon RunMode', () => {
+        const mode = 'enqueuer';
         fileLoadMock = jest.fn(() => {
             return {
-                'run-mode': runMode
+                'run-mode': {
+                    daemon: mode
+                }
             }
         });
-        FileConfiguration.reload('itDoesNotMatter');
+        FileConfiguration.load('itDoesNotMatter');
 
+        expect(FileConfiguration.getDaemon()).toBe(mode);
+    });
 
-        expect(FileConfiguration.getRunMode()).toBe(runMode);
+    it('getDaemon', () => {
+        const mode = 'enqueuer';
+        fileLoadMock = jest.fn(() => {
+            return {
+                daemon: mode
+            }
+        });
+        FileConfiguration.load('itDoesNotMatter');
+
+        expect(FileConfiguration.getDaemon()).toBe(mode);
+    });
+
+    it('getSingleRun RunMode', () => {
+        const mode = 'enqueuer';
+        fileLoadMock = jest.fn(() => {
+            return {
+                'run-mode': {
+                    'single-run': mode
+                }
+            }
+        });
+        FileConfiguration.load('itDoesNotMatter');
+
+        expect(FileConfiguration.getSingleRun()).toBe(mode);
+    });
+
+    it('getSingleRun', () => {
+        const mode = 'enqueuer';
+        fileLoadMock = jest.fn(() => {
+            return {
+                'single-run': mode
+            }
+        });
+        FileConfiguration.load('itDoesNotMatter');
+
+        expect(FileConfiguration.getSingleRun()).toBe(mode);
     });
 
     it('getOutputs', () => {
@@ -66,7 +104,7 @@ describe('FileConfiguration', () => {
                 'outputs': outputs
             }
         });
-        FileConfiguration.reload('itDoesNotMatter');
+        FileConfiguration.load('itDoesNotMatter');
 
 
         expect(FileConfiguration.getOutputs()).toBe(outputs);
@@ -77,12 +115,11 @@ describe('FileConfiguration', () => {
             return {
             }
         });
-        FileConfiguration.reload('itDoesNotMatter');
+        FileConfiguration.load('itDoesNotMatter');
 
 
-        expect(FileConfiguration.getOutputs()).toEqual([]);
+        expect(FileConfiguration.getOutputs()).toBeUndefined();
     });
-
 
     it('getStore', () => {
         const store = {
@@ -94,7 +131,7 @@ describe('FileConfiguration', () => {
                 'store': store
             }
         });
-        FileConfiguration.reload('itDoesNotMatter');
+        FileConfiguration.load('itDoesNotMatter');
 
 
         expect(FileConfiguration.getStore()).toBe(store);
@@ -105,10 +142,10 @@ describe('FileConfiguration', () => {
             return {
             }
         });
-        FileConfiguration.reload('itDoesNotMatter');
+        FileConfiguration.load('itDoesNotMatter');
 
 
-        expect(FileConfiguration.getStore()).toEqual({});
+        expect(FileConfiguration.getStore()).toBeUndefined()
     });
 
 

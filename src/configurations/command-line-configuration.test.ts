@@ -34,16 +34,9 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.getVerbosity()).toBeUndefined();
     });
 
-    it('getConfigFileName default', () => {
-        const defaultConfigFile = 'config.yml';
-        commanderRefresher(['node', 'test']);
-
-        expect(CommandLineConfiguration.getConfigFileName()).toBe(defaultConfigFile);
-    });
-
     it('getConfigFileName <no dash>', () => {
         const configFile = 'filename';
-        commanderRefresher(['node', 'test', '--some', 'test', configFile]);
+        commanderRefresher(['node', 'test', '--some', 'test', configFile, '--other', 'stuff', ]);
 
         expect(CommandLineConfiguration.getConfigFileName()).toBe(configFile);
     });

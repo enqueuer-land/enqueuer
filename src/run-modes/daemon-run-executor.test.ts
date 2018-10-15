@@ -27,9 +27,7 @@ let daemonConfiguration;
 describe('DaemonRunExecutor', () => {
     beforeEach(() => {
         daemonConfiguration = {
-            runMode: {
-                daemon: ['input1', 'input2']
-            },
+            daemon: ['input1', 'input2'],
             outputs: 'bla'
         };
         createMock.mockReset();
@@ -42,7 +40,7 @@ describe('DaemonRunExecutor', () => {
         expect(mockCalls.length).toBe(1);
         const injectableOption = mockCalls[0][0];
         expect(injectableOption.predicate(daemonConfiguration)).toBeTruthy();
-        delete daemonConfiguration.runMode.daemon;
+        delete daemonConfiguration.daemon;
         expect(injectableOption.predicate(daemonConfiguration)).toBeFalsy();
     });
 
@@ -58,9 +56,9 @@ describe('DaemonRunExecutor', () => {
     it('should call DaemonInput constructor', () => {
 
         new DaemonRunExecutor(daemonConfiguration);
-        expect(createMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
-        expect(createMock).toBeCalledWith(daemonConfiguration.runMode.daemon[0]);
-        expect(createMock).toBeCalledWith(daemonConfiguration.runMode.daemon[1]);
+        expect(createMock).toHaveBeenCalledTimes(daemonConfiguration.daemon.length);
+        expect(createMock).toBeCalledWith(daemonConfiguration.daemon[0]);
+        expect(createMock).toBeCalledWith(daemonConfiguration.daemon[1]);
     });
     //
     // it('execute subscription fail', ()=> {
