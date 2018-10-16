@@ -33,7 +33,7 @@ export class Configuration {
             logLevel: CommandLineConfiguration.getVerbosity() || FileConfiguration.getLogLevel() || defaultValues.logLevel,
             daemon: FileConfiguration.getDaemon(),
             'single-run': FileConfiguration.getSingleRun() || defaultValues.singleRun,
-            outputs: FileConfiguration.getOutputs() || defaultValues.outputs,
+            outputs: defaultValues.outputs.concat(FileConfiguration.getOutputs()),
             store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
             quiet: CommandLineConfiguration.isQuietMode(),
             addSingleRun: CommandLineConfiguration.singleRunFiles(),
@@ -42,12 +42,16 @@ export class Configuration {
     }
 
     private static default(): any {
+        let outputs = [];
+        if (CommandLineConfiguration.getStdoutRequisitionOutput()) {
+            outputs.push({type: 'standard-output', pretty: true});
+        }
         return {
             logLevel: CommandLineConfiguration.getVerbosity() || 'warn',
             'single-run': {
                 files: []
             },
-            outputs: [],
+            outputs: outputs,
             store: Object.assign({}, CommandLineConfiguration.getStore()),
             quiet: CommandLineConfiguration.isQuietMode(),
             addSingleRun: CommandLineConfiguration.singleRunFiles(),

@@ -16,6 +16,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
         .option('-q, --quiet', 'disable logging', false)
         .option('-b, --verbosity <level>', 'set verbosity [trace, debug, info, warn, error, fatal]')
         .option('-c, --config-file <path>', 'set configurationFile')
+        .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
         .option('-s, --store [store]', 'add variables values to this session',
             (val: string, memo: string[]) => {
                 const split = val.split('=');
@@ -66,6 +67,10 @@ export class CommandLineConfiguration {
 
     public static getVerbosity(): string {
         return CommandLineConfiguration.getCommandLine().verbosity;
+    }
+
+    public static getStdoutRequisitionOutput(): boolean {
+        return !!CommandLineConfiguration.getCommandLine().stdoutRequisitionOutput;
     }
 
     public static getConfigFileName(): string | undefined {

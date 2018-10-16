@@ -34,6 +34,24 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.getVerbosity()).toBeUndefined();
     });
 
+    it('default console output', () => {
+        commanderRefresher(['node', 'test']);
+
+        expect(CommandLineConfiguration.getStdoutRequisitionOutput()).toBeFalsy();
+    });
+
+    it('set console output -o', () => {
+        commanderRefresher(['node', 'test', '-o']);
+
+        expect(CommandLineConfiguration.getStdoutRequisitionOutput()).toBeTruthy();
+    });
+
+    it('set console output --stdout-requisition-output', () => {
+        commanderRefresher(['node', 'test', '--stdout-requisition-output']);
+
+        expect(CommandLineConfiguration.getStdoutRequisitionOutput()).toBeTruthy();
+    });
+
     it('getConfigFileName <no dash>', () => {
         const configFile = 'filename';
         commanderRefresher(['node', 'test', '--some', 'test', configFile, '--other', 'stuff', ]);

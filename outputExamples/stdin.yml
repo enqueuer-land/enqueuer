@@ -1,9 +1,9 @@
 name: examples/stdin.yml
-valid: true
+valid: false
 tests: []
 requisitions:
   -
-    valid: true
+    valid: false
     tests: []
     name: 'Requisition #0'
     subscriptions:
@@ -12,23 +12,22 @@ requisitions:
         type: standard-input
         tests:
           -
-            name: payload
-            valid: true
-            description: 'Expected ''message'' to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
-          -
-            valid: true
+            valid: false
             name: 'Message received'
-            description: 'Subscription has received its message'
-        valid: true
-        connectionTime: '2018-10-15T23:35:15.275Z'
-        messageReceived: 'enqueuer standard-input payload'
+            description: 'Subscription has not received its message'
+          -
+            valid: false
+            name: 'No time out'
+            description: 'Not avoidable subscription has timed out'
+        valid: false
+        connectionTime: '2018-10-16T23:04:54.799Z'
     publishers: []
     time:
-      startTime: '2018-10-15T23:35:15.232Z'
-      endTime: '2018-10-15T23:35:15.347Z'
-      totalTime: 115
+      startTime: '2018-10-16T23:04:54.756Z'
+      endTime: '2018-10-16T23:04:57.797Z'
+      totalTime: 3041
     requisitions: []
 time:
-  startTime: '2018-10-15T23:35:15.178Z'
-  endTime: '2018-10-15T23:35:15.347Z'
-  totalTime: 169
+  startTime: '2018-10-16T23:04:54.710Z'
+  endTime: '2018-10-16T23:04:57.798Z'
+  totalTime: 3088

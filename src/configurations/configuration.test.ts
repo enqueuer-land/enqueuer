@@ -68,7 +68,7 @@ describe('Configuration', () => {
         const outputs = 'confFile';
         FileConfiguration.getOutputs.mockImplementationOnce(() => outputs);
 
-        expect(Configuration.getValues().outputs).toBe(outputs);
+        expect(Configuration.getValues().outputs).toEqual([outputs]);
     });
 
     it('should merge getStore from configuration file and command line', () => {
