@@ -11,8 +11,8 @@ When a TCP server you own is hit, you have to send an information to a RESTful A
 
 Now, you have three options to test this **polyglot flow**:
 1. Write no test at all;
-2. Write a component test for each one of these cases separately in the codebase itself, mock them all, handle new dependencies, figure out details and deal with debugging them when they fail; or
-3. Use **enqueuer** and have it all tested right out of the box.
+1. Write a component test for each one of these cases separately in the codebase itself, mock them all, handle new dependencies, figure out details and deal with debugging them when they fail; or
+1. Use **enqueuer** and have it all tested right out of the box.
 
 To use **enqueuer**, you have to:
 
@@ -20,21 +20,17 @@ To use **enqueuer**, you have to:
 
     ```$npm install enqueuer --no-optional --global```
     
-2. create a configuration file like this:
-    ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-config.png "config-file.yml")
-
-3. create a file to describe how to test:
+1. create a file to describe how to test:
     ![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-test.png "testfile")
 
-4. execute it:
-    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-result.png "executing")
-    
+1. execute it:
+    ![readme-result](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-result.png "executing")    
 
 #### What it does
 It is a microservice integration testing tool that supports a range of protocols (HTTP, AMQP, MQTT etc.) and provides the following capabilities:
-1) Initiates requests
-2) Mock depended services
-3) Assert against payload and message content
-4) CLI easily added to CI pipelines
+- Initiates requests
+- Mock depended services
+- Assert against payload and message content
+- CLI easily added to CI pipelines
     
 Consider reading the [instructions](https://github.com/lopidio/enqueuer/tree/develop/docs/instructions "instructions") for further details
