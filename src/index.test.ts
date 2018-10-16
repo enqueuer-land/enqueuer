@@ -16,8 +16,7 @@ let configurationGetReturn: ConfigurationValues = {
         runMode: {
             daemon: [],
             'single-run': {
-                name: 'anyName',
-                reportName: 'reportNameSingle',
+                report: 'reportNameSingle',
                 parallel: true,
                 files: [],
             }

@@ -13,14 +13,14 @@ single-run: #(default)
   #Used to describe your config test scenario
   name: examples
 
-  #requisition files name or glob
+  #Optional. A single file with the whole execution report is generated. Every test of every input file will be there.
+  report: singleRunOutput.yml #outputExamples/singleRunOutput.json
+
+  #Optional. Requisition files name or glob
   files:
   - 1.yml
   - 2.yml
   - *.json
-
-  #Optional. A single file with the whole execution report is generated. Every test of every input file will be there.
-  reportName: singleRunOutput.yml #outputExamples/singleRunOutput.json
 
   #Default: false
   #Run every file at the same time

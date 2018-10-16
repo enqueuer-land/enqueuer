@@ -3,8 +3,8 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 
 export type DaemonMode = SubscriptionModel[];
 export type SingleRunMode = {
-    name: string;
-    reportName: string;
+    reportName?: string;
+    report?: string;
     parallel: boolean;
     files: string[];
 };
