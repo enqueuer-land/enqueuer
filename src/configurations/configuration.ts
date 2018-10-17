@@ -33,7 +33,7 @@ export class Configuration {
             logLevel: CommandLineConfiguration.getVerbosity() || FileConfiguration.getLogLevel() || defaultValues.logLevel,
             daemon: FileConfiguration.getDaemon(),
             'single-run': FileConfiguration.getSingleRun() || defaultValues.singleRun,
-            outputs: defaultValues.outputs.concat(FileConfiguration.getOutputs()),
+            outputs: defaultValues.outputs.concat(FileConfiguration.getOutputs() || []),
             store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
             quiet: CommandLineConfiguration.isQuietMode(),
             addSingleRun: CommandLineConfiguration.singleRunFiles(),
