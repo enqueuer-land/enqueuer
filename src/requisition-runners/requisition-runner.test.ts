@@ -4,7 +4,7 @@ import {RequisitionReporter} from "../reporters/requisition-reporter";
 import {Store} from '../configurations/store';
 import {Timeout} from '../timers/timeout';
 
-const report = "I'm a report";
+const report = {name: "I'm a report"};
 let startMock = jest.fn((cb) => cb());
 let getReportMock = jest.fn(() => report);
 let requisitionReporterConstructorMock = jest.fn(() => {
@@ -51,7 +51,6 @@ describe('RequisitionRunner', () => {
 
         expect(new RequisitionRunner(requisition).run()).resolves.toBe(report);
         expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({"timeout": "value"});
-        expect(startMock).toHaveBeenCalled();
     });
 
     it('Should return requisition report collection', done => {
@@ -66,8 +65,11 @@ describe('RequisitionRunner', () => {
             delete report.time;
             expect(report).toEqual({
                 "name": "req name iterator collection",
-                "requisitions": ["I'm a report", "I'm a report"],
                 "publishers": [],
+                "requisitions": [{"name": "I'm a report", "requisitions": []}, {
+                    "name": "I'm a report",
+                    "requisitions": []
+                }],
                 "subscriptions": [],
                 "tests": [],
                 "valid": true

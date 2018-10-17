@@ -38,23 +38,7 @@ export class MultiRequisitionRunner {
     private runRequisition(promises: (() => Promise<output.RequisitionModel>)[], resolve: any, reject: any) {
         this.sequentialRunner(promises)
             .then((reports: output.RequisitionModel[]) => {
-                Logger.debug(`Got requisitions reports from: ${this.report.name}`);
-                reports.forEach((report) => {
-                    this.report.valid = this.report.valid && report.valid;
-                    if (this.report.requisitions) {
-                        this.report.requisitions.push(report);
-                    }
-                });
-            })
-            .then(() => {
-                if (this.report.time) {
-                    const endDate = new DateController();
-                    this.report.time = {
-                        startTime: this.startTime.toString(),
-                        endTime: endDate.toString(),
-                        totalTime: endDate.getTime() - this.startTime.getTime()
-                    };
-                }
+                this.appendReports(reports);
                 resolve(this.report);
             })
             .catch((err: any) => {
@@ -63,25 +47,32 @@ export class MultiRequisitionRunner {
             });
     }
 
-    private async checkInnerRequisitions(requisition: input.RequisitionModel): Promise<void> {
-        if (requisition.requisitions && requisition.requisitions.length > 0) {
-            const multiRequisitionRunner = new MultiRequisitionRunner(requisition.requisitions, requisition.name, requisition);
-            Logger.info(`Handling inner ${requisition.name} requisitions`);
-            return multiRequisitionRunner
-                .run()
-                .then((report: output.RequisitionModel) => {
-                    if (this.report.requisitions) {
-                        this.report.requisitions.push(report);
-                    }
-                });
+    private appendReports(reports: output.RequisitionModel[]) {
+        Logger.debug(`Got requisitions reports from: ${this.report.name}`);
+        reports.forEach((report) => {
+            this.report.valid = this.report.valid && report.valid;
+            if (this.report.requisitions) {
+                this.report.requisitions.push(report);
+            }
+        });
+        if (this.report.time) {
+            this.adjustTimeReport();
         }
+    }
+
+    private adjustTimeReport() {
+        const endDate = new DateController();
+        this.report.time = {
+            startTime: this.startTime.toString(),
+            endTime: endDate.toString(),
+            totalTime: endDate.getTime() - this.startTime.getTime()
+        };
     }
 
     private promisifyRequisitionExecutionCall(): (() => Promise<output.RequisitionModel>)[] {
         return this.requisitions.map((requisition: input.RequisitionModel) => () => {
             Logger.debug(`Promisifying '${requisition.name}' requisition`);
-            return this.checkInnerRequisitions(requisition)
-                .then(() => new RequisitionRunner(requisition, this.parent).run());
+            return new RequisitionRunner(requisition, this.parent).run();
         });
     }
 

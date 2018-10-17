@@ -4,17 +4,21 @@
             counter: 0
 -   name: second
     requisitions:
-        -   iterations: 3
+        -   name: second.0
+            iterations: 3
             requisitions:
-                -   iterations: 3
+                -   name: second.1
+                    iterations: 3
                     requisitions:
-                        -   iterations: 3
+                        -   name: second.2
+                            iterations: 3
                             requisitions:
-                            -   iterations: 3
+                            -   name: second.3
+                                iterations: 3
                                 onInit:
-                                    script: console.log(++store.counter)
+                                    script: ++store.counter
 -   name: third
     onFinish:
         assertions:
         -   expect: store.counter
-            toBeEqualTo: 3
+            toBeEqualTo: 3*3*3*3

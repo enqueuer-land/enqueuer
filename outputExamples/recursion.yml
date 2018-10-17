@@ -3,154 +3,15 @@ valid: true
 tests: []
 requisitions:
   -
-    name: second
-    valid: true
-    tests: []
-    requisitions:
-      -
-        name: 'Requisition #0'
-        valid: true
-        tests: []
-        requisitions:
-          -
-            name: 'Requisition #0'
-            valid: true
-            tests: []
-            requisitions:
-              -
-                name: 'Requisition #0'
-                valid: true
-                tests: []
-                requisitions:
-                  - {valid: true, tests: [], name: 'Requisition #0 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.004Z', endTime: '2018-10-17T18:05:04.052Z', totalTime: 48}, requisitions: [{valid: true, tests: [], name: 'Requisition #0 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.004Z', endTime: '2018-10-17T18:05:04.007Z', totalTime: 3}, requisitions: []}, {valid: true, tests: [], name: 'Requisition #0 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.007Z', endTime: '2018-10-17T18:05:04.023Z', totalTime: 16}, requisitions: []}, {valid: true, tests: [], name: 'Requisition #0 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.024Z', endTime: '2018-10-17T18:05:04.052Z', totalTime: 28}, requisitions: []}]}
-                time:
-                  startTime: '2018-10-17T18:05:04.004Z'
-                  endTime: '2018-10-17T18:05:04.052Z'
-                  totalTime: 48
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0 iterator collection'
-                subscriptions: []
-                publishers: []
-                time:
-                  startTime: '2018-10-17T18:05:04.053Z'
-                  endTime: '2018-10-17T18:05:04.126Z'
-                  totalTime: 73
-                requisitions:
-                  - {valid: true, tests: [], name: 'Requisition #0 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.053Z', endTime: '2018-10-17T18:05:04.084Z', totalTime: 31}, requisitions: []}
-                  - {valid: true, tests: [], name: 'Requisition #0 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.085Z', endTime: '2018-10-17T18:05:04.111Z', totalTime: 26}, requisitions: []}
-                  - {valid: true, tests: [], name: 'Requisition #0 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.111Z', endTime: '2018-10-17T18:05:04.126Z', totalTime: 15}, requisitions: []}
-            time:
-              startTime: '2018-10-17T18:05:04.004Z'
-              endTime: '2018-10-17T18:05:04.126Z'
-              totalTime: 122
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0 iterator collection'
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2018-10-17T18:05:04.126Z'
-              endTime: '2018-10-17T18:05:04.136Z'
-              totalTime: 10
-            requisitions:
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0 [0]'
-                subscriptions: []
-                publishers: []
-                time:
-                  startTime: '2018-10-17T18:05:04.126Z'
-                  endTime: '2018-10-17T18:05:04.129Z'
-                  totalTime: 3
-                requisitions: []
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0 [1]'
-                subscriptions: []
-                publishers: []
-                time:
-                  startTime: '2018-10-17T18:05:04.130Z'
-                  endTime: '2018-10-17T18:05:04.132Z'
-                  totalTime: 2
-                requisitions: []
-              -
-                valid: true
-                tests: []
-                name: 'Requisition #0 [2]'
-                subscriptions: []
-                publishers: []
-                time:
-                  startTime: '2018-10-17T18:05:04.132Z'
-                  endTime: '2018-10-17T18:05:04.136Z'
-                  totalTime: 4
-                requisitions: []
-        time:
-          startTime: '2018-10-17T18:05:04.001Z'
-          endTime: '2018-10-17T18:05:04.136Z'
-          totalTime: 135
-      -
-        valid: true
-        tests: []
-        name: 'Requisition #0 iterator collection'
-        subscriptions: []
-        publishers: []
-        time:
-          startTime: '2018-10-17T18:05:04.136Z'
-          endTime: '2018-10-17T18:05:04.152Z'
-          totalTime: 16
-        requisitions:
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0 [0]'
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2018-10-17T18:05:04.136Z'
-              endTime: '2018-10-17T18:05:04.147Z'
-              totalTime: 11
-            requisitions: []
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0 [1]'
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2018-10-17T18:05:04.147Z'
-              endTime: '2018-10-17T18:05:04.149Z'
-              totalTime: 2
-            requisitions: []
-          -
-            valid: true
-            tests: []
-            name: 'Requisition #0 [2]'
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2018-10-17T18:05:04.149Z'
-              endTime: '2018-10-17T18:05:04.152Z'
-              totalTime: 3
-            requisitions: []
-    time:
-      startTime: '2018-10-17T18:05:04.001Z'
-      endTime: '2018-10-17T18:05:04.152Z'
-      totalTime: 151
-  -
     valid: true
     tests: []
     name: first
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-17T18:05:03.929Z'
-      endTime: '2018-10-17T18:05:03.976Z'
-      totalTime: 47
+      startTime: '2018-10-17T18:32:52.471Z'
+      endTime: '2018-10-17T18:32:52.519Z'
+      totalTime: 48
     requisitions: []
   -
     valid: true
@@ -159,26 +20,112 @@ requisitions:
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-17T18:05:04.152Z'
-      endTime: '2018-10-17T18:05:04.153Z'
-      totalTime: 1
-    requisitions: []
+      startTime: '2018-10-17T18:32:52.540Z'
+      endTime: '2018-10-17T18:32:52.881Z'
+      totalTime: 341
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'second.0 iterator collection'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-17T18:32:52.551Z'
+          endTime: '2018-10-17T18:32:52.881Z'
+          totalTime: 330
+        requisitions:
+          -
+            valid: true
+            tests: []
+            name: 'second.0 [0]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-17T18:32:52.551Z'
+              endTime: '2018-10-17T18:32:52.751Z'
+              totalTime: 200
+            requisitions:
+              -
+                valid: true
+                tests: []
+                name: 'second.1 iterator collection'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-17T18:32:52.554Z'
+                  endTime: '2018-10-17T18:32:52.751Z'
+                  totalTime: 197
+                requisitions:
+                  - {valid: true, tests: [], name: 'second.1 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.554Z', endTime: '2018-10-17T18:32:52.706Z', totalTime: 152}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.556Z', endTime: '2018-10-17T18:32:52.706Z', totalTime: 150}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.556Z', endTime: '2018-10-17T18:32:52.611Z', totalTime: 55}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.570Z', endTime: '2018-10-17T18:32:52.611Z', totalTime: 41}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.570Z', endTime: '2018-10-17T18:32:52.593Z', totalTime: 23}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.593Z', endTime: '2018-10-17T18:32:52.610Z', totalTime: 17}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.610Z', endTime: '2018-10-17T18:32:52.611Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.611Z', endTime: '2018-10-17T18:32:52.680Z', totalTime: 69}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.647Z', endTime: '2018-10-17T18:32:52.680Z', totalTime: 33}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.647Z', endTime: '2018-10-17T18:32:52.675Z', totalTime: 28}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.675Z', endTime: '2018-10-17T18:32:52.679Z', totalTime: 4}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.679Z', endTime: '2018-10-17T18:32:52.680Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.680Z', endTime: '2018-10-17T18:32:52.706Z', totalTime: 26}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.683Z', endTime: '2018-10-17T18:32:52.706Z', totalTime: 23}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.683Z', endTime: '2018-10-17T18:32:52.691Z', totalTime: 8}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.691Z', endTime: '2018-10-17T18:32:52.701Z', totalTime: 10}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.701Z', endTime: '2018-10-17T18:32:52.706Z', totalTime: 5}, requisitions: []}]}]}]}]}
+                  - {valid: true, tests: [], name: 'second.1 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.706Z', endTime: '2018-10-17T18:32:52.734Z', totalTime: 28}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.710Z', endTime: '2018-10-17T18:32:52.734Z', totalTime: 24}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.710Z', endTime: '2018-10-17T18:32:52.724Z', totalTime: 14}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.715Z', endTime: '2018-10-17T18:32:52.724Z', totalTime: 9}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.715Z', endTime: '2018-10-17T18:32:52.717Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.717Z', endTime: '2018-10-17T18:32:52.720Z', totalTime: 3}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.720Z', endTime: '2018-10-17T18:32:52.724Z', totalTime: 4}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.724Z', endTime: '2018-10-17T18:32:52.729Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.725Z', endTime: '2018-10-17T18:32:52.729Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.725Z', endTime: '2018-10-17T18:32:52.726Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.726Z', endTime: '2018-10-17T18:32:52.727Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.727Z', endTime: '2018-10-17T18:32:52.729Z', totalTime: 2}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.729Z', endTime: '2018-10-17T18:32:52.734Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.730Z', endTime: '2018-10-17T18:32:52.734Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.730Z', endTime: '2018-10-17T18:32:52.731Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.731Z', endTime: '2018-10-17T18:32:52.733Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.733Z', endTime: '2018-10-17T18:32:52.734Z', totalTime: 1}, requisitions: []}]}]}]}]}
+                  - {valid: true, tests: [], name: 'second.1 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.734Z', endTime: '2018-10-17T18:32:52.751Z', totalTime: 17}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.735Z', endTime: '2018-10-17T18:32:52.751Z', totalTime: 16}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.735Z', endTime: '2018-10-17T18:32:52.741Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.736Z', endTime: '2018-10-17T18:32:52.741Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.736Z', endTime: '2018-10-17T18:32:52.738Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.739Z', endTime: '2018-10-17T18:32:52.740Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.740Z', endTime: '2018-10-17T18:32:52.741Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.741Z', endTime: '2018-10-17T18:32:52.746Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.742Z', endTime: '2018-10-17T18:32:52.746Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.742Z', endTime: '2018-10-17T18:32:52.743Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.743Z', endTime: '2018-10-17T18:32:52.745Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.745Z', endTime: '2018-10-17T18:32:52.746Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.746Z', endTime: '2018-10-17T18:32:52.751Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.748Z', endTime: '2018-10-17T18:32:52.751Z', totalTime: 3}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.748Z', endTime: '2018-10-17T18:32:52.749Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.749Z', endTime: '2018-10-17T18:32:52.750Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.750Z', endTime: '2018-10-17T18:32:52.751Z', totalTime: 1}, requisitions: []}]}]}]}]}
+          -
+            valid: true
+            tests: []
+            name: 'second.0 [1]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-17T18:32:52.751Z'
+              endTime: '2018-10-17T18:32:52.820Z'
+              totalTime: 69
+            requisitions:
+              -
+                valid: true
+                tests: []
+                name: 'second.1 iterator collection'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-17T18:32:52.752Z'
+                  endTime: '2018-10-17T18:32:52.819Z'
+                  totalTime: 67
+                requisitions:
+                  - {valid: true, tests: [], name: 'second.1 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.752Z', endTime: '2018-10-17T18:32:52.778Z', totalTime: 26}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.758Z', endTime: '2018-10-17T18:32:52.778Z', totalTime: 20}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.758Z', endTime: '2018-10-17T18:32:52.764Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.760Z', endTime: '2018-10-17T18:32:52.764Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.760Z', endTime: '2018-10-17T18:32:52.761Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.761Z', endTime: '2018-10-17T18:32:52.763Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.763Z', endTime: '2018-10-17T18:32:52.764Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.765Z', endTime: '2018-10-17T18:32:52.771Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.766Z', endTime: '2018-10-17T18:32:52.771Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.766Z', endTime: '2018-10-17T18:32:52.767Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.768Z', endTime: '2018-10-17T18:32:52.769Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.769Z', endTime: '2018-10-17T18:32:52.771Z', totalTime: 2}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.771Z', endTime: '2018-10-17T18:32:52.778Z', totalTime: 7}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.773Z', endTime: '2018-10-17T18:32:52.778Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.773Z', endTime: '2018-10-17T18:32:52.774Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.775Z', endTime: '2018-10-17T18:32:52.776Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.776Z', endTime: '2018-10-17T18:32:52.778Z', totalTime: 2}, requisitions: []}]}]}]}]}
+                  - {valid: true, tests: [], name: 'second.1 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.779Z', endTime: '2018-10-17T18:32:52.800Z', totalTime: 21}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.780Z', endTime: '2018-10-17T18:32:52.800Z', totalTime: 20}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.780Z', endTime: '2018-10-17T18:32:52.786Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.781Z', endTime: '2018-10-17T18:32:52.786Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.781Z', endTime: '2018-10-17T18:32:52.783Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.783Z', endTime: '2018-10-17T18:32:52.784Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.785Z', endTime: '2018-10-17T18:32:52.786Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.787Z', endTime: '2018-10-17T18:32:52.793Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.789Z', endTime: '2018-10-17T18:32:52.793Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.789Z', endTime: '2018-10-17T18:32:52.791Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.791Z', endTime: '2018-10-17T18:32:52.792Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.792Z', endTime: '2018-10-17T18:32:52.793Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.793Z', endTime: '2018-10-17T18:32:52.800Z', totalTime: 7}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.795Z', endTime: '2018-10-17T18:32:52.799Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.795Z', endTime: '2018-10-17T18:32:52.796Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.796Z', endTime: '2018-10-17T18:32:52.798Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.798Z', endTime: '2018-10-17T18:32:52.799Z', totalTime: 1}, requisitions: []}]}]}]}]}
+                  - {valid: true, tests: [], name: 'second.1 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.800Z', endTime: '2018-10-17T18:32:52.819Z', totalTime: 19}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.801Z', endTime: '2018-10-17T18:32:52.819Z', totalTime: 18}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.801Z', endTime: '2018-10-17T18:32:52.807Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.803Z', endTime: '2018-10-17T18:32:52.807Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.803Z', endTime: '2018-10-17T18:32:52.804Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.804Z', endTime: '2018-10-17T18:32:52.805Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.806Z', endTime: '2018-10-17T18:32:52.807Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.807Z', endTime: '2018-10-17T18:32:52.814Z', totalTime: 7}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.809Z', endTime: '2018-10-17T18:32:52.813Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.809Z', endTime: '2018-10-17T18:32:52.810Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.810Z', endTime: '2018-10-17T18:32:52.812Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.812Z', endTime: '2018-10-17T18:32:52.813Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.814Z', endTime: '2018-10-17T18:32:52.819Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.815Z', endTime: '2018-10-17T18:32:52.819Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.815Z', endTime: '2018-10-17T18:32:52.816Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.816Z', endTime: '2018-10-17T18:32:52.817Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.817Z', endTime: '2018-10-17T18:32:52.819Z', totalTime: 2}, requisitions: []}]}]}]}]}
+          -
+            valid: true
+            tests: []
+            name: 'second.0 [2]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-17T18:32:52.820Z'
+              endTime: '2018-10-17T18:32:52.881Z'
+              totalTime: 61
+            requisitions:
+              -
+                valid: true
+                tests: []
+                name: 'second.1 iterator collection'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-17T18:32:52.822Z'
+                  endTime: '2018-10-17T18:32:52.881Z'
+                  totalTime: 59
+                requisitions:
+                  - {valid: true, tests: [], name: 'second.1 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.822Z', endTime: '2018-10-17T18:32:52.843Z', totalTime: 21}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.824Z', endTime: '2018-10-17T18:32:52.843Z', totalTime: 19}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.824Z', endTime: '2018-10-17T18:32:52.831Z', totalTime: 7}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.825Z', endTime: '2018-10-17T18:32:52.831Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.825Z', endTime: '2018-10-17T18:32:52.828Z', totalTime: 3}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.828Z', endTime: '2018-10-17T18:32:52.829Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.829Z', endTime: '2018-10-17T18:32:52.831Z', totalTime: 2}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.831Z', endTime: '2018-10-17T18:32:52.837Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.832Z', endTime: '2018-10-17T18:32:52.837Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.832Z', endTime: '2018-10-17T18:32:52.834Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.834Z', endTime: '2018-10-17T18:32:52.836Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.836Z', endTime: '2018-10-17T18:32:52.837Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.837Z', endTime: '2018-10-17T18:32:52.843Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.839Z', endTime: '2018-10-17T18:32:52.843Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.839Z', endTime: '2018-10-17T18:32:52.840Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.840Z', endTime: '2018-10-17T18:32:52.842Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.842Z', endTime: '2018-10-17T18:32:52.843Z', totalTime: 1}, requisitions: []}]}]}]}]}
+                  - {valid: true, tests: [], name: 'second.1 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.843Z', endTime: '2018-10-17T18:32:52.863Z', totalTime: 20}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.845Z', endTime: '2018-10-17T18:32:52.863Z', totalTime: 18}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.845Z', endTime: '2018-10-17T18:32:52.851Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.846Z', endTime: '2018-10-17T18:32:52.851Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.846Z', endTime: '2018-10-17T18:32:52.848Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.848Z', endTime: '2018-10-17T18:32:52.849Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.850Z', endTime: '2018-10-17T18:32:52.851Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.851Z', endTime: '2018-10-17T18:32:52.857Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.852Z', endTime: '2018-10-17T18:32:52.857Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.852Z', endTime: '2018-10-17T18:32:52.854Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.854Z', endTime: '2018-10-17T18:32:52.855Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.856Z', endTime: '2018-10-17T18:32:52.857Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.857Z', endTime: '2018-10-17T18:32:52.863Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.858Z', endTime: '2018-10-17T18:32:52.863Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.858Z', endTime: '2018-10-17T18:32:52.860Z', totalTime: 2}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.860Z', endTime: '2018-10-17T18:32:52.861Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.861Z', endTime: '2018-10-17T18:32:52.863Z', totalTime: 2}, requisitions: []}]}]}]}]}
+                  - {valid: true, tests: [], name: 'second.1 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.863Z', endTime: '2018-10-17T18:32:52.881Z', totalTime: 18}, requisitions: [{valid: true, tests: [], name: 'second.2 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.864Z', endTime: '2018-10-17T18:32:52.881Z', totalTime: 17}, requisitions: [{valid: true, tests: [], name: 'second.2 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.864Z', endTime: '2018-10-17T18:32:52.869Z', totalTime: 5}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.866Z', endTime: '2018-10-17T18:32:52.869Z', totalTime: 3}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.866Z', endTime: '2018-10-17T18:32:52.867Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.867Z', endTime: '2018-10-17T18:32:52.868Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.868Z', endTime: '2018-10-17T18:32:52.869Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.869Z', endTime: '2018-10-17T18:32:52.873Z', totalTime: 4}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.870Z', endTime: '2018-10-17T18:32:52.873Z', totalTime: 3}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.870Z', endTime: '2018-10-17T18:32:52.871Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.871Z', endTime: '2018-10-17T18:32:52.872Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.872Z', endTime: '2018-10-17T18:32:52.873Z', totalTime: 1}, requisitions: []}]}]}, {valid: true, tests: [], name: 'second.2 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.873Z', endTime: '2018-10-17T18:32:52.881Z', totalTime: 8}, requisitions: [{valid: true, tests: [], name: 'second.3 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.875Z', endTime: '2018-10-17T18:32:52.881Z', totalTime: 6}, requisitions: [{valid: true, tests: [], name: 'second.3 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.875Z', endTime: '2018-10-17T18:32:52.876Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.877Z', endTime: '2018-10-17T18:32:52.878Z', totalTime: 1}, requisitions: []}, {valid: true, tests: [], name: 'second.3 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:32:52.879Z', endTime: '2018-10-17T18:32:52.881Z', totalTime: 2}, requisitions: []}]}]}]}]}
   -
     valid: true
     tests:
       -
         name: 'Assertion #0'
         valid: true
-        description: 'Expected ''store.counter'' to be equal to ''3''. Received ''3'''
+        description: 'Expected ''store.counter'' to be equal to ''81''. Received ''81'''
     name: third
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-17T18:05:04.153Z'
-      endTime: '2018-10-17T18:05:04.155Z'
-      totalTime: 2
+      startTime: '2018-10-17T18:32:52.882Z'
+      endTime: '2018-10-17T18:32:52.883Z'
+      totalTime: 1
     requisitions: []
 time:
-  startTime: '2018-10-17T18:05:03.881Z'
-  endTime: '2018-10-17T18:05:04.155Z'
-  totalTime: 274
+  startTime: '2018-10-17T18:32:52.421Z'
+  endTime: '2018-10-17T18:32:52.883Z'
+  totalTime: 462

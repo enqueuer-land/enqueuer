@@ -81,6 +81,15 @@ export class RequisitionRunner {
         }
     }
 
+    private async checkInnerRequisitions(parent: input.RequisitionModel): Promise<output.RequisitionModel[]> {
+        if (parent.requisitions && parent.requisitions.length > 0) {
+            Logger.info(`Handling inner ${parent.name} requisitions`);
+            return await Promise.all(parent.requisitions.map(requisition => new RequisitionRunner(requisition, parent).run()));
+        } else {
+            return [];
+        }
+    }
+
     private startRequisition(requisition: input.RequisitionModel): Promise<output.RequisitionModel> {
         const placeHolderReplacer = new JsonPlaceholderReplacer();
         const fileMapCreator = new FileContentMapCreator();
@@ -103,13 +112,16 @@ export class RequisitionRunner {
         return new Promise((resolve) => {
             const requisitionReporter = new RequisitionReporter(requisitionModel);
             new Timeout(() => {
-
-                requisitionReporter.start(() => {
-                    const report = requisitionReporter.getReport();
-                    Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
-                    Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
-                    resolve(report);
-                });
+                this.checkInnerRequisitions(requisitionModel)
+                    .then((reports: output.RequisitionModel[]) => {
+                        requisitionReporter.start(() => {
+                            const report = requisitionReporter.getReport();
+                            Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
+                            Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
+                            report.requisitions = reports;
+                            resolve(report);
+                        });
+                    });
             }).start(requisitionModel.delay || 0);
         });
     }
