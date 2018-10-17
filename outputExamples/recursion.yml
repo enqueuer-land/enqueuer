@@ -3,7 +3,7 @@ valid: true
 tests: []
 requisitions:
   -
-    name: 'Requisition #0'
+    name: second
     valid: true
     tests: []
     requisitions:
@@ -18,66 +18,167 @@ requisitions:
             tests: []
             requisitions:
               -
+                name: 'Requisition #0'
                 valid: true
                 tests: []
-                name: 'Requisition #0'
+                requisitions:
+                  - {valid: true, tests: [], name: 'Requisition #0 iterator collection', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.004Z', endTime: '2018-10-17T18:05:04.052Z', totalTime: 48}, requisitions: [{valid: true, tests: [], name: 'Requisition #0 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.004Z', endTime: '2018-10-17T18:05:04.007Z', totalTime: 3}, requisitions: []}, {valid: true, tests: [], name: 'Requisition #0 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.007Z', endTime: '2018-10-17T18:05:04.023Z', totalTime: 16}, requisitions: []}, {valid: true, tests: [], name: 'Requisition #0 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.024Z', endTime: '2018-10-17T18:05:04.052Z', totalTime: 28}, requisitions: []}]}
+                time:
+                  startTime: '2018-10-17T18:05:04.004Z'
+                  endTime: '2018-10-17T18:05:04.052Z'
+                  totalTime: 48
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0 iterator collection'
                 subscriptions: []
                 publishers: []
                 time:
-                  startTime: '2018-10-16T23:29:35.106Z'
-                  endTime: '2018-10-16T23:29:35.154Z'
-                  totalTime: 48
-                requisitions: []
+                  startTime: '2018-10-17T18:05:04.053Z'
+                  endTime: '2018-10-17T18:05:04.126Z'
+                  totalTime: 73
+                requisitions:
+                  - {valid: true, tests: [], name: 'Requisition #0 [0]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.053Z', endTime: '2018-10-17T18:05:04.084Z', totalTime: 31}, requisitions: []}
+                  - {valid: true, tests: [], name: 'Requisition #0 [1]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.085Z', endTime: '2018-10-17T18:05:04.111Z', totalTime: 26}, requisitions: []}
+                  - {valid: true, tests: [], name: 'Requisition #0 [2]', subscriptions: [], publishers: [], time: {startTime: '2018-10-17T18:05:04.111Z', endTime: '2018-10-17T18:05:04.126Z', totalTime: 15}, requisitions: []}
             time:
-              startTime: '2018-10-16T23:29:35.061Z'
-              endTime: '2018-10-16T23:29:35.177Z'
-              totalTime: 116
+              startTime: '2018-10-17T18:05:04.004Z'
+              endTime: '2018-10-17T18:05:04.126Z'
+              totalTime: 122
           -
             valid: true
             tests: []
-            name: 'Requisition #0'
+            name: 'Requisition #0 iterator collection'
             subscriptions: []
             publishers: []
             time:
-              startTime: '2018-10-16T23:29:35.181Z'
-              endTime: '2018-10-16T23:29:35.183Z'
-              totalTime: 2
-            requisitions: []
+              startTime: '2018-10-17T18:05:04.126Z'
+              endTime: '2018-10-17T18:05:04.136Z'
+              totalTime: 10
+            requisitions:
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0 [0]'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-17T18:05:04.126Z'
+                  endTime: '2018-10-17T18:05:04.129Z'
+                  totalTime: 3
+                requisitions: []
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0 [1]'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-17T18:05:04.130Z'
+                  endTime: '2018-10-17T18:05:04.132Z'
+                  totalTime: 2
+                requisitions: []
+              -
+                valid: true
+                tests: []
+                name: 'Requisition #0 [2]'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-17T18:05:04.132Z'
+                  endTime: '2018-10-17T18:05:04.136Z'
+                  totalTime: 4
+                requisitions: []
         time:
-          startTime: '2018-10-16T23:29:35.061Z'
-          endTime: '2018-10-16T23:29:35.183Z'
-          totalTime: 122
+          startTime: '2018-10-17T18:05:04.001Z'
+          endTime: '2018-10-17T18:05:04.136Z'
+          totalTime: 135
       -
         valid: true
         tests: []
-        name: 'Requisition #0'
+        name: 'Requisition #0 iterator collection'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-16T23:29:35.185Z'
-          endTime: '2018-10-16T23:29:35.187Z'
-          totalTime: 2
-        requisitions: []
+          startTime: '2018-10-17T18:05:04.136Z'
+          endTime: '2018-10-17T18:05:04.152Z'
+          totalTime: 16
+        requisitions:
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0 [0]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-17T18:05:04.136Z'
+              endTime: '2018-10-17T18:05:04.147Z'
+              totalTime: 11
+            requisitions: []
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0 [1]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-17T18:05:04.147Z'
+              endTime: '2018-10-17T18:05:04.149Z'
+              totalTime: 2
+            requisitions: []
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0 [2]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-17T18:05:04.149Z'
+              endTime: '2018-10-17T18:05:04.152Z'
+              totalTime: 3
+            requisitions: []
     time:
-      startTime: '2018-10-16T23:29:35.061Z'
-      endTime: '2018-10-16T23:29:35.187Z'
-      totalTime: 126
+      startTime: '2018-10-17T18:05:04.001Z'
+      endTime: '2018-10-17T18:05:04.152Z'
+      totalTime: 151
+  -
+    valid: true
+    tests: []
+    name: first
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-10-17T18:05:03.929Z'
+      endTime: '2018-10-17T18:05:03.976Z'
+      totalTime: 47
+    requisitions: []
+  -
+    valid: true
+    tests: []
+    name: second
+    subscriptions: []
+    publishers: []
+    time:
+      startTime: '2018-10-17T18:05:04.152Z'
+      endTime: '2018-10-17T18:05:04.153Z'
+      totalTime: 1
+    requisitions: []
   -
     valid: true
     tests:
       -
-        name: 'Last one was executed'
+        name: 'Assertion #0'
         valid: true
-        description: 'Expect ''store.lastExecution'' to be defined'
-    name: 'Requisition #0'
+        description: 'Expected ''store.counter'' to be equal to ''3''. Received ''3'''
+    name: third
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-16T23:29:35.187Z'
-      endTime: '2018-10-16T23:29:35.207Z'
-      totalTime: 20
+      startTime: '2018-10-17T18:05:04.153Z'
+      endTime: '2018-10-17T18:05:04.155Z'
+      totalTime: 2
     requisitions: []
 time:
-  startTime: '2018-10-16T23:29:35.061Z'
-  endTime: '2018-10-16T23:29:35.207Z'
-  totalTime: 146
+  startTime: '2018-10-17T18:05:03.881Z'
+  endTime: '2018-10-17T18:05:04.155Z'
+  totalTime: 274

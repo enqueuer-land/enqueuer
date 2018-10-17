@@ -14,26 +14,25 @@ import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
 export type RequisitionRunnerCallback = () => void;
 
 export class RequisitionReporter {
+    private readonly requisitionTimeout?: number;
+    private readonly requisitionAttributes: RequisitionModel;
     private reportGenerator: ReportGenerator;
     private multiSubscriptionsReporter: MultiSubscriptionsReporter;
     private multiPublishersReporter: MultiPublishersReporter;
     private onFinishCallback: RequisitionRunnerCallback;
-    private readonly requisitionTimeout?: number;
     private publishersDoneTheirJob = false;
     private allSubscriptionsStoppedWaiting = false;
-    private readonly requisitionAttributes: RequisitionModel;
 
     constructor(requisitionAttributes: input.RequisitionModel) {
         this.requisitionAttributes = requisitionAttributes;
-        this.reportGenerator = new ReportGenerator(this.requisitionAttributes);
+        this.reportGenerator = new ReportGenerator(this.requisitionAttributes, this.requisitionAttributes.timeout);
         this.executeOnInitFunction();
-        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions);
-        this.multiPublishersReporter = new MultiPublishersReporter(this.requisitionAttributes.publishers);
+        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions, this.requisitionAttributes);
+        this.multiPublishersReporter = new MultiPublishersReporter(this.requisitionAttributes.publishers, this.requisitionAttributes);
         this.requisitionTimeout = this.requisitionAttributes.timeout;
         this.onFinishCallback = () => {
             //do nothing
         };
-        this.reportGenerator.start(this.requisitionTimeout);
     }
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {

@@ -13,15 +13,19 @@ export abstract class EventExecutor {
     private storeInstanceName = 'store';
 
     private arguments: { name: string, value: any }[] = [];
-    private event: Event;
-    private name: string;
+    private readonly event: Event;
+    private readonly name: string;
 
-    public constructor(name: string, event?: Event) {
+    protected constructor(name: string, event?: Event) {
         this.event = this.initializeEvent(event);
         this.name = name;
     }
 
     public abstract trigger(): TestModel[];
+
+    public addArgument(name: string, value: any): void {
+        this.arguments.push({name: name, value: value});
+    }
 
     protected execute(): TestModel[] {
 
@@ -61,10 +65,6 @@ export abstract class EventExecutor {
             ++assertionCounter;
             return assertion;
         });
-    }
-
-    protected addArgument(name: string, value: any): void {
-        this.arguments.push({name: name, value: value});
     }
 
     private runEvent(script: string): Test[] {

@@ -12,10 +12,12 @@ import {FileContentMapCreator} from '../configurations/file-content-map-creator'
 
 export class RequisitionRunner {
 
-    private requisitions: input.RequisitionModel[] = [];
-    private name: string;
+    private readonly requisitions: input.RequisitionModel[] = [];
+    private readonly name: string;
+    private readonly parent: input.RequisitionModel;
 
-    public constructor(requisition: input.RequisitionModel) {
+    public constructor(requisition: input.RequisitionModel, parent: input.RequisitionModel) {
+        this.parent = parent;
         this.name = requisition.name;
         Logger.debug(`Initializing requisition '${requisition.name}'`);
         const items = new RequisitionMultiplier(requisition).multiply();
@@ -93,6 +95,7 @@ export class RequisitionRunner {
             Logger.info(`Requisition will be skipped`);
             return Promise.resolve(RequisitionDefaultReports.createSkippedReport(this.name));
         }
+        requisition.parent = this.parent;
         return this.startRequisitionReporter(requisitionModel);
     }
 

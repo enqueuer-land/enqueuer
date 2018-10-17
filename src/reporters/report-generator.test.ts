@@ -26,17 +26,16 @@ describe('ReportGenerator', () => {
     });
 
     it('Time report with timeout', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
+        const timeout = 1000;
+        const reportGenerator = new ReportGenerator({name: 'someName'}, timeout);
         const firstReport = reportGenerator.getReport();
         const firstStartTime = new Date(firstReport.time.startTime.valueOf()).getTime();
 
         sleep(20);
-        const timeout = 1000;
-        reportGenerator.start(timeout);
         reportGenerator.finish();
 
         const secondReport = reportGenerator.getReport();
-        expect(new Date(secondReport.time.startTime).getTime()).toBeGreaterThan(firstStartTime);
+        expect(new Date(secondReport.time.startTime).getTime()).toBeGreaterThanOrEqual(firstStartTime);
         expect(secondReport.time.timeout).toBeGreaterThanOrEqual(timeout);
         delete secondReport.time;
         delete secondReport.tests;
@@ -51,9 +50,8 @@ describe('ReportGenerator', () => {
     });
 
     it('Time out test success', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
         const timeout = 1000;
-        reportGenerator.start(timeout);
+        const reportGenerator = new ReportGenerator({name: 'someName'}, timeout);
         reportGenerator.finish();
 
         const report = reportGenerator.getReport();
@@ -65,9 +63,8 @@ describe('ReportGenerator', () => {
     });
 
     it('Time out test fail', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
         const timeout = 10;
-        reportGenerator.start(timeout);
+        const reportGenerator = new ReportGenerator({name: 'someName'}, timeout);
         sleep(50);
         reportGenerator.finish();
 
@@ -82,7 +79,6 @@ describe('ReportGenerator', () => {
     it('Time report without timeout', () => {
         const reportGenerator = new ReportGenerator({name: 'someName'});
 
-        reportGenerator.start();
         reportGenerator.finish();
 
         const time = reportGenerator.getReport().time;

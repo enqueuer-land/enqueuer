@@ -1,10 +1,20 @@
-onFinish:
-    assertions:
-        -   name: Last one was executed
-            expectToBeDefined: store.lastExecution
-requisitions:
-    -   requisitions:
-            -   requisitions:
-                    -   onFinish:
-                            store:
-                                lastExecution: `lastExecution`
+-   name: first
+    onInit:
+        store:
+            counter: 0
+-   name: second
+    requisitions:
+        -   iterations: 3
+            requisitions:
+                -   iterations: 3
+                    requisitions:
+                        -   iterations: 3
+                            requisitions:
+                            -   iterations: 3
+                                onInit:
+                                    script: console.log(++store.counter)
+-   name: third
+    onFinish:
+        assertions:
+        -   expect: store.counter
+            toBeEqualTo: 3

@@ -7,11 +7,13 @@ import {DateController} from '../timers/date-controller';
 //TODO test it
 export class MultiRequisitionRunner {
 
+    private readonly startTime: DateController;
+    private readonly parent: input.RequisitionModel;
     private report: output.RequisitionModel;
     private requisitions: input.RequisitionModel[];
-    private readonly startTime: DateController;
 
-    constructor(requisitions: input.RequisitionModel[], name: string) {
+    constructor(requisitions: input.RequisitionModel[], name: string, parent: input.RequisitionModel) {
+        this.parent = parent;
         this.requisitions = this.addDefaultNames(requisitions);
         this.startTime = new DateController();
         this.report = {
@@ -30,16 +32,7 @@ export class MultiRequisitionRunner {
     public run(): Promise<output.RequisitionModel> {
         Logger.info(`Running requisition: ${this.report.name}`);
         const promises = this.promisifyRequisitionExecutionCall();
-        return new Promise((resolve, reject) => {
-            this.checkInnerRequisitions()
-                .then(() => {
-                    this.runRequisition(promises, resolve, reject);
-                })
-                .catch((err: any) => {
-                    Logger.error(`Error running inner requisitions: ${err}`);
-                    reject(err);
-                });
-        });
+        return new Promise((resolve, reject) => this.runRequisition(promises, resolve, reject));
     }
 
     private runRequisition(promises: (() => Promise<output.RequisitionModel>)[], resolve: any, reject: any) {
@@ -70,33 +63,26 @@ export class MultiRequisitionRunner {
             });
     }
 
-    private checkInnerRequisitions(): Promise<{}[]> {
-        return Promise.all(this.requisitions.map(requisition => {
-            return new Promise(resolve => {
-                this.runInnerRequisition(requisition, resolve);
-            });
-        }));
-    }
-
-    private runInnerRequisition(requisition: input.RequisitionModel, resolve: any) {
+    private async checkInnerRequisitions(requisition: input.RequisitionModel): Promise<void> {
         if (requisition.requisitions && requisition.requisitions.length > 0) {
+            const multiRequisitionRunner = new MultiRequisitionRunner(requisition.requisitions, requisition.name, requisition);
             Logger.info(`Handling inner ${requisition.name} requisitions`);
-            const multiRequisitionRunner = new MultiRequisitionRunner(requisition.requisitions, requisition.name);
-            multiRequisitionRunner
+            return multiRequisitionRunner
                 .run()
                 .then((report: output.RequisitionModel) => {
                     if (this.report.requisitions) {
                         this.report.requisitions.push(report);
                     }
-                    resolve();
                 });
-        } else {
-            resolve();
         }
     }
 
     private promisifyRequisitionExecutionCall(): (() => Promise<output.RequisitionModel>)[] {
-        return this.requisitions.map((requisition: input.RequisitionModel) => () => new RequisitionRunner(requisition).run());
+        return this.requisitions.map((requisition: input.RequisitionModel) => () => {
+            Logger.debug(`Promisifying '${requisition.name}' requisition`);
+            return this.checkInnerRequisitions(requisition)
+                .then(() => new RequisitionRunner(requisition, this.parent).run());
+        });
     }
 
     private sequentialRunner(requisitionRunFunctions: Function[]): Promise<output.RequisitionModel[]> {

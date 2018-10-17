@@ -102,7 +102,8 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return new Promise((resolve) => {
             const requisitions: RequisitionModel[] | undefined = this.parseFile(filename);
             if (requisitions) {
-                new MultiRequisitionRunner(requisitions, filename)
+                const parent: RequisitionModel = {name: filename, requisitions: requisitions, subscriptions: [], publishers: []};
+                new MultiRequisitionRunner(requisitions, filename, parent)
                     .run()
                     .then(report => {
                         this.multiResultCreator.addTestSuite(filename, report);

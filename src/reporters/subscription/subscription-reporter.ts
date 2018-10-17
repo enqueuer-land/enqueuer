@@ -17,9 +17,9 @@ import {Json} from '../../object-notations/json';
 
 export class SubscriptionReporter {
 
-    private killListener: SignalsListener;
+    private readonly killListener: SignalsListener;
+    private readonly report: output.SubscriptionModel;
     private subscription: Subscription;
-    private report: output.SubscriptionModel;
     private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;

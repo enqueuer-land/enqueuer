@@ -55,7 +55,7 @@ describe('MultiPublishersReporter', () => {
     });
 
     it('Call publishReporter constructors empty publishers', () => {
-        new MultiPublishersReporter();
+        new MultiPublishersReporter([]);
 
         expect(PublisherReporter).toHaveBeenCalledTimes(0);
     });
@@ -75,7 +75,7 @@ describe('MultiPublishersReporter', () => {
     });
 
     it('should handle be success when no publisher is given', done => {
-        new MultiPublishersReporter()
+        new MultiPublishersReporter([])
             .publish()
             .then(() => {
                 done();

@@ -10,14 +10,11 @@ import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-
 export class ReportGenerator {
 
     private startTime: DateController = new DateController();
-    private timeout?: number;
+    private readonly timeout?: number;
     private readonly report: output.RequisitionModel;
 
-    public constructor(requisitionAttributes: input.RequisitionModel) {
+    public constructor(requisitionAttributes: input.RequisitionModel, timeout?: number) {
         this.report = RequisitionDefaultReports.createDefaultReport(requisitionAttributes.name);
-    }
-
-    public start(timeout?: number) {
         this.startTime = new DateController();
         this.timeout = timeout;
     }

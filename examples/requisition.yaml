@@ -24,3 +24,13 @@
                 toBeLessThan: 3000
             -   expect: requisition.anyStuff
                 toBeEqualTo: `anyValue`
+-   name: third
+    onInit:
+        assertions:
+        -  expect: requisition.parent.requisitions[3].name
+           toBeEqualTo: `fourth`
+-   name: fourth
+    onInit:
+        assertions:
+        -  expect: requisition.parent.requisitions[2].name
+           toBeEqualTo: `third`

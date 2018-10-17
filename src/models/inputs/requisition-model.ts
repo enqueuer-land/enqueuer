@@ -9,6 +9,7 @@ export interface RequisitionModel extends Finishable, Initializable {
     name: string;
     subscriptions: SubscriptionModel[];
     publishers: PublisherModel[];
+    parent?: RequisitionModel;
     delay?: number;
     iterations?: number;
     requisitions?: RequisitionModel[];

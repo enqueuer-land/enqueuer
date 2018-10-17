@@ -49,7 +49,7 @@ export class ConsoleResultCreator implements ResultCreator {
     }
 
     private findRequisitions(requisitions: RequisitionModel[] = [], hierarchy: string[]) {
-        requisitions.forEach((requisition: RequisitionModel) => {
+        (requisitions || []).forEach((requisition: RequisitionModel) => {
             const levelName = hierarchy.concat(requisition.name);
             this.findRequisitions(requisition.requisitions, levelName);
             this.findTests(requisition, levelName);

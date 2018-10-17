@@ -4,7 +4,7 @@ import {Initializable} from '../models/events/initializable';
 import {TestModel} from '../models/outputs/test-model';
 
 export class OnInitEventExecutor extends EventExecutor {
-    private initializable: Initializable;
+    private readonly initializable: Initializable;
 
     constructor(name: string, initializable: Initializable) {
         super('onInit', initializable.onInit);
