@@ -8,7 +8,7 @@ export class Yaml implements ObjectNotation {
     }
 
     public stringify(value: object, space: number = 2): string {
-        return yaml.stringify(new ObjectDecycler().decycle(value || {}), 10, space);
+        return yaml.stringify(new ObjectDecycler().decycle(value || {}), 100, space);
     }
 
     public loadFromFileSync(filename: string): object {
