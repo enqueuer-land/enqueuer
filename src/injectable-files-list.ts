@@ -50,6 +50,11 @@ try {
   /* do nothing*/
 }
 try {
+  require('./publishers/raw-socket-stream-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
   require('./publishers/sqs-publisher');
 } catch (err) {
   /* do nothing*/
@@ -65,17 +70,7 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/tcp-client-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./publishers/udp-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
-  require('./publishers/uds-publisher');
 } catch (err) {
   /* do nothing*/
 }
@@ -145,6 +140,11 @@ try {
   /* do nothing*/
 }
 try {
+  require('./subscriptions/raw-socket-stream-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
   require('./subscriptions/sqs-subscription');
 } catch (err) {
   /* do nothing*/
@@ -160,17 +160,7 @@ try {
   /* do nothing*/
 }
 try {
-  require('./subscriptions/tcp-server-subscription');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./subscriptions/udp-subscription');
-} catch (err) {
-  /* do nothing*/
-}
-try {
-  require('./subscriptions/uds-subscription');
 } catch (err) {
   /* do nothing*/
 }

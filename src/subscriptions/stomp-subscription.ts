@@ -11,7 +11,7 @@ const protocol = new Protocol('stomp')
     .setLibrary('stomp-client')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class StompSubscription extends Subscription {
     private client: any;
 

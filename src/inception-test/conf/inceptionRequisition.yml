@@ -11,7 +11,7 @@
 
                 #inner requisition
                 subscriptions:
-                    -   type: tcp-server
+                    -   type: tcp
                         timeout: 20
                         #port: auto generated free one
                         avoid: true
@@ -20,7 +20,7 @@
 -   name: Daemon HTTP
     timeout: 10000
     publishers:
-        -   type: http-client
+        -   type: http
             url: http://localhost:23023/requisitions
             method: POST
             onMessageReceived:
@@ -31,7 +31,7 @@
 
                 #inner requisition
                 subscriptions:
-                    -   type: tcp-server
+                    -   type: tcp
                         timeout: 20
                         #port: auto generated free one
                         avoid: true
@@ -40,7 +40,7 @@
 -   name: Daemon TCP
     timeout: 10000
     publishers:
-        -   type: tcp-client
+        -   type: tcp
             port: 23022
             serverAddress: localhost
             onMessageReceived:
@@ -51,7 +51,7 @@
 
                 #inner requisition
                 subscriptions:
-                    -   type: tcp-server
+                    -   type: tcp
                         timeout: 20
                         #port: auto generated free one
                         avoid: true

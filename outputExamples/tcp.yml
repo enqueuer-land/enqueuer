@@ -13,7 +13,7 @@ requisitions:
     subscriptions:
       -
         name: 'Subscription #0'
-        type: tcp-server
+        type: tcp
         tests:
           -
             name: 'Beatles Song'
@@ -28,7 +28,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-17T19:06:28.332Z'
+        connectionTime: '2018-10-18T18:00:49.473Z'
         messageReceived:
           payload:
             type: Buffer
@@ -49,7 +49,7 @@ requisitions:
       -
         name: 'Publisher #0'
         valid: true
-        type: tcp-client
+        type: tcp
         tests:
           -
             name: Published
@@ -63,17 +63,17 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-17T19:06:28.441Z'
+        publishTime: '2018-10-18T18:00:49.582Z'
         messageReceived:
           payload: 'Do not make it bad'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 58056
+            port: 64934
     time:
-      startTime: '2018-10-17T19:06:28.266Z'
-      endTime: '2018-10-17T19:06:28.441Z'
-      totalTime: 175
+      startTime: '2018-10-18T18:00:49.402Z'
+      endTime: '2018-10-18T18:00:49.583Z'
+      totalTime: 181
       timeout: 3000
     requisitions: []
   -
@@ -87,7 +87,7 @@ requisitions:
     subscriptions:
       -
         name: 'tcp 1 subscription description'
-        type: tcp-server
+        type: tcp
         tests:
           -
             name: 'I care'
@@ -98,7 +98,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-17T19:06:28.453Z'
+        connectionTime: '2018-10-18T18:00:49.601Z'
         messageReceived:
           payload:
             type: Buffer
@@ -124,7 +124,7 @@ requisitions:
       -
         name: 'tcp 1 publisher description'
         valid: true
-        type: tcp-client
+        type: tcp
         tests:
           -
             name: Published
@@ -138,17 +138,17 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-17T19:06:29.281Z'
+        publishTime: '2018-10-18T18:00:50.429Z'
         messageReceived:
           payload: EnqueuerRocks
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 58068
+            port: 64945
     time:
-      startTime: '2018-10-17T19:06:28.441Z'
-      endTime: '2018-10-17T19:06:29.281Z'
-      totalTime: 840
+      startTime: '2018-10-18T18:00:49.583Z'
+      endTime: '2018-10-18T18:00:50.429Z'
+      totalTime: 846
       timeout: 3000
     requisitions: []
   -
@@ -162,7 +162,7 @@ requisitions:
     subscriptions:
       -
         name: 'tcp 2 subscription description'
-        type: tcp-server
+        type: tcp
         tests:
           -
             name: 'It is still open'
@@ -173,7 +173,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-17T19:06:29.285Z'
+        connectionTime: '2018-10-18T18:00:50.432Z'
         messageReceived:
           payload:
             type: Buffer
@@ -206,7 +206,7 @@ requisitions:
       -
         name: 'Publisher #0'
         valid: true
-        type: tcp-client
+        type: tcp
         tests:
           -
             name: Published
@@ -220,16 +220,16 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-17T19:06:29.286Z'
+        publishTime: '2018-10-18T18:00:50.434Z'
         messageReceived:
           payload: 'enqueuer Rocks'
     time:
-      startTime: '2018-10-17T19:06:29.282Z'
-      endTime: '2018-10-17T19:06:29.287Z'
-      totalTime: 5
+      startTime: '2018-10-18T18:00:50.430Z'
+      endTime: '2018-10-18T18:00:50.434Z'
+      totalTime: 4
       timeout: 3000
     requisitions: []
 time:
-  startTime: '2018-10-17T19:06:28.221Z'
-  endTime: '2018-10-17T19:06:29.287Z'
-  totalTime: 1066
+  startTime: '2018-10-18T18:00:49.352Z'
+  endTime: '2018-10-18T18:00:50.434Z'
+  totalTime: 1082

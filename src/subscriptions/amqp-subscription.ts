@@ -10,7 +10,7 @@ const protocol = new Protocol('amqp')
     .setLibrary('amqp')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class AmqpSubscription extends Subscription {
 
     private readonly queueName: string;

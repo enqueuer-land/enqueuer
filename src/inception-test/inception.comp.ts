@@ -78,7 +78,7 @@ describe('Inception test', () => {
         }
     };
 
-    let testSingleRunReport = function (outterTest: RequisitionModel) {
+    let testSingleRunReport = (outterTest: RequisitionModel) => {
         expect(outterTest.valid).toBeTruthy();
 
         outterTest.requisitions.forEach((requisition) => {
@@ -124,7 +124,7 @@ describe('Inception test', () => {
 
                 testDaemonReport(testerReports['src/inception-test/tcp_test.json']);
                 testDaemonReport(testerReports['src/inception-test/uds_test.json']);
-                testDaemonReport(testerReports['src/inception-test/http-server_test.json']);
+                testDaemonReport(testerReports['src/inception-test/http_test.json']);
                 testSingleRunReport(testerReports['src/inception-test/outter_test.json']);
 
                 beingTested.kill('SIGINT');

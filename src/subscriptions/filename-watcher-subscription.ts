@@ -9,7 +9,7 @@ import {Protocol} from '../protocols/protocol';
 const protocol = new Protocol('file')
     .addAlternativeName('file-system-watcher', 'file-watcher').registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class FileSystemWatcherSubscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {

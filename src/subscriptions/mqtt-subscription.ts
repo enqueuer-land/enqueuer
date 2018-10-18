@@ -9,7 +9,7 @@ const protocol = new Protocol('mqtt')
     .setLibrary('mqtt')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class MqttSubscription extends Subscription {
 
     private client: any;

@@ -7,7 +7,7 @@ const protocol = new Protocol('stdin')
     .addAlternativeName('standard-input')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class StandardInputSubscription extends Subscription {
     private value?: string;
 

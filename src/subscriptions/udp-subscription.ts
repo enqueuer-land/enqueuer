@@ -10,7 +10,7 @@ const protocol = new Protocol('udp')
     .addAlternativeName('udp-server')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class UdpSubscription extends Subscription {
 
     private server: any;

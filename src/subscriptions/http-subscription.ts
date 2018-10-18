@@ -14,7 +14,7 @@ const protocol = new Protocol('http')
     .setLibrary('express')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class HttpSubscription extends Subscription {
 
     private readonly proxy: boolean;

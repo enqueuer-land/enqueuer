@@ -13,7 +13,7 @@ requisitions:
     subscriptions:
       -
         name: 'Subscription #0'
-        type: http-server
+        type: http
         tests:
           -
             name: '"Bearer" authentication prefix'
@@ -36,7 +36,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-17T19:06:28.332Z'
+        connectionTime: '2018-10-18T18:00:49.473Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -51,7 +51,7 @@ requisitions:
       -
         name: 'Publisher #0'
         valid: true
-        type: http-client
+        type: http
         tests:
           -
             name: Published
@@ -65,7 +65,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-17T19:06:28.447Z'
+        publishTime: '2018-10-18T18:00:49.594Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -76,7 +76,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Wed, 17 Oct 2018 19:06:28 GMT'
+            date: 'Thu, 18 Oct 2018 18:00:49 GMT'
             connection: close
           request:
             uri:
@@ -98,12 +98,12 @@ requisitions:
               authorization: 'Bearer bearerToken'
               Content-Length: 4
     time:
-      startTime: '2018-10-17T19:06:28.240Z'
-      endTime: '2018-10-17T19:06:28.448Z'
-      totalTime: 208
+      startTime: '2018-10-18T18:00:49.376Z'
+      endTime: '2018-10-18T18:00:49.594Z'
+      totalTime: 218
       timeout: 3000
     requisitions: []
 time:
-  startTime: '2018-10-17T19:06:28.187Z'
-  endTime: '2018-10-17T19:06:28.448Z'
-  totalTime: 261
+  startTime: '2018-10-18T18:00:49.322Z'
+  endTime: '2018-10-18T18:00:49.595Z'
+  totalTime: 273

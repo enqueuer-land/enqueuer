@@ -56,7 +56,7 @@
             type: uds
             timeout: 2000
             payload: I am still opened
-            loadStream: udsPubStreamName
+            loadStream: udsSubStreamName
             onMessageReceived:
                 assertions:
                     -   name: Message received
@@ -64,7 +64,7 @@
                         toBeEqualTo: `I am still bidirectional`
     subscriptions:
         -   type: uds
-            loadStream: udsSubStreamName
+            loadStream: udsPubStreamName
             response: I am still bidirectional
             onMessageReceived:
                 assertions:

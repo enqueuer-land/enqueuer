@@ -7,13 +7,18 @@ import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
 import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
+import * as fs from 'fs';
 
-const protocol = new Protocol('tcp')
+const tcp = new Protocol('tcp')
     .addAlternativeName('tcp-server')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
-export class TcpServerSubscription extends Subscription {
+const uds = new Protocol('uds')
+    .addAlternativeName('uds-server')
+    .registerAsSubscription();
+
+@Injectable({predicate: (subscription: any) => tcp.matches(subscription.type) || uds.matches(subscription.type)})
+export class RawSocketStreamSubscription extends Subscription {
 
     private server: any;
     private stream: any;
@@ -31,7 +36,7 @@ export class TcpServerSubscription extends Subscription {
                 this.waitForData(reject, resolve);
             } else {
                 this.server.once('connection', (stream: any) => {
-                    Logger.debug(`Tcp server got a connection`);
+                    Logger.debug(`${this.type} server got a connection`);
                     this.stream = stream;
                     this.sendGreeting();
                     this.waitForData(reject, resolve);
@@ -52,6 +57,9 @@ export class TcpServerSubscription extends Subscription {
     }
 
     public async unsubscribe(): Promise<void> {
+        if (uds.matches(this.type) && fs.existsSync(this.path)) {
+            fs.unlinkSync(this.path);
+        }
         if (this.server) {
             this.server.close();
             this.server = null;
@@ -61,7 +69,7 @@ export class TcpServerSubscription extends Subscription {
     public sendResponse(): Promise<void> {
         return new Promise((resolve) => {
             if (this.stream) {
-                Logger.debug(`Tcp server (${this.stream.localPort}) sending response`);
+                Logger.debug(`${this.type} server (${this.stream.localPort}) sending response`);
                 this.stream.write(this.response, () => {
                     this.persistStream();
                     resolve();
@@ -74,7 +82,7 @@ export class TcpServerSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             try {
                 this.tryToLoadStream();
-                Logger.debug(`Tcp server is reusing tcp stream running on ${this.stream.localPort}`);
+                Logger.debug(`${this.type} server is reusing ${this.type} stream running on ${this.stream.localPort}`);
                 resolve();
             } catch (err) {
                 Logger.error(err);
@@ -89,13 +97,20 @@ export class TcpServerSubscription extends Subscription {
     private createServer(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.server = net.createServer();
-            new HandlerListener(this.server).listen(this.port)
+            const handlerListener = new HandlerListener(this.server);
+            let listenPromise;
+            if (tcp.matches(this.type)) {
+                listenPromise = handlerListener.listen(this.port);
+            } else {
+                listenPromise = handlerListener.listen(this.path);
+            }
+            listenPromise
                 .then(() => {
-                    Logger.debug(`Tcp server is listening for tcp clients on ${this.port}`);
+                    Logger.debug(`${this.type} server is listening for ${this.type} clients on ${this.port}`);
                     resolve();
                 })
                 .catch(err => {
-                    const message = `Tcp server could not listen to port ${this.port}: ${err}`;
+                    const message = `${this.type} server could not listen to port ${this.port}: ${err}`;
                     Logger.error(message);
                     reject(message);
                 });
@@ -104,31 +119,31 @@ export class TcpServerSubscription extends Subscription {
 
     private sendGreeting() {
         if (this.greeting) {
-            Logger.debug(`Tcp server (${this.stream.localPort}) sending greeting message`);
+            Logger.debug(`${this.type} server (${this.stream.localPort}) sending greeting message`);
             this.stream.write(this.greeting);
         }
     }
 
     private tryToLoadStream() {
-        Logger.debug(`Server is loading tcp stream: ${this.loadStream}`);
+        Logger.debug(`Server is loading ${this.type} stream: ${this.loadStream}`);
         this.stream = Store.getData()[this.loadStream];
         if (this.stream) {
-            Logger.debug(`Server loaded tcp stream: ${this.loadStream} (${this.stream.localPort})`);
+            Logger.debug(`Server loaded ${this.type} stream: ${this.loadStream} (${this.stream.localPort})`);
         } else {
-            throw `Impossible to load tcp stream: ${this.loadStream}`;
+            throw `Impossible to load ${this.type} stream: ${this.loadStream}`;
         }
     }
 
     private waitForData(reject: Function, resolve: Function) {
-        Logger.trace(`Tcp server (${this.stream.localPort}) is waiting on data`);
+        Logger.trace(`${this.type} server is waiting on data`);
         this.stream.once('end', () => {
-            const message = `Tcp server detected 'end' event`;
+            const message = `${this.type} server detected 'end' event`;
             Logger.debug(message);
             reject(message);
         });
 
         this.stream.once('data', (msg: any) => {
-            Logger.debug(`Tcp server (${this.stream.localPort}) got data ${msg}`);
+            Logger.debug(`${this.type} server (${this.stream.localPort}) got data ${msg}`);
             resolve({payload: msg, stream: this.stream.address()});
         });
 
@@ -136,11 +151,11 @@ export class TcpServerSubscription extends Subscription {
 
     private persistStream() {
         if (this.saveStream) {
-            Logger.debug(`Persisting subscription tcp stream ${this.saveStream} (${this.stream.localPort})`);
+            Logger.debug(`Persisting subscription ${this.type} stream ${this.saveStream}`);
             Store.getData()[this.saveStream] = this.stream;
             this.saveStream = undefined;
         } else {
-            Logger.trace(`Ending TCP stream (${this.stream.localPort})`);
+            Logger.trace(`Ending ${this.type} stream`);
             this.stream.end();
         }
     }

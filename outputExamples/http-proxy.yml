@@ -44,7 +44,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-17T19:06:28.332Z'
+        connectionTime: '2018-10-18T18:00:49.474Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -60,7 +60,7 @@ requisitions:
           body: "{\n  \"proxy\": \"test\"\n}"
       -
         name: 'real server'
-        type: http-server
+        type: http
         tests:
           -
             name: '"Basic" authentication prefix'
@@ -95,7 +95,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-17T19:06:28.332Z'
+        connectionTime: '2018-10-18T18:00:49.474Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -112,7 +112,7 @@ requisitions:
       -
         name: 'publisher proxy'
         valid: true
-        type: http-client
+        type: http
         tests:
           -
             name: Published
@@ -130,7 +130,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-17T19:06:28.475Z'
+        publishTime: '2018-10-18T18:00:49.625Z'
         messageReceived:
           statusCode: 333
           body: responsePayload
@@ -141,7 +141,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Wed, 17 Oct 2018 19:06:28 GMT'
+            date: 'Thu, 18 Oct 2018 18:00:49 GMT'
             connection: close
           request:
             uri:
@@ -163,11 +163,11 @@ requisitions:
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
               Content-Length: 21
     time:
-      startTime: '2018-10-17T19:06:28.244Z'
-      endTime: '2018-10-17T19:06:28.476Z'
-      totalTime: 232
+      startTime: '2018-10-18T18:00:49.377Z'
+      endTime: '2018-10-18T18:00:49.625Z'
+      totalTime: 248
     requisitions: []
 time:
-  startTime: '2018-10-17T19:06:28.201Z'
-  endTime: '2018-10-17T19:06:28.476Z'
-  totalTime: 275
+  startTime: '2018-10-18T18:00:49.329Z'
+  endTime: '2018-10-18T18:00:49.626Z'
+  totalTime: 297

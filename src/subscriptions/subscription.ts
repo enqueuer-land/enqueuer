@@ -10,7 +10,7 @@ export abstract class Subscription {
     public onMessageReceived?: Event;
     public onFinish?: Event;
     public response?: any;
-    public type?: string;
+    public type: string;
     public avoid: boolean = false;
 
     [propName: string]: any;
@@ -18,6 +18,7 @@ export abstract class Subscription {
         Object.keys(subscriptionAttributes).forEach(key => {
             this[key] = subscriptionAttributes[key];
         });
+        this.type = subscriptionAttributes.type;
         this.name = subscriptionAttributes.name;
     }
 

@@ -1,6 +1,6 @@
 publishers:
     -   name: publisher proxy
-        type: http-client
+        type: http
         url: http://localhost:23085/proxy/idValue?query=proxied
         method: PATCH
         payload:
@@ -42,7 +42,7 @@ subscriptions:
                     expect: query.query
                     toBeEqualTo: `proxied`
     -   name: real server
-        type: http-server
+        type: http
         endpoint: /proxy/:firstId
         port: 23086
         method: PATCH

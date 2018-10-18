@@ -1,6 +1,6 @@
 timeout: 3000
 publishers:
-    -   type: http-client
+    -   type: http
         url: http://localhost:23067/bearer
         method: POST
         payload: Rech
@@ -15,7 +15,7 @@ publishers:
                     expect: body
                     toBeEqualTo: `responsePayload`
 subscriptions:
--   type: http-server
+-   type: http
     endpoint: /bearer
     port: 23067
     method: POST

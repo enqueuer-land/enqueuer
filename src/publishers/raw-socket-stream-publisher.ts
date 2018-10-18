@@ -7,12 +7,16 @@ import {Store} from '../configurations/store';
 import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 
-const protocol = new Protocol('tcp')
+const tcp = new Protocol('tcp')
     .addAlternativeName('tcp-client')
     .registerAsPublisher();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
-export class TcpClientPublisher extends Publisher {
+const uds = new Protocol('uds')
+    .addAlternativeName('uds-client')
+    .registerAsPublisher();
+
+@Injectable({predicate: (publish: any) => tcp.matches(publish.type) || uds.matches(publish.type)})
+export class RawSocketStreamPublisher extends Publisher {
 
     private readonly loadedStream: any;
 
@@ -20,7 +24,7 @@ export class TcpClientPublisher extends Publisher {
         super(publisherAttributes);
         this.timeout = this.timeout || 1000;
         if (this.loadStream) {
-            Logger.debug(`Loading tcp client: ${this.loadStream}`);
+            Logger.debug(`Loading ${this.type} client: ${this.loadStream}`);
             this.loadedStream = Store.getData()[this.loadStream];
         }
     }
@@ -37,30 +41,46 @@ export class TcpClientPublisher extends Publisher {
     }
 
     private sendReusingStream(resolve: any, reject: any) {
-        Logger.debug('Client is trying to reuse tcp stream');
+        Logger.debug(`Client is trying to reuse ${this.type} stream`);
         if (!this.loadedStream) {
-            Logger.error(`There is no tcp stream able to be loaded named ${this.loadStream}`);
+            Logger.error(`There is no ${this.type} stream able to be loaded named ${this.loadStream}`);
             this.sendCreatingStream(resolve, reject);
         } else {
-            Logger.debug('Client is reusing tcp stream');
+            Logger.debug(`Client is reusing ${this.type} stream`);
             this.publishData(this.loadedStream, resolve, reject);
         }
     }
 
     private sendCreatingStream(resolve: any, reject: any) {
-        const stream = new net.Socket();
-        Logger.debug('Tcp client trying to connect');
-        stream.connect(this.port, this.serverAddress, () => {
-            Logger.debug(`Tcp client connected to: ${this.serverAddress}:${this.port}`);
-            this.publishData(stream, resolve, reject);
-        });
-        stream.on('error', (error) => {
-            reject(error);
+        Logger.debug(`${this.type} client trying to connect`);
+        this.createStream()
+            .then((stream: any) => {
+                Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port}`);
+                this.publishData(stream, resolve, reject);
+            }).catch(err => {
+                reject(err);
+            });
+    }
+
+    private createStream(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (tcp.matches(this.type)) {
+                const stream = new net.Socket();
+                stream.connect(this.port, this.serverAddress, () => {
+                    Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port}`);
+                    resolve(stream);
+                });
+                stream.on('error', (error: any) => {
+                    reject(error);
+                });
+            } else {
+                resolve(net.createConnection(this.path));
+            }
         });
     }
 
     private publishData(stream: any, resolve: (value?: (PromiseLike<any> | any)) => void, reject: (reason?: any) => void) {
-        Logger.debug(`Tcp client publishing`);
+        Logger.debug(`${this.type} client publishing`);
         stream.setTimeout(this.timeout);
         stream.once('error', (data: any) => {
             this.finalize(stream);
@@ -86,7 +106,7 @@ export class TcpClientPublisher extends Publisher {
             resolve();
         })
         .on('data', (msg: Buffer) => {
-            Logger.debug(`Tcp client got data '${msg.toString()}'`);
+            Logger.debug(`${this.type} client got data '${msg.toString()}'`);
             if (!this.messageReceived) {
                 this.messageReceived = {
                     payload: '',

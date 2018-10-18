@@ -1,17 +1,17 @@
 -   timeout: 3000
     publishers:
-        -   type: tcp-client
+        -   type: tcp
             timeout: 1000
             serverAddress: localhost
             port: 23069
             payload: Hey Jude
-            onMessageReceived: 
-                assertions: 
+            onMessageReceived:
+                assertions:
                     -   name: Do not make it bad
                         expect: payload
                         toBeEqualTo: `Do not make it bad`
     subscriptions:
-        -   type: tcp-server
+        -   type: tcp
             port: 23069
             timeout: 1000
             response: Do not make it bad
@@ -25,7 +25,7 @@
 -   timeout: 3000
     publishers:
         -   name: tcp 1 publisher description
-            type: tcp-client
+            type: tcp
             timeout: 800
             serverAddress: localhost
             port: 23070
@@ -38,7 +38,7 @@
                         toBeEqualTo: `EnqueuerRocks`
     subscriptions:
         -   name: tcp 1 subscription description
-            type: tcp-server
+            type: tcp
             port: 23070
             timeout: 500
             saveStream: tcpSubscriptionSocket
@@ -51,7 +51,7 @@
                         toBeEqualTo: `I do not care`
 -   timeout: 3000
     publishers:
-        -   type: tcp-client
+        -   type: tcp
             payload: The socket is still open
             loadStream: tcpPublisherSocket
             onMessageReceived:
@@ -60,7 +60,7 @@
                         expect: payload
                         toBeEqualTo: `<<tcpPayload>>`
     subscriptions:
-        -   type: tcp-server
+        -   type: tcp
             name: tcp 2 subscription description
             loadStream: tcpSubscriptionSocket
             response: <<tcpPayload>>

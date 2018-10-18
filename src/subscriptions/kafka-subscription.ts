@@ -10,7 +10,7 @@ const protocol = new Protocol('kafka')
     .setLibrary('kafka-node')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class KafkaSubscription extends Subscription {
 
     private readonly client: KafkaClient;

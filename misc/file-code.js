@@ -1,3 +1,1 @@
-function double (value) {
-    return value*2;
-}
+(value) => value * 2;

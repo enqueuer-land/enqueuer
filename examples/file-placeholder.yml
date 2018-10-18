@@ -4,7 +4,7 @@
     yml: <<yaml://misc/file-content.yml>>
     fileNotFound: <<file://not/found.file>>
     onInit:
-        script: double = <<file://misc/file-code.js>>
+        script: double = <<js://misc/file-code.js>>
         store:
             scriptResult: double(20);
     onFinish:

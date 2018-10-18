@@ -11,7 +11,7 @@ const protocol = new Protocol('sqs')
     .setLibrary('aws-sdk')
     .registerAsSubscription();
 
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
+@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
 export class SqsSubscription extends Subscription {
 
     private sqs: AWS.SQS;

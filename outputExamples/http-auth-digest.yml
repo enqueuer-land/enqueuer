@@ -13,7 +13,7 @@ requisitions:
     subscriptions:
       -
         name: 'Subscription #0'
-        type: http-server
+        type: http
         tests:
           -
             name: '"Digest" authentication prefix'
@@ -60,7 +60,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-17T19:06:28.307Z'
+        connectionTime: '2018-10-18T18:00:49.444Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -75,7 +75,7 @@ requisitions:
       -
         name: 'Publisher #0'
         valid: true
-        type: http-client
+        type: http
         tests:
           -
             name: Published
@@ -89,7 +89,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-17T19:06:28.445Z'
+        publishTime: '2018-10-18T18:00:49.592Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -100,7 +100,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Wed, 17 Oct 2018 19:06:28 GMT'
+            date: 'Thu, 18 Oct 2018 18:00:49 GMT'
             connection: close
           request:
             uri:
@@ -122,12 +122,12 @@ requisitions:
               authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
               Content-Length: 4
     time:
-      startTime: '2018-10-17T19:06:28.241Z'
-      endTime: '2018-10-17T19:06:28.445Z'
-      totalTime: 204
+      startTime: '2018-10-18T18:00:49.376Z'
+      endTime: '2018-10-18T18:00:49.592Z'
+      totalTime: 216
       timeout: 3000
     requisitions: []
 time:
-  startTime: '2018-10-17T19:06:28.198Z'
-  endTime: '2018-10-17T19:06:28.446Z'
-  totalTime: 248
+  startTime: '2018-10-18T18:00:49.326Z'
+  endTime: '2018-10-18T18:00:49.592Z'
+  totalTime: 266

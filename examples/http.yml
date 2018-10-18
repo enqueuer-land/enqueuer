@@ -1,6 +1,6 @@
 -   timeout: 3000
     publishers:
-    -   type: http-client
+    -   type: http
         url: http://localhost:23075/enqueuer/idStuff?query=2345
         method: POST
         payload:
@@ -29,7 +29,7 @@
                 expect: statusCode
                 toBeEqualTo: 444
     subscriptions:
-        -   type: http-server
+        -   type: http
             endpoint: /enqueuer/:firstId
             port: 23075
             method: POST
@@ -73,7 +73,7 @@
 -   timeout: 5000
     publishers:
         -   name: publisher description
-            type: http-client
+            type: http
             url: http://localhost:23075/enqueuer/idStuff?query=111
             method: POST
             payload:
@@ -89,7 +89,7 @@
                         expect: body
                         toBeEqualTo: `duplicatedResponsePayload`
     subscriptions:
-        -   type: http-server
+        -   type: http
             endpoint: /enqueuer/:secondId
             port: 23075
             method: POST
@@ -105,7 +105,7 @@
     timeout: 5000
     subscriptions:
         -   name: subscription description
-            type: http-server
+            type: http
             endpoint: /differentPort
             port: 23076
             method: POST
