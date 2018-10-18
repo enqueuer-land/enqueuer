@@ -4,11 +4,13 @@
 -   onFinish:
         script: ++store.value
         assertions:
-            -   name: Payload
-                expect: <<value>>
-                toBeEqualTo: 123
+        -   name: Payload
+            expect: <<value>>
+            toBeEqualTo: 123
+        -   name: Environment Variables added
+            expectToBeDefined: store.PATH
 -   onFinish:
         assertions:
-            -   name: Payload
-                expect: <<value>>
-                toBeEqualTo: 124
+        -   name: Payload
+            expect: <<value>>
+            toBeEqualTo: 124

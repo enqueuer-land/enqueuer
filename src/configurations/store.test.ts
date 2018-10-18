@@ -15,15 +15,6 @@ describe('Store', () => {
         clearMocks();
     });
 
-    afterEach(() => {
-        getValuesMock = jest.fn(() => {
-            return {
-                store: store
-            }
-        });
-        Configuration.getValues.mockImplementationOnce(getValuesMock);
-    });
-
     it('Catch getData exception', () => {
         Configuration.getValues.mockImplementation(() => {
             throw `err`
@@ -35,12 +26,18 @@ describe('Store', () => {
     });
 
     it('data call just once', () => {
+        getValuesMock = jest.fn(() => {
+            return {
+                store: store
+            }
+        });
+        Configuration.getValues.mockImplementationOnce(getValuesMock);
+        Store.data = {};
         Store.getData();
         const data = Store.getData();
 
-        expect(data).toBe(store);
+        expect(data.PATH).toBeDefined();
         expect(getValuesMock).toBeCalledTimes(1);
     });
-
 
 });

@@ -106,7 +106,7 @@ describe('OnMessageReceivedEventExecutor', () => {
 
         eventExecutor.trigger();
 
-        expect(addArgumentMock).toHaveBeenCalledWith('store', {});
+        expect(addArgumentMock).toHaveBeenCalledWith('store', expect.any(Object));
     });
 
     it('Should add tester and pass it to the script executor', () => {
