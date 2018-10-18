@@ -19,6 +19,7 @@ describe('Configuration', () => {
 
     beforeEach(() => {
         CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => makeId());
+        CommandLineConfiguration.getDaemonTypes.mockImplementationOnce(() => []);
     });
 
     it('should check \'refresh\'', () => {

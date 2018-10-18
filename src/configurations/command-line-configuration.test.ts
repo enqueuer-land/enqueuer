@@ -104,6 +104,12 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.singleRunFilesIgnoring()).toEqual([]);
     });
 
+    it('daemon mode', () => {
+        commanderRefresher(['node', 'test', '-d',  'type', '--daemon', 'other']);
+
+        expect(CommandLineConfiguration.getDaemonTypes()).toEqual(['type', 'other']);
+    });
+
     it('add single run file', () => {
         commanderRefresher(['node', 'test', '-a', 'file', '--add-file-single-run', 'file2']);
 

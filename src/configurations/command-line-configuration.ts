@@ -8,6 +8,7 @@ const testMode = process.argv[1].toString().match('jest');
 let commandLineStore: any = {};
 let singleRunFiles: string[] = [];
 let singleRunFilesIgnoring: string[] = [];
+let daemonTypes: string[] = [];
 
 let refreshCommander = (commandLineArguments: string[]) => {
     let commander = new Command()
@@ -26,6 +27,8 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 memo.push(val);
                 return memo;
             }, [])
+        .option('-d, --daemon <type>', 'execute in daemon mode with default values of <type>',
+            (val: string) => daemonTypes.push(val), [])
         .option('-a, --add-file-single-run <file>', 'add file to be tested in single-run',
             (val: string) => singleRunFiles.push(val), [])
         .option('-A, --add-file-and-ignore-single-run <file>', 'add file to be tested and ignore the ones set in single-run  ',
@@ -101,4 +104,7 @@ export class CommandLineConfiguration {
         return singleRunFilesIgnoring;
     }
 
+    public static getDaemonTypes(): string[]  {
+        return daemonTypes;
+    }
 }

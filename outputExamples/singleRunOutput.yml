@@ -3,6 +3,195 @@ tests: []
 valid: true
 requisitions:
   -
+    name: examples/crypto-require.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''requisition.toEncrypt'' to be equal to ''7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0''. Received ''7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0'''
+        name: 'Testing Script Loading'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.779Z'
+          endTime: '2018-10-18T22:03:31.857Z'
+          totalTime: 78
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.735Z'
+      endTime: '2018-10-18T22:03:31.877Z'
+      totalTime: 142
+  -
+    name: examples/file-placeholder.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            name: 'fileRead (yml)'
+            valid: true
+            description: 'Expected ''requisition.yml.key'' to be equal to ''I''m persisted in singleRun file''. Received ''I''m persisted in singleRun file'''
+          -
+            name: 'fileRead (.json)'
+            valid: true
+            description: 'Expected ''requisition.json.key'' to be equal to ''value''. Received ''value'''
+          -
+            name: 'fileRead (.csv)'
+            valid: true
+            description: 'Expected ''requisition.csv[1].title'' to be equal to ''secondRow''. Received ''secondRow'''
+          -
+            name: 'fileRead (.tsv)'
+            valid: true
+            description: 'Expected ''requisition.tsv[0].title'' to be equal to ''virgs''. Received ''virgs'''
+          -
+            name: 'file not found'
+            valid: true
+            description: 'Expected ''requisition.fileNotFound'' to be equal to ''Error: ENOENT: no such file or directory, open ''not/found.file''''. Received ''Error: ENOENT: no such file or directory, open ''not/found.file'''''
+          -
+            name: 'fileRead (.js)'
+            valid: true
+            description: 'Expected ''store.scriptResult'' to be equal to ''40''. Received ''40'''
+        name: 'Requisition #0'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.785Z'
+          endTime: '2018-10-18T22:03:31.857Z'
+          totalTime: 72
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'it''s not stored'
+            valid: true
+            description: 'Expect ''requisition.yml'' to be undefined'
+        name: 'Requisition #1'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.877Z'
+          endTime: '2018-10-18T22:03:31.890Z'
+          totalTime: 13
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.737Z'
+      endTime: '2018-10-18T22:03:31.890Z'
+      totalTime: 153
+  -
+    name: examples/skipped.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0 iterator collection'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.810Z'
+          endTime: '2018-10-18T22:03:31.878Z'
+          totalTime: 68
+        requisitions:
+          -
+            valid: true
+            tests: []
+            name: 'Requisition #0 [0]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.810Z'
+              endTime: '2018-10-18T22:03:31.857Z'
+              totalTime: 47
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                valid: true
+                name: 'Requisition skipped'
+                description: 'There is no iterations set to this requisition'
+            name: 'Requisition #0'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.877Z'
+              endTime: '2018-10-18T22:03:31.877Z'
+              totalTime: 0
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                valid: true
+                name: 'Requisition skipped'
+                description: 'There is no iterations set to this requisition'
+            name: 'Requisition #0'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.877Z'
+              endTime: '2018-10-18T22:03:31.877Z'
+              totalTime: 0
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                valid: true
+                name: 'Requisition skipped'
+                description: 'There is no iterations set to this requisition'
+            name: 'Requisition #0'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.877Z'
+              endTime: '2018-10-18T22:03:31.877Z'
+              totalTime: 0
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                valid: true
+                name: 'Requisition skipped'
+                description: 'There is no iterations set to this requisition'
+            name: 'Requisition #0'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.878Z'
+              endTime: '2018-10-18T22:03:31.878Z'
+              totalTime: 0
+            requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''store.executions'' to be equal to ''1''. Received ''1'''
+        name: 'Requisition #1'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.881Z'
+          endTime: '2018-10-18T22:03:31.890Z'
+          totalTime: 9
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.760Z'
+      endTime: '2018-10-18T22:03:31.891Z'
+      totalTime: 131
+  -
     name: examples/store.yml
     valid: true
     tests: []
@@ -14,9 +203,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-18T21:50:00.341Z'
-          endTime: '2018-10-18T21:50:00.344Z'
-          totalTime: 3
+          startTime: '2018-10-18T22:03:31.817Z'
+          endTime: '2018-10-18T22:03:31.857Z'
+          totalTime: 40
         requisitions: []
       -
         valid: true
@@ -33,9 +222,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-18T21:50:00.345Z'
-          endTime: '2018-10-18T21:50:00.348Z'
-          totalTime: 3
+          startTime: '2018-10-18T22:03:31.878Z'
+          endTime: '2018-10-18T22:03:31.890Z'
+          totalTime: 12
         requisitions: []
       -
         valid: true
@@ -48,11 +237,4501 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2018-10-18T21:50:00.348Z'
-          endTime: '2018-10-18T21:50:00.350Z'
+          startTime: '2018-10-18T22:03:31.891Z'
+          endTime: '2018-10-18T22:03:31.898Z'
+          totalTime: 7
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.766Z'
+      endTime: '2018-10-18T22:03:31.898Z'
+      totalTime: 132
+  -
+    name: examples/file.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: file-system-watcher
+            tests:
+              -
+                name: 'Some time has passed'
+                valid: true
+                description: 'Expected ''now'' to be greater than or equal to ''1539900211786''. Received ''1539900211913'''
+              -
+                name: Filename
+                valid: true
+                description: 'Expecting ''name'' (temp/fileTest20181018190331085866_79a2be2a.file) to contain ''temp/'''
+              -
+                name: Content
+                valid: true
+                description: 'Expect ''content'' to be defined'
+              -
+                name: Created
+                valid: true
+                description: 'Expect ''created'' to be defined'
+              -
+                name: Modified
+                valid: true
+                description: 'Expect ''modified'' to be defined'
+              -
+                name: Size
+                valid: true
+                description: 'Expected ''size'' to be greater than ''0''. Received ''13'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.856Z'
+            messageReceived:
+              content: '1539900211786'
+              name: temp/fileTest20181018190331085866_79a2be2a.file
+              size: 13
+              modified: '2018-10-18T22:03:31.859Z'
+              created: '2018-10-18T22:03:31.859Z'
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: file
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:31.872Z'
+        time:
+          startTime: '2018-10-18T22:03:31.786Z'
+          endTime: '2018-10-18T22:03:31.914Z'
+          totalTime: 128
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.738Z'
+      endTime: '2018-10-18T22:03:31.915Z'
+      totalTime: 177
+  -
+    name: examples/stdin.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: standard-input
+            tests:
+              -
+                name: payload
+                valid: true
+                description: 'Expected ''message'' to be equal to ''enqueuer standard-input payload''. Received ''enqueuer standard-input payload'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.856Z'
+            messageReceived: 'enqueuer standard-input payload'
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.816Z'
+          endTime: '2018-10-18T22:03:31.918Z'
+          totalTime: 102
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.764Z'
+      endTime: '2018-10-18T22:03:31.918Z'
+      totalTime: 154
+  -
+    name: examples/udp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: udp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''it''. Received ''it'''
+              -
+                name: 'Remote Adderss'
+                valid: true
+                description: 'Expected ''remoteInfo.address'' to be equal to ''127.0.0.1''. Received ''127.0.0.1'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.856Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 105
+                  - 116
+              remoteInfo:
+                address: 127.0.0.1
+                family: IPv4
+                port: 53250
+                size: 2
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: udp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:31.917Z'
+        time:
+          startTime: '2018-10-18T22:03:31.818Z'
+          endTime: '2018-10-18T22:03:31.922Z'
+          totalTime: 104
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.769Z'
+      endTime: '2018-10-18T22:03:31.922Z'
+      totalTime: 153
+  -
+    name: examples/sqs.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'requisition description'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: sqs
+            tests:
+              -
+                name: Body
+                valid: true
+                description: 'Expecting ''Body'' (enqueuer) to contain ''enq'''
+              -
+                name: MessageId
+                valid: true
+                description: 'Expect ''MessageId'' to be defined'
+              -
+                name: ReceiptHandle
+                valid: true
+                description: 'Expect ''ReceiptHandle'' to be defined'
+              -
+                name: MD5OfBody
+                valid: true
+                description: 'Expect ''MD5OfBody'' to be defined'
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.856Z'
+            messageReceived:
+              MessageId: 57531c37-f73c-4c10-8235-a672bf2da187
+              ReceiptHandle: '57531c37-f73c-4c10-8235-a672bf2da187#12cfe64a-7828-4644-93b8-76fed75137a2'
+              MD5OfBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+              Body: enqueuer
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: sqs
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Request Id is all 000000'
+                valid: true
+                description: 'Expected ''ResponseMetadata.RequestId'' to be equal to ''00000000-0000-0000-0000-000000000000''. Received ''00000000-0000-0000-0000-000000000000'''
+              -
+                name: ResponseMetadata
+                valid: true
+                description: 'Expect ''ResponseMetadata'' to be defined'
+              -
+                name: MD5
+                valid: true
+                description: 'Expect ''MD5OfMessageBody'' to be defined'
+              -
+                name: MD5OfMessageAttributes
+                valid: true
+                description: 'Expect ''MD5OfMessageAttributes'' to be defined'
+              -
+                name: MessageId
+                valid: true
+                description: 'Expect ''MessageId'' to be defined'
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.965Z'
+            messageReceived:
+              ResponseMetadata:
+                RequestId: 00000000-0000-0000-0000-000000000000
+              MD5OfMessageBody: 9dea6b5787a8fcdbd8db4505e4a1958b
+              MD5OfMessageAttributes: d41d8cd98f00b204e9800998ecf8427e
+              MessageId: 0a286415-3205-4ab4-8e88-789e04a72b6a
+        time:
+          startTime: '2018-10-18T22:03:31.810Z'
+          endTime: '2018-10-18T22:03:31.965Z'
+          totalTime: 155
+          timeout: 5000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.762Z'
+      endTime: '2018-10-18T22:03:31.965Z'
+      totalTime: 203
+  -
+    name: examples/hooks.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            name: 'Requisitions exists onInit'
+            valid: true
+            description: 'Expect ''requisition'' to be defined'
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'requisition description'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: tcp-server
+            tests:
+              -
+                name: 'Subscription exists onInit'
+                valid: true
+                description: 'Expect ''subscription'' to be defined'
+              -
+                name: 'Subscription name'
+                valid: true
+                description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
+              -
+                name: 'Subscription exists onMessageReceived'
+                valid: true
+                description: 'Expect ''subscription'' to be defined'
+              -
+                name: 'Subscription name changed'
+                valid: true
+                description: 'Expected ''subscription.name'' to be equal to ''changed''. Received ''changed'''
+              -
+                name: 'Subscription onInit executed'
+                valid: true
+                description: 'Expecting ''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''subscription::onInit'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 105
+                  - 116
+              stream:
+                address: '::ffff:127.0.0.1'
+                family: IPv6
+                port: 23080
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: tcp-client
+            tests:
+              -
+                name: 'Publisher exists onInit'
+                valid: true
+                description: 'Expect ''publisher'' to be defined'
+              -
+                name: 'Publisher name'
+                valid: true
+                description: 'Expect ''publisher.name'' to be defined'
+              -
+                name: 'Assertion #2'
+                valid: true
+                description: 'Expect ''publisher'' to be defined'
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Publisher exists onMessageReceived'
+                valid: true
+                description: 'Expect ''publisher'' to be defined'
+              -
+                name: 'Requisition onInit'
+                valid: true
+                description: 'Expecting ''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''requisition::onInit'''
+              -
+                name: 'Publisher name changed'
+                valid: true
+                description: 'Expected ''publisher.name'' to be equal to ''changed''. Received ''changed'''
+              -
+                name: 'Publisher onInit executed'
+                valid: true
+                description: 'Expecting ''store.sequence'' (requisition::onInit-> subscription::onInit-> publisher::onInit) to contain ''publisher::onInit'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.984Z'
+            messageReceived:
+              payload: 'hook response'
+              stream:
+                address: 127.0.0.1
+                family: IPv4
+                port: 51686
+        time:
+          startTime: '2018-10-18T22:03:31.787Z'
+          endTime: '2018-10-18T22:03:31.984Z'
+          totalTime: 197
+          timeout: 2000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.740Z'
+      endTime: '2018-10-18T22:03:31.984Z'
+      totalTime: 244
+  -
+    name: examples/http-auth-bearer.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: http
+            tests:
+              -
+                name: '"Bearer" authentication prefix'
+                valid: true
+                description: 'Prefix "Bearer" was found.'
+              -
+                name: '"Bearer" authentication token'
+                valid: true
+                description: 'Token match'
+              -
+                name: '"Bearer" authentication'
+                valid: true
+                description: 'Bearer authentication is valid'
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''message.body'' to be equal to ''Rech''. Received ''Rech'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                authorization: 'Bearer bearerToken'
+                content-length: '4'
+                host: 'localhost:23067'
+                connection: close
+              params: {}
+              query: {}
+              body: Rech
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: http
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: Body
+                valid: true
+                description: 'Expected ''body'' to be equal to ''responsePayload''. Received ''responsePayload'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.989Z'
+            messageReceived:
+              statusCode: 321
+              body: responsePayload
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                content-type: 'text/html; charset=utf-8'
+                content-length: '15'
+                etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
+                date: 'Thu, 18 Oct 2018 22:03:31 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'http:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:23067'
+                  port: '23067'
+                  hostname: localhost
+                  hash: null
+                  search: null
+                  query: null
+                  pathname: /bearer
+                  path: /bearer
+                  href: 'http://localhost:23067/bearer'
+                method: post
+                headers:
+                  content-type: application/json
+                  authorization: 'Bearer bearerToken'
+                  Content-Length: 4
+        time:
+          startTime: '2018-10-18T22:03:31.792Z'
+          endTime: '2018-10-18T22:03:31.989Z'
+          totalTime: 197
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.743Z'
+      endTime: '2018-10-18T22:03:31.989Z'
+      totalTime: 246
+  -
+    name: examples/http-auth-digest.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: http
+            tests:
+              -
+                name: '"Digest" authentication prefix'
+                valid: true
+                description: 'Prefix "Digest" was found'
+              -
+                name: '"username" value does not match'
+                valid: true
+                description: 'Calculated "username" value matches'
+              -
+                name: '"realm" value does not match'
+                valid: true
+                description: 'Calculated "realm" value matches'
+              -
+                name: '"nonce" value does not match'
+                valid: true
+                description: 'Calculated "nonce" value matches'
+              -
+                name: '"uri" value does not match'
+                valid: true
+                description: 'Calculated "uri" value matches'
+              -
+                name: '"algorithm" value does not match'
+                valid: true
+                description: 'Calculated "algorithm" value matches'
+              -
+                name: '"Response" authentication value'
+                valid: true
+                description: 'Calculated "response" value matches'
+              -
+                name: '"opaque" value does not match'
+                valid: true
+                description: 'Calculated "opaque" value matches'
+              -
+                name: 'Every field was found'
+                valid: true
+                description: 'Every field was found'
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''message.body'' to be equal to ''Rech''. Received ''Rech'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.857Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
+                content-length: '4'
+                host: 'localhost:23067'
+                connection: close
+              params: {}
+              query: {}
+              body: Rech
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: http
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: Body
+                valid: true
+                description: 'Expected ''body'' to be equal to ''responsePayload''. Received ''responsePayload'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.991Z'
+            messageReceived:
+              statusCode: 321
+              body: responsePayload
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                content-type: 'text/html; charset=utf-8'
+                content-length: '15'
+                etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
+                date: 'Thu, 18 Oct 2018 22:03:31 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'http:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:23067'
+                  port: '23067'
+                  hostname: localhost
+                  hash: null
+                  search: null
+                  query: null
+                  pathname: /digest
+                  path: /digest
+                  href: 'http://localhost:23067/digest'
+                method: post
+                headers:
+                  content-type: application/json
+                  authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
+                  Content-Length: 4
+        time:
+          startTime: '2018-10-18T22:03:31.793Z'
+          endTime: '2018-10-18T22:03:31.991Z'
+          totalTime: 198
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.745Z'
+      endTime: '2018-10-18T22:03:31.991Z'
+      totalTime: 246
+  -
+    name: examples/http-auth-basic.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: http-server
+            tests:
+              -
+                name: '"Basic" authentication prefix'
+                valid: true
+                description: 'Prefix "Basic" was found'
+              -
+                name: '"Basic" authentication user'
+                valid: true
+                description: 'User found'
+              -
+                name: '"Basic" authentication password'
+                valid: true
+                description: 'Password match'
+              -
+                name: '"Basic" authentication'
+                valid: true
+                description: 'Basic authentication is valid'
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''message.body'' to be equal to ''basic auth''. Received ''basic auth'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+                content-length: '10'
+                host: 'localhost:23068'
+                connection: close
+              params: {}
+              query: {}
+              body: 'basic auth'
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: http
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''body'' to be equal to ''basic auth response''. Received ''basic auth response'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.992Z'
+            messageReceived:
+              statusCode: 200
+              body: 'basic auth response'
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                content-type: 'text/html; charset=utf-8'
+                content-length: '19'
+                etag: 'W/"13-nGN7LEwCUKXpQoLxNqKZXSglYNc"'
+                date: 'Thu, 18 Oct 2018 22:03:31 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'http:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:23068'
+                  port: '23068'
+                  hostname: localhost
+                  hash: null
+                  search: null
+                  query: null
+                  pathname: /basic
+                  path: /basic
+                  href: 'http://localhost:23068/basic'
+                method: post
+                headers:
+                  content-type: application/json
+                  authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+                  Content-Length: 10
+        time:
+          startTime: '2018-10-18T22:03:31.791Z'
+          endTime: '2018-10-18T22:03:31.992Z'
+          totalTime: 201
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.742Z'
+      endTime: '2018-10-18T22:03:31.993Z'
+      totalTime: 251
+  -
+    name: examples/https.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: https-server
+            tests:
+              -
+                name: 'Https payload'
+                valid: true
+                description: 'Expected ''JSON.parse(message.body).https'' to be equal to ''works!''. Received ''works!'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                content-length: '23'
+                host: 'localhost:4430'
+                connection: close
+              params: {}
+              query: {}
+              body: "{\n  \"https\": \"works!\"\n}"
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: https-client
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Status Code'
+                valid: true
+                description: 'Expected ''statusCode'' to be equal to ''200''. Received ''200'''
+              -
+                name: Body
+                valid: true
+                description: 'Expected ''body'' to be equal to ''https''. Received ''https'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:32.012Z'
+            messageReceived:
+              statusCode: 200
+              body: https
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                content-type: 'text/html; charset=utf-8'
+                content-length: '5'
+                etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
+                date: 'Thu, 18 Oct 2018 22:03:32 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'https:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:4430'
+                  port: '4430'
+                  hostname: localhost
+                  hash: null
+                  search: null
+                  query: null
+                  pathname: /enqueuer
+                  path: /enqueuer
+                  href: 'https://localhost:4430/enqueuer'
+                method: post
+                headers:
+                  content-type: application/json
+                  Content-Length: 23
+        time:
+          startTime: '2018-10-18T22:03:31.795Z'
+          endTime: '2018-10-18T22:03:32.012Z'
+          totalTime: 217
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.754Z'
+      endTime: '2018-10-18T22:03:32.012Z'
+      totalTime: 258
+  -
+    name: examples/http-proxy.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'proxy server'
+            type: http-proxy
+            tests:
+              -
+                name: '"Basic" authentication prefix'
+                valid: true
+                description: 'Prefix "Basic" was found'
+              -
+                name: '"Basic" authentication user'
+                valid: true
+                description: 'User found'
+              -
+                name: '"Basic" authentication password'
+                valid: true
+                description: 'Password match'
+              -
+                name: '"Basic" authentication'
+                valid: true
+                description: 'Basic authentication is valid'
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''JSON.parse(message.body).proxy'' to be equal to ''test''. Received ''test'''
+              -
+                name: Params
+                valid: true
+                description: 'Expected ''params.id'' to be equal to ''idValue''. Received ''idValue'''
+              -
+                name: Query
+                valid: true
+                description: 'Expected ''query.query'' to be equal to ''proxied''. Received ''proxied'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+                content-length: '21'
+                host: 'localhost:23085'
+                connection: close
+                Content-Length: 21
+              params:
+                id: idValue
+              query:
+                query: proxied
+              body: "{\n  \"proxy\": \"test\"\n}"
+          -
+            name: 'real server'
+            type: http
+            tests:
+              -
+                name: '"Basic" authentication prefix'
+                valid: true
+                description: 'Prefix "Basic" was found'
+              -
+                name: '"Basic" authentication user'
+                valid: true
+                description: 'User found'
+              -
+                name: '"Basic" authentication password'
+                valid: true
+                description: 'Password match'
+              -
+                name: '"Basic" authentication'
+                valid: true
+                description: 'Basic authentication is valid'
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''JSON.parse(message.body).proxy'' to be equal to ''test''. Received ''test'''
+              -
+                name: Params
+                valid: true
+                description: 'Expected ''params.firstId'' to be equal to ''idValue''. Received ''idValue'''
+              -
+                name: Query
+                valid: true
+                description: 'Expected ''query.query'' to be equal to ''proxied''. Received ''proxied'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+                content-length: '21'
+                host: 'localhost:23085'
+                connection: close
+              params:
+                firstId: idValue
+              query:
+                query: proxied
+              body: "{\n  \"proxy\": \"test\"\n}"
+        publishers:
+          -
+            name: 'publisher proxy'
+            valid: true
+            type: http
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Status Code'
+                valid: true
+                description: 'Expected ''statusCode'' to be equal to ''333''. Received ''333'''
+              -
+                name: Body
+                valid: true
+                description: 'Expected ''body'' to be equal to ''responsePayload''. Received ''responsePayload'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:32.014Z'
+            messageReceived:
+              statusCode: 333
+              body: responsePayload
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                content-type: 'text/html; charset=utf-8'
+                content-length: '15'
+                etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
+                date: 'Thu, 18 Oct 2018 22:03:32 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'http:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:23085'
+                  port: '23085'
+                  hostname: localhost
+                  hash: null
+                  search: '?query=proxied'
+                  query: query=proxied
+                  pathname: /proxy/idValue
+                  path: '/proxy/idValue?query=proxied'
+                  href: 'http://localhost:23085/proxy/idValue?query=proxied'
+                method: patch
+                headers:
+                  content-type: application/json
+                  authorization: 'Basic dXNlcjpwYXNzd29yZA=='
+                  Content-Length: 21
+        time:
+          startTime: '2018-10-18T22:03:31.793Z'
+          endTime: '2018-10-18T22:03:32.014Z'
+          totalTime: 221
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.748Z'
+      endTime: '2018-10-18T22:03:32.014Z'
+      totalTime: 266
+  -
+    name: examples/kafka.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: kafka
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''value'' to be equal to ''kafkaPayload''. Received ''kafkaPayload'''
+              -
+                name: 'Assertion #1'
+                valid: true
+                description: 'Expected ''topic'' to be equal to ''enqueuer-topic-name''. Received ''enqueuer-topic-name'''
+              -
+                name: 'Assertion #2'
+                valid: true
+                description: 'Expect ''offset'' to be defined'
+              -
+                name: 'Assertion #3'
+                valid: true
+                description: 'Expect ''partition'' to be defined'
+              -
+                name: 'Assertion #4'
+                valid: true
+                description: 'Expect ''timestamp'' to be defined'
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.008Z'
+            messageReceived:
+              topic: enqueuer-topic-name
+              value: kafkaPayload
+              offset: 59
+              partition: 0
+              highWaterOffset: 60
+              key: null
+              timestamp: '2018-10-18T22:03:32.010Z'
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: kafka
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'kafka publish response payload'
+                valid: true
+                description: 'Expect ''JSON.parse(message)["enqueuer-topic-name"]'' to be defined'
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:32.024Z'
+            messageReceived: "{\n  \"enqueuer-topic-name\": {\n    \"0\": 59\n  }\n}"
+        time:
+          startTime: '2018-10-18T22:03:31.796Z'
+          endTime: '2018-10-18T22:03:32.027Z'
+          totalTime: 231
+          timeout: 8000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.756Z'
+      endTime: '2018-10-18T22:03:32.027Z'
+      totalTime: 271
+  -
+    name: examples/recursion.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: first
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.809Z'
+          endTime: '2018-10-18T22:03:31.857Z'
+          totalTime: 48
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: second
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.878Z'
+          endTime: '2018-10-18T22:03:32.188Z'
+          totalTime: 310
+        requisitions:
+          -
+            valid: true
+            tests: []
+            name: 'second.0 iterator collection'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.889Z'
+              endTime: '2018-10-18T22:03:32.188Z'
+              totalTime: 299
+            requisitions:
+              -
+                valid: true
+                tests: []
+                name: 'second.0 [0]'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-18T22:03:31.889Z'
+                  endTime: '2018-10-18T22:03:32.064Z'
+                  totalTime: 175
+                requisitions:
+                  -
+                    valid: true
+                    tests: []
+                    name: 'second.1 iterator collection'
+                    subscriptions: []
+                    publishers: []
+                    time:
+                      startTime: '2018-10-18T22:03:31.898Z'
+                      endTime: '2018-10-18T22:03:32.064Z'
+                      totalTime: 166
+                    requisitions:
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [0]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:31.898Z'
+                          endTime: '2018-10-18T22:03:32.018Z'
+                          totalTime: 120
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:31.909Z'
+                              endTime: '2018-10-18T22:03:32.018Z'
+                              totalTime: 109
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:31.909Z'
+                                  endTime: '2018-10-18T22:03:31.944Z'
+                                  totalTime: 35
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:31.916Z'
+                                      endTime: '2018-10-18T22:03:31.943Z'
+                                      totalTime: 27
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:31.916Z'
+                                          endTime: '2018-10-18T22:03:31.917Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:31.917Z'
+                                          endTime: '2018-10-18T22:03:31.931Z'
+                                          totalTime: 14
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:31.932Z'
+                                          endTime: '2018-10-18T22:03:31.943Z'
+                                          totalTime: 11
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:31.944Z'
+                                  endTime: '2018-10-18T22:03:32.000Z'
+                                  totalTime: 56
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:31.978Z'
+                                      endTime: '2018-10-18T22:03:31.999Z'
+                                      totalTime: 21
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:31.978Z'
+                                          endTime: '2018-10-18T22:03:31.980Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:31.980Z'
+                                          endTime: '2018-10-18T22:03:31.996Z'
+                                          totalTime: 16
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:31.996Z'
+                                          endTime: '2018-10-18T22:03:31.999Z'
+                                          totalTime: 3
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.000Z'
+                                  endTime: '2018-10-18T22:03:32.018Z'
+                                  totalTime: 18
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.003Z'
+                                      endTime: '2018-10-18T22:03:32.018Z'
+                                      totalTime: 15
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.003Z'
+                                          endTime: '2018-10-18T22:03:32.006Z'
+                                          totalTime: 3
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.006Z'
+                                          endTime: '2018-10-18T22:03:32.016Z'
+                                          totalTime: 10
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.016Z'
+                                          endTime: '2018-10-18T22:03:32.018Z'
+                                          totalTime: 2
+                                        requisitions: []
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [1]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.018Z'
+                          endTime: '2018-10-18T22:03:32.043Z'
+                          totalTime: 25
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.019Z'
+                              endTime: '2018-10-18T22:03:32.043Z'
+                              totalTime: 24
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.019Z'
+                                  endTime: '2018-10-18T22:03:32.029Z'
+                                  totalTime: 10
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.021Z'
+                                      endTime: '2018-10-18T22:03:32.029Z'
+                                      totalTime: 8
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.021Z'
+                                          endTime: '2018-10-18T22:03:32.022Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.022Z'
+                                          endTime: '2018-10-18T22:03:32.025Z'
+                                          totalTime: 3
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.025Z'
+                                          endTime: '2018-10-18T22:03:32.029Z'
+                                          totalTime: 4
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.029Z'
+                                  endTime: '2018-10-18T22:03:32.035Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.030Z'
+                                      endTime: '2018-10-18T22:03:32.035Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.030Z'
+                                          endTime: '2018-10-18T22:03:32.032Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.032Z'
+                                          endTime: '2018-10-18T22:03:32.033Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.034Z'
+                                          endTime: '2018-10-18T22:03:32.035Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.035Z'
+                                  endTime: '2018-10-18T22:03:32.043Z'
+                                  totalTime: 8
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.037Z'
+                                      endTime: '2018-10-18T22:03:32.043Z'
+                                      totalTime: 6
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.037Z'
+                                          endTime: '2018-10-18T22:03:32.039Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.039Z'
+                                          endTime: '2018-10-18T22:03:32.041Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.041Z'
+                                          endTime: '2018-10-18T22:03:32.043Z'
+                                          totalTime: 2
+                                        requisitions: []
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [2]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.044Z'
+                          endTime: '2018-10-18T22:03:32.064Z'
+                          totalTime: 20
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.044Z'
+                              endTime: '2018-10-18T22:03:32.064Z'
+                              totalTime: 20
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.044Z'
+                                  endTime: '2018-10-18T22:03:32.050Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.045Z'
+                                      endTime: '2018-10-18T22:03:32.050Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.045Z'
+                                          endTime: '2018-10-18T22:03:32.047Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.047Z'
+                                          endTime: '2018-10-18T22:03:32.049Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.049Z'
+                                          endTime: '2018-10-18T22:03:32.050Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.051Z'
+                                  endTime: '2018-10-18T22:03:32.057Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.051Z'
+                                      endTime: '2018-10-18T22:03:32.056Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.051Z'
+                                          endTime: '2018-10-18T22:03:32.052Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.053Z'
+                                          endTime: '2018-10-18T22:03:32.054Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.055Z'
+                                          endTime: '2018-10-18T22:03:32.056Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.057Z'
+                                  endTime: '2018-10-18T22:03:32.064Z'
+                                  totalTime: 7
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.059Z'
+                                      endTime: '2018-10-18T22:03:32.064Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.059Z'
+                                          endTime: '2018-10-18T22:03:32.061Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.061Z'
+                                          endTime: '2018-10-18T22:03:32.062Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.063Z'
+                                          endTime: '2018-10-18T22:03:32.064Z'
+                                          totalTime: 1
+                                        requisitions: []
+              -
+                valid: true
+                tests: []
+                name: 'second.0 [1]'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-18T22:03:32.065Z'
+                  endTime: '2018-10-18T22:03:32.124Z'
+                  totalTime: 59
+                requisitions:
+                  -
+                    valid: true
+                    tests: []
+                    name: 'second.1 iterator collection'
+                    subscriptions: []
+                    publishers: []
+                    time:
+                      startTime: '2018-10-18T22:03:32.066Z'
+                      endTime: '2018-10-18T22:03:32.124Z'
+                      totalTime: 58
+                    requisitions:
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [0]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.066Z'
+                          endTime: '2018-10-18T22:03:32.086Z'
+                          totalTime: 20
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.068Z'
+                              endTime: '2018-10-18T22:03:32.086Z'
+                              totalTime: 18
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.068Z'
+                                  endTime: '2018-10-18T22:03:32.074Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.069Z'
+                                      endTime: '2018-10-18T22:03:32.074Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.069Z'
+                                          endTime: '2018-10-18T22:03:32.071Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.071Z'
+                                          endTime: '2018-10-18T22:03:32.072Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.073Z'
+                                          endTime: '2018-10-18T22:03:32.074Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.074Z'
+                                  endTime: '2018-10-18T22:03:32.080Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.076Z'
+                                      endTime: '2018-10-18T22:03:32.080Z'
+                                      totalTime: 4
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.076Z'
+                                          endTime: '2018-10-18T22:03:32.077Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.077Z'
+                                          endTime: '2018-10-18T22:03:32.078Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.079Z'
+                                          endTime: '2018-10-18T22:03:32.080Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.080Z'
+                                  endTime: '2018-10-18T22:03:32.086Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.081Z'
+                                      endTime: '2018-10-18T22:03:32.086Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.081Z'
+                                          endTime: '2018-10-18T22:03:32.083Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.083Z'
+                                          endTime: '2018-10-18T22:03:32.084Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.084Z'
+                                          endTime: '2018-10-18T22:03:32.086Z'
+                                          totalTime: 2
+                                        requisitions: []
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [1]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.086Z'
+                          endTime: '2018-10-18T22:03:32.105Z'
+                          totalTime: 19
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.088Z'
+                              endTime: '2018-10-18T22:03:32.105Z'
+                              totalTime: 17
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.088Z'
+                                  endTime: '2018-10-18T22:03:32.093Z'
+                                  totalTime: 5
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.089Z'
+                                      endTime: '2018-10-18T22:03:32.093Z'
+                                      totalTime: 4
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.089Z'
+                                          endTime: '2018-10-18T22:03:32.090Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.090Z'
+                                          endTime: '2018-10-18T22:03:32.092Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.092Z'
+                                          endTime: '2018-10-18T22:03:32.093Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.093Z'
+                                  endTime: '2018-10-18T22:03:32.099Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.094Z'
+                                      endTime: '2018-10-18T22:03:32.099Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.094Z'
+                                          endTime: '2018-10-18T22:03:32.096Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.096Z'
+                                          endTime: '2018-10-18T22:03:32.097Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.098Z'
+                                          endTime: '2018-10-18T22:03:32.099Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.099Z'
+                                  endTime: '2018-10-18T22:03:32.105Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.101Z'
+                                      endTime: '2018-10-18T22:03:32.105Z'
+                                      totalTime: 4
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.101Z'
+                                          endTime: '2018-10-18T22:03:32.102Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.102Z'
+                                          endTime: '2018-10-18T22:03:32.104Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.104Z'
+                                          endTime: '2018-10-18T22:03:32.105Z'
+                                          totalTime: 1
+                                        requisitions: []
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [2]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.106Z'
+                          endTime: '2018-10-18T22:03:32.124Z'
+                          totalTime: 18
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.107Z'
+                              endTime: '2018-10-18T22:03:32.124Z'
+                              totalTime: 17
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.107Z'
+                                  endTime: '2018-10-18T22:03:32.113Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.109Z'
+                                      endTime: '2018-10-18T22:03:32.113Z'
+                                      totalTime: 4
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.109Z'
+                                          endTime: '2018-10-18T22:03:32.110Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.110Z'
+                                          endTime: '2018-10-18T22:03:32.112Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.112Z'
+                                          endTime: '2018-10-18T22:03:32.113Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.113Z'
+                                  endTime: '2018-10-18T22:03:32.118Z'
+                                  totalTime: 5
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.115Z'
+                                      endTime: '2018-10-18T22:03:32.118Z'
+                                      totalTime: 3
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.115Z'
+                                          endTime: '2018-10-18T22:03:32.116Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.116Z'
+                                          endTime: '2018-10-18T22:03:32.117Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.118Z'
+                                          endTime: '2018-10-18T22:03:32.118Z'
+                                          totalTime: 0
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.118Z'
+                                  endTime: '2018-10-18T22:03:32.124Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.119Z'
+                                      endTime: '2018-10-18T22:03:32.124Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.119Z'
+                                          endTime: '2018-10-18T22:03:32.121Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.121Z'
+                                          endTime: '2018-10-18T22:03:32.122Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.122Z'
+                                          endTime: '2018-10-18T22:03:32.124Z'
+                                          totalTime: 2
+                                        requisitions: []
+              -
+                valid: true
+                tests: []
+                name: 'second.0 [2]'
+                subscriptions: []
+                publishers: []
+                time:
+                  startTime: '2018-10-18T22:03:32.124Z'
+                  endTime: '2018-10-18T22:03:32.188Z'
+                  totalTime: 64
+                requisitions:
+                  -
+                    valid: true
+                    tests: []
+                    name: 'second.1 iterator collection'
+                    subscriptions: []
+                    publishers: []
+                    time:
+                      startTime: '2018-10-18T22:03:32.126Z'
+                      endTime: '2018-10-18T22:03:32.187Z'
+                      totalTime: 61
+                    requisitions:
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [0]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.126Z'
+                          endTime: '2018-10-18T22:03:32.144Z'
+                          totalTime: 18
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.127Z'
+                              endTime: '2018-10-18T22:03:32.144Z'
+                              totalTime: 17
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.127Z'
+                                  endTime: '2018-10-18T22:03:32.132Z'
+                                  totalTime: 5
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.129Z'
+                                      endTime: '2018-10-18T22:03:32.132Z'
+                                      totalTime: 3
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.129Z'
+                                          endTime: '2018-10-18T22:03:32.130Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.130Z'
+                                          endTime: '2018-10-18T22:03:32.131Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.131Z'
+                                          endTime: '2018-10-18T22:03:32.132Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.132Z'
+                                  endTime: '2018-10-18T22:03:32.138Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.134Z'
+                                      endTime: '2018-10-18T22:03:32.138Z'
+                                      totalTime: 4
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.134Z'
+                                          endTime: '2018-10-18T22:03:32.134Z'
+                                          totalTime: 0
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.134Z'
+                                          endTime: '2018-10-18T22:03:32.136Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.136Z'
+                                          endTime: '2018-10-18T22:03:32.138Z'
+                                          totalTime: 2
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.138Z'
+                                  endTime: '2018-10-18T22:03:32.144Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.139Z'
+                                      endTime: '2018-10-18T22:03:32.144Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.139Z'
+                                          endTime: '2018-10-18T22:03:32.141Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.141Z'
+                                          endTime: '2018-10-18T22:03:32.142Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.143Z'
+                                          endTime: '2018-10-18T22:03:32.144Z'
+                                          totalTime: 1
+                                        requisitions: []
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [1]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.144Z'
+                          endTime: '2018-10-18T22:03:32.167Z'
+                          totalTime: 23
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.146Z'
+                              endTime: '2018-10-18T22:03:32.167Z'
+                              totalTime: 21
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.146Z'
+                                  endTime: '2018-10-18T22:03:32.153Z'
+                                  totalTime: 7
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.148Z'
+                                      endTime: '2018-10-18T22:03:32.153Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.148Z'
+                                          endTime: '2018-10-18T22:03:32.149Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.149Z'
+                                          endTime: '2018-10-18T22:03:32.151Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.151Z'
+                                          endTime: '2018-10-18T22:03:32.153Z'
+                                          totalTime: 2
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.153Z'
+                                  endTime: '2018-10-18T22:03:32.160Z'
+                                  totalTime: 7
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.155Z'
+                                      endTime: '2018-10-18T22:03:32.159Z'
+                                      totalTime: 4
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.155Z'
+                                          endTime: '2018-10-18T22:03:32.156Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.156Z'
+                                          endTime: '2018-10-18T22:03:32.158Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.158Z'
+                                          endTime: '2018-10-18T22:03:32.159Z'
+                                          totalTime: 1
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.160Z'
+                                  endTime: '2018-10-18T22:03:32.167Z'
+                                  totalTime: 7
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.162Z'
+                                      endTime: '2018-10-18T22:03:32.167Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.162Z'
+                                          endTime: '2018-10-18T22:03:32.163Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.163Z'
+                                          endTime: '2018-10-18T22:03:32.165Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.165Z'
+                                          endTime: '2018-10-18T22:03:32.167Z'
+                                          totalTime: 2
+                                        requisitions: []
+                      -
+                        valid: true
+                        tests: []
+                        name: 'second.1 [2]'
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2018-10-18T22:03:32.167Z'
+                          endTime: '2018-10-18T22:03:32.187Z'
+                          totalTime: 20
+                        requisitions:
+                          -
+                            valid: true
+                            tests: []
+                            name: 'second.2 iterator collection'
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2018-10-18T22:03:32.169Z'
+                              endTime: '2018-10-18T22:03:32.187Z'
+                              totalTime: 18
+                            requisitions:
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [0]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.169Z'
+                                  endTime: '2018-10-18T22:03:32.174Z'
+                                  totalTime: 5
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.169Z'
+                                      endTime: '2018-10-18T22:03:32.174Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.169Z'
+                                          endTime: '2018-10-18T22:03:32.170Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.170Z'
+                                          endTime: '2018-10-18T22:03:32.172Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.172Z'
+                                          endTime: '2018-10-18T22:03:32.174Z'
+                                          totalTime: 2
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [1]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.174Z'
+                                  endTime: '2018-10-18T22:03:32.181Z'
+                                  totalTime: 7
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.176Z'
+                                      endTime: '2018-10-18T22:03:32.181Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.176Z'
+                                          endTime: '2018-10-18T22:03:32.177Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.178Z'
+                                          endTime: '2018-10-18T22:03:32.179Z'
+                                          totalTime: 1
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.179Z'
+                                          endTime: '2018-10-18T22:03:32.181Z'
+                                          totalTime: 2
+                                        requisitions: []
+                              -
+                                valid: true
+                                tests: []
+                                name: 'second.2 [2]'
+                                subscriptions: []
+                                publishers: []
+                                time:
+                                  startTime: '2018-10-18T22:03:32.181Z'
+                                  endTime: '2018-10-18T22:03:32.187Z'
+                                  totalTime: 6
+                                requisitions:
+                                  -
+                                    valid: true
+                                    tests: []
+                                    name: 'second.3 iterator collection'
+                                    subscriptions: []
+                                    publishers: []
+                                    time:
+                                      startTime: '2018-10-18T22:03:32.182Z'
+                                      endTime: '2018-10-18T22:03:32.187Z'
+                                      totalTime: 5
+                                    requisitions:
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [0]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.182Z'
+                                          endTime: '2018-10-18T22:03:32.184Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [1]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.184Z'
+                                          endTime: '2018-10-18T22:03:32.186Z'
+                                          totalTime: 2
+                                        requisitions: []
+                                      -
+                                        valid: true
+                                        tests: []
+                                        name: 'second.3 [2]'
+                                        subscriptions: []
+                                        publishers: []
+                                        time:
+                                          startTime: '2018-10-18T22:03:32.186Z'
+                                          endTime: '2018-10-18T22:03:32.187Z'
+                                          totalTime: 1
+                                        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''store.counter'' to be equal to ''81''. Received ''81'''
+        name: third
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:32.188Z'
+          endTime: '2018-10-18T22:03:32.189Z'
+          totalTime: 1
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.760Z'
+      endTime: '2018-10-18T22:03:32.190Z'
+      totalTime: 430
+  -
+    name: examples/stomp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: stomp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.245Z'
+            messageReceived:
+              payload: stompQueue
+              headers:
+                destination: /queue/stompQueue
+                message-id: Q_/queue/stompQueue@@session-LPkTe7Ee3zuNpndxJzrPPQ@@1
+                redelivered: 'false'
+                content-length: '10'
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: stomp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:32.262Z'
+        time:
+          startTime: '2018-10-18T22:03:31.817Z'
+          endTime: '2018-10-18T22:03:32.263Z'
+          totalTime: 446
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.765Z'
+      endTime: '2018-10-18T22:03:32.263Z'
+      totalTime: 498
+  -
+    name: examples/mqtt.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: mqtt
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+              -
+                name: Topic
+                valid: true
+                description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+              -
+                name: 'Beatles song'
+                valid: true
+                description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.252Z'
+            messageReceived:
+              topic: enqueuer/integration/public/test
+              payload:
+                type: Buffer
+                data:
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: mqtt
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:32.266Z'
+        time:
+          startTime: '2018-10-18T22:03:31.808Z'
+          endTime: '2018-10-18T22:03:32.268Z'
+          totalTime: 460
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.757Z'
+      endTime: '2018-10-18T22:03:32.269Z'
+      totalTime: 512
+  -
+    name: examples/amqp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'creating exchange'
+        subscriptions: []
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:32.254Z'
+        time:
+          startTime: '2018-10-18T22:03:31.777Z'
+          endTime: '2018-10-18T22:03:32.255Z'
+          totalTime: 478
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'using just created exchange'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: amqp
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
+              -
+                name: Header
+                valid: true
+                description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
+              -
+                name: 'Other Header Value'
+                valid: true
+                description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
+              -
+                name: 'Routing Key'
+                valid: true
+                description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.270Z'
+            messageReceived:
+              payload:
+                how:
+                  about: 'a new object?'
+              headers:
+                key: value
+                otherKey: otherValue
+              deliveryInfo:
+                contentType: application/json
+                headers:
+                  key: value
+                  otherKey: otherValue
+                queue: PY48iiaj
+                deliveryTag:
+                  type: Buffer
+                  data:
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                redelivered: false
+                exchange: enqueuer.exchange
+                routingKey: enqueuer.integration.test.routing.key
+                consumerTag: node-amqp-52319-0.9345737482314964
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:32.278Z'
+        time:
+          startTime: '2018-10-18T22:03:32.255Z'
+          endTime: '2018-10-18T22:03:32.279Z'
+          totalTime: 24
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'default exhange'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: amqp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.302Z'
+            messageReceived:
+              payload:
+                data:
+                  type: Buffer
+                  data:
+                    - 100
+                    - 101
+                    - 102
+                    - 97
+                    - 117
+                    - 108
+                    - 116
+                    - 32
+                    - 101
+                    - 120
+                    - 99
+                    - 104
+                    - 97
+                    - 110
+                    - 103
+                    - 101
+                contentType: application/octet-stream
+              headers: {}
+              deliveryInfo:
+                contentType: application/octet-stream
+                queue: enqueuer.default.exchange
+                deliveryTag:
+                  type: Buffer
+                  data:
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                redelivered: false
+                exchange: ""
+                routingKey: enqueuer.default.exchange
+                consumerTag: node-amqp-52319-0.48422335163233066
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: amqp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:32.308Z'
+        time:
+          startTime: '2018-10-18T22:03:32.280Z'
+          endTime: '2018-10-18T22:03:32.309Z'
+          totalTime: 29
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.733Z'
+      endTime: '2018-10-18T22:03:32.309Z'
+      totalTime: 576
+  -
+    name: examples/parallel-sub.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: tcp-server
+            tests:
+              -
+                name: Paralleling
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''anything''. Received ''anything'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 97
+                  - 110
+                  - 121
+                  - 116
+                  - 104
+                  - 105
+                  - 110
+                  - 103
+              stream:
+                address: '::ffff:127.0.0.1'
+                family: IPv6
+                port: 23081
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.809Z'
+          endTime: '2018-10-18T22:03:32.312Z'
+          totalTime: 503
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.758Z'
+      endTime: '2018-10-18T22:03:32.312Z'
+      totalTime: 554
+  -
+    name: examples/parallel-pub.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'requisition description'
+        subscriptions: []
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: tcp-client
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Back and forth'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''anyValue''. Received ''anyValue'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:32.313Z'
+            messageReceived:
+              payload: anyValue
+              stream:
+                address: 127.0.0.1
+                family: IPv4
+                port: 51708
+        time:
+          startTime: '2018-10-18T22:03:31.809Z'
+          endTime: '2018-10-18T22:03:32.314Z'
+          totalTime: 505
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.758Z'
+      endTime: '2018-10-18T22:03:32.314Z'
+      totalTime: 556
+  -
+    name: examples/tcp.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: tcp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''Hey Jude''. Received ''Hey Jude'''
+              -
+                name: 'Assertion #1'
+                valid: true
+                description: 'Expecting ''stream.address'' (::ffff:127.0.0.1) to contain ''127.0.0.1'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 72
+                  - 101
+                  - 121
+                  - 32
+                  - 74
+                  - 117
+                  - 100
+                  - 101
+              stream:
+                address: '::ffff:127.0.0.1'
+                family: IPv6
+                port: 23069
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: tcp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''Do not make it bad''. Received ''Do not make it bad'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.985Z'
+            messageReceived:
+              payload: 'Do not make it bad'
+              stream:
+                address: 127.0.0.1
+                family: IPv4
+                port: 51687
+        time:
+          startTime: '2018-10-18T22:03:31.818Z'
+          endTime: '2018-10-18T22:03:31.985Z'
+          totalTime: 167
+          timeout: 3000
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #1'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: tcp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''I do not care''. Received ''I do not care'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.996Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 73
+                  - 32
+                  - 100
+                  - 111
+                  - 32
+                  - 110
+                  - 111
+                  - 116
+                  - 32
+                  - 99
+                  - 97
+                  - 114
+                  - 101
+              stream:
+                address: '::ffff:127.0.0.1'
+                family: IPv6
+                port: 23070
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: tcp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''EnqueuerRocks''. Received ''EnqueuerRocks'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:32.817Z'
+            messageReceived:
+              payload: EnqueuerRocks
+              stream:
+                address: 127.0.0.1
+                family: IPv4
+                port: 51698
+        time:
+          startTime: '2018-10-18T22:03:31.986Z'
+          endTime: '2018-10-18T22:03:32.818Z'
+          totalTime: 832
+          timeout: 3000
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #2'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: tcp
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''The socket is still open''. Received ''The socket is still open'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.821Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 84
+                  - 104
+                  - 101
+                  - 32
+                  - 115
+                  - 111
+                  - 99
+                  - 107
+                  - 101
+                  - 116
+                  - 32
+                  - 105
+                  - 115
+                  - 32
+                  - 115
+                  - 116
+                  - 105
+                  - 108
+                  - 108
+                  - 32
+                  - 111
+                  - 112
+                  - 101
+                  - 110
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: tcp
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''enqueuer Rocks''. Received ''enqueuer Rocks'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:32.822Z'
+            messageReceived:
+              payload: 'enqueuer Rocks'
+        time:
+          startTime: '2018-10-18T22:03:32.818Z'
+          endTime: '2018-10-18T22:03:32.822Z'
+          totalTime: 4
+          timeout: 3000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.768Z'
+      endTime: '2018-10-18T22:03:32.822Z'
+      totalTime: 1054
+  -
+    name: examples/uds.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: uds
+            tests:
+              -
+                name: 'Message received is enqueuer'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+              stream: {}
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: uds
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''responsePayload''. Received ''responsePayload'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.946Z'
+            messageReceived:
+              payload: responsePayload
+              stream: {}
+        time:
+          startTime: '2018-10-18T22:03:31.819Z'
+          endTime: '2018-10-18T22:03:31.946Z'
+          totalTime: 127
+          timeout: 3000
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #1'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: uds
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''message.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.979Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 101
+                  - 110
+                  - 113
+                  - 117
+                  - 101
+                  - 117
+                  - 101
+                  - 114
+              stream: {}
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: uds
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''publisher.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+            publishTime: '2018-10-18T22:03:33.001Z'
+            messageReceived:
+              payload: '{}'
+              stream: {}
+        time:
+          startTime: '2018-10-18T22:03:31.947Z'
+          endTime: '2018-10-18T22:03:33.001Z'
+          totalTime: 1054
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #2'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: uds
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''I am still opened''. Received ''I am still opened'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:33.006Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 73
+                  - 32
+                  - 97
+                  - 109
+                  - 32
+                  - 115
+                  - 116
+                  - 105
+                  - 108
+                  - 108
+                  - 32
+                  - 111
+                  - 112
+                  - 101
+                  - 110
+                  - 101
+                  - 100
+              stream: {}
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: uds
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:33.007Z'
+            messageReceived:
+              payload: 'I am still bidirectional'
+              stream: {}
+        time:
+          startTime: '2018-10-18T22:03:33.003Z'
+          endTime: '2018-10-18T22:03:33.008Z'
+          totalTime: 5
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.771Z'
+      endTime: '2018-10-18T22:03:33.008Z'
+      totalTime: 1237
+  -
+    name: examples/avoid.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: tcp-server
+            tests:
+              -
+                valid: true
+                name: 'Subscription avoided'
+                description: 'Avoidable subscription has not received any message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.778Z'
+          endTime: '2018-10-18T22:03:33.821Z'
+          totalTime: 2043
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.734Z'
+      endTime: '2018-10-18T22:03:33.822Z'
+      totalTime: 2088
+  -
+    name: examples/ssl.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: ssl
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''secureMessage''. Received ''secureMessage'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 115
+                  - 101
+                  - 99
+                  - 117
+                  - 114
+                  - 101
+                  - 77
+                  - 101
+                  - 115
+                  - 115
+                  - 97
+                  - 103
+                  - 101
+              stream:
+                address: '::ffff:127.0.0.1'
+                family: IPv6
+                port: 23082
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: ssl
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''hisecureResponse''. Received ''hisecureResponse'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:34.005Z'
+            messageReceived:
+              payload: hisecureResponse
+              stream:
+                address: 127.0.0.1
+                family: IPv4
+                port: 51688
+        time:
+          startTime: '2018-10-18T22:03:31.816Z'
+          endTime: '2018-10-18T22:03:34.005Z'
+          totalTime: 2189
+        requisitions: []
+      -
+        valid: true
+        tests: []
+        name: 'Requisition #1'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: ssl
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''reusingSecureMessage''. Received ''reusingSecureMessage'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:34.008Z'
+            messageReceived:
+              payload:
+                type: Buffer
+                data:
+                  - 114
+                  - 101
+                  - 117
+                  - 115
+                  - 105
+                  - 110
+                  - 103
+                  - 83
+                  - 101
+                  - 99
+                  - 117
+                  - 114
+                  - 101
+                  - 77
+                  - 101
+                  - 115
+                  - 115
+                  - 97
+                  - 103
+                  - 101
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: ssl
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''payload'' to be equal to ''reusingSecureResponse''. Received ''reusingSecureResponse'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:34.009Z'
+            messageReceived:
+              payload: reusingSecureResponse
+        time:
+          startTime: '2018-10-18T22:03:34.006Z'
+          endTime: '2018-10-18T22:03:34.009Z'
+          totalTime: 3
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.764Z'
+      endTime: '2018-10-18T22:03:34.009Z'
+      totalTime: 2245
+  -
+    name: examples/http.yml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #0'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: http
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expected ''JSON.parse(message.body).enqueuer'' to be equal to ''virgs''. Received ''virgs'''
+              -
+                name: Params
+                valid: true
+                description: 'Expected ''params.firstId'' to be equal to ''idStuff''. Received ''idStuff'''
+              -
+                name: Query
+                valid: true
+                description: 'Expected ''query.query'' to be equal to ''2345''. Received ''2345'''
+              -
+                name: Header
+                valid: true
+                description: 'Expected ''headers.nqr'' to be equal to ''publisher''. Received ''publisher'''
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.883Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                nqr: publisher
+                content-length: '25'
+                host: 'localhost:23075'
+                connection: close
+              params:
+                firstId: idStuff
+              query:
+                query: '2345'
+              body: "{\n  \"enqueuer\": \"virgs\"\n}"
+          -
+            name: 'same port'
+            type: http
+            tests:
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.857Z'
+            messageReceived:
+              headers:
+                content-length: '5'
+                host: 'localhost:23075'
+                connection: close
+              params: {}
+              query: {}
+              body: virgs
+          -
+            name: 'yet another, but avoidable'
+            type: http
+            tests:
+              -
+                valid: true
+                name: 'Subscription avoided'
+                description: 'Avoidable subscription has not received any message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:31.857Z'
+        publishers:
+          -
+            name: 'Publisher #0'
+            valid: true
+            type: http
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Status Code'
+                valid: true
+                description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
+              -
+                name: Body
+                valid: true
+                description: 'Expected ''body'' to be equal to ''dynamically changed payload''. Received ''dynamically changed payload'''
+              -
+                name: Header
+                valid: true
+                description: 'Expected ''headers.nqr'' to be equal to ''subscription''. Received ''subscription'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.994Z'
+            messageReceived:
+              statusCode: 321
+              body: 'dynamically changed payload'
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                nqr: subscription
+                content-type: 'text/html; charset=utf-8'
+                content-length: '27'
+                etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
+                date: 'Thu, 18 Oct 2018 22:03:31 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'http:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:23075'
+                  port: '23075'
+                  hostname: localhost
+                  hash: null
+                  search: '?query=2345'
+                  query: query=2345
+                  pathname: /enqueuer/idStuff
+                  path: '/enqueuer/idStuff?query=2345'
+                  href: 'http://localhost:23075/enqueuer/idStuff?query=2345'
+                method: post
+                headers:
+                  content-type: application/json
+                  nqr: publisher
+                  Content-Length: 25
+          -
+            name: 'Publisher #1'
+            valid: true
+            type: http
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Status Code'
+                valid: true
+                description: 'Expected ''statusCode'' to be equal to ''444''. Received ''444'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:31.994Z'
+            messageReceived:
+              statusCode: 444
+              body: blah
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                content-type: 'text/html; charset=utf-8'
+                content-length: '4'
+                etag: 'W/"4-W/H9kn37hnlJai5s8Ay+UMHIcUU"'
+                date: 'Thu, 18 Oct 2018 22:03:31 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'http:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:23075'
+                  port: '23075'
+                  hostname: localhost
+                  hash: null
+                  search: null
+                  query: null
+                  pathname: /samePort
+                  path: /samePort
+                  href: 'http://localhost:23075/samePort'
+                method: post
+                headers:
+                  Content-Length: 5
+        time:
+          startTime: '2018-10-18T22:03:31.794Z'
+          endTime: '2018-10-18T22:03:32.126Z'
+          totalTime: 332
+          timeout: 3000
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'Requisition #1'
+        subscriptions:
+          -
+            name: 'Subscription #0'
+            type: http
+            tests:
+              -
+                name: Payload
+                valid: true
+                description: 'Expect ''JSON.parse(message.body).duplicated'' to be true'
+              -
+                valid: true
+                name: 'Message received'
+                description: 'Subscription has received its message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.129Z'
+            messageReceived:
+              headers:
+                content-type: application/json
+                content-length: '24'
+                host: 'localhost:23075'
+                connection: close
+              params:
+                secondId: idStuff
+              query:
+                query: '111'
+              body: "{\n  \"duplicated\": true\n}"
+        publishers:
+          -
+            name: 'publisher description'
+            valid: true
+            type: http
+            tests:
+              -
+                name: Published
+                valid: true
+                description: 'Published successfully'
+              -
+                name: 'Status Code'
+                valid: true
+                description: 'Expected ''statusCode'' to be equal to ''321''. Received ''321'''
+              -
+                name: Body
+                valid: true
+                description: 'Expected ''body'' to be equal to ''duplicatedResponsePayload''. Received ''duplicatedResponsePayload'''
+              -
+                name: 'Response message received'
+                valid: true
+                description: 'Response message was received'
+            publishTime: '2018-10-18T22:03:32.133Z'
+            messageReceived:
+              statusCode: 321
+              body: duplicatedResponsePayload
+              headers:
+                x-powered-by: Express
+                access-control-allow-origin: '*'
+                access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept'
+                content-type: 'text/html; charset=utf-8'
+                content-length: '25'
+                etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
+                date: 'Thu, 18 Oct 2018 22:03:32 GMT'
+                connection: close
+              request:
+                uri:
+                  protocol: 'http:'
+                  slashes: true
+                  auth: null
+                  host: 'localhost:23075'
+                  port: '23075'
+                  hostname: localhost
+                  hash: null
+                  search: '?query=111'
+                  query: query=111
+                  pathname: /enqueuer/idStuff
+                  path: '/enqueuer/idStuff?query=111'
+                  href: 'http://localhost:23075/enqueuer/idStuff?query=111'
+                method: post
+                headers:
+                  content-type: application/json
+                  Content-Length: 24
+        time:
+          startTime: '2018-10-18T22:03:32.127Z'
+          endTime: '2018-10-18T22:03:32.133Z'
+          totalTime: 6
+          timeout: 5000
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'requisition 2 (port 23076)'
+        subscriptions:
+          -
+            name: 'subscription description'
+            type: http
+            tests:
+              -
+                valid: true
+                name: 'Subscription avoided'
+                description: 'Avoidable subscription has not received any message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:32.134Z'
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:32.133Z'
+          endTime: '2018-10-18T22:03:33.138Z'
+          totalTime: 1005
+          timeout: 5000
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            valid: true
+            name: 'No time out'
+            description: 'Requisition has not timed out'
+        name: 'check port releasing (23076)'
+        subscriptions:
+          -
+            name: 'same port subscription'
+            type: tcp-server
+            tests:
+              -
+                valid: true
+                name: 'Subscription avoided'
+                description: 'Avoidable subscription has not received any message'
+            valid: true
+            connectionTime: '2018-10-18T22:03:33.141Z'
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:33.139Z'
+          endTime: '2018-10-18T22:03:34.142Z'
+          totalTime: 1003
+          timeout: 5000
+        requisitions: []
+    time:
+      startTime: '2018-10-18T22:03:31.753Z'
+      endTime: '2018-10-18T22:03:34.143Z'
+      totalTime: 2390
+  -
+    name: examples/requisition.yaml
+    valid: true
+    tests: []
+    requisitions:
+      -
+        valid: true
+        tests: []
+        name: 'iterations iterator collection'
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.775Z'
+          endTime: '2018-10-18T22:03:31.980Z'
+          totalTime: 205
+        requisitions:
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [0]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.775Z'
+              endTime: '2018-10-18T22:03:31.857Z'
+              totalTime: 82
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [1]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.876Z'
+              endTime: '2018-10-18T22:03:31.890Z'
+              totalTime: 14
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [2]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.890Z'
+              endTime: '2018-10-18T22:03:31.898Z'
+              totalTime: 8
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [3]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.898Z'
+              endTime: '2018-10-18T22:03:31.910Z'
+              totalTime: 12
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [4]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.910Z'
+              endTime: '2018-10-18T22:03:31.917Z'
+              totalTime: 7
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [5]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.917Z'
+              endTime: '2018-10-18T22:03:31.931Z'
+              totalTime: 14
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [6]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.931Z'
+              endTime: '2018-10-18T22:03:31.932Z'
+              totalTime: 1
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [7]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.932Z'
+              endTime: '2018-10-18T22:03:31.943Z'
+              totalTime: 11
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [8]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.944Z'
+              endTime: '2018-10-18T22:03:31.979Z'
+              totalTime: 35
+            requisitions: []
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined'
+            name: 'iterations [9]'
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2018-10-18T22:03:31.979Z'
+              endTime: '2018-10-18T22:03:31.980Z'
+              totalTime: 1
+            requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'It was executed 10 times'
+            valid: true
+            description: 'Expected ''store.iteration'' to be equal to ''9''. Received ''9'''
+          -
+            name: 'It delayed for at least ~3 seconds'
+            valid: true
+            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3056'''
+          -
+            name: 'It delayed for no more than ~3 seconds'
+            valid: true
+            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2506'''
+          -
+            name: 'Assertion #3'
+            valid: true
+            description: 'Expected ''requisition.anyStuff'' to be equal to ''anyValue''. Received ''anyValue'''
+        name: delayed
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:31.980Z'
+          endTime: '2018-10-18T22:03:34.985Z'
+          totalTime: 3005
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''requisition.parent.requisitions[3].name'' to be equal to ''fourth''. Received ''fourth'''
+        name: third
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:34.985Z'
+          endTime: '2018-10-18T22:03:34.987Z'
+          totalTime: 2
+        requisitions: []
+      -
+        valid: true
+        tests:
+          -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''requisition.parent.requisitions[2].name'' to be equal to ''third''. Received ''third'''
+        name: fourth
+        subscriptions: []
+        publishers: []
+        time:
+          startTime: '2018-10-18T22:03:34.987Z'
+          endTime: '2018-10-18T22:03:34.989Z'
           totalTime: 2
         requisitions: []
     time:
-      startTime: '2018-10-18T21:50:00.339Z'
-      endTime: '2018-10-18T21:50:00.350Z'
-      totalTime: 11
+      startTime: '2018-10-18T22:03:31.730Z'
+      endTime: '2018-10-18T22:03:34.989Z'
+      totalTime: 3259

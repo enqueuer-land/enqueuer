@@ -17,7 +17,12 @@ export class Configuration {
         const fileNameHasChanged = configFileName != Configuration.configFileName;
 
         if (isNotLoadedYet) {
-            Configuration.instance = Configuration.default();
+            const daemonTypes = CommandLineConfiguration.getDaemonTypes();
+            if (daemonTypes.length > 0) {
+                Configuration.instance = Configuration.createDefaultDaemon(daemonTypes);
+            } else {
+                Configuration.instance = Configuration.createDefaultSingleRun();
+            }
         }
         if (configFileName !== undefined && fileNameHasChanged) {
             Configuration.instance = this.readFromFile(configFileName);
@@ -26,7 +31,7 @@ export class Configuration {
     }
 
     private static readFromFile(configFileName: string): any {
-        const defaultValues = Configuration.default();
+        const defaultValues = Configuration.createDefaultSingleRun();
         FileConfiguration.load(configFileName);
         Configuration.configFileName = configFileName;
         return {
@@ -41,7 +46,7 @@ export class Configuration {
         };
     }
 
-    private static default(): any {
+    private static createDefaultSingleRun(): any {
         let outputs = [];
         if (CommandLineConfiguration.getStdoutRequisitionOutput()) {
             outputs.push({type: 'standard-output', pretty: true});
@@ -51,6 +56,24 @@ export class Configuration {
             'single-run': {
                 files: []
             },
+            outputs: outputs,
+            store: Object.assign({}, CommandLineConfiguration.getStore()),
+            quiet: CommandLineConfiguration.isQuietMode(),
+            addSingleRun: CommandLineConfiguration.singleRunFiles(),
+            addSingleRunIgnore: CommandLineConfiguration.singleRunFilesIgnoring()
+        };
+    }
+
+    private static createDefaultDaemon(daemonTypes: string[]): any {
+        let outputs = [];
+        if (CommandLineConfiguration.getStdoutRequisitionOutput()) {
+            outputs.push({type: 'standard-output', pretty: true});
+        }
+        return {
+            logLevel: CommandLineConfiguration.getVerbosity() || 'warn',
+            daemon: daemonTypes.map((daemonType: string) => {
+                return {type: daemonType};
+            }),
             outputs: outputs,
             store: Object.assign({}, CommandLineConfiguration.getStore()),
             quiet: CommandLineConfiguration.isQuietMode(),
