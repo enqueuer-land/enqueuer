@@ -13,7 +13,7 @@ let daemonTypes: string[] = [];
 let refreshCommander = (commandLineArguments: string[]) => {
     let commander = new Command()
         .version(process.env.npm_package_version || packageJson.version, '-v, --version')
-        .usage('[options] <confif-file-path>')
+        .usage('[options] <config-file-path>')
         .option('-q, --quiet', 'disable logging', false)
         .option('-b, --verbosity <level>', 'set verbosity [trace, debug, info, warn, error, fatal]')
         .option('-c, --config-file <path>', 'set configurationFile')

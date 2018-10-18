@@ -9,7 +9,7 @@ So you don't have to deal with a whole bunch of stuff you will not need.
 ###### If you need some help:
 
     $ nqr -h
-    Usage: nqr [options] <confif-file-path>
+    Usage: nqr [options] <config-file-path>
     
     Options:
     
@@ -19,10 +19,12 @@ So you don't have to deal with a whole bunch of stuff you will not need.
       -c, --config-file <path>                     set configurationFile
       -o, --stdout-requisition-output              add stdout as requisition output
       -s, --store [store]                          add variables values to this session (default: )
+      -d, --daemon <type>                          execute in daemon mode with default values of <type> (default: )
       -a, --add-file-single-run <file>             add file to be tested in single-run (default: )
       -A, --add-file-and-ignore-single-run <file>  add file to be tested and ignore the ones set in single-run   (default: )
       -p, --protocols-description [protocol]       describe protocols
       -h, --help                                   output usage information
+
 
 ###### Run it:
 
