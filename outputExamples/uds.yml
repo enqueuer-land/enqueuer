@@ -24,7 +24,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-18T18:00:49.473Z'
+        connectionTime: '2018-10-18T21:24:36.944Z'
         messageReceived:
           payload:
             type: Buffer
@@ -40,7 +40,7 @@ requisitions:
           stream: {}
     publishers:
       -
-        name: 'publisher description'
+        name: 'Publisher #0'
         valid: true
         type: uds
         tests:
@@ -49,34 +49,34 @@ requisitions:
             valid: true
             description: 'Published successfully'
           -
-            name: 'It is bidirectional'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''responsePayload''. Received ''responsePayload'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-18T18:00:49.538Z'
+        publishTime: '2018-10-18T21:24:37.013Z'
         messageReceived:
           payload: responsePayload
           stream: {}
     time:
-      startTime: '2018-10-18T18:00:49.403Z'
-      endTime: '2018-10-18T18:00:49.538Z'
-      totalTime: 135
+      startTime: '2018-10-18T21:24:36.869Z'
+      endTime: '2018-10-18T21:24:37.013Z'
+      totalTime: 144
       timeout: 3000
     requisitions: []
   -
     valid: true
     tests: []
-    name: 'UDS2 Name saver'
+    name: 'Requisition #1'
     subscriptions:
       -
-        name: 'udsSubscription2 description'
+        name: 'Subscription #0'
         type: uds
         tests:
           -
-            name: 'Message received is enqueuer 2'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''message.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
@@ -84,7 +84,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-18T18:00:49.577Z'
+        connectionTime: '2018-10-18T21:24:37.038Z'
         messageReceived:
           payload:
             type: Buffer
@@ -100,38 +100,38 @@ requisitions:
           stream: {}
     publishers:
       -
-        name: 'udsPublisher2 description'
+        name: 'Publisher #0'
         valid: true
         type: uds
         tests:
           -
-            name: 'Message to be published is enqueuer'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''publisher.payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-18T18:00:50.613Z'
+        publishTime: '2018-10-18T21:24:38.058Z'
         messageReceived:
           payload: '{}'
           stream: {}
     time:
-      startTime: '2018-10-18T18:00:49.539Z'
-      endTime: '2018-10-18T18:00:50.614Z'
-      totalTime: 1075
+      startTime: '2018-10-18T21:24:37.019Z'
+      endTime: '2018-10-18T21:24:38.058Z'
+      totalTime: 1039
     requisitions: []
   -
     valid: true
     tests: []
-    name: 'udsStreamLoader description'
+    name: 'Requisition #2'
     subscriptions:
       -
         name: 'Subscription #0'
         type: uds
         tests:
           -
-            name: 'Publisher stream was still opened'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''I am still opened''. Received ''I am still opened'''
           -
@@ -139,7 +139,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-18T18:00:50.617Z'
+        connectionTime: '2018-10-18T21:24:38.062Z'
         messageReceived:
           payload:
             type: Buffer
@@ -164,7 +164,7 @@ requisitions:
           stream: {}
     publishers:
       -
-        name: 'udsStreamLoader publisher'
+        name: 'Publisher #0'
         valid: true
         type: uds
         tests:
@@ -173,23 +173,23 @@ requisitions:
             valid: true
             description: 'Published successfully'
           -
-            name: 'Message received'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''I am still bidirectional''. Received ''I am still bidirectional'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-18T18:00:50.618Z'
+        publishTime: '2018-10-18T21:24:38.063Z'
         messageReceived:
           payload: 'I am still bidirectional'
           stream: {}
     time:
-      startTime: '2018-10-18T18:00:50.615Z'
-      endTime: '2018-10-18T18:00:50.619Z'
+      startTime: '2018-10-18T21:24:38.060Z'
+      endTime: '2018-10-18T21:24:38.064Z'
       totalTime: 4
     requisitions: []
 time:
-  startTime: '2018-10-18T18:00:49.355Z'
-  endTime: '2018-10-18T18:00:50.619Z'
-  totalTime: 1264
+  startTime: '2018-10-18T21:24:36.820Z'
+  endTime: '2018-10-18T21:24:38.064Z'
+  totalTime: 1244

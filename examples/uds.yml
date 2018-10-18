@@ -1,7 +1,6 @@
 -   timeout: 3000
     publishers:
-        -   name: publisher description
-            type: uds
+        -   type: uds
             path: /tmp/unix.sock
             timeout: 2000
             payload: I'll be replaced in onInit
@@ -9,13 +8,10 @@
                 script: publisher.payload = 'enqueuer'
                 store:
                     udsPayload: `enqueuer`
-                    uds2RequisitionName: `RequisitionUds2Name`
                     uds2Timeout: `2000`
-                    uds2Name: `UDS2 Name`
             onMessageReceived:
                 assertions:
-                    -   name: It is bidirectional
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `responsePayload`
     subscriptions:
         -   type: uds
@@ -27,40 +23,32 @@
                     -   name: Message received is enqueuer
                         expect: payload
                         toBeEqualTo: store.udsPayload
--   name: <<uds2Name>> saver
-    publishers:
-        -   name: udsPublisher2 description
-            type: uds
+-   publishers:
+        -   type: uds
             path: /tmp/unix2.sock
             payload: <<udsPayload>>
             saveStream: udsPubStreamName
             onInit:
                 assertions:
-                    -   name: Message to be published is <<udsPayload>>
-                        expect: publisher.payload
+                    -   expect: publisher.payload
                         toBeEqualTo: store.udsPayload
     subscriptions:
-        -   name: udsSubscription2 description
-            type: uds
+        -   type: uds
             path: /tmp/unix2.sock
             saveStream: udsSubStreamName
             onMessageReceived:
                 assertions:
-                    -   name: Message received is <<udsPayload>> 2
-                        expect: message.payload
+                    -   expect: message.payload
                         toBeEqualTo: store.udsPayload
             timeout: <<uds2Timeout>>
--   name: udsStreamLoader description
-    publishers:
-        -   name: udsStreamLoader publisher
-            type: uds
+-   publishers:
+        -   type: uds
             timeout: 2000
             payload: I am still opened
             loadStream: udsSubStreamName
             onMessageReceived:
                 assertions:
-                    -   name: Message received
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `I am still bidirectional`
     subscriptions:
         -   type: uds
@@ -68,6 +56,5 @@
             response: I am still bidirectional
             onMessageReceived:
                 assertions:
-                    -   name: Publisher stream was still opened
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `I am still opened`

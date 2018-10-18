@@ -16,7 +16,7 @@ requisitions:
         type: tcp
         tests:
           -
-            name: 'Beatles Song'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''Hey Jude''. Received ''Hey Jude'''
           -
@@ -28,7 +28,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-18T18:00:49.473Z'
+        connectionTime: '2018-10-18T21:24:36.935Z'
         messageReceived:
           payload:
             type: Buffer
@@ -56,24 +56,24 @@ requisitions:
             valid: true
             description: 'Published successfully'
           -
-            name: 'Do not make it bad'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''Do not make it bad''. Received ''Do not make it bad'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-18T18:00:49.582Z'
+        publishTime: '2018-10-18T21:24:37.044Z'
         messageReceived:
           payload: 'Do not make it bad'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 64934
+            port: 51113
     time:
-      startTime: '2018-10-18T18:00:49.402Z'
-      endTime: '2018-10-18T18:00:49.583Z'
-      totalTime: 181
+      startTime: '2018-10-18T21:24:36.867Z'
+      endTime: '2018-10-18T21:24:37.044Z'
+      totalTime: 177
       timeout: 3000
     requisitions: []
   -
@@ -86,11 +86,11 @@ requisitions:
     name: 'Requisition #1'
     subscriptions:
       -
-        name: 'tcp 1 subscription description'
+        name: 'Subscription #0'
         type: tcp
         tests:
           -
-            name: 'I care'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''I do not care''. Received ''I do not care'''
           -
@@ -98,7 +98,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-18T18:00:49.601Z'
+        connectionTime: '2018-10-18T21:24:37.054Z'
         messageReceived:
           payload:
             type: Buffer
@@ -122,7 +122,7 @@ requisitions:
             port: 23070
     publishers:
       -
-        name: 'tcp 1 publisher description'
+        name: 'Publisher #0'
         valid: true
         type: tcp
         tests:
@@ -131,24 +131,24 @@ requisitions:
             valid: true
             description: 'Published successfully'
           -
-            name: 'Greeting received'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''EnqueuerRocks''. Received ''EnqueuerRocks'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-18T18:00:50.429Z'
+        publishTime: '2018-10-18T21:24:37.876Z'
         messageReceived:
           payload: EnqueuerRocks
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 64945
+            port: 51124
     time:
-      startTime: '2018-10-18T18:00:49.583Z'
-      endTime: '2018-10-18T18:00:50.429Z'
-      totalTime: 846
+      startTime: '2018-10-18T21:24:37.044Z'
+      endTime: '2018-10-18T21:24:37.876Z'
+      totalTime: 832
       timeout: 3000
     requisitions: []
   -
@@ -161,11 +161,11 @@ requisitions:
     name: 'Requisition #2'
     subscriptions:
       -
-        name: 'tcp 2 subscription description'
+        name: 'Subscription #0'
         type: tcp
         tests:
           -
-            name: 'It is still open'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''The socket is still open''. Received ''The socket is still open'''
           -
@@ -173,7 +173,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-18T18:00:50.432Z'
+        connectionTime: '2018-10-18T21:24:37.879Z'
         messageReceived:
           payload:
             type: Buffer
@@ -213,23 +213,23 @@ requisitions:
             valid: true
             description: 'Published successfully'
           -
-            name: 'Second message is enqueuer Rocks'
+            name: 'Assertion #0'
             valid: true
             description: 'Expected ''payload'' to be equal to ''enqueuer Rocks''. Received ''enqueuer Rocks'''
           -
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-18T18:00:50.434Z'
+        publishTime: '2018-10-18T21:24:37.880Z'
         messageReceived:
           payload: 'enqueuer Rocks'
     time:
-      startTime: '2018-10-18T18:00:50.430Z'
-      endTime: '2018-10-18T18:00:50.434Z'
+      startTime: '2018-10-18T21:24:37.877Z'
+      endTime: '2018-10-18T21:24:37.881Z'
       totalTime: 4
       timeout: 3000
     requisitions: []
 time:
-  startTime: '2018-10-18T18:00:49.352Z'
-  endTime: '2018-10-18T18:00:50.434Z'
-  totalTime: 1082
+  startTime: '2018-10-18T21:24:36.816Z'
+  endTime: '2018-10-18T21:24:37.881Z'
+  totalTime: 1065

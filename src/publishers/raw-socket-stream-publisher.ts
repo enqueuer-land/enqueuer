@@ -6,6 +6,7 @@ import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
+import * as tls from 'tls';
 
 const tcp = new Protocol('tcp')
     .addAlternativeName('tcp-client')
@@ -15,7 +16,13 @@ const uds = new Protocol('uds')
     .addAlternativeName('uds-client')
     .registerAsPublisher();
 
-@Injectable({predicate: (publish: any) => tcp.matches(publish.type) || uds.matches(publish.type)})
+const ssl = new Protocol('ssl')
+    .addAlternativeName('tls')
+    .registerAsPublisher();
+
+@Injectable({predicate: (publish: any) => tcp.matches(publish.type)
+        || uds.matches(publish.type)
+        || ssl.matches(publish.type)})
 export class RawSocketStreamPublisher extends Publisher {
 
     private readonly loadedStream: any;
@@ -41,7 +48,7 @@ export class RawSocketStreamPublisher extends Publisher {
     }
 
     private sendReusingStream(resolve: any, reject: any) {
-        Logger.debug(`Client is trying to reuse ${this.type} stream`);
+        Logger.info(`${this.type} client is trying to reuse stream ${this.loadStream}`);
         if (!this.loadedStream) {
             Logger.error(`There is no ${this.type} stream able to be loaded named ${this.loadStream}`);
             this.sendCreatingStream(resolve, reject);
@@ -52,7 +59,7 @@ export class RawSocketStreamPublisher extends Publisher {
     }
 
     private sendCreatingStream(resolve: any, reject: any) {
-        Logger.debug(`${this.type} client trying to connect`);
+        Logger.info(`${this.type} client trying to connect`);
         this.createStream()
             .then((stream: any) => {
                 Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port}`);
@@ -65,21 +72,33 @@ export class RawSocketStreamPublisher extends Publisher {
     private createStream(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (tcp.matches(this.type)) {
-                const stream = new net.Socket();
-                stream.connect(this.port, this.serverAddress, () => {
-                    Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port}`);
-                    resolve(stream);
-                });
-                stream.on('error', (error: any) => {
-                    reject(error);
-                });
+                this.createTcpServer(resolve, reject);
+            } else if (ssl.matches(this.type)) {
+                this.createSslServer(resolve, reject);
             } else {
                 resolve(net.createConnection(this.path));
             }
         });
     }
 
-    private publishData(stream: any, resolve: (value?: (PromiseLike<any> | any)) => void, reject: (reason?: any) => void) {
+    private createSslServer(resolve: any, reject: any): void {
+        const stream: any = tls.connect(this.port, this.serverAddress, this.options, () => resolve(stream));
+        stream.on('error', (error: any) => {
+            Logger.error(`${this.type} client error: ${error}`);
+            reject(error);
+        });
+    }
+
+    private createTcpServer(resolve: any, reject: any): void {
+        const stream = new net.Socket();
+        stream.connect(this.port, this.serverAddress, () => resolve(stream));
+        stream.on('error', (error: any) => {
+            Logger.error(`${this.type} client error: ${error}`);
+            reject(error);
+        });
+    }
+
+    private publishData(stream: any, resolve: any, reject: any) {
         Logger.debug(`${this.type} client publishing`);
         stream.setTimeout(this.timeout);
         stream.once('error', (data: any) => {
@@ -87,6 +106,7 @@ export class RawSocketStreamPublisher extends Publisher {
             reject(data);
         });
         stream.write(this.stringifyPayload(), () => {
+            Logger.debug(`${this.type} client published`);
             this.registerEvents(stream, resolve);
             if (this.saveStream) {
                 Logger.debug(`Persisting publisher stream ${this.saveStream}`);

@@ -39,7 +39,7 @@ export class PublisherReporter {
                     resolve();
                 })
                 .catch((err: any) => {
-                    Logger.error(err);
+                    Logger.error(`${this.report.name} fail publishing: ${err}`);
                     this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
                     reject(err);
                 });

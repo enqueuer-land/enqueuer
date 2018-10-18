@@ -21,7 +21,6 @@ export class HttpRequester {
         return new Promise((resolve, reject) => {
             Logger.info(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
             const options = this.createOptions();
-            process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request(options,
                 (error: any, response: any) => {
                     if (error) {
@@ -38,7 +37,8 @@ export class HttpRequester {
             url: this.url,
             method: this.method,
             timeout: this.timeout,
-            headers: this.headers
+            headers: this.headers,
+            rejectUnauthorized: false
         };
         options.data = options.body = this.handleObjectPayload();
         if (this.method.toUpperCase() != 'GET') {

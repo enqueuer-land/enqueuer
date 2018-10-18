@@ -1,0 +1,47 @@
+-   publishers:
+        -   type: ssl
+            port: 23082
+            serverAddress: localhost
+            saveStream: sslFirst
+            options:
+                cert: <<certificate>>
+                rejectUnauthorized: false
+            timeout: 2000
+            payload: secureMessage
+            onMessageReceived:
+                assertions:
+                    -   expect: payload
+                        toBeEqualTo: `hisecureResponse`
+    subscriptions:
+        -   type: ssl
+            port: 23082
+            saveStream: sslSecond
+            options:
+                key: <<privateKey>>
+                cert: <<certificate>>
+                rejectUnauthorized: true
+            response: secureResponse
+            greeting: hi
+            timeout: 2000
+            onMessageReceived:
+                assertions:
+                    -   expect: payload
+                        toBeEqualTo: `secureMessage`
+-   publishers:
+    -   type: ssl
+        loadStream: sslFirst
+        timeout: 2000
+        payload: reusingSecureMessage
+        onMessageReceived:
+            assertions:
+            -   expect: payload
+                toBeEqualTo: `reusingSecureResponse`
+    subscriptions:
+    -   type: ssl
+        loadStream: sslSecond
+        response: reusingSecureResponse
+        timeout: 2000
+        onMessageReceived:
+            assertions:
+            -   expect: payload
+                toBeEqualTo: `reusingSecureMessage`

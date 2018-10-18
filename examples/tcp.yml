@@ -7,8 +7,7 @@
             payload: Hey Jude
             onMessageReceived:
                 assertions:
-                    -   name: Do not make it bad
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `Do not make it bad`
     subscriptions:
         -   type: tcp
@@ -17,15 +16,13 @@
             response: Do not make it bad
             onMessageReceived:
                 assertions:
-                    -   name: Beatles Song
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `Hey Jude`
                     -   expect: stream.address
                         toContain: `127.0.0.1`
 -   timeout: 3000
     publishers:
-        -   name: tcp 1 publisher description
-            type: tcp
+        -   type: tcp
             timeout: 800
             serverAddress: localhost
             port: 23070
@@ -33,12 +30,10 @@
             saveStream: tcpPublisherSocket
             onMessageReceived:
                 assertions:
-                    -   name: Greeting received
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `EnqueuerRocks`
     subscriptions:
-        -   name: tcp 1 subscription description
-            type: tcp
+        -   type: tcp
             port: 23070
             timeout: 500
             saveStream: tcpSubscriptionSocket
@@ -46,8 +41,7 @@
             response: Rocks
             onMessageReceived:
                 assertions:
-                    -   name: I care
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `I do not care`
 -   timeout: 3000
     publishers:
@@ -56,17 +50,14 @@
             loadStream: tcpPublisherSocket
             onMessageReceived:
                 assertions:
-                    -   name: Second message is <<tcpPayload>>
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `<<tcpPayload>>`
     subscriptions:
         -   type: tcp
-            name: tcp 2 subscription description
             loadStream: tcpSubscriptionSocket
             response: <<tcpPayload>>
             timeout: 1000
             onMessageReceived:
                 assertions:
-                    -   name: It is still open
-                        expect: payload
+                    -   expect: payload
                         toBeEqualTo: `The socket is still open`

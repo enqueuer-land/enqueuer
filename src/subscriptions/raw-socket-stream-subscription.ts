@@ -2,6 +2,7 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Injectable} from 'conditional-injector';
 import * as net from 'net';
+import * as tls from 'tls';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
@@ -17,7 +18,15 @@ const uds = new Protocol('uds')
     .addAlternativeName('uds-server')
     .registerAsSubscription();
 
-@Injectable({predicate: (subscription: any) => tcp.matches(subscription.type) || uds.matches(subscription.type)})
+const ssl = new Protocol('ssl')
+    .addAlternativeName('tls')
+    .registerAsSubscription();
+
+@Injectable({
+    predicate: (subscription: any) => tcp.matches(subscription.type)
+        || ssl.matches(subscription.type)
+        || uds.matches(subscription.type)
+})
 export class RawSocketStreamSubscription extends Subscription {
 
     private server: any;
@@ -30,22 +39,28 @@ export class RawSocketStreamSubscription extends Subscription {
         }
     }
 
-    public receiveMessage(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (this.loadStream) {
-                this.waitForData(reject, resolve);
-            } else {
+    public async receiveMessage(): Promise<any> {
+        if (this.loadStream) {
+            return await this.waitForData();
+        } else if (ssl.matches(this.type)) {
+            await this.sslServerGotConnection;
+            return await this.gotConnection(this.stream);
+        } else {
+            return new Promise((resolve, reject) => {
                 this.server.once('connection', (stream: any) => {
-                    Logger.debug(`${this.type} server got a connection`);
-                    this.stream = stream;
-                    this.sendGreeting();
-                    this.waitForData(reject, resolve);
-                    this.server.close();
-                    this.server = null;
+                    this.gotConnection(stream)
+                        .then((message: any) => resolve(message))
+                        .catch((err: any) => reject(err));
                 });
-            }
+            });
+        }
+    }
 
-        });
+    private async gotConnection(stream: any): Promise<any>  {
+        this.stream = stream;
+        Logger.debug(`${this.type} server got a connection ${this.stream}`);
+        this.sendGreeting();
+        return await this.waitForData();
     }
 
     public subscribe(): Promise<void> {
@@ -96,25 +111,36 @@ export class RawSocketStreamSubscription extends Subscription {
 
     private createServer(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.server = net.createServer();
-            const handlerListener = new HandlerListener(this.server);
-            let listenPromise;
-            if (tcp.matches(this.type)) {
-                listenPromise = handlerListener.listen(this.port);
-            } else {
-                listenPromise = handlerListener.listen(this.path);
-            }
+            const listenPromise = this.createListenPromise();
             listenPromise
                 .then(() => {
-                    Logger.debug(`${this.type} server is listening for ${this.type} clients on ${this.port}`);
+                    Logger.debug(`${this.type} server is waiting for clients on ${this.port || this.path}`);
                     resolve();
                 })
                 .catch(err => {
-                    const message = `${this.type} server could not listen to port ${this.port}: ${err}`;
+                    const message = `${this.type} server could not listen to port ${this.port || this.path}: ${err}`;
                     Logger.error(message);
                     reject(message);
                 });
         });
+    }
+
+    private createListenPromise(): Promise<any> {
+        if (tcp.matches(this.type)) {
+            this.server = net.createServer();
+            return new HandlerListener(this.server).listen(this.port);
+        } else if (ssl.matches(this.type)) {
+            this.sslServerGotConnection = new Promise((resolve) => {
+                this.server = tls.createServer(this.options, (stream) => {
+                    this.stream = stream;
+                    resolve();
+                });
+            });
+            return new HandlerListener(this.server).listen(this.port);
+        } else {
+            this.server = net.createServer();
+            return new HandlerListener(this.server).listen(this.path);
+        }
     }
 
     private sendGreeting() {
@@ -134,19 +160,20 @@ export class RawSocketStreamSubscription extends Subscription {
         }
     }
 
-    private waitForData(reject: Function, resolve: Function) {
-        Logger.trace(`${this.type} server is waiting on data`);
-        this.stream.once('end', () => {
-            const message = `${this.type} server detected 'end' event`;
-            Logger.debug(message);
-            reject(message);
-        });
+    private waitForData(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            Logger.trace(`${this.type} server is waiting on data`);
+            this.stream.once('end', () => {
+                const message = `${this.type} server detected 'end' event`;
+                Logger.debug(message);
+                reject(message);
+            });
 
-        this.stream.once('data', (msg: any) => {
-            Logger.debug(`${this.type} server (${this.stream.localPort}) got data ${msg}`);
-            resolve({payload: msg, stream: this.stream.address()});
+            this.stream.once('data', (msg: any) => {
+                Logger.debug(`${this.type} server (${this.stream.localPort}) got data ${msg}`);
+                resolve({payload: msg, stream: this.stream.address()});
+            });
         });
-
     }
 
     private persistStream() {

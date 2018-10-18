@@ -22,7 +22,9 @@ subscriptions:
         port: 4430
         method: POST
         timeout: 3000
-        credentials: <<httpsCredentials>>
+        credentials:
+            key: <<privateKey>>
+            cert: <<certificate>>
         response:
             status: 200
             payload: https
