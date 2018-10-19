@@ -1,8 +1,8 @@
-import {TestsCounter} from "./tests-counter";
+import {TestsAnalyzer} from "./tests-analyzer";
 import {RequisitionModel} from "../../models/outputs/requisition-model";
 import {TestModel} from "../../models/outputs/test-model";
 
-describe('TestsCounter', () => {
+describe('TestsAnalyzer', () => {
 
     it('Percentage should be zero when there are no tests', () => {
         const test: RequisitionModel = {
@@ -11,12 +11,11 @@ describe('TestsCounter', () => {
             tests: []
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addRequisitionTest(test);
+        const testsAnalyzer = new TestsAnalyzer(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(0);
-        expect(testsCounter.getPercentage()).toBe(100);
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(0);
+        expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
     it('Should trunc to two decimals number', () => {
@@ -39,12 +38,11 @@ describe('TestsCounter', () => {
             }]
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addRequisitionTest(test);
+        const testsAnalyzer = new TestsAnalyzer(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(1);
-        expect(testsCounter.getTestsNumber()).toBe(3);
-        expect(testsCounter.getPercentage()).toBe(66.66)
+        expect(testsAnalyzer.getFailingTests().length).toBe(1);
+        expect(testsAnalyzer.getTests().length).toBe(3);
+        expect(testsAnalyzer.getPercentage()).toBe(66.66)
     });
 
     it('Should count inner tests (inner runnable is undefined)', () => {
@@ -53,53 +51,48 @@ describe('TestsCounter', () => {
             name: 'name',
             valid: true,
             tests: [],
-            type: 'runnable'
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addRequisitionTest(test);
+        const testsAnalyzer = new TestsAnalyzer(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(0);
-        expect(testsCounter.getPercentage()).toBe(100);
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(0);
+        expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
 
     it('Should add test', () => {
 
-        const test: TestModel = {
+        const test: RequisitionModel = {
             name: 'name',
-            description: 'name',
             valid: true,
+            tests: [{valid: true}],
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addTest(test);
-        test.valid = false;
-        testsCounter.addTest(test);
+        const testsAnalyzer = new TestsAnalyzer();
+        testsAnalyzer.addTest(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(1);
-        expect(testsCounter.getTestsNumber()).toBe(2);
-        expect(testsCounter.getPercentage()).toBe(50);
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(1);
+        expect(testsAnalyzer.getPercentage()).toBe(100);
     });
+
 
     it('Should get passing tests', () => {
 
         const test: TestModel = {
             name: 'name',
             description: 'name',
+            tests: [{valid: true}, {valid: true}, {valid: true}, {valid: false}],
             valid: true,
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addTest(test);
-        test.valid = false;
-        testsCounter.addTest(test);
+        const testsAnalyzer = new TestsAnalyzer(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(1);
-        expect(testsCounter.getPassingTestsNumber()).toBe(1);
-        expect(testsCounter.getTestsNumber()).toBe(2);
-        expect(testsCounter.getPercentage()).toBe(50);
+        expect(testsAnalyzer.getFailingTests().length).toBe(1);
+        expect(testsAnalyzer.getPassingTests().length).toBe(3);
+        expect(testsAnalyzer.getTests().length).toBe(4);
+        expect(testsAnalyzer.getPercentage()).toBe(75);
     });
 
     it('Should count inner tests (no publishers)', () => {
@@ -123,12 +116,11 @@ describe('TestsCounter', () => {
             }]
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addRequisitionTest(test);
+        const testsAnalyzer = new TestsAnalyzer(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(2);
-        expect(testsCounter.getPercentage()).toBe(100);
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(2);
+        expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
     it('Should count inner tests (publishers)', () => {
@@ -159,12 +151,11 @@ describe('TestsCounter', () => {
             }]
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addRequisitionTest(test);
+        const testsAnalyzer = new TestsAnalyzer(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(3);
-        expect(testsCounter.getPercentage()).toBe(100);
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(3);
+        expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
     it('Should count really really inner tests', () => {
@@ -258,12 +249,11 @@ describe('TestsCounter', () => {
             }]
         };
 
-        const testsCounter = new TestsCounter();
-        testsCounter.addRequisitionTest(test);
+        const testsAnalyzer = new TestsAnalyzer(test);
 
-        expect(testsCounter.getFailingTestsNumber()).toBe(0);
-        expect(testsCounter.getTestsNumber()).toBe(16);
-        expect(testsCounter.getPercentage()).toBe(100);
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(16);
+        expect(testsAnalyzer.getPercentage()).toBe(100);
 
     });
 });

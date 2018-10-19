@@ -60,16 +60,15 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
     }
 
     private handleRequisitionReceived(message: DaemonInputRequisition) {
-        let requisitionModels;
         try {
-            requisitionModels = this.parser.parse(message.input);
+            let requisitionModels = this.parser.parse(message.input);
+            return this.runRequisition(requisitionModels, message);
         } catch (err) {
             const messageError = `Error parsing requisition from '${message.type}': ${err}`;
             Logger.error(messageError);
             message.output = messageError;
             return this.publishError(message);
         }
-        return this.runRequisition(requisitionModels, message);
     }
 
     private async publishError(message: DaemonInputRequisition) {
