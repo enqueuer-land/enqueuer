@@ -1,0 +1,50 @@
+name: examples/custom.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests: []
+    name: 'Requisition #0'
+    subscriptions:
+      -
+        name: 'Subscription #0'
+        type: custom
+        tests:
+          -
+            name: Payload
+            valid: true
+            description: 'Expected ''payload'' to be equal to ''customQueuePayload''. Received ''customQueuePayload'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-10-19T01:37:04.638Z'
+        messageReceived:
+          payload: customQueuePayload
+          headers:
+            destination: /queue/custom.queue
+            message-id: Q_custom.queue@@session-WogZ1LkBsZeTyjLoamWAdw@@1
+            redelivered: 'false'
+            content-length: '18'
+    publishers:
+      -
+        name: 'Publisher #0'
+        valid: true
+        type: custom
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-10-19T01:37:04.709Z'
+    time:
+      startTime: '2018-10-19T01:37:04.409Z'
+      endTime: '2018-10-19T01:37:04.713Z'
+      totalTime: 304
+    requisitions: []
+time:
+  startTime: '2018-10-19T01:37:04.364Z'
+  endTime: '2018-10-19T01:37:04.713Z'
+  totalTime: 349
