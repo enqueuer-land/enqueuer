@@ -17,13 +17,15 @@ import {Json} from '../../object-notations/json';
 
 export class SubscriptionReporter {
 
+    private static readonly DEFAULT_TIMEOUT: number = 5 * 1000;
     private readonly killListener: SignalsListener;
     private readonly report: output.SubscriptionModel;
+    private readonly startTime: DateController;
     private subscription: Subscription;
-    private startTime: DateController;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
     private subscribed: boolean = false;
+    private totalTime?: DateController;
 
     constructor(subscriptionAttributes: input.SubscriptionModel) {
         this.startTime = new DateController();
@@ -35,6 +37,12 @@ export class SubscriptionReporter {
         };
 
         this.executeOnInitFunction(subscriptionAttributes);
+        if (subscriptionAttributes.timeout === undefined) {
+            subscriptionAttributes.timeout = SubscriptionReporter.DEFAULT_TIMEOUT;
+        } else if (subscriptionAttributes.timeout <= 0) {
+            delete subscriptionAttributes.timeout;
+        }
+
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
         this.killListener = (signal: Signals) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
@@ -47,6 +55,7 @@ export class SubscriptionReporter {
         }
         this.timeOut = new Timeout(() => {
             if (!this.subscription.messageReceived) {
+                this.totalTime = new DateController();
                 const message = `${this.subscription.name} stopped waiting because it has timed out`;
                 Logger.info(message);
                 this.hasTimedOut = true;
@@ -120,10 +129,17 @@ export class SubscriptionReporter {
     }
 
     public getReport(): output.SubscriptionModel {
+        const time: any = {
+            timeout: this.subscription.timeout
+        };
+        if (!this.totalTime) {
+            this.totalTime = new DateController();
+        }
+        time.totalTime = this.totalTime.getTime() - this.startTime.getTime();
         const finalReporter = new SubscriptionFinalReporter(this.subscribed,
             this.subscription.avoid,
             !!this.subscription.messageReceived,
-            !!this.subscription.timeout && this.hasTimedOut);
+            time);
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
         this.report.messageReceived = this.subscription.messageReceived;
@@ -150,6 +166,7 @@ export class SubscriptionReporter {
         Logger.debug(`${this.subscription.name} message: ${new Json().stringify(message)}`.substr(0, 150) + '...');
         if (!this.hasTimedOut) {
             Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
+            this.totalTime = new DateController();
             this.subscription.messageReceived = message;
             this.executeOnMessageReceivedFunction();
         } else {

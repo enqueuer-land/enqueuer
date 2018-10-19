@@ -4,7 +4,11 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions:
       -
@@ -20,7 +24,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:17.758Z'
+        connectionTime: '2018-10-19T14:59:00.204Z'
         messageReceived:
           payload:
             type: Buffer
@@ -60,21 +64,26 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-19T13:57:19.893Z'
+        publishTime: '2018-10-19T14:59:02.351Z'
         messageReceived:
           payload: hisecureResponse
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 58625
+            port: 59659
     time:
-      startTime: '2018-10-19T13:57:17.650Z'
-      endTime: '2018-10-19T13:57:19.893Z'
-      totalTime: 2243
+      startTime: '2018-10-19T14:59:00.127Z'
+      endTime: '2018-10-19T14:59:02.352Z'
+      totalTime: 2225
+      timeout: 5000
     requisitions: []
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #1'
     subscriptions:
       -
@@ -90,7 +99,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:19.896Z'
+        connectionTime: '2018-10-19T14:59:02.355Z'
         messageReceived:
           payload:
             type: Buffer
@@ -133,15 +142,16 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-19T13:57:19.898Z'
+        publishTime: '2018-10-19T14:59:02.357Z'
         messageReceived:
           payload: reusingSecureResponse
     time:
-      startTime: '2018-10-19T13:57:19.894Z'
-      endTime: '2018-10-19T13:57:19.898Z'
+      startTime: '2018-10-19T14:59:02.353Z'
+      endTime: '2018-10-19T14:59:02.357Z'
       totalTime: 4
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.588Z'
-  endTime: '2018-10-19T13:57:19.898Z'
-  totalTime: 2310
+  startTime: '2018-10-19T14:59:00.072Z'
+  endTime: '2018-10-19T14:59:02.357Z'
+  totalTime: 2285

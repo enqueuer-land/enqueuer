@@ -4,7 +4,11 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'creating exchange'
     subscriptions: []
     publishers:
@@ -17,15 +21,20 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T13:57:18.459Z'
+        publishTime: '2018-10-19T14:59:00.363Z'
     time:
-      startTime: '2018-10-19T13:57:17.602Z'
-      endTime: '2018-10-19T13:57:18.459Z'
-      totalTime: 857
+      startTime: '2018-10-19T14:59:00.087Z'
+      endTime: '2018-10-19T14:59:00.363Z'
+      totalTime: 276
+      timeout: 5000
     requisitions: []
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'using just created exchange'
     subscriptions:
       -
@@ -53,7 +62,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:18.501Z'
+        connectionTime: '2018-10-19T14:59:00.426Z'
         messageReceived:
           payload:
             how:
@@ -66,7 +75,7 @@ requisitions:
             headers:
               key: value
               otherKey: otherValue
-            queue: X1dVoTVD
+            queue: Q94FYv3D
             deliveryTag:
               type: Buffer
               data:
@@ -81,7 +90,7 @@ requisitions:
             redelivered: false
             exchange: enqueuer.exchange
             routingKey: enqueuer.integration.test.routing.key
-            consumerTag: node-amqp-10378-0.5017487866430677
+            consumerTag: node-amqp-20121-0.7110260047384831
     publishers:
       -
         name: 'Publisher #0'
@@ -96,15 +105,20 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T13:57:18.520Z'
+        publishTime: '2018-10-19T14:59:00.435Z'
     time:
-      startTime: '2018-10-19T13:57:18.460Z'
-      endTime: '2018-10-19T13:57:18.522Z'
-      totalTime: 62
+      startTime: '2018-10-19T14:59:00.363Z'
+      endTime: '2018-10-19T14:59:00.437Z'
+      totalTime: 74
+      timeout: 5000
     requisitions: []
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'default exhange'
     subscriptions:
       -
@@ -120,7 +134,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:18.551Z'
+        connectionTime: '2018-10-19T14:59:00.453Z'
         messageReceived:
           payload:
             data:
@@ -161,7 +175,7 @@ requisitions:
             redelivered: false
             exchange: ""
             routingKey: enqueuer.default.exchange
-            consumerTag: node-amqp-10378-0.8708654689349047
+            consumerTag: node-amqp-20121-0.8068220113937421
     publishers:
       -
         name: 'Publisher #0'
@@ -172,13 +186,14 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T13:57:18.558Z'
+        publishTime: '2018-10-19T14:59:00.466Z'
     time:
-      startTime: '2018-10-19T13:57:18.523Z'
-      endTime: '2018-10-19T13:57:18.559Z'
-      totalTime: 36
+      startTime: '2018-10-19T14:59:00.438Z'
+      endTime: '2018-10-19T14:59:00.467Z'
+      totalTime: 29
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.560Z'
-  endTime: '2018-10-19T13:57:18.559Z'
-  totalTime: 999
+  startTime: '2018-10-19T14:59:00.044Z'
+  endTime: '2018-10-19T14:59:00.467Z'
+  totalTime: 423

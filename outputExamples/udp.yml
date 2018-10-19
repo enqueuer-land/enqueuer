@@ -4,7 +4,11 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions:
       -
@@ -24,7 +28,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:17.716Z'
+        connectionTime: '2018-10-19T14:59:00.173Z'
         messageReceived:
           payload:
             type: Buffer
@@ -34,7 +38,7 @@ requisitions:
           remoteInfo:
             address: 127.0.0.1
             family: IPv4
-            port: 56069
+            port: 63920
             size: 2
     publishers:
       -
@@ -46,13 +50,14 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T13:57:17.791Z'
+        publishTime: '2018-10-19T14:59:00.236Z'
     time:
-      startTime: '2018-10-19T13:57:17.655Z'
-      endTime: '2018-10-19T13:57:17.797Z'
-      totalTime: 142
+      startTime: '2018-10-19T14:59:00.130Z'
+      endTime: '2018-10-19T14:59:00.241Z'
+      totalTime: 111
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.593Z'
-  endTime: '2018-10-19T13:57:17.797Z'
-  totalTime: 204
+  startTime: '2018-10-19T14:59:00.078Z'
+  endTime: '2018-10-19T14:59:00.242Z'
+  totalTime: 164

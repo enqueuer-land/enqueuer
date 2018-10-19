@@ -17,7 +17,7 @@ type: amqp
 avoid: false
 
 #Defaults to 0. Sets in milliseconds how log the subscription has to wait before being considered as invalid.
-#Even thought it's an optional value, it's a good practice to define it to avoid endless executions.
+#Set to zero or less than zero to run it endlessly
 timeout: 3000
 
 #Check the list of events here: /docs/instructions/events.yml

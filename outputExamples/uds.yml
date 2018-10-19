@@ -24,7 +24,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:17.758Z'
+        connectionTime: '2018-10-19T14:59:00.205Z'
         messageReceived:
           payload:
             type: Buffer
@@ -56,19 +56,23 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-19T13:57:17.842Z'
+        publishTime: '2018-10-19T14:59:00.269Z'
         messageReceived:
           payload: responsePayload
           stream: {}
     time:
-      startTime: '2018-10-19T13:57:17.656Z'
-      endTime: '2018-10-19T13:57:17.848Z'
-      totalTime: 192
+      startTime: '2018-10-19T14:59:00.131Z'
+      endTime: '2018-10-19T14:59:00.269Z'
+      totalTime: 138
       timeout: 3000
     requisitions: []
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #1'
     subscriptions:
       -
@@ -84,7 +88,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:17.867Z'
+        connectionTime: '2018-10-19T14:59:00.304Z'
         messageReceived:
           payload:
             type: Buffer
@@ -112,18 +116,23 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T13:57:18.887Z'
+        publishTime: '2018-10-19T14:59:01.345Z'
         messageReceived:
           payload: '{}'
           stream: {}
     time:
-      startTime: '2018-10-19T13:57:17.849Z'
-      endTime: '2018-10-19T13:57:18.887Z'
-      totalTime: 1038
+      startTime: '2018-10-19T14:59:00.271Z'
+      endTime: '2018-10-19T14:59:01.345Z'
+      totalTime: 1074
+      timeout: 5000
     requisitions: []
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #2'
     subscriptions:
       -
@@ -139,7 +148,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:18.891Z'
+        connectionTime: '2018-10-19T14:59:01.349Z'
         messageReceived:
           payload:
             type: Buffer
@@ -180,16 +189,17 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-19T13:57:18.892Z'
+        publishTime: '2018-10-19T14:59:01.351Z'
         messageReceived:
           payload: 'I am still bidirectional'
           stream: {}
     time:
-      startTime: '2018-10-19T13:57:18.889Z'
-      endTime: '2018-10-19T13:57:18.892Z'
-      totalTime: 3
+      startTime: '2018-10-19T14:59:01.347Z'
+      endTime: '2018-10-19T14:59:01.351Z'
+      totalTime: 4
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.596Z'
-  endTime: '2018-10-19T13:57:18.892Z'
-  totalTime: 1296
+  startTime: '2018-10-19T14:59:00.081Z'
+  endTime: '2018-10-19T14:59:01.351Z'
+  totalTime: 1270

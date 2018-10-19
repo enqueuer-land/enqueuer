@@ -1,0 +1,48 @@
+name: examples/amqp-1.yml
+valid: true
+tests: []
+requisitions:
+  -
+    valid: true
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
+    name: 'Requisition #0'
+    subscriptions:
+      -
+        name: 'Subscription #0'
+        type: amqp-1
+        tests:
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-10-19T14:59:00.315Z'
+        messageReceived:
+          durable: false
+          first_acquirer: true
+          body: message
+    publishers:
+      -
+        name: 'Publisher #0'
+        valid: true
+        type: amqp-1
+        tests:
+          -
+            name: Published
+            valid: true
+            description: 'Published successfully'
+        publishTime: '2018-10-19T14:59:00.414Z'
+    time:
+      startTime: '2018-10-19T14:59:00.086Z'
+      endTime: '2018-10-19T14:59:00.419Z'
+      totalTime: 333
+      timeout: 5000
+    requisitions: []
+time:
+  startTime: '2018-10-19T14:59:00.042Z'
+  endTime: '2018-10-19T14:59:00.419Z'
+  totalTime: 377

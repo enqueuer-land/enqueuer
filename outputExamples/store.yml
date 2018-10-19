@@ -4,14 +4,19 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-19T13:57:17.654Z'
-      endTime: '2018-10-19T13:57:17.718Z'
-      totalTime: 64
+      startTime: '2018-10-19T14:59:00.129Z'
+      endTime: '2018-10-19T14:59:00.175Z'
+      totalTime: 46
+      timeout: 5000
     requisitions: []
   -
     valid: true
@@ -24,13 +29,18 @@ requisitions:
         name: 'Environment Variables added'
         valid: true
         description: 'Expect ''store.PATH'' to be defined'
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #1'
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-19T13:57:17.751Z'
-      endTime: '2018-10-19T13:57:17.767Z'
-      totalTime: 16
+      startTime: '2018-10-19T14:59:00.199Z'
+      endTime: '2018-10-19T14:59:00.212Z'
+      totalTime: 13
+      timeout: 5000
     requisitions: []
   -
     valid: true
@@ -39,15 +49,20 @@ requisitions:
         name: Payload
         valid: true
         description: 'Expected ''124'' to be equal to ''124''. Received ''124'''
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #2'
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-19T13:57:17.768Z'
-      endTime: '2018-10-19T13:57:17.770Z'
+      startTime: '2018-10-19T14:59:00.213Z'
+      endTime: '2018-10-19T14:59:00.215Z'
       totalTime: 2
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.590Z'
-  endTime: '2018-10-19T13:57:17.771Z'
-  totalTime: 181
+  startTime: '2018-10-19T14:59:00.075Z'
+  endTime: '2018-10-19T14:59:00.216Z'
+  totalTime: 141

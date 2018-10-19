@@ -6,8 +6,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = false;
         const hasMessage = false;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, );
 
         const report = finalReporter.getReport();
 
@@ -20,8 +19,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = false;
         const hasMessage = false;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -34,8 +32,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = false;
         const hasMessage = true;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -48,8 +45,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = false;
         const hasMessage = true;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, {timeout: 1000, totalTime: 1001});
 
         const report = finalReporter.getReport();
 
@@ -62,8 +58,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = true;
         const hasMessage = false;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -76,8 +71,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = true;
         const hasMessage = false;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, {timeout: 1000, totalTime: 1001});
 
         const report = finalReporter.getReport();
 
@@ -90,8 +84,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = true;
         const hasMessage = true;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -104,8 +97,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = true;
         const hasMessage = true;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, {timeout: 1000, totalTime: 1001});
 
         const report = finalReporter.getReport();
 
@@ -118,8 +110,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = false;
         const hasMessage = false;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -132,8 +123,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = false;
         const hasMessage = false;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, {timeout: 1000, totalTime: 1001});
 
         const report = finalReporter.getReport();
 
@@ -148,8 +138,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = false;
         const hasMessage = true;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -162,8 +151,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = false;
         const hasMessage = true;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, {timeout: 1000, totalTime: 1001});
 
         const report = finalReporter.getReport();
 
@@ -179,8 +167,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = true;
         const hasMessage = false;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -193,8 +180,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = true;
         const hasMessage = false;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, {timeout: 1000, totalTime: 1001});
 
         const report = finalReporter.getReport();
 
@@ -207,8 +193,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = true;
         const hasMessage = true;
-        const hasTimedOut = false;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage);
 
         const report = finalReporter.getReport();
 
@@ -221,8 +206,7 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = true;
         const avoidable = true;
         const hasMessage = true;
-        const hasTimedOut = true;
-        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, hasTimedOut);
+        const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter(subscribed, avoidable, hasMessage, {timeout: 1000, totalTime: 1001});
 
         const report = finalReporter.getReport();
 

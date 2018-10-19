@@ -1,21 +1,23 @@
 import {TestModel} from '../../models/outputs/test-model';
 
+type Time = { timeout?: number; totalTime: number };
+
 export class SubscriptionFinalReporter {
     private messageReceivedTestName: string = `Message received`;
     private subscriptionAvoidedTestName: string = `Subscription avoided`;
     private noTimeOutTestName: string = `No time out`;
     private subscribedTestName: string = `Subscribed`;
 
-    private subscribed: boolean;
-    private avoidable: boolean;
-    private hasMessage: boolean = false;
-    private hasTimedOut: boolean;
+    private readonly subscribed: boolean;
+    private readonly avoidable: boolean;
+    private readonly hasMessage: boolean = false;
+    private readonly time?: Time;
 
-    constructor(subscribed: boolean, avoidable: boolean, hasMessage: boolean, hasTimedOut: boolean) {
+    constructor(subscribed: boolean, avoidable: boolean, hasMessage: boolean, time?: Time) {
         this.subscribed = subscribed;
         this.avoidable = avoidable;
         this.hasMessage = hasMessage;
-        this.hasTimedOut = hasTimedOut;
+        this.time = time;
     }
 
     public getReport(): TestModel[] {
@@ -32,8 +34,10 @@ export class SubscriptionFinalReporter {
     }
 
     private addTimeoutTests(): TestModel[] {
-        if (this.hasTimedOut) {
-            return this.createTimeoutTests();
+        if (this.time) {
+            if (!!this.time.timeout && this.time.totalTime > this.time.timeout) {
+                return this.createTimeoutTests();
+            }
         }
         return [];
     }
@@ -62,11 +66,11 @@ export class SubscriptionFinalReporter {
         }
     }
     private createTimeoutTests(): TestModel[] {
-        if (!this.avoidable) {
+        if (!this.avoidable && this.time) {
             return [{
                 valid: false,
                 name: this.noTimeOutTestName,
-                description: `Not avoidable subscription has timed out`
+                description: `Not avoidable subscription has timed out: ${this.time.totalTime} > ${this.time.timeout}`
             }];
         }
         return [];

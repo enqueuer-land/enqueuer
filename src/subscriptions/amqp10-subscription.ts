@@ -1,12 +1,12 @@
 import {Subscription} from './subscription';
 import {Injectable} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Logger} from '../loggers/logger';
-const container = require('rhea');
 import {StringRandomCreator} from '../strings/string-random-creator';
 import {Protocol} from '../protocols/protocol';
+const container = require('rhea');
 
-const protocol = new Protocol('amqp10')
+const protocol = new Protocol('amqp1')
+    .addAlternativeName('amqp-1')
     .setLibrary('rhea')
     .registerAsSubscription();
 

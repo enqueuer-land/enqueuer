@@ -4,7 +4,11 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions:
       -
@@ -20,12 +24,12 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:18.445Z'
+        connectionTime: '2018-10-19T14:59:00.317Z'
         messageReceived:
           payload: customQueuePayload
           headers:
             destination: /queue/custom.queue
-            message-id: Q_custom.queue@@session-HxA5UwUh5NlnrTOrtVXPHA@@1
+            message-id: Q_custom.queue@@session-enRr5NZueX6T2-Qny9xNkg@@1
             redelivered: 'false'
             content-length: '18'
     publishers:
@@ -38,13 +42,14 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T13:57:18.482Z'
+        publishTime: '2018-10-19T14:59:00.365Z'
     time:
-      startTime: '2018-10-19T13:57:17.605Z'
-      endTime: '2018-10-19T13:57:18.489Z'
-      totalTime: 884
+      startTime: '2018-10-19T14:59:00.091Z'
+      endTime: '2018-10-19T14:59:00.381Z'
+      totalTime: 290
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.563Z'
-  endTime: '2018-10-19T13:57:18.489Z'
-  totalTime: 926
+  startTime: '2018-10-19T14:59:00.047Z'
+  endTime: '2018-10-19T14:59:00.381Z'
+  totalTime: 334

@@ -4,7 +4,11 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions:
       -
@@ -44,7 +48,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:17.758Z'
+        connectionTime: '2018-10-19T14:59:00.205Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -95,7 +99,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:17.758Z'
+        connectionTime: '2018-10-19T14:59:00.205Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -130,7 +134,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2018-10-19T13:57:17.895Z'
+        publishTime: '2018-10-19T14:59:00.356Z'
         messageReceived:
           statusCode: 333
           body: responsePayload
@@ -141,7 +145,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Fri, 19 Oct 2018 13:57:17 GMT'
+            date: 'Fri, 19 Oct 2018 14:59:00 GMT'
             connection: close
           request:
             uri:
@@ -163,11 +167,12 @@ requisitions:
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
               Content-Length: 21
     time:
-      startTime: '2018-10-19T13:57:17.618Z'
-      endTime: '2018-10-19T13:57:17.896Z'
-      totalTime: 278
+      startTime: '2018-10-19T14:59:00.104Z'
+      endTime: '2018-10-19T14:59:00.357Z'
+      totalTime: 253
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.575Z'
-  endTime: '2018-10-19T13:57:17.896Z'
-  totalTime: 321
+  startTime: '2018-10-19T14:59:00.058Z'
+  endTime: '2018-10-19T14:59:00.357Z'
+  totalTime: 299

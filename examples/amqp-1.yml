@@ -1,0 +1,19 @@
+publishers:
+-   type: amqp-1
+    payload:
+        body: let your imagination fly
+    options:
+        host: localhost
+        port: 5672
+    routingKey: amqp10RK
+subscriptions:
+-   type: amqp-1
+    options:
+        host: localhost
+        port: 5672
+    routingKey: amqp10RK
+    onMessageReceived:
+        assertions:
+        -   expect: body
+            toBeEqualTo: subscription.parent.publishers[0].payload.body
+

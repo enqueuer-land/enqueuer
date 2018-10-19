@@ -29,13 +29,18 @@ requisitions:
         name: 'fileRead (.js)'
         valid: true
         description: 'Expected ''store.scriptResult'' to be equal to ''40''. Received ''40'''
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-19T13:57:17.611Z'
-      endTime: '2018-10-19T13:57:17.718Z'
-      totalTime: 107
+      startTime: '2018-10-19T14:59:00.096Z'
+      endTime: '2018-10-19T14:59:00.175Z'
+      totalTime: 79
+      timeout: 5000
     requisitions: []
   -
     valid: true
@@ -44,15 +49,20 @@ requisitions:
         name: 'it''s not stored'
         valid: true
         description: 'Expect ''requisition.yml'' to be undefined'
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #1'
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-10-19T13:57:17.744Z'
-      endTime: '2018-10-19T13:57:17.767Z'
-      totalTime: 23
+      startTime: '2018-10-19T14:59:00.198Z'
+      endTime: '2018-10-19T14:59:00.212Z'
+      totalTime: 14
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.565Z'
-  endTime: '2018-10-19T13:57:17.767Z'
-  totalTime: 202
+  startTime: '2018-10-19T14:59:00.048Z'
+  endTime: '2018-10-19T14:59:00.213Z'
+  totalTime: 165

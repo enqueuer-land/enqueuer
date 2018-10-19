@@ -4,7 +4,11 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions:
       -
@@ -16,14 +20,15 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2018-10-19T13:57:17.758Z'
+        connectionTime: '2018-10-19T14:59:00.204Z'
     publishers: []
     time:
-      startTime: '2018-10-19T13:57:17.603Z'
-      endTime: '2018-10-19T13:57:19.667Z'
-      totalTime: 2064
+      startTime: '2018-10-19T14:59:00.088Z'
+      endTime: '2018-10-19T14:59:02.140Z'
+      totalTime: 2052
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.562Z'
-  endTime: '2018-10-19T13:57:19.668Z'
-  totalTime: 2106
+  startTime: '2018-10-19T14:59:00.045Z'
+  endTime: '2018-10-19T14:59:02.141Z'
+  totalTime: 2096

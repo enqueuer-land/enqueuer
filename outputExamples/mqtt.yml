@@ -4,7 +4,11 @@ tests: []
 requisitions:
   -
     valid: true
-    tests: []
+    tests:
+      -
+        valid: true
+        name: 'No time out'
+        description: 'Requisition has not timed out'
     name: 'Requisition #0'
     subscriptions:
       -
@@ -28,7 +32,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T13:57:18.458Z'
+        connectionTime: '2018-10-19T14:59:00.337Z'
         messageReceived:
           topic: enqueuer/integration/public/test
           payload:
@@ -52,13 +56,14 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T13:57:18.488Z'
+        publishTime: '2018-10-19T14:59:00.405Z'
     time:
-      startTime: '2018-10-19T13:57:17.638Z'
-      endTime: '2018-10-19T13:57:18.493Z'
-      totalTime: 855
+      startTime: '2018-10-19T14:59:00.119Z'
+      endTime: '2018-10-19T14:59:00.408Z'
+      totalTime: 289
+      timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T13:57:17.582Z'
-  endTime: '2018-10-19T13:57:18.493Z'
-  totalTime: 911
+  startTime: '2018-10-19T14:59:00.066Z'
+  endTime: '2018-10-19T14:59:00.409Z'
+  totalTime: 343
