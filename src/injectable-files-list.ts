@@ -25,6 +25,11 @@ try {
   /* do nothing*/
 }
 try {
+  require('./publishers/custom-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
   require('./publishers/file-publisher');
 } catch (err) {
   /* do nothing*/
@@ -111,6 +116,11 @@ try {
 }
 try {
   require('./subscriptions/amqp-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/custom-subscription');
 } catch (err) {
   /* do nothing*/
 }

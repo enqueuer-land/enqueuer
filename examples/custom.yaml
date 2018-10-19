@@ -1,0 +1,23 @@
+publishers:
+    -   type: custom
+        implementation: ../../misc/custom-protocol.js
+        address: localhost
+        port: 61613
+        user: guest
+        password: guest
+        queue: custom.queue
+        payload: customQueuePayload
+subscriptions:
+    -   type: custom
+        implementation: ../../misc/custom-protocol.js
+        timeout: 10000
+        address: localhost
+        port: 61613
+        user: guest
+        password: guest
+        queue: custom.queue
+        onMessageReceived:
+            assertions:
+            -   name: Payload
+                expect: payload
+                toBeEqualTo: `customQueuePayload`

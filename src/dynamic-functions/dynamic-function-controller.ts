@@ -8,6 +8,7 @@ export class DynamicFunctionController {
     public constructor(functionBody: string) {
         this.functionBody = functionBody;
         this.addArgument('require', require);
+        this.addArgument('Logger', Logger);
     }
 
     public addArgument(name: string, value: any): void {

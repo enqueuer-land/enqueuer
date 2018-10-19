@@ -32,7 +32,6 @@ export class ZeromqSubscription extends Subscription {
                 .connect(this.address)
                 .subscribe(this.topic);
         });
-
     }
 
     public receiveMessage(): Promise<any> {

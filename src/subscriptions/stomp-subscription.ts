@@ -43,7 +43,6 @@ export class StompSubscription extends Subscription {
                     reject(err);
                 });
         });
-
     }
 
     public async unsubscribe(): Promise<void> {
