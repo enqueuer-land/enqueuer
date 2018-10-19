@@ -14,7 +14,7 @@ import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
 export type RequisitionRunnerCallback = () => void;
 
 export class RequisitionReporter {
-    private readonly requisitionTimeout?: number;
+    private readonly timeout?: number;
     private readonly requisitionAttributes: RequisitionModel;
     private reportGenerator: ReportGenerator;
     private multiSubscriptionsReporter: MultiSubscriptionsReporter;
@@ -25,11 +25,12 @@ export class RequisitionReporter {
 
     constructor(requisitionAttributes: input.RequisitionModel) {
         this.requisitionAttributes = requisitionAttributes;
+        const onInitFunctionTests = this.executeOnInitFunction();
         this.reportGenerator = new ReportGenerator(this.requisitionAttributes, this.requisitionAttributes.timeout);
-        this.executeOnInitFunction();
+        this.reportGenerator.addTests(onInitFunctionTests);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions, this.requisitionAttributes);
         this.multiPublishersReporter = new MultiPublishersReporter(this.requisitionAttributes.publishers, this.requisitionAttributes);
-        this.requisitionTimeout = this.requisitionAttributes.timeout;
+        this.timeout = this.requisitionAttributes.timeout;
         this.onFinishCallback = () => {
             //do nothing
         };
@@ -78,13 +79,13 @@ export class RequisitionReporter {
     }
 
     private initializeTimeout() {
-        if (this.requisitionTimeout) {
+        if (this.timeout) {
             new Timeout(async () => {
                 if (!this.publishersDoneTheirJob || !this.allSubscriptionsStoppedWaiting) {
                     Logger.info(`Requisition timed out`);
                     await this.onRequisitionFinish();
                 }
-            }).start(this.requisitionTimeout);
+            }).start(this.timeout);
         }
     }
 
@@ -123,7 +124,7 @@ export class RequisitionReporter {
 
     private executeOnInitFunction() {
         Logger.debug(`Executing requisition::onInit hook function`);
-        this.reportGenerator.addTests(new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger());
+        return new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger();
     }
 
     private executeOnFinishFunction(): void {

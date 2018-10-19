@@ -16,23 +16,23 @@ export class CustomSubscription extends Subscription {
     }
 
     public async subscribe(): Promise<void> {
-        this.module = await import(this.implementation) as any;
-        return this.module.subscribe(this, Store.getData(), Logger);
+        this.custom = await import(this.module) as any;
+        return this.custom.subscribe(this, {store: Store.getData(), logger: Logger});
     }
 
     public async receiveMessage(): Promise<any> {
-        return this.module.receiveMessage(this, Store.getData(), Logger);
+        return this.custom.receiveMessage(this, {store: Store.getData(), logger: Logger});
     }
 
     public async unsubscribe(): Promise<any> {
-        if (this.module.unsubscribe) {
-            return this.module.unsubscribe(this, Store.getData(), Logger);
+        if (this.custom.unsubscribe) {
+            return this.custom.unsubscribe(this, {store: Store.getData(), logger: Logger});
         }
     }
 
     public async sendResponse(): Promise<any> {
-        if (this.module.sendResponse) {
-            return this.module.sendResponse(this, Store.getData(), Logger);
+        if (this.custom.sendResponse) {
+            return this.custom.sendResponse(this, {store: Store.getData(), logger: Logger});
         }
     }
 }

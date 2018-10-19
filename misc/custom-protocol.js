@@ -1,11 +1,11 @@
 const Stomp = require('stomp-client');
 
-const subscribe = (subscription, store, logger) => {
+const subscribe = (subscription, context) => {
     return new Promise((resolve, reject) => {
-        logger.debug(`Stomp subscription connecting to ${subscription.address}:${subscription.port}`);
+        context.logger.debug(`Stomp subscription connecting to ${subscription.address}:${subscription.port}`);
         subscription.client = new Stomp(subscription.address, subscription.port, subscription.user, subscription.password);
         subscription.client.connect((sessionId) => {
-            logger.debug(`connected id ${sessionId}`);
+            context.logger.debug(`connected id ${sessionId}`);
             resolve();
         }, (err) => {
             reject(err);
@@ -13,11 +13,11 @@ const subscribe = (subscription, store, logger) => {
     });
 };
 
-const receiveMessage = (subscription, store, logger) => {
+const receiveMessage = (subscription, context) => {
     return new Promise((resolve, reject) => {
-        logger.trace(`Stomp waiting for a message related to queue ${subscription.queue}`);
+        context.logger.trace(`Stomp waiting for a message related to queue ${subscription.queue}`);
         const gotMessage = (message, headers) => {
-            logger.trace(`e received header ${JSON.stringify(headers)}`);
+            context.logger.trace(`e received header ${JSON.stringify(headers)}`);
             resolve({payload: message, headers: headers});
         };
         subscription.client.subscribe(subscription.queue, gotMessage);
@@ -28,15 +28,15 @@ const receiveMessage = (subscription, store, logger) => {
     });
 };
 
-const publish = (publisher, store, logger) => {
+const publish = (publisher, context) => {
     return new Promise((resolve, reject) => {
         const client = new Stomp(publisher.address, publisher.port, publisher.user, publisher.password);
         client.connect((sessionId) => {
-            logger.debug(`Stomp publisher connected id ${sessionId}`);
+            context.logger.debug(`Stomp publisher connected id ${sessionId}`);
             client.publish(publisher.queue, publisher.payload);
             resolve();
         }, (err) => {
-            logger.error(`Error connecting to stomp to publish: ${err}`);
+            context.logger.error(`Error connecting to stomp to publish: ${err}`);
             reject(err);
         });
     });

@@ -1,9 +1,9 @@
 name: examples/mqtt.yml
-valid: false
+valid: true
 tests: []
 requisitions:
   -
-    valid: false
+    valid: true
     tests: []
     name: 'Requisition #0'
     subscriptions:
@@ -12,15 +12,36 @@ requisitions:
         type: mqtt
         tests:
           -
-            valid: false
-            name: 'Message received'
-            description: 'Subscription has not received its message'
+            name: Payload
+            valid: true
+            description: 'Expected ''payload'' to be equal to ''enqueuer''. Received ''enqueuer'''
           -
-            valid: false
-            name: 'No time out'
-            description: 'Not avoidable subscription has timed out'
-        valid: false
-        connectionTime: '2018-10-19T03:09:08.610Z'
+            name: Topic
+            valid: true
+            description: 'Expected ''topic'' to be equal to ''enqueuer/integration/public/test''. Received ''enqueuer/integration/public/test'''
+          -
+            name: 'Beatles song'
+            valid: true
+            description: 'Expected ''payload.length'' to be greater than ''5''. Received ''8'''
+          -
+            valid: true
+            name: 'Message received'
+            description: 'Subscription has received its message'
+        valid: true
+        connectionTime: '2018-10-19T13:57:18.458Z'
+        messageReceived:
+          topic: enqueuer/integration/public/test
+          payload:
+            type: Buffer
+            data:
+              - 101
+              - 110
+              - 113
+              - 117
+              - 101
+              - 117
+              - 101
+              - 114
     publishers:
       -
         name: 'publisher description'
@@ -31,13 +52,13 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T03:09:08.638Z'
+        publishTime: '2018-10-19T13:57:18.488Z'
     time:
-      startTime: '2018-10-19T03:09:07.856Z'
-      endTime: '2018-10-19T03:09:12.887Z'
-      totalTime: 5031
+      startTime: '2018-10-19T13:57:17.638Z'
+      endTime: '2018-10-19T13:57:18.493Z'
+      totalTime: 855
     requisitions: []
 time:
-  startTime: '2018-10-19T03:09:07.779Z'
-  endTime: '2018-10-19T03:09:12.889Z'
-  totalTime: 5110
+  startTime: '2018-10-19T13:57:17.582Z'
+  endTime: '2018-10-19T13:57:18.493Z'
+  totalTime: 911

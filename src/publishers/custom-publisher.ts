@@ -16,8 +16,8 @@ export class CustomPublisher extends Publisher {
     }
 
     public async publish(): Promise<void> {
-        const module = await import(this.implementation) as any;
-        return module.publish(this, Store.getData(), Logger);
+        const custom = await import(this.module) as any;
+        return custom.publish(this, {store: Store.getData(), logger: Logger});
     }
 
 }

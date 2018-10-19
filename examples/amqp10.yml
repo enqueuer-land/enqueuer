@@ -1,0 +1,16 @@
+-   publishers:
+        -   type: amqp10
+            payload: message12
+            options:
+                host: localhost
+                port: 5672
+            routingKey: amqp10RK
+    subscriptions:
+        -   type: amqp10
+            timeout: 3000
+            options:
+                host: localhost
+                port: 5672
+            routingKey: amqp10RK
+#            onMessageReceived:
+#                script: console.log(message);
