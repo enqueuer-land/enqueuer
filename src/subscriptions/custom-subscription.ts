@@ -13,10 +13,14 @@ export class CustomSubscription extends Subscription {
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
+        import(this.module).then((custom) => {
+            this.custom = custom;
+        }).catch((err) => {
+            Logger.error(`Error loading module: ${err}`);
+        });
     }
 
     public async subscribe(): Promise<void> {
-        this.custom = await import(this.module) as any;
         return this.custom.subscribe(this, {store: Store.getData(), logger: Logger});
     }
 

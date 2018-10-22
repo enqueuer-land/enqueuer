@@ -16,15 +16,19 @@ requisitions:
         type: amqp-1
         tests:
           -
+            name: 'Assertion #0'
+            valid: true
+            description: 'Expected ''body'' to be equal to ''let your imagination fly''. Received ''let your imagination fly'''
+          -
             valid: true
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2018-10-19T14:59:00.315Z'
+        connectionTime: '2018-10-19T17:24:10.725Z'
         messageReceived:
           durable: false
           first_acquirer: true
-          body: message
+          body: 'let your imagination fly'
     publishers:
       -
         name: 'Publisher #0'
@@ -35,14 +39,14 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2018-10-19T14:59:00.414Z'
+        publishTime: '2018-10-19T17:24:10.838Z'
     time:
-      startTime: '2018-10-19T14:59:00.086Z'
-      endTime: '2018-10-19T14:59:00.419Z'
-      totalTime: 333
+      startTime: '2018-10-19T17:24:10.491Z'
+      endTime: '2018-10-19T17:24:10.842Z'
+      totalTime: 351
       timeout: 5000
     requisitions: []
 time:
-  startTime: '2018-10-19T14:59:00.042Z'
-  endTime: '2018-10-19T14:59:00.419Z'
-  totalTime: 377
+  startTime: '2018-10-19T17:24:10.459Z'
+  endTime: '2018-10-19T17:24:10.842Z'
+  totalTime: 383

@@ -13,11 +13,15 @@ export class CustomPublisher extends Publisher {
 
     constructor(model: PublisherModel) {
         super(model);
+        import(this.module).then((custom) => {
+            this.custom = custom;
+        }).catch((err) => {
+           Logger.error(`Error loading module: ${err}`);
+        });
     }
 
     public async publish(): Promise<void> {
-        const custom = await import(this.module) as any;
-        return custom.publish(this, {store: Store.getData(), logger: Logger});
+        return this.custom.publish(this, {store: Store.getData(), logger: Logger});
     }
 
 }

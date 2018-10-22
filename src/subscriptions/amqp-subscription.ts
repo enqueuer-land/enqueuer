@@ -7,6 +7,7 @@ import {StringRandomCreator} from '../strings/string-random-creator';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('amqp')
+    .addAlternativeName('amqp-0.9')
     .setLibrary('amqp')
     .registerAsSubscription();
 

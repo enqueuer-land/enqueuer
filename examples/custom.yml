@@ -1,6 +1,6 @@
 publishers:
     -   type: custom
-        module: ../../misc/custom-protocol.js
+        module: ../../misc/custom-protocol
         address: localhost
         port: 61613
         user: guest
@@ -9,7 +9,7 @@ publishers:
         payload: customQueuePayload
 subscriptions:
     -   type: custom
-        module: ../../misc/custom-protocol.js
+        module: ../../misc/custom-protocol
         timeout: 10000
         address: localhost
         port: 61613
@@ -20,4 +20,4 @@ subscriptions:
             assertions:
             -   name: Payload
                 expect: payload
-                toBeEqualTo: `customQueuePayload`
+                toBeEqualTo: subscription.parent.publishers[0].payload

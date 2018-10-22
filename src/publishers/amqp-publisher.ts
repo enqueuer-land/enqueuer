@@ -6,6 +6,7 @@ import * as amqp from 'amqp';
 import {Protocol} from '../protocols/protocol';
 
 const protocol = new Protocol('amqp')
+    .addAlternativeName('amqp-0.9')
     .setLibrary('amqp')
     .registerAsPublisher();
 
