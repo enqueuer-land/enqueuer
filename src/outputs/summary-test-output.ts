@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import {Test, TestsAnalyzer} from './tests-analyzer';
 
 export class SummaryTestOutput {
+    private static readonly NAME_SPACING = 50;
     private testAnalyzer: TestsAnalyzer;
     private report: RequisitionModel;
 
@@ -29,7 +30,7 @@ export class SummaryTestOutput {
 
     private formatName(): string {
         let formattedString = this.report.name;
-        while (formattedString.length < 40) {
+        while (formattedString.length < SummaryTestOutput.NAME_SPACING) {
             formattedString = formattedString.concat(' ');
         }
         return formattedString;
