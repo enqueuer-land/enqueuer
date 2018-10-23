@@ -1,5 +1,5 @@
-import {RequisitionModel} from '../../models/outputs/requisition-model';
-import {TestModel} from '../../models/outputs/test-model';
+import {RequisitionModel} from '../models/outputs/requisition-model';
+import {TestModel} from '../models/outputs/test-model';
 
 export type Test = { test: TestModel, hierarchy: string[] };
 

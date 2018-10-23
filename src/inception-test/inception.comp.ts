@@ -71,7 +71,7 @@ describe('Inception test', () => {
         const innerRequisition: RequisitionModel = innerTest.requisitions[0];
 
         expect(innerRequisition.valid).toBeTruthy();
-        if (innerRequisition.subscriptions[0]) {
+        if (innerRequisition.subscriptions && innerRequisition.subscriptions[0]) {
             expect(innerRequisition.subscriptions[0].valid).toBeTruthy();
             expect(innerRequisition.subscriptions[0].name).toBeDefined();
             expect(innerRequisition.subscriptions[0].tests[0].valid).toBeTruthy();
@@ -119,13 +119,17 @@ describe('Inception test', () => {
                         testerReports[filename] = new Json().loadFromFileSync(filename);
                     });
 
-                console.log(Object.keys(testerReports));
-                expect(Object.keys(testerReports).length).toBe(4);
+                const reportKeys = Object.keys(testerReports);
+                console.log(reportKeys);
+                expect(reportKeys.length).toBe(7);
 
-                testDaemonReport(testerReports['src/inception-test/tcp_test.json']);
-                testDaemonReport(testerReports['src/inception-test/uds_test.json']);
-                testDaemonReport(testerReports['src/inception-test/http_test.json']);
-                testSingleRunReport(testerReports['src/inception-test/outter_test.json']);
+                reportKeys
+                    .filter((key: string) => key.indexOf('single-Run') === -1)
+                    .forEach((key: string) => testDaemonReport(testerReports[key]));
+
+                reportKeys
+                    .filter((key: string) => key.indexOf('single-Run') !== -1)
+                    .forEach((key: string) => testSingleRunReport(testerReports[key]));
 
                 beingTested.kill('SIGINT');
             });

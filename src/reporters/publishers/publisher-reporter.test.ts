@@ -65,7 +65,7 @@ describe('PublisherReporter', () => {
         expect(publisherMock).toHaveBeenCalledWith(publisher);
     });
 
-    it('Should execute onInit', () => {
+    it('Should print onInit', () => {
         new PublisherReporter(publisher);
 
         expect(onInitEventMock).toHaveBeenCalledWith('publisher', publisher);
@@ -124,7 +124,7 @@ describe('PublisherReporter', () => {
     });
 
 
-    it('Should execute onMessageReceived', done => {
+    it('Should print onMessageReceived', done => {
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().then(() => {
 
@@ -183,7 +183,7 @@ describe('PublisherReporter', () => {
 
     });
 
-    it('Should execute onFinish', () => {
+    it('Should print onFinish', () => {
         new PublisherReporter(publisher).onFinish();
 
         expect(onFinishEventMock).toHaveBeenCalledWith('publisher', publisherMock());

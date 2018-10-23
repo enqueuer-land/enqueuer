@@ -2,7 +2,6 @@ import {Publisher} from './publisher';
 import {Injectable} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Protocol} from '../protocols/protocol';
-
 const container = require('rhea');
 
 const protocol = new Protocol('amqp1')

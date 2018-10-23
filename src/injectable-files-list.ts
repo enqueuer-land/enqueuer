@@ -20,6 +20,16 @@ try {
   /* do nothing*/
 }
 try {
+  require('./outputs/formatters/json-formatter');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./outputs/formatters/yml-formatter');
+} catch (err) {
+  /* do nothing*/
+}
+try {
   require('./publishers/amqp-publisher');
 } catch (err) {
   /* do nothing*/

@@ -8,8 +8,10 @@ daemon:
 #        port: 23023
 #        method: POST
 
-#outputs:
-#    -   type: standard-output
-#        pretty: true
+#output:
+#-   type: standard-output
+#-   type: file
+#    format: yml
+#    filename: outputExamples/daemon.yml
 
 log-level: info

@@ -27,7 +27,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 memo.push(val);
                 return memo;
             }, [])
-        .option('-d, --daemon <type>', 'execute in daemon mode with default values of <type>',
+        .option('-d, --daemon <type>', 'print in daemon mode with default values of <type>',
             (val: string) => daemonTypes.push(val), [])
         .option('-a, --add-file-single-run <file>', 'add file to be tested in single-run',
             (val: string) => singleRunFiles.push(val), [])

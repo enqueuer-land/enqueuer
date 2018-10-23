@@ -1,20 +1,19 @@
 import {DaemonInput} from './daemon-run-input/daemon-input';
 import {Logger} from '../loggers/logger';
-import {MultiPublisher} from '../publishers/multi-publisher';
 import {EnqueuerExecutor} from './enqueuer-executor';
 import {Container, Injectable} from 'conditional-injector';
 import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
 import * as output from '../models/outputs/requisition-model';
 import {ConfigurationValues, DaemonMode} from '../configurations/configuration-values';
 import {DaemonInputRequisition} from './daemon-run-input/daemon-input-requisition';
-import {ConsoleResultCreator} from './single-run-result-creators/console-result-creator';
 import {RequisitionParser} from '../requisition-runners/requisition-parser';
 import {RequisitionModel} from '../models/inputs/requisition-model';
+import {MultiTestsOutput} from '../outputs/multi-tests-output';
 
 @Injectable({predicate: (configuration: ConfigurationValues) => configuration.daemon !== undefined})
 export class DaemonRunExecutor extends EnqueuerExecutor {
     private daemonInputs: DaemonInput[];
-    private multiPublisher: MultiPublisher;
+    private outputs: MultiTestsOutput;
     private daemonInputsLength: number;
     private parser: RequisitionParser;
     private reject?: (reason?: any) => void;
@@ -25,7 +24,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         let daemonMode: DaemonMode = configuration.daemon;
         Logger.info('Executing in Daemon mode');
 
-        this.multiPublisher = new MultiPublisher(configuration.outputs);
+        this.outputs = new MultiTestsOutput(configuration.outputs);
         this.daemonInputs = daemonMode.map((input: any) => Container.subclassesOf(DaemonInput).create(input));
         this.daemonInputsLength = this.daemonInputs.length;
         this.parser = new RequisitionParser();
@@ -73,7 +72,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
 
     private async publishError(message: DaemonInputRequisition) {
         return this.sendResponse(message)
-            .then(() => this.multiPublisher.publish(message.output));
+            .then(() => this.registerTest(message));
     }
 
     private async runRequisition(requisitionModels: RequisitionModel[], message: DaemonInputRequisition) {
@@ -81,8 +80,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         return new MultiRequisitionRunner(requisitionModels, message.type, parent).run()
             .then((report: output.RequisitionModel) => message.output = report)
             .then(() => this.registerTest(message))
-            .then(() => this.sendResponse(message))
-            .then(() => this.multiPublisher.publish(message.output));
+            .then(() => this.sendResponse(message));
     }
 
     private async sendResponse(message: DaemonInputRequisition) {
@@ -90,11 +88,9 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
         await message.daemon.cleanUp(message);
     }
 
-    private registerTest(message: DaemonInputRequisition) {
+    private async registerTest(message: DaemonInputRequisition) {
         if (message.output) {
-            const resultCreator = new ConsoleResultCreator();
-            resultCreator.addTestSuite(message.type, message.output);
-            resultCreator.create();
+            await this.outputs.execute(message.output);
         }
     }
 

@@ -49,7 +49,7 @@ export class Configuration {
     private static createDefaultSingleRun(): any {
         let outputs = [];
         if (CommandLineConfiguration.getStdoutRequisitionOutput()) {
-            outputs.push({type: 'standard-output', pretty: true});
+            outputs.push({type: 'standard-output'});
         }
         return {
             logLevel: CommandLineConfiguration.getVerbosity() || 'warn',
@@ -67,7 +67,7 @@ export class Configuration {
     private static createDefaultDaemon(daemonTypes: string[]): any {
         let outputs = [];
         if (CommandLineConfiguration.getStdoutRequisitionOutput()) {
-            outputs.push({type: 'standard-output', pretty: true});
+            outputs.push({type: 'standard-output'});
         }
         return {
             logLevel: CommandLineConfiguration.getVerbosity() || 'warn',

@@ -10,12 +10,6 @@
 #               1, if there is at least one invalid thing.
 # You can use this one as example: /singleRun.yml
 single-run: #(default)
-  #Used to describe your config test scenario
-  name: examples
-
-  #Optional. A single file with the whole execution report is generated. Every test of every input file will be there.
-  report: singleRunOutput.yml #outputExamples/singleRunOutput.json
-
   #Optional. Requisition files name or glob
   files:
   - 1.yml
@@ -55,6 +49,7 @@ log-level: trace
 #Every supported IPC protocol is available here and you can check their values in /docs/tests/publishers folder.
 outputs:
   -  type: file
+     format: yaml #yml (default) / xunit (not done yet) / html (not done yet)/ json
      filenamePrefix: outputExamples/
      filenameExtension: yml #json
 

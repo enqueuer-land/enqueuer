@@ -1,10 +1,9 @@
 import {Container, Injectable} from "conditional-injector";
-import {MultiPublisher} from "../publishers/multi-publisher";
+import {MultiTestsOutput} from "../outputs/multi-tests-output"
 import {DaemonRunExecutor} from "./daemon-run-executor";
-import {MultiRequisitionRunner} from "../requisition-runners/multi-requisition-runner";
 
 jest.mock("../requisition-runners/multi-requisition-runner");
-jest.mock('../publishers/multi-publisher');
+jest.mock('../outputs/multi-tests-output');
 jest.mock('./daemon-run-input/daemon-input');
 
 let subscribeMock = jest.fn(() => Promise.resolve(true));
@@ -45,12 +44,12 @@ describe('DaemonRunExecutor', () => {
     });
 
     it('should call multipublisher constructor', () => {
-        const multiPublisherMock = jest.fn();
-        MultiPublisher.mockImplementation(multiPublisherMock);
+        const multiMock = jest.fn();
+        MultiTestsOutput.mockImplementation(multiMock);
 
         new DaemonRunExecutor(daemonConfiguration);
 
-        expect(multiPublisherMock).toBeCalledWith(daemonConfiguration.outputs);
+        expect(multiMock).toBeCalledWith(daemonConfiguration.outputs);
     });
 
     it('should call DaemonInput constructor', () => {
@@ -61,7 +60,7 @@ describe('DaemonRunExecutor', () => {
         expect(createMock).toBeCalledWith(daemonConfiguration.daemon[1]);
     });
     //
-    // it('execute subscription fail', ()=> {
+    // it('print subscription fail', ()=> {
     //     expect.assertions(3);
     //     let unsubscribeMock = jest.fn(() => {
     //         expect(unsubscribeMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
@@ -76,7 +75,7 @@ describe('DaemonRunExecutor', () => {
     //         }
     //     });
     //
-    //     new DaemonRunExecutor(daemonConfiguration).execute();
+    //     new DaemonRunExecutor(daemonConfiguration).print();
     //     expect(subscribeMock).toHaveBeenCalledTimes(daemonConfiguration.runMode.daemon.length);
     // });
     //
@@ -120,7 +119,7 @@ describe('DaemonRunExecutor', () => {
     //     });
     //
     //
-    //     new DaemonRunExecutor(daemonConfiguration).execute();
+    //     new DaemonRunExecutor(daemonConfiguration).print();
     // });
 
 });

@@ -1,15 +1,16 @@
 import {EnqueuerExecutor} from './enqueuer-executor';
-import {MultiPublisher} from '../publishers/multi-publisher';
 import {Logger} from '../loggers/logger';
 import {Injectable} from 'conditional-injector';
-import {MultiResultCreator} from './single-run-result-creators/multi-result-creator';
+import {MultiTestsOutput} from '../outputs/multi-tests-output';
 import {RequisitionParser} from '../requisition-runners/requisition-parser';
 import * as glob from 'glob';
 import * as fs from 'fs';
-import {RequisitionModel} from '../models/inputs/requisition-model';
+import * as input from '../models/inputs/requisition-model';
+import * as output from '../models/outputs/requisition-model';
 import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
 import {ConfigurationValues, SingleRunMode} from '../configurations/configuration-values';
-import {Json} from '../object-notations/json';
+import {SummaryTestOutput} from '../outputs/summary-test-output';
+import {DateController} from '../timers/date-controller';
 
 //TODO test it
 @Injectable()
@@ -18,23 +19,22 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private readonly fileNames: string[];
     private readonly parallelMode: boolean;
     private readonly totalFilesNum: number;
-    private multiPublisher: MultiPublisher;
-    private multiResultCreator: MultiResultCreator;
+    private readonly outputs: MultiTestsOutput;
+    private readonly report: output.RequisitionModel;
 
     constructor(configuration: ConfigurationValues) {
         super();
         let singleRunMode: SingleRunMode = configuration['single-run'];
+        this.report = this.initialReport();
         if (singleRunMode) {
-            this.multiResultCreator = new MultiResultCreator(singleRunMode.reportName || singleRunMode.report);
             this.parallelMode = singleRunMode.parallel;
-            this.multiPublisher = new MultiPublisher(configuration.outputs);
             this.fileNames = this.getTestFiles(configuration, singleRunMode.files || []);
+            this.report.name = singleRunMode.name || this.report.name;
         } else {
-            this.multiResultCreator = new MultiResultCreator();
             this.parallelMode = false;
-            this.multiPublisher = new MultiPublisher(configuration.outputs);
             this.fileNames = this.getTestFiles(configuration, []);
         }
+        this.outputs = new MultiTestsOutput(configuration.outputs || []);
         this.totalFilesNum = this.fileNames.length;
     }
 
@@ -48,6 +48,21 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         } else {
             return this.executeSequentialMode(this.fileNames);
         }
+    }
+
+    private initialReport() {
+        const now = new DateController().toString();
+        return {
+            name: 'single-Run',
+            valid: true,
+            tests: [],
+            requisitions: [],
+            time: {
+                startTime: now,
+                endTime: now,
+                totalTime: 0
+            }
+        };
     }
 
     private executeSequentialMode(fileNames: string[]): Promise<boolean> {
@@ -82,7 +97,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
             if (typeof(pattern) == 'string') {
                 const items = glob.sync(pattern);
                 if (items.length <= 0) {
-                    this.sendErrorMessage(`No file was found with: ${pattern}`);
+                    this.addTestError(`Test found`, `No file was found with: ${pattern}`);
                 } else {
                     result = result.concat(items.sort());
                 }
@@ -92,26 +107,36 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return result;
     }
 
-    private sendErrorMessage(message: any) {
-        Logger.error(message);
-        this.multiResultCreator.addError(message);
-        this.multiPublisher.publish(message).then().catch(console.log.bind(console));
+    private addRequisitionReport(test: output.RequisitionModel) {
+        if (this.report.requisitions) {
+            this.report.requisitions.push(test);
+        }
+        new SummaryTestOutput(test).print();
+    }
+
+    private addTestError(name: string, description: string) {
+        Logger.error(`${description}`);
+        const test = {name: name, description: description, valid: false};
+        if (this.report.requisitions) {
+            this.report.tests.push(test);
+        }
+        this.report.valid = false;
+        new SummaryTestOutput({name: this.report.name, tests: [test], valid: false}).print();
     }
 
     private runFile(filename: string): Promise<void> {
         return new Promise((resolve) => {
-            const requisitions: RequisitionModel[] | undefined = this.parseFile(filename);
+            const requisitions: input.RequisitionModel[] | undefined = this.parseFile(filename);
             if (requisitions) {
-                const parent: RequisitionModel = {name: filename, requisitions: requisitions, subscriptions: [], publishers: []};
+                const parent = this.createParent(filename, requisitions);
                 new MultiRequisitionRunner(requisitions, filename, parent)
                     .run()
                     .then(report => {
-                        this.multiResultCreator.addTestSuite(filename, report);
-                        this.multiPublisher.publish(report).catch(console.log.bind(console));
+                        this.addRequisitionReport(report);
                         resolve();
                     })
                     .catch((err) => {
-                        this.sendErrorMessage(`Single-run error reported: ${new Json().stringify(err)}`);
+                        this.addTestError(`Requisition ran`, `Single-run error reported: ${err}`);
                         resolve();
                     });
             } else {
@@ -120,20 +145,33 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private parseFile(fileName: string): RequisitionModel[] | undefined {
+    private createParent(filename: string, requisitions: input.RequisitionModel[]) {
+        return {
+            name: filename,
+            requisitions: requisitions,
+            subscriptions: [],
+            publishers: []
+        };
+    }
+
+    private parseFile(fileName: string): input.RequisitionModel[] | undefined {
         try {
             const fileBufferContent = fs.readFileSync(fileName);
             return new RequisitionParser().parse(fileBufferContent.toString());
         } catch (err) {
-            this.sendErrorMessage(`Error parsing: ${fileName}: ` + err);
+            this.addTestError(`Requisition parsed`, `Error parsing: ${fileName}: ${err}`);
         }
-        return undefined;
     }
 
-    private finishExecution(): boolean {
+    private async finishExecution(): Promise<boolean> {
         Logger.info('There is no more files to be ran');
-        this.multiResultCreator.create();
-        return this.multiResultCreator.isValid();
+        if (this.report.time) {
+            const now = new DateController();
+            this.report.time.endTime = now.toString();
+            this.report.time.totalTime = now.getTime() - new DateController(new Date(this.report.time.startTime)).getTime();
+        }
+        await this.outputs.execute(this.report);
+        return this.report.valid;
     }
 
 }

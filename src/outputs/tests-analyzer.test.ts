@@ -1,6 +1,6 @@
 import {TestsAnalyzer} from "./tests-analyzer";
-import {RequisitionModel} from "../../models/outputs/requisition-model";
-import {TestModel} from "../../models/outputs/test-model";
+import {RequisitionModel} from "../models/outputs/requisition-model";
+import {TestModel} from "../models/outputs/test-model";
 
 describe('TestsAnalyzer', () => {
 
