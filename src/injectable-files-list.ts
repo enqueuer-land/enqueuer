@@ -20,6 +20,11 @@ try {
   /* do nothing*/
 }
 try {
+  require('./outputs/formatters/console-formatter');
+} catch (err) {
+  /* do nothing*/
+}
+try {
   require('./outputs/formatters/html-formatter');
 } catch (err) {
   /* do nothing*/

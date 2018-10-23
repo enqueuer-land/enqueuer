@@ -15,6 +15,7 @@ export class MultiTestsOutput {
             Logger.debug(`Instantiating output '${output.type}' and format '${output.format}'`);
             const publisher = Container.subclassesOf(Publisher).create(output);
             publisher.formatter = Container.subclassesOf(Formatter).create(output);
+            publisher.format = output.format;
             this.outputs.push(publisher);
         });
     }
@@ -26,6 +27,7 @@ export class MultiTestsOutput {
         await Promise.all(this.outputs
             .map(publisher => {
                 const formatter = publisher.formatter as Formatter;
+                Logger.trace(`Formatting as ${publisher.format}`);
                 publisher.payload = formatter.format(report);
                 return publisher.publish();
             }));

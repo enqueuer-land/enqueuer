@@ -111,6 +111,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         if (this.report.requisitions) {
             this.report.requisitions.push(test);
         }
+        this.report.valid = this.report.valid && test.valid;
         new SummaryTestOutput(test).print();
     }
 
