@@ -8,8 +8,7 @@ export class SummaryTestOutput {
 
     public constructor(report: RequisitionModel) {
         this.report = report;
-        this.testAnalyzer = new TestsAnalyzer();
-        this.testAnalyzer.addTest(report);
+        this.testAnalyzer = new TestsAnalyzer(report);
     }
 
     public print() {

@@ -16,7 +16,7 @@ export class TestsAnalyzer {
         this.findRequisitions([report], []);
     }
 
-    public getTests(): any[] {
+    public getTests(): Test[] {
         return this.tests;
     }
 

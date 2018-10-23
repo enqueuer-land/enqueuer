@@ -168,7 +168,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         if (this.report.time) {
             const now = new DateController();
             this.report.time.endTime = now.toString();
-            this.report.time.totalTime = now.getTime() - new DateController(new Date(this.report.time.startTime)).getTime();
+            this.report.time.totalTime = now.getTime() - new DateController(new Date(this.report.time.startTime as string)).getTime();
         }
         await this.outputs.execute(this.report);
         return this.report.valid;
