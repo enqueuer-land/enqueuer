@@ -1,6 +1,6 @@
 import {TestModel} from '../../models/outputs/test-model';
 
-type Time = { timeout?: number; totalTime: number };
+export type Time = { timeout?: number; totalTime: number };
 
 export class SubscriptionFinalReporter {
     private messageReceivedTestName: string = `Message received`;
