@@ -13,7 +13,7 @@ const options = {
 };
 
 //TODO test it
-@Injectable({predicate: (output: any) => output.format && output.format.toUpperCase() === 'CONSOLE'})
+@Injectable({predicate: (output: any) => output.format && output.format.toLowerCase() === 'console'})
 export class ConsoleFormatter extends Formatter {
 
     public format(report: RequisitionModel): string {

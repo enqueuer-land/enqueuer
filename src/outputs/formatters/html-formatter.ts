@@ -9,7 +9,7 @@ import {SubscriptionModel} from '../../models/outputs/subscription-model';
 import {bool} from 'aws-sdk/clients/signer';
 
 //TODO test it
-@Injectable({predicate: (output: any) => output.format && output.format.toUpperCase() === 'HTML'})
+@Injectable({predicate: (output: any) => output.format && output.format.toLowerCase() === 'html'})
 export class JsonFormatter extends Formatter {
 
     public format(report: RequisitionModel): string {
