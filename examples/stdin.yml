@@ -1,9 +1,9 @@
 subscriptions:
-    -   name: subscription description
-        type: standard-input
-        timeout: 3000
-        onMessageReceived:
-            assertions:
-                -   name: payload
-                    expect: message
-                    toBeEqualTo: `enqueuer standard-input payload`
+-   name: subscription description
+    type: standard-input
+    timeout: 3000
+    onMessageReceived:
+        assertions:
+        -   name: payload
+            expect: message
+            toBeEqualTo: `enqueuer standard-input payload`

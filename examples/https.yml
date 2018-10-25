@@ -1,35 +1,35 @@
 timeout: 3000
 publishers:
-    -   name: publisher description
-        type: https-client
-        url: https://localhost:4430/enqueuer
-        method: POST
-        payload:
-            https: works!
-        headers:
-            content-type: application/json
-        onMessageReceived:
-            assertions:
-                -   name: Status Code
-                    expect: statusCode
-                    toBeEqualTo: 200
-                -   name: Body
-                    expect: body
-                    toBeEqualTo: `https`
+-   name: publisher description
+    type: https-client
+    url: https://localhost:4430/enqueuer
+    method: POST
+    payload:
+        https: works!
+    headers:
+        content-type: application/json
+    onMessageReceived:
+        assertions:
+        -   name: Status Code
+            expect: statusCode
+            toBeEqualTo: 200
+        -   name: Body
+            expect: body
+            toBeEqualTo: `https`
 subscriptions:
-    -   type: https-server
-        endpoint: /enqueuer
-        port: 4430
-        method: POST
-        timeout: 3000
-        credentials:
-            key: <<privateKey>>
-            cert: <<certificate>>
-        response:
-            status: 200
-            payload: https
-        onMessageReceived:
-            assertions:
-                -   name: Https payload
-                    expect: JSON.parse(message.body).https
-                    toBeEqualTo: `works!`
+-   type: https-server
+    endpoint: /enqueuer
+    port: 4430
+    method: POST
+    timeout: 3000
+    credentials:
+        key: <<privateKey>>
+        cert: <<certificate>>
+    response:
+        status: 200
+        payload: https
+    onMessageReceived:
+        assertions:
+        -   name: Https payload
+            expect: JSON.parse(message.body).https
+            toBeEqualTo: `works!`

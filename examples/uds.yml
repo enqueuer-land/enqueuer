@@ -1,60 +1,60 @@
 -   timeout: 3000
     publishers:
-        -   type: uds
-            path: /tmp/unix.sock
-            timeout: 2000
-            payload: I'll be replaced in onInit
-            onInit:
-                script: publisher.payload = 'enqueuer'
-                store:
-                    udsPayload: `enqueuer`
-                    uds2Timeout: `2000`
-            onMessageReceived:
-                assertions:
-                    -   expect: payload
-                        toBeEqualTo: `responsePayload`
+    -   type: uds
+        path: /tmp/unix.sock
+        timeout: 2000
+        payload: I'll be replaced in onInit
+        onInit:
+            script: publisher.payload = 'enqueuer'
+            store:
+                udsPayload: `enqueuer`
+                uds2Timeout: `2000`
+        onMessageReceived:
+            assertions:
+            -   expect: payload
+                toBeEqualTo: `responsePayload`
     subscriptions:
-        -   type: uds
-            path: /tmp/unix.sock
-            response: responsePayload
-            timeout: 2000
-            onMessageReceived:
-                assertions:
-                    -   name: Message received is enqueuer
-                        expect: payload
-                        toBeEqualTo: store.udsPayload
+    -   type: uds
+        path: /tmp/unix.sock
+        response: responsePayload
+        timeout: 2000
+        onMessageReceived:
+            assertions:
+            -   name: Message received is enqueuer
+                expect: payload
+                toBeEqualTo: store.udsPayload
 -   publishers:
-        -   type: uds
-            path: /tmp/unix2.sock
-            payload: <<udsPayload>>
-            saveStream: udsPubStreamName
-            onInit:
-                assertions:
-                    -   expect: publisher.payload
-                        toBeEqualTo: store.udsPayload
+    -   type: uds
+        path: /tmp/unix2.sock
+        payload: <<udsPayload>>
+        saveStream: udsPubStreamName
+        onInit:
+            assertions:
+            -   expect: publisher.payload
+                toBeEqualTo: store.udsPayload
     subscriptions:
-        -   type: uds
-            path: /tmp/unix2.sock
-            saveStream: udsSubStreamName
-            onMessageReceived:
-                assertions:
-                    -   expect: message.payload
-                        toBeEqualTo: store.udsPayload
-            timeout: <<uds2Timeout>>
+    -   type: uds
+        path: /tmp/unix2.sock
+        saveStream: udsSubStreamName
+        onMessageReceived:
+            assertions:
+            -   expect: message.payload
+                toBeEqualTo: store.udsPayload
+        timeout: <<uds2Timeout>>
 -   publishers:
-        -   type: uds
-            timeout: 2000
-            payload: I am still opened
-            loadStream: udsSubStreamName
-            onMessageReceived:
-                assertions:
-                    -   expect: payload
-                        toBeEqualTo: `I am still bidirectional`
+    -   type: uds
+        timeout: 2000
+        payload: I am still opened
+        loadStream: udsSubStreamName
+        onMessageReceived:
+            assertions:
+            -   expect: payload
+                toBeEqualTo: `I am still bidirectional`
     subscriptions:
-        -   type: uds
-            loadStream: udsPubStreamName
-            response: I am still bidirectional
-            onMessageReceived:
-                assertions:
-                    -   expect: payload
-                        toBeEqualTo: `I am still opened`
+    -   type: uds
+        loadStream: udsPubStreamName
+        response: I am still bidirectional
+        onMessageReceived:
+            assertions:
+            -   expect: payload
+                toBeEqualTo: `I am still opened`

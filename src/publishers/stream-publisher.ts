@@ -7,6 +7,8 @@ import {Store} from '../configurations/store';
 import {Json} from '../object-notations/json';
 import {Protocol} from '../protocols/protocol';
 import * as tls from 'tls';
+import * as fs from 'fs';
+import {Timeout} from '../timers/timeout';
 
 const tcp = new Protocol('tcp')
     .addAlternativeName('tcp-client')
@@ -20,15 +22,20 @@ const ssl = new Protocol('ssl')
     .addAlternativeName('tls')
     .registerAsPublisher();
 
+const fileStream = new Protocol('file-stream')
+    .registerAsPublisher();
+
 @Injectable({predicate: (publish: any) => tcp.matches(publish.type)
         || uds.matches(publish.type)
+        || fileStream.matches(publish.type)
         || ssl.matches(publish.type)})
-export class RawSocketStreamPublisher extends Publisher {
+export class StreamPublisher extends Publisher {
 
     private readonly loadedStream: any;
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
+        this.timeout = this.streamTimeout;
         this.timeout = this.timeout || 1000;
         if (this.loadStream) {
             Logger.debug(`Loading ${this.type} client: ${this.loadStream}`);
@@ -72,16 +79,18 @@ export class RawSocketStreamPublisher extends Publisher {
     private createStream(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (tcp.matches(this.type)) {
-                this.createTcpServer(resolve, reject);
+                this.createTcpStream(resolve, reject);
             } else if (ssl.matches(this.type)) {
-                this.createSslServer(resolve, reject);
+                this.createSslStream(resolve, reject);
+            } else if (fileStream.matches(this.type)) {
+                this.createFileStream(resolve, reject);
             } else {
                 resolve(net.createConnection(this.path));
             }
         });
     }
 
-    private createSslServer(resolve: any, reject: any): void {
+    private createSslStream(resolve: any, reject: any): void {
         const stream: any = tls.connect(this.port, this.serverAddress, this.options, () => resolve(stream));
         stream.on('error', (error: any) => {
             Logger.error(`${this.type} client error: ${error}`);
@@ -89,7 +98,16 @@ export class RawSocketStreamPublisher extends Publisher {
         });
     }
 
-    private createTcpServer(resolve: any, reject: any): void {
+    private createFileStream(resolve: any, reject: any): void {
+        const stream: any = fs.createWriteStream(this.path, this.options);
+        stream.on('error', (error: any) => {
+            Logger.error(`${this.type} client error: ${error}`);
+            reject(error);
+        });
+        resolve(stream);
+    }
+
+    private createTcpStream(resolve: any, reject: any): void {
         const stream = new net.Socket();
         stream.connect(this.port, this.serverAddress, () => resolve(stream));
         stream.on('error', (error: any) => {
@@ -100,12 +118,12 @@ export class RawSocketStreamPublisher extends Publisher {
 
     private publishData(stream: any, resolve: any, reject: any) {
         Logger.debug(`${this.type} client publishing`);
-        stream.setTimeout(this.timeout);
         stream.once('error', (data: any) => {
             this.finalize(stream);
             reject(data);
         });
-        stream.write(this.stringifyPayload(), () => {
+        const stringifyPayload = this.stringifyPayload();
+        stream.write(stringifyPayload, () => {
             Logger.debug(`${this.type} client published`);
             this.registerEvents(stream, resolve);
             if (this.saveStream) {
@@ -116,12 +134,20 @@ export class RawSocketStreamPublisher extends Publisher {
     }
 
     private registerEvents(stream: any, resolve: (value?: (PromiseLike<any> | any)) => void) {
-        stream.on('timeout', () => {
+        // if (!stream.read) {
+        //     Logger.debug(`${this.type} is not a readable stream`);
+        //     this.finalize(stream);
+        //     resolve();
+        // }
+        new Timeout(() => {
             this.finalize(stream);
+            Logger.debug(`${this.type} client timed out`);
             stream.removeAllListeners('data');
             resolve();
-        })
-        .once('end', () => {
+        }).start(this.timeout);
+
+        stream.once('end', () => {
+            Logger.debug(`${this.type} client ended`);
             this.finalize(stream);
             resolve();
         })

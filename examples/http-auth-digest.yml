@@ -1,52 +1,52 @@
 timeout: 3000
 publishers:
-    -   type: http
-        url: http://localhost:23067/digest
-        method: POST
-        payload: Rech
-        headers:
-            content-type: application/json
-        authentication:
-            digest:
-                username: guest
-                password: guest
-                realm: nqrRealm
-                method: GET
-                uri: /digest
-                opaque: opaque
-                nonce: 58bac26865505
-                nonceCount: 00000001
-                clientNonce: 72ae56dde9406045
-                qop: auth
-        onMessageReceived:
-            assertions:
-                -   name: Body
-                    expect: body
-                    toBeEqualTo: `responsePayload`
+-   type: http
+    url: http://localhost:23067/digest
+    method: POST
+    payload: Rech
+    headers:
+        content-type: application/json
+    authentication:
+        digest:
+            username: guest
+            password: guest
+            realm: nqrRealm
+            method: GET
+            uri: /digest
+            opaque: opaque
+            nonce: 58bac26865505
+            nonceCount: 00000001
+            clientNonce: 72ae56dde9406045
+            qop: auth
+    onMessageReceived:
+        assertions:
+        -   name: Body
+            expect: body
+            toBeEqualTo: `responsePayload`
 subscriptions:
-    -   type: http
-        endpoint: /digest
-        port: 23067
-        method: POST
-        timeout: 10000
-        authentication:
-            digest:
-                username: guest
-                password: guest
-                realm: nqrRealm
-                method: GET
-                uri: /digest
-                opaque: opaque
-                nonce: 58bac26865505
-                nonceCount: 00000001
-                clientNonce: 72ae56dde9406045
-                qop: auth
-        response:
-            status: 321
-            payload: responsePayload
-        onMessageReceived:
-            assertions:
-                -   name: Payload
-                    expect: message.body
-                    toBeEqualTo: `Rech`
+-   type: http
+    endpoint: /digest
+    port: 23067
+    method: POST
+    timeout: 10000
+    authentication:
+        digest:
+            username: guest
+            password: guest
+            realm: nqrRealm
+            method: GET
+            uri: /digest
+            opaque: opaque
+            nonce: 58bac26865505
+            nonceCount: 00000001
+            clientNonce: 72ae56dde9406045
+            qop: auth
+    response:
+        status: 321
+        payload: responsePayload
+    onMessageReceived:
+        assertions:
+        -   name: Payload
+            expect: message.body
+            toBeEqualTo: `Rech`
 

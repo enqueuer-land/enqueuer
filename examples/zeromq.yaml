@@ -1,22 +1,22 @@
 publishers:
-    -   type: zeromq
-        address: <<zeroMqAddress>>
-        payload: enqueuer zeroes
-        topic: topic.enqueuer.virgs
-        subscriptionTimeout: 1000
+-   type: zeromq
+    address: <<zeroMqAddress>>
+    payload: enqueuer zeroes
+    topic: topic.enqueuer.virgs
+    subscriptionTimeout: 1000
 subscriptions:
-    -   type: zeromq
-        timeout: 1000
-        address: <<zeroMqAddress>>
-        topic: topic.enqueuer.virgs
-        onMessageReceived:
-            assertions:
-                -   name: topic
-                    expect: topic
-                    toBeEqualTo: `topic.enqueuer.virgs`
-                -   name: payload
-                    expect: payload
-                    toBeEqualTo: `enqueuer zeroes`
-                -   name: address
-                    expect: store.zeroMqAddress
-                    toBeEqualTo: `<<zeroMqAddress>>`
+-   type: zeromq
+    timeout: 1000
+    address: <<zeroMqAddress>>
+    topic: topic.enqueuer.virgs
+    onMessageReceived:
+        assertions:
+        -   name: topic
+            expect: topic
+            toBeEqualTo: `topic.enqueuer.virgs`
+        -   name: payload
+            expect: payload
+            toBeEqualTo: `enqueuer zeroes`
+        -   name: address
+            expect: store.zeroMqAddress
+            toBeEqualTo: `<<zeroMqAddress>>`

@@ -4,19 +4,19 @@
             counter: 0
 -   name: second
     requisitions:
-        -   name: second.0
+    -   name: second.0
+        iterations: 3
+        requisitions:
+        -   name: second.1
             iterations: 3
             requisitions:
-                -   name: second.1
+            -   name: second.2
+                iterations: 3
+                requisitions:
+                -   name: second.3
                     iterations: 3
-                    requisitions:
-                        -   name: second.2
-                            iterations: 3
-                            requisitions:
-                            -   name: second.3
-                                iterations: 3
-                                onInit:
-                                    script: ++store.counter
+                    onInit:
+                        script: ++store.counter
 -   name: third
     onFinish:
         assertions:

@@ -2,13 +2,13 @@ delay: 500
 name: requisition description
 timeout: 3000
 publishers:
-    -   name: publisher description
-        type: tcp-client
-        serverAddress: localhost
-        port: 23081
-        payload: anything
-        onMessageReceived:
-            assertions:
-                -   name: Back and forth
-                    expect: payload
-                    toBeEqualTo: `anyValue`
+-   name: publisher description
+    type: tcp-client
+    serverAddress: localhost
+    port: 23081
+    payload: anything
+    onMessageReceived:
+        assertions:
+        -   name: Back and forth
+            expect: payload
+            toBeEqualTo: `anyValue`

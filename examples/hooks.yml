@@ -1,65 +1,62 @@
-name: requisition description
-timeout: 2000
+timeout: 3000
 onInit:
     store:
         sequence: `requisition::onInit`
     assertions:
-        -   name: Requisitions exists onInit
-            expectToBeDefined: requisition
+    -   name: Requisitions exists onInit
+        expectToBeDefined: requisition
 publishers:
-    -   name: publisher description
-        type: tcp-client
-        timeout: 2000
-        serverAddress: localhost
-        port: 23080
-        payload: it
-        onInit:
-            script: publisher.name = 'changed';
-            store:
-                sequence: store.sequence + `-> publisher::onInit`
-            assertions:
-                -   name: Publisher exists onInit
-                    expectToBeDefined: publisher
-                -   name: Publisher name
-                    expectToBeDefined: publisher.name
-                -   expectToBeDefined: publisher
-        onMessageReceived:
-            store:
-                sequence: store.sequence + `-> publisher::onMessageReceived`
-            assertions:
-                -   name: Publisher exists onMessageReceived
-                    expectToBeDefined: publisher
-                -   name: Requisition onInit
-                    expect: store.sequence
-                    toContain: `requisition::onInit`
-                -   name: Publisher name changed
-                    expect: publisher.name
-                    toBeEqualTo: `changed`
-                -   name: Publisher onInit executed
-                    expect: store.sequence
-                    toContain: `publisher::onInit`
+-   type: tcp
+    timeout: 2000
+    serverAddress: localhost
+    port: 23080
+    payload: it
+    onInit:
+        script: publisher.name = 'changed';
+        store:
+            sequence: store.sequence + `-> publisher::onInit`
+        assertions:
+        -   name: Publisher exists onInit
+            expectToBeDefined: publisher
+        -   name: Publisher name
+            expectToBeDefined: publisher.name
+        -   expectToBeDefined: publisher
+    onMessageReceived:
+        store:
+            sequence: store.sequence + `-> publisher::onMessageReceived`
+        assertions:
+        -   name: Publisher exists onMessageReceived
+            expectToBeDefined: publisher
+        -   name: Requisition onInit
+            expect: store.sequence
+            toContain: `requisition::onInit`
+        -   name: Publisher name changed
+            expect: publisher.name
+            toBeEqualTo: `changed`
+        -   name: Publisher onInit executed
+            expect: store.sequence
+            toContain: `publisher::onInit`
 subscriptions:
-    -   name: subscription description
-        type: tcp-server
-        port: 23080
-        response: hook response
-        onInit:
-            script: subscription.name = 'changed';
-            store:
-                sequence: store.sequence + `-> subscription::onInit`
-            assertions:
-                -   name: Subscription exists onInit
-                    expectToBeDefined: subscription
-                -   name: Subscription name
-                    expect: subscription.name
-                    toBeEqualTo: `changed`
-        onMessageReceived:
-            assertions:
-                -   name: Subscription exists onMessageReceived
-                    expectToBeDefined: subscription
-                -   name: Subscription name changed
-                    expect: subscription.name
-                    toBeEqualTo: `changed`
-                -   name: Subscription onInit executed
-                    expect: store.sequence
-                    toContain: `subscription::onInit`
+-   type: tcp
+    port: 23080
+    response: hook response
+    onInit:
+        script: subscription.name = 'changed';
+        store:
+            sequence: store.sequence + `-> subscription::onInit`
+        assertions:
+        -   name: Subscription exists onInit
+            expectToBeDefined: subscription
+        -   name: Subscription name
+            expect: subscription.name
+            toBeEqualTo: `changed`
+    onMessageReceived:
+        assertions:
+        -   name: Subscription exists onMessageReceived
+            expectToBeDefined: subscription
+        -   name: Subscription name changed
+            expect: subscription.name
+            toBeEqualTo: `changed`
+        -   name: Subscription onInit executed
+            expect: store.sequence
+            toContain: `subscription::onInit`

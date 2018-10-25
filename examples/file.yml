@@ -1,32 +1,32 @@
 timeout: 3000
 publishers:
-    -   type: file
-        name: publisher description
-        payload: filePublisher
-        filenamePrefix: temp/fileTest
-        filenameExtension: file
-        onInit:
-            script: publisher.payload=new Date().getTime();
+-   type: file
+    name: publisher description
+    payload: filePublisher
+    filenamePrefix: temp/fileTest
+    filenameExtension: file
+    onInit:
+        script: publisher.payload=new Date().getTime();
 subscriptions:
-    -   name: subscription description
-        type: file-system-watcher
-        timeout: 3000
-        fileNamePattern: temp/fileTest*
-        onMessageReceived:
-            script: now = new Date().getTime();
-            assertions:
-                -   name: Some time has passed
-                    expect: now
-                    toBeGreaterThanOrEqualTo: message.content
-                -   name: Filename
-                    expect: name
-                    toContain: `temp/`
-                -   name: Content
-                    expectToBeDefined: content
-                -   name: Created
-                    expectToBeDefined: created
-                -   name: Modified
-                    expectToBeDefined: modified
-                -   name: Size
-                    expect: size
-                    toBeGreaterThan: 0
+-   name: subscription description
+    type: file-system-watcher
+    timeout: 3000
+    fileNamePattern: temp/fileTest*
+    onMessageReceived:
+        script: now = new Date().getTime();
+        assertions:
+        -   name: Some time has passed
+            expect: now
+            toBeGreaterThanOrEqualTo: message.content
+        -   name: Filename
+            expect: name
+            toContain: `temp/`
+        -   name: Content
+            expectToBeDefined: content
+        -   name: Created
+            expectToBeDefined: created
+        -   name: Modified
+            expectToBeDefined: modified
+        -   name: Size
+            expect: size
+            toBeGreaterThan: 0

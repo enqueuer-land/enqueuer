@@ -9,26 +9,26 @@
             scriptResult: double(20);
     onFinish:
         assertions:
-            -   name: fileRead (yml)
-                expect: requisition.yml.key
-                toBeEqualTo: `I'm persisted in singleRun file`
-            -   name: fileRead (.json)
-                expect: requisition.json.key
-                toBeEqualTo: `value`
-            -   name: fileRead (.csv)
-                expect: requisition.csv[1].title
-                toBeEqualTo: `secondRow`
-            -   name: fileRead (.tsv)
-                expect: requisition.tsv[0].title
-                toBeEqualTo: `virgs`
-            -   name: file not found
-                expect: requisition.fileNotFound
-                toBeEqualTo: `Error: ENOENT: no such file or directory, open 'not/found.file'`
-            -   name: fileRead (.js)
-                expect: store.scriptResult
-                toBeEqualTo: 40
+        -   name: fileRead (yml)
+            expect: requisition.yml.key
+            toBeEqualTo: `I'm persisted in singleRun file`
+        -   name: fileRead (.json)
+            expect: requisition.json.key
+            toBeEqualTo: `value`
+        -   name: fileRead (.csv)
+            expect: requisition.csv[1].title
+            toBeEqualTo: `secondRow`
+        -   name: fileRead (.tsv)
+            expect: requisition.tsv[0].title
+            toBeEqualTo: `virgs`
+        -   name: file not found
+            expect: requisition.fileNotFound
+            toBeEqualTo: `Error: ENOENT: no such file or directory, open 'not/found.file'`
+        -   name: fileRead (.js)
+            expect: store.scriptResult
+            toBeEqualTo: 40
 
 -   onInit:
         assertions:
-            -   name: it's not stored
-                expectToBeUndefined: requisition.yml
+        -   name: it's not stored
+            expectToBeUndefined: requisition.yml

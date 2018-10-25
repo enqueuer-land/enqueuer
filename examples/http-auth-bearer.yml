@@ -1,19 +1,19 @@
 timeout: 3000
 publishers:
-    -   type: http
-        url: http://localhost:23067/bearer
-        method: POST
-        payload: Rech
-        headers:
-            content-type: application/json
-        authentication:
-            bearer:
-                token: bearerToken
-        onMessageReceived:
-            assertions:
-                -   name: Body
-                    expect: body
-                    toBeEqualTo: `responsePayload`
+-   type: http
+    url: http://localhost:23067/bearer
+    method: POST
+    payload: Rech
+    headers:
+        content-type: application/json
+    authentication:
+        bearer:
+            token: bearerToken
+    onMessageReceived:
+        assertions:
+        -   name: Body
+            expect: body
+            toBeEqualTo: `responsePayload`
 subscriptions:
 -   type: http
     endpoint: /bearer
@@ -24,10 +24,10 @@ subscriptions:
         bearer:
             token: bearerToken
     response:
-            status: 321
-            payload: responsePayload
+        status: 321
+        payload: responsePayload
     onMessageReceived:
         assertions:
-            -   name: Payload
-                expect: message.body
-                toBeEqualTo: `Rech`
+        -   name: Payload
+            expect: message.body
+            toBeEqualTo: `Rech`

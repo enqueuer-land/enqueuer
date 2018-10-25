@@ -95,11 +95,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/raw-socket-stream-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./publishers/sqs-publisher');
 } catch (err) {
   /* do nothing*/
@@ -111,6 +106,11 @@ try {
 }
 try {
   require('./publishers/stomp-publisher');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./publishers/stream-publisher');
 } catch (err) {
   /* do nothing*/
 }
@@ -195,11 +195,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./subscriptions/raw-socket-stream-subscription');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./subscriptions/sqs-subscription');
 } catch (err) {
   /* do nothing*/
@@ -211,6 +206,11 @@ try {
 }
 try {
   require('./subscriptions/stomp-subscription');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./subscriptions/stream-subscription');
 } catch (err) {
   /* do nothing*/
 }

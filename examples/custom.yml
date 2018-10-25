@@ -1,23 +1,23 @@
 publishers:
-    -   type: custom
-        module: ../../misc/custom-protocol
-        address: localhost
-        port: 61613
-        user: guest
-        password: guest
-        queue: custom.queue
-        payload: customQueuePayload
+-   type: custom
+    module: ../../misc/custom-protocol
+    address: localhost
+    port: 61613
+    user: guest
+    password: guest
+    queue: custom.queue
+    payload: customQueuePayload
 subscriptions:
-    -   type: custom
-        module: ../../misc/custom-protocol
-        timeout: 10000
-        address: localhost
-        port: 61613
-        user: guest
-        password: guest
-        queue: custom.queue
-        onMessageReceived:
-            assertions:
-            -   name: Payload
-                expect: payload
-                toBeEqualTo: subscription.parent.publishers[0].payload
+-   type: custom
+    module: ../../misc/custom-protocol
+    timeout: 10000
+    address: localhost
+    port: 61613
+    user: guest
+    password: guest
+    queue: custom.queue
+    onMessageReceived:
+        assertions:
+        -   name: Payload
+            expect: payload
+            toBeEqualTo: subscription.parent.publishers[0].payload

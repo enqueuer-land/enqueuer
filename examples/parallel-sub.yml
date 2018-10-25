@@ -1,11 +1,11 @@
 timeout: 3000
 subscriptions:
-    -   type: tcp-server
-        name: subscription description
-        port: 23081
-        response: anyValue
-        onMessageReceived:
-            assertions:
-                -   name: Paralleling
-                    expect: payload
-                    toBeEqualTo: `anything`
+-   type: tcp-server
+    name: subscription description
+    port: 23081
+    response: anyValue
+    onMessageReceived:
+        assertions:
+        -   name: Paralleling
+            expect: payload
+            toBeEqualTo: `anything`
