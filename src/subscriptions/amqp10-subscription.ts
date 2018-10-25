@@ -1,8 +1,8 @@
 import {Subscription} from './subscription';
 import {Injectable} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {StringRandomCreator} from '../strings/string-random-creator';
 import {Protocol} from '../protocols/protocol';
+
 const container = require('rhea');
 
 const protocol = new Protocol('amqp1')
@@ -15,26 +15,40 @@ export class Amqp10Subscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.queueName = subscriptionAttributes.queueName || new StringRandomCreator().create(8);
     }
 
     public receiveMessage(): Promise<any> {
-        return new Promise((resolve) => {
-            container.on('message', (context: any) => {
+        return new Promise((resolve, reject) => {
+            container.once('message', (context: any) => {
                 resolve(context.message);
                 context.connection.close();
             });
+            container.once('error', reject);
         });
     }
 
     public subscribe(): Promise<void> {
-        return new Promise((resolve) => {
-            container.on('connection_open', (context: any) => {
-                context.connection.open_receiver(this.routingKey);
+        return new Promise((resolve, reject) => {
+            if (this.server === true) {
+                const server = container.listen(this.connection);
+                server.once('listening', resolve);
+                server.once('connection', server.close);
+                server.once('error', (err: any) => reject(err.error));
+            } else {
+                container.connect(this.connection);
+            }
+            this.registerFailures(reject);
+            container.once('connection_open', (context: any) => {
+                context.connection.open_receiver(this.options);
                 resolve();
             });
-            container.connect(this.options);
         });
     }
 
+    private registerFailures(reject: any) {
+        container.once('connection_close', (err: any) => reject(err.error));
+        container.once('connection_error', (err: any) => reject(err.error));
+        container.once('error', (err: any) => reject(err.error));
+        container.once('receiver_close', (err: any) => reject(err.error));
+    }
 }

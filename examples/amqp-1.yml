@@ -1,19 +1,62 @@
-publishers:
--   type: amqp-1
-    payload:
-        body: let your imagination fly
-    options:
-        host: localhost
-        port: 5672
-    routingKey: amqp10RK
-subscriptions:
--   type: amqp-1
-    options:
-        host: localhost
-        port: 5672
-    routingKey: amqp10RK
-    onMessageReceived:
-        assertions:
-        -   expect: body
-            toBeEqualTo: subscription.parent.publishers[0].payload.body
+-   name: broker subscription
+    publishers:
+    -   type: amqp-1
+        options:
+            target: subscriptionName
+        payload:
+            body: let your imagination fly
+        connection:
+            host: localhost
+            port: 5672
+        onMessageReceived:
+            assertions:
+            -   expectToBeDefined: id
+            -   expectToBeDefined: tag
+            -   expectToBeDefined: link
+            -   expectToBeDefined: data
+            -   expectToBeDefined: format
+            -   expectToBeDefined: sent
+            -   expectToBeDefined: settled
+            -   expectToBeDefined: remote_settled
+    subscriptions:
+    -   type: amqp-1
+        connection:
+            host: localhost
+            port: 5672
+        options:
+            source: subscriptionName
+        onMessageReceived:
+            assertions:
+            -   expect: body
+                toBeEqualTo: subscription.parent.publishers[0].payload.body
+            -   expectToBeDefined: durable
+            -   expectToBeDefined: first_acquirer
+-   name: server subscription
+    publishers:
+    -   type: amqp-1
+        payload:
+            body: direct hello world
+        connection:
+            port: 23074
+        options: queueWannaBe
+        onMessageReceived:
+            assertions:
+            -   expectToBeDefined: id
+            -   expectToBeDefined: tag
+            -   expectToBeDefined: link
+            -   expectToBeDefined: data
+            -   expectToBeDefined: format
+            -   expectToBeDefined: sent
+            -   expectToBeDefined: settled
+            -   expectToBeDefined: remote_settled
+    subscriptions:
+    -   type: amqp-1
+        server: true
+        connection:
+            port: 23074
+        options: queueWannaBe
+        onMessageReceived:
+            assertions:
+            -   expect: body
+                toBeEqualTo: subscription.parent.publishers[0].payload.body
 
