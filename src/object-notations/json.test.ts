@@ -1,5 +1,8 @@
 import {Json} from "./json";
 import * as fs from "fs";
+import {Injectable} from "conditional-injector";
+jest.mock('conditional-injector');
+Injectable.mockImplementation();
 
 jest.mock("fs");
 fs.readFileSync.mockImplementation(() => Buffer.from('{\n' +
@@ -10,6 +13,17 @@ fs.readFileSync.mockImplementation(() => Buffer.from('{\n' +
 
 
 describe('Json', () => {
+
+    it('should inject properly', () => {
+        expect(Injectable).toBeCalled();
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
+        const injectableOption = mockCalls[0][0];
+        expect(injectableOption.predicate('json')).toBeTruthy();
+        expect(injectableOption.predicate('JsOn')).toBeTruthy();
+        expect(injectableOption.predicate('notJson')).toBeFalsy();
+        Injectable.mockClear();
+    });
 
     test('should stringify', () => {
         const value = {firstLevel: {secondLevel: 'value'}};

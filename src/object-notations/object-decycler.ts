@@ -1,6 +1,6 @@
 export class ObjectDecycler {
+    private readonly circularReplacer?: string;
     private cache = new Map();
-    private circularReplacer?: string;
 
     public constructor(circularReplacer?: string) {
         this.circularReplacer = circularReplacer;

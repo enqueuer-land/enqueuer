@@ -1,49 +1,53 @@
 import {FileContentMapCreator} from "./file-content-map-creator";
-import {Json} from "../object-notations/json";
-import {Yaml} from "../object-notations/yaml";
 import * as fs from 'fs';
-import {Csv} from "../object-notations/csv";
+import {Container} from "conditional-injector";
 
-jest.mock('../object-notations/json');
-jest.mock('../object-notations/yaml');
-jest.mock('../object-notations/csv');
+jest.mock('conditional-injector');
 jest.mock('fs');
 describe('FileContentMapCreator', () => {
 
-    it('Handle file not found', () => {
-        const loadFromFileSyncMock = jest.fn(() => {throw 'err'});
-        Json.mockImplementationOnce(() => {
+    it('Handle exceptions', () => {
+        const loadFromFileSyncMock = jest.fn(() => {
+            throw 'err';
+        });
+        Container.subclassesOf.mockImplementationOnce(() => {
             return {
-                loadFromFileSync: loadFromFileSyncMock
+                create: () => {
+                    return {
+                        loadFromFileSync: loadFromFileSyncMock
+                    }
+                }
             }
         });
-
-        const tag = 'json';
-        const filename = 'examples/file-content.json';
+        const tag = 'any';
+        const filename = 'examples/file-content.any';
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
-
 
         const fileMap = new FileContentMapCreator();
         fileMap.createMap(requisition);
 
-        const expected = {};
+        const expected: any = {};
         expected[replaceableKey] = 'err';
         expect(fileMap.getMap()).toEqual(expected);
         expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
     });
 
-    it('Load json tag', () => {
+    it('Load tag', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
-        Json.mockImplementationOnce(() => {
+        Container.subclassesOf.mockImplementationOnce(() => {
             return {
-                loadFromFileSync: loadFromFileSyncMock
+                create: () => {
+                    return {
+                        loadFromFileSync: loadFromFileSyncMock
+                    }
+                }
             }
         });
 
-        const tag = 'json';
-        const filename = 'examples/file-content.json';
+        const tag = 'tag';
+        const filename = 'examples/file-content.tag';
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
@@ -51,114 +55,23 @@ describe('FileContentMapCreator', () => {
         const fileMap = new FileContentMapCreator();
         fileMap.createMap(requisition);
 
-        const expected = {};
+        const expected: any = {};
         expected[replaceableKey] = fileContent;
         expect(fileMap.getMap()).toEqual(expected);
         expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
-    });
-
-    it('Load yaml tag', () => {
-        const fileContent = 'fileContent';
-        const loadFromFileSyncMock = jest.fn(() => fileContent);
-        Yaml.mockImplementationOnce(() => {
-            return {
-                loadFromFileSync: loadFromFileSyncMock
-            }
-        });
-
-        const tag = 'yaml';
-        const filename = 'examples/file-content.yaml';
-        const replaceableKey = tag + '://' + filename;
-        const requisition = {value: '<<' + replaceableKey + '>>'};
-
-
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
-
-        const expected = {};
-        expected[replaceableKey] = fileContent;
-        expect(fileMap.getMap()).toEqual(expected);
-        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
-    });
-
-    it('Load yml tag', () => {
-        const fileContent = 'fileContent';
-        const loadFromFileSyncMock = jest.fn(() => fileContent);
-        Yaml.mockImplementationOnce(() => {
-            return {
-                loadFromFileSync: loadFromFileSyncMock
-            }
-        });
-
-        const tag = 'yml';
-        const filename = 'examples/file-content.yml';
-        const replaceableKey = tag + '://' + filename;
-        const requisition = {value: '<<' + replaceableKey + '>>'};
-
-
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
-
-        const expected = {};
-        expected[replaceableKey] = fileContent;
-        expect(fileMap.getMap()).toEqual(expected);
-        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
-    });
-
-    it('Load csv tag', () => {
-        const fileContent = 'fileContent';
-        const loadFromFileSyncMock = jest.fn(() => fileContent);
-        Csv.mockImplementationOnce(() => {
-            return {
-                loadFromFileSync: loadFromFileSyncMock
-            }
-        });
-
-        const tag = 'csv';
-        const filename = 'examples/file-content.yml';
-        const replaceableKey = tag + '://' + filename;
-        const requisition = {value: '<<' + replaceableKey + '>>'};
-
-
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
-
-        const expected = {};
-        expected[replaceableKey] = fileContent;
-        expect(fileMap.getMap()).toEqual(expected);
-        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
-    });
-
-    it('Load tsv tag', () => {
-        const fileContent = 'fileContent';
-        const loadFromFileSyncMock = jest.fn(() => fileContent);
-        const delimiterConstructor = jest.fn(() => {
-            return {
-                loadFromFileSync: loadFromFileSyncMock
-            }
-        });
-        Csv.mockImplementationOnce(delimiterConstructor);
-
-        const tag = 'tsv';
-        const filename = 'examples/file-content.yml';
-        const replaceableKey = tag + '://' + filename;
-        const requisition = {value: '<<' + replaceableKey + '>>'};
-
-
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
-
-        const expected = {};
-        expected[replaceableKey] = fileContent;
-        expect(fileMap.getMap()).toEqual(expected);
-        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
-        expect(delimiterConstructor).toHaveBeenCalledWith('\t');
     });
 
     it('Load unknown tag as file', () => {
         const fileContent = 'fileContent';
         const readFileSync = jest.fn(() => Buffer.from(fileContent));
         fs.readFileSync.mockImplementationOnce(readFileSync);
+        Container.subclassesOf.mockImplementationOnce(() => {
+            return {
+                create: () => {
+                    loadFromFileSync: () => {}
+                }
+            }
+        });
 
         const tag = 'unknown';
         const filename = 'examples/file-content.unknown';
@@ -169,7 +82,7 @@ describe('FileContentMapCreator', () => {
         const fileMap = new FileContentMapCreator();
         fileMap.createMap(requisition);
 
-        const expected = {};
+        const expected: any = {};
         expected[replaceableKey] = fileContent;
         expect(fileMap.getMap()).toEqual(expected);
         expect(readFileSync).toHaveBeenCalledWith(filename);
@@ -178,14 +91,18 @@ describe('FileContentMapCreator', () => {
     it('Load each key just once', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
-        Yaml.mockImplementationOnce(() => {
+        Container.subclassesOf.mockImplementationOnce(() => {
             return {
-                loadFromFileSync: loadFromFileSyncMock
+                create: () => {
+                    return {
+                        loadFromFileSync: loadFromFileSyncMock
+                    }
+                }
             }
         });
 
         const tag = 'yaml';
-        const filename = 'examples/file-content.yaml';
+        const filename = 'examples/file-content';
         const replaceableKey = tag + '://' + filename;
         const requisition = {
             value: '<<' + replaceableKey + '>>',
@@ -193,11 +110,10 @@ describe('FileContentMapCreator', () => {
             third: '<<' + replaceableKey + '>>',
         };
 
-
         const fileMap = new FileContentMapCreator();
         fileMap.createMap(requisition);
 
-        const expected = {};
+        const expected: any = {};
         expected[replaceableKey] = fileContent;
         expect(fileMap.getMap()).toEqual(expected);
         expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
@@ -212,7 +128,7 @@ describe('FileContentMapCreator', () => {
         const fileMap = new FileContentMapCreator();
         fileMap.createMap(requisition);
 
-        const expected = {};
+        const expected: any = {};
         expect(fileMap.getMap()).toEqual(expected);
     });
 

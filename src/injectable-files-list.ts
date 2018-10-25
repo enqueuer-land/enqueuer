@@ -20,6 +20,21 @@ try {
   /* do nothing*/
 }
 try {
+  require('./object-notations/csv');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./object-notations/json');
+} catch (err) {
+  /* do nothing*/
+}
+try {
+  require('./object-notations/yaml');
+} catch (err) {
+  /* do nothing*/
+}
+try {
   require('./outputs/formatters/console-formatter');
 } catch (err) {
   /* do nothing*/

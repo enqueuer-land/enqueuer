@@ -17,17 +17,21 @@ export class Configuration {
         const fileNameHasChanged = configFileName != Configuration.configFileName;
 
         if (isNotLoadedYet) {
-            const daemonTypes = CommandLineConfiguration.getDaemonTypes();
-            if (daemonTypes.length > 0) {
-                Configuration.instance = Configuration.createDefaultDaemon(daemonTypes);
-            } else {
-                Configuration.instance = Configuration.createDefaultSingleRun();
-            }
+            Configuration.instance = this.initialLoad();
         }
         if (configFileName !== undefined && fileNameHasChanged) {
             Configuration.instance = this.readFromFile(configFileName);
         }
         return {...Configuration.instance} as ConfigurationValues;
+    }
+
+    private static initialLoad() {
+        const daemonTypes = CommandLineConfiguration.getDaemonTypes();
+        if (daemonTypes.length > 0) {
+            return Configuration.createDefaultDaemon(daemonTypes);
+        } else {
+            return Configuration.createDefaultSingleRun();
+        }
     }
 
     private static readFromFile(configFileName: string): any {

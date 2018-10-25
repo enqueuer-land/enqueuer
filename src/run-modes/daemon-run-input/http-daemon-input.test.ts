@@ -1,8 +1,6 @@
 import {Injectable} from "conditional-injector";
 import {HttpContainerPool} from "../../pools/http-container-pool";
 import {HttpDaemonInput} from "./http-daemon-input";
-
-
 jest.mock('conditional-injector');
 Injectable.mockImplementation();
 
@@ -38,15 +36,13 @@ describe('HttpDaemonInput', () => {
         };
     });
 
-
     it('should inject correctly', () => {
         const mockCalls = Injectable.mock.calls;
-        expect(mockCalls.length).toBe(1);
-        const injectableOption = mockCalls[0][0];
+        const injectableOption = mockCalls[mockCalls.length - 1][0];
         expect(injectableOption.predicate(daemonInput)).toBeTruthy();
         delete daemonInput.type;
         expect(injectableOption.predicate(daemonInput)).toBeFalsy();
-
+        Injectable.mockClear();
     });
 
     it('should subscribe httpContainer', done => {

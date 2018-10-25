@@ -7,10 +7,10 @@ import {Json} from '../../object-notations/json';
 
 @Injectable({predicate: (daemonInput: any) => daemonInput.type === 'http-server' || daemonInput.type === 'http'})
 export class HttpDaemonInput extends DaemonInput {
-    private port: number;
+    private readonly port: number;
+    private readonly type: string;
     private endpoint: string;
     private method: string;
-    private type: string;
 
     public constructor(daemonInput: any) {
         super();

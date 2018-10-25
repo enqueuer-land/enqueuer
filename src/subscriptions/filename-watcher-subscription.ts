@@ -18,7 +18,6 @@ export class FileSystemWatcherSubscription extends Subscription {
         if (!this.fileNamePattern) {
             throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' field`);
         }
-
     }
 
     public subscribe(): Promise<void> {
@@ -46,13 +45,12 @@ export class FileSystemWatcherSubscription extends Subscription {
 
     private extractFileInformation(filename: string) {
         const stat = fs.lstatSync(filename);
-        const message = {
+        return {
             content: fs.readFileSync(filename).toString(),
             name: filename,
             size: stat.size,
             modified: stat.mtime,
             created: stat.ctime
         };
-        return message;
     }
 }

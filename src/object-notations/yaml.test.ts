@@ -1,6 +1,22 @@
 import {Yaml} from "./yaml";
+import {Injectable} from "conditional-injector";
+jest.mock('conditional-injector');
+Injectable.mockImplementation();
 
 describe('Yaml', () => {
+
+    it('should inject properly', () => {
+        expect(Injectable).toBeCalled();
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
+        const injectableOption = mockCalls[0][0];
+        expect(injectableOption.predicate('YML')).toBeTruthy();
+        expect(injectableOption.predicate('YaML')).toBeTruthy();
+        expect(injectableOption.predicate('yMl')).toBeTruthy();
+        expect(injectableOption.predicate('yAMl')).toBeTruthy();
+        expect(injectableOption.predicate('notYml')).toBeFalsy();
+        Injectable.mockClear();
+    });
 
     test('should stringify', () => {
         const value = {firstLevel: {secondLevel: 'value'}};

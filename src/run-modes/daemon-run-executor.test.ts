@@ -36,8 +36,7 @@ describe('DaemonRunExecutor', () => {
     it('should inject properly', () => {
         Injectable.mockImplementation();
         const mockCalls = Injectable.mock.calls;
-        expect(mockCalls.length).toBe(1);
-        const injectableOption = mockCalls[0][0];
+        const injectableOption = mockCalls[mockCalls.length - 1][0];
         expect(injectableOption.predicate(daemonConfiguration)).toBeTruthy();
         delete daemonConfiguration.daemon;
         expect(injectableOption.predicate(daemonConfiguration)).toBeFalsy();

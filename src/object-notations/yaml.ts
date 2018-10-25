@@ -1,8 +1,10 @@
 import {ObjectNotation} from './object-notation';
 import * as yaml from 'yamljs';
 import {ObjectDecycler} from './object-decycler';
+import {Injectable} from 'conditional-injector';
 
-export class Yaml implements ObjectNotation {
+@Injectable({predicate: (type: string) => type.toLowerCase() === 'yml' || type.toLowerCase() === 'yaml'})
+export class Yaml extends ObjectNotation {
     public parse(value: string): object {
         return yaml.parse(value);
     }

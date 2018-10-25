@@ -1,8 +1,10 @@
 import {ObjectNotation} from './object-notation';
 import * as fs from 'fs';
 import {ObjectDecycler} from './object-decycler';
+import {Injectable} from 'conditional-injector';
 
-export class Json implements ObjectNotation {
+@Injectable({predicate: (type: string) => typeof type === 'string' && type.toLowerCase() === 'json'})
+export class Json extends ObjectNotation {
 
     public parse(value: string): object {
         return JSON.parse(value);

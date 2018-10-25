@@ -1,8 +1,7 @@
-import {Json} from '../object-notations/json';
-import {Yaml} from '../object-notations/yaml';
-import {Csv} from '../object-notations/csv';
 import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
+import {Container} from 'conditional-injector';
+import {ObjectNotation} from '../object-notations/object-notation';
 
 export class FileContentMapCreator {
 
@@ -40,16 +39,15 @@ export class FileContentMapCreator {
     private insertIntoMap(key: string) {
         try {
             if (!this.map[key]) {
-                const separator = key.indexOf('://');
-                const tag = key.substring(0, separator);
-                const filename = key.substring(separator + 3);
-                switch (tag) {
-                    case 'json': this.map[key] = new Json().loadFromFileSync(filename); break;
-                    case 'yml': this.map[key] = new Yaml().loadFromFileSync(filename); break;
-                    case 'yaml': this.map[key] = new Yaml().loadFromFileSync(filename); break;
-                    case 'csv': this.map[key] = new Csv().loadFromFileSync(filename); break;
-                    case 'tsv': this.map[key] = new Csv('\t').loadFromFileSync(filename); break;
-                    default: this.map[key] = fs.readFileSync(filename).toString();
+                const separator: string = '://';
+                const separatorIndex = key.indexOf(separator);
+                const tag = key.substring(0, separatorIndex);
+                const filename = key.substring(separatorIndex + 3);
+                const objectNotation = Container.subclassesOf(ObjectNotation).create(tag);
+                if (objectNotation) {
+                    this.map[key] = objectNotation.loadFromFileSync(filename);
+                } else {
+                    this.map[key] = fs.readFileSync(filename).toString();
                 }
             }
         } catch (err) {

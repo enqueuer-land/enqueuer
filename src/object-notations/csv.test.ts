@@ -1,8 +1,23 @@
 import {Csv} from "./csv";
 import * as fs from "fs";
+import {Injectable} from "conditional-injector";
+jest.mock('conditional-injector');
+Injectable.mockImplementation();
 
 jest.mock("fs");
 describe('Csv', () => {
+    it('should inject properly', () => {
+        expect(Injectable).toBeCalled();
+        const mockCalls = Injectable.mock.calls;
+        expect(mockCalls.length).toBe(1);
+        const injectableOption = mockCalls[0][0];
+        expect(injectableOption.predicate('csv')).toBeTruthy();
+        expect(injectableOption.predicate('CsV')).toBeTruthy();
+        expect(injectableOption.predicate('tSv')).toBeTruthy();
+        expect(injectableOption.predicate('TSv')).toBeTruthy();
+        expect(injectableOption.predicate('notCsv')).toBeFalsy();
+        Injectable.mockClear();
+    });
 
     test('should stringify undefined objects', () => {
         const stringified = new Csv().stringify(undefined);
@@ -35,31 +50,19 @@ describe('Csv', () => {
         expect(parsed).toEqual(expected)
     });
 
-    test('should parse with given delimiter and no header as default', () => {
-        const value = 'a1.a2.a3\r\n' +
-            'b1.b2.b3';
-        const expected = [
-            ["a1", "a2", "a3"],
-            ["b1", "b2", "b3"]];
-
-        const parsed = new Csv('.', false).parse(value);
-
-        expect(parsed).toEqual(expected)
-    });
-
-    test('should parse with given delimiter and no header as default', () => {
+    test('should parse tsv', () => {
         const value = 'a1\ta2\ta3\r\n' +
             'b1\tb2\tb3';
         const expected = [
             ["a1", "a2", "a3"],
             ["b1", "b2", "b3"]];
 
-        const parsed = new Csv('\t', false).parse(value);
+        const parsed = new Csv('tsv').parse(value);
 
         expect(parsed).toEqual(expected)
     });
 
-    test('should stringify with default header (true) and delimiter (;) value', () => {
+    test('should stringify with default header', () => {
         const value = [
             {"title1": "a1", "title2": "a2", "title3": "a3"},
             {"title1": "b1", "title2": "b2", "title3": "b3"}];
@@ -80,7 +83,7 @@ b1;b2;b3";
         const expected = "0\t1\tfalse\r\n\
 b1\tb2\tb3";
 
-        const parsed = new Csv('\t', false).stringify(value);
+        const parsed = new Csv('tsv').stringify(value);
 
         expect(parsed).toEqual(expected)
     });
@@ -89,8 +92,7 @@ b1\tb2\tb3";
         const value: any = [["00"]];
         value[0][0] = value;
 
-
-        const stringified = new Csv(';', false).stringify(value);
+        const stringified = new Csv('csv').stringify(value);
 
         expect(stringified).toBe("[CYCLIC REFERENCE]");
     });
