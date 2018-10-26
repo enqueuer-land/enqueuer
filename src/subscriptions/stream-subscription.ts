@@ -23,14 +23,10 @@ const ssl = new Protocol('ssl')
     .addAlternativeName('tls')
     .registerAsSubscription();
 
-const fileStream = new Protocol('file-stream')
-    .registerAsSubscription();
-
 @Injectable({
     predicate: (subscription: any) => tcp.matches(subscription.type)
         || ssl.matches(subscription.type)
         || uds.matches(subscription.type)
-        || fileStream.matches(subscription.type)
 })
 export class StreamSubscription extends Subscription {
 
@@ -45,7 +41,7 @@ export class StreamSubscription extends Subscription {
     }
 
     public async receiveMessage(): Promise<any> {
-        if (this.loadStream || fileStream.matches(this.type)) {
+        if (this.loadStream) {
             return await this.waitForData();
         } else if (ssl.matches(this.type)) {
             await this.sslServerGotConnection;
@@ -142,10 +138,6 @@ export class StreamSubscription extends Subscription {
         } else if (ssl.matches(this.type)) {
             this.createSslConnection();
             return new HandlerListener(this.server).listen(this.port);
-        } else if (fileStream.matches(this.type)) {
-            Logger.debug(`${this.type} creating read stream ${this.path}`);
-            this.stream = fs.createReadStream(this.path, this.options);
-            return Promise.resolve();
         } else {
             this.server = net.createServer();
             return new HandlerListener(this.server).listen(this.path);
@@ -188,7 +180,7 @@ export class StreamSubscription extends Subscription {
             Logger.trace(`${this.type} readableStream is waiting on data`);
             if (this.streamTimeout) {
                 new Timeout(() => {
-                    Logger.trace(`'Stream timeout' emitted`);
+                    Logger.trace(`Readable 'stream timeout' emitted`);
                     this.onEnd(message, resolve, reject);
                 }).start(this.streamTimeout);
             } else {
@@ -199,7 +191,6 @@ export class StreamSubscription extends Subscription {
             }
             this.stream.on('data', (msg: any) => {
                 this.onData(msg, message, resolve);
-                this.stream.read(0);
             });
         });
     }

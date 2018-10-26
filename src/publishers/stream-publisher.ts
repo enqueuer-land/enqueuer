@@ -22,12 +22,8 @@ const ssl = new Protocol('ssl')
     .addAlternativeName('tls')
     .registerAsPublisher();
 
-const fileStream = new Protocol('file-stream')
-    .registerAsPublisher();
-
 @Injectable({predicate: (publish: any) => tcp.matches(publish.type)
         || uds.matches(publish.type)
-        || fileStream.matches(publish.type)
         || ssl.matches(publish.type)})
 export class StreamPublisher extends Publisher {
 
@@ -69,7 +65,7 @@ export class StreamPublisher extends Publisher {
         Logger.info(`${this.type} client trying to connect`);
         this.createStream()
             .then((stream: any) => {
-                Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port}`);
+                Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port || this.path}`);
                 this.publishData(stream, resolve, reject);
             }).catch(err => {
                 reject(err);
@@ -82,8 +78,6 @@ export class StreamPublisher extends Publisher {
                 this.createTcpStream(resolve, reject);
             } else if (ssl.matches(this.type)) {
                 this.createSslStream(resolve, reject);
-            } else if (fileStream.matches(this.type)) {
-                this.createFileStream(resolve, reject);
             } else {
                 resolve(net.createConnection(this.path));
             }
@@ -96,15 +90,6 @@ export class StreamPublisher extends Publisher {
             Logger.error(`${this.type} client error: ${error}`);
             reject(error);
         });
-    }
-
-    private createFileStream(resolve: any, reject: any): void {
-        const stream: any = fs.createWriteStream(this.path, this.options);
-        stream.on('error', (error: any) => {
-            Logger.error(`${this.type} client error: ${error}`);
-            reject(error);
-        });
-        resolve(stream);
     }
 
     private createTcpStream(resolve: any, reject: any): void {
@@ -133,12 +118,7 @@ export class StreamPublisher extends Publisher {
         });
     }
 
-    private registerEvents(stream: any, resolve: (value?: (PromiseLike<any> | any)) => void) {
-        // if (!stream.read) {
-        //     Logger.debug(`${this.type} is not a readable stream`);
-        //     this.finalize(stream);
-        //     resolve();
-        // }
+    private registerEvents(stream: any, resolve: any) {
         new Timeout(() => {
             this.finalize(stream);
             Logger.debug(`${this.type} client timed out`);
@@ -165,7 +145,12 @@ export class StreamPublisher extends Publisher {
 
     private finalize(stream: any) {
         if (!this.saveStream) {
+            Logger.trace(`Ending writable stream`);
             stream.end();
+        }
+        if (stream.close) {
+            Logger.trace(`Closing writable stream`);
+            stream.close();
         }
     }
 
