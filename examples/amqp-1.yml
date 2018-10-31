@@ -1,36 +1,3 @@
--   name: broker subscription
-    publishers:
-    -   type: amqp-1
-        options:
-            target: subscriptionName
-        payload:
-            body: let your imagination fly
-        connection:
-            host: localhost
-            port: 5672
-        onMessageReceived:
-            assertions:
-            -   expectToBeDefined: id
-            -   expectToBeDefined: tag
-            -   expectToBeDefined: link
-            -   expectToBeDefined: data
-            -   expectToBeDefined: format
-            -   expectToBeDefined: sent
-            -   expectToBeDefined: settled
-            -   expectToBeDefined: remote_settled
-    subscriptions:
-    -   type: amqp-1
-        connection:
-            host: localhost
-            port: 5672
-        options:
-            source: subscriptionName
-        onMessageReceived:
-            assertions:
-            -   expect: body
-                toBeEqualTo: subscription.parent.publishers[0].payload.body
-            -   expectToBeDefined: durable
-            -   expectToBeDefined: first_acquirer
 -   name: server subscription
     publishers:
     -   type: amqp-1
@@ -59,4 +26,36 @@
             assertions:
             -   expect: body
                 toBeEqualTo: subscription.parent.publishers[0].payload.body
-
+-   name: broker subscription
+    publishers:
+    -   type: amqp-1
+        options:
+            target: /queue/Q
+        payload:
+            body: let your imagination fly
+        connection:
+            host: localhost
+            port: 5672
+        onMessageReceived:
+            assertions:
+            -   expectToBeDefined: id
+            -   expectToBeDefined: tag
+            -   expectToBeDefined: link
+            -   expectToBeDefined: data
+            -   expectToBeDefined: format
+            -   expectToBeDefined: sent
+            -   expectToBeDefined: settled
+            -   expectToBeDefined: remote_settled
+    subscriptions:
+    -   type: amqp-1
+        connection:
+            host: localhost
+            port: 5672
+        options:
+            source: /queue/Q
+        onMessageReceived:
+            assertions:
+            -   expect: body
+                toBeEqualTo: subscription.parent.publishers[0].payload.body
+            -   expectToBeDefined: durable
+            -   expectToBeDefined: first_acquirer
