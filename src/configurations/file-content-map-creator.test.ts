@@ -24,8 +24,7 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
+        const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
         expected[replaceableKey] = 'err';
@@ -52,8 +51,7 @@ describe('FileContentMapCreator', () => {
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
 
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
+        const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
         expected[replaceableKey] = fileContent;
@@ -79,8 +77,7 @@ describe('FileContentMapCreator', () => {
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
 
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
+        const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
         expected[replaceableKey] = fileContent;
@@ -110,8 +107,7 @@ describe('FileContentMapCreator', () => {
             third: '<<' + replaceableKey + '>>',
         };
 
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
+        const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
         expected[replaceableKey] = fileContent;
@@ -125,8 +121,7 @@ describe('FileContentMapCreator', () => {
             key: '((I am not a file))',
         };
 
-        const fileMap = new FileContentMapCreator();
-        fileMap.createMap(requisition);
+        const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
         expect(fileMap.getMap()).toEqual(expected);

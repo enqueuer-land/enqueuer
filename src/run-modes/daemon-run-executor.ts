@@ -76,8 +76,7 @@ export class DaemonRunExecutor extends EnqueuerExecutor {
     }
 
     private async runRequisition(requisitionModels: RequisitionModel[], message: DaemonInputRequisition) {
-        const parent: RequisitionModel = {name: message.type, requisitions: requisitionModels, subscriptions: [], publishers: []};
-        return new MultiRequisitionRunner(requisitionModels, message.type, parent).run()
+        return new MultiRequisitionRunner(requisitionModels, message.type).run()
             .then((report: output.RequisitionModel) => message.output = report)
             .then(() => this.registerTest(message))
             .then(() => this.sendResponse(message));

@@ -129,8 +129,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return new Promise((resolve) => {
             const requisitions: input.RequisitionModel[] | undefined = this.parseFile(filename);
             if (requisitions) {
-                const parent = this.createParent(filename, requisitions);
-                new MultiRequisitionRunner(requisitions, filename, parent)
+                new MultiRequisitionRunner(requisitions, filename)
                     .run()
                     .then(report => {
                         this.addRequisitionReport(report);
@@ -144,15 +143,6 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 resolve();
             }
         });
-    }
-
-    private createParent(filename: string, requisitions: input.RequisitionModel[]) {
-        return {
-            name: filename,
-            requisitions: requisitions,
-            subscriptions: [],
-            publishers: []
-        };
     }
 
     private parseFile(fileName: string): input.RequisitionModel[] | undefined {

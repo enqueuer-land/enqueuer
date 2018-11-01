@@ -19,10 +19,10 @@ export class RequisitionRunner {
     public constructor(requisition: input.RequisitionModel, parent: input.RequisitionModel) {
         this.parent = parent;
         this.name = requisition.name;
-        Logger.debug(`Initializing requisition '${requisition.name}'`);
+        Logger.info(`Initializing requisition '${requisition.name}'`);
         const items = new RequisitionMultiplier(requisition).multiply();
         if (items.length <= 0) {
-            Logger.debug(`No result requisition after iterations evaluation: ${requisition.iterations}`);
+            Logger.info(`No result requisition after iterations evaluation: ${requisition.iterations}`);
         } else {
             this.requisitions = items;
         }
@@ -61,6 +61,7 @@ export class RequisitionRunner {
         if (iteratorReport.requisitions) {
             iteratorReport.requisitions.push(report);
         }
+        iteratorReport.valid = iteratorReport.valid && report.valid;
     }
 
     private adjustIteratorReportTimeValues(iteratorReport: output.RequisitionModel) {
@@ -84,28 +85,35 @@ export class RequisitionRunner {
     private async checkInnerRequisitions(parent: input.RequisitionModel): Promise<output.RequisitionModel[]> {
         if (parent.requisitions && parent.requisitions.length > 0) {
             Logger.info(`Handling inner ${parent.name} requisitions`);
-            return await Promise.all(parent.requisitions.map(requisition => new RequisitionRunner(requisition, parent).run()));
+            return await Promise.all(parent.requisitions.map((requisition, index) => {
+                requisition.name = requisition.name || `${parent.name} - inner [${index}]`;
+                return new RequisitionRunner(requisition, parent).run();
+            }));
         } else {
             return [];
         }
     }
 
     private startRequisition(requisition: input.RequisitionModel): Promise<output.RequisitionModel> {
-        const placeHolderReplacer = new JsonPlaceholderReplacer();
-        const fileMapCreator = new FileContentMapCreator();
-        fileMapCreator.createMap(requisition);
-        let requisitionModel = placeHolderReplacer
+        if (requisition === undefined) {
+            Logger.info(`No requisition to run. Skipping`);
+            return Promise.resolve(RequisitionDefaultReports.createSkippedReport(this.name));
+        }
+        Logger.debug(`Evaluating starting of requisition '${requisition ? requisition.name : 'no requisition'}'`);
+        const fileMapCreator = new FileContentMapCreator(requisition);
+        let mapReplacedRequisition: any = new JsonPlaceholderReplacer()
             .addVariableMap(fileMapCreator.getMap())
             .replace(requisition) as input.RequisitionModel;
-        requisitionModel = placeHolderReplacer
+        mapReplacedRequisition = new JsonPlaceholderReplacer()
             .addVariableMap(Store.getData())
-            .replace(requisitionModel) as input.RequisitionModel;
-        if (this.shouldSkipRequisition(requisition, requisitionModel)) {
+            .replace(mapReplacedRequisition) as input.RequisitionModel;
+        if (this.shouldSkipRequisition(mapReplacedRequisition)) {
             Logger.info(`Requisition will be skipped`);
             return Promise.resolve(RequisitionDefaultReports.createSkippedReport(this.name));
         }
-        requisition.parent = this.parent;
-        return this.startRequisitionReporter(requisitionModel);
+        mapReplacedRequisition.parent = this.parent;
+        Logger.trace(`Requisition runner starting requisition reporter for '${mapReplacedRequisition.name}'`);
+        return this.startRequisitionReporter(mapReplacedRequisition);
     }
 
     private startRequisitionReporter(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
@@ -126,12 +134,13 @@ export class RequisitionRunner {
         });
     }
 
-    private shouldSkipRequisition(requisition: input.RequisitionModel, requisitionModel: input.RequisitionModel) {
-        if (!requisitionModel || !requisition) {
+    private shouldSkipRequisition(requisition: input.RequisitionModel) {
+        Logger.trace(`Requisition runner evaluating skipping of '${requisition.name}'`);
+        if (!requisition) {
             return true;
         }
-        const definedButLessThanZero = (requisitionModel.iterations !== undefined && requisitionModel.iterations <= 0);
-        const definedButInvalid = requisitionModel.iterations !== undefined && typeof(requisitionModel.iterations) != 'number';
+        const definedButLessThanZero = (requisition.iterations !== undefined && requisition.iterations <= 0);
+        const definedButInvalid = requisition.iterations !== undefined && typeof(requisition.iterations) != 'number';
         return definedButInvalid || definedButLessThanZero;
     }
 

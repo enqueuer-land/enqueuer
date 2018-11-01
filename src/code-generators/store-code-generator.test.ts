@@ -1,5 +1,5 @@
 import {StoreCodeGenerator} from './store-code-generator';
-import {Event} from '../events/event';
+import {Event} from '../models/events/event';
 
 const event: Event = {
     store: {

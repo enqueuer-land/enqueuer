@@ -2,12 +2,13 @@ import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
 import {Container} from 'conditional-injector';
 import {ObjectNotation} from '../object-notations/object-notation';
+import {Json} from '../object-notations/json';
 
 export class FileContentMapCreator {
 
     private map: any = {};
 
-    public createMap(value: object) {
+    public constructor(value: object) {
         this.checkChildren(value);
     }
 
@@ -18,15 +19,15 @@ export class FileContentMapCreator {
     private checkChildren(node: any): void {
         for (const key in node) {
             const attribute = node[key];
-            if (typeof attribute == 'object') {
+            if (typeof attribute === 'object') {
                 this.checkChildren(attribute);
             } else {
-                this.replaceValue(attribute.toString());
+                this.findTags(new Json().stringify(attribute));
             }
         }
     }
 
-    private replaceValue(node: string) {
+    private findTags(node: string) {
         const angleBrackets = /<<[\w\s]+:\/\/[^>>]+>>/g;
         const curlyBrackets = /{{[\w\s]+:\/\/[^}}]+}}/g;
         const match = (node.match(angleBrackets) || []).concat(node.match(curlyBrackets) || []);

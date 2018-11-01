@@ -3,39 +3,34 @@ import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {RequisitionRunner} from './requisition-runner';
 import {DateController} from '../timers/date-controller';
+import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 
 //TODO test it
 export class MultiRequisitionRunner {
 
-    private readonly startTime: DateController;
     private readonly parent: input.RequisitionModel;
+    private readonly requisitions: input.RequisitionModel[];
     private report: output.RequisitionModel;
-    private requisitions: input.RequisitionModel[];
 
-    constructor(requisitions: input.RequisitionModel[], name: string, parent: input.RequisitionModel) {
-        this.parent = parent;
+    constructor(requisitions: input.RequisitionModel[], name: string) {
         this.requisitions = this.addDefaultNames(requisitions);
-        this.startTime = new DateController();
-        this.report = {
-            name: name,
-            valid: true,
-            tests: [],
-            requisitions: [],
-            time: {
-                startTime: this.startTime.toString(),
-                endTime: this.startTime.toString(),
-                totalTime: 0
-            }
-        };
+        this.parent = this.createParent(name);
+        this.report = RequisitionDefaultReports.createDefaultReport(name);
     }
 
     public run(): Promise<output.RequisitionModel> {
         Logger.info(`Running requisition: ${this.report.name}`);
-        const promises = this.promisifyRequisitionExecutionCall();
-        return new Promise((resolve, reject) => this.runRequisition(promises, resolve, reject));
+        const promises = this.promisifyRequisitionsExecutionCall();
+        return new Promise((resolve, reject) => this.runRequisitions(promises, resolve, reject));
     }
 
-    private runRequisition(promises: (() => Promise<output.RequisitionModel>)[], resolve: any, reject: any) {
+    private createParent(filename: string) {
+        const parent: any = RequisitionDefaultReports.createDefaultReport(filename);
+        parent.requisitions = this.requisitions;
+        return parent;
+    }
+
+    private runRequisitions(promises: (() => Promise<output.RequisitionModel>)[], resolve: any, reject: any) {
         this.sequentialRunner(promises)
             .then((reports: output.RequisitionModel[]) => {
                 this.appendReports(reports);
@@ -55,23 +50,21 @@ export class MultiRequisitionRunner {
                 this.report.requisitions.push(report);
             }
         });
-        if (this.report.time) {
-            this.adjustTimeReport();
-        }
+        this.adjustTimeReport();
     }
 
     private adjustTimeReport() {
-        const endDate = new DateController();
-        this.report.time = {
-            startTime: this.startTime.toString(),
-            endTime: endDate.toString(),
-            totalTime: endDate.getTime() - this.startTime.getTime()
-        };
+        if (this.report.time) {
+            const endDate = new DateController();
+            const startTimeDate = new DateController(new Date(this.report.time.startTime));
+            this.report.time.endTime = endDate.toString();
+            this.report.time.totalTime = endDate.getTime() - startTimeDate.getTime();
+        }
     }
 
-    private promisifyRequisitionExecutionCall(): (() => Promise<output.RequisitionModel>)[] {
+    private promisifyRequisitionsExecutionCall(): (() => Promise<output.RequisitionModel>)[] {
         return this.requisitions.map((requisition: input.RequisitionModel) => () => {
-            Logger.debug(`Promisifying '${requisition.name}' requisition`);
+            Logger.debug(`Promisifying '${requisition.name}' requisition. Parent '${this.parent.name}'`);
             return new RequisitionRunner(requisition, this.parent).run();
         });
     }

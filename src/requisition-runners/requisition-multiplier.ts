@@ -4,8 +4,8 @@ import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 
 export class RequisitionMultiplier {
-    private requisition: RequisitionModel;
-    private iterations?: number;
+    private readonly requisition: RequisitionModel;
+    private readonly iterations?: number;
 
     public constructor (requisition: RequisitionModel) {
         this.requisition = requisition;

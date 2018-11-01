@@ -5,7 +5,7 @@ import {TestModel} from '../../models/outputs/test-model';
 export class RequisitionDefaultReports {
 
     public static createDefaultReport(name: string, tests: TestModel[] = []): RequisitionModel {
-        const valid = tests.every((test) => test.valid);
+        const valid = tests.length > 0 ? tests.every((test) => test.valid) : true;
         return {
             valid: valid,
             tests: tests,
