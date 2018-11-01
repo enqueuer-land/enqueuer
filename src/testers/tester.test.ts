@@ -211,7 +211,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotDefined.label).toBe(`label`);
         expect(isNotDefined.valid).toBeFalsy();
-        expect(isNotDefined.errorDescription).toEqual(`Expect 'var' to be defined`);
+        expect(isNotDefined.errorDescription).toEqual(`Expect 'var' to be defined and it is: 'undefined'`);
     });
 
     it(`isDefined`, () => {
@@ -234,7 +234,7 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(isNotUndefined.label).toBe(`label`);
         expect(isNotUndefined.valid).toBeFalsy();
-        expect(isNotUndefined.errorDescription).toEqual(`Expect 'value' to be undefined`);
+        expect(isNotUndefined.errorDescription).toEqual(`Expect 'value' to be undefined and it is: 'value'`);
     });
 
     it(`isUndefined`, () => {

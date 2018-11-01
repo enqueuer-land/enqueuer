@@ -71,13 +71,13 @@ export class Tester {
     public expectToBeDefined(label: string, defined: any, fieldName: string): void {
         this.addTestModel(label,
             defined !== undefined,
-            `Expect '${fieldName}' to be defined`);
+            `Expect '${fieldName}' to be defined and it is: '${defined}'`);
     }
 
     public expectToBeUndefined(label: string, defined: any, fieldName: string): void {
         this.addTestModel(label,
             defined === undefined,
-            `Expect '${fieldName}' to be undefined`);
+            `Expect '${fieldName}' to be undefined and it is: '${defined}'`);
     }
 
 }
