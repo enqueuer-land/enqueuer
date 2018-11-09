@@ -6,13 +6,13 @@
     {
       "valid": true,
       "tests": [],
-      "name": "examples/http.yml",
+      "name": "examples/http-auth-basic.yml",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2018-11-01T20:20:04.009Z",
-        "endTime": "2018-11-01T20:20:06.349Z",
-        "totalTime": 2340
+        "startTime": "2018-11-09T15:50:21.259Z",
+        "endTime": "2018-11-09T15:50:21.298Z",
+        "totalTime": 39
       },
       "requisitions": [
         {
@@ -28,27 +28,32 @@
           "subscriptions": [
             {
               "name": "Subscription #0",
-              "type": "http",
+              "type": "http-server",
               "tests": [
+                {
+                  "name": "\"Basic\" authentication prefix",
+                  "valid": true,
+                  "description": "Prefix \"Basic\" was found"
+                },
+                {
+                  "name": "\"Basic\" authentication user",
+                  "valid": true,
+                  "description": "User found"
+                },
+                {
+                  "name": "\"Basic\" authentication password",
+                  "valid": true,
+                  "description": "Password match"
+                },
+                {
+                  "name": "\"Basic\" authentication",
+                  "valid": true,
+                  "description": "Basic authentication is valid"
+                },
                 {
                   "name": "Payload",
                   "valid": true,
-                  "description": "Expected 'JSON.parse(message.body).enqueuer' to be equal to 'virgs'. Received 'virgs'"
-                },
-                {
-                  "name": "Params",
-                  "valid": true,
-                  "description": "Expected 'params.firstId' to be equal to 'idStuff'. Received 'idStuff'"
-                },
-                {
-                  "name": "Query",
-                  "valid": true,
-                  "description": "Expected 'query.query' to be equal to '2345'. Received '2345'"
-                },
-                {
-                  "name": "Header",
-                  "valid": true,
-                  "description": "Expected 'headers.nqr' to be equal to 'publisher'. Received 'publisher'"
+                  "description": "Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'"
                 },
                 {
                   "valid": true,
@@ -57,59 +62,19 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2018-11-01T20:20:04.022Z",
+              "connectionTime": "2018-11-09T15:50:21.268Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
-                  "nqr": "publisher",
-                  "content-length": "25",
-                  "host": "localhost:23075",
-                  "connection": "close"
-                },
-                "params": {
-                  "firstId": "idStuff"
-                },
-                "query": {
-                  "query": "2345"
-                },
-                "body": "{\n  \"enqueuer\": \"virgs\"\n}"
-              }
-            },
-            {
-              "name": "same port",
-              "type": "http",
-              "tests": [
-                {
-                  "valid": true,
-                  "name": "Message received",
-                  "description": "Subscription has received its message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-11-01T20:20:04.021Z",
-              "messageReceived": {
-                "headers": {
-                  "content-length": "5",
-                  "host": "localhost:23075",
+                  "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                  "content-length": "10",
+                  "host": "localhost:23068",
                   "connection": "close"
                 },
                 "params": {},
                 "query": {},
-                "body": "virgs"
+                "body": "basic auth"
               }
-            },
-            {
-              "name": "yet another, but avoidable",
-              "type": "http",
-              "tests": [
-                {
-                  "valid": true,
-                  "name": "Subscription avoided",
-                  "description": "Avoidable subscription has not received any message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-11-01T20:20:04.021Z"
             }
           ],
           "publishers": [
@@ -124,19 +89,9 @@
                   "description": "Published successfully"
                 },
                 {
-                  "name": "Status Code",
+                  "name": "Assertion #0",
                   "valid": true,
-                  "description": "Expected 'statusCode' to be equal to '321'. Received '321'"
-                },
-                {
-                  "name": "Body",
-                  "valid": true,
-                  "description": "Expected 'body' to be equal to 'dynamically changed payload'. Received 'dynamically changed payload'"
-                },
-                {
-                  "name": "Header",
-                  "valid": true,
-                  "description": "Expected 'headers.nqr' to be equal to 'subscription'. Received 'subscription'"
+                  "description": "Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'"
                 },
                 {
                   "name": "Response message received",
@@ -144,19 +99,18 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2018-11-01T20:20:04.051Z",
+              "publishTime": "2018-11-09T15:50:21.296Z",
               "messageReceived": {
-                "statusCode": 321,
-                "body": "dynamically changed payload",
+                "statusCode": 200,
+                "body": "basic auth response",
                 "headers": {
                   "x-powered-by": "Express",
                   "access-control-allow-origin": "*",
                   "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-                  "nqr": "subscription",
                   "content-type": "text/html; charset=utf-8",
-                  "content-length": "27",
-                  "etag": "W/\"1b-e5esTWfu+XftewZ5g2Tclr7ClTo\"",
-                  "date": "Thu, 01 Nov 2018 20:20:04 GMT",
+                  "content-length": "19",
+                  "etag": "W/\"13-nGN7LEwCUKXpQoLxNqKZXSglYNc\"",
+                  "date": "Fri, 09 Nov 2018 15:50:21 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -164,274 +118,31 @@
                     "protocol": "http:",
                     "slashes": true,
                     "auth": null,
-                    "host": "localhost:23075",
-                    "port": "23075",
-                    "hostname": "localhost",
-                    "hash": null,
-                    "search": "?query=2345",
-                    "query": "query=2345",
-                    "pathname": "/enqueuer/idStuff",
-                    "path": "/enqueuer/idStuff?query=2345",
-                    "href": "http://localhost:23075/enqueuer/idStuff?query=2345"
-                  },
-                  "method": "post",
-                  "headers": {
-                    "content-type": "application/json",
-                    "nqr": "publisher",
-                    "Content-Length": 25
-                  }
-                }
-              }
-            },
-            {
-              "name": "Publisher #1",
-              "valid": true,
-              "type": "http",
-              "tests": [
-                {
-                  "name": "Published",
-                  "valid": true,
-                  "description": "Published successfully"
-                },
-                {
-                  "name": "Status Code",
-                  "valid": true,
-                  "description": "Expected 'statusCode' to be equal to '444'. Received '444'"
-                },
-                {
-                  "name": "Response message received",
-                  "valid": true,
-                  "description": "Response message was received"
-                }
-              ],
-              "publishTime": "2018-11-01T20:20:04.052Z",
-              "messageReceived": {
-                "statusCode": 444,
-                "body": "blah",
-                "headers": {
-                  "x-powered-by": "Express",
-                  "access-control-allow-origin": "*",
-                  "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-                  "content-type": "text/html; charset=utf-8",
-                  "content-length": "4",
-                  "etag": "W/\"4-W/H9kn37hnlJai5s8Ay+UMHIcUU\"",
-                  "date": "Thu, 01 Nov 2018 20:20:04 GMT",
-                  "connection": "close"
-                },
-                "request": {
-                  "uri": {
-                    "protocol": "http:",
-                    "slashes": true,
-                    "auth": null,
-                    "host": "localhost:23075",
-                    "port": "23075",
+                    "host": "localhost:23068",
+                    "port": "23068",
                     "hostname": "localhost",
                     "hash": null,
                     "search": null,
                     "query": null,
-                    "pathname": "/samePort",
-                    "path": "/samePort",
-                    "href": "http://localhost:23075/samePort"
-                  },
-                  "method": "post",
-                  "headers": {
-                    "Content-Length": 5
-                  }
-                }
-              }
-            }
-          ],
-          "time": {
-            "startTime": "2018-11-01T20:20:04.012Z",
-            "endTime": "2018-11-01T20:20:04.327Z",
-            "totalTime": 315,
-            "timeout": 3000
-          },
-          "requisitions": []
-        },
-        {
-          "valid": true,
-          "tests": [
-            {
-              "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
-            }
-          ],
-          "name": "Requisition #1",
-          "subscriptions": [
-            {
-              "name": "Subscription #0",
-              "type": "http",
-              "tests": [
-                {
-                  "name": "Payload",
-                  "valid": true,
-                  "description": "Expect 'JSON.parse(message.body).duplicated' to be true"
-                },
-                {
-                  "valid": true,
-                  "name": "Message received",
-                  "description": "Subscription has received its message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-11-01T20:20:04.332Z",
-              "messageReceived": {
-                "headers": {
-                  "content-type": "application/json",
-                  "content-length": "24",
-                  "host": "localhost:23075",
-                  "connection": "close"
-                },
-                "params": {
-                  "secondId": "idStuff"
-                },
-                "query": {
-                  "query": "111"
-                },
-                "body": "{\n  \"duplicated\": true\n}"
-              }
-            }
-          ],
-          "publishers": [
-            {
-              "name": "publisher description",
-              "valid": true,
-              "type": "http",
-              "tests": [
-                {
-                  "name": "Published",
-                  "valid": true,
-                  "description": "Published successfully"
-                },
-                {
-                  "name": "Status Code",
-                  "valid": true,
-                  "description": "Expected 'statusCode' to be equal to '321'. Received '321'"
-                },
-                {
-                  "name": "Body",
-                  "valid": true,
-                  "description": "Expected 'body' to be equal to 'duplicatedResponsePayload'. Received 'duplicatedResponsePayload'"
-                },
-                {
-                  "name": "Response message received",
-                  "valid": true,
-                  "description": "Response message was received"
-                }
-              ],
-              "publishTime": "2018-11-01T20:20:04.336Z",
-              "messageReceived": {
-                "statusCode": 321,
-                "body": "duplicatedResponsePayload",
-                "headers": {
-                  "x-powered-by": "Express",
-                  "access-control-allow-origin": "*",
-                  "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-                  "content-type": "text/html; charset=utf-8",
-                  "content-length": "25",
-                  "etag": "W/\"19-yZRAgggcER0sMyRTVBBpErTPT/A\"",
-                  "date": "Thu, 01 Nov 2018 20:20:04 GMT",
-                  "connection": "close"
-                },
-                "request": {
-                  "uri": {
-                    "protocol": "http:",
-                    "slashes": true,
-                    "auth": null,
-                    "host": "localhost:23075",
-                    "port": "23075",
-                    "hostname": "localhost",
-                    "hash": null,
-                    "search": "?query=111",
-                    "query": "query=111",
-                    "pathname": "/enqueuer/idStuff",
-                    "path": "/enqueuer/idStuff?query=111",
-                    "href": "http://localhost:23075/enqueuer/idStuff?query=111"
+                    "pathname": "/basic",
+                    "path": "/basic",
+                    "href": "http://localhost:23068/basic"
                   },
                   "method": "post",
                   "headers": {
                     "content-type": "application/json",
-                    "Content-Length": 24
+                    "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+                    "Content-Length": 10
                   }
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2018-11-01T20:20:04.329Z",
-            "endTime": "2018-11-01T20:20:04.337Z",
-            "totalTime": 8,
-            "timeout": 5000
-          },
-          "requisitions": []
-        },
-        {
-          "valid": true,
-          "tests": [
-            {
-              "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
-            }
-          ],
-          "name": "requisition 2 (port 23076)",
-          "subscriptions": [
-            {
-              "name": "subscription description",
-              "type": "http",
-              "tests": [
-                {
-                  "valid": true,
-                  "name": "Subscription avoided",
-                  "description": "Avoidable subscription has not received any message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-11-01T20:20:04.340Z"
-            }
-          ],
-          "publishers": [],
-          "time": {
-            "startTime": "2018-11-01T20:20:04.337Z",
-            "endTime": "2018-11-01T20:20:05.342Z",
-            "totalTime": 1005,
-            "timeout": 5000
-          },
-          "requisitions": []
-        },
-        {
-          "valid": true,
-          "tests": [
-            {
-              "valid": true,
-              "name": "No time out",
-              "description": "Requisition has not timed out"
-            }
-          ],
-          "name": "check port releasing (23076)",
-          "subscriptions": [
-            {
-              "name": "same port subscription",
-              "type": "tcp-server",
-              "tests": [
-                {
-                  "valid": true,
-                  "name": "Subscription avoided",
-                  "description": "Avoidable subscription has not received any message"
-                }
-              ],
-              "valid": true,
-              "connectionTime": "2018-11-01T20:20:05.347Z"
-            }
-          ],
-          "publishers": [],
-          "time": {
-            "startTime": "2018-11-01T20:20:05.343Z",
-            "endTime": "2018-11-01T20:20:06.348Z",
-            "totalTime": 1005,
-            "timeout": 5000
+            "startTime": "2018-11-09T15:50:21.262Z",
+            "endTime": "2018-11-09T15:50:21.297Z",
+            "totalTime": 35,
+            "timeout": 3000
           },
           "requisitions": []
         }
@@ -439,8 +150,8 @@
     }
   ],
   "time": {
-    "startTime": "2018-11-01T20:20:04.001Z",
-    "endTime": "2018-11-01T20:20:06.352Z",
-    "totalTime": 2351
+    "startTime": "2018-11-09T15:50:21.254Z",
+    "endTime": "2018-11-09T15:50:21.300Z",
+    "totalTime": 46
   }
 }

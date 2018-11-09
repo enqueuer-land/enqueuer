@@ -14,18 +14,16 @@
                         <div class="text-center">
                             <img src="../docs/images/fullLogo1.png">
                         </div>
-                        <div class="accordion " id="idD3LMOazyXc  mb-1">
+                        <div class="accordion " id="id2TYor4FppX  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idD3LMOazyXc">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idMDhEew99kc">
-                          Tests
-                        </button>
-                      </h6>
+                    <div class="card-header" id="id2TYor4FppX">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id2dEh8YkrhM" style="text-decoration: none;">
+                            <h6>Tests</h6>
+                        </a>
                     </div>
-                    <div id="idMDhEew99kc" class="collapse" data-parent="#idD3LMOazyXc">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >27/27 (100%) 2351ms</h6>
+                    <div id="id2dEh8YkrhM" class="collapse" data-parent="#id2TYor4FppX">
+                      <div class="card-body bg-light p-2">
+                        <h6 class="text-success text-right" >10/10 (100%) 46ms</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
                     <tr>
@@ -39,205 +37,97 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Requisition #0</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Requisition #0</td>
                                   <td>No time out</td>
                                   <td>Requisition has not timed out</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expected 'JSON.parse(message.body).enqueuer' to be equal to 'virgs'. Received 'virgs'</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication prefix</td>
+                                  <td>Prefix "Basic" was found</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">3</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Params</td>
-                                  <td>Expected 'params.firstId' to be equal to 'idStuff'. Received 'idStuff'</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication user</td>
+                                  <td>User found</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">4</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Query</td>
-                                  <td>Expected 'query.query' to be equal to '2345'. Received '2345'</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication password</td>
+                                  <td>Password match</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">5</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'publisher'. Received 'publisher'</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication</td>
+                                  <td>Basic authentication is valid</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">6</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>Payload</td>
+                                  <td>Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">7</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › same port</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
                                   <td>Message received</td>
                                   <td>Subscription has received its message</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">8</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › yet another, but avoidable</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Publisher #0</td>
+                                  <td>Published</td>
+                                  <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">9</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Publisher #0</td>
+                                  <td>Assertion #0</td>
+                                  <td>Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">10</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">11</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'dynamically changed payload'. Received 'dynamically changed payload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">12</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'subscription'. Received 'subscription'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">13</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #0</td>
+                                  <td>examples › examples/http-auth-basic.yml › Requisition #0 › Publisher #0</td>
                                   <td>Response message received</td>
                                   <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">14</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #1</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">15</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #1</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '444'. Received '444'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">16</th>
-                                  <td>examples › examples/http.yml › Requisition #0 › Publisher #1</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">17</th>
-                                  <td>examples › examples/http.yml › Requisition #1 › Requisition #1</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">18</th>
-                                  <td>examples › examples/http.yml › Requisition #1 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expect 'JSON.parse(message.body).duplicated' to be true</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">19</th>
-                                  <td>examples › examples/http.yml › Requisition #1 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">20</th>
-                                  <td>examples › examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">21</th>
-                                  <td>examples › examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">22</th>
-                                  <td>examples › examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'duplicatedResponsePayload'. Received 'duplicatedResponsePayload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">23</th>
-                                  <td>examples › examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">24</th>
-                                  <td>examples › examples/http.yml › requisition 2 (port 23076) › requisition 2 (port 23076)</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">25</th>
-                                  <td>examples › examples/http.yml › requisition 2 (port 23076) › subscription description</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">26</th>
-                                  <td>examples › examples/http.yml › check port releasing (23076) › check port releasing (23076)</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">27</th>
-                                  <td>examples › examples/http.yml › check port releasing (23076) › same port subscription</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr>
                   </tbody>
                 </table>
                       </div>
                     </div>
-                </div><div class="accordion " id="idV2EBoPW1NT  mb-1">
-                    <div class="accordion " id="idV2EBoPW1NT  mb-1">
+                </div><div class="accordion " id="idK2cXycC6V9  mb-1">
+                    <div class="accordion " id="idK2cXycC6V9  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idnFFZM9vnZE">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idIRbTN6kEH6">
-                          Requisitions
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idTIOhqaqSEb">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id2N4V8Ax6ZG" style="text-decoration: none;">
+                            <h6>Requisitions</h6>
+                        </a>
                     </div>
-                    <div id="idIRbTN6kEH6" class="collapse" data-parent="#idnFFZM9vnZE">
-                      <div class="card-body bg-light">
+                    <div id="id2N4V8Ax6ZG" class="collapse" data-parent="#idTIOhqaqSEb">
+                      <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idnFFZM9vnZE">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idBD3wlO7c0q">
-                          examples/http.yml
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idTIOhqaqSEb">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idhcKa8OOW6S" style="text-decoration: none;">
+                            <h6>examples/http-auth-basic.yml</h6>
+                        </a>
                     </div>
-                    <div id="idBD3wlO7c0q" class="collapse" data-parent="#idnFFZM9vnZE">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idc0DWseUhcd  mb-1">
+                    <div id="idhcKa8OOW6S" class="collapse" data-parent="#idTIOhqaqSEb">
+                      <div class="card-body bg-light p-2">
+                        <div class="accordion " id="idIWwV9MSNNY  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idc0DWseUhcd">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idrvySG5tiiF">
-                          Tests
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idIWwV9MSNNY">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idGVZMYiV6CT" style="text-decoration: none;">
+                            <h6>Tests</h6>
+                        </a>
                     </div>
-                    <div id="idrvySG5tiiF" class="collapse" data-parent="#idc0DWseUhcd">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >27/27 (100%) 2340ms</h6>
+                    <div id="idGVZMYiV6CT" class="collapse" data-parent="#idIWwV9MSNNY">
+                      <div class="card-body bg-light p-2">
+                        <h6 class="text-success text-right" >10/10 (100%) 39ms</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
                     <tr>
@@ -251,205 +141,97 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>examples/http.yml › Requisition #0 › Requisition #0</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Requisition #0</td>
                                   <td>No time out</td>
                                   <td>Requisition has not timed out</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
-                                  <td>examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expected 'JSON.parse(message.body).enqueuer' to be equal to 'virgs'. Received 'virgs'</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication prefix</td>
+                                  <td>Prefix "Basic" was found</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">3</th>
-                                  <td>examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Params</td>
-                                  <td>Expected 'params.firstId' to be equal to 'idStuff'. Received 'idStuff'</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication user</td>
+                                  <td>User found</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">4</th>
-                                  <td>examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Query</td>
-                                  <td>Expected 'query.query' to be equal to '2345'. Received '2345'</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication password</td>
+                                  <td>Password match</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">5</th>
-                                  <td>examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'publisher'. Received 'publisher'</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>"Basic" authentication</td>
+                                  <td>Basic authentication is valid</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">6</th>
-                                  <td>examples/http.yml › Requisition #0 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
+                                  <td>Payload</td>
+                                  <td>Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">7</th>
-                                  <td>examples/http.yml › Requisition #0 › same port</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Subscription #0</td>
                                   <td>Message received</td>
                                   <td>Subscription has received its message</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">8</th>
-                                  <td>examples/http.yml › Requisition #0 › yet another, but avoidable</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Publisher #0</td>
+                                  <td>Published</td>
+                                  <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">9</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Publisher #0</td>
+                                  <td>Assertion #0</td>
+                                  <td>Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">10</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">11</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'dynamically changed payload'. Received 'dynamically changed payload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">12</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'subscription'. Received 'subscription'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">13</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #0</td>
+                                  <td>examples/http-auth-basic.yml › Requisition #0 › Publisher #0</td>
                                   <td>Response message received</td>
                                   <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">14</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #1</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">15</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #1</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '444'. Received '444'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">16</th>
-                                  <td>examples/http.yml › Requisition #0 › Publisher #1</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">17</th>
-                                  <td>examples/http.yml › Requisition #1 › Requisition #1</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">18</th>
-                                  <td>examples/http.yml › Requisition #1 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expect 'JSON.parse(message.body).duplicated' to be true</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">19</th>
-                                  <td>examples/http.yml › Requisition #1 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">20</th>
-                                  <td>examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">21</th>
-                                  <td>examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">22</th>
-                                  <td>examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'duplicatedResponsePayload'. Received 'duplicatedResponsePayload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">23</th>
-                                  <td>examples/http.yml › Requisition #1 › publisher description</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">24</th>
-                                  <td>examples/http.yml › requisition 2 (port 23076) › requisition 2 (port 23076)</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">25</th>
-                                  <td>examples/http.yml › requisition 2 (port 23076) › subscription description</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">26</th>
-                                  <td>examples/http.yml › check port releasing (23076) › check port releasing (23076)</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">27</th>
-                                  <td>examples/http.yml › check port releasing (23076) › same port subscription</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr>
                   </tbody>
                 </table>
                       </div>
                     </div>
-                </div><div class="accordion " id="idkbCmNgW44r  mb-1">
-                    <div class="accordion " id="idkbCmNgW44r  mb-1">
+                </div><div class="accordion " id="idk1b0COn64o  mb-1">
+                    <div class="accordion " id="idk1b0COn64o  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idMkEUiJb0qV">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idSK9XdKeEoU">
-                          Requisitions
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idVj0ArQJE0x">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id0tlIQqm4du" style="text-decoration: none;">
+                            <h6>Requisitions</h6>
+                        </a>
                     </div>
-                    <div id="idSK9XdKeEoU" class="collapse" data-parent="#idMkEUiJb0qV">
-                      <div class="card-body bg-light">
+                    <div id="id0tlIQqm4du" class="collapse" data-parent="#idVj0ArQJE0x">
+                      <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idMkEUiJb0qV">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idFpXzQUXHyK">
-                          Requisition #0
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idVj0ArQJE0x">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idoGjvWPAEup" style="text-decoration: none;">
+                            <h6>Requisition #0</h6>
+                        </a>
                     </div>
-                    <div id="idFpXzQUXHyK" class="collapse" data-parent="#idMkEUiJb0qV">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idNZHgUW3oMc  mb-1">
+                    <div id="idoGjvWPAEup" class="collapse" data-parent="#idVj0ArQJE0x">
+                      <div class="card-body bg-light p-2">
+                        <div class="accordion " id="id402FlgFUyj  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idNZHgUW3oMc">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idb4K6urR0yb">
-                          Tests
-                        </button>
-                      </h6>
+                    <div class="card-header" id="id402FlgFUyj">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idAVrwdwoZye" style="text-decoration: none;">
+                            <h6>Tests</h6>
+                        </a>
                     </div>
-                    <div id="idb4K6urR0yb" class="collapse" data-parent="#idNZHgUW3oMc">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >16/16 (100%) 315ms</h6>
+                    <div id="idAVrwdwoZye" class="collapse" data-parent="#id402FlgFUyj">
+                      <div class="card-body bg-light p-2">
+                        <h6 class="text-success text-right" >10/10 (100%) 35ms</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
                     <tr>
@@ -470,90 +252,54 @@
                                 </tr><tr>
                                   <th scope="row">2</th>
                                   <td>Requisition #0 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expected 'JSON.parse(message.body).enqueuer' to be equal to 'virgs'. Received 'virgs'</td>
+                                  <td>"Basic" authentication prefix</td>
+                                  <td>Prefix "Basic" was found</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">3</th>
                                   <td>Requisition #0 › Subscription #0</td>
-                                  <td>Params</td>
-                                  <td>Expected 'params.firstId' to be equal to 'idStuff'. Received 'idStuff'</td>
+                                  <td>"Basic" authentication user</td>
+                                  <td>User found</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">4</th>
                                   <td>Requisition #0 › Subscription #0</td>
-                                  <td>Query</td>
-                                  <td>Expected 'query.query' to be equal to '2345'. Received '2345'</td>
+                                  <td>"Basic" authentication password</td>
+                                  <td>Password match</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">5</th>
                                   <td>Requisition #0 › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'publisher'. Received 'publisher'</td>
+                                  <td>"Basic" authentication</td>
+                                  <td>Basic authentication is valid</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">6</th>
                                   <td>Requisition #0 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
+                                  <td>Payload</td>
+                                  <td>Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">7</th>
-                                  <td>Requisition #0 › same port</td>
+                                  <td>Requisition #0 › Subscription #0</td>
                                   <td>Message received</td>
                                   <td>Subscription has received its message</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">8</th>
-                                  <td>Requisition #0 › yet another, but avoidable</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
+                                  <td>Requisition #0 › Publisher #0</td>
+                                  <td>Published</td>
+                                  <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">9</th>
                                   <td>Requisition #0 › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
+                                  <td>Assertion #0</td>
+                                  <td>Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">10</th>
                                   <td>Requisition #0 › Publisher #0</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">11</th>
-                                  <td>Requisition #0 › Publisher #0</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'dynamically changed payload'. Received 'dynamically changed payload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">12</th>
-                                  <td>Requisition #0 › Publisher #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'subscription'. Received 'subscription'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">13</th>
-                                  <td>Requisition #0 › Publisher #0</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">14</th>
-                                  <td>Requisition #0 › Publisher #1</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">15</th>
-                                  <td>Requisition #0 › Publisher #1</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '444'. Received '444'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">16</th>
-                                  <td>Requisition #0 › Publisher #1</td>
                                   <td>Response message received</td>
                                   <td>Response message was received</td>
                                   <td class="bg-success text-center" >true</td>
@@ -562,160 +308,33 @@
                 </table>
                       </div>
                     </div>
-                </div><div class="accordion " id="idJgK13Y14ih  mb-1">
-                    <div class="accordion " id="idJgK13Y14ih  mb-1">
+                </div><div class="accordion " id="idQS13BEaM71  mb-1">
+                    <div class="accordion " id="idQS13BEaM71  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idRFyo7RR6NY">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idlYEWnRAuzN">
-                          Publishers
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idvWr7luudFi">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idy0KrtZvNhY" style="text-decoration: none;">
+                            <h6>Publishers</h6>
+                        </a>
                     </div>
-                    <div id="idlYEWnRAuzN" class="collapse" data-parent="#idRFyo7RR6NY">
-                      <div class="card-body bg-light">
+                    <div id="idy0KrtZvNhY" class="collapse" data-parent="#idvWr7luudFi">
+                      <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idRFyo7RR6NY">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idjepUqEOaAA">
-                          Publisher #0
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idvWr7luudFi">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idWBtKkc81KV" style="text-decoration: none;">
+                            <h6>Publisher #0</h6>
+                        </a>
                     </div>
-                    <div id="idjepUqEOaAA" class="collapse" data-parent="#idRFyo7RR6NY">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idt9gds1vaCO  mb-1">
+                    <div id="idWBtKkc81KV" class="collapse" data-parent="#idvWr7luudFi">
+                      <div class="card-body bg-light p-2">
+                        <div class="accordion " id="idwuHqV10eyP  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idt9gds1vaCO">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idDY2eCyPkqQ">
-                          Tests
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idwuHqV10eyP">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idUmyCxFkikg" style="text-decoration: none;">
+                            <h6>Tests</h6>
+                        </a>
                     </div>
-                    <div id="idDY2eCyPkqQ" class="collapse" data-parent="#idt9gds1vaCO">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >5/5 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">3</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'dynamically changed payload'. Received 'dynamically changed payload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">4</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'subscription'. Received 'subscription'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">5</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idt9gds1vaCO">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idRrABRVc3pN">
-                          Message received
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idRrABRVc3pN" class="collapse" data-parent="#idt9gds1vaCO">
-                      <div class="card-body bg-light">
-                        <pre><code class="text-white">{
-  "statusCode": 321,
-  "body": "dynamically changed payload",
-  "headers": {
-    "x-powered-by": "Express",
-    "access-control-allow-origin": "*",
-    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-    "nqr": "subscription",
-    "content-type": "text/html; charset=utf-8",
-    "content-length": "27",
-    "etag": "W/\"1b-e5esTWfu+XftewZ5g2Tclr7ClTo\"",
-    "date": "Thu, 01 Nov 2018 20:20:04 GMT",
-    "connection": "close"
-  },
-  "request": {
-    "uri": {
-      "protocol": "http:",
-      "slashes": true,
-      "auth": null,
-      "host": "localhost:23075",
-      "port": "23075",
-      "hostname": "localhost",
-      "hash": null,
-      "search": "?query=2345",
-      "query": "query=2345",
-      "pathname": "/enqueuer/idStuff",
-      "path": "/enqueuer/idStuff?query=2345",
-      "href": "http://localhost:23075/enqueuer/idStuff?query=2345"
-    },
-    "method": "post",
-    "headers": {
-      "content-type": "application/json",
-      "nqr": "publisher",
-      "Content-Length": 25
-    }
-  }
-}</code></pre>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idRFyo7RR6NY">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idsrhMYtWavX">
-                          Publisher #1
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idsrhMYtWavX" class="collapse" data-parent="#idRFyo7RR6NY">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="id0hJqWPK3Pu  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id0hJqWPK3Pu">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idCtsOD3jYAz">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idCtsOD3jYAz" class="collapse" data-parent="#id0hJqWPK3Pu">
-                      <div class="card-body bg-light">
+                    <div id="idUmyCxFkikg" class="collapse" data-parent="#idwuHqV10eyP">
+                      <div class="card-body bg-light p-2">
                         <h6 class="text-success text-right" >3/3 (100%)</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
@@ -730,19 +349,19 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>Publisher #1 › Publisher #1</td>
+                                  <td>Publisher #0 › Publisher #0</td>
                                   <td>Published</td>
                                   <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
-                                  <td>Publisher #1 › Publisher #1</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '444'. Received '444'</td>
+                                  <td>Publisher #0 › Publisher #0</td>
+                                  <td>Assertion #0</td>
+                                  <td>Expected 'body' to be equal to 'basic auth response'. Received 'basic auth response'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">3</th>
-                                  <td>Publisher #1 › Publisher #1</td>
+                                  <td>Publisher #0 › Publisher #0</td>
                                   <td>Response message received</td>
                                   <td>Response message was received</td>
                                   <td class="bg-success text-center" >true</td>
@@ -752,26 +371,24 @@
                       </div>
                     </div>
                 </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="id0hJqWPK3Pu">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idpqKbqJl21z">
-                          Message received
-                        </button>
-                      </h6>
+                    <div class="card-header" id="idwuHqV10eyP">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idVLlxNlR2wt" style="text-decoration: none;">
+                            <h6>Message received</h6>
+                        </a>
                     </div>
-                    <div id="idpqKbqJl21z" class="collapse" data-parent="#id0hJqWPK3Pu">
-                      <div class="card-body bg-light">
-                        <pre><code class="text-white">{
-  "statusCode": 444,
-  "body": "blah",
+                    <div id="idVLlxNlR2wt" class="collapse" data-parent="#idwuHqV10eyP">
+                      <div class="card-body bg-light p-2">
+                        <pre><code>{
+  "statusCode": 200,
+  "body": "basic auth response",
   "headers": {
     "x-powered-by": "Express",
     "access-control-allow-origin": "*",
     "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
     "content-type": "text/html; charset=utf-8",
-    "content-length": "4",
-    "etag": "W/\"4-W/H9kn37hnlJai5s8Ay+UMHIcUU\"",
-    "date": "Thu, 01 Nov 2018 20:20:04 GMT",
+    "content-length": "19",
+    "etag": "W/\"13-nGN7LEwCUKXpQoLxNqKZXSglYNc\"",
+    "date": "Fri, 09 Nov 2018 15:50:21 GMT",
     "connection": "close"
   },
   "request": {
@@ -779,468 +396,21 @@
       "protocol": "http:",
       "slashes": true,
       "auth": null,
-      "host": "localhost:23075",
-      "port": "23075",
+      "host": "localhost:23068",
+      "port": "23068",
       "hostname": "localhost",
       "hash": null,
       "search": null,
       "query": null,
-      "pathname": "/samePort",
-      "path": "/samePort",
-      "href": "http://localhost:23075/samePort"
-    },
-    "method": "post",
-    "headers": {
-      "Content-Length": 5
-    }
-  }
-}</code></pre>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                 </div><div class="accordion " id="idnQ6LXMpw2J  mb-1">
-                    <div class="accordion " id="idnQ6LXMpw2J  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idy4jawlgfuP">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idTlWkgawvI2">
-                          Subscriptions
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idTlWkgawvI2" class="collapse" data-parent="#idy4jawlgfuP">
-                      <div class="card-body bg-light">
-                        <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idy4jawlgfuP">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idmiKd4xEmKJ">
-                          Subscription #0
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idmiKd4xEmKJ" class="collapse" data-parent="#idy4jawlgfuP">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="id7kOK26vGzy  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id7kOK26vGzy">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idYdI5pW4Zct">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idYdI5pW4Zct" class="collapse" data-parent="#id7kOK26vGzy">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >5/5 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expected 'JSON.parse(message.body).enqueuer' to be equal to 'virgs'. Received 'virgs'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Params</td>
-                                  <td>Expected 'params.firstId' to be equal to 'idStuff'. Received 'idStuff'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">3</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Query</td>
-                                  <td>Expected 'query.query' to be equal to '2345'. Received '2345'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">4</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.nqr' to be equal to 'publisher'. Received 'publisher'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">5</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="id7kOK26vGzy">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idN3akgNv67L">
-                          Message received
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idN3akgNv67L" class="collapse" data-parent="#id7kOK26vGzy">
-                      <div class="card-body bg-light">
-                        <pre><code>{
-  "headers": {
-    "content-type": "application/json",
-    "nqr": "publisher",
-    "content-length": "25",
-    "host": "localhost:23075",
-    "connection": "close"
-  },
-  "params": {
-    "firstId": "idStuff"
-  },
-  "query": {
-    "query": "2345"
-  },
-  "body": "{\n  \"enqueuer\": \"virgs\"\n}"
-}</code></pre>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idy4jawlgfuP">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idgfuf7gDQOz">
-                          same port
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idgfuf7gDQOz" class="collapse" data-parent="#idy4jawlgfuP">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idxeCNExqMdY  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idxeCNExqMdY">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idYyvfdFK5tI">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idYyvfdFK5tI" class="collapse" data-parent="#idxeCNExqMdY">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >1/1 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>same port › same port</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idxeCNExqMdY">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idoBiNWdtlQb">
-                          Message received
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idoBiNWdtlQb" class="collapse" data-parent="#idxeCNExqMdY">
-                      <div class="card-body bg-light">
-                        <pre><code>{
-  "headers": {
-    "content-length": "5",
-    "host": "localhost:23075",
-    "connection": "close"
-  },
-  "params": {},
-  "query": {},
-  "body": "virgs"
-}</code></pre>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idy4jawlgfuP">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idVI2MIQ5lEz">
-                          yet another, but avoidable
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idVI2MIQ5lEz" class="collapse" data-parent="#idy4jawlgfuP">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idtCn3g9nQUH  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idtCn3g9nQUH">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idnHcapnqSXC">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idnHcapnqSXC" class="collapse" data-parent="#idtCn3g9nQUH">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >1/1 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>yet another, but avoidable › yet another, but avoidable</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                 </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idMkEUiJb0qV">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idDbj7ADCpZr">
-                          Requisition #1
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idDbj7ADCpZr" class="collapse" data-parent="#idMkEUiJb0qV">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idQuDyXGTADE  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idQuDyXGTADE">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idZal9FJTEYd">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idZal9FJTEYd" class="collapse" data-parent="#idQuDyXGTADE">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >7/7 (100%) 8ms</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>Requisition #1 › Requisition #1</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>Requisition #1 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expect 'JSON.parse(message.body).duplicated' to be true</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">3</th>
-                                  <td>Requisition #1 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">4</th>
-                                  <td>Requisition #1 › publisher description</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">5</th>
-                                  <td>Requisition #1 › publisher description</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">6</th>
-                                  <td>Requisition #1 › publisher description</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'duplicatedResponsePayload'. Received 'duplicatedResponsePayload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">7</th>
-                                  <td>Requisition #1 › publisher description</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="accordion " id="idNUAws5gK8U  mb-1">
-                    <div class="accordion " id="idNUAws5gK8U  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idsIBdmiHefh">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idlkA2vebEs9">
-                          Publishers
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idlkA2vebEs9" class="collapse" data-parent="#idsIBdmiHefh">
-                      <div class="card-body bg-light">
-                        <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idsIBdmiHefh">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idjOEOVEwrwn">
-                          publisher description
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idjOEOVEwrwn" class="collapse" data-parent="#idsIBdmiHefh">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idCDbvVHn2jb  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idCDbvVHn2jb">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#id1FrNf2jWEq">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="id1FrNf2jWEq" class="collapse" data-parent="#idCDbvVHn2jb">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >4/4 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>publisher description › publisher description</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>publisher description › publisher description</td>
-                                  <td>Status Code</td>
-                                  <td>Expected 'statusCode' to be equal to '321'. Received '321'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">3</th>
-                                  <td>publisher description › publisher description</td>
-                                  <td>Body</td>
-                                  <td>Expected 'body' to be equal to 'duplicatedResponsePayload'. Received 'duplicatedResponsePayload'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">4</th>
-                                  <td>publisher description › publisher description</td>
-                                  <td>Response message received</td>
-                                  <td>Response message was received</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idCDbvVHn2jb">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idtZX4DKjKHT">
-                          Message received
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idtZX4DKjKHT" class="collapse" data-parent="#idCDbvVHn2jb">
-                      <div class="card-body bg-light">
-                        <pre><code class="text-white">{
-  "statusCode": 321,
-  "body": "duplicatedResponsePayload",
-  "headers": {
-    "x-powered-by": "Express",
-    "access-control-allow-origin": "*",
-    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-    "content-type": "text/html; charset=utf-8",
-    "content-length": "25",
-    "etag": "W/\"19-yZRAgggcER0sMyRTVBBpErTPT/A\"",
-    "date": "Thu, 01 Nov 2018 20:20:04 GMT",
-    "connection": "close"
-  },
-  "request": {
-    "uri": {
-      "protocol": "http:",
-      "slashes": true,
-      "auth": null,
-      "host": "localhost:23075",
-      "port": "23075",
-      "hostname": "localhost",
-      "hash": null,
-      "search": "?query=111",
-      "query": "query=111",
-      "pathname": "/enqueuer/idStuff",
-      "path": "/enqueuer/idStuff?query=111",
-      "href": "http://localhost:23075/enqueuer/idStuff?query=111"
+      "pathname": "/basic",
+      "path": "/basic",
+      "href": "http://localhost:23068/basic"
     },
     "method": "post",
     "headers": {
       "content-type": "application/json",
-      "Content-Length": 24
+      "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+      "Content-Length": 10
     }
   }
 }</code></pre>
@@ -1255,40 +425,34 @@
                     </div>
                 </div>
                  </div>
-                 </div><div class="accordion " id="idOLJOYutWMB  mb-1">
-                    <div class="accordion " id="idOLJOYutWMB  mb-1">
+                 </div><div class="accordion " id="idSngslw3YHs  mb-1">
+                    <div class="accordion " id="idSngslw3YHs  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idtBr2nO3rF8">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idsl9prrOhLJ">
-                          Subscriptions
-                        </button>
-                      </h6>
+                    <div class="card-header" id="id5JpTdW7CS7">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idKL3dADsOkz" style="text-decoration: none;">
+                            <h6>Subscriptions</h6>
+                        </a>
                     </div>
-                    <div id="idsl9prrOhLJ" class="collapse" data-parent="#idtBr2nO3rF8">
-                      <div class="card-body bg-light">
+                    <div id="idKL3dADsOkz" class="collapse" data-parent="#id5JpTdW7CS7">
+                      <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idtBr2nO3rF8">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idKsAcST52ND">
-                          Subscription #0
-                        </button>
-                      </h6>
+                    <div class="card-header" id="id5JpTdW7CS7">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idLfS4o3YrgJ" style="text-decoration: none;">
+                            <h6>Subscription #0</h6>
+                        </a>
                     </div>
-                    <div id="idKsAcST52ND" class="collapse" data-parent="#idtBr2nO3rF8">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idqcEly2lUvx  mb-1">
+                    <div id="idLfS4o3YrgJ" class="collapse" data-parent="#id5JpTdW7CS7">
+                      <div class="card-body bg-light p-2">
+                        <div class="accordion " id="id4kSh5HFLgw  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idqcEly2lUvx">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idbPJClGzy6C">
-                          Tests
-                        </button>
-                      </h6>
+                    <div class="card-header" id="id4kSh5HFLgw">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idUL4WBvRxPO" style="text-decoration: none;">
+                            <h6>Tests</h6>
+                        </a>
                     </div>
-                    <div id="idbPJClGzy6C" class="collapse" data-parent="#idqcEly2lUvx">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >2/2 (100%)</h6>
+                    <div id="idUL4WBvRxPO" class="collapse" data-parent="#id4kSh5HFLgw">
+                      <div class="card-body bg-light p-2">
+                        <h6 class="text-success text-right" >6/6 (100%)</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
                     <tr>
@@ -1303,11 +467,35 @@
                     <tr>
                                   <th scope="row">1</th>
                                   <td>Subscription #0 › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expect 'JSON.parse(message.body).duplicated' to be true</td>
+                                  <td>"Basic" authentication prefix</td>
+                                  <td>Prefix "Basic" was found</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
+                                  <td>Subscription #0 › Subscription #0</td>
+                                  <td>"Basic" authentication user</td>
+                                  <td>User found</td>
+                                  <td class="bg-success text-center" >true</td>
+                                </tr><tr>
+                                  <th scope="row">3</th>
+                                  <td>Subscription #0 › Subscription #0</td>
+                                  <td>"Basic" authentication password</td>
+                                  <td>Password match</td>
+                                  <td class="bg-success text-center" >true</td>
+                                </tr><tr>
+                                  <th scope="row">4</th>
+                                  <td>Subscription #0 › Subscription #0</td>
+                                  <td>"Basic" authentication</td>
+                                  <td>Basic authentication is valid</td>
+                                  <td class="bg-success text-center" >true</td>
+                                </tr><tr>
+                                  <th scope="row">5</th>
+                                  <td>Subscription #0 › Subscription #0</td>
+                                  <td>Payload</td>
+                                  <td>Expected 'message.body' to be equal to 'basic auth'. Received 'basic auth'</td>
+                                  <td class="bg-success text-center" >true</td>
+                                </tr><tr>
+                                  <th scope="row">6</th>
                                   <td>Subscription #0 › Subscription #0</td>
                                   <td>Message received</td>
                                   <td>Subscription has received its message</td>
@@ -1318,268 +506,25 @@
                       </div>
                     </div>
                 </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idqcEly2lUvx">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#id47Exmad2Ad">
-                          Message received
-                        </button>
-                      </h6>
+                    <div class="card-header" id="id4kSh5HFLgw">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idhlXb1oQzA6" style="text-decoration: none;">
+                            <h6>Message received</h6>
+                        </a>
                     </div>
-                    <div id="id47Exmad2Ad" class="collapse" data-parent="#idqcEly2lUvx">
-                      <div class="card-body bg-light">
+                    <div id="idhlXb1oQzA6" class="collapse" data-parent="#id4kSh5HFLgw">
+                      <div class="card-body bg-light p-2">
                         <pre><code>{
   "headers": {
     "content-type": "application/json",
-    "content-length": "24",
-    "host": "localhost:23075",
+    "authorization": "Basic dXNlcjpwYXNzd29yZA==",
+    "content-length": "10",
+    "host": "localhost:23068",
     "connection": "close"
   },
-  "params": {
-    "secondId": "idStuff"
-  },
-  "query": {
-    "query": "111"
-  },
-  "body": "{\n  \"duplicated\": true\n}"
+  "params": {},
+  "query": {},
+  "body": "basic auth"
 }</code></pre>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                 </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idMkEUiJb0qV">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idt04JitGuNz">
-                          requisition 2 (port 23076)
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idt04JitGuNz" class="collapse" data-parent="#idMkEUiJb0qV">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idvRY8D2vrIr  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idvRY8D2vrIr">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#id5BdHRrQLXk">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="id5BdHRrQLXk" class="collapse" data-parent="#idvRY8D2vrIr">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >2/2 (100%) 1005ms</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>requisition 2 (port 23076) › requisition 2 (port 23076)</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>requisition 2 (port 23076) › subscription description</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="accordion " id="idg8dMYSqBZZ  mb-1">
-                    <div class="accordion " id="idg8dMYSqBZZ  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idI0R8Cf2WJz">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idtVgEZ1jtGW">
-                          Subscriptions
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idtVgEZ1jtGW" class="collapse" data-parent="#idI0R8Cf2WJz">
-                      <div class="card-body bg-light">
-                        <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idI0R8Cf2WJz">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idZC2gFvHLxv">
-                          subscription description
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idZC2gFvHLxv" class="collapse" data-parent="#idI0R8Cf2WJz">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idveqa2PemBt  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idveqa2PemBt">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idv8Kqzs1FWt">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idv8Kqzs1FWt" class="collapse" data-parent="#idveqa2PemBt">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >1/1 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>subscription description › subscription description</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                 </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idMkEUiJb0qV">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idgXmY5ndRHf">
-                          check port releasing (23076)
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idgXmY5ndRHf" class="collapse" data-parent="#idMkEUiJb0qV">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="idGcGPhXEP1l  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idGcGPhXEP1l">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idBx6CyXOsXV">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idBx6CyXOsXV" class="collapse" data-parent="#idGcGPhXEP1l">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >2/2 (100%) 1005ms</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>check port releasing (23076) › check port releasing (23076)</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>check port releasing (23076) › same port subscription</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="accordion " id="idwcdWTgIKbf  mb-1">
-                    <div class="accordion " id="idwcdWTgIKbf  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idxivDIHtVYw">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idmjiFArGBsA">
-                          Subscriptions
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idmjiFArGBsA" class="collapse" data-parent="#idxivDIHtVYw">
-                      <div class="card-body bg-light">
-                        <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idxivDIHtVYw">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idqpDXzgmorC">
-                          same port subscription
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idqpDXzgmorC" class="collapse" data-parent="#idxivDIHtVYw">
-                      <div class="card-body bg-light">
-                        <div class="accordion " id="id93ezCsxn2W  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id93ezCsxn2W">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#idYxU8AozrLD">
-                          Tests
-                        </button>
-                      </h6>
-                    </div>
-                    <div id="idYxU8AozrLD" class="collapse" data-parent="#id93ezCsxn2W">
-                      <div class="card-body bg-light">
-                        <h6 class="text-success text-right" >1/1 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>same port subscription › same port subscription</td>
-                                  <td>Subscription avoided</td>
-                                  <td>Avoidable subscription has not received any message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
                       </div>
                     </div>
                 </div>

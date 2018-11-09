@@ -58,7 +58,7 @@ export class JsonFormatter extends Formatter {
         let body = this.createTestAccordionCard(publisherReport, parentId);
         if (publisherReport.messageReceived) {
             body += this.createAccordionCard(parentId, 'Message received',
-                `<pre><code class="text-white">${new Json().stringify(publisherReport.messageReceived)}</code></pre>`);
+                `<pre><code>${new Json().stringify(publisherReport.messageReceived)}</code></pre>`);
         }
         return this.createAccordion(parentId, body);
     }
@@ -100,14 +100,12 @@ export class JsonFormatter extends Formatter {
         const collapsibleId = 'id' + new StringRandomCreator().create(10);
         return `<div class="card bg-dark mb-0">
                     <div class="card-header" id="${parentId}">
-                      <h6 class="mb-0">
-                        <button class="btn btn-link text-white " type="button" data-toggle="collapse" data-target="#${collapsibleId}">
-                          ${title}
-                        </button>
-                      </h6>
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#${collapsibleId}" style="text-decoration: none;">
+                            <h6>${title}</h6>
+                        </a>
                     </div>
                     <div id="${collapsibleId}" class="collapse" data-parent="#${parentId}">
-                      <div class="card-body bg-light">
+                      <div class="card-body bg-light p-2">
                         ${body}
                       </div>
                     </div>
