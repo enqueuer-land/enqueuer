@@ -30,6 +30,7 @@ export class SubscriptionReporter {
     constructor(subscriptionAttributes: input.SubscriptionModel) {
         this.startTime = new DateController();
         this.report = {
+            id: subscriptionAttributes.id,
             name: subscriptionAttributes.name,
             type: subscriptionAttributes.type,
             tests: [],

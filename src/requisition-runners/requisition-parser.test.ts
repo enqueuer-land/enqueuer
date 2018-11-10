@@ -122,7 +122,7 @@ const validRunnable = {
 describe('RequisitionParser', () => {
 
     it('Should not parse invalid json', () => {
-        const runnable = "invalidJson";
+        const runnable = "[00inv;alid";
         const parser: RequisitionParser = new RequisitionParser();
 
         expect(() => parser.parse(runnable)).toThrow()
@@ -142,12 +142,12 @@ describe('RequisitionParser', () => {
         expect(firstModel.id).toBe(validWithId[0].id);
     });
 
-    it('Should insert id if no one is given', () => {
-        const runnableStringified: string = JSON.stringify(valid);
-        const parser: RequisitionParser = new RequisitionParser();
-
-        expect(parser.parse(runnableStringified)[0].id).toBeDefined();
-    });
+    // it('Should insert id if no one is given', () => {
+    //     const runnableStringified: string = JSON.stringify(valid);
+    //     const parser: RequisitionParser = new RequisitionParser();
+    //
+    //     expect(parser.parse(runnableStringified)[0].id).toBeDefined();
+    // });
 
     it('Should accept valid stringified json', () => {
         const runnableStringified: string = JSON.stringify(validRunnable);

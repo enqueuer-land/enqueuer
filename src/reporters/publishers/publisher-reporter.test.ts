@@ -17,7 +17,8 @@ let containerMock = jest.fn(() => {
 });
 
 const publisher = {
-    name: 'pubName'
+    name: 'pubName',
+    id: 'id'
 };
 jest.mock('conditional-injector');
 Container.subclassesOf.mockImplementation(containerMock);
@@ -92,6 +93,17 @@ describe('PublisherReporter', () => {
         });
 
     });
+
+    it('Should keep id', done => {
+        const publisherReporter = new PublisherReporter(publisher);
+        publisherReporter.publish().then(() => {
+            const report = publisherReporter.getReport();
+            expect(report.id).toBe(publisher.id);
+            done();
+        });
+
+    });
+
 
     it('Should add Publisher test - success', done => {
         const publisherReporter = new PublisherReporter(publisher);

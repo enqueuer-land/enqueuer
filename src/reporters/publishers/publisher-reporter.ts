@@ -16,6 +16,7 @@ export class PublisherReporter {
 
     constructor(publisher: input.PublisherModel) {
         this.report = {
+            id: publisher.id,
             name: publisher.name,
             valid: true,
             type: publisher.type,

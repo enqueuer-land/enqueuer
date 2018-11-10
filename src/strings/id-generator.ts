@@ -20,6 +20,6 @@ export class IdGenerator {
         const coded = hash.digest('hex');
         return new DateController().getStringOnlyNumbers() +
                 '_' +
-                coded.substr(0, 8);
+                coded.substr(0, 20);
     }
 }

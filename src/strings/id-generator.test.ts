@@ -22,7 +22,7 @@ describe('IdGenerator', () => {
 
         const idGenerator: IdGenerator = new IdGenerator(text);
         const expected =  new DateController().getStringOnlyNumbers() + "_" +
-            coded.substr(0, 8);
+            coded.substr(0, 20);
 
         let generatedId = idGenerator.generateId();
 
@@ -43,7 +43,7 @@ describe('IdGenerator', () => {
 
         const idGenerator: IdGenerator = new IdGenerator(value);
         const expected =  new DateController().getStringOnlyNumbers() + "_" +
-            coded.substr(0, 8);
+            coded.substr(0, 20);
 
         let generatedId = idGenerator.generateId();
 
