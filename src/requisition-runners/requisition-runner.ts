@@ -9,6 +9,7 @@ import {RequisitionMultiplier} from './requisition-multiplier';
 import {DateController} from '../timers/date-controller';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {FileContentMapCreator} from '../configurations/file-content-map-creator';
+import {IterationsEvaluator} from './iterations-evaluator';
 
 export class RequisitionRunner {
 
@@ -139,13 +140,7 @@ export class RequisitionRunner {
 
     private shouldSkipRequisition(requisition: input.RequisitionModel) {
         Logger.trace(`Requisition runner evaluating skipping of '${requisition.name}'`);
-        if (!requisition) {
-            return true;
-        }
-        //TODO eval it
-        const definedButLessThanZero = (requisition.iterations !== undefined && requisition.iterations <= 0);
-        const definedButInvalid = requisition.iterations !== undefined && typeof(requisition.iterations) != 'number';
-        return definedButInvalid || definedButLessThanZero;
+        return new IterationsEvaluator().evaluate(requisition) <= 0;
     }
 
 }

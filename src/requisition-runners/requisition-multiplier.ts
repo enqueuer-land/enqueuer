@@ -2,6 +2,7 @@ import {RequisitionModel} from '../models/inputs/requisition-model';
 import {Logger} from '../loggers/logger';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
+import {IterationsEvaluator} from './iterations-evaluator';
 
 export class RequisitionMultiplier {
     private readonly requisition: RequisitionModel;
@@ -39,8 +40,9 @@ export class RequisitionMultiplier {
         };
 
         try {
-            return (placeHolderReplacer.addVariableMap(Store.getData())
-                .replace(iterations) as any).iterations;
+            const replaced = (placeHolderReplacer.addVariableMap(Store.getData())
+                .replace(iterations) as any);
+            return new IterationsEvaluator().evaluate(replaced);
         } catch (err) {
             return undefined;
         }

@@ -11,3 +11,26 @@
         assertions:
         -   expect: store.executions
             toBeEqualTo: 1
+-   iterations: 1 === 0
+    onInit:
+        assertions:
+        -   expectToBeTruthy: false
+-   iterations: -1
+    onInit:
+        assertions:
+        -   expectToBeTruthy: false
+-   iterations: 0
+    onInit:
+        assertions:
+        -   expectToBeTruthy: false
+-   iterations: `1`
+    onInit:
+        assertions:
+        -   expectToBeTruthy: true
+-   iterations: 1 === 1
+    onInit:
+        store:
+            executed: true
+-   onInit:
+        assertions:
+        -   expectToBeDefined: store.executed

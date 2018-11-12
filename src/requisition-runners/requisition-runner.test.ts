@@ -50,7 +50,7 @@ describe('RequisitionRunner', () => {
         };
 
         expect(new RequisitionRunner(requisition).run()).resolves.toBe(report);
-        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({"timeout": "value"});
+        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({"name": "undefined [0]", "parent": undefined, "timeout": "value"});
     });
 
     it('Should return requisition report collection', done => {
