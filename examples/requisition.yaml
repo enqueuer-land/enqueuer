@@ -1,4 +1,5 @@
 -   name: iterations
+    id: test
     iterations: 10
     onInit:
         store:
@@ -25,6 +26,7 @@
         -   expect: requisition.anyStuff
             toBeEqualTo: `anyValue`
 -   name: third
+    id: third
     onInit:
         assertions:
         -   expect: requisition.parent.requisitions[3].name
