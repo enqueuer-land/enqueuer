@@ -15,7 +15,7 @@ export class MultiRequisitionRunner {
     constructor(requisitions: input.RequisitionModel[], name: string) {
         this.requisitions = this.addDefaultNames(requisitions);
         this.parent = this.createParent(name);
-        this.report = RequisitionDefaultReports.createDefaultReport(name);
+        this.report = RequisitionDefaultReports.createDefaultReport(this.parent);
     }
 
     public run(): Promise<output.RequisitionModel> {
@@ -25,7 +25,7 @@ export class MultiRequisitionRunner {
     }
 
     private createParent(filename: string) {
-        const parent: any = RequisitionDefaultReports.createDefaultReport(filename);
+        const parent: any = RequisitionDefaultReports.createDefaultReport({name: filename, id: filename});
         parent.requisitions = this.requisitions;
         return parent;
     }

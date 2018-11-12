@@ -1,15 +1,16 @@
-import {RequisitionModel} from '../../models/outputs/requisition-model';
+import * as output from '../../models/outputs/requisition-model';
 import {DateController} from '../../timers/date-controller';
 import {TestModel} from '../../models/outputs/test-model';
 
 export class RequisitionDefaultReports {
 
-    public static createDefaultReport(name: string, tests: TestModel[] = []): RequisitionModel {
+    public static createDefaultReport(base: {name: string, id?: string}, tests: TestModel[] = []): output.RequisitionModel {
         const valid = tests.length > 0 ? tests.every((test) => test.valid) : true;
         return {
             valid: valid,
             tests: tests,
-            name: name,
+            name: base.name,
+            id: base.id,
             subscriptions: [],
             publishers: [],
             time: {
@@ -21,24 +22,25 @@ export class RequisitionDefaultReports {
         };
     }
 
-    public static createRunningError(name: string, err: any): RequisitionModel {
-        return RequisitionDefaultReports.createDefaultReport(name, [{
+    public static createRunningError(base: {name: string, id?: string}, err: any): output.RequisitionModel {
+        return RequisitionDefaultReports.createDefaultReport(base, [{
             valid: false,
             name: 'Requisition ran',
             description: err
         }]);
     }
 
-    public static createSkippedReport(name: string): RequisitionModel {
-        return RequisitionDefaultReports.createDefaultReport(name, [{
+    public static createSkippedReport(base: {name: string, id?: string}): output.RequisitionModel {
+        return RequisitionDefaultReports.createDefaultReport(base, [{
                 valid: true,
                 name: 'Requisition skipped',
                 description: 'There is no iterations set to this requisition'
             }]);
     }
 
-    public static createIteratorReport(name: string): RequisitionModel {
-        return RequisitionDefaultReports.createDefaultReport(name + ' iterator collection');
+    public static createIteratorReport(base: {name: string, id?: string}): output.RequisitionModel {
+        base.name = base.name + ' iterator collection';
+        return RequisitionDefaultReports.createDefaultReport(base);
     }
 
 }

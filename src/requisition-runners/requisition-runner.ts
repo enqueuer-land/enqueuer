@@ -15,10 +15,12 @@ export class RequisitionRunner {
     private readonly requisitions: input.RequisitionModel[] = [];
     private readonly name: string;
     private readonly parent: input.RequisitionModel;
+    private readonly id?: string;
 
     public constructor(requisition: input.RequisitionModel, parent: input.RequisitionModel) {
         this.parent = parent;
         this.name = requisition.name;
+        this.id = requisition.id;
         Logger.info(`Initializing requisition '${requisition.name}'`);
         const items = new RequisitionMultiplier(requisition).multiply();
         if (items.length <= 0) {
@@ -33,7 +35,8 @@ export class RequisitionRunner {
         if (this.requisitions.length <= 1) {
             return this.startRequisition(this.requisitions[0]);
         } else {
-            return new Promise((resolve) => this.startIterator(RequisitionDefaultReports.createIteratorReport(this.name), resolve));
+            return new Promise((resolve) => this.startIterator(RequisitionDefaultReports.createIteratorReport(
+                {name: this.name, id: this.id}), resolve));
         }
     }
 
@@ -51,7 +54,7 @@ export class RequisitionRunner {
             });
         } catch (err) {
             Logger.error(`Error running requisition '${requisition.name}'`);
-            const report: output.RequisitionModel = RequisitionDefaultReports.createRunningError(requisition.name, err);
+            const report: output.RequisitionModel = RequisitionDefaultReports.createRunningError({name: requisition.name, id: this.id}, err);
             this.addReport(iteratorReport, report);
             this.startIterator(iteratorReport, resolve);
         }
@@ -97,7 +100,7 @@ export class RequisitionRunner {
     private startRequisition(requisition: input.RequisitionModel): Promise<output.RequisitionModel> {
         if (requisition === undefined) {
             Logger.info(`No requisition to run. Skipping`);
-            return Promise.resolve(RequisitionDefaultReports.createSkippedReport(this.name));
+            return Promise.resolve(RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id}));
         }
         Logger.debug(`Evaluating starting of requisition '${requisition ? requisition.name : 'no requisition'}'`);
         const fileMapCreator = new FileContentMapCreator(requisition);
@@ -109,7 +112,7 @@ export class RequisitionRunner {
             .replace(mapReplacedRequisition) as input.RequisitionModel;
         if (this.shouldSkipRequisition(mapReplacedRequisition)) {
             Logger.info(`Requisition will be skipped`);
-            return Promise.resolve(RequisitionDefaultReports.createSkippedReport(this.name));
+            return Promise.resolve(RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id}));
         }
         mapReplacedRequisition.parent = this.parent;
         Logger.trace(`Requisition runner starting requisition reporter for '${mapReplacedRequisition.name}'`);
@@ -139,6 +142,7 @@ export class RequisitionRunner {
         if (!requisition) {
             return true;
         }
+        //TODO eval it
         const definedButLessThanZero = (requisition.iterations !== undefined && requisition.iterations <= 0);
         const definedButInvalid = requisition.iterations !== undefined && typeof(requisition.iterations) != 'number';
         return definedButInvalid || definedButLessThanZero;

@@ -2,13 +2,14 @@ import {RequisitionDefaultReports} from "./requisition-default-reports";
 
 describe('RequisitionDefaultReports', () => {
     it('default', () => {
-        const report = RequisitionDefaultReports.createDefaultReport('g');
+        const report = RequisitionDefaultReports.createDefaultReport({name: 'g',  id: 'id'});
         expect(report.time.startTime).toBeDefined();
         expect(report.time.endTime).toBeDefined();
         expect(report.time.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
             "name": "g",
+            id: "id",
             publishers: [],
             "subscriptions": [],
             "tests": [],
@@ -18,7 +19,8 @@ describe('RequisitionDefaultReports', () => {
     });
 
     it('createIteratorReport', () => {
-        const report = RequisitionDefaultReports.createIteratorReport('g');
+        const report = RequisitionDefaultReports.createIteratorReport({name: 'g'});
+        expect(report.id).toBeUndefined();
         expect(report.time.startTime).toBeDefined();
         expect(report.time.endTime).toBeDefined();
         expect(report.time.totalTime).toBeLessThan(1000);
@@ -34,7 +36,7 @@ describe('RequisitionDefaultReports', () => {
     });
 
     it('createRunningError', () => {
-        const report = RequisitionDefaultReports.createRunningError('lopidio', 'err');
+        const report = RequisitionDefaultReports.createRunningError({name: 'lopidio'}, 'err');
         expect(report.time.startTime).toBeDefined();
         expect(report.time.endTime).toBeDefined();
         expect(report.time.totalTime).toBeLessThan(1000);
@@ -50,10 +52,10 @@ describe('RequisitionDefaultReports', () => {
     });
 
     it('createSkippedReport', () => {
-        const report = RequisitionDefaultReports.createSkippedReport('virgs');
+        const report = RequisitionDefaultReports.createSkippedReport({name: 'virgs'});
         expect(report.time.startTime).toBeDefined();
         expect(report.time.endTime).toBeDefined();
-        expect(report.time.totalTime).toBeLessThan(1000);
+        expect(report.time.totalTime).toBe(0);
         delete report.time;
         expect(report).toEqual({
                 "name": "virgs",
