@@ -1,7 +1,7 @@
 timeout: 3000
 publishers:
 -   name: publisher description
-    type: https-client
+    type: HTTPS
     url: https://localhost:4430/enqueuer
     method: POST
     payload:
@@ -17,7 +17,7 @@ publishers:
             expect: body
             toBeEqualTo: `https`
 subscriptions:
--   type: https-server
+-   type: https
     endpoint: /enqueuer
     port: 4430
     method: POST

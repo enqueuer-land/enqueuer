@@ -25,6 +25,7 @@ export class HttpSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
 
+        this.type = this.type.toLowerCase();
         this.secureServer = this.isSecureServer();
         this.proxy = this.isProxyServer();
         this.method = subscriptionAttributes.method.toLowerCase();

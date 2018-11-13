@@ -13,6 +13,16 @@ describe('Protocol', () => {
         expect(match).toBeTruthy();
     });
 
+    it('should ignore case going', () => {
+        const match = new Protocol('gui').matches('GUI');
+        expect(match).toBeTruthy();
+    });
+
+    it('should ignore case coming', () => {
+        const match = new Protocol('GUI').matches('gui');
+        expect(match).toBeTruthy();
+    });
+
     it('namesMatch alternative', () => {
         const match = new Protocol('').addAlternativeName('gui').matches('gui');
         expect(match).toBeTruthy();

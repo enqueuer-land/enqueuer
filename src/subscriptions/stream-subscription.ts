@@ -35,6 +35,7 @@ export class StreamSubscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
+        this.type = this.type.toLowerCase();
         if (this.response && typeof subscriptionAttributes.response != 'string') {
             this.response = new Json().stringify(subscriptionAttributes.response);
         }
