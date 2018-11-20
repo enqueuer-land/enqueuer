@@ -6,7 +6,8 @@ import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
 import {Protocol} from '../protocols/protocol';
 
-const protocol = new Protocol('http').addAlternativeName('http-client', 'https', 'https-client')
+const protocol = new Protocol('http')
+    .addAlternativeName('http-client', 'https', 'https-client')
     .registerAsPublisher();
 
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
