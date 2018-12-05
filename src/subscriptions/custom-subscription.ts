@@ -14,29 +14,30 @@ export class CustomSubscription extends Subscription {
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
         import(this.module).then((custom) => {
-            this.custom = custom;
+            this.custom = new custom.Subscription(subscriptionModel);
+
         }).catch((err) => {
             Logger.error(`Error loading module: ${err}`);
         });
     }
 
     public async subscribe(): Promise<void> {
-        return this.custom.subscribe(this, {store: Store.getData(), logger: Logger});
+        return this.custom.subscribe({store: Store.getData(), logger: Logger});
     }
 
     public async receiveMessage(): Promise<any> {
-        return this.custom.receiveMessage(this, {store: Store.getData(), logger: Logger});
+        return this.custom.receiveMessage({store: Store.getData(), logger: Logger});
     }
 
     public async unsubscribe(): Promise<any> {
         if (this.custom.unsubscribe) {
-            return this.custom.unsubscribe(this, {store: Store.getData(), logger: Logger});
+            return this.custom.unsubscribe({store: Store.getData(), logger: Logger});
         }
     }
 
     public async sendResponse(): Promise<any> {
         if (this.custom.sendResponse) {
-            return this.custom.sendResponse(this, {store: Store.getData(), logger: Logger});
+            return this.custom.sendResponse({store: Store.getData(), logger: Logger});
         }
     }
 }
