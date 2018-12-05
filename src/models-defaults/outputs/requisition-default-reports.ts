@@ -39,7 +39,6 @@ export class RequisitionDefaultReports {
     }
 
     public static createIteratorReport(base: {name: string, id?: string}): output.RequisitionModel {
-        base.name = base.name + ' iterator collection';
         return RequisitionDefaultReports.createDefaultReport(base);
     }
 

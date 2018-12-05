@@ -15,7 +15,7 @@ publishers:
         -   expect: body
             toBeEqualTo: `basic auth response`
 subscriptions:
--   type: http-server
+-   type: http
     endpoint: /basic
     port: 23068
     method: POST

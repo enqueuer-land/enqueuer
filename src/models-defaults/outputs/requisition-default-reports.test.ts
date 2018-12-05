@@ -26,7 +26,7 @@ describe('RequisitionDefaultReports', () => {
         expect(report.time.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
-            "name": "g iterator collection",
+            "name": "g",
             publishers: [],
             "subscriptions": [],
             "tests": [],

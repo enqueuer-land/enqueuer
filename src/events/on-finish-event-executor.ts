@@ -4,7 +4,7 @@ import {TestModel} from '../models/outputs/test-model';
 import {Finishable} from '../models/events/finishable';
 
 export class OnFinishEventExecutor extends EventExecutor {
-    private finishable: Finishable;
+    private readonly finishable: Finishable;
 
     constructor(name: string, finishable: Finishable) {
         super('onFinish', finishable.onFinish);

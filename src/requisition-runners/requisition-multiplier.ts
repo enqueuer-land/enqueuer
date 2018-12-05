@@ -15,7 +15,7 @@ export class RequisitionMultiplier {
 
     public multiply(): RequisitionModel[] {
 
-        if (this.iterations === undefined) {
+        if (this.iterations === undefined || this.iterations === 1) {
             return [this.requisition];
         }
 

@@ -46,11 +46,11 @@ describe('RequisitionRunner', () => {
 
     it('Should return requisition report', () => {
         const requisition: RequisitionModel = {
-            timeout: '<<keyName>>'
+            timeout: '<<keyName>>',
         };
 
         expect(new RequisitionRunner(requisition).run()).resolves.toBe(report);
-        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({"name": "undefined [0]", "parent": undefined, "timeout": "value"});
+        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({parent: undefined, timeout: "value"});
     });
 
     it('Should return requisition report collection', done => {
@@ -64,7 +64,7 @@ describe('RequisitionRunner', () => {
             expect(report.time).toBeDefined();
             delete report.time;
             expect(report).toEqual({
-                "name": "req name iterator collection",
+                "name": "req name",
                 "publishers": [],
                 "requisitions": [{"name": "I'm a report", "requisitions": [], "valid": true}, {
                     "name": "I'm a report",

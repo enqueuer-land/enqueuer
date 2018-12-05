@@ -13,7 +13,6 @@ const protocol = new Protocol('amqp')
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
 export class AmqpPublisher extends Publisher {
     private connection: any;
-    private readonly messageOptions: any;
 
     constructor(publisher: PublisherModel) {
         super(publisher);

@@ -133,7 +133,7 @@ export class RequisitionReporter {
         return new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger();
     }
 
-    private executeOnFinishFunction(): void {
+    private async executeOnFinishFunction(): Promise<void> {
         this.multiSubscriptionsReporter.onFinish();
         this.reportGenerator.addTests(new OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
         this.multiPublishersReporter.onFinish();

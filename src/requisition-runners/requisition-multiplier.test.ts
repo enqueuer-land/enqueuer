@@ -29,6 +29,8 @@ describe('RequisitionMultiplier', () => {
 
         const multiplied = new RequisitionMultiplier(requisition).multiply();
 
+
+        expect(multiplied.map(req => req.name)).toEqual(["file [0]", "file [1]", "file [2]", "file [3]", "file [4]", "file [5]", "file [6]", "file [7]", "file [8]", "file [9]"]);
         expect(multiplied.length).toBe(requisition.iterations);
     });
 
@@ -48,11 +50,11 @@ describe('RequisitionMultiplier', () => {
     });
 
     it('Should set default name', () => {
-
+        requisition.iterations = 1;
         const multiplied = new RequisitionMultiplier(requisition).multiply();
 
         expect(multiplied.length).toBe(requisition.iterations);
-        expect(multiplied[0].name).toBe('file [0]');
+        expect(multiplied[0].name).toBe('file');
     });
 
     it('Should default (null) iterations to 0', () => {
