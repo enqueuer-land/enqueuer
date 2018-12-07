@@ -86,13 +86,23 @@ export class RequisitionRunner {
         }
     }
 
+    private promiseSerial(promisifiedInnerRunners: (() => Promise<output.RequisitionModel>)[]): any {
+        return promisifiedInnerRunners.reduce((promise: any, promisifiedRunner: () => Promise<output.RequisitionModel>) =>
+                promise.then((result: output.RequisitionModel) => promisifiedRunner().then(Array.prototype.concat.bind(result))),
+            Promise.resolve([]));
+    }
+
     private async checkInnerRequisitions(parent: input.RequisitionModel): Promise<output.RequisitionModel[]> {
         if (parent.requisitions && parent.requisitions.length > 0) {
             Logger.info(`Handling inner ${parent.name} requisitions`);
-            return await Promise.all(parent.requisitions.map((requisition, index) => {
-                requisition.name = requisition.name || `${parent.name} - inner [${index}]`;
-                return new RequisitionRunner(requisition, parent).run();
-            }));
+
+            const promisifiedInnerRunners: (() => Promise<output.RequisitionModel>)[] = parent.requisitions
+                .map((requisition, index) => () => {
+                    requisition.name = requisition.name || `${parent.name} - inner [${index}]`;
+                    return new RequisitionRunner(requisition, parent).run();
+                });
+
+            return await this.promiseSerial(promisifiedInnerRunners);
         } else {
             return [];
         }
