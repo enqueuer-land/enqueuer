@@ -29,9 +29,12 @@ So you don't have to deal with a whole bunch of stuff you will not need.
 ###### Run it:
 
     $ nqr configFile.yml
+or
+
+    $ nqr -a testFile.yml
 
 #### Configuration file
-A configuration file must be used always. I said ALWAYS. I mean it.
+To save you sometime, a configuration file may be used.
 They tell how **enqueuer** should proceed. Which tests will be executed, log-level, generated files.
 You get the picture.
 This file look like this: ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-config.png "config-file.yml")
