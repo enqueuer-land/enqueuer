@@ -40,9 +40,10 @@ You get the picture.
 This file look like this: ![config-file](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-config.png "config-file.yml")
 
 There are some examples
-[here](https://github.com/lopidio/enqueuer/blob/develop/enqueuer.yml),
-[here](https://github.com/lopidio/enqueuer/blob/develop/src/inceptionTest/beingTested.yml ) and
-[here](https://github.com/lopidio/enqueuer/blob/develop/src/inceptionTest/tester.yml).
+[here](https://github.com/lopidio/enqueuer/blob/develop/conf/singleRun.yml),
+[here](https://github.com/lopidio/enqueuer/blob/develop/conf/daemonRun.yml),
+[here](https://github.com/lopidio/enqueuer/blob/develop/src/inception-test/conf/beingTested.yml) and
+[here](https://github.com/lopidio/enqueuer/blob/develop/src/inception-test/conf/tester.json).
 If you want to know more about them, [click here](https://github.com/lopidio/enqueuer/blob/develop/docs/instructions/config-file.yml "config file description").
 
 #### Installing new protocols
