@@ -1,4 +1,6 @@
 import {Command} from 'commander';
+import {Logger} from '../loggers/logger';
+
 const packageJson = require('../../package.json');
 
 let commander = {};
@@ -17,32 +19,36 @@ let singleRunFilesIgnoring: string[] = [];
 let daemonTypes: string[] = [];
 
 let refreshCommander = (commandLineArguments: string[]) => {
-    let commander = new Command()
-        .version(process.env.npm_package_version || packageJson.version, '-v, --version')
-        .allowUnknownOption()
-        .usage('[options] <config-file-path>')
-        .option('-q, --quiet', 'disable logging', false)
-        .option('-b, --verbosity <level>', 'set verbosity [trace, debug, info, warn, error, fatal]')
-        .option('-c, --config-file <path>', 'set configurationFile')
-        .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
-        .option('-s, --store [store]', 'add variables values to this session',
-            (val: string, memo: string[]) => {
-                const split = val.split('=');
-                if (split.length == 2) {
-                    commandLineStore[split[0]] = split[1];
-                }
-                memo.push(val);
-                return memo;
-            }, [])
-        .option('-d, --daemon <type>', 'print in daemon mode with default values of <type>',
-            (val: string) => daemonTypes.push(val), [])
-        .option('-a, --add-file-single-run <file>', 'add file to be tested in single-run',
-            (val: string) => singleRunFiles.push(val), [])
-        .option('-A, --add-file-and-ignore-single-run <file>', 'add file to be tested and ignore the ones set in single-run  ',
-            (val: string) => singleRunFilesIgnoring.push(val), [])
-        .option('-p, --protocols-description [protocol]', 'describe protocols')
-        .parse(commandLineArguments || ['path', 'enqueuer']);
-    return commander;
+    try {
+        return new Command()
+            .version(process.env.npm_package_version || packageJson.version, '-v, --version')
+            .allowUnknownOption()
+            .usage('[options] <config-file-path>')
+            .option('-q, --quiet', 'disable logging', false)
+            .option('-b, --verbosity <level>', 'set verbosity [trace, debug, info, warn, error, fatal]')
+            .option('-c, --config-file <path>', 'set configurationFile')
+            .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
+            .option('-s, --store [store]', 'add variables values to this session',
+                (val: string, memo: string[]) => {
+                    const split = val.split('=');
+                    if (split.length == 2) {
+                        commandLineStore[split[0]] = split[1];
+                    }
+                    memo.push(val);
+                    return memo;
+                }, [])
+            .option('-d, --daemon <type>', 'print in daemon mode with default values of <type>',
+                (val: string) => daemonTypes.push(val), [])
+            .option('-a, --add-file-single-run <file>', 'add file to be tested in single-run',
+                (val: string) => singleRunFiles.push(val), [])
+            .option('-A, --add-file-and-ignore-single-run <file>', 'add file to be tested and ignore the ones set in single-run  ',
+                (val: string) => singleRunFilesIgnoring.push(val), [])
+            .option('-p, --protocols-description [protocol]', 'describe protocols')
+            .parse(commandLineArguments || ['path', 'enqueuer']);
+    } catch (err) {
+        Logger.warning(err);
+        return {};
+    }
 };
 
 if (!testMode) {
