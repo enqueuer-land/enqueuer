@@ -1,5 +1,7 @@
+component: requisition
 publishers:
 -   name: publisher proxy
+    component: publisher
     type: http
     url: http://localhost:23085/proxy/idValue?query=proxied
     method: PATCH

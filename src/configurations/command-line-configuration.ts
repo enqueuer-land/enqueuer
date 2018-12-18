@@ -3,7 +3,13 @@ const packageJson = require('../../package.json');
 
 let commander = {};
 
-const testMode = process.argv[1].toString().match('jest');
+let testMode = false;
+if (process.argv.length > 1) {
+    const secondArgument = process.argv[1];
+    if (secondArgument) {
+        testMode = !!secondArgument.toString().match('jest');
+    }
+}
 
 let commandLineStore: any = {};
 let singleRunFiles: string[] = [];
