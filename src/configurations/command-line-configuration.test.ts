@@ -122,6 +122,10 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.singleRunFilesIgnoring()).toEqual(['file', 'file2']);
     });
 
+    it('handle null procces.argv', () => {
+        expect (() => commanderRefresher()).not.toThrow();
+    });
+
     it('getStore -s', () => {
         const option = ['-s', '--store'];
         const store = {

@@ -41,7 +41,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
         .option('-A, --add-file-and-ignore-single-run <file>', 'add file to be tested and ignore the ones set in single-run  ',
             (val: string) => singleRunFilesIgnoring.push(val), [])
         .option('-p, --protocols-description [protocol]', 'describe protocols')
-        .parse(commandLineArguments || ''); //TODO create test for it
+        .parse(commandLineArguments || ['path', 'enqueuer']);
     return commander;
 };
 
