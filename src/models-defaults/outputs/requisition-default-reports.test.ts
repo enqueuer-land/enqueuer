@@ -71,4 +71,25 @@ describe('RequisitionDefaultReports', () => {
             }
         );
     });
+
+    it('createIgnoredReport', () => {
+        const report = RequisitionDefaultReports.createIgnoredReport({name: 'virgs'});
+        expect(report.time.startTime).toBeDefined();
+        expect(report.time.endTime).toBeDefined();
+        expect(report.time.totalTime).toBe(0);
+        delete report.time;
+        expect(report).toEqual({
+                "name": "virgs",
+                publishers: [],
+                "subscriptions": [],
+                "tests": [{
+                    "description": "Requisitions was not ran",
+                    "name": "Requisition ignored",
+                    "valid": true
+                }],
+                "valid": true,
+                requisitions: []
+            }
+        );
+    });
 });

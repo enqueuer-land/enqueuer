@@ -125,6 +125,10 @@ export class RequisitionRunner {
             Logger.info(`Requisition will be skipped`);
             return Promise.resolve(RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id}));
         }
+        if (mapReplacedRequisition.ignore) {
+            Logger.info(`Requisition will be ignored`);
+            return Promise.resolve(RequisitionDefaultReports.createIgnoredReport({name: this.name, id: this.id}));
+        }
         mapReplacedRequisition.parent = this.parent;
         Logger.trace(`Requisition runner starting requisition reporter for '${mapReplacedRequisition.name}'`);
         return this.startRequisitionReporter(mapReplacedRequisition);

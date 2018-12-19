@@ -79,7 +79,7 @@ export class ReportGenerator {
         };
         if (timesReport.totalTime <= timesReport.timeout) {
             timeoutTest.valid = true;
-            timeoutTest.description = 'Requisition has not timed out';
+            timeoutTest.description = `Requisition has not timed out: ${timesReport.totalTime} <= ${this.timeout}`;
         }
         return timeoutTest;
     }

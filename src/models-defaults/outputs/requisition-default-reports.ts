@@ -38,6 +38,14 @@ export class RequisitionDefaultReports {
             }]);
     }
 
+    public static createIgnoredReport(base: {name: string, id?: string}): output.RequisitionModel {
+        return RequisitionDefaultReports.createDefaultReport(base, [{
+                valid: true,
+                name: 'Requisition ignored',
+                description: 'Requisitions was not ran'
+            }]);
+    }
+
     public static createIteratorReport(base: {name: string, id?: string}): output.RequisitionModel {
         return RequisitionDefaultReports.createDefaultReport(base);
     }

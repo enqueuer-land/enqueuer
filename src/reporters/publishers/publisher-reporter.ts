@@ -29,21 +29,27 @@ export class PublisherReporter {
     }
 
     public publish(): Promise<void> {
-        Logger.trace(`Publishing ${this.report.name}`);
         return new Promise((resolve, reject) => {
-            this.publisher.publish()
-                .then(() => {
-                    Logger.debug(`${this.report.name} published`);
-                    this.report.publishTime = new DateController().toString();
-                    this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
-                    this.executeOnMessageReceivedFunction();
-                    resolve();
-                })
-                .catch((err: any) => {
-                    Logger.error(`${this.report.name} fail publishing: ${err}`);
-                    this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
-                    reject(err);
-                });
+            if (this.publisher.ignore) {
+                Logger.trace(`Ignoring publisher ${this.report.name}`);
+                resolve();
+            } else {
+                Logger.trace(`Publishing ${this.report.name}`);
+                this.publisher.publish()
+                    .then(() => {
+                        Logger.debug(`${this.report.name} published`);
+                        this.report.publishTime = new DateController().toString();
+                        this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
+                        this.executeOnMessageReceivedFunction();
+                        resolve();
+                    })
+                    .catch((err: any) => {
+                        Logger.error(`${this.report.name} fail publishing: ${err}`);
+                        this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
+                        reject(err);
+                    });
+
+            }
         });
     }
 
@@ -54,14 +60,16 @@ export class PublisherReporter {
     }
 
     public onFinish(): void {
-        this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('publisher', this.publisher).trigger());
+        if (!this.publisher.ignore) {
+            this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('publisher', this.publisher).trigger());
+        }
     }
 
     private pushResponseMessageReceivedTest() {
         this.report.messageReceived = this.publisher.messageReceived;
         const publisherHasAssertions = this.publisher.onMessageReceived &&
-                                        this.publisher.onMessageReceived.assertions &&
-                                        this.publisher.onMessageReceived.assertions.length > 0;
+            this.publisher.onMessageReceived.assertions &&
+            this.publisher.onMessageReceived.assertions.length > 0;
         if (publisherHasAssertions) {
             let responseTest = {
                 name: 'Response message received',
@@ -77,11 +85,15 @@ export class PublisherReporter {
     }
 
     private executeOnMessageReceivedFunction() {
-        this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('publisher', this.publisher).trigger());
+        if (!this.publisher.ignore) {
+            this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('publisher', this.publisher).trigger());
+        }
     }
 
     private executeOnInitFunction(publisher: input.PublisherModel) {
-        this.report.tests = this.report.tests.concat(new OnInitEventExecutor('publisher', publisher).trigger());
+        if (!publisher.ignore) {
+            this.report.tests = this.report.tests.concat(new OnInitEventExecutor('publisher', publisher).trigger());
+        }
     }
 
 }

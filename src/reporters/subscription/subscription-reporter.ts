@@ -67,43 +67,52 @@ export class SubscriptionReporter {
 
     public subscribe(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Logger.trace(`Starting ${this.subscription.name} time out`);
-            this.initializeTimeout();
-            Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
-            this.subscription.subscribe()
-                .then(() => {
-                    this.handleSubscription(reject, resolve);
-                })
-                .catch((err: any) => {
-                    Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
-                    reject(err);
-                });
+            if (this.subscription.ignore) {
+                Logger.trace(`Subscription ${this.subscription.name} is ignored`);
+                resolve();
+            } else {
+                Logger.trace(`Starting ${this.subscription.name} time out`);
+                this.initializeTimeout();
+                Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
+                this.subscription.subscribe()
+                    .then(() => {
+                        this.handleSubscription(reject, resolve);
+                    })
+                    .catch((err: any) => {
+                        Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
+                        reject(err);
+                    });
+            }
         });
     }
 
     public receiveMessage(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.subscription.receiveMessage()
-                .then((message: any) => {
-                    Logger.debug(`${this.subscription.name} received its message`);
-                    if (message !== null || message !== undefined) {
-                        this.handleMessageArrival(message);
-                        this.sendSyncResponse(resolve, message, reject);
-                    } else {
-                        Logger.warning(`${this.subscription.name} message is null or undefined`);
-                    }
-                })
-                .catch((err: any) => {
-                    this.subscription.unsubscribe().catch(console.log.bind(console));
-                    Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
-                    reject(err);
-                });
+            if (this.subscription.ignore) {
+                resolve();
+            } else {
+                this.subscription.receiveMessage()
+                    .then((message: any) => {
+                        Logger.debug(`${this.subscription.name} received its message`);
+                        if (message !== null || message !== undefined) {
+                            this.handleMessageArrival(message);
+                            this.sendSyncResponse(resolve, message, reject);
+                        } else {
+                            Logger.warning(`${this.subscription.name} message is null or undefined`);
+                        }
+                    })
+                    .catch((err: any) => {
+                        this.subscription.unsubscribe().catch(console.log.bind(console));
+                        Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
+                        reject(err);
+                    });
+            }
         });
     }
 
     private handleSubscription(reject: any, resolve: any) {
         if (this.hasTimedOut) {
-            const message = `Ignoring subscription '${this.subscription.name}' subscription because it has timed out`;
+            const message = `Subscription '${this.subscription.name}' subscription because it has timed out`;
             Logger.error(message);
             reject(message);
         } else {
@@ -137,10 +146,13 @@ export class SubscriptionReporter {
             this.totalTime = new DateController();
         }
         time.totalTime = this.totalTime.getTime() - this.startTime.getTime();
-        const finalReporter = new SubscriptionFinalReporter(this.subscribed,
-            this.subscription.avoid,
-            !!this.subscription.messageReceived,
-            time);
+        const finalReporter = new SubscriptionFinalReporter({
+            subscribed: this.subscribed,
+            avoidable: this.subscription.avoid,
+            hasMessage: !!this.subscription.messageReceived,
+            time: time,
+            ignore: this.subscription.ignore
+        });
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
         this.report.messageReceived = this.subscription.messageReceived;
@@ -150,7 +162,7 @@ export class SubscriptionReporter {
 
     public async unsubscribe(): Promise<void> {
         process.removeListener('SIGINT', this.killListener)
-                .removeListener('SIGTERM', this.killListener);
+            .removeListener('SIGTERM', this.killListener);
 
         Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
         if (this.subscribed) {
@@ -160,7 +172,9 @@ export class SubscriptionReporter {
 
     public onFinish() {
         Logger.trace(`Executing subscription onFinish`);
-        this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('subscription', this.subscription).trigger());
+        if (!this.subscription.ignore) {
+            this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('subscription', this.subscription).trigger());
+        }
     }
 
     private handleMessageArrival(message: any) {
@@ -184,8 +198,10 @@ export class SubscriptionReporter {
     }
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
-        Logger.debug(`Executing subscription::onInit hook function`);
-        this.report.tests = this.report.tests.concat(new OnInitEventExecutor('subscription', subscriptionAttributes).trigger());
+        if (!subscriptionAttributes.ignore) {
+            Logger.debug(`Executing subscription::onInit hook function`);
+            this.report.tests = this.report.tests.concat(new OnInitEventExecutor('subscription', subscriptionAttributes).trigger());
+        }
     }
 
     private executeOnMessageReceivedFunction() {

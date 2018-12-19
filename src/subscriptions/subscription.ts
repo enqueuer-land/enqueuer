@@ -12,6 +12,7 @@ export abstract class Subscription {
     public response?: any;
     public type: string;
     public avoid: boolean = false;
+    public ignore: boolean = false;
 
     [propName: string]: any;
     protected constructor(subscriptionAttributes: SubscriptionModel) {
