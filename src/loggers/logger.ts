@@ -36,7 +36,7 @@ export class Logger {
     }
 }
 
-if (process.argv[1].toString().match('jest')) {
+if (process.argv.length > 1 && process.argv[1].toString().match('jest')) {
     console.log = function() {
         //empty
     };

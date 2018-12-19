@@ -27,7 +27,7 @@ export async function start(): Promise<number> {
     }
 }
 
-const testMode = process.argv[1].toString().match('jest');
+const testMode = process.argv.length > 1 && process.argv[1].toString().match('jest');
 
 if (!testMode) {
     start()
