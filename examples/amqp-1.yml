@@ -1,6 +1,7 @@
 -   name: server subscription
     publishers:
-    -   type: amqp-1
+    -   type: custom
+        module: ../../protocols/publishers/amqp10
         payload:
             body: direct hello world
         connection:
@@ -17,7 +18,8 @@
             -   expectToBeDefined: settled
             -   expectToBeDefined: remote_settled
     subscriptions:
-    -   type: amqp-1
+    -   type: custom
+        module: ../../protocols/subscriptions/amqp10
         server: true
         connection:
             port: 23074
@@ -28,7 +30,8 @@
                 toBeEqualTo: subscription.parent.publishers[0].payload.body
 -   name: broker subscription
     publishers:
-    -   type: amqp-1
+    -   type: custom
+        module: ../../protocols/publishers/amqp10
         options:
             target: /queue/Q
         payload:
@@ -47,7 +50,8 @@
             -   expectToBeDefined: settled
             -   expectToBeDefined: remote_settled
     subscriptions:
-    -   type: amqp-1
+    -   type: custom
+        module: ../../protocols/subscriptions/amqp10
         connection:
             host: localhost
             port: 5672

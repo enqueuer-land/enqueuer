@@ -21,7 +21,7 @@ export class CustomPublisher extends Publisher {
     }
 
     public async publish(): Promise<void> {
-        return this.custom.publish({store: Store.getData(), logger: Logger});
+        this.messageReceived = await this.custom.publish({store: Store.getData(), logger: Logger});
     }
 
 }
