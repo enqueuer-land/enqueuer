@@ -90,11 +90,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/sqs-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./publishers/standard-output-publisher');
 } catch (err) {
   /* do nothing*/
@@ -176,11 +171,6 @@ try {
 }
 try {
   require('./subscriptions/null-subscription');
-} catch (err) {
-  /* do nothing*/
-}
-try {
-  require('./subscriptions/sqs-subscription');
 } catch (err) {
   /* do nothing*/
 }

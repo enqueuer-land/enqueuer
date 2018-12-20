@@ -2,7 +2,8 @@ name: requisition description
 timeout: 5000
 publishers:
 -   name: publisher description
-    type: sqs
+    type: custom
+    module: ../../protocols/publishers/sqs
     payload: enqueuer
     awsConfiguration: <<awsConfiguration>>
     messageParams:
@@ -22,7 +23,8 @@ publishers:
             expectToBeDefined: MessageId
 subscriptions:
 -   name: subscription description
-    type: sqs
+    type: custom
+    module: ../../protocols/subscriptions/sqs
     awsConfiguration: <<awsConfiguration>>
     messageParams:
         QueueUrl: http://localhost:9324/queue/enqueuerQueue
