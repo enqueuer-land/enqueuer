@@ -1,6 +1,7 @@
 -   name: creating exchange
     publishers:
-    -   type: amqp
+    -   type: custom
+        module: ../../protocols/publishers/amqp
         payload: notPassive
         options:
             host: localhost
@@ -11,7 +12,8 @@
         routingKey: creating.exchange.example
 -   name: using just created exchange
     publishers:
-    -   type: amqp
+    -   type: custom
+        module: ../../protocols/publishers/amqp
         payload:
             how:
                 about: a new object?
@@ -31,7 +33,8 @@
             -   expect: publisher.options.port
                 toBeEqualTo: 5672
     subscriptions:
-    -   type: amqp
+    -   type: custom
+        module: ../../protocols/subscriptions/amqp
         timeout: 3000
         options:
             host: localhost
@@ -54,14 +57,16 @@
                 toBeEqualTo: `enqueuer.integration.test.routing.key`
 -   name: default exhange
     publishers:
-    -   type: amqp
+    -   type: custom
+        module: ../../protocols/publishers/amqp
         payload: default exchange
         options:
             host: localhost
             port: 5672
         routingKey: enqueuer.default.exchange
     subscriptions:
-    -   type: amqp
+    -   type: custom
+        module: ../../protocols/subscriptions/amqp
         timeout: 3000
         options:
             host: localhost

@@ -55,11 +55,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/amqp-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./publishers/custom-publisher');
 } catch (err) {
   /* do nothing*/
@@ -121,11 +116,6 @@ try {
 }
 try {
   require('./run-modes/single-run-executor');
-} catch (err) {
-  /* do nothing*/
-}
-try {
-  require('./subscriptions/amqp-subscription');
 } catch (err) {
   /* do nothing*/
 }
