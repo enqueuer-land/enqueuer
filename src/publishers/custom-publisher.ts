@@ -16,7 +16,7 @@ export class CustomPublisher extends Publisher {
         import(this.module).then((custom) => {
             this.custom = new custom.Publisher(model);
         }).catch((err) => {
-           Logger.error(`Error loading module: ${err}`);
+            Logger.error(`Error loading module '${this.module}': ${err}`);
         });
     }
 

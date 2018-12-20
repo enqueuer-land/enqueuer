@@ -1,6 +1,5 @@
 import {ProtocolManager} from "./protocol-manager";
 import '../injectable-files-list'
-import "../publishers/zeromq-publisher";
 import {Protocol} from "./protocol";
 import prettyjson from "prettyjson";
 jest.mock('prettyjson')

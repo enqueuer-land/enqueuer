@@ -105,11 +105,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/zeromq-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./run-modes/daemon-run-executor');
 } catch (err) {
   /* do nothing*/
@@ -186,11 +181,6 @@ try {
 }
 try {
   require('./subscriptions/udp-subscription');
-} catch (err) {
-  /* do nothing*/
-}
-try {
-  require('./subscriptions/zeromq-subscription');
 } catch (err) {
   /* do nothing*/
 }

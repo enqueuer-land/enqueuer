@@ -17,7 +17,7 @@ export class CustomSubscription extends Subscription {
             this.custom = new custom.Subscription(subscriptionModel);
 
         }).catch((err) => {
-            Logger.error(`Error loading module: ${err}`);
+            Logger.error(`Error loading module '${this.module}': ${err}`);
         });
     }
 
