@@ -75,11 +75,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/kafka-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./publishers/mqtt-publisher');
 } catch (err) {
   /* do nothing*/
@@ -151,11 +146,6 @@ try {
 }
 try {
   require('./subscriptions/http-subscription');
-} catch (err) {
-  /* do nothing*/
-}
-try {
-  require('./subscriptions/kafka-subscription');
 } catch (err) {
   /* do nothing*/
 }
