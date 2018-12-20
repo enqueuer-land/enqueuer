@@ -104,7 +104,7 @@ export class Protocol {
     }
 
     private createLibrary(name: string): Library | undefined {
-        const dependencies = packageJson.dependencies[name] || packageJson.optionalDependencies[name];
+        const dependencies = packageJson.dependencies[name] || packageJson.devDependencies[name];
         if (dependencies) {
             return {
                 name: name,

@@ -105,11 +105,6 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/stomp-publisher');
-} catch (err) {
-  /* do nothing*/
-}
-try {
   require('./publishers/stream-publisher');
 } catch (err) {
   /* do nothing*/
@@ -201,11 +196,6 @@ try {
 }
 try {
   require('./subscriptions/standard-input-subscription');
-} catch (err) {
-  /* do nothing*/
-}
-try {
-  require('./subscriptions/stomp-subscription');
 } catch (err) {
   /* do nothing*/
 }

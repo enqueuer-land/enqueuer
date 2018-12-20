@@ -32,17 +32,17 @@ RUN npm install -g n
 #kafka
 EXPOSE 9093
 #kafka
-EXPOSE 9092 
+EXPOSE 9092
 #amqp
-EXPOSE 5672 
+EXPOSE 5672
 #mqtt
-EXPOSE 1883 
+EXPOSE 1883
 #stomp
 EXPOSE 61613
-#sqs 
-EXPOSE 9324 
+#sqs
+EXPOSE 9324
 #zeromq
-EXPOSE 23000 
+EXPOSE 23000
 EXPOSE 3000
 
 ENTRYPOINT [ "./config/docker-init.sh" ]

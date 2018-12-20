@@ -14,16 +14,16 @@
                         <div class="text-center">
                             <img src="../docs/images/fullLogo1.png">
                         </div>
-                        <div class="accordion " id="idNB8kX1IOpo  mb-1">
+                        <div class="accordion " id="idyyWxuewMIM  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idNB8kX1IOpo">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idQBdT4rM0nX" style="text-decoration: none;">
+                    <div class="card-header" id="idyyWxuewMIM">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#iddbTcaRYrvE" style="text-decoration: none;">
                             <h6>Tests</h6>
                         </a>
                     </div>
-                    <div id="idQBdT4rM0nX" class="collapse" data-parent="#idNB8kX1IOpo">
+                    <div id="iddbTcaRYrvE" class="collapse" data-parent="#idyyWxuewMIM">
                       <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >14/14 (100%) 97ms</h6>
+                        <h6 class="text-success text-right" >4/4 (100%) 91ms</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
                     <tr>
@@ -37,85 +37,25 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>examples › examples/amqp.yml › creating exchange › creating exchange</td>
+                                  <td>examples › examples/stomp.yml › Requisition #0 › Requisition #0</td>
                                   <td>No time out</td>
-                                  <td>Requisition has not timed out: 30 <= 5000</td>
+                                  <td>Requisition has not timed out: 61 <= 3000</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
-                                  <td>examples › examples/amqp.yml › creating exchange › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
+                                  <td>examples › examples/stomp.yml › Requisition #0 › subscription description</td>
+                                  <td>Payload</td>
+                                  <td>Expected 'payload' to be equal to 'stompQueue'. Received 'stompQueue'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">3</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › using just created exchange</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out: 25 <= 5000</td>
+                                  <td>examples › examples/stomp.yml › Requisition #0 › subscription description</td>
+                                  <td>Message received</td>
+                                  <td>Subscription has received its message</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">4</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expected 'payload.how.about' to be equal to 'a new object?'. Received 'a new object?'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">5</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.key' to be equal to 'value'. Received 'value'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">6</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Other Header Value</td>
-                                  <td>Expected 'headers.otherKey' to be equal to 'otherValue'. Received 'otherValue'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">7</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Routing Key</td>
-                                  <td>Expected 'deliveryInfo.routingKey' to be equal to 'enqueuer.integration.test.routing.key'. Received 'enqueuer.integration.test.routing.key'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">8</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">9</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › Publisher #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'publisher.options.port' to be equal to '5672'. Received '5672'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">10</th>
-                                  <td>examples › examples/amqp.yml › using just created exchange › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">11</th>
-                                  <td>examples › examples/amqp.yml › default exhange › default exhange</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out: 22 <= 5000</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">12</th>
-                                  <td>examples › examples/amqp.yml › default exhange › Subscription #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'data' to be equal to 'default exchange'. Received 'default exchange'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">13</th>
-                                  <td>examples › examples/amqp.yml › default exhange › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">14</th>
-                                  <td>examples › examples/amqp.yml › default exhange › Publisher #0</td>
+                                  <td>examples › examples/stomp.yml › Requisition #0 › publisher description</td>
                                   <td>Published</td>
                                   <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
@@ -124,34 +64,34 @@
                 </table>
                       </div>
                     </div>
-                </div><div class="accordion " id="idhXtD2OUG5o  mb-1">
-                    <div class="accordion " id="idhXtD2OUG5o  mb-1">
+                </div><div class="accordion " id="idG4901dWQ0W  mb-1">
+                    <div class="accordion " id="idG4901dWQ0W  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idOqI6Ze3xii">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id9iyKKE7w0g" style="text-decoration: none;">
+                    <div class="card-header" id="idyLVqERod5H">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idAknNSF79LF" style="text-decoration: none;">
                             <h6>Requisitions</h6>
                         </a>
                     </div>
-                    <div id="id9iyKKE7w0g" class="collapse" data-parent="#idOqI6Ze3xii">
+                    <div id="idAknNSF79LF" class="collapse" data-parent="#idyLVqERod5H">
                       <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idOqI6Ze3xii">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idPVDklY024s" style="text-decoration: none;">
-                            <h6>examples/amqp.yml</h6>
+                    <div class="card-header" id="idyLVqERod5H">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id6leWVuyGLx" style="text-decoration: none;">
+                            <h6>examples/stomp.yml</h6>
                         </a>
                     </div>
-                    <div id="idPVDklY024s" class="collapse" data-parent="#idOqI6Ze3xii">
+                    <div id="id6leWVuyGLx" class="collapse" data-parent="#idyLVqERod5H">
                       <div class="card-body bg-light p-2">
-                        <div class="accordion " id="idKv56jqGgy0  mb-1">
+                        <div class="accordion " id="idJSDS6luByf  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idKv56jqGgy0">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idoPwpcWdHL4" style="text-decoration: none;">
+                    <div class="card-header" id="idJSDS6luByf">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idhInEc3suWe" style="text-decoration: none;">
                             <h6>Tests</h6>
                         </a>
                     </div>
-                    <div id="idoPwpcWdHL4" class="collapse" data-parent="#idKv56jqGgy0">
+                    <div id="idhInEc3suWe" class="collapse" data-parent="#idJSDS6luByf">
                       <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >14/14 (100%) 81ms</h6>
+                        <h6 class="text-success text-right" >4/4 (100%) 66ms</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
                     <tr>
@@ -165,85 +105,25 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>examples/amqp.yml › creating exchange › creating exchange</td>
+                                  <td>examples/stomp.yml › Requisition #0 › Requisition #0</td>
                                   <td>No time out</td>
-                                  <td>Requisition has not timed out: 30 <= 5000</td>
+                                  <td>Requisition has not timed out: 61 <= 3000</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
-                                  <td>examples/amqp.yml › creating exchange › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
+                                  <td>examples/stomp.yml › Requisition #0 › subscription description</td>
+                                  <td>Payload</td>
+                                  <td>Expected 'payload' to be equal to 'stompQueue'. Received 'stompQueue'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">3</th>
-                                  <td>examples/amqp.yml › using just created exchange › using just created exchange</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out: 25 <= 5000</td>
+                                  <td>examples/stomp.yml › Requisition #0 › subscription description</td>
+                                  <td>Message received</td>
+                                  <td>Subscription has received its message</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">4</th>
-                                  <td>examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expected 'payload.how.about' to be equal to 'a new object?'. Received 'a new object?'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">5</th>
-                                  <td>examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.key' to be equal to 'value'. Received 'value'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">6</th>
-                                  <td>examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Other Header Value</td>
-                                  <td>Expected 'headers.otherKey' to be equal to 'otherValue'. Received 'otherValue'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">7</th>
-                                  <td>examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Routing Key</td>
-                                  <td>Expected 'deliveryInfo.routingKey' to be equal to 'enqueuer.integration.test.routing.key'. Received 'enqueuer.integration.test.routing.key'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">8</th>
-                                  <td>examples/amqp.yml › using just created exchange › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">9</th>
-                                  <td>examples/amqp.yml › using just created exchange › Publisher #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'publisher.options.port' to be equal to '5672'. Received '5672'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">10</th>
-                                  <td>examples/amqp.yml › using just created exchange › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">11</th>
-                                  <td>examples/amqp.yml › default exhange › default exhange</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out: 22 <= 5000</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">12</th>
-                                  <td>examples/amqp.yml › default exhange › Subscription #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'data' to be equal to 'default exchange'. Received 'default exchange'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">13</th>
-                                  <td>examples/amqp.yml › default exhange › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">14</th>
-                                  <td>examples/amqp.yml › default exhange › Publisher #0</td>
+                                  <td>examples/stomp.yml › Requisition #0 › publisher description</td>
                                   <td>Published</td>
                                   <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
@@ -252,34 +132,34 @@
                 </table>
                       </div>
                     </div>
-                </div><div class="accordion " id="idH7niB9BBVW  mb-1">
-                    <div class="accordion " id="idH7niB9BBVW  mb-1">
+                </div><div class="accordion " id="idw9K30mysnl  mb-1">
+                    <div class="accordion " id="idw9K30mysnl  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idJPiMi7tQ8D">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idMcEoo7PM9A" style="text-decoration: none;">
+                    <div class="card-header" id="idH5EV9ecNdH">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idoKncn2XTcQ" style="text-decoration: none;">
                             <h6>Requisitions</h6>
                         </a>
                     </div>
-                    <div id="idMcEoo7PM9A" class="collapse" data-parent="#idJPiMi7tQ8D">
+                    <div id="idoKncn2XTcQ" class="collapse" data-parent="#idH5EV9ecNdH">
                       <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idJPiMi7tQ8D">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idacPbk3WxGj" style="text-decoration: none;">
-                            <h6>creating exchange</h6>
+                    <div class="card-header" id="idH5EV9ecNdH">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idkjwKZKgkWh" style="text-decoration: none;">
+                            <h6>Requisition #0</h6>
                         </a>
                     </div>
-                    <div id="idacPbk3WxGj" class="collapse" data-parent="#idJPiMi7tQ8D">
+                    <div id="idkjwKZKgkWh" class="collapse" data-parent="#idH5EV9ecNdH">
                       <div class="card-body bg-light p-2">
-                        <div class="accordion " id="idZhP40ctiuS  mb-1">
+                        <div class="accordion " id="idX5HhB0ltY7  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idZhP40ctiuS">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idHDxRF9PpAm" style="text-decoration: none;">
+                    <div class="card-header" id="idX5HhB0ltY7">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id0xIXRVU3Z2" style="text-decoration: none;">
                             <h6>Tests</h6>
                         </a>
                     </div>
-                    <div id="idHDxRF9PpAm" class="collapse" data-parent="#idZhP40ctiuS">
+                    <div id="id0xIXRVU3Z2" class="collapse" data-parent="#idX5HhB0ltY7">
                       <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >2/2 (100%) 30ms</h6>
+                        <h6 class="text-success text-right" >4/4 (100%) 61ms</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
                   <thead>
                     <tr>
@@ -293,13 +173,25 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>creating exchange › creating exchange</td>
+                                  <td>Requisition #0 › Requisition #0</td>
                                   <td>No time out</td>
-                                  <td>Requisition has not timed out: 30 <= 5000</td>
+                                  <td>Requisition has not timed out: 61 <= 3000</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
-                                  <td>creating exchange › Publisher #0</td>
+                                  <td>Requisition #0 › subscription description</td>
+                                  <td>Payload</td>
+                                  <td>Expected 'payload' to be equal to 'stompQueue'. Received 'stompQueue'</td>
+                                  <td class="bg-success text-center" >true</td>
+                                </tr><tr>
+                                  <th scope="row">3</th>
+                                  <td>Requisition #0 › subscription description</td>
+                                  <td>Message received</td>
+                                  <td>Subscription has received its message</td>
+                                  <td class="bg-success text-center" >true</td>
+                                </tr><tr>
+                                  <th scope="row">4</th>
+                                  <td>Requisition #0 › publisher description</td>
                                   <td>Published</td>
                                   <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
@@ -308,32 +200,32 @@
                 </table>
                       </div>
                     </div>
-                </div><div class="accordion " id="idiVNA88v4n2  mb-1">
-                    <div class="accordion " id="idiVNA88v4n2  mb-1">
+                </div><div class="accordion " id="idhlP2Dal3N8  mb-1">
+                    <div class="accordion " id="idhlP2Dal3N8  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id9MYHLhgQDl">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idQyyAh3Kugw" style="text-decoration: none;">
+                    <div class="card-header" id="idlljqcL8XO4">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idbfAdpValpv" style="text-decoration: none;">
                             <h6>Publishers</h6>
                         </a>
                     </div>
-                    <div id="idQyyAh3Kugw" class="collapse" data-parent="#id9MYHLhgQDl">
+                    <div id="idbfAdpValpv" class="collapse" data-parent="#idlljqcL8XO4">
                       <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id9MYHLhgQDl">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id7GWfjRJNyt" style="text-decoration: none;">
-                            <h6>Publisher #0</h6>
+                    <div class="card-header" id="idlljqcL8XO4">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id2kq7GXzSZD" style="text-decoration: none;">
+                            <h6>publisher description</h6>
                         </a>
                     </div>
-                    <div id="id7GWfjRJNyt" class="collapse" data-parent="#id9MYHLhgQDl">
+                    <div id="id2kq7GXzSZD" class="collapse" data-parent="#idlljqcL8XO4">
                       <div class="card-body bg-light p-2">
-                        <div class="accordion " id="id4CC8uTuMej  mb-1">
+                        <div class="accordion " id="idKgUPUTxDOl  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id4CC8uTuMej">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idd0pO62Lrfl" style="text-decoration: none;">
+                    <div class="card-header" id="idKgUPUTxDOl">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idMVgf0rLit6" style="text-decoration: none;">
                             <h6>Tests</h6>
                         </a>
                     </div>
-                    <div id="idd0pO62Lrfl" class="collapse" data-parent="#id4CC8uTuMej">
+                    <div id="idMVgf0rLit6" class="collapse" data-parent="#idKgUPUTxDOl">
                       <div class="card-body bg-light p-2">
                         <h6 class="text-success text-right" >1/1 (100%)</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
@@ -349,7 +241,7 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>Publisher #0 › Publisher #0</td>
+                                  <td>publisher description › publisher description</td>
                                   <td>Published</td>
                                   <td>Published successfully</td>
                                   <td class="bg-success text-center" >true</td>
@@ -367,118 +259,32 @@
                     </div>
                 </div>
                  </div>
-                 </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idJPiMi7tQ8D">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idhplV6YPZ0o" style="text-decoration: none;">
-                            <h6>using just created exchange</h6>
-                        </a>
-                    </div>
-                    <div id="idhplV6YPZ0o" class="collapse" data-parent="#idJPiMi7tQ8D">
-                      <div class="card-body bg-light p-2">
-                        <div class="accordion " id="idPCLHq0XKw1  mb-1">
+                 </div><div class="accordion " id="ide9Hf57WDsA  mb-1">
+                    <div class="accordion " id="ide9Hf57WDsA  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idPCLHq0XKw1">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idFkCmghWCpZ" style="text-decoration: none;">
-                            <h6>Tests</h6>
+                    <div class="card-header" id="idrkkgnYVmcj">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idexNtuMbGQY" style="text-decoration: none;">
+                            <h6>Subscriptions</h6>
                         </a>
                     </div>
-                    <div id="idFkCmghWCpZ" class="collapse" data-parent="#idPCLHq0XKw1">
-                      <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >8/8 (100%) 25ms</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>using just created exchange › using just created exchange</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out: 25 <= 5000</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>using just created exchange › Subscription #0</td>
-                                  <td>Payload</td>
-                                  <td>Expected 'payload.how.about' to be equal to 'a new object?'. Received 'a new object?'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">3</th>
-                                  <td>using just created exchange › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.key' to be equal to 'value'. Received 'value'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">4</th>
-                                  <td>using just created exchange › Subscription #0</td>
-                                  <td>Other Header Value</td>
-                                  <td>Expected 'headers.otherKey' to be equal to 'otherValue'. Received 'otherValue'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">5</th>
-                                  <td>using just created exchange › Subscription #0</td>
-                                  <td>Routing Key</td>
-                                  <td>Expected 'deliveryInfo.routingKey' to be equal to 'enqueuer.integration.test.routing.key'. Received 'enqueuer.integration.test.routing.key'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">6</th>
-                                  <td>using just created exchange › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">7</th>
-                                  <td>using just created exchange › Publisher #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'publisher.options.port' to be equal to '5672'. Received '5672'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">8</th>
-                                  <td>using just created exchange › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="accordion " id="id6sH0GUCJxR  mb-1">
-                    <div class="accordion " id="id6sH0GUCJxR  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idbBU6TqKGkS">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id0hfaR1aECK" style="text-decoration: none;">
-                            <h6>Publishers</h6>
-                        </a>
-                    </div>
-                    <div id="id0hfaR1aECK" class="collapse" data-parent="#idbBU6TqKGkS">
+                    <div id="idexNtuMbGQY" class="collapse" data-parent="#idrkkgnYVmcj">
                       <div class="card-body bg-light p-2">
                         <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idbBU6TqKGkS">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idsh3j8MRFPx" style="text-decoration: none;">
-                            <h6>Publisher #0</h6>
+                    <div class="card-header" id="idrkkgnYVmcj">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idyASjrHGZ1v" style="text-decoration: none;">
+                            <h6>subscription description</h6>
                         </a>
                     </div>
-                    <div id="idsh3j8MRFPx" class="collapse" data-parent="#idbBU6TqKGkS">
+                    <div id="idyASjrHGZ1v" class="collapse" data-parent="#idrkkgnYVmcj">
                       <div class="card-body bg-light p-2">
-                        <div class="accordion " id="idIoReUoOAg8  mb-1">
+                        <div class="accordion " id="idFJskC0m904  mb-1">
                     <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idIoReUoOAg8">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idm45WRNLa2c" style="text-decoration: none;">
+                    <div class="card-header" id="idFJskC0m904">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idCV1Af4ANsK" style="text-decoration: none;">
                             <h6>Tests</h6>
                         </a>
                     </div>
-                    <div id="idm45WRNLa2c" class="collapse" data-parent="#idIoReUoOAg8">
+                    <div id="idCV1Af4ANsK" class="collapse" data-parent="#idFJskC0m904">
                       <div class="card-body bg-light p-2">
                         <h6 class="text-success text-right" >2/2 (100%)</h6>
                 <table class="table table-sm table-striped table-hover table-dark">
@@ -494,96 +300,13 @@
                   <tbody>
                     <tr>
                                   <th scope="row">1</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'publisher.options.port' to be equal to '5672'. Received '5672'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                 </div><div class="accordion " id="id55DMHxkgPG  mb-1">
-                    <div class="accordion " id="id55DMHxkgPG  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idsAlUnxQlOL">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idtZrlZOV7wH" style="text-decoration: none;">
-                            <h6>Subscriptions</h6>
-                        </a>
-                    </div>
-                    <div id="idtZrlZOV7wH" class="collapse" data-parent="#idsAlUnxQlOL">
-                      <div class="card-body bg-light p-2">
-                        <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idsAlUnxQlOL">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idOBRHcqaoCr" style="text-decoration: none;">
-                            <h6>Subscription #0</h6>
-                        </a>
-                    </div>
-                    <div id="idOBRHcqaoCr" class="collapse" data-parent="#idsAlUnxQlOL">
-                      <div class="card-body bg-light p-2">
-                        <div class="accordion " id="idNK8JgH5arz  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idNK8JgH5arz">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idg2qgoagnYW" style="text-decoration: none;">
-                            <h6>Tests</h6>
-                        </a>
-                    </div>
-                    <div id="idg2qgoagnYW" class="collapse" data-parent="#idNK8JgH5arz">
-                      <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >5/5 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>Subscription #0 › Subscription #0</td>
+                                  <td>subscription description › subscription description</td>
                                   <td>Payload</td>
-                                  <td>Expected 'payload.how.about' to be equal to 'a new object?'. Received 'a new object?'</td>
+                                  <td>Expected 'payload' to be equal to 'stompQueue'. Received 'stompQueue'</td>
                                   <td class="bg-success text-center" >true</td>
                                 </tr><tr>
                                   <th scope="row">2</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Header</td>
-                                  <td>Expected 'headers.key' to be equal to 'value'. Received 'value'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">3</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Other Header Value</td>
-                                  <td>Expected 'headers.otherKey' to be equal to 'otherValue'. Received 'otherValue'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">4</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Routing Key</td>
-                                  <td>Expected 'deliveryInfo.routingKey' to be equal to 'enqueuer.integration.test.routing.key'. Received 'enqueuer.integration.test.routing.key'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">5</th>
-                                  <td>Subscription #0 › Subscription #0</td>
+                                  <td>subscription description › subscription description</td>
                                   <td>Message received</td>
                                   <td>Subscription has received its message</td>
                                   <td class="bg-success text-center" >true</td>
@@ -593,291 +316,20 @@
                       </div>
                     </div>
                 </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idNK8JgH5arz">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id1QwIGMz8fJ" style="text-decoration: none;">
+                    <div class="card-header" id="idFJskC0m904">
+                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id66UiZm2szd" style="text-decoration: none;">
                             <h6>Message received</h6>
                         </a>
                     </div>
-                    <div id="id1QwIGMz8fJ" class="collapse" data-parent="#idNK8JgH5arz">
+                    <div id="id66UiZm2szd" class="collapse" data-parent="#idFJskC0m904">
                       <div class="card-body bg-light p-2">
                         <pre><code>{
-  "payload": {
-    "how": {
-      "about": "a new object?"
-    }
-  },
+  "payload": "stompQueue",
   "headers": {
-    "key": "value",
-    "otherKey": "otherValue"
-  },
-  "deliveryInfo": {
-    "contentType": "application/json",
-    "headers": {
-      "key": "value",
-      "otherKey": "otherValue"
-    },
-    "queue": "8DUG2gLa",
-    "deliveryTag": {
-      "type": "Buffer",
-      "data": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1
-      ]
-    },
-    "redelivered": false,
-    "exchange": "enqueuer.exchange",
-    "routingKey": "enqueuer.integration.test.routing.key",
-    "consumerTag": "node-amqp-23357-0.49445148966345465"
-  }
-}</code></pre>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                 </div>
-                 </div>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idJPiMi7tQ8D">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idTID2AkrvKJ" style="text-decoration: none;">
-                            <h6>default exhange</h6>
-                        </a>
-                    </div>
-                    <div id="idTID2AkrvKJ" class="collapse" data-parent="#idJPiMi7tQ8D">
-                      <div class="card-body bg-light p-2">
-                        <div class="accordion " id="idri5TudQt4Y  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idri5TudQt4Y">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idf6Ym2uPZLo" style="text-decoration: none;">
-                            <h6>Tests</h6>
-                        </a>
-                    </div>
-                    <div id="idf6Ym2uPZLo" class="collapse" data-parent="#idri5TudQt4Y">
-                      <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >4/4 (100%) 22ms</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>default exhange › default exhange</td>
-                                  <td>No time out</td>
-                                  <td>Requisition has not timed out: 22 <= 5000</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>default exhange › Subscription #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'data' to be equal to 'default exchange'. Received 'default exchange'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">3</th>
-                                  <td>default exhange › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">4</th>
-                                  <td>default exhange › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="accordion " id="idOzQgF94GNo  mb-1">
-                    <div class="accordion " id="idOzQgF94GNo  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id3RQuqy6r53">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#id2GBSHMyX6G" style="text-decoration: none;">
-                            <h6>Publishers</h6>
-                        </a>
-                    </div>
-                    <div id="id2GBSHMyX6G" class="collapse" data-parent="#id3RQuqy6r53">
-                      <div class="card-body bg-light p-2">
-                        <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id3RQuqy6r53">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idpgHfWSjUeq" style="text-decoration: none;">
-                            <h6>Publisher #0</h6>
-                        </a>
-                    </div>
-                    <div id="idpgHfWSjUeq" class="collapse" data-parent="#id3RQuqy6r53">
-                      <div class="card-body bg-light p-2">
-                        <div class="accordion " id="id2cVWcgeStb  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="id2cVWcgeStb">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idzCJurd3wqi" style="text-decoration: none;">
-                            <h6>Tests</h6>
-                        </a>
-                    </div>
-                    <div id="idzCJurd3wqi" class="collapse" data-parent="#id2cVWcgeStb">
-                      <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >1/1 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>Publisher #0 › Publisher #0</td>
-                                  <td>Published</td>
-                                  <td>Published successfully</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                      </div>
-                    </div>
-                </div>
-                      </div>
-                    </div>
-                </div>
-                 </div>
-                 </div><div class="accordion " id="idF4FB0uA6kH  mb-1">
-                    <div class="accordion " id="idF4FB0uA6kH  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idixUQYvedSu">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idRA5PJug3YQ" style="text-decoration: none;">
-                            <h6>Subscriptions</h6>
-                        </a>
-                    </div>
-                    <div id="idRA5PJug3YQ" class="collapse" data-parent="#idixUQYvedSu">
-                      <div class="card-body bg-light p-2">
-                        <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idixUQYvedSu">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idViOdLiqgWi" style="text-decoration: none;">
-                            <h6>Subscription #0</h6>
-                        </a>
-                    </div>
-                    <div id="idViOdLiqgWi" class="collapse" data-parent="#idixUQYvedSu">
-                      <div class="card-body bg-light p-2">
-                        <div class="accordion " id="idG7u7aj0Paz  mb-1">
-                    <div class="card bg-dark mb-0">
-                    <div class="card-header" id="idG7u7aj0Paz">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idukc0FrFnwM" style="text-decoration: none;">
-                            <h6>Tests</h6>
-                        </a>
-                    </div>
-                    <div id="idukc0FrFnwM" class="collapse" data-parent="#idG7u7aj0Paz">
-                      <div class="card-body bg-light p-2">
-                        <h6 class="text-success text-right" >2/2 (100%)</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                                  <th scope="row">1</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Assertion #0</td>
-                                  <td>Expected 'data' to be equal to 'default exchange'. Received 'default exchange'</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr><tr>
-                                  <th scope="row">2</th>
-                                  <td>Subscription #0 › Subscription #0</td>
-                                  <td>Message received</td>
-                                  <td>Subscription has received its message</td>
-                                  <td class="bg-success text-center" >true</td>
-                                </tr>
-                  </tbody>
-                </table>
-                      </div>
-                    </div>
-                </div><div class="card bg-dark mb-0">
-                    <div class="card-header" id="idG7u7aj0Paz">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#idCDEa3IrcSp" style="text-decoration: none;">
-                            <h6>Message received</h6>
-                        </a>
-                    </div>
-                    <div id="idCDEa3IrcSp" class="collapse" data-parent="#idG7u7aj0Paz">
-                      <div class="card-body bg-light p-2">
-                        <pre><code>{
-  "payload": {
-    "data": {
-      "type": "Buffer",
-      "data": [
-        100,
-        101,
-        102,
-        97,
-        117,
-        108,
-        116,
-        32,
-        101,
-        120,
-        99,
-        104,
-        97,
-        110,
-        103,
-        101
-      ]
-    },
-    "contentType": "application/octet-stream"
-  },
-  "headers": {},
-  "deliveryInfo": {
-    "contentType": "application/octet-stream",
-    "queue": "enqueuer.default.exchange",
-    "deliveryTag": {
-      "type": "Buffer",
-      "data": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1
-      ]
-    },
-    "redelivered": false,
-    "exchange": "",
-    "routingKey": "enqueuer.default.exchange",
-    "consumerTag": "node-amqp-23357-0.8849014245827125"
+    "destination": "/queue/stompQueue",
+    "message-id": "Q_/queue/stompQueue@@session-oIj3SFO9kMoQICqesH7oQQ@@1",
+    "redelivered": "false",
+    "content-length": "10"
   }
 }</code></pre>
                       </div>

@@ -5,14 +5,14 @@ requisitions:
   -
     valid: true
     tests: []
-    name: examples/amqp.yml
-    id: examples/amqp.yml
+    name: examples/stomp.yml
+    id: examples/stomp.yml
     subscriptions: []
     publishers: []
     time:
-      startTime: '2018-12-19T20:17:20.253Z'
-      endTime: '2018-12-19T20:17:20.334Z'
-      totalTime: 81
+      startTime: '2018-12-20T18:42:08.111Z'
+      endTime: '2018-12-20T18:42:08.177Z'
+      totalTime: 66
     requisitions:
       -
         valid: true
@@ -20,192 +20,48 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 30 <= 5000'
-        name: 'creating exchange'
-        subscriptions: []
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
-            tests:
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-12-19T20:17:20.285Z'
-        time:
-          startTime: '2018-12-19T20:17:20.255Z'
-          endTime: '2018-12-19T20:17:20.285Z'
-          totalTime: 30
-          timeout: 5000
-        requisitions: []
-      -
-        valid: true
-        tests:
-          -
-            valid: true
-            name: 'No time out'
-            description: 'Requisition has not timed out: 25 <= 5000'
-        name: 'using just created exchange'
+            description: 'Requisition has not timed out: 61 <= 3000'
+        name: 'Requisition #0'
         subscriptions:
           -
-            name: 'Subscription #0'
-            type: amqp
+            name: 'subscription description'
+            type: custom
             tests:
               -
                 name: Payload
                 valid: true
-                description: 'Expected ''payload.how.about'' to be equal to ''a new object?''. Received ''a new object?'''
-              -
-                name: Header
-                valid: true
-                description: 'Expected ''headers.key'' to be equal to ''value''. Received ''value'''
-              -
-                name: 'Other Header Value'
-                valid: true
-                description: 'Expected ''headers.otherKey'' to be equal to ''otherValue''. Received ''otherValue'''
-              -
-                name: 'Routing Key'
-                valid: true
-                description: 'Expected ''deliveryInfo.routingKey'' to be equal to ''enqueuer.integration.test.routing.key''. Received ''enqueuer.integration.test.routing.key'''
+                description: 'Expected ''payload'' to be equal to ''stompQueue''. Received ''stompQueue'''
               -
                 valid: true
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2018-12-19T20:17:20.302Z'
+            connectionTime: '2018-12-20T18:42:08.144Z'
             messageReceived:
-              payload:
-                how:
-                  about: 'a new object?'
+              payload: stompQueue
               headers:
-                key: value
-                otherKey: otherValue
-              deliveryInfo:
-                contentType: application/json
-                headers:
-                  key: value
-                  otherKey: otherValue
-                queue: 8DUG2gLa
-                deliveryTag:
-                  type: Buffer
-                  data:
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 1
-                redelivered: false
-                exchange: enqueuer.exchange
-                routingKey: enqueuer.integration.test.routing.key
-                consumerTag: node-amqp-23357-0.49445148966345465
+                destination: /queue/stompQueue
+                message-id: Q_/queue/stompQueue@@session-oIj3SFO9kMoQICqesH7oQQ@@1
+                redelivered: 'false'
+                content-length: '10'
         publishers:
           -
-            name: 'Publisher #0'
+            name: 'publisher description'
             valid: true
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''publisher.options.port'' to be equal to ''5672''. Received ''5672'''
-              -
-                name: Published
-                valid: true
-                description: 'Published successfully'
-            publishTime: '2018-12-19T20:17:20.309Z'
-        time:
-          startTime: '2018-12-19T20:17:20.286Z'
-          endTime: '2018-12-19T20:17:20.311Z'
-          totalTime: 25
-          timeout: 5000
-        requisitions: []
-      -
-        valid: true
-        tests:
-          -
-            valid: true
-            name: 'No time out'
-            description: 'Requisition has not timed out: 22 <= 5000'
-        name: 'default exhange'
-        subscriptions:
-          -
-            name: 'Subscription #0'
-            type: amqp
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expected ''data'' to be equal to ''default exchange''. Received ''default exchange'''
-              -
-                valid: true
-                name: 'Message received'
-                description: 'Subscription has received its message'
-            valid: true
-            connectionTime: '2018-12-19T20:17:20.325Z'
-            messageReceived:
-              payload:
-                data:
-                  type: Buffer
-                  data:
-                    - 100
-                    - 101
-                    - 102
-                    - 97
-                    - 117
-                    - 108
-                    - 116
-                    - 32
-                    - 101
-                    - 120
-                    - 99
-                    - 104
-                    - 97
-                    - 110
-                    - 103
-                    - 101
-                contentType: application/octet-stream
-              headers: {}
-              deliveryInfo:
-                contentType: application/octet-stream
-                queue: enqueuer.default.exchange
-                deliveryTag:
-                  type: Buffer
-                  data:
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 0
-                    - 1
-                redelivered: false
-                exchange: ""
-                routingKey: enqueuer.default.exchange
-                consumerTag: node-amqp-23357-0.8849014245827125
-        publishers:
-          -
-            name: 'Publisher #0'
-            valid: true
-            type: amqp
+            type: custom
             tests:
               -
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2018-12-19T20:17:20.334Z'
+            publishTime: '2018-12-20T18:42:08.169Z'
         time:
-          startTime: '2018-12-19T20:17:20.312Z'
-          endTime: '2018-12-19T20:17:20.334Z'
-          totalTime: 22
-          timeout: 5000
+          startTime: '2018-12-20T18:42:08.115Z'
+          endTime: '2018-12-20T18:42:08.176Z'
+          totalTime: 61
+          timeout: 3000
         requisitions: []
 time:
-  startTime: '2018-12-19T20:17:20.239Z'
-  endTime: '2018-12-19T20:17:20.336Z'
-  totalTime: 97
+  startTime: '2018-12-20T18:42:08.104Z'
+  endTime: '2018-12-20T18:42:08.195Z'
+  totalTime: 91

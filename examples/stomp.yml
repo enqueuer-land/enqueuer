@@ -1,7 +1,8 @@
 timeout: 3000
 publishers:
 -   name: publisher description
-    type: stomp
+    type: custom
+    module: ../../protocols/publishers/stomp
     address: localhost
     port: 61613
     user: guest
@@ -10,7 +11,8 @@ publishers:
     payload: stompQueue
 subscriptions:
 -   name: subscription description
-    type: stomp
+    type: custom
+    module: ../../protocols/subscriptions/stomp
     address: localhost
     port: 61613
     user: guest
