@@ -1,5 +1,6 @@
 publishers:
--   type: mqtt
+-   type: custom
+    module: ../../protocols/publishers/mqtt
     name: publisher description
     brokerAddress: mqtt://localhost
     payload: enqueuer
@@ -7,8 +8,8 @@ publishers:
     options:
         clientId: enqueuerPublishOptionsExampleIdDifferent2313
 subscriptions:
--   name: subscription description
-    type: mqtt
+-   type: custom
+    module: ../../protocols/subscriptions/mqtt
     brokerAddress: mqtt://localhost
     topic: '#'
     timeout: 5000

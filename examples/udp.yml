@@ -8,7 +8,7 @@ subscriptions:
 -   name: subscription description
     type: udp
     port: 23071
-    timeout: 500
+    timeout: 1000
     onMessageReceived:
         script: payload = Buffer.from(message.payload);
         assertions:
