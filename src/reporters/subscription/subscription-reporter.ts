@@ -14,6 +14,7 @@ import Signals = NodeJS.Signals;
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import SignalsListener = NodeJS.SignalsListener;
 import {Json} from '../../object-notations/json';
+import '../../injectable-files-list';
 
 export class SubscriptionReporter {
 
@@ -21,7 +22,8 @@ export class SubscriptionReporter {
     private readonly killListener: SignalsListener;
     private readonly report: output.SubscriptionModel;
     private readonly startTime: DateController;
-    private subscription: Subscription;
+    private readonly subscription: Subscription;
+    private subscribeError?: string;
     private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
     private subscribed: boolean = false;
@@ -46,6 +48,7 @@ export class SubscriptionReporter {
 
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
+        Logger.debug(`Subscription instantiated: ${!!this.subscription}`);
         this.killListener = (signal: Signals) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
     }
 
@@ -79,7 +82,8 @@ export class SubscriptionReporter {
                         this.handleSubscription(reject, resolve);
                     })
                     .catch((err: any) => {
-                        Logger.error(`${this.subscription.name} is unable to connect: ${err}`);
+                        Logger.error(`${this.subscription.name} is unable to subscribe: ${err}`);
+                        this.subscribeError = new Json().stringify(err);
                         reject(err);
                     });
             }
@@ -151,6 +155,7 @@ export class SubscriptionReporter {
             avoidable: this.subscription.avoid,
             hasMessage: !!this.subscription.messageReceived,
             time: time,
+            subscribeError: this.subscribeError,
             ignore: this.subscription.ignore
         });
         this.report.tests = this.report.tests.concat(finalReporter.getReport());

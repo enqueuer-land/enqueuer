@@ -1,7 +1,7 @@
 import {TestModel} from '../../models/outputs/test-model';
 
 export type Time = { timeout?: number; totalTime: number };
-export type Summary = { subscribed: boolean, avoidable: boolean, hasMessage: boolean, time?: Time, ignore?: boolean};
+export type Summary = { subscribed: boolean, avoidable: boolean, hasMessage: boolean, time?: Time, ignore?: boolean, subscribeError?: string};
 
 export class SubscriptionFinalReporter {
     private messageReceivedTestName: string = `Message received`;
@@ -14,12 +14,14 @@ export class SubscriptionFinalReporter {
     private readonly hasMessage: boolean = false;
     private readonly ignore: boolean;
     private readonly time?: Time;
+    private readonly subscribeError?: string;
 
     constructor(summary: Summary) {
         this.subscribed = summary.subscribed;
         this.avoidable = summary.avoidable;
         this.hasMessage = summary.hasMessage;
         this.time = summary.time;
+        this.subscribeError = summary.subscribeError;
         this.ignore = !!summary.ignore;
     }
 
@@ -52,7 +54,7 @@ export class SubscriptionFinalReporter {
         return [{
             valid: false,
             name: this.subscribedTestName,
-            description: `Subscription is not able to subscribe`
+            description: `Subscription is not able to subscribe: ${this.subscribeError}`
         }];
     }
 

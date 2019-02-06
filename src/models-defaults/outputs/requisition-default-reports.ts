@@ -42,7 +42,7 @@ export class RequisitionDefaultReports {
         return RequisitionDefaultReports.createDefaultReport(base, [{
                 valid: true,
                 name: 'Requisition ignored',
-                description: 'Requisitions was not ran'
+                description: 'Requisition was not ran'
             }]);
     }
 

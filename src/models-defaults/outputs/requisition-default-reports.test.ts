@@ -83,7 +83,7 @@ describe('RequisitionDefaultReports', () => {
                 publishers: [],
                 "subscriptions": [],
                 "tests": [{
-                    "description": "Requisitions was not ran",
+                    "description": "Requisition was not ran",
                     "name": "Requisition ignored",
                     "valid": true
                 }],

@@ -9,6 +9,7 @@ import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-e
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {PublisherModel} from '../../models/outputs/publisher-model';
+import '../../injectable-files-list';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
@@ -25,7 +26,7 @@ export class PublisherReporter {
         this.executeOnInitFunction(publisher);
         Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
         this.publisher = Container.subclassesOf(Publisher).create(publisher);
-        Logger.debug(`Publisher '${publisher.type}' instantiated`);
+        Logger.debug(`Publisher instantiated: ${!!this.publisher}`);
     }
 
     public publish(): Promise<void> {

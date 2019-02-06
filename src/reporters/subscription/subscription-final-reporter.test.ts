@@ -23,9 +23,11 @@ describe('SubscriptionFinalReporter', () => {
         const subscribed = false;
         const avoidable = false;
         const hasMessage = false;
+        const errorDescription = 'error';
         const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter({
             subscribed: subscribed,
             avoidable: avoidable,
+            subscribeError: errorDescription,
             hasMessage: hasMessage
         });
 
@@ -34,6 +36,7 @@ describe('SubscriptionFinalReporter', () => {
         expect(report.length).toBe(1);
         expect(report[0].valid).toBeFalsy();
         expect(report[0].name).toBe('Subscribed');
+        expect(report[0].description).toContain(errorDescription);
     });
 
     it('No subscribed, no avoidable, message, no timeout', () => {

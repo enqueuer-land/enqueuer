@@ -2,6 +2,7 @@ import {EnqueuerExecutor} from './run-modes/enqueuer-executor';
 import {Logger} from './loggers/logger';
 import {Container} from 'conditional-injector';
 import {ConfigurationValues} from './configurations/configuration-values';
+import './injectable-files-list';
 
 export class EnqueuerStarter {
 
