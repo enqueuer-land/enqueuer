@@ -11,7 +11,7 @@ const protocol = new Protocol('http')
     .registerAsPublisher();
 
 @Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
-export class HttpClientPublisher extends Publisher {
+export class HttpPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {
         super(publish);

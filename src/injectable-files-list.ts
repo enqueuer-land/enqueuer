@@ -65,7 +65,7 @@ try {
   /* do nothing*/
 }
 try {
-  require('./publishers/http-client-publisher');
+  require('./publishers/http-publisher');
 } catch (err) {
   /* do nothing*/
 }
