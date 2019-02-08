@@ -2,7 +2,7 @@ timeout: 3000
 publishers:
 -   name: publisher description
     type: custom
-    module: ../../protocols/publishers/stomp
+    module: protocols/publishers/stomp.js
     address: localhost
     port: 61613
     user: guest
@@ -12,7 +12,7 @@ publishers:
 subscriptions:
 -   name: subscription description
     type: custom
-    module: ../../protocols/subscriptions/stomp
+    module: protocols/subscriptions/stomp.js
     address: localhost
     port: 61613
     user: guest

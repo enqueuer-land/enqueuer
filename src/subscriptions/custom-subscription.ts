@@ -4,6 +4,8 @@ import {Injectable} from 'conditional-injector';
 import {Protocol} from '../protocols/protocol';
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
+import * as fs from 'fs';
+import requireFromString from 'require-from-string';
 
 const protocol = new Protocol('custom')
     .registerAsSubscription();
@@ -13,12 +15,13 @@ export class CustomSubscription extends Subscription {
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
-        import(this.module).then((custom) => {
-            this.custom = new custom.Subscription(subscriptionModel);
-
-        }).catch((err) => {
+        try {
+            const moduleString: string = fs.readFileSync(this.module).toString();
+            const module = requireFromString(moduleString);
+            this.custom = new module.Subscription(subscriptionModel);
+        } catch (err) {
             Logger.error(`Error loading module '${this.module}': ${err}`);
-        });
+        }
     }
 
     public async subscribe(): Promise<void> {

@@ -1,13 +1,13 @@
 publishers:
 -   type: custom
-    module: ../../protocols/publishers/zeromq
+    module: protocols/publishers/zeromq.js
     address: <<zeroMqAddress>>
     payload: enqueuer zeroes
     topic: topic.enqueuer.virgs
     subscriptionTimeout: 1000
 subscriptions:
 -   type: custom
-    module: ../../protocols/subscriptions/zeromq
+    module: protocols/subscriptions/zeromq.js
     timeout: 1000
     address: <<zeroMqAddress>>
     topic: topic.enqueuer.virgs

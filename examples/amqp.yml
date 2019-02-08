@@ -1,7 +1,7 @@
 -   name: creating exchange
     publishers:
     -   type: custom
-        module: ../../protocols/publishers/amqp
+        module: protocols/publishers/amqp.js
         payload: notPassive
         options:
             host: localhost
@@ -13,7 +13,7 @@
 -   name: using just created exchange
     publishers:
     -   type: custom
-        module: ../../protocols/publishers/amqp
+        module: protocols/publishers/amqp.js
         payload:
             how:
                 about: a new object?
@@ -34,7 +34,7 @@
                 toBeEqualTo: 5672
     subscriptions:
     -   type: custom
-        module: ../../protocols/subscriptions/amqp
+        module: protocols/subscriptions/amqp.js
         timeout: 3000
         options:
             host: localhost
@@ -58,7 +58,7 @@
 -   name: default exhange
     publishers:
     -   type: custom
-        module: ../../protocols/publishers/amqp
+        module: protocols/publishers/amqp.js
         payload: default exchange
         options:
             host: localhost
@@ -66,7 +66,7 @@
         routingKey: enqueuer.default.exchange
     subscriptions:
     -   type: custom
-        module: ../../protocols/subscriptions/amqp
+        module: protocols/subscriptions/amqp.js
         timeout: 3000
         options:
             host: localhost

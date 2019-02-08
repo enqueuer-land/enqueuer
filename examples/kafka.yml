@@ -1,7 +1,7 @@
 timeout: 8000
 publishers:
 -   type: custom
-    module: ../../protocols/publishers/kafka
+    module: protocols/publishers/kafka.js
     client:
         kafkaHost: localhost:9093
     topic: enqueuer-topic-name
@@ -11,7 +11,7 @@ publishers:
         -   expectToBeDefined: JSON.parse(message)["enqueuer-topic-name"]
 subscriptions:
 -   type: custom
-    module: ../../protocols/subscriptions/kafka
+    module: protocols/subscriptions/kafka.js
     timeout: 4000
     client:
         kafkaHost: localhost:9093

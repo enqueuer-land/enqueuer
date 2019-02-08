@@ -4,6 +4,8 @@ import {Protocol} from '../protocols/protocol';
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 import {PublisherModel} from '../models/inputs/publisher-model';
+import * as fs from 'fs';
+import requireFromString from 'require-from-string';
 
 const protocol = new Protocol('custom')
     .registerAsPublisher();
@@ -13,15 +15,18 @@ export class CustomPublisher extends Publisher {
 
     constructor(model: PublisherModel) {
         super(model);
-        import(this.module).then((custom) => {
-            this.custom = new custom.Publisher(model);
-        }).catch((err) => {
-            Logger.error(`Error loading module '${this.module}': ${err}`);
-        });
+        this.model = model;
     }
 
     public async publish(): Promise<void> {
-        this.messageReceived = await this.custom.publish({store: Store.getData(), logger: Logger});
+        try {
+            const moduleString: string = fs.readFileSync(this.module).toString();
+            const module = requireFromString(moduleString);
+            const custom = new module.Publisher(this.model);
+            this.messageReceived = await custom.publish({store: Store.getData(), logger: Logger});
+        } catch (err) {
+            Logger.error(`Error loading module '${this.module}': ${err}`);
+        }
     }
 
 }

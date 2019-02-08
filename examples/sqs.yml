@@ -3,7 +3,7 @@ timeout: 5000
 publishers:
 -   name: publisher description
     type: custom
-    module: ../../protocols/publishers/sqs
+    module: protocols/publishers/sqs.js
     payload: enqueuer
     awsConfiguration: <<awsConfiguration>>
     messageParams:
@@ -24,7 +24,7 @@ publishers:
 subscriptions:
 -   name: subscription description
     type: custom
-    module: ../../protocols/subscriptions/sqs
+    module: protocols/subscriptions/sqs.js
     awsConfiguration: <<awsConfiguration>>
     messageParams:
         QueueUrl: http://localhost:9324/queue/enqueuerQueue
