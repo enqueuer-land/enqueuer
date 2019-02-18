@@ -1,18 +1,12 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Injectable} from 'conditional-injector';
 import * as dgram from 'dgram';
 import {Logger} from '../loggers/logger';
 import {Json} from '../object-notations/json';
-import {Protocol} from '../protocols/protocol';
+import {MainInstance} from '../plugins/main-instance';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
-const protocol = new Protocol('udp')
-    .addAlternativeName('udp-server')
-    .registerAsSubscription();
-
-@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
-export class UdpSubscription extends Subscription {
-
+class UdpSubscription extends Subscription {
     private server: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
@@ -52,4 +46,13 @@ export class UdpSubscription extends Subscription {
         });
     }
 
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new SubscriptionProtocol('udp',
+        (subscriptionModel: SubscriptionModel) => new UdpSubscription(subscriptionModel),
+        ['payload', 'remoteInfo'])
+        .addAlternativeName('udp-server');
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

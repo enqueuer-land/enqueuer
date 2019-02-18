@@ -1,8 +1,10 @@
 import {MultiTestsOutput} from "./multi-tests-output";
 import {SummaryTestOutput} from "./summary-test-output";
 import {Container} from "conditional-injector";
-import {Publisher} from "../publishers/publisher";
 import {Formatter} from "./formatters/formatter";
+import {ProtocolManager} from "../protocols/protocol-manager";
+
+jest.mock("../protocols/protocol-manager");
 jest.mock("conditional-injector");
 jest.mock("./summary-test-output");
 
@@ -14,12 +16,11 @@ let constructorSummary = jest.fn(() => {
 });
 SummaryTestOutput.mockImplementation(constructorSummary);
 
-
-const publish = jest.fn();
+const publishMock = jest.fn();
 let format = jest.fn();
 const create = jest.fn(() => {
     return {
-        publish: publish,
+
         format: format
     }
 });
@@ -31,14 +32,30 @@ let subclassesOfMock = jest.fn(() => {
 Container.subclassesOf.mockImplementation(subclassesOfMock);
 
 
+const createPublisherMock = jest.fn(() => {
+    return {
+        publish: publishMock,
+    }
+});
+ProtocolManager.mockImplementation(() => {
+    return {
+        init: () => {
+            return {
+                createPublisher: createPublisherMock
+            }
+        }
+    }
+});
+
 describe('MultiTestsOutput', () => {
     beforeEach(() => {
         print.mockClear();
         constructorSummary.mockClear();
         SummaryTestOutput.mockClear();
-        publish.mockClear();
+        publishMock.mockClear();
         format.mockClear();
         create.mockClear();
+        createPublisherMock.mockClear();
         subclassesOfMock.mockClear();
         Container.subclassesOf.mockClear();
     });
@@ -47,9 +64,8 @@ describe('MultiTestsOutput', () => {
         const output = {type: 'output', format: 'formatter'};
         new MultiTestsOutput([output]);
 
-        expect(subclassesOfMock).toHaveBeenCalledWith(Publisher);
+        expect(createPublisherMock).toHaveBeenCalledWith(output);
         expect(subclassesOfMock).toHaveBeenCalledWith(Formatter);
-        expect(create).toHaveBeenCalledTimes(2);
         expect(create).toHaveBeenCalledWith(output);
     });
 
@@ -71,7 +87,7 @@ describe('MultiTestsOutput', () => {
         await new MultiTestsOutput([output]).execute(report);
 
         expect(format).toHaveBeenCalledWith(report);
-        expect(publish).toHaveBeenCalledWith();
+        expect(publishMock).toHaveBeenCalledWith();
     });
 
 });

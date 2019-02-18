@@ -110,6 +110,18 @@ describe('FileConfiguration', () => {
         expect(FileConfiguration.getOutputs()).toBe(outputs);
     });
 
+    it('getPlugins', () => {
+        const pluginsList = ['plugin1', 'plugin2'];
+        fileLoadMock = jest.fn(() => {
+            return {
+                'plugins': pluginsList
+            }
+        });
+        FileConfiguration.load('itDoesNotMatter');
+
+        expect(FileConfiguration.getPlugins()).toBe(pluginsList);
+    });
+
     it('getOutputs default', () => {
         fileLoadMock = jest.fn(() => {
             return {

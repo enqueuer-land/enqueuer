@@ -50,26 +50,16 @@ describe('Protocol', () => {
         expect(available).toBeFalsy();
     });
 
-    it('no library to suggest', () => {
-        const available = new Protocol('').suggestInstallation();
-        expect(available).toBeFalsy();
-    });
-
-    it('library to suggest', () => {
-        const available = new Protocol('').setLibrary('express').suggestInstallation();
-        expect(available).toBeTruthy();
-    });
-
     it('get property', () => {
-        const property = new Protocol('')
+        const property = new Protocol('protocol')
             .addAlternativeName('alternativeName')
             .setLibrary('express')
             .getDescription();
         expect(property).toEqual({
+            name: 'protocol',
             alternativeNames: ["alternativeName"],
             library: {
                 name: "express",
-                version: expect.any(String),
                 installed: expect.any(Boolean)
             }
         });

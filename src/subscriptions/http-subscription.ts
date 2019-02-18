@@ -1,21 +1,16 @@
 import {Subscription} from './subscription';
 import {Logger} from '../loggers/logger';
-import {Container, Injectable} from 'conditional-injector';
+import {Container} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {HttpContainerPool} from '../pools/http-container-pool';
 import {TestModel} from '../models/outputs/test-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
 import {Json} from '../object-notations/json';
-import {Protocol} from '../protocols/protocol';
+import {MainInstance} from '../plugins/main-instance';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
-const protocol = new Protocol('http')
-    .addAlternativeName('https', 'http-proxy', 'https-proxy', 'http-server', 'https-server')
-    .setLibrary('express')
-    .registerAsSubscription();
-
-@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
-export class HttpSubscription extends Subscription {
+class HttpSubscription extends Subscription {
 
     private readonly proxy: boolean;
     private responseToClientHandler?: any;
@@ -38,11 +33,11 @@ export class HttpSubscription extends Subscription {
                     this.expressApp = app;
                     resolve();
                 }).catch(err => {
-                    const message = `Error in ${this.type} subscription: ${err}`;
-                    Logger.error(message);
-                    reject(message);
-                });
+                const message = `Error in ${this.type} subscription: ${err}`;
+                Logger.error(message);
+                reject(message);
             });
+        });
     }
 
     public unsubscribe(): Promise<void> {
@@ -99,7 +94,7 @@ export class HttpSubscription extends Subscription {
                 this.redirectCall(request)
                     .then((redirectionResponse: any) => {
                         Logger.trace(`${this.type}:${this.port} got redirection response: ` +
-                                    `${new Json().stringify(redirectionResponse)}`);
+                            `${new Json().stringify(redirectionResponse)}`);
                         this.response = {
                             status: redirectionResponse.statusCode,
                             payload: redirectionResponse.body,
@@ -157,4 +152,17 @@ export class HttpSubscription extends Subscription {
         }
         throw `Http server type is not known: ${this.type}`;
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new SubscriptionProtocol('http',
+        (subscriptionModel: SubscriptionModel) => new HttpSubscription(subscriptionModel),
+        ['headers',
+            'params',
+            'query',
+            'body'])
+        .addAlternativeName('https', 'http-proxy', 'https-proxy', 'http-server', 'https-server')
+        .setLibrary('express');
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

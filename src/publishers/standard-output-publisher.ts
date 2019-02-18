@@ -1,15 +1,10 @@
 import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {Injectable} from 'conditional-injector';
 import {Json} from '../object-notations/json';
-import {Protocol} from '../protocols/protocol';
+import {MainInstance} from '../plugins/main-instance';
+import {PublisherProtocol} from '../protocols/publisher-protocol';
 
-const protocol = new Protocol('stdout')
-    .addAlternativeName('standard-output')
-    .registerAsPublisher();
-
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
-export class StandardOutputPublisher extends Publisher {
+class StandardOutputPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);
@@ -22,4 +17,12 @@ export class StandardOutputPublisher extends Publisher {
         console.log(this.payload);
         return Promise.resolve();
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new PublisherProtocol('stdout',
+        (publisherModel: PublisherModel) => new StandardOutputPublisher(publisherModel))
+        .addAlternativeName('standard-output');
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

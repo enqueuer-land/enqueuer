@@ -1,15 +1,12 @@
 import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {IdGenerator} from '../strings/id-generator';
-import {Injectable} from 'conditional-injector';
 import * as fs from 'fs';
 import {Json} from '../object-notations/json';
-import {Protocol} from '../protocols/protocol';
+import {MainInstance} from '../plugins/main-instance';
+import {PublisherProtocol} from '../protocols/publisher-protocol';
 
-const protocol = new Protocol('file')
-    .registerAsPublisher();
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
-export class FilePublisher extends Publisher {
+class FilePublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
@@ -43,4 +40,11 @@ export class FilePublisher extends Publisher {
         }
         return filename + this.filenameExtension;
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new PublisherProtocol('file',
+        (publisherModel: PublisherModel) => new FilePublisher(publisherModel));
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

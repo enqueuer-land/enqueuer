@@ -1,31 +1,15 @@
 import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import * as net from 'net';
-import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {Json} from '../object-notations/json';
-import {Protocol} from '../protocols/protocol';
 import * as tls from 'tls';
-import * as fs from 'fs';
 import {Timeout} from '../timers/timeout';
+import {MainInstance} from '../plugins/main-instance';
+import {PublisherProtocol} from '../protocols/publisher-protocol';
 
-const tcp = new Protocol('tcp')
-    .addAlternativeName('tcp-client')
-    .registerAsPublisher();
-
-const uds = new Protocol('uds')
-    .addAlternativeName('uds-client')
-    .registerAsPublisher();
-
-const ssl = new Protocol('ssl')
-    .addAlternativeName('tls')
-    .registerAsPublisher();
-
-@Injectable({predicate: (publish: any) => tcp.matches(publish.type)
-        || uds.matches(publish.type)
-        || ssl.matches(publish.type)})
-export class StreamPublisher extends Publisher {
+class StreamPublisher extends Publisher {
 
     private readonly loadedStream: any;
 
@@ -68,15 +52,15 @@ export class StreamPublisher extends Publisher {
                 Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port || this.path}`);
                 this.publishData(stream, resolve, reject);
             }).catch(err => {
-                reject(err);
-            });
+            reject(err);
+        });
     }
 
     private createStream(): Promise<any> {
         return new Promise((resolve, reject) => {
-            if (tcp.matches(this.type)) {
+            if ('tcp' === (this.type || '').toLowerCase()) {
                 this.createTcpStream(resolve, reject);
-            } else if (ssl.matches(this.type)) {
+            } else if ('ssl' === (this.type || '').toLowerCase()) {
                 this.createSslStream(resolve, reject);
             } else {
                 resolve(net.createConnection(this.path));
@@ -131,16 +115,16 @@ export class StreamPublisher extends Publisher {
             this.finalize(stream);
             resolve();
         })
-        .on('data', (msg: Buffer) => {
-            Logger.debug(`${this.type} client got data '${msg.toString()}'`);
-            if (!this.messageReceived) {
-                this.messageReceived = {
-                    payload: '',
-                    stream: stream.address()
-                };
-            }
-            this.messageReceived.payload += msg;
-        });
+            .on('data', (msg: Buffer) => {
+                Logger.debug(`${this.type} client got data '${msg.toString()}'`);
+                if (!this.messageReceived) {
+                    this.messageReceived = {
+                        payload: '',
+                        stream: stream.address()
+                    };
+                }
+                this.messageReceived.payload += msg;
+            });
     }
 
     private finalize(stream: any) {
@@ -160,4 +144,19 @@ export class StreamPublisher extends Publisher {
         }
         return this.payload;
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const createFunction = (publisherModel: PublisherModel) => new StreamPublisher(publisherModel);
+    const tcp = new PublisherProtocol('tcp',
+        createFunction);
+    const uds = new PublisherProtocol('uds',
+        createFunction)
+        .addAlternativeName('uds-client');
+    const ssl = new PublisherProtocol('ssl',
+        createFunction);
+
+    mainInstance.protocolManager.addProtocol(tcp);
+    mainInstance.protocolManager.addProtocol(uds);
+    mainInstance.protocolManager.addProtocol(ssl);
 }

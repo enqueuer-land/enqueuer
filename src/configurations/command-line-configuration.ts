@@ -15,6 +15,7 @@ if (process.argv.length > 1) {
 
 let commandLineStore: any = {};
 let singleRunFiles: string[] = [];
+let plugins: string[] = [];
 let singleRunFilesIgnoring: string[] = [];
 let daemonTypes: string[] = [];
 
@@ -39,11 +40,13 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 }, [])
             .option('-d, --daemon <type>', 'print in daemon mode with default values of <type>',
                 (val: string) => daemonTypes.push(val), [])
+            .option('-l, --add-plugin <plugin>', 'add plugin',
+                (val: string) => plugins.push(val), [])
             .option('-a, --add-file-single-run <file>', 'add file to be tested in single-run',
                 (val: string) => singleRunFiles.push(val), [])
             .option('-A, --add-file-and-ignore-single-run <file>', 'add file to be tested and ignore the ones set in single-run  ',
                 (val: string) => singleRunFilesIgnoring.push(val), [])
-            .option('-p, --protocols-description [protocol]', 'describe protocols')
+            .option('-p, --protocols-description', 'describe protocols')
             .parse(commandLineArguments || ['path', 'enqueuer']);
     } catch (err) {
         Logger.warning(err);
@@ -119,5 +122,9 @@ export class CommandLineConfiguration {
 
     public static getDaemonTypes(): string[]  {
         return daemonTypes;
+    }
+
+    public static getPlugins(): string[] {
+        return plugins;
     }
 }

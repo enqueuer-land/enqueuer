@@ -1,7 +1,15 @@
-import {Logger} from '../loggers/logger';
-import {Protocol} from './protocol';
-import '../injectable-files-list';
 import prettyjson from 'prettyjson';
+import {PublisherProtocol} from './publisher-protocol';
+import {SubscriptionProtocol} from './subscription-protocol';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {Publisher} from '../publishers/publisher';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
+import {Subscription} from '../subscriptions/subscription';
+import {NullSubscription} from '../subscriptions/null-subscription';
+import {NullPublisher} from '../publishers/null-publisher';
+import {Logger} from '../loggers/logger';
+import {Configuration} from '../configurations/configuration';
+import {Protocol, ProtocolType} from './protocol';
 
 const options = {
     defaultIndentation: 4,
@@ -12,84 +20,72 @@ const options = {
 };
 
 export class ProtocolManager {
-    private static instance: ProtocolManager;
+    private protocols: Protocol[] = [];
 
-    private publishers: Protocol[] = [];
-    private subscriptions: Protocol[] = [];
-
-    private constructor() {
-        /* do nothing */
+    public init(): ProtocolManager {
+        const builtInModules = [
+            '../publishers/custom-publisher',
+            '../publishers/file-publisher',
+            '../publishers/http-publisher',
+            '../publishers/standard-output-publisher',
+            '../publishers/stream-publisher',
+            '../publishers/udp-publisher',
+            '../subscriptions/custom-subscription',
+            '../subscriptions/filename-watcher-subscription',
+            '../subscriptions/http-subscription',
+            '../subscriptions/standard-input-subscription',
+            '../subscriptions/stream-subscription',
+            '../subscriptions/udp-subscription'];
+        //sync forEach
+        builtInModules.concat(Configuration.getValues().plugins)
+            .map(async module => {
+                try {
+                    require(module).entryPoint({protocolManager: this});
+                } catch (err) {
+                    Logger.warning(`Error loading '${module}': ${err}`);
+                }
+            });
+        return this;
     }
 
-    public static getInstance(): ProtocolManager {
-        if (!ProtocolManager.instance) {
-            ProtocolManager.instance = new ProtocolManager();
+    public createPublisher(publisherModel: PublisherModel): Publisher {
+        const matchingPublishers = this.protocols
+            .filter((protocol: Protocol) => protocol.type === ProtocolType.PUBLISHER)
+            .filter((protocol: Protocol) => protocol.matches(publisherModel.type))
+            .map((protocol: Protocol) => (protocol as PublisherProtocol).create(publisherModel));
+        if (matchingPublishers.length > 0) {
+            return matchingPublishers[0];
         }
-        return ProtocolManager.instance;
+        return new NullPublisher(publisherModel);
     }
 
-    public describeProtocols(protocol: true | string): void {
-        let result;
-        if (typeof(protocol) == 'string') {
-            result = this.createDeepDescription(protocol as string);
-        } else {
-            result = this.createShallowDescription();
+    public createSubscription(subscriptionModel: SubscriptionModel): Subscription {
+        const matchingSubscriptions = this.protocols
+            .filter((protocol: Protocol) => protocol.type === ProtocolType.SUBSCRIPTION)
+            .filter((protocol: Protocol) => protocol.matches(subscriptionModel.type))
+            .map((protocol: Protocol) => (protocol as SubscriptionProtocol).create(subscriptionModel));
+        if (matchingSubscriptions.length > 0) {
+            return matchingSubscriptions[0];
         }
-        console.log(prettyjson.render(result, options));
+        return new NullSubscription(subscriptionModel);
     }
 
-    public insertPublisher(protocol: Protocol): void {
-        this.publishers.push(protocol);
+    public addProtocol(protocol: Protocol): void {
+        this.protocols.push(protocol);
     }
 
-    public insertSubscription(protocol: Protocol): void {
-        this.subscriptions.push(protocol);
+    public describeProtocols(): void {
+        console.log(prettyjson.render(this.createDescription(), options));
     }
 
-    public suggestSimilarSubscriptions(type?: string): void {
-        this.suggestSimilar(this.subscriptions, type as string);
-    }
-
-    public suggestSimilarPublishers(type: string): void {
-        this.suggestSimilar(this.publishers, type);
-    }
-
-    private suggestSimilar(protocols: Protocol[], name: string): void {
-        const ratingSortedProtocols = protocols
-            .sort((first, second) => second.getBestRating(name).rating
-                                                - first.getBestRating(name).rating);
-
-        Logger.warning(`Unknown protocol '${name}'`);
-        ratingSortedProtocols
-            .filter((value, index) => index <= 2)
-            .forEach((protocol) => protocol.printTip(name));
-    }
-
-    private createShallowDescription(): {} {
+    private createDescription(): {} {
         return {
-            protocols: {
-                publishers: this.publishers.map(protocol => protocol.getName()),
-                subscriptions: this.subscriptions.map(protocol => protocol.getName())
-            }
+            publishers: this.protocols
+                .filter((protocol: Protocol) => protocol.type === ProtocolType.PUBLISHER)
+                .map(protocol => protocol.getDescription()),
+            subscriptions: this.protocols
+                .filter((protocol: Protocol) => protocol.type === ProtocolType.SUBSCRIPTION)
+                .map(protocol => protocol.getDescription())
         };
-    }
-
-    private createDeepDescription(protocolToDescribe: string): {} {
-        const result: any = {
-            publishers: {},
-            subscriptions: {}
-        };
-        let tolerance = 20;
-        this.publishers.map((protocol: Protocol) => {
-            if (protocol.matches(protocolToDescribe, tolerance)) {
-                result.publishers[protocol.getName()] = protocol.getDescription();
-            }
-        });
-        this.subscriptions.map((protocol: Protocol) => {
-            if (protocol.matches(protocolToDescribe, tolerance)) {
-                result.subscriptions[protocol.getName()] = protocol.getDescription();
-            }
-        });
-        return result;
     }
 }

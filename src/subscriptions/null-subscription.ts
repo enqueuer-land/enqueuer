@@ -1,16 +1,12 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Injectable} from 'conditional-injector';
-import {ProtocolManager} from '../protocols/protocol-manager';
 
-@Injectable()
 export class NullSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
     }
 
     public subscribe(): Promise<void> {
-        ProtocolManager.getInstance().suggestSimilarSubscriptions(this.type);
         return Promise.reject(`Undefined subscription: '${this.type}'`);
     }
 

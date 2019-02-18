@@ -28,6 +28,16 @@ describe('Yaml', () => {
         expect(stringified).toBe(expected)
     });
 
+    test('should keep string numbers as string', () => {
+        const value =    "firstLevel:\n" +
+            "  secondLevel: '123.00'\n";
+
+        const parsed: any = new Yaml().parse(value);
+
+        expect(typeof parsed.firstLevel.secondLevel).toEqual("string");
+        expect(parsed.firstLevel.secondLevel).toEqual("123.00");
+    });
+
     test('should stringify cycle reference', () => {
         let value: any = {firstLevel: {secondLevel: {}}};
         value.firstLevel.secondLevel.thirdLevel = value;

@@ -1,17 +1,11 @@
 import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {Injectable} from 'conditional-injector';
 import {Logger} from '../loggers/logger';
 import * as dgram from 'dgram';
-import {Protocol} from '../protocols/protocol';
+import {PublisherProtocol} from '../protocols/publisher-protocol';
+import {MainInstance} from '../plugins/main-instance';
 
-const protocol = new Protocol('udp')
-    .addAlternativeName('udp-client')
-    .registerAsPublisher();
-
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
-export class UdpPublisher extends Publisher {
-
+class UdpPublisher extends Publisher {
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
     }
@@ -33,4 +27,12 @@ export class UdpPublisher extends Publisher {
 
         });
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new PublisherProtocol('udp',
+        (publisherModel: PublisherModel) => new UdpPublisher(publisherModel))
+        .addAlternativeName('udp-client');
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

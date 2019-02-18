@@ -9,6 +9,7 @@ export abstract class Publisher {
     public onInit?: Event;
     public onFinish?: Event;
     public messageReceived?: any;
+    public ignore: boolean = false;
 
     [propName: string]: any;
     protected constructor(publisherAttributes: PublisherModel) {

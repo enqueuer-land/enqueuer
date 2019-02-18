@@ -44,4 +44,8 @@ export class FileConfiguration {
     public static getStore(): any {
         return FileConfiguration.instance.store;
     }
+
+    static getPlugins(): string[] {
+        return FileConfiguration.instance.plugins;
+    }
 }

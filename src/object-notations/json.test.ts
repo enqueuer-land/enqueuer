@@ -25,6 +25,19 @@ describe('Json', () => {
         Injectable.mockClear();
     });
 
+    test('should keep string numbers as string', () => {
+        const value =   '{\n' +
+            '  "firstLevel": {\n' +
+            '    "secondLevel": "123.00"\n' +
+            '  }\n' +
+            '}';
+
+        const parsed: any = new Json().parse(value);
+
+        expect(typeof parsed.firstLevel.secondLevel).toEqual("string");
+        expect(parsed.firstLevel.secondLevel).toEqual("123.00");
+    });
+
     test('should stringify', () => {
         const value = {firstLevel: {secondLevel: 'value'}};
         const expected =    '{\n' +

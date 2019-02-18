@@ -1,101 +1,101 @@
-import {RequisitionParser} from "./requisition-parser";
+import {RequisitionParser} from './requisition-parser';
 
 const valid = [
     {
         timeout: 3000,
-        name: "name",
+        name: 'name',
         subscriptions: [
             {
-                name: "name",
-                type: "uds",
-                path: "/tmp/unix.sock",
+                name: 'name',
+                type: 'uds',
+                path: '/tmp/unix.sock',
                 timeout: 500
             }
         ],
         publishers: [{
-            name: "name",
-            type: "uds",
-            path: "/tmp/unix.sock",
-            payload: "{{sessionKey}}"
+            name: 'name',
+            type: 'uds',
+            path: '/tmp/unix.sock',
+            payload: '{{sessionKey}}'
         }]
     },
     {
         timeout: 3000,
-        name: "name",
+        name: 'name',
         subscriptions: [
             {
-                name: "name",
-                type: "uds",
-                path: "/tmp/unix.sock",
+                name: 'name',
+                type: 'uds',
+                path: '/tmp/unix.sock',
                 timeout: 500
             }
         ],
         publishers: [{
-            name: "name",
-            type: "uds",
-            path: "/tmp/unix.sock",
-            payload: "{{sessionKey}}"
+            name: 'name',
+            type: 'uds',
+            path: '/tmp/unix.sock',
+            payload: '{{sessionKey}}'
         },{
-            name: "name",
-            type: "uds",
-            path: "/tmp/unix.sock",
-            payload: "{{sessionKey}}"
+            name: 'name',
+            type: 'uds',
+            path: '/tmp/unix.sock',
+            payload: '{{sessionKey}}'
         }]
     }
 ];
 const validWithId = [{
     timeout: 3000,
-    name: "name",
-    id: "nameId",
+    name: 'name',
+    id: 'nameId',
     subscriptions: [
         {
-            name: "name",
-            type: "uds",
-            path: "/tmp/unix.sock",
+            name: 'name',
+            type: 'uds',
+            path: '/tmp/unix.sock',
             timeout: 500
         }
     ],
     publishers: [{
-        name: "name",
-        type: "uds",
-        path: "/tmp/unix.sock",
-        payload: "{{sessionKey}}"
+        name: 'name',
+        type: 'uds',
+        path: '/tmp/unix.sock',
+        payload: '{{sessionKey}}'
     }],
     requisitions: [{
         timeout: 3000,
-        name: "name",
+        name: 'name',
         subscriptions: [
             {
-                name: "name",
-                type: "uds",
-                path: "/tmp/unix.sock",
+                name: 'name',
+                type: 'uds',
+                path: '/tmp/unix.sock',
                 timeout: 500
             }
         ],
     publishers: [{
-        name: "name",
-        type: "uds",
-        path: "/tmp/unix.sock",
-        payload: "{{sessionKey}}"
+        name: 'name',
+        type: 'uds',
+        path: '/tmp/unix.sock',
+        payload: '{{sessionKey}}'
     }],
         requisitions: [
             {
                 timeout: 3000,
                 delay: 3000,
-                name: "name",
+                name: 'name',
                 subscriptions: [
                     {
-                        name: "name",
-                        type: "uds",
-                        path: "/tmp/unix.sock",
+                        name: 'name',
+                        type: 'uds',
+                        path: '/tmp/unix.sock',
                         timeout: 500
                     }
                 ],
                 publishers: [{
-                    name: "name",
-                    type: "uds",
-                    path: "/tmp/unix.sock",
-                    payload: "{{sessionKey}}"
+                    name: 'name',
+                    type: 'uds',
+                    path: '/tmp/unix.sock',
+                    payload: '{{sessionKey}}'
                 }],
                 requisitions: []
 
@@ -104,9 +104,9 @@ const validWithId = [{
     }]
 }];
 const validRunnable = {
-        "timeout": 3000,
-        "name": "file",
-        "iterations": "10",
+        'timeout': 3000,
+        'name': 'file',
+        'iterations': "10",
         "subscriptions": [],
         "publishers": [{
             "type": "file",

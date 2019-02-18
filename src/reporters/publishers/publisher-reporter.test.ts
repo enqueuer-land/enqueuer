@@ -1,8 +1,8 @@
-import {Container} from "conditional-injector";
 import {OnInitEventExecutor} from "../../events/on-init-event-executor";
 import {OnFinishEventExecutor} from "../../events/on-finish-event-executor";
 import {OnMessageReceivedEventExecutor} from "../../events/on-message-received-event-executor";
 import {PublisherReporter} from "./publisher-reporter";
+import {ProtocolManager} from "../../protocols/protocol-manager";
 
 let publishMock = jest.fn(() => Promise.resolve(true));
 let publisherMock = jest.fn(() => {
@@ -10,9 +10,15 @@ let publisherMock = jest.fn(() => {
         publish: publishMock
     }
 });
-let containerMock = jest.fn(() => {
+
+jest.mock('../../protocols/protocol-manager');
+ProtocolManager.mockImplementation(() => {
     return {
-        create: publisherMock
+        init: () => {
+            return {
+                createPublisher: publisherMock
+            }
+        }
     }
 });
 
@@ -20,9 +26,6 @@ const publisher = {
     name: 'pubName',
     id: 'id'
 };
-jest.mock('conditional-injector');
-Container.subclassesOf.mockImplementation(containerMock);
-
 
 let onInitTrigger = jest.fn(() => []);
 let onInitEventMock = jest.fn(() => {
@@ -52,8 +55,6 @@ let onMessageReceivedEventMock = jest.fn(() => {
 });
 jest.mock('../../events/on-message-received-event-executor');
 OnMessageReceivedEventExecutor.mockImplementation((onMessageReceivedEventMock));
-
-jest.mock('conditional-injector');
 
 describe('PublisherReporter', () => {
     beforeEach(() => {

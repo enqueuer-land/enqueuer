@@ -18,7 +18,7 @@ To use **enqueuer**, you have to:
 
 1. install it:
 
-    ```$npm install enqueuer --no-optional --global```
+    ```$npm install enqueuer```
     
 1. create a file to describe how to test:
     ![readme-tests](https://github.com/lopidio/enqueuer/blob/develop/docs/images/readme-test.png "testfile")

@@ -1,16 +1,12 @@
 import {Subscription} from './subscription';
 import {Logger} from '../loggers/logger';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Injectable} from 'conditional-injector';
 import * as fs from 'fs';
 import * as glob from 'glob';
-import {Protocol} from '../protocols/protocol';
+import {MainInstance} from '../plugins/main-instance';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
-const protocol = new Protocol('file')
-    .addAlternativeName('file-system-watcher', 'file-watcher').registerAsSubscription();
-
-@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
-export class FileSystemWatcherSubscription extends Subscription {
+class FileSystemWatcherSubscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
@@ -53,4 +49,13 @@ export class FileSystemWatcherSubscription extends Subscription {
             created: stat.ctime
         };
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new SubscriptionProtocol('file',
+        (subscriptionModel: SubscriptionModel) => new FileSystemWatcherSubscription(subscriptionModel),
+        ['content', 'name', 'size', 'modified', 'created'])
+        .addAlternativeName('file-system-watcher', 'file-watcher');
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

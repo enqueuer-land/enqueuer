@@ -92,6 +92,19 @@ describe('Configuration', () => {
         expect(Configuration.getValues().store).toEqual(expected);
     });
 
+    it('should merge plugins from configuration file, method and command line', () => {
+        CommandLineConfiguration.getPlugins.mockImplementation(() => {
+            return ['CommandLineConfiguration']
+        });
+        FileConfiguration.getPlugins.mockImplementation(() => {
+            return ['FileConfiguration']
+        });
+
+        Configuration.addPlugin('ConfigurationMethod');
+
+        expect(Configuration.getValues().plugins).toEqual(['CommandLineConfiguration', 'FileConfiguration', 'ConfigurationMethod']);
+    });
+
     it('should check \'isQuietMode\' in command line', () => {
         const quietMode = false;
         CommandLineConfiguration.isQuietMode.mockImplementation(() => quietMode);

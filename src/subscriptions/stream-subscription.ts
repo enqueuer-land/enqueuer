@@ -1,33 +1,16 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Injectable} from 'conditional-injector';
 import * as net from 'net';
 import * as tls from 'tls';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
 import {Json} from '../object-notations/json';
-import {Protocol} from '../protocols/protocol';
 import * as fs from 'fs';
 import {Timeout} from '../timers/timeout';
+import {MainInstance} from '../plugins/main-instance';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
-const tcp = new Protocol('tcp')
-    .addAlternativeName('tcp-server')
-    .registerAsSubscription();
-
-const uds = new Protocol('uds')
-    .addAlternativeName('uds-server')
-    .registerAsSubscription();
-
-const ssl = new Protocol('ssl')
-    .addAlternativeName('tls')
-    .registerAsSubscription();
-
-@Injectable({
-    predicate: (subscription: any) => tcp.matches(subscription.type)
-        || ssl.matches(subscription.type)
-        || uds.matches(subscription.type)
-})
 export class StreamSubscription extends Subscription {
 
     private server: any;
@@ -44,7 +27,7 @@ export class StreamSubscription extends Subscription {
     public async receiveMessage(): Promise<any> {
         if (this.loadStream) {
             return await this.waitForData();
-        } else if (ssl.matches(this.type)) {
+        } else if ('ssl' === (this.type || '').toLowerCase()) {
             await this.sslServerGotConnection;
             return await this.gotConnection(this.stream);
         } else {
@@ -75,7 +58,7 @@ export class StreamSubscription extends Subscription {
 
     public async unsubscribe(): Promise<void> {
         this.persistStream();
-        if (uds.matches(this.type) && fs.existsSync(this.path)) {
+        if ('uds' === (this.type || '').toLowerCase() && fs.existsSync(this.path)) {
             fs.unlinkSync(this.path);
         }
         if (this.server) {
@@ -133,10 +116,10 @@ export class StreamSubscription extends Subscription {
     }
 
     private createStream(): Promise<void> {
-        if (tcp.matches(this.type)) {
+        if ('tcp' === (this.type || '').toLowerCase()) {
             this.server = net.createServer();
             return new HandlerListener(this.server).listen(this.port);
-        } else if (ssl.matches(this.type)) {
+        } else if ('ssl' === (this.type || '').toLowerCase()) {
             this.createSslConnection();
             return new HandlerListener(this.server).listen(this.port);
         } else {
@@ -177,7 +160,11 @@ export class StreamSubscription extends Subscription {
 
     private waitForData(): Promise<any> {
         return new Promise((resolve, reject) => {
-            let message: any = {payload: undefined, stream: this.stream.address ? this.stream.address() : undefined, path: this.path};
+            let message: any = {
+                payload: undefined,
+                stream: this.stream.address ? this.stream.address() : undefined,
+                path: this.path
+            };
             Logger.trace(`${this.type} readableStream is waiting on data`);
             if (this.streamTimeout) {
                 new Timeout(() => {
@@ -228,4 +215,23 @@ export class StreamSubscription extends Subscription {
         }
     }
 
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const createFunction = (subscriptionModel: SubscriptionModel) => new StreamSubscription(subscriptionModel);
+    const tcp = new SubscriptionProtocol('tcp',
+        createFunction,
+        ['payload', 'stream']);
+
+    const uds = new SubscriptionProtocol('uds',
+        createFunction,
+        ['payload', 'stream', 'path']);
+
+    const ssl = new SubscriptionProtocol('ssl',
+        createFunction,
+        ['payload', 'stream']);
+
+    mainInstance.protocolManager.addProtocol(tcp);
+    mainInstance.protocolManager.addProtocol(uds);
+    mainInstance.protocolManager.addProtocol(ssl);
 }

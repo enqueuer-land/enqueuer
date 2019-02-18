@@ -8,9 +8,8 @@ import {ProtocolManager} from './protocols/protocol-manager';
 
 export async function start(): Promise<number> {
     Logger.setLoggerLevel('info');
-    const protocolToDescribe = CommandLineConfiguration.describeProtocols();
-    if (protocolToDescribe) {
-        ProtocolManager.getInstance().describeProtocols(protocolToDescribe);
+    if (CommandLineConfiguration.describeProtocols()) {
+        new ProtocolManager().init().describeProtocols();
         return 0;
     } else {
         const configuration = Configuration.getValues();

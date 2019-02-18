@@ -1,21 +1,28 @@
-import {Match, StringMatcher} from '../strings/string-matcher';
 import {Logger} from '../loggers/logger';
-import {ProtocolManager} from './protocol-manager';
-const packageJson = require('../../package.json');
 
 type Library = {
     name: string;
-    version?: string;
     installed: boolean;
 };
 
-export class Protocol {
+export enum ProtocolType {
+    PUBLISHER,
+    SUBSCRIPTION
+}
+
+export abstract class Protocol {
+    readonly type: ProtocolType;
     private readonly name: string;
     private alternativeNames?: string[];
     private library?: Library;
 
-    public constructor(name: string) {
+    protected constructor(name: string, type: ProtocolType) {
         this.name = name;
+        this.type = type;
+    }
+
+    protected getDeepDescription(): any {
+        return {};
     }
 
     public getName(): string {
@@ -23,7 +30,8 @@ export class Protocol {
     }
 
     public getDescription() {
-        let properties: any = {};
+        let properties: any = this.getDeepDescription();
+        properties.name = this.name;
         if (this.alternativeNames) {
             properties.alternativeNames = this.alternativeNames;
         }
@@ -37,7 +45,6 @@ export class Protocol {
         let uniqueAlternativeNames;
         if (this.alternativeNames) {
             uniqueAlternativeNames = new Set(this.alternativeNames.concat(alternativeNames));
-
         } else {
             uniqueAlternativeNames = new Set(alternativeNames);
         }
@@ -50,47 +57,14 @@ export class Protocol {
         return this;
     }
 
-    public registerAsPublisher(): Protocol {
-        ProtocolManager.getInstance().insertPublisher(this);
-        return this;
-    }
-
-    public registerAsSubscription(): Protocol {
-        ProtocolManager.getInstance().insertSubscription(this);
-        return this;
-    }
-
-    public getBestRating(name: string): Match {
-        return new StringMatcher().sortBestMatches(name, [this.name].concat(this.alternativeNames || []))[0];
-    }
-
-    public matches(name: string, errorTolerancePct: number = 0): boolean {
-        return this.getBestRating(name).rating >= 100 - errorTolerancePct;
-    }
-
-    public printTip(name: string) {
-        const bestRating = this.getBestRating(name);
-        if (bestRating.rating > 50) {
-            Logger.warning(`${bestRating.rating}% sure you meant '${bestRating.target}'`);
-            this.suggestInstallation();
-        } else if (bestRating.rating > 10) {
-            Logger.warning(`There is a tiny possibility (${bestRating.rating}%) you tried to type '${bestRating.target}'`);
+    public matches(type: string): boolean {
+        try {
+            return [this.name].concat(this.alternativeNames || [])
+                .filter((name: string) => name.toUpperCase() === type.toUpperCase()).length > 0;
+        } catch (exc) {
+            Logger.warning(`Error comparing protocols with given type '${type}': ${exc}`);
+            return false;
         }
-    }
-
-    private suggestInstallation(): boolean {
-        if (this.library) {
-            const packageDisplay = `${this.library.name}@${this.library.version}`;
-            if (!this.library.installed) {
-                const installationString = `npm install ${packageDisplay} --no-optional`;
-                Logger.warning(`Library '${this.library.name}' is not installed. ` +
-                    `If you want to, install it using: ${installationString}`);
-            }
-            Logger.trace(`Protocol ${this.name} has its library ${packageDisplay} installed`);
-            return true;
-        }
-        Logger.trace(`Protocol ${this.name} has no library to be suggested`);
-        return false;
     }
 
     private isLibraryInstalled(libraryName: string): boolean {
@@ -104,14 +78,10 @@ export class Protocol {
     }
 
     private createLibrary(name: string): Library | undefined {
-        const dependencies = packageJson.dependencies[name] || packageJson.devDependencies[name];
-        if (dependencies) {
-            return {
-                name: name,
-                version: dependencies,
-                installed: this.isLibraryInstalled(name)
-            };
-        }
+        return {
+            name: name,
+            installed: this.isLibraryInstalled(name)
+        };
     }
 
 }

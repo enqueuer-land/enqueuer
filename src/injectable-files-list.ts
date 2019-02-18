@@ -55,41 +55,6 @@ try {
     console.warn(`Error loading './outputs/formatters/yml-formatter': ${err}`);
 }
 try {
-   require('./publishers/custom-publisher');
-} catch (err) {
-    console.warn(`Error loading './publishers/custom-publisher': ${err}`);
-}
-try {
-   require('./publishers/file-publisher');
-} catch (err) {
-    console.warn(`Error loading './publishers/file-publisher': ${err}`);
-}
-try {
-   require('./publishers/http-publisher');
-} catch (err) {
-    console.warn(`Error loading './publishers/http-publisher': ${err}`);
-}
-try {
-   require('./publishers/null-publisher');
-} catch (err) {
-    console.warn(`Error loading './publishers/null-publisher': ${err}`);
-}
-try {
-   require('./publishers/standard-output-publisher');
-} catch (err) {
-    console.warn(`Error loading './publishers/standard-output-publisher': ${err}`);
-}
-try {
-   require('./publishers/stream-publisher');
-} catch (err) {
-    console.warn(`Error loading './publishers/stream-publisher': ${err}`);
-}
-try {
-   require('./publishers/udp-publisher');
-} catch (err) {
-    console.warn(`Error loading './publishers/udp-publisher': ${err}`);
-}
-try {
    require('./run-modes/daemon-run-executor');
 } catch (err) {
     console.warn(`Error loading './run-modes/daemon-run-executor': ${err}`);
@@ -118,39 +83,4 @@ try {
    require('./run-modes/single-run-executor');
 } catch (err) {
     console.warn(`Error loading './run-modes/single-run-executor': ${err}`);
-}
-try {
-   require('./subscriptions/custom-subscription');
-} catch (err) {
-    console.warn(`Error loading './subscriptions/custom-subscription': ${err}`);
-}
-try {
-   require('./subscriptions/filename-watcher-subscription');
-} catch (err) {
-    console.warn(`Error loading './subscriptions/filename-watcher-subscription': ${err}`);
-}
-try {
-   require('./subscriptions/http-subscription');
-} catch (err) {
-    console.warn(`Error loading './subscriptions/http-subscription': ${err}`);
-}
-try {
-   require('./subscriptions/null-subscription');
-} catch (err) {
-    console.warn(`Error loading './subscriptions/null-subscription': ${err}`);
-}
-try {
-   require('./subscriptions/standard-input-subscription');
-} catch (err) {
-    console.warn(`Error loading './subscriptions/standard-input-subscription': ${err}`);
-}
-try {
-   require('./subscriptions/stream-subscription');
-} catch (err) {
-    console.warn(`Error loading './subscriptions/stream-subscription': ${err}`);
-}
-try {
-   require('./subscriptions/udp-subscription');
-} catch (err) {
-    console.warn(`Error loading './subscriptions/udp-subscription': ${err}`);
 }

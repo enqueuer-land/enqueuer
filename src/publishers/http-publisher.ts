@@ -1,17 +1,13 @@
 import {Publisher} from './publisher';
 import {Logger} from '../loggers/logger';
-import {Container, Injectable} from 'conditional-injector';
+import {Container} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
-import {Protocol} from '../protocols/protocol';
+import {MainInstance} from '../plugins/main-instance';
+import {PublisherProtocol} from '../protocols/publisher-protocol';
 
-const protocol = new Protocol('http')
-    .addAlternativeName('http-client', 'https', 'https-client')
-    .registerAsPublisher();
-
-@Injectable({predicate: (publish: any) => protocol.matches(publish.type)})
-export class HttpPublisher extends Publisher {
+class HttpPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {
         super(publish);
@@ -26,10 +22,10 @@ export class HttpPublisher extends Publisher {
             this.insertAuthentication();
 
             new HttpRequester(this.url,
-                            this.method.toLowerCase(),
-                            this.headers,
-                            this.payload,
-                            this.timeout)
+                this.method.toLowerCase(),
+                this.headers,
+                this.payload,
+                this.timeout)
                 .request()
                 .then((response: any) => {
                     this.messageReceived = response;
@@ -50,4 +46,14 @@ export class HttpPublisher extends Publisher {
             }
         }
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new PublisherProtocol('http',
+        (publisherModel: PublisherModel) => new HttpPublisher(publisherModel),
+        ['statusCode', 'statusMessage', 'body'])
+        .addAlternativeName('http-client', 'https', 'https-client')
+        .setLibrary('request');
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

@@ -85,18 +85,6 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.describeProtocols()).toBeUndefined();
     });
 
-    it('describe mqtt protocol -p', () => {
-        commanderRefresher(['node', 'test', '-p', 'mqtt']);
-
-        expect(CommandLineConfiguration.describeProtocols()).toBe('mqtt');
-    });
-
-    it('describe mqtt protocol --protocolsDescription', () => {
-        commanderRefresher(['node', 'test', '-p', 'mqtt']);
-
-        expect(CommandLineConfiguration.describeProtocols()).toBe('mqtt');
-    });
-
     it('no single run file', () => {
         commanderRefresher(['node', 'test']);
 
@@ -116,6 +104,12 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.singleRunFiles()).toEqual(['file', 'file2']);
     });
 
+    it('add plugin', () => {
+        commanderRefresher(['node', 'test', '-l', 'plugin1', '--add-plugin', 'plugin2']);
+
+        expect(CommandLineConfiguration.getPlugins()).toEqual(['plugin1', 'plugin2']);
+    });
+
     it('add single run file ignoring', () => {
         commanderRefresher(['node', 'test', '-A', 'file', '--add-file-and-ignore-single-run', 'file2']);
 
@@ -123,6 +117,7 @@ describe('CommandLineConfiguration', () => {
     });
 
     it('handle null procces.argv', () => {
+        // @ts-ignore
         expect (() => commanderRefresher()).not.toThrow();
     });
 

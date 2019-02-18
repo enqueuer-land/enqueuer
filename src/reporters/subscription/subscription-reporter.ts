@@ -2,7 +2,6 @@ import {Logger} from '../../loggers/logger';
 import {DateController} from '../../timers/date-controller';
 import {Subscription} from '../../subscriptions/subscription';
 import {Timeout} from '../../timers/timeout';
-import {Container} from 'conditional-injector';
 import * as input from '../../models/inputs/subscription-model';
 import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
@@ -10,11 +9,12 @@ import {checkValidation} from '../../models/outputs/report-model';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
-import Signals = NodeJS.Signals;
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
-import SignalsListener = NodeJS.SignalsListener;
 import {Json} from '../../object-notations/json';
 import '../../injectable-files-list';
+import {ProtocolManager} from '../../protocols/protocol-manager';
+import Signals = NodeJS.Signals;
+import SignalsListener = NodeJS.SignalsListener;
 
 export class SubscriptionReporter {
 
@@ -47,8 +47,7 @@ export class SubscriptionReporter {
         }
 
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscription = Container.subclassesOf(Subscription).create(subscriptionAttributes);
-        Logger.debug(`Subscription instantiated: ${!!this.subscription}`);
+        this.subscription = new ProtocolManager().init().createSubscription(subscriptionAttributes);
         this.killListener = (signal: Signals) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
     }
 

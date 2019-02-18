@@ -6,6 +6,7 @@ import {Container} from 'conditional-injector';
 import {Publisher} from '../publishers/publisher';
 import {Formatter} from './formatters/formatter';
 import chalk from 'chalk';
+import {ProtocolManager} from '../protocols/protocol-manager';
 
 export class MultiTestsOutput {
     private outputs: Publisher[] = [];
@@ -13,7 +14,7 @@ export class MultiTestsOutput {
     public constructor(outputs: PublisherModel[]) {
         (outputs || []).forEach((output: PublisherModel) => {
             Logger.debug(`Instantiating output '${output.type}' and format '${output.format}'`);
-            const publisher = Container.subclassesOf(Publisher).create(output);
+            const publisher = new ProtocolManager().init().createPublisher(output);
             publisher.formatter = Container.subclassesOf(Formatter).create(output);
             publisher.format = output.format;
             this.outputs.push(publisher);

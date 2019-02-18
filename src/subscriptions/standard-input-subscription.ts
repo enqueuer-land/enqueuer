@@ -1,14 +1,9 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Injectable} from 'conditional-injector';
-import {Protocol} from '../protocols/protocol';
+import {MainInstance} from '../plugins/main-instance';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
-const protocol = new Protocol('stdin')
-    .addAlternativeName('standard-input')
-    .registerAsSubscription();
-
-@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
-export class StandardInputSubscription extends Subscription {
+class StandardInputSubscription extends Subscription {
     private value?: string;
 
     constructor(subscriptionModel: SubscriptionModel) {
@@ -42,4 +37,13 @@ export class StandardInputSubscription extends Subscription {
         process.stdin.pause();
     }
 
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new SubscriptionProtocol('stdin',
+        (subscriptionModel: SubscriptionModel) => new StandardInputSubscription(subscriptionModel),
+        [])
+        .addAlternativeName('standard-input');
+
+    mainInstance.protocolManager.addProtocol(protocol);
 }

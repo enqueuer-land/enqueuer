@@ -19,6 +19,7 @@ export interface ConfigurationValues {
     outputs: PublisherModel[];
     store: any;
     quiet: boolean;
+    plugins: string[];
     addSingleRun: string[];
     addSingleRunIgnore: string[];
 }

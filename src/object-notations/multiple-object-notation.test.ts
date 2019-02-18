@@ -38,6 +38,19 @@ describe('MultipleObjectNotation', () => {
         expect(parsed).toEqual(expected)
     });
 
+    test('should keep string numbers as string', () => {
+        const value =   '{\n' +
+            '  "firstLevel": {\n' +
+            '    "secondLevel": "123.00"\n' +
+            '  }\n' +
+            '}';
+
+        const parsed: any = new MultipleObjectNotation().parse(value);
+
+        expect(typeof parsed.firstLevel.secondLevel).toEqual("string");
+        expect(parsed.firstLevel.secondLevel).toEqual("123.00");
+    });
+
     test('should load from file', () => {
         const expected = {firstLevel: {secondLevel: 'value'}};
 

@@ -1,17 +1,13 @@
 import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Injectable} from 'conditional-injector';
-import {Protocol} from '../protocols/protocol';
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 import * as fs from 'fs';
 import requireFromString from 'require-from-string';
+import {MainInstance} from '../plugins/main-instance';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
-const protocol = new Protocol('custom')
-    .registerAsSubscription();
-
-@Injectable({predicate: (subscription: any) => protocol.matches(subscription.type)})
-export class CustomSubscription extends Subscription {
+class CustomSubscription extends Subscription {
 
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
@@ -43,4 +39,11 @@ export class CustomSubscription extends Subscription {
             return this.custom.sendResponse({store: Store.getData(), logger: Logger});
         }
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    const protocol = new SubscriptionProtocol('custom',
+        (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel),
+        []);
+    mainInstance.protocolManager.addProtocol(protocol);
 }

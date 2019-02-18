@@ -1,15 +1,14 @@
 import {Publisher} from '../../publishers/publisher';
 import {DateController} from '../../timers/date-controller';
 import * as output from '../../models/outputs/publisher-model';
+import {PublisherModel} from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
 import {Logger} from '../../loggers/logger';
-import {Container} from 'conditional-injector';
 import {checkValidation} from '../../models/outputs/report-model';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
-import {PublisherModel} from '../../models/outputs/publisher-model';
-import '../../injectable-files-list';
+import {ProtocolManager} from '../../protocols/protocol-manager';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
@@ -25,8 +24,7 @@ export class PublisherReporter {
         };
         this.executeOnInitFunction(publisher);
         Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
-        this.publisher = Container.subclassesOf(Publisher).create(publisher);
-        Logger.debug(`Publisher instantiated: ${!!this.publisher}`);
+        this.publisher = new ProtocolManager().init().createPublisher(publisher);
     }
 
     public publish(): Promise<void> {
