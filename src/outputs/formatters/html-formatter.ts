@@ -6,7 +6,6 @@ import {Test, TestsAnalyzer} from '../tests-analyzer';
 import {PublisherModel} from '../../models/outputs/publisher-model';
 import {Json} from '../../object-notations/json';
 import {SubscriptionModel} from '../../models/outputs/subscription-model';
-import {bool} from 'aws-sdk/clients/signer';
 
 //TODO test it
 @Injectable({predicate: (output: any) => output.format && output.format.toLowerCase() === 'html'})
@@ -90,7 +89,7 @@ export class JsonFormatter extends Formatter {
         return '';
     }
 
-    private createAccordion(parentId: string, accordionCards: string, show: bool = false): string {
+    private createAccordion(parentId: string, accordionCards: string, show: boolean = false): string {
         return `<div class="accordion ${show ? 'show' : ''}" id="${parentId}  mb-1">
                     ${accordionCards}
                  </div>`;

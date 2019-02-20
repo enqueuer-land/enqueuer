@@ -1,4 +1,4 @@
-const Stomp = require('stomp-client');
+const dgram = require("dgram");
 
 class Subscription {
     constructor(subscription) {
@@ -6,29 +6,30 @@ class Subscription {
     }
 
     subscribe(context) {
+
         return new Promise((resolve, reject) => {
-            context.logger.debug(`Stomp subscription connecting to ${this.subscription.address}:${this.subscription.port}`);
-            this.subscription.client = new Stomp(this.subscription.address, this.subscription.port, this.subscription.user, this.subscription.password);
-            this.subscription.client.connect((sessionId) => {
-                context.logger.debug(`connected id ${sessionId}`);
+            this.server = dgram.createSocket('udp4');
+            try {
+                this.server.bind(this.subscription.port);
                 resolve();
-            }, (err) => {
-                reject(err);
-            });
+            } catch (err) {
+                const message = `Udp server could not listen to ${this.subscription.port}`;
+                context.logger.error(message);
+                reject(message);
+            }
         });
     };
 
     receiveMessage(context) {
         return new Promise((resolve, reject) => {
-            context.logger.trace(`Stomp waiting for a message related to queue ${this.subscription.queue}`);
-            const gotMessage = (message, headers) => {
-                context.logger.trace(`Stomp message received header ${JSON.stringify(headers)}`);
-                resolve({payload: message, headers: headers});
-            };
-            this.subscription.client.subscribe(this.subscription.queue, gotMessage);
-            this.subscription.client.on('message', gotMessage);
-            this.subscription.client.once('error', (err) => {
+            this.server.on('error', (err) => {
+                this.server.close();
                 reject(err);
+            });
+
+            this.server.on('message', (msg, remoteInfo) => {
+                this.server.close();
+                resolve({payload: msg, remoteInfo: remoteInfo});
             });
         });
     };
@@ -41,15 +42,19 @@ class Publisher {
 
     publish(context) {
         return new Promise((resolve, reject) => {
-            const client = new Stomp(this.publisher.address, this.publisher.port, this.publisher.user, this.publisher.password);
-            client.connect((sessionId) => {
-                context.logger.debug(`Stomp publisher connected id ${sessionId}`);
-                client.publish(this.publisher.queue, this.publisher.payload);
+            const client = dgram.createSocket('udp4');
+            context.logger.debug('Udp client trying to send message');
+
+            client.send(Buffer.from(this.publisher.payload), this.publisher.port, this.publisher.serverAddress, (error) => {
+                if (error) {
+                    client.close();
+                    reject(error);
+                    return;
+                }
+                context.logger.debug('Udp client sent message');
                 resolve();
-            }, (err) => {
-                context.logger.error(`Error connecting to stomp to publish: ${err}`);
-                reject(err);
             });
+
         });
     };
 }

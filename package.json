@@ -9,16 +9,12 @@
     "test": "npm run codeCoverage && npm run singleRunTest && npm run daemonRunTest",
     "unitTest": "node_modules/.bin/jest --silent .test.ts",
     "daemonRunTest": "node_modules/.bin/jest --detectOpenHandles --forceExit .comp.ts",
-    "singleRunTest": "nqr conf/singleRun.yml --store zeroMqAddress=tcp://127.0.0.1:3000 -a examples/requisition.yaml < misc/stdin",
+    "singleRunTest": "nqr conf/singleRun.yml -a examples/requisition.yaml < misc/stdin",
     "codeCoverage": "node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
-    "build": "node misc/generate-injectables-list.js src/injectable-files-list.ts src && tsc",
-    "docker-build": "docker build -t enqueuer/enqueuer:dev .",
-    "docker-run": "docker run --cpus 2 --rm -itd -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash",
-    "docker-expose-brokers": "docker run --cpus 2 --rm -itd -p 9092:9092 -p 9093:9093 -p 5672:5672 -p 1883:1883 -p 3000:3000 -p 9324:9324 -p 61613:61613 -p 23000:23000 -p 2181:2181 -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash",
-    "docker-test": "docker run --cpus 2 --rm -it -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash -c 'cd enqueuer; node js/index.js conf/singleRun.yml --store zeroMqAddress=tcp://127.0.0.1:3000 < misc/stdin'"
+    "build": "node misc/generate-injectables-list.js src/injectable-files-list.ts src && tsc"
   },
   "repository": {
     "type": "git",
@@ -44,30 +40,20 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@types/amqp": "^0.2.4",
     "@types/express": "^4.16.0",
     "@types/glob": "^7.1.0",
     "@types/jest": "^24.0.0",
-    "@types/kafka-node": "^2.0.7",
     "@types/node": "^11.9.0",
     "@types/object-hash": "^1.2.0",
     "@types/prettyjson": "0.0.28",
     "@types/request": "^2.47.1",
     "@types/require-from-string": "^1.2.0",
     "@types/yamljs": "^0.2.30",
-    "@types/zeromq": "^4.6.1",
-    "amqp": "^0.2.7",
-    "aws-sdk": "^2.386.0",
     "jest": "^24.1.0",
-    "kafka-node": "^4.0.0",
-    "mqtt": "^2.18.8",
-    "rhea": "^0.3.3",
-    "stomp-client": "^0.9.0",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
-    "typescript": "^3.0.3",
-    "zeromq": "^5.0.0"
+    "typescript": "^3.0.3"
   },
   "jest": {
     "globals": {

@@ -1,13 +1,15 @@
 publishers:
--   type: udp
+-   type: custom
+    module: misc/custom-protocol.js
     name: publisher description
     serverAddress: localhost
-    port: 23072
+    port: 23071
     payload: it
 subscriptions:
 -   name: subscription description
-    type: udp
-    port: 23072
+    type: custom
+    port: 23071
+    module: misc/custom-protocol.js
     timeout: 1000
     onMessageReceived:
         script: payload = Buffer.from(message.payload);

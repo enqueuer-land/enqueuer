@@ -1,6 +1,6 @@
 ###### Install it:
     
-    $ npm install enqueuer --no-optional --global
+    $ npm install enqueuer --global
 
 After installation, you can use ```enqueuer``` or ```nqr``` interchangeably. They mean the same thing.
 Adopting --no-optional flag, you download enqueuer with no additional dependencies. As raw as possible.
@@ -18,11 +18,12 @@ So you don't have to deal with a whole bunch of stuff you will not need.
       -b, --verbosity <level>                      set verbosity [trace, debug, info, warn, error, fatal]
       -c, --config-file <path>                     set configurationFile
       -o, --stdout-requisition-output              add stdout as requisition output
-      -s, --store [store]                          add variables values to this session (default: )
-      -d, --daemon <type>                          execute in daemon mode with default values of <type> (default: )
-      -a, --add-file-single-run <file>             add file to be tested in single-run (default: )
-      -A, --add-file-and-ignore-single-run <file>  add file to be tested and ignore the ones set in single-run   (default: )
-      -p, --protocols-description [protocol]       describe protocols
+      -s, --store [store]                          add variables values to this session (default: [])
+      -d, --daemon <type>                          print in daemon mode with default values of <type> (default: [])
+      -l, --add-plugin <plugin>                    add plugin (default: [])
+      -a, --add-file-single-run <file>             add file to be tested in single-run (default: [])
+      -A, --add-file-and-ignore-single-run <file>  add file to be tested and ignore the ones set in single-run   (default: [])
+      -p, --protocols-description                  describe protocols
       -h, --help                                   output usage information
 
 
@@ -53,28 +54,7 @@ But do not worry, you can add some protocols after installation.
 ##### To see available protocols
 
     $ nqr -p
-    protocols: 
-        publishers:    amqp, file, http, kafka, mqtt, sqs, stdout, stomp, tcp, udp, uds, zeromq
-        subscriptions: amqp, file, http, kafka, mqtt, sqs, stdin, stomp, tcp, udp, uds, zeromq
-    
-
-##### To see deeper details:
-
-    $ nqr -p amqp
-    publishers: 
-        amqp: 
-            library: 
-                name:      amqp
-                version:   ^0.2.7
-                installed: true
-    subscriptions: 
-        amqp: 
-            library: 
-                name:      amqp
-                version:   ^0.2.7
-                installed: true
-
 
 ##### And then install the ones you desire:
     
-    $ npm install mqtt@^2.18.8 --no-optional
+    $ npm install enqueuer-plugin-mqtt

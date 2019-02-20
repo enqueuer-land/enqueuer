@@ -12,9 +12,6 @@ If you are opening a pull request/issue/suggestion (*thanks!*), please include:
 
 ## Running the tests
 
-To make your life easier, you can get the _enqueuer docker developer image_.
-Every broker/dependency is running perfectly over there.
-
 To build:
 
   ```npm run build```

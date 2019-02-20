@@ -3,31 +3,25 @@ language: node_js
 sudo: required
 
 node_js:
-  - v10.8.0
+- v10.8.0
 
 cache:
-  directories:
+    directories:
     - node_modules
 
 notifications:
-  email:
-    recipients:
-      - guilherme.moraes@outlook.com
-    on_success: never
-    on_failure: always
+    email:
+        recipients:
+        - guilherme.moraes@outlook.com
+        on_success: never
+        on_failure: always
 
-services:
-  - docker
-
-before_install:
-  - docker pull enqueuer/enqueuer:dev
-  - docker run --rm -itd -v $(pwd):/enqueuer -h enqueuer-host --name enqueuer enqueuer/enqueuer:dev /bin/bash
-  - docker ps -a
 
 script:
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm install"
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run lint"
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run build; npm link"
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run codeCoverage"
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run singleRunTest"
-  - docker exec enqueuer /bin/bash -c "cd /enqueuer; npm run daemonRunTest"
+- npm install
+- npm run lint
+- npm run build
+- npm link
+- npm run codeCoverage
+- npm run singleRunTest
+- npm run daemonRunTest
