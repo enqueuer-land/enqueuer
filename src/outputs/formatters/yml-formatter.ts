@@ -1,12 +1,14 @@
-import {Formatter} from './formatter';
+import {ReportFormatter} from './report-formatter';
 import {RequisitionModel} from '../../models/outputs/requisition-model';
 import {Yaml} from '../../object-notations/yaml';
-import {Injectable} from 'conditional-injector';
+import {MainInstance} from '../../plugins/main-instance';
 
-//TODO test it
-@Injectable({predicate: (output: any) => output.format && (output.format.toLowerCase() === 'yml' || output.format.toLowerCase() === 'yaml')})
-export class YmlFormatter extends Formatter {
+export class YmlReportFormatter extends ReportFormatter {
     public format(report: RequisitionModel): string {
         return new Yaml().stringify(report);
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    mainInstance.reportFormatterManager.addReportFormatter(() => new YmlReportFormatter(), 'yml', 'yaml');
 }

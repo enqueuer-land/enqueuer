@@ -47,6 +47,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
             .option('-A, --add-file-and-ignore-single-run <file>', 'add file to be tested and ignore the ones set in single-run  ',
                 (val: string) => singleRunFilesIgnoring.push(val), [])
             .option('-p, --protocols-description', 'describe protocols')
+            .option('-f, --formatters-description', 'describe report formatters')
             .parse(commandLineArguments || ['path', 'enqueuer']);
     } catch (err) {
         Logger.warning(err);
@@ -110,6 +111,10 @@ export class CommandLineConfiguration {
 
     public static describeProtocols(): string | undefined | true {
         return CommandLineConfiguration.getCommandLine().protocolsDescription;
+    }
+
+    public static describeFormatters(): string | undefined | true {
+        return CommandLineConfiguration.getCommandLine().formattersDescription;
     }
 
     public static singleRunFiles(): string[] {

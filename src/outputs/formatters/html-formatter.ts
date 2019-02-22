@@ -1,15 +1,13 @@
-import {Formatter} from './formatter';
+import {ReportFormatter} from './report-formatter';
 import {RequisitionModel} from '../../models/outputs/requisition-model';
-import {Injectable} from 'conditional-injector';
 import {StringRandomCreator} from '../../strings/string-random-creator';
 import {Test, TestsAnalyzer} from '../tests-analyzer';
 import {PublisherModel} from '../../models/outputs/publisher-model';
 import {Json} from '../../object-notations/json';
 import {SubscriptionModel} from '../../models/outputs/subscription-model';
+import {MainInstance} from '../../plugins/main-instance';
 
-//TODO test it
-@Injectable({predicate: (output: any) => output.format && output.format.toLowerCase() === 'html'})
-export class JsonFormatter extends Formatter {
+export class HtmlReportFormatter extends ReportFormatter {
 
     public format(report: RequisitionModel): string {
         const body = this.createRequisitionCard(report);
@@ -90,21 +88,21 @@ export class JsonFormatter extends Formatter {
     }
 
     private createAccordion(parentId: string, accordionCards: string, show: boolean = false): string {
-        return `<div class="accordion ${show ? 'show' : ''}" id="${parentId}  mb-1">
+        return `<div class='accordion ${show ? 'show' : ''}' id='${parentId}  mb-1'>
                     ${accordionCards}
                  </div>`;
     }
 
     private createAccordionCard(parentId: string, title: string, body: string) {
         const collapsibleId = 'id' + new StringRandomCreator().create(10);
-        return `<div class="card bg-dark mb-0">
-                    <div class="card-header" id="${parentId}">
-                        <a href="#" class="text-white mb-0" data-toggle="collapse" data-target="#${collapsibleId}" style="text-decoration: none;">
+        return `<div class='card bg-dark mb-0'>
+                    <div class='card-header' id='${parentId}'>
+                        <a href='#' class='text-white mb-0' data-toggle='collapse' data-target='#${collapsibleId}' style='text-decoration: none;'>
                             <h6>${title}</h6>
                         </a>
                     </div>
-                    <div id="${collapsibleId}" class="collapse" data-parent="#${parentId}">
-                      <div class="card-body bg-light p-2">
+                    <div id='${collapsibleId}' class='collapse' data-parent='#${parentId}'>
+                      <div class='card-body bg-light p-2'>
                         ${body}
                       </div>
                     </div>
@@ -112,25 +110,25 @@ export class JsonFormatter extends Formatter {
     }
 
     private createTestTable(title: string, tests: Test[]): string {
-        return `<h6 class="${tests.every(test => test.test.valid) ? 'text-success' : 'text-danger'} text-right" >${title}</h6>
-                <table class="table table-sm table-striped table-hover table-dark">
+        return `<h6 class='${tests.every(test => test.test.valid) ? 'text-success' : 'text-danger'} text-right' >${title}</h6>
+                <table class='table table-sm table-striped table-hover table-dark'>
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Hierarchy</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Valid</th>
+                      <th scope='col'>#</th>
+                      <th scope='col'>Hierarchy</th>
+                      <th scope='col'>Name</th>
+                      <th scope='col'>Description</th>
+                      <th scope='col'>Valid</th>
                     </tr>
                   </thead>
                   <tbody>
                     ${tests.map((test: Test, index: number) => {
                         return `<tr>
-                                  <th scope="row">${index + 1}</th>
+                                  <th scope='row'>${index + 1}</th>
                                   <td>${test.hierarchy.join(' › ')}</td>
                                   <td>${test.test.name}</td>
                                   <td>${test.test.description}</td>
-                                  <td class="${test.test.valid ? 'bg-success' : 'bg-danger'} text-center" >${test.test.valid}</td>
+                                  <td class='${test.test.valid ? 'bg-success' : 'bg-danger'} text-center' >${test.test.valid}</td>
                                 </tr>`;
                     }).join('')}
                   </tbody>
@@ -139,32 +137,36 @@ export class JsonFormatter extends Formatter {
 
     private createFullHtml(body: string): string {
         return `<!doctype html>
-                <html lang="en">
+                <html lang='en'>
                   <head>
                     <!-- Required meta tags -->
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                    <meta charset='utf-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
                     <!-- Bootstrap CSS -->
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-                        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+                    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
+                        integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
                     <title>Enqueuer Rocks</title>
                   </head>
                   <body>
-                    <div class="container-fluid">
-                        <div class="text-center">
-                            <img src="../docs/images/fullLogo1.png">
+                    <div class='container-fluid'>
+                        <div class='text-center'>
+                            <img src='../docs/images/fullLogo1.png'>
                         </div>
                         ${body}
                     </div>
                     <!-- Optional JavaScript -->
                     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-                        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-                        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+                    <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'
+                        integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
+                    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'
+                        integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49' crossorigin='anonymous'></script>
+                    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'
+                        integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy' crossorigin='anonymous'></script>
                   </body>
                 </html>`;
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    mainInstance.reportFormatterManager.addReportFormatter(() => new HtmlReportFormatter(), 'html');
 }

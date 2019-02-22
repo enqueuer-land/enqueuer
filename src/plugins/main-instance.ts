@@ -1,5 +1,7 @@
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {ProtocolManager} from './protocol-manager';
+import {ReportFormatterManager} from './report-formatter-manager';
 
 export interface MainInstance {
-    protocolManager: ProtocolManager;
+    readonly protocolManager: ProtocolManager;
+    readonly reportFormatterManager: ReportFormatterManager;
 }

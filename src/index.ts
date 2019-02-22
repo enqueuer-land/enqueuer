@@ -4,12 +4,15 @@ import {EnqueuerStarter} from './enqueuer-starter';
 import {Configuration} from './configurations/configuration';
 import {Logger} from './loggers/logger';
 import {CommandLineConfiguration} from './configurations/command-line-configuration';
-import {ProtocolManager} from './protocols/protocol-manager';
+import {PluginManager} from './plugins/plugin-manager';
 
 export async function start(): Promise<number> {
     Logger.setLoggerLevel('info');
     if (CommandLineConfiguration.describeProtocols()) {
-        new ProtocolManager().init().describeProtocols();
+        PluginManager.getProtocolManager().describeProtocols();
+        return 0;
+    } else if (CommandLineConfiguration.describeFormatters()) {
+        PluginManager.getReportFormatterManager().describeReportFormatters();
         return 0;
     } else {
         const configuration = Configuration.getValues();

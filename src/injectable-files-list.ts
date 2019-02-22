@@ -35,26 +35,6 @@ try {
     console.warn(`Error loading './object-notations/yaml': ${err}`);
 }
 try {
-   require('./outputs/formatters/console-formatter');
-} catch (err) {
-    console.warn(`Error loading './outputs/formatters/console-formatter': ${err}`);
-}
-try {
-   require('./outputs/formatters/html-formatter');
-} catch (err) {
-    console.warn(`Error loading './outputs/formatters/html-formatter': ${err}`);
-}
-try {
-   require('./outputs/formatters/json-formatter');
-} catch (err) {
-    console.warn(`Error loading './outputs/formatters/json-formatter': ${err}`);
-}
-try {
-   require('./outputs/formatters/yml-formatter');
-} catch (err) {
-    console.warn(`Error loading './outputs/formatters/yml-formatter': ${err}`);
-}
-try {
    require('./run-modes/daemon-run-executor');
 } catch (err) {
     console.warn(`Error loading './run-modes/daemon-run-executor': ${err}`);

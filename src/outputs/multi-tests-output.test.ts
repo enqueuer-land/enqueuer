@@ -1,11 +1,19 @@
 import {MultiTestsOutput} from "./multi-tests-output";
 import {SummaryTestOutput} from "./summary-test-output";
-import {Container} from "conditional-injector";
-import {Formatter} from "./formatters/formatter";
-import {ProtocolManager} from "../protocols/protocol-manager";
+import {ProtocolManager} from "../plugins/protocol-manager";
+import {ReportFormatterManager} from "../plugins/report-formatter-manager";
+import {PluginManager} from "../plugins/plugin-manager";
 
-jest.mock("../protocols/protocol-manager");
-jest.mock("conditional-injector");
+jest.mock('../plugins/plugin-manager');
+PluginManager.getReportFormatterManager.mockImplementation(() => {
+    return new ReportFormatterManager()
+});
+PluginManager.getProtocolManager.mockImplementation(() => {
+    return new ProtocolManager()
+});
+
+jest.mock("../plugins/report-formatter-manager");
+jest.mock("../plugins/protocol-manager");
 jest.mock("./summary-test-output");
 
 const print = jest.fn();
@@ -20,17 +28,9 @@ const publishMock = jest.fn();
 let format = jest.fn();
 const create = jest.fn(() => {
     return {
-
         format: format
     }
 });
-let subclassesOfMock = jest.fn(() => {
-    return {
-        create: create
-    }
-});
-Container.subclassesOf.mockImplementation(subclassesOfMock);
-
 
 const createPublisherMock = jest.fn(() => {
     return {
@@ -39,11 +39,18 @@ const createPublisherMock = jest.fn(() => {
 });
 ProtocolManager.mockImplementation(() => {
     return {
-        init: () => {
-            return {
-                createPublisher: createPublisherMock
-            }
-        }
+        createPublisher: createPublisherMock
+    }
+});
+const formatMock = jest.fn();
+const createReportFormatterMock = jest.fn(() => {
+    return {
+        format: formatMock,
+    }
+});
+ReportFormatterManager.mockImplementation(() => {
+    return {
+        createReportFormatter: createReportFormatterMock
     }
 });
 
@@ -56,22 +63,18 @@ describe('MultiTestsOutput', () => {
         format.mockClear();
         create.mockClear();
         createPublisherMock.mockClear();
-        subclassesOfMock.mockClear();
-        Container.subclassesOf.mockClear();
     });
 
-    it('Should create an output and a formatter', () => {
-        const output = {type: 'output', format: 'formatter'};
+    it('Should create an output and a createFunction', () => {
+        const output = {type: 'output', format: 'createFunction'};
         new MultiTestsOutput([output]);
 
         expect(createPublisherMock).toHaveBeenCalledWith(output);
-        expect(subclassesOfMock).toHaveBeenCalledWith(Formatter);
-        expect(create).toHaveBeenCalledWith(output);
     });
 
     it('Should print a summary in execute', async () => {
         const report = {};
-        const output = {type: 'output', format: 'formatter'};
+        const output = {type: 'output', format: 'createFunction'};
         await new MultiTestsOutput([output]).execute(report);
 
         expect(SummaryTestOutput).toHaveBeenCalledWith(report);
@@ -79,14 +82,11 @@ describe('MultiTestsOutput', () => {
     });
 
     it('Should format before printing', async () => {
-        const formatted = 'formatted';
-        format = jest.fn(() => formatted);
 
         const report = {};
-        const output = {type: 'output', format: 'formatter'};
+        const output = {type: 'output', format: 'createFunction'};
         await new MultiTestsOutput([output]).execute(report);
 
-        expect(format).toHaveBeenCalledWith(report);
         expect(publishMock).toHaveBeenCalledWith();
     });
 

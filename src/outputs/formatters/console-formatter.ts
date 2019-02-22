@@ -1,8 +1,8 @@
-import {Formatter} from './formatter';
+import {ReportFormatter} from './report-formatter';
 import {RequisitionModel} from '../../models/outputs/requisition-model';
-import {Injectable} from 'conditional-injector';
 import prettyjson from 'prettyjson';
 import {ObjectDecycler} from '../../object-notations/object-decycler';
+import {MainInstance} from '../../plugins/main-instance';
 
 const options = {
     defaultIndentation: 4,
@@ -12,11 +12,13 @@ const options = {
     dashColor: 'grey'
 };
 
-//TODO test it
-@Injectable({predicate: (output: any) => output.format && output.format.toLowerCase() === 'console'})
-export class ConsoleFormatter extends Formatter {
+export class ConsoleFormatter extends ReportFormatter {
 
     public format(report: RequisitionModel): string {
         return prettyjson.render(new ObjectDecycler().decycle(report), options);
     }
+}
+
+export function entryPoint(mainInstance: MainInstance): void {
+    mainInstance.reportFormatterManager.addReportFormatter(() => new ConsoleFormatter(), 'console', 'stdout');
 }

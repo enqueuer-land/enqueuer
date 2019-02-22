@@ -2,11 +2,10 @@ import {SummaryTestOutput} from './summary-test-output';
 import {Logger} from '../loggers/logger';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {Container} from 'conditional-injector';
 import {Publisher} from '../publishers/publisher';
-import {Formatter} from './formatters/formatter';
+import {ReportFormatter} from './formatters/report-formatter';
 import chalk from 'chalk';
-import {ProtocolManager} from '../protocols/protocol-manager';
+import {PluginManager} from '../plugins/plugin-manager';
 
 export class MultiTestsOutput {
     private outputs: Publisher[] = [];
@@ -14,8 +13,8 @@ export class MultiTestsOutput {
     public constructor(outputs: PublisherModel[]) {
         (outputs || []).forEach((output: PublisherModel) => {
             Logger.debug(`Instantiating output '${output.type}' and format '${output.format}'`);
-            const publisher = new ProtocolManager().init().createPublisher(output);
-            publisher.formatter = Container.subclassesOf(Formatter).create(output);
+            const publisher = PluginManager.getProtocolManager().createPublisher(output);
+            publisher.formatter = PluginManager.getReportFormatterManager().createReportFormatter(output.format);
             publisher.format = output.format;
             this.outputs.push(publisher);
         });
@@ -27,7 +26,7 @@ export class MultiTestsOutput {
 
         await Promise.all(this.outputs
             .map(publisher => {
-                const formatter = publisher.formatter as Formatter;
+                const formatter = publisher.formatter as ReportFormatter;
                 Logger.trace(`Formatting as ${publisher.format}`);
                 publisher.payload = formatter.format(report);
                 return publisher.publish();

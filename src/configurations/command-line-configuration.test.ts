@@ -79,7 +79,31 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.describeProtocols()).toBeTruthy();
     });
 
+    it('describe protocols --protocols-description', () => {
+        commanderRefresher(['node', 'test', '--protocols-description']);
+
+        expect(CommandLineConfiguration.describeProtocols()).toBeTruthy();
+    });
+
     it('no describe protocols', () => {
+        commanderRefresher(['node', 'test']);
+
+        expect(CommandLineConfiguration.describeProtocols()).toBeUndefined();
+    });
+
+    it('describe formatters -f', () => {
+        commanderRefresher(['node', 'test', '-f']);
+
+        expect(CommandLineConfiguration.describeFormatters()).toBeTruthy();
+    });
+
+    it('describe formatters --formatters-description', () => {
+        commanderRefresher(['node', 'test', '--formatters-description']);
+
+        expect(CommandLineConfiguration.describeFormatters()).toBeTruthy();
+    });
+
+    it('no describe formatters', () => {
         commanderRefresher(['node', 'test']);
 
         expect(CommandLineConfiguration.describeProtocols()).toBeUndefined();

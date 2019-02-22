@@ -4,7 +4,11 @@ import {EnqueuerStarter} from './enqueuer-starter';
 import {Logger} from './loggers/logger';
 import {ConfigurationValues} from "./configurations/configuration-values";
 import {CommandLineConfiguration} from "./configurations/command-line-configuration";
+import {PluginManager} from "./plugins/plugin-manager";
+import {ProtocolManager} from "./plugins/protocol-manager";
+import {ReportFormatterManager} from "./plugins/report-formatter-manager";
 
+jest.mock('./plugins/plugin-manager');
 jest.mock('./configurations/command-line-configuration');
 jest.mock('./configurations/configuration');
 jest.mock('./enqueuer-starter');
@@ -106,7 +110,17 @@ describe('Index', () => {
     });
 
     it('Should list available libraries value', done => {
+        PluginManager.getProtocolManager.mockImplementationOnce(() => new ProtocolManager());
         CommandLineConfiguration.describeProtocols.mockImplementationOnce(() => true);
+        start().then((statusCode) => {
+            expect(statusCode).toBe(0);
+            done();
+        });
+    });
+
+    it('Should list available formatters value', done => {
+        PluginManager.getReportFormatterManager.mockImplementationOnce(() => new ReportFormatterManager());
+        CommandLineConfiguration.describeFormatters.mockImplementationOnce(() => true);
         start().then((statusCode) => {
             expect(statusCode).toBe(0);
             done();

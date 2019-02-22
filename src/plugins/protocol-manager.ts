@@ -1,15 +1,13 @@
 import prettyjson from 'prettyjson';
-import {PublisherProtocol} from './publisher-protocol';
-import {SubscriptionProtocol} from './subscription-protocol';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Publisher} from '../publishers/publisher';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Subscription} from '../subscriptions/subscription';
 import {NullSubscription} from '../subscriptions/null-subscription';
 import {NullPublisher} from '../publishers/null-publisher';
-import {Logger} from '../loggers/logger';
-import {Configuration} from '../configurations/configuration';
-import {Protocol, ProtocolType} from './protocol';
+import {ProtocolType, Protocol} from '../protocols/protocol';
+import {PublisherProtocol} from '../protocols/publisher-protocol';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
 const options = {
     defaultIndentation: 4,
@@ -21,32 +19,6 @@ const options = {
 
 export class ProtocolManager {
     private protocols: Protocol[] = [];
-
-    public init(): ProtocolManager {
-        const builtInModules = [
-            '../publishers/custom-publisher',
-            '../publishers/file-publisher',
-            '../publishers/http-publisher',
-            '../publishers/standard-output-publisher',
-            '../publishers/stream-publisher',
-            '../publishers/udp-publisher',
-            '../subscriptions/custom-subscription',
-            '../subscriptions/filename-watcher-subscription',
-            '../subscriptions/http-subscription',
-            '../subscriptions/standard-input-subscription',
-            '../subscriptions/stream-subscription',
-            '../subscriptions/udp-subscription'];
-        //sync forEach
-        builtInModules.concat(Configuration.getValues().plugins)
-            .map(async module => {
-                try {
-                    require(module).entryPoint({protocolManager: this});
-                } catch (err) {
-                    Logger.warning(`Error loading '${module}': ${err}`);
-                }
-            });
-        return this;
-    }
 
     public createPublisher(publisherModel: PublisherModel): Publisher {
         const matchingPublishers = this.protocols

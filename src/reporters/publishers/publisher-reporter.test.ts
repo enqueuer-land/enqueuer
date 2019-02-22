@@ -2,7 +2,13 @@ import {OnInitEventExecutor} from "../../events/on-init-event-executor";
 import {OnFinishEventExecutor} from "../../events/on-finish-event-executor";
 import {OnMessageReceivedEventExecutor} from "../../events/on-message-received-event-executor";
 import {PublisherReporter} from "./publisher-reporter";
-import {ProtocolManager} from "../../protocols/protocol-manager";
+import {ProtocolManager} from "../../plugins/protocol-manager";
+import {PluginManager} from "../../plugins/plugin-manager";
+
+jest.mock('../../plugins/plugin-manager');
+PluginManager.getProtocolManager.mockImplementation(() => {
+    return new ProtocolManager()
+});
 
 let publishMock = jest.fn(() => Promise.resolve(true));
 let publisherMock = jest.fn(() => {
@@ -11,14 +17,10 @@ let publisherMock = jest.fn(() => {
     }
 });
 
-jest.mock('../../protocols/protocol-manager');
+jest.mock('../../plugins/protocol-manager');
 ProtocolManager.mockImplementation(() => {
     return {
-        init: () => {
-            return {
-                createPublisher: publisherMock
-            }
-        }
+        createPublisher: publisherMock
     }
 });
 

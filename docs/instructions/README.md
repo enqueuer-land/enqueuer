@@ -24,6 +24,7 @@ So you don't have to deal with a whole bunch of stuff you will not need.
       -a, --add-file-single-run <file>             add file to be tested in single-run (default: [])
       -A, --add-file-and-ignore-single-run <file>  add file to be tested and ignore the ones set in single-run   (default: [])
       -p, --protocols-description                  describe protocols
+      -f, --formatters-description                 describe report formatters
       -h, --help                                   output usage information
 
 

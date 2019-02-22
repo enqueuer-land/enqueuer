@@ -1,6 +1,5 @@
 import {Configuration} from './configuration';
 
-//TODO create method to refresh it
 export class Store {
     private static data: any = {};
 
