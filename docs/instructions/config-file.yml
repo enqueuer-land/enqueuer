@@ -1,46 +1,20 @@
 #This file tells how enqueuer should be executed
 
-#execution mode
-#two modes are mutually exclusive 'single-run' (default) and 'daemon'.
-# single-run mode: executes a single time. This is the one that has to be used when your goal is to integrate your pipeline.
-#             It runs, at the same time, every file (/docs/tests/test.yml) listed in 'files' field or that matches 'file' value.
-#             Once them all are ran, enqueuer ends its execution, compiles a summary and saves it in a file defined in 'reportName'.
-#             At the end of execution, a status code is returned:
-#               0, if everything is ok; or
-#               1, if there is at least one invalid thing.
+# It runs, at the same time, every file (/docs/tests/test.yml) listed in 'files' field or that matches 'file' value.
+# Once them all are ran, enqueuer ends its execution, compiles a summary and saves it in a file defined in 'reportName'.
+# At the end of execution, a status code is returned:
+#   0, if everything is ok; or
+#   1, if there is at least one invalid thing.
 # You can use this one as example: /singleRun.yml
-single-run: #(default)
-  #Optional. Requisition files name or glob
-  files:
-  - 1.yml
-  - 2.yml
-  - *.json
+#Optional. Requisition files name or glob
+files:
+- 1.yml
+- 2.yml
+- *.json
 
-  #Default: false
-  #Run every file at the same time
-  parallel: false
-
-##--------------------------------------
-
-# daemon mode: it will run indefinitely. Endlessly. As a service.
-#         When running in daemon mode it will be waiting for test values (/docs/tests/test.yml) from those mechanisms inputs listed. One after the other.
-#         Some IPC protocols are currently supported: http, tcp and uds. You can find an example of both right below
-# You can use this one as example: /daemonRun.yml
-daemon:
-#Accepts uds requisitions
-- type: uds
-  path: /tmp/in.sock #defaults to /tmp/enqueuer.requisitions
-
-#Accepts tcp requisitions
-- type: tcp
-  port: 8081 #defaults to23022
-
-
-#Accepts http requisitions
-- type: http
-  endpoint: /any #defaults to /requisitions
-  port: 8080 #defaults to 23023
-  method: PUT #defaults to POST
+#Default: false
+#Run every file at the same time
+parallel: false
 
 #Optional. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
 log-level: trace

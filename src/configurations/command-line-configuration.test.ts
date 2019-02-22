@@ -116,14 +116,8 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.singleRunFilesIgnoring()).toEqual([]);
     });
 
-    it('daemon mode', () => {
-        commanderRefresher(['node', 'test', '-d',  'type', '--daemon', 'other']);
-
-        expect(CommandLineConfiguration.getDaemonTypes()).toEqual(['type', 'other']);
-    });
-
     it('add single run file', () => {
-        commanderRefresher(['node', 'test', '-a', 'file', '--add-file-single-run', 'file2']);
+        commanderRefresher(['node', 'test', '-a', 'file', '--add-file', 'file2']);
 
         expect(CommandLineConfiguration.singleRunFiles()).toEqual(['file', 'file2']);
     });
@@ -135,7 +129,7 @@ describe('CommandLineConfiguration', () => {
     });
 
     it('add single run file ignoring', () => {
-        commanderRefresher(['node', 'test', '-A', 'file', '--add-file-and-ignore-single-run', 'file2']);
+        commanderRefresher(['node', 'test', '-A', 'file', '--add-file-and-ignore-others', 'file2']);
 
         expect(CommandLineConfiguration.singleRunFilesIgnoring()).toEqual(['file', 'file2']);
     });

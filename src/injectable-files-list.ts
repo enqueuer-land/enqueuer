@@ -34,33 +34,3 @@ try {
 } catch (err) {
     console.warn(`Error loading './object-notations/yaml': ${err}`);
 }
-try {
-   require('./run-modes/daemon-run-executor');
-} catch (err) {
-    console.warn(`Error loading './run-modes/daemon-run-executor': ${err}`);
-}
-try {
-   require('./run-modes/daemon-run-input/http-daemon-input');
-} catch (err) {
-    console.warn(`Error loading './run-modes/daemon-run-input/http-daemon-input': ${err}`);
-}
-try {
-   require('./run-modes/daemon-run-input/null-daemon-input');
-} catch (err) {
-    console.warn(`Error loading './run-modes/daemon-run-input/null-daemon-input': ${err}`);
-}
-try {
-   require('./run-modes/daemon-run-input/tcp-daemon-input');
-} catch (err) {
-    console.warn(`Error loading './run-modes/daemon-run-input/tcp-daemon-input': ${err}`);
-}
-try {
-   require('./run-modes/daemon-run-input/uds-daemon-input');
-} catch (err) {
-    console.warn(`Error loading './run-modes/daemon-run-input/uds-daemon-input': ${err}`);
-}
-try {
-   require('./run-modes/single-run-executor');
-} catch (err) {
-    console.warn(`Error loading './run-modes/single-run-executor': ${err}`);
-}

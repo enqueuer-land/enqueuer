@@ -15,21 +15,17 @@ jest.mock('./enqueuer-starter');
 jest.mock('./loggers/logger');
 
 let configurationGetReturn: ConfigurationValues = {
-        logLevel: 'logLevelTest',
-        quiet: true,
-        runMode: {
-            daemon: [],
-            'single-run': {
-                report: 'reportNameSingle',
-                parallel: true,
-                files: [],
-            }
-        },
-        outputs: [],
-        store: {}
-    }
-;
-
+    logLevel: 'logLevelTest',
+    quiet: true,
+    name: 'reportNameSingle',
+    parallel: true,
+    plugins: [],
+    files: [],
+    outputs: [],
+    store: {},
+    addSingleRun: [],
+    addSingleRunIgnore: []
+};
 
 let getValuesMock;
 const remockConfiguration = (values = configurationGetReturn) => {
@@ -51,7 +47,8 @@ EnqueuerStarter.mockImplementation(enqueuerConstructorMock);
 
 let setLoggerLevelMock = jest.fn();
 Logger.setLoggerLevel.mockImplementation(() => setLoggerLevelMock);
-Logger.mockImplementation(() => {});
+Logger.mockImplementation(() => {
+});
 
 describe('Index', () => {
 

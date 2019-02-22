@@ -19,7 +19,6 @@ describe('Configuration', () => {
 
     beforeEach(() => {
         CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => makeId());
-        CommandLineConfiguration.getDaemonTypes.mockImplementationOnce(() => []);
     });
 
     it('should check \'refresh\'', () => {
@@ -63,6 +62,12 @@ describe('Configuration', () => {
 
     it('should check default \'log-level\'', () => {
         expect(Configuration.getValues().logLevel).toBe('warn');
+    });
+
+    it('should check default values', () => {
+        expect(Configuration.getValues().name).toBeUndefined();
+        expect(Configuration.getValues().parallel).toBeFalsy();
+        expect(Configuration.getValues().files).toEqual([]);
     });
 
     it('should getOutputs in configuration file', () => {

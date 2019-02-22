@@ -6,9 +6,8 @@
   "scripts": {
     "start": "node js/index.js",
     "prepublishOnly": "npm run clean && npm run build",
-    "test": "npm run codeCoverage && npm run singleRunTest && npm run daemonRunTest",
+    "test": "npm run codeCoverage && npm run singleRunTest",
     "unitTest": "node_modules/.bin/jest --silent .test.ts",
-    "daemonRunTest": "node_modules/.bin/jest --detectOpenHandles --forceExit .comp.ts",
     "singleRunTest": "nqr conf/singleRun.yml -a examples/requisition.yaml < misc/stdin",
     "codeCoverage": "node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",

@@ -1,6 +1,5 @@
 import {EnqueuerExecutor} from './enqueuer-executor';
 import {Logger} from '../loggers/logger';
-import {Injectable} from 'conditional-injector';
 import {MultiTestsOutput} from '../outputs/multi-tests-output';
 import {RequisitionParser} from '../requisition-runners/requisition-parser';
 import * as glob from 'glob';
@@ -8,12 +7,10 @@ import * as fs from 'fs';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {MultiRequisitionRunner} from '../requisition-runners/multi-requisition-runner';
-import {ConfigurationValues, SingleRunMode} from '../configurations/configuration-values';
+import {ConfigurationValues} from '../configurations/configuration-values';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {DateController} from '../timers/date-controller';
 
-//TODO test it
-@Injectable()
 export class SingleRunExecutor extends EnqueuerExecutor {
 
     private readonly fileNames: string[];
@@ -24,16 +21,10 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     constructor(configuration: ConfigurationValues) {
         super();
-        let singleRunMode: SingleRunMode = configuration['single-run'];
         this.report = this.initialReport();
-        if (singleRunMode) {
-            this.parallelMode = singleRunMode.parallel;
-            this.fileNames = this.getTestFiles(configuration, singleRunMode.files || []);
-            this.report.name = singleRunMode.name || this.report.name;
-        } else {
-            this.parallelMode = false;
-            this.fileNames = this.getTestFiles(configuration, []);
-        }
+        this.parallelMode = configuration.parallel;
+        this.fileNames = this.getTestFiles(configuration);
+        this.report.name = configuration.name || this.report.name;
         this.outputs = new MultiTestsOutput(configuration.outputs || []);
         this.totalFilesNum = this.fileNames.length;
     }
@@ -85,16 +76,16 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         });
     }
 
-    private getTestFiles(configuration: ConfigurationValues, singleRunFiles: string[]): string[] {
+    private getTestFiles(configuration: ConfigurationValues): string[] {
         let files: string[] = configuration.addSingleRunIgnore;
 
         if (files.length == 0) {
-            files = configuration.addSingleRun.concat(singleRunFiles);
+            files = configuration.addSingleRun.concat(configuration.files);
         }
 
         let result: string[] = [];
         files.forEach((pattern: any) => {
-            if (typeof(pattern) == 'string') {
+            if (typeof (pattern) == 'string') {
                 const items = glob.sync(pattern);
                 if (items.length <= 0) {
                     this.addTestError(`Test found`, `No file was found with: ${pattern}`);

@@ -1,22 +1,14 @@
-import {Container} from 'conditional-injector';
 import {EnqueuerStarter} from "./enqueuer-starter";
-import {EnqueuerExecutor} from "./run-modes/enqueuer-executor";
+import {SingleRunExecutor} from "./run-modes/single-run-executor";
+
 
 let executorMock = jest.fn(() => Promise.resolve(true));
-let createMock = jest.fn(() => {
+jest.mock('./run-modes/single-run-executor');
+SingleRunExecutor.mockImplementation(() => {
     return {
         execute: executorMock
     }
 });
-let containerMock = jest.fn(() => {
-    return {
-        create: createMock
-    }
-});
-
-jest.mock('conditional-injector');
-Container.subclassesOf.mockImplementation(containerMock);
-
 describe('EnqueuerStarter', () => {
     const configuration = {
         runMode: 'daemon'
@@ -25,8 +17,7 @@ describe('EnqueuerStarter', () => {
     it('Should detect run mode', () => {
         new EnqueuerStarter(configuration);
 
-        expect(containerMock).toHaveBeenCalledWith(EnqueuerExecutor);
-        expect(createMock).toHaveBeenCalledWith(configuration);
+        expect(SingleRunExecutor).toHaveBeenCalledWith(configuration);
     });
 
     it('Should translate true to 0', () => {

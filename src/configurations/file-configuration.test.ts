@@ -45,58 +45,6 @@ describe('FileConfiguration', () => {
         expect(FileConfiguration.getLogLevel()).toBe(logLevel);
     });
 
-    it('getDaemon RunMode', () => {
-        const mode = 'enqueuer';
-        fileLoadMock = jest.fn(() => {
-            return {
-                'run-mode': {
-                    daemon: mode
-                }
-            }
-        });
-        FileConfiguration.load('itDoesNotMatter');
-
-        expect(FileConfiguration.getDaemon()).toBe(mode);
-    });
-
-    it('getDaemon', () => {
-        const mode = 'enqueuer';
-        fileLoadMock = jest.fn(() => {
-            return {
-                daemon: mode
-            }
-        });
-        FileConfiguration.load('itDoesNotMatter');
-
-        expect(FileConfiguration.getDaemon()).toBe(mode);
-    });
-
-    it('getSingleRun RunMode', () => {
-        const mode = 'enqueuer';
-        fileLoadMock = jest.fn(() => {
-            return {
-                'run-mode': {
-                    'single-run': mode
-                }
-            }
-        });
-        FileConfiguration.load('itDoesNotMatter');
-
-        expect(FileConfiguration.getSingleRun()).toBe(mode);
-    });
-
-    it('getSingleRun', () => {
-        const mode = 'enqueuer';
-        fileLoadMock = jest.fn(() => {
-            return {
-                'single-run': mode
-            }
-        });
-        FileConfiguration.load('itDoesNotMatter');
-
-        expect(FileConfiguration.getSingleRun()).toBe(mode);
-    });
-
     it('getOutputs', () => {
         const outputs = 'enqueuer';
         fileLoadMock = jest.fn(() => {
@@ -108,6 +56,21 @@ describe('FileConfiguration', () => {
 
 
         expect(FileConfiguration.getOutputs()).toBe(outputs);
+    });
+
+    it('name; parallel; files', () => {
+        fileLoadMock = jest.fn(() => {
+            return {
+                'name': 'enqueuer',
+                'parallel': true,
+                'files': ['1', '2']
+            }
+        });
+        FileConfiguration.load('itDoesNotMatter');
+
+        expect(FileConfiguration.getName()).toBe('enqueuer');
+        expect(FileConfiguration.isParallelExecution()).toBeTruthy();
+        expect(FileConfiguration.getFiles()).toEqual(['1', '2']);
     });
 
     it('getPlugins', () => {

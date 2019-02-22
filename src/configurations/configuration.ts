@@ -34,22 +34,18 @@ export class Configuration {
     }
 
     private static initialLoad() {
-        const daemonTypes = CommandLineConfiguration.getDaemonTypes();
-        if (daemonTypes.length > 0) {
-            return Configuration.createDefaultDaemon(daemonTypes);
-        } else {
-            return Configuration.createDefaultSingleRun();
-        }
+        return Configuration.createDefaultSingleRun();
     }
 
-    private static readFromFile(configFileName: string): any {
+    private static readFromFile(configFileName: string): ConfigurationValues {
         const defaultValues = Configuration.createDefaultSingleRun();
         FileConfiguration.load(configFileName);
         Configuration.configFileName = configFileName;
         return {
+            name: FileConfiguration.getName(),
+            parallel: !!FileConfiguration.isParallelExecution(),
+            files: FileConfiguration.getFiles() || [],
             logLevel: CommandLineConfiguration.getVerbosity() || FileConfiguration.getLogLevel() || defaultValues.logLevel,
-            daemon: FileConfiguration.getDaemon(),
-            'single-run': FileConfiguration.getSingleRun() || defaultValues.singleRun,
             outputs: defaultValues.outputs.concat(FileConfiguration.getOutputs() || []),
             plugins: defaultValues.plugins.concat(FileConfiguration.getPlugins() || []),
             store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
@@ -66,32 +62,13 @@ export class Configuration {
         }
         return {
             logLevel: CommandLineConfiguration.getVerbosity() || 'warn',
-            'single-run': {
-                files: []
-            },
+            name: '',
+            parallel: false,
+            files: [],
             outputs: outputs,
             store: Object.assign({}, CommandLineConfiguration.getStore()),
             quiet: CommandLineConfiguration.isQuietMode(),
             plugins: CommandLineConfiguration.getPlugins() || [],
-            addSingleRun: CommandLineConfiguration.singleRunFiles(),
-            addSingleRunIgnore: CommandLineConfiguration.singleRunFilesIgnoring()
-        };
-    }
-
-    private static createDefaultDaemon(daemonTypes: string[]): any {
-        let outputs = [];
-        if (CommandLineConfiguration.getStdoutRequisitionOutput()) {
-            outputs.push({type: 'standard-output', format: 'console'});
-        }
-        return {
-            logLevel: CommandLineConfiguration.getVerbosity() || 'warn',
-            daemon: daemonTypes.map((daemonType: string) => {
-                return {type: daemonType};
-            }),
-            outputs: outputs,
-            store: Object.assign({}, CommandLineConfiguration.getStore()),
-            plugins: CommandLineConfiguration.getPlugins() || [],
-            quiet: CommandLineConfiguration.isQuietMode(),
             addSingleRun: CommandLineConfiguration.singleRunFiles(),
             addSingleRunIgnore: CommandLineConfiguration.singleRunFilesIgnoring()
         };
