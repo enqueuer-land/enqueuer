@@ -30,7 +30,6 @@ export class PluginManager {
             '../subscriptions/udp-subscription',
 
             '../outputs/formatters/console-formatter',
-            '../outputs/formatters/html-formatter',
             '../outputs/formatters/json-formatter',
             '../outputs/formatters/yml-formatter'
         ];
