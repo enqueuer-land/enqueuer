@@ -39,7 +39,7 @@ describe('HttpContainer', () => {
         })
     });
 
-    it('Should handle handleListen faile', done => {
+    it('Should handle handleListen fail', done => {
         const appReturn = {
             use: () => {}
         };
@@ -86,7 +86,7 @@ describe('HttpContainer', () => {
         });
 
         const onCloseMock = jest.fn();
-        new HttpContainer(123, false).release(onCloseMock)
+        new HttpContainer(123, false).release(onCloseMock);
 
         expect(onCloseMock).toHaveBeenCalled();
     });

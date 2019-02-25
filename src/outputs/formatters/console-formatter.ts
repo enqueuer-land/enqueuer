@@ -12,7 +12,7 @@ const options = {
     dashColor: 'grey'
 };
 
-export class ConsoleFormatter extends ReportFormatter {
+export class ConsoleFormatter implements ReportFormatter {
 
     public format(report: RequisitionModel): string {
         return prettyjson.render(new ObjectDecycler().decycle(report), options);

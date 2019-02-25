@@ -3,7 +3,7 @@ import {RequisitionModel} from '../../models/outputs/requisition-model';
 import {Yaml} from '../../object-notations/yaml';
 import {MainInstance} from '../../plugins/main-instance';
 
-export class YmlReportFormatter extends ReportFormatter {
+export class YmlReportFormatter implements ReportFormatter {
     public format(report: RequisitionModel): string {
         return new Yaml().stringify(report);
     }

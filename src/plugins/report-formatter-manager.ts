@@ -21,7 +21,7 @@ export class ReportFormatterManager {
 
     public createReportFormatter(format: string): ReportFormatter {
         const matchingFormatters = this.formatters
-            .filter((addedFormatter: AddedReportFormatter) => addedFormatter.tags
+            .filter((addedFormatter: AddedReportFormatter) => addedFormatter.tags || []
                 .some((tag: string) => tag.toLowerCase() === format.toLowerCase()))
             .map((addedFormatter: AddedReportFormatter) => addedFormatter.createFunction());
         if (matchingFormatters.length > 0) {
