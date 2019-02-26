@@ -5,6 +5,7 @@ import {Configuration} from './configurations/configuration';
 import {Logger} from './loggers/logger';
 import {CommandLineConfiguration} from './configurations/command-line-configuration';
 import {PluginManager} from './plugins/plugin-manager';
+import {TestsDescriber} from './testers/tests-describer';
 
 export async function start(): Promise<number> {
     Logger.setLoggerLevel('info');
@@ -13,6 +14,9 @@ export async function start(): Promise<number> {
         return 0;
     } else if (CommandLineConfiguration.describeFormatters()) {
         PluginManager.getReportFormatterManager().describeReportFormatters();
+        return 0;
+    } else if (CommandLineConfiguration.describeTestsList()) {
+        new TestsDescriber().describeTests();
         return 0;
     } else {
         const configuration = Configuration.getValues();

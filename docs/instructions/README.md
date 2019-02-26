@@ -24,6 +24,7 @@ So you don't have to deal with a whole bunch of stuff you will not need.
       -A, --add-file-and-ignore-others <file>  add file to be tested and ignore others (default: [])
       -p, --protocols-description              describe protocols
       -f, --formatters-description             describe report formatters
+      -t, --tests-list                         list available tests assertions
       -h, --help                               output usage information
 
 

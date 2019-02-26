@@ -109,6 +109,24 @@ describe('CommandLineConfiguration', () => {
         expect(CommandLineConfiguration.describeProtocols()).toBeUndefined();
     });
 
+    it('describe assertions -t', () => {
+        commanderRefresher(['node', 'test', '-t']);
+
+        expect(CommandLineConfiguration.describeTestsList()).toBeTruthy();
+    });
+
+    it('describe assertions --tests-list', () => {
+        commanderRefresher(['node', 'test', '--tests-list']);
+
+        expect(CommandLineConfiguration.describeTestsList()).toBeTruthy();
+    });
+
+    it('no describe assertions', () => {
+        commanderRefresher(['node', 'test']);
+
+        expect(CommandLineConfiguration.describeTestsList()).toBeUndefined();
+    });
+
     it('no single run file', () => {
         commanderRefresher(['node', 'test']);
 

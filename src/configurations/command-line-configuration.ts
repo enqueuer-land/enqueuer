@@ -45,6 +45,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
                 (val: string) => singleRunFilesIgnoring.push(val), [])
             .option('-p, --protocols-description', 'describe protocols')
             .option('-f, --formatters-description', 'describe report formatters')
+            .option('-t, --tests-list', 'list available tests assertions')
             .parse(commandLineArguments || ['path', 'enqueuer']);
     } catch (err) {
         Logger.warning(err);
@@ -112,6 +113,10 @@ export class CommandLineConfiguration {
 
     public static describeFormatters(): string | undefined | true {
         return CommandLineConfiguration.getCommandLine().formattersDescription;
+    }
+
+    public static describeTestsList() {
+        return CommandLineConfiguration.getCommandLine().testsList;
     }
 
     public static singleRunFiles(): string[] {

@@ -1,13 +1,15 @@
 import {Configuration} from './configurations/configuration';
-import {start} from "./index";
+import {start} from './index';
 import {EnqueuerStarter} from './enqueuer-starter';
 import {Logger} from './loggers/logger';
-import {ConfigurationValues} from "./configurations/configuration-values";
-import {CommandLineConfiguration} from "./configurations/command-line-configuration";
-import {PluginManager} from "./plugins/plugin-manager";
-import {ProtocolManager} from "./plugins/protocol-manager";
-import {ReportFormatterManager} from "./plugins/report-formatter-manager";
+import {ConfigurationValues} from './configurations/configuration-values';
+import {CommandLineConfiguration} from './configurations/command-line-configuration';
+import {PluginManager} from './plugins/plugin-manager';
+import {ProtocolManager} from './plugins/protocol-manager';
+import {ReportFormatterManager} from './plugins/report-formatter-manager';
+import {TestsDescriber} from './testers/tests-describer';
 
+jest.mock('./testers/tests-describer');
 jest.mock('./plugins/plugin-manager');
 jest.mock('./configurations/command-line-configuration');
 jest.mock('./configurations/configuration');
@@ -30,7 +32,7 @@ let configurationGetReturn: ConfigurationValues = {
 let getValuesMock;
 const remockConfiguration = (values = configurationGetReturn) => {
     getValuesMock = jest.fn(() => {
-        return configurationGetReturn
+        return configurationGetReturn;
     });
     Configuration.getValues.mockImplementationOnce(getValuesMock);
 };
@@ -119,6 +121,21 @@ describe('Index', () => {
         PluginManager.getReportFormatterManager.mockImplementationOnce(() => new ReportFormatterManager());
         CommandLineConfiguration.describeFormatters.mockImplementationOnce(() => true);
         start().then((statusCode) => {
+            expect(statusCode).toBe(0);
+            done();
+        });
+    });
+
+    it('Should list available tests value', done => {
+        const describeTestsMock = jest.fn();
+        TestsDescriber.mockImplementationOnce(() => {
+            return {
+                describeTests: describeTestsMock
+            };
+        });
+        CommandLineConfiguration.describeTestsList.mockImplementationOnce(() => true);
+        start().then((statusCode) => {
+            expect(describeTestsMock).toHaveBeenCalled();
             expect(statusCode).toBe(0);
             done();
         });

@@ -4,12 +4,12 @@ import {Assertion} from '../models/events/assertion';
 import {StoreCodeGenerator} from './store-code-generator';
 
 export class EventCodeGenerator {
-    private testerInstanceName: string;
-    private storeInstanceName: string;
+    private readonly testerInstanceName: string;
+    private readonly storeInstanceName: string;
+    private readonly script: string;
+    private readonly store: { [propName: string]: any };
+    private readonly name: string;
     private assertions: Assertion[];
-    private script: string;
-    private store: { [propName: string]: any };
-    private name: string;
 
     public constructor(testerInstanceName: string, storeInstanceName: string, eventValue: Event, eventName: string = 'eventName') {
         this.name = eventName;

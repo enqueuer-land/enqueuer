@@ -3,14 +3,12 @@ import {Assertion} from '../models/events/assertion';
 import {Json} from '../object-notations/json';
 
 export class AssertionCodeGenerator {
-    private testerInstanceName: string;
-    private testerMethods: string[];
-    private tester: any;
+    private readonly testerInstanceName: string;
+    private readonly tester: any;
 
     public constructor(testerInstanceName: string) {
         this.tester = new Tester();
         this.testerInstanceName = testerInstanceName;
-        this.testerMethods = this.identifyTesterMethods();
     }
 
     public generate(assertion: Assertion): string {
@@ -91,10 +89,6 @@ export class AssertionCodeGenerator {
         }
         delete clone[field];
         return clone;
-    }
-
-    private identifyTesterMethods() {
-        return Object.getOwnPropertyNames(Object.getPrototypeOf(this.tester)).filter(methodName => methodName != 'constructor');
     }
 
     private generateAssertionCodeCatch() {
