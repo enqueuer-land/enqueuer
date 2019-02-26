@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node js/index.js",
     "prepublishOnly": "npm run clean && npm run build",
-    "test": "npm run codeCoverage && npm run singleRunTest",
+    "test": "npm run codeCoverage && npm run singleRunTest && npm run validateOutput",
     "unitTest": "node_modules/.bin/jest --silent .test.ts",
     "singleRunTest": "nqr conf/singleRun.yml -a examples/requisition.yaml < misc/stdin",
+    "validateOutput": "yval --from=json outputExamples/singleRunOutput.json && yval --from=yaml outputExamples/singleRunOutput.yml",
     "codeCoverage": "node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
@@ -52,7 +53,8 @@
     "ts-jest": "^24.0.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.13.0",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "yval": "0.0.3"
   },
   "jest": {
     "globals": {

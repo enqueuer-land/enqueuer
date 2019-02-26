@@ -3,23 +3,26 @@ language: node_js
 sudo: required
 
 node_js:
-- v10.8.0
+    - v10.8.0
 
 cache:
     directories:
-    - node_modules
+        - node_modules
 
 notifications:
     email:
         recipients:
-        - guilherme.moraes@outlook.com
+            - guilherme.moraes@outlook.com
         on_success: never
         on_failure: always
 
 script:
-- npm install
-- npm run lint
-- npm run build
-- npm link
-- npm run codeCoverage
-- npm run singleRunTest
+    - rm outputExamples/*
+    - npm install
+    - npm run lint
+    - npm run build
+    - npm link
+    - npm run codeCoverage
+    - npm run singleRunTest
+    - yval --from=json outputExamples/singleRunOutput.json
+    - yval --from=yaml outputExamples/singleRunOutput.yml
