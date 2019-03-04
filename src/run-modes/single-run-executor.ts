@@ -86,10 +86,10 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         let result: string[] = [];
         files.forEach((pattern: any) => {
             if (typeof (pattern) == 'string') {
-                const items = glob.sync(pattern);
-                if (items.length <= 0) {
-                    this.addTestError(`Test found`, `No file was found with: ${pattern}`);
-                } else {
+            const items = glob.sync(pattern);
+            if (items.length <= 0) {
+                this.addTestError(`Test found`, `No file was found with: ${pattern}`);
+            } else {
                     result = result.concat(items.sort());
                 }
             }
