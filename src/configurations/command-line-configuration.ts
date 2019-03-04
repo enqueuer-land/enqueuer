@@ -24,7 +24,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
             .version(process.env.npm_package_version || packageJson.version, '-v, --version')
             .allowUnknownOption()
             .usage('[options]')
-            .description('Take a look at the full documentation: http://enqueuer.github.io/enqueuer')
+            .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
             .option('-q, --quiet', 'disable logging', false)
             .option('-b, --verbosity <level>', 'set verbosity [trace, debug, info, warn, error, fatal]')
             .option('-c, --config-file <path>', 'set configurationFile')

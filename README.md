@@ -1,14 +1,14 @@
-[![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer) [![Build Status](https://travis-ci.org/lopidio/enqueuer.svg?branch=develop)](https://travis-ci.org/lopidio/enqueuer)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability)](https://codeclimate.com/github/lopidio/enqueuer/maintainability) [![Greenkeeper badge](https://badges.greenkeeper.io/lopidio/enqueuer.svg)](https://greenkeeper.io/)
+[![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer) [![Build Status](https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=develop)](https://travis-ci.org/enqueuer-land/enqueuer)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability)](https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability) [![Greenkeeper badge](https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg)](https://greenkeeper.io/)
 
-![enqueuerlogo](https://raw.githubusercontent.com/lopidio/enqueuer/develop/docs/images/fullLogo1.png "Enqueuer Logo")
+![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/develop/docs/images/fullLogo1.png "Enqueuer Logo")
 
 Have you ever wonder how to test multi IPC protocol flows?\
 How to make sure that a user journey which involves several steps with different protocols is working properly?\ 
  Enqueuer is what you're looking for.
 
 #### Enqueuer
-It is ~~not just~~ a integration tool that provides the following capabilities:
+It is ~~not just~~ a integration tool that provides the following capabilities:\
 - Initiates requests\
 - Mock depending services\
 - Assert against payload and message content\
@@ -30,7 +30,7 @@ or
     $ nqr -h
     Usage: nqr [options]
     
-    Take a look at the full documentation: http://enqueuer.github.io/enqueuer
+    Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
     
     Options:
     
