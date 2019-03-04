@@ -150,7 +150,7 @@ Available in requisitions, publishers and subscriptions. It gets executed as soo
 **onFinish**\
 Available in requisitions, publishers and subscriptions. It gets executed when the field is about to finish
 
-**onMessageReceived**\ 
+**onMessageReceived**\
 Available in every subscriptions and publishers that provide synchronous properties. 
 It gets executed when the field receives a message.
 An additional 'message' object is available having all of its attributes.
@@ -163,7 +163,7 @@ Javascript code snippet executed when the event is triggered.\
 **store**\
 Data to be persisted\
 **assertions**\
-Array of assertions. Run `$ nqr -t` to see available ones\
+Array of assertions. Run `$ nqr -t` to see available ones
 
 ##### examples
 

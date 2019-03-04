@@ -20,10 +20,16 @@ export class Tester {
         });
     }
 
-    public toBeEqualTo(label: string, actual: number, expected: number, fieldName: string): void {
-        this.addTestModel(label,
-            actual == expected,
-            `Expected '${fieldName}' to be equal to '${expected}'. Received '${actual}'`);
+    public toBeEqualTo(label: string, actual: object, expected: object, fieldName: string): void {
+        if (typeof (actual)  === 'object' && typeof (expected) === 'object') {
+            this.addTestModel(label,
+                JSON.stringify(actual) == JSON.stringify(expected),
+                `Expected '${fieldName}' to be equal to '${expected}'. Received '${actual}'`);
+        } else {
+            this.addTestModel(label,
+                actual == expected,
+                `Expected '${fieldName}' to be equal to '${expected}'. Received '${actual}'`);
+        }
     }
 
     public toBeGreaterThan(label: string, actual: number, expected: number, fieldName: string): void {
@@ -50,10 +56,26 @@ export class Tester {
             `Expected '${fieldName}' to be less than or equal to '${expected}'. Received '${actual}'`);
     }
 
-    public toContain(label: string, expected: string, toContain: string, fieldName: string): void {
-        this.addTestModel(label,
-            expected.indexOf(toContain) != -1,
-            `Expecting '${fieldName}' (${expected}) to contain '${toContain}'`);
+    public toContain(label: string, expected: string | object[], toContain: string | object, fieldName: string): void {
+        if (typeof (expected) === 'string') {
+            if (typeof (toContain) === 'string') {
+                this.addTestModel(label,
+                    expected.indexOf(toContain) != -1,
+                    `Expecting '${fieldName}' (${expected}) to contain '${toContain}'`);
+            } else {
+                this.addTestModel(label,
+                    false,
+                    `Expecting 'toContain' to be a 'string'. Received a '${typeof (toContain)}' instead`);
+            }
+        } else if (Array.isArray((expected))) {
+            this.addTestModel(label,
+                expected.some((expectedElements: any) => expectedElements === expectedElements),
+                `Expecting '${fieldName}' (${expected}) to contain '${toContain}'`);
+        } else {
+            this.addTestModel(label,
+                false,
+                `Expecting '${fieldName}' to be a string or an array. Received a '${typeof (toContain)}'`);
+        }
     }
 
     public expectToBeTruthy(label: string, expected: any, fieldName: string): void {

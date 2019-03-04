@@ -41,6 +41,17 @@ describe('Tester', () => {
         expect(equalTo.valid).toBeTruthy();
     });
 
+    it(`isEqualTo Object`, () => {
+        const tester: Tester = new Tester;
+
+        tester.toBeEqualTo(`label`, {object: 3, name: 'deep'}, {object: 3, name: 'deep'}, 'value');
+
+        const equalTo = tester.getReport()[0];
+        expect(tester.getReport().length).toBe(1);
+        expect(equalTo.label).toBe(`label`);
+        expect(equalTo.valid).toBeTruthy();
+    });
+
     it(`isNotGreaterThan`, () => {
         const tester: Tester = new Tester;
 
@@ -200,6 +211,28 @@ describe('Tester', () => {
         expect(tester.getReport().length).toBe(1);
         expect(contains.label).toBe(`label`);
         expect(contains.valid).toBeTruthy();
+    });
+
+    it(`contains array`, () => {
+        const tester: Tester = new Tester;
+
+        tester.toContain(`label`, [100, 'gui', true], 100);
+
+        const contains = tester.getReport()[0];
+        expect(tester.getReport().length).toBe(1);
+        expect(contains.label).toBe(`label`);
+        expect(contains.valid).toBeTruthy();
+    });
+
+    it(`contains error`, () => {
+        const tester: Tester = new Tester;
+
+        tester.toContain(`label`, "guigui", 10);
+
+        const contains = tester.getReport()[0];
+        expect(tester.getReport().length).toBe(1);
+        expect(contains.label).toBe(`label`);
+        expect(contains.valid).toBeFalsy();
     });
 
     it(`isNotDefined`, () => {
