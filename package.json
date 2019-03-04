@@ -13,7 +13,7 @@
     "codeCoverage": "node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
-    "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
+    "all": "npm run clean && npm run lint && npm run build && npm link && npm run test && misc/mdToHtml.js",
     "build": "node misc/generate-injectables-list.js src/injectable-files-list.ts src && tsc"
   },
   "repository": {
@@ -50,6 +50,7 @@
     "@types/require-from-string": "^1.2.0",
     "@types/yamljs": "^0.2.30",
     "jest": "^24.1.0",
+    "pagedown": "^1.1.0",
     "ts-jest": "^24.0.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.13.0",
