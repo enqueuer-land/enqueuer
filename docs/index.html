@@ -73,18 +73,18 @@
     }
 
     .nqr-logo {
-        transition: 200ms ease all;
+        transition: 1000ms ease all;
     }
 
     .nqr-logo:hover {
-        transform: scale(2) rotate(5deg);
+        transform: scale(2.5) rotate(5deg);
     }
 
 </style>
 
 
 <div class="container">
-    <div class="float-right" style="width: 30px; height: auto;"><img class="nqr-logo"
+    <div class="float-right" style="width: 36px; height: auto;"><img class="nqr-logo"
             src="https://raw.githubusercontent.com/lopidio/enqueuer/develop/docs/images/symbol1.png" alt="enqueuerlogo"
             title="Enqueuer Logo" style="width: 100%;"></div>
 <p><a href="https://badge.fury.io/js/enqueuer"><img src="https://badge.fury.io/js/enqueuer.svg" alt="npm version" title="" /></a> <a href="https://travis-ci.org/lopidio/enqueuer"><img src="https://travis-ci.org/lopidio/enqueuer.svg?branch=develop" alt="Build Status" title="" /></a>
@@ -98,11 +98,11 @@ How to make sure that a user journey which involves several steps with different
 
 <h4 id="enqueuer">1.<span class="enqueuer-name"> enqueuer</span></h4>
 
-<p>It is <span style="text-decoration: line-through">not just</span> a integration tool that provides the following capabilities:<br>
+<p>It is <span style="text-decoration: line-through">not just</span> a integration tool that provides the following capabilities:
 - Initiates requests<br>
 - Mock depending services<br>
 - Assert against payload and message content<br>
-- Easily extensible through third parties <a href="http://github.com/enqueuer-land/plugins-list">plugins architecture</a>, including your <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a><br> 
+- Easily extensible through third parties <a href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including your <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a><br> 
 - CLI easily added to CI pipelines<br></p>
 
 <h5 id="install_it:">1.1. Install it:</h5>
@@ -364,17 +364,19 @@ Values defined here, using 'key: value' pattern, are available to every througho
 <pre><code>store:
   tcpKey: "tcp value" # Defines 'tcpKey' key and its value 'tcp value'. 
 
-  # there are two ways of using it:
-  #   Non js code snippet: the easiest one is to type &lt;&lt;tcpKey&gt;&gt; where you want it to be replaced in a test file.
-  #   js code snippet: simply store.tcpKey. So, you're able to use 'console.log(store.tcpKey)' and get 'tcp value' printed out in the console.
-
-  'separated key': separated value
+  'separated key': 6
 
   object: # You can even define whole objects here:
     first: first value
     second:
       nested: thing
 </code></pre>
+
+<p>There are two ways of using them:
+<strong>Non js code snippet</strong><br>
+The easiest one is to type &lt;<tcpKey>> where you want it to be replaced in a test file.
+<strong>Js code snippet</strong><br>
+Simply <code>store.tcpKey</code>. So, you're able to use <code>console.log(store.tcpKey)</code> or <code>console.log(2 * store['separated key']);</code> and get them printed out in the console.</p>
 
 <h5 id="example">6.1. example</h5>
 
@@ -417,7 +419,9 @@ It works as simple as this:</p>
 
 <p>dynamically set it through an event's store <a href="#events-store">field</a></p>
 
-<h4 id="content_file_insertion">8. content file insertion</h4>
+<hr />
+
+<h4 id="content_file_injection">8. Content File Injection</h4>
 
 <p>You are able to insert file content in a requisition/publisher/subscription field.</p>
 

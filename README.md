@@ -8,11 +8,11 @@ How to make sure that a user journey which involves several steps with different
  Enqueuer is what you're looking for.
 
 #### Enqueuer
-It is ~~not just~~ a integration tool that provides the following capabilities:\
+It is ~~not just~~ a integration tool that provides the following capabilities:
 - Initiates requests\
 - Mock depending services\
 - Assert against payload and message content\
-- Easily extensible through third parties [plugins architecture](http://github.com/enqueuer-land/plugins-list), including your [custom one](https://github.com/enqueuer-land/plugin-scaffold)\ 
+- Easily extensible through third parties [plugins](http://github.com/enqueuer-land/plugins-list), including your [custom one](https://github.com/enqueuer-land/plugin-scaffold)\ 
 - CLI easily added to CI pipelines\
 
 ##### Install it:
@@ -248,16 +248,19 @@ Values defined here, using 'key: value' pattern, are available to every througho
     store:
       tcpKey: "tcp value" # Defines 'tcpKey' key and its value 'tcp value'. 
       
-      # there are two ways of using it:
-      #   Non js code snippet: the easiest one is to type <<tcpKey>> where you want it to be replaced in a test file.
-      #   js code snippet: simply store.tcpKey. So, you're able to use 'console.log(store.tcpKey)' and get 'tcp value' printed out in the console.
-    
-      'separated key': separated value
+      'separated key': 6
       
       object: # You can even define whole objects here:
         first: first value
         second:
           nested: thing
+          
+There are two ways of using them:
+**Non js code snippet**\
+The easiest one is to type <<tcpKey>> where you want it to be replaced in a test file.
+**Js code snippet**\
+Simply `store.tcpKey`. So, you're able to use `console.log(store.tcpKey)` or `console.log(2 * store['separated key']);` and get them printed out in the console.
+ 
 
 ##### example
 [Here's](conf/singleRun.yml) an example of how it looks like.
@@ -289,7 +292,9 @@ a command line argument `$ nqr --store key=value`
 ##### event's store
 dynamically set it through an event's store [field](#events-store)
 
-#### content file insertion
+----
+
+#### Content File Injection
 You are able to insert file content in a requisition/publisher/subscription field.
 
     fileContent: <<json://path/to/file.json>>
