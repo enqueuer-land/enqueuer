@@ -302,6 +302,7 @@ The easiest one is to type `<<tcpKey>>` where you want it to be replaced in a te
 Using the `store` object. It's attributes are the keys and their values are their respective values. 
 Therefore, you're free to use `store.tcpKey`, `console.log(store.tcpKey);` or `console.log(2 * store['separated key']);` and get them.
  
+Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/variables.yml) test to see it working.
 
 ----
 
@@ -329,6 +330,6 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 
 #### Enqueuer Instance Flow
 
-![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.svg "Enqueuer Instance Flow")
+![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
 
 [![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
