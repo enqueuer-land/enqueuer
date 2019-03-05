@@ -36,9 +36,14 @@ export class ReportFormatterManager {
         this.formatters.push({tags, createFunction});
     }
 
-    public describeReportFormatters(): void {
-        console.log(prettyjson.render({
-            formatters: this.formatters.map((formatter: AddedReportFormatter) => formatter.tags)
-        }, options));
+    public describeReportFormatters(describeFormatters: string | true): boolean {
+        const data = {
+            formatters: this.formatters
+                .filter((addedFormatter: AddedReportFormatter) => typeof (describeFormatters) === 'string' ? (addedFormatter.tags || [])
+                    .some((tag: string) => tag.toLowerCase() === describeFormatters.toLowerCase()) : true)
+                .map((formatter: AddedReportFormatter) => formatter.tags)
+        };
+        console.log(prettyjson.render(data, options));
+        return data.formatters.length > 0;
     }
 }

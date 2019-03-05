@@ -46,17 +46,21 @@ export class ProtocolManager {
         this.protocols.push(protocol);
     }
 
-    public describeProtocols(): void {
-        console.log(prettyjson.render(this.createDescription(), options));
+    public describeProtocols(describeProtocols: string | true): boolean {
+        const description: any = this.createDescription(describeProtocols);
+        console.log(prettyjson.render(description, options));
+        return description.publishers.length + description.subscriptions.length > 0;
     }
 
-    private createDescription(): {} {
+    private createDescription(protocol: string | true): {} {
         return {
             publishers: this.protocols
                 .filter((protocol: Protocol) => protocol.type === ProtocolType.PUBLISHER)
+                .filter((publisher: Protocol) => typeof protocol === 'string' ? publisher.matches(protocol) : true)
                 .map(protocol => protocol.getDescription()),
             subscriptions: this.protocols
                 .filter((protocol: Protocol) => protocol.type === ProtocolType.SUBSCRIPTION)
+                .filter((subscription: Protocol) => typeof protocol === 'string' ? subscription.matches(protocol) : true)
                 .map(protocol => protocol.getDescription())
         };
     }

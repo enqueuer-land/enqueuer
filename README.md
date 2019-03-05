@@ -32,20 +32,27 @@ or
     Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
     
     Options:
+      -v, --version                             output the version number
+      -q, --quiet                               disable logging
+      -b, --verbosity <level>                   set verbosity (default: "warn")
+      -o, --stdout-requisition-output           add stdout as requisition output
+      -s, --store [store]                       add variables values to this session (default: [])
+      -p, --protocols-description [protocol]    describe protocols
+      -f, --formatters-description [formatter]  describe report formatters
+      -t, --tests-list                          list available tests assertions
+      -l, --add-plugin [plugin]                 add plugin (default: [])
+      -c, --config-file <path>                  set configurationFile
+      -a, --add-file <file>                     add file to be tested (default: [])
+      -A, --add-file-and-ignore-others <file>   add file to be tested and ignore others (default: [])
+      -h, --help                                output usage information
     
-      -v, --version                            output the version number
-      -q, --quiet                              disable logging
-      -b, --verbosity <level>                  set verbosity [trace, debug, info, warn, error, fatal]
-      -c, --config-file <path>                 set configurationFile
-      -o, --stdout-requisition-output          add stdout as requisition output
-      -s, --store [store]                      add variables values to this session (default: [])
-      -l, --add-plugin <plugin>                add plugin (default: [])
-      -a, --add-file <file>                    add file to be tested (default: [])
-      -A, --add-file-and-ignore-others <file>  add file to be tested and ignore others (default: [])
-      -p, --protocols-description              describe protocols
-      -f, --formatters-description             describe report formatters
-      -t, --tests-list                         list available tests assertions
-      -h, --help                               output usage information
+    Examples:
+      $ nqr --config-file config-file.yml --verbosity error --store key=value
+      $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info
+      $ enqueuer -a test-file.yml
+      $ nqr -p http
+      $ nqr -p json
+
 
 ----
 

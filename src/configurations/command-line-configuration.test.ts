@@ -15,14 +15,14 @@ describe('CommandLineConfiguration', () => {
     });
 
     it('verbosity -b', () => {
-        const logLevel = 'minusL';
+        const logLevel = 'info';
         commanderRefresher(['node', 'test', '-b', logLevel]);
 
         expect(CommandLineConfiguration.getVerbosity()).toBe(logLevel);
     });
 
     it('verbosity --verbosity', () => {
-        const logLevel = 'verbosity';
+        const logLevel = 'info';
         commanderRefresher(['node', 'test', '--verbosity', logLevel]);
 
         expect(CommandLineConfiguration.getVerbosity()).toBe(logLevel);
@@ -31,7 +31,7 @@ describe('CommandLineConfiguration', () => {
     it('undefined logLevel', () => {
         commanderRefresher(['node', 'test']);
 
-        expect(CommandLineConfiguration.getVerbosity()).toBeUndefined();
+        expect(CommandLineConfiguration.getVerbosity()).toBe('warn');
     });
 
     it('default console output', () => {
@@ -83,6 +83,12 @@ describe('CommandLineConfiguration', () => {
         commanderRefresher(['node', 'test', '--protocols-description']);
 
         expect(CommandLineConfiguration.describeProtocols()).toBeTruthy();
+    });
+
+    it('describe protocols --protocols-description', () => {
+        commanderRefresher(['node', 'test', '--protocols-description', 'http']);
+
+        expect(CommandLineConfiguration.describeProtocols()).toBe('http');
     });
 
     it('no describe protocols', () => {

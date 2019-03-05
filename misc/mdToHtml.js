@@ -64,4 +64,4 @@ output =
     bottom_part;
 
 fs.writeFileSync('docs/index.html', output);
-console.log("Converted");
+console.log("Html generated");

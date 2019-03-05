@@ -17,7 +17,9 @@ describe('ProtocolManager', () => {
     });
 
     it('describeProtocols', () => {
-        new ProtocolManager().describeProtocols();
+        const protocolManager = new ProtocolManager();
+        protocolManager.addProtocol(new PublisherProtocol('mine', () => {));
+        expect(protocolManager.describeProtocols(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             publishers: expect.anything(),
             subscriptions: expect.anything()
@@ -63,7 +65,14 @@ describe('ProtocolManager', () => {
         const protocolManager = new ProtocolManager();
         protocolManager.addProtocol(new PublisherProtocol('pub',
             () => {}).addAlternativeName('virgs').setLibrary('request'));
-        protocolManager.describeProtocols();
+        expect(protocolManager.describeProtocols('virgs')).toBeTruthy();
+        expect(render).toHaveBeenCalled();
+    });
+
+    it('error describe given publisher Protocol', () => {
+        // @ts-ignore
+        const protocolManager = new ProtocolManager();
+        expect(protocolManager.describeProtocols(true)).toBeFalsy();
         expect(render).toHaveBeenCalled();
     });
 
@@ -73,7 +82,14 @@ describe('ProtocolManager', () => {
         protocolManager.addProtocol(new SubscriptionProtocol('sub',
             () => {}, ['value']).addAlternativeName('altName')
             .setLibrary('express'));
-        protocolManager.describeProtocols();
+        expect(protocolManager.describeProtocols('sub')).toBeTruthy();
+        expect(render).toHaveBeenCalled();
+    });
+
+    it('error describe given subscription Protocol', () => {
+        // @ts-ignore
+        const protocolManager = new ProtocolManager();
+        expect(protocolManager.describeProtocols('value')).toBeFalsy();
         expect(render).toHaveBeenCalled();
     });
 

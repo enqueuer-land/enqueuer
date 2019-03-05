@@ -20,14 +20,14 @@ let singleRunFilesIgnoring: string[] = [];
 
 let refreshCommander = (commandLineArguments: string[]) => {
     try {
-        return new Command()
+        let commander = new Command()
             .version(process.env.npm_package_version || packageJson.version, '-v, --version')
             .allowUnknownOption()
             .usage('[options]')
             .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
+            // .help('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
             .option('-q, --quiet', 'disable logging', false)
-            .option('-b, --verbosity <level>', 'set verbosity [trace, debug, info, warn, error, fatal]')
-            .option('-c, --config-file <path>', 'set configurationFile')
+            .option('-b, --verbosity <level>', 'set verbosity',  /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
             .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
             .option('-s, --store [store]', 'add variables values to this session',
                 (val: string, memo: string[]) => {
@@ -38,16 +38,26 @@ let refreshCommander = (commandLineArguments: string[]) => {
                     memo.push(val);
                     return memo;
                 }, [])
-            .option('-l, --add-plugin <plugin>', 'add plugin',
+            .option('-p, --protocols-description [protocol]', 'describe protocols')
+            .option('-f, --formatters-description [formatter]', 'describe report formatters')
+            .option('-t, --tests-list', 'list available tests assertions')
+            .option('-l, --add-plugin [plugin]', 'add plugin',
                 (val: string) => plugins.push(val), [])
+            .option('-c, --config-file <path>', 'set configurationFile')
             .option('-a, --add-file <file>', 'add file to be tested',
                 (val: string) => singleRunFiles.push(val), [])
             .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
-                (val: string) => singleRunFilesIgnoring.push(val), [])
-            .option('-p, --protocols-description', 'describe protocols')
-            .option('-f, --formatters-description', 'describe report formatters')
-            .option('-t, --tests-list', 'list available tests assertions')
-            .parse(commandLineArguments || ['path', 'enqueuer']);
+                (val: string) => singleRunFilesIgnoring.push(val), []);
+        commander.on('--help', () => {
+            console.log('');
+            console.log('Examples:');
+            console.log('  $ nqr --config-file config-file.yml --verbosity error --store key=value');
+            console.log('  $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info');
+            console.log('  $ enqueuer -a test-file.yml');
+            console.log('  $ nqr -p http');
+            console.log('  $ nqr -p json');
+        });
+        return commander.parse(commandLineArguments || ['path', 'enqueuer']);
     } catch (err) {
         Logger.warning(err);
         return {};

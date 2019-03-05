@@ -9,12 +9,12 @@ import {TestsDescriber} from './testers/tests-describer';
 
 export async function start(): Promise<number> {
     Logger.setLoggerLevel('info');
-    if (CommandLineConfiguration.describeProtocols()) {
-        PluginManager.getProtocolManager().describeProtocols();
-        return 0;
-    } else if (CommandLineConfiguration.describeFormatters()) {
-        PluginManager.getReportFormatterManager().describeReportFormatters();
-        return 0;
+    const describeProtocols = CommandLineConfiguration.describeProtocols();
+    const describeFormatters = CommandLineConfiguration.describeFormatters();
+    if (describeProtocols) {
+        return PluginManager.getProtocolManager().describeProtocols(describeProtocols) ? 0 : 1;
+    } else if (describeFormatters) {
+        return PluginManager.getReportFormatterManager().describeReportFormatters(describeFormatters) ? 0 : 1;
     } else if (CommandLineConfiguration.describeTestsList()) {
         new TestsDescriber().describeTests();
         return 0;

@@ -136,20 +136,26 @@ Usage: nqr [options]
 Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
 
 Options:
+  -v, --version                             output the version number
+  -q, --quiet                               disable logging
+  -b, --verbosity &lt;level&gt;                   set verbosity (default: "warn")
+  -o, --stdout-requisition-output           add stdout as requisition output
+  -s, --store [store]                       add variables values to this session (default: [])
+  -p, --protocols-description [protocol]    describe protocols
+  -f, --formatters-description [formatter]  describe report formatters
+  -t, --tests-list                          list available tests assertions
+  -l, --add-plugin [plugin]                 add plugin (default: [])
+  -c, --config-file &lt;path&gt;                  set configurationFile
+  -a, --add-file &lt;file&gt;                     add file to be tested (default: [])
+  -A, --add-file-and-ignore-others &lt;file&gt;   add file to be tested and ignore others (default: [])
+  -h, --help                                output usage information
 
-  -v, --version                            output the version number
-  -q, --quiet                              disable logging
-  -b, --verbosity &lt;level&gt;                  set verbosity [trace, debug, info, warn, error, fatal]
-  -c, --config-file &lt;path&gt;                 set configurationFile
-  -o, --stdout-requisition-output          add stdout as requisition output
-  -s, --store [store]                      add variables values to this session (default: [])
-  -l, --add-plugin &lt;plugin&gt;                add plugin (default: [])
-  -a, --add-file &lt;file&gt;                    add file to be tested (default: [])
-  -A, --add-file-and-ignore-others &lt;file&gt;  add file to be tested and ignore others (default: [])
-  -p, --protocols-description              describe protocols
-  -f, --formatters-description             describe report formatters
-  -t, --tests-list                         list available tests assertions
-  -h, --help                               output usage information
+Examples:
+  $ nqr --config-file config-file.yml --verbosity error --store key=value
+  $<span class="enqueuer-name"> enqueuer</span> -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info
+  $<span class="enqueuer-name"> enqueuer</span> -a test-file.yml
+  $ nqr -p http
+  $ nqr -p json
 </code></pre>
 
 <hr />

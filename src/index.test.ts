@@ -109,7 +109,11 @@ describe('Index', () => {
     });
 
     it('Should list available libraries value', done => {
-        PluginManager.getProtocolManager.mockImplementationOnce(() => new ProtocolManager());
+        PluginManager.getProtocolManager.mockImplementationOnce(() => {
+            return {
+                describeProtocols: () => true
+            };
+        });
         CommandLineConfiguration.describeProtocols.mockImplementationOnce(() => true);
         start().then((statusCode) => {
             expect(statusCode).toBe(0);
@@ -117,11 +121,41 @@ describe('Index', () => {
         });
     });
 
+    it('Should list available libraries value error ', done => {
+        PluginManager.getProtocolManager.mockImplementationOnce(() => {
+            return {
+                describeProtocols: () => false
+            };
+        });
+        CommandLineConfiguration.describeProtocols.mockImplementationOnce(() => true);
+        start().then((statusCode) => {
+            expect(statusCode).toBe(1);
+            done();
+        });
+    });
+
     it('Should list available formatters value', done => {
-        PluginManager.getReportFormatterManager.mockImplementationOnce(() => new ReportFormatterManager());
+        PluginManager.getReportFormatterManager.mockImplementationOnce(() => {
+            return {
+                describeReportFormatters: () => true
+            };
+        });
         CommandLineConfiguration.describeFormatters.mockImplementationOnce(() => true);
         start().then((statusCode) => {
             expect(statusCode).toBe(0);
+            done();
+        });
+    });
+
+    it('Should list available formatters value error', done => {
+        PluginManager.getReportFormatterManager.mockImplementationOnce(() => {
+            return {
+                describeReportFormatters: () => false
+            };
+        });
+        CommandLineConfiguration.describeFormatters.mockImplementationOnce(() => true);
+        start().then((statusCode) => {
+            expect(statusCode).toBe(1);
             done();
         });
     });
