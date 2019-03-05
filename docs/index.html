@@ -7,15 +7,8 @@
     <meta name="author" content="Virgs">
     <title>Enqueuer</title>
 
-    <!-- Le styles -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/lil-grotesk" type="text/css"/>
-
-    <link href="https://fonts.googleapis.com/css?family=Nova+Mono" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -25,6 +18,7 @@
 
     :root {
         --nqr-color: #9FB630;
+        --nqr-link: #309fb6;
         --nqr-text-color: #eeeeee;
         --nqr-text-smooth-color: #a4a4a4;
         --nqr-header-background-color: #2b2a2e;
@@ -32,8 +26,12 @@
         --nqr-background-alternative-color: #424242;
     }
 
-    .enqueuer-name, a {
+    .enqueuer-name {
         color: var(--nqr-color);
+    }
+
+    a {
+        color: var(--nqr-link);
     }
 
     body {
@@ -47,7 +45,10 @@
 
     h4 {
         color: var(--nqr-color);
-        font-size: 3em;
+        font-size: 2.5em;
+        text-transform: capitalize;
+        font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;;
+        letter-spacing: 2px;
     }
 
     h1, h2, h3, h5, h6, strong {
@@ -55,9 +56,9 @@
     }
 
     pre {
-        border: 0;
+        border: 1px solid var(--nqr-background-alternative-color);
         padding: 10px 20px;
-        border-radius: 5px;
+        border-radius: 8px;
         font-family: "Source Code Pro", monospace;
         font-size: .9em;
         background-color: var(--nqr-header-background-color);
@@ -76,7 +77,7 @@
         margin-top: 2rem;
         margin-bottom: 5rem;
         border: 0;
-        border-top: 1px solid rgba(0,0,0,.1);
+        border-top: 1px solid rgba(0, 0, 0, .1);
         height: 2px;
     }
 
@@ -85,26 +86,34 @@
     }
 
     .nqr-logo:hover {
-        transform: scale(2.5) rotate(5deg);
+        transform: scale(1.75) rotate(180deg) translateX(2px);
     }
 
 </style>
 
 
 <div class="container">
-    <div class="float-right" style="width: 36px; height: auto;"><img class="nqr-logo"
-            src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png" alt="enqueuerlogo"
-            title="Enqueuer Logo" style="width: 100%;"></div>
-<p><a href="https://badge.fury.io/js/enqueuer"><img src="https://badge.fury.io/js/enqueuer.svg" alt="npm version" title="" /></a> <a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=develop" alt="Build Status" title="" /></a>
-<a href="https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability"><img src="https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability" alt="Maintainability" title="" /></a> <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg" alt="Greenkeeper badge" title="" /></a></p>
+    <a class="float-left" style="width: 36px; height: auto;" href="http://github.com/enqueuer-land/enqueuer">
+        <img class="nqr-logo"
+             src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"
+             alt="enqueuerlogo"
+             title="Enqueuer Logo" style="width: 100%;">
+    </a>
+    <div class="float-right pt-1 px-1">
+        <a class="github-button float-right mt-1" href="https://github.com/enqueuer-land/enqueuer"
+           data-icon="octicon-star"
+           data-show-count="true" aria-label="Star enqueuer-land/enqueuer on GitHub">Star</a>
+    </div>
+<p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a><a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
+<a href="https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability"><img src="https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability" alt="Maintainability" title="" /></a> <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg" alt="Greenkeeper badge" title="" /></a><a href="https://snyk.io/test/npm/enqueuer"><img src="https://snyk.io/test/npm/enqueuer/badge.svg" alt="Known Vulnerabilities" title="" /></a></p>
 
-<p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png" alt="enqueuerlogo" title="Enqueuer Logo" /></p>
+<p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png" alt="enqueuerlogo" title="Enqueuer Giant Logo" /></p>
 
 <p>Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
-<span class="enqueuer-name"> enqueuer</span> is what you're looking for.</p>
+<span class="enqueuer-name"> Enqueuer</span> is what you're looking for.</p>
 
-<h4 id="enqueuer">1.<span class="enqueuer-name"> enqueuer</span></h4>
+<h4 id="enqueuer">1.<span class="enqueuer-name"> Enqueuer</span></h4>
 
 <p>It's <span style="text-decoration: line-through">not just</span> an integration testing tool. It is a developer friendly platform that provides the following capabilities:<br>
 - Initiates requests with support for many protocols out of the box<br>
@@ -112,6 +121,8 @@ Want to ensure that a user journey which involves several steps with different p
 - Built in assertion library to verify response data coming from your services<br>
 - Easily extensible through third party <a href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including a <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a><br> 
 - Built in CLI is easy to add to your team's existing CI pipelines<br></p>
+
+<hr />
 
 <h5 id="install_it:">1.1. Install it:</h5>
 
@@ -446,18 +457,24 @@ It works as simple as this:</p>
 <pre><code>fileContent: &lt;&lt;json://path/to/file.json&gt;&gt;
 </code></pre>
 
-<p>In the above example,<span class="enqueuer-name"> enqueuer</span> will read the file and parse its content as a JSON object.
+<p>In the above example,<span class="enqueuer-name"> enqueuer</span> will read the file and parse its content as a object.
 Other parsable values include:</p>
 
 <pre><code>csv: &lt;&lt;csv://misc/file-content.csv&gt;&gt;
 tsv: &lt;&lt;tsv://misc/file-content.tsv&gt;&gt;
 json: &lt;&lt;json://misc/file-content.json&gt;&gt;
 yml: &lt;&lt;yaml://misc/file-content.yml&gt;&gt;
-regularFile: &lt;&lt;file://misc/file-content.yml&gt;&gt;
+</code></pre>
+
+<p>The tag <code>file</code>, on the other hand, reads the content as a regular string</p>
+
+<pre><code>file: &lt;&lt;file://misc/file-content.yml&gt;&gt;
 </code></pre>
 
 <p>You can even read java script code and insert it into a <code>script</code> field in an event object. You have no limits.
 Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml">this test example</a> test to get a full picture of it.</p>
+
+<p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p>
     </div>
 
   </div>
@@ -475,10 +492,20 @@ Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/example
               integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
               crossorigin="anonymous"></script>
         <script>
-            let enqueuerLogo = $("[title='Enqueuer Logo']");
-            enqueuerLogo.css({'max-width': '80vw'});
-            enqueuerLogo.parent().css({'text-align': 'center'})
+            const enqueuerLogo = $("[title='Enqueuer Giant Logo']");
+            enqueuerLogo.css({'max-width': '80vw', padding: '15vh 0 15vh'});
+            enqueuerLogo.parent().css({'text-align': 'center'});
+
+
+            const npmBigBadge = $("[href='https://nodei.co/npm/enqueuer/']");
+            npmBigBadge.parent().css({'text-align': 'center'});
+
+            const npmBadges = $("[href='https://travis-ci.org/enqueuer-land/enqueuer']");
+            npmBadges.parent().css({'text-align': 'center'});
         </script>
+
+        <!-- Place this tag in your head or just before your close body tag. -->
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     </body>
 </html>

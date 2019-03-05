@@ -38,7 +38,7 @@ converter.hooks.set("postConversion", (text) => {
     .replace(/\\/g, '<br>')
     .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
     .replace(/fullLogo1/g, 'fullLogo3')
-    .replace(/ enqueuer/gi, '<span class="enqueuer-name"> enqueuer</span>')
+    .replace(/ (enqueuer)/gi, (match, p1) => '<span class="enqueuer-name"> ' + p1 + '</span>')
 });
 
 

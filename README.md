@@ -1,7 +1,8 @@
-[![npm version](https://badge.fury.io/js/enqueuer.svg)](https://badge.fury.io/js/enqueuer) [![Build Status](https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=develop)](https://travis-ci.org/enqueuer-land/enqueuer)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability)](https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability) [![Greenkeeper badge](https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg)](https://greenkeeper.io/)
+[![npm](https://img.shields.io/npm/dt/enqueuer.svg)]()[![Build Status](https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master)](https://travis-ci.org/enqueuer-land/enqueuer)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability)](https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability) [![Greenkeeper badge](https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg)](https://greenkeeper.io/)[![Known Vulnerabilities](https://snyk.io/test/npm/enqueuer/badge.svg)](https://snyk.io/test/npm/enqueuer)
 
-![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Logo")
+
+![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Giant Logo")
 
 Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
@@ -13,6 +14,9 @@ It's ~~not just~~ an integration testing tool. It is a developer friendly platfo
 - Built in assertion library to verify response data coming from your services\
 - Easily extensible through third party [plugins](http://github.com/enqueuer-land/plugins-list), including a [custom one](https://github.com/enqueuer-land/plugin-scaffold)\ 
 - Built in CLI is easy to add to your team's existing CI pipelines\
+
+----
+
 
 ##### Install it:
     $ npm install enqueuer
@@ -304,14 +308,19 @@ You are able to insert file content in a requisition/publisher/subscription fiel
 
     fileContent: <<json://path/to/file.json>>
 
-In the above example, enqueuer will read the file and parse its content as a JSON object.
+In the above example, enqueuer will read the file and parse its content as a object.
 Other parsable values include:
 
     csv: <<csv://misc/file-content.csv>>
     tsv: <<tsv://misc/file-content.tsv>>
     json: <<json://misc/file-content.json>>
     yml: <<yaml://misc/file-content.yml>>
-    regularFile: <<file://misc/file-content.yml>>
+    
+The tag `file`, on the other hand, reads the content as a regular string
+    
+    file: <<file://misc/file-content.yml>>
 
 You can even read java script code and insert it into a `script` field in an event object. You have no limits.
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
+
+[![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
