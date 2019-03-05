@@ -3,17 +3,16 @@
 
 ![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Logo")
 
-Have you ever wonder how to test multi IPC protocol flows?\
-How to make sure that a user journey which involves several steps with different protocols is working properly?\ 
+Have you ever struggled with testing multi IPC protocol flows?
+Want to ensure that a user journey which involves several steps with different protocols is working properly?
  Enqueuer is what you're looking for.
-
 #### Enqueuer
-It is ~~not just~~ a integration tool that provides the following capabilities:\
-- Initiates requests\
-- Mock depending services\
-- Assert against payload and message content\
-- Easily extensible through third parties [plugins](http://github.com/enqueuer-land/plugins-list), including your [custom one](https://github.com/enqueuer-land/plugin-scaffold)\ 
-- CLI easily added to CI pipelines\
+It's ~~not just~~ an integration tool. It is a developer friendly platform that provides the following capabilities:\
+- Initiates requests with support for many protocols out of the box\
+- Easily mock services to alleviate the headaches of functional and integration tests\
+- Built in assertion library to verify response data coming from your services\
+- Easily extensible through third party [plugins](http://github.com/enqueuer-land/plugins-list), including a [custom one](https://github.com/enqueuer-land/plugin-scaffold)\ 
+- Built in CLI is easy to add to your team's existing CI pipelines\
 
 ##### Install it:
     $ npm install enqueuer
@@ -48,11 +47,12 @@ or
       -t, --tests-list                         list available tests assertions
       -h, --help                               output usage information
 
+----
 
 #### Requisition
-This file describe the test scenario. It tells what and how test stuff.
+This file describes the test scenario. It tells what and how test your applications and services.
 It's a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition).
-Yes, it can get really recursive.
+It supports multi-level test scenarios out of the box.
 [Variable replacements](#variables) are available through the entire requisition.
 
 **name**\
@@ -61,13 +61,13 @@ Optional, describes what the requisition is suppose to do
     name: requisition action
 
 **timeout**\
-Sets in milliseconds how log the requisition waits to expire. Defaults to 5000.
+Sets in milliseconds how long the requisition waits to expire. Defaults to 5000.
 Set to zero or less than zero to run it endlessly
 
     timeout: 3000
     
 **delay**\
-Optional. Defaults to 0. Sets in milliseconds how log the test has to wait before starting.
+Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting.
 
     delay: 0
 
@@ -83,7 +83,7 @@ Optional. List of [publishers](#publisher)
 Optional. List of [subscriptions](#subscription)
 
 **requisitions**\
-Optional. Things get really interesting. List of [requisitions](requisition.md).
+Optional. A list of child test scenarios. List of [requisitions](#requisition).
 
 **events**\
 Available events are described [here](#event). A `requisition` object is available to access and change its attributes.  
@@ -96,7 +96,7 @@ A publisher action is triggered by enqueuer itself. It **acts** whereas a [subsc
 Every publisher has its own properties, depending on its protocol and implementation. But they all have these properties.
 
 **name**\
-Optional, describes what the publisher is suppose to do
+Optional, describes what the publisher is supposed to do
 
     name: publisher action
 
@@ -113,24 +113,24 @@ Available events are described [here](#event). A `publisher` object is available
 
 #### Subscription
 A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
-It means that it is not triggered by enqueuer itself. 
-Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that flew through it
+This means that it is not triggered by enqueuer itself. 
+Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
 Every subscription has its own properties, depending on its protocol and implementation. But they all have these properties. 
 
 **name**\
-Optional, describes what the subscription is suppose to do
+Optional, describes what the subscription is supposed to do
 
     name: subscription action
 
 **avoid**\
-Identifies that this subscription should not receive any message. Defaults to false.
-If set and a message is received a failing test will be generated
-On the other hand, when it's false and no message is received in a given timeout. This subscription is a valid one
+Identifies whether or not this subscription should not receive any message. Defaults to false.
+If set and a message is received a failing test will be generated.
+On the other hand, when it's false and no message is received in a given timeout. The subscription is valid.
     
     avoid: false
 
 **timeout**\
-Sets in milliseconds how log the subscription waits to expire. Defaults to 3000.
+Sets in milliseconds how long the subscription waits to expire. Defaults to 3000.
 Set to zero or less than zero to run it endlessly
 
     timeout: 3000
@@ -141,22 +141,22 @@ Available events are described [here](#event). A `subscription` object is availa
 ----
 #### Event
 
-Events are actions triggered by something.
+Events are actions triggered by test scenarios like publishers or subscriptions.
 There are three events available:
 
 **onInit**\
-Available in requisitions, publishers and subscriptions. It gets executed as soon as the field is initialized
+Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized
 
 **onFinish**\
-Available in requisitions, publishers and subscriptions. It gets executed when the field is about to finish
+Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish
 
 **onMessageReceived**\
-Available in every subscriptions and publishers that provide synchronous properties. 
-It gets executed when the field receives a message.
-An additional 'message' object is available having all of its attributes.
+Available in every subscription and in publishers that provide synchronous properties. 
+It gets executed when the subscription or publisher receives a message.
+An additional `message` object is available having all of attributes returned from the received message.
 
 ##### fields
-Every event object has 3 children:
+Every event object has 3 properties:
 
 **script**\
 Javascript code snippet executed when the event is triggered.\
@@ -169,10 +169,10 @@ Array of assertions. Run `$ nqr -t` to see available ones
 
     onInit:
       script: |-
-        stringLiteral = 'string value'
+        variableIdentifier = 'string value'
     
       assertions:
-        - expect: stringLiteral
+        - expect: variableIdentifier
           toBeEqualTo: `string value`
     
     onMessageReceived:
@@ -191,15 +191,12 @@ Array of assertions. Run `$ nqr -t` to see available ones
           toBeGreaterThan: 3
 
 #### Configuration File
-To save you sometime, a configuration file may be used.
-They tell how enqueuer should proceed. Which tests will be executed, log-level, generated files.
-I'm sure you got the picture.
+To save yourself some time, a configuration file may be used.
+Configuration files tell enqueuer which tests will be executed, log-level, and which output test report files should be generated.
 This file tells how enqueuer should be executed
 
-    $ nqr [configuration-file.yml]
-
 **files**\
-Requisition files name or glob
+Requisition file names or glob
 Enqueuer runs every file that matches an element value.
 
     files:
@@ -215,22 +212,22 @@ Optional. Requisition should be executed in parallel mode
 **log-level**\
 Optional. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
 
-    log-level: trace (warning)
+    log-level: trace
 
 **plugins**\
-Optional. List of in plugins module. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
+Optional. List of in plugins used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
     
     plugins:
     - enqueuer-plugin-amqp 
     - enqueuer-plugin-ws 
-    - enqueuer-plugin-mqtt 
+    - enqueuer-plugin-mqtt
 
 **outputs**\
-Once enqueuer runs every requisition, it compiles a summary and send it to every element listed through its defined 'type' value.
-An important thing to note is that every available publisher is available here.
-You can run `$ nqr -p` to check available ones. \
-Another important thing to note is the 'format' value. By default a 'json' summary is generated, but you can change it to whatever format you want to.
-You can run `$ nqr -f` to check available ones.
+Once enqueuer runs every requisition, it compiles a summary and sends it to every publisher listed in output.
+An important thing to note is that every available report publisher is available here.
+You can run `$ nqr -p` to check available report publishers. \
+Another important thing to note is the 'format' value. By default a 'json' summary is generated, but you can change it to whatever format you would like.
+You can run `$ nqr -f` to check available formats.
     
     outputs:
     - type: file
@@ -243,7 +240,7 @@ You can run `$ nqr -f` to check available ones.
       format: console
 
 **store**\
-Values defined here, using 'key: value' pattern, are available to every throughout the entire execution
+Values defined here use the 'key: value' pattern and are available to every test scenario throughout the entire execution
 
     store:
       tcpKey: "tcp value" # Defines 'tcpKey' key and its value 'tcp value'. 
@@ -263,7 +260,7 @@ Simply `store.tcpKey`. So, you're able to use `console.log(store.tcpKey)` or `co
  
 
 ##### example
-[Here's](conf/singleRun.yml) an example of how it looks like.
+[Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/singleRun.yml) a complete example of a configuration file.
 
 ----
 
@@ -274,7 +271,7 @@ It works as simple as this:
 
     variableName: <<valueToBeDefinedLater>>
 
-Every time enqueuer sees these kind of notations, it searches in its store for a thing like:
+Every time enqueuer sees these kind of notations, it searches in its store for a key/value pair like:
     
     valueToBeDefinedLater: `value`
 
@@ -283,7 +280,7 @@ Then, when enqueuer parses the original map, it gets translated to this:
     variableName: `value`
 
 ##### set a variable
-There are a few ways to set a value in store.
+There are a few ways to set a value in the store.
 
 ##### configuration file
 configuration file's store [field](#configuration-file)
@@ -299,8 +296,8 @@ You are able to insert file content in a requisition/publisher/subscription fiel
 
     fileContent: <<json://path/to/file.json>>
 
-Doing this way, enqueuer will read the file and parse its content as a JSON object.
-Other parsable values are these ones:
+In the above example, enqueuer will read the file and parse its content as a JSON object.
+Other parsable values include:
 
     csv: <<csv://misc/file-content.csv>>
     tsv: <<tsv://misc/file-content.tsv>>
@@ -308,5 +305,5 @@ Other parsable values are these ones:
     yml: <<yaml://misc/file-content.yml>>
     regularFile: <<file://misc/file-content.yml>>
 
-You can even read java script code and insert it into a 'script' field in an event field. You have no limits.
-Check [this test example](../examples/file-placeholder.yml) test to get a full picture of it.
+You can even read java script code and insert it into a 'script' field in an event object. You have no limits.
+Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
