@@ -328,7 +328,7 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 
 ----
 
-#### Enqueuer Instance Flow
+#### Enqueuer Flow
 
 ![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
 
