@@ -8,11 +8,12 @@ Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
  Enqueuer is what you're looking for.
 #### Enqueuer
-It's ~~not just~~ an integration testing tool. It is a developer friendly platform that provides the following capabilities:\
-- Initiates requests with support for many protocols out of the box\
+It's ~~not just~~ an integration testing tool. It is a platform that provides the following capabilities:\
+- Support for many protocols out of the box\
 - Easily mock services to alleviate the headaches of functional and integration tests\
+- Friendly for developers and no developers\
 - Built in assertion library to verify response data coming from your services\
-- Easily extensible through third party [plugins](http://github.com/enqueuer-land/plugins-list), including a [custom one](https://github.com/enqueuer-land/plugin-scaffold)\ 
+- Easily extensible through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)\ 
 - Built in CLI is easy to add to your team's existing CI pipelines\
 
 ----
@@ -53,15 +54,15 @@ or
     Examples:
       $ nqr --config-file config-file.yml --verbosity error --store key=value
       $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info
-      $ enqueuer -a test-file.yml
+      $ enqueuer -a test-file.yml --store someKey=true --store someOtherKey=false
+      $ nqr --protocols-description -s key=value
       $ nqr -p http
-      $ nqr -p json
-
+      $ nqr --formatters-description json
 
 ----
 
 #### Requisition
-This file describes the test scenario. It tells what and how test your applications and services.
+This describes the test scenario. It tells what and how test your applications and services.
 It's a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition).
 It supports multi-level test scenarios out of the box.
 [Variable replacements](#variables) are available through the entire requisition.
@@ -94,7 +95,7 @@ Optional. List of [publishers](#publisher)
 Optional. List of [subscriptions](#subscription)
 
 **requisitions**\
-Optional. A list of child test scenarios. List of [requisitions](#requisition).
+Optional. A list of child scenarios. List of [requisitions](#requisition).
 
 **events**\
 Available events are described [here](#event). A `requisition` object is available to access and change its attributes.  
@@ -207,8 +208,7 @@ Configuration files tell enqueuer which tests will be executed, log-level, and w
 This file tells how enqueuer should be executed
 
 **files**\
-Requisition file names or glob
-Enqueuer runs every file that matches an element value.
+Requisition file names or glob. Enqueuer runs every file that matches an element value.
 
     files:
     - 1.yml
@@ -232,13 +232,14 @@ Optional. List of in plugins used by the test scenarios. You can [check them out
     - enqueuer-plugin-amqp 
     - enqueuer-plugin-ws 
     - enqueuer-plugin-mqtt
+    - enqueuer-plugin-html-report
 
 **outputs**\
 Once enqueuer runs every requisition, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
 You can run `$ nqr -p` to check available report publishers. \
 Another important thing to note is the `format` value. By default a `json` summary is generated, but you can change it to whatever format you would like.
-You can run `$ nqr -f` to check available formats.
+You can run `$ nqr -f` to check available formats or event [write your own](https://github.com/enqueuer-land/plugin-scaffold)
     
     outputs:
     - type: file
@@ -269,19 +270,19 @@ Values defined here use the 'key: value' pattern and are available to every test
 ----
 
 #### Variables
-To give you even more power and flexibility, enqueuer allows you to use values that will be defined later.
+Providing power and flexibility, enqueuer allows you to use variables placeholder replacement.
 That's why there is a `store` field and you'll see a lot of `<<` and `{{` being used in the examples files.
 It works as simple as this:
 
-    variableName: <<valueToBeDefinedLater>>
+    name: my name is <<variableKey>>
 
 Every time enqueuer sees these kind of notations, it searches in its store for a key/value pair like:
     
-    valueToBeDefinedLater: `value`
+    variableKey: `enqueuer`
 
 Then, when enqueuer parses the original map, it gets translated to this:
     
-    variableName: `value`
+    name: my name is enqueuer
 
 ##### set a variable
 There are a few ways to set a value in the store.
@@ -297,8 +298,9 @@ dynamically set it through an event's store
 There are two ways of using them:
 ##### non js code snippet
 The easiest one is to type `<<tcpKey>>` where you want it to be replaced in a test file.\
-##### js code snippet**
-Simply `store.tcpKey`. So, you'll be able to use `console.log(store.tcpKey);` or `console.log(2 * store['separated key']);` and get them printed out in the console.
+##### js code snippet
+Using the `store` object. It's attributes are the keys and their values are their respective values. 
+Therefore, you're free to use `store.tcpKey`, `console.log(store.tcpKey);` or `console.log(2 * store['separated key']);` and get them.
  
 
 ----
@@ -322,5 +324,11 @@ The tag `file`, on the other hand, reads the content as a regular string
 
 You can even read java script code and insert it into a `script` field in an event object. You have no limits.
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
+
+----
+
+#### Enqueuer Instance Flow
+
+![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.svg "Enqueuer Instance Flow")
 
 [![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)

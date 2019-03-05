@@ -53,9 +53,10 @@ let refreshCommander = (commandLineArguments: string[]) => {
             console.log('Examples:');
             console.log('  $ nqr --config-file config-file.yml --verbosity error --store key=value');
             console.log('  $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info');
-            console.log('  $ enqueuer -a test-file.yml');
+            console.log('  $ enqueuer -a test-file.yml --store someKey=true --store someOtherKey=false');
+            console.log('  $ nqr --protocols-description -s key=value');
             console.log('  $ nqr -p http');
-            console.log('  $ nqr -p json');
+            console.log('  $ nqr --formatters-description json');
         });
         return commander.parse(commandLineArguments || ['path', 'enqueuer']);
     } catch (err) {
