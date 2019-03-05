@@ -81,7 +81,7 @@
     }
 
     .nqr-logo {
-        transition: 1000ms ease all;
+        transition: 250ms all ease;
     }
 
     .nqr-logo:hover {
@@ -106,7 +106,7 @@ Want to ensure that a user journey which involves several steps with different p
 
 <h4 id="enqueuer">1.<span class="enqueuer-name"> enqueuer</span></h4>
 
-<p>It's <span style="text-decoration: line-through">not just</span> an integration tool. It is a developer friendly platform that provides the following capabilities:<br>
+<p>It's <span style="text-decoration: line-through">not just</span> an integration testing tool. It is a developer friendly platform that provides the following capabilities:<br>
 - Initiates requests with support for many protocols out of the box<br>
 - Easily mock services to alleviate the headaches of functional and integration tests<br>
 - Built in assertion library to verify response data coming from your services<br>
@@ -258,7 +258,7 @@ Available events are described <a href="#event">here</a>. A <code>subscription</
 
 <h4 id="event">5. Event</h4>
 
-<p>Events are actions triggered by test scenarios like publishers or subscriptions.
+<p>Events are hook methods executed by<span class="enqueuer-name"> enqueuer</span> when an action occurs on publishers, subscriptions or requisitions.
 There are three events available:</p>
 
 <p><strong>onInit</strong><br>
@@ -350,7 +350,7 @@ Optional. List of in plugins used by the test scenarios. You can <a href="https:
 Once<span class="enqueuer-name"> enqueuer</span> runs every requisition, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
 You can run <code>$ nqr -p</code> to check available report publishers. <br>
-Another important thing to note is the 'format' value. By default a 'json' summary is generated, but you can change it to whatever format you would like.
+Another important thing to note is the <code>format</code> value. By default a <code>json</code> summary is generated, but you can change it to whatever format you would like.
 You can run <code>$ nqr -f</code> to check available formats.</p>
 
 <pre><code>outputs:
@@ -378,12 +378,6 @@ Values defined here use the 'key: value' pattern and are available to every test
       nested: thing
 </code></pre>
 
-<p>There are two ways of using them:
-<strong>Non js code snippet</strong><br>
-The easiest one is to type &lt;<tcpKey>> where you want it to be replaced in a test file.
-<strong>Js code snippet</strong><br>
-Simply <code>store.tcpKey</code>. So, you're able to use <code>console.log(store.tcpKey)</code> or <code>console.log(2 * store['separated key']);</code> and get them printed out in the console.</p>
-
 <h5 id="example">6.1. example</h5>
 
 <p><a href="https://github.com/enqueuer-land/enqueuer/blob/master/conf/singleRun.yml">Here's</a> a complete example of a configuration file.</p>
@@ -393,7 +387,7 @@ Simply <code>store.tcpKey</code>. So, you're able to use <code>console.log(store
 <h4 id="variables">7. Variables</h4>
 
 <p>To give you even more power and flexibility,<span class="enqueuer-name"> enqueuer</span> allows you to use values that will be defined later.
-That's why there is a 'store' field and you'll see a lot of '&lt;&lt;' and '{{' being used in the examples files.
+That's why there is a <code>store</code> field and you'll see a lot of <code>&lt;&lt;</code> and <code>{{</code> being used in the examples files.
 It works as simple as this:</p>
 
 <pre><code>variableName: &lt;&lt;valueToBeDefinedLater&gt;&gt;
@@ -413,17 +407,29 @@ It works as simple as this:</p>
 
 <p>There are a few ways to set a value in the store.</p>
 
-<h5 id="configuration_file">7.2. configuration file</h5>
+<h6 id="configuration_file">7.1.1. configuration file</h6>
 
-<p>configuration file's store <a href="#configuration-file">field</a></p>
+<p>configuration file's store</p>
 
-<h5 id="command_line">7.3. command line</h5>
+<h6 id="command_line">7.1.2. command line</h6>
 
 <p>a command line argument <code>$ nqr --store key=value</code></p>
 
-<h5 id="event's_store">7.4. event's store</h5>
+<h6 id="event's_store">7.1.3. event's store</h6>
 
-<p>dynamically set it through an event's store <a href="#events-store">field</a></p>
+<p>dynamically set it through an event's store</p>
+
+<h5 id="using_it">7.2. using it</h5>
+
+<p>There are two ways of using them:</p>
+
+<h5 id="non_js_code_snippet">7.3. non js code snippet</h5>
+
+<p>The easiest one is to type <code>&lt;&lt;tcpKey&gt;&gt;</code> where you want it to be replaced in a test file.<br></p>
+
+<h5 id="js_code_snippet**">7.4. js code snippet**</h5>
+
+<p>Simply <code>store.tcpKey</code>. So, you'll be able to use <code>console.log(store.tcpKey);</code> or <code>console.log(2 * store['separated key']);</code> and get them printed out in the console.</p>
 
 <hr />
 
@@ -444,7 +450,7 @@ yml: &lt;&lt;yaml://misc/file-content.yml&gt;&gt;
 regularFile: &lt;&lt;file://misc/file-content.yml&gt;&gt;
 </code></pre>
 
-<p>You can even read java script code and insert it into a 'script' field in an event object. You have no limits.
+<p>You can even read java script code and insert it into a <code>script</code> field in an event object. You have no limits.
 Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml">this test example</a> test to get a full picture of it.</p>
     </div>
 
@@ -462,6 +468,11 @@ Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/example
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
               integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
               crossorigin="anonymous"></script>
+        <script>
+            let enqueuerLogo = $("[title='Enqueuer Logo']");
+            enqueuerLogo.css({'max-width': '80vw'});
+            enqueuerLogo.parent().css({'text-align': 'center'})
+        </script>
 
     </body>
 </html>
