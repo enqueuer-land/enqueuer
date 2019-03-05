@@ -141,7 +141,7 @@ Available events are described [here](#event). A `subscription` object is availa
 ----
 #### Event
 
-Events are actions triggered by test scenarios like publishers or subscriptions.
+Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
 There are three events available:
 
 **onInit**\
@@ -226,7 +226,7 @@ Optional. List of in plugins used by the test scenarios. You can [check them out
 Once enqueuer runs every requisition, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
 You can run `$ nqr -p` to check available report publishers. \
-Another important thing to note is the 'format' value. By default a 'json' summary is generated, but you can change it to whatever format you would like.
+Another important thing to note is the `format` value. By default a `json` summary is generated, but you can change it to whatever format you would like.
 You can run `$ nqr -f` to check available formats.
     
     outputs:
@@ -251,13 +251,6 @@ Values defined here use the 'key: value' pattern and are available to every test
         first: first value
         second:
           nested: thing
-          
-There are two ways of using them:
-**Non js code snippet**\
-The easiest one is to type <<tcpKey>> where you want it to be replaced in a test file.
-**Js code snippet**\
-Simply `store.tcpKey`. So, you're able to use `console.log(store.tcpKey)` or `console.log(2 * store['separated key']);` and get them printed out in the console.
- 
 
 ##### example
 [Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/singleRun.yml) a complete example of a configuration file.
@@ -266,7 +259,7 @@ Simply `store.tcpKey`. So, you're able to use `console.log(store.tcpKey)` or `co
 
 #### Variables
 To give you even more power and flexibility, enqueuer allows you to use values that will be defined later.
-That's why there is a 'store' field and you'll see a lot of '<<' and '{{' being used in the examples files.
+That's why there is a `store` field and you'll see a lot of `<<` and `{{` being used in the examples files.
 It works as simple as this:
 
     variableName: <<valueToBeDefinedLater>>
@@ -282,12 +275,20 @@ Then, when enqueuer parses the original map, it gets translated to this:
 ##### set a variable
 There are a few ways to set a value in the store.
 
-##### configuration file
-configuration file's store [field](#configuration-file)
-##### command line
+###### configuration file
+configuration file's store
+###### command line
 a command line argument `$ nqr --store key=value`
-##### event's store
-dynamically set it through an event's store [field](#events-store)
+###### event's store
+dynamically set it through an event's store
+
+##### using it          
+There are two ways of using them:
+##### non js code snippet
+The easiest one is to type `<<tcpKey>>` where you want it to be replaced in a test file.\
+##### js code snippet**
+Simply `store.tcpKey`. So, you'll be able to use `console.log(store.tcpKey);` or `console.log(2 * store['separated key']);` and get them printed out in the console.
+ 
 
 ----
 
@@ -305,5 +306,5 @@ Other parsable values include:
     yml: <<yaml://misc/file-content.yml>>
     regularFile: <<file://misc/file-content.yml>>
 
-You can even read java script code and insert it into a 'script' field in an event object. You have no limits.
+You can even read java script code and insert it into a `script` field in an event object. You have no limits.
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
