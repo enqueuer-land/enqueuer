@@ -1,0 +1,11 @@
+-   onInit:
+        store:
+            key: 10
+    onFinish:
+        assertions:
+            -   expect: store.key
+                toBeEqualTo: 10
+-   onInit:
+        assertions:
+            -   expect: <<key>> + 1
+                toBeEqualTo: 11
