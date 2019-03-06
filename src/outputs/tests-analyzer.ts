@@ -2,9 +2,11 @@ import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
 
 export type Test = { test: TestModel, hierarchy: string[] };
+export type IgnoredItem = { hierarchy: string[] };
 
 export class TestsAnalyzer {
     private tests: Test[] = [];
+    private ignoredList: IgnoredItem[] = [];
 
     public constructor(report?: RequisitionModel) {
         if (report) {
@@ -18,6 +20,10 @@ export class TestsAnalyzer {
 
     public getTests(): Test[] {
         return this.tests;
+    }
+
+    public getIgnoredList(): IgnoredItem[] {
+        return this.ignoredList;
     }
 
     public getPassingTests(): Test[] {
@@ -44,16 +50,28 @@ export class TestsAnalyzer {
     }
 
     private findTests(requisition: RequisitionModel, hierarchy: string[]) {
-        this.sumTests(requisition.tests, hierarchy.concat(requisition.name));
+        if (requisition.ignored) {
+            this.computeIgnored(hierarchy.concat(requisition.name));
+        } else {
+            this.computeTests(requisition.tests, hierarchy.concat(requisition.name));
+            for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
+                const childHierarchy = hierarchy.concat(child.name);
+                if (child.ignored) {
+                    this.computeIgnored(childHierarchy);
+                } else {
+                    this.computeTests(child.tests, childHierarchy);
+                }
+            }
+        }
 
-        (requisition.subscriptions || [])
-            .forEach((subscription: any) => this.sumTests(subscription.tests, hierarchy.concat(subscription.name)));
-        (requisition.publishers || [])
-            .forEach((publisher: any) => this.sumTests(publisher.tests, hierarchy.concat(publisher.name)));
     }
 
-    private sumTests(tests: any[], hierarchy: string[]): void {
+    private computeTests(tests: any[], hierarchy: string[]): void {
         tests.forEach(test => this.tests.push({test, hierarchy: hierarchy}));
+    }
+
+    private computeIgnored(hierarchy: string[]): void {
+        this.ignoredList.push({hierarchy: hierarchy});
     }
 
 }

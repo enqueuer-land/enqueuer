@@ -1,6 +1,6 @@
-import {TestsAnalyzer} from "./tests-analyzer";
-import {RequisitionModel} from "../models/outputs/requisition-model";
-import {TestModel} from "../models/outputs/test-model";
+import {TestsAnalyzer} from './tests-analyzer';
+import {RequisitionModel} from '../models/outputs/requisition-model';
+import {TestModel} from '../models/outputs/test-model';
 
 describe('TestsAnalyzer', () => {
 
@@ -42,7 +42,7 @@ describe('TestsAnalyzer', () => {
 
         expect(testsAnalyzer.getFailingTests().length).toBe(1);
         expect(testsAnalyzer.getTests().length).toBe(3);
-        expect(testsAnalyzer.getPercentage()).toBe(66.66)
+        expect(testsAnalyzer.getPercentage()).toBe(66.66);
     });
 
     it('Should count inner tests (inner runnable is undefined)', () => {
@@ -60,7 +60,6 @@ describe('TestsAnalyzer', () => {
         expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
-
     it('Should add test', () => {
 
         const test: RequisitionModel = {
@@ -77,8 +76,7 @@ describe('TestsAnalyzer', () => {
         expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
-
-    it('Should get passing tests', () => {
+    it('Should get filtered tests', () => {
 
         const test: TestModel = {
             name: 'name',
@@ -93,6 +91,24 @@ describe('TestsAnalyzer', () => {
         expect(testsAnalyzer.getPassingTests().length).toBe(3);
         expect(testsAnalyzer.getTests().length).toBe(4);
         expect(testsAnalyzer.getPercentage()).toBe(75);
+    });
+
+    it('Should get ignored tests', () => {
+
+        const test: TestModel = {
+            name: 'name',
+            description: 'name',
+            tests: [{valid: true}, {valid: true}, {valid: true}, {valid: false}],
+            ignored: true,
+            valid: true,
+        };
+
+        const testsAnalyzer = new TestsAnalyzer(test);
+
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getPassingTests().length).toBe(0);
+        expect(testsAnalyzer.getIgnoredList().length).toBe(1);
+        expect(testsAnalyzer.getTests().length).toBe(0);
     });
 
     it('Should count inner tests (no publishers)', () => {
@@ -188,7 +204,7 @@ describe('TestsAnalyzer', () => {
                             tests: [{valid: true}],
 
                         }]
-                    },{
+                    }, {
                         name: 'name',
                         valid: true,
                         tests: [{valid: true}],
@@ -205,7 +221,7 @@ describe('TestsAnalyzer', () => {
                             tests: [{valid: true}],
 
                         }]
-                    },{
+                    }, {
                         name: 'name',
                         valid: true,
                         tests: [{valid: true}],

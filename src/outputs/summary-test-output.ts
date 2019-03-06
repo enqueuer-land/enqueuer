@@ -17,6 +17,9 @@ export class SummaryTestOutput {
         if (this.report.valid) {
             message = `\t${chalk.black.bgGreen('[PASS]')} `;
             message += chalk.green(this.formatName());
+        } else if (!!this.report.ignored) {
+            message = `\t${chalk.black.bgRed('[SKIP]')} `;
+            message += chalk.bgYellow(this.formatName());
         } else {
             message = `\t${chalk.black.bgRed('[FAIL]')} `;
             message += chalk.red(this.formatName());
@@ -40,6 +43,10 @@ export class SummaryTestOutput {
         const percentage = this.testAnalyzer.getPercentage();
         const testsNumber = this.testAnalyzer.getTests().length;
         let message = `${this.testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;
+        const ignoredTests = this.testAnalyzer.getIgnoredList();
+        if (ignoredTests.length > 0) {
+            message += ` - ${ignoredTests.length} ignored -`;
+        }
         if (this.report.time) {
             const totalTime = this.report.time.totalTime;
             message += ` ran in ${totalTime}ms`;
