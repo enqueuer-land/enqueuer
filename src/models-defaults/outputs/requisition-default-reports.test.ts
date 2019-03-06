@@ -3,9 +3,9 @@ import {RequisitionDefaultReports} from "./requisition-default-reports";
 describe('RequisitionDefaultReports', () => {
     it('default', () => {
         const report = RequisitionDefaultReports.createDefaultReport({name: 'g',  id: 'id'});
-        expect(report.time.startTime).toBeDefined();
-        expect(report.time.endTime).toBeDefined();
-        expect(report.time.totalTime).toBeLessThan(1000);
+        expect(report.time!.startTime).toBeDefined();
+        expect(report.time!.endTime).toBeDefined();
+        expect(report.time!.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
             "name": "g",
@@ -21,9 +21,9 @@ describe('RequisitionDefaultReports', () => {
     it('createIteratorReport', () => {
         const report = RequisitionDefaultReports.createIteratorReport({name: 'g'});
         expect(report.id).toBeUndefined();
-        expect(report.time.startTime).toBeDefined();
-        expect(report.time.endTime).toBeDefined();
-        expect(report.time.totalTime).toBeLessThan(1000);
+        expect(report.time!.startTime).toBeDefined();
+        expect(report.time!.endTime).toBeDefined();
+        expect(report.time!.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
             "name": "g",
@@ -37,9 +37,9 @@ describe('RequisitionDefaultReports', () => {
 
     it('createRunningError', () => {
         const report = RequisitionDefaultReports.createRunningError({name: 'lopidio'}, 'err');
-        expect(report.time.startTime).toBeDefined();
-        expect(report.time.endTime).toBeDefined();
-        expect(report.time.totalTime).toBeLessThan(1000);
+        expect(report.time!.startTime).toBeDefined();
+        expect(report.time!.endTime).toBeDefined();
+        expect(report.time!.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
             "name": "lopidio",
@@ -53,9 +53,9 @@ describe('RequisitionDefaultReports', () => {
 
     it('createSkippedReport', () => {
         const report = RequisitionDefaultReports.createSkippedReport({name: 'virgs'});
-        expect(report.time.startTime).toBeDefined();
-        expect(report.time.endTime).toBeDefined();
-        expect(report.time.totalTime).toBe(0);
+        expect(report.time!.startTime).toBeDefined();
+        expect(report.time!.endTime).toBeDefined();
+        expect(report.time!.totalTime).toBe(0);
         delete report.time;
         expect(report).toEqual({
                 "name": "virgs",
@@ -74,19 +74,16 @@ describe('RequisitionDefaultReports', () => {
 
     it('createIgnoredReport', () => {
         const report = RequisitionDefaultReports.createIgnoredReport({name: 'virgs'});
-        expect(report.time.startTime).toBeDefined();
-        expect(report.time.endTime).toBeDefined();
-        expect(report.time.totalTime).toBe(0);
+        expect(report.time!.startTime).toBeDefined();
+        expect(report.time!.endTime).toBeDefined();
+        expect(report.time!.totalTime).toBe(0);
         delete report.time;
         expect(report).toEqual({
                 "name": "virgs",
+                ignored: true,
                 publishers: [],
                 "subscriptions": [],
-                "tests": [{
-                    "description": "Requisition was not ran",
-                    "name": "Requisition ignored",
-                    "valid": true
-                }],
+                "tests": [],
                 "valid": true,
                 requisitions: []
             }

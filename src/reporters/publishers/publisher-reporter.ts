@@ -18,6 +18,7 @@ export class PublisherReporter {
         this.report = {
             id: publisher.id,
             name: publisher.name,
+            ignored: publisher.ignore,
             valid: true,
             type: publisher.type,
             tests: []

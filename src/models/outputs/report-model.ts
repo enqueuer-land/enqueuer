@@ -3,6 +3,7 @@ import { TestModel } from './test-model';
 export interface ReportModel {
     name: string;
     valid: boolean;
+    ignored?: boolean;
     tests: TestModel[];
 }
 

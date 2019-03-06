@@ -11,7 +11,7 @@ Want to ensure that a user journey which involves several steps with different p
 It's ~~not just~~ an integration testing tool. It is a platform that provides the following capabilities:\
 - Support for many protocols out of the box\
 - Easily mock services to alleviate the headaches of functional and integration tests\
-- Friendly for developers and no developers\
+- Friendly for developers and non developers\
 - Built in assertion library to verify response data coming from your services\
 - Easily extensible through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)\ 
 - Built in CLI is easy to add to your team's existing CI pipelines\
@@ -20,7 +20,7 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 
 
 ##### Install it:
-    $ npm install enqueuer
+    $ npm install --global enqueuer
     
 ##### Run it:
 

@@ -55,6 +55,7 @@ let refreshCommander = (commandLineArguments: string[]) => {
             console.log('  $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info');
             console.log('  $ enqueuer -a test-file.yml --store someKey=true --store someOtherKey=false');
             console.log('  $ nqr --protocols-description -s key=value');
+            console.log('  $ nqr -l my-enqueuer-plugin-name -p plugin-protocol');
             console.log('  $ nqr -p http');
             console.log('  $ nqr --formatters-description json');
         });

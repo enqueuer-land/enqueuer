@@ -1,11 +1,16 @@
 -   onInit:
+        script: store.otherKey = 2
         store:
             key: 10
     onFinish:
         assertions:
             -   expect: store.key
                 toBeEqualTo: 10
+            -   expect: store.otherKey / 2
+                toBeEqualTo: 1
 -   onInit:
         assertions:
             -   expect: <<key>> + 1
                 toBeEqualTo: 11
+            -   expect: <<otherKey>> * 5
+                toBeEqualTo: 10

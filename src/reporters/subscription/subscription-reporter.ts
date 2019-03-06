@@ -34,6 +34,7 @@ export class SubscriptionReporter {
         this.report = {
             id: subscriptionAttributes.id,
             name: subscriptionAttributes.name,
+            ignored: subscriptionAttributes.ignore,
             type: subscriptionAttributes.type,
             tests: [],
             valid: true
