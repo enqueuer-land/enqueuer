@@ -1,19 +1,22 @@
 [![npm](https://img.shields.io/npm/dt/enqueuer.svg)]()[![Build Status](https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master)](https://travis-ci.org/enqueuer-land/enqueuer)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability)](https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability) [![Greenkeeper badge](https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg)](https://greenkeeper.io/)[![Known Vulnerabilities](https://snyk.io/test/npm/enqueuer/badge.svg)](https://snyk.io/test/npm/enqueuer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 
 ![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Giant Logo")
 
 Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
- Enqueuer is what you're looking for.
+Dependencies messages have become a pain?
+Don't you worry anymore. Enqueuer is what you're looking for.
 #### Enqueuer
 It's ~~not just~~ an integration testing tool. It is a platform that provides the following capabilities:\
 - Support for many protocols out of the box\
-- Easily mock services to alleviate the headaches of functional and integration tests\
+- Easily mock numerous services to alleviate the headaches of functional and integration tests\
 - Friendly for developers and non developers\
-- Built in assertion library to verify response data coming from your services\
-- Easily extensible through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)\ 
+- Built in assertion library to verify response data coming from/going to your services\
+- Easily extensible behavior through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)\ 
 - Built in CLI is easy to add to your team's existing CI pipelines\
 
 ----

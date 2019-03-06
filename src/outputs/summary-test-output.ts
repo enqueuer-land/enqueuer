@@ -14,12 +14,12 @@ export class SummaryTestOutput {
 
     public print() {
         let message = '';
-        if (this.report.valid) {
+        if (this.report.ignored === true) {
+            message = `\t${chalk.black.bgYellow('[SKIP]')} `;
+            message += chalk.bgYellow(this.formatName());
+        } else if (this.report.valid === true) {
             message = `\t${chalk.black.bgGreen('[PASS]')} `;
             message += chalk.green(this.formatName());
-        } else if (!!this.report.ignored) {
-            message = `\t${chalk.black.bgRed('[SKIP]')} `;
-            message += chalk.bgYellow(this.formatName());
         } else {
             message = `\t${chalk.black.bgRed('[FAIL]')} `;
             message += chalk.red(this.formatName());

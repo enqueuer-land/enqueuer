@@ -4,8 +4,8 @@ const argv = {};
 let pagedown = require('pagedown'),
     converter = new pagedown.Converter(),
     fs = require('fs'),
-    top_part = fs.readFileSync(__dirname + "/parts/top.html").toString(),
-    bottom_part = fs.readFileSync(__dirname + "/parts/bottom.html").toString(),
+    top_part = fs.readFileSync(__dirname + "/html/top.html").toString(),
+    bottom_part = fs.readFileSync(__dirname + "/html/bottom.html").toString(),
     levels, toc, nextId;
 
 // Configure section and toc generation
