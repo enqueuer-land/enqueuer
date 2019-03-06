@@ -6,11 +6,14 @@
 
 ![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Giant Logo")
 
+----
+
 Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
 Dependencies messages have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.
-#### Enqueuer
+
+### Enqueuer
 It's ~~not just~~ an integration testing tool. It is a platform that provides the following capabilities:\
 - Support for many protocols out of the box\
 - Easily mock numerous services to alleviate the headaches of functional and integration tests\
@@ -19,20 +22,17 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 - Easily extensible behavior through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)\ 
 - Built in CLI is easy to add to your team's existing CI pipelines\
 
-----
-
-
-##### Install it:
+#### install it
     $ npm install --global enqueuer
     
-##### Run it:
+#### run it
 
     $ nqr configFile.yml
 or
 
     $ nqr -a testFile.yml
     
-##### Get help:
+#### get help:
 
     $ nqr -h
     Usage: nqr [options]
@@ -59,37 +59,47 @@ or
       $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info
       $ enqueuer -a test-file.yml --store someKey=true --store someOtherKey=false
       $ nqr --protocols-description -s key=value
+      $ nqr -l my-enqueuer-plugin-name -p plugin-protocol
       $ nqr -p http
       $ nqr --formatters-description json
 
-----
 
-#### Requisition
-This describes the test scenario. It tells what and how test your applications and services.
+----
+### Components
+There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
+They work along with each other and are responsible for the full behavior of enqueuer.
+
+#### requisition
+Test scenario description. It tells what and how test your applications and services.
 It's a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition).
 It supports multi-level test scenarios out of the box.
 [Variable replacements](#variables) are available through the entire requisition.
 
 **name**\
-Optional, describes what the requisition is suppose to do
+Optional, describes what the requisition is suppose to do.
 
     name: requisition action
 
 **timeout**\
 Sets in milliseconds how long the requisition waits to expire. Defaults to 5000.
-Set to zero or less than zero to run it endlessly
+Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
     
 **delay**\
-Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting.
+Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition.yml) to get the full idea.
 
     delay: 0
 
 **iterations**\
-Optional. Defaults to 1. Sets how many times this test will be executed
+Optional. Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
 
     iterations: 3
+
+**ignore**\
+Optional. Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+
+    ignore: true
 
 **publishers**\
 Optional. List of [publishers](#publisher)
@@ -99,19 +109,18 @@ Optional. List of [subscriptions](#subscription)
 
 **requisitions**\
 Optional. A list of child scenarios. List of [requisitions](#requisition).
+Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
 **events**\
 Available events are described [here](#event). A `requisition` object is available to access and change its attributes.  
 
-----
-
-#### Publisher
+#### publisher
 
 A publisher action is triggered by enqueuer itself. It **acts** whereas a [subscription](#subscription) **reacts**.
-Every publisher has its own properties, depending on its protocol and implementation. But they all have these properties.
+Every publisher has its own properties, depending on its protocol and implementation. But, usually, they all have these properties.
 
 **name**\
-Optional, describes what the publisher is supposed to do
+Optional, describes what the publisher is supposed to do.
 
     name: publisher action
 
@@ -121,56 +130,65 @@ The message itself that will be send through this IPC protocol. Be it a string, 
 
     payload: value
     
+**ignore**\
+Optional. Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+
+    ignore: true    
+    
 **events**\
 Available events are described [here](#event). A `publisher` object is available to access and change its attributes.  
 
-----
-
-#### Subscription
+#### subscription
 A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
 This means that it is not triggered by enqueuer itself. 
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
 Every subscription has its own properties, depending on its protocol and implementation. But they all have these properties. 
 
 **name**\
-Optional, describes what the subscription is supposed to do
+Optional, describes what the subscription is supposed to do.
 
     name: subscription action
 
 **avoid**\
 Identifies whether or not this subscription should not receive any message. Defaults to false.
 If set and a message is received a failing test will be generated.
+Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/avoid.yml) to see it working.
 On the other hand, when it's false and no message is received in a given timeout. The subscription is valid.
     
     avoid: false
 
 **timeout**\
 Sets in milliseconds how long the subscription waits to expire. Defaults to 3000.
-Set to zero or less than zero to run it endlessly
+Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
+    
+**ignore**\
+Optional. Defaults to false. Tells to enqueuer that this subscription should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+
+    ignore: true    
 
 **events**\
 Available events are described [here](#event). A `subscription` object is available to access and change its attributes.  
 
 ----
-#### Event
+### Event
 
 Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
 There are three events available:
 
 **onInit**\
-Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized
+Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
 
 **onFinish**\
-Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish
+Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
 
 **onMessageReceived**\
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
 An additional `message` object is available having all of attributes returned from the received message.
 
-##### fields
+#### fields
 Every event object has 3 properties:
 
 **script**\
@@ -178,9 +196,7 @@ Javascript code snippet executed when the event is triggered.\
 **store**\
 Data to be persisted\
 **assertions**\
-Array of assertions. Run `$ nqr -t` to see available ones
-
-##### examples
+Array of assertions. Run `$ nqr -t` to see available ones.
 
     onInit:
       script: |-
@@ -205,7 +221,12 @@ Array of assertions. Run `$ nqr -t` to see available ones
         - expect: message + 3
           toBeGreaterThan: 3
 
-#### Configuration File
+#### example
+Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/hooks.yml) test file to see it in practice.
+
+----
+
+### Configuration File
 To save yourself some time, a configuration file may be used.
 Configuration files tell enqueuer which tests will be executed, log-level, and which output test report files should be generated.
 This file tells how enqueuer should be executed
@@ -258,7 +279,7 @@ You can run `$ nqr -f` to check available formats or event [write your own](http
 Values defined here use the 'key: value' pattern and are available to every test scenario throughout the entire execution
 
     store:
-      tcpKey: "tcp value" # Defines 'tcpKey' key and its value 'tcp value'. 
+      variableKey: "my value" # Defines 'variableKey' key and its value 'my value'. 
       
       'separated key': 6
       
@@ -267,12 +288,12 @@ Values defined here use the 'key: value' pattern and are available to every test
         second:
           nested: thing
 
-##### example
+#### example
 [Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/singleRun.yml) a complete example of a configuration file.
 
 ----
 
-#### Variables
+### Variables
 Providing power and flexibility, enqueuer allows you to use variables placeholder replacement.
 That's why there is a `store` field and you'll see a lot of `<<` and `{{` being used in the examples files.
 It works as simple as this:
@@ -287,29 +308,30 @@ Then, when enqueuer parses the original map, it gets translated to this:
     
     name: my name is enqueuer
 
-##### set a variable
+#### setting a variable
 There are a few ways to set a value in the store.
 
-###### configuration file
-configuration file's store
-###### command line
-a command line argument `$ nqr --store key=value`
-###### event's store
-dynamically set it through an event's store
+##### configuration file
+Configuration file's store
+##### command line
+A command line argument `$ nqr --store key=value -s anotherVariable=true `
+##### event's store
+Dynamically set it through an event's store
 
-##### using it          
+#### using it          
 There are two ways of using them:
 ##### non js code snippet
-The easiest one is to type `<<tcpKey>>` where you want it to be replaced in a test file.\
+The easiest one is to type `<<variableKey>>` or `{{variableKey}}` where you want it to be replaced in a test file.\
 ##### js code snippet
 Using the `store` object. It's attributes are the keys and their values are their respective values. 
-Therefore, you're free to use `store.tcpKey`, `console.log(store.tcpKey);` or `console.log(2 * store['separated key']);` and get them.
- 
+Therefore, you're free to use `store.variableKey`, `console.log(store.variableKey);` or `console.log(2 * store['separated key']);` and get them.
+
+#### example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/variables.yml) test to see it working.
 
 ----
 
-#### Content File Injection
+### Content File Injection
 You are able to insert file content in a requisition/publisher/subscription field.
 
     fileContent: <<json://path/to/file.json>>
@@ -327,11 +349,12 @@ The tag `file`, on the other hand, reads the content as a regular string
     file: <<file://misc/file-content.yml>>
 
 You can even read java script code and insert it into a `script` field in an event object. You have no limits.
+#### example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
 
 ----
 
-#### Enqueuer Flow
+### Enqueuer Flow
 
 ![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
 

@@ -24,14 +24,20 @@
         --nqr-header-background-color: #2b2a2e;
         --nqr-background-color: #353535;
         --nqr-background-alternative-color: #424242;
+        --nqr-code-color: #e83e8c;
     }
 
-    .enqueuer-name {
+    .enqueuer-name, .hljs-attr {
         color: var(--nqr-color);
     }
 
     a {
         color: var(--nqr-link);
+    }
+
+    .dollar-sign {
+        padding-left: 3px;
+        color: var(--nqr-code-color);
     }
 
     body {
@@ -43,7 +49,11 @@
         color: var(--nqr-text-smooth-color);
     }
 
-    h4 {
+    h1, h2, h6, strong {
+        color: var(--nqr-text-color);
+    }
+
+    h3, h4, h5 {
         color: var(--nqr-color);
         font-size: 2.5em;
         text-transform: capitalize;
@@ -51,7 +61,12 @@
         letter-spacing: 2px;
     }
 
-    h1, h2, h3, h5, h6, strong {
+    h4 {
+        font-size: 1.75em;
+    }
+
+    h5 {
+        font-size: 1em;
         color: var(--nqr-text-color);
     }
 

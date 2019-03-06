@@ -33,12 +33,13 @@ converter.hooks.set("postConversion", (text) => {
         ++nextId;
 
         const title =  str.slice(offset+4, str.slice(offset).indexOf("</h")+offset);
-        return "<h" + p2 + ' id="' + title.replace(/ +/g, '_').toLowerCase() + '">' + levelStr;
+        return "<h" + p2 + ' id="' + title.replace(/ +/g, '_').toLowerCase() + '" style="padding-left: '+ 8 * (p2 - 3) +'px">' + levelStr;
     })
     .replace(/\\/g, '<br>')
     .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
     .replace(/fullLogo1/g, 'fullLogo3')
-    .replace(/ (enqueuer)/gi, (match, p1) => '<span class="enqueuer-name"> ' + p1 + '</span>')
+    // .replace(/ (enqueuer)/gi, (match, p1) => '<span class="enqueuer-name"> ' + p1 + '</span>')
+    .replace(/\$/gi, () => '<span class="dollar-sign">$</span>')
 });
 
 
