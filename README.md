@@ -360,23 +360,28 @@ Then, when enqueuer parses the original map, it gets translated to this:
     
     name: my name is enqueuer
 
+#### default values
+By default, every ENV_VAR set is loaded automatically to the store. Check [this example](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L11).
+
 #### setting a variable
 There are a few ways to set a value in the store.
 
 ##### configuration file
-Configuration file's store
+Configuration file's store as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27)
 ##### command line
 A command line argument `$ nqr --store key=value -s anotherVariable=true `
-##### event's store
-Dynamically set it through an event's store
+##### event.
+Dynamically set it through an event. 
+Be it in its [script](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) field or straight through its store [field](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3). 
 
 #### using it          
 There are two ways of using them:
 ##### non js code snippet
-The easiest one is to type `<<variableKey>>` or `{{variableKey}}` where you want it to be replaced in a test file.\
+The easiest one is to type `<<variableKey>>` or `{{variableKey}}` where you want it to be replaced in a test file, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8)
 ##### js code snippet
 Using the `store` object. It's attributes are the keys and their values are their respective values. 
 Therefore, you're free to use `store.variableKey`, `console.log(store.variableKey);` or `console.log(2 * store['separated key']);` and get them.
+Like [this](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) one.
 
 #### example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/variables.yml) test to see it working.
