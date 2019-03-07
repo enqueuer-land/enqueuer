@@ -32,7 +32,7 @@ or
 
     $ nqr -a testFile.yml
     
-#### get help:
+#### get help
 
     $ nqr -h
     Usage: nqr [options]
@@ -103,16 +103,44 @@ Optional. Defaults to false. Tells to enqueuer that this requisitions should be 
 
 **publishers**\
 Optional. List of [publishers](#publisher)
+    
+    publishers:
+    - name: some publisher name
+      type: http
+    - name: another publisher name
+      type: tcp
 
 **subscriptions**\
 Optional. List of [subscriptions](#subscription)
+
+    subscriptions:
+    - name: some subscription name
+      type: udp
+    - name: another subscription name
+      type: file
+
 
 **requisitions**\
 Optional. A list of child scenarios. List of [requisitions](#requisition).
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
-**events**\
-Available events are described [here](#event). A `requisition` object is available to access and change its attributes.  
+    requisitions:
+    - name: some requisition name
+      iterations: 2
+    - name: another requisition name
+      delay: 200
+
+##### events
+Available events are described [here](#event). A `requisition` object is available to access and change its attributes.
+
+    name: my name
+    onInit:
+      script: requisition.delay = 3000;
+      assertions:
+      - expectToBeDefined: requisition.name
+    onFinish:  
+      assertions:
+      - expectToBeDefined: requisition.name
 
 #### publisher
 
@@ -135,9 +163,22 @@ Optional. Defaults to false. Tells to enqueuer that this publisher should be ski
 
     ignore: true    
     
-**events**\
-Available events are described [here](#event). A `publisher` object is available to access and change its attributes.  
+##### events
+Available events are described [here](#event). A `publisher` object is available to access and change its attributes.
+Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist a `onMessageReceived` event and a special object given `message`. 
+On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually does not provide it. 
 
+    onInit:
+      script: publisher.ignore = false
+      assertions:
+      - expectToBeDefined: publisher.type
+    onMessageReceived: #Provided in synchronous protocols  
+      assertions:
+      - expectToBeDefined: message
+    onFinish:  
+      assertions:
+      - expectToBeDefined: publisher.type
+  
 #### subscription
 A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
 This means that it is not triggered by enqueuer itself. 
@@ -168,10 +209,22 @@ Optional. Defaults to false. Tells to enqueuer that this subscription should be 
 
     ignore: true    
 
-**events**\
+##### events
 Available events are described [here](#event). A `subscription` object is available to access and change its attributes.  
 
+    onInit:
+      script: subscription.avoid = false;
+      assertions:
+      - expectToBeDefined: subscription.type
+    onMessageReceived:  
+      assertions:
+      - expectToBeDefined: message
+    onFinish:  
+      assertions:
+      - expectToBeDefined: subscription.type
+      
 ----
+
 ### Event
 
 Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
@@ -199,12 +252,11 @@ Data to be persisted\
 Array of assertions. Run `$ nqr -t` to see available ones.
 
     onInit:
-      script: |-
-        variableIdentifier = 'string value'
+      script: variableIdentifier = 'string value'
     
       assertions:
-        - expect: variableIdentifier
-          toBeEqualTo: `string value`
+      - expect: variableIdentifier
+        toBeEqualTo: `string value`
     
     onMessageReceived:
       script: |-
@@ -215,11 +267,11 @@ Array of assertions. Run `$ nqr -t` to see available ones.
         key: message
     
       assertions:
-        - name: anyValue #optional
-          expect: message
-          toBeEqualTo: store.key
-        - expect: message + 3
-          toBeGreaterThan: 3
+      - name: anyValue #optional
+        expect: message
+        toBeEqualTo: store.key
+      - expect: message + 3
+        toBeGreaterThan: 3
 
 #### example
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/hooks.yml) test file to see it in practice.

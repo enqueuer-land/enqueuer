@@ -204,7 +204,7 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 <pre><code><span class="dollar-sign">$</span> nqr -a testFile.yml
 </code></pre>
 
-<h4 id="get_help:" style="padding-left: 8px">1.3. get help:</h4>
+<h4 id="get_help" style="padding-left: 8px">1.3. get help</h4>
 
 <pre><code><span class="dollar-sign">$</span> nqr -h
 Usage: nqr [options]
@@ -284,15 +284,47 @@ Optional. Defaults to false. Tells to enqueuer that this requisitions should be 
 <p><strong>publishers</strong><br>
 Optional. List of <a href="#publisher">publishers</a></p>
 
+<pre><code>publishers:
+- name: some publisher name
+  type: http
+- name: another publisher name
+  type: tcp
+</code></pre>
+
 <p><strong>subscriptions</strong><br>
 Optional. List of <a href="#subscription">subscriptions</a></p>
+
+<pre><code>subscriptions:
+- name: some subscription name
+  type: udp
+- name: another subscription name
+  type: file
+</code></pre>
 
 <p><strong>requisitions</strong><br>
 Optional. A list of child scenarios. List of <a href="#requisition">requisitions</a>.
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> example, it may help.</p>
 
-<p><strong>events</strong><br>
-Available events are described <a href="#event">here</a>. A <code>requisition</code> object is available to access and change its attributes.  </p>
+<pre><code>requisitions:
+- name: some requisition name
+  iterations: 2
+- name: another requisition name
+  delay: 200
+</code></pre>
+
+<h5 id="events" style="padding-left: 16px">2.1.1. events</h5>
+
+<p>Available events are described <a href="#event">here</a>. A <code>requisition</code> object is available to access and change its attributes.</p>
+
+<pre><code>name: my name
+onInit:
+  script: requisition.delay = 3000;
+  assertions:
+  - expectToBeDefined: requisition.name
+onFinish:  
+  assertions:
+  - expectToBeDefined: requisition.name
+</code></pre>
 
 <h4 id="publisher" style="padding-left: 8px">2.2. publisher</h4>
 
@@ -318,8 +350,23 @@ Optional. Defaults to false. Tells to enqueuer that this publisher should be ski
 <pre><code>ignore: true    
 </code></pre>
 
-<p><strong>events</strong><br>
-Available events are described <a href="#event">here</a>. A <code>publisher</code> object is available to access and change its attributes.  </p>
+<h5 id="events" style="padding-left: 16px">2.2.1. events</h5>
+
+<p>Available events are described <a href="#event">here</a>. A <code>publisher</code> object is available to access and change its attributes.
+Depending on the protocol and its implementation, such as <code>http</code> and <code>tcp</code>, there may exist a <code>onMessageReceived</code> event and a special object given <code>message</code>. 
+On the other hand, an asynchronous protocol, like: <code>udp</code> and <code>amqp</code>, usually does not provide it. </p>
+
+<pre><code>onInit:
+  script: publisher.ignore = false
+  assertions:
+  - expectToBeDefined: publisher.type
+onMessageReceived: #Provided in synchronous protocols  
+  assertions:
+  - expectToBeDefined: message
+onFinish:  
+  assertions:
+  - expectToBeDefined: publisher.type
+</code></pre>
 
 <h4 id="subscription" style="padding-left: 8px">2.3. subscription</h4>
 
@@ -356,8 +403,21 @@ Optional. Defaults to false. Tells to enqueuer that this subscription should be 
 <pre><code>ignore: true    
 </code></pre>
 
-<p><strong>events</strong><br>
-Available events are described <a href="#event">here</a>. A <code>subscription</code> object is available to access and change its attributes.  </p>
+<h5 id="events" style="padding-left: 16px">2.3.1. events</h5>
+
+<p>Available events are described <a href="#event">here</a>. A <code>subscription</code> object is available to access and change its attributes.  </p>
+
+<pre><code>onInit:
+  script: subscription.avoid = false;
+  assertions:
+  - expectToBeDefined: subscription.type
+onMessageReceived:  
+  assertions:
+  - expectToBeDefined: message
+onFinish:  
+  assertions:
+  - expectToBeDefined: subscription.type
+</code></pre>
 
 <hr />
 
@@ -389,12 +449,11 @@ Data to be persisted<br>
 Array of assertions. Run <code><span class="dollar-sign">$</span> nqr -t</code> to see available ones.</p>
 
 <pre><code>onInit:
-  script: |-
-    variableIdentifier = 'string value'
+  script: variableIdentifier = 'string value'
 
   assertions:
-    - expect: variableIdentifier
-      toBeEqualTo: `string value`
+  - expect: variableIdentifier
+    toBeEqualTo: `string value`
 
 onMessageReceived:
   script: |-
@@ -405,11 +464,11 @@ onMessageReceived:
     key: message
 
   assertions:
-    - name: anyValue #optional
-      expect: message
-      toBeEqualTo: store.key
-    - expect: message + 3
-      toBeGreaterThan: 3
+  - name: anyValue #optional
+    expect: message
+    toBeEqualTo: store.key
+  - expect: message + 3
+    toBeGreaterThan: 3
 </code></pre>
 
 <h4 id="example" style="padding-left: 8px">3.2. example</h4>
