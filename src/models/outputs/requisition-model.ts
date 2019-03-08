@@ -9,4 +9,5 @@ export interface RequisitionModel extends ReportModel {
     publishers?: PublisherModel[];
     subscriptions?: SubscriptionModel[];
     requisitions?: RequisitionModel[];
+    level?: number;
 }

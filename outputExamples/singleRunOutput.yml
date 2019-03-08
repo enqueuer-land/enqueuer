@@ -5,9 +5,9 @@ id: examples
 subscriptions: []
 publishers: []
 time:
-  startTime: '2019-03-08T02:57:42.238Z'
-  endTime: '2019-03-08T02:57:45.431Z'
-  totalTime: 3193
+  startTime: '2019-03-08T03:07:43.765Z'
+  endTime: '2019-03-08T03:07:47.017Z'
+  totalTime: 3252
 requisitions:
   -
     valid: true
@@ -15,15 +15,15 @@ requisitions:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 120 <= 5000'
+        description: 'Requisition has not timed out: 136 <= 5000'
     name: examples/requisition-navigation.yaml
-    id: 2357420205_00667e7390_2116
+    id: 0007430734_00667e7390_600838
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.238Z'
-      endTime: '2019-03-08T02:57:42.358Z'
-      totalTime: 120
+      startTime: '2019-03-08T03:07:43.765Z'
+      endTime: '2019-03-08T03:07:43.901Z'
+      totalTime: 136
       timeout: 5000
     requisitions:
       -
@@ -36,17 +36,18 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 69 <= 5000'
+            description: 'Requisition has not timed out: 77 <= 5000'
         name: first
         id: first
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.273Z'
-          endTime: '2019-03-08T02:57:42.342Z'
-          totalTime: 69
+          startTime: '2019-03-08T03:07:43.799Z'
+          endTime: '2019-03-08T03:07:43.876Z'
+          totalTime: 77
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
@@ -57,24 +58,26 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 15 <= 5000'
+            description: 'Requisition has not timed out: 24 <= 5000'
         name: second
         id: second
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.343Z'
-          endTime: '2019-03-08T02:57:42.358Z'
-          totalTime: 15
+          startTime: '2019-03-08T03:07:43.877Z'
+          endTime: '2019-03-08T03:07:43.901Z'
+          totalTime: 24
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 3040 <= 5000'
+        description: 'Requisition has not timed out: 3035 <= 5000'
     name: examples/avoid.yml
     id: examples/avoid.yml
     subscriptions:
@@ -87,7 +90,7 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.277Z'
+        connectionTime: '2019-03-08T03:07:43.804Z'
       -
         name: 'Subscription #1'
         type: HTTP
@@ -97,14 +100,15 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.278Z'
+        connectionTime: '2019-03-08T03:07:43.804Z'
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.239Z'
-      endTime: '2019-03-08T02:57:45.279Z'
-      totalTime: 3040
+      startTime: '2019-03-08T03:07:43.767Z'
+      endTime: '2019-03-08T03:07:46.802Z'
+      totalTime: 3035
       timeout: 5000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
@@ -115,24 +119,25 @@ requisitions:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 37 <= 5000'
+        description: 'Requisition has not timed out: 36 <= 5000'
     name: 'Testing Script Loading'
     id: 'Testing Script Loading'
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.242Z'
-      endTime: '2019-03-08T02:57:42.279Z'
-      totalTime: 37
+      startTime: '2019-03-08T03:07:43.769Z'
+      endTime: '2019-03-08T03:07:43.805Z'
+      totalTime: 36
       timeout: 5000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 128 <= 5000'
+        description: 'Requisition has not timed out: 126 <= 5000'
     name: examples/custom.yml
     id: examples/custom.yml
     subscriptions:
@@ -153,7 +158,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.289Z'
+        connectionTime: '2019-03-08T03:07:43.814Z'
         messageReceived:
           payload:
             type: Buffer
@@ -163,7 +168,7 @@ requisitions:
           remoteInfo:
             address: 127.0.0.1
             family: IPv4
-            port: 57357
+            port: 60128
             size: 2
     publishers:
       -
@@ -175,28 +180,29 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2019-03-08T02:57:42.367Z'
+        publishTime: '2019-03-08T03:07:43.894Z'
     time:
-      startTime: '2019-03-08T02:57:42.242Z'
-      endTime: '2019-03-08T02:57:42.370Z'
-      totalTime: 128
+      startTime: '2019-03-08T03:07:43.770Z'
+      endTime: '2019-03-08T03:07:43.896Z'
+      totalTime: 126
       timeout: 5000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 111 <= 5000'
+        description: 'Requisition has not timed out: 128 <= 5000'
     name: examples/file-placeholder.yml
-    id: 2357420208_a4aad2313c_743837
+    id: 0007430737_a4aad2313c_35836
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.248Z'
-      endTime: '2019-03-08T02:57:42.359Z'
-      totalTime: 111
+      startTime: '2019-03-08T03:07:43.774Z'
+      endTime: '2019-03-08T03:07:43.902Z'
+      totalTime: 128
       timeout: 5000
     requisitions:
       -
@@ -229,17 +235,18 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 50 <= 5000'
+            description: 'Requisition has not timed out: 60 <= 5000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.293Z'
-          endTime: '2019-03-08T02:57:42.343Z'
-          totalTime: 50
+          startTime: '2019-03-08T03:07:43.818Z'
+          endTime: '2019-03-08T03:07:43.878Z'
+          totalTime: 60
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
@@ -250,24 +257,26 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 15 <= 5000'
+            description: 'Requisition has not timed out: 23 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.344Z'
-          endTime: '2019-03-08T02:57:42.359Z'
-          totalTime: 15
+          startTime: '2019-03-08T03:07:43.879Z'
+          endTime: '2019-03-08T03:07:43.902Z'
+          totalTime: 23
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 108 <= 3000'
+        description: 'Requisition has not timed out: 118 <= 3000'
     name: examples/file.yml
     id: examples/file.yml
     subscriptions:
@@ -278,23 +287,23 @@ requisitions:
           -
             name: 'Some time has passed'
             valid: true
-            description: 'Expected ''now'' to be greater than or equal to ''1552013862249''. Received ''1552013862356'''
+            description: 'Expected ''now'' to be greater than or equal to ''1552014463776''. Received ''1552014463892'''
           -
             name: Filename
             valid: true
-            description: 'Expecting ''name'' (temp/fileTest2357420294_76273700ff_639521.file) to contain ''temp/'''
+            description: 'Expecting ''name'' (temp/fileTest0007430819_42270a18aa_512695.file) to contain ''temp/'''
           -
             name: Content
             valid: true
-            description: 'Expect ''content'' to be defined and it is: ''1552013862249'''
+            description: 'Expect ''content'' to be defined and it is: ''1552014463776'''
           -
             name: Created
             valid: true
-            description: 'Expect ''created'' to be defined and it is: ''Thu Mar 07 2019 23:57:42 GMT-0300 (Brasilia Standard Time)'''
+            description: 'Expect ''created'' to be defined and it is: ''Fri Mar 08 2019 00:07:43 GMT-0300 (Brasilia Standard Time)'''
           -
             name: Modified
             valid: true
-            description: 'Expect ''modified'' to be defined and it is: ''Thu Mar 07 2019 23:57:42 GMT-0300 (Brasilia Standard Time)'''
+            description: 'Expect ''modified'' to be defined and it is: ''Fri Mar 08 2019 00:07:43 GMT-0300 (Brasilia Standard Time)'''
           -
             name: Size
             valid: true
@@ -304,13 +313,13 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.293Z'
+        connectionTime: '2019-03-08T03:07:43.819Z'
         messageReceived:
-          content: '1552013862249'
-          name: temp/fileTest2357420294_76273700ff_639521.file
+          content: '1552014463776'
+          name: temp/fileTest0007430819_42270a18aa_512695.file
           size: 13
-          modified: '2019-03-08T02:57:42.295Z'
-          created: '2019-03-08T02:57:42.295Z'
+          modified: '2019-03-08T03:07:43.820Z'
+          created: '2019-03-08T03:07:43.820Z'
     publishers:
       -
         name: 'publisher description'
@@ -321,13 +330,14 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2019-03-08T02:57:42.294Z'
+        publishTime: '2019-03-08T03:07:43.820Z'
     time:
-      startTime: '2019-03-08T02:57:42.249Z'
-      endTime: '2019-03-08T02:57:42.357Z'
-      totalTime: 108
+      startTime: '2019-03-08T03:07:43.775Z'
+      endTime: '2019-03-08T03:07:43.893Z'
+      totalTime: 118
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
@@ -338,7 +348,7 @@ requisitions:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 1123 <= 3000'
+        description: 'Requisition has not timed out: 1124 <= 3000'
     name: examples/hooks.yml
     id: examples/hooks.yml
     subscriptions:
@@ -371,7 +381,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.295Z'
+        connectionTime: '2019-03-08T03:07:43.820Z'
         messageReceived:
           payload: it
           stream:
@@ -420,26 +430,27 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-08T02:57:43.374Z'
+        publishTime: '2019-03-08T03:07:44.900Z'
         messageReceived:
           payload: 'hook response'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 53971
+            port: 54099
     time:
-      startTime: '2019-03-08T02:57:42.251Z'
-      endTime: '2019-03-08T02:57:43.374Z'
-      totalTime: 1123
+      startTime: '2019-03-08T03:07:43.777Z'
+      endTime: '2019-03-08T03:07:44.901Z'
+      totalTime: 1124
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 155 <= 3000'
+        description: 'Requisition has not timed out: 225 <= 3000'
     name: examples/http-auth-basic.yml
     id: examples/http-auth-basic.yml
     subscriptions:
@@ -472,7 +483,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.296Z'
+        connectionTime: '2019-03-08T03:07:43.822Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -501,7 +512,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-08T02:57:42.408Z'
+        publishTime: '2019-03-08T03:07:44.004Z'
         messageReceived:
           statusCode: 200
           body: 'basic auth response'
@@ -512,7 +523,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '19'
             etag: 'W/"13-nGN7LEwCUKXpQoLxNqKZXSglYNc"'
-            date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+            date: 'Fri, 08 Mar 2019 03:07:43 GMT'
             connection: close
           request:
             uri:
@@ -534,18 +545,19 @@ requisitions:
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
               Content-Length: 10
     time:
-      startTime: '2019-03-08T02:57:42.253Z'
-      endTime: '2019-03-08T02:57:42.408Z'
-      totalTime: 155
+      startTime: '2019-03-08T03:07:43.779Z'
+      endTime: '2019-03-08T03:07:44.004Z'
+      totalTime: 225
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 155 <= 3000'
+        description: 'Requisition has not timed out: 224 <= 3000'
     name: examples/http-auth-bearer.yml
     id: examples/http-auth-bearer.yml
     subscriptions:
@@ -574,7 +586,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.301Z'
+        connectionTime: '2019-03-08T03:07:43.828Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -603,7 +615,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-08T02:57:42.409Z'
+        publishTime: '2019-03-08T03:07:44.005Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -614,7 +626,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+            date: 'Fri, 08 Mar 2019 03:07:43 GMT'
             connection: close
           request:
             uri:
@@ -636,18 +648,19 @@ requisitions:
               authorization: 'Bearer bearerToken'
               Content-Length: 4
     time:
-      startTime: '2019-03-08T02:57:42.254Z'
-      endTime: '2019-03-08T02:57:42.409Z'
-      totalTime: 155
+      startTime: '2019-03-08T03:07:43.781Z'
+      endTime: '2019-03-08T03:07:44.005Z'
+      totalTime: 224
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 154 <= 3000'
+        description: 'Requisition has not timed out: 224 <= 3000'
     name: examples/http-auth-digest.yml
     id: examples/http-auth-digest.yml
     subscriptions:
@@ -700,7 +713,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.301Z'
+        connectionTime: '2019-03-08T03:07:43.828Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -729,7 +742,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-08T02:57:42.410Z'
+        publishTime: '2019-03-08T03:07:44.006Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -740,7 +753,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+            date: 'Fri, 08 Mar 2019 03:07:43 GMT'
             connection: close
           request:
             uri:
@@ -762,18 +775,19 @@ requisitions:
               authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
               Content-Length: 4
     time:
-      startTime: '2019-03-08T02:57:42.256Z'
-      endTime: '2019-03-08T02:57:42.410Z'
-      totalTime: 154
+      startTime: '2019-03-08T03:07:43.782Z'
+      endTime: '2019-03-08T03:07:44.006Z'
+      totalTime: 224
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 179 <= 5000'
+        description: 'Requisition has not timed out: 253 <= 5000'
     name: examples/http-proxy.yml
     id: examples/http-proxy.yml
     subscriptions:
@@ -814,7 +828,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.303Z'
+        connectionTime: '2019-03-08T03:07:43.830Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -865,7 +879,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.303Z'
+        connectionTime: '2019-03-08T03:07:43.830Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -900,7 +914,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-08T02:57:42.436Z'
+        publishTime: '2019-03-08T03:07:44.035Z'
         messageReceived:
           statusCode: 333
           body: responsePayload
@@ -911,7 +925,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+            date: 'Fri, 08 Mar 2019 03:07:44 GMT'
             connection: close
           request:
             uri:
@@ -933,26 +947,27 @@ requisitions:
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
               Content-Length: 21
     time:
-      startTime: '2019-03-08T02:57:42.257Z'
-      endTime: '2019-03-08T02:57:42.436Z'
-      totalTime: 179
+      startTime: '2019-03-08T03:07:43.783Z'
+      endTime: '2019-03-08T03:07:44.036Z'
+      totalTime: 253
       timeout: 5000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 2411 <= 5000'
+        description: 'Requisition has not timed out: 2444 <= 5000'
     name: examples/http.yml
-    id: 2357420219_8985f2a402_50340
+    id: 0007430748_8985f2a402_954084
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.259Z'
-      endTime: '2019-03-08T02:57:44.670Z'
-      totalTime: 2411
+      startTime: '2019-03-08T03:07:43.785Z'
+      endTime: '2019-03-08T03:07:46.229Z'
+      totalTime: 2444
       timeout: 5000
     requisitions:
       -
@@ -961,7 +976,7 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 344 <= 3000'
+            description: 'Requisition has not timed out: 348 <= 3000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions:
@@ -990,7 +1005,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.345Z'
+            connectionTime: '2019-03-08T03:07:43.880Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1012,7 +1027,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.345Z'
+            connectionTime: '2019-03-08T03:07:43.879Z'
             messageReceived:
               headers:
                 content-length: '5'
@@ -1030,7 +1045,7 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.345Z'
+            connectionTime: '2019-03-08T03:07:43.880Z'
         publishers:
           -
             name: 'Publisher #0'
@@ -1057,7 +1072,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:42.424Z'
+            publishTime: '2019-03-08T03:07:44.017Z'
             messageReceived:
               statusCode: 321
               body: 'dynamically changed payload'
@@ -1069,7 +1084,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '27'
                 etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-                date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+                date: 'Fri, 08 Mar 2019 03:07:43 GMT'
                 connection: close
               request:
                 uri:
@@ -1107,7 +1122,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:42.424Z'
+            publishTime: '2019-03-08T03:07:44.018Z'
             messageReceived:
               statusCode: 444
               body: blah
@@ -1118,7 +1133,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '4'
                 etag: 'W/"4-W/H9kn37hnlJai5s8Ay+UMHIcUU"'
-                date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+                date: 'Fri, 08 Mar 2019 03:07:43 GMT'
                 connection: close
               request:
                 uri:
@@ -1138,18 +1153,19 @@ requisitions:
                 headers:
                   Content-Length: 5
         time:
-          startTime: '2019-03-08T02:57:42.307Z'
-          endTime: '2019-03-08T02:57:42.651Z'
-          totalTime: 344
+          startTime: '2019-03-08T03:07:43.833Z'
+          endTime: '2019-03-08T03:07:44.181Z'
+          totalTime: 348
           timeout: 3000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 6 <= 5000'
+            description: 'Requisition has not timed out: 25 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions:
@@ -1166,7 +1182,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.656Z'
+            connectionTime: '2019-03-08T03:07:44.190Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1200,7 +1216,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:42.659Z'
+            publishTime: '2019-03-08T03:07:44.209Z'
             messageReceived:
               statusCode: 321
               body: duplicatedResponsePayload
@@ -1211,7 +1227,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '25'
                 etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-                date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+                date: 'Fri, 08 Mar 2019 03:07:44 GMT'
                 connection: close
               request:
                 uri:
@@ -1232,18 +1248,19 @@ requisitions:
                   content-type: application/json
                   Content-Length: 24
         time:
-          startTime: '2019-03-08T02:57:42.653Z'
-          endTime: '2019-03-08T02:57:42.659Z'
-          totalTime: 6
+          startTime: '2019-03-08T03:07:44.185Z'
+          endTime: '2019-03-08T03:07:44.210Z'
+          totalTime: 25
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1005 <= 5000'
+            description: 'Requisition has not timed out: 1006 <= 5000'
         name: 'requisition 2 (port 23076)'
         id: 'requisition 2 (port 23076)'
         subscriptions:
@@ -1256,21 +1273,22 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.663Z'
+            connectionTime: '2019-03-08T03:07:44.217Z'
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.661Z'
-          endTime: '2019-03-08T02:57:43.666Z'
-          totalTime: 1005
+          startTime: '2019-03-08T03:07:44.213Z'
+          endTime: '2019-03-08T03:07:45.219Z'
+          totalTime: 1006
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1002 <= 5000'
+            description: 'Requisition has not timed out: 1005 <= 5000'
         name: 'check port releasing (23076)'
         id: 'check port releasing (23076)'
         subscriptions:
@@ -1283,21 +1301,23 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2019-03-08T02:57:43.669Z'
+            connectionTime: '2019-03-08T03:07:45.226Z'
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:43.667Z'
-          endTime: '2019-03-08T02:57:44.669Z'
-          totalTime: 1002
+          startTime: '2019-03-08T03:07:45.224Z'
+          endTime: '2019-03-08T03:07:46.229Z'
+          totalTime: 1005
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 176 <= 3000'
+        description: 'Requisition has not timed out: 249 <= 3000'
     name: examples/https.yml
     id: examples/https.yml
     subscriptions:
@@ -1314,7 +1334,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.318Z'
+        connectionTime: '2019-03-08T03:07:43.844Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -1346,7 +1366,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-08T02:57:42.435Z'
+        publishTime: '2019-03-08T03:07:44.034Z'
         messageReceived:
           statusCode: 200
           body: https
@@ -1357,7 +1377,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '5'
             etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-            date: 'Fri, 08 Mar 2019 02:57:42 GMT'
+            date: 'Fri, 08 Mar 2019 03:07:44 GMT'
             connection: close
           request:
             uri:
@@ -1378,26 +1398,27 @@ requisitions:
               content-type: application/json
               Content-Length: 23
     time:
-      startTime: '2019-03-08T02:57:42.260Z'
-      endTime: '2019-03-08T02:57:42.436Z'
-      totalTime: 176
+      startTime: '2019-03-08T03:07:43.786Z'
+      endTime: '2019-03-08T03:07:44.035Z'
+      totalTime: 249
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 99 <= 5000'
+        description: 'Requisition has not timed out: 117 <= 5000'
     name: examples/ignore.yml
-    id: 2357420222_0e9bcf265b_66810
+    id: 0007430751_0e9bcf265b_414211
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.261Z'
-      endTime: '2019-03-08T02:57:42.360Z'
-      totalTime: 99
+      startTime: '2019-03-08T03:07:43.787Z'
+      endTime: '2019-03-08T03:07:43.904Z'
+      totalTime: 117
       timeout: 5000
     requisitions:
       -
@@ -1406,7 +1427,7 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 26 <= 5000'
+            description: 'Requisition has not timed out: 34 <= 5000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions: []
@@ -1418,18 +1439,19 @@ requisitions:
             type: tcp
             tests: []
         time:
-          startTime: '2019-03-08T02:57:42.319Z'
-          endTime: '2019-03-08T02:57:42.345Z'
-          totalTime: 26
+          startTime: '2019-03-08T03:07:43.846Z'
+          endTime: '2019-03-08T03:07:43.880Z'
+          totalTime: 34
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 13 <= 5000'
+            description: 'Requisition has not timed out: 21 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions:
@@ -1441,11 +1463,12 @@ requisitions:
             valid: true
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.346Z'
-          endTime: '2019-03-08T02:57:42.359Z'
-          totalTime: 13
+          startTime: '2019-03-08T03:07:43.881Z'
+          endTime: '2019-03-08T03:07:43.902Z'
+          totalTime: 21
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests: []
@@ -1455,17 +1478,18 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.360Z'
-          endTime: '2019-03-08T02:57:42.360Z'
+          startTime: '2019-03-08T03:07:43.904Z'
+          endTime: '2019-03-08T03:07:43.904Z'
           totalTime: 0
         requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 506 <= 3000'
+        description: 'Requisition has not timed out: 507 <= 3000'
     name: examples/parallel-pub.yml
     id: examples/parallel-pub.yml
     subscriptions: []
@@ -1487,26 +1511,27 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-08T02:57:42.767Z'
+        publishTime: '2019-03-08T03:07:44.294Z'
         messageReceived:
           payload: anyValue
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 53983
+            port: 54111
     time:
-      startTime: '2019-03-08T02:57:42.261Z'
-      endTime: '2019-03-08T02:57:42.767Z'
-      totalTime: 506
+      startTime: '2019-03-08T03:07:43.787Z'
+      endTime: '2019-03-08T03:07:44.294Z'
+      totalTime: 507
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 503 <= 3000'
+        description: 'Requisition has not timed out: 505 <= 3000'
     name: examples/parallel-sub.yml
     id: examples/parallel-sub.yml
     subscriptions:
@@ -1523,7 +1548,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.320Z'
+        connectionTime: '2019-03-08T03:07:43.847Z'
         messageReceived:
           payload: anything
           stream:
@@ -1532,26 +1557,27 @@ requisitions:
             port: 23081
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.262Z'
-      endTime: '2019-03-08T02:57:42.765Z'
-      totalTime: 503
+      startTime: '2019-03-08T03:07:43.788Z'
+      endTime: '2019-03-08T03:07:44.293Z'
+      totalTime: 505
       timeout: 3000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 283 <= 5000'
+        description: 'Requisition has not timed out: 439 <= 5000'
     name: examples/recursion.yml
-    id: 2357420224_42805d69f1_525813
+    id: 0007430752_42805d69f1_612658
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.262Z'
-      endTime: '2019-03-08T02:57:42.545Z'
-      totalTime: 283
+      startTime: '2019-03-08T03:07:43.788Z'
+      endTime: '2019-03-08T03:07:44.227Z'
+      totalTime: 439
       timeout: 5000
     requisitions:
       -
@@ -1560,32 +1586,33 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 26 <= 5000'
+            description: 'Requisition has not timed out: 32 <= 5000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.320Z'
-          endTime: '2019-03-08T02:57:42.346Z'
-          totalTime: 26
+          startTime: '2019-03-08T03:07:43.849Z'
+          endTime: '2019-03-08T03:07:43.881Z'
+          totalTime: 32
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 195 <= 5000'
+            description: 'Requisition has not timed out: 341 <= 5000'
         name: 'Requisition #1'
-        id: 2357420347_4815598900_380069
+        id: 0007430882_4815598900_190481
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.348Z'
-          endTime: '2019-03-08T02:57:42.543Z'
-          totalTime: 195
+          startTime: '2019-03-08T03:07:43.883Z'
+          endTime: '2019-03-08T03:07:44.224Z'
+          totalTime: 341
           timeout: 5000
         requisitions:
           -
@@ -1594,15 +1621,15 @@ requisitions:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 88 <= 5000'
+                description: 'Requisition has not timed out: 146 <= 5000'
             name: 'Requisition #1 [0]'
-            id: 2357420347_4815598900_380069
+            id: 0007430882_4815598900_190481
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.361Z'
-              endTime: '2019-03-08T02:57:42.449Z'
-              totalTime: 88
+              startTime: '2019-03-08T03:07:43.905Z'
+              endTime: '2019-03-08T03:07:44.051Z'
+              totalTime: 146
               timeout: 5000
             requisitions:
               -
@@ -1611,15 +1638,15 @@ requisitions:
                   -
                     valid: true
                     name: 'No time out'
-                    description: 'Requisition has not timed out: 82 <= 5000'
+                    description: 'Requisition has not timed out: 136 <= 5000'
                 name: 'Requisition #1 [0] [0]'
-                id: 2357420364_180613af6f_546385
+                id: 0007430912_180613af6f_976543
                 subscriptions: []
                 publishers: []
                 time:
-                  startTime: '2019-03-08T02:57:42.366Z'
-                  endTime: '2019-03-08T02:57:42.448Z'
-                  totalTime: 82
+                  startTime: '2019-03-08T03:07:43.915Z'
+                  endTime: '2019-03-08T03:07:44.051Z'
+                  totalTime: 136
                   timeout: 5000
                 requisitions:
                   -
@@ -1628,14 +1655,104 @@ requisitions:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 40 <= 5000'
+                        description: 'Requisition has not timed out: 59 <= 5000'
                     name: 'Requisition #1 [0] [0] [0]'
-                    id: 2357420364_180613af6f_546385
+                    id: 0007430912_180613af6f_976543
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.374Z'
-                      endTime: '2019-03-08T02:57:42.414Z'
+                      startTime: '2019-03-08T03:07:43.923Z'
+                      endTime: '2019-03-08T03:07:43.982Z'
+                      totalTime: 59
+                      timeout: 5000
+                    requisitions:
+                      -
+                        valid: true
+                        tests:
+                          -
+                            valid: true
+                            name: 'No time out'
+                            description: 'Requisition has not timed out: 51 <= 5000'
+                        name: 'Requisition #1 [0] [0] [0] [0]'
+                        id: 0007430927_298e6555fb_773571
+                        subscriptions: []
+                        publishers: []
+                        time:
+                          startTime: '2019-03-08T03:07:43.931Z'
+                          endTime: '2019-03-08T03:07:43.982Z'
+                          totalTime: 51
+                          timeout: 5000
+                        requisitions:
+                          -
+                            valid: true
+                            tests:
+                              -
+                                valid: true
+                                name: 'No time out'
+                                description: 'Requisition has not timed out: 20 <= 5000'
+                            name: 'Requisition #1 [0] [0] [0] [0] [0]'
+                            id: 0007430927_298e6555fb_773571
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2019-03-08T03:07:43.944Z'
+                              endTime: '2019-03-08T03:07:43.964Z'
+                              totalTime: 20
+                              timeout: 5000
+                            requisitions: []
+                            level: 6
+                          -
+                            valid: true
+                            tests:
+                              -
+                                valid: true
+                                name: 'No time out'
+                                description: 'Requisition has not timed out: 5 <= 5000'
+                            name: 'Requisition #1 [0] [0] [0] [0] [1]'
+                            id: 0007430927_298e6555fb_773571
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2019-03-08T03:07:43.967Z'
+                              endTime: '2019-03-08T03:07:43.972Z'
+                              totalTime: 5
+                              timeout: 5000
+                            requisitions: []
+                            level: 6
+                          -
+                            valid: true
+                            tests:
+                              -
+                                valid: true
+                                name: 'No time out'
+                                description: 'Requisition has not timed out: 5 <= 5000'
+                            name: 'Requisition #1 [0] [0] [0] [0] [2]'
+                            id: 0007430927_298e6555fb_773571
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2019-03-08T03:07:43.977Z'
+                              endTime: '2019-03-08T03:07:43.982Z'
+                              totalTime: 5
+                              timeout: 5000
+                            requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
+                  -
+                    valid: true
+                    tests:
+                      -
+                        valid: true
+                        name: 'No time out'
+                        description: 'Requisition has not timed out: 40 <= 5000'
+                    name: 'Requisition #1 [0] [0] [1]'
+                    id: 0007430912_180613af6f_976543
+                    subscriptions: []
+                    publishers: []
+                    time:
+                      startTime: '2019-03-08T03:07:43.985Z'
+                      endTime: '2019-03-08T03:07:44.025Z'
                       totalTime: 40
                       timeout: 5000
                     requisitions:
@@ -1645,102 +1762,35 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 36 <= 5000'
-                        name: 'Requisition #1 [0] [0] [0] [0]'
-                        id: 2357420375_298e6555fb_868177
-                        subscriptions: []
-                        publishers: []
-                        time:
-                          startTime: '2019-03-08T02:57:42.378Z'
-                          endTime: '2019-03-08T02:57:42.414Z'
-                          totalTime: 36
-                          timeout: 5000
-                        requisitions:
-                          -
-                            valid: true
-                            tests:
-                              -
-                                valid: true
-                                name: 'No time out'
-                                description: 'Requisition has not timed out: 6 <= 5000'
-                            name: 'Requisition #1 [0] [0] [0] [0] [0]'
-                            id: 2357420375_298e6555fb_868177
-                            subscriptions: []
-                            publishers: []
-                            time:
-                              startTime: '2019-03-08T02:57:42.381Z'
-                              endTime: '2019-03-08T02:57:42.387Z'
-                              totalTime: 6
-                              timeout: 5000
-                            requisitions: []
-                          -
-                            valid: true
-                            tests:
-                              -
-                                valid: true
-                                name: 'No time out'
-                                description: 'Requisition has not timed out: 16 <= 5000'
-                            name: 'Requisition #1 [0] [0] [0] [0] [1]'
-                            id: 2357420375_298e6555fb_868177
-                            subscriptions: []
-                            publishers: []
-                            time:
-                              startTime: '2019-03-08T02:57:42.388Z'
-                              endTime: '2019-03-08T02:57:42.404Z'
-                              totalTime: 16
-                              timeout: 5000
-                            requisitions: []
-                          -
-                            valid: true
-                            tests:
-                              -
-                                valid: true
-                                name: 'No time out'
-                                description: 'Requisition has not timed out: 8 <= 5000'
-                            name: 'Requisition #1 [0] [0] [0] [0] [2]'
-                            id: 2357420375_298e6555fb_868177
-                            subscriptions: []
-                            publishers: []
-                            time:
-                              startTime: '2019-03-08T02:57:42.405Z'
-                              endTime: '2019-03-08T02:57:42.413Z'
-                              totalTime: 8
-                              timeout: 5000
-                            requisitions: []
-                  -
-                    valid: true
-                    tests:
-                      -
-                        valid: true
-                        name: 'No time out'
-                        description: 'Requisition has not timed out: 19 <= 5000'
-                    name: 'Requisition #1 [0] [0] [1]'
-                    id: 2357420364_180613af6f_546385
-                    subscriptions: []
-                    publishers: []
-                    time:
-                      startTime: '2019-03-08T02:57:42.415Z'
-                      endTime: '2019-03-08T02:57:42.434Z'
-                      totalTime: 19
-                      timeout: 5000
-                    requisitions:
-                      -
-                        valid: true
-                        tests:
-                          -
-                            valid: true
-                            name: 'No time out'
-                            description: 'Requisition has not timed out: 15 <= 5000'
+                            description: 'Requisition has not timed out: 30 <= 5000'
                         name: 'Requisition #1 [0] [0] [1] [0]'
-                        id: 2357420418_381a77d68e_844089
+                        id: 0007430991_381a77d68e_904061
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.419Z'
-                          endTime: '2019-03-08T02:57:42.434Z'
-                          totalTime: 15
+                          startTime: '2019-03-08T03:07:43.994Z'
+                          endTime: '2019-03-08T03:07:44.024Z'
+                          totalTime: 30
                           timeout: 5000
                         requisitions:
+                          -
+                            valid: true
+                            tests:
+                              -
+                                valid: true
+                                name: 'No time out'
+                                description: 'Requisition has not timed out: 11 <= 5000'
+                            name: 'Requisition #1 [0] [0] [1] [0] [0]'
+                            id: 0007430991_381a77d68e_904061
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2019-03-08T03:07:44.001Z'
+                              endTime: '2019-03-08T03:07:44.012Z'
+                              totalTime: 11
+                              timeout: 5000
+                            requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -1748,16 +1798,17 @@ requisitions:
                                 valid: true
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 4 <= 5000'
-                            name: 'Requisition #1 [0] [0] [1] [0] [0]'
-                            id: 2357420418_381a77d68e_844089
+                            name: 'Requisition #1 [0] [0] [1] [0] [1]'
+                            id: 0007430991_381a77d68e_904061
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.422Z'
-                              endTime: '2019-03-08T02:57:42.426Z'
+                              startTime: '2019-03-08T03:07:44.015Z'
+                              endTime: '2019-03-08T03:07:44.019Z'
                               totalTime: 4
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -1765,48 +1816,34 @@ requisitions:
                                 valid: true
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 2 <= 5000'
-                            name: 'Requisition #1 [0] [0] [1] [0] [1]'
-                            id: 2357420418_381a77d68e_844089
+                            name: 'Requisition #1 [0] [0] [1] [0] [2]'
+                            id: 0007430991_381a77d68e_904061
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.427Z'
-                              endTime: '2019-03-08T02:57:42.429Z'
+                              startTime: '2019-03-08T03:07:44.022Z'
+                              endTime: '2019-03-08T03:07:44.024Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
-                          -
-                            valid: true
-                            tests:
-                              -
-                                valid: true
-                                name: 'No time out'
-                                description: 'Requisition has not timed out: 3 <= 5000'
-                            name: 'Requisition #1 [0] [0] [1] [0] [2]'
-                            id: 2357420418_381a77d68e_844089
-                            subscriptions: []
-                            publishers: []
-                            time:
-                              startTime: '2019-03-08T02:57:42.430Z'
-                              endTime: '2019-03-08T02:57:42.433Z'
-                              totalTime: 3
-                              timeout: 5000
-                            requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
                   -
                     valid: true
                     tests:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 14 <= 5000'
+                        description: 'Requisition has not timed out: 24 <= 5000'
                     name: 'Requisition #1 [0] [0] [2]'
-                    id: 2357420364_180613af6f_546385
+                    id: 0007430912_180613af6f_976543
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.434Z'
-                      endTime: '2019-03-08T02:57:42.448Z'
-                      totalTime: 14
+                      startTime: '2019-03-08T03:07:44.027Z'
+                      endTime: '2019-03-08T03:07:44.051Z'
+                      totalTime: 24
                       timeout: 5000
                     requisitions:
                       -
@@ -1815,15 +1852,15 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 10 <= 5000'
+                            description: 'Requisition has not timed out: 17 <= 5000'
                         name: 'Requisition #1 [0] [0] [2] [0]'
-                        id: 2357420437_458f86a58e_91213
+                        id: 0007440030_458f86a58e_368916
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.438Z'
-                          endTime: '2019-03-08T02:57:42.448Z'
-                          totalTime: 10
+                          startTime: '2019-03-08T03:07:44.033Z'
+                          endTime: '2019-03-08T03:07:44.050Z'
+                          totalTime: 17
                           timeout: 5000
                         requisitions:
                           -
@@ -1834,15 +1871,16 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [0] [0] [2] [0] [0]'
-                            id: 2357420437_458f86a58e_91213
+                            id: 0007440030_458f86a58e_368916
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.440Z'
-                              endTime: '2019-03-08T02:57:42.442Z'
+                              startTime: '2019-03-08T03:07:44.040Z'
+                              endTime: '2019-03-08T03:07:44.042Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -1851,15 +1889,16 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 1 <= 5000'
                             name: 'Requisition #1 [0] [0] [2] [0] [1]'
-                            id: 2357420437_458f86a58e_91213
+                            id: 0007440030_458f86a58e_368916
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.443Z'
-                              endTime: '2019-03-08T02:57:42.444Z'
+                              startTime: '2019-03-08T03:07:44.045Z'
+                              endTime: '2019-03-08T03:07:44.046Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -1868,30 +1907,35 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 1 <= 5000'
                             name: 'Requisition #1 [0] [0] [2] [0] [2]'
-                            id: 2357420437_458f86a58e_91213
+                            id: 0007440030_458f86a58e_368916
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.446Z'
-                              endTime: '2019-03-08T02:57:42.447Z'
+                              startTime: '2019-03-08T03:07:44.049Z'
+                              endTime: '2019-03-08T03:07:44.050Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
+                level: 3
+            level: 2
           -
             valid: true
             tests:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 47 <= 5000'
+                description: 'Requisition has not timed out: 81 <= 5000'
             name: 'Requisition #1 [1]'
-            id: 2357420347_4815598900_380069
+            id: 0007430882_4815598900_190481
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.450Z'
-              endTime: '2019-03-08T02:57:42.497Z'
-              totalTime: 47
+              startTime: '2019-03-08T03:07:44.052Z'
+              endTime: '2019-03-08T03:07:44.133Z'
+              totalTime: 81
               timeout: 5000
             requisitions:
               -
@@ -1900,15 +1944,15 @@ requisitions:
                   -
                     valid: true
                     name: 'No time out'
-                    description: 'Requisition has not timed out: 43 <= 5000'
+                    description: 'Requisition has not timed out: 75 <= 5000'
                 name: 'Requisition #1 [1] [0]'
-                id: 2357420451_d2274b88ae_239889
+                id: 0007440054_d2274b88ae_70308
                 subscriptions: []
                 publishers: []
                 time:
-                  startTime: '2019-03-08T02:57:42.453Z'
-                  endTime: '2019-03-08T02:57:42.496Z'
-                  totalTime: 43
+                  startTime: '2019-03-08T03:07:44.057Z'
+                  endTime: '2019-03-08T03:07:44.132Z'
+                  totalTime: 75
                   timeout: 5000
                 requisitions:
                   -
@@ -1917,15 +1961,15 @@ requisitions:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 12 <= 5000'
+                        description: 'Requisition has not timed out: 20 <= 5000'
                     name: 'Requisition #1 [1] [0] [0]'
-                    id: 2357420451_d2274b88ae_239889
+                    id: 0007440054_d2274b88ae_70308
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.455Z'
-                      endTime: '2019-03-08T02:57:42.467Z'
-                      totalTime: 12
+                      startTime: '2019-03-08T03:07:44.060Z'
+                      endTime: '2019-03-08T03:07:44.080Z'
+                      totalTime: 20
                       timeout: 5000
                     requisitions:
                       -
@@ -1934,15 +1978,15 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 8 <= 5000'
+                            description: 'Requisition has not timed out: 15 <= 5000'
                         name: 'Requisition #1 [1] [0] [0] [0]'
-                        id: 2357420456_6f7696f9ab_569457
+                        id: 0007440062_6f7696f9ab_720793
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.458Z'
-                          endTime: '2019-03-08T02:57:42.466Z'
-                          totalTime: 8
+                          startTime: '2019-03-08T03:07:44.065Z'
+                          endTime: '2019-03-08T03:07:44.080Z'
+                          totalTime: 15
                           timeout: 5000
                         requisitions:
                           -
@@ -1953,15 +1997,16 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 1 <= 5000'
                             name: 'Requisition #1 [1] [0] [0] [0] [0]'
-                            id: 2357420456_6f7696f9ab_569457
+                            id: 0007440062_6f7696f9ab_720793
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.460Z'
-                              endTime: '2019-03-08T02:57:42.461Z'
+                              startTime: '2019-03-08T03:07:44.069Z'
+                              endTime: '2019-03-08T03:07:44.070Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -1970,15 +2015,16 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [1] [0] [0] [0] [1]'
-                            id: 2357420456_6f7696f9ab_569457
+                            id: 0007440062_6f7696f9ab_720793
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.462Z'
-                              endTime: '2019-03-08T02:57:42.464Z'
+                              startTime: '2019-03-08T03:07:44.073Z'
+                              endTime: '2019-03-08T03:07:44.075Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -1987,30 +2033,33 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [1] [0] [0] [0] [2]'
-                            id: 2357420456_6f7696f9ab_569457
+                            id: 0007440062_6f7696f9ab_720793
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.464Z'
-                              endTime: '2019-03-08T02:57:42.466Z'
+                              startTime: '2019-03-08T03:07:44.078Z'
+                              endTime: '2019-03-08T03:07:44.080Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
                   -
                     valid: true
                     tests:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 13 <= 5000'
+                        description: 'Requisition has not timed out: 27 <= 5000'
                     name: 'Requisition #1 [1] [0] [1]'
-                    id: 2357420451_d2274b88ae_239889
+                    id: 0007440054_d2274b88ae_70308
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.468Z'
-                      endTime: '2019-03-08T02:57:42.481Z'
-                      totalTime: 13
+                      startTime: '2019-03-08T03:07:44.083Z'
+                      endTime: '2019-03-08T03:07:44.110Z'
+                      totalTime: 27
                       timeout: 5000
                     requisitions:
                       -
@@ -2019,15 +2068,15 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 9 <= 5000'
+                            description: 'Requisition has not timed out: 20 <= 5000'
                         name: 'Requisition #1 [1] [0] [1] [0]'
-                        id: 2357420469_e155e5442f_962783
+                        id: 0007440084_e155e5442f_429675
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.472Z'
-                          endTime: '2019-03-08T02:57:42.481Z'
-                          totalTime: 9
+                          startTime: '2019-03-08T03:07:44.089Z'
+                          endTime: '2019-03-08T03:07:44.109Z'
+                          totalTime: 20
                           timeout: 5000
                         requisitions:
                           -
@@ -2036,66 +2085,71 @@ requisitions:
                               -
                                 valid: true
                                 name: 'No time out'
-                                description: 'Requisition has not timed out: 2 <= 5000'
+                                description: 'Requisition has not timed out: 3 <= 5000'
                             name: 'Requisition #1 [1] [0] [1] [0] [0]'
-                            id: 2357420469_e155e5442f_962783
+                            id: 0007440084_e155e5442f_429675
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.474Z'
-                              endTime: '2019-03-08T02:57:42.476Z'
+                              startTime: '2019-03-08T03:07:44.093Z'
+                              endTime: '2019-03-08T03:07:44.096Z'
+                              totalTime: 3
+                              timeout: 5000
+                            requisitions: []
+                            level: 6
+                          -
+                            valid: true
+                            tests:
+                              -
+                                valid: true
+                                name: 'No time out'
+                                description: 'Requisition has not timed out: 2 <= 5000'
+                            name: 'Requisition #1 [1] [0] [1] [0] [1]'
+                            id: 0007440084_e155e5442f_429675
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2019-03-08T03:07:44.099Z'
+                              endTime: '2019-03-08T03:07:44.101Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
                               -
                                 valid: true
                                 name: 'No time out'
-                                description: 'Requisition has not timed out: 1 <= 5000'
-                            name: 'Requisition #1 [1] [0] [1] [0] [1]'
-                            id: 2357420469_e155e5442f_962783
-                            subscriptions: []
-                            publishers: []
-                            time:
-                              startTime: '2019-03-08T02:57:42.477Z'
-                              endTime: '2019-03-08T02:57:42.478Z'
-                              totalTime: 1
-                              timeout: 5000
-                            requisitions: []
-                          -
-                            valid: true
-                            tests:
-                              -
-                                valid: true
-                                name: 'No time out'
-                                description: 'Requisition has not timed out: 1 <= 5000'
+                                description: 'Requisition has not timed out: 5 <= 5000'
                             name: 'Requisition #1 [1] [0] [1] [0] [2]'
-                            id: 2357420469_e155e5442f_962783
+                            id: 0007440084_e155e5442f_429675
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.479Z'
-                              endTime: '2019-03-08T02:57:42.480Z'
-                              totalTime: 1
+                              startTime: '2019-03-08T03:07:44.104Z'
+                              endTime: '2019-03-08T03:07:44.109Z'
+                              totalTime: 5
                               timeout: 5000
                             requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
                   -
                     valid: true
                     tests:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 14 <= 5000'
+                        description: 'Requisition has not timed out: 20 <= 5000'
                     name: 'Requisition #1 [1] [0] [2]'
-                    id: 2357420451_d2274b88ae_239889
+                    id: 0007440054_d2274b88ae_70308
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.482Z'
-                      endTime: '2019-03-08T02:57:42.496Z'
-                      totalTime: 14
+                      startTime: '2019-03-08T03:07:44.112Z'
+                      endTime: '2019-03-08T03:07:44.132Z'
+                      totalTime: 20
                       timeout: 5000
                     requisitions:
                       -
@@ -2104,15 +2158,15 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 9 <= 5000'
+                            description: 'Requisition has not timed out: 15 <= 5000'
                         name: 'Requisition #1 [1] [0] [2] [0]'
-                        id: 2357420484_2a37c5c772_982957
+                        id: 0007440114_2a37c5c772_85466
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.486Z'
-                          endTime: '2019-03-08T02:57:42.495Z'
-                          totalTime: 9
+                          startTime: '2019-03-08T03:07:44.117Z'
+                          endTime: '2019-03-08T03:07:44.132Z'
+                          totalTime: 15
                           timeout: 5000
                         requisitions:
                           -
@@ -2123,32 +2177,16 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 1 <= 5000'
                             name: 'Requisition #1 [1] [0] [2] [0] [0]'
-                            id: 2357420484_2a37c5c772_982957
+                            id: 0007440114_2a37c5c772_85466
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.488Z'
-                              endTime: '2019-03-08T02:57:42.489Z'
+                              startTime: '2019-03-08T03:07:44.121Z'
+                              endTime: '2019-03-08T03:07:44.122Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
-                          -
-                            valid: true
-                            tests:
-                              -
-                                valid: true
-                                name: 'No time out'
-                                description: 'Requisition has not timed out: 2 <= 5000'
-                            name: 'Requisition #1 [1] [0] [2] [0] [1]'
-                            id: 2357420484_2a37c5c772_982957
-                            subscriptions: []
-                            publishers: []
-                            time:
-                              startTime: '2019-03-08T02:57:42.491Z'
-                              endTime: '2019-03-08T02:57:42.493Z'
-                              totalTime: 2
-                              timeout: 5000
-                            requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -2156,31 +2194,54 @@ requisitions:
                                 valid: true
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 1 <= 5000'
-                            name: 'Requisition #1 [1] [0] [2] [0] [2]'
-                            id: 2357420484_2a37c5c772_982957
+                            name: 'Requisition #1 [1] [0] [2] [0] [1]'
+                            id: 0007440114_2a37c5c772_85466
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.494Z'
-                              endTime: '2019-03-08T02:57:42.495Z'
+                              startTime: '2019-03-08T03:07:44.126Z'
+                              endTime: '2019-03-08T03:07:44.127Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
+                            level: 6
+                          -
+                            valid: true
+                            tests:
+                              -
+                                valid: true
+                                name: 'No time out'
+                                description: 'Requisition has not timed out: 2 <= 5000'
+                            name: 'Requisition #1 [1] [0] [2] [0] [2]'
+                            id: 0007440114_2a37c5c772_85466
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2019-03-08T03:07:44.130Z'
+                              endTime: '2019-03-08T03:07:44.132Z'
+                              totalTime: 2
+                              timeout: 5000
+                            requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
+                level: 3
+            level: 2
           -
             valid: true
             tests:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 44 <= 5000'
+                description: 'Requisition has not timed out: 90 <= 5000'
             name: 'Requisition #1 [2]'
-            id: 2357420347_4815598900_380069
+            id: 0007430882_4815598900_190481
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.498Z'
-              endTime: '2019-03-08T02:57:42.542Z'
-              totalTime: 44
+              startTime: '2019-03-08T03:07:44.134Z'
+              endTime: '2019-03-08T03:07:44.224Z'
+              totalTime: 90
               timeout: 5000
             requisitions:
               -
@@ -2189,15 +2250,15 @@ requisitions:
                   -
                     valid: true
                     name: 'No time out'
-                    description: 'Requisition has not timed out: 41 <= 5000'
+                    description: 'Requisition has not timed out: 86 <= 5000'
                 name: 'Requisition #1 [2] [0]'
-                id: 2357420499_855f2e8740_72386
+                id: 0007440135_855f2e8740_60624
                 subscriptions: []
                 publishers: []
                 time:
-                  startTime: '2019-03-08T02:57:42.501Z'
-                  endTime: '2019-03-08T02:57:42.542Z'
-                  totalTime: 41
+                  startTime: '2019-03-08T03:07:44.138Z'
+                  endTime: '2019-03-08T03:07:44.224Z'
+                  totalTime: 86
                   timeout: 5000
                 requisitions:
                   -
@@ -2206,15 +2267,15 @@ requisitions:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 11 <= 5000'
+                        description: 'Requisition has not timed out: 23 <= 5000'
                     name: 'Requisition #1 [2] [0] [0]'
-                    id: 2357420499_855f2e8740_72386
+                    id: 0007440135_855f2e8740_60624
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.503Z'
-                      endTime: '2019-03-08T02:57:42.514Z'
-                      totalTime: 11
+                      startTime: '2019-03-08T03:07:44.141Z'
+                      endTime: '2019-03-08T03:07:44.164Z'
+                      totalTime: 23
                       timeout: 5000
                     requisitions:
                       -
@@ -2223,15 +2284,15 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 8 <= 5000'
+                            description: 'Requisition has not timed out: 18 <= 5000'
                         name: 'Requisition #1 [2] [0] [0] [0]'
-                        id: 2357420504_08786e4b97_95389
+                        id: 0007440143_08786e4b97_893495
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.506Z'
-                          endTime: '2019-03-08T02:57:42.514Z'
-                          totalTime: 8
+                          startTime: '2019-03-08T03:07:44.146Z'
+                          endTime: '2019-03-08T03:07:44.164Z'
+                          totalTime: 18
                           timeout: 5000
                         requisitions:
                           -
@@ -2240,34 +2301,36 @@ requisitions:
                               -
                                 valid: true
                                 name: 'No time out'
-                                description: 'Requisition has not timed out: 1 <= 5000'
+                                description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [2] [0] [0] [0] [0]'
-                            id: 2357420504_08786e4b97_95389
+                            id: 0007440143_08786e4b97_893495
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.508Z'
-                              endTime: '2019-03-08T02:57:42.509Z'
-                              totalTime: 1
+                              startTime: '2019-03-08T03:07:44.151Z'
+                              endTime: '2019-03-08T03:07:44.153Z'
+                              totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
                               -
                                 valid: true
                                 name: 'No time out'
-                                description: 'Requisition has not timed out: 1 <= 5000'
+                                description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [2] [0] [0] [0] [1]'
-                            id: 2357420504_08786e4b97_95389
+                            id: 0007440143_08786e4b97_893495
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.510Z'
-                              endTime: '2019-03-08T02:57:42.511Z'
-                              totalTime: 1
+                              startTime: '2019-03-08T03:07:44.156Z'
+                              endTime: '2019-03-08T03:07:44.158Z'
+                              totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -2276,30 +2339,33 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 1 <= 5000'
                             name: 'Requisition #1 [2] [0] [0] [0] [2]'
-                            id: 2357420504_08786e4b97_95389
+                            id: 0007440143_08786e4b97_893495
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.512Z'
-                              endTime: '2019-03-08T02:57:42.513Z'
+                              startTime: '2019-03-08T03:07:44.162Z'
+                              endTime: '2019-03-08T03:07:44.163Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
                   -
                     valid: true
                     tests:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 13 <= 5000'
+                        description: 'Requisition has not timed out: 28 <= 5000'
                     name: 'Requisition #1 [2] [0] [1]'
-                    id: 2357420499_855f2e8740_72386
+                    id: 0007440135_855f2e8740_60624
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.515Z'
-                      endTime: '2019-03-08T02:57:42.528Z'
-                      totalTime: 13
+                      startTime: '2019-03-08T03:07:44.168Z'
+                      endTime: '2019-03-08T03:07:44.196Z'
+                      totalTime: 28
                       timeout: 5000
                     requisitions:
                       -
@@ -2308,15 +2374,15 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 9 <= 5000'
+                            description: 'Requisition has not timed out: 22 <= 5000'
                         name: 'Requisition #1 [2] [0] [1] [0]'
-                        id: 2357420516_fa3de275a4_781060
+                        id: 0007440170_fa3de275a4_774363
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.518Z'
-                          endTime: '2019-03-08T02:57:42.527Z'
-                          totalTime: 9
+                          startTime: '2019-03-08T03:07:44.174Z'
+                          endTime: '2019-03-08T03:07:44.196Z'
+                          totalTime: 22
                           timeout: 5000
                         requisitions:
                           -
@@ -2325,17 +2391,18 @@ requisitions:
                               -
                                 valid: true
                                 name: 'No time out'
-                                description: 'Requisition has not timed out: 1 <= 5000'
+                                description: 'Requisition has not timed out: 7 <= 5000'
                             name: 'Requisition #1 [2] [0] [1] [0] [0]'
-                            id: 2357420516_fa3de275a4_781060
+                            id: 0007440170_fa3de275a4_774363
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.520Z'
-                              endTime: '2019-03-08T02:57:42.521Z'
-                              totalTime: 1
+                              startTime: '2019-03-08T03:07:44.179Z'
+                              endTime: '2019-03-08T03:07:44.186Z'
+                              totalTime: 7
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -2344,15 +2411,16 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 1 <= 5000'
                             name: 'Requisition #1 [2] [0] [1] [0] [1]'
-                            id: 2357420516_fa3de275a4_781060
+                            id: 0007440170_fa3de275a4_774363
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.523Z'
-                              endTime: '2019-03-08T02:57:42.524Z'
+                              startTime: '2019-03-08T03:07:44.189Z'
+                              endTime: '2019-03-08T03:07:44.190Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -2361,30 +2429,33 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [2] [0] [1] [0] [2]'
-                            id: 2357420516_fa3de275a4_781060
+                            id: 0007440170_fa3de275a4_774363
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.525Z'
-                              endTime: '2019-03-08T02:57:42.527Z'
+                              startTime: '2019-03-08T03:07:44.194Z'
+                              endTime: '2019-03-08T03:07:44.196Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
                   -
                     valid: true
                     tests:
                       -
                         valid: true
                         name: 'No time out'
-                        description: 'Requisition has not timed out: 12 <= 5000'
+                        description: 'Requisition has not timed out: 25 <= 5000'
                     name: 'Requisition #1 [2] [0] [2]'
-                    id: 2357420499_855f2e8740_72386
+                    id: 0007440135_855f2e8740_60624
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-08T02:57:42.529Z'
-                      endTime: '2019-03-08T02:57:42.541Z'
-                      totalTime: 12
+                      startTime: '2019-03-08T03:07:44.199Z'
+                      endTime: '2019-03-08T03:07:44.224Z'
+                      totalTime: 25
                       timeout: 5000
                     requisitions:
                       -
@@ -2393,15 +2464,15 @@ requisitions:
                           -
                             valid: true
                             name: 'No time out'
-                            description: 'Requisition has not timed out: 9 <= 5000'
+                            description: 'Requisition has not timed out: 20 <= 5000'
                         name: 'Requisition #1 [2] [0] [2] [0]'
-                        id: 2357420530_68beda894e_370613
+                        id: 0007440199_68beda894e_434579
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-08T02:57:42.532Z'
-                          endTime: '2019-03-08T02:57:42.541Z'
-                          totalTime: 9
+                          startTime: '2019-03-08T03:07:44.203Z'
+                          endTime: '2019-03-08T03:07:44.223Z'
+                          totalTime: 20
                           timeout: 5000
                         requisitions:
                           -
@@ -2410,17 +2481,18 @@ requisitions:
                               -
                                 valid: true
                                 name: 'No time out'
-                                description: 'Requisition has not timed out: 1 <= 5000'
+                                description: 'Requisition has not timed out: 4 <= 5000'
                             name: 'Requisition #1 [2] [0] [2] [0] [0]'
-                            id: 2357420530_68beda894e_370613
+                            id: 0007440199_68beda894e_434579
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.534Z'
-                              endTime: '2019-03-08T02:57:42.535Z'
-                              totalTime: 1
+                              startTime: '2019-03-08T03:07:44.209Z'
+                              endTime: '2019-03-08T03:07:44.213Z'
+                              totalTime: 4
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
@@ -2429,32 +2501,39 @@ requisitions:
                                 name: 'No time out'
                                 description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [2] [0] [2] [0] [1]'
-                            id: 2357420530_68beda894e_370613
+                            id: 0007440199_68beda894e_434579
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.536Z'
-                              endTime: '2019-03-08T02:57:42.538Z'
+                              startTime: '2019-03-08T03:07:44.216Z'
+                              endTime: '2019-03-08T03:07:44.218Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
                           -
                             valid: true
                             tests:
                               -
                                 valid: true
                                 name: 'No time out'
-                                description: 'Requisition has not timed out: 1 <= 5000'
+                                description: 'Requisition has not timed out: 2 <= 5000'
                             name: 'Requisition #1 [2] [0] [2] [0] [2]'
-                            id: 2357420530_68beda894e_370613
+                            id: 0007440199_68beda894e_434579
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-08T02:57:42.539Z'
-                              endTime: '2019-03-08T02:57:42.540Z'
-                              totalTime: 1
+                              startTime: '2019-03-08T03:07:44.221Z'
+                              endTime: '2019-03-08T03:07:44.223Z'
+                              totalTime: 2
                               timeout: 5000
                             requisitions: []
+                            level: 6
+                        level: 5
+                    level: 4
+                level: 3
+            level: 2
+        level: 1
       -
         valid: true
         tests:
@@ -2465,32 +2544,34 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1 <= 5000'
+            description: 'Requisition has not timed out: 2 <= 5000'
         name: 'Requisition #2'
         id: 'Requisition #2'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.544Z'
-          endTime: '2019-03-08T02:57:42.545Z'
-          totalTime: 1
+          startTime: '2019-03-08T03:07:44.225Z'
+          endTime: '2019-03-08T03:07:44.227Z'
+          totalTime: 2
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 3167 <= 5000'
+        description: 'Requisition has not timed out: 3227 <= 5000'
     name: examples/requisition-delay-iterations.yml
-    id: 2357420225_16f1d16ead_907886
+    id: 0007430753_16f1d16ead_737065
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.263Z'
-      endTime: '2019-03-08T02:57:45.430Z'
-      totalTime: 3167
+      startTime: '2019-03-08T03:07:43.789Z'
+      endTime: '2019-03-08T03:07:47.016Z'
+      totalTime: 3227
       timeout: 5000
     requisitions:
       -
@@ -2499,15 +2580,15 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 99 <= 5000'
+            description: 'Requisition has not timed out: 157 <= 5000'
         name: iterations
-        id: 2357420320_2a09eb92d4_412491
+        id: 0007430849_2a09eb92d4_565516
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.326Z'
-          endTime: '2019-03-08T02:57:42.425Z'
-          totalTime: 99
+          startTime: '2019-03-08T03:07:43.854Z'
+          endTime: '2019-03-08T03:07:44.011Z'
+          totalTime: 157
           timeout: 5000
         requisitions:
           -
@@ -2520,80 +2601,18 @@ requisitions:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 12 <= 5000'
+                description: 'Requisition has not timed out: 20 <= 5000'
             name: 'iterations [0]'
-            id: 2357420320_2a09eb92d4_412491
+            id: 0007430849_2a09eb92d4_565516
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.349Z'
-              endTime: '2019-03-08T02:57:42.361Z'
-              totalTime: 12
+              startTime: '2019-03-08T03:07:43.885Z'
+              endTime: '2019-03-08T03:07:43.905Z'
+              totalTime: 20
               timeout: 5000
             requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 4 <= 5000'
-            name: 'iterations [1]'
-            id: 2357420320_2a09eb92d4_412491
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.362Z'
-              endTime: '2019-03-08T02:57:42.366Z'
-              totalTime: 4
-              timeout: 5000
-            requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 8 <= 5000'
-            name: 'iterations [2]'
-            id: 2357420320_2a09eb92d4_412491
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.366Z'
-              endTime: '2019-03-08T02:57:42.374Z'
-              totalTime: 8
-              timeout: 5000
-            requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 3 <= 5000'
-            name: 'iterations [3]'
-            id: 2357420320_2a09eb92d4_412491
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.375Z'
-              endTime: '2019-03-08T02:57:42.378Z'
-              totalTime: 3
-              timeout: 5000
-            requisitions: []
+            level: 2
           -
             valid: true
             tests:
@@ -2605,100 +2624,17 @@ requisitions:
                 valid: true
                 name: 'No time out'
                 description: 'Requisition has not timed out: 7 <= 5000'
-            name: 'iterations [4]'
-            id: 2357420320_2a09eb92d4_412491
+            name: 'iterations [1]'
+            id: 0007430849_2a09eb92d4_565516
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.379Z'
-              endTime: '2019-03-08T02:57:42.386Z'
+              startTime: '2019-03-08T03:07:43.908Z'
+              endTime: '2019-03-08T03:07:43.915Z'
               totalTime: 7
               timeout: 5000
             requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 15 <= 5000'
-            name: 'iterations [5]'
-            id: 2357420320_2a09eb92d4_412491
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.386Z'
-              endTime: '2019-03-08T02:57:42.401Z'
-              totalTime: 15
-              timeout: 5000
-            requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 3 <= 5000'
-            name: 'iterations [6]'
-            id: 2357420320_2a09eb92d4_412491
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.402Z'
-              endTime: '2019-03-08T02:57:42.405Z'
-              totalTime: 3
-              timeout: 5000
-            requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 10 <= 5000'
-            name: 'iterations [7]'
-            id: 2357420320_2a09eb92d4_412491
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.405Z'
-              endTime: '2019-03-08T02:57:42.415Z'
-              totalTime: 10
-              timeout: 5000
-            requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                name: 'Assertion #0'
-                valid: true
-                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 3 <= 5000'
-            name: 'iterations [8]'
-            id: 2357420320_2a09eb92d4_412491
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.416Z'
-              endTime: '2019-03-08T02:57:42.419Z'
-              totalTime: 3
-              timeout: 5000
-            requisitions: []
+            level: 2
           -
             valid: true
             tests:
@@ -2710,16 +2646,172 @@ requisitions:
                 valid: true
                 name: 'No time out'
                 description: 'Requisition has not timed out: 5 <= 5000'
-            name: 'iterations [9]'
-            id: 2357420320_2a09eb92d4_412491
+            name: 'iterations [2]'
+            id: 0007430849_2a09eb92d4_565516
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.420Z'
-              endTime: '2019-03-08T02:57:42.425Z'
+              startTime: '2019-03-08T03:07:43.918Z'
+              endTime: '2019-03-08T03:07:43.923Z'
               totalTime: 5
               timeout: 5000
             requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 10 <= 5000'
+            name: 'iterations [3]'
+            id: 0007430849_2a09eb92d4_565516
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.925Z'
+              endTime: '2019-03-08T03:07:43.935Z'
+              totalTime: 10
+              timeout: 5000
+            requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 19 <= 5000'
+            name: 'iterations [4]'
+            id: 0007430849_2a09eb92d4_565516
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.939Z'
+              endTime: '2019-03-08T03:07:43.958Z'
+              totalTime: 19
+              timeout: 5000
+            requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 6 <= 5000'
+            name: 'iterations [5]'
+            id: 0007430849_2a09eb92d4_565516
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.961Z'
+              endTime: '2019-03-08T03:07:43.967Z'
+              totalTime: 6
+              timeout: 5000
+            requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 7 <= 5000'
+            name: 'iterations [6]'
+            id: 0007430849_2a09eb92d4_565516
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.970Z'
+              endTime: '2019-03-08T03:07:43.977Z'
+              totalTime: 7
+              timeout: 5000
+            requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 5 <= 5000'
+            name: 'iterations [7]'
+            id: 0007430849_2a09eb92d4_565516
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.980Z'
+              endTime: '2019-03-08T03:07:43.985Z'
+              totalTime: 5
+              timeout: 5000
+            requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 7 <= 5000'
+            name: 'iterations [8]'
+            id: 0007430849_2a09eb92d4_565516
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.987Z'
+              endTime: '2019-03-08T03:07:43.994Z'
+              totalTime: 7
+              timeout: 5000
+            requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 13 <= 5000'
+            name: 'iterations [9]'
+            id: 0007430849_2a09eb92d4_565516
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.997Z'
+              endTime: '2019-03-08T03:07:44.010Z'
+              totalTime: 13
+              timeout: 5000
+            requisitions: []
+            level: 2
+        level: 1
       -
         valid: true
         tests:
@@ -2730,11 +2822,11 @@ requisitions:
           -
             name: 'It delayed for at least ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3059'''
+            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3068'''
           -
             name: 'It delayed for no more than ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2509'''
+            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2518'''
           -
             name: 'Assertion #3'
             valid: true
@@ -2748,26 +2840,28 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.426Z'
-          endTime: '2019-03-08T02:57:45.429Z'
+          startTime: '2019-03-08T03:07:44.012Z'
+          endTime: '2019-03-08T03:07:47.015Z'
           totalTime: 3003
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 162 <= 5000'
+        description: 'Requisition has not timed out: 222 <= 5000'
     name: examples/skipped.yml
-    id: 2357420226_05247139ae_373541
+    id: 0007430754_05247139ae_709788
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.264Z'
-      endTime: '2019-03-08T02:57:42.426Z'
-      totalTime: 162
+      startTime: '2019-03-08T03:07:43.790Z'
+      endTime: '2019-03-08T03:07:44.012Z'
+      totalTime: 222
       timeout: 5000
     requisitions:
       -
@@ -2776,15 +2870,15 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 59 <= 5000'
+            description: 'Requisition has not timed out: 104 <= 5000'
         name: 'Requisition #0'
-        id: 2357420326_e362f7cb78_830886
+        id: 0007430855_e362f7cb78_693811
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.328Z'
-          endTime: '2019-03-08T02:57:42.387Z'
-          totalTime: 59
+          startTime: '2019-03-08T03:07:43.857Z'
+          endTime: '2019-03-08T03:07:43.961Z'
+          totalTime: 104
           timeout: 5000
         requisitions:
           -
@@ -2793,34 +2887,18 @@ requisitions:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 13 <= 5000'
+                description: 'Requisition has not timed out: 22 <= 5000'
             name: 'Requisition #0 [0]'
-            id: 2357420326_e362f7cb78_830886
+            id: 0007430855_e362f7cb78_693811
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.349Z'
-              endTime: '2019-03-08T02:57:42.362Z'
-              totalTime: 13
+              startTime: '2019-03-08T03:07:43.886Z'
+              endTime: '2019-03-08T03:07:43.908Z'
+              totalTime: 22
               timeout: 5000
             requisitions: []
-          -
-            valid: true
-            tests:
-              -
-                valid: true
-                name: 'No time out'
-                description: 'Requisition has not timed out: 3 <= 5000'
-            name: 'Requisition #0 [1]'
-            id: 2357420326_e362f7cb78_830886
-            subscriptions: []
-            publishers: []
-            time:
-              startTime: '2019-03-08T02:57:42.363Z'
-              endTime: '2019-03-08T02:57:42.366Z'
-              totalTime: 3
-              timeout: 5000
-            requisitions: []
+            level: 2
           -
             valid: true
             tests:
@@ -2828,50 +2906,72 @@ requisitions:
                 valid: true
                 name: 'No time out'
                 description: 'Requisition has not timed out: 8 <= 5000'
-            name: 'Requisition #0 [2]'
-            id: 2357420326_e362f7cb78_830886
+            name: 'Requisition #0 [1]'
+            id: 0007430855_e362f7cb78_693811
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.367Z'
-              endTime: '2019-03-08T02:57:42.375Z'
+              startTime: '2019-03-08T03:07:43.910Z'
+              endTime: '2019-03-08T03:07:43.918Z'
               totalTime: 8
               timeout: 5000
             requisitions: []
+            level: 2
           -
             valid: true
             tests:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 4 <= 5000'
+                description: 'Requisition has not timed out: 5 <= 5000'
+            name: 'Requisition #0 [2]'
+            id: 0007430855_e362f7cb78_693811
+            subscriptions: []
+            publishers: []
+            time:
+              startTime: '2019-03-08T03:07:43.920Z'
+              endTime: '2019-03-08T03:07:43.925Z'
+              totalTime: 5
+              timeout: 5000
+            requisitions: []
+            level: 2
+          -
+            valid: true
+            tests:
+              -
+                valid: true
+                name: 'No time out'
+                description: 'Requisition has not timed out: 12 <= 5000'
             name: 'Requisition #0 [3]'
-            id: 2357420326_e362f7cb78_830886
+            id: 0007430855_e362f7cb78_693811
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.375Z'
-              endTime: '2019-03-08T02:57:42.379Z'
-              totalTime: 4
+              startTime: '2019-03-08T03:07:43.927Z'
+              endTime: '2019-03-08T03:07:43.939Z'
+              totalTime: 12
               timeout: 5000
             requisitions: []
+            level: 2
           -
             valid: true
             tests:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 6 <= 5000'
+                description: 'Requisition has not timed out: 20 <= 5000'
             name: 'Requisition #0 [4]'
-            id: 2357420326_e362f7cb78_830886
+            id: 0007430855_e362f7cb78_693811
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.380Z'
-              endTime: '2019-03-08T02:57:42.386Z'
-              totalTime: 6
+              startTime: '2019-03-08T03:07:43.941Z'
+              endTime: '2019-03-08T03:07:43.961Z'
+              totalTime: 20
               timeout: 5000
             requisitions: []
+            level: 2
+        level: 1
       -
         valid: true
         tests:
@@ -2882,17 +2982,18 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 15 <= 5000'
+            description: 'Requisition has not timed out: 7 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.387Z'
-          endTime: '2019-03-08T02:57:42.402Z'
-          totalTime: 15
+          startTime: '2019-03-08T03:07:43.963Z'
+          endTime: '2019-03-08T03:07:43.970Z'
+          totalTime: 7
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
@@ -2905,8 +3006,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.402Z'
-          endTime: '2019-03-08T02:57:42.402Z'
+          startTime: '2019-03-08T03:07:43.970Z'
+          endTime: '2019-03-08T03:07:43.970Z'
           totalTime: 0
         requisitions: []
       -
@@ -2921,8 +3022,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.402Z'
-          endTime: '2019-03-08T02:57:42.402Z'
+          startTime: '2019-03-08T03:07:43.971Z'
+          endTime: '2019-03-08T03:07:43.971Z'
           totalTime: 0
         requisitions: []
       -
@@ -2937,8 +3038,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.403Z'
-          endTime: '2019-03-08T02:57:42.403Z'
+          startTime: '2019-03-08T03:07:43.971Z'
+          endTime: '2019-03-08T03:07:43.971Z'
           totalTime: 0
         requisitions: []
       -
@@ -2947,15 +3048,15 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 12 <= 5000'
+            description: 'Requisition has not timed out: 16 <= 5000'
         name: 'Requisition #5'
-        id: 2357420403_55da6aafb1_686676
+        id: 0007430971_55da6aafb1_554308
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.404Z'
-          endTime: '2019-03-08T02:57:42.416Z'
-          totalTime: 12
+          startTime: '2019-03-08T03:07:43.972Z'
+          endTime: '2019-03-08T03:07:43.988Z'
+          totalTime: 16
           timeout: 5000
         requisitions:
           -
@@ -2968,34 +3069,37 @@ requisitions:
               -
                 valid: true
                 name: 'No time out'
-                description: 'Requisition has not timed out: 10 <= 5000'
+                description: 'Requisition has not timed out: 5 <= 5000'
             name: 'Requisition #5 [0]'
-            id: 2357420403_55da6aafb1_686676
+            id: 0007430971_55da6aafb1_554308
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-08T02:57:42.406Z'
-              endTime: '2019-03-08T02:57:42.416Z'
-              totalTime: 10
+              startTime: '2019-03-08T03:07:43.982Z'
+              endTime: '2019-03-08T03:07:43.987Z'
+              totalTime: 5
               timeout: 5000
             requisitions: []
+            level: 2
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 2 <= 5000'
+            description: 'Requisition has not timed out: 6 <= 5000'
         name: 'Requisition #6'
         id: 'Requisition #6'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.418Z'
-          endTime: '2019-03-08T02:57:42.420Z'
-          totalTime: 2
+          startTime: '2019-03-08T03:07:43.991Z'
+          endTime: '2019-03-08T03:07:43.997Z'
+          totalTime: 6
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
@@ -3006,32 +3110,34 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 5 <= 5000'
+            description: 'Requisition has not timed out: 14 <= 5000'
         name: 'Requisition #7'
         id: 'Requisition #7'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.421Z'
-          endTime: '2019-03-08T02:57:42.426Z'
-          totalTime: 5
+          startTime: '2019-03-08T03:07:43.998Z'
+          endTime: '2019-03-08T03:07:44.012Z'
+          totalTime: 14
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 2177 <= 5000'
+        description: 'Requisition has not timed out: 2250 <= 5000'
     name: examples/ssl.yml
-    id: 2357420228_aaa1765c8e_108515
+    id: 0007430755_aaa1765c8e_793547
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.265Z'
-      endTime: '2019-03-08T02:57:44.442Z'
-      totalTime: 2177
+      startTime: '2019-03-08T03:07:43.791Z'
+      endTime: '2019-03-08T03:07:46.041Z'
+      totalTime: 2250
       timeout: 5000
     requisitions:
       -
@@ -3040,7 +3146,7 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1104 <= 5000'
+            description: 'Requisition has not timed out: 1171 <= 5000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions:
@@ -3057,7 +3163,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.350Z'
+            connectionTime: '2019-03-08T03:07:43.887Z'
             messageReceived:
               payload: secureMessagereusingSecureMessage
               stream:
@@ -3082,26 +3188,27 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:43.433Z'
+            publishTime: '2019-03-08T03:07:45.028Z'
             messageReceived:
               payload: hisecureResponse
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 53977
+                port: 54105
         time:
-          startTime: '2019-03-08T02:57:42.329Z'
-          endTime: '2019-03-08T02:57:43.433Z'
-          totalTime: 1104
+          startTime: '2019-03-08T03:07:43.858Z'
+          endTime: '2019-03-08T03:07:45.029Z'
+          totalTime: 1171
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1007 <= 5000'
+            description: 'Requisition has not timed out: 1009 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions:
@@ -3118,7 +3225,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:43.438Z'
+            connectionTime: '2019-03-08T03:07:45.034Z'
             messageReceived:
               payload: reusingSecureMessage
         publishers:
@@ -3139,15 +3246,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:44.441Z'
+            publishTime: '2019-03-08T03:07:46.040Z'
             messageReceived:
               payload: reusingSecureResponse
         time:
-          startTime: '2019-03-08T02:57:43.435Z'
-          endTime: '2019-03-08T02:57:44.442Z'
-          totalTime: 1007
+          startTime: '2019-03-08T03:07:45.032Z'
+          endTime: '2019-03-08T03:07:46.041Z'
+          totalTime: 1009
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
@@ -3172,30 +3281,31 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.330Z'
+        connectionTime: '2019-03-08T03:07:43.860Z'
         messageReceived: 'enqueuer standard-input payload'
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.266Z'
-      endTime: '2019-03-08T02:57:42.368Z'
+      startTime: '2019-03-08T03:07:43.792Z'
+      endTime: '2019-03-08T03:07:43.894Z'
       totalTime: 102
       timeout: 5000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 107 <= 5000'
+        description: 'Requisition has not timed out: 127 <= 5000'
     name: examples/store.yml
-    id: 2357420229_35e8f41e6a_804177
+    id: 0007430756_35e8f41e6a_97875
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.266Z'
-      endTime: '2019-03-08T02:57:42.373Z'
-      totalTime: 107
+      startTime: '2019-03-08T03:07:43.793Z'
+      endTime: '2019-03-08T03:07:43.920Z'
+      totalTime: 127
       timeout: 5000
     requisitions:
       -
@@ -3204,17 +3314,18 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 20 <= 5000'
+            description: 'Requisition has not timed out: 25 <= 5000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.331Z'
-          endTime: '2019-03-08T02:57:42.351Z'
-          totalTime: 20
+          startTime: '2019-03-08T03:07:43.863Z'
+          endTime: '2019-03-08T03:07:43.888Z'
+          totalTime: 25
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
@@ -3229,17 +3340,18 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 12 <= 5000'
+            description: 'Requisition has not timed out: 22 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.351Z'
-          endTime: '2019-03-08T02:57:42.363Z'
-          totalTime: 12
+          startTime: '2019-03-08T03:07:43.888Z'
+          endTime: '2019-03-08T03:07:43.910Z'
+          totalTime: 22
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
@@ -3256,26 +3368,28 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.364Z'
-          endTime: '2019-03-08T02:57:42.373Z'
+          startTime: '2019-03-08T03:07:43.911Z'
+          endTime: '2019-03-08T03:07:43.920Z'
           totalTime: 9
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 3131 <= 5000'
+        description: 'Requisition has not timed out: 3165 <= 5000'
     name: examples/tcp.yml
-    id: 2357420230_bc047fe306_498727
+    id: 0007430758_bc047fe306_95894
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.268Z'
-      endTime: '2019-03-08T02:57:45.399Z'
-      totalTime: 3131
+      startTime: '2019-03-08T03:07:43.794Z'
+      endTime: '2019-03-08T03:07:46.959Z'
+      totalTime: 3165
       timeout: 5000
     requisitions:
       -
@@ -3284,7 +3398,7 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1054 <= 3000'
+            description: 'Requisition has not timed out: 1076 <= 3000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions:
@@ -3305,7 +3419,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.352Z'
+            connectionTime: '2019-03-08T03:07:43.889Z'
             messageReceived:
               payload: 'Hey Jude'
               stream:
@@ -3330,26 +3444,27 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:43.386Z'
+            publishTime: '2019-03-08T03:07:44.940Z'
             messageReceived:
               payload: 'Do not make it bad'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 53978
+                port: 54106
         time:
-          startTime: '2019-03-08T02:57:42.332Z'
-          endTime: '2019-03-08T02:57:43.386Z'
-          totalTime: 1054
+          startTime: '2019-03-08T03:07:43.865Z'
+          endTime: '2019-03-08T03:07:44.941Z'
+          totalTime: 1076
           timeout: 3000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1005 <= 3000'
+            description: 'Requisition has not timed out: 1003 <= 3000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions:
@@ -3366,7 +3481,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:43.390Z'
+            connectionTime: '2019-03-08T03:07:44.944Z'
             messageReceived:
               payload: 'I do not careThe socket is still open'
               stream:
@@ -3391,26 +3506,27 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:44.392Z'
+            publishTime: '2019-03-08T03:07:45.947Z'
             messageReceived:
               payload: EnqueuerRocks
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 53984
+                port: 54112
         time:
-          startTime: '2019-03-08T02:57:43.388Z'
-          endTime: '2019-03-08T02:57:44.393Z'
-          totalTime: 1005
+          startTime: '2019-03-08T03:07:44.944Z'
+          endTime: '2019-03-08T03:07:45.947Z'
+          totalTime: 1003
           timeout: 3000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1004 <= 3000'
+            description: 'Requisition has not timed out: 1008 <= 3000'
         name: 'Requisition #2'
         id: 'Requisition #2'
         subscriptions:
@@ -3427,7 +3543,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:44.396Z'
+            connectionTime: '2019-03-08T03:07:45.952Z'
             messageReceived:
               payload: 'The socket is still open'
         publishers:
@@ -3448,15 +3564,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:45.398Z'
+            publishTime: '2019-03-08T03:07:46.958Z'
             messageReceived:
               payload: 'enqueuer Rocks'
         time:
-          startTime: '2019-03-08T02:57:44.394Z'
-          endTime: '2019-03-08T02:57:45.398Z'
-          totalTime: 1004
+          startTime: '2019-03-08T03:07:45.950Z'
+          endTime: '2019-03-08T03:07:46.958Z'
+          totalTime: 1008
           timeout: 3000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
@@ -3484,7 +3602,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-08T02:57:42.332Z'
+        connectionTime: '2019-03-08T03:07:43.865Z'
         messageReceived:
           payload:
             type: Buffer
@@ -3494,7 +3612,7 @@ requisitions:
           remoteInfo:
             address: 127.0.0.1
             family: IPv4
-            port: 50670
+            port: 51337
             size: 2
     publishers:
       -
@@ -3506,28 +3624,29 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2019-03-08T02:57:42.367Z'
+        publishTime: '2019-03-08T03:07:43.894Z'
     time:
-      startTime: '2019-03-08T02:57:42.269Z'
-      endTime: '2019-03-08T02:57:42.371Z'
+      startTime: '2019-03-08T03:07:43.795Z'
+      endTime: '2019-03-08T03:07:43.897Z'
       totalTime: 102
       timeout: 5000
     requisitions: []
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 3121 <= 5000'
+        description: 'Requisition has not timed out: 3120 <= 5000'
     name: examples/uds.yml
-    id: 2357420233_b92b54acfc_54731
+    id: 0007430760_b92b54acfc_940078
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.271Z'
-      endTime: '2019-03-08T02:57:45.392Z'
-      totalTime: 3121
+      startTime: '2019-03-08T03:07:43.797Z'
+      endTime: '2019-03-08T03:07:46.917Z'
+      totalTime: 3120
       timeout: 5000
     requisitions:
       -
@@ -3536,7 +3655,7 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1042 <= 3000'
+            description: 'Requisition has not timed out: 1035 <= 3000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions:
@@ -3553,7 +3672,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:42.352Z'
+            connectionTime: '2019-03-08T03:07:43.889Z'
             messageReceived:
               payload: enqueuer
               stream: {}
@@ -3576,23 +3695,24 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:43.375Z'
+            publishTime: '2019-03-08T03:07:44.901Z'
             messageReceived:
               payload: responsePayload
               stream: {}
         time:
-          startTime: '2019-03-08T02:57:42.333Z'
-          endTime: '2019-03-08T02:57:43.375Z'
-          totalTime: 1042
+          startTime: '2019-03-08T03:07:43.867Z'
+          endTime: '2019-03-08T03:07:44.902Z'
+          totalTime: 1035
           timeout: 3000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1008 <= 5000'
+            description: 'Requisition has not timed out: 1003 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions:
@@ -3609,7 +3729,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:43.379Z'
+            connectionTime: '2019-03-08T03:07:44.906Z'
             messageReceived:
               payload: 'enqueuerI am still bidirectional'
               stream: {}
@@ -3628,20 +3748,21 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2019-03-08T02:57:44.385Z'
+            publishTime: '2019-03-08T03:07:45.908Z'
         time:
-          startTime: '2019-03-08T02:57:43.377Z'
-          endTime: '2019-03-08T02:57:44.385Z'
-          totalTime: 1008
+          startTime: '2019-03-08T03:07:44.905Z'
+          endTime: '2019-03-08T03:07:45.908Z'
+          totalTime: 1003
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 1003 <= 5000'
+            description: 'Requisition has not timed out: 1004 <= 5000'
         name: 'Requisition #2'
         id: 'Requisition #2'
         subscriptions:
@@ -3658,7 +3779,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-08T02:57:44.390Z'
+            connectionTime: '2019-03-08T03:07:45.913Z'
             messageReceived:
               payload: 'I am still opened'
               stream: {}
@@ -3680,31 +3801,33 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-08T02:57:45.390Z'
+            publishTime: '2019-03-08T03:07:46.915Z'
             messageReceived:
               payload: 'I am still bidirectional'
               stream: {}
         time:
-          startTime: '2019-03-08T02:57:44.388Z'
-          endTime: '2019-03-08T02:57:45.391Z'
-          totalTime: 1003
+          startTime: '2019-03-08T03:07:45.912Z'
+          endTime: '2019-03-08T03:07:46.916Z'
+          totalTime: 1004
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0
   -
     valid: true
     tests:
       -
         valid: true
         name: 'No time out'
-        description: 'Requisition has not timed out: 93 <= 5000'
+        description: 'Requisition has not timed out: 115 <= 5000'
     name: examples/variables.yml
-    id: 2357420234_2e1e4d53e3_689268
+    id: 0007430761_2e1e4d53e3_492492
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-08T02:57:42.271Z'
-      endTime: '2019-03-08T02:57:42.364Z'
-      totalTime: 93
+      startTime: '2019-03-08T03:07:43.797Z'
+      endTime: '2019-03-08T03:07:43.912Z'
+      totalTime: 115
       timeout: 5000
     requisitions:
       -
@@ -3721,17 +3844,18 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 19 <= 5000'
+            description: 'Requisition has not timed out: 23 <= 5000'
         name: 'Requisition #0'
         id: 'Requisition #0'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.334Z'
-          endTime: '2019-03-08T02:57:42.353Z'
-          totalTime: 19
+          startTime: '2019-03-08T03:07:43.876Z'
+          endTime: '2019-03-08T03:07:43.899Z'
+          totalTime: 23
           timeout: 5000
         requisitions: []
+        level: 1
       -
         valid: true
         tests:
@@ -3750,14 +3874,16 @@ requisitions:
           -
             valid: true
             name: 'No time out'
-            description: 'Requisition has not timed out: 10 <= 5000'
+            description: 'Requisition has not timed out: 11 <= 5000'
         name: 'Requisition #1'
         id: 'Requisition #1'
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-08T02:57:42.354Z'
-          endTime: '2019-03-08T02:57:42.364Z'
-          totalTime: 10
+          startTime: '2019-03-08T03:07:43.901Z'
+          endTime: '2019-03-08T03:07:43.912Z'
+          totalTime: 11
           timeout: 5000
         requisitions: []
+        level: 1
+    level: 0

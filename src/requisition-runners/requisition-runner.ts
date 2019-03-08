@@ -12,7 +12,6 @@ import {FileContentMapCreator} from '../configurations/file-content-map-creator'
 import {IterationsEvaluator} from './iterations-evaluator';
 import {ObjectDecycler} from '../object-notations/object-decycler';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
-import {ParentRemover} from '../components/parent-remover';
 import {HashComponentCreator} from '../components/hash-component-creator';
 
 export class RequisitionRunner {
@@ -20,8 +19,10 @@ export class RequisitionRunner {
     private readonly requisition?: input.RequisitionModel;
     private readonly name: string;
     private readonly id?: string;
+    private readonly level: number;
 
-    public constructor(requisition: input.RequisitionModel) {
+    public constructor(requisition: input.RequisitionModel, level: number = 0) {
+        this.level = level;
         this.name = requisition.name;
         this.id = requisition.id || requisition.name;
         requisition.id = this.id;
@@ -53,7 +54,7 @@ export class RequisitionRunner {
         for (const child of children) {
             child.parent = requisition;
             child.name = child.name || `${requisition.name} [${index}]`;
-            reports.push(await new RequisitionRunner(child).run());
+            reports.push(await new RequisitionRunner(child, this.level + 1).run());
             ++index;
         }
         return reports;
@@ -74,9 +75,8 @@ export class RequisitionRunner {
         const withId = new HashComponentCreator().refresh(this.requisition!);
         Logger.debug(`Evaluating variables of requisition '${this.requisition!.name}'`);
         const parentBkp = withId.parent;
-        const parentLess: any = new ParentRemover().remove(withId);
 
-        const decycled: input.RequisitionModel = new ObjectDecycler().decycle(parentLess) as input.RequisitionModel;
+        const decycled: input.RequisitionModel = new ObjectDecycler().decycle(withId) as input.RequisitionModel;
 
         const fileMapCreator = new FileContentMapCreator(decycled);
         const fileReplaced = new JsonPlaceholderReplacer()
@@ -110,6 +110,7 @@ export class RequisitionRunner {
                             const report = requisitionReporter.getReport();
                             Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
                             Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
+                            report.level = this.level;
                             report.requisitions = childrenReport;
                             report.valid = report.valid && report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
                             resolve(report);

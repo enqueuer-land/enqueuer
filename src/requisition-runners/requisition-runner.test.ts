@@ -10,6 +10,23 @@ Timeout.mockImplementation((cb) => {
 
 describe('RequisitionRunner', () => {
 
+    it('Should set levels', async () => {
+        const requisition: RequisitionModel = {
+            name: 'parent',
+            iterations: 2,
+            requisitions: [{
+                name: 'child'
+            }]
+        };
+
+        const actual = await new RequisitionRunner(requisition).run();
+        expect(actual!.level).toBe(0);
+        expect(actual!.requisitions![0].level).toBe(1);
+        expect(actual!.requisitions![0].requisitions![0].level).toBe(2);
+        expect(actual!.requisitions![1].level).toBe(1);
+        expect(actual!.requisitions![1].requisitions![0].level).toBe(2);
+    });
+
     it('Should return requisition reporter skipped', async () => {
         const requisition: RequisitionModel = {
             iterations: 0,
