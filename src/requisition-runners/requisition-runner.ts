@@ -12,7 +12,7 @@ import {FileContentMapCreator} from '../configurations/file-content-map-creator'
 import {IterationsEvaluator} from './iterations-evaluator';
 import {ObjectDecycler} from '../object-notations/object-decycler';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
-import {HashComponentCreator} from '../components/hash-component-creator';
+import {ComponentUniqueTagCreator} from '../components/component-unique-tag-creator';
 
 export class RequisitionRunner {
 
@@ -74,7 +74,7 @@ export class RequisitionRunner {
     }
 
     private replaceVariables(): input.RequisitionModel {
-        const withId = new HashComponentCreator().refresh(this.requisition!);
+        const withId = new ComponentUniqueTagCreator().refresh(this.requisition!);
         Logger.debug(`Evaluating variables of requisition '${this.requisition!.name}'`);
         const parentBkp = withId.parent;
 

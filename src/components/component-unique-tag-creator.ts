@@ -3,7 +3,7 @@ import {IdGenerator} from '../strings/id-generator';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 
-export class HashComponentCreator {
+export class ComponentUniqueTagCreator {
 
     public refresh(requisition: RequisitionModel): RequisitionModel {
         this.refreshInComponent(requisition);
@@ -14,7 +14,7 @@ export class HashComponentCreator {
     }
 
     private refreshInComponent(component: RequisitionModel | PublisherModel | SubscriptionModel) {
-        component.hash = new IdGenerator(component).generateId();
+        component.uniqueTag = new IdGenerator(component).generateId();
     }
 
 }

@@ -13,9 +13,12 @@ describe('RequisitionMultiplier', () => {
             }
         };
 
+        // @ts-ignore
         const multiplied = new RequisitionMultiplier(original).multiply();
 
+        // @ts-ignore
         expect(multiplied.requisitions.map(child => child.name)).toEqual(['super [0]', 'super [1]', 'super [2]']);
+        // @ts-ignore
         multiplied.requisitions.map(child => {
             original.name = child.name;
             expect(child.id).toBeDefined();
@@ -30,8 +33,10 @@ describe('RequisitionMultiplier', () => {
             iterations: 3,
         };
 
+        // @ts-ignore
         const multiplied = new RequisitionMultiplier(original).multiply();
 
+        // @ts-ignore
         multiplied.requisitions.map((child, index) => {
             expect(child.name).toEqual(original.name + ` [${index}]`);
         });
@@ -41,6 +46,7 @@ describe('RequisitionMultiplier', () => {
         const original = {
             iterations: '<<UnknownIterations>>',
         };
+        // @ts-ignore
         const multiplied = new RequisitionMultiplier(original).multiply();
 
         expect(multiplied).toBeUndefined();
@@ -49,6 +55,7 @@ describe('RequisitionMultiplier', () => {
     it('Should default (undefined) iterations to 1', () => {
         const original = {};
 
+        // @ts-ignore
         const multiplied = new RequisitionMultiplier(original).multiply();
 
         expect(multiplied).toBeDefined();
@@ -56,8 +63,10 @@ describe('RequisitionMultiplier', () => {
 
     it('Should default (null) iterations to 0', () => {
         const original = {};
+        // @ts-ignore
         original.iterations = null;
 
+        // @ts-ignore
         const multiplied = new RequisitionMultiplier(original).multiply();
 
         expect(multiplied).toBeUndefined();
@@ -68,6 +77,7 @@ describe('RequisitionMultiplier', () => {
             iterations: -10,
         };
 
+        // @ts-ignore
         const multiplied = new RequisitionMultiplier(original).multiply();
 
         expect(multiplied).toBeUndefined();
@@ -108,24 +118,13 @@ describe('RequisitionMultiplier', () => {
 
         const multiplied = new RequisitionMultiplier(requisition).multiply();
 
-        // @ts-ignore
-        const foundIds: RequisitionModel = [];
-        expect(foundIds).not.toContainEqual(multiplied!.id);
-        foundIds.push(multiplied!.id);
+        expect(multiplied!.requisitions![0].uniqueTag).toBeDefined();
+        expect(multiplied!.requisitions![0].requisitions![0].uniqueTag).toBeDefined();
+        expect(multiplied!.requisitions![0].requisitions![1].uniqueTag).toBeDefined();
 
-        expect(foundIds).not.toContainEqual(multiplied!.requisitions![0].hash);
-        foundIds.push(multiplied!.requisitions![0].hash);
-        expect(foundIds).not.toContainEqual(multiplied!.requisitions![0].requisitions![0].hash);
-        foundIds.push(multiplied!.requisitions![0].requisitions![0].hash);
-        expect(foundIds).not.toContainEqual(multiplied!.requisitions![0].requisitions![1].hash);
-        foundIds.push(multiplied!.requisitions![0].requisitions![1].hash);
-
-        expect(foundIds).not.toContainEqual(multiplied!.requisitions![1].hash);
-        foundIds.push(multiplied!.requisitions![1].hash);
-        expect(foundIds).not.toContainEqual(multiplied!.requisitions![1].requisitions![0].hash);
-        foundIds.push(multiplied!.requisitions![1].requisitions![0].hash);
-        expect(foundIds).not.toContainEqual(multiplied!.requisitions![1].requisitions![1].hash);
-        foundIds.push(multiplied!.requisitions![1].requisitions![1].hash);
+        expect(multiplied!.requisitions![1].uniqueTag).toBeDefined();
+        expect(multiplied!.requisitions![1].requisitions![0].uniqueTag).toBeDefined();
+        expect(multiplied!.requisitions![1].requisitions![1].uniqueTag).toBeDefined();
 
     });
 

@@ -3,7 +3,7 @@ import {Logger} from '../loggers/logger';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 import {IterationsEvaluator} from './iterations-evaluator';
-import {HashComponentCreator} from '../components/hash-component-creator';
+import {ComponentUniqueTagCreator} from '../components/component-unique-tag-creator';
 import {RequisitionParentCreator} from '../components/requisition-parent-creator';
 
 export class RequisitionMultiplier {
@@ -43,10 +43,10 @@ export class RequisitionMultiplier {
             clone.parent = result;
             clone.iterations = 1;
             clone.name = clone.name + ` [${x}]`;
-            result.requisitions!.push(new HashComponentCreator().refresh(clone));
+            result.requisitions!.push(clone);
         }
         result.parent = parentBkp;
-        return result;
+        return new ComponentUniqueTagCreator().refresh(result);
     }
 
     private evaluateIterations(): number | undefined {

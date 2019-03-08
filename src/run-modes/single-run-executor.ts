@@ -39,7 +39,6 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
         const parent: input.RequisitionModel = this.createParent(this.fileNames);
         if (this.parallelMode) {
-            //TODO Create class
             const requisitionsReport = await Promise
                 .all(parent.requisitions!
                     .map(async requisition => await new RequisitionRunner(requisition, 1).run()));
