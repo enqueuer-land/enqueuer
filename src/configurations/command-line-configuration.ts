@@ -34,7 +34,7 @@ export class CommandLineConfiguration {
                     (val: string) => this.singleRunFiles.push(val), [])
                 .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
                     (val: string) => this.singleRunFilesIgnoring.push(val), [])
-                .action((parsedCommandLine) => this.verifyShortCutActions(parsedCommandLine));
+                .action((parsedCommandLine) => this.verifyPrematureActions(parsedCommandLine));
             commander.on('--help', () => this.helpDescription());
             this.parsedCommandLine = commander.parse(commandLineArguments || ['path', 'enqueuer']);
         } catch (err) {
@@ -81,6 +81,10 @@ export class CommandLineConfiguration {
         return this.plugins;
     }
 
+    public getVersion(): string {
+        return this.parsedCommandLine._version;
+    }
+
     private storeCommandLineAction(val: string, memo: string[]) {
         const split = val.split('=');
         if (split.length == 2) {
@@ -90,7 +94,7 @@ export class CommandLineConfiguration {
         return memo;
     }
 
-    private helpDescription() {
+    private helpDescription(): void {
         console.log('');
         console.log('Examples:');
         console.log('  $ nqr --config-file config-file.yml --verbosity error --store key=value');
@@ -103,17 +107,19 @@ export class CommandLineConfiguration {
     }
 
     //TODO test it
-    private verifyShortCutActions(parsedCommandLine: any) {
+    private verifyPrematureActions(parsedCommandLine: any): void {
         let exitCode;
         if (parsedCommandLine.protocolsDescription) {
             exitCode = PluginManager.getProtocolManager().describeProtocols(parsedCommandLine.protocolsDescription) ? 0 : 1;
         } else if (parsedCommandLine.formattersDescription) {
             exitCode = PluginManager.getReportFormatterManager().describeReportFormatters(parsedCommandLine.formattersDescription) ? 0 : 1;
-        } else if (parsedCommandLine.formattersDescription) {
+        } else if (parsedCommandLine.testsList) {
             new TestsDescriber().describeTests();
+            exitCode = 0;
         }
         if (exitCode !== undefined) {
             process.exit(exitCode);
         }
     }
+
 }

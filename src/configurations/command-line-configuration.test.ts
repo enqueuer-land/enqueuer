@@ -1,12 +1,12 @@
 import {CommandLineConfiguration} from './command-line-configuration';
 
-// const setProperty = (object: any, property: string, value: any) => {
-//     const originalProperty = Object.getOwnPropertyDescriptor(object, property);
-//     Object.defineProperty(object, property, {value});
-//     return originalProperty;
-// };
-
+const exitMock = jest.fn();
 describe('CommandLineConfiguration', () => {
+    beforeEach(() => {
+        exitMock.mockClear();
+        // @ts-ignore
+        process.exit = exitMock;
+    });
 
     it('isQuietMode', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-q']);
@@ -79,75 +79,48 @@ describe('CommandLineConfiguration', () => {
         expect(commandLineConfiguration.getConfigFileName()).toBe(configFile);
     });
 
-    // it('describe protocols -p', () => {
-    //     // const exitMock = jest.fn()
-    //     // setProperty(process, 'exit', exitMock)
-    //
-    //     const exitMock = jest.fn();
-    //     process.exit = exitMock;
-    //
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-p']);
-    //
-    //     expect(exitMock).toHaveBeenCalled();
-    // });
-    //
-    // it('describe protocols --protocols-description', () => {
-    //     const exitMock = jest.fn();
-    //     process.exit = exitMock;
-    //
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description']);
-    //
-    //     expect(exitMock).not.toHaveBeenCalled();
-    // });
-    //
-    // it('describe protocols --protocols-description http', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description', 'http']);
-    //
-    //     expect(commandLineConfiguration.describeProtocols()).toBe('http');
-    // });
-    //
-    // it('no describe protocols', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
-    //
-    //     expect(commandLineConfiguration.describeProtocols()).toBeUndefined();
-    // });
-    //
-    // it('describe formatters -f', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-f', 'json']);
-    //
-    //     expect(commandLineConfiguration.describeFormatters()).toBeTruthy();
-    // });
-    //
-    // it('describe formatters --formatters-description', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--formatters-description']);
-    //
-    //     expect(commandLineConfiguration.describeFormatters()).toBeTruthy();
-    // });
-    //
-    // it('no describe formatters', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
-    //
-    //     expect(commandLineConfiguration.describeProtocols()).toBeUndefined();
-    // });
-    //
-    // it('describe assertions -t', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-t']);
-    //
-    //     expect(commandLineConfiguration.describeTestsList()).toBeTruthy();
-    // });
-    //
-    // it('describe assertions --tests-list', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--tests-list']);
-    //
-    //     expect(commandLineConfiguration.describeTestsList()).toBeTruthy();
-    // });
-    //
-    // it('no describe assertions', () => {
-    //     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
-    //
-    //     expect(commandLineConfiguration.describeTestsList()).toBeUndefined();
-    // });
-    //
+    it('describe protocols -p', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-p']);
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('describe protocols --protocols-description', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description']);
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('describe protocols --protocols-description http', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description', 'http']);
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('describe formatters -f', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-f', 'json']);
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('describe formatters --formatters-description', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--formatters-description']);
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('describe assertions -t', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-t']);
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('describe assertions --tests-list', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--tests-list']);
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
     it('no single run file', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
 
@@ -165,6 +138,21 @@ describe('CommandLineConfiguration', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-l', 'plugin1', '--add-plugin', 'plugin2']);
 
         expect(commandLineConfiguration.getPlugins()).toEqual(['plugin1', 'plugin2']);
+    });
+
+    it('render help', () => {
+        const consoleMock = jest.fn();
+        console.log = consoleMock;
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-h']);
+        expect(consoleMock).toHaveBeenCalled();
+    });
+
+    it('get version', () => {
+        const packageJson = require('../../package.json');
+
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-v']);
+
+        expect(commandLineConfiguration.getVersion()).toBe(packageJson.version);
     });
 
     it('add single run file ignoring', () => {
