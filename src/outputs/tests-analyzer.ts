@@ -14,6 +14,10 @@ export class TestsAnalyzer {
         return this;
     }
 
+    public isValid(): boolean {
+        return this.getNotIgnoredTests().every(test => test.valid);
+    }
+
     public getTests(): AnalyzedTest[] {
         return this.tests;
     }
@@ -43,9 +47,9 @@ export class TestsAnalyzer {
     }
 
     private findRequisitions(requisition: RequisitionModel[] = [], hierarchy: string[]) {
-        requisition.forEach((requisition: any) => {
-            this.findRequisitions(requisition.requisitions, hierarchy.concat(requisition.name));
-            this.findTests(requisition, hierarchy.concat(requisition.name));
+        requisition.forEach((child: any) => {
+            this.findRequisitions(child.requisitions, hierarchy.concat(child.name));
+            this.findTests(child, hierarchy.concat(child.name));
         });
     }
 

@@ -74,6 +74,19 @@ describe('TestsAnalyzer', () => {
         expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
+    it('Should ignore ignored test to validate', () => {
+
+        const test: RequisitionModel = {
+            name: 'name',
+            valid: true,
+            tests: [{valid: true}, {ignored: true}, {valid: true, ignored: true}],
+        };
+
+        const testsAnalyzer = new TestsAnalyzer().addTest(test);
+
+        expect(testsAnalyzer.isValid()).toBeTruthy();
+    });
+
     it('Should get filtered tests', () => {
         const test: RequisitionModel = {
             name: 'name',
