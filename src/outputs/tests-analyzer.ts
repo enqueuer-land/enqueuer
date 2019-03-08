@@ -1,41 +1,41 @@
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {TestModel} from '../models/outputs/test-model';
+import {ReportModel} from '../models/outputs/report-model';
 
-export type Test = { test: TestModel, hierarchy: string[] };
-export type IgnoredItem = { hierarchy: string[] };
+export interface AnalyzedTest extends TestModel {
+    hierarchy: string[];
+}
 
 export class TestsAnalyzer {
-    private tests: Test[] = [];
-    private ignoredList: IgnoredItem[] = [];
+    private tests: AnalyzedTest[] = [];
 
-    public constructor(report?: RequisitionModel) {
-        if (report) {
-            this.addTest(report);
-        }
-    }
-
-    public addTest(report: RequisitionModel) {
+    public addTest(report: RequisitionModel): TestsAnalyzer {
         this.findRequisitions([report], []);
+        return this;
     }
 
-    public getTests(): Test[] {
+    public getTests(): AnalyzedTest[] {
         return this.tests;
     }
 
-    public getIgnoredList(): IgnoredItem[] {
-        return this.ignoredList;
+    public getNotIgnoredTests(): AnalyzedTest[] {
+        return this.tests.filter(test => !test.ignored);
     }
 
-    public getPassingTests(): Test[] {
-        return this.tests.filter(test => test.test.valid);
+    public getIgnoredList(): AnalyzedTest[] {
+        return this.tests.filter(test => test.ignored);
     }
 
-    public getFailingTests(): any[] {
-        return this.tests.filter(test => !test.test.valid);
+    public getPassingTests(): AnalyzedTest[] {
+        return this.tests.filter(test => test.valid && !test.ignored);
+    }
+
+    public getFailingTests(): AnalyzedTest[] {
+        return this.tests.filter(test => !test.valid && !test.ignored);
     }
 
     public getPercentage(): number {
-        let percentage = Math.trunc(10000 * this.getPassingTests().length / this.getTests().length) / 100;
+        let percentage = Math.trunc(10000 * this.getPassingTests().length / this.getNotIgnoredTests().length) / 100;
         if (isNaN(percentage)) {
             percentage = 100;
         }
@@ -50,28 +50,30 @@ export class TestsAnalyzer {
     }
 
     private findTests(requisition: RequisitionModel, hierarchy: string[]) {
-        if (requisition.ignored) {
-            this.computeIgnored(hierarchy);
-        } else {
-            this.computeTests(requisition.tests, hierarchy);
-            for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
-                const childHierarchy = hierarchy.concat(child.name);
-                if (child.ignored) {
-                    this.computeIgnored(childHierarchy);
-                } else {
-                    this.computeTests(child.tests, childHierarchy);
-                }
-            }
+        this.computeTests(requisition, hierarchy);
+        for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
+            const childHierarchy = hierarchy.concat(child.name);
+            this.computeTests(child, childHierarchy);
         }
-
     }
 
-    private computeTests(tests: any[], hierarchy: string[]): void {
-        tests.forEach(test => this.tests.push({test, hierarchy: hierarchy}));
-    }
-
-    private computeIgnored(hierarchy: string[]): void {
-        this.ignoredList.push({hierarchy: hierarchy});
+    private computeTests(reportModel: ReportModel, hierarchy: string[]): void {
+        if (reportModel.ignored) {
+            this.tests.push({
+                ignored: true,
+                description: 'Ignored',
+                valid: true,
+                name: reportModel.name,
+                hierarchy: hierarchy
+            });
+        } else {
+            (reportModel.tests || []).forEach(test => {
+                this.tests.push({
+                    ...test,
+                    hierarchy: hierarchy
+                });
+            });
+        }
     }
 
 }

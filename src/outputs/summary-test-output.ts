@@ -1,6 +1,6 @@
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import chalk from 'chalk';
-import {Test, TestsAnalyzer} from './tests-analyzer';
+import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
 
 export class SummaryTestOutput {
     private static readonly NAME_SPACING = 140;
@@ -12,7 +12,7 @@ export class SummaryTestOutput {
     public constructor(report: RequisitionModel) {
         this.report = report;
         this.level = this.report.level || 0;
-        this.testAnalyzer = new TestsAnalyzer(report);
+        this.testAnalyzer = new TestsAnalyzer().addTest(report);
     }
 
     public print(): void {
@@ -73,11 +73,11 @@ export class SummaryTestOutput {
 
     private printFailingTests() {
         this.testAnalyzer.getFailingTests()
-            .forEach((failingTest: Test) => {
+            .forEach((failingTest: AnalyzedTest) => {
                 let message = '\t\t\t';
-                message += this.prettifyTestHierarchyMessage(failingTest.hierarchy, failingTest.test.name, chalk.red);
+                message += this.prettifyTestHierarchyMessage(failingTest.hierarchy, failingTest.name, chalk.red);
                 console.log(message);
-                console.log(chalk.red(`\t\t\t\t\t ${failingTest.test.description}`));
+                console.log(chalk.red(`\t\t\t\t\t ${failingTest.description}`));
             });
     }
 
