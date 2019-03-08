@@ -41,7 +41,9 @@ export class RequisitionRunner {
         } else {
             report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
         }
-        new SummaryTestOutput(report).print(); //TODO use it
+        if (this.level <= 1) {
+            new SummaryTestOutput(report).print();
+        }
         return report;
 
     }

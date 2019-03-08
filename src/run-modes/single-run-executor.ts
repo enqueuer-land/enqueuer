@@ -35,10 +35,10 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
         const parent: input.RequisitionModel = this.createParent(this.fileNames);
         if (this.parallelMode) {
-            //Create class
+            //TODO Create class
             const requisitionsReport = await Promise
                 .all(parent.requisitions!
-                    .map(async requisition => await new RequisitionRunner(requisition).run()));
+                    .map(async requisition => await new RequisitionRunner(requisition, 1).run()));
             const parallelReport = RequisitionDefaultReports.createDefaultReport({name: this.name, id: this.name});
             parallelReport.requisitions = requisitionsReport;
             parallelReport.valid = parallelReport.requisitions.every((requisitionsReport) => requisitionsReport.valid);
