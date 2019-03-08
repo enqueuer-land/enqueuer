@@ -51,9 +51,9 @@ export class TestsAnalyzer {
 
     private findTests(requisition: RequisitionModel, hierarchy: string[]) {
         if (requisition.ignored) {
-            this.computeIgnored(hierarchy.concat(requisition.name));
+            this.computeIgnored(hierarchy);
         } else {
-            this.computeTests(requisition.tests, hierarchy.concat(requisition.name));
+            this.computeTests(requisition.tests, hierarchy);
             for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
                 const childHierarchy = hierarchy.concat(child.name);
                 if (child.ignored) {

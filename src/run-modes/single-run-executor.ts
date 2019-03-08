@@ -4,12 +4,12 @@ import {MultiTestsOutput} from '../outputs/multi-tests-output';
 import * as glob from 'glob';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
+import {RequisitionModel} from '../models/outputs/requisition-model';
 import {ConfigurationValues} from '../configurations/configuration-values';
 import {DateController} from '../timers/date-controller';
 import {RequisitionFileParser} from '../requisition-runners/requisition-file-parser';
 import {RequisitionRunner} from '../requisition-runners/requisition-runner';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
-import {TimeModel} from '../models/outputs/time-model';
 import {RequisitionParentCreator} from '../components/requisition-parent-creator';
 
 //TODO test it
@@ -19,11 +19,15 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private readonly outputs: MultiTestsOutput;
     private readonly name: string;
     private readonly parallelMode: boolean;
+    private readonly errors: RequisitionModel[];
+    private readonly startTime: DateController;
 
     constructor(configuration: ConfigurationValues) {
         super();
+        this.startTime = new DateController();
         this.name = configuration.name || 'single-run';
         this.parallelMode = configuration.parallel;
+        this.errors = [];
         this.fileNames = this.getTestFiles(configuration);
         this.outputs = new MultiTestsOutput(configuration.outputs || []);
     }
@@ -41,12 +45,9 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                     .map(async requisition => await new RequisitionRunner(requisition, 1).run()));
             const parallelReport = RequisitionDefaultReports.createDefaultReport({name: this.name, id: this.name});
             parallelReport.requisitions = requisitionsReport;
-            parallelReport.valid = parallelReport.requisitions.every((requisitionsReport) => requisitionsReport.valid);
-            parallelReport.time = this.adjustIteratorReportTimeValues(requisitionsReport);
             return await this.finishExecution(parallelReport);
         } else {
-            const report: output.RequisitionModel = await new RequisitionRunner(parent).run();
-            return await this.finishExecution(report);
+            return await this.finishExecution(await new RequisitionRunner(parent).run());
         }
     }
 
@@ -72,36 +73,17 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         return result;
     }
 
-    //TODO class to do thus
-    private adjustIteratorReportTimeValues(reports: output.RequisitionModel[]): TimeModel {
-        const first = reports[0];
-        const last = reports[reports.length - 1];
-        if (first && first.time && last && last.time) {
-            const startTime = new DateController(new Date(first.time.startTime as string));
-            const endTime = new DateController(new Date(last.time.endTime as string));
-            const totalTime = endTime.getTime() - startTime.getTime();
-            return {
-                startTime: startTime.toString(),
-                endTime: endTime.toString(),
-                totalTime: totalTime
-            };
-        }
-        return {
-            startTime: new DateController().toString(),
-            endTime: new DateController().toString(),
-            totalTime: 0
-        };
-
-    }
-
-    private createParent(filename: string[]): input.RequisitionModel {
+    private createParent(files: string[]): input.RequisitionModel {
         const requisitions: input.RequisitionModel[] = [];
-        filename.forEach(file => {
+        files.forEach(file => {
             try {
                 const requisition: input.RequisitionModel = new RequisitionFileParser(file).parse();
                 requisitions.push(requisition);
             } catch (err) {
-                Logger.error(`Error parsing file: ${filename}: ${err}`);
+                const message = `Error parsing file: ${err}`;
+                Logger.error(message);
+                const error = RequisitionDefaultReports.createRunningError({name: file}, message);
+                this.errors.push(error);
             }
         });
         return new RequisitionParentCreator().create(this.name, requisitions);
@@ -109,11 +91,14 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     private async finishExecution(report: output.RequisitionModel): Promise<boolean> {
         Logger.info('There is no more files to be ran');
-        if (report.time) {
-            const now = new DateController();
-            report.time.endTime = now.toString();
-            report.time.totalTime = now.getTime() - new DateController(new Date(report.time.startTime as string)).getTime();
-        }
+        report.requisitions = report.requisitions!.concat(this.errors);
+        const now = new DateController();
+        report.time = {
+            startTime: this.startTime.toString(),
+            endTime: now.toString(),
+            totalTime: now.getTime() - this.startTime.getTime()
+        };
+        report.valid = report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
         await this.outputs.execute(report);
         return report.valid;
     }

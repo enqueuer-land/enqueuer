@@ -20,7 +20,7 @@ describe('ProtocolManager', () => {
     it('describeProtocols', () => {
         const protocolManager = new ProtocolManager();
         // @ts-ignore
-        protocolManager.addProtocol(new PublisherProtocol('mine', () => {));
+        protocolManager.addProtocol(new PublisherProtocol('mine', () => {/*not empty*/}));
         expect(protocolManager.describeProtocols(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             publishers: expect.anything(),

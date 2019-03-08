@@ -58,13 +58,15 @@ export abstract class Protocol {
     }
 
     public matches(type: string): boolean {
-        try {
-            return [this.name].concat(this.alternativeNames || [])
-                .filter((name: string) => name.toUpperCase() === type.toUpperCase()).length > 0;
-        } catch (exc) {
-            Logger.warning(`Error comparing protocols with given type '${type}': ${exc}`);
-            return false;
+        if (typeof type === 'string') {
+            try {
+                return [this.name].concat(this.alternativeNames || [])
+                    .filter((name: string) => name.toUpperCase() === type.toUpperCase()).length > 0;
+            } catch (exc) {
+                Logger.warning(`Error comparing protocols with given type '${type}': ${exc}`);
+            }
         }
+        return false;
     }
 
     private isLibraryInstalled(libraryName: string): boolean {

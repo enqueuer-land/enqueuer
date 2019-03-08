@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import {Test, TestsAnalyzer} from './tests-analyzer';
 
 export class SummaryTestOutput {
-    private static readonly NAME_SPACING = 120;
+    private static readonly NAME_SPACING = 140;
     private static readonly LEVEL_TABULATION = 10;
     private readonly level: number;
     private testAnalyzer: TestsAnalyzer;

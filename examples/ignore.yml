@@ -1,6 +1,5 @@
 -   publishers:
     -   ignore: true
-        type: tcp
         onInit:
             assertions:
             -   expectToBeTruthy: false
@@ -9,7 +8,6 @@
             -   expectToBeTruthy: false
 -   subscriptions:
     -   ignore: true
-        type: tcp
         onInit:
             assertions:
             -   expectToBeTruthy: false
@@ -25,16 +23,14 @@
             assertions:
             -   expectToBeTruthy: false
     publishers:
-    -   type: tcp
-        onInit:
+    -   onInit:
             assertions:
             -   expectToBeTruthy: false
         onFinish:
             assertions:
             -   expectToBeTruthy: false
     subscriptions:
-    -   type: tcp
-        onInit:
+    -   onInit:
             assertions:
             -   expectToBeTruthy: false
         onFinish:
