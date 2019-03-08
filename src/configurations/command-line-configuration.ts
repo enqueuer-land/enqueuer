@@ -1,6 +1,6 @@
 import {Command} from 'commander';
 import {Logger} from '../loggers/logger';
-import {PluginManager} from '../plugins/plugin-manager';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {TestsDescriber} from '../testers/tests-describer';
 
 const packageJson = require('../../package.json');
@@ -110,9 +110,11 @@ export class CommandLineConfiguration {
     private verifyPrematureActions(parsedCommandLine: any): void {
         let exitCode;
         if (parsedCommandLine.protocolsDescription) {
-            exitCode = PluginManager.getProtocolManager().describeProtocols(parsedCommandLine.protocolsDescription) ? 0 : 1;
+            exitCode = DynamicModulesManager.getInstance().getProtocolManager()
+                .describeProtocols(parsedCommandLine.protocolsDescription) ? 0 : 1;
         } else if (parsedCommandLine.formattersDescription) {
-            exitCode = PluginManager.getReportFormatterManager().describeReportFormatters(parsedCommandLine.formattersDescription) ? 0 : 1;
+            exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
+                .describeReportFormatters(parsedCommandLine.formattersDescription) ? 0 : 1;
         } else if (parsedCommandLine.testsList) {
             new TestsDescriber().describeTests();
             exitCode = 0;

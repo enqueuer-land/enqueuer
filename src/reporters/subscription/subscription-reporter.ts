@@ -12,7 +12,7 @@ import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {Json} from '../../object-notations/json';
 import '../../injectable-files-list';
-import {PluginManager} from '../../plugins/plugin-manager';
+import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
 
@@ -48,7 +48,8 @@ export class SubscriptionReporter {
         }
 
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscription = PluginManager.getProtocolManager().createSubscription(subscriptionAttributes);
+        this.subscription = DynamicModulesManager.getInstance().getProtocolManager()
+            .createSubscription(subscriptionAttributes);
         this.killListener = (signal: Signals) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
     }
 

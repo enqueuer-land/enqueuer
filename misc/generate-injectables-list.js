@@ -5,7 +5,7 @@ const fs = require('fs');
 let files = [];
 function findEveryTsFile(path) {
     const dirContent = fs.readdirSync(path);
-    for (var i = 0; i < dirContent.length; i++) {
+    for (let i = 0; i < dirContent.length; i++) {
         const filename = path + dirContent[i];
         const stat = fs.lstatSync(filename);
         if (stat.isDirectory()) {

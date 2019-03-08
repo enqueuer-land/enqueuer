@@ -2,16 +2,15 @@ import {MultiTestsOutput} from './multi-tests-output';
 import {SummaryTestOutput} from './summary-test-output';
 import {ProtocolManager} from '../plugins/protocol-manager';
 import {ReportFormatterManager} from '../plugins/report-formatter-manager';
-import {PluginManager} from '../plugins/plugin-manager';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
-jest.mock('../plugins/plugin-manager');
+jest.mock('../plugins/dynamic-modules-manager');
 // @ts-ignore
-PluginManager.getReportFormatterManager.mockImplementation(() => {
-    return new ReportFormatterManager();
-});
-// @ts-ignore
-PluginManager.getProtocolManager.mockImplementation(() => {
-    return new ProtocolManager();
+DynamicModulesManager.getInstance.mockImplementation(() => {
+    return {
+        getProtocolManager: () => new ProtocolManager(),
+        getReportFormatterManager: () => new ReportFormatterManager()
+    };
 });
 
 jest.mock('../plugins/report-formatter-manager');

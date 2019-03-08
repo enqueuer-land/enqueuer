@@ -5,7 +5,7 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Publisher} from '../publishers/publisher';
 import {ReportFormatter} from './formatters/report-formatter';
 import chalk from 'chalk';
-import {PluginManager} from '../plugins/plugin-manager';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
 export class MultiTestsOutput {
     private outputs: Publisher[] = [];
@@ -13,8 +13,10 @@ export class MultiTestsOutput {
     public constructor(outputs: PublisherModel[]) {
         (outputs || []).forEach((output: PublisherModel) => {
             Logger.debug(`Instantiating output '${output.type}' and format '${output.format}'`);
-            const publisher = PluginManager.getProtocolManager().createPublisher(output);
-            publisher.formatter = PluginManager.getReportFormatterManager().createReportFormatter(output.format);
+            const publisher = DynamicModulesManager.getInstance()
+                .getProtocolManager().createPublisher(output);
+            publisher.formatter = DynamicModulesManager.getInstance()
+                .getReportFormatterManager().createReportFormatter(output.format);
             publisher.format = output.format;
             this.outputs.push(publisher);
         });

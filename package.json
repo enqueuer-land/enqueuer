@@ -11,7 +11,7 @@
     "singleRunTest": "nqr conf/singleRun.yml -a examples/requisition-navigation.yaml < misc/stdin && npm run validateOutput",
     "validateOutput": "yval --from=json outputExamples/singleRunOutput.json && yval --from=yaml outputExamples/singleRunOutput.yml",
     "codeCoverage": "node_modules/.bin/jest --detectOpenHandles --coverage --silent",
-    "listsDescriptions": "nqr -t && nqr -p && nqr -t",
+    "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "updateHtml": "misc/mdToHtml.js",

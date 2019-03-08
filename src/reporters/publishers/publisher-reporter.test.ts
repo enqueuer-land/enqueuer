@@ -1,27 +1,31 @@
-import {OnInitEventExecutor} from "../../events/on-init-event-executor";
-import {OnFinishEventExecutor} from "../../events/on-finish-event-executor";
-import {OnMessageReceivedEventExecutor} from "../../events/on-message-received-event-executor";
-import {PublisherReporter} from "./publisher-reporter";
-import {ProtocolManager} from "../../plugins/protocol-manager";
-import {PluginManager} from "../../plugins/plugin-manager";
+import {OnInitEventExecutor} from '../../events/on-init-event-executor';
+import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
+import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
+import {PublisherReporter} from './publisher-reporter';
+import {ProtocolManager} from '../../plugins/protocol-manager';
+import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 
-jest.mock('../../plugins/plugin-manager');
-PluginManager.getProtocolManager.mockImplementation(() => {
-    return new ProtocolManager()
+jest.mock('../../plugins/dynamic-modules-manager');
+// @ts-ignore
+DynamicModulesManager.getInstance.mockImplementation(() => {
+    return {
+        getProtocolManager: () => new ProtocolManager()
+    };
 });
 
 let publishMock = jest.fn(() => Promise.resolve(true));
 let publisherMock = jest.fn(() => {
     return {
         publish: publishMock
-    }
+    };
 });
 
 jest.mock('../../plugins/protocol-manager');
+// @ts-ignore
 ProtocolManager.mockImplementation(() => {
     return {
         createPublisher: publisherMock
-    }
+    };
 });
 
 const publisher = {
@@ -33,27 +37,25 @@ let onInitTrigger = jest.fn(() => []);
 let onInitEventMock = jest.fn(() => {
     return {
         trigger: onInitTrigger
-    }
+    };
 });
 jest.mock('../../events/on-init-event-executor');
 OnInitEventExecutor.mockImplementation((onInitEventMock));
-
 
 let onFinishTrigger = jest.fn(() => []);
 let onFinishEventMock = jest.fn(() => {
     return {
         trigger: onFinishTrigger
-    }
+    };
 });
 jest.mock('../../events/on-finish-event-executor');
 OnFinishEventExecutor.mockImplementation((onFinishEventMock));
-
 
 let onMessageReceivedTrigger = jest.fn(() => []);
 let onMessageReceivedEventMock = jest.fn(() => {
     return {
         trigger: onMessageReceivedTrigger
-    }
+    };
 });
 jest.mock('../../events/on-message-received-event-executor');
 OnMessageReceivedEventExecutor.mockImplementation((onMessageReceivedEventMock));
@@ -84,7 +86,6 @@ describe('PublisherReporter', () => {
 
     });
 
-
     it('Should reject onMessageReceived', done => {
         const reason = 'reasonMessage';
         publishMock = jest.fn(() => Promise.reject(reason));
@@ -106,7 +107,6 @@ describe('PublisherReporter', () => {
         });
 
     });
-
 
     it('Should add Publisher test - success', done => {
         const publisherReporter = new PublisherReporter(publisher);
@@ -138,7 +138,6 @@ describe('PublisherReporter', () => {
 
     });
 
-
     it('Should print onMessageReceived', done => {
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().then(() => {
@@ -158,7 +157,7 @@ describe('PublisherReporter', () => {
                 onMessageReceived: {
                     assertions: 'blah'
                 }
-            }
+            };
         });
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().then(() => {
@@ -182,7 +181,7 @@ describe('PublisherReporter', () => {
                 onMessageReceived: {
                     assertions: 'blah'
                 }
-            }
+            };
         });
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().then(() => {
