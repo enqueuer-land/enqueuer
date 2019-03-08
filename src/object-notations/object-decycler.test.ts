@@ -8,7 +8,7 @@ describe('ObjectDecycler', () => {
 
         const stringified = new ObjectDecycler().decycle(value);
 
-        expect(stringified).toEqual(expected)
+        expect(stringified).toEqual(expected);
     });
 
     it('should replace cycle reference', () => {
@@ -19,7 +19,7 @@ describe('ObjectDecycler', () => {
 
         const stringified = new ObjectDecycler(replacer).decycle(value);
 
-        expect(stringified).toEqual(expected)
+        expect(stringified).toEqual(expected);
     });
 
 });

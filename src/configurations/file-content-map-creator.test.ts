@@ -15,9 +15,9 @@ describe('FileContentMapCreator', () => {
                 create: () => {
                     return {
                         loadFromFileSync: loadFromFileSyncMock
-                    }
+                    };
                 }
-            }
+            };
         });
         const tag = 'any';
         const filename = 'examples/file-content.any';
@@ -40,16 +40,15 @@ describe('FileContentMapCreator', () => {
                 create: () => {
                     return {
                         loadFromFileSync: loadFromFileSyncMock
-                    }
+                    };
                 }
-            }
+            };
         });
 
         const tag = 'tag';
         const filename = 'examples/file-content.tag';
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
-
 
         const fileMap = new FileContentMapCreator(requisition);
 
@@ -66,16 +65,16 @@ describe('FileContentMapCreator', () => {
         Container.subclassesOf.mockImplementationOnce(() => {
             return {
                 create: () => {
-                    loadFromFileSync: () => {}
+                    loadFromFileSync: () => {
+                    };
                 }
-            }
+            };
         });
 
         const tag = 'unknown';
         const filename = 'examples/file-content.unknown';
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
-
 
         const fileMap = new FileContentMapCreator(requisition);
 
@@ -93,9 +92,9 @@ describe('FileContentMapCreator', () => {
                 create: () => {
                     return {
                         loadFromFileSync: loadFromFileSyncMock
-                    }
+                    };
                 }
-            }
+            };
         });
 
         const tag = 'yaml';

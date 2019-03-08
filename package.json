@@ -8,7 +8,7 @@
     "prepublishOnly": "npm run clean && npm run build",
     "test": "npm run codeCoverage && npm run singleRunTest && npm run validateOutput",
     "unitTest": "node_modules/.bin/jest --silent .test.ts",
-    "singleRunTest": "nqr conf/singleRun.yml -a examples/requisition.yaml < misc/stdin",
+    "singleRunTest": "nqr conf/singleRun.yml -a examples/requisition-navigation.yaml < misc/stdin",
     "validateOutput": "yval --from=json outputExamples/singleRunOutput.json && yval --from=yaml outputExamples/singleRunOutput.yml",
     "codeCoverage": "node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
@@ -77,10 +77,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 70,
-        "branches": 70,
-        "functions": 70,
-        "lines": 70
+        "statements": 75,
+        "branches": 75,
+        "functions": 75,
+        "lines": 75
       }
     },
     "transform": {

@@ -8,8 +8,11 @@
                 toBeEqualTo: 10
             -   expect: store.otherKey / 2
                 toBeEqualTo: 1
--   onInit:
+-   anyName: <<key>>
+    onInit:
         assertions:
+            -   expect: requisition.anyName
+                toBeEqualTo: 10
             -   expect: <<key>> + 1
                 toBeEqualTo: 11
             -   expect: <<otherKey>> * 5

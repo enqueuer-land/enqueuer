@@ -263,13 +263,13 @@ Set to zero or less than zero to run it endlessly.</p>
 </code></pre>
 
 <p><strong>delay</strong><br>
-Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition.yml">this</a> to get the full idea.</p>
+Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> to get the full idea.</p>
 
 <pre><code>delay: 0
 </code></pre>
 
 <p><strong>iterations</strong><br>
-Optional. Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
+Optional. Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
 
 <pre><code>iterations: 3
 </code></pre>
@@ -489,12 +489,6 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
 - 1.yml
 - 2.yml
 - *.json
-</code></pre>
-
-<p><strong>parallel</strong><br>
-Optional. Requisition should be executed in parallel mode</p>
-
-<pre><code>parallel: true (false by default)
 </code></pre>
 
 <p><strong>log-level</strong><br>

@@ -3,34 +3,45 @@ import {Logger} from '../loggers/logger';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 import {IterationsEvaluator} from './iterations-evaluator';
+import {HashComponentCreator} from '../object-notations/hash-component-creator';
 
 export class RequisitionMultiplier {
     private readonly requisition: RequisitionModel;
     private readonly iterations?: number;
 
-    public constructor (requisition: RequisitionModel) {
+    public constructor(requisition: RequisitionModel) {
         this.requisition = requisition;
         this.iterations = this.evaluateIterations();
     }
 
-    public multiply(): RequisitionModel[] {
+    public multiply(): RequisitionModel | undefined {
 
         if (this.iterations === undefined || this.iterations === 1) {
-            return [this.requisition];
+            return this.requisition;
         }
 
         if (!this.iterations) {
             Logger.debug(`No iteration was found`);
-            return [];
+            return undefined;
         }
+        return this.cloneIt();
+    }
 
-        let requisitions: RequisitionModel[] = [];
-        for (let x = 0; x < this.iterations; ++x) {
-            const clone: RequisitionModel = {...this.requisition} as RequisitionModel;
+    private cloneIt() {
+        const result = this.createParent();
+        const parentBkp = this.requisition.parent;
+        delete this.requisition.parent;
+        const stringifiedRequisition = JSON.stringify(this.requisition);
+        for (let x = 0; x < this.iterations!; ++x) {
+            const clone: RequisitionModel = JSON.parse(stringifiedRequisition) as RequisitionModel;
+            clone.id = result.id;
+            clone.parent = result;
+            clone.iterations = 1;
             clone.name = clone.name + ` [${x}]`;
-            requisitions = requisitions.concat(clone);
+            result.requisitions!.push(new HashComponentCreator().refresh(clone));
         }
-        return requisitions;
+        result.parent = parentBkp;
+        return result;
     }
 
     private evaluateIterations(): number | undefined {
@@ -47,4 +58,15 @@ export class RequisitionMultiplier {
             return undefined;
         }
     }
+
+    private createParent(): RequisitionModel {
+        return {
+            name: this.requisition.name,
+            id: this.requisition.name,
+            subscriptions: [],
+            publishers: [],
+            requisitions: []
+        };
+    }
+
 }

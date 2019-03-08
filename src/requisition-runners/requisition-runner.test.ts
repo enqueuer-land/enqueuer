@@ -1,27 +1,7 @@
-import {RequisitionRunner} from "./requisition-runner";
-import {RequisitionModel} from "../models/inputs/requisition-model";
-import {RequisitionReporter} from "../reporters/requisition-reporter";
-import {Store} from '../configurations/store';
+import {RequisitionRunner} from './requisition-runner';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 import {Timeout} from '../timers/timeout';
-
-const report = {name: "I'm a report", valid: true};
-let startMock = jest.fn((cb) => cb());
-let getReportMock = jest.fn(() => report);
-let requisitionReporterConstructorMock = jest.fn(() => {
-    return {
-        start: startMock,
-        getReport: getReportMock
-    }
-});
-
-jest.mock('../reporters/requisition-reporter');
-RequisitionReporter.mockImplementation(requisitionReporterConstructorMock);
-
-
-jest.mock('../configurations/store');
-Store.getData.mockImplementation(() => {
-    return {keyName: 'value'}
-});
+import {Store} from '../configurations/store';
 
 jest.mock('../timers/timeout');
 Timeout.mockImplementation((cb) => {
@@ -30,53 +10,58 @@ Timeout.mockImplementation((cb) => {
 
 describe('RequisitionRunner', () => {
 
-    it('Should return requisition reporter skipped', done => {
+    it('Should return requisition reporter skipped', async () => {
         const requisition: RequisitionModel = {
-            name: '<<keyName>>',
             iterations: 0
         };
 
-        new RequisitionRunner(requisition).run().then(report => {
-            expect(report.valid).toBeTruthy();
-            expect(report.tests[0].valid).toBeTruthy();
-            done();
-        });
-        expect(startMock).not.toHaveBeenCalled();
+        const actual = await new RequisitionRunner(requisition).run();
+        expect(actual!.valid).toBeTruthy();
+        expect(actual!.tests[0].valid).toBeTruthy();
     });
 
-    it('Should return requisition report', () => {
+    it('Should return requisition report collection', async () => {
         const requisition: RequisitionModel = {
-            timeout: '<<keyName>>',
+            name: 'super cool',
+            iterations: 2,
+            requisitions: [
+                {
+                    name: 'first child'
+                },
+                {
+                    name: 'second child'
+                }
+            ]
         };
 
-        expect(new RequisitionRunner(requisition).run()).resolves.toBe(report);
-        expect(requisitionReporterConstructorMock).toHaveBeenCalledWith({parent: undefined, timeout: "value"});
+        const report = await new RequisitionRunner(requisition).run();
+        expect(report.time).toBeDefined();
+
+        expect(report.name).toBe(requisition.name);
+        expect(report.valid).toBeTruthy();
+        expect(report.requisitions![0].name).toBeDefined();
+        expect(report.requisitions![0].requisitions![0].name).toBe(requisition.requisitions![0].name);
+        expect(report.requisitions![0].requisitions![0].valid).toBeTruthy();
+        expect(report.requisitions![0].requisitions![1].name).toBe(requisition.requisitions![1].name);
+        expect(report.requisitions![0].requisitions![1].valid).toBeTruthy();
+
+        expect(report.requisitions![1].name).toBeDefined();
+        expect(report.requisitions![1].requisitions![0].name).toBe(requisition.requisitions![0].name);
+        expect(report.requisitions![1].requisitions![0].valid).toBeTruthy();
+        expect(report.requisitions![1].requisitions![1].name).toBe(requisition.requisitions![1].name);
+        expect(report.requisitions![1].requisitions![1].valid).toBeTruthy();
     });
 
-    it('Should return requisition report collection', done => {
+    it('Should replace stuff', async () => {
+        const keyName = 'value';
+        Store.getData().keyName = keyName;
+        // @ts-ignore
         const requisition: RequisitionModel = {
-            timeout: '<<keyName>>',
-            name: 'req name',
-            iterations: 2
+            name: '<<keyName>>',
         };
 
-        new RequisitionRunner(requisition).run().then((report) => {
-            expect(report.time).toBeDefined();
-            delete report.time;
-            expect(report).toEqual({
-                "name": "req name",
-                "publishers": [],
-                "requisitions": [{"name": "I'm a report", "requisitions": [], "valid": true}, {
-                    "name": "I'm a report",
-                    "requisitions": [],
-                    "valid": true
-                }],
-                "subscriptions": [],
-                "tests": [],
-                "valid": true
-            });
-            done();
-        });
+        const report = await new RequisitionRunner(requisition).run();
+        expect(report.name).toBe(keyName);
     });
 
 });

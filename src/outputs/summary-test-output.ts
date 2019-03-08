@@ -12,9 +12,9 @@ export class SummaryTestOutput {
         this.testAnalyzer = new TestsAnalyzer(report);
     }
 
-    public print() {
+    public print(): void {
         let message = '';
-        if (this.report.ignored === true) {
+        if (this.report.ignored) {
             message = `\t${chalk.black.bgYellow('[SKIP]')} `;
             message += chalk.bgYellow(this.formatName());
         } else if (this.report.valid === true) {

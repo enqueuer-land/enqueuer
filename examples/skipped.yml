@@ -1,16 +1,16 @@
 -   iterations: <<skipped>>
     onInit:
         script: |-
-            if (!store.executions) {
-                store.executions = 0;
+            if (!store.skippedExecutions) {
+                store.skippedExecutions = 0;
             }
-            ++store.executions;
+            ++store.skippedExecutions;
         store:
             skipped: 0
 -   onInit:
         assertions:
-        -   expect: store.executions
-            toBeEqualTo: 1
+        -   expect: store.skippedExecutions
+            toBeEqualTo: 5
 -   iterations: 1 === 0
     onInit:
         assertions:

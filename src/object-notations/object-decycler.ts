@@ -1,4 +1,5 @@
 export class ObjectDecycler {
+
     private readonly circularReplacer?: string;
     private cache = new Map();
 

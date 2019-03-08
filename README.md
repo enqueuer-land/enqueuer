@@ -87,12 +87,12 @@ Set to zero or less than zero to run it endlessly.
     timeout: 3000
     
 **delay**\
-Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition.yml) to get the full idea.
+Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) to get the full idea.
 
     delay: 0
 
 **iterations**\
-Optional. Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
+Optional. Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
 
     iterations: 3
 

@@ -3,12 +3,13 @@ import {Logger} from '../loggers/logger';
 import {Container} from 'conditional-injector';
 import {ObjectNotation} from '../object-notations/object-notation';
 import {Json} from '../object-notations/json';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 
 export class FileContentMapCreator {
 
     private map: any = {};
 
-    public constructor(value: object) {
+    public constructor(value: RequisitionModel) {
         this.checkChildren(value);
     }
 

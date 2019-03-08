@@ -1,14 +1,15 @@
 import {DateController} from '../timers/date-controller';
-import {createHash } from 'crypto';
+import {createHash} from 'crypto';
 import {Json} from '../object-notations/json';
+import {ObjectDecycler} from '../object-notations/object-decycler';
 
 export class IdGenerator {
 
-    private value: string;
+    private readonly value: string;
 
     public constructor(value: any) {
-        if (typeof(value) !== 'string') {
-            this.value = new Json().stringify(value);
+        if (typeof (value) !== 'string') {
+            this.value = JSON.stringify(new ObjectDecycler().decycle(value));
         } else {
             this.value = value as string;
         }
@@ -18,8 +19,10 @@ export class IdGenerator {
         const hash = createHash('sha256');
         hash.update(this.value, 'utf8');
         const coded = hash.digest('hex');
-        return new DateController().getStringOnlyNumbers() +
-                '_' +
-                coded.substr(0, 20);
+        return new DateController().getStringOnlyNumbers().substr(8, 10) +
+            '_' +
+            coded.substr(0, 10) +
+            '_' +
+            Math.trunc(Math.random() * 1000000 + 0x123);
     }
 }

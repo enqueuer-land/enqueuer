@@ -1,150 +1,116 @@
 import {Logger} from '../loggers/logger';
 import {RequisitionReporter} from '../reporters/requisition-reporter';
 import * as input from '../models/inputs/requisition-model';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 import {Timeout} from '../timers/timeout';
 import {RequisitionMultiplier} from './requisition-multiplier';
-import {DateController} from '../timers/date-controller';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {FileContentMapCreator} from '../configurations/file-content-map-creator';
 import {IterationsEvaluator} from './iterations-evaluator';
+import {ParentRemover} from '../object-notations/parent-remover';
+import {ObjectDecycler} from '../object-notations/object-decycler';
+import {HashComponentCreator} from '../object-notations/hash-component-creator';
 
 export class RequisitionRunner {
 
-    private readonly requisitions: input.RequisitionModel[] = [];
+    private readonly requisition?: input.RequisitionModel;
     private readonly name: string;
-    private readonly parent: input.RequisitionModel;
     private readonly id?: string;
 
-    public constructor(requisition: input.RequisitionModel, parent: input.RequisitionModel) {
-        this.parent = parent;
+    public constructor(requisition: input.RequisitionModel) {
         this.name = requisition.name;
+        //TODO create id if needed
         this.id = requisition.id;
         Logger.info(`Initializing requisition '${requisition.name}'`);
-        const items = new RequisitionMultiplier(requisition).multiply();
-        if (items.length <= 0) {
+        this.requisition = new RequisitionMultiplier(requisition).multiply();
+        if (!this.requisition) {
             Logger.info(`No result requisition after iterations evaluation: ${requisition.iterations}`);
-        } else {
-            this.requisitions = items;
         }
     }
 
-    public run(): Promise<output.RequisitionModel> {
+    public async run(): Promise<output.RequisitionModel> {
         Logger.info(`Running requisition '${this.name}'`);
-        if (this.requisitions.length <= 1) {
-            return this.startRequisition(this.requisitions[0]);
+        let report;
+        if (this.requisition) {
+            report = await this.startRequisition();
         } else {
-            return new Promise((resolve) => this.startIterator(RequisitionDefaultReports.createIteratorReport(
-                {name: this.name, id: this.id}), resolve));
+            report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
         }
+        // new SummaryTestOutput(report).print(); //TODO use it
+        return report;
+
     }
 
-    private startIterator(iteratorReport: output.RequisitionModel, resolve: any) {
-        const requisition = this.requisitions.shift();
-        if (!requisition) {
-            this.adjustIteratorReportTimeValues(iteratorReport);
-            resolve(iteratorReport);
-            return;
+    private async runChildRequisitions(requisition: input.RequisitionModel): Promise<output.RequisitionModel[]> {
+        const children: RequisitionModel[] = requisition.requisitions || [];
+        const reports = [];
+        Logger.debug(`Handling child '${requisition.name}' requisitions`);
+        let index: number = 0;
+        for (const child of children) {
+            child.parent = requisition;
+            child.name = child.name || `${requisition.name} [${index}]`;
+            reports.push(await new RequisitionRunner(child).run());
+            ++index;
         }
-        try {
-            this.startRequisition(requisition).then(report => {
-                this.addReport(iteratorReport, report);
-                this.startIterator(iteratorReport, resolve);
-            });
-        } catch (err) {
-            Logger.error(`Error running requisition '${requisition.name}'`);
-            const report: output.RequisitionModel = RequisitionDefaultReports.createRunningError({name: requisition.name, id: this.id}, err);
-            this.addReport(iteratorReport, report);
-            this.startIterator(iteratorReport, resolve);
-        }
+        return reports;
     }
 
-    private addReport(iteratorReport: output.RequisitionModel, report: output.RequisitionModel) {
-        if (iteratorReport.requisitions) {
-            iteratorReport.requisitions.push(report);
+    private async startRequisition(): Promise<output.RequisitionModel> {
+        const mapReplacedRequisition = this.replaceVariables();
+        const notRanReport = this.shouldNotRun(mapReplacedRequisition);
+        if (!!notRanReport) {
+            return Promise.resolve(notRanReport);
         }
-        iteratorReport.valid = iteratorReport.valid && report.valid;
+
+        Logger.trace(`Requisition runner starting requisition reporter for '${mapReplacedRequisition.name}'`);
+        return await this.startRequisitionReporter(mapReplacedRequisition);
     }
 
-    private adjustIteratorReportTimeValues(iteratorReport: output.RequisitionModel) {
-        if (!iteratorReport.requisitions) {
-            return;
-        }
-        const first = iteratorReport.requisitions[0];
-        const last = iteratorReport.requisitions[iteratorReport.requisitions.length - 1];
-        if (first && first.time && last && last.time) {
-            const startTime = new DateController(new Date(first.time.startTime as string));
-            const endTime = new DateController(new Date(last.time.endTime as string));
-            const totalTime = endTime.getTime() - startTime.getTime();
-            iteratorReport.time = {
-                startTime: startTime.toString(),
-                endTime: endTime.toString(),
-                totalTime: totalTime
-            };
-        }
-    }
+    private replaceVariables(): input.RequisitionModel {
+        const withId = new HashComponentCreator().insert(this.requisition!);
+        Logger.debug(`Evaluating variables of requisition '${this.requisition!.name}'`);
+        const parentBkp = withId.parent;
+        const parentLess: any = new ParentRemover().remove(withId);
 
-    private promiseSerial(promisifiedInnerRunners: (() => Promise<output.RequisitionModel>)[]): any {
-        return promisifiedInnerRunners.reduce((promise: any, promisifiedRunner: () => Promise<output.RequisitionModel>) =>
-                promise.then((result: output.RequisitionModel) => promisifiedRunner().then(Array.prototype.concat.bind(result))),
-            Promise.resolve([]));
-    }
+        const decycled: input.RequisitionModel = new ObjectDecycler().decycle(parentLess) as input.RequisitionModel;
 
-    private async checkInnerRequisitions(parent: input.RequisitionModel): Promise<output.RequisitionModel[]> {
-        if (parent.requisitions && parent.requisitions.length > 0) {
-            Logger.info(`Handling inner ${parent.name} requisitions`);
-
-            const promisifiedInnerRunners: (() => Promise<output.RequisitionModel>)[] = parent.requisitions
-                .map((requisition, index) => () => {
-                    requisition.name = requisition.name || `${parent.name} - inner [${index}]`;
-                    return new RequisitionRunner(requisition, parent).run();
-                });
-
-            return await this.promiseSerial(promisifiedInnerRunners);
-        } else {
-            return [];
-        }
-    }
-
-    private startRequisition(requisition: input.RequisitionModel): Promise<output.RequisitionModel> {
-        if (requisition === undefined) {
-            Logger.info(`No requisition to run. Skipping`);
-            return Promise.resolve(RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id}));
-        }
-        Logger.debug(`Evaluating starting of requisition '${requisition ? requisition.name : 'no requisition'}'`);
-        const fileMapCreator = new FileContentMapCreator(requisition);
-        let mapReplacedRequisition: any = new JsonPlaceholderReplacer()
+        const fileMapCreator = new FileContentMapCreator(decycled);
+        const fileReplaced = new JsonPlaceholderReplacer()
             .addVariableMap(fileMapCreator.getMap())
-            .replace(requisition) as input.RequisitionModel;
-        mapReplacedRequisition = new JsonPlaceholderReplacer()
+            .replace(decycled) as input.RequisitionModel;
+        const storeReplaced = new JsonPlaceholderReplacer()
             .addVariableMap(Store.getData())
-            .replace(mapReplacedRequisition) as input.RequisitionModel;
+            .replace(fileReplaced) as input.RequisitionModel;
+        storeReplaced.parent = parentBkp;
+        return storeReplaced;
+    }
+
+    private shouldNotRun(mapReplacedRequisition: any): output.RequisitionModel | undefined {
         if (this.shouldSkipRequisition(mapReplacedRequisition)) {
             Logger.info(`Requisition will be skipped`);
-            return Promise.resolve(RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id}));
+            return RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
         }
         if (mapReplacedRequisition.ignore) {
             Logger.info(`Requisition will be ignored`);
-            return Promise.resolve(RequisitionDefaultReports.createIgnoredReport({name: this.name, id: this.id}));
+            return RequisitionDefaultReports.createIgnoredReport({name: this.name, id: this.id});
         }
-        mapReplacedRequisition.parent = this.parent;
-        Logger.trace(`Requisition runner starting requisition reporter for '${mapReplacedRequisition.name}'`);
-        return this.startRequisitionReporter(mapReplacedRequisition);
     }
 
     private startRequisitionReporter(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
         return new Promise((resolve) => {
             const requisitionReporter = new RequisitionReporter(requisitionModel);
             new Timeout(() => {
-                this.checkInnerRequisitions(requisitionModel)
-                    .then((reports: output.RequisitionModel[]) => {
+                this.runChildRequisitions(requisitionModel)
+                    .then((childrenReport: output.RequisitionModel[]) => {
                         requisitionReporter.start(() => {
                             const report = requisitionReporter.getReport();
                             Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
                             Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
-                            report.requisitions = reports;
+                            report.requisitions = childrenReport;
+                            report.valid = report.valid && report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
                             resolve(report);
                         });
                     });

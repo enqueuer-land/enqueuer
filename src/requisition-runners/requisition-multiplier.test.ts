@@ -1,76 +1,132 @@
-import {RequisitionModel} from "../models/inputs/requisition-model";
-import {RequisitionMultiplier} from "./requisition-multiplier";
-
-let requisition: RequisitionModel;
+import {RequisitionMultiplier} from './requisition-multiplier';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 
 describe('RequisitionMultiplier', () => {
-    beforeEach(() => {
-        requisition = {
-            timeout: 3000,
-            name: "file",
-            iterations: 10,
-            subscriptions: [],
-            startEvent: {
-                publisher: {
-                    type: "file",
-                    name: "filePublisher",
-                    payload: "filePublisher",
-                    filenamePrefix: "temp/fileTest",
-                    filenameExtension: "file",
-                    onInit: "publisher.payload=new Date().getTime();"
-                }
-            },
-            requisitions: []
+    it('Should multiply requisitions by iterations', () => {
+        const original = {
+            name: 'super',
+            iterations: 3,
+            deep: {
+                deeper: {
+                    value: 123
+                },
+            }
         };
 
-    });
+        const multiplied = new RequisitionMultiplier(original).multiply();
 
-    it('Should multiply requisitions by iterations', () => {
-
-        const multiplied = new RequisitionMultiplier(requisition).multiply();
-
-
-        expect(multiplied.map(req => req.name)).toEqual(["file [0]", "file [1]", "file [2]", "file [3]", "file [4]", "file [5]", "file [6]", "file [7]", "file [8]", "file [9]"]);
-        expect(multiplied.length).toBe(requisition.iterations);
-    });
-
-    it('Should default unknown variable', () => {
-        requisition.iterations = '<<UnknownIterations>>';
-        const multiplied = new RequisitionMultiplier(requisition).multiply();
-
-        expect(multiplied.length).toBe(0);
-    });
-
-    it('Should default (undefined) iterations to 1', () => {
-        delete requisition.iterations;
-
-        const multiplied = new RequisitionMultiplier(requisition).multiply();
-
-        expect(multiplied.length).toBe(1);
+        expect(multiplied.requisitions.map(child => child.name)).toEqual(['super [0]', 'super [1]', 'super [2]']);
+        multiplied.requisitions.map(child => {
+            original.name = child.name;
+            expect(child.id).toBeDefined();
+            expect(child.deep).toEqual(original.deep);
+            expect(child.iterations).toBe(1);
+        });
     });
 
     it('Should set default name', () => {
-        requisition.iterations = 1;
-        const multiplied = new RequisitionMultiplier(requisition).multiply();
+        const original = {
+            name: 'super',
+            iterations: 3,
+        };
 
-        expect(multiplied.length).toBe(requisition.iterations);
-        expect(multiplied[0].name).toBe('file');
+        const multiplied = new RequisitionMultiplier(original).multiply();
+
+        multiplied.requisitions.map((child, index) => {
+            expect(child.name).toEqual(original.name + ` [${index}]`);
+        });
+    });
+
+    it('Should default unknown variable', () => {
+        const original = {
+            iterations: '<<UnknownIterations>>',
+        };
+        const multiplied = new RequisitionMultiplier(original).multiply();
+
+        expect(multiplied).toBeUndefined();
+    });
+
+    it('Should default (undefined) iterations to 1', () => {
+        const original = {};
+
+        const multiplied = new RequisitionMultiplier(original).multiply();
+
+        expect(multiplied).toBeDefined();
     });
 
     it('Should default (null) iterations to 0', () => {
-        requisition.iterations = null;
+        const original = {};
+        original.iterations = null;
 
-        const multiplied = new RequisitionMultiplier(requisition).multiply();
+        const multiplied = new RequisitionMultiplier(original).multiply();
 
-        expect(multiplied.length).toBe(0);
+        expect(multiplied).toBeUndefined();
     });
 
     it('Should default negative iterations to 0', () => {
-        requisition.iterations = -3;
+        const original = {
+            iterations: -10,
+        };
+
+        const multiplied = new RequisitionMultiplier(original).multiply();
+
+        expect(multiplied.requisitions.length).toBe(0);
+    });
+
+    it('Should keep parent', () => {
+        const original = {
+            name: 'original',
+            iterations: 2,
+            parent: {name: 'parent'}
+        };
+        // @ts-ignore
+        original.parent.requisitions = [original];
+
+        // @ts-ignore
+        const multiplied = new RequisitionMultiplier(original).multiply();
+
+        expect(multiplied.parent.name).toBe('parent');
+        expect(multiplied.requisitions[0].parent.name).toBe(original.name);
+        expect(multiplied.requisitions[0].parent.parent.name).toBe('parent');
+        expect(multiplied.requisitions[1].parent.name).toBe(original.name);
+        expect(multiplied.requisitions[1].parent.parent.name).toBe('parent');
+    });
+
+    it('Should refresh ids', () => {
+        const requisition: RequisitionModel = {
+            name: 'super cool',
+            iterations: 2,
+            requisitions: [
+                {
+                    name: 'first child'
+                },
+                {
+                    name: 'second child'
+                }
+            ]
+        };
 
         const multiplied = new RequisitionMultiplier(requisition).multiply();
 
-        expect(multiplied.length).toBe(0);
+        // @ts-ignore
+        const foundIds: RequisitionModel = [];
+        expect(foundIds).not.toContainEqual(multiplied!.id);
+        foundIds.push(multiplied!.id);
+
+        expect(foundIds).not.toContainEqual(multiplied!.requisitions![0].hash);
+        foundIds.push(multiplied!.requisitions![0].hash);
+        expect(foundIds).not.toContainEqual(multiplied!.requisitions![0].requisitions![0].hash);
+        foundIds.push(multiplied!.requisitions![0].requisitions![0].hash);
+        expect(foundIds).not.toContainEqual(multiplied!.requisitions![0].requisitions![1].hash);
+        foundIds.push(multiplied!.requisitions![0].requisitions![1].hash);
+
+        expect(foundIds).not.toContainEqual(multiplied!.requisitions![1].hash);
+        foundIds.push(multiplied!.requisitions![1].hash);
+        expect(foundIds).not.toContainEqual(multiplied!.requisitions![1].requisitions![0].hash);
+        foundIds.push(multiplied!.requisitions![1].requisitions![0].hash);
+        expect(foundIds).not.toContainEqual(multiplied!.requisitions![1].requisitions![1].hash);
+        foundIds.push(multiplied!.requisitions![1].requisitions![1].hash);
+
     });
 
 });
