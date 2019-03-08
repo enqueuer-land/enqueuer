@@ -1,78 +1,119 @@
 import {CommandLineConfiguration} from './command-line-configuration';
 import {FileConfiguration} from './file-configuration';
-import {ConfigurationValues} from './configuration-values';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {Logger} from '../loggers/logger';
+import {Yaml} from '../object-notations/yaml';
 
 export class Configuration {
+    private static instance: Configuration;
+    private static loaded: boolean = false;
 
-    private static configFileName?: string;
-    private static instance: any;
+    private name: string = 'enqueuer';
+    private parallel: boolean = false;
+    private files: string[] = [];
+    private logLevel: string = 'warn';
+    private outputs: PublisherModel[] = [];
+    private maxReportLevelPrint: number = 2;
+    private store: any = {};
+    private quiet: boolean = false;
+    private plugins: string[] = [];
 
     private constructor() {
-
+        const commandLineConfiguration = new CommandLineConfiguration(process.argv);
+        const fileName = commandLineConfiguration.getConfigFileName();
+        this.adjustFromFile(fileName);
+        this.adjustFromCommandLine(commandLineConfiguration);
     }
 
-    public static getValues(): ConfigurationValues {
-        const configFileName = CommandLineConfiguration.getConfigFileName();
-        const isNotLoadedYet = !Configuration.instance;
-        const fileNameHasChanged = configFileName != Configuration.configFileName;
-
-        if (isNotLoadedYet) {
-            Configuration.instance = this.initialLoad();
+    public static getInstance(): Configuration {
+        if (Configuration.loaded === false) {
+            Configuration.loaded = true;
+            Configuration.instance = new Configuration();
+            Logger.trace(`Configuration: ${new Yaml().stringify(Configuration.instance)}`);
         }
-        if (configFileName !== undefined && fileNameHasChanged) {
-            Configuration.instance = this.readFromFile(configFileName);
-        }
-        return {...Configuration.instance} as ConfigurationValues;
+        return Configuration.instance;
     }
 
-    public static addPlugin(pluginName: string): ConfigurationValues {
-        Configuration.getValues();
-        const plugins: Set<string> = new Set(Configuration.instance.plugins);
+    public addPlugin(pluginName: string): Configuration {
+        const plugins: Set<string> = new Set(this.plugins);
         plugins.add(pluginName);
-        Configuration.instance.plugins = Array.from(plugins.values());
-        return this.getValues();
+        this.plugins = Array.from(plugins.values());
+        return this;
     }
 
-    private static initialLoad() {
-        return Configuration.createDefaultSingleRun();
+    public getName(): string {
+        return this.name;
     }
 
-    private static readFromFile(configFileName: string): ConfigurationValues {
-        const defaultValues = Configuration.createDefaultSingleRun();
-        FileConfiguration.load(configFileName);
-        Configuration.configFileName = configFileName;
-        return {
-            name: FileConfiguration.getName(),
-            parallel: !!FileConfiguration.isParallelExecution(),
-            files: FileConfiguration.getFiles() || [],
-            logLevel: CommandLineConfiguration.getVerbosity() || FileConfiguration.getLogLevel() || defaultValues.logLevel,
-            outputs: defaultValues.outputs.concat(FileConfiguration.getOutputs() || []),
-            plugins: defaultValues.plugins.concat(FileConfiguration.getPlugins() || []),
-            store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
-            maxReportLevelPrint: FileConfiguration.getMaxReportLevelPrint() || defaultValues.maxReportLevelPrint,
-            quiet: CommandLineConfiguration.isQuietMode(),
-            addSingleRun: CommandLineConfiguration.singleRunFiles(),
-            addSingleRunIgnore: CommandLineConfiguration.singleRunFilesIgnoring()
-        };
+    public isParallel(): boolean {
+        return this.parallel;
     }
 
-    private static createDefaultSingleRun(): any {
-        let outputs = [];
-        if (CommandLineConfiguration.getStdoutRequisitionOutput()) {
-            outputs.push({type: 'standard-output', format: 'console'});
+    public getFiles(): string[] {
+        return this.files;
+    }
+
+    public getLogLevel(): string {
+        return this.logLevel;
+    }
+
+    public getOutputs(): PublisherModel[] {
+        return this.outputs;
+    }
+
+    public getMaxReportLevelPrint(): number {
+        return this.maxReportLevelPrint;
+    }
+
+    public getStore(): any {
+        return this.store;
+    }
+
+    public isQuiet(): boolean {
+        return this.quiet;
+    }
+
+    public getPlugins(): string[] {
+        return this.plugins;
+    }
+
+    private adjustFromCommandLine(commandLineConfiguration: CommandLineConfiguration): void {
+        this.files = this.files.concat(commandLineConfiguration.getSingleRunFiles() || []);
+
+        this.logLevel = commandLineConfiguration.getVerbosity() || this.logLevel;
+        this.plugins = [...new Set(this.plugins.concat(commandLineConfiguration.getPlugins() || []))];
+        this.store = Object.assign({}, this.store, commandLineConfiguration.getStore());
+        this.quiet = commandLineConfiguration.isQuietMode();
+        const singleRunFilesIgnoring = commandLineConfiguration.getSingleRunFilesIgnoring();
+        if (singleRunFilesIgnoring && singleRunFilesIgnoring.length > 0) {
+            this.files = singleRunFilesIgnoring;
         }
-        return {
-            logLevel: CommandLineConfiguration.getVerbosity() || 'warn',
-            name: '',
-            parallel: false,
-            maxReportLevelPrint: 2,
-            files: [],
-            outputs: outputs,
-            store: Object.assign({}, CommandLineConfiguration.getStore()),
-            quiet: CommandLineConfiguration.isQuietMode(),
-            plugins: CommandLineConfiguration.getPlugins() || [],
-            addSingleRun: CommandLineConfiguration.singleRunFiles(),
-            addSingleRunIgnore: CommandLineConfiguration.singleRunFilesIgnoring()
-        };
+        if (commandLineConfiguration.getStdoutRequisitionOutput() !== false) {
+            this.outputs.push({type: 'standard-output', format: 'console', name: 'command line report output'});
+        }
     }
+
+    private adjustFromFile(filename?: string) {
+        if (filename !== undefined) {
+            try {
+                const fileConfiguration = new FileConfiguration(filename);
+                if (fileConfiguration) {
+                    this.name = fileConfiguration.getName() || this.name;
+                    this.parallel = !!fileConfiguration.isParallelExecution() || this.parallel;
+                    this.files = fileConfiguration.getFiles() || this.files;
+                    this.logLevel = fileConfiguration.getLogLevel() || this.logLevel;
+                    this.outputs = this.outputs.concat(fileConfiguration.getOutputs() || []);
+                    this.plugins = this.plugins.concat(fileConfiguration.getPlugins() || []);
+                    this.store = Object.assign({}, fileConfiguration.getStore(), this.store);
+                    const fileMaxReportLevelPrint = fileConfiguration.getMaxReportLevelPrint();
+                    if (fileMaxReportLevelPrint !== undefined) {
+                        this.maxReportLevelPrint = fileMaxReportLevelPrint;
+                    }
+                }
+            } catch (err) {
+                Logger.error(err);
+            }
+        }
+    }
+
 }

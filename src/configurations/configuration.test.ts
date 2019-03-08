@@ -1,153 +1,190 @@
-import {Configuration} from "./configuration";
-import {FileConfiguration} from "./file-configuration";
-import {CommandLineConfiguration} from "./command-line-configuration";
+import {Configuration} from './configuration';
+import {FileConfiguration} from './file-configuration';
+import {CommandLineConfiguration} from './command-line-configuration';
 
 jest.mock('./file-configuration');
 jest.mock('./command-line-configuration');
 
 describe('Configuration', () => {
-
-    const makeId = () => {
-        let text = "";
-        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (let i = 0; i < 8; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-        return text;
-    };
-
     beforeEach(() => {
-        CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => makeId());
-    });
-
-    it('should check \'refresh\'', () => {
-        CommandLineConfiguration.getConfigFileName.mockReset();
-
-        const reloadMock = jest.fn();
-        FileConfiguration.load.mockImplementation(reloadMock);
-
-        let configFileName = 'first';
-        CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => configFileName);
-
-        Configuration.getValues();
-
-        expect(reloadMock).toHaveBeenCalledWith(configFileName);
-
-        //----
-
-        configFileName = 'second';
-        CommandLineConfiguration.getConfigFileName.mockImplementationOnce(() => configFileName);
-
-        Configuration.getValues();
-
-
-        expect(reloadMock).toHaveBeenCalledWith(configFileName);
-    });
-
-    it('should check \'LogLevel\' in command line', () => {
-        const logLevel = 'commandLine';
-        CommandLineConfiguration.getVerbosity.mockImplementationOnce(() => logLevel);
-
-        expect(Configuration.getValues().logLevel).toBe(logLevel);
-    });
-
-    it('should check \'log-level\' in configuration file', () => {
-        const logLevel = 'confFile';
-        CommandLineConfiguration.getVerbosity.mockImplementation(() => {});
-        FileConfiguration.getLogLevel.mockImplementationOnce(() => logLevel);
-
-        expect(Configuration.getValues().logLevel).toBe(logLevel);
-    });
-
-    it('should check default \'log-level\'', () => {
-        expect(Configuration.getValues().logLevel).toBe('warn');
+        // @ts-ignore
+        Configuration.loaded = false;
     });
 
     it('should check default values', () => {
-        expect(Configuration.getValues().name).toBeUndefined();
-        expect(Configuration.getValues().parallel).toBeFalsy();
-        expect(Configuration.getValues().maxReportLevelPrint).toBe(2);
-        expect(Configuration.getValues().files).toEqual([]);
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine());
+
+        const instance = Configuration.getInstance();
+
+        expect(instance.getName()).toBe('enqueuer');
+        expect(instance.isParallel()).toBeFalsy();
+        expect(instance.getFiles()).toEqual([]);
+        expect(instance.getLogLevel()).toBe('warn');
+        expect(instance.getMaxReportLevelPrint()).toBe(2);
+        expect(instance.getStore()).toEqual({});
+        expect(instance.isQuiet()).toBeFalsy();
+        expect(instance.getPlugins()).toEqual([]);
+        expect(instance.getOutputs()).toEqual([]);
     });
 
-    it('should getOutputs in configuration file', () => {
-        const outputs = 'confFile';
-        FileConfiguration.getOutputs.mockImplementationOnce(() => outputs);
+    it('should work with only command line', () => {
+        const commandLine = createCommandLine();
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
 
-        expect(Configuration.getValues().outputs).toEqual([outputs]);
+        const instance = Configuration.getInstance();
+
+        expect(instance.getFiles()).toEqual(['cli-firstFile', 'cli-secondFile']);
+        expect(instance.getLogLevel()).toBe('cli-debug');
+        expect(instance.getStore()).toEqual({cliKey: 'value'});
+        expect(instance.isQuiet()).toBeTruthy();
+        expect(instance.getPlugins()).toEqual(['cli-amqp-plugin', 'common-plugin']);
+        expect(instance.getName()).toBe('enqueuer');
+        expect(instance.isParallel()).toBeFalsy();
+        expect(instance.getMaxReportLevelPrint()).toBe(2);
     });
 
-    it('should merge getStore from configuration file and command line', () => {
-        CommandLineConfiguration.getStore.mockImplementation(() => {
-            return {
-                commandLine: 'value'
-            }
-        });
-        FileConfiguration.getStore.mockImplementation(() => {
-            return {
-                confFile: 'value'
-            }
+    it('should work with only conf file', () => {
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine('confFile'));
+        // @ts-ignore
+        FileConfiguration.mockImplementationOnce(() => createFileConfiguration());
+
+        const instance = Configuration.getInstance();
+
+        expect(instance.getName()).toBe('confFile-examples');
+        expect(instance.isParallel()).toBeTruthy();
+        expect(instance.getFiles()).toEqual(['confFile-1', 'confFile-2']);
+        expect(instance.getLogLevel()).toBe('confFile-fatal');
+        expect(instance.getMaxReportLevelPrint()).toBe(13);
+        expect(instance.getStore()).toEqual({confFileStore: 'yml', confFileKey: 'file report output'});
+        expect(instance.getPlugins()).toEqual(['confFile-plugin', 'confFile-plugin-2', 'common-plugin']);
+        expect(instance.isQuiet()).toBeFalsy();
+    });
+
+    it('should handle file not found', () => {
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine('not to throw'));
+        // @ts-ignore
+        FileConfiguration.mockImplementationOnce(() => {
+            throw 'error';
         });
 
-        const expected = {
-            commandLine: 'value',
-            confFile: 'value'
+        expect(() => Configuration.getInstance()).not.toThrow();
+    });
+
+    it('should merge command line with conf file', () => {
+        const commandLine = createCommandLine('conf-file');
+        const fileConfiguration = createFileConfiguration();
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        // @ts-ignore
+        FileConfiguration.mockImplementationOnce(() => fileConfiguration);
+
+        const instance = Configuration.getInstance();
+
+        expect(instance.getName()).toBe(fileConfiguration.getName());
+        expect(instance.isParallel()).toBeTruthy();
+        expect(instance.getFiles()).toEqual(fileConfiguration.getFiles().concat(commandLine.getSingleRunFiles()));
+        expect(instance.getLogLevel()).toBe(commandLine.getVerbosity());
+        expect(instance.getMaxReportLevelPrint()).toBe(fileConfiguration.getMaxReportLevelPrint());
+        expect(instance.getStore()).toEqual(Object.assign({}, fileConfiguration.getStore(), commandLine.getStore()));
+        expect(instance.isQuiet()).toBeTruthy();
+    });
+
+    it('should ignore files', () => {
+        const uniqueFiles = ['unique-file1', 'unique-file2'];
+        const fileConfiguration = createFileConfiguration();
+        const commandLine = createCommandLine('conf-file');
+        // @ts-ignore
+        commandLine.getSingleRunFilesIgnoring = () => uniqueFiles;
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        // @ts-ignore
+        FileConfiguration.mockImplementationOnce(() => fileConfiguration);
+
+        const instance = Configuration.getInstance();
+
+        expect(instance.getFiles()).toEqual(uniqueFiles);
+    });
+
+    it('should combine plugins', () => {
+        const commandLine = createCommandLine('conf-file');
+        const fileConfiguration = createFileConfiguration();
+        const manuallyAddedPlugins = ['common-plugin', 'manuallyAddedPlugin'];
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        // @ts-ignore
+        FileConfiguration.mockImplementationOnce(() => fileConfiguration);
+
+        const configuration = Configuration.getInstance();
+        manuallyAddedPlugins.forEach(plugin => configuration.addPlugin(plugin));
+
+        const confPlugins = configuration.getPlugins();
+        const uniquePlugins = [...new Set(commandLine.getPlugins()
+            .concat(fileConfiguration.getPlugins())
+            .concat(manuallyAddedPlugins))];
+        expect(confPlugins.length).toBe(uniquePlugins.length);
+        confPlugins.forEach(confPlugin => expect(uniquePlugins).toContainEqual(confPlugin));
+    });
+
+    it('should create cli output formatter', () => {
+        const commandLine = createCommandLine();
+        commandLine.getStdoutRequisitionOutput = () => true;
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+
+        const instance = Configuration.getInstance();
+
+        expect(instance.getOutputs()).toEqual([{format: 'console', name: 'command line report output', type: 'standard-output'}]);
+    });
+
+    const createEmptyCommandLine = (filename: string) => {
+        return {
+            getConfigFileName: () => filename,
+            getSingleRunFiles: () => undefined,
+            getVerbosity: () => undefined,
+            getPlugins: () => undefined,
+            getStore: () => undefined,
+            isQuietMode: () => undefined,
+            getSingleRunFilesIgnoring: () => undefined,
+            getStdoutRequisitionOutput: () => false,
         };
+    };
 
-        expect(Configuration.getValues().store).toEqual(expected);
-    });
+    const createCommandLine = (filename?: string) => {
+        return {
+            getConfigFileName: () => filename,
+            getSingleRunFiles: () => ['cli-firstFile', 'cli-secondFile'],
+            getVerbosity: () => 'cli-debug',
+            getPlugins: () => ['cli-amqp-plugin', 'common-plugin'],
+            getStore: () => {
+                return {
+                    cliKey: 'value'
+                };
+            },
+            isQuietMode: () => true,
+            getSingleRunFilesIgnoring: () => undefined,
+            getStdoutRequisitionOutput: () => true,
+        };
+    };
 
-    it('should merge plugins from configuration file, method and command line', () => {
-        CommandLineConfiguration.getPlugins.mockImplementation(() => {
-            return ['CommandLineConfiguration']
-        });
-        FileConfiguration.getPlugins.mockImplementation(() => {
-            return ['FileConfiguration']
-        });
-
-        Configuration.addPlugin('ConfigurationMethod');
-
-        expect(Configuration.getValues().plugins).toEqual(['CommandLineConfiguration', 'FileConfiguration', 'ConfigurationMethod']);
-    });
-
-    it('should check \'isQuietMode\' in command line', () => {
-        const quietMode = false;
-        CommandLineConfiguration.isQuietMode.mockImplementation(() => quietMode);
-
-        expect(Configuration.getValues().quiet).toBe(quietMode);
-    });
-
-    it('should clone original value', () => {
-        CommandLineConfiguration.getConfigFileName.mockReset();
-        CommandLineConfiguration.getConfigFileName.mockImplementation(() => 'file');
-
-        const original = {original: true};
-        const changed = {changed: true};
-        CommandLineConfiguration.getStore.mockImplementation(() => {return original});
-
-        const previousValue = Configuration.getValues();
-        previousValue.store = changed;
-
-        const attributes = Configuration.getValues();
-
-        expect(previousValue.store).toEqual(changed);
-        expect(attributes.store.original).toEqual(original.original);
-    });
-
-    it('should avoid refreshing', () => {
-        const filename = makeId();
-        CommandLineConfiguration.getConfigFileName.mockReset();
-        CommandLineConfiguration.getConfigFileName.mockImplementation(() => filename);
-
-        const reloadMock = jest.fn();
-        FileConfiguration.load.mockImplementation(reloadMock);
-
-        Configuration.getValues();
-        Configuration.getValues();
-        Configuration.getValues();
-
-        expect(reloadMock).toHaveBeenCalledTimes(1);
-    });
+    const createFileConfiguration = () => {
+        return {
+            getLogLevel: () => 'confFile-fatal',
+            getOutputs: () => {
+                return {type: 'confFile-type', format: 'yml', name: 'confFile report output'};
+            },
+            getStore: () => {
+                return {confFileStore: 'yml', confFileKey: 'file report output'};
+            },
+            getPlugins: () => ['confFile-plugin', 'confFile-plugin-2', 'common-plugin'],
+            getName: () => 'confFile-examples',
+            isParallelExecution: () => true,
+            getFiles: () => ['confFile-1', 'confFile-2'],
+            getMaxReportLevelPrint: () => 13,
+        };
+    };
 
 });

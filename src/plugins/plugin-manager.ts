@@ -35,7 +35,7 @@ export class PluginManager {
         ];
 
         //sync forEach
-        builtInModules.concat(Configuration.getValues().plugins)
+        builtInModules.concat(Configuration.getInstance().getPlugins())
             .map(async module => {
                 try {
                     require(module).entryPoint({

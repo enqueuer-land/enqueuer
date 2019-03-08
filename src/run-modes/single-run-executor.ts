@@ -5,12 +5,12 @@ import * as glob from 'glob';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
-import {ConfigurationValues} from '../configurations/configuration-values';
 import {DateController} from '../timers/date-controller';
 import {RequisitionFileParser} from '../requisition-runners/requisition-file-parser';
 import {RequisitionRunner} from '../requisition-runners/requisition-runner';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {RequisitionParentCreator} from '../components/requisition-parent-creator';
+import {Configuration} from '../configurations/configuration';
 
 //TODO test it
 export class SingleRunExecutor extends EnqueuerExecutor {
@@ -22,14 +22,15 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private readonly errors: RequisitionModel[];
     private readonly startTime: DateController;
 
-    constructor(configuration: ConfigurationValues) {
+    constructor() {
         super();
+        const configuration = Configuration.getInstance();
         this.startTime = new DateController();
-        this.name = configuration.name || 'enqueuer';
-        this.parallelMode = configuration.parallel;
+        this.name = configuration.getName();
+        this.parallelMode = configuration.isParallel();
         this.errors = [];
-        this.fileNames = this.getTestFiles(configuration);
-        this.outputs = new MultiTestsOutput(configuration.outputs || []);
+        this.fileNames = this.getTestFiles(configuration.getFiles());
+        this.outputs = new MultiTestsOutput(configuration.getOutputs());
     }
 
     public async execute(): Promise<boolean> {
@@ -50,13 +51,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
         }
     }
 
-    private getTestFiles(configuration: ConfigurationValues): string[] {
-        let files: string[] = configuration.addSingleRunIgnore;
-
-        if (files.length == 0) {
-            files = configuration.addSingleRun.concat(configuration.files);
-        }
-
+    private getTestFiles(files: string[]): string[] {
         let result: string[] = [];
         files.forEach((pattern: any) => {
             if (typeof (pattern) == 'string') {
@@ -68,6 +63,8 @@ export class SingleRunExecutor extends EnqueuerExecutor {
                 }
             }
         });
+        result = [...new Set(result)];
+
         Logger.info(`Files list: ${result}`);
         return result;
     }

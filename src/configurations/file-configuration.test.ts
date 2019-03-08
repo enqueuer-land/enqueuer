@@ -1,36 +1,38 @@
-import {FileConfiguration} from "./file-configuration";
-import {MultipleObjectNotation} from "../object-notations/multiple-object-notation";
+import {FileConfiguration} from './file-configuration';
+import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
 
 jest.mock('../object-notations/multiple-object-notation');
 let fileLoadMock = jest.fn(() => true);
 
 describe('FileConfiguration', () => {
     beforeEach(() => {
+        // @ts-ignore
         MultipleObjectNotation.mockImplementationOnce(() => {
             return {
                 loadFromFileSync: fileLoadMock
-            }
+            };
         });
 
     });
 
     afterEach(() => {
         fileLoadMock.mockClear();
+        // @ts-ignore
         MultipleObjectNotation.mockClear();
     });
 
     it('Reload file - success', () => {
         const filename = 'filename';
 
-        expect(() => FileConfiguration.load(filename)).not.toThrow();
+        expect(() => new FileConfiguration(filename)).not.toThrow();
     });
 
     it('Reload file - fail', () => {
-        fileLoadMock.mockImplementation(() => {throw 'error'});
+        fileLoadMock.mockImplementation(() => {throw 'error';});
 
         const filename = 'filename';
 
-        expect(() => FileConfiguration.load(filename)).toThrow();
+        expect(() => new FileConfiguration(filename)).toThrow();
     });
 
     it('getVerbosity', () => {
@@ -38,11 +40,11 @@ describe('FileConfiguration', () => {
         fileLoadMock.mockImplementation(() => {
             return {
                 'log-level': logLevel
-            }
+            };
         });
-        FileConfiguration.load('itDoesNotMatter');
+        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-        expect(FileConfiguration.getLogLevel()).toBe(logLevel);
+        expect(fileConfiguration.getLogLevel()).toBe(logLevel);
     });
 
     it('getOutputs', () => {
@@ -50,12 +52,11 @@ describe('FileConfiguration', () => {
         fileLoadMock = jest.fn(() => {
             return {
                 'outputs': outputs
-            }
+            };
         });
-        FileConfiguration.load('itDoesNotMatter');
+        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-
-        expect(FileConfiguration.getOutputs()).toBe(outputs);
+        expect(fileConfiguration.getOutputs()).toBe(outputs);
     });
 
     it('name; parallel; files, maxReportLevelPrint', () => {
@@ -65,14 +66,14 @@ describe('FileConfiguration', () => {
                 'parallel': true,
                 'files': ['1', '2'],
                 maxReportLevelPrint: 10
-            }
+            };
         });
-        FileConfiguration.load('itDoesNotMatter');
+        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-        expect(FileConfiguration.getName()).toBe('enqueuer');
-        expect(FileConfiguration.isParallelExecution()).toBeTruthy();
-        expect(FileConfiguration.getFiles()).toEqual(['1', '2']);
-        expect(FileConfiguration.getMaxReportLevelPrint()).toEqual(10);
+        expect(fileConfiguration.getName()).toBe('enqueuer');
+        expect(fileConfiguration.isParallelExecution()).toBeTruthy();
+        expect(fileConfiguration.getFiles()).toEqual(['1', '2']);
+        expect(fileConfiguration.getMaxReportLevelPrint()).toEqual(10);
     });
 
     it('getPlugins', () => {
@@ -80,22 +81,21 @@ describe('FileConfiguration', () => {
         fileLoadMock = jest.fn(() => {
             return {
                 'plugins': pluginsList
-            }
+            };
         });
-        FileConfiguration.load('itDoesNotMatter');
+        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-        expect(FileConfiguration.getPlugins()).toBe(pluginsList);
+        expect(fileConfiguration.getPlugins()).toBe(pluginsList);
     });
 
     it('getOutputs default', () => {
         fileLoadMock = jest.fn(() => {
             return {
-            }
+            };
         });
-        FileConfiguration.load('itDoesNotMatter');
+        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-
-        expect(FileConfiguration.getOutputs()).toBeUndefined();
+        expect(fileConfiguration.getOutputs()).toBeUndefined();
     });
 
     it('getStore', () => {
@@ -106,24 +106,21 @@ describe('FileConfiguration', () => {
         fileLoadMock = jest.fn(() => {
             return {
                 'store': store
-            }
+            };
         });
-        FileConfiguration.load('itDoesNotMatter');
+        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-
-        expect(FileConfiguration.getStore()).toBe(store);
+        expect(fileConfiguration.getStore()).toBe(store);
     });
 
     it('getStore default', () => {
         fileLoadMock = jest.fn(() => {
             return {
-            }
+            };
         });
-        FileConfiguration.load('itDoesNotMatter');
+        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-
-        expect(FileConfiguration.getStore()).toBeUndefined()
+        expect(fileConfiguration.getStore()).toBeUndefined();
     });
-
 
 });

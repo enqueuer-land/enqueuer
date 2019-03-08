@@ -2,49 +2,45 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
 
 export class FileConfiguration {
-    private static instance: any;
+    private readonly parsedFile: any;
 
-    private constructor() {
-        /* do nothing */
-    }
-
-    public static load(filename: string): void {
+    public constructor(filename: string) {
         try {
-            FileConfiguration.instance = new MultipleObjectNotation().loadFromFileSync(filename);
+            this.parsedFile = new MultipleObjectNotation().loadFromFileSync(filename);
         } catch (err) {
             throw (`Error loading configuration file: ${err}`);
         }
     }
 
-    public static getLogLevel(): string {
-        return FileConfiguration.instance['log-level'];
+    public getLogLevel(): string {
+        return this.parsedFile['log-level'];
     }
 
-    public static getOutputs(): PublisherModel[] {
-        return FileConfiguration.instance.outputs;
+    public getOutputs(): PublisherModel[] {
+        return this.parsedFile.outputs;
     }
 
-    public static getStore(): any {
-        return FileConfiguration.instance.store;
+    public getStore(): any {
+        return this.parsedFile.store;
     }
 
-    static getPlugins(): string[] {
-        return FileConfiguration.instance.plugins;
+    public getPlugins(): string[] {
+        return this.parsedFile.plugins;
     }
 
-    public static getName() {
-        return FileConfiguration.instance.name;
+    public getName() {
+        return this.parsedFile.name;
     }
 
-    static isParallelExecution() {
-        return FileConfiguration.instance.parallel;
+    public isParallelExecution() {
+        return this.parsedFile.parallel;
     }
 
-    static getFiles() {
-        return FileConfiguration.instance.files;
+    public getFiles() {
+        return this.parsedFile.files;
     }
 
-    static getMaxReportLevelPrint() {
-        return FileConfiguration.instance.maxReportLevelPrint;
+    public getMaxReportLevelPrint() {
+        return this.parsedFile.maxReportLevelPrint;
     }
 }

@@ -1,14 +1,15 @@
 import {Configuration} from './configuration';
+import {Logger} from '../loggers/logger';
 
 export class Store {
-    private static data: any = {};
+    private static data: any = undefined;
 
     private constructor() {
         //private
     }
 
     public static getData(): any {
-        if (!Store.data || Object.keys(Store.data).length == 0) {
+        if (Store.data === undefined) {
             this.refreshData();
         }
         return Store.data;
@@ -16,11 +17,11 @@ export class Store {
 
     public static refreshData() {
         try {
-            Store.data = Object.assign({}, Configuration.getValues().store, process.env);
+            Store.data = process.env;
+            const configurationStore = Configuration.getInstance().getStore();
+            Store.data = Object.assign({}, configurationStore, Store.data);
         } catch (err) {
-            /*
-                do nothing
-             */
+            Logger.warning(err);
         }
     }
 }

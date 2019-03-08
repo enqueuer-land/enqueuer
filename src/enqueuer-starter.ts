@@ -1,14 +1,13 @@
 import {EnqueuerExecutor} from './run-modes/enqueuer-executor';
 import {Logger} from './loggers/logger';
-import {ConfigurationValues} from './configurations/configuration-values';
 import {SingleRunExecutor} from './run-modes/single-run-executor';
 
 export class EnqueuerStarter {
 
     private executor: EnqueuerExecutor;
 
-    constructor(configuration: ConfigurationValues) {
-        this.executor = new SingleRunExecutor(configuration);
+    constructor() {
+        this.executor = new SingleRunExecutor();
     }
 
     public start(): Promise<number> {
