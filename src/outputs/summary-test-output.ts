@@ -3,8 +3,8 @@ import chalk from 'chalk';
 import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
 
 export class SummaryTestOutput {
-    private static readonly NAME_SPACING = 140;
-    private static readonly LEVEL_TABULATION = 10;
+    private static readonly NAME_SPACING = 100;
+    private static readonly LEVEL_TABULATION = 8;
     private readonly level: number;
     private testAnalyzer: TestsAnalyzer;
     private report: RequisitionModel;
@@ -28,7 +28,7 @@ export class SummaryTestOutput {
         if (this.report.ignored) {
             formattedString += `${chalk.black.bgYellow('[SKIP]')} `;
             formattedString += chalk.yellow(this.report.name);
-        } else if (this.report.valid === true) {
+        } else if (this.report.valid) {
             formattedString += `${chalk.black.bgGreen('[PASS]')} `;
             formattedString += chalk.green(this.report.name);
         } else {
