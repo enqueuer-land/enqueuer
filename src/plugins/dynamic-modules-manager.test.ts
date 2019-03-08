@@ -28,7 +28,7 @@ describe('DynamicModulesManager', () => {
             '../outputs/formatters/console-formatter',
             '../outputs/formatters/json-formatter',
             '../outputs/formatters/yml-formatter'
-        ];
+        ].map(expected => __dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();
 
         expect(expectedBuiltInModules.length).toBe(actualList.length);

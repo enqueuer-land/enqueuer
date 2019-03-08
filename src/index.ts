@@ -5,12 +5,8 @@ import {Configuration} from './configurations/configuration';
 import {Logger} from './loggers/logger';
 
 export async function start(): Promise<number> {
-    Logger.setLoggerLevel('info');
     const logLevel = Configuration.getInstance().getLogLevel();
-
-    if (Logger && logLevel) {
-        Logger.setLoggerLevel(logLevel);
-    }
+    Logger.setLoggerLevel(logLevel);
 
     return await new EnqueuerStarter().start().catch((error) => {
         Logger.fatal(error);

@@ -331,9 +331,15 @@ onFinish:
 Every publisher has its own properties, depending on its protocol and implementation. But, usually, they all have these properties.</p>
 
 <p><strong>name</strong><br>
-Optional, describes what the publisher is supposed to do.</p>
+Describes what the publisher is supposed to do.</p>
 
 <pre><code>name: publisher action
+</code></pre>
+
+<p><strong>type</strong><br>
+Key tag to identify which publisher will be instantiated</p>
+
+<pre><code>type: http
 </code></pre>
 
 <p><strong>payload</strong><br>
@@ -344,7 +350,7 @@ The message itself that will be send through this IPC protocol. Be it a string, 
 </code></pre>
 
 <p><strong>ignore</strong><br>
-Optional. Defaults to false. Tells to enqueuer that this publisher should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
+Defaults to false. Tells to enqueuer that this publisher should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
 <pre><code>ignore: true    
 </code></pre>
@@ -372,12 +378,18 @@ onFinish:
 <p>A subscription is an "under demand" event. It <strong>reacts</strong> whereas a <a href="#publisher">publisher</a> <strong>acts</strong>.
 This means that it is not triggered by enqueuer itself. 
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
-Every subscription has its own properties, depending on its protocol and implementation. But they all have these properties. </p>
+Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. </p>
 
 <p><strong>name</strong><br>
-Optional, describes what the subscription is supposed to do.</p>
+Describes what the subscription is supposed to do.</p>
 
 <pre><code>name: subscription action
+</code></pre>
+
+<p><strong>type</strong><br>
+Key tag to identify which subscription will be instantiated</p>
+
+<pre><code>type: http
 </code></pre>
 
 <p><strong>avoid</strong><br>

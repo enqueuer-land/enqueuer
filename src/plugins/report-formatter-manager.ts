@@ -20,7 +20,7 @@ export class ReportFormatterManager {
         if (matchingFormatters.length > 0) {
             return matchingFormatters[0];
         }
-        Logger.info(`No Report Formatter was found with '${format}', using default one`);
+        Logger.error(`No report formatter was found with '${format}', using default one`);
         return new JsonReportFormatter();
     }
 

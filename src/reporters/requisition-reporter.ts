@@ -48,7 +48,7 @@ export class RequisitionReporter {
         this.multiSubscriptionsReporter
             .subscribe(() => this.onAllSubscriptionsStopWaiting())
             .then(() => {
-                Logger.info('Multisubscriptions are ready');
+                Logger.debug('Multisubscriptions are ready');
                 this.initializeTimeout();
                 return this.onSubscriptionsCompleted();
             })
@@ -73,7 +73,7 @@ export class RequisitionReporter {
             });
         this.multiPublishersReporter.publish()
             .then(async () => {
-                Logger.info('Publishers have done their job');
+                Logger.info('All publishers have done their job');
                 this.publishersDoneTheirJob = true;
                 await this.tryToFinishExecution();
             })

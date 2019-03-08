@@ -2,7 +2,8 @@ import {CommandLineConfiguration} from './command-line-configuration';
 import {FileConfiguration} from './file-configuration';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
-import {Yaml} from '../object-notations/yaml';
+import prettyjson from 'prettyjson';
+import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 
 export class Configuration {
     private static instance: Configuration;
@@ -29,12 +30,15 @@ export class Configuration {
         if (Configuration.loaded === false) {
             Configuration.loaded = true;
             Configuration.instance = new Configuration();
-            Logger.trace(`Configuration: ${new Yaml().stringify(Configuration.instance)}`);
+            if (Configuration.instance.logLevel === 'trace') {
+                console.log(prettyjson.render({configuration: Configuration.instance}, getPrettyJsonConfig()));
+            }
         }
         return Configuration.instance;
     }
 
     public addPlugin(pluginName: string): Configuration {
+        Logger.info(`Plugin added to the list: ${pluginName}`);
         const plugins: Set<string> = new Set(this.plugins);
         plugins.add(pluginName);
         this.plugins = Array.from(plugins.values());

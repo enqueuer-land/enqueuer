@@ -9,6 +9,7 @@ import {ProtocolType, Protocol} from '../protocols/protocol';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
+import {Logger} from '../loggers/logger';
 
 export class ProtocolManager {
     private protocols: Protocol[] = [];
@@ -21,6 +22,7 @@ export class ProtocolManager {
         if (matchingPublishers.length > 0) {
             return matchingPublishers[0];
         }
+        Logger.error(`No publisher was found with '${publisherModel.type}'`);
         return new NullPublisher(publisherModel);
     }
 
@@ -32,6 +34,7 @@ export class ProtocolManager {
         if (matchingSubscriptions.length > 0) {
             return matchingSubscriptions[0];
         }
+        Logger.error(`No subscription was found with '${subscriptionModel.type}'`);
         return new NullSubscription(subscriptionModel);
     }
 

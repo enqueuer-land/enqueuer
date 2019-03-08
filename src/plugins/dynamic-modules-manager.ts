@@ -2,6 +2,9 @@ import {MainInstance} from './main-instance';
 import {ProtocolManager} from './protocol-manager';
 import {ReportFormatterManager} from './report-formatter-manager';
 import * as fs from 'fs';
+import {Logger} from '../loggers/logger';
+import {Configuration} from '../configurations/configuration';
+import * as path from 'path';
 
 export class DynamicModulesManager {
     private static instance: DynamicModulesManager;
@@ -13,6 +16,7 @@ export class DynamicModulesManager {
         this.protocolManager = new ProtocolManager();
         this.reportFormatterManager = new ReportFormatterManager();
         this.builtInModules = this.findEveryEntryPointableModule();
+        this.loadModules();
     }
 
     public static getInstance() {
@@ -42,7 +46,9 @@ export class DynamicModulesManager {
             const stat = fs.lstatSync(filename);
             if (stat.isDirectory()) {
                 files = files.concat(DynamicModulesManager.findEveryTsFile(filename + '/'));
-            } else if (!filename.endsWith('.test.ts') && filename.endsWith('.ts')) {
+            } else if (!filename.endsWith('.test.ts')
+                && (filename.endsWith('.d.ts') || filename.endsWith('.ts'))) {
+
                 files.push(filename);
             }
         }
@@ -50,23 +56,53 @@ export class DynamicModulesManager {
     }
 
     private findEveryEntryPointableModule(): string[] {
-        return DynamicModulesManager.findEveryTsFile('./src/')
+        return DynamicModulesManager.findEveryTsFile(__dirname + '/../')
             .map(module => module.replace('./src/', '../'))
-            .map(module => module.replace(/\.ts$/, ''))
+            .map(module => module.replace(/\.d\.ts/, ''))
+            .map(module => module.replace(/\.ts/, ''))
             .filter(module => {
                 try {
-                    require(module)
-                        .entryPoint(
-                            {
-                                protocolManager: this.protocolManager,
-                                reportFormatterManager: this.reportFormatterManager
-                            } as MainInstance
-                        );
-                    return true;
+                    return require(module).entryPoint !== undefined;
                 } catch (err) {
                     return false;
                 }
             });
 
+    }
+
+    private loadModules() {
+        this.builtInModules
+            .filter(module => {
+                try {
+                    this.loadModule(module);
+                    Logger.debug(`Success to load '${path.basename(module)}' as dynamic importable module`);
+                    return true;
+                } catch (err) {
+                    Logger.trace(`Fail to load '${module}' as dynamic importable module: ${err}`);
+                    return false;
+                }
+            });
+        Configuration.getInstance().getPlugins()
+            .filter(module => {
+                try {
+                    this.loadModule(module);
+                    Logger.info(`Success to load '${path.basename(module)}' as dynamic importable module`);
+                    return true;
+                } catch (err) {
+                    Logger.error(`Fail to load '${module}' as dynamic importable module: ${err}`);
+                    return false;
+                }
+            });
+
+    }
+
+    private loadModule(module: string) {
+        require(module)
+            .entryPoint(
+                {
+                    protocolManager: this.protocolManager,
+                    reportFormatterManager: this.reportFormatterManager
+                } as MainInstance
+            );
     }
 }

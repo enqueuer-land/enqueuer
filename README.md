@@ -148,9 +148,14 @@ A publisher action is triggered by enqueuer itself. It **acts** whereas a [subsc
 Every publisher has its own properties, depending on its protocol and implementation. But, usually, they all have these properties.
 
 **name**\
-Optional, describes what the publisher is supposed to do.
+Describes what the publisher is supposed to do.
 
     name: publisher action
+
+**type**\
+Key tag to identify which publisher will be instantiated
+
+    type: http
 
 **payload**\
 Since a publisher usually publishes something, it's very likely you have to set a value here.
@@ -159,7 +164,7 @@ The message itself that will be send through this IPC protocol. Be it a string, 
     payload: value
     
 **ignore**\
-Optional. Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true    
     
@@ -183,12 +188,17 @@ On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually doe
 A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
 This means that it is not triggered by enqueuer itself. 
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
-Every subscription has its own properties, depending on its protocol and implementation. But they all have these properties. 
+Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. 
 
 **name**\
-Optional, describes what the subscription is supposed to do.
+Describes what the subscription is supposed to do.
 
     name: subscription action
+    
+**type**\
+Key tag to identify which subscription will be instantiated
+
+    type: http
 
 **avoid**\
 Identifies whether or not this subscription should not receive any message. Defaults to false.
