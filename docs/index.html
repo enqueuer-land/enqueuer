@@ -492,19 +492,25 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
 </code></pre>
 
 <p><strong>parallel</strong><br>
-Optional. Requisition should be executed in parallel mode</p>
+Requisition should be executed in parallel mode</p>
 
 <pre><code>parallel: true (false by default)
 </code></pre>
 
 <p><strong>log-level</strong><br>
-Optional. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.</p>
+Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.</p>
 
 <pre><code>log-level: trace
 </code></pre>
 
+<p><strong>maxReportLevelPrint</strong>/
+The deepest level of report to be printed to the console. Defaults to 2 (enqueuer + filename); </p>
+
+<pre><code>maxReportLevelPrint: 2
+</code></pre>
+
 <p><strong>plugins</strong><br>
-Optional. List of in plugins used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>. </p>
+List of in plugins used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>. </p>
 
 <pre><code>plugins:
 - enqueuer-plugin-amqp 

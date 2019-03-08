@@ -43,4 +43,8 @@ export class FileConfiguration {
     static getFiles() {
         return FileConfiguration.instance.files;
     }
+
+    static getMaxReportLevelPrint() {
+        return FileConfiguration.instance.maxReportLevelPrint;
+    }
 }

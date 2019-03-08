@@ -25,7 +25,7 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     constructor(configuration: ConfigurationValues) {
         super();
         this.startTime = new DateController();
-        this.name = configuration.name || 'single-run';
+        this.name = configuration.name || 'enqueuer';
         this.parallelMode = configuration.parallel;
         this.errors = [];
         this.fileNames = this.getTestFiles(configuration);

@@ -292,17 +292,22 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
     - *.json
 
 **parallel**\
-Optional. Requisition should be executed in parallel mode
+Requisition should be executed in parallel mode
 
     parallel: true (false by default)
 
 **log-level**\
-Optional. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
+Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
 
     log-level: trace
 
+**maxReportLevelPrint**/
+The deepest level of report to be printed to the console. Defaults to 2 (enqueuer + filename); 
+
+    maxReportLevelPrint: 2
+
 **plugins**\
-Optional. List of in plugins used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
+List of in plugins used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
     
     plugins:
     - enqueuer-plugin-amqp 

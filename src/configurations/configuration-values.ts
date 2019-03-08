@@ -6,6 +6,7 @@ export interface ConfigurationValues {
     files: string[];
     logLevel: string;
     outputs: PublisherModel[];
+    maxReportLevelPrint: number;
     store: any;
     quiet: boolean;
     plugins: string[];

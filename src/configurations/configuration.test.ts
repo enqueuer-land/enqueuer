@@ -67,6 +67,7 @@ describe('Configuration', () => {
     it('should check default values', () => {
         expect(Configuration.getValues().name).toBeUndefined();
         expect(Configuration.getValues().parallel).toBeFalsy();
+        expect(Configuration.getValues().maxReportLevelPrint).toBe(2);
         expect(Configuration.getValues().files).toEqual([]);
     });
 

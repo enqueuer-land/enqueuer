@@ -49,6 +49,7 @@ export class Configuration {
             outputs: defaultValues.outputs.concat(FileConfiguration.getOutputs() || []),
             plugins: defaultValues.plugins.concat(FileConfiguration.getPlugins() || []),
             store: Object.assign({}, FileConfiguration.getStore(), CommandLineConfiguration.getStore()),
+            maxReportLevelPrint: FileConfiguration.getMaxReportLevelPrint() || defaultValues.maxReportLevelPrint,
             quiet: CommandLineConfiguration.isQuietMode(),
             addSingleRun: CommandLineConfiguration.singleRunFiles(),
             addSingleRunIgnore: CommandLineConfiguration.singleRunFilesIgnoring()
@@ -64,6 +65,7 @@ export class Configuration {
             logLevel: CommandLineConfiguration.getVerbosity() || 'warn',
             name: '',
             parallel: false,
+            maxReportLevelPrint: 2,
             files: [],
             outputs: outputs,
             store: Object.assign({}, CommandLineConfiguration.getStore()),

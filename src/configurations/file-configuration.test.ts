@@ -58,12 +58,13 @@ describe('FileConfiguration', () => {
         expect(FileConfiguration.getOutputs()).toBe(outputs);
     });
 
-    it('name; parallel; files', () => {
+    it('name; parallel; files, maxReportLevelPrint', () => {
         fileLoadMock = jest.fn(() => {
             return {
                 'name': 'enqueuer',
                 'parallel': true,
-                'files': ['1', '2']
+                'files': ['1', '2'],
+                maxReportLevelPrint: 10
             }
         });
         FileConfiguration.load('itDoesNotMatter');
@@ -71,6 +72,7 @@ describe('FileConfiguration', () => {
         expect(FileConfiguration.getName()).toBe('enqueuer');
         expect(FileConfiguration.isParallelExecution()).toBeTruthy();
         expect(FileConfiguration.getFiles()).toEqual(['1', '2']);
+        expect(FileConfiguration.getMaxReportLevelPrint()).toEqual(10);
     });
 
     it('getPlugins', () => {

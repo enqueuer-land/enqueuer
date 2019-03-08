@@ -13,6 +13,7 @@ import {IterationsEvaluator} from './iterations-evaluator';
 import {ObjectDecycler} from '../object-notations/object-decycler';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {ComponentUniqueTagCreator} from '../components/component-unique-tag-creator';
+import {Configuration} from '../configurations/configuration';
 
 export class RequisitionRunner {
 
@@ -41,7 +42,7 @@ export class RequisitionRunner {
         } else {
             report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
         }
-        if (this.level <= 1) {
+        if (this.level < Configuration.getValues().maxReportLevelPrint) {
             new SummaryTestOutput(report).print();
         }
         return report;

@@ -1,14 +1,14 @@
 name: examples
-files:
-- examples/*.yml
 
-#optional
+files:
+-   examples/*.yml
+
 parallel: true
 
-#optional
 log-level: warn
 
-#optional
+maxReportLevelPrint: 2
+
 outputs:
 -   type: file
     format: json
@@ -19,11 +19,9 @@ outputs:
 #-   type: standard-output
 #    format: console
 
-#optional
 #plugins:
 #-   enqueuer-plugin-amqp
 
-#optional
 store:
     file-placeholder-injection: I'm persisted in singleRun file
     tcpPayload: "enqueuer Rocks"
