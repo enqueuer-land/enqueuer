@@ -10,7 +10,7 @@ import {RequisitionFileParser} from '../requisition-runners/requisition-file-par
 import {RequisitionRunner} from '../requisition-runners/requisition-runner';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {TimeModel} from '../models/outputs/time-model';
-import {IdGenerator} from '../strings/id-generator';
+import {RequisitionParentCreator} from '../requisition-runners/requisition-parent-creator';
 
 //TODO test it
 export class SingleRunExecutor extends EnqueuerExecutor {
@@ -94,24 +94,17 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     }
 
-    //TODO create a class to do this
     private createParent(filename: string[]): input.RequisitionModel {
-        const defaultParent: input.RequisitionModel = {
-            name: this.name,
-            id: new IdGenerator(this.name).generateId(),
-            subscriptions: [],
-            publishers: [],
-            requisitions: []
-        };
+        const requisitions: input.RequisitionModel[] = [];
         filename.forEach(file => {
             try {
                 const requisition: input.RequisitionModel = new RequisitionFileParser(file).parse();
-                defaultParent.requisitions!.push(requisition);
+                requisitions.push(requisition);
             } catch (err) {
                 Logger.error(`Error parsing file: ${filename}: ${err}`);
             }
         });
-        return defaultParent;
+        return new RequisitionParentCreator().create(this.name, requisitions);
     }
 
     private async finishExecution(report: output.RequisitionModel): Promise<boolean> {

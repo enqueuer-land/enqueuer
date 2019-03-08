@@ -70,7 +70,7 @@ describe('RequisitionMultiplier', () => {
 
         const multiplied = new RequisitionMultiplier(original).multiply();
 
-        expect(multiplied.requisitions.length).toBe(0);
+        expect(multiplied).toBeUndefined();
     });
 
     it('Should keep parent', () => {

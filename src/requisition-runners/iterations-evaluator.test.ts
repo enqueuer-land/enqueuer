@@ -1,4 +1,3 @@
-import {RequisitionModel} from "../models/inputs/requisition-model";
 import {IterationsEvaluator} from "./iterations-evaluator";
 
 describe('IterationsEvaluator', () => {

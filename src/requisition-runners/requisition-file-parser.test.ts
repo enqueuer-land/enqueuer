@@ -39,6 +39,7 @@ describe('RequisitionFileParser', () => {
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
         const filename = 'anyStuff';
+
         const requisition = new RequisitionFileParser(filename).parse();
 
         expect(requisition.name).toBe(filename);

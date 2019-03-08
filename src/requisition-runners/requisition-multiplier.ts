@@ -4,6 +4,7 @@ import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 import {IterationsEvaluator} from './iterations-evaluator';
 import {HashComponentCreator} from '../object-notations/hash-component-creator';
+import {RequisitionParentCreator} from './requisition-parent-creator';
 
 export class RequisitionMultiplier {
     private readonly requisition: RequisitionModel;
@@ -20,6 +21,10 @@ export class RequisitionMultiplier {
             return this.requisition;
         }
 
+        if (this.iterations <= 0) {
+            return undefined;
+        }
+
         if (!this.iterations) {
             Logger.debug(`No iteration was found`);
             return undefined;
@@ -27,8 +32,8 @@ export class RequisitionMultiplier {
         return this.cloneIt();
     }
 
-    private cloneIt() {
-        const result = this.createParent();
+    private cloneIt(): RequisitionModel {
+        const result = new RequisitionParentCreator().create(this.requisition.name);
         const parentBkp = this.requisition.parent;
         delete this.requisition.parent;
         const stringifiedRequisition = JSON.stringify(this.requisition);
@@ -57,16 +62,6 @@ export class RequisitionMultiplier {
         } catch (err) {
             return undefined;
         }
-    }
-
-    private createParent(): RequisitionModel {
-        return {
-            name: this.requisition.name,
-            id: this.requisition.name,
-            subscriptions: [],
-            publishers: [],
-            requisitions: []
-        };
     }
 
 }
