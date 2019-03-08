@@ -22,6 +22,25 @@ describe('RequisitionRunner', () => {
         expect(actual!.tests[0].valid).toBeTruthy();
     });
 
+    it('Should keep id', async () => {
+        const requisition: RequisitionModel = {
+            id: 'myId',
+            name: 'myName',
+        };
+
+        const actual = await new RequisitionRunner(requisition).run();
+        expect(actual!.id).toBe(requisition.id);
+    });
+
+    it('Should get name as id', async () => {
+        const requisition: RequisitionModel = {
+            name: 'myName',
+        };
+
+        const actual = await new RequisitionRunner(requisition).run();
+        expect(actual!.id).toBe(requisition.name);
+    });
+
     it('Should return requisition report collection', async () => {
         const requisition: RequisitionModel = {
             name: 'super cool',

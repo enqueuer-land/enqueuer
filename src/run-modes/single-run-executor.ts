@@ -10,7 +10,7 @@ import {RequisitionFileParser} from '../requisition-runners/requisition-file-par
 import {RequisitionRunner} from '../requisition-runners/requisition-runner';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {TimeModel} from '../models/outputs/time-model';
-import {RequisitionParentCreator} from '../requisition-runners/requisition-parent-creator';
+import {RequisitionParentCreator} from '../components/requisition-parent-creator';
 
 //TODO test it
 export class SingleRunExecutor extends EnqueuerExecutor {

@@ -4,6 +4,7 @@ import {Json} from '../object-notations/json';
 import {DateController} from '../timers/date-controller';
 
 jest.mock('../timers/date-controller');
+// @ts-ignore
 DateController.mockImplementation(() => {
     return {
         getStringOnlyNumbers: () => {

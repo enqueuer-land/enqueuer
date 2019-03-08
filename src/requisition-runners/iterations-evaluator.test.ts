@@ -4,6 +4,7 @@ describe('IterationsEvaluator', () => {
 
     it('Should return 0 when no requisition', () => {
 
+        // @ts-ignore
         expect(new IterationsEvaluator().evaluate()).toBe(0);
     });
 

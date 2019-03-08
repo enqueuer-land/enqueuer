@@ -10,10 +10,10 @@ import {RequisitionMultiplier} from './requisition-multiplier';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {FileContentMapCreator} from '../configurations/file-content-map-creator';
 import {IterationsEvaluator} from './iterations-evaluator';
-import {ParentRemover} from '../object-notations/parent-remover';
 import {ObjectDecycler} from '../object-notations/object-decycler';
-import {HashComponentCreator} from '../object-notations/hash-component-creator';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
+import {ParentRemover} from '../components/parent-remover';
+import {HashComponentCreator} from '../components/hash-component-creator';
 
 export class RequisitionRunner {
 
@@ -23,8 +23,8 @@ export class RequisitionRunner {
 
     public constructor(requisition: input.RequisitionModel) {
         this.name = requisition.name;
-        //TODO create id if needed
-        this.id = requisition.id;
+        this.id = requisition.id || requisition.name;
+        requisition.id = this.id;
         Logger.info(`Initializing requisition '${requisition.name}'`);
         this.requisition = new RequisitionMultiplier(requisition).multiply();
         if (!this.requisition) {
@@ -71,7 +71,7 @@ export class RequisitionRunner {
     }
 
     private replaceVariables(): input.RequisitionModel {
-        const withId = new HashComponentCreator().insert(this.requisition!);
+        const withId = new HashComponentCreator().refresh(this.requisition!);
         Logger.debug(`Evaluating variables of requisition '${this.requisition!.name}'`);
         const parentBkp = withId.parent;
         const parentLess: any = new ParentRemover().remove(withId);

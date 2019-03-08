@@ -3,16 +3,7 @@ import {IdGenerator} from '../strings/id-generator';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 
-//TODO test it
 export class HashComponentCreator {
-
-    public insert(requisition: RequisitionModel): RequisitionModel {
-        this.insertInComponent(requisition);
-        (requisition.requisitions || []).map(child => this.insert(child));
-        (requisition.publishers || []).map(publisher => this.insertInComponent(publisher));
-        (requisition.subscriptions || []).map(subscription => this.insertInComponent(subscription));
-        return requisition;
-    }
 
     public refresh(requisition: RequisitionModel): RequisitionModel {
         this.refreshInComponent(requisition);
@@ -26,7 +17,4 @@ export class HashComponentCreator {
         component.hash = new IdGenerator(component).generateId();
     }
 
-    private insertInComponent(component: RequisitionModel | PublisherModel | SubscriptionModel) {
-        component.hash = component.hash || new IdGenerator(component).generateId();
-    }
 }

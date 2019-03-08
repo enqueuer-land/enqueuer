@@ -3,8 +3,8 @@ import {Logger} from '../loggers/logger';
 import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
 import {Store} from '../configurations/store';
 import {IterationsEvaluator} from './iterations-evaluator';
-import {HashComponentCreator} from '../object-notations/hash-component-creator';
-import {RequisitionParentCreator} from './requisition-parent-creator';
+import {HashComponentCreator} from '../components/hash-component-creator';
+import {RequisitionParentCreator} from '../components/requisition-parent-creator';
 
 export class RequisitionMultiplier {
     private readonly requisition: RequisitionModel;

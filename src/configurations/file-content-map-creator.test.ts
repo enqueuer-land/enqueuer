@@ -1,6 +1,6 @@
-import {FileContentMapCreator} from "./file-content-map-creator";
+import {FileContentMapCreator} from './file-content-map-creator';
 import * as fs from 'fs';
-import {Container} from "conditional-injector";
+import {Container} from 'conditional-injector';
 
 jest.mock('conditional-injector');
 jest.mock('fs');
@@ -10,6 +10,7 @@ describe('FileContentMapCreator', () => {
         const loadFromFileSyncMock = jest.fn(() => {
             throw 'err';
         });
+        // @ts-ignore
         Container.subclassesOf.mockImplementationOnce(() => {
             return {
                 create: () => {
@@ -24,6 +25,7 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
+        // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
@@ -35,6 +37,7 @@ describe('FileContentMapCreator', () => {
     it('Load tag', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
+        // @ts-ignore
         Container.subclassesOf.mockImplementationOnce(() => {
             return {
                 create: () => {
@@ -50,6 +53,7 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
+        // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
@@ -61,12 +65,12 @@ describe('FileContentMapCreator', () => {
     it('Load unknown tag as file', () => {
         const fileContent = 'fileContent';
         const readFileSync = jest.fn(() => Buffer.from(fileContent));
+        // @ts-ignore
         fs.readFileSync.mockImplementationOnce(readFileSync);
+        // @ts-ignore
         Container.subclassesOf.mockImplementationOnce(() => {
             return {
-                create: () => {
-                    loadFromFileSync: () => {
-                    };
+                create: () => {/*not empty*/
                 }
             };
         });
@@ -76,6 +80,7 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
+        // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
@@ -87,6 +92,7 @@ describe('FileContentMapCreator', () => {
     it('Load each key just once', () => {
         const fileContent = 'fileContent';
         const loadFromFileSyncMock = jest.fn(() => fileContent);
+        // @ts-ignore
         Container.subclassesOf.mockImplementationOnce(() => {
             return {
                 create: () => {
@@ -106,6 +112,7 @@ describe('FileContentMapCreator', () => {
             third: '<<' + replaceableKey + '>>',
         };
 
+        // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
@@ -120,6 +127,7 @@ describe('FileContentMapCreator', () => {
             key: '((I am not a file))',
         };
 
+        // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
 
         const expected: any = {};
