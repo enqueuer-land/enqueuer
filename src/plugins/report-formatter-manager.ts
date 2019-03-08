@@ -9,7 +9,6 @@ interface AddedReportFormatter {
     createFunction: () => ReportFormatter;
 }
 
-//TODO test it
 export class ReportFormatterManager {
     private formatters: AddedReportFormatter[] = [];
 
