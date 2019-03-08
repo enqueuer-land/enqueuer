@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import {Test, TestsAnalyzer} from './tests-analyzer';
 
 export class SummaryTestOutput {
-    private static readonly NAME_SPACING = 50;
+    private static readonly NAME_SPACING = 70;
     private testAnalyzer: TestsAnalyzer;
     private report: RequisitionModel;
 
@@ -16,7 +16,7 @@ export class SummaryTestOutput {
         let message = '';
         if (this.report.ignored) {
             message = `\t${chalk.black.bgYellow('[SKIP]')} `;
-            message += chalk.bgYellow(this.formatName());
+            message += chalk.yellow(this.formatName());
         } else if (this.report.valid === true) {
             message = `\t${chalk.black.bgGreen('[PASS]')} `;
             message += chalk.green(this.formatName());

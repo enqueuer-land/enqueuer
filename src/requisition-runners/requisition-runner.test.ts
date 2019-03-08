@@ -12,10 +12,12 @@ describe('RequisitionRunner', () => {
 
     it('Should return requisition reporter skipped', async () => {
         const requisition: RequisitionModel = {
-            iterations: 0
+            iterations: 0,
+            name: 'skipped'
         };
 
         const actual = await new RequisitionRunner(requisition).run();
+        expect(actual!.name).toBe(requisition.name);
         expect(actual!.valid).toBeTruthy();
         expect(actual!.tests[0].valid).toBeTruthy();
     });

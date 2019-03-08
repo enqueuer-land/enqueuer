@@ -13,6 +13,7 @@ import {IterationsEvaluator} from './iterations-evaluator';
 import {ParentRemover} from '../object-notations/parent-remover';
 import {ObjectDecycler} from '../object-notations/object-decycler';
 import {HashComponentCreator} from '../object-notations/hash-component-creator';
+import {SummaryTestOutput} from '../outputs/summary-test-output';
 
 export class RequisitionRunner {
 
@@ -39,7 +40,7 @@ export class RequisitionRunner {
         } else {
             report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
         }
-        // new SummaryTestOutput(report).print(); //TODO use it
+        new SummaryTestOutput(report).print(); //TODO use it
         return report;
 
     }
