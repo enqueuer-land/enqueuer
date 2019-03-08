@@ -8,14 +8,7 @@ import {NullPublisher} from '../publishers/null-publisher';
 import {ProtocolType, Protocol} from '../protocols/protocol';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-
-const options = {
-    defaultIndentation: 4,
-    inlineArrays: true,
-    emptyArrayMsg: '-',
-    keysColor: 'green',
-    dashColor: 'grey'
-};
+import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 
 export class ProtocolManager {
     private protocols: Protocol[] = [];
@@ -48,7 +41,7 @@ export class ProtocolManager {
 
     public describeProtocols(describeProtocols: string | true): boolean {
         const description: any = this.createDescription(describeProtocols);
-        console.log(prettyjson.render(description, options));
+        console.log(prettyjson.render(description, getPrettyJsonConfig()));
         return description.publishers.length + description.subscriptions.length > 0;
     }
 

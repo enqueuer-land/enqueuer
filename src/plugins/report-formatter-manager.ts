@@ -2,14 +2,7 @@ import prettyjson from 'prettyjson';
 import {ReportFormatter} from '../outputs/formatters/report-formatter';
 import {JsonReportFormatter} from '../outputs/formatters/json-formatter';
 import {Logger} from '../loggers/logger';
-
-const options = {
-    defaultIndentation: 4,
-    inlineArrays: true,
-    emptyArrayMsg: '-',
-    keysColor: 'green',
-    dashColor: 'grey'
-};
+import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 
 interface AddedReportFormatter {
     tags: string[];
@@ -43,7 +36,7 @@ export class ReportFormatterManager {
                     .some((tag: string) => tag.toLowerCase() === describeFormatters.toLowerCase()) : true)
                 .map((formatter: AddedReportFormatter) => formatter.tags)
         };
-        console.log(prettyjson.render(data, options));
+        console.log(prettyjson.render(data, getPrettyJsonConfig()));
         return data.formatters.length > 0;
     }
 }

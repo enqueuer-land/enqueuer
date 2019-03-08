@@ -3,7 +3,6 @@ import {RequisitionModel} from '../../models/outputs/requisition-model';
 import {Json} from '../../object-notations/json';
 import {MainInstance} from '../../plugins/main-instance';
 
-//TODO test it
 export class JsonReportFormatter implements ReportFormatter {
     public format(report: RequisitionModel): string {
         return new Json().stringify(report);
