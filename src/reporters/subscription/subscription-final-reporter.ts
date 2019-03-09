@@ -42,6 +42,7 @@ export class SubscriptionFinalReporter {
     }
 
     private addTimeoutTests(): TestModel[] {
+        //TODO create this only if timeout is set explicitly
         if (this.time) {
             if (!!this.time.timeout && this.time.totalTime > this.time.timeout) {
                 return this.createTimeoutTests();

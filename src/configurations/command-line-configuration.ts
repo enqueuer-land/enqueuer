@@ -5,6 +5,7 @@ import {TestsDescriber} from '../testers/tests-describer';
 
 const packageJson = require('../../package.json');
 
+//TODO default argument will be req files
 export class CommandLineConfiguration {
     private parsedCommandLine: any;
     private readonly commandLineStore: any = {};

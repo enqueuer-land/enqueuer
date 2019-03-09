@@ -10,6 +10,8 @@ import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {RequisitionDefaultReports} from './models-defaults/outputs/requisition-default-reports';
 import {RequisitionParentCreator} from './components/requisition-parent-creator';
 import {Configuration} from './configurations/configuration';
+import chalk from 'chalk';
+import {SummaryTestOutput} from './outputs/summary-test-output';
 
 //TODO test it
 //TODO rename every single run to enqueuer
@@ -64,7 +66,7 @@ export class EnqueuerRunner {
         });
         result = [...new Set(result)];
 
-        Logger.info(`Files list: ${result}`);
+        Logger.info(`Files list: ${JSON.stringify(result, null, 2)}`);
         return result;
     }
 
@@ -93,8 +95,10 @@ export class EnqueuerRunner {
             endTime: now.toString(),
             totalTime: now.getTime() - this.startTime.getTime()
         };
-        report.level = 0;
         report.valid = report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
+        console.log(chalk.white(`    ------------------------------`));
+        new SummaryTestOutput(report).print();
+
         await this.outputs.execute(report);
         return report.valid;
     }

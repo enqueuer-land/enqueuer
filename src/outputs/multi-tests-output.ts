@@ -1,10 +1,8 @@
-import {SummaryTestOutput} from './summary-test-output';
 import {Logger} from '../loggers/logger';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Publisher} from '../publishers/publisher';
 import {ReportFormatter} from './formatters/report-formatter';
-import chalk from 'chalk';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
 export class MultiTestsOutput {
@@ -23,9 +21,6 @@ export class MultiTestsOutput {
     }
 
     public async execute(report: RequisitionModel) {
-        console.log(chalk.white(`------------------------------`));
-        new SummaryTestOutput(report).print();
-
         await Promise.all(this.outputs
             .map(publisher => {
                 const formatter = publisher.formatter as ReportFormatter;

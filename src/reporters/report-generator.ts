@@ -7,6 +7,7 @@ import {TestModel} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 
+//TODO rename to RequisitionReportGenerator
 export class ReportGenerator {
 
     private startTime: DateController = new DateController();
@@ -55,6 +56,7 @@ export class ReportGenerator {
     private addTimesReport(): void {
         let timesReport = this.generateTimesReport();
         this.report.time = timesReport;
+        //TODO create this only if timeout is set explicitly
         if (this.timeout) {
             this.report.time.timeout = this.timeout;
             const timeoutTest = this.createTimeoutTest(this.report.time);

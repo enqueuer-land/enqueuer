@@ -1,6 +1,7 @@
-import { TestModel } from './test-model';
+import {TestModel} from './test-model';
 
 export interface ReportModel {
+    [indexSignature: string]: any;
     name: string;
     valid: boolean;
     ignored?: boolean;

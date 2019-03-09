@@ -78,16 +78,6 @@ describe('MultiTestsOutput', () => {
         expect(createPublisherMock).toHaveBeenCalledWith(output);
     });
 
-    it('Should print a summary in execute', async () => {
-        const report = {};
-        const output = {type: 'output', format: 'createFunction'};
-        // @ts-ignore
-        await new MultiTestsOutput([output]).execute(report);
-
-        expect(SummaryTestOutput).toHaveBeenCalledWith(report);
-        expect(print).toHaveBeenCalledWith();
-    });
-
     it('Should format before printing', async () => {
 
         const report = {};

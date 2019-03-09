@@ -13,6 +13,7 @@ import {IterationsEvaluator} from './iterations-evaluator';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {ComponentUniqueTagCreator} from '../components/component-unique-tag-creator';
 import {ObjectDecycler} from '../object-parser/object-decycler';
+import {Configuration} from '../configurations/configuration';
 
 export class RequisitionRunner {
 
@@ -40,10 +41,11 @@ export class RequisitionRunner {
             report = await this.startRequisition();
         } else {
             report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
-            report.level = this.level;
         }
 
-        new SummaryTestOutput(report).print();
+        new SummaryTestOutput(report,
+            Configuration.getInstance().getMaxReportLevelPrint() - this.level,
+            this.level).print();
         return report;
 
     }
@@ -66,7 +68,6 @@ export class RequisitionRunner {
         const mapReplacedRequisition = this.replaceVariables();
         const notRanReport = this.shouldNotRun(mapReplacedRequisition);
         if (!!notRanReport) {
-            notRanReport.level = this.level;
             return Promise.resolve(notRanReport);
         }
 
@@ -114,7 +115,6 @@ export class RequisitionRunner {
                             const report = requisitionReporter.getReport();
                             Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
                             Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
-                            report.level = this.level;
                             report.requisitions = childrenReport;
                             report.valid = report.valid && report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
                             resolve(report);

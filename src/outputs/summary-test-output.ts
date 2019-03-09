@@ -1,28 +1,38 @@
-import {RequisitionModel} from '../models/outputs/requisition-model';
 import chalk from 'chalk';
 import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
-import {Configuration} from '../configurations/configuration';
+import {ReportModel} from '../models/outputs/report-model';
 
-//TODO make this recursive!!
+//TODO test it
 export class SummaryTestOutput {
     private static readonly NAME_SPACING = 120;
     private static readonly LEVEL_TABULATION = 8;
     private readonly level: number;
-    private testAnalyzer: TestsAnalyzer;
-    private report: RequisitionModel;
+    private readonly report: ReportModel;
+    private readonly maxLevel: number;
 
-    public constructor(report: RequisitionModel) {
+    public constructor(report: ReportModel, maxLevel: number = 1, level: number = 0) {
         this.report = report;
-        this.level = this.report.level || 0;
-        this.testAnalyzer = new TestsAnalyzer().addTest(report);
+        this.maxLevel = maxLevel;
+        this.level = level;
     }
 
     public print(): void {
-        if (this.level < Configuration.getInstance().getMaxReportLevelPrint()) {
-            console.log(this.formatTitle() + this.createSummary());
-            if (this.testAnalyzer.getFailingTests().length > 0) {
-                this.printFailingTests();
+        if (this.level < this.maxLevel) {
+            this.printChildren();
+            const testAnalyzer = new TestsAnalyzer().addTest(this.report);
+            console.log(this.formatTitle() + this.createSummary(testAnalyzer));
+            if (testAnalyzer.getFailingTests().length > 0) {
+                this.printFailingTests(testAnalyzer);
             }
+        }
+    }
+
+    private printChildren() {
+        const reportChildren = (this.report.requisitions || [])
+            .concat((this.report.subscriptions || []))
+            .concat(this.report.publishers || []);
+        for (const child of reportChildren) {
+            new SummaryTestOutput(child, this.maxLevel, this.level + 1).print();
         }
     }
 
@@ -51,11 +61,11 @@ export class SummaryTestOutput {
         return blank;
     }
 
-    private createSummary(): string {
-        const percentage = this.testAnalyzer.getPercentage();
-        const testsNumber = this.testAnalyzer.getTests().length;
-        let message = `${this.testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;
-        const ignoredTests = this.testAnalyzer.getIgnoredList();
+    private createSummary(testAnalyzer: TestsAnalyzer): string {
+        const percentage = testAnalyzer.getPercentage();
+        const testsNumber = testAnalyzer.getTests().length;
+        let message = `${testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;
+        const ignoredTests = testAnalyzer.getIgnoredList();
         if (ignoredTests.length > 0) {
             message += ` - ${ignoredTests.length} ignored -`;
         }
@@ -66,6 +76,16 @@ export class SummaryTestOutput {
         return this.getColor(percentage)(message);
     }
 
+    private printFailingTests(testAnalyzer: TestsAnalyzer) {
+        testAnalyzer.getFailingTests()
+            .forEach((failingTest: AnalyzedTest) => {
+                let message = '\t\t\t';
+                message += this.prettifyTestHierarchyMessage(failingTest.hierarchy, failingTest.name, chalk.red);
+                console.log(message);
+                console.log(chalk.red(`\t\t\t\t\t ${failingTest.description}`));
+            });
+    }
+
     private getColor(percentage: number): Function {
         if (percentage == 100) {
             return chalk.green;
@@ -73,16 +93,6 @@ export class SummaryTestOutput {
             return chalk.yellow;
         }
         return chalk.red;
-    }
-
-    private printFailingTests() {
-        this.testAnalyzer.getFailingTests()
-            .forEach((failingTest: AnalyzedTest) => {
-                let message = '\t\t\t';
-                message += this.prettifyTestHierarchyMessage(failingTest.hierarchy, failingTest.name, chalk.red);
-                console.log(message);
-                console.log(chalk.red(`\t\t\t\t\t ${failingTest.description}`));
-            });
     }
 
     private prettifyTestHierarchyMessage(hierarchy: string[], name: string, color: Function) {

@@ -250,48 +250,49 @@ It supports multi-level test scenarios out of the box.
 <a href="#variables">Variable replacements</a> are available through the entire requisition.</p>
 
 <p><strong>name</strong><br>
-Optional, describes what the requisition is suppose to do.</p>
+Describes what the requisition is suppose to do.
+Defaults to requisition index.</p>
 
 <pre><code>name: requisition action
 </code></pre>
 
 <p><strong>timeout</strong><br>
-Sets in milliseconds how long the requisition waits to expire. Defaults to 5000.
+Defaults to 5000.
+Sets in milliseconds how long the requisition waits to expire.
 Set to zero or less than zero to run it endlessly.</p>
 
 <pre><code>timeout: 3000
 </code></pre>
 
 <p><strong>delay</strong><br>
-Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> to get the full idea.</p>
+Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> to get the full idea.</p>
 
 <pre><code>delay: 0
 </code></pre>
 
 <p><strong>iterations</strong><br>
-Optional. Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
+Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
 
 <pre><code>iterations: 3
 </code></pre>
 
 <p><strong>ignore</strong><br>
-Optional. Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
+Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
 <pre><code>ignore: true
 </code></pre>
 
 <p><strong>publishers</strong><br>
-Optional. List of <a href="#publisher">publishers</a></p>
+List of <a href="#publisher">publishers</a></p>
 
 <pre><code>publishers:
 - name: some publisher name
   type: http
-- name: another publisher name
-  type: tcp
+- type: tcp
 </code></pre>
 
 <p><strong>subscriptions</strong><br>
-Optional. List of <a href="#subscription">subscriptions</a></p>
+List of <a href="#subscription">subscriptions</a></p>
 
 <pre><code>subscriptions:
 - name: some subscription name
@@ -301,7 +302,7 @@ Optional. List of <a href="#subscription">subscriptions</a></p>
 </code></pre>
 
 <p><strong>requisitions</strong><br>
-Optional. A list of child scenarios. List of <a href="#requisition">requisitions</a>.
+A list of child scenarios. List of <a href="#requisition">requisitions</a>.
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> example, it may help.</p>
 
 <pre><code>requisitions:
@@ -331,6 +332,7 @@ onFinish:
 Every publisher has its own properties, depending on its protocol and implementation. But, usually, they all have these properties.</p>
 
 <p><strong>name</strong><br>
+Defaults to publisher index.
 Describes what the publisher is supposed to do.</p>
 
 <pre><code>name: publisher action
@@ -381,6 +383,7 @@ Rather than that, enqueuer waits on an external event to be triggered and then i
 Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. </p>
 
 <p><strong>name</strong><br>
+Defaults to subscription index.
 Describes what the subscription is supposed to do.</p>
 
 <pre><code>name: subscription action
@@ -409,7 +412,7 @@ Set to zero or less than zero to run it endlessly.</p>
 </code></pre>
 
 <p><strong>ignore</strong><br>
-Optional. Defaults to false. Tells to enqueuer that this subscription should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
+Defaults to false. Tells to enqueuer that this subscription should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
 <pre><code>ignore: true    
 </code></pre>

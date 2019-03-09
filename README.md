@@ -76,42 +76,43 @@ It supports multi-level test scenarios out of the box.
 [Variable replacements](#variables) are available through the entire requisition.
 
 **name**\
-Optional, describes what the requisition is suppose to do.
+Describes what the requisition is suppose to do.
+Defaults to requisition index.
 
     name: requisition action
 
 **timeout**\
-Sets in milliseconds how long the requisition waits to expire. Defaults to 5000.
+Defaults to 5000.
+Sets in milliseconds how long the requisition waits to expire.
 Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
     
 **delay**\
-Optional. Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) to get the full idea.
+Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) to get the full idea.
 
     delay: 0
 
 **iterations**\
-Optional. Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
+Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
 
     iterations: 3
 
 **ignore**\
-Optional. Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
 
 **publishers**\
-Optional. List of [publishers](#publisher)
+List of [publishers](#publisher)
     
     publishers:
     - name: some publisher name
       type: http
-    - name: another publisher name
-      type: tcp
+    - type: tcp
 
 **subscriptions**\
-Optional. List of [subscriptions](#subscription)
+List of [subscriptions](#subscription)
 
     subscriptions:
     - name: some subscription name
@@ -121,7 +122,7 @@ Optional. List of [subscriptions](#subscription)
 
 
 **requisitions**\
-Optional. A list of child scenarios. List of [requisitions](#requisition).
+A list of child scenarios. List of [requisitions](#requisition).
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
     requisitions:
@@ -148,6 +149,7 @@ A publisher action is triggered by enqueuer itself. It **acts** whereas a [subsc
 Every publisher has its own properties, depending on its protocol and implementation. But, usually, they all have these properties.
 
 **name**\
+Defaults to publisher index.
 Describes what the publisher is supposed to do.
 
     name: publisher action
@@ -191,6 +193,7 @@ Rather than that, enqueuer waits on an external event to be triggered and then i
 Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. 
 
 **name**\
+Defaults to subscription index.
 Describes what the subscription is supposed to do.
 
     name: subscription action
@@ -215,7 +218,7 @@ Set to zero or less than zero to run it endlessly.
     timeout: 3000
     
 **ignore**\
-Optional. Defaults to false. Tells to enqueuer that this subscription should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+Defaults to false. Tells to enqueuer that this subscription should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true    
 
