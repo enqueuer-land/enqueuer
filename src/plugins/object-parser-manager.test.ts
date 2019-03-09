@@ -67,7 +67,37 @@ describe('ObjectParserManager', () => {
         } catch (err) {
             expect(err).toEqual({
                 first: 'error',
-                other: 'other error',
+                other: 'other error'
+            });
+        }
+    });
+
+    it('should tryToParseWithEveryParser subset error', () => {
+        const objectParserManager = new ObjectParserManager();
+        // @ts-ignore
+        objectParserManager.addObjectParser(() => {
+            return {
+                parse: () => {
+                    throw 'error';
+                }
+            };
+        }, 'first');
+
+        // @ts-ignore
+        objectParserManager.addObjectParser(() => {
+            return {
+                parse: () => {
+                    throw 'other error';
+                }
+            };
+        }, 'other');
+
+        try {
+            objectParserManager.tryToParseWithEveryParser('stuff', 'other');
+            expect(true).toBeFalsy();
+        } catch (err) {
+            expect(err).toEqual({
+                other: 'other error'
             });
         }
 

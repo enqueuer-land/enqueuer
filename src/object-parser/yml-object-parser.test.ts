@@ -24,7 +24,7 @@ describe('YmlObjectParser', () => {
     });
 
     test('should keep string numbers as string', () => {
-        const value =    'firstLevel:\n' +
+        const value = 'firstLevel:\n' +
             "  secondLevel: '123.00'\n";
 
         const parsed: any = new YmlObjectParser().parse(value);
@@ -49,14 +49,10 @@ describe('YmlObjectParser', () => {
         expect(stringified).toBe('{}');
     });
 
-    test('should parse', () => {
-        const value =    'firstLevel:\n' +
-                         '  secondLevel: value\n';
-        const expected = {firstLevel: {secondLevel: 'value'}};
+    test('should throw parse error', () => {
+        const notYml = 'foo bar\nfoo: bar';
 
-        const parsed = new YmlObjectParser().parse(value);
-
-        expect(parsed).toEqual(expected);
+        expect(() => new YmlObjectParser().parse(notYml)).toThrow();
     });
 
     it('Should export an entry point', done => {

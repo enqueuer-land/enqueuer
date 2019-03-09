@@ -12,6 +12,7 @@ import {RequisitionParentCreator} from './components/requisition-parent-creator'
 import {Configuration} from './configurations/configuration';
 
 //TODO test it
+//TODO rename it to Enqueuer Runner
 export class SingleRunExecutor {
 
     private readonly fileNames: string[];
@@ -74,7 +75,7 @@ export class SingleRunExecutor {
                 const requisition: input.RequisitionModel = new RequisitionFileParser(file).parse();
                 requisitions.push(requisition);
             } catch (err) {
-                const message = `Error parsing file: ${err}`;
+                const message = `Error parsing file ${file}: ${typeof err === 'string' ? err : JSON.stringify(err, null, 2)}`;
                 Logger.error(message);
                 const error = RequisitionDefaultReports.createRunningError({name: file}, message);
                 this.errors.push(error);

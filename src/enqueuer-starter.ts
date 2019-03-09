@@ -2,6 +2,7 @@ import {Logger} from './loggers/logger';
 import {Configuration} from './configurations/configuration';
 import {SingleRunExecutor} from './single-run-executor';
 
+//TODO move output dir from js to dist
 export class EnqueuerStarter {
 
     private singleRunExecutor: SingleRunExecutor;

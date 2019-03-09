@@ -1,4 +1,9 @@
+//TODO bring CSV back
+//TODO test javascript parser
 export interface ObjectParser {
-    parse(value: string, query?: any): object | string;
-    stringify(value: object, params?: any): string;
+    //TODO throw on error
+    parse(value: string, query?: any): object;
+
+    //TODO Remove it
+    stringify(value: object, query?: any): string;
 }

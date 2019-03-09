@@ -8,18 +8,18 @@ export class YmlObjectParser implements ObjectParser {
         return yaml.parse(value);
     }
 
-    public stringify(value: object, query: any = {}): string {
-        const parsedQuery = this.parseQuery(query);
-        return yaml.stringify(new ObjectDecycler().decycle(value || {}), parsedQuery.inline, parsedQuery.space);
+    public stringify(value: object, params: any = {}): string {
+        const parsedParams = this.parseParams(params);
+        return yaml.stringify(new ObjectDecycler().decycle(value || {}), parsedParams.inline, parsedParams.space);
     }
 
-    private parseQuery(query: any): any {
+    private parseParams(params: any): any {
         return Object.assign({},
             {
                 inline: 100,
                 space: 2
             },
-            query);
+            params);
     }
 
 }

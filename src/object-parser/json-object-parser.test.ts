@@ -1,4 +1,4 @@
-import {JsonObjectParser, entryPoint} from './json-object-parser';
+import {entryPoint, JsonObjectParser} from './json-object-parser';
 import {MainInstance} from '../plugins/main-instance';
 
 describe('JsonObjectParser', () => {
@@ -55,17 +55,10 @@ describe('JsonObjectParser', () => {
         expect(stringified).toBe(expected);
     });
 
-    test('should parse', () => {
-        const value = '{\n' +
-            '  "firstLevel": {\n' +
-            '    "secondLevel": "value"\n' +
-            '  }\n' +
-            '}';
-        const expected = {firstLevel: {secondLevel: 'value'}};
+    test('should throw parse error', () => {
+        const notJson = 'foo bar\nfoo: bar';
 
-        const parsed = new JsonObjectParser().parse(value);
-
-        expect(parsed).toEqual(expected);
+        expect(() => new JsonObjectParser().parse(notJson)).toThrow();
     });
 
     it('Should export an entry point', done => {

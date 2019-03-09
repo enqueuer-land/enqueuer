@@ -1,6 +1,7 @@
 import {RequisitionFileParser} from './requisition-file-parser';
 import * as fs from 'fs';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import {YmlObjectParser} from '../object-parser/yml-object-parser';
 
 jest.mock('fs');
 
@@ -34,7 +35,7 @@ describe('RequisitionFileParser', () => {
             return {
                 parse: () => value
             };
-        }, 'some');
+        }, 'yml');
 
         const parser: RequisitionFileParser = new RequisitionFileParser(filename);
 
@@ -55,7 +56,7 @@ describe('RequisitionFileParser', () => {
             return {
                 parse: () => requisitions
             };
-        }, 'some');
+        }, 'yml');
 
         const fileContent = JSON.stringify(requisitions);
         // @ts-ignore
@@ -79,12 +80,32 @@ describe('RequisitionFileParser', () => {
             return {
                 parse: () => value
             };
-        }, 'some');
+        }, 'yml');
 
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
         const requisition = new RequisitionFileParser('anyStuff').parse();
         expect(requisition.id).toBe(12345);
+    });
+
+    it('Should throw if not yml nor json', () => {
+        const notYml = 'foo bar\nfoo: bar';
+
+        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
+            return {
+                parse: (value) => new YmlObjectParser().parse(value)
+            };
+        }, 'yml');
+
+        // @ts-ignore
+        fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
+        try {
+            new RequisitionFileParser('anyStuff').parse();
+            expect(false).toBeTruthy();
+        } catch (err) {
+            expect(err.json).toBeDefined();
+            expect(err.yml).toBeDefined();
+        }
     });
 
 });

@@ -11,6 +11,7 @@ const options = {
 
 //TODO test it
 export class TestsDescriber {
+    //TODO group them by key
     public describeTests() {
         const tester = new Tester();
 

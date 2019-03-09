@@ -39,19 +39,39 @@ export class ObjectParserManager {
         Logger.trace(`No object parser was found with '${tag}'`);
     }
 
-    public tryToParseWithEveryParser(fileBufferContent: string): string | object {
+    //TODO improve logic
+    public tryToParseWithEveryParser(fileBufferContent: string, ...tags: string[]): string | object {
         const errorResult: any = {};
-        for (const addedObject of this.addedObjectParsers) {
-            const objectParser = addedObject.createFunction();
-            try {
-                const parse = objectParser.parse(fileBufferContent);
-                Logger.debug(`Content parsed as ${addedObject.tags[0]}`);
-                return parse;
-            } catch (err) {
-                errorResult[addedObject.tags[0]] = err;
+        if (tags && tags.length > 0) {
+            for (const tag of tags || []) {
+                const objectParser = this.createParser(tag);
+                if (objectParser) {
+                    try {
+                        const parse = objectParser.parse(fileBufferContent);
+                        Logger.debug(`Content parsed as ${tag}`);
+                        return parse;
+                    } catch (err) {
+                        errorResult[tag] = err.toString();
+                    }
+                } else {
+                    errorResult[tag] = `No object parser was found with '${tag}'`;
+                }
             }
+            throw errorResult;
+
+        } else {
+            for (const addedObject of this.addedObjectParsers) {
+                const objectParser = addedObject.createFunction();
+                try {
+                    const parse = objectParser.parse(fileBufferContent);
+                    Logger.debug(`Content parsed as ${addedObject.tags[0]}`);
+                    return parse;
+                } catch (err) {
+                    errorResult[addedObject.tags[0]] = err;
+                }
+            }
+            throw errorResult;
         }
-        console.log(JSON.stringify(errorResult));
-        throw errorResult;
     }
+
 }
