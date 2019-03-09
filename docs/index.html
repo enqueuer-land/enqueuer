@@ -227,8 +227,8 @@ Options:
 
 Examples:
   <span class="dollar-sign">$</span> nqr --config-file config-file.yml --verbosity error --store key=value
-  <span class="dollar-sign">$</span> enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info
-  <span class="dollar-sign">$</span> enqueuer -a test-file.yml --store someKey=true --store someOtherKey=false
+  <span class="dollar-sign">$</span> enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
+  <span class="dollar-sign">$</span> enqueuer test-file.yml --store someKey=true --store someOtherKey=false
   <span class="dollar-sign">$</span> nqr --protocols-description -s key=value
   <span class="dollar-sign">$</span> nqr -l my-enqueuer-plugin-name -p plugin-protocol
   <span class="dollar-sign">$</span> nqr -p http

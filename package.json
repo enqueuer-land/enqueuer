@@ -8,7 +8,7 @@
     "prepublishOnly": "npm run clean && npm run build",
     "test": "npm run codeCoverage && npm run singleRunTest && npm run listsDescriptions",
     "unitTest": "NODE_ENV_TEST=true node_modules/.bin/jest --silent .test.ts",
-    "singleRunTest": "nqr conf/singleRun.yml -a examples/requisition-navigation.yaml < misc/stdin && npm run validateOutput",
+    "singleRunTest": "nqr -c conf/singleRun.yml examples/requisition-navigation.yaml < misc/stdin && npm run validateOutput",
     "validateOutput": "yval --from=json outputExamples/singleRunOutput.json && yval --from=yaml outputExamples/singleRunOutput.yml",
     "codeCoverage": "NODE_ENV_TEST=true node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null",

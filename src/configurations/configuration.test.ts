@@ -97,7 +97,7 @@ describe('Configuration', () => {
 
         expect(instance.getName()).toBe(fileConfiguration.getName());
         expect(instance.isParallel()).toBeTruthy();
-        expect(instance.getFiles()).toEqual(fileConfiguration.getFiles().concat(commandLine.getSingleRunFiles()));
+        expect(instance.getFiles()).toEqual(fileConfiguration.getFiles().concat(commandLine.getTestFiles()));
         expect(instance.getLogLevel()).toBe(commandLine.getVerbosity());
         expect(instance.getMaxReportLevelPrint()).toBe(fileConfiguration.getMaxReportLevelPrint());
         expect(instance.getStore()).toEqual(Object.assign({}, fileConfiguration.getStore(), commandLine.getStore()));
@@ -109,7 +109,7 @@ describe('Configuration', () => {
         const fileConfiguration = createFileConfiguration();
         const commandLine = createCommandLine('conf-file');
         // @ts-ignore
-        commandLine.getSingleRunFilesIgnoring = () => uniqueFiles;
+        commandLine.getTestFilesIgnoringOthers = () => uniqueFiles;
         // @ts-ignore
         CommandLineConfiguration.mockImplementationOnce(() => commandLine);
         // @ts-ignore
@@ -155,12 +155,12 @@ describe('Configuration', () => {
         return {
             verifyPrematureActions: () => true,
             getConfigFileName: () => filename,
-            getSingleRunFiles: () => undefined,
+            getTestFiles: () => undefined,
             getVerbosity: () => undefined,
             getPlugins: () => undefined,
             getStore: () => undefined,
             isQuietMode: () => undefined,
-            getSingleRunFilesIgnoring: () => undefined,
+            getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => false,
         };
     };
@@ -169,7 +169,7 @@ describe('Configuration', () => {
         return {
             verifyPrematureActions: () => true,
             getConfigFileName: () => filename,
-            getSingleRunFiles: () => ['cli-firstFile', 'cli-secondFile'],
+            getTestFiles: () => ['cli-firstFile', 'cli-secondFile'],
             getVerbosity: () => 'cli-debug',
             getPlugins: () => ['cli-amqp-plugin', 'common-plugin'],
             getStore: () => {
@@ -178,7 +178,7 @@ describe('Configuration', () => {
                 };
             },
             isQuietMode: () => true,
-            getSingleRunFilesIgnoring: () => undefined,
+            getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => true,
         };
     };

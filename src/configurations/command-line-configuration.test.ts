@@ -58,13 +58,6 @@ describe('CommandLineConfiguration', () => {
         expect(commandLineConfiguration.getStdoutRequisitionOutput()).toBeTruthy();
     });
 
-    it('getConfigFileName <no dash>', () => {
-        const configFile = 'filename';
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--some', 'test', configFile, '--other', 'stuff']);
-
-        expect(commandLineConfiguration.getConfigFileName()).toBe(configFile);
-    });
-
     it('getConfigFileName -c', () => {
         const configFile = 'minusC';
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-c', configFile]);
@@ -137,14 +130,23 @@ describe('CommandLineConfiguration', () => {
     it('no single run file', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
 
-        expect(commandLineConfiguration.getSingleRunFiles()).toEqual([]);
-        expect(commandLineConfiguration.getSingleRunFilesIgnoring()).toEqual([]);
+        expect(commandLineConfiguration.getTestFiles()).toEqual([]);
+        expect(commandLineConfiguration.getTestFilesIgnoringOthers()).toEqual([]);
+    });
+
+    it('add file <no dash>', () => {
+        const testFile1 = 'filename1';
+        const testFile2 = 'filename2';
+        const commandLineConfiguration = new CommandLineConfiguration(
+            ['node', 'test', '--some', 'test', testFile1, '--other', 'stuff', testFile2]);
+
+        expect(commandLineConfiguration.getTestFiles().sort()).toEqual([testFile2, testFile1].sort());
     });
 
     it('add single run file', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-a', 'file', '--add-file', 'file2']);
 
-        expect(commandLineConfiguration.getSingleRunFiles()).toEqual(['file', 'file2']);
+        expect(commandLineConfiguration.getTestFiles()).toEqual(['file', 'file2']);
     });
 
     it('add plugin', () => {
@@ -171,7 +173,7 @@ describe('CommandLineConfiguration', () => {
     it('add single run file ignoring', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-A', 'file', '--add-file-and-ignore-others', 'file2']);
 
-        expect(commandLineConfiguration.getSingleRunFilesIgnoring()).toEqual(['file', 'file2']);
+        expect(commandLineConfiguration.getTestFilesIgnoringOthers()).toEqual(['file', 'file2']);
     });
 
     it('handle null procces.argv', () => {

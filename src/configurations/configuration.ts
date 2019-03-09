@@ -4,7 +4,6 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
 import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
-import {Store} from './store';
 
 export class Configuration {
     private static instance: Configuration;
@@ -85,13 +84,13 @@ export class Configuration {
     }
 
     private adjustFromCommandLine(): void {
-        this.files = this.files.concat(this.commandLineConfiguration.getSingleRunFiles() || []);
+        this.files = this.files.concat(this.commandLineConfiguration.getTestFiles() || []);
 
         this.logLevel = this.commandLineConfiguration.getVerbosity() || this.logLevel;
         this.plugins = [...new Set(this.plugins.concat(this.commandLineConfiguration.getPlugins() || []))];
         this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
         this.quiet = this.commandLineConfiguration.isQuietMode();
-        const singleRunFilesIgnoring = this.commandLineConfiguration.getSingleRunFilesIgnoring();
+        const singleRunFilesIgnoring = this.commandLineConfiguration.getTestFilesIgnoringOthers();
         if (singleRunFilesIgnoring && singleRunFilesIgnoring.length > 0) {
             this.files = singleRunFilesIgnoring;
         }

@@ -5,20 +5,19 @@ import {TestsDescriber} from '../testers/tests-describer';
 
 const packageJson = require('../../package.json');
 
-//TODO default argument will be req files
 export class CommandLineConfiguration {
     private parsedCommandLine: any;
     private readonly commandLineStore: any = {};
     private readonly plugins: string[] = [];
-    private readonly singleRunFiles: string[] = [];
-    private readonly singleRunFilesIgnoring: string[] = [];
+    private readonly testFiles: string[] = [];
+    private readonly testFilesIgnoringOthers: string[] = [];
 
     public constructor(commandLineArguments: string[]) {
         try {
             const commander = new Command()
                 .version(process.env.npm_package_version || packageJson.version, '-v, --version')
                 .allowUnknownOption()
-                .usage('[options]')
+                .usage('[options] test-file1 test-file2')
                 .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
                 .option('-q, --quiet', 'disable logging', false)
                 .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
@@ -32,9 +31,9 @@ export class CommandLineConfiguration {
                     (val: string) => this.plugins.push(val), [])
                 .option('-c, --config-file <path>', 'set configurationFile')
                 .option('-a, --add-file <file>', 'add file to be tested',
-                    (val: string) => this.singleRunFiles.push(val), [])
+                    (val: string) => this.testFiles.push(val), [])
                 .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
-                    (val: string) => this.singleRunFilesIgnoring.push(val), []);
+                    (val: string) => this.testFilesIgnoringOthers.push(val), []);
             commander.on('--help', () => this.helpDescription());
             this.parsedCommandLine = commander.parse(commandLineArguments || ['path', 'enqueuer']);
         } catch (err) {
@@ -73,26 +72,27 @@ export class CommandLineConfiguration {
     }
 
     public getConfigFileName(): string | undefined {
-        let configFileName = this.parsedCommandLine.configFile;
-        if (configFileName) {
-            return configFileName;
-        }
-        const args = this.parsedCommandLine.args;
-        if (args && args.length > 0) {
-            return args[0];
-        }
+        return this.parsedCommandLine.configFile;
     }
 
     public getStore(): any {
         return this.commandLineStore;
     }
 
-    public getSingleRunFiles(): string[] {
-        return this.singleRunFiles;
+    public getTestFiles(): string[] {
+        const testFiles = this.testFiles;
+        if (testFiles.length > 0) {
+            return testFiles;
+        }
+        const args = this.parsedCommandLine.args;
+        if (args && args.length > 0) {
+            return args;
+        }
+        return [];
     }
 
-    public getSingleRunFilesIgnoring(): string[] {
-        return this.singleRunFilesIgnoring;
+    public getTestFilesIgnoringOthers(): string[] {
+        return this.testFilesIgnoringOthers;
     }
 
     public getPlugins(): string[] {
@@ -116,8 +116,8 @@ export class CommandLineConfiguration {
         console.log('');
         console.log('Examples:');
         console.log('  $ nqr --config-file config-file.yml --verbosity error --store key=value');
-        console.log('  $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info');
-        console.log('  $ enqueuer -a test-file.yml --store someKey=true --store someOtherKey=false');
+        console.log('  $ enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info');
+        console.log('  $ enqueuer test-file.yml --store someKey=true --store someOtherKey=false');
         console.log('  $ nqr --protocols-description -s key=value');
         console.log('  $ nqr -l my-enqueuer-plugin-name -p plugin-protocol');
         console.log('  $ nqr -p http');

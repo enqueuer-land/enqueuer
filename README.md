@@ -56,13 +56,12 @@ or
     
     Examples:
       $ nqr --config-file config-file.yml --verbosity error --store key=value
-      $ enqueuer -c config-file.yml -a test-file.yml --add-file another-test-file.yml -b info
-      $ enqueuer -a test-file.yml --store someKey=true --store someOtherKey=false
+      $ enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
+      $ enqueuer test-file.yml --store someKey=true --store someOtherKey=false
       $ nqr --protocols-description -s key=value
       $ nqr -l my-enqueuer-plugin-name -p plugin-protocol
       $ nqr -p http
       $ nqr --formatters-description json
-
 
 ----
 ### Components
