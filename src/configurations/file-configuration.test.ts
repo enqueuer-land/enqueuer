@@ -1,126 +1,83 @@
 import {FileConfiguration} from './file-configuration';
-import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
+import {YmlObjectParser} from '../object-parser/yml-object-parser';
+import * as fs from 'fs';
 
-jest.mock('../object-notations/multiple-object-notation');
-let fileLoadMock = jest.fn(() => true);
+jest.mock('../object-parser/yml-object-parser');
+jest.mock('fs');
+
+fs.readFileSync.mockImplementation(() => 'fileContent');
 
 describe('FileConfiguration', () => {
-    beforeEach(() => {
+
+    it('Throw error', () => {
         // @ts-ignore
-        MultipleObjectNotation.mockImplementationOnce(() => {
+        YmlObjectParser.mockImplementationOnce(() => {
             return {
-                loadFromFileSync: fileLoadMock
+                parse: () => {
+                    throw 'error';
+                }
             };
         });
-
-    });
-
-    afterEach(() => {
-        fileLoadMock.mockClear();
-        // @ts-ignore
-        MultipleObjectNotation.mockClear();
-    });
-
-    it('Reload file - success', () => {
-        const filename = 'filename';
-
-        expect(() => new FileConfiguration(filename)).not.toThrow();
-    });
-
-    it('Reload file - fail', () => {
-        fileLoadMock.mockImplementation(() => {throw 'error';});
 
         const filename = 'filename';
 
         expect(() => new FileConfiguration(filename)).toThrow();
     });
 
-    it('getVerbosity', () => {
-        const logLevel = 'enqueuer';
-        fileLoadMock.mockImplementation(() => {
+    it('get values', () => {
+        YmlObjectParser.mockImplementationOnce(() => {
             return {
-                'log-level': logLevel
+                parse: () => {
+                    return {
+                        'log-level': 'logEnqueuer',
+                        outputs: ['outputs'],
+                        name: 'enqueuer',
+                        parallel: true,
+                        files: ['1', '2'],
+                        plugins: ['plugin1', 'plugin2'],
+                        maxReportLevelPrint: 10,
+                        store: {
+                            key: 'value',
+                            otherKey: 123
+                        }
+                    };
+                }
             };
         });
         const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-        expect(fileConfiguration.getLogLevel()).toBe(logLevel);
-    });
-
-    it('getOutputs', () => {
-        const outputs = 'enqueuer';
-        fileLoadMock = jest.fn(() => {
-            return {
-                'outputs': outputs
-            };
-        });
-        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
-
-        expect(fileConfiguration.getOutputs()).toBe(outputs);
-    });
-
-    it('name; parallel; files, maxReportLevelPrint', () => {
-        fileLoadMock = jest.fn(() => {
-            return {
-                'name': 'enqueuer',
-                'parallel': true,
-                'files': ['1', '2'],
-                maxReportLevelPrint: 10
-            };
-        });
-        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
-
+        expect(fileConfiguration.getOutputs()).toEqual(['outputs']);
         expect(fileConfiguration.getName()).toBe('enqueuer');
         expect(fileConfiguration.isParallelExecution()).toBeTruthy();
         expect(fileConfiguration.getFiles()).toEqual(['1', '2']);
-        expect(fileConfiguration.getMaxReportLevelPrint()).toEqual(10);
+        expect(fileConfiguration.getMaxReportLevelPrint()).toBe(10);
+        expect(fileConfiguration.getPlugins()).toEqual(['plugin1', 'plugin2']);
+        expect(fileConfiguration.getStore()).toEqual(
+            {
+                key: 'value',
+                otherKey: 123
+            });
     });
 
-    it('getPlugins', () => {
-        const pluginsList = ['plugin1', 'plugin2'];
-        fileLoadMock = jest.fn(() => {
+    it('get default', () => {
+        // @ts-ignore
+        YmlObjectParser.mockImplementationOnce(() => {
             return {
-                'plugins': pluginsList
+                parse: () => {
+                    return {};
+                }
             };
         });
         const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
-        expect(fileConfiguration.getPlugins()).toBe(pluginsList);
-    });
+        expect(fileConfiguration.getOutputs()).toEqual([]);
+        expect(fileConfiguration.getName()).toBeUndefined();
+        expect(fileConfiguration.isParallelExecution()).toBeFalsy();
+        expect(fileConfiguration.getFiles()).toEqual([]);
+        expect(fileConfiguration.getMaxReportLevelPrint()).toBeUndefined();
+        expect(fileConfiguration.getPlugins()).toEqual([]);
+        expect(fileConfiguration.getStore()).toEqual({});
 
-    it('getOutputs default', () => {
-        fileLoadMock = jest.fn(() => {
-            return {
-            };
-        });
-        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
-
-        expect(fileConfiguration.getOutputs()).toBeUndefined();
-    });
-
-    it('getStore', () => {
-        const store = {
-            key: 'value',
-            otherKey: 123
-        };
-        fileLoadMock = jest.fn(() => {
-            return {
-                'store': store
-            };
-        });
-        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
-
-        expect(fileConfiguration.getStore()).toBe(store);
-    });
-
-    it('getStore default', () => {
-        fileLoadMock = jest.fn(() => {
-            return {
-            };
-        });
-        const fileConfiguration = new FileConfiguration('itDoesNotMatter');
-
-        expect(fileConfiguration.getStore()).toBeUndefined();
     });
 
 });

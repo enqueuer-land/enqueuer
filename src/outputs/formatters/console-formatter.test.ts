@@ -1,8 +1,8 @@
 import {RequisitionModel} from '../../models/outputs/requisition-model';
 import {ConsoleFormatter, entryPoint} from './console-formatter';
-import {ObjectDecycler} from '../../object-notations/object-decycler';
 import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../prettyjson-config';
+import {ObjectDecycler} from '../../object-parser/object-decycler';
 
 describe('ConsoleFormatter', () => {
 

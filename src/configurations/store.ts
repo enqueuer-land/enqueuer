@@ -10,18 +10,19 @@ export class Store {
 
     public static getData(): any {
         if (Store.data === undefined) {
-            this.refreshData();
+            try {
+                Store.data = process.env;
+                const configurationStore = Configuration.getInstance().getStore();
+                Store.data = Object.assign({}, configurationStore, Store.data);
+            } catch (err) {
+                Logger.warning(err);
+            }
         }
         return Store.data;
     }
 
-    public static refreshData() {
-        try {
-            Store.data = process.env;
-            const configurationStore = Configuration.getInstance().getStore();
-            Store.data = Object.assign({}, configurationStore, Store.data);
-        } catch (err) {
-            Logger.warning(err);
-        }
+    public static refreshData(): any {
+        Store.data = undefined;
+        return Store.getData();
     }
 }

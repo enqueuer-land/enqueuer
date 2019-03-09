@@ -1,7 +1,7 @@
 import {RequisitionModel} from '../models/inputs/requisition-model';
-import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
 import * as fs from 'fs';
 import {RequisitionParentCreator} from '../components/requisition-parent-creator';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
 export class RequisitionFileParser {
     private readonly filename: string;
@@ -12,7 +12,7 @@ export class RequisitionFileParser {
 
     public parse(): RequisitionModel {
         const fileBufferContent = fs.readFileSync(this.filename).toString();
-        const fileContent: any = new MultipleObjectNotation().parse(fileBufferContent);
+        const fileContent: any = DynamicModulesManager.getInstance().getObjectParserManager().tryToParseWithEveryParser(fileBufferContent);
         if (Array.isArray(fileContent)) {
             return new RequisitionParentCreator().create(this.filename, fileContent);
         }

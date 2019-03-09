@@ -10,10 +10,10 @@ import {RequisitionMultiplier} from './requisition-multiplier';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {FileContentMapCreator} from '../configurations/file-content-map-creator';
 import {IterationsEvaluator} from './iterations-evaluator';
-import {ObjectDecycler} from '../object-notations/object-decycler';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {ComponentUniqueTagCreator} from '../components/component-unique-tag-creator';
 import {Configuration} from '../configurations/configuration';
+import {ObjectDecycler} from '../object-parser/object-decycler';
 
 export class RequisitionRunner {
 
@@ -74,6 +74,7 @@ export class RequisitionRunner {
         return await this.startRequisitionReporter(mapReplacedRequisition);
     }
 
+    //TODO extract to class
     private replaceVariables(): input.RequisitionModel {
         const withId = new ComponentUniqueTagCreator().refresh(this.requisition!);
         Logger.debug(`Evaluating variables of requisition '${this.requisition!.name}'`);

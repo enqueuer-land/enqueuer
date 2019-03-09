@@ -3,11 +3,11 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import * as net from 'net';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
-import {Json} from '../object-notations/json';
 import * as tls from 'tls';
 import {Timeout} from '../timers/timeout';
 import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 class StreamPublisher extends Publisher {
 
@@ -140,7 +140,7 @@ class StreamPublisher extends Publisher {
 
     private stringifyPayload() {
         if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            return new Json().stringify(this.payload);
+            return new JsonObjectParser().stringify(this.payload);
         }
         return this.payload;
     }

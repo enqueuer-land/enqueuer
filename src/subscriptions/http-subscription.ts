@@ -4,10 +4,10 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {HttpContainerPool} from '../pools/http-container-pool';
 import {TestModel} from '../models/outputs/test-model';
 import {HttpRequester} from '../pools/http-requester';
-import {Json} from '../object-notations/json';
 import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 import {HttpAuthenticationFactory} from '../http-authentications/http-authentication-factory';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 class HttpSubscription extends Subscription {
 
@@ -44,7 +44,7 @@ class HttpSubscription extends Subscription {
     }
 
     public sendResponse(): Promise<void> {
-        Logger.trace(`${this.type} sending response: ${new Json().stringify(this.response)}`);
+        Logger.trace(`${this.type} sending response: ${new JsonObjectParser().stringify(this.response)}`);
         try {
             Object.keys(this.response.headers || {}).forEach(key => {
                 this.responseToClientHandler.header(key, this.response.headers[key]);
@@ -59,7 +59,7 @@ class HttpSubscription extends Subscription {
 
     public onMessageReceivedTests(): TestModel[] {
         if (this.authentication && this.messageReceived) {
-            Logger.debug(`${this.type} authenticating message with ${new Json().stringify(Object.keys(this.authentication))}`);
+            Logger.debug(`${this.type} authenticating message with ${new JsonObjectParser().stringify(Object.keys(this.authentication))}`);
             const verifier = new HttpAuthenticationFactory().create(this.authentication);
             return verifier.verify(this.messageReceived.headers.authorization);
         }
@@ -92,7 +92,7 @@ class HttpSubscription extends Subscription {
                 this.redirectCall(request)
                     .then((redirectionResponse: any) => {
                         Logger.trace(`${this.type}:${this.port} got redirection response: ` +
-                            `${new Json().stringify(redirectionResponse)}`);
+                            `${new JsonObjectParser().stringify(redirectionResponse)}`);
                         this.response = {
                             status: redirectionResponse.statusCode,
                             payload: redirectionResponse.body,

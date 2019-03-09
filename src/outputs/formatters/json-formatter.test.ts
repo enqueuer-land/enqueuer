@@ -1,6 +1,6 @@
 import {RequisitionModel} from '../../models/outputs/requisition-model';
 import {entryPoint, JsonReportFormatter} from './json-formatter';
-import {Json} from '../../object-notations/json';
+import {JsonObjectParser} from '../../object-parser/json-object-parser';
 
 describe('JsonReportFormatter', () => {
 
@@ -13,7 +13,7 @@ describe('JsonReportFormatter', () => {
         const format = new JsonReportFormatter().format(test);
 
         expect(typeof (format)).toBe('string');
-        expect(format).toBe(new Json().stringify(test));
+        expect(format).toBe(new JsonObjectParser().stringify(test));
     });
 
     it('Should export an entry point', done => {
@@ -28,7 +28,6 @@ describe('JsonReportFormatter', () => {
         };
 
         entryPoint(mainInstance);
-
     });
 
 });

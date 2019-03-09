@@ -1,10 +1,10 @@
 import {HandlerListener} from './handler-listener';
 import * as net from 'net';
-import {Json} from '../object-notations/json';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 export class StreamInputHandler {
     private readonly handlerListener: HandlerListener;
-    private server: net.Server;
+    private readonly server: net.Server;
     private handler: string | number;
 
     public constructor(handler: string | number) {
@@ -33,6 +33,7 @@ export class StreamInputHandler {
     public async unsubscribe(): Promise<void> {
         if (this.server) {
             this.server.close();
+            // @ts-ignore
             delete this.server;
         }
     }
@@ -65,6 +66,6 @@ export class StreamInputHandler {
         if (typeof(payload) == 'string' || Buffer.isBuffer(payload)) {
             return payload;
         }
-        return new Json().stringify(payload) as string;
+        return new JsonObjectParser().stringify(payload) as string;
     }
 }

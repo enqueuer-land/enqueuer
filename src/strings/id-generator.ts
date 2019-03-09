@@ -1,7 +1,6 @@
 import {DateController} from '../timers/date-controller';
 import {createHash} from 'crypto';
-import {Json} from '../object-notations/json';
-import {ObjectDecycler} from '../object-notations/object-decycler';
+import {ObjectDecycler} from '../object-parser/object-decycler';
 
 export class IdGenerator {
 

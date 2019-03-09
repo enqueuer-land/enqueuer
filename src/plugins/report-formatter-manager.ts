@@ -24,8 +24,8 @@ export class ReportFormatterManager {
         return new JsonReportFormatter();
     }
 
-    public addReportFormatter(createFunction: () => ReportFormatter, ...tags: string[]): void {
-        this.formatters.push({tags, createFunction});
+    public addReportFormatter(createFunction: () => ReportFormatter, firstTag: string, ...tags: string[]): void {
+        this.formatters.push({tags: [firstTag].concat(tags), createFunction});
     }
 
     public describeReportFormatters(describeFormatters: string | true): boolean {

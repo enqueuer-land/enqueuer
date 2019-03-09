@@ -1,7 +1,5 @@
--   csv: <<csvh://misc/file-content.csv>> #h at the ends indicates a presence of a header
-    tsv: <<tsvh://misc/file-content.tsv>> #h at the ends indicates a presence of a header
-    json: <<json://misc/file-content.json>>
-    yml: <<yaml://misc/file-content.yml>>
+-   json: <<json://misc/file-content.json>>
+    yml: <<yml://misc/file-content.yml>>
     fileNotFound: <<file://not/found.file>>
     onInit:
         script: double = <<js://misc/file-code.js>>
@@ -15,19 +13,12 @@
         -   name: fileRead (.json)
             expect: requisition.json.key
             toBeEqualTo: `value`
-        -   name: fileRead (.csv)
-            expect: requisition.csv[1].title
-            toBeEqualTo: `secondRow`
-        -   name: fileRead (.tsv)
-            expect: requisition.tsv[0].title
-            toBeEqualTo: `virgs`
         -   name: file not found
             expect: requisition.fileNotFound
             toBeEqualTo: `Error: ENOENT: no such file or directory, open 'not/found.file'`
         -   name: fileRead (.js)
             expect: store.scriptResult
             toBeEqualTo: 40
-
 -   onInit:
         assertions:
         -   name: it's not stored

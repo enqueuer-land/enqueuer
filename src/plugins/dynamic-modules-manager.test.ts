@@ -2,6 +2,7 @@ import {DynamicModulesManager} from './dynamic-modules-manager';
 import {entryPoint} from '../outputs/formatters/json-formatter';
 import {ProtocolManager} from './protocol-manager';
 import {ReportFormatterManager} from './report-formatter-manager';
+import {ObjectParserManager} from './object-parser-manager';
 
 jest.mock('../outputs/formatters/json-formatter');
 
@@ -27,7 +28,9 @@ describe('DynamicModulesManager', () => {
             '../subscriptions/udp-subscription',
             '../outputs/formatters/console-formatter',
             '../outputs/formatters/json-formatter',
-            '../outputs/formatters/yml-formatter'
+            '../outputs/formatters/yml-formatter',
+            '../object-parser/json-object-parser',
+            '../object-parser/yml-object-parser',
         ].map(expected => __dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();
 
@@ -49,6 +52,6 @@ describe('DynamicModulesManager', () => {
         expect(entryPointMock).toHaveBeenCalled();
         expect(mainInstance.protocolManager).toBeInstanceOf(ProtocolManager);
         expect(mainInstance.reportFormatterManager).toBeInstanceOf(ReportFormatterManager);
-
+        expect(mainInstance.objectParserManager).toBeInstanceOf(ObjectParserManager);
     });
 });

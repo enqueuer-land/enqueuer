@@ -1,8 +1,9 @@
-import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
-import {Json} from '../object-notations/json';
 import {RequisitionModel} from '../models/inputs/requisition-model';
-import {ObjectNotationFactory} from '../object-notations/object-notation-factory';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import * as fs from 'fs';
+import {ObjectParser} from '../object-parser/object-parser';
 
 export class FileContentMapCreator {
 
@@ -22,7 +23,7 @@ export class FileContentMapCreator {
             if (typeof attribute === 'object') {
                 this.checkChildren(attribute);
             } else {
-                this.findTags(new Json().stringify(attribute));
+                this.findTags(new JsonObjectParser().stringify(attribute));
             }
         }
     }
@@ -33,28 +34,59 @@ export class FileContentMapCreator {
         const match = (node.match(angleBrackets) || []).concat(node.match(curlyBrackets) || []);
         match.forEach((value: string) => {
             const key: string = value.substr(2, value.length - 4);
-            this.insertIntoMap(key);
+            this.map[key] = this.insertIntoMap(key);
         });
     }
 
-    private insertIntoMap(key: string) {
-        try {
-            if (!this.map[key]) {
-                const separator: string = '://';
-                const separatorIndex = key.indexOf(separator);
-                const tag = key.substring(0, separatorIndex);
-                const filename = key.substring(separatorIndex + 3);
-                const objectNotation = new ObjectNotationFactory().create(tag);
-                if (objectNotation) {
-                    this.map[key] = objectNotation.loadFromFileSync(filename);
-                } else {
-                    this.map[key] = fs.readFileSync(filename).toString();
+    private insertIntoMap(key: string): object | string {
+        if (!this.map[key]) {
+            try {
+                const query = this.parsePlaceHolder(key);
+                const fileContent = fs.readFileSync(query.filename).toString();
+                const objectParser = DynamicModulesManager.getInstance().getObjectParserManager().createParser(query.tag);
+                if (objectParser !== undefined) {
+                    return this.getValue(objectParser, fileContent, query);
                 }
+                return fileContent;
+            } catch (err) {
+                Logger.warning(err.toString());
+                return err.toString();
             }
-        } catch (err) {
-            Logger.warning(err.toString());
-            this.map[key] = err.toString();
         }
+        return this.map[key];
     }
 
+    private parsePlaceHolder(key: string) {
+        const separator: string = '://';
+        const separatorIndex = key.indexOf(separator);
+        const tag = key.substring(0, separatorIndex);
+        const afterDoubleSlash = key.substring(separatorIndex + 3);
+        const parseQuery = this.parseQuery(afterDoubleSlash);
+        parseQuery.tag = tag;
+        return parseQuery;
+    }
+
+    private parseQuery(tag: string) {
+        const strings = tag.split('?');
+        const query: any = {
+            filename: strings[0]
+        };
+        if (strings.length > 1) {
+            const pairs = strings[1].split('&');
+            for (let i = 0; i < pairs.length; i++) {
+                const pair = pairs[i].split('=');
+                query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            }
+        }
+        return query;
+    }
+
+    private getValue(objectParser: ObjectParser, fileContent: string, query: any): object | string {
+        try {
+            return objectParser.parse(fileContent, query);
+        } catch (err) {
+            Logger.error(err.toString());
+            return fileContent;
+        }
+    }
 }
