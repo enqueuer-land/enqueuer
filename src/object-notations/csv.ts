@@ -1,15 +1,12 @@
 import {ObjectNotation} from './object-notation';
 import * as fs from 'fs';
 import {ObjectDecycler} from './object-decycler';
-import {Injectable} from 'conditional-injector';
 
-@Injectable({predicate: (type: string) => type.toLowerCase().startsWith('csv') || type.toLowerCase().startsWith('tsv')})
-export class Csv extends ObjectNotation {
+export class Csv implements ObjectNotation {
     private readonly delimiter: string;
     private readonly header: boolean;
 
     public constructor(type: string = 'csvh') {
-        super();
         this.delimiter = ';';
         if (type.toLowerCase().startsWith('tsv')) {
             this.delimiter = '\t';

@@ -1,29 +1,15 @@
-import {Json} from "./json";
-import * as fs from "fs";
-import {Injectable} from "conditional-injector";
-jest.mock('conditional-injector');
-Injectable.mockImplementation();
+import {Json} from './json';
+import * as fs from 'fs';
 
-jest.mock("fs");
+jest.mock('fs');
+// @ts-ignore
 fs.readFileSync.mockImplementation(() => Buffer.from('{\n' +
     '  "firstLevel": {\n' +
     '    "secondLevel": "value"\n' +
     '  }\n' +
     '}'));
 
-
 describe('Json', () => {
-
-    it('should inject properly', () => {
-        expect(Injectable).toBeCalled();
-        const mockCalls = Injectable.mock.calls;
-        expect(mockCalls.length).toBe(1);
-        const injectableOption = mockCalls[0][0];
-        expect(injectableOption.predicate('json')).toBeTruthy();
-        expect(injectableOption.predicate('JsOn')).toBeTruthy();
-        expect(injectableOption.predicate('notJson')).toBeFalsy();
-        Injectable.mockClear();
-    });
 
     test('should keep string numbers as string', () => {
         const value =   '{\n' +
@@ -34,8 +20,8 @@ describe('Json', () => {
 
         const parsed: any = new Json().parse(value);
 
-        expect(typeof parsed.firstLevel.secondLevel).toEqual("string");
-        expect(parsed.firstLevel.secondLevel).toEqual("123.00");
+        expect(typeof parsed.firstLevel.secondLevel).toEqual('string');
+        expect(parsed.firstLevel.secondLevel).toEqual('123.00');
     });
 
     test('should stringify', () => {
@@ -48,10 +34,11 @@ describe('Json', () => {
 
         const stringified = new Json().stringify(value);
 
-        expect(stringified).toBe(expected)
+        expect(stringified).toBe(expected);
     });
 
     test('should stringify undefined objects', () => {
+        // @ts-ignore
         const stringified = new Json().stringify(undefined);
 
         expect(stringified).toBe('{}');
@@ -68,7 +55,7 @@ describe('Json', () => {
 
         const stringified = new Json().stringify(value);
 
-        expect(stringified).toBe(expected)
+        expect(stringified).toBe(expected);
     });
 
     test('should parse', () => {
@@ -81,7 +68,7 @@ describe('Json', () => {
 
         const parsed = new Json().parse(value);
 
-        expect(parsed).toEqual(expected)
+        expect(parsed).toEqual(expected);
     });
 
     test('should load from file', () => {
@@ -89,7 +76,7 @@ describe('Json', () => {
 
         const loaded = new Json().loadFromFileSync('bla');
 
-        expect(loaded).toEqual(expected)
+        expect(loaded).toEqual(expected);
     });
 
 });

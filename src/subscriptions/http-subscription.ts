@@ -81,7 +81,6 @@ class HttpSubscription extends Subscription {
                 Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
                 this.responseToClientHandler = responseHandler;
                 resolve(this.createMessageReceivedStructure(request));
-                // next(); //breaks two endpoints same port test
             });
         });
     }

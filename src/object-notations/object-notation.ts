@@ -1,5 +1,5 @@
-export abstract class ObjectNotation {
-    abstract parse(value: string): object;
-    abstract stringify(value: object, space: number): string;
-    abstract loadFromFileSync(filename: string): object;
+export interface ObjectNotation {
+    parse(value: string): object;
+    stringify(value: object, space: number): string;
+    loadFromFileSync(filename: string): object;
 }

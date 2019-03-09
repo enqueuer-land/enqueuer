@@ -1,25 +1,16 @@
 import {FileContentMapCreator} from './file-content-map-creator';
 import * as fs from 'fs';
-import {Container} from 'conditional-injector';
 
-jest.mock('conditional-injector');
 jest.mock('fs');
 describe('FileContentMapCreator', () => {
 
     it('Handle exceptions', () => {
-        const loadFromFileSyncMock = jest.fn(() => {
+        const readFileSyncMock = jest.fn(() => {
             throw 'err';
         });
         // @ts-ignore
-        Container.subclassesOf.mockImplementationOnce(() => {
-            return {
-                create: () => {
-                    return {
-                        loadFromFileSync: loadFromFileSyncMock
-                    };
-                }
-            };
-        });
+        fs.readFileSync.mockImplementationOnce(readFileSyncMock);
+
         const tag = 'any';
         const filename = 'examples/file-content.any';
         const replaceableKey = tag + '://' + filename;
@@ -31,22 +22,14 @@ describe('FileContentMapCreator', () => {
         const expected: any = {};
         expected[replaceableKey] = 'err';
         expect(fileMap.getMap()).toEqual(expected);
-        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
+        expect(readFileSyncMock).toHaveBeenCalledWith(filename);
     });
 
     it('Load tag', () => {
         const fileContent = 'fileContent';
-        const loadFromFileSyncMock = jest.fn(() => fileContent);
+        const readFileSyncMock = jest.fn(() => fileContent);
         // @ts-ignore
-        Container.subclassesOf.mockImplementationOnce(() => {
-            return {
-                create: () => {
-                    return {
-                        loadFromFileSync: loadFromFileSyncMock
-                    };
-                }
-            };
-        });
+        fs.readFileSync.mockImplementationOnce(readFileSyncMock);
 
         const tag = 'tag';
         const filename = 'examples/file-content.tag';
@@ -59,7 +42,7 @@ describe('FileContentMapCreator', () => {
         const expected: any = {};
         expected[replaceableKey] = fileContent;
         expect(fileMap.getMap()).toEqual(expected);
-        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
+        expect(readFileSyncMock).toHaveBeenCalledWith(filename);
     });
 
     it('Load unknown tag as file', () => {
@@ -67,13 +50,6 @@ describe('FileContentMapCreator', () => {
         const readFileSync = jest.fn(() => Buffer.from(fileContent));
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(readFileSync);
-        // @ts-ignore
-        Container.subclassesOf.mockImplementationOnce(() => {
-            return {
-                create: () => {/*not empty*/
-                }
-            };
-        });
 
         const tag = 'unknown';
         const filename = 'examples/file-content.unknown';
@@ -91,19 +67,11 @@ describe('FileContentMapCreator', () => {
 
     it('Load each key just once', () => {
         const fileContent = 'fileContent';
-        const loadFromFileSyncMock = jest.fn(() => fileContent);
+        const readFileSyncMock = jest.fn(() => Buffer.from(fileContent));
         // @ts-ignore
-        Container.subclassesOf.mockImplementationOnce(() => {
-            return {
-                create: () => {
-                    return {
-                        loadFromFileSync: loadFromFileSyncMock
-                    };
-                }
-            };
-        });
+        fs.readFileSync.mockImplementation(readFileSyncMock);
 
-        const tag = 'yaml';
+        const tag = 'tag';
         const filename = 'examples/file-content';
         const replaceableKey = tag + '://' + filename;
         const requisition = {
@@ -118,8 +86,8 @@ describe('FileContentMapCreator', () => {
         const expected: any = {};
         expected[replaceableKey] = fileContent;
         expect(fileMap.getMap()).toEqual(expected);
-        expect(loadFromFileSyncMock).toHaveBeenCalledWith(filename);
-        expect(loadFromFileSyncMock).toHaveBeenCalledTimes(1);
+        expect(readFileSyncMock).toHaveBeenCalledWith(filename);
+        expect(readFileSyncMock).toHaveBeenCalledTimes(1);
     });
 
     it('Handle empty matches', () => {

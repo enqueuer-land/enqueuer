@@ -1,9 +1,8 @@
 import * as fs from 'fs';
 import {Logger} from '../loggers/logger';
-import {Container} from 'conditional-injector';
-import {ObjectNotation} from '../object-notations/object-notation';
 import {Json} from '../object-notations/json';
 import {RequisitionModel} from '../models/inputs/requisition-model';
+import {ObjectNotationFactory} from '../object-notations/object-notation-factory';
 
 export class FileContentMapCreator {
 
@@ -45,7 +44,7 @@ export class FileContentMapCreator {
                 const separatorIndex = key.indexOf(separator);
                 const tag = key.substring(0, separatorIndex);
                 const filename = key.substring(separatorIndex + 3);
-                const objectNotation = Container.subclassesOf(ObjectNotation).create(tag);
+                const objectNotation = new ObjectNotationFactory().create(tag);
                 if (objectNotation) {
                     this.map[key] = objectNotation.loadFromFileSync(filename);
                 } else {
