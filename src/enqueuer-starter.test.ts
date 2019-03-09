@@ -1,9 +1,9 @@
 import {EnqueuerStarter} from './enqueuer-starter';
-import {SingleRunExecutor} from './single-run-executor';
+import {EnqueuerRunner} from './enqueuer-runner';
 import {Configuration} from './configurations/configuration';
 import {Logger} from './loggers/logger';
 
-jest.mock('./single-run-executor');
+jest.mock('./enqueuer-runner');
 jest.mock('./configurations/configuration');
 jest.mock('./loggers/logger');
 
@@ -18,7 +18,7 @@ Configuration.getInstance.mockImplementation(() => {
 describe('EnqueuerStarter', () => {
     it('Should translate true to 0', async () => {
         // @ts-ignore
-        SingleRunExecutor.mockImplementationOnce(() => {
+        EnqueuerRunner.mockImplementationOnce(() => {
             return {
                 execute: () => true
             };
@@ -29,7 +29,7 @@ describe('EnqueuerStarter', () => {
 
     it('Should translate false to 1', async () => {
         // @ts-ignore
-        SingleRunExecutor.mockImplementationOnce(() => {
+        EnqueuerRunner.mockImplementationOnce(() => {
             return {
                 execute: () => false
             };
@@ -40,7 +40,7 @@ describe('EnqueuerStarter', () => {
 
     it('Should translate error to -1', async () => {
         // @ts-ignore
-        SingleRunExecutor.mockImplementationOnce(() => {
+        EnqueuerRunner.mockImplementationOnce(() => {
             return {
                 execute: () => {
                     throw `error`;

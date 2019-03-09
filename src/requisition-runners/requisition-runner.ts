@@ -12,7 +12,6 @@ import {FileContentMapCreator} from '../configurations/file-content-map-creator'
 import {IterationsEvaluator} from './iterations-evaluator';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {ComponentUniqueTagCreator} from '../components/component-unique-tag-creator';
-import {Configuration} from '../configurations/configuration';
 import {ObjectDecycler} from '../object-parser/object-decycler';
 
 export class RequisitionRunner {
@@ -41,10 +40,10 @@ export class RequisitionRunner {
             report = await this.startRequisition();
         } else {
             report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
+            report.level = this.level;
         }
-        if (this.level < Configuration.getInstance().getMaxReportLevelPrint()) {
-            new SummaryTestOutput(report).print();
-        }
+
+        new SummaryTestOutput(report).print();
         return report;
 
     }
@@ -67,6 +66,7 @@ export class RequisitionRunner {
         const mapReplacedRequisition = this.replaceVariables();
         const notRanReport = this.shouldNotRun(mapReplacedRequisition);
         if (!!notRanReport) {
+            notRanReport.level = this.level;
             return Promise.resolve(notRanReport);
         }
 

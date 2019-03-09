@@ -1,7 +1,9 @@
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import chalk from 'chalk';
 import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
+import {Configuration} from '../configurations/configuration';
 
+//TODO make this recursive!!
 export class SummaryTestOutput {
     private static readonly NAME_SPACING = 120;
     private static readonly LEVEL_TABULATION = 8;
@@ -16,9 +18,11 @@ export class SummaryTestOutput {
     }
 
     public print(): void {
-        console.log(this.formatTitle() + this.createSummary());
-        if (this.testAnalyzer.getFailingTests().length > 0) {
-            this.printFailingTests();
+        if (this.level < Configuration.getInstance().getMaxReportLevelPrint()) {
+            console.log(this.formatTitle() + this.createSummary());
+            if (this.testAnalyzer.getFailingTests().length > 0) {
+                this.printFailingTests();
+            }
         }
     }
 

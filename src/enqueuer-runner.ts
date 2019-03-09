@@ -12,8 +12,8 @@ import {RequisitionParentCreator} from './components/requisition-parent-creator'
 import {Configuration} from './configurations/configuration';
 
 //TODO test it
-//TODO rename it to Enqueuer Runner
-export class SingleRunExecutor {
+//TODO rename every single run to enqueuer
+export class EnqueuerRunner {
 
     private readonly fileNames: string[];
     private readonly outputs: MultiTestsOutput;
@@ -93,6 +93,7 @@ export class SingleRunExecutor {
             endTime: now.toString(),
             totalTime: now.getTime() - this.startTime.getTime()
         };
+        report.level = 0;
         report.valid = report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
         await this.outputs.execute(report);
         return report.valid;

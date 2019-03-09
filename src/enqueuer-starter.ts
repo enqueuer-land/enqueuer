@@ -1,16 +1,15 @@
 import {Logger} from './loggers/logger';
 import {Configuration} from './configurations/configuration';
-import {SingleRunExecutor} from './single-run-executor';
+import {EnqueuerRunner} from './enqueuer-runner';
 
-//TODO move output dir from js to dist
 export class EnqueuerStarter {
 
-    private singleRunExecutor: SingleRunExecutor;
+    private singleRunExecutor: EnqueuerRunner;
 
     constructor() {
         const logLevel = Configuration.getInstance().getLogLevel();
         Logger.setLoggerLevel(logLevel);
-        this.singleRunExecutor = new SingleRunExecutor();
+        this.singleRunExecutor = new EnqueuerRunner();
     }
 
     public async start(): Promise<number> {
