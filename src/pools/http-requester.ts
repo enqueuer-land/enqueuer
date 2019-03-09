@@ -1,6 +1,6 @@
 import request from 'request';
 import {Logger} from '../loggers/logger';
-import {Json} from '../object-notations/json';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 export class HttpRequester {
     private readonly url: string;
@@ -60,14 +60,14 @@ export class HttpRequester {
             return undefined;
         }
         try {
-            new Json().parse(this.body);
+            new JsonObjectParser().parse(this.body);
             return this.body;
         }
         catch (exc) {
             //do nothing
         }
         if (typeof(this.body) != 'string') {
-            this.body = new Json().stringify(this.body);
+            this.body = new JsonObjectParser().stringify(this.body);
         }
 
         return this.body;

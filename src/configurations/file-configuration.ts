@@ -1,12 +1,15 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {MultipleObjectNotation} from '../object-notations/multiple-object-notation';
+import {YmlObjectParser} from '../object-parser/yml-object-parser';
+import * as fs from 'fs';
 
 export class FileConfiguration {
     private readonly parsedFile: any;
 
     public constructor(filename: string) {
         try {
-            this.parsedFile = new MultipleObjectNotation().loadFromFileSync(filename);
+            const fileContent = fs.readFileSync(filename).toString();
+            const ymlObjectParser = new YmlObjectParser();
+            this.parsedFile = ymlObjectParser.parse(fileContent);
         } catch (err) {
             throw (`Error loading configuration file: ${err}`);
         }
@@ -17,30 +20,30 @@ export class FileConfiguration {
     }
 
     public getOutputs(): PublisherModel[] {
-        return this.parsedFile.outputs;
+        return this.parsedFile.outputs || [];
     }
 
     public getStore(): any {
-        return this.parsedFile.store;
+        return this.parsedFile.store || {};
     }
 
     public getPlugins(): string[] {
-        return this.parsedFile.plugins;
+        return this.parsedFile.plugins || [];
     }
 
     public getName() {
         return this.parsedFile.name;
     }
 
-    public isParallelExecution() {
-        return this.parsedFile.parallel;
+    public isParallelExecution(): boolean {
+        return !!this.parsedFile.parallel;
     }
 
-    public getFiles() {
-        return this.parsedFile.files;
+    public getFiles(): string[] {
+        return this.parsedFile.files || [];
     }
 
-    public getMaxReportLevelPrint() {
+    public getMaxReportLevelPrint(): number {
         return this.parsedFile.maxReportLevelPrint;
     }
 }

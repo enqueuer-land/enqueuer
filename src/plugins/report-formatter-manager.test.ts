@@ -23,11 +23,10 @@ describe('ReportFormatterManager', () => {
         reportFormatterManager.addReportFormatter(() => {/**/
         }, 'second');
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
-        });
+
         expect(reportFormatterManager.describeReportFormatters(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
-            formatters: [['first', '1st'], ['second'], []]
+            formatters: [['first', '1st'], ['second']]
         }, expect.anything());
     });
 
@@ -47,15 +46,6 @@ describe('ReportFormatterManager', () => {
 
     it('should create Default formatter', () => {
         const formatter = new ReportFormatterManager().createReportFormatter('unknown');
-        expect(formatter).toBeInstanceOf(JsonReportFormatter);
-    });
-
-    it('should create Default formatter when no tag is given', () => {
-        const reportFormatterManager = new ReportFormatterManager();
-        // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/*not empty*/
-        });
-        const formatter = reportFormatterManager.createReportFormatter('unknown');
         expect(formatter).toBeInstanceOf(JsonReportFormatter);
     });
 

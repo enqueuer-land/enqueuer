@@ -1,6 +1,8 @@
 import {FileContentMapCreator} from './file-content-map-creator';
 import * as fs from 'fs';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
+jest.mock('../plugins/dynamic-modules-manager');
 jest.mock('fs');
 describe('FileContentMapCreator', () => {
 
@@ -25,7 +27,7 @@ describe('FileContentMapCreator', () => {
         expect(readFileSyncMock).toHaveBeenCalledWith(filename);
     });
 
-    it('Load tag', () => {
+    it('Parse from file with right parser', () => {
         const fileContent = 'fileContent';
         const readFileSyncMock = jest.fn(() => fileContent);
         // @ts-ignore
@@ -36,6 +38,20 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
+        DynamicModulesManager.getInstance.mockImplementation(() => {
+            return {
+                getObjectParserManager: () => {
+                    return {
+                        createParser: () => {
+                            return {
+                                parse: () => fileContent
+                            };
+                        }
+                    };
+                }
+            };
+        });
+
         // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
 
@@ -45,7 +61,7 @@ describe('FileContentMapCreator', () => {
         expect(readFileSyncMock).toHaveBeenCalledWith(filename);
     });
 
-    it('Load unknown tag as file', () => {
+    it('Load unknown tag as a regular file', () => {
         const fileContent = 'fileContent';
         const readFileSync = jest.fn(() => Buffer.from(fileContent));
         // @ts-ignore
@@ -56,6 +72,22 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
+        DynamicModulesManager.getInstance.mockImplementation(() => {
+            return {
+                getObjectParserManager: () => {
+                    return {
+                        createParser: () => {
+                            return {
+                                parse: () => {
+                                    throw 'not parsed';
+                                }
+                            };
+                        }
+                    };
+                }
+            };
+        });
+
         // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
 
@@ -63,6 +95,42 @@ describe('FileContentMapCreator', () => {
         expected[replaceableKey] = fileContent;
         expect(fileMap.getMap()).toEqual(expected);
         expect(readFileSync).toHaveBeenCalledWith(filename);
+    });
+
+    it('should parse query', () => {
+        const fileContent = 'fileContent';
+        const readFileSync = jest.fn(() => Buffer.from(fileContent));
+        let text;
+        let query;
+
+        // @ts-ignore
+        fs.readFileSync.mockImplementationOnce(readFileSync);
+
+        const requisition = {value: '<<some://filename?delimiter=;&header=false&other>>'};
+
+        // @ts-ignore
+        DynamicModulesManager.getInstance.mockImplementation(() => {
+            return {
+                getObjectParserManager: () => {
+                    return {
+                        createParser: (tag: string) => {
+                            expect(tag).toBe('some');
+                            return {
+                                parse: (receivedText: string, receivedQuery: any) => {
+                                    text = receivedText;
+                                    query = receivedQuery;
+                                }
+                            };
+                        }
+                    };
+                }
+            };
+        });
+
+        // @ts-ignore
+        new FileContentMapCreator(requisition).getMap();
+        expect(text).toBe(fileContent);
+        expect(query).toEqual({delimiter: ';', header: 'false', other: 'undefined', tag: 'some', filename: 'filename'});
     });
 
     it('Load each key just once', () => {
@@ -79,6 +147,21 @@ describe('FileContentMapCreator', () => {
             second: '{{' + replaceableKey + '}}',
             third: '<<' + replaceableKey + '>>',
         };
+
+        // @ts-ignore
+        DynamicModulesManager.getInstance.mockImplementation(() => {
+            return {
+                getObjectParserManager: () => {
+                    return {
+                        createParser: () => {
+                            return {
+                                parse: () => fileContent
+                            };
+                        }
+                    };
+                }
+            };
+        });
 
         // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);

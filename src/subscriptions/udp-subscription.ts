@@ -2,9 +2,9 @@ import {Subscription} from './subscription';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import * as dgram from 'dgram';
 import {Logger} from '../loggers/logger';
-import {Json} from '../object-notations/json';
 import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 class UdpSubscription extends Subscription {
     private server: any;
@@ -13,7 +13,7 @@ class UdpSubscription extends Subscription {
         super(subscriptionAttributes);
 
         if (typeof subscriptionAttributes.response != 'string') {
-            this.response = new Json().stringify(subscriptionAttributes.response);
+            this.response = new JsonObjectParser().stringify(subscriptionAttributes.response);
         }
     }
 

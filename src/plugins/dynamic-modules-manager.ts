@@ -1,20 +1,23 @@
 import {MainInstance} from './main-instance';
 import {ProtocolManager} from './protocol-manager';
 import {ReportFormatterManager} from './report-formatter-manager';
-import * as fs from 'fs';
-import {Logger} from '../loggers/logger';
 import {Configuration} from '../configurations/configuration';
+import {Logger} from '../loggers/logger';
+import * as fs from 'fs';
 import * as path from 'path';
+import {ObjectParserManager} from './object-parser-manager';
 
 export class DynamicModulesManager {
     private static instance: DynamicModulesManager;
     private readonly protocolManager: ProtocolManager;
     private readonly reportFormatterManager: ReportFormatterManager;
     private readonly builtInModules: string[];
+    private readonly objectParserManager: ObjectParserManager;
 
     private constructor() {
         this.protocolManager = new ProtocolManager();
         this.reportFormatterManager = new ReportFormatterManager();
+        this.objectParserManager = new ObjectParserManager();
         this.builtInModules = this.findEveryEntryPointableModule();
         this.loadModules();
     }
@@ -38,9 +41,13 @@ export class DynamicModulesManager {
         return this.reportFormatterManager;
     }
 
+    public getObjectParserManager(): ObjectParserManager {
+        return this.objectParserManager;
+    }
+
     private static findEveryTsFile(path: string): string[] {
         let files: string[] = [];
-        const dirContent = fs.readdirSync(path);
+        const dirContent = fs.readdirSync(path) || [];
         for (let i = 0; i < dirContent.length; i++) {
             const filename = path + dirContent[i];
             const stat = fs.lstatSync(filename);
@@ -75,10 +82,10 @@ export class DynamicModulesManager {
             .filter(module => {
                 try {
                     this.loadModule(module);
-                    Logger.debug(`Success to load '${path.basename(module)}' as dynamic importable module`);
+                    Logger.debug(`Success to load '${path.basename(module)}' as built in module`);
                     return true;
                 } catch (err) {
-                    Logger.trace(`Fail to load '${module}' as dynamic importable module: ${err}`);
+                    Logger.trace(`Fail to load '${module}' as built in  module: ${err}`);
                     return false;
                 }
             });
@@ -101,8 +108,10 @@ export class DynamicModulesManager {
             .entryPoint(
                 {
                     protocolManager: this.protocolManager,
-                    reportFormatterManager: this.reportFormatterManager
+                    reportFormatterManager: this.reportFormatterManager,
+                    objectParserManager: this.objectParserManager
                 } as MainInstance
             );
     }
+
 }

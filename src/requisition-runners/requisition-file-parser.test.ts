@@ -1,9 +1,14 @@
 import {RequisitionFileParser} from './requisition-file-parser';
 import * as fs from 'fs';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
 jest.mock('fs');
 
 describe('RequisitionFileParser', () => {
+    beforeEach(() => {
+        // @ts-ignore
+        delete DynamicModulesManager.instance;
+    });
 
     it('Should throw invalid file', () => {
         // @ts-ignore
@@ -16,10 +21,21 @@ describe('RequisitionFileParser', () => {
     });
 
     it('Should set default name', () => {
-        const fileContent = 'att: 1';
+        const value = {
+            id: 12345
+        };
+        const fileContent: string = JSON.stringify(value);
+
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
         const filename = 'anyStuff';
+
+        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
+            return {
+                parse: () => value
+            };
+        }, 'some');
+
         const parser: RequisitionFileParser = new RequisitionFileParser(filename);
 
         expect(parser.parse().name).toBe(filename);
@@ -35,6 +51,12 @@ describe('RequisitionFileParser', () => {
                 id: 1
             }
         ];
+        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
+            return {
+                parse: () => requisitions
+            };
+        }, 'some');
+
         const fileContent = JSON.stringify(requisitions);
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
@@ -48,9 +70,17 @@ describe('RequisitionFileParser', () => {
     });
 
     it('Should keep initial id', () => {
-        const fileContent: string = JSON.stringify({
+        const value = {
             id: 12345
-        });
+        };
+        const fileContent: string = JSON.stringify(value);
+
+        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
+            return {
+                parse: () => value
+            };
+        }, 'some');
+
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
         const requisition = new RequisitionFileParser('anyStuff').parse();

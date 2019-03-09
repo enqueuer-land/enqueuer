@@ -4,6 +4,7 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
 import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
+import {Store} from './store';
 
 export class Configuration {
     private static instance: Configuration;
@@ -33,7 +34,7 @@ export class Configuration {
             Configuration.instance = new Configuration();
             Configuration.instance.commandLineConfiguration.verifyPrematureActions();
             if (Configuration.instance.logLevel === 'trace') {
-                console.log(prettyjson.render({configuration: Configuration.instance}, getPrettyJsonConfig()));
+                this.printConfiguration();
             }
         }
         return Configuration.instance;
@@ -105,11 +106,11 @@ export class Configuration {
                 const fileConfiguration = new FileConfiguration(filename);
                 if (fileConfiguration) {
                     this.name = fileConfiguration.getName() || this.name;
-                    this.parallel = !!fileConfiguration.isParallelExecution() || this.parallel;
-                    this.files = fileConfiguration.getFiles() || this.files;
+                    this.parallel = fileConfiguration.isParallelExecution() || this.parallel;
                     this.logLevel = fileConfiguration.getLogLevel() || this.logLevel;
-                    this.outputs = this.outputs.concat(fileConfiguration.getOutputs() || []);
-                    this.plugins = this.plugins.concat(fileConfiguration.getPlugins() || []);
+                    this.files = this.files.concat(fileConfiguration.getFiles());
+                    this.outputs = this.outputs.concat(fileConfiguration.getOutputs());
+                    this.plugins = this.plugins.concat(fileConfiguration.getPlugins());
                     this.store = Object.assign({}, fileConfiguration.getStore(), this.store);
                     const fileMaxReportLevelPrint = fileConfiguration.getMaxReportLevelPrint();
                     if (fileMaxReportLevelPrint !== undefined) {
@@ -120,6 +121,12 @@ export class Configuration {
                 Logger.error(err);
             }
         }
+    }
+
+    private static printConfiguration() {
+        const configuration = JSON.parse(JSON.stringify(Configuration.instance));
+        delete configuration.commandLineConfiguration;
+        console.log(prettyjson.render({configuration: configuration}, getPrettyJsonConfig()));
     }
 
 }

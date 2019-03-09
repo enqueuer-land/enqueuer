@@ -10,10 +10,10 @@ import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
-import {Json} from '../../object-notations/json';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
+import {JsonObjectParser} from '../../object-parser/json-object-parser';
 
 export class SubscriptionReporter {
 
@@ -83,7 +83,7 @@ export class SubscriptionReporter {
                     })
                     .catch((err: any) => {
                         Logger.error(`${this.subscription.name} is unable to subscribe: ${err}`);
-                        this.subscribeError = new Json().stringify(err);
+                        this.subscribeError = new JsonObjectParser().stringify(err);
                         reject(err);
                     });
             }
@@ -183,7 +183,7 @@ export class SubscriptionReporter {
     }
 
     private handleMessageArrival(message: any) {
-        Logger.debug(`${this.subscription.name} message: ${new Json().stringify(message)}`.substr(0, 150) + '...');
+        Logger.debug(`${this.subscription.name} message: ${new JsonObjectParser().stringify(message)}`.substr(0, 150) + '...');
         if (!this.hasTimedOut) {
             Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
             this.totalTime = new DateController();

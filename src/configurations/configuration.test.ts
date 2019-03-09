@@ -151,7 +151,7 @@ describe('Configuration', () => {
         expect(instance.getOutputs()).toEqual([{format: 'console', name: 'command line report output', type: 'standard-output'}]);
     });
 
-    const createEmptyCommandLine = (filename: string) => {
+    const createEmptyCommandLine = (filename?: string) => {
         return {
             verifyPrematureActions: () => true,
             getConfigFileName: () => filename,

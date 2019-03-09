@@ -411,8 +411,6 @@ You are able to insert file content in a requisition/publisher/subscription fiel
 In the above example, enqueuer will read the file and parse its content as a object.
 Other parsable values include:
 
-    csv: <<csv://misc/file-content.csv>>
-    tsv: <<tsv://misc/file-content.tsv>>
     json: <<json://misc/file-content.json>>
     yml: <<yaml://misc/file-content.yml>>
     

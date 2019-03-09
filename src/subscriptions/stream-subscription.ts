@@ -5,11 +5,11 @@ import * as tls from 'tls';
 import {Logger} from '../loggers/logger';
 import {Store} from '../configurations/store';
 import {HandlerListener} from '../handlers/handler-listener';
-import {Json} from '../object-notations/json';
 import * as fs from 'fs';
 import {Timeout} from '../timers/timeout';
 import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 export class StreamSubscription extends Subscription {
 
@@ -20,7 +20,7 @@ export class StreamSubscription extends Subscription {
         super(subscriptionAttributes);
         this.type = this.type.toLowerCase();
         if (this.response && typeof subscriptionAttributes.response != 'string') {
-            this.response = new Json().stringify(subscriptionAttributes.response);
+            this.response = new JsonObjectParser().stringify(subscriptionAttributes.response);
         }
     }
 

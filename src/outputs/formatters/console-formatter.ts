@@ -1,9 +1,9 @@
 import {ReportFormatter} from './report-formatter';
 import {RequisitionModel} from '../../models/outputs/requisition-model';
 import prettyjson from 'prettyjson';
-import {ObjectDecycler} from '../../object-notations/object-decycler';
 import {MainInstance} from '../../plugins/main-instance';
 import {getPrettyJsonConfig} from '../prettyjson-config';
+import {ObjectDecycler} from '../../object-parser/object-decycler';
 
 export class ConsoleFormatter implements ReportFormatter {
 

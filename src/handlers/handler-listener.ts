@@ -1,5 +1,5 @@
 import {Logger} from '../loggers/logger';
-import {Json} from '../object-notations/json';
+import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 export class HandlerListener {
     public static ADDRESS_IN_USE = 'EADDRINUSE';
@@ -65,7 +65,7 @@ export class HandlerListener {
                 this.tryToListen(handler, resolve, reject);
             }, this.retryTimeout);
         } else {
-            const message = `Error listening to handler (${handler}) ${new Json().stringify(err)}`;
+            const message = `Error listening to handler (${handler}) ${new JsonObjectParser().stringify(err)}`;
             Logger.error(message);
             reject(message);
         }
