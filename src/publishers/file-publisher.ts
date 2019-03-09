@@ -4,7 +4,6 @@ import {IdGenerator} from '../strings/id-generator';
 import * as fs from 'fs';
 import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
-import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 class FilePublisher extends Publisher {
 
@@ -18,7 +17,7 @@ class FilePublisher extends Publisher {
         let value = this.payload;
 
         if (typeof(value) === 'object') {
-            value = new JsonObjectParser().stringify(value);
+            value = JSON.stringify(value, null, 2);
         }
 
         fs.writeFileSync(filename, value);

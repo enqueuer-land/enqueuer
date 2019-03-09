@@ -9,7 +9,6 @@ import * as fs from 'fs';
 import {Timeout} from '../timers/timeout';
 import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 export class StreamSubscription extends Subscription {
 
@@ -20,7 +19,7 @@ export class StreamSubscription extends Subscription {
         super(subscriptionAttributes);
         this.type = this.type.toLowerCase();
         if (this.response && typeof subscriptionAttributes.response != 'string') {
-            this.response = new JsonObjectParser().stringify(subscriptionAttributes.response);
+            this.response = JSON.stringify(subscriptionAttributes.response, null, 2);
         }
     }
 

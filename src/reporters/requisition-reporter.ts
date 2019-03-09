@@ -9,7 +9,6 @@ import {TestModel} from '../models/outputs/test-model';
 import {OnInitEventExecutor} from '../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../events/on-finish-event-executor';
 import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
-import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 export type RequisitionRunnerCallback = () => void;
 
@@ -115,7 +114,7 @@ export class RequisitionReporter {
         Logger.info(`Start gathering reports`);
 
         if (error) {
-            Logger.debug(`Requisition error collected: ${new JsonObjectParser().stringify(error)}`);
+            Logger.debug(`Requisition error collected: ${JSON.stringify(error)}`);
             this.reportGenerator.addError(error);
         }
         this.reportGenerator.setPublishersReport(this.multiPublishersReporter.getReport());

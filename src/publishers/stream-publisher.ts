@@ -7,7 +7,6 @@ import * as tls from 'tls';
 import {Timeout} from '../timers/timeout';
 import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
-import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 class StreamPublisher extends Publisher {
 
@@ -140,7 +139,7 @@ class StreamPublisher extends Publisher {
 
     private stringifyPayload() {
         if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
-            return new JsonObjectParser().stringify(this.payload);
+            return JSON.stringify(this.payload);
         }
         return this.payload;
     }

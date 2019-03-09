@@ -13,7 +13,6 @@ import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
-import {JsonObjectParser} from '../../object-parser/json-object-parser';
 
 export class SubscriptionReporter {
 
@@ -83,7 +82,7 @@ export class SubscriptionReporter {
                     })
                     .catch((err: any) => {
                         Logger.error(`${this.subscription.name} is unable to subscribe: ${err}`);
-                        this.subscribeError = new JsonObjectParser().stringify(err);
+                        this.subscribeError = JSON.stringify(err);
                         reject(err);
                     });
             }
@@ -183,7 +182,7 @@ export class SubscriptionReporter {
     }
 
     private handleMessageArrival(message: any) {
-        Logger.debug(`${this.subscription.name} message: ${new JsonObjectParser().stringify(message)}`.substr(0, 150) + '...');
+        Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message, null, 2)}`.substr(0, 150) + '...');
         if (!this.hasTimedOut) {
             Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
             this.totalTime = new DateController();

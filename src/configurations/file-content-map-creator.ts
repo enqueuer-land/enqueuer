@@ -1,6 +1,5 @@
 import {Logger} from '../loggers/logger';
 import {RequisitionModel} from '../models/inputs/requisition-model';
-import {JsonObjectParser} from '../object-parser/json-object-parser';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import * as fs from 'fs';
 import {ObjectParser} from '../object-parser/object-parser';
@@ -23,7 +22,7 @@ export class FileContentMapCreator {
             if (typeof attribute === 'object') {
                 this.checkChildren(attribute);
             } else {
-                this.findTags(new JsonObjectParser().stringify(attribute));
+                this.findTags(JSON.stringify(attribute));
             }
         }
     }

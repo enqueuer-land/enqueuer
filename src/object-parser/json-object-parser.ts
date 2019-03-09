@@ -2,7 +2,6 @@ import {ObjectParser} from './object-parser';
 import {ObjectDecycler} from './object-decycler';
 import {MainInstance} from '../plugins/main-instance';
 
-//TODO Remove every explicit dependency on it
 export class JsonObjectParser implements ObjectParser {
 
     public parse(value: string): object {

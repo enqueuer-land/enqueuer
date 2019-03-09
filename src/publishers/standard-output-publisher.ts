@@ -2,7 +2,6 @@ import {Publisher} from './publisher';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
-import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 class StandardOutputPublisher extends Publisher {
 
@@ -12,7 +11,7 @@ class StandardOutputPublisher extends Publisher {
 
     public publish(): Promise<void> {
         if (typeof(this.payload) === 'object') {
-            this.payload = new JsonObjectParser().stringify(this.payload);
+            this.payload = JSON.stringify(this.payload, null, 2);
         }
         console.log(this.payload);
         return Promise.resolve();

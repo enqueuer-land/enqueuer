@@ -1,6 +1,5 @@
 import {HandlerListener} from './handler-listener';
 import * as net from 'net';
-import {JsonObjectParser} from '../object-parser/json-object-parser';
 
 export class StreamInputHandler {
     private readonly handlerListener: HandlerListener;
@@ -66,6 +65,6 @@ export class StreamInputHandler {
         if (typeof(payload) == 'string' || Buffer.isBuffer(payload)) {
             return payload;
         }
-        return new JsonObjectParser().stringify(payload) as string;
+        return JSON.stringify(payload || {});
     }
 }
