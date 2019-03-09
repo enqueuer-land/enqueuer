@@ -81,6 +81,7 @@ describe('CommandLineConfiguration', () => {
 
     it('describe protocols -p', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-p']);
+        commandLineConfiguration.verifyPrematureActions();
 
         expect(exitMock).toHaveBeenCalled();
     });
@@ -88,11 +89,15 @@ describe('CommandLineConfiguration', () => {
     it('describe protocols --protocols-description', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description']);
 
+        commandLineConfiguration.verifyPrematureActions();
+
         expect(exitMock).toHaveBeenCalled();
     });
 
     it('describe protocols --protocols-description http', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description', 'http']);
+
+        commandLineConfiguration.verifyPrematureActions();
 
         expect(exitMock).toHaveBeenCalled();
     });
@@ -100,11 +105,15 @@ describe('CommandLineConfiguration', () => {
     it('describe formatters -f', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-f', 'json']);
 
+        commandLineConfiguration.verifyPrematureActions();
+
         expect(exitMock).toHaveBeenCalled();
     });
 
     it('describe formatters --formatters-description', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--formatters-description']);
+
+        commandLineConfiguration.verifyPrematureActions();
 
         expect(exitMock).toHaveBeenCalled();
     });
@@ -112,11 +121,15 @@ describe('CommandLineConfiguration', () => {
     it('describe assertions -t', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-t']);
 
+        commandLineConfiguration.verifyPrematureActions();
+
         expect(exitMock).toHaveBeenCalled();
     });
 
     it('describe assertions --tests-list', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--tests-list']);
+
+        commandLineConfiguration.verifyPrematureActions();
 
         expect(exitMock).toHaveBeenCalled();
     });

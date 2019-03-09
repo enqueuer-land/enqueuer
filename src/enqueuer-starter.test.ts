@@ -1,46 +1,64 @@
 import {EnqueuerStarter} from './enqueuer-starter';
-import {SingleRunExecutor} from './run-modes/single-run-executor';
+import {SingleRunExecutor} from './single-run-executor';
+import {Configuration} from './configurations/configuration';
+import {Logger} from './loggers/logger';
 
-let executorMock = jest.fn(() => Promise.resolve(true));
-jest.mock('./run-modes/single-run-executor');
+jest.mock('./single-run-executor');
+jest.mock('./configurations/configuration');
+jest.mock('./loggers/logger');
+
+const enqueuerStarterLevel = 'enqueuer-starter-level';
 // @ts-ignore
-SingleRunExecutor.mockImplementation(() => {
+Configuration.getInstance.mockImplementation(() => {
     return {
-        execute: executorMock
+        getLogLevel: () => enqueuerStarterLevel
     };
 });
+
 describe('EnqueuerStarter', () => {
-    it('Should detect run mode', () => {
-        const enqueuerStarter = new EnqueuerStarter();
-
-        expect(SingleRunExecutor).toHaveBeenCalled();
-    });
-
     it('Should translate true to 0', async () => {
-        expect.assertions(2);
-        executorMock = jest.fn(() => Promise.resolve(true));
+        // @ts-ignore
+        SingleRunExecutor.mockImplementationOnce(() => {
+            return {
+                execute: () => true
+            };
+        });
 
         expect(await new EnqueuerStarter().start()).toBe(0);
-
-        expect(executorMock).toHaveBeenCalled();
     });
 
     it('Should translate false to 1', async () => {
-        expect.assertions(2);
-        executorMock = jest.fn(() => Promise.resolve(false));
+        // @ts-ignore
+        SingleRunExecutor.mockImplementationOnce(() => {
+            return {
+                execute: () => false
+            };
+        });
 
         expect(await new EnqueuerStarter().start()).toBe(1);
-
-        expect(executorMock).toHaveBeenCalled();
     });
 
     it('Should translate error to -1', async () => {
-        expect.assertions(2);
-        executorMock = jest.fn(() => Promise.reject('error'));
+        // @ts-ignore
+        SingleRunExecutor.mockImplementationOnce(() => {
+            return {
+                execute: () => {
+                    throw `error`;
+                }
+            };
+        });
 
         expect(await new EnqueuerStarter().start()).toBe(-1);
+    });
 
-        expect(executorMock).toHaveBeenCalled();
+    it('Should set logger level', () => {
+        const loggerLevelMock = jest.fn();
+        // @ts-ignore
+        Logger.setLoggerLevel.mockImplementationOnce(loggerLevelMock);
+
+        const enqueuerStarter = new EnqueuerStarter();
+
+        expect(loggerLevelMock).toHaveBeenCalledWith(enqueuerStarterLevel);
     });
 
 });

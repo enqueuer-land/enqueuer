@@ -18,18 +18,20 @@ export class Configuration {
     private store: any = {};
     private quiet: boolean = false;
     private plugins: string[] = [];
+    private commandLineConfiguration: CommandLineConfiguration;
 
     private constructor() {
-        const commandLineConfiguration = new CommandLineConfiguration(process.argv);
-        const fileName = commandLineConfiguration.getConfigFileName();
+        this.commandLineConfiguration = new CommandLineConfiguration(process.argv);
+        const fileName = this.commandLineConfiguration.getConfigFileName();
         this.adjustFromFile(fileName);
-        this.adjustFromCommandLine(commandLineConfiguration);
+        this.adjustFromCommandLine();
     }
 
     public static getInstance(): Configuration {
         if (Configuration.loaded === false) {
             Configuration.loaded = true;
             Configuration.instance = new Configuration();
+            Configuration.instance.commandLineConfiguration.verifyPrematureActions();
             if (Configuration.instance.logLevel === 'trace') {
                 console.log(prettyjson.render({configuration: Configuration.instance}, getPrettyJsonConfig()));
             }
@@ -81,18 +83,18 @@ export class Configuration {
         return this.plugins;
     }
 
-    private adjustFromCommandLine(commandLineConfiguration: CommandLineConfiguration): void {
-        this.files = this.files.concat(commandLineConfiguration.getSingleRunFiles() || []);
+    private adjustFromCommandLine(): void {
+        this.files = this.files.concat(this.commandLineConfiguration.getSingleRunFiles() || []);
 
-        this.logLevel = commandLineConfiguration.getVerbosity() || this.logLevel;
-        this.plugins = [...new Set(this.plugins.concat(commandLineConfiguration.getPlugins() || []))];
-        this.store = Object.assign({}, this.store, commandLineConfiguration.getStore());
-        this.quiet = commandLineConfiguration.isQuietMode();
-        const singleRunFilesIgnoring = commandLineConfiguration.getSingleRunFilesIgnoring();
+        this.logLevel = this.commandLineConfiguration.getVerbosity() || this.logLevel;
+        this.plugins = [...new Set(this.plugins.concat(this.commandLineConfiguration.getPlugins() || []))];
+        this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
+        this.quiet = this.commandLineConfiguration.isQuietMode();
+        const singleRunFilesIgnoring = this.commandLineConfiguration.getSingleRunFilesIgnoring();
         if (singleRunFilesIgnoring && singleRunFilesIgnoring.length > 0) {
             this.files = singleRunFilesIgnoring;
         }
-        if (commandLineConfiguration.getStdoutRequisitionOutput() !== false) {
+        if (this.commandLineConfiguration.getStdoutRequisitionOutput() !== false) {
             this.outputs.push({type: 'standard-output', format: 'console', name: 'command line report output'});
         }
     }

@@ -1,19 +1,18 @@
-import {EnqueuerExecutor} from './enqueuer-executor';
-import {Logger} from '../loggers/logger';
-import {MultiTestsOutput} from '../outputs/multi-tests-output';
+import {Logger} from './loggers/logger';
+import {MultiTestsOutput} from './outputs/multi-tests-output';
 import * as glob from 'glob';
-import * as input from '../models/inputs/requisition-model';
-import * as output from '../models/outputs/requisition-model';
-import {RequisitionModel} from '../models/outputs/requisition-model';
-import {DateController} from '../timers/date-controller';
-import {RequisitionFileParser} from '../requisition-runners/requisition-file-parser';
-import {RequisitionRunner} from '../requisition-runners/requisition-runner';
-import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
-import {RequisitionParentCreator} from '../components/requisition-parent-creator';
-import {Configuration} from '../configurations/configuration';
+import * as input from './models/inputs/requisition-model';
+import * as output from './models/outputs/requisition-model';
+import {RequisitionModel} from './models/outputs/requisition-model';
+import {DateController} from './timers/date-controller';
+import {RequisitionFileParser} from './requisition-runners/requisition-file-parser';
+import {RequisitionRunner} from './requisition-runners/requisition-runner';
+import {RequisitionDefaultReports} from './models-defaults/outputs/requisition-default-reports';
+import {RequisitionParentCreator} from './components/requisition-parent-creator';
+import {Configuration} from './configurations/configuration';
 
 //TODO test it
-export class SingleRunExecutor extends EnqueuerExecutor {
+export class SingleRunExecutor {
 
     private readonly fileNames: string[];
     private readonly outputs: MultiTestsOutput;
@@ -23,7 +22,6 @@ export class SingleRunExecutor extends EnqueuerExecutor {
     private readonly startTime: DateController;
 
     constructor() {
-        super();
         const configuration = Configuration.getInstance();
         this.startTime = new DateController();
         this.name = configuration.getName();
@@ -35,14 +33,14 @@ export class SingleRunExecutor extends EnqueuerExecutor {
 
     public async execute(): Promise<boolean> {
         if (this.fileNames.length === 0) {
-            return Promise.reject(`No test file was found`);
+            return Promise.reject(`no test file was found`);
         }
 
         const parent: input.RequisitionModel = this.createParent(this.fileNames);
         if (this.parallelMode) {
             const requisitionsReport = await Promise
                 .all(parent.requisitions!
-                    .map(async requisition => await new RequisitionRunner(requisition, 1).run()));
+                    .map(async (requisition: any) => await new RequisitionRunner(requisition, 1).run()));
             const parallelReport = RequisitionDefaultReports.createDefaultReport({name: this.name, id: this.name});
             parallelReport.requisitions = requisitionsReport;
             return await this.finishExecution(parallelReport);

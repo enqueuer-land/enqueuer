@@ -33,12 +33,29 @@ export class CommandLineConfiguration {
                 .option('-a, --add-file <file>', 'add file to be tested',
                     (val: string) => this.singleRunFiles.push(val), [])
                 .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
-                    (val: string) => this.singleRunFilesIgnoring.push(val), [])
-                .action((parsedCommandLine) => this.verifyPrematureActions(parsedCommandLine));
+                    (val: string) => this.singleRunFilesIgnoring.push(val), []);
             commander.on('--help', () => this.helpDescription());
             this.parsedCommandLine = commander.parse(commandLineArguments || ['path', 'enqueuer']);
         } catch (err) {
             Logger.warning(err);
+        }
+    }
+
+    public verifyPrematureActions(): void {
+        let exitCode;
+        if (this.parsedCommandLine.protocolsDescription) {
+            exitCode = DynamicModulesManager.getInstance().getProtocolManager()
+                .describeProtocols(this.parsedCommandLine.protocolsDescription) ? 0 : 1;
+        } else if (this.parsedCommandLine.formattersDescription) {
+            exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
+                .describeReportFormatters(this.parsedCommandLine.formattersDescription) ? 0 : 1;
+        } else if (this.parsedCommandLine.testsList) {
+            new TestsDescriber().describeTests();
+            exitCode = 0;
+        }
+
+        if (exitCode !== undefined) {
+            process.exit(exitCode);
         }
     }
 
@@ -104,24 +121,6 @@ export class CommandLineConfiguration {
         console.log('  $ nqr -l my-enqueuer-plugin-name -p plugin-protocol');
         console.log('  $ nqr -p http');
         console.log('  $ nqr --formatters-description json');
-    }
-
-    //TODO test it
-    private verifyPrematureActions(parsedCommandLine: any): void {
-        let exitCode;
-        if (parsedCommandLine.protocolsDescription) {
-            exitCode = DynamicModulesManager.getInstance().getProtocolManager()
-                .describeProtocols(parsedCommandLine.protocolsDescription) ? 0 : 1;
-        } else if (parsedCommandLine.formattersDescription) {
-            exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
-                .describeReportFormatters(parsedCommandLine.formattersDescription) ? 0 : 1;
-        } else if (parsedCommandLine.testsList) {
-            new TestsDescriber().describeTests();
-            exitCode = 0;
-        }
-        if (exitCode !== undefined) {
-            process.exit(exitCode);
-        }
     }
 
 }

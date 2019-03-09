@@ -11,6 +11,17 @@ describe('Configuration', () => {
         Configuration.loaded = false;
     });
 
+    it('should call verifyPrematureActions', () => {
+        const commandLine = createEmptyCommandLine();
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        commandLine.verifyPrematureActions = jest.fn();
+
+        const instance = Configuration.getInstance();
+
+        expect(commandLine.verifyPrematureActions).toBeCalled();
+    });
+
     it('should check default values', () => {
         // @ts-ignore
         CommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine());
@@ -142,6 +153,7 @@ describe('Configuration', () => {
 
     const createEmptyCommandLine = (filename: string) => {
         return {
+            verifyPrematureActions: () => true,
             getConfigFileName: () => filename,
             getSingleRunFiles: () => undefined,
             getVerbosity: () => undefined,
@@ -155,6 +167,7 @@ describe('Configuration', () => {
 
     const createCommandLine = (filename?: string) => {
         return {
+            verifyPrematureActions: () => true,
             getConfigFileName: () => filename,
             getSingleRunFiles: () => ['cli-firstFile', 'cli-secondFile'],
             getVerbosity: () => 'cli-debug',

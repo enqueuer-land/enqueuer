@@ -1,5 +1,5 @@
-import {Injectable} from "conditional-injector";
-import {HttpDigestAuthentication} from "./http-digest-authentication";
+import {Injectable} from 'conditional-injector';
+import {HttpDigestAuthentication} from './http-digest-authentication';
 
 jest.mock('conditional-injector');
 
@@ -37,13 +37,13 @@ describe('HttpDigestAuthentication', () => {
         const value: any = digest.generate();
 
         const expected = {
-            authorization: "Digest username=\"guest\"," +
-            " realm=\"nqrRealm\"," +
-            " nonce=\"58bac26865505\"," +
-            " uri=\"/auth/02-2617.php\"," +
-            " algorithm=\"MD5-sess\"," +
-            " response=\"9e254ee246ca9f39a82048580b2e7e53\"," +
-            " opaque=\"opaque\""
+            authorization: 'Digest username="guest",' +
+            ' realm="nqrRealm",' +
+            ' nonce="58bac26865505",' +
+            ' uri="/auth/02-2617.php",' +
+            ' algorithm="MD5-sess",' +
+            ' response="9e254ee246ca9f39a82048580b2e7e53",' +
+            ' opaque="opaque"'
         };
 
         expect(value).toEqual(expected);
@@ -100,13 +100,13 @@ describe('HttpDigestAuthentication', () => {
         const value: any = digest.generate();
 
         const expected = {
-            authorization: "Digest username=\"guest\"," +
-            " realm=\"nqrRealm\"," +
-            " nonce=\"58bac26865505\"," +
-            " uri=\"/auth/02-2617.php\"," +
-            " algorithm=\"MD5\"," +
-            " response=\"a42e17afd5200c6f2dab4e278cfe39bf\"," +
-            " opaque=\"opaque\""
+            authorization: 'Digest username="guest",' +
+            ' realm="nqrRealm",' +
+            ' nonce="58bac26865505",' +
+            ' uri="/auth/02-2617.php",' +
+            ' algorithm="MD5",' +
+            ' response="a42e17afd5200c6f2dab4e278cfe39bf",' +
+            ' opaque="opaque"'
         };
 
         expect(value).toEqual(expected);
@@ -131,13 +131,13 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = "Digest username=\"guest\"," +
-            " realm=\"nqrRealm\"," +
-            " nonce=\"58bac26865505\"," +
-            " uri=\"/auth/02-2617.php\"," +
-            " algorithm=\"MD5\"," +
-            " response=\"a42e17afd5200c6f2dab4e278cfe39bf\"," +
-            " opaque=\"opaque\"";
+        const authorization = 'Digest username="guest",' +
+            ' realm="nqrRealm",' +
+            ' nonce="58bac26865505",' +
+            ' uri="/auth/02-2617.php",' +
+            ' algorithm="MD5",' +
+            ' response="a42e17afd5200c6f2dab4e278cfe39bf",' +
+            ' opaque="opaque"';
 
         const tests: any = digest.verify(authorization);
 
@@ -150,7 +150,7 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = "NotDigest username=\"guest\"";
+        const authorization = 'NotDigest username="guest"';
 
         const tests: any = digest.verify(authorization);
 
@@ -177,13 +177,13 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = "Digest username=\"guest\"," +
-            " realm=\"nqrRealm\"," +
-            " nonce=\"58bac26865505\"," +
-            " uri=\"/auth/02-2617.php\"," +
-            " algorithm=\"MD5\"," +
-            " response=\"obviouslyWrong\"," +
-            " opaque=\"opaque\"";
+        const authorization = 'Digest username="guest",' +
+            ' realm="nqrRealm",' +
+            ' nonce="58bac26865505",' +
+            ' uri="/auth/02-2617.php",' +
+            ' algorithm="MD5",' +
+            ' response="obviouslyWrong",' +
+            ' opaque="opaque"';
 
         const tests: any = digest.verify(authorization);
 
@@ -210,13 +210,13 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = "Digest username=\"guest\"," +
-            " realm=\"nqrRealm\"," +
-            " nonce=\"58bac26865505\"," +
-            " uri=\"/auth/02-2617.php\"," +
-            " algorithm=\"MD5\"," +
-            " response=\"obviouslyWrong\"," +
-            " opaque=\"opaque\"";
+        const authorization = 'Digest username="guest",' +
+            ' realm="nqrRealm",' +
+            ' nonce="58bac26865505",' +
+            ' uri="/auth/02-2617.php",' +
+            ' algorithm="MD5",' +
+            ' response="obviouslyWrong",' +
+            ' opaque="opaque"';
 
         const tests: any = digest.verify(authorization);
 
@@ -234,13 +234,13 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = "Digest username=\"guest\"," +
-            " realm=\"nqrRealm\"," +
-            " nonce=\"58bac26865505\"," +
-            " uri=\"/auth/02-2617.php\"," +
-            " algorithm=\"MD5\"," +
-            " response=\"obviouslyWrong\"," +
-            " opaque=\"opaque\"";
+        const authorization = 'Digest username="guest",' +
+            ' realm="nqrRealm",' +
+            ' nonce="58bac26865505",' +
+            ' uri="/auth/02-2617.php",' +
+            ' algorithm="MD5",' +
+            ' response="obviouslyWrong",' +
+            ' opaque="opaque"';
 
         const tests: any = digest.verify(authorization);
 
@@ -267,12 +267,12 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = "Digest username=\"guest\"," +
-            " realm=\"nqrRealm\"," +
-            " nonce=\"58bac26865505\"," +
-            " uri=\"/auth/02-2617.php\"," +
-            " response=\"obviouslyWrong\"," +
-            " opaque=\"opaque\"";
+        const authorization = 'Digest username="guest",' +
+            ' realm="nqrRealm",' +
+            ' nonce="58bac26865505",' +
+            ' uri="/auth/02-2617.php",' +
+            ' response="obviouslyWrong",' +
+            ' opaque="opaque"';
 
         const tests: any = digest.verify(authorization);
 
