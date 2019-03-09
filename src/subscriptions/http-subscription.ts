@@ -1,14 +1,13 @@
 import {Subscription} from './subscription';
 import {Logger} from '../loggers/logger';
-import {Container} from 'conditional-injector';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {HttpContainerPool} from '../pools/http-container-pool';
 import {TestModel} from '../models/outputs/test-model';
-import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
 import {Json} from '../object-notations/json';
 import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import {HttpAuthenticationFactory} from '../http-authentications/http-authentication-factory';
 
 class HttpSubscription extends Subscription {
 
@@ -61,7 +60,7 @@ class HttpSubscription extends Subscription {
     public onMessageReceivedTests(): TestModel[] {
         if (this.authentication && this.messageReceived) {
             Logger.debug(`${this.type} authenticating message with ${new Json().stringify(Object.keys(this.authentication))}`);
-            const verifier = Container.subclassesOf(HttpAuthentication).create(this.authentication);
+            const verifier = new HttpAuthenticationFactory().create(this.authentication);
             return verifier.verify(this.messageReceived.headers.authorization);
         }
         return [];

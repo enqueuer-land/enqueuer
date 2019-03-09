@@ -1,11 +1,10 @@
 import {Publisher} from './publisher';
 import {Logger} from '../loggers/logger';
-import {Container} from 'conditional-injector';
 import {PublisherModel} from '../models/inputs/publisher-model';
-import {HttpAuthentication} from '../http-authentications/http-authentication';
 import {HttpRequester} from '../pools/http-requester';
 import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
+import {HttpAuthenticationFactory} from '../http-authentications/http-authentication-factory';
 
 class HttpPublisher extends Publisher {
 
@@ -37,7 +36,7 @@ class HttpPublisher extends Publisher {
 
     private insertAuthentication() {
         if (this.authentication) {
-            const authenticator = Container.subclassesOf(HttpAuthentication).create(this.authentication);
+            const authenticator = new HttpAuthenticationFactory().create(this.authentication);
             const authentication = authenticator.generate();
             if (authentication) {
                 this.headers = Object.assign(this.headers, authentication);

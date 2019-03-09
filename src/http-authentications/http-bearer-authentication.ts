@@ -1,15 +1,12 @@
-import {Injectable} from 'conditional-injector';
 import {HttpAuthentication} from './http-authentication';
 import {TestModel} from '../models/outputs/test-model';
 import {Logger} from '../loggers/logger';
 
-@Injectable({predicate: (authentication: any) => authentication.bearer && authentication.bearer.token})
-export class HttpBearerAuthentication extends HttpAuthentication {
+export class HttpBearerAuthentication implements HttpAuthentication {
 
-    private token: any;
+    private readonly token: any;
 
     public constructor(authentication: any) {
-        super();
         this.token = authentication.bearer.token;
     }
 

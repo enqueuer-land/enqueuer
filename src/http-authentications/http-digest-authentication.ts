@@ -1,26 +1,23 @@
-import {Injectable} from 'conditional-injector';
 import {HttpAuthentication} from './http-authentication';
 import {TestModel} from '../models/outputs/test-model';
 import {createHash} from 'crypto';
 
-@Injectable({predicate: (authentication: any) => authentication.digest})
-export class HttpDigestAuthentication extends HttpAuthentication {
+export class HttpDigestAuthentication implements HttpAuthentication {
     public static MD5_SESS = 'MD5-sess';
 
-    private qop: string;
-    private algorithm: string;
-    private nonce: string;
-    private nonceCount: string;
-    private clientNonce: string;
-    private method: string;
-    private uri: any;
-    private username: string;
-    private realm: string;
-    private password: string;
-    private opaque: string;
+    private readonly qop: string;
+    private readonly algorithm: string;
+    private readonly nonce: string;
+    private readonly nonceCount: string;
+    private readonly clientNonce: string;
+    private readonly method: string;
+    private readonly uri: any;
+    private readonly username: string;
+    private readonly realm: string;
+    private readonly password: string;
+    private readonly opaque: string;
 
     public constructor(authentication: any) {
-        super();
         const digest = authentication.digest;
         this.qop = digest.qop;
         this.algorithm = digest.algorithm;

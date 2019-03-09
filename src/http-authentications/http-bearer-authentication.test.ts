@@ -1,7 +1,4 @@
 import {HttpBearerAuthentication} from './http-bearer-authentication';
-import {Injectable} from "conditional-injector";
-
-jest.mock('conditional-injector');
 
 describe('HttpBearerAuthentication', () => {
 
@@ -12,17 +9,6 @@ describe('HttpBearerAuthentication', () => {
             token: 'dXNlcjpwYXNzd29yZA'
         }
     };
-
-    it('should inject properly', () => {
-        Injectable.mockImplementation();
-        expect(Injectable).toBeCalled();
-        const mockCalls = Injectable.mock.calls;
-        expect(mockCalls.length).toBe(1);
-        const injectableOption = mockCalls[0][0];
-        expect(injectableOption.predicate({bearer: { token: 'value' }})).toBeTruthy();
-        expect(injectableOption.predicate({bearer: 'value'})).toBeFalsy();
-        expect(injectableOption.predicate({unknown: 'value'})).toBeFalsy();
-    });
 
     it('tests number', () => {
         const authorization: HttpBearerAuthentication = new HttpBearerAuthentication(DEFAULT_AUTH);
@@ -43,7 +29,7 @@ describe('HttpBearerAuthentication', () => {
         const authorization: HttpBearerAuthentication = new HttpBearerAuthentication(DEFAULT_AUTH);
 
         const verify = authorization.verify('Bearer tokenUnmatch');
-        const bearerTokenTest = verify.filter((test) => test.name ==  '"Bearer" authentication token')[0];
+        const bearerTokenTest = verify.filter((test) => test.name == '"Bearer" authentication token')[0];
 
         expect(bearerTokenTest.valid).toBeFalsy();
     });
@@ -67,8 +53,9 @@ describe('HttpBearerAuthentication', () => {
     it('Empty authentication is falsy', () => {
         const authorization: HttpBearerAuthentication = new HttpBearerAuthentication(DEFAULT_AUTH);
 
+        // @ts-ignore
         const verify = authorization.verify();
 
-        expect(verify.valid).toBeFalsy();
+        expect(verify.some(test => test.valid)).toBeFalsy();
     });
 });

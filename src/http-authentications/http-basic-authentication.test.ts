@@ -1,18 +1,6 @@
 import {HttpBasicAuthentication} from './http-basic-authentication';
-import {Injectable} from "conditional-injector";
-
-jest.mock('conditional-injector');
 
 describe('HttpBasicAuthentication', () => {
-    it('should inject properly', () => {
-        Injectable.mockImplementation();
-        expect(Injectable).toBeCalled();
-        const mockCalls = Injectable.mock.calls;
-        expect(mockCalls.length).toBe(1);
-        const injectableOption = mockCalls[0][0];
-        expect(injectableOption.predicate({basic: 'value'})).toBeTruthy();
-        expect(injectableOption.predicate({unknown: 'value'})).toBeFalsy();
-    });
 
     it('tests number', () => {
         const authentication = {
@@ -55,7 +43,6 @@ describe('HttpBasicAuthentication', () => {
         expect(verify.every((test) => test.valid)).toBeTruthy();
     });
 
-
     it('No basic prefix', () => {
         const authentication = {
             basic: {
@@ -69,7 +56,6 @@ describe('HttpBasicAuthentication', () => {
 
         expect(verify.filter((test) => !test.valid)[0].name).toBe('"Basic" authentication prefix');
     });
-
 
     it('alladin:OpenSesame', () => {
         const authentication = {
@@ -108,9 +94,10 @@ describe('HttpBasicAuthentication', () => {
         };
         const authorization: HttpBasicAuthentication = new HttpBasicAuthentication(authentication);
 
+        // @ts-ignore
         const verify = authorization.verify();
 
-        expect(verify.valid).toBeFalsy();
+        expect(verify.some(test => test.valid)).toBeFalsy();
     });
 
     it('Empty auth credentials', () => {

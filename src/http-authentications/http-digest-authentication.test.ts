@@ -1,19 +1,6 @@
-import {Injectable} from 'conditional-injector';
 import {HttpDigestAuthentication} from './http-digest-authentication';
 
-jest.mock('conditional-injector');
-
 describe('HttpDigestAuthentication', () => {
-    it('should inject properly', () => {
-        Injectable.mockImplementation();
-        expect(Injectable).toBeCalled();
-        const mockCalls = Injectable.mock.calls;
-        expect(mockCalls.length).toBe(1);
-        const injectableOption = mockCalls[0][0];
-        expect(injectableOption.predicate({digest: 'value'})).toBeTruthy();
-        expect(injectableOption.predicate({unknown: 'value'})).toBeFalsy();
-    });
-
     it('generate MD5-sess', () => {
         const authentication = {
             digest: {

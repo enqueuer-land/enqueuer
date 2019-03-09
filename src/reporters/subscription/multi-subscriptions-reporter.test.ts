@@ -1,5 +1,5 @@
-import {SubscriptionReporter} from "./subscription-reporter";
-import {MultiSubscriptionsReporter} from "./multi-subscriptions-reporter";
+import {SubscriptionReporter} from './subscription-reporter';
+import {MultiSubscriptionsReporter} from './multi-subscriptions-reporter';
 
 let startTimeoutMock = jest.fn(() => {});
 let onFinishMock = jest.fn();
@@ -13,7 +13,7 @@ let SubscriptionReporterMock = jest.fn(() => {
         onFinish: onFinishMock,
         receiveMessage: receiveMessageMock,
         getReport: getReportMock
-    }
+    };
 });
 
 jest.mock('../subscription/subscription-reporter');
@@ -66,20 +66,19 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-
     it('Should call getReport of each', () => {
         getReportMock = jest.fn(() => {
             return {
                 type: 'iei',
                 valid: false,
                 tests: [{valid: true}]
-            }
+            };
         } );
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
         const report = multi.getReport();
 
-        expect(report).toEqual([{"tests": [{"valid": true}], "type": "iei", "valid": false}, {"tests": [{"valid": true}], "type": "iei", "valid": false}] );
+        expect(report).toEqual([{'tests': [{'valid': true}], 'type': 'iei', 'valid': false}, {'tests': [{'valid': true}], 'type': 'iei', 'valid': false}] );
         expect(getReportMock).toHaveBeenCalledTimes(2);
     });
 
@@ -118,7 +117,6 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-
     it('Handling receiveMessage no subscription', done => {
         const multi = new MultiSubscriptionsReporter([]);
 
@@ -142,9 +140,9 @@ describe('MultiSubscriptionsReporter', () => {
         expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
-        new MultiSubscriptionsReporter([{}]).receiveMessage().then(() =>{
+        new MultiSubscriptionsReporter([{}]).receiveMessage().then(() => {
             done();
-        })
+        });
 
     });
 
@@ -152,9 +150,9 @@ describe('MultiSubscriptionsReporter', () => {
         expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
-        new MultiSubscriptionsReporter([]).receiveMessage().then(() =>{
+        new MultiSubscriptionsReporter([]).receiveMessage().then(() => {
             done();
-        })
+        });
 
     });
 

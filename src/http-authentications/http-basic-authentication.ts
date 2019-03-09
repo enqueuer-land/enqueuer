@@ -1,17 +1,14 @@
-import {Injectable} from 'conditional-injector';
 import {HttpAuthentication} from './http-authentication';
 import {TestModel} from '../models/outputs/test-model';
 import {Logger} from '../loggers/logger';
 
-@Injectable({predicate: (authentication: any) => authentication.basic})
-export class HttpBasicAuthentication extends HttpAuthentication {
+export class HttpBasicAuthentication implements HttpAuthentication {
 
-    private user: any;
-    private password: any;
+    private readonly user: any;
+    private readonly password: any;
     private tests: TestModel[] = [];
 
     public constructor(authentication: any) {
-        super();
         this.user = authentication.basic.user || '';
         this.password = authentication.basic.password;
     }

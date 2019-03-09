@@ -11,7 +11,6 @@ import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-e
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {Json} from '../../object-notations/json';
-import '../../injectable-files-list';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
