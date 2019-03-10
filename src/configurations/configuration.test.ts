@@ -36,6 +36,7 @@ describe('Configuration', () => {
         expect(instance.getStore()).toEqual({});
         expect(instance.getPlugins()).toEqual([]);
         expect(instance.getOutputs()).toEqual([]);
+        expect(instance.getMaxReportLevelPrint()).toEqual(2);
     });
 
     it('should work with only command line', () => {
@@ -51,7 +52,7 @@ describe('Configuration', () => {
         expect(instance.getPlugins()).toEqual(['cli-amqp-plugin', 'common-plugin']);
         expect(instance.getName()).toBe('enqueuer');
         expect(instance.isParallel()).toBeFalsy();
-        expect(instance.getMaxReportLevelPrint()).toBe(2);
+        expect(instance.getMaxReportLevelPrint()).toBe(5);
     });
 
     it('should work with only conf file', () => {
@@ -96,7 +97,7 @@ describe('Configuration', () => {
         expect(instance.isParallel()).toBeTruthy();
         expect(instance.getFiles()).toEqual(fileConfiguration.getFiles().concat(commandLine.getTestFiles()));
         expect(instance.getLogLevel()).toBe(commandLine.getVerbosity());
-        expect(instance.getMaxReportLevelPrint()).toBe(fileConfiguration.getMaxReportLevelPrint());
+        expect(instance.getMaxReportLevelPrint()).toBe(commandLine.getMaxReportLevelPrint());
         expect(instance.getStore()).toEqual(Object.assign({}, fileConfiguration.getStore(), commandLine.getStore()));
     });
 
@@ -157,6 +158,7 @@ describe('Configuration', () => {
             getStore: () => undefined,
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => false,
+            getMaxReportLevelPrint: () => undefined
         };
     };
 
@@ -174,6 +176,7 @@ describe('Configuration', () => {
             },
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => true,
+            getMaxReportLevelPrint: () => 5
         };
     };
 

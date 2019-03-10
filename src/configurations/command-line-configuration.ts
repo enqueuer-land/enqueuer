@@ -22,6 +22,7 @@ export class CommandLineConfiguration {
             .option('-e, --parsers-list [parser]', 'list available object parsers')
             .option('-f, --formatters-description [formatter]', 'describe report formatters')
             .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
+            .option('-m, --max-report-level-print <level>', 'set max report level print', /^(\d)$/i)
             .option('-p, --protocols-description [protocol]', 'describe protocols')
             .option('-t, --tests-list', 'list available tests assertions')
             .option('-s, --store [store]', 'add variables values to this session',
@@ -91,6 +92,10 @@ export class CommandLineConfiguration {
 
     public getPlugins(): string[] {
         return this.plugins;
+    }
+
+    public getMaxReportLevelPrint(): number | undefined {
+        return this.parsedCommandLine.maxReportLevelPrint;
     }
 
     public getVersion(): string {

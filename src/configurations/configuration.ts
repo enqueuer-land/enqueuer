@@ -92,6 +92,11 @@ export class Configuration {
         if (this.commandLineConfiguration.getStdoutRequisitionOutput() !== false) {
             this.outputs.push({type: 'standard-output', format: 'console', name: 'command line report output'});
         }
+        const fileMaxReportLevelPrint = this.commandLineConfiguration.getMaxReportLevelPrint();
+        if (fileMaxReportLevelPrint !== undefined) {
+            this.maxReportLevelPrint = fileMaxReportLevelPrint;
+        }
+
     }
 
     private adjustFromFile(filename?: string) {

@@ -22,6 +22,26 @@ describe('CommandLineConfiguration', () => {
         expect(commandLineConfiguration.getVerbosity()).toBe(logLevel);
     });
 
+    it('verbosity -m', () => {
+        const maxLevel = '3';
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-m', maxLevel]);
+
+        expect(commandLineConfiguration.getMaxReportLevelPrint()).toBe(maxLevel);
+    });
+
+    it('verbosity --max-report-level-print', () => {
+        const maxLevel = '3';
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--max-report-level-print', maxLevel]);
+
+        expect(commandLineConfiguration.getMaxReportLevelPrint()).toBe(maxLevel);
+    });
+
+    it('verbosity --max-report-level-print default', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
+
+        expect(commandLineConfiguration.getMaxReportLevelPrint()).toBeUndefined();
+    });
+
     it('undefined logLevel', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
 

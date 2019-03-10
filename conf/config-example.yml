@@ -7,7 +7,7 @@ parallel: true
 
 log-level: warn
 
-maxReportLevelPrint: 3
+max-report-level-print: 3
 
 outputs:
 -   type: file
@@ -23,12 +23,11 @@ outputs:
 #-   enqueuer-plugin-amqp
 
 store:
-    file-placeholder-injection: I'm persisted in config file
+    filePlaceholderInjection: I'm persisted in config file
     tcpPayload: "enqueuer Rocks"
 
     skipped: 5
 
-    zeroMqAddress: tcp://127.0.0.1:23000
     privateKey: |-
         -----BEGIN RSA PRIVATE KEY-----
         MIIEowIBAAKCAQEA5dJgImUrAPpWRZE59ZO/MXhJA+mu4PeD6s3wBS6gu7DzPZ8S

@@ -42,13 +42,15 @@ or
     Options:
       -v, --version                             output the version number
       -b, --verbosity <level>                   set verbosity (default: "warn")
-      -o, --stdout-requisition-output           add stdout as requisition output
-      -s, --store [store]                       add variables values to this session (default: [])
-      -p, --protocols-description [protocol]    describe protocols
-      -f, --formatters-description [formatter]  describe report formatters
-      -t, --tests-list                          list available tests assertions
-      -l, --add-plugin [plugin]                 add plugin (default: [])
       -c, --config-file <path>                  set configurationFile
+      -e, --parsers-list [parser]               list available object parsers
+      -f, --formatters-description [formatter]  describe report formatters
+      -o, --stdout-requisition-output           add stdout as requisition output
+      -m, --max-report-level-print <level>      set max report level print
+      -p, --protocols-description [protocol]    describe protocols
+      -t, --tests-list                          list available tests assertions
+      -s, --store [store]                       add variables values to this session (default: [])
+      -l, --add-plugin [plugin]                 add plugin (default: [])
       -a, --add-file <file>                     add file to be tested (default: [])
       -A, --add-file-and-ignore-others <file>   add file to be tested and ignore others (default: [])
       -h, --help                                output usage information
@@ -63,6 +65,7 @@ or
       $ nqr --formatters-description json
 
 ----
+
 ### Components
 There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
 They work along with each other and are responsible for the full behavior of enqueuer.
@@ -312,10 +315,10 @@ Defines how information are logged in the console. Accepted values are: trace; d
 
     log-level: trace
 
-**maxReportLevelPrint**/
+**max-report-level-print**/
 The deepest level of report to be printed to the console. Defaults to 2 (enqueuer + filename); 
 
-    maxReportLevelPrint: 2
+    max-report-level-print: 2
 
 **plugins**\
 List of in plugins used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
