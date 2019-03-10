@@ -28,7 +28,6 @@ describe('Configuration', () => {
 
         const instance = Configuration.getInstance();
 
-        expect(instance.getName()).toBe('enqueuer');
         expect(instance.isParallel()).toBeFalsy();
         expect(instance.getFiles()).toEqual([]);
         expect(instance.getLogLevel()).toBe('warn');
@@ -50,7 +49,6 @@ describe('Configuration', () => {
         expect(instance.getLogLevel()).toBe('cli-debug');
         expect(instance.getStore()).toEqual({cliKey: 'value'});
         expect(instance.getPlugins()).toEqual(['cli-amqp-plugin', 'common-plugin']);
-        expect(instance.getName()).toBe('enqueuer');
         expect(instance.isParallel()).toBeFalsy();
         expect(instance.getMaxReportLevelPrint()).toBe(5);
     });
@@ -63,7 +61,6 @@ describe('Configuration', () => {
 
         const instance = Configuration.getInstance();
 
-        expect(instance.getName()).toBe('confFile-examples');
         expect(instance.isParallel()).toBeTruthy();
         expect(instance.getFiles()).toEqual(['confFile-1', 'confFile-2']);
         expect(instance.getLogLevel()).toBe('confFile-fatal');
@@ -93,7 +90,6 @@ describe('Configuration', () => {
 
         const instance = Configuration.getInstance();
 
-        expect(instance.getName()).toBe(fileConfiguration.getName());
         expect(instance.isParallel()).toBeTruthy();
         expect(instance.getFiles()).toEqual(fileConfiguration.getFiles().concat(commandLine.getTestFiles()));
         expect(instance.getLogLevel()).toBe(commandLine.getVerbosity());
@@ -190,7 +186,6 @@ describe('Configuration', () => {
                 return {confFileStore: 'yml', confFileKey: 'file report output'};
             },
             getPlugins: () => ['confFile-plugin', 'confFile-plugin-2', 'common-plugin'],
-            getName: () => 'confFile-examples',
             isParallelExecution: () => true,
             getFiles: () => ['confFile-1', 'confFile-2'],
             getMaxReportLevelPrint: () => 13,

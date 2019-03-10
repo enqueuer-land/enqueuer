@@ -1,28 +1,36 @@
 import {EnqueuerRunner} from './enqueuer-runner';
 import {Configuration} from './configurations/configuration';
-import {RequisitionFileParser} from './requisition-runners/requisition-file-parser';
+import {SummaryTestOutput} from './outputs/summary-test-output';
 
+jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
 jest.mock('./requisition-runners/requisition-file-parser');
 
 describe('EnqueuerRunner', () => {
     let configurationMethodsMock: any;
+    let summaryTestsMock: any;
+    let summaryTestsMethodsMock: any;
 
     beforeEach(() => {
         configurationMethodsMock = {
-            getName: jest.fn(),
             isParallel: jest.fn(),
             getFiles: jest.fn(() => ['src/*.ts', 'not-matching-pattern', true]),
         };
         // @ts-ignore
         Configuration.getInstance.mockImplementation(() => configurationMethodsMock);
+
+        summaryTestsMethodsMock = {
+            print: jest.fn()
+        };
+        summaryTestsMock = jest.fn(() => summaryTestsMethodsMock);
+        // @ts-ignore
+        SummaryTestOutput.mockImplementation(summaryTestsMock);
     });
 
     it('should call configuration methods', () => {
 
         const enqueuerRunner = new EnqueuerRunner();
 
-        expect(configurationMethodsMock.getName).toHaveBeenCalledTimes(1);
         expect(configurationMethodsMock.isParallel).toHaveBeenCalledTimes(1);
         expect(configurationMethodsMock.getFiles).toHaveBeenCalledTimes(1);
     });
@@ -43,50 +51,32 @@ describe('EnqueuerRunner', () => {
         const enqueuerRunner = new EnqueuerRunner();
 
         expect(enqueuerRunner.getFilesErrors().sort()).toEqual([{
-            'description': 'No file was found with: not-matching-pattern',
-            'name': 'File found with not-matching-pattern',
+            'description': 'No file was found with: \'not-matching-pattern\'',
+            'name': 'No file was found with: \'not-matching-pattern\'',
             'valid': false,
         }, {
-            'description': 'File pattern is not a string: true',
-            'name': 'true is a string',
+            'description': 'File pattern is not a string: \'true\'',
+            'name': 'File pattern is not a string: \'true\'',
             'valid': false,
         }].sort());
     });
 
-    it('should add error when no test is found', async done => {
+    it('should add error when no test is found', async () => {
         configurationMethodsMock = {
-            getName: () => '',
             isParallel: () => true,
             getFiles: () => ['not-matching-pattern'],
             getMaxReportLevelPrint: jest.fn(),
             getOutputs: jest.fn(() => [])
         };
 
-        try {
-            await new EnqueuerRunner().execute();
-        } catch (err) {
-            expect(err).toBeDefined();
-            expect(configurationMethodsMock.getMaxReportLevelPrint).toHaveBeenCalledTimes(1);
-            expect(configurationMethodsMock.getOutputs).toHaveBeenCalledTimes(1);
-            done();
-        }
+        expect(await new EnqueuerRunner().execute()).toBeFalsy();
+        expect(configurationMethodsMock.getMaxReportLevelPrint).toHaveBeenCalledTimes(1);
+        expect(configurationMethodsMock.getOutputs).toHaveBeenCalledTimes(1);
+        expect(configurationMethodsMock.getOutputs).toHaveBeenCalledTimes(1);
+        expect(summaryTestsMethodsMock.print).toHaveBeenCalledTimes(1);
+        const summaryTestsConstructorArgs = summaryTestsMock.mock.calls[0][0];
+        expect(summaryTestsConstructorArgs.valid).toBeFalsy();
+        expect(summaryTestsConstructorArgs.tests[0].description).toContain('not-matching-pattern');
     });
 
-    it('should not print summary when is not parallel', async done => {
-        configurationMethodsMock = {
-            getName: () => '',
-            isParallel: () => false,
-            getFiles: () => ['not-matching-pattern'],
-            getMaxReportLevelPrint: jest.fn(),
-            getOutputs: jest.fn(() => [])
-        };
-
-        try {
-            await new EnqueuerRunner().execute();
-        } catch (err) {
-            expect(err).toBeDefined();
-            expect(configurationMethodsMock.getMaxReportLevelPrint).not.toHaveBeenCalled();
-            done();
-        }
-    });
 });

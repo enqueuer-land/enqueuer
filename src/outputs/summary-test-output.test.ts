@@ -1,6 +1,7 @@
 import {SummaryTestOutput} from './summary-test-output';
 
-let consoleLogMock = jest.fn();
+let consoleLogMock = jest.fn((message) => console.warn(message));
+// let consoleLogMock = jest.fn();
 console.log = consoleLogMock;
 
 describe('SummaryTestOutput', () => {
@@ -14,27 +15,33 @@ describe('SummaryTestOutput', () => {
             name: 'name',
             valid: true,
             tests: [{
-                name: 'notMe',
+                name: 'testName',
                 valid: true,
                 description: ''
             }]
         }).print();
 
-        expect(someConsoleLogIncludes('name')).toBeTruthy();
+        expect(consolePrintedTimes('name')).toBe(1);
+        expect(consolePrintedTimes('testName')).toBe(0);
     });
 
-    it('should print not print tests name', () => {
+    it('should print failed tests name', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
             tests: [{
-                name: 'notMe',
+                name: 'failing',
+                valid: false,
+                description: ''
+            }, {
+                name: 'passingTest',
                 valid: true,
                 description: ''
             }]
-        }).print();
+        }, {printFailingTests: true, level: 0}).print();
 
-        expect(someConsoleLogIncludes('notMe')).toBeFalsy();
+        expect(consolePrintedTimes('failing')).toBe(1);
+        expect(consolePrintedTimes('passingTest')).toBe(0);
     });
 
     it('should print PASS', () => {
@@ -48,9 +55,9 @@ describe('SummaryTestOutput', () => {
             }]
         }).print();
 
-        expect(someConsoleLogIncludes('PASS')).toBeTruthy();
-        expect(someConsoleLogIncludes('FAIL')).toBeFalsy();
-        expect(someConsoleLogIncludes('SKIP')).toBeFalsy();
+        expect(consolePrintedTimes('PASS')).toBe(1);
+        expect(consolePrintedTimes('FAIL')).toBe(0);
+        expect(consolePrintedTimes('SKIP')).toBe(0);
     });
 
     it('should print FAIL', () => {
@@ -64,9 +71,9 @@ describe('SummaryTestOutput', () => {
             }]
         }).print();
 
-        expect(someConsoleLogIncludes('FAIL')).toBeTruthy();
-        expect(someConsoleLogIncludes('PASS')).toBeFalsy();
-        expect(someConsoleLogIncludes('SKIP')).toBeFalsy();
+        expect(consolePrintedTimes('FAIL')).toBe(1);
+        expect(consolePrintedTimes('PASS')).toBe(0);
+        expect(consolePrintedTimes('SKIP')).toBe(0);
     });
 
     it('should print failed tests', () => {
@@ -80,19 +87,18 @@ describe('SummaryTestOutput', () => {
             }, {
                 name: 'second',
                 valid: false,
-                description: 'secondDesc'
+                description: 'secDesc'
             }]
-        }).print();
+        }, {printTests: true, level: 0}).print();
 
-        expect(someConsoleLogIncludes('FAIL')).toBeTruthy();
+        expect(consolePrintedTimes('FAIL')).toBe(1);
+        expect(consolePrintedTimes('name')).toBe(3);
 
-        expect(consoleLogMock.mock.calls[1][0].includes('name')).toBeTruthy();
-        expect(consoleLogMock.mock.calls[1][0].includes('any')).toBeTruthy();
-        expect(consoleLogMock.mock.calls[2][0].includes('description')).toBeTruthy();
+        expect(consolePrintedTimes('any')).toBe(1);
+        expect(consolePrintedTimes('description')).toBe(1);
 
-        expect(consoleLogMock.mock.calls[3][0].includes('name')).toBeTruthy();
-        expect(consoleLogMock.mock.calls[4][0].includes('second')).toBeTruthy();
-        expect(consoleLogMock.mock.calls[4][0].includes('secondDesc')).toBeTruthy();
+        expect(consolePrintedTimes('second')).toBe(1);
+        expect(consolePrintedTimes('secDesc')).toBe(1);
     });
 
     it('should print SKIP when ignored', () => {
@@ -107,9 +113,9 @@ describe('SummaryTestOutput', () => {
             }]
         }).print();
 
-        expect(someConsoleLogIncludes('SKIP')).toBeTruthy();
-        expect(someConsoleLogIncludes('PASS')).toBeFalsy();
-        expect(someConsoleLogIncludes('FAIL')).toBeFalsy();
+        expect(consolePrintedTimes('SKIP')).toBe(1);
+        expect(consolePrintedTimes('PASS')).toBe(0);
+        expect(consolePrintedTimes('FAIL')).toBe(0);
     });
 
     it('should print SKIP when there is no test', () => {
@@ -120,9 +126,9 @@ describe('SummaryTestOutput', () => {
             tests: []
         }).print();
 
-        expect(someConsoleLogIncludes('SKIP')).toBeTruthy();
-        expect(someConsoleLogIncludes('PASS')).toBeFalsy();
-        expect(someConsoleLogIncludes('FAIL')).toBeFalsy();
+        expect(consolePrintedTimes('SKIP')).toBe(1);
+        expect(consolePrintedTimes('PASS')).toBe(0);
+        expect(consolePrintedTimes('FAIL')).toBe(0);
     });
 
     it('should print total time', () => {
@@ -136,7 +142,7 @@ describe('SummaryTestOutput', () => {
             tests: []
         }).print();
 
-        expect(someConsoleLogIncludes(totalTime)).toBeTruthy();
+        expect(consolePrintedTimes(totalTime)).toBe(1);
     });
 
     it('should print children but not recursive', () => {
@@ -149,9 +155,24 @@ describe('SummaryTestOutput', () => {
             requisitions: [{name: 'requisition'}],
         }).print();
 
-        expect(someConsoleLogIncludes('publisher')).toBeTruthy();
-        expect(someConsoleLogIncludes('subscription')).toBeTruthy();
-        expect(someConsoleLogIncludes('requisition')).toBeFalsy();
+        expect(consolePrintedTimes('publisher')).toBe(1);
+        expect(consolePrintedTimes('subscription')).toBe(1);
+        expect(consolePrintedTimes('requisition')).toBe(0);
+    });
+
+    it('should print children tests ony when print requisition', () => {
+        new SummaryTestOutput({
+            name: 'name',
+            valid: true,
+            tests: [],
+            publishers: [{name: 'publisher', tests: [{name: 'pubTest'}]}],
+            subscriptions: [{name: 'subscription', tests: [{name: 'subTest'}]}],
+        }).print();
+
+        expect(consolePrintedTimes('publisher')).toBe(2);
+        expect(consolePrintedTimes('subscription')).toBe(2);
+        expect(consolePrintedTimes('pubTest')).toBe(1);
+        expect(consolePrintedTimes('subTest')).toBe(1);
     });
 
     it('should not print children if it is deeper than max', () => {
@@ -162,15 +183,15 @@ describe('SummaryTestOutput', () => {
             tests: [],
             publishers: [{name: 'publisher', valid: false}],
             subscriptions: [{name: 'subscription', valid: false}],
-        }, 0).print();
+        }, {maxLevel: 0, level: 0}).print();
 
-        expect(someConsoleLogIncludes('name')).toBeTruthy();
-        expect(someConsoleLogIncludes('publisher')).toBeFalsy();
-        expect(someConsoleLogIncludes('subscription')).toBeFalsy();
-        expect(someConsoleLogIncludes('requisition')).toBeFalsy();
+        expect(consolePrintedTimes('name')).toBe(1);
+        expect(consolePrintedTimes('publisher')).toBe(0);
+        expect(consolePrintedTimes('subscription')).toBe(0);
+        expect(consolePrintedTimes('requisition')).toBe(0);
     });
 
-    const someConsoleLogIncludes = (text: any): boolean => {
-        return consoleLogMock.mock.calls.some((mockCall: any) => mockCall[0].includes(text));
+    const consolePrintedTimes = (text: any): number => {
+        return consoleLogMock.mock.calls.reduce((acc: number, mockCall: any) => acc + mockCall[0].includes(text), 0);
     };
 });

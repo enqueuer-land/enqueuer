@@ -31,10 +31,6 @@ export class FileConfiguration {
         return this.parsedFile.plugins || [];
     }
 
-    public getName() {
-        return this.parsedFile.name;
-    }
-
     public isParallelExecution(): boolean {
         return !!this.parsedFile.parallel;
     }

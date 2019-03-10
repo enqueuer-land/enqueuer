@@ -14,9 +14,9 @@ import {SummaryTestOutput} from './outputs/summary-test-output';
 import {TestModel} from './models/outputs/test-model';
 
 export class EnqueuerRunner {
+    private static reportName: string = 'enqueuer';
 
     private readonly fileNames: string[];
-    private readonly name: string;
     private readonly parallelMode: boolean;
     private readonly filesErrors: TestModel[];
     private readonly startTime: DateController;
@@ -25,24 +25,17 @@ export class EnqueuerRunner {
         this.filesErrors = [];
         this.startTime = new DateController();
         const configuration = Configuration.getInstance();
-        this.name = configuration.getName();
         this.parallelMode = configuration.isParallel();
         this.fileNames = this.getTestFiles(configuration.getFiles());
     }
 
     public async execute(): Promise<boolean> {
-        if (this.fileNames.length === 0) {
-            const message = `no test file was found`;
-            await this.finishExecution(RequisitionDefaultReports.createRunningError({name: message}, message));
-            return Promise.reject(message);
-        }
-
         const parent: input.RequisitionModel = this.createParent(this.fileNames);
         if (this.parallelMode) {
             const requisitionsReport = await Promise
                 .all(parent.requisitions!
                     .map(async (requisition: any) => await new RequisitionRunner(requisition, 1).run()));
-            const parallelReport = RequisitionDefaultReports.createDefaultReport({name: this.name, id: this.name});
+            const parallelReport = RequisitionDefaultReports.createDefaultReport({name: EnqueuerRunner.reportName, id: EnqueuerRunner.reportName});
             parallelReport.requisitions = requisitionsReport;
             return await this.finishExecution(parallelReport);
         } else {
@@ -64,14 +57,14 @@ export class EnqueuerRunner {
             if (typeof (pattern) == 'string') {
                 const items = glob.sync(pattern);
                 if (items.length <= 0) {
-                    const message = `No file was found with: ${pattern}`;
-                    Logger.error(message);
-                    this.addError(`File found with ${pattern}`, message);
+                    const message = `No file was found with: '${pattern}'`;
+                    this.addError(message, message);
                 } else {
                     result = result.concat(items.sort());
                 }
             } else {
-                this.addError(`${pattern} is a string`, `File pattern is not a string: ${pattern}`);
+                const message = `File pattern is not a string: '${pattern}'`;
+                this.addError(message, message);
             }
         });
         result = [...new Set(result)];
@@ -91,27 +84,26 @@ export class EnqueuerRunner {
             try {
                 requisitions.push(new RequisitionFileParser(file).parse());
             } catch (err) {
-                const message = `Error parsing file ${file}: ${typeof err === 'string' ? err : JSON.stringify(err, null, 2)}`;
-                Logger.error(message);
-                this.addError(`${file} parsed`, message);
+                const message = `${typeof err === 'string' ? err : JSON.stringify(err, null, 2)}`;
+                this.addError(`Error parsing file '${file}'`, message);
             }
         });
-        return new RequisitionParentCreator().create(this.name, requisitions);
+        return new RequisitionParentCreator().create(EnqueuerRunner.reportName, requisitions);
     }
 
     private async finishExecution(report: output.RequisitionModel): Promise<boolean> {
-        Logger.info('There is no more files to be ran');
+        Logger.info('Finishing enqueuer execution');
         this.adjustFinalReport(report);
         const configuration = Configuration.getInstance();
-        if (this.parallelMode) {
-            new SummaryTestOutput(report, configuration.getMaxReportLevelPrint()).print();
-        }
+        console.log('  --------------------');
+        new SummaryTestOutput(report, {maxLevel: configuration.getMaxReportLevelPrint()}).print();
         await new MultiTestsOutput(configuration.getOutputs()).execute(report);
         return report.valid;
     }
 
     private adjustFinalReport(report: RequisitionModel) {
         const now = new DateController();
+        report.name = EnqueuerRunner.reportName;
         report.time = {
             startTime: this.startTime.toString(),
             endTime: now.toString(),

@@ -9,7 +9,6 @@ export class Configuration {
     private static instance: Configuration;
     private static loaded: boolean = false;
 
-    private name: string = 'enqueuer';
     private parallel: boolean = false;
     private files: string[] = [];
     private logLevel: string = 'warn';
@@ -44,10 +43,6 @@ export class Configuration {
         plugins.add(pluginName);
         this.plugins = Array.from(plugins.values());
         return this;
-    }
-
-    public getName(): string {
-        return this.name;
     }
 
     public isParallel(): boolean {
@@ -103,7 +98,6 @@ export class Configuration {
             try {
                 const fileConfiguration = new FileConfiguration(filename);
                 if (fileConfiguration) {
-                    this.name = fileConfiguration.getName() || this.name;
                     this.parallel = fileConfiguration.isParallelExecution() || this.parallel;
                     this.logLevel = fileConfiguration.getLogLevel() || this.logLevel;
                     this.files = this.files.concat(fileConfiguration.getFiles());

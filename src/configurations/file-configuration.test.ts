@@ -31,7 +31,6 @@ describe('FileConfiguration', () => {
                     return {
                         'log-level': 'logEnqueuer',
                         outputs: ['outputs'],
-                        name: 'enqueuer',
                         parallel: true,
                         files: ['1', '2'],
                         plugins: ['plugin1', 'plugin2'],
@@ -47,7 +46,6 @@ describe('FileConfiguration', () => {
         const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
         expect(fileConfiguration.getOutputs()).toEqual(['outputs']);
-        expect(fileConfiguration.getName()).toBe('enqueuer');
         expect(fileConfiguration.isParallelExecution()).toBeTruthy();
         expect(fileConfiguration.getFiles()).toEqual(['1', '2']);
         expect(fileConfiguration.getMaxReportLevelPrint()).toBe(10);
@@ -71,7 +69,6 @@ describe('FileConfiguration', () => {
         const fileConfiguration = new FileConfiguration('itDoesNotMatter');
 
         expect(fileConfiguration.getOutputs()).toEqual([]);
-        expect(fileConfiguration.getName()).toBeUndefined();
         expect(fileConfiguration.isParallelExecution()).toBeFalsy();
         expect(fileConfiguration.getFiles()).toEqual([]);
         expect(fileConfiguration.getMaxReportLevelPrint()).toBeUndefined();

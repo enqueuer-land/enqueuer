@@ -2,21 +2,31 @@ import chalk from 'chalk';
 import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
 import {ReportModel} from '../models/outputs/report-model';
 
-export class SummaryTestOutput {
-    private static readonly NAME_SPACING = 120;
-    private static readonly LEVEL_TABULATION = 8;
-    private readonly report: ReportModel;
-    private readonly level: number;
-    private readonly maxLevel?: number;
+export type SummaryOptions = {
+    maxLevel?: number,
+    level?: number,
+    printFailingTests?: boolean,
+    tabulationPerLevel?: number,
+    summarySpacing?: number
+};
 
-    public constructor(report: ReportModel, maxLevel?: number, level: number = 0) {
+export class SummaryTestOutput {
+    private readonly report: ReportModel;
+    private readonly options = {
+        level: 0,
+        printFailingTests: true,
+        maxLevel: 100,
+        tabulationPerLevel: 5,
+        summarySpacing: 110
+    };
+
+    public constructor(report: ReportModel, options?: SummaryOptions) {
         this.report = report;
-        this.level = level;
-        this.maxLevel = maxLevel;
+        this.options = Object.assign({}, this.options, options);
     }
 
     public print(): void {
-        if (this.maxLevel === undefined || this.level <= this.maxLevel) {
+        if (this.options.maxLevel === undefined || this.options.level <= this.options.maxLevel) {
             this.printChildren();
             this.printSelf();
         }
@@ -25,38 +35,44 @@ export class SummaryTestOutput {
     private printChildren() {
         const reportLeaves = (this.report.subscriptions || []).concat(this.report.publishers || []);
         for (const leaf of reportLeaves) {
-            new SummaryTestOutput(leaf, this.maxLevel, this.level + 1).print();
+            new SummaryTestOutput(leaf, {
+                maxLevel: this.options.maxLevel,
+                level: this.options.level + 1,
+                printFailingTests: false
+            }).print();
         }
     }
 
     private printSelf() {
         const testAnalyzer = new TestsAnalyzer().addTest(this.report);
         console.log(this.formatTitle(testAnalyzer) + this.createSummary(testAnalyzer));
-        if (testAnalyzer.getFailingTests().length > 0) {
+        if (this.options.printFailingTests && testAnalyzer.getFailingTests().length > 0) {
             this.printFailingTests(testAnalyzer);
         }
     }
 
     private formatTitle(testAnalyzer: TestsAnalyzer): string {
-        const tabulation = this.level * SummaryTestOutput.LEVEL_TABULATION;
-        let formattedString = '\t' + this.createEmptySpaceUntilTotalLength(0, tabulation);
+        let formattedString = this.createEmptyStringSized(2 * this.options.tabulationPerLevel);
+        let nameColorFunction;
         if (this.report.ignored || testAnalyzer.getNotIgnoredTests().length === 0) {
             formattedString += `${chalk.black.bgYellow('[SKIP]')} `;
-            formattedString += chalk.yellow(this.report.name);
+            nameColorFunction = chalk.yellow;
         } else if (this.report.valid) {
             formattedString += `${chalk.black.bgGreen('[PASS]')} `;
-            formattedString += chalk.green(this.report.name);
+            nameColorFunction = chalk.green;
         } else {
             formattedString += `${chalk.black.bgRed('[FAIL]')} `;
-            formattedString += chalk.red(this.report.name);
+            nameColorFunction = chalk.red;
         }
-        formattedString += this.createEmptySpaceUntilTotalLength(formattedString.length, SummaryTestOutput.NAME_SPACING);
+        formattedString += this.createEmptyStringSized(this.options.level * this.options.tabulationPerLevel);
+        formattedString += nameColorFunction(this.report.name);
+        formattedString += this.createEmptyStringSized(this.options.summarySpacing - formattedString.length);
         return formattedString;
     }
 
-    private createEmptySpaceUntilTotalLength(initialLength: number, length: number): string {
+    private createEmptyStringSized(length: number): string {
         let blank = '';
-        while (initialLength + blank.length < length) {
+        while (--length > 0) {
             blank = blank.concat(' ');
         }
         return blank;
@@ -80,10 +96,12 @@ export class SummaryTestOutput {
     private printFailingTests(testAnalyzer: TestsAnalyzer) {
         testAnalyzer.getFailingTests()
             .forEach((failingTest: AnalyzedTest) => {
-                let message = '\t\t\t';
+                let initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
+                let message = initialTabulation;
                 message += this.prettifyTestHierarchyMessage(failingTest.hierarchy, failingTest.name, chalk.red);
                 console.log(message);
-                console.log(chalk.red(`\t\t\t\t\t ${failingTest.description}`));
+                initialTabulation += this.createEmptyStringSized(2 * this.options.tabulationPerLevel);
+                console.log(chalk.red(`${initialTabulation} ${failingTest.description}`));
             });
     }
 
