@@ -414,7 +414,8 @@ In the above example, enqueuer will read the file and parse its content as a obj
 Other parsable values include:
 
     json: <<json://misc/file-content.json>>
-    yml: <<yaml://misc/file-content.yml>>
+    yml: <<yml://misc/file-content.yml>>
+    csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
     
 The tag `file`, on the other hand, reads the content as a regular string
     

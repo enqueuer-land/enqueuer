@@ -1,25 +1,26 @@
--   json: <<json://misc/file-content.json>>
-    yml: <<yml://misc/file-content.yml>>
+-   csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
+    json: <<json://misc/file-content.json>>
+    yml: <<yaml://misc/file-content.yml>>
+    #    js: <<js://misc/file-code.js>>
     fileNotFound: <<file://not/found.file>>
-    onInit:
-        script: double = <<js://misc/file-code.js>>
-        store:
-            scriptResult: double(20);
     onFinish:
         assertions:
-        -   name: fileRead (yml)
-            expect: requisition.yml.key
-            toBeEqualTo: `I'm persisted in singleRun file`
-        -   name: fileRead (.json)
-            expect: requisition.json.key
-            toBeEqualTo: `value`
-        -   name: file not found
-            expect: requisition.fileNotFound
-            toBeEqualTo: `Error: ENOENT: no such file or directory, open 'not/found.file'`
-        -   name: fileRead (.js)
-            expect: store.scriptResult
-            toBeEqualTo: 40
+            -   name: fileRead (yml)
+                expect: requisition.yml.key
+                toBeEqualTo: `I'm persisted in singleRun file`
+            -   name: fileRead (.json)
+                expect: requisition.json.key
+                toBeEqualTo: `value`
+            -   name: fileRead (.csv)
+                expect: requisition.csv[1].title
+                toBeEqualTo: `secondRow`
+            -   name: file not found
+                expect: requisition.fileNotFound
+                toContain: `not/found.file`
+#            -   name: fileRead (.js)
+#                expect: store.scriptResult
+#                toBeEqualTo: 40
 -   onInit:
         assertions:
-        -   name: it's not stored
-            expectToBeUndefined: requisition.yml
+            -   name: it's not stored
+                expectToBeUndefined: requisition.yml

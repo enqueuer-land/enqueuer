@@ -30,6 +30,7 @@ describe('DynamicModulesManager', () => {
             '../outputs/formatters/json-formatter',
             '../outputs/formatters/yml-formatter',
             '../object-parser/json-object-parser',
+            '../object-parser/csv-object-parser',
             '../object-parser/yml-object-parser',
         ].map(expected => __dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();

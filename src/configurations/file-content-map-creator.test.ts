@@ -130,7 +130,7 @@ describe('FileContentMapCreator', () => {
         // @ts-ignore
         new FileContentMapCreator(requisition).getMap();
         expect(text).toBe(fileContent);
-        expect(query).toEqual({delimiter: ';', header: 'false', other: 'undefined', tag: 'some', filename: 'filename'});
+        expect(query).toEqual({delimiter: ';', header: 'false', other: true, tag: 'some', filename: 'filename'});
     });
 
     it('Load each key just once', () => {

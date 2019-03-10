@@ -44,6 +44,7 @@ export class FileContentMapCreator {
                 const fileContent = fs.readFileSync(query.filename).toString();
                 const objectParser = DynamicModulesManager.getInstance().getObjectParserManager().createParser(query.tag);
                 if (objectParser !== undefined) {
+                    Logger.trace(`Trying to parse content as '${query.tag}' parser`);
                     return this.getValue(objectParser, fileContent, query);
                 }
                 return fileContent;
@@ -74,7 +75,11 @@ export class FileContentMapCreator {
             const pairs = strings[1].split('&');
             for (let i = 0; i < pairs.length; i++) {
                 const pair = pairs[i].split('=');
-                query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+                let value: any = pair[1];
+                if (value  === undefined) {
+                    value = true;
+                }
+                query[pair[0]] = value;
             }
         }
         return query;

@@ -36,7 +36,7 @@ export class ObjectParserManager {
         if (matchingObjectParsers.length > 0) {
             return matchingObjectParsers[0];
         }
-        Logger.trace(`No object parser was found with '${tag}'`);
+        Logger.warning(`No object parser was found with '${tag}'`);
     }
 
     //TODO improve logic
