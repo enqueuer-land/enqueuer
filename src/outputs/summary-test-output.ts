@@ -1,41 +1,46 @@
 import chalk from 'chalk';
 import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
 import {ReportModel} from '../models/outputs/report-model';
-import {Configuration} from '../configurations/configuration';
 
 export class SummaryTestOutput {
     private static readonly NAME_SPACING = 120;
     private static readonly LEVEL_TABULATION = 8;
     private readonly report: ReportModel;
     private readonly level: number;
+    private readonly maxLevel?: number;
 
-    public constructor(report: ReportModel, level: number = 0) {
+    public constructor(report: ReportModel, maxLevel?: number, level: number = 0) {
         this.report = report;
         this.level = level;
+        this.maxLevel = maxLevel;
     }
 
     public print(): void {
-        if (this.level <= Configuration.getInstance().getMaxReportLevelPrint()) {
+        if (this.maxLevel === undefined || this.level <= this.maxLevel) {
             this.printChildren();
-            const testAnalyzer = new TestsAnalyzer().addTest(this.report);
-            console.log(this.formatTitle(testAnalyzer) + this.createSummary(testAnalyzer));
-            if (testAnalyzer.getFailingTests().length > 0) {
-                this.printFailingTests(testAnalyzer);
-            }
+            this.printSelf();
         }
     }
 
     private printChildren() {
-        let reportLeaves = (this.report.subscriptions || []).concat(this.report.publishers || []);
+        const reportLeaves = (this.report.subscriptions || []).concat(this.report.publishers || []);
         for (const leaf of reportLeaves) {
-            new SummaryTestOutput(leaf, this.level + 1).print();
+            new SummaryTestOutput(leaf, this.maxLevel, this.level + 1).print();
+        }
+    }
+
+    private printSelf() {
+        const testAnalyzer = new TestsAnalyzer().addTest(this.report);
+        console.log(this.formatTitle(testAnalyzer) + this.createSummary(testAnalyzer));
+        if (testAnalyzer.getFailingTests().length > 0) {
+            this.printFailingTests(testAnalyzer);
         }
     }
 
     private formatTitle(testAnalyzer: TestsAnalyzer): string {
         const tabulation = this.level * SummaryTestOutput.LEVEL_TABULATION;
         let formattedString = '\t' + this.createEmptySpaceUntilTotalLength(0, tabulation);
-        if (this.report.ignored || testAnalyzer.getNotIgnoredTests().length === 0 ) {
+        if (this.report.ignored || testAnalyzer.getNotIgnoredTests().length === 0) {
             formattedString += `${chalk.black.bgYellow('[SKIP]')} `;
             formattedString += chalk.yellow(this.report.name);
         } else if (this.report.valid) {

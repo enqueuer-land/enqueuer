@@ -1,14 +1,4 @@
 import {SummaryTestOutput} from './summary-test-output';
-import {Configuration} from '../configurations/configuration';
-
-jest.mock('../configurations/configuration');
-let maxReportLevelPrint = 4;
-// @ts-ignore
-Configuration.getInstance.mockImplementation(() => {
-    return {
-        getMaxReportLevelPrint: () => maxReportLevelPrint
-    };
-});
 
 let consoleLogMock = jest.fn();
 console.log = consoleLogMock;
@@ -17,7 +7,6 @@ describe('SummaryTestOutput', () => {
 
     beforeEach(() => {
         consoleLogMock.mockClear();
-        maxReportLevelPrint = 4;
     });
 
     it('should print report name', () => {
@@ -166,7 +155,6 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should not print children if it is deeper than max', () => {
-        maxReportLevelPrint = 0;
 
         new SummaryTestOutput({
             name: 'name',
@@ -174,7 +162,7 @@ describe('SummaryTestOutput', () => {
             tests: [],
             publishers: [{name: 'publisher', valid: false}],
             subscriptions: [{name: 'subscription', valid: false}],
-        }).print();
+        }, 0).print();
 
         expect(someConsoleLogIncludes('name')).toBeTruthy();
         expect(someConsoleLogIncludes('publisher')).toBeFalsy();

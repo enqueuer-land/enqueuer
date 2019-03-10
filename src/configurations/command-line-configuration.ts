@@ -15,7 +15,7 @@ export class CommandLineConfiguration {
         const commander = new Command()
             .version(process.env.npm_package_version || packageJson.version, '-v, --version')
             .allowUnknownOption()
-            .usage('[options] test-file1 test-file2')
+            .usage('[options] <test-file> [other-test-files...]')
             .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
             .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
             .option('-c, --config-file <path>', 'set configurationFile')

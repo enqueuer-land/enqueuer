@@ -43,8 +43,9 @@ export class RequisitionRunner {
             report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
         }
 
-        if (this.level <= Configuration.getInstance().getMaxReportLevelPrint()) {
-            new SummaryTestOutput(report, this.level).print();
+        const configuration = Configuration.getInstance();
+        if (this.level <= configuration.getMaxReportLevelPrint()) {
+            new SummaryTestOutput(report, configuration.getMaxReportLevelPrint(), this.level).print();
         }
         return report;
 

@@ -6,7 +6,7 @@
   "homepage": "https://enqueuer-land.github.io/enqueuer/",
   "scripts": {
     "start": "node js/index.js",
-    "prepublishOnly": "npm run clean && npm run build",
+    "prepublishOnly": "npm run all",
     "test": "npm run codeCoverage && npm run examplesTest && npm run listsDescriptions",
     "unitTest": "NODE_ENV_TEST=true node_modules/.bin/jest --silent .test.ts",
     "examplesTest": "nqr -c conf/config-example.yml examples/requisition-navigation.yaml < misc/stdin && npm run validateOutput",

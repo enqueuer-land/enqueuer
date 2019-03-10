@@ -16,7 +16,6 @@ import {SummaryTestOutput} from './outputs/summary-test-output';
 export class EnqueuerRunner {
 
     private readonly fileNames: string[];
-    private readonly outputs: MultiTestsOutput;
     private readonly name: string;
     private readonly parallelMode: boolean;
     private readonly errors: RequisitionModel[];
@@ -29,7 +28,6 @@ export class EnqueuerRunner {
         this.parallelMode = configuration.isParallel();
         this.errors = [];
         this.fileNames = this.getTestFiles(configuration.getFiles());
-        this.outputs = new MultiTestsOutput(configuration.getOutputs());
     }
 
     public async execute(): Promise<boolean> {
@@ -94,11 +92,11 @@ export class EnqueuerRunner {
             totalTime: now.getTime() - this.startTime.getTime()
         };
         report.valid = report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
+        const configuration = Configuration.getInstance();
         if (this.parallelMode) {
-            new SummaryTestOutput(report).print();
+            new SummaryTestOutput(report, configuration.getMaxReportLevelPrint()).print();
         }
-
-        await this.outputs.execute(report);
+        await new MultiTestsOutput(configuration.getOutputs()).execute(report);
         return report.valid;
     }
 
