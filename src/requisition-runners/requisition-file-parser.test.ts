@@ -52,9 +52,11 @@ describe('RequisitionFileParser', () => {
     it('Should parse array as just one', () => {
         const requisitionsInput = [
             {
+                onInit: {},
                 id: 0
             },
             {
+                publishers: [{type: true}],
                 name: 'named',
                 id: 1
             }
@@ -81,7 +83,7 @@ describe('RequisitionFileParser', () => {
     it('Should keep initial id', () => {
         const value = {
             id: 12345,
-            requisitions: [{}]
+            subscriptions: [{type: 123}]
         };
         const fileContent: string = JSON.stringify(value);
 

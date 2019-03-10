@@ -6,6 +6,7 @@ import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as input from '../models/inputs/requisition-model';
 import * as fs from 'fs';
 import * as glob from 'glob';
+import {RequisitionValidator} from './requisition-validator';
 
 export class RequisitionFileParser {
     private readonly patterns: string[];
@@ -35,18 +36,20 @@ export class RequisitionFileParser {
 
     private parseFile(filename: string): RequisitionModel {
         const fileBufferContent = fs.readFileSync(filename).toString();
-        const requisition: any = DynamicModulesManager
+        let requisition: any = DynamicModulesManager
             .getInstance().getObjectParserManager()
             .tryToParseWithParsers(fileBufferContent, ['yml', 'json']);
         if (Array.isArray(requisition)) {
-            return new RequisitionParentCreator().create(filename, requisition);
+            requisition = new RequisitionParentCreator().create(filename, requisition);
         }
-        if (!requisition.name) {
-            requisition.name = filename;
-        }
-        if (!this.isValidRequisition(requisition)) {
+
+        if (!new RequisitionValidator().validate(requisition)) {
             throw 'File ' + filename + ' is not a valid requisition. ' +
             'Unable to find: \'onInit\', \'onFinish\', \'requisitions\', \'publishers\' nor \'subscriptions\'';
+        }
+
+        if (!requisition.name) {
+            requisition.name = filename;
         }
 
         return requisition;
@@ -55,16 +58,11 @@ export class RequisitionFileParser {
     private getMatchingFiles(): string[] {
         let result: string[] = [];
         this.patterns.map((pattern: string) => {
-            if (typeof (pattern) == 'string') {
-                const items = glob.sync(pattern);
-                if (items.length > 0) {
-                    result = result.concat(items.sort());
-                } else {
-                    const message = `No file was found with: '${pattern}'`;
-                    this.addError(message, message);
-                }
+            const items = glob.sync(pattern);
+            if (items.length > 0) {
+                result = result.concat(items.sort());
             } else {
-                const message = `File pattern is not a string: '${pattern}'`;
+                const message = `No file was found with: '${pattern}'`;
                 this.addError(message, message);
             }
         });
@@ -72,14 +70,6 @@ export class RequisitionFileParser {
 
         Logger.info(`Files list: ${JSON.stringify(result, null, 2)}`);
         return result;
-    }
-
-    private isValidRequisition(requisition: RequisitionModel): boolean {
-        return requisition.onInit !== undefined ||
-            requisition.onFinish !== undefined ||
-            (Array.isArray(requisition.requisitions) && requisition.requisitions.length > 0) ||
-            (Array.isArray(requisition.publishers) && requisition.publishers.length > 0) ||
-            (Array.isArray(requisition.subscriptions) && requisition.subscriptions.length > 0);
     }
 
     private addError(title: string, message: string) {

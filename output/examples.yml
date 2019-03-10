@@ -5,9 +5,9 @@ id: enqueuer
 subscriptions: []
 publishers: []
 time:
-  startTime: '2019-03-10T22:51:13.892Z'
-  endTime: '2019-03-10T22:51:17.534Z'
-  totalTime: 3642
+  startTime: '2019-03-10T23:44:28.141Z'
+  endTime: '2019-03-10T23:44:31.787Z'
+  totalTime: 3646
 requisitions:
   -
     valid: true
@@ -24,7 +24,7 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.279Z'
+        connectionTime: '2019-03-10T23:44:28.529Z'
       -
         name: 'Subscription #1'
         type: HTTP
@@ -34,12 +34,12 @@ requisitions:
             name: 'Subscription avoided'
             description: 'Avoidable subscription has not received any message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.279Z'
+        connectionTime: '2019-03-10T23:44:28.529Z'
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.223Z'
-      endTime: '2019-03-10T22:51:17.280Z'
-      totalTime: 3057
+      startTime: '2019-03-10T23:44:28.464Z'
+      endTime: '2019-03-10T23:44:31.523Z'
+      totalTime: 3059
       timeout: 5000
     requisitions: []
   -
@@ -54,9 +54,9 @@ requisitions:
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.226Z'
-      endTime: '2019-03-10T22:51:14.281Z'
-      totalTime: 55
+      startTime: '2019-03-10T23:44:28.467Z'
+      endTime: '2019-03-10T23:44:28.531Z'
+      totalTime: 64
       timeout: 5000
     requisitions: []
   -
@@ -82,7 +82,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.291Z'
+        connectionTime: '2019-03-10T23:44:28.541Z'
         messageReceived:
           payload:
             type: Buffer
@@ -92,7 +92,7 @@ requisitions:
           remoteInfo:
             address: 127.0.0.1
             family: IPv4
-            port: 51307
+            port: 64433
             size: 2
     publishers:
       -
@@ -104,24 +104,24 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2019-03-10T22:51:14.395Z'
+        publishTime: '2019-03-10T23:44:28.645Z'
     time:
-      startTime: '2019-03-10T22:51:14.226Z'
-      endTime: '2019-03-10T22:51:14.399Z'
-      totalTime: 173
+      startTime: '2019-03-10T23:44:28.467Z'
+      endTime: '2019-03-10T23:44:28.648Z'
+      totalTime: 181
       timeout: 5000
     requisitions: []
   -
     valid: true
     tests: []
     name: examples/file-placeholder.yml
-    id: 1951140188_a4aad2313c_896992
+    id: 2044280432_a4aad2313c_678331
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.229Z'
-      endTime: '2019-03-10T22:51:14.402Z'
-      totalTime: 173
+      startTime: '2019-03-10T23:44:28.471Z'
+      endTime: '2019-03-10T23:44:28.651Z'
+      totalTime: 180
       timeout: 5000
     requisitions:
       -
@@ -148,9 +148,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.294Z'
-          endTime: '2019-03-10T22:51:14.376Z'
-          totalTime: 82
+          startTime: '2019-03-10T23:44:28.545Z'
+          endTime: '2019-03-10T23:44:28.628Z'
+          totalTime: 83
           timeout: 5000
         requisitions: []
       -
@@ -165,9 +165,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.377Z'
-          endTime: '2019-03-10T22:51:14.402Z'
-          totalTime: 25
+          startTime: '2019-03-10T23:44:28.629Z'
+          endTime: '2019-03-10T23:44:28.650Z'
+          totalTime: 21
           timeout: 5000
         requisitions: []
   -
@@ -183,23 +183,23 @@ requisitions:
           -
             name: 'Some time has passed'
             valid: true
-            description: 'Expected ''now'' to be greater than or equal to ''1552258274229''. Received ''1552258274394'''
+            description: 'Expected ''now'' to be greater than or equal to ''1552261468472''. Received ''1552261468644'''
           -
             name: Filename
             valid: true
-            description: 'Expecting ''name'' (temp/fileTest1951140294_14aa4deaed_467627.file) to contain ''temp/'''
+            description: 'Expecting ''name'' (temp/fileTest2044280545_8f181dd0b4_913978.file) to contain ''temp/'''
           -
             name: Content
             valid: true
-            description: 'Expect ''content'' to be defined and it is: ''1552258274229'''
+            description: 'Expect ''content'' to be defined and it is: ''1552261468472'''
           -
             name: Created
             valid: true
-            description: 'Expect ''created'' to be defined and it is: ''Sun Mar 10 2019 19:51:14 GMT-0300 (Brasilia Standard Time)'''
+            description: 'Expect ''created'' to be defined and it is: ''Sun Mar 10 2019 20:44:28 GMT-0300 (Brasilia Standard Time)'''
           -
             name: Modified
             valid: true
-            description: 'Expect ''modified'' to be defined and it is: ''Sun Mar 10 2019 19:51:14 GMT-0300 (Brasilia Standard Time)'''
+            description: 'Expect ''modified'' to be defined and it is: ''Sun Mar 10 2019 20:44:28 GMT-0300 (Brasilia Standard Time)'''
           -
             name: Size
             valid: true
@@ -209,13 +209,13 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.294Z'
+        connectionTime: '2019-03-10T23:44:28.545Z'
         messageReceived:
-          content: '1552258274229'
-          name: temp/fileTest1951140294_14aa4deaed_467627.file
+          content: '1552261468472'
+          name: temp/fileTest2044280545_8f181dd0b4_913978.file
           size: 13
-          modified: '2019-03-10T22:51:14.295Z'
-          created: '2019-03-10T22:51:14.295Z'
+          modified: '2019-03-10T23:44:28.547Z'
+          created: '2019-03-10T23:44:28.547Z'
     publishers:
       -
         name: 'publisher description'
@@ -226,11 +226,11 @@ requisitions:
             name: Published
             valid: true
             description: 'Published successfully'
-        publishTime: '2019-03-10T22:51:14.295Z'
+        publishTime: '2019-03-10T23:44:28.546Z'
     time:
-      startTime: '2019-03-10T22:51:14.229Z'
-      endTime: '2019-03-10T22:51:14.394Z'
-      totalTime: 165
+      startTime: '2019-03-10T23:44:28.472Z'
+      endTime: '2019-03-10T23:44:28.645Z'
+      totalTime: 173
       timeout: 3000
     requisitions: []
   -
@@ -272,7 +272,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.296Z'
+        connectionTime: '2019-03-10T23:44:28.547Z'
         messageReceived:
           payload: it
           stream:
@@ -321,17 +321,17 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-10T22:51:15.403Z'
+        publishTime: '2019-03-10T23:44:29.649Z'
         messageReceived:
           payload: 'hook response'
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 59364
+            port: 59770
     time:
-      startTime: '2019-03-10T22:51:14.231Z'
-      endTime: '2019-03-10T22:51:15.403Z'
-      totalTime: 1172
+      startTime: '2019-03-10T23:44:28.474Z'
+      endTime: '2019-03-10T23:44:29.649Z'
+      totalTime: 1175
       timeout: 3000
     requisitions: []
   -
@@ -369,7 +369,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.297Z'
+        connectionTime: '2019-03-10T23:44:28.548Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -398,7 +398,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-10T22:51:14.521Z'
+        publishTime: '2019-03-10T23:44:28.787Z'
         messageReceived:
           statusCode: 200
           body: 'basic auth response'
@@ -409,7 +409,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '19'
             etag: 'W/"13-nGN7LEwCUKXpQoLxNqKZXSglYNc"'
-            date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+            date: 'Sun, 10 Mar 2019 23:44:28 GMT'
             connection: close
           request:
             uri:
@@ -431,9 +431,9 @@ requisitions:
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
               Content-Length: 10
     time:
-      startTime: '2019-03-10T22:51:14.232Z'
-      endTime: '2019-03-10T22:51:14.521Z'
-      totalTime: 289
+      startTime: '2019-03-10T23:44:28.475Z'
+      endTime: '2019-03-10T23:44:28.787Z'
+      totalTime: 312
       timeout: 3000
     requisitions: []
   -
@@ -467,7 +467,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.302Z'
+        connectionTime: '2019-03-10T23:44:28.553Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -496,7 +496,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-10T22:51:14.522Z'
+        publishTime: '2019-03-10T23:44:28.788Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -507,7 +507,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+            date: 'Sun, 10 Mar 2019 23:44:28 GMT'
             connection: close
           request:
             uri:
@@ -529,9 +529,9 @@ requisitions:
               authorization: 'Bearer bearerToken'
               Content-Length: 4
     time:
-      startTime: '2019-03-10T22:51:14.233Z'
-      endTime: '2019-03-10T22:51:14.523Z'
-      totalTime: 290
+      startTime: '2019-03-10T23:44:28.476Z'
+      endTime: '2019-03-10T23:44:28.788Z'
+      totalTime: 312
       timeout: 3000
     requisitions: []
   -
@@ -589,7 +589,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.302Z'
+        connectionTime: '2019-03-10T23:44:28.553Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -618,7 +618,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-10T22:51:14.523Z'
+        publishTime: '2019-03-10T23:44:28.788Z'
         messageReceived:
           statusCode: 321
           body: responsePayload
@@ -629,7 +629,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+            date: 'Sun, 10 Mar 2019 23:44:28 GMT'
             connection: close
           request:
             uri:
@@ -651,9 +651,9 @@ requisitions:
               authorization: 'Digest username="guest", realm="nqrRealm", nonce="58bac26865505", uri="/digest", algorithm="MD5", response="6309166f64557e9d56ffe6c34a0a6ca4", opaque="opaque"'
               Content-Length: 4
     time:
-      startTime: '2019-03-10T22:51:14.234Z'
-      endTime: '2019-03-10T22:51:14.523Z'
-      totalTime: 289
+      startTime: '2019-03-10T23:44:28.477Z'
+      endTime: '2019-03-10T23:44:28.788Z'
+      totalTime: 311
       timeout: 3000
     requisitions: []
   -
@@ -699,7 +699,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.304Z'
+        connectionTime: '2019-03-10T23:44:28.555Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -750,7 +750,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.304Z'
+        connectionTime: '2019-03-10T23:44:28.555Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -785,7 +785,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-10T22:51:14.581Z'
+        publishTime: '2019-03-10T23:44:28.837Z'
         messageReceived:
           statusCode: 333
           body: responsePayload
@@ -796,7 +796,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '15'
             etag: 'W/"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk"'
-            date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+            date: 'Sun, 10 Mar 2019 23:44:28 GMT'
             connection: close
           request:
             uri:
@@ -818,22 +818,22 @@ requisitions:
               authorization: 'Basic dXNlcjpwYXNzd29yZA=='
               Content-Length: 16
     time:
-      startTime: '2019-03-10T22:51:14.235Z'
-      endTime: '2019-03-10T22:51:14.581Z'
-      totalTime: 346
+      startTime: '2019-03-10T23:44:28.479Z'
+      endTime: '2019-03-10T23:44:28.837Z'
+      totalTime: 358
       timeout: 5000
     requisitions: []
   -
     valid: true
     tests: []
     name: examples/http.yml
-    id: 1951140200_8985f2a402_622985
+    id: 2044280446_8985f2a402_712905
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.253Z'
-      endTime: '2019-03-10T22:51:16.713Z'
-      totalTime: 2460
+      startTime: '2019-03-10T23:44:28.481Z'
+      endTime: '2019-03-10T23:44:30.984Z'
+      totalTime: 2503
       timeout: 5000
     requisitions:
       -
@@ -867,7 +867,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.377Z'
+            connectionTime: '2019-03-10T23:44:28.629Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -889,7 +889,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.377Z'
+            connectionTime: '2019-03-10T23:44:28.629Z'
             messageReceived:
               headers:
                 content-length: '5'
@@ -907,7 +907,7 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.377Z'
+            connectionTime: '2019-03-10T23:44:28.629Z'
         publishers:
           -
             name: 'Publisher #0'
@@ -934,7 +934,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:14.532Z'
+            publishTime: '2019-03-10T23:44:28.817Z'
             messageReceived:
               statusCode: 321
               body: 'dynamically changed payload'
@@ -946,7 +946,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '27'
                 etag: 'W/"1b-e5esTWfu+XftewZ5g2Tclr7ClTo"'
-                date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+                date: 'Sun, 10 Mar 2019 23:44:28 GMT'
                 connection: close
               request:
                 uri:
@@ -984,7 +984,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:14.532Z'
+            publishTime: '2019-03-10T23:44:28.818Z'
             messageReceived:
               statusCode: 444
               body: blah
@@ -995,7 +995,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '4'
                 etag: 'W/"4-W/H9kn37hnlJai5s8Ay+UMHIcUU"'
-                date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+                date: 'Sun, 10 Mar 2019 23:44:28 GMT'
                 connection: close
               request:
                 uri:
@@ -1015,9 +1015,9 @@ requisitions:
                 headers:
                   Content-Length: 5
         time:
-          startTime: '2019-03-10T22:51:14.308Z'
-          endTime: '2019-03-10T22:51:14.678Z'
-          totalTime: 370
+          startTime: '2019-03-10T23:44:28.558Z'
+          endTime: '2019-03-10T23:44:28.942Z'
+          totalTime: 384
           timeout: 3000
         requisitions: []
       -
@@ -1039,7 +1039,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.683Z'
+            connectionTime: '2019-03-10T23:44:28.949Z'
             messageReceived:
               headers:
                 content-type: application/json
@@ -1073,7 +1073,7 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:14.696Z'
+            publishTime: '2019-03-10T23:44:28.963Z'
             messageReceived:
               statusCode: 321
               body: duplicatedResponsePayload
@@ -1084,7 +1084,7 @@ requisitions:
                 content-type: 'text/html; charset=utf-8'
                 content-length: '25'
                 etag: 'W/"19-yZRAgggcER0sMyRTVBBpErTPT/A"'
-                date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+                date: 'Sun, 10 Mar 2019 23:44:28 GMT'
                 connection: close
               request:
                 uri:
@@ -1105,9 +1105,9 @@ requisitions:
                   content-type: application/json
                   Content-Length: 19
         time:
-          startTime: '2019-03-10T22:51:14.681Z'
-          endTime: '2019-03-10T22:51:14.696Z'
-          totalTime: 15
+          startTime: '2019-03-10T23:44:28.945Z'
+          endTime: '2019-03-10T23:44:28.964Z'
+          totalTime: 19
           timeout: 5000
         requisitions: []
       -
@@ -1125,12 +1125,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.703Z'
+            connectionTime: '2019-03-10T23:44:28.974Z'
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.699Z'
-          endTime: '2019-03-10T22:51:15.703Z'
-          totalTime: 1004
+          startTime: '2019-03-10T23:44:28.968Z'
+          endTime: '2019-03-10T23:44:29.977Z'
+          totalTime: 1009
           timeout: 5000
         requisitions: []
       -
@@ -1148,12 +1148,12 @@ requisitions:
                 name: 'Subscription avoided'
                 description: 'Avoidable subscription has not received any message'
             valid: true
-            connectionTime: '2019-03-10T22:51:15.709Z'
+            connectionTime: '2019-03-10T23:44:29.983Z'
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:15.708Z'
-          endTime: '2019-03-10T22:51:16.713Z'
-          totalTime: 1005
+          startTime: '2019-03-10T23:44:29.981Z'
+          endTime: '2019-03-10T23:44:30.984Z'
+          totalTime: 1003
           timeout: 5000
         requisitions: []
   -
@@ -1175,7 +1175,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.317Z'
+        connectionTime: '2019-03-10T23:44:28.568Z'
         messageReceived:
           headers:
             content-type: application/json
@@ -1207,7 +1207,7 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-10T22:51:14.580Z'
+        publishTime: '2019-03-10T23:44:28.836Z'
         messageReceived:
           statusCode: 200
           body: https
@@ -1218,7 +1218,7 @@ requisitions:
             content-type: 'text/html; charset=utf-8'
             content-length: '5'
             etag: 'W/"5-w0N9vHwSVdOiHURNhuvy6SNMIr0"'
-            date: 'Sun, 10 Mar 2019 22:51:14 GMT'
+            date: 'Sun, 10 Mar 2019 23:44:28 GMT'
             connection: close
           request:
             uri:
@@ -1239,22 +1239,22 @@ requisitions:
               content-type: application/json
               Content-Length: 18
     time:
-      startTime: '2019-03-10T22:51:14.255Z'
-      endTime: '2019-03-10T22:51:14.580Z'
-      totalTime: 325
+      startTime: '2019-03-10T23:44:28.482Z'
+      endTime: '2019-03-10T23:44:28.836Z'
+      totalTime: 354
       timeout: 3000
     requisitions: []
   -
     valid: true
     tests: []
     name: examples/ignore.yml
-    id: 1951140204_0e9bcf265b_96278
+    id: 2044280448_0e9bcf265b_996523
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.257Z'
-      endTime: '2019-03-10T22:51:14.403Z'
-      totalTime: 146
+      startTime: '2019-03-10T23:44:28.483Z'
+      endTime: '2019-03-10T23:44:28.652Z'
+      totalTime: 169
       timeout: 5000
     requisitions:
       -
@@ -1271,9 +1271,9 @@ requisitions:
             type: file
             tests: []
         time:
-          startTime: '2019-03-10T22:51:14.319Z'
-          endTime: '2019-03-10T22:51:14.378Z'
-          totalTime: 59
+          startTime: '2019-03-10T23:44:28.570Z'
+          endTime: '2019-03-10T23:44:28.630Z'
+          totalTime: 60
           timeout: 5000
         requisitions: []
       -
@@ -1290,9 +1290,9 @@ requisitions:
             valid: true
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.379Z'
-          endTime: '2019-03-10T22:51:14.402Z'
-          totalTime: 23
+          startTime: '2019-03-10T23:44:28.631Z'
+          endTime: '2019-03-10T23:44:28.651Z'
+          totalTime: 20
           timeout: 5000
         requisitions: []
       -
@@ -1304,8 +1304,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.403Z'
-          endTime: '2019-03-10T22:51:14.403Z'
+          startTime: '2019-03-10T23:44:28.652Z'
+          endTime: '2019-03-10T23:44:28.652Z'
           totalTime: 0
         requisitions: []
   -
@@ -1332,17 +1332,17 @@ requisitions:
             name: 'Response message received'
             valid: true
             description: 'Response message was received'
-        publishTime: '2019-03-10T22:51:14.787Z'
+        publishTime: '2019-03-10T23:44:29.038Z'
         messageReceived:
           payload: anyValue
           stream:
             address: 127.0.0.1
             family: IPv4
-            port: 59376
+            port: 59782
     time:
-      startTime: '2019-03-10T22:51:14.257Z'
-      endTime: '2019-03-10T22:51:14.787Z'
-      totalTime: 530
+      startTime: '2019-03-10T23:44:28.483Z'
+      endTime: '2019-03-10T23:44:29.038Z'
+      totalTime: 555
       timeout: 3000
     requisitions: []
   -
@@ -1364,7 +1364,7 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.319Z'
+        connectionTime: '2019-03-10T23:44:28.570Z'
         messageReceived:
           payload: anything
           stream:
@@ -1373,22 +1373,22 @@ requisitions:
             port: 23081
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.258Z'
-      endTime: '2019-03-10T22:51:14.784Z'
-      totalTime: 526
+      startTime: '2019-03-10T23:44:28.483Z'
+      endTime: '2019-03-10T23:44:28.998Z'
+      totalTime: 515
       timeout: 3000
     requisitions: []
   -
     valid: true
     tests: []
     name: examples/recursion.yml
-    id: 1951140207_42805d69f1_804247
+    id: 2044280451_42805d69f1_618491
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.259Z'
-      endTime: '2019-03-10T22:51:14.824Z'
-      totalTime: 565
+      startTime: '2019-03-10T23:44:28.484Z'
+      endTime: '2019-03-10T23:44:29.073Z'
+      totalTime: 589
       timeout: 5000
     requisitions:
       -
@@ -1399,203 +1399,203 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.320Z'
-          endTime: '2019-03-10T22:51:14.379Z'
-          totalTime: 59
+          startTime: '2019-03-10T23:44:28.571Z'
+          endTime: '2019-03-10T23:44:28.631Z'
+          totalTime: 60
           timeout: 5000
         requisitions: []
       -
         valid: true
         tests: []
         name: 'Requisition #1'
-        id: 1951140379_4815598900_254796
+        id: 2044280631_4815598900_482936
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.381Z'
-          endTime: '2019-03-10T22:51:14.822Z'
-          totalTime: 441
+          startTime: '2019-03-10T23:44:28.633Z'
+          endTime: '2019-03-10T23:44:29.070Z'
+          totalTime: 437
           timeout: 5000
         requisitions:
           -
             valid: true
             tests: []
             name: 'Requisition #1 [0]'
-            id: 1951140379_4815598900_254796
+            id: 2044280631_4815598900_482936
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.405Z'
-              endTime: '2019-03-10T22:51:14.595Z'
-              totalTime: 190
+              startTime: '2019-03-10T23:44:28.653Z'
+              endTime: '2019-03-10T23:44:28.847Z'
+              totalTime: 194
               timeout: 5000
             requisitions:
               -
                 valid: true
                 tests: []
                 name: 'Requisition #1 [0] [0]'
-                id: 1951140415_180613af6f_571598
+                id: 2044280663_180613af6f_307736
                 subscriptions: []
                 publishers: []
                 time:
-                  startTime: '2019-03-10T22:51:14.418Z'
-                  endTime: '2019-03-10T22:51:14.595Z'
-                  totalTime: 177
+                  startTime: '2019-03-10T23:44:28.667Z'
+                  endTime: '2019-03-10T23:44:28.846Z'
+                  totalTime: 179
                   timeout: 5000
                 requisitions:
                   -
                     valid: true
                     tests: []
                     name: 'Requisition #1 [0] [0] [0]'
-                    id: 1951140415_180613af6f_571598
+                    id: 2044280663_180613af6f_307736
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.437Z'
-                      endTime: '2019-03-10T22:51:14.500Z'
-                      totalTime: 63
+                      startTime: '2019-03-10T23:44:28.676Z'
+                      endTime: '2019-03-10T23:44:28.749Z'
+                      totalTime: 73
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [0] [0] [0] [0]'
-                        id: 1951140452_298e6555fb_553588
+                        id: 2044280681_298e6555fb_807274
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.474Z'
-                          endTime: '2019-03-10T22:51:14.500Z'
-                          totalTime: 26
+                          startTime: '2019-03-10T23:44:28.685Z'
+                          endTime: '2019-03-10T23:44:28.749Z'
+                          totalTime: 64
                           timeout: 5000
                         requisitions:
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [0] [0] [0]'
-                            id: 1951140452_298e6555fb_553588
+                            id: 2044280681_298e6555fb_807274
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.481Z'
-                              endTime: '2019-03-10T22:51:14.485Z'
-                              totalTime: 4
+                              startTime: '2019-03-10T23:44:28.691Z'
+                              endTime: '2019-03-10T23:44:28.737Z'
+                              totalTime: 46
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [0] [0] [1]'
-                            id: 1951140452_298e6555fb_553588
+                            id: 2044280681_298e6555fb_807274
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.488Z'
-                              endTime: '2019-03-10T22:51:14.493Z'
-                              totalTime: 5
+                              startTime: '2019-03-10T23:44:28.739Z'
+                              endTime: '2019-03-10T23:44:28.743Z'
+                              totalTime: 4
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [0] [0] [2]'
-                            id: 1951140452_298e6555fb_553588
+                            id: 2044280681_298e6555fb_807274
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.496Z'
-                              endTime: '2019-03-10T22:51:14.500Z'
-                              totalTime: 4
+                              startTime: '2019-03-10T23:44:28.746Z'
+                              endTime: '2019-03-10T23:44:28.749Z'
+                              totalTime: 3
                               timeout: 5000
                             requisitions: []
                   -
                     valid: true
                     tests: []
                     name: 'Requisition #1 [0] [0] [1]'
-                    id: 1951140415_180613af6f_571598
+                    id: 2044280663_180613af6f_307736
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.502Z'
-                      endTime: '2019-03-10T22:51:14.537Z'
-                      totalTime: 35
+                      startTime: '2019-03-10T23:44:28.751Z'
+                      endTime: '2019-03-10T23:44:28.820Z'
+                      totalTime: 69
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [0] [0] [1] [0]'
-                        id: 1951140508_381a77d68e_420367
+                        id: 2044280756_381a77d68e_447918
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.513Z'
-                          endTime: '2019-03-10T22:51:14.537Z'
-                          totalTime: 24
+                          startTime: '2019-03-10T23:44:28.760Z'
+                          endTime: '2019-03-10T23:44:28.819Z'
+                          totalTime: 59
                           timeout: 5000
                         requisitions:
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [1] [0] [0]'
-                            id: 1951140508_381a77d68e_420367
+                            id: 2044280756_381a77d68e_447918
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.518Z'
-                              endTime: '2019-03-10T22:51:14.528Z'
-                              totalTime: 10
+                              startTime: '2019-03-10T23:44:28.767Z'
+                              endTime: '2019-03-10T23:44:28.782Z'
+                              totalTime: 15
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [1] [0] [1]'
-                            id: 1951140508_381a77d68e_420367
+                            id: 2044280756_381a77d68e_447918
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.530Z'
-                              endTime: '2019-03-10T22:51:14.533Z'
-                              totalTime: 3
+                              startTime: '2019-03-10T23:44:28.784Z'
+                              endTime: '2019-03-10T23:44:28.792Z'
+                              totalTime: 8
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [1] [0] [2]'
-                            id: 1951140508_381a77d68e_420367
+                            id: 2044280756_381a77d68e_447918
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.535Z'
-                              endTime: '2019-03-10T22:51:14.537Z'
-                              totalTime: 2
+                              startTime: '2019-03-10T23:44:28.795Z'
+                              endTime: '2019-03-10T23:44:28.819Z'
+                              totalTime: 24
                               timeout: 5000
                             requisitions: []
                   -
                     valid: true
                     tests: []
                     name: 'Requisition #1 [0] [0] [2]'
-                    id: 1951140415_180613af6f_571598
+                    id: 2044280663_180613af6f_307736
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.539Z'
-                      endTime: '2019-03-10T22:51:14.595Z'
-                      totalTime: 56
+                      startTime: '2019-03-10T23:44:28.823Z'
+                      endTime: '2019-03-10T23:44:28.846Z'
+                      totalTime: 23
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [0] [0] [2] [0]'
-                        id: 1951140576_458f86a58e_596259
+                        id: 2044280826_458f86a58e_785525
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.579Z'
-                          endTime: '2019-03-10T22:51:14.595Z'
+                          startTime: '2019-03-10T23:44:28.830Z'
+                          endTime: '2019-03-10T23:44:28.846Z'
                           totalTime: 16
                           timeout: 5000
                         requisitions:
@@ -1603,25 +1603,25 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [2] [0] [0]'
-                            id: 1951140576_458f86a58e_596259
+                            id: 2044280826_458f86a58e_785525
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.584Z'
-                              endTime: '2019-03-10T22:51:14.585Z'
-                              totalTime: 1
+                              startTime: '2019-03-10T23:44:28.835Z'
+                              endTime: '2019-03-10T23:44:28.838Z'
+                              totalTime: 3
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [2] [0] [1]'
-                            id: 1951140576_458f86a58e_596259
+                            id: 2044280826_458f86a58e_785525
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.589Z'
-                              endTime: '2019-03-10T22:51:14.591Z'
+                              startTime: '2019-03-10T23:44:28.840Z'
+                              endTime: '2019-03-10T23:44:28.842Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -1629,12 +1629,12 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [0] [0] [2] [0] [2]'
-                            id: 1951140576_458f86a58e_596259
+                            id: 2044280826_458f86a58e_785525
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.593Z'
-                              endTime: '2019-03-10T22:51:14.595Z'
+                              startTime: '2019-03-10T23:44:28.844Z'
+                              endTime: '2019-03-10T23:44:28.846Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -1642,51 +1642,51 @@ requisitions:
             valid: true
             tests: []
             name: 'Requisition #1 [1]'
-            id: 1951140379_4815598900_254796
+            id: 2044280631_4815598900_482936
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.597Z'
-              endTime: '2019-03-10T22:51:14.708Z'
-              totalTime: 111
+              startTime: '2019-03-10T23:44:28.848Z'
+              endTime: '2019-03-10T23:44:28.957Z'
+              totalTime: 109
               timeout: 5000
             requisitions:
               -
                 valid: true
                 tests: []
                 name: 'Requisition #1 [1] [0]'
-                id: 1951140597_d2274b88ae_719589
+                id: 2044280849_d2274b88ae_507789
                 subscriptions: []
                 publishers: []
                 time:
-                  startTime: '2019-03-10T22:51:14.600Z'
-                  endTime: '2019-03-10T22:51:14.708Z'
-                  totalTime: 108
+                  startTime: '2019-03-10T23:44:28.854Z'
+                  endTime: '2019-03-10T23:44:28.957Z'
+                  totalTime: 103
                   timeout: 5000
                 requisitions:
                   -
                     valid: true
                     tests: []
                     name: 'Requisition #1 [1] [0] [0]'
-                    id: 1951140597_d2274b88ae_719589
+                    id: 2044280849_d2274b88ae_507789
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.606Z'
-                      endTime: '2019-03-10T22:51:14.626Z'
-                      totalTime: 20
+                      startTime: '2019-03-10T23:44:28.857Z'
+                      endTime: '2019-03-10T23:44:28.879Z'
+                      totalTime: 22
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [1] [0] [0] [0]'
-                        id: 1951140607_6f7696f9ab_47593
+                        id: 2044280859_6f7696f9ab_869667
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.611Z'
-                          endTime: '2019-03-10T22:51:14.626Z'
+                          startTime: '2019-03-10T23:44:28.864Z'
+                          endTime: '2019-03-10T23:44:28.879Z'
                           totalTime: 15
                           timeout: 5000
                         requisitions:
@@ -1694,25 +1694,25 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [0] [0] [0]'
-                            id: 1951140607_6f7696f9ab_47593
+                            id: 2044280859_6f7696f9ab_869667
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.616Z'
-                              endTime: '2019-03-10T22:51:14.617Z'
-                              totalTime: 1
+                              startTime: '2019-03-10T23:44:28.867Z'
+                              endTime: '2019-03-10T23:44:28.869Z'
+                              totalTime: 2
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [0] [0] [1]'
-                            id: 1951140607_6f7696f9ab_47593
+                            id: 2044280859_6f7696f9ab_869667
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.620Z'
-                              endTime: '2019-03-10T22:51:14.622Z'
+                              startTime: '2019-03-10T23:44:28.872Z'
+                              endTime: '2019-03-10T23:44:28.874Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -1720,51 +1720,51 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [0] [0] [2]'
-                            id: 1951140607_6f7696f9ab_47593
+                            id: 2044280859_6f7696f9ab_869667
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.624Z'
-                              endTime: '2019-03-10T22:51:14.626Z'
-                              totalTime: 2
+                              startTime: '2019-03-10T23:44:28.876Z'
+                              endTime: '2019-03-10T23:44:28.879Z'
+                              totalTime: 3
                               timeout: 5000
                             requisitions: []
                   -
                     valid: true
                     tests: []
                     name: 'Requisition #1 [1] [0] [1]'
-                    id: 1951140597_d2274b88ae_719589
+                    id: 2044280849_d2274b88ae_507789
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.628Z'
-                      endTime: '2019-03-10T22:51:14.685Z'
-                      totalTime: 57
+                      startTime: '2019-03-10T23:44:28.881Z'
+                      endTime: '2019-03-10T23:44:28.912Z'
+                      totalTime: 31
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [1] [0] [1] [0]'
-                        id: 1951140629_e155e5442f_546903
+                        id: 2044280883_e155e5442f_616608
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.634Z'
-                          endTime: '2019-03-10T22:51:14.685Z'
-                          totalTime: 51
+                          startTime: '2019-03-10T23:44:28.887Z'
+                          endTime: '2019-03-10T23:44:28.911Z'
+                          totalTime: 24
                           timeout: 5000
                         requisitions:
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [1] [0] [0]'
-                            id: 1951140629_e155e5442f_546903
+                            id: 2044280883_e155e5442f_616608
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.638Z'
-                              endTime: '2019-03-10T22:51:14.640Z'
+                              startTime: '2019-03-10T23:44:28.891Z'
+                              endTime: '2019-03-10T23:44:28.893Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -1772,25 +1772,25 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [1] [0] [1]'
-                            id: 1951140629_e155e5442f_546903
+                            id: 2044280883_e155e5442f_616608
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.678Z'
-                              endTime: '2019-03-10T22:51:14.681Z'
-                              totalTime: 3
+                              startTime: '2019-03-10T23:44:28.897Z'
+                              endTime: '2019-03-10T23:44:28.899Z'
+                              totalTime: 2
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [1] [0] [2]'
-                            id: 1951140629_e155e5442f_546903
+                            id: 2044280883_e155e5442f_616608
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.683Z'
-                              endTime: '2019-03-10T22:51:14.685Z'
+                              startTime: '2019-03-10T23:44:28.909Z'
+                              endTime: '2019-03-10T23:44:28.911Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -1798,25 +1798,25 @@ requisitions:
                     valid: true
                     tests: []
                     name: 'Requisition #1 [1] [0] [2]'
-                    id: 1951140597_d2274b88ae_719589
+                    id: 2044280849_d2274b88ae_507789
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.687Z'
-                      endTime: '2019-03-10T22:51:14.708Z'
-                      totalTime: 21
+                      startTime: '2019-03-10T23:44:28.915Z'
+                      endTime: '2019-03-10T23:44:28.957Z'
+                      totalTime: 42
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [1] [0] [2] [0]'
-                        id: 1951140688_2a37c5c772_964596
+                        id: 2044280916_2a37c5c772_983376
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.692Z'
-                          endTime: '2019-03-10T22:51:14.708Z'
+                          startTime: '2019-03-10T23:44:28.940Z'
+                          endTime: '2019-03-10T23:44:28.956Z'
                           totalTime: 16
                           timeout: 5000
                         requisitions:
@@ -1824,12 +1824,12 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [2] [0] [0]'
-                            id: 1951140688_2a37c5c772_964596
+                            id: 2044280916_2a37c5c772_983376
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.696Z'
-                              endTime: '2019-03-10T22:51:14.699Z'
+                              startTime: '2019-03-10T23:44:28.947Z'
+                              endTime: '2019-03-10T23:44:28.950Z'
                               totalTime: 3
                               timeout: 5000
                             requisitions: []
@@ -1837,12 +1837,12 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [2] [0] [1]'
-                            id: 1951140688_2a37c5c772_964596
+                            id: 2044280916_2a37c5c772_983376
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.702Z'
-                              endTime: '2019-03-10T22:51:14.703Z'
+                              startTime: '2019-03-10T23:44:28.952Z'
+                              endTime: '2019-03-10T23:44:28.953Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
@@ -1850,77 +1850,77 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [1] [0] [2] [0] [2]'
-                            id: 1951140688_2a37c5c772_964596
+                            id: 2044280916_2a37c5c772_983376
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.706Z'
-                              endTime: '2019-03-10T22:51:14.708Z'
-                              totalTime: 2
+                              startTime: '2019-03-10T23:44:28.956Z'
+                              endTime: '2019-03-10T23:44:28.956Z'
+                              totalTime: 0
                               timeout: 5000
                             requisitions: []
           -
             valid: true
             tests: []
             name: 'Requisition #1 [2]'
-            id: 1951140379_4815598900_254796
+            id: 2044280631_4815598900_482936
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.710Z'
-              endTime: '2019-03-10T22:51:14.821Z'
-              totalTime: 111
+              startTime: '2019-03-10T23:44:28.958Z'
+              endTime: '2019-03-10T23:44:29.070Z'
+              totalTime: 112
               timeout: 5000
             requisitions:
               -
                 valid: true
                 tests: []
                 name: 'Requisition #1 [2] [0]'
-                id: 1951140712_855f2e8740_539536
+                id: 2044280960_855f2e8740_106633
                 subscriptions: []
                 publishers: []
                 time:
-                  startTime: '2019-03-10T22:51:14.715Z'
-                  endTime: '2019-03-10T22:51:14.821Z'
-                  totalTime: 106
+                  startTime: '2019-03-10T23:44:28.963Z'
+                  endTime: '2019-03-10T23:44:29.070Z'
+                  totalTime: 107
                   timeout: 5000
                 requisitions:
                   -
                     valid: true
                     tests: []
                     name: 'Requisition #1 [2] [0] [0]'
-                    id: 1951140712_855f2e8740_539536
+                    id: 2044280960_855f2e8740_106633
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.719Z'
-                      endTime: '2019-03-10T22:51:14.760Z'
-                      totalTime: 41
+                      startTime: '2019-03-10T23:44:28.971Z'
+                      endTime: '2019-03-10T23:44:28.995Z'
+                      totalTime: 24
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [2] [0] [0] [0]'
-                        id: 1951140721_08786e4b97_883928
+                        id: 2044280974_08786e4b97_176917
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.725Z'
-                          endTime: '2019-03-10T22:51:14.758Z'
-                          totalTime: 33
+                          startTime: '2019-03-10T23:44:28.978Z'
+                          endTime: '2019-03-10T23:44:28.995Z'
+                          totalTime: 17
                           timeout: 5000
                         requisitions:
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [2] [0] [0] [0] [0]'
-                            id: 1951140721_08786e4b97_883928
+                            id: 2044280974_08786e4b97_176917
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.730Z'
-                              endTime: '2019-03-10T22:51:14.732Z'
+                              startTime: '2019-03-10T23:44:28.984Z'
+                              endTime: '2019-03-10T23:44:28.986Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -1928,90 +1928,90 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [2] [0] [0] [0] [1]'
-                            id: 1951140721_08786e4b97_883928
+                            id: 2044280974_08786e4b97_176917
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.735Z'
-                              endTime: '2019-03-10T22:51:14.737Z'
-                              totalTime: 2
+                              startTime: '2019-03-10T23:44:28.991Z'
+                              endTime: '2019-03-10T23:44:28.991Z'
+                              totalTime: 0
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [2] [0] [0] [0] [2]'
-                            id: 1951140721_08786e4b97_883928
+                            id: 2044280974_08786e4b97_176917
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.739Z'
-                              endTime: '2019-03-10T22:51:14.757Z'
-                              totalTime: 18
+                              startTime: '2019-03-10T23:44:28.995Z'
+                              endTime: '2019-03-10T23:44:28.995Z'
+                              totalTime: 0
                               timeout: 5000
                             requisitions: []
                   -
                     valid: true
                     tests: []
                     name: 'Requisition #1 [2] [0] [1]'
-                    id: 1951140712_855f2e8740_539536
+                    id: 2044280960_855f2e8740_106633
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.778Z'
-                      endTime: '2019-03-10T22:51:14.799Z'
-                      totalTime: 21
+                      startTime: '2019-03-10T23:44:28.998Z'
+                      endTime: '2019-03-10T23:44:29.048Z'
+                      totalTime: 50
                       timeout: 5000
                     requisitions:
                       -
                         valid: true
                         tests: []
                         name: 'Requisition #1 [2] [0] [1] [0]'
-                        id: 1951140780_fa3de275a4_594836
+                        id: 2044280999_fa3de275a4_635888
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.783Z'
-                          endTime: '2019-03-10T22:51:14.799Z'
-                          totalTime: 16
+                          startTime: '2019-03-10T23:44:29.023Z'
+                          endTime: '2019-03-10T23:44:29.048Z'
+                          totalTime: 25
                           timeout: 5000
                         requisitions:
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [2] [0] [1] [0] [0]'
-                            id: 1951140780_fa3de275a4_594836
+                            id: 2044280999_fa3de275a4_635888
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.787Z'
-                              endTime: '2019-03-10T22:51:14.789Z'
-                              totalTime: 2
-                              timeout: 5000
-                            requisitions: []
-                          -
-                            valid: true
-                            tests: []
-                            name: 'Requisition #1 [2] [0] [1] [0] [1]'
-                            id: 1951140780_fa3de275a4_594836
-                            subscriptions: []
-                            publishers: []
-                            time:
-                              startTime: '2019-03-10T22:51:14.792Z'
-                              endTime: '2019-03-10T22:51:14.793Z'
+                              startTime: '2019-03-10T23:44:29.037Z'
+                              endTime: '2019-03-10T23:44:29.038Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
-                            name: 'Requisition #1 [2] [0] [1] [0] [2]'
-                            id: 1951140780_fa3de275a4_594836
+                            name: 'Requisition #1 [2] [0] [1] [0] [1]'
+                            id: 2044280999_fa3de275a4_635888
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.797Z'
-                              endTime: '2019-03-10T22:51:14.799Z'
+                              startTime: '2019-03-10T23:44:29.041Z'
+                              endTime: '2019-03-10T23:44:29.043Z'
+                              totalTime: 2
+                              timeout: 5000
+                            requisitions: []
+                          -
+                            valid: true
+                            tests: []
+                            name: 'Requisition #1 [2] [0] [1] [0] [2]'
+                            id: 2044280999_fa3de275a4_635888
+                            subscriptions: []
+                            publishers: []
+                            time:
+                              startTime: '2019-03-10T23:44:29.046Z'
+                              endTime: '2019-03-10T23:44:29.048Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -2019,12 +2019,12 @@ requisitions:
                     valid: true
                     tests: []
                     name: 'Requisition #1 [2] [0] [2]'
-                    id: 1951140712_855f2e8740_539536
+                    id: 2044280960_855f2e8740_106633
                     subscriptions: []
                     publishers: []
                     time:
-                      startTime: '2019-03-10T22:51:14.801Z'
-                      endTime: '2019-03-10T22:51:14.821Z'
+                      startTime: '2019-03-10T23:44:29.050Z'
+                      endTime: '2019-03-10T23:44:29.070Z'
                       totalTime: 20
                       timeout: 5000
                     requisitions:
@@ -2032,12 +2032,12 @@ requisitions:
                         valid: true
                         tests: []
                         name: 'Requisition #1 [2] [0] [2] [0]'
-                        id: 1951140802_68beda894e_784403
+                        id: 2044290051_68beda894e_631759
                         subscriptions: []
                         publishers: []
                         time:
-                          startTime: '2019-03-10T22:51:14.806Z'
-                          endTime: '2019-03-10T22:51:14.821Z'
+                          startTime: '2019-03-10T23:44:29.055Z'
+                          endTime: '2019-03-10T23:44:29.070Z'
                           totalTime: 15
                           timeout: 5000
                         requisitions:
@@ -2045,25 +2045,25 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [2] [0] [2] [0] [0]'
-                            id: 1951140802_68beda894e_784403
+                            id: 2044290051_68beda894e_631759
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.810Z'
-                              endTime: '2019-03-10T22:51:14.812Z'
-                              totalTime: 2
+                              startTime: '2019-03-10T23:44:29.059Z'
+                              endTime: '2019-03-10T23:44:29.060Z'
+                              totalTime: 1
                               timeout: 5000
                             requisitions: []
                           -
                             valid: true
                             tests: []
                             name: 'Requisition #1 [2] [0] [2] [0] [1]'
-                            id: 1951140802_68beda894e_784403
+                            id: 2044290051_68beda894e_631759
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.814Z'
-                              endTime: '2019-03-10T22:51:14.815Z'
+                              startTime: '2019-03-10T23:44:29.063Z'
+                              endTime: '2019-03-10T23:44:29.064Z'
                               totalTime: 1
                               timeout: 5000
                             requisitions: []
@@ -2071,12 +2071,12 @@ requisitions:
                             valid: true
                             tests: []
                             name: 'Requisition #1 [2] [0] [2] [0] [2]'
-                            id: 1951140802_68beda894e_784403
+                            id: 2044290051_68beda894e_631759
                             subscriptions: []
                             publishers: []
                             time:
-                              startTime: '2019-03-10T22:51:14.819Z'
-                              endTime: '2019-03-10T22:51:14.821Z'
+                              startTime: '2019-03-10T23:44:29.068Z'
+                              endTime: '2019-03-10T23:44:29.070Z'
                               totalTime: 2
                               timeout: 5000
                             requisitions: []
@@ -2092,34 +2092,34 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.822Z'
-          endTime: '2019-03-10T22:51:14.824Z'
-          totalTime: 2
+          startTime: '2019-03-10T23:44:29.072Z'
+          endTime: '2019-03-10T23:44:29.073Z'
+          totalTime: 1
           timeout: 5000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/requisition-delay-iterations.yml
-    id: 1951140208_16f1d16ead_903401
+    id: 2044280452_16f1d16ead_792872
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.260Z'
-      endTime: '2019-03-10T22:51:17.533Z'
-      totalTime: 3273
+      startTime: '2019-03-10T23:44:28.485Z'
+      endTime: '2019-03-10T23:44:31.787Z'
+      totalTime: 3302
       timeout: 5000
     requisitions:
       -
         valid: true
         tests: []
         name: iterations
-        id: 1951140320_2a09eb92d4_263423
+        id: 2044280571_2a09eb92d4_264183
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.325Z'
-          endTime: '2019-03-10T22:51:14.527Z'
+          startTime: '2019-03-10T23:44:28.579Z'
+          endTime: '2019-03-10T23:44:28.781Z'
           totalTime: 202
           timeout: 5000
         requisitions:
@@ -2131,13 +2131,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [0]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.384Z'
-              endTime: '2019-03-10T22:51:14.405Z'
-              totalTime: 21
+              startTime: '2019-03-10T23:44:28.634Z'
+              endTime: '2019-03-10T23:44:28.653Z'
+              totalTime: 19
               timeout: 5000
             requisitions: []
           -
@@ -2148,13 +2148,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [1]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.407Z'
-              endTime: '2019-03-10T22:51:14.418Z'
-              totalTime: 11
+              startTime: '2019-03-10T23:44:28.659Z'
+              endTime: '2019-03-10T23:44:28.667Z'
+              totalTime: 8
               timeout: 5000
             requisitions: []
           -
@@ -2165,13 +2165,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [2]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.421Z'
-              endTime: '2019-03-10T22:51:14.437Z'
-              totalTime: 16
+              startTime: '2019-03-10T23:44:28.670Z'
+              endTime: '2019-03-10T23:44:28.676Z'
+              totalTime: 6
               timeout: 5000
             requisitions: []
           -
@@ -2182,13 +2182,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [3]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.441Z'
-              endTime: '2019-03-10T22:51:14.474Z'
-              totalTime: 33
+              startTime: '2019-03-10T23:44:28.679Z'
+              endTime: '2019-03-10T23:44:28.685Z'
+              totalTime: 6
               timeout: 5000
             requisitions: []
           -
@@ -2199,13 +2199,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [4]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.477Z'
-              endTime: '2019-03-10T22:51:14.482Z'
-              totalTime: 5
+              startTime: '2019-03-10T23:44:28.687Z'
+              endTime: '2019-03-10T23:44:28.732Z'
+              totalTime: 45
               timeout: 5000
             requisitions: []
           -
@@ -2216,13 +2216,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [5]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.484Z'
-              endTime: '2019-03-10T22:51:14.488Z'
-              totalTime: 4
+              startTime: '2019-03-10T23:44:28.735Z'
+              endTime: '2019-03-10T23:44:28.740Z'
+              totalTime: 5
               timeout: 5000
             requisitions: []
           -
@@ -2233,12 +2233,12 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [6]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.492Z'
-              endTime: '2019-03-10T22:51:14.496Z'
+              startTime: '2019-03-10T23:44:28.742Z'
+              endTime: '2019-03-10T23:44:28.746Z'
               totalTime: 4
               timeout: 5000
             requisitions: []
@@ -2250,13 +2250,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [7]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.498Z'
-              endTime: '2019-03-10T22:51:14.502Z'
-              totalTime: 4
+              startTime: '2019-03-10T23:44:28.748Z'
+              endTime: '2019-03-10T23:44:28.751Z'
+              totalTime: 3
               timeout: 5000
             requisitions: []
           -
@@ -2267,13 +2267,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [8]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.505Z'
-              endTime: '2019-03-10T22:51:14.513Z'
-              totalTime: 8
+              startTime: '2019-03-10T23:44:28.754Z'
+              endTime: '2019-03-10T23:44:28.761Z'
+              totalTime: 7
               timeout: 5000
             requisitions: []
           -
@@ -2284,13 +2284,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''requisition.hakunaMatata'' to be undefined and it is: ''undefined'''
             name: 'iterations [9]'
-            id: 1951140320_2a09eb92d4_263423
+            id: 2044280571_2a09eb92d4_264183
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.515Z'
-              endTime: '2019-03-10T22:51:14.527Z'
-              totalTime: 12
+              startTime: '2019-03-10T23:44:28.763Z'
+              endTime: '2019-03-10T23:44:28.781Z'
+              totalTime: 18
               timeout: 5000
             requisitions: []
       -
@@ -2303,11 +2303,11 @@ requisitions:
           -
             name: 'It delayed for at least ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3068'''
+            description: 'Expected ''delayedTime + 50'' to be greater than ''3000''. Received ''3074'''
           -
             name: 'It delayed for no more than ~3 seconds'
             valid: true
-            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2518'''
+            description: 'Expected ''delayedTime - 500'' to be less than ''3000''. Received ''2524'''
           -
             name: 'Assertion #3'
             valid: true
@@ -2317,100 +2317,100 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.527Z'
-          endTime: '2019-03-10T22:51:17.533Z'
-          totalTime: 3006
+          startTime: '2019-03-10T23:44:28.782Z'
+          endTime: '2019-03-10T23:44:31.787Z'
+          totalTime: 3005
           timeout: 5000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/skipped.yml
-    id: 1951140209_05247139ae_341132
+    id: 2044280453_05247139ae_35809
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.262Z'
-      endTime: '2019-03-10T22:51:14.528Z'
-      totalTime: 266
+      startTime: '2019-03-10T23:44:28.485Z'
+      endTime: '2019-03-10T23:44:28.782Z'
+      totalTime: 297
       timeout: 5000
     requisitions:
       -
         valid: true
         tests: []
         name: 'Requisition #0'
-        id: 1951140325_e362f7cb78_613234
+        id: 2044280579_e362f7cb78_777093
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.328Z'
-          endTime: '2019-03-10T22:51:14.484Z'
-          totalTime: 156
+          startTime: '2019-03-10T23:44:28.582Z'
+          endTime: '2019-03-10T23:44:28.736Z'
+          totalTime: 154
           timeout: 5000
         requisitions:
           -
             valid: true
             tests: []
             name: 'Requisition #0 [0]'
-            id: 1951140325_e362f7cb78_613234
+            id: 2044280579_e362f7cb78_777093
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.385Z'
-              endTime: '2019-03-10T22:51:14.407Z'
-              totalTime: 22
+              startTime: '2019-03-10T23:44:28.635Z'
+              endTime: '2019-03-10T23:44:28.660Z'
+              totalTime: 25
               timeout: 5000
             requisitions: []
           -
             valid: true
             tests: []
             name: 'Requisition #0 [1]'
-            id: 1951140325_e362f7cb78_613234
+            id: 2044280579_e362f7cb78_777093
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.409Z'
-              endTime: '2019-03-10T22:51:14.421Z'
-              totalTime: 12
+              startTime: '2019-03-10T23:44:28.661Z'
+              endTime: '2019-03-10T23:44:28.671Z'
+              totalTime: 10
               timeout: 5000
             requisitions: []
           -
             valid: true
             tests: []
             name: 'Requisition #0 [2]'
-            id: 1951140325_e362f7cb78_613234
+            id: 2044280579_e362f7cb78_777093
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.422Z'
-              endTime: '2019-03-10T22:51:14.441Z'
-              totalTime: 19
+              startTime: '2019-03-10T23:44:28.673Z'
+              endTime: '2019-03-10T23:44:28.679Z'
+              totalTime: 6
               timeout: 5000
             requisitions: []
           -
             valid: true
             tests: []
             name: 'Requisition #0 [3]'
-            id: 1951140325_e362f7cb78_613234
+            id: 2044280579_e362f7cb78_777093
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.450Z'
-              endTime: '2019-03-10T22:51:14.477Z'
-              totalTime: 27
+              startTime: '2019-03-10T23:44:28.681Z'
+              endTime: '2019-03-10T23:44:28.687Z'
+              totalTime: 6
               timeout: 5000
             requisitions: []
           -
             valid: true
             tests: []
             name: 'Requisition #0 [4]'
-            id: 1951140325_e362f7cb78_613234
+            id: 2044280579_e362f7cb78_777093
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.479Z'
-              endTime: '2019-03-10T22:51:14.484Z'
-              totalTime: 5
+              startTime: '2019-03-10T23:44:28.689Z'
+              endTime: '2019-03-10T23:44:28.736Z'
+              totalTime: 47
               timeout: 5000
             requisitions: []
       -
@@ -2425,9 +2425,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.485Z'
-          endTime: '2019-03-10T22:51:14.492Z'
-          totalTime: 7
+          startTime: '2019-03-10T23:44:28.737Z'
+          endTime: '2019-03-10T23:44:28.742Z'
+          totalTime: 5
           timeout: 5000
         requisitions: []
       -
@@ -2442,8 +2442,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.492Z'
-          endTime: '2019-03-10T22:51:14.492Z'
+          startTime: '2019-03-10T23:44:28.742Z'
+          endTime: '2019-03-10T23:44:28.742Z'
           totalTime: 0
         requisitions: []
       -
@@ -2458,8 +2458,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.492Z'
-          endTime: '2019-03-10T22:51:14.492Z'
+          startTime: '2019-03-10T23:44:28.742Z'
+          endTime: '2019-03-10T23:44:28.742Z'
           totalTime: 0
         requisitions: []
       -
@@ -2474,21 +2474,21 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.492Z'
-          endTime: '2019-03-10T22:51:14.492Z'
+          startTime: '2019-03-10T23:44:28.742Z'
+          endTime: '2019-03-10T23:44:28.742Z'
           totalTime: 0
         requisitions: []
       -
         valid: true
         tests: []
         name: 'Requisition #5'
-        id: 1951140492_55da6aafb1_880687
+        id: 2044280742_55da6aafb1_700410
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.493Z'
-          endTime: '2019-03-10T22:51:14.505Z'
-          totalTime: 12
+          startTime: '2019-03-10T23:44:28.743Z'
+          endTime: '2019-03-10T23:44:28.754Z'
+          totalTime: 11
           timeout: 5000
         requisitions:
           -
@@ -2499,13 +2499,13 @@ requisitions:
                 valid: true
                 description: 'Expect ''true'' to be true'
             name: 'Requisition #5 [0]'
-            id: 1951140492_55da6aafb1_880687
+            id: 2044280742_55da6aafb1_700410
             subscriptions: []
             publishers: []
             time:
-              startTime: '2019-03-10T22:51:14.499Z'
-              endTime: '2019-03-10T22:51:14.505Z'
-              totalTime: 6
+              startTime: '2019-03-10T23:44:28.749Z'
+              endTime: '2019-03-10T23:44:28.754Z'
+              totalTime: 5
               timeout: 5000
             requisitions: []
       -
@@ -2516,8 +2516,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.508Z'
-          endTime: '2019-03-10T22:51:14.515Z'
+          startTime: '2019-03-10T23:44:28.756Z'
+          endTime: '2019-03-10T23:44:28.763Z'
           totalTime: 7
           timeout: 5000
         requisitions: []
@@ -2533,22 +2533,22 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.516Z'
-          endTime: '2019-03-10T22:51:14.527Z'
-          totalTime: 11
+          startTime: '2019-03-10T23:44:28.764Z'
+          endTime: '2019-03-10T23:44:28.782Z'
+          totalTime: 18
           timeout: 5000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/ssl.yml
-    id: 1951140210_aaa1765c8e_870687
+    id: 2044280454_aaa1765c8e_791113
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.264Z'
-      endTime: '2019-03-10T22:51:16.550Z'
-      totalTime: 2286
+      startTime: '2019-03-10T23:44:28.487Z'
+      endTime: '2019-03-10T23:44:30.838Z'
+      totalTime: 2351
       timeout: 5000
     requisitions:
       -
@@ -2570,7 +2570,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.386Z'
+            connectionTime: '2019-03-10T23:44:28.636Z'
             messageReceived:
               payload: secureMessagereusingSecureMessage
               stream:
@@ -2595,17 +2595,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:15.538Z'
+            publishTime: '2019-03-10T23:44:29.829Z'
             messageReceived:
               payload: hisecureResponse
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 59370
+                port: 59776
         time:
-          startTime: '2019-03-10T22:51:14.329Z'
-          endTime: '2019-03-10T22:51:15.538Z'
-          totalTime: 1209
+          startTime: '2019-03-10T23:44:28.583Z'
+          endTime: '2019-03-10T23:44:29.830Z'
+          totalTime: 1247
           timeout: 5000
         requisitions: []
       -
@@ -2627,7 +2627,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:15.544Z'
+            connectionTime: '2019-03-10T23:44:29.834Z'
             messageReceived:
               payload: reusingSecureMessage
         publishers:
@@ -2648,13 +2648,13 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:16.549Z'
+            publishTime: '2019-03-10T23:44:30.837Z'
             messageReceived:
               payload: reusingSecureResponse
         time:
-          startTime: '2019-03-10T22:51:15.541Z'
-          endTime: '2019-03-10T22:51:16.550Z'
-          totalTime: 1009
+          startTime: '2019-03-10T23:44:29.833Z'
+          endTime: '2019-03-10T23:44:30.838Z'
+          totalTime: 1005
           timeout: 5000
         requisitions: []
   -
@@ -2677,26 +2677,26 @@ requisitions:
             name: 'Message received'
             description: 'Subscription has received its message'
         valid: true
-        connectionTime: '2019-03-10T22:51:14.330Z'
+        connectionTime: '2019-03-10T23:44:28.584Z'
         messageReceived: 'enqueuer standard-input payload'
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.265Z'
-      endTime: '2019-03-10T22:51:14.396Z'
-      totalTime: 131
+      startTime: '2019-03-10T23:44:28.487Z'
+      endTime: '2019-03-10T23:44:28.646Z'
+      totalTime: 159
       timeout: 5000
     requisitions: []
   -
     valid: true
     tests: []
     name: examples/store.yml
-    id: 1951140213_35e8f41e6a_736111
+    id: 2044280455_35e8f41e6a_793600
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.266Z'
-      endTime: '2019-03-10T22:51:14.422Z'
-      totalTime: 156
+      startTime: '2019-03-10T23:44:28.488Z'
+      endTime: '2019-03-10T23:44:28.673Z'
+      totalTime: 185
       timeout: 5000
     requisitions:
       -
@@ -2707,9 +2707,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.331Z'
-          endTime: '2019-03-10T22:51:14.387Z'
-          totalTime: 56
+          startTime: '2019-03-10T23:44:28.585Z'
+          endTime: '2019-03-10T23:44:28.637Z'
+          totalTime: 52
           timeout: 5000
         requisitions: []
       -
@@ -2728,9 +2728,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.388Z'
-          endTime: '2019-03-10T22:51:14.409Z'
-          totalTime: 21
+          startTime: '2019-03-10T23:44:28.638Z'
+          endTime: '2019-03-10T23:44:28.661Z'
+          totalTime: 23
           timeout: 5000
         requisitions: []
       -
@@ -2745,22 +2745,22 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.410Z'
-          endTime: '2019-03-10T22:51:14.422Z'
-          totalTime: 12
+          startTime: '2019-03-10T23:44:28.662Z'
+          endTime: '2019-03-10T23:44:28.673Z'
+          totalTime: 11
           timeout: 5000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/tcp.yml
-    id: 1951140215_bc047fe306_902537
+    id: 2044280457_bc047fe306_298082
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.268Z'
-      endTime: '2019-03-10T22:51:17.428Z'
-      totalTime: 3160
+      startTime: '2019-03-10T23:44:28.490Z'
+      endTime: '2019-03-10T23:44:31.757Z'
+      totalTime: 3267
       timeout: 5000
     requisitions:
       -
@@ -2786,7 +2786,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.388Z'
+            connectionTime: '2019-03-10T23:44:28.638Z'
             messageReceived:
               payload: 'Hey Jude'
               stream:
@@ -2811,17 +2811,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:15.415Z'
+            publishTime: '2019-03-10T23:44:29.735Z'
             messageReceived:
               payload: 'Do not make it bad'
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 59371
+                port: 59777
         time:
-          startTime: '2019-03-10T22:51:14.332Z'
-          endTime: '2019-03-10T22:51:15.415Z'
-          totalTime: 1083
+          startTime: '2019-03-10T23:44:28.586Z'
+          endTime: '2019-03-10T23:44:29.735Z'
+          totalTime: 1149
           timeout: 3000
         requisitions: []
       -
@@ -2843,7 +2843,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:15.419Z'
+            connectionTime: '2019-03-10T23:44:29.740Z'
             messageReceived:
               payload: 'I do not careThe socket is still open'
               stream:
@@ -2868,17 +2868,17 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:16.421Z'
+            publishTime: '2019-03-10T23:44:30.746Z'
             messageReceived:
               payload: EnqueuerRocks
               stream:
                 address: 127.0.0.1
                 family: IPv4
-                port: 59377
+                port: 59783
         time:
-          startTime: '2019-03-10T22:51:15.418Z'
-          endTime: '2019-03-10T22:51:16.422Z'
-          totalTime: 1004
+          startTime: '2019-03-10T23:44:29.738Z'
+          endTime: '2019-03-10T23:44:30.746Z'
+          totalTime: 1008
           timeout: 3000
         requisitions: []
       -
@@ -2900,7 +2900,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:16.427Z'
+            connectionTime: '2019-03-10T23:44:30.752Z'
             messageReceived:
               payload: 'The socket is still open'
         publishers:
@@ -2921,26 +2921,26 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:17.428Z'
+            publishTime: '2019-03-10T23:44:31.756Z'
             messageReceived:
               payload: 'enqueuer Rocks'
         time:
-          startTime: '2019-03-10T22:51:16.425Z'
-          endTime: '2019-03-10T22:51:17.428Z'
-          totalTime: 1003
+          startTime: '2019-03-10T23:44:30.751Z'
+          endTime: '2019-03-10T23:44:31.756Z'
+          totalTime: 1005
           timeout: 3000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/udp.yml
-    id: 1951140217_d503407b88_140751
+    id: 2044280457_d503407b88_498013
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.269Z'
-      endTime: '2019-03-10T22:51:14.413Z'
-      totalTime: 144
+      startTime: '2019-03-10T23:44:28.490Z'
+      endTime: '2019-03-10T23:44:28.730Z'
+      totalTime: 240
       timeout: 5000
     requisitions:
       -
@@ -2966,7 +2966,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.388Z'
+            connectionTime: '2019-03-10T23:44:28.639Z'
             messageReceived:
               payload:
                 type: Buffer
@@ -2976,7 +2976,7 @@ requisitions:
               remoteInfo:
                 address: 127.0.0.1
                 family: IPv4
-                port: 62544
+                port: 65340
                 size: 2
         publishers:
           -
@@ -2988,24 +2988,24 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2019-03-10T22:51:14.410Z'
+            publishTime: '2019-03-10T23:44:28.692Z'
         time:
-          startTime: '2019-03-10T22:51:14.333Z'
-          endTime: '2019-03-10T22:51:14.413Z'
-          totalTime: 80
+          startTime: '2019-03-10T23:44:28.587Z'
+          endTime: '2019-03-10T23:44:28.730Z'
+          totalTime: 143
           timeout: 5000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/uds.yml
-    id: 1951140219_b92b54acfc_620780
+    id: 2044280459_b92b54acfc_381637
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.272Z'
-      endTime: '2019-03-10T22:51:17.417Z'
-      totalTime: 3145
+      startTime: '2019-03-10T23:44:28.492Z'
+      endTime: '2019-03-10T23:44:31.660Z'
+      totalTime: 3168
       timeout: 5000
     requisitions:
       -
@@ -3027,7 +3027,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:14.389Z'
+            connectionTime: '2019-03-10T23:44:28.640Z'
             messageReceived:
               payload: enqueuer
               stream: {}
@@ -3050,14 +3050,14 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:15.404Z'
+            publishTime: '2019-03-10T23:44:29.650Z'
             messageReceived:
               payload: responsePayload
               stream: {}
         time:
-          startTime: '2019-03-10T22:51:14.334Z'
-          endTime: '2019-03-10T22:51:15.404Z'
-          totalTime: 1070
+          startTime: '2019-03-10T23:44:28.588Z'
+          endTime: '2019-03-10T23:44:29.650Z'
+          totalTime: 1062
           timeout: 3000
         requisitions: []
       -
@@ -3079,7 +3079,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:15.410Z'
+            connectionTime: '2019-03-10T23:44:29.654Z'
             messageReceived:
               payload: 'enqueuerI am still bidirectional'
               stream: {}
@@ -3098,10 +3098,10 @@ requisitions:
                 name: Published
                 valid: true
                 description: 'Published successfully'
-            publishTime: '2019-03-10T22:51:16.410Z'
+            publishTime: '2019-03-10T23:44:30.656Z'
         time:
-          startTime: '2019-03-10T22:51:15.407Z'
-          endTime: '2019-03-10T22:51:16.410Z'
+          startTime: '2019-03-10T23:44:29.653Z'
+          endTime: '2019-03-10T23:44:30.656Z'
           totalTime: 1003
           timeout: 5000
         requisitions: []
@@ -3124,7 +3124,7 @@ requisitions:
                 name: 'Message received'
                 description: 'Subscription has received its message'
             valid: true
-            connectionTime: '2019-03-10T22:51:16.415Z'
+            connectionTime: '2019-03-10T23:44:30.659Z'
             messageReceived:
               payload: 'I am still opened'
               stream: {}
@@ -3146,27 +3146,27 @@ requisitions:
                 name: 'Response message received'
                 valid: true
                 description: 'Response message was received'
-            publishTime: '2019-03-10T22:51:17.416Z'
+            publishTime: '2019-03-10T23:44:31.659Z'
             messageReceived:
               payload: 'I am still bidirectional'
               stream: {}
         time:
-          startTime: '2019-03-10T22:51:16.414Z'
-          endTime: '2019-03-10T22:51:17.416Z'
-          totalTime: 1002
+          startTime: '2019-03-10T23:44:30.659Z'
+          endTime: '2019-03-10T23:44:31.660Z'
+          totalTime: 1001
           timeout: 5000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/variables.yml
-    id: 1951140219_2e1e4d53e3_799742
+    id: 2044280460_2e1e4d53e3_715190
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.273Z'
-      endTime: '2019-03-10T22:51:14.410Z'
-      totalTime: 137
+      startTime: '2019-03-10T23:44:28.493Z'
+      endTime: '2019-03-10T23:44:28.662Z'
+      totalTime: 169
       timeout: 5000
     requisitions:
       -
@@ -3185,9 +3185,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.334Z'
-          endTime: '2019-03-10T22:51:14.390Z'
-          totalTime: 56
+          startTime: '2019-03-10T23:44:28.589Z'
+          endTime: '2019-03-10T23:44:28.640Z'
+          totalTime: 51
           timeout: 5000
         requisitions: []
       -
@@ -3210,22 +3210,22 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.391Z'
-          endTime: '2019-03-10T22:51:14.410Z'
-          totalTime: 19
+          startTime: '2019-03-10T23:44:28.641Z'
+          endTime: '2019-03-10T23:44:28.662Z'
+          totalTime: 21
           timeout: 5000
         requisitions: []
   -
     valid: true
     tests: []
     name: examples/requisition-navigation.yaml
-    id: 1951140219_00667e7390_856866
+    id: 2044280460_00667e7390_266831
     subscriptions: []
     publishers: []
     time:
-      startTime: '2019-03-10T22:51:14.273Z'
-      endTime: '2019-03-10T22:51:14.415Z'
-      totalTime: 142
+      startTime: '2019-03-10T23:44:28.493Z'
+      endTime: '2019-03-10T23:44:28.662Z'
+      totalTime: 169
       timeout: 5000
     requisitions:
       -
@@ -3240,9 +3240,9 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.376Z'
-          endTime: '2019-03-10T22:51:14.401Z'
-          totalTime: 25
+          startTime: '2019-03-10T23:44:28.628Z'
+          endTime: '2019-03-10T23:44:28.650Z'
+          totalTime: 22
           timeout: 5000
         requisitions: []
       -
@@ -3257,8 +3257,8 @@ requisitions:
         subscriptions: []
         publishers: []
         time:
-          startTime: '2019-03-10T22:51:14.402Z'
-          endTime: '2019-03-10T22:51:14.415Z'
-          totalTime: 13
+          startTime: '2019-03-10T23:44:28.650Z'
+          endTime: '2019-03-10T23:44:28.662Z'
+          totalTime: 12
           timeout: 5000
         requisitions: []

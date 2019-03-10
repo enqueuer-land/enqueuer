@@ -156,7 +156,7 @@ Describes what the publisher is supposed to do.
     name: publisher action
 
 **type**\
-Key tag to identify which publisher will be instantiated
+Mandatory. Key tag to identify which publisher will be instantiated
 
     type: http
 
@@ -200,7 +200,7 @@ Describes what the subscription is supposed to do.
     name: subscription action
     
 **type**\
-Key tag to identify which subscription will be instantiated
+Mandatory. Key tag to identify which subscription will be instantiated
 
     type: http
 
