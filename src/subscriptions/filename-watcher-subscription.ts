@@ -11,9 +11,6 @@ class FileSystemWatcherSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this.options = subscriptionAttributes.options || {nodir: true};
-        if (!this.fileNamePattern) {
-            throw new Error(`Impossible to create a ${this.type} with no 'fileNamePattern' field`);
-        }
     }
 
     public subscribe(): Promise<void> {

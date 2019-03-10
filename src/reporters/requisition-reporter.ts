@@ -1,4 +1,4 @@
-import {ReportGenerator} from './report-generator';
+import {RequisitionReportGenerator} from './requisition-report-generator';
 import {Logger} from '../loggers/logger';
 import * as input from '../models/inputs/requisition-model';
 import {RequisitionModel} from '../models/inputs/requisition-model';
@@ -16,7 +16,7 @@ export class RequisitionReporter {
     public static readonly DEFAULT_TIMEOUT  = 5 * 1000;
     private readonly timeout?: number;
     private readonly requisitionAttributes: RequisitionModel;
-    private reportGenerator: ReportGenerator;
+    private reportGenerator: RequisitionReportGenerator;
     private multiSubscriptionsReporter: MultiSubscriptionsReporter;
     private multiPublishersReporter: MultiPublishersReporter;
     private onFinishCallback: RequisitionRunnerCallback;
@@ -32,7 +32,7 @@ export class RequisitionReporter {
             delete this.requisitionAttributes.timeout;
         }
         this.timeout = this.requisitionAttributes.timeout;
-        this.reportGenerator = new ReportGenerator(this.requisitionAttributes, this.timeout);
+        this.reportGenerator = new RequisitionReportGenerator(this.requisitionAttributes, this.timeout);
         this.reportGenerator.addTests(onInitFunctionTests);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions, this.requisitionAttributes);
         this.multiPublishersReporter = new MultiPublishersReporter(this.requisitionAttributes.publishers, this.requisitionAttributes);

@@ -1,6 +1,4 @@
-import {ReportGenerator} from "./report-generator";
-import * as input from '../models/inputs/requisition-model';
-import * as output from '../models/outputs/requisition-model';
+import {RequisitionReportGenerator} from "./requisition-report-generator";
 
 let sleep = (millisecondsToWait: number): void => {
     const waitTill = new Date(new Date().getTime() + millisecondsToWait);
@@ -9,10 +7,10 @@ let sleep = (millisecondsToWait: number): void => {
     }
 };
 
-describe('ReportGenerator', () => {
+describe('RequisitionReportGenerator', () => {
 
     it('Create default report', () => {
-        const report = new ReportGenerator({name: 'testName'}).getReport();
+        const report = new RequisitionReportGenerator({name: 'testName'}).getReport();
         expect(report.time).toBeDefined();
         delete report.time;
         expect(report).toEqual({
@@ -27,7 +25,7 @@ describe('ReportGenerator', () => {
 
     it('Time report with timeout', () => {
         const timeout = 1000;
-        const reportGenerator = new ReportGenerator({name: 'someName'}, timeout);
+        const reportGenerator = new RequisitionReportGenerator({name: 'someName'}, timeout);
         const firstReport = reportGenerator.getReport();
         const firstStartTime = new Date(firstReport.time.startTime.valueOf()).getTime();
 
@@ -49,22 +47,9 @@ describe('ReportGenerator', () => {
         });
     });
 
-    it('Time out test success', () => {
-        const timeout = 1000;
-        const reportGenerator = new ReportGenerator({name: 'someName'}, timeout);
-        reportGenerator.finish();
-
-        const report = reportGenerator.getReport();
-        expect(report.valid).toBeTruthy();
-        expect(report.tests.length).toBe(1);
-        expect(report.tests[0].name).toBe('No time out');
-        expect(report.tests[0].valid).toBeTruthy();
-        expect(report.tests[0].description).toBeDefined();
-    });
-
     it('Time out test fail', () => {
         const timeout = 10;
-        const reportGenerator = new ReportGenerator({name: 'someName'}, timeout);
+        const reportGenerator = new RequisitionReportGenerator({name: 'someName'}, timeout);
         sleep(50);
         reportGenerator.finish();
 
@@ -77,7 +62,7 @@ describe('ReportGenerator', () => {
     });
 
     it('Time report without timeout', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
 
         reportGenerator.finish();
 
@@ -90,7 +75,7 @@ describe('ReportGenerator', () => {
     });
 
     it('Adding publisher report', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
 
         let report = reportGenerator.getReport();
         expect(report.valid).toBeTruthy();
@@ -105,7 +90,7 @@ describe('ReportGenerator', () => {
     });
 
     it('Adding subscription report', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
 
         let report = reportGenerator.getReport();
         expect(report.valid).toBeTruthy();
@@ -120,7 +105,7 @@ describe('ReportGenerator', () => {
     });
 
     it('Adding tests', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
 
         let report = reportGenerator.getReport();
         expect(report.valid).toBeTruthy();
@@ -132,7 +117,7 @@ describe('ReportGenerator', () => {
     });
 
     it('Adding error', () => {
-        const reportGenerator = new ReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
 
         let report = reportGenerator.getReport();
         expect(report.valid).toBeTruthy();
