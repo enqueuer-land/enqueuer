@@ -11,28 +11,30 @@ import {RequisitionDefaultReports} from './models-defaults/outputs/requisition-d
 import {RequisitionParentCreator} from './components/requisition-parent-creator';
 import {Configuration} from './configurations/configuration';
 import {SummaryTestOutput} from './outputs/summary-test-output';
+import {TestModel} from './models/outputs/test-model';
 
-//TODO test it
 export class EnqueuerRunner {
 
     private readonly fileNames: string[];
     private readonly name: string;
     private readonly parallelMode: boolean;
-    private readonly errors: RequisitionModel[];
+    private readonly filesErrors: TestModel[];
     private readonly startTime: DateController;
 
     constructor() {
-        const configuration = Configuration.getInstance();
+        this.filesErrors = [];
         this.startTime = new DateController();
+        const configuration = Configuration.getInstance();
         this.name = configuration.getName();
         this.parallelMode = configuration.isParallel();
-        this.errors = [];
         this.fileNames = this.getTestFiles(configuration.getFiles());
     }
 
     public async execute(): Promise<boolean> {
         if (this.fileNames.length === 0) {
-            return Promise.reject(`no test file was found`);
+            const message = `no test file was found`;
+            await this.finishExecution(RequisitionDefaultReports.createRunningError({name: message}, message));
+            return Promise.reject(message);
         }
 
         const parent: input.RequisitionModel = this.createParent(this.fileNames);
@@ -48,16 +50,28 @@ export class EnqueuerRunner {
         }
     }
 
+    public getFilesErrors(): TestModel[] {
+        return this.filesErrors;
+    }
+
+    public getFilesName(): string[] {
+        return this.fileNames;
+    }
+
     private getTestFiles(files: string[]): string[] {
         let result: string[] = [];
-        files.forEach((pattern: any) => {
+        files.map((pattern: string) => {
             if (typeof (pattern) == 'string') {
                 const items = glob.sync(pattern);
                 if (items.length <= 0) {
-                    Logger.error(`No file was found with: ${pattern}`);
+                    const message = `No file was found with: ${pattern}`;
+                    Logger.error(message);
+                    this.addError(`File found with ${pattern}`, message);
                 } else {
                     result = result.concat(items.sort());
                 }
+            } else {
+                this.addError(`${pattern} is a string`, `File pattern is not a string: ${pattern}`);
             }
         });
         result = [...new Set(result)];
@@ -66,17 +80,20 @@ export class EnqueuerRunner {
         return result;
     }
 
+    private addError(title: string, message: string) {
+        Logger.error(message);
+        this.filesErrors.push({name: title, valid: false, description: message});
+    }
+
     private createParent(files: string[]): input.RequisitionModel {
         const requisitions: input.RequisitionModel[] = [];
         files.forEach(file => {
             try {
-                const requisition: input.RequisitionModel = new RequisitionFileParser(file).parse();
-                requisitions.push(requisition);
+                requisitions.push(new RequisitionFileParser(file).parse());
             } catch (err) {
                 const message = `Error parsing file ${file}: ${typeof err === 'string' ? err : JSON.stringify(err, null, 2)}`;
                 Logger.error(message);
-                const error = RequisitionDefaultReports.createRunningError({name: file}, message);
-                this.errors.push(error);
+                this.addError(`${file} parsed`, message);
             }
         });
         return new RequisitionParentCreator().create(this.name, requisitions);
@@ -84,14 +101,7 @@ export class EnqueuerRunner {
 
     private async finishExecution(report: output.RequisitionModel): Promise<boolean> {
         Logger.info('There is no more files to be ran');
-        report.requisitions = report.requisitions!.concat(this.errors);
-        const now = new DateController();
-        report.time = {
-            startTime: this.startTime.toString(),
-            endTime: now.toString(),
-            totalTime: now.getTime() - this.startTime.getTime()
-        };
-        report.valid = report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
+        this.adjustFinalReport(report);
         const configuration = Configuration.getInstance();
         if (this.parallelMode) {
             new SummaryTestOutput(report, configuration.getMaxReportLevelPrint()).print();
@@ -100,4 +110,17 @@ export class EnqueuerRunner {
         return report.valid;
     }
 
+    private adjustFinalReport(report: RequisitionModel) {
+        const now = new DateController();
+        report.time = {
+            startTime: this.startTime.toString(),
+            endTime: now.toString(),
+            totalTime: now.getTime() - this.startTime.getTime()
+        };
+        report.tests = this.filesErrors || [];
+        report.valid = (report.requisitions || [])
+                .every((requisitionsReport) => requisitionsReport.valid) &&
+            (report.tests || [])
+                .every((test) => test.valid);
+    }
 }
