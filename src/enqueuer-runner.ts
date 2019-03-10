@@ -30,17 +30,19 @@ export class EnqueuerRunner {
     }
 
     public async execute(): Promise<boolean> {
+        const enqueuerReport = RequisitionDefaultReports.createDefaultReport({name: EnqueuerRunner.reportName, id: EnqueuerRunner.reportName});
         const parent: input.RequisitionModel = this.createParent(this.fileNames);
         if (this.parallelMode) {
-            const requisitionsReport = await Promise
+            enqueuerReport.requisitions = await Promise
                 .all(parent.requisitions!
                     .map(async (requisition: any) => await new RequisitionRunner(requisition, 1).run()));
-            const parallelReport = RequisitionDefaultReports.createDefaultReport({name: EnqueuerRunner.reportName, id: EnqueuerRunner.reportName});
-            parallelReport.requisitions = requisitionsReport;
-            return await this.finishExecution(parallelReport);
         } else {
-            return await this.finishExecution(await new RequisitionRunner(parent).run());
+            for (const requisition of (parent.requisitions || [])) {
+                const requisitionReport = await new RequisitionRunner(requisition, 1).run();
+                enqueuerReport.requisitions = (enqueuerReport.requisitions || []).concat(requisitionReport);
+            }
         }
+        return await this.finishExecution(enqueuerReport);
     }
 
     public getFilesErrors(): TestModel[] {
@@ -95,7 +97,7 @@ export class EnqueuerRunner {
         Logger.info('Finishing enqueuer execution');
         this.adjustFinalReport(report);
         const configuration = Configuration.getInstance();
-        console.log('  --------------------');
+        console.log('    ----------------------');
         new SummaryTestOutput(report, {maxLevel: configuration.getMaxReportLevelPrint()}).print();
         await new MultiTestsOutput(configuration.getOutputs()).execute(report);
         return report.valid;
@@ -103,7 +105,6 @@ export class EnqueuerRunner {
 
     private adjustFinalReport(report: RequisitionModel) {
         const now = new DateController();
-        report.name = EnqueuerRunner.reportName;
         report.time = {
             startTime: this.startTime.toString(),
             endTime: now.toString(),

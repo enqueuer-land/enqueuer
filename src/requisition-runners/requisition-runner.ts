@@ -37,10 +37,10 @@ export class RequisitionRunner {
     public async run(): Promise<output.RequisitionModel> {
         Logger.info(`Running requisition '${this.name}'`);
         let report;
-        if (this.requisition) {
-            report = await this.startRequisition();
-        } else {
+        if (!this.requisition) {
             report = RequisitionDefaultReports.createSkippedReport({name: this.name, id: this.id});
+        } else {
+            report = await this.startRequisition();
         }
 
         const configuration = Configuration.getInstance();
@@ -129,5 +129,4 @@ export class RequisitionRunner {
         Logger.trace(`Requisition runner evaluating skipping of '${requisition.name}'`);
         return new IterationsEvaluator().evaluate(requisition) <= 0;
     }
-
 }

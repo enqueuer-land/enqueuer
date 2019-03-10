@@ -23,7 +23,8 @@ describe('RequisitionFileParser', () => {
 
     it('Should set default name', () => {
         const value = {
-            id: 12345
+            id: 12345,
+            onFinish: {}
         };
         const fileContent: string = JSON.stringify(value);
 
@@ -72,7 +73,8 @@ describe('RequisitionFileParser', () => {
 
     it('Should keep initial id', () => {
         const value = {
-            id: 12345
+            id: 12345,
+            requisitions: [{}]
         };
         const fileContent: string = JSON.stringify(value);
 
@@ -105,6 +107,25 @@ describe('RequisitionFileParser', () => {
         } catch (err) {
             expect(err.json).toBeDefined();
             expect(err.yml).toBeDefined();
+        }
+    });
+
+    it('Should throw if it is not a valid requisition', () => {
+        const notYml = 'hey: bar';
+
+        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
+            return {
+                parse: (value) => new YmlObjectParser().parse(value)
+            };
+        }, 'yml');
+
+        // @ts-ignore
+        fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
+        try {
+            new RequisitionFileParser('anyStuff').parse();
+            expect(false).toBeTruthy();
+        } catch (err) {
+            expect(err).toBeDefined();
         }
     });
 
