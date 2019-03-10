@@ -1,6 +1,7 @@
 import {EnqueuerRunner} from './enqueuer-runner';
 import {Configuration} from './configurations/configuration';
 import {SummaryTestOutput} from './outputs/summary-test-output';
+import {RequisitionFileParser} from './requisition-runners/requisition-file-parser';
 
 jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
@@ -14,6 +15,8 @@ describe('EnqueuerRunner', () => {
     beforeEach(() => {
         configurationMethodsMock = {
             isParallel: jest.fn(),
+            getMaxReportLevelPrint: jest.fn(),
+            getOutputs: jest.fn(),
             getFiles: jest.fn(() => ['src/*.ts', 'not-matching-pattern', true]),
         };
         // @ts-ignore
@@ -25,58 +28,24 @@ describe('EnqueuerRunner', () => {
         summaryTestsMock = jest.fn(() => summaryTestsMethodsMock);
         // @ts-ignore
         SummaryTestOutput.mockImplementation(summaryTestsMock);
+
+        // @ts-ignore
+        RequisitionFileParser.mockImplementationOnce(() => {
+            return {
+                parse: () => [],
+                getFilesErrors: () => []
+            };
+        });
     });
 
-    it('should call configuration methods', () => {
+    it('should call configuration methods once', async () => {
 
-        const enqueuerRunner = new EnqueuerRunner();
+        await new EnqueuerRunner().execute();
 
         expect(configurationMethodsMock.isParallel).toHaveBeenCalledTimes(1);
-        expect(configurationMethodsMock.getFiles).toHaveBeenCalledTimes(1);
-    });
-
-    it('should add every matching file', () => {
-        const enqueuerRunner = new EnqueuerRunner();
-
-        expect(enqueuerRunner.getFilesName()).toEqual([
-            'src/enqueuer-runner.test.ts',
-            'src/enqueuer-runner.ts',
-            'src/enqueuer-starter.test.ts',
-            'src/enqueuer-starter.ts',
-            'src/index.ts',
-        ]);
-    });
-
-    it('should add every not matching file to error', () => {
-        const enqueuerRunner = new EnqueuerRunner();
-
-        expect(enqueuerRunner.getFilesErrors().sort()).toEqual([{
-            'description': 'No file was found with: \'not-matching-pattern\'',
-            'name': 'No file was found with: \'not-matching-pattern\'',
-            'valid': false,
-        }, {
-            'description': 'File pattern is not a string: \'true\'',
-            'name': 'File pattern is not a string: \'true\'',
-            'valid': false,
-        }].sort());
-    });
-
-    it('should add error when no test is found', async () => {
-        configurationMethodsMock = {
-            isParallel: () => true,
-            getFiles: () => ['not-matching-pattern'],
-            getMaxReportLevelPrint: jest.fn(),
-            getOutputs: jest.fn(() => [])
-        };
-
-        expect(await new EnqueuerRunner().execute()).toBeFalsy();
         expect(configurationMethodsMock.getMaxReportLevelPrint).toHaveBeenCalledTimes(1);
         expect(configurationMethodsMock.getOutputs).toHaveBeenCalledTimes(1);
-        expect(configurationMethodsMock.getOutputs).toHaveBeenCalledTimes(1);
-        expect(summaryTestsMethodsMock.print).toHaveBeenCalledTimes(1);
-        const summaryTestsConstructorArgs = summaryTestsMock.mock.calls[0][0];
-        expect(summaryTestsConstructorArgs.valid).toBeFalsy();
-        expect(summaryTestsConstructorArgs.tests[0].description).toContain('not-matching-pattern');
+        expect(configurationMethodsMock.getFiles).toHaveBeenCalledTimes(1);
     });
 
 });

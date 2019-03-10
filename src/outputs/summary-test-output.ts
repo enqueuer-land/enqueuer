@@ -16,7 +16,7 @@ export class SummaryTestOutput {
         level: 0,
         printFailingTests: true,
         maxLevel: 100,
-        tabulationPerLevel: 5,
+        tabulationPerLevel: 6,
         summarySpacing: 110
     };
 
