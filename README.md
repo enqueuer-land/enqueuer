@@ -41,7 +41,6 @@ or
     
     Options:
       -v, --version                             output the version number
-      -q, --quiet                               disable logging
       -b, --verbosity <level>                   set verbosity (default: "warn")
       -o, --stdout-requisition-output           add stdout as requisition output
       -s, --store [store]                       add variables values to this session (default: [])

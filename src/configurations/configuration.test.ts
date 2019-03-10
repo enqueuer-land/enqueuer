@@ -34,7 +34,6 @@ describe('Configuration', () => {
         expect(instance.getLogLevel()).toBe('warn');
         expect(instance.getMaxReportLevelPrint()).toBe(2);
         expect(instance.getStore()).toEqual({});
-        expect(instance.isQuiet()).toBeFalsy();
         expect(instance.getPlugins()).toEqual([]);
         expect(instance.getOutputs()).toEqual([]);
     });
@@ -49,7 +48,6 @@ describe('Configuration', () => {
         expect(instance.getFiles()).toEqual(['cli-firstFile', 'cli-secondFile']);
         expect(instance.getLogLevel()).toBe('cli-debug');
         expect(instance.getStore()).toEqual({cliKey: 'value'});
-        expect(instance.isQuiet()).toBeTruthy();
         expect(instance.getPlugins()).toEqual(['cli-amqp-plugin', 'common-plugin']);
         expect(instance.getName()).toBe('enqueuer');
         expect(instance.isParallel()).toBeFalsy();
@@ -71,7 +69,6 @@ describe('Configuration', () => {
         expect(instance.getMaxReportLevelPrint()).toBe(13);
         expect(instance.getStore()).toEqual({confFileStore: 'yml', confFileKey: 'file report output'});
         expect(instance.getPlugins()).toEqual(['confFile-plugin', 'confFile-plugin-2', 'common-plugin']);
-        expect(instance.isQuiet()).toBeFalsy();
     });
 
     it('should handle file not found', () => {
@@ -101,7 +98,6 @@ describe('Configuration', () => {
         expect(instance.getLogLevel()).toBe(commandLine.getVerbosity());
         expect(instance.getMaxReportLevelPrint()).toBe(fileConfiguration.getMaxReportLevelPrint());
         expect(instance.getStore()).toEqual(Object.assign({}, fileConfiguration.getStore(), commandLine.getStore()));
-        expect(instance.isQuiet()).toBeTruthy();
     });
 
     it('should ignore files', () => {
@@ -159,7 +155,6 @@ describe('Configuration', () => {
             getVerbosity: () => undefined,
             getPlugins: () => undefined,
             getStore: () => undefined,
-            isQuietMode: () => undefined,
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => false,
         };
@@ -177,7 +172,6 @@ describe('Configuration', () => {
                     cliKey: 'value'
                 };
             },
-            isQuietMode: () => true,
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => true,
         };

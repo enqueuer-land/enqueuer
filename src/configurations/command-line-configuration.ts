@@ -1,5 +1,4 @@
 import {Command} from 'commander';
-import {Logger} from '../loggers/logger';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {TestsDescriber} from '../testers/tests-describer';
 
@@ -13,33 +12,28 @@ export class CommandLineConfiguration {
     private readonly testFilesIgnoringOthers: string[] = [];
 
     public constructor(commandLineArguments: string[]) {
-        try {
-            const commander = new Command()
-                .version(process.env.npm_package_version || packageJson.version, '-v, --version')
-                .allowUnknownOption()
-                .usage('[options] test-file1 test-file2')
-                .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
-                .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
-                .option('-c, --config-file <path>', 'set configurationFile')
-                .option('-e, --parsers-list [parser]', 'list available object parsers')
-                .option('-f, --formatters-description [formatter]', 'describe report formatters')
-                .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
-                .option('-p, --protocols-description [protocol]', 'describe protocols')
-                .option('-q, --quiet', 'disable logging', false)
-                .option('-t, --tests-list', 'list available tests assertions')
-                .option('-s, --store [store]', 'add variables values to this session',
-                    (val: string, memo: string[]) => this.storeCommandLineAction(val, memo), [])
-                .option('-l, --add-plugin [plugin]', 'add plugin',
-                    (val: string) => this.plugins.push(val), [])
-                .option('-a, --add-file <file>', 'add file to be tested',
-                    (val: string) => this.testFiles.push(val), [])
-                .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
-                    (val: string) => this.testFilesIgnoringOthers.push(val), []);
-            commander.on('--help', () => this.helpDescription());
-            this.parsedCommandLine = commander.parse(commandLineArguments || ['path', 'enqueuer']);
-        } catch (err) {
-            Logger.warning(err);
-        }
+        const commander = new Command()
+            .version(process.env.npm_package_version || packageJson.version, '-v, --version')
+            .allowUnknownOption()
+            .usage('[options] test-file1 test-file2')
+            .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
+            .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
+            .option('-c, --config-file <path>', 'set configurationFile')
+            .option('-e, --parsers-list [parser]', 'list available object parsers')
+            .option('-f, --formatters-description [formatter]', 'describe report formatters')
+            .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
+            .option('-p, --protocols-description [protocol]', 'describe protocols')
+            .option('-t, --tests-list', 'list available tests assertions')
+            .option('-s, --store [store]', 'add variables values to this session',
+                (val: string, memo: string[]) => this.storeCommandLineAction(val, memo), [])
+            .option('-l, --add-plugin [plugin]', 'add plugin',
+                (val: string) => this.plugins.push(val), [])
+            .option('-a, --add-file <file>', 'add file to be tested',
+                (val: string) => this.testFiles.push(val), [])
+            .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
+                (val: string) => this.testFilesIgnoringOthers.push(val), []);
+        commander.on('--help', () => this.helpDescription());
+        this.parsedCommandLine = commander.parse(commandLineArguments);
     }
 
     public verifyPrematureActions(): void {
@@ -61,10 +55,6 @@ export class CommandLineConfiguration {
         if (exitCode !== undefined) {
             process.exit(exitCode);
         }
-    }
-
-    public isQuietMode(): boolean {
-        return this.parsedCommandLine.quiet;
     }
 
     public getVerbosity(): string {

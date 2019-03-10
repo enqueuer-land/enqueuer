@@ -75,10 +75,6 @@ export class Configuration {
         return this.store;
     }
 
-    public isQuiet(): boolean {
-        return this.quiet;
-    }
-
     public getPlugins(): string[] {
         return this.plugins;
     }
@@ -89,7 +85,6 @@ export class Configuration {
         this.logLevel = this.commandLineConfiguration.getVerbosity() || this.logLevel;
         this.plugins = [...new Set(this.plugins.concat(this.commandLineConfiguration.getPlugins() || []))];
         this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
-        this.quiet = this.commandLineConfiguration.isQuietMode();
         const singleRunFilesIgnoring = this.commandLineConfiguration.getTestFilesIgnoringOthers();
         if (singleRunFilesIgnoring && singleRunFilesIgnoring.length > 0) {
             this.files = singleRunFilesIgnoring;

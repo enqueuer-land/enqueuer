@@ -8,18 +8,6 @@ describe('CommandLineConfiguration', () => {
         process.exit = exitMock;
     });
 
-    it('isQuietMode', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-q']);
-
-        expect(commandLineConfiguration.isQuietMode()).toBeTruthy();
-    });
-
-    it('isNotQuietMode', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
-
-        expect(commandLineConfiguration.isQuietMode()).toBeFalsy();
-    });
-
     it('verbosity -b', () => {
         const logLevel = 'info';
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-b', logLevel]);
@@ -192,9 +180,9 @@ describe('CommandLineConfiguration', () => {
         expect(commandLineConfiguration.getTestFilesIgnoringOthers()).toEqual(['file', 'file2']);
     });
 
-    it('handle null procces.argv', () => {
+    it('handle null process.argv', () => {
         // @ts-ignore
-        expect(() => new CommandLineConfiguration()).not.toThrow();
+        expect(() => new CommandLineConfiguration()).toThrow();
     });
 
     it('getStore -s', () => {

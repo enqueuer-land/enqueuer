@@ -75,7 +75,6 @@ export class RequisitionRunner {
         return await this.startRequisitionReporter(mapReplacedRequisition);
     }
 
-    //TODO extract to class
     private replaceVariables(): input.RequisitionModel {
         const withId = new ComponentUniqueTagCreator().refresh(this.requisition!);
         Logger.debug(`Evaluating variables of requisition '${this.requisition!.name}'`);
