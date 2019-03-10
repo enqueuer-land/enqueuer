@@ -4,18 +4,18 @@ import {EnqueuerRunner} from './enqueuer-runner';
 
 export class EnqueuerStarter {
 
-    private singleRunExecutor: EnqueuerRunner;
+    private enqueuerRunner: EnqueuerRunner;
 
     constructor() {
         const logLevel = Configuration.getInstance().getLogLevel();
         Logger.setLoggerLevel(logLevel);
-        this.singleRunExecutor = new EnqueuerRunner();
+        this.enqueuerRunner = new EnqueuerRunner();
     }
 
     public async start(): Promise<number> {
         let statusCode = 1;
         try {
-            statusCode = await this.singleRunExecutor.execute() ? 0 : 1;
+            statusCode = await this.enqueuerRunner.execute() ? 0 : 1;
         } catch (error) {
             Logger.fatal(`Execution error: ${error}`);
             statusCode = -1;

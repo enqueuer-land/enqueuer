@@ -85,9 +85,9 @@ export class Configuration {
         this.logLevel = this.commandLineConfiguration.getVerbosity() || this.logLevel;
         this.plugins = [...new Set(this.plugins.concat(this.commandLineConfiguration.getPlugins() || []))];
         this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
-        const singleRunFilesIgnoring = this.commandLineConfiguration.getTestFilesIgnoringOthers();
-        if (singleRunFilesIgnoring && singleRunFilesIgnoring.length > 0) {
-            this.files = singleRunFilesIgnoring;
+        const filesIgnoringOthers = this.commandLineConfiguration.getTestFilesIgnoringOthers();
+        if (filesIgnoringOthers && filesIgnoringOthers.length > 0) {
+            this.files = filesIgnoringOthers;
         }
         if (this.commandLineConfiguration.getStdoutRequisitionOutput() !== false) {
             this.outputs.push({type: 'standard-output', format: 'console', name: 'command line report output'});

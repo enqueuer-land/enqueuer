@@ -12,10 +12,10 @@ maxReportLevelPrint: 3
 outputs:
 -   type: file
     format: json
-    filename: outputExamples/singleRunOutput.json
+    filename: output/examples.json
 -   type: file
     format: yml #default
-    filename: outputExamples/singleRunOutput.yml
+    filename: output/examples.yml
 #-   type: standard-output
 #    format: console
 
@@ -23,7 +23,7 @@ outputs:
 #-   enqueuer-plugin-amqp
 
 store:
-    file-placeholder-injection: I'm persisted in singleRun file
+    file-placeholder-injection: I'm persisted in config file
     tcpPayload: "enqueuer Rocks"
 
     skipped: 5

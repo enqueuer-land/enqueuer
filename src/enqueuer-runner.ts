@@ -14,7 +14,6 @@ import chalk from 'chalk';
 import {SummaryTestOutput} from './outputs/summary-test-output';
 
 //TODO test it
-//TODO rename every single run to enqueuer
 export class EnqueuerRunner {
 
     private readonly fileNames: string[];

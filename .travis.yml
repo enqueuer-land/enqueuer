@@ -17,11 +17,11 @@ notifications:
         on_failure: always
 
 script:
-    - rm outputExamples/*
+    - rm output/*
     - npm install
     - npm run lint
     - npm run build
     - npm link
     - npm run codeCoverage
-    - npm run singleRunTest
+    - npm run examplesTest
     - npm run listsDescriptions

@@ -336,10 +336,10 @@ You can run `$ nqr -f` to check available formats or event [write your own](http
     outputs:
     - type: file
       format: json (default)
-      filename: outputExamples/singleRunOutput.json
+      filename: output/examples.json
     - type: file
       format: yml
-      filename: outputExamples/singleRunOutput.yml
+      filename: output/examples.yml
     - type: standard-output (default)
       format: console
 
@@ -357,7 +357,7 @@ Values defined here use the 'key: value' pattern and are available to every test
           nested: thing
 
 #### example
-[Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/singleRun.yml) a complete example of a configuration file.
+[Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml) a complete example of a configuration file.
 
 ----
 

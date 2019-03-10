@@ -147,7 +147,7 @@ describe('CommandLineConfiguration', () => {
         expect(commandLineConfiguration.getTestFiles().sort()).toEqual([testFile2, testFile1].sort());
     });
 
-    it('add single run file', () => {
+    it('add test file', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-a', 'file', '--add-file', 'file2']);
 
         expect(commandLineConfiguration.getTestFiles()).toEqual(['file', 'file2']);
@@ -174,7 +174,7 @@ describe('CommandLineConfiguration', () => {
         expect(commandLineConfiguration.getVersion()).toBe(packageJson.version);
     });
 
-    it('add single run file ignoring', () => {
+    it('add test file ignoring', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-A', 'file', '--add-file-and-ignore-others', 'file2']);
 
         expect(commandLineConfiguration.getTestFilesIgnoringOthers()).toEqual(['file', 'file2']);
