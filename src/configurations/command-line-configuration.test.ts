@@ -111,6 +111,22 @@ describe('CommandLineConfiguration', () => {
         expect(exitMock).toHaveBeenCalled();
     });
 
+    it('describe assertions -e', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-e']);
+
+        commandLineConfiguration.verifyPrematureActions();
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('describe assertions --parsers-list', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--parsers-list']);
+
+        commandLineConfiguration.verifyPrematureActions();
+
+        expect(exitMock).toHaveBeenCalled();
+    });
+
     it('describe assertions -t', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-t']);
 
@@ -127,7 +143,7 @@ describe('CommandLineConfiguration', () => {
         expect(exitMock).toHaveBeenCalled();
     });
 
-    it('no single run file', () => {
+    it('no file', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
 
         expect(commandLineConfiguration.getTestFiles()).toEqual([]);

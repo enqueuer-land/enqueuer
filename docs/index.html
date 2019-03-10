@@ -634,25 +634,33 @@ Like <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5b
 
 <h3 id="content_file_injection" style="padding-left: 0px">6. Content File Injection</h3>
 
-<p>You are able to insert file content in a requisition/publisher/subscription field.</p>
-
-<pre><code>fileContent: &lt;&lt;json://path/to/file.json&gt;&gt;
-</code></pre>
-
-<p>In the above example, enqueuer will read the file and parse its content as a object.
-Other parsable values include:</p>
-
-<pre><code>json: &lt;&lt;json://misc/file-content.json&gt;&gt;
-yml: &lt;&lt;yml://misc/file-content.yml&gt;&gt;
-csv: &lt;&lt;csv://misc/file-content.csv?header=true&amp;delimiter=;&gt;&gt;
-</code></pre>
-
-<p>The tag <code>file</code>, on the other hand, reads the content as a regular string</p>
+<p>You are able to inject file content into a requisition/publisher/subscription field.</p>
 
 <pre><code>file: &lt;&lt;file://misc/file-content.yml&gt;&gt;
 </code></pre>
 
-<p>You can even read java script code and insert it into a <code>script</code> field in an event object. You have no limits.</p>
+<p>Other than that, enqueuer can read it parse its content as an object using this familiar syntax: <code>&lt;&lt;tag://path/to/file?query=value&amp;other=true&gt;&gt;</code>.</p>
+
+<pre><code>requisition:
+    json: &lt;&lt;json://misc/file-content.json&gt;&gt;
+    yml: &lt;&lt;yml://misc/file-content.yml&gt;&gt;
+    csv: &lt;&lt;csv://misc/file-content.csv?header=true&amp;delimiter=;&gt;&gt;
+    file: &lt;&lt;file://misc/file-content.yml&gt;&gt;
+</code></pre>
+
+<p>Once the object is parsed, your free to use it as a regular object in any event</p>
+
+<pre><code>onInit:
+    script: console.log(requisition.yml.deep.field);
+onFinish:
+    assertions:
+    -   expect: json.first
+        toBeEqualTo: csv[0].first 
+</code></pre>
+
+<p>It get's event better. 
+Due its fantastic plugin architecture design, you can extend its default modules and use any of <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">these</a> plugins or event <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a> to parse however you want. <br>
+Run <code><span class="dollar-sign">$</span> nqr -e</code> to see available ones.</p>
 
 <h4 id="example" style="padding-left: 8px">6.1. example</h4>
 

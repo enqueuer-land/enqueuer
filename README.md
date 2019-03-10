@@ -406,23 +406,31 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 ----
 
 ### Content File Injection
-You are able to insert file content in a requisition/publisher/subscription field.
+You are able to inject file content into a requisition/publisher/subscription field.
 
-    fileContent: <<json://path/to/file.json>>
-
-In the above example, enqueuer will read the file and parse its content as a object.
-Other parsable values include:
-
-    json: <<json://misc/file-content.json>>
-    yml: <<yml://misc/file-content.yml>>
-    csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
     file: <<file://misc/file-content.yml>>
     
-The tag `file`, on the other hand, reads the content as a regular string
-    
-    file: <<file://misc/file-content.yml>>
+Other than that, enqueuer can read it parse its content as an object using this familiar syntax: `<<tag://path/to/file?query=value&other=true>>`.
 
-You can even read java script code and insert it into a `script` field in an event object. You have no limits.
+    requisition:
+        json: <<json://misc/file-content.json>>
+        yml: <<yml://misc/file-content.yml>>
+        csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
+        file: <<file://misc/file-content.yml>>
+    
+Once the object is parsed, your free to use it as a regular object in any event
+    
+    onInit:
+        script: console.log(requisition.yml.deep.field);
+    onFinish:
+        assertions:
+        -   expect: json.first
+            toBeEqualTo: csv[0].first 
+
+It get's event better. 
+Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.    
+Run `$ nqr -e` to see available ones.
+    
 #### example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
 

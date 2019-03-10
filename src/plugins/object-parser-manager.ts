@@ -16,7 +16,6 @@ export class ObjectParserManager {
         this.addedObjectParsers.push({tags: strings, createFunction});
     }
 
-    //TODO CLI to call it
     public describeObjectParsers(describeObjectParsers: string | true): boolean {
         const data = {
             parsers: this.addedObjectParsers

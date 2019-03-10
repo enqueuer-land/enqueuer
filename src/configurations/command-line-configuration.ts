@@ -19,17 +19,18 @@ export class CommandLineConfiguration {
                 .allowUnknownOption()
                 .usage('[options] test-file1 test-file2')
                 .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
-                .option('-q, --quiet', 'disable logging', false)
                 .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
+                .option('-c, --config-file <path>', 'set configurationFile')
+                .option('-e, --parsers-list [parser]', 'list available object parsers')
+                .option('-f, --formatters-description [formatter]', 'describe report formatters')
                 .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
+                .option('-p, --protocols-description [protocol]', 'describe protocols')
+                .option('-q, --quiet', 'disable logging', false)
+                .option('-t, --tests-list', 'list available tests assertions')
                 .option('-s, --store [store]', 'add variables values to this session',
                     (val: string, memo: string[]) => this.storeCommandLineAction(val, memo), [])
-                .option('-p, --protocols-description [protocol]', 'describe protocols')
-                .option('-f, --formatters-description [formatter]', 'describe report formatters')
-                .option('-t, --tests-list', 'list available tests assertions')
                 .option('-l, --add-plugin [plugin]', 'add plugin',
                     (val: string) => this.plugins.push(val), [])
-                .option('-c, --config-file <path>', 'set configurationFile')
                 .option('-a, --add-file <file>', 'add file to be tested',
                     (val: string) => this.testFiles.push(val), [])
                 .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
@@ -49,6 +50,9 @@ export class CommandLineConfiguration {
         } else if (this.parsedCommandLine.formattersDescription) {
             exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
                 .describeReportFormatters(this.parsedCommandLine.formattersDescription) ? 0 : 1;
+        } else if (this.parsedCommandLine.parsersList) {
+            exitCode = DynamicModulesManager.getInstance().getObjectParserManager()
+                .describeObjectParsers(this.parsedCommandLine.parsersList) ? 0 : 1;
         } else if (this.parsedCommandLine.testsList) {
             new TestsDescriber().describeTests();
             exitCode = 0;
