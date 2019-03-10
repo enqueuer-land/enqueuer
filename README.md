@@ -316,7 +316,7 @@ Defines how information are logged in the console. Accepted values are: trace; d
     log-level: trace
 
 **max-report-level-print**/
-The deepest level of report to be printed to the console. Defaults to 2 (enqueuer + filename); 
+The deepest level of report to be printed to the console. Defaults to 1 
 
     max-report-level-print: 2
 

@@ -213,13 +213,15 @@ Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
 Options:
   -v, --version                             output the version number
   -b, --verbosity &lt;level&gt;                   set verbosity (default: "warn")
-  -o, --stdout-requisition-output           add stdout as requisition output
-  -s, --store [store]                       add variables values to this session (default: [])
-  -p, --protocols-description [protocol]    describe protocols
-  -f, --formatters-description [formatter]  describe report formatters
-  -t, --tests-list                          list available tests assertions
-  -l, --add-plugin [plugin]                 add plugin (default: [])
   -c, --config-file &lt;path&gt;                  set configurationFile
+  -e, --parsers-list [parser]               list available object parsers
+  -f, --formatters-description [formatter]  describe report formatters
+  -o, --stdout-requisition-output           add stdout as requisition output
+  -m, --max-report-level-print &lt;level&gt;      set max report level print
+  -p, --protocols-description [protocol]    describe protocols
+  -t, --tests-list                          list available tests assertions
+  -s, --store [store]                       add variables values to this session (default: [])
+  -l, --add-plugin [plugin]                 add plugin (default: [])
   -a, --add-file &lt;file&gt;                     add file to be tested (default: [])
   -A, --add-file-and-ignore-others &lt;file&gt;   add file to be tested and ignore others (default: [])
   -h, --help                                output usage information
@@ -518,7 +520,7 @@ Defines how information are logged in the console. Accepted values are: trace; d
 </code></pre>
 
 <p><strong>max-report-level-print</strong>/
-The deepest level of report to be printed to the console. Defaults to 2 (enqueuer + filename); </p>
+The deepest level of report to be printed to the console. Defaults to 1 </p>
 
 <pre><code>max-report-level-print: 2
 </code></pre>

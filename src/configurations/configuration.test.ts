@@ -32,11 +32,11 @@ describe('Configuration', () => {
         expect(instance.isParallel()).toBeFalsy();
         expect(instance.getFiles()).toEqual([]);
         expect(instance.getLogLevel()).toBe('warn');
-        expect(instance.getMaxReportLevelPrint()).toBe(2);
+        expect(instance.getMaxReportLevelPrint()).toBe(1);
         expect(instance.getStore()).toEqual({});
         expect(instance.getPlugins()).toEqual([]);
         expect(instance.getOutputs()).toEqual([]);
-        expect(instance.getMaxReportLevelPrint()).toEqual(2);
+        expect(instance.getMaxReportLevelPrint()).toEqual(1);
     });
 
     it('should work with only command line', () => {

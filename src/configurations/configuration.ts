@@ -14,9 +14,8 @@ export class Configuration {
     private files: string[] = [];
     private logLevel: string = 'warn';
     private outputs: PublisherModel[] = [];
-    private maxReportLevelPrint: number = 2;
+    private maxReportLevelPrint: number = 1;
     private store: any = {};
-    private quiet: boolean = false;
     private plugins: string[] = [];
     private commandLineConfiguration: CommandLineConfiguration;
 

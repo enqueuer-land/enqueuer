@@ -95,8 +95,9 @@ export class EnqueuerRunner {
             totalTime: now.getTime() - this.startTime.getTime()
         };
         report.valid = report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
-        console.log(chalk.white(`    ------------------------------`));
-        new SummaryTestOutput(report).print();
+        if (this.parallelMode) {
+            new SummaryTestOutput(report).print();
+        }
 
         await this.outputs.execute(report);
         return report.valid;
