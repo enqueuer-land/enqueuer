@@ -416,6 +416,7 @@ Other parsable values include:
     json: <<json://misc/file-content.json>>
     yml: <<yml://misc/file-content.yml>>
     csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
+    file: <<file://misc/file-content.yml>>
     
 The tag `file`, on the other hand, reads the content as a regular string
     

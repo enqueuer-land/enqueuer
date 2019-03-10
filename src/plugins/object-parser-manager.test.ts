@@ -28,7 +28,7 @@ describe('ObjectParserManager', () => {
         expect(objectParserManager.createParser(tags.toUpperCase())).toBe(myObject);
     });
 
-    it('should tryToParseWithEveryParser', () => {
+    it('should tryToParseWithParsers', () => {
         const parsed = 'parsed';
         const objectParserManager = new ObjectParserManager();
         // @ts-ignore
@@ -38,38 +38,7 @@ describe('ObjectParserManager', () => {
             };
         }, 'first');
 
-        expect(objectParserManager.tryToParseWithEveryParser('stuff')).toBe(parsed);
-    });
-
-    it('should tryToParseWithEveryParser error', () => {
-        const objectParserManager = new ObjectParserManager();
-        // @ts-ignore
-        objectParserManager.addObjectParser(() => {
-            return {
-                parse: () => {
-                    throw 'error';
-                }
-            };
-        }, 'first');
-
-        // @ts-ignore
-        objectParserManager.addObjectParser(() => {
-            return {
-                parse: () => {
-                    throw 'other error';
-                }
-            };
-        }, 'other');
-
-        try {
-            objectParserManager.tryToParseWithEveryParser('stuff');
-            expect(true).toBeFalsy();
-        } catch (err) {
-            expect(err).toEqual({
-                first: 'error',
-                other: 'other error'
-            });
-        }
+        expect(objectParserManager.tryToParseWithParsers('stuff', ['first'])).toBe(parsed);
     });
 
     it('should tryToParseWithEveryParser subset error', () => {
@@ -93,7 +62,7 @@ describe('ObjectParserManager', () => {
         }, 'other');
 
         try {
-            objectParserManager.tryToParseWithEveryParser('stuff', 'other');
+            objectParserManager.tryToParseWithParsers('stuff', ['other']);
             expect(true).toBeFalsy();
         } catch (err) {
             expect(err).toEqual({

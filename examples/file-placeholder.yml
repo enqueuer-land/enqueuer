@@ -1,9 +1,8 @@
 -   csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
     json: <<json://misc/file-content.json>>
     yml: <<yaml://misc/file-content.yml>>
-    #    js: <<js://misc/file-code.js>>
-    fileNotFound: <<file://not/found.file>>
-    onFinish:
+    onInit:
+        script: requisition.javascript = <<file://misc/file-code.js>>
         assertions:
             -   name: fileRead (yml)
                 expect: requisition.yml.key
@@ -14,12 +13,9 @@
             -   name: fileRead (.csv)
                 expect: requisition.csv[1].title
                 toBeEqualTo: `secondRow`
-            -   name: file not found
-                expect: requisition.fileNotFound
-                toContain: `not/found.file`
-#            -   name: fileRead (.js)
-#                expect: store.scriptResult
-#                toBeEqualTo: 40
+            -   name: fileRead (.js)
+                expect: requisition.javascript(20)
+                toBeEqualTo: 40
 -   onInit:
         assertions:
             -   name: it's not stored

@@ -1,3 +1,1 @@
-export function injected(value) {
-    return value * 2;
-}
+(value) => value * 2;

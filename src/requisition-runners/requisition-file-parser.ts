@@ -14,7 +14,7 @@ export class RequisitionFileParser {
         const fileBufferContent = fs.readFileSync(this.filename).toString();
         const fileContent: any = DynamicModulesManager
             .getInstance().getObjectParserManager()
-            .tryToParseWithEveryParser(fileBufferContent, 'yml', 'json');
+            .tryToParseWithParsers(fileBufferContent, ['yml', 'json']);
         if (Array.isArray(fileContent)) {
             return new RequisitionParentCreator().create(this.filename, fileContent);
         }

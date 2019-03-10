@@ -39,39 +39,23 @@ export class ObjectParserManager {
         Logger.warning(`No object parser was found with '${tag}'`);
     }
 
-    //TODO improve logic
-    public tryToParseWithEveryParser(fileBufferContent: string, ...tags: string[]): string | object {
+    public tryToParseWithParsers(fileBufferContent: string, tags: string[] = []): string | object {
         const errorResult: any = {};
-        if (tags && tags.length > 0) {
-            for (const tag of tags || []) {
-                const objectParser = this.createParser(tag);
-                if (objectParser) {
-                    try {
-                        const parse = objectParser.parse(fileBufferContent);
-                        Logger.debug(`Content parsed as ${tag}`);
-                        return parse;
-                    } catch (err) {
-                        errorResult[tag] = err.toString();
-                    }
-                } else {
-                    errorResult[tag] = `No object parser was found with '${tag}'`;
-                }
-            }
-            throw errorResult;
-
-        } else {
-            for (const addedObject of this.addedObjectParsers) {
-                const objectParser = addedObject.createFunction();
+        for (const tag of tags) {
+            const objectParser = this.createParser(tag);
+            if (objectParser) {
                 try {
                     const parse = objectParser.parse(fileBufferContent);
-                    Logger.debug(`Content parsed as ${addedObject.tags[0]}`);
+                    Logger.debug(`Content parsed as ${tag}`);
                     return parse;
                 } catch (err) {
-                    errorResult[addedObject.tags[0]] = err;
+                    errorResult[tag] = err.toString();
                 }
+            } else {
+                errorResult[tag] = `No object parser was found with '${tag}'`;
             }
-            throw errorResult;
         }
+        throw errorResult;
     }
 
 }

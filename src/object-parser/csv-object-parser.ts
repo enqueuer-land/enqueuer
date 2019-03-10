@@ -6,7 +6,6 @@ export class CsvObjectParser implements ObjectParser {
 
     public parse(text: string, query: any = {}): object {
         const {header, delimiter} = this.parseQuery(query);
-        console.log(`Parsing with csv ${delimiter} ----- ${text}`);
         const lineSeparator = /\r?\n/;
         if (text.split) {
             const lines = text.split(lineSeparator);

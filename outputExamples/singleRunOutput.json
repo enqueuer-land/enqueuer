@@ -6,9 +6,9 @@
   "subscriptions": [],
   "publishers": [],
   "time": {
-    "startTime": "2019-03-10T00:09:52.073Z",
-    "endTime": "2019-03-10T00:09:55.773Z",
-    "totalTime": 3700
+    "startTime": "2019-03-10T00:54:14.678Z",
+    "endTime": "2019-03-10T00:54:18.361Z",
+    "totalTime": 3683
   },
   "requisitions": [
     {
@@ -34,7 +34,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.466Z"
+          "connectionTime": "2019-03-10T00:54:15.060Z"
         },
         {
           "name": "Subscription #1",
@@ -47,13 +47,13 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.466Z"
+          "connectionTime": "2019-03-10T00:54:15.061Z"
         }
       ],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.401Z",
-        "endTime": "2019-03-10T00:09:55.466Z",
+        "startTime": "2019-03-10T00:54:14.994Z",
+        "endTime": "2019-03-10T00:54:18.059Z",
         "totalTime": 3065,
         "timeout": 5000
       },
@@ -70,7 +70,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 63 <= 5000"
+          "description": "Requisition has not timed out: 65 <= 5000"
         }
       ],
       "name": "examples/crypto-require.yml",
@@ -78,9 +78,9 @@
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.405Z",
-        "endTime": "2019-03-10T00:09:52.468Z",
-        "totalTime": 63,
+        "startTime": "2019-03-10T00:54:14.997Z",
+        "endTime": "2019-03-10T00:54:15.062Z",
+        "totalTime": 65,
         "timeout": 5000
       },
       "requisitions": []
@@ -91,7 +91,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 199 <= 5000"
+          "description": "Requisition has not timed out: 193 <= 5000"
         }
       ],
       "name": "examples/custom.yml",
@@ -118,7 +118,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.477Z",
+          "connectionTime": "2019-03-10T00:54:15.072Z",
           "messageReceived": {
             "payload": {
               "type": "Buffer",
@@ -130,7 +130,7 @@
             "remoteInfo": {
               "address": "127.0.0.1",
               "family": "IPv4",
-              "port": 55699,
+              "port": 52583,
               "size": 2
             }
           }
@@ -148,13 +148,13 @@
               "description": "Published successfully"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.602Z"
+          "publishTime": "2019-03-10T00:54:15.189Z"
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.406Z",
-        "endTime": "2019-03-10T00:09:52.605Z",
-        "totalTime": 199,
+        "startTime": "2019-03-10T00:54:14.998Z",
+        "endTime": "2019-03-10T00:54:15.191Z",
+        "totalTime": 193,
         "timeout": 5000
       },
       "requisitions": []
@@ -165,17 +165,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 199 <= 5000"
+          "description": "Requisition has not timed out: 194 <= 5000"
         }
       ],
       "name": "examples/file-placeholder.yml",
-      "id": "2109520372_a4aad2313c_195521",
+      "id": "2154140965_a4aad2313c_977443",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.409Z",
-        "endTime": "2019-03-10T00:09:52.608Z",
-        "totalTime": 199,
+        "startTime": "2019-03-10T00:54:15.000Z",
+        "endTime": "2019-03-10T00:54:15.194Z",
+        "totalTime": 194,
         "timeout": 5000
       },
       "requisitions": [
@@ -198,14 +198,14 @@
               "description": "Expected 'requisition.csv[1].title' to be equal to 'secondRow'. Received 'secondRow'"
             },
             {
-              "name": "file not found",
+              "name": "fileRead (.js)",
               "valid": true,
-              "description": "Expecting 'requisition.fileNotFound' (Error: ENOENT: no such file or directory, open 'not/found.file') to contain 'not/found.file'"
+              "description": "Expected 'requisition.javascript(20)' to be equal to '40'. Received '40'"
             },
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 89 <= 5000"
+              "description": "Requisition has not timed out: 96 <= 5000"
             }
           ],
           "name": "Requisition #0",
@@ -213,9 +213,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.481Z",
-            "endTime": "2019-03-10T00:09:52.570Z",
-            "totalTime": 89,
+            "startTime": "2019-03-10T00:54:15.076Z",
+            "endTime": "2019-03-10T00:54:15.172Z",
+            "totalTime": 96,
             "timeout": 5000
           },
           "requisitions": []
@@ -231,7 +231,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 37 <= 5000"
+              "description": "Requisition has not timed out: 21 <= 5000"
             }
           ],
           "name": "Requisition #1",
@@ -239,9 +239,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.571Z",
-            "endTime": "2019-03-10T00:09:52.608Z",
-            "totalTime": 37,
+            "startTime": "2019-03-10T00:54:15.173Z",
+            "endTime": "2019-03-10T00:54:15.194Z",
+            "totalTime": 21,
             "timeout": 5000
           },
           "requisitions": []
@@ -254,7 +254,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 191 <= 3000"
+          "description": "Requisition has not timed out: 187 <= 3000"
         }
       ],
       "name": "examples/file.yml",
@@ -267,27 +267,27 @@
             {
               "name": "Some time has passed",
               "valid": true,
-              "description": "Expected 'now' to be greater than or equal to '1552176592410'. Received '1552176592600'"
+              "description": "Expected 'now' to be greater than or equal to '1552179255001'. Received '1552179255187'"
             },
             {
               "name": "Filename",
               "valid": true,
-              "description": "Expecting 'name' (temp/fileTest2109520482_977e039e58_23671.file) to contain 'temp/'"
+              "description": "Expecting 'name' (temp/fileTest2154150076_eb74705960_806185.file) to contain 'temp/'"
             },
             {
               "name": "Content",
               "valid": true,
-              "description": "Expect 'content' to be defined and it is: '1552176592410'"
+              "description": "Expect 'content' to be defined and it is: '1552179255001'"
             },
             {
               "name": "Created",
               "valid": true,
-              "description": "Expect 'created' to be defined and it is: 'Sat Mar 09 2019 21:09:52 GMT-0300 (Brasilia Standard Time)'"
+              "description": "Expect 'created' to be defined and it is: 'Sat Mar 09 2019 21:54:15 GMT-0300 (Brasilia Standard Time)'"
             },
             {
               "name": "Modified",
               "valid": true,
-              "description": "Expect 'modified' to be defined and it is: 'Sat Mar 09 2019 21:09:52 GMT-0300 (Brasilia Standard Time)'"
+              "description": "Expect 'modified' to be defined and it is: 'Sat Mar 09 2019 21:54:15 GMT-0300 (Brasilia Standard Time)'"
             },
             {
               "name": "Size",
@@ -301,13 +301,13 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.482Z",
+          "connectionTime": "2019-03-10T00:54:15.076Z",
           "messageReceived": {
-            "content": "1552176592410",
-            "name": "temp/fileTest2109520482_977e039e58_23671.file",
+            "content": "1552179255001",
+            "name": "temp/fileTest2154150076_eb74705960_806185.file",
             "size": 13,
-            "modified": "2019-03-10T00:09:52.483Z",
-            "created": "2019-03-10T00:09:52.483Z"
+            "modified": "2019-03-10T00:54:15.077Z",
+            "created": "2019-03-10T00:54:15.077Z"
           }
         }
       ],
@@ -323,13 +323,13 @@
               "description": "Published successfully"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.483Z"
+          "publishTime": "2019-03-10T00:54:15.077Z"
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.410Z",
-        "endTime": "2019-03-10T00:09:52.601Z",
-        "totalTime": 191,
+        "startTime": "2019-03-10T00:54:15.001Z",
+        "endTime": "2019-03-10T00:54:15.188Z",
+        "totalTime": 187,
         "timeout": 3000
       },
       "requisitions": []
@@ -345,7 +345,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 1199 <= 3000"
+          "description": "Requisition has not timed out: 1193 <= 3000"
         }
       ],
       "name": "examples/hooks.yml",
@@ -387,7 +387,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.483Z",
+          "connectionTime": "2019-03-10T00:54:15.077Z",
           "messageReceived": {
             "payload": "it",
             "stream": {
@@ -450,21 +450,21 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2019-03-10T00:09:53.610Z",
+          "publishTime": "2019-03-10T00:54:16.195Z",
           "messageReceived": {
             "payload": "hook response",
             "stream": {
               "address": "127.0.0.1",
               "family": "IPv4",
-              "port": 53401
+              "port": 53723
             }
           }
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.412Z",
-        "endTime": "2019-03-10T00:09:53.611Z",
-        "totalTime": 1199,
+        "startTime": "2019-03-10T00:54:15.003Z",
+        "endTime": "2019-03-10T00:54:16.196Z",
+        "totalTime": 1193,
         "timeout": 3000
       },
       "requisitions": []
@@ -475,7 +475,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 275 <= 3000"
+          "description": "Requisition has not timed out: 336 <= 3000"
         }
       ],
       "name": "examples/http-auth-basic.yml",
@@ -517,7 +517,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.485Z",
+          "connectionTime": "2019-03-10T00:54:15.079Z",
           "messageReceived": {
             "headers": {
               "content-type": "application/json",
@@ -554,7 +554,7 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.688Z",
+          "publishTime": "2019-03-10T00:54:15.333Z",
           "messageReceived": {
             "statusCode": 200,
             "body": "basic auth response",
@@ -565,7 +565,7 @@
               "content-type": "text/html; charset=utf-8",
               "content-length": "19",
               "etag": "W/\"13-nGN7LEwCUKXpQoLxNqKZXSglYNc\"",
-              "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+              "date": "Sun, 10 Mar 2019 00:54:15 GMT",
               "connection": "close"
             },
             "request": {
@@ -594,9 +594,9 @@
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.413Z",
-        "endTime": "2019-03-10T00:09:52.688Z",
-        "totalTime": 275,
+        "startTime": "2019-03-10T00:54:15.004Z",
+        "endTime": "2019-03-10T00:54:15.340Z",
+        "totalTime": 336,
         "timeout": 3000
       },
       "requisitions": []
@@ -607,7 +607,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 275 <= 3000"
+          "description": "Requisition has not timed out: 343 <= 3000"
         }
       ],
       "name": "examples/http-auth-bearer.yml",
@@ -644,7 +644,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.490Z",
+          "connectionTime": "2019-03-10T00:54:15.083Z",
           "messageReceived": {
             "headers": {
               "content-type": "application/json",
@@ -681,7 +681,7 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.689Z",
+          "publishTime": "2019-03-10T00:54:15.347Z",
           "messageReceived": {
             "statusCode": 321,
             "body": "responsePayload",
@@ -692,7 +692,7 @@
               "content-type": "text/html; charset=utf-8",
               "content-length": "15",
               "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
-              "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+              "date": "Sun, 10 Mar 2019 00:54:15 GMT",
               "connection": "close"
             },
             "request": {
@@ -721,9 +721,9 @@
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.414Z",
-        "endTime": "2019-03-10T00:09:52.689Z",
-        "totalTime": 275,
+        "startTime": "2019-03-10T00:54:15.005Z",
+        "endTime": "2019-03-10T00:54:15.348Z",
+        "totalTime": 343,
         "timeout": 3000
       },
       "requisitions": []
@@ -734,7 +734,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 275 <= 3000"
+          "description": "Requisition has not timed out: 343 <= 3000"
         }
       ],
       "name": "examples/http-auth-digest.yml",
@@ -801,7 +801,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.490Z",
+          "connectionTime": "2019-03-10T00:54:15.084Z",
           "messageReceived": {
             "headers": {
               "content-type": "application/json",
@@ -838,7 +838,7 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.690Z",
+          "publishTime": "2019-03-10T00:54:15.349Z",
           "messageReceived": {
             "statusCode": 321,
             "body": "responsePayload",
@@ -849,7 +849,7 @@
               "content-type": "text/html; charset=utf-8",
               "content-length": "15",
               "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
-              "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+              "date": "Sun, 10 Mar 2019 00:54:15 GMT",
               "connection": "close"
             },
             "request": {
@@ -878,9 +878,9 @@
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.415Z",
-        "endTime": "2019-03-10T00:09:52.690Z",
-        "totalTime": 275,
+        "startTime": "2019-03-10T00:54:15.006Z",
+        "endTime": "2019-03-10T00:54:15.349Z",
+        "totalTime": 343,
         "timeout": 3000
       },
       "requisitions": []
@@ -891,7 +891,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 367 <= 5000"
+          "description": "Requisition has not timed out: 370 <= 5000"
         }
       ],
       "name": "examples/http-proxy.yml",
@@ -943,7 +943,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.492Z",
+          "connectionTime": "2019-03-10T00:54:15.085Z",
           "messageReceived": {
             "headers": {
               "content-type": "application/json",
@@ -1008,7 +1008,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.492Z",
+          "connectionTime": "2019-03-10T00:54:15.085Z",
           "messageReceived": {
             "headers": {
               "content-type": "application/json",
@@ -1054,7 +1054,7 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.783Z",
+          "publishTime": "2019-03-10T00:54:15.378Z",
           "messageReceived": {
             "statusCode": 333,
             "body": "responsePayload",
@@ -1065,7 +1065,7 @@
               "content-type": "text/html; charset=utf-8",
               "content-length": "15",
               "etag": "W/\"f-V9sBEzo+y6k6sqGXsr1Ql2B0tAk\"",
-              "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+              "date": "Sun, 10 Mar 2019 00:54:15 GMT",
               "connection": "close"
             },
             "request": {
@@ -1094,9 +1094,9 @@
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.417Z",
-        "endTime": "2019-03-10T00:09:52.784Z",
-        "totalTime": 367,
+        "startTime": "2019-03-10T00:54:15.008Z",
+        "endTime": "2019-03-10T00:54:15.378Z",
+        "totalTime": 370,
         "timeout": 5000
       },
       "requisitions": []
@@ -1107,17 +1107,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 2492 <= 5000"
+          "description": "Requisition has not timed out: 2508 <= 5000"
         }
       ],
       "name": "examples/http.yml",
-      "id": "2109520384_8985f2a402_291977",
+      "id": "2154140978_8985f2a402_122699",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.419Z",
-        "endTime": "2019-03-10T00:09:54.911Z",
-        "totalTime": 2492,
+        "startTime": "2019-03-10T00:54:15.013Z",
+        "endTime": "2019-03-10T00:54:17.521Z",
+        "totalTime": 2508,
         "timeout": 5000
       },
       "requisitions": [
@@ -1127,7 +1127,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 378 <= 3000"
+              "description": "Requisition has not timed out: 389 <= 3000"
             }
           ],
           "name": "Requisition #0",
@@ -1164,7 +1164,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.571Z",
+              "connectionTime": "2019-03-10T00:54:15.173Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -1193,7 +1193,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.571Z",
+              "connectionTime": "2019-03-10T00:54:15.173Z",
               "messageReceived": {
                 "headers": {
                   "content-length": "5",
@@ -1216,7 +1216,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.571Z"
+              "connectionTime": "2019-03-10T00:54:15.173Z"
             }
           ],
           "publishers": [
@@ -1251,7 +1251,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:52.765Z",
+              "publishTime": "2019-03-10T00:54:15.360Z",
               "messageReceived": {
                 "statusCode": 321,
                 "body": "dynamically changed payload",
@@ -1263,7 +1263,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "27",
                   "etag": "W/\"1b-e5esTWfu+XftewZ5g2Tclr7ClTo\"",
-                  "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+                  "date": "Sun, 10 Mar 2019 00:54:15 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -1311,7 +1311,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:52.765Z",
+              "publishTime": "2019-03-10T00:54:15.361Z",
               "messageReceived": {
                 "statusCode": 444,
                 "body": "blah",
@@ -1322,7 +1322,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "4",
                   "etag": "W/\"4-W/H9kn37hnlJai5s8Ay+UMHIcUU\"",
-                  "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+                  "date": "Sun, 10 Mar 2019 00:54:15 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -1349,9 +1349,9 @@
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:52.495Z",
-            "endTime": "2019-03-10T00:09:52.873Z",
-            "totalTime": 378,
+            "startTime": "2019-03-10T00:54:15.088Z",
+            "endTime": "2019-03-10T00:54:15.477Z",
+            "totalTime": 389,
             "timeout": 3000
           },
           "requisitions": []
@@ -1362,7 +1362,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 19 <= 5000"
+              "description": "Requisition has not timed out: 20 <= 5000"
             }
           ],
           "name": "Requisition #1",
@@ -1384,7 +1384,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.883Z",
+              "connectionTime": "2019-03-10T00:54:15.484Z",
               "messageReceived": {
                 "headers": {
                   "content-type": "application/json",
@@ -1429,7 +1429,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:52.895Z",
+              "publishTime": "2019-03-10T00:54:15.500Z",
               "messageReceived": {
                 "statusCode": 321,
                 "body": "duplicatedResponsePayload",
@@ -1440,7 +1440,7 @@
                   "content-type": "text/html; charset=utf-8",
                   "content-length": "25",
                   "etag": "W/\"19-yZRAgggcER0sMyRTVBBpErTPT/A\"",
-                  "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+                  "date": "Sun, 10 Mar 2019 00:54:15 GMT",
                   "connection": "close"
                 },
                 "request": {
@@ -1468,9 +1468,9 @@
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:52.876Z",
-            "endTime": "2019-03-10T00:09:52.895Z",
-            "totalTime": 19,
+            "startTime": "2019-03-10T00:54:15.480Z",
+            "endTime": "2019-03-10T00:54:15.500Z",
+            "totalTime": 20,
             "timeout": 5000
           },
           "requisitions": []
@@ -1481,7 +1481,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1006 <= 5000"
+              "description": "Requisition has not timed out: 1007 <= 5000"
             }
           ],
           "name": "requisition 2 (port 23076)",
@@ -1498,14 +1498,14 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.901Z"
+              "connectionTime": "2019-03-10T00:54:15.507Z"
             }
           ],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.898Z",
-            "endTime": "2019-03-10T00:09:53.904Z",
-            "totalTime": 1006,
+            "startTime": "2019-03-10T00:54:15.503Z",
+            "endTime": "2019-03-10T00:54:16.510Z",
+            "totalTime": 1007,
             "timeout": 5000
           },
           "requisitions": []
@@ -1516,7 +1516,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1002 <= 5000"
+              "description": "Requisition has not timed out: 1004 <= 5000"
             }
           ],
           "name": "check port releasing (23076)",
@@ -1533,14 +1533,14 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:53.911Z"
+              "connectionTime": "2019-03-10T00:54:16.518Z"
             }
           ],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:53.909Z",
-            "endTime": "2019-03-10T00:09:54.911Z",
-            "totalTime": 1002,
+            "startTime": "2019-03-10T00:54:16.516Z",
+            "endTime": "2019-03-10T00:54:17.520Z",
+            "totalTime": 1004,
             "timeout": 5000
           },
           "requisitions": []
@@ -1553,7 +1553,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 363 <= 3000"
+          "description": "Requisition has not timed out: 336 <= 3000"
         }
       ],
       "name": "examples/https.yml",
@@ -1575,7 +1575,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.504Z",
+          "connectionTime": "2019-03-10T00:54:15.097Z",
           "messageReceived": {
             "headers": {
               "content-type": "application/json",
@@ -1616,7 +1616,7 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.782Z",
+          "publishTime": "2019-03-10T00:54:15.377Z",
           "messageReceived": {
             "statusCode": 200,
             "body": "https",
@@ -1627,7 +1627,7 @@
               "content-type": "text/html; charset=utf-8",
               "content-length": "5",
               "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
-              "date": "Sun, 10 Mar 2019 00:09:52 GMT",
+              "date": "Sun, 10 Mar 2019 00:54:15 GMT",
               "connection": "close"
             },
             "request": {
@@ -1655,9 +1655,9 @@
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.420Z",
-        "endTime": "2019-03-10T00:09:52.783Z",
-        "totalTime": 363,
+        "startTime": "2019-03-10T00:54:15.041Z",
+        "endTime": "2019-03-10T00:54:15.377Z",
+        "totalTime": 336,
         "timeout": 3000
       },
       "requisitions": []
@@ -1668,17 +1668,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 189 <= 5000"
+          "description": "Requisition has not timed out: 153 <= 5000"
         }
       ],
       "name": "examples/ignore.yml",
-      "id": "2109520386_0e9bcf265b_988732",
+      "id": "2154140980_0e9bcf265b_32783",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.421Z",
-        "endTime": "2019-03-10T00:09:52.610Z",
-        "totalTime": 189,
+        "startTime": "2019-03-10T00:54:15.043Z",
+        "endTime": "2019-03-10T00:54:15.196Z",
+        "totalTime": 153,
         "timeout": 5000
       },
       "requisitions": [
@@ -1688,7 +1688,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 65 <= 5000"
+              "description": "Requisition has not timed out: 75 <= 5000"
             }
           ],
           "name": "Requisition #0",
@@ -1703,9 +1703,9 @@
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:52.507Z",
-            "endTime": "2019-03-10T00:09:52.572Z",
-            "totalTime": 65,
+            "startTime": "2019-03-10T00:54:15.099Z",
+            "endTime": "2019-03-10T00:54:15.174Z",
+            "totalTime": 75,
             "timeout": 5000
           },
           "requisitions": []
@@ -1716,7 +1716,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 35 <= 5000"
+              "description": "Requisition has not timed out: 20 <= 5000"
             }
           ],
           "name": "Requisition #1",
@@ -1731,9 +1731,9 @@
           ],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.573Z",
-            "endTime": "2019-03-10T00:09:52.608Z",
-            "totalTime": 35,
+            "startTime": "2019-03-10T00:54:15.175Z",
+            "endTime": "2019-03-10T00:54:15.195Z",
+            "totalTime": 20,
             "timeout": 5000
           },
           "requisitions": []
@@ -1747,8 +1747,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.610Z",
-            "endTime": "2019-03-10T00:09:52.610Z",
+            "startTime": "2019-03-10T00:54:15.196Z",
+            "endTime": "2019-03-10T00:54:15.196Z",
             "totalTime": 0
           },
           "requisitions": []
@@ -1761,7 +1761,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 542 <= 3000"
+          "description": "Requisition has not timed out: 522 <= 3000"
         }
       ],
       "name": "examples/parallel-pub.yml",
@@ -1789,21 +1789,21 @@
               "description": "Response message was received"
             }
           ],
-          "publishTime": "2019-03-10T00:09:52.963Z",
+          "publishTime": "2019-03-10T00:54:15.565Z",
           "messageReceived": {
             "payload": "anyValue",
             "stream": {
               "address": "127.0.0.1",
               "family": "IPv4",
-              "port": 53413
+              "port": 53735
             }
           }
         }
       ],
       "time": {
-        "startTime": "2019-03-10T00:09:52.421Z",
-        "endTime": "2019-03-10T00:09:52.963Z",
-        "totalTime": 542,
+        "startTime": "2019-03-10T00:54:15.043Z",
+        "endTime": "2019-03-10T00:54:15.565Z",
+        "totalTime": 522,
         "timeout": 3000
       },
       "requisitions": []
@@ -1814,7 +1814,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 508 <= 3000"
+          "description": "Requisition has not timed out: 517 <= 3000"
         }
       ],
       "name": "examples/parallel-sub.yml",
@@ -1836,7 +1836,7 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.507Z",
+          "connectionTime": "2019-03-10T00:54:15.100Z",
           "messageReceived": {
             "payload": "anything",
             "stream": {
@@ -1849,9 +1849,9 @@
       ],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.421Z",
-        "endTime": "2019-03-10T00:09:52.929Z",
-        "totalTime": 508,
+        "startTime": "2019-03-10T00:54:15.045Z",
+        "endTime": "2019-03-10T00:54:15.562Z",
+        "totalTime": 517,
         "timeout": 3000
       },
       "requisitions": []
@@ -1862,17 +1862,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 603 <= 5000"
+          "description": "Requisition has not timed out: 572 <= 5000"
         }
       ],
       "name": "examples/recursion.yml",
-      "id": "2109520388_42805d69f1_684091",
+      "id": "2154140981_42805d69f1_990310",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.422Z",
-        "endTime": "2019-03-10T00:09:53.025Z",
-        "totalTime": 603,
+        "startTime": "2019-03-10T00:54:15.046Z",
+        "endTime": "2019-03-10T00:54:15.618Z",
+        "totalTime": 572,
         "timeout": 5000
       },
       "requisitions": [
@@ -1882,7 +1882,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 64 <= 5000"
+              "description": "Requisition has not timed out: 74 <= 5000"
             }
           ],
           "name": "Requisition #0",
@@ -1890,9 +1890,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.509Z",
-            "endTime": "2019-03-10T00:09:52.573Z",
-            "totalTime": 64,
+            "startTime": "2019-03-10T00:54:15.101Z",
+            "endTime": "2019-03-10T00:54:15.175Z",
+            "totalTime": 74,
             "timeout": 5000
           },
           "requisitions": []
@@ -1903,17 +1903,17 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 447 <= 5000"
+              "description": "Requisition has not timed out: 438 <= 5000"
             }
           ],
           "name": "Requisition #1",
-          "id": "2109520573_4815598900_893328",
+          "id": "2154150175_4815598900_734915",
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.575Z",
-            "endTime": "2019-03-10T00:09:53.022Z",
-            "totalTime": 447,
+            "startTime": "2019-03-10T00:54:15.177Z",
+            "endTime": "2019-03-10T00:54:15.615Z",
+            "totalTime": 438,
             "timeout": 5000
           },
           "requisitions": [
@@ -1923,17 +1923,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 195 <= 5000"
+                  "description": "Requisition has not timed out: 196 <= 5000"
                 }
               ],
               "name": "Requisition #1 [0]",
-              "id": "2109520573_4815598900_893328",
+              "id": "2154150175_4815598900_734915",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.611Z",
-                "endTime": "2019-03-10T00:09:52.806Z",
-                "totalTime": 195,
+                "startTime": "2019-03-10T00:54:15.197Z",
+                "endTime": "2019-03-10T00:54:15.393Z",
+                "totalTime": 196,
                 "timeout": 5000
               },
               "requisitions": [
@@ -1943,17 +1943,17 @@
                     {
                       "valid": true,
                       "name": "No time out",
-                      "description": "Requisition has not timed out: 180 <= 5000"
+                      "description": "Requisition has not timed out: 177 <= 5000"
                     }
                   ],
                   "name": "Requisition #1 [0] [0]",
-                  "id": "2109520623_180613af6f_283684",
+                  "id": "2154150211_180613af6f_155722",
                   "subscriptions": [],
                   "publishers": [],
                   "time": {
-                    "startTime": "2019-03-10T00:09:52.626Z",
-                    "endTime": "2019-03-10T00:09:52.806Z",
-                    "totalTime": 180,
+                    "startTime": "2019-03-10T00:54:15.215Z",
+                    "endTime": "2019-03-10T00:54:15.392Z",
+                    "totalTime": 177,
                     "timeout": 5000
                   },
                   "requisitions": [
@@ -1963,17 +1963,17 @@
                         {
                           "valid": true,
                           "name": "No time out",
-                          "description": "Requisition has not timed out: 40 <= 5000"
+                          "description": "Requisition has not timed out: 47 <= 5000"
                         }
                       ],
                       "name": "Requisition #1 [0] [0] [0]",
-                      "id": "2109520623_180613af6f_283684",
+                      "id": "2154150211_180613af6f_155722",
                       "subscriptions": [],
                       "publishers": [],
                       "time": {
-                        "startTime": "2019-03-10T00:09:52.670Z",
-                        "endTime": "2019-03-10T00:09:52.710Z",
-                        "totalTime": 40,
+                        "startTime": "2019-03-10T00:54:15.246Z",
+                        "endTime": "2019-03-10T00:54:15.293Z",
+                        "totalTime": 47,
                         "timeout": 5000
                       },
                       "requisitions": [
@@ -1983,17 +1983,17 @@
                             {
                               "valid": true,
                               "name": "No time out",
-                              "description": "Requisition has not timed out: 32 <= 5000"
+                              "description": "Requisition has not timed out: 40 <= 5000"
                             }
                           ],
                           "name": "Requisition #1 [0] [0] [0] [0]",
-                          "id": "2109520674_298e6555fb_205728",
+                          "id": "2154150250_298e6555fb_660887",
                           "subscriptions": [],
                           "publishers": [],
                           "time": {
-                            "startTime": "2019-03-10T00:09:52.678Z",
-                            "endTime": "2019-03-10T00:09:52.710Z",
-                            "totalTime": 32,
+                            "startTime": "2019-03-10T00:54:15.253Z",
+                            "endTime": "2019-03-10T00:54:15.293Z",
+                            "totalTime": 40,
                             "timeout": 5000
                           },
                           "requisitions": [
@@ -2003,17 +2003,17 @@
                                 {
                                   "valid": true,
                                   "name": "No time out",
-                                  "description": "Requisition has not timed out: 11 <= 5000"
+                                  "description": "Requisition has not timed out: 19 <= 5000"
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [0] [0] [0]",
-                              "id": "2109520674_298e6555fb_205728",
+                              "id": "2154150250_298e6555fb_660887",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.686Z",
-                                "endTime": "2019-03-10T00:09:52.697Z",
-                                "totalTime": 11,
+                                "startTime": "2019-03-10T00:54:15.261Z",
+                                "endTime": "2019-03-10T00:54:15.280Z",
+                                "totalTime": 19,
                                 "timeout": 5000
                               },
                               "requisitions": []
@@ -2024,17 +2024,17 @@
                                 {
                                   "valid": true,
                                   "name": "No time out",
-                                  "description": "Requisition has not timed out: 5 <= 5000"
+                                  "description": "Requisition has not timed out: 4 <= 5000"
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [0] [0] [1]",
-                              "id": "2109520674_298e6555fb_205728",
+                              "id": "2154150250_298e6555fb_660887",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.699Z",
-                                "endTime": "2019-03-10T00:09:52.704Z",
-                                "totalTime": 5,
+                                "startTime": "2019-03-10T00:54:15.282Z",
+                                "endTime": "2019-03-10T00:54:15.286Z",
+                                "totalTime": 4,
                                 "timeout": 5000
                               },
                               "requisitions": []
@@ -2049,12 +2049,12 @@
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [0] [0] [2]",
-                              "id": "2109520674_298e6555fb_205728",
+                              "id": "2154150250_298e6555fb_660887",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.706Z",
-                                "endTime": "2019-03-10T00:09:52.710Z",
+                                "startTime": "2019-03-10T00:54:15.289Z",
+                                "endTime": "2019-03-10T00:54:15.293Z",
                                 "totalTime": 4,
                                 "timeout": 5000
                               },
@@ -2070,17 +2070,17 @@
                         {
                           "valid": true,
                           "name": "No time out",
-                          "description": "Requisition has not timed out: 67 <= 5000"
+                          "description": "Requisition has not timed out: 72 <= 5000"
                         }
                       ],
                       "name": "Requisition #1 [0] [0] [1]",
-                      "id": "2109520623_180613af6f_283684",
+                      "id": "2154150211_180613af6f_155722",
                       "subscriptions": [],
                       "publishers": [],
                       "time": {
-                        "startTime": "2019-03-10T00:09:52.712Z",
-                        "endTime": "2019-03-10T00:09:52.779Z",
-                        "totalTime": 67,
+                        "startTime": "2019-03-10T00:54:15.295Z",
+                        "endTime": "2019-03-10T00:54:15.367Z",
+                        "totalTime": 72,
                         "timeout": 5000
                       },
                       "requisitions": [
@@ -2090,17 +2090,17 @@
                             {
                               "valid": true,
                               "name": "No time out",
-                              "description": "Requisition has not timed out: 57 <= 5000"
+                              "description": "Requisition has not timed out: 63 <= 5000"
                             }
                           ],
                           "name": "Requisition #1 [0] [0] [1] [0]",
-                          "id": "2109520717_381a77d68e_343447",
+                          "id": "2154150300_381a77d68e_609873",
                           "subscriptions": [],
                           "publishers": [],
                           "time": {
-                            "startTime": "2019-03-10T00:09:52.722Z",
-                            "endTime": "2019-03-10T00:09:52.779Z",
-                            "totalTime": 57,
+                            "startTime": "2019-03-10T00:54:15.304Z",
+                            "endTime": "2019-03-10T00:54:15.367Z",
+                            "totalTime": 63,
                             "timeout": 5000
                           },
                           "requisitions": [
@@ -2110,17 +2110,17 @@
                                 {
                                   "valid": true,
                                   "name": "No time out",
-                                  "description": "Requisition has not timed out: 38 <= 5000"
+                                  "description": "Requisition has not timed out: 43 <= 5000"
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [1] [0] [0]",
-                              "id": "2109520717_381a77d68e_343447",
+                              "id": "2154150300_381a77d68e_609873",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.729Z",
-                                "endTime": "2019-03-10T00:09:52.767Z",
-                                "totalTime": 38,
+                                "startTime": "2019-03-10T00:54:15.312Z",
+                                "endTime": "2019-03-10T00:54:15.355Z",
+                                "totalTime": 43,
                                 "timeout": 5000
                               },
                               "requisitions": []
@@ -2135,12 +2135,12 @@
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [1] [0] [1]",
-                              "id": "2109520717_381a77d68e_343447",
+                              "id": "2154150300_381a77d68e_609873",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.770Z",
-                                "endTime": "2019-03-10T00:09:52.773Z",
+                                "startTime": "2019-03-10T00:54:15.358Z",
+                                "endTime": "2019-03-10T00:54:15.361Z",
                                 "totalTime": 3,
                                 "timeout": 5000
                               },
@@ -2152,17 +2152,17 @@
                                 {
                                   "valid": true,
                                   "name": "No time out",
-                                  "description": "Requisition has not timed out: 4 <= 5000"
+                                  "description": "Requisition has not timed out: 2 <= 5000"
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [1] [0] [2]",
-                              "id": "2109520717_381a77d68e_343447",
+                              "id": "2154150300_381a77d68e_609873",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.775Z",
-                                "endTime": "2019-03-10T00:09:52.779Z",
-                                "totalTime": 4,
+                                "startTime": "2019-03-10T00:54:15.364Z",
+                                "endTime": "2019-03-10T00:54:15.366Z",
+                                "totalTime": 2,
                                 "timeout": 5000
                               },
                               "requisitions": []
@@ -2177,17 +2177,17 @@
                         {
                           "valid": true,
                           "name": "No time out",
-                          "description": "Requisition has not timed out: 25 <= 5000"
+                          "description": "Requisition has not timed out: 23 <= 5000"
                         }
                       ],
                       "name": "Requisition #1 [0] [0] [2]",
-                      "id": "2109520623_180613af6f_283684",
+                      "id": "2154150211_180613af6f_155722",
                       "subscriptions": [],
                       "publishers": [],
                       "time": {
-                        "startTime": "2019-03-10T00:09:52.781Z",
-                        "endTime": "2019-03-10T00:09:52.806Z",
-                        "totalTime": 25,
+                        "startTime": "2019-03-10T00:54:15.369Z",
+                        "endTime": "2019-03-10T00:54:15.392Z",
+                        "totalTime": 23,
                         "timeout": 5000
                       },
                       "requisitions": [
@@ -2197,17 +2197,17 @@
                             {
                               "valid": true,
                               "name": "No time out",
-                              "description": "Requisition has not timed out: 18 <= 5000"
+                              "description": "Requisition has not timed out: 17 <= 5000"
                             }
                           ],
                           "name": "Requisition #1 [0] [0] [2] [0]",
-                          "id": "2109520785_458f86a58e_151363",
+                          "id": "2154150372_458f86a58e_32011",
                           "subscriptions": [],
                           "publishers": [],
                           "time": {
-                            "startTime": "2019-03-10T00:09:52.788Z",
-                            "endTime": "2019-03-10T00:09:52.806Z",
-                            "totalTime": 18,
+                            "startTime": "2019-03-10T00:54:15.375Z",
+                            "endTime": "2019-03-10T00:54:15.392Z",
+                            "totalTime": 17,
                             "timeout": 5000
                           },
                           "requisitions": [
@@ -2217,17 +2217,17 @@
                                 {
                                   "valid": true,
                                   "name": "No time out",
-                                  "description": "Requisition has not timed out: 1 <= 5000"
+                                  "description": "Requisition has not timed out: 0 <= 5000"
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [2] [0] [0]",
-                              "id": "2109520785_458f86a58e_151363",
+                              "id": "2154150372_458f86a58e_32011",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.795Z",
-                                "endTime": "2019-03-10T00:09:52.796Z",
-                                "totalTime": 1,
+                                "startTime": "2019-03-10T00:54:15.382Z",
+                                "endTime": "2019-03-10T00:54:15.382Z",
+                                "totalTime": 0,
                                 "timeout": 5000
                               },
                               "requisitions": []
@@ -2238,274 +2238,16 @@
                                 {
                                   "valid": true,
                                   "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
+                                  "description": "Requisition has not timed out: 1 <= 5000"
                                 }
                               ],
                               "name": "Requisition #1 [0] [0] [2] [0] [1]",
-                              "id": "2109520785_458f86a58e_151363",
+                              "id": "2154150372_458f86a58e_32011",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.799Z",
-                                "endTime": "2019-03-10T00:09:52.801Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [0] [0] [2] [0] [2]",
-                              "id": "2109520785_458f86a58e_151363",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.804Z",
-                                "endTime": "2019-03-10T00:09:52.806Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "valid": true,
-              "tests": [
-                {
-                  "valid": true,
-                  "name": "No time out",
-                  "description": "Requisition has not timed out: 115 <= 5000"
-                }
-              ],
-              "name": "Requisition #1 [1]",
-              "id": "2109520573_4815598900_893328",
-              "subscriptions": [],
-              "publishers": [],
-              "time": {
-                "startTime": "2019-03-10T00:09:52.808Z",
-                "endTime": "2019-03-10T00:09:52.923Z",
-                "totalTime": 115,
-                "timeout": 5000
-              },
-              "requisitions": [
-                {
-                  "valid": true,
-                  "tests": [
-                    {
-                      "valid": true,
-                      "name": "No time out",
-                      "description": "Requisition has not timed out: 111 <= 5000"
-                    }
-                  ],
-                  "name": "Requisition #1 [1] [0]",
-                  "id": "2109520809_d2274b88ae_545027",
-                  "subscriptions": [],
-                  "publishers": [],
-                  "time": {
-                    "startTime": "2019-03-10T00:09:52.812Z",
-                    "endTime": "2019-03-10T00:09:52.923Z",
-                    "totalTime": 111,
-                    "timeout": 5000
-                  },
-                  "requisitions": [
-                    {
-                      "valid": true,
-                      "tests": [
-                        {
-                          "valid": true,
-                          "name": "No time out",
-                          "description": "Requisition has not timed out: 55 <= 5000"
-                        }
-                      ],
-                      "name": "Requisition #1 [1] [0] [0]",
-                      "id": "2109520809_d2274b88ae_545027",
-                      "subscriptions": [],
-                      "publishers": [],
-                      "time": {
-                        "startTime": "2019-03-10T00:09:52.815Z",
-                        "endTime": "2019-03-10T00:09:52.870Z",
-                        "totalTime": 55,
-                        "timeout": 5000
-                      },
-                      "requisitions": [
-                        {
-                          "valid": true,
-                          "tests": [
-                            {
-                              "valid": true,
-                              "name": "No time out",
-                              "description": "Requisition has not timed out: 49 <= 5000"
-                            }
-                          ],
-                          "name": "Requisition #1 [1] [0] [0] [0]",
-                          "id": "2109520817_6f7696f9ab_531586",
-                          "subscriptions": [],
-                          "publishers": [],
-                          "time": {
-                            "startTime": "2019-03-10T00:09:52.821Z",
-                            "endTime": "2019-03-10T00:09:52.870Z",
-                            "totalTime": 49,
-                            "timeout": 5000
-                          },
-                          "requisitions": [
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 1 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [0] [0] [0]",
-                              "id": "2109520817_6f7696f9ab_531586",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.825Z",
-                                "endTime": "2019-03-10T00:09:52.826Z",
-                                "totalTime": 1,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 4 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [0] [0] [1]",
-                              "id": "2109520817_6f7696f9ab_531586",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.829Z",
-                                "endTime": "2019-03-10T00:09:52.833Z",
-                                "totalTime": 4,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [0] [0] [2]",
-                              "id": "2109520817_6f7696f9ab_531586",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.868Z",
-                                "endTime": "2019-03-10T00:09:52.870Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "valid": true,
-                      "tests": [
-                        {
-                          "valid": true,
-                          "name": "No time out",
-                          "description": "Requisition has not timed out: 27 <= 5000"
-                        }
-                      ],
-                      "name": "Requisition #1 [1] [0] [1]",
-                      "id": "2109520809_d2274b88ae_545027",
-                      "subscriptions": [],
-                      "publishers": [],
-                      "time": {
-                        "startTime": "2019-03-10T00:09:52.872Z",
-                        "endTime": "2019-03-10T00:09:52.899Z",
-                        "totalTime": 27,
-                        "timeout": 5000
-                      },
-                      "requisitions": [
-                        {
-                          "valid": true,
-                          "tests": [
-                            {
-                              "valid": true,
-                              "name": "No time out",
-                              "description": "Requisition has not timed out: 18 <= 5000"
-                            }
-                          ],
-                          "name": "Requisition #1 [1] [0] [1] [0]",
-                          "id": "2109520877_e155e5442f_436523",
-                          "subscriptions": [],
-                          "publishers": [],
-                          "time": {
-                            "startTime": "2019-03-10T00:09:52.881Z",
-                            "endTime": "2019-03-10T00:09:52.899Z",
-                            "totalTime": 18,
-                            "timeout": 5000
-                          },
-                          "requisitions": [
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [1] [0] [0]",
-                              "id": "2109520877_e155e5442f_436523",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.886Z",
-                                "endTime": "2019-03-10T00:09:52.888Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 1 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [1] [0] [1]",
-                              "id": "2109520877_e155e5442f_436523",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.891Z",
-                                "endTime": "2019-03-10T00:09:52.892Z",
+                                "startTime": "2019-03-10T00:54:15.385Z",
+                                "endTime": "2019-03-10T00:54:15.386Z",
                                 "totalTime": 1,
                                 "timeout": 5000
                               },
@@ -2520,121 +2262,14 @@
                                   "description": "Requisition has not timed out: 3 <= 5000"
                                 }
                               ],
-                              "name": "Requisition #1 [1] [0] [1] [0] [2]",
-                              "id": "2109520877_e155e5442f_436523",
+                              "name": "Requisition #1 [0] [0] [2] [0] [2]",
+                              "id": "2154150372_458f86a58e_32011",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.895Z",
-                                "endTime": "2019-03-10T00:09:52.898Z",
+                                "startTime": "2019-03-10T00:54:15.389Z",
+                                "endTime": "2019-03-10T00:54:15.392Z",
                                 "totalTime": 3,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "valid": true,
-                      "tests": [
-                        {
-                          "valid": true,
-                          "name": "No time out",
-                          "description": "Requisition has not timed out: 22 <= 5000"
-                        }
-                      ],
-                      "name": "Requisition #1 [1] [0] [2]",
-                      "id": "2109520809_d2274b88ae_545027",
-                      "subscriptions": [],
-                      "publishers": [],
-                      "time": {
-                        "startTime": "2019-03-10T00:09:52.901Z",
-                        "endTime": "2019-03-10T00:09:52.923Z",
-                        "totalTime": 22,
-                        "timeout": 5000
-                      },
-                      "requisitions": [
-                        {
-                          "valid": true,
-                          "tests": [
-                            {
-                              "valid": true,
-                              "name": "No time out",
-                              "description": "Requisition has not timed out: 17 <= 5000"
-                            }
-                          ],
-                          "name": "Requisition #1 [1] [0] [2] [0]",
-                          "id": "2109520901_2a37c5c772_324977",
-                          "subscriptions": [],
-                          "publishers": [],
-                          "time": {
-                            "startTime": "2019-03-10T00:09:52.906Z",
-                            "endTime": "2019-03-10T00:09:52.923Z",
-                            "totalTime": 17,
-                            "timeout": 5000
-                          },
-                          "requisitions": [
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [2] [0] [0]",
-                              "id": "2109520901_2a37c5c772_324977",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.910Z",
-                                "endTime": "2019-03-10T00:09:52.912Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [2] [0] [1]",
-                              "id": "2109520901_2a37c5c772_324977",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.915Z",
-                                "endTime": "2019-03-10T00:09:52.917Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [1] [0] [2] [0] [2]",
-                              "id": "2109520901_2a37c5c772_324977",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.921Z",
-                                "endTime": "2019-03-10T00:09:52.923Z",
-                                "totalTime": 2,
                                 "timeout": 5000
                               },
                               "requisitions": []
@@ -2653,17 +2288,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 97 <= 5000"
+                  "description": "Requisition has not timed out: 114 <= 5000"
                 }
               ],
-              "name": "Requisition #1 [2]",
-              "id": "2109520573_4815598900_893328",
+              "name": "Requisition #1 [1]",
+              "id": "2154150175_4815598900_734915",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.925Z",
-                "endTime": "2019-03-10T00:09:53.022Z",
-                "totalTime": 97,
+                "startTime": "2019-03-10T00:54:15.394Z",
+                "endTime": "2019-03-10T00:54:15.508Z",
+                "totalTime": 114,
                 "timeout": 5000
               },
               "requisitions": [
@@ -2673,17 +2308,17 @@
                     {
                       "valid": true,
                       "name": "No time out",
-                      "description": "Requisition has not timed out: 94 <= 5000"
+                      "description": "Requisition has not timed out: 109 <= 5000"
                     }
                   ],
-                  "name": "Requisition #1 [2] [0]",
-                  "id": "2109520925_855f2e8740_74044",
+                  "name": "Requisition #1 [1] [0]",
+                  "id": "2154150395_d2274b88ae_360335",
                   "subscriptions": [],
                   "publishers": [],
                   "time": {
-                    "startTime": "2019-03-10T00:09:52.928Z",
-                    "endTime": "2019-03-10T00:09:53.022Z",
-                    "totalTime": 94,
+                    "startTime": "2019-03-10T00:54:15.399Z",
+                    "endTime": "2019-03-10T00:54:15.508Z",
+                    "totalTime": 109,
                     "timeout": 5000
                   },
                   "requisitions": [
@@ -2693,17 +2328,17 @@
                         {
                           "valid": true,
                           "name": "No time out",
-                          "description": "Requisition has not timed out: 44 <= 5000"
+                          "description": "Requisition has not timed out: 56 <= 5000"
                         }
                       ],
-                      "name": "Requisition #1 [2] [0] [0]",
-                      "id": "2109520925_855f2e8740_74044",
+                      "name": "Requisition #1 [1] [0] [0]",
+                      "id": "2154150395_d2274b88ae_360335",
                       "subscriptions": [],
                       "publishers": [],
                       "time": {
-                        "startTime": "2019-03-10T00:09:52.931Z",
-                        "endTime": "2019-03-10T00:09:52.975Z",
-                        "totalTime": 44,
+                        "startTime": "2019-03-10T00:54:15.402Z",
+                        "endTime": "2019-03-10T00:54:15.458Z",
+                        "totalTime": 56,
                         "timeout": 5000
                       },
                       "requisitions": [
@@ -2713,17 +2348,382 @@
                             {
                               "valid": true,
                               "name": "No time out",
-                              "description": "Requisition has not timed out: 12 <= 5000"
+                              "description": "Requisition has not timed out: 51 <= 5000"
                             }
                           ],
-                          "name": "Requisition #1 [2] [0] [0] [0]",
-                          "id": "2109520931_08786e4b97_813431",
+                          "name": "Requisition #1 [1] [0] [0] [0]",
+                          "id": "2154150403_6f7696f9ab_185840",
                           "subscriptions": [],
                           "publishers": [],
                           "time": {
-                            "startTime": "2019-03-10T00:09:52.963Z",
-                            "endTime": "2019-03-10T00:09:52.975Z",
-                            "totalTime": 12,
+                            "startTime": "2019-03-10T00:54:15.407Z",
+                            "endTime": "2019-03-10T00:54:15.458Z",
+                            "totalTime": 51,
+                            "timeout": 5000
+                          },
+                          "requisitions": [
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 2 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [0] [0] [0]",
+                              "id": "2154150403_6f7696f9ab_185840",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.411Z",
+                                "endTime": "2019-03-10T00:54:15.413Z",
+                                "totalTime": 2,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 1 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [0] [0] [1]",
+                              "id": "2154150403_6f7696f9ab_185840",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.452Z",
+                                "endTime": "2019-03-10T00:54:15.453Z",
+                                "totalTime": 1,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 2 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [0] [0] [2]",
+                              "id": "2154150403_6f7696f9ab_185840",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.456Z",
+                                "endTime": "2019-03-10T00:54:15.458Z",
+                                "totalTime": 2,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "valid": true,
+                      "tests": [
+                        {
+                          "valid": true,
+                          "name": "No time out",
+                          "description": "Requisition has not timed out: 24 <= 5000"
+                        }
+                      ],
+                      "name": "Requisition #1 [1] [0] [1]",
+                      "id": "2154150395_d2274b88ae_360335",
+                      "subscriptions": [],
+                      "publishers": [],
+                      "time": {
+                        "startTime": "2019-03-10T00:54:15.461Z",
+                        "endTime": "2019-03-10T00:54:15.485Z",
+                        "totalTime": 24,
+                        "timeout": 5000
+                      },
+                      "requisitions": [
+                        {
+                          "valid": true,
+                          "tests": [
+                            {
+                              "valid": true,
+                              "name": "No time out",
+                              "description": "Requisition has not timed out: 18 <= 5000"
+                            }
+                          ],
+                          "name": "Requisition #1 [1] [0] [1] [0]",
+                          "id": "2154150462_e155e5442f_967681",
+                          "subscriptions": [],
+                          "publishers": [],
+                          "time": {
+                            "startTime": "2019-03-10T00:54:15.467Z",
+                            "endTime": "2019-03-10T00:54:15.485Z",
+                            "totalTime": 18,
+                            "timeout": 5000
+                          },
+                          "requisitions": [
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 1 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [1] [0] [0]",
+                              "id": "2154150462_e155e5442f_967681",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.471Z",
+                                "endTime": "2019-03-10T00:54:15.472Z",
+                                "totalTime": 1,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 4 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [1] [0] [1]",
+                              "id": "2154150462_e155e5442f_967681",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.477Z",
+                                "endTime": "2019-03-10T00:54:15.481Z",
+                                "totalTime": 4,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 1 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [1] [0] [2]",
+                              "id": "2154150462_e155e5442f_967681",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.484Z",
+                                "endTime": "2019-03-10T00:54:15.485Z",
+                                "totalTime": 1,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "valid": true,
+                      "tests": [
+                        {
+                          "valid": true,
+                          "name": "No time out",
+                          "description": "Requisition has not timed out: 20 <= 5000"
+                        }
+                      ],
+                      "name": "Requisition #1 [1] [0] [2]",
+                      "id": "2154150395_d2274b88ae_360335",
+                      "subscriptions": [],
+                      "publishers": [],
+                      "time": {
+                        "startTime": "2019-03-10T00:54:15.487Z",
+                        "endTime": "2019-03-10T00:54:15.507Z",
+                        "totalTime": 20,
+                        "timeout": 5000
+                      },
+                      "requisitions": [
+                        {
+                          "valid": true,
+                          "tests": [
+                            {
+                              "valid": true,
+                              "name": "No time out",
+                              "description": "Requisition has not timed out: 14 <= 5000"
+                            }
+                          ],
+                          "name": "Requisition #1 [1] [0] [2] [0]",
+                          "id": "2154150488_2a37c5c772_595318",
+                          "subscriptions": [],
+                          "publishers": [],
+                          "time": {
+                            "startTime": "2019-03-10T00:54:15.493Z",
+                            "endTime": "2019-03-10T00:54:15.507Z",
+                            "totalTime": 14,
+                            "timeout": 5000
+                          },
+                          "requisitions": [
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 1 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [2] [0] [0]",
+                              "id": "2154150488_2a37c5c772_595318",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.496Z",
+                                "endTime": "2019-03-10T00:54:15.497Z",
+                                "totalTime": 1,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 4 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [2] [0] [1]",
+                              "id": "2154150488_2a37c5c772_595318",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.500Z",
+                                "endTime": "2019-03-10T00:54:15.504Z",
+                                "totalTime": 4,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 0 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [1] [0] [2] [0] [2]",
+                              "id": "2154150488_2a37c5c772_595318",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.507Z",
+                                "endTime": "2019-03-10T00:54:15.507Z",
+                                "totalTime": 0,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "valid": true,
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "No time out",
+                  "description": "Requisition has not timed out: 104 <= 5000"
+                }
+              ],
+              "name": "Requisition #1 [2]",
+              "id": "2154150175_4815598900_734915",
+              "subscriptions": [],
+              "publishers": [],
+              "time": {
+                "startTime": "2019-03-10T00:54:15.510Z",
+                "endTime": "2019-03-10T00:54:15.614Z",
+                "totalTime": 104,
+                "timeout": 5000
+              },
+              "requisitions": [
+                {
+                  "valid": true,
+                  "tests": [
+                    {
+                      "valid": true,
+                      "name": "No time out",
+                      "description": "Requisition has not timed out: 99 <= 5000"
+                    }
+                  ],
+                  "name": "Requisition #1 [2] [0]",
+                  "id": "2154150512_855f2e8740_400418",
+                  "subscriptions": [],
+                  "publishers": [],
+                  "time": {
+                    "startTime": "2019-03-10T00:54:15.515Z",
+                    "endTime": "2019-03-10T00:54:15.614Z",
+                    "totalTime": 99,
+                    "timeout": 5000
+                  },
+                  "requisitions": [
+                    {
+                      "valid": true,
+                      "tests": [
+                        {
+                          "valid": true,
+                          "name": "No time out",
+                          "description": "Requisition has not timed out: 20 <= 5000"
+                        }
+                      ],
+                      "name": "Requisition #1 [2] [0] [0]",
+                      "id": "2154150512_855f2e8740_400418",
+                      "subscriptions": [],
+                      "publishers": [],
+                      "time": {
+                        "startTime": "2019-03-10T00:54:15.545Z",
+                        "endTime": "2019-03-10T00:54:15.565Z",
+                        "totalTime": 20,
+                        "timeout": 5000
+                      },
+                      "requisitions": [
+                        {
+                          "valid": true,
+                          "tests": [
+                            {
+                              "valid": true,
+                              "name": "No time out",
+                              "description": "Requisition has not timed out: 9 <= 5000"
+                            }
+                          ],
+                          "name": "Requisition #1 [2] [0] [0] [0]",
+                          "id": "2154150551_08786e4b97_510367",
+                          "subscriptions": [],
+                          "publishers": [],
+                          "time": {
+                            "startTime": "2019-03-10T00:54:15.556Z",
+                            "endTime": "2019-03-10T00:54:15.565Z",
+                            "totalTime": 9,
                             "timeout": 5000
                           },
                           "requisitions": [
@@ -2737,12 +2737,12 @@
                                 }
                               ],
                               "name": "Requisition #1 [2] [0] [0] [0] [0]",
-                              "id": "2109520931_08786e4b97_813431",
+                              "id": "2154150551_08786e4b97_510367",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.967Z",
-                                "endTime": "2019-03-10T00:09:52.967Z",
+                                "startTime": "2019-03-10T00:54:15.559Z",
+                                "endTime": "2019-03-10T00:54:15.559Z",
                                 "totalTime": 0,
                                 "timeout": 5000
                               },
@@ -2758,12 +2758,12 @@
                                 }
                               ],
                               "name": "Requisition #1 [2] [0] [0] [0] [1]",
-                              "id": "2109520931_08786e4b97_813431",
+                              "id": "2154150551_08786e4b97_510367",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.970Z",
-                                "endTime": "2019-03-10T00:09:52.971Z",
+                                "startTime": "2019-03-10T00:54:15.561Z",
+                                "endTime": "2019-03-10T00:54:15.562Z",
                                 "totalTime": 1,
                                 "timeout": 5000
                               },
@@ -2779,12 +2779,12 @@
                                 }
                               ],
                               "name": "Requisition #1 [2] [0] [0] [0] [2]",
-                              "id": "2109520931_08786e4b97_813431",
+                              "id": "2154150551_08786e4b97_510367",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.974Z",
-                                "endTime": "2019-03-10T00:09:52.975Z",
+                                "startTime": "2019-03-10T00:54:15.564Z",
+                                "endTime": "2019-03-10T00:54:15.565Z",
                                 "totalTime": 1,
                                 "timeout": 5000
                               },
@@ -2804,12 +2804,12 @@
                         }
                       ],
                       "name": "Requisition #1 [2] [0] [1]",
-                      "id": "2109520925_855f2e8740_74044",
+                      "id": "2154150512_855f2e8740_400418",
                       "subscriptions": [],
                       "publishers": [],
                       "time": {
-                        "startTime": "2019-03-10T00:09:52.977Z",
-                        "endTime": "2019-03-10T00:09:52.997Z",
+                        "startTime": "2019-03-10T00:54:15.567Z",
+                        "endTime": "2019-03-10T00:54:15.587Z",
                         "totalTime": 20,
                         "timeout": 5000
                       },
@@ -2820,17 +2820,17 @@
                             {
                               "valid": true,
                               "name": "No time out",
-                              "description": "Requisition has not timed out: 14 <= 5000"
+                              "description": "Requisition has not timed out: 15 <= 5000"
                             }
                           ],
                           "name": "Requisition #1 [2] [0] [1] [0]",
-                          "id": "2109520979_fa3de275a4_913423",
+                          "id": "2154150569_fa3de275a4_758274",
                           "subscriptions": [],
                           "publishers": [],
                           "time": {
-                            "startTime": "2019-03-10T00:09:52.983Z",
-                            "endTime": "2019-03-10T00:09:52.997Z",
-                            "totalTime": 14,
+                            "startTime": "2019-03-10T00:54:15.572Z",
+                            "endTime": "2019-03-10T00:54:15.587Z",
+                            "totalTime": 15,
                             "timeout": 5000
                           },
                           "requisitions": [
@@ -2840,37 +2840,16 @@
                                 {
                                   "valid": true,
                                   "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [2] [0] [1] [0] [0]",
-                              "id": "2109520979_fa3de275a4_913423",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:52.986Z",
-                                "endTime": "2019-03-10T00:09:52.988Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
                                   "description": "Requisition has not timed out: 1 <= 5000"
                                 }
                               ],
-                              "name": "Requisition #1 [2] [0] [1] [0] [1]",
-                              "id": "2109520979_fa3de275a4_913423",
+                              "name": "Requisition #1 [2] [0] [1] [0] [0]",
+                              "id": "2154150569_fa3de275a4_758274",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.990Z",
-                                "endTime": "2019-03-10T00:09:52.991Z",
+                                "startTime": "2019-03-10T00:54:15.576Z",
+                                "endTime": "2019-03-10T00:54:15.577Z",
                                 "totalTime": 1,
                                 "timeout": 5000
                               },
@@ -2885,13 +2864,34 @@
                                   "description": "Requisition has not timed out: 2 <= 5000"
                                 }
                               ],
-                              "name": "Requisition #1 [2] [0] [1] [0] [2]",
-                              "id": "2109520979_fa3de275a4_913423",
+                              "name": "Requisition #1 [2] [0] [1] [0] [1]",
+                              "id": "2154150569_fa3de275a4_758274",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:52.995Z",
-                                "endTime": "2019-03-10T00:09:52.997Z",
+                                "startTime": "2019-03-10T00:54:15.580Z",
+                                "endTime": "2019-03-10T00:54:15.582Z",
+                                "totalTime": 2,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 2 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [2] [0] [1] [0] [2]",
+                              "id": "2154150569_fa3de275a4_758274",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.585Z",
+                                "endTime": "2019-03-10T00:54:15.587Z",
                                 "totalTime": 2,
                                 "timeout": 5000
                               },
@@ -2907,17 +2907,17 @@
                         {
                           "valid": true,
                           "name": "No time out",
-                          "description": "Requisition has not timed out: 22 <= 5000"
+                          "description": "Requisition has not timed out: 25 <= 5000"
                         }
                       ],
                       "name": "Requisition #1 [2] [0] [2]",
-                      "id": "2109520925_855f2e8740_74044",
+                      "id": "2154150512_855f2e8740_400418",
                       "subscriptions": [],
                       "publishers": [],
                       "time": {
-                        "startTime": "2019-03-10T00:09:53.000Z",
-                        "endTime": "2019-03-10T00:09:53.022Z",
-                        "totalTime": 22,
+                        "startTime": "2019-03-10T00:54:15.589Z",
+                        "endTime": "2019-03-10T00:54:15.614Z",
+                        "totalTime": 25,
                         "timeout": 5000
                       },
                       "requisitions": [
@@ -2927,17 +2927,17 @@
                             {
                               "valid": true,
                               "name": "No time out",
-                              "description": "Requisition has not timed out: 15 <= 5000"
+                              "description": "Requisition has not timed out: 18 <= 5000"
                             }
                           ],
                           "name": "Requisition #1 [2] [0] [2] [0]",
-                          "id": "2109530001_68beda894e_161675",
+                          "id": "2154150591_68beda894e_466356",
                           "subscriptions": [],
                           "publishers": [],
                           "time": {
-                            "startTime": "2019-03-10T00:09:53.006Z",
-                            "endTime": "2019-03-10T00:09:53.021Z",
-                            "totalTime": 15,
+                            "startTime": "2019-03-10T00:54:15.596Z",
+                            "endTime": "2019-03-10T00:54:15.614Z",
+                            "totalTime": 18,
                             "timeout": 5000
                           },
                           "requisitions": [
@@ -2951,33 +2951,12 @@
                                 }
                               ],
                               "name": "Requisition #1 [2] [0] [2] [0] [0]",
-                              "id": "2109530001_68beda894e_161675",
+                              "id": "2154150591_68beda894e_466356",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:53.010Z",
-                                "endTime": "2019-03-10T00:09:53.012Z",
-                                "totalTime": 2,
-                                "timeout": 5000
-                              },
-                              "requisitions": []
-                            },
-                            {
-                              "valid": true,
-                              "tests": [
-                                {
-                                  "valid": true,
-                                  "name": "No time out",
-                                  "description": "Requisition has not timed out: 2 <= 5000"
-                                }
-                              ],
-                              "name": "Requisition #1 [2] [0] [2] [0] [1]",
-                              "id": "2109530001_68beda894e_161675",
-                              "subscriptions": [],
-                              "publishers": [],
-                              "time": {
-                                "startTime": "2019-03-10T00:09:53.015Z",
-                                "endTime": "2019-03-10T00:09:53.017Z",
+                                "startTime": "2019-03-10T00:54:15.603Z",
+                                "endTime": "2019-03-10T00:54:15.605Z",
                                 "totalTime": 2,
                                 "timeout": 5000
                               },
@@ -2992,14 +2971,35 @@
                                   "description": "Requisition has not timed out: 1 <= 5000"
                                 }
                               ],
-                              "name": "Requisition #1 [2] [0] [2] [0] [2]",
-                              "id": "2109530001_68beda894e_161675",
+                              "name": "Requisition #1 [2] [0] [2] [0] [1]",
+                              "id": "2154150591_68beda894e_466356",
                               "subscriptions": [],
                               "publishers": [],
                               "time": {
-                                "startTime": "2019-03-10T00:09:53.020Z",
-                                "endTime": "2019-03-10T00:09:53.021Z",
+                                "startTime": "2019-03-10T00:54:15.608Z",
+                                "endTime": "2019-03-10T00:54:15.609Z",
                                 "totalTime": 1,
+                                "timeout": 5000
+                              },
+                              "requisitions": []
+                            },
+                            {
+                              "valid": true,
+                              "tests": [
+                                {
+                                  "valid": true,
+                                  "name": "No time out",
+                                  "description": "Requisition has not timed out: 2 <= 5000"
+                                }
+                              ],
+                              "name": "Requisition #1 [2] [0] [2] [0] [2]",
+                              "id": "2154150591_68beda894e_466356",
+                              "subscriptions": [],
+                              "publishers": [],
+                              "time": {
+                                "startTime": "2019-03-10T00:54:15.612Z",
+                                "endTime": "2019-03-10T00:54:15.614Z",
+                                "totalTime": 2,
                                 "timeout": 5000
                               },
                               "requisitions": []
@@ -3033,8 +3033,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:53.023Z",
-            "endTime": "2019-03-10T00:09:53.025Z",
+            "startTime": "2019-03-10T00:54:15.616Z",
+            "endTime": "2019-03-10T00:54:15.618Z",
             "totalTime": 2,
             "timeout": 5000
           },
@@ -3048,17 +3048,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 3346 <= 5000"
+          "description": "Requisition has not timed out: 3312 <= 5000"
         }
       ],
       "name": "examples/requisition-delay-iterations.yml",
-      "id": "2109520388_16f1d16ead_843342",
+      "id": "2154140982_16f1d16ead_926336",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.425Z",
-        "endTime": "2019-03-10T00:09:55.771Z",
-        "totalTime": 3346,
+        "startTime": "2019-03-10T00:54:15.048Z",
+        "endTime": "2019-03-10T00:54:18.360Z",
+        "totalTime": 3312,
         "timeout": 5000
       },
       "requisitions": [
@@ -3068,17 +3068,17 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 245 <= 5000"
+              "description": "Requisition has not timed out: 241 <= 5000"
             }
           ],
           "name": "iterations",
-          "id": "2109520509_2a09eb92d4_725452",
+          "id": "2154150101_2a09eb92d4_942897",
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.521Z",
-            "endTime": "2019-03-10T00:09:52.766Z",
-            "totalTime": 245,
+            "startTime": "2019-03-10T00:54:15.113Z",
+            "endTime": "2019-03-10T00:54:15.354Z",
+            "totalTime": 241,
             "timeout": 5000
           },
           "requisitions": [
@@ -3093,17 +3093,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 34 <= 5000"
+                  "description": "Requisition has not timed out: 18 <= 5000"
                 }
               ],
               "name": "iterations [0]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.577Z",
-                "endTime": "2019-03-10T00:09:52.611Z",
-                "totalTime": 34,
+                "startTime": "2019-03-10T00:54:15.179Z",
+                "endTime": "2019-03-10T00:54:15.197Z",
+                "totalTime": 18,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3119,17 +3119,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 11 <= 5000"
+                  "description": "Requisition has not timed out: 13 <= 5000"
                 }
               ],
               "name": "iterations [1]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.615Z",
-                "endTime": "2019-03-10T00:09:52.626Z",
-                "totalTime": 11,
+                "startTime": "2019-03-10T00:54:15.202Z",
+                "endTime": "2019-03-10T00:54:15.215Z",
+                "totalTime": 13,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3145,17 +3145,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 40 <= 5000"
+                  "description": "Requisition has not timed out: 27 <= 5000"
                 }
               ],
               "name": "iterations [2]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.630Z",
-                "endTime": "2019-03-10T00:09:52.670Z",
-                "totalTime": 40,
+                "startTime": "2019-03-10T00:54:15.219Z",
+                "endTime": "2019-03-10T00:54:15.246Z",
+                "totalTime": 27,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3175,12 +3175,12 @@
                 }
               ],
               "name": "iterations [3]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.673Z",
-                "endTime": "2019-03-10T00:09:52.678Z",
+                "startTime": "2019-03-10T00:54:15.248Z",
+                "endTime": "2019-03-10T00:54:15.253Z",
                 "totalTime": 5,
                 "timeout": 5000
               },
@@ -3197,17 +3197,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 13 <= 5000"
+                  "description": "Requisition has not timed out: 18 <= 5000"
                 }
               ],
               "name": "iterations [4]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.680Z",
-                "endTime": "2019-03-10T00:09:52.693Z",
-                "totalTime": 13,
+                "startTime": "2019-03-10T00:54:15.256Z",
+                "endTime": "2019-03-10T00:54:15.274Z",
+                "totalTime": 18,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3223,17 +3223,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 3 <= 5000"
+                  "description": "Requisition has not timed out: 4 <= 5000"
                 }
               ],
               "name": "iterations [5]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.696Z",
-                "endTime": "2019-03-10T00:09:52.699Z",
-                "totalTime": 3,
+                "startTime": "2019-03-10T00:54:15.278Z",
+                "endTime": "2019-03-10T00:54:15.282Z",
+                "totalTime": 4,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3249,17 +3249,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 5 <= 5000"
+                  "description": "Requisition has not timed out: 4 <= 5000"
                 }
               ],
               "name": "iterations [6]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.702Z",
-                "endTime": "2019-03-10T00:09:52.707Z",
-                "totalTime": 5,
+                "startTime": "2019-03-10T00:54:15.285Z",
+                "endTime": "2019-03-10T00:54:15.289Z",
+                "totalTime": 4,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3275,17 +3275,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 3 <= 5000"
+                  "description": "Requisition has not timed out: 4 <= 5000"
                 }
               ],
               "name": "iterations [7]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.709Z",
-                "endTime": "2019-03-10T00:09:52.712Z",
-                "totalTime": 3,
+                "startTime": "2019-03-10T00:54:15.291Z",
+                "endTime": "2019-03-10T00:54:15.295Z",
+                "totalTime": 4,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3305,12 +3305,12 @@
                 }
               ],
               "name": "iterations [8]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.715Z",
-                "endTime": "2019-03-10T00:09:52.722Z",
+                "startTime": "2019-03-10T00:54:15.297Z",
+                "endTime": "2019-03-10T00:54:15.304Z",
                 "totalTime": 7,
                 "timeout": 5000
               },
@@ -3327,17 +3327,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 42 <= 5000"
+                  "description": "Requisition has not timed out: 48 <= 5000"
                 }
               ],
               "name": "iterations [9]",
-              "id": "2109520509_2a09eb92d4_725452",
+              "id": "2154150101_2a09eb92d4_942897",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.724Z",
-                "endTime": "2019-03-10T00:09:52.766Z",
-                "totalTime": 42,
+                "startTime": "2019-03-10T00:54:15.306Z",
+                "endTime": "2019-03-10T00:54:15.354Z",
+                "totalTime": 48,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3355,12 +3355,12 @@
             {
               "name": "It delayed for at least ~3 seconds",
               "valid": true,
-              "description": "Expected 'delayedTime + 50' to be greater than '3000'. Received '3097'"
+              "description": "Expected 'delayedTime + 50' to be greater than '3000'. Received '3104'"
             },
             {
               "name": "It delayed for no more than ~3 seconds",
               "valid": true,
-              "description": "Expected 'delayedTime - 500' to be less than '3000'. Received '2547'"
+              "description": "Expected 'delayedTime - 500' to be less than '3000'. Received '2554'"
             },
             {
               "name": "Assertion #3",
@@ -3370,7 +3370,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 3004 <= 5000"
+              "description": "Requisition has not timed out: 3005 <= 5000"
             }
           ],
           "name": "delayed",
@@ -3378,9 +3378,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.767Z",
-            "endTime": "2019-03-10T00:09:55.771Z",
-            "totalTime": 3004,
+            "startTime": "2019-03-10T00:54:15.355Z",
+            "endTime": "2019-03-10T00:54:18.360Z",
+            "totalTime": 3005,
             "timeout": 5000
           },
           "requisitions": []
@@ -3393,17 +3393,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 325 <= 5000"
+          "description": "Requisition has not timed out: 306 <= 5000"
         }
       ],
       "name": "examples/skipped.yml",
-      "id": "2109520389_05247139ae_328657",
+      "id": "2154140983_05247139ae_299139",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.442Z",
-        "endTime": "2019-03-10T00:09:52.767Z",
-        "totalTime": 325,
+        "startTime": "2019-03-10T00:54:15.049Z",
+        "endTime": "2019-03-10T00:54:15.355Z",
+        "totalTime": 306,
         "timeout": 5000
       },
       "requisitions": [
@@ -3413,17 +3413,17 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 171 <= 5000"
+              "description": "Requisition has not timed out: 133 <= 5000"
             }
           ],
           "name": "Requisition #0",
-          "id": "2109520521_e362f7cb78_916367",
+          "id": "2154150120_e362f7cb78_326805",
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.525Z",
-            "endTime": "2019-03-10T00:09:52.696Z",
-            "totalTime": 171,
+            "startTime": "2019-03-10T00:54:15.146Z",
+            "endTime": "2019-03-10T00:54:15.279Z",
+            "totalTime": 133,
             "timeout": 5000
           },
           "requisitions": [
@@ -3433,17 +3433,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 37 <= 5000"
+                  "description": "Requisition has not timed out: 22 <= 5000"
                 }
               ],
               "name": "Requisition #0 [0]",
-              "id": "2109520521_e362f7cb78_916367",
+              "id": "2154150120_e362f7cb78_326805",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.578Z",
-                "endTime": "2019-03-10T00:09:52.615Z",
-                "totalTime": 37,
+                "startTime": "2019-03-10T00:54:15.180Z",
+                "endTime": "2019-03-10T00:54:15.202Z",
+                "totalTime": 22,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3454,17 +3454,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 13 <= 5000"
+                  "description": "Requisition has not timed out: 15 <= 5000"
                 }
               ],
               "name": "Requisition #0 [1]",
-              "id": "2109520521_e362f7cb78_916367",
+              "id": "2154150120_e362f7cb78_326805",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.617Z",
-                "endTime": "2019-03-10T00:09:52.630Z",
-                "totalTime": 13,
+                "startTime": "2019-03-10T00:54:15.204Z",
+                "endTime": "2019-03-10T00:54:15.219Z",
+                "totalTime": 15,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3475,17 +3475,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 41 <= 5000"
+                  "description": "Requisition has not timed out: 9 <= 5000"
                 }
               ],
               "name": "Requisition #0 [2]",
-              "id": "2109520521_e362f7cb78_916367",
+              "id": "2154150120_e362f7cb78_326805",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.632Z",
-                "endTime": "2019-03-10T00:09:52.673Z",
-                "totalTime": 41,
+                "startTime": "2019-03-10T00:54:15.239Z",
+                "endTime": "2019-03-10T00:54:15.248Z",
+                "totalTime": 9,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3500,12 +3500,12 @@
                 }
               ],
               "name": "Requisition #0 [3]",
-              "id": "2109520521_e362f7cb78_916367",
+              "id": "2154150120_e362f7cb78_326805",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.674Z",
-                "endTime": "2019-03-10T00:09:52.681Z",
+                "startTime": "2019-03-10T00:54:15.249Z",
+                "endTime": "2019-03-10T00:54:15.256Z",
                 "totalTime": 7,
                 "timeout": 5000
               },
@@ -3517,17 +3517,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 14 <= 5000"
+                  "description": "Requisition has not timed out: 22 <= 5000"
                 }
               ],
               "name": "Requisition #0 [4]",
-              "id": "2109520521_e362f7cb78_916367",
+              "id": "2154150120_e362f7cb78_326805",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.682Z",
-                "endTime": "2019-03-10T00:09:52.696Z",
-                "totalTime": 14,
+                "startTime": "2019-03-10T00:54:15.257Z",
+                "endTime": "2019-03-10T00:54:15.279Z",
+                "totalTime": 22,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3553,8 +3553,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.697Z",
-            "endTime": "2019-03-10T00:09:52.702Z",
+            "startTime": "2019-03-10T00:54:15.280Z",
+            "endTime": "2019-03-10T00:54:15.285Z",
             "totalTime": 5,
             "timeout": 5000
           },
@@ -3574,8 +3574,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.702Z",
-            "endTime": "2019-03-10T00:09:52.702Z",
+            "startTime": "2019-03-10T00:54:15.285Z",
+            "endTime": "2019-03-10T00:54:15.285Z",
             "totalTime": 0
           },
           "requisitions": []
@@ -3594,8 +3594,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.702Z",
-            "endTime": "2019-03-10T00:09:52.702Z",
+            "startTime": "2019-03-10T00:54:15.285Z",
+            "endTime": "2019-03-10T00:54:15.285Z",
             "totalTime": 0
           },
           "requisitions": []
@@ -3614,8 +3614,8 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.702Z",
-            "endTime": "2019-03-10T00:09:52.702Z",
+            "startTime": "2019-03-10T00:54:15.285Z",
+            "endTime": "2019-03-10T00:54:15.285Z",
             "totalTime": 0
           },
           "requisitions": []
@@ -3630,12 +3630,12 @@
             }
           ],
           "name": "Requisition #5",
-          "id": "2109520702_55da6aafb1_355359",
+          "id": "2154150285_55da6aafb1_434556",
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.704Z",
-            "endTime": "2019-03-10T00:09:52.715Z",
+            "startTime": "2019-03-10T00:54:15.286Z",
+            "endTime": "2019-03-10T00:54:15.297Z",
             "totalTime": 11,
             "timeout": 5000
           },
@@ -3651,17 +3651,17 @@
                 {
                   "valid": true,
                   "name": "No time out",
-                  "description": "Requisition has not timed out: 5 <= 5000"
+                  "description": "Requisition has not timed out: 4 <= 5000"
                 }
               ],
               "name": "Requisition #5 [0]",
-              "id": "2109520702_55da6aafb1_355359",
+              "id": "2154150285_55da6aafb1_434556",
               "subscriptions": [],
               "publishers": [],
               "time": {
-                "startTime": "2019-03-10T00:09:52.710Z",
-                "endTime": "2019-03-10T00:09:52.715Z",
-                "totalTime": 5,
+                "startTime": "2019-03-10T00:54:15.293Z",
+                "endTime": "2019-03-10T00:54:15.297Z",
+                "totalTime": 4,
                 "timeout": 5000
               },
               "requisitions": []
@@ -3674,7 +3674,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 7 <= 5000"
+              "description": "Requisition has not timed out: 6 <= 5000"
             }
           ],
           "name": "Requisition #6",
@@ -3682,9 +3682,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.717Z",
-            "endTime": "2019-03-10T00:09:52.724Z",
-            "totalTime": 7,
+            "startTime": "2019-03-10T00:54:15.300Z",
+            "endTime": "2019-03-10T00:54:15.306Z",
+            "totalTime": 6,
             "timeout": 5000
           },
           "requisitions": []
@@ -3700,7 +3700,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 41 <= 5000"
+              "description": "Requisition has not timed out: 48 <= 5000"
             }
           ],
           "name": "Requisition #7",
@@ -3708,9 +3708,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.726Z",
-            "endTime": "2019-03-10T00:09:52.767Z",
-            "totalTime": 41,
+            "startTime": "2019-03-10T00:54:15.307Z",
+            "endTime": "2019-03-10T00:54:15.355Z",
+            "totalTime": 48,
             "timeout": 5000
           },
           "requisitions": []
@@ -3723,17 +3723,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 2336 <= 5000"
+          "description": "Requisition has not timed out: 2327 <= 5000"
         }
       ],
       "name": "examples/ssl.yml",
-      "id": "2109520391_aaa1765c8e_349720",
+      "id": "2154140984_aaa1765c8e_618841",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.446Z",
-        "endTime": "2019-03-10T00:09:54.782Z",
-        "totalTime": 2336,
+        "startTime": "2019-03-10T00:54:15.049Z",
+        "endTime": "2019-03-10T00:54:17.376Z",
+        "totalTime": 2327,
         "timeout": 5000
       },
       "requisitions": [
@@ -3743,7 +3743,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1249 <= 5000"
+              "description": "Requisition has not timed out: 1222 <= 5000"
             }
           ],
           "name": "Requisition #0",
@@ -3765,7 +3765,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.579Z",
+              "connectionTime": "2019-03-10T00:54:15.180Z",
               "messageReceived": {
                 "payload": "secureMessagereusingSecureMessage",
                 "stream": {
@@ -3798,21 +3798,21 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:53.776Z",
+              "publishTime": "2019-03-10T00:54:16.370Z",
               "messageReceived": {
                 "payload": "hisecureResponse",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 53407
+                  "port": 53729
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:52.527Z",
-            "endTime": "2019-03-10T00:09:53.776Z",
-            "totalTime": 1249,
+            "startTime": "2019-03-10T00:54:15.148Z",
+            "endTime": "2019-03-10T00:54:16.370Z",
+            "totalTime": 1222,
             "timeout": 5000
           },
           "requisitions": []
@@ -3845,7 +3845,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:53.780Z",
+              "connectionTime": "2019-03-10T00:54:16.375Z",
               "messageReceived": {
                 "payload": "reusingSecureMessage",
                 "stream": {
@@ -3878,20 +3878,20 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:54.781Z",
+              "publishTime": "2019-03-10T00:54:17.376Z",
               "messageReceived": {
                 "payload": "reusingSecureResponse",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 53407
+                  "port": 53729
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:53.779Z",
-            "endTime": "2019-03-10T00:09:54.782Z",
+            "startTime": "2019-03-10T00:54:16.373Z",
+            "endTime": "2019-03-10T00:54:17.376Z",
             "totalTime": 1003,
             "timeout": 5000
           },
@@ -3905,7 +3905,7 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 157 <= 5000"
+          "description": "Requisition has not timed out: 139 <= 5000"
         }
       ],
       "name": "examples/stdin.yml",
@@ -3928,15 +3928,15 @@
             }
           ],
           "valid": true,
-          "connectionTime": "2019-03-10T00:09:52.529Z",
+          "connectionTime": "2019-03-10T00:54:15.150Z",
           "messageReceived": "enqueuer standard-input payload"
         }
       ],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.446Z",
-        "endTime": "2019-03-10T00:09:52.603Z",
-        "totalTime": 157,
+        "startTime": "2019-03-10T00:54:15.050Z",
+        "endTime": "2019-03-10T00:54:15.189Z",
+        "totalTime": 139,
         "timeout": 5000
       },
       "requisitions": []
@@ -3947,17 +3947,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 185 <= 5000"
+          "description": "Requisition has not timed out: 188 <= 5000"
         }
       ],
       "name": "examples/store.yml",
-      "id": "2109520392_35e8f41e6a_724320",
+      "id": "2154140986_35e8f41e6a_507241",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.448Z",
-        "endTime": "2019-03-10T00:09:52.633Z",
-        "totalTime": 185,
+        "startTime": "2019-03-10T00:54:15.051Z",
+        "endTime": "2019-03-10T00:54:15.239Z",
+        "totalTime": 188,
         "timeout": 5000
       },
       "requisitions": [
@@ -3967,7 +3967,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 27 <= 5000"
+              "description": "Requisition has not timed out: 30 <= 5000"
             }
           ],
           "name": "Requisition #0",
@@ -3975,9 +3975,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.553Z",
-            "endTime": "2019-03-10T00:09:52.580Z",
-            "totalTime": 27,
+            "startTime": "2019-03-10T00:54:15.151Z",
+            "endTime": "2019-03-10T00:54:15.181Z",
+            "totalTime": 30,
             "timeout": 5000
           },
           "requisitions": []
@@ -3998,7 +3998,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 36 <= 5000"
+              "description": "Requisition has not timed out: 22 <= 5000"
             }
           ],
           "name": "Requisition #1",
@@ -4006,9 +4006,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.581Z",
-            "endTime": "2019-03-10T00:09:52.617Z",
-            "totalTime": 36,
+            "startTime": "2019-03-10T00:54:15.182Z",
+            "endTime": "2019-03-10T00:54:15.204Z",
+            "totalTime": 22,
             "timeout": 5000
           },
           "requisitions": []
@@ -4024,7 +4024,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 16 <= 5000"
+              "description": "Requisition has not timed out: 34 <= 5000"
             }
           ],
           "name": "Requisition #2",
@@ -4032,9 +4032,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.617Z",
-            "endTime": "2019-03-10T00:09:52.633Z",
-            "totalTime": 16,
+            "startTime": "2019-03-10T00:54:15.205Z",
+            "endTime": "2019-03-10T00:54:15.239Z",
+            "totalTime": 34,
             "timeout": 5000
           },
           "requisitions": []
@@ -4047,17 +4047,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 3185 <= 5000"
+          "description": "Requisition has not timed out: 3173 <= 5000"
         }
       ],
       "name": "examples/tcp.yml",
-      "id": "2109520393_bc047fe306_598274",
+      "id": "2154140987_bc047fe306_229725",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.451Z",
-        "endTime": "2019-03-10T00:09:55.636Z",
-        "totalTime": 3185,
+        "startTime": "2019-03-10T00:54:15.052Z",
+        "endTime": "2019-03-10T00:54:18.225Z",
+        "totalTime": 3173,
         "timeout": 5000
       },
       "requisitions": [
@@ -4067,7 +4067,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1069 <= 3000"
+              "description": "Requisition has not timed out: 1060 <= 3000"
             }
           ],
           "name": "Requisition #0",
@@ -4094,7 +4094,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.581Z",
+              "connectionTime": "2019-03-10T00:54:15.182Z",
               "messageReceived": {
                 "payload": "Hey Jude",
                 "stream": {
@@ -4127,21 +4127,21 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:53.623Z",
+              "publishTime": "2019-03-10T00:54:16.212Z",
               "messageReceived": {
                 "payload": "Do not make it bad",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 53408
+                  "port": 53730
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:52.554Z",
-            "endTime": "2019-03-10T00:09:53.623Z",
-            "totalTime": 1069,
+            "startTime": "2019-03-10T00:54:15.152Z",
+            "endTime": "2019-03-10T00:54:16.212Z",
+            "totalTime": 1060,
             "timeout": 3000
           },
           "requisitions": []
@@ -4152,7 +4152,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1002 <= 3000"
+              "description": "Requisition has not timed out: 1003 <= 3000"
             }
           ],
           "name": "Requisition #1",
@@ -4174,7 +4174,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:53.627Z",
+              "connectionTime": "2019-03-10T00:54:16.215Z",
               "messageReceived": {
                 "payload": "I do not careThe socket is still open",
                 "stream": {
@@ -4207,21 +4207,21 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:54.629Z",
+              "publishTime": "2019-03-10T00:54:17.218Z",
               "messageReceived": {
                 "payload": "EnqueuerRocks",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 53414
+                  "port": 53736
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:53.627Z",
-            "endTime": "2019-03-10T00:09:54.629Z",
-            "totalTime": 1002,
+            "startTime": "2019-03-10T00:54:16.215Z",
+            "endTime": "2019-03-10T00:54:17.218Z",
+            "totalTime": 1003,
             "timeout": 3000
           },
           "requisitions": []
@@ -4254,7 +4254,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:54.634Z",
+              "connectionTime": "2019-03-10T00:54:17.222Z",
               "messageReceived": {
                 "payload": "The socket is still open",
                 "stream": {
@@ -4287,20 +4287,20 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:55.635Z",
+              "publishTime": "2019-03-10T00:54:18.224Z",
               "messageReceived": {
                 "payload": "enqueuer Rocks",
                 "stream": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 53414
+                  "port": 53736
                 }
               }
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:54.632Z",
-            "endTime": "2019-03-10T00:09:55.636Z",
+            "startTime": "2019-03-10T00:54:17.221Z",
+            "endTime": "2019-03-10T00:54:18.225Z",
             "totalTime": 1004,
             "timeout": 3000
           },
@@ -4314,17 +4314,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 169 <= 5000"
+          "description": "Requisition has not timed out: 155 <= 5000"
         }
       ],
       "name": "examples/udp.yml",
-      "id": "2109520394_d503407b88_97269",
+      "id": "2154140988_d503407b88_758846",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.452Z",
-        "endTime": "2019-03-10T00:09:52.621Z",
-        "totalTime": 169,
+        "startTime": "2019-03-10T00:54:15.053Z",
+        "endTime": "2019-03-10T00:54:15.208Z",
+        "totalTime": 155,
         "timeout": 5000
       },
       "requisitions": [
@@ -4334,7 +4334,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 65 <= 5000"
+              "description": "Requisition has not timed out: 55 <= 5000"
             }
           ],
           "name": "Requisition #0",
@@ -4361,7 +4361,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.581Z",
+              "connectionTime": "2019-03-10T00:54:15.183Z",
               "messageReceived": {
                 "payload": {
                   "type": "Buffer",
@@ -4373,7 +4373,7 @@
                 "remoteInfo": {
                   "address": "127.0.0.1",
                   "family": "IPv4",
-                  "port": 58592,
+                  "port": 57035,
                   "size": 2
                 }
               }
@@ -4391,13 +4391,13 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:52.618Z"
+              "publishTime": "2019-03-10T00:54:15.206Z"
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:52.555Z",
-            "endTime": "2019-03-10T00:09:52.620Z",
-            "totalTime": 65,
+            "startTime": "2019-03-10T00:54:15.153Z",
+            "endTime": "2019-03-10T00:54:15.208Z",
+            "totalTime": 55,
             "timeout": 5000
           },
           "requisitions": []
@@ -4410,17 +4410,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 3173 <= 5000"
+          "description": "Requisition has not timed out: 3159 <= 5000"
         }
       ],
       "name": "examples/uds.yml",
-      "id": "2109520396_b92b54acfc_316224",
+      "id": "2154140990_b92b54acfc_940012",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.457Z",
-        "endTime": "2019-03-10T00:09:55.630Z",
-        "totalTime": 3173,
+        "startTime": "2019-03-10T00:54:15.054Z",
+        "endTime": "2019-03-10T00:54:18.213Z",
+        "totalTime": 3159,
         "timeout": 5000
       },
       "requisitions": [
@@ -4430,7 +4430,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1055 <= 3000"
+              "description": "Requisition has not timed out: 1042 <= 3000"
             }
           ],
           "name": "Requisition #0",
@@ -4452,7 +4452,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:52.594Z",
+              "connectionTime": "2019-03-10T00:54:15.183Z",
               "messageReceived": {
                 "payload": "enqueuer",
                 "stream": {},
@@ -4482,7 +4482,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:53.612Z",
+              "publishTime": "2019-03-10T00:54:16.197Z",
               "messageReceived": {
                 "payload": "responsePayload",
                 "stream": {}
@@ -4490,9 +4490,9 @@
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:52.557Z",
-            "endTime": "2019-03-10T00:09:53.612Z",
-            "totalTime": 1055,
+            "startTime": "2019-03-10T00:54:15.155Z",
+            "endTime": "2019-03-10T00:54:16.197Z",
+            "totalTime": 1042,
             "timeout": 3000
           },
           "requisitions": []
@@ -4503,7 +4503,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1004 <= 5000"
+              "description": "Requisition has not timed out: 1003 <= 5000"
             }
           ],
           "name": "Requisition #1",
@@ -4525,7 +4525,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:53.618Z",
+              "connectionTime": "2019-03-10T00:54:16.201Z",
               "messageReceived": {
                 "payload": "enqueuerI am still bidirectional",
                 "stream": {},
@@ -4550,13 +4550,13 @@
                   "description": "Published successfully"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:54.620Z"
+              "publishTime": "2019-03-10T00:54:17.204Z"
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:53.616Z",
-            "endTime": "2019-03-10T00:09:54.620Z",
-            "totalTime": 1004,
+            "startTime": "2019-03-10T00:54:16.201Z",
+            "endTime": "2019-03-10T00:54:17.204Z",
+            "totalTime": 1003,
             "timeout": 5000
           },
           "requisitions": []
@@ -4567,7 +4567,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 1005 <= 5000"
+              "description": "Requisition has not timed out: 1004 <= 5000"
             }
           ],
           "name": "Requisition #2",
@@ -4589,7 +4589,7 @@
                 }
               ],
               "valid": true,
-              "connectionTime": "2019-03-10T00:09:54.626Z",
+              "connectionTime": "2019-03-10T00:54:17.209Z",
               "messageReceived": {
                 "payload": "I am still opened",
                 "stream": {}
@@ -4618,7 +4618,7 @@
                   "description": "Response message was received"
                 }
               ],
-              "publishTime": "2019-03-10T00:09:55.629Z",
+              "publishTime": "2019-03-10T00:54:18.211Z",
               "messageReceived": {
                 "payload": "I am still bidirectional",
                 "stream": {}
@@ -4626,9 +4626,9 @@
             }
           ],
           "time": {
-            "startTime": "2019-03-10T00:09:54.624Z",
-            "endTime": "2019-03-10T00:09:55.629Z",
-            "totalTime": 1005,
+            "startTime": "2019-03-10T00:54:17.208Z",
+            "endTime": "2019-03-10T00:54:18.212Z",
+            "totalTime": 1004,
             "timeout": 5000
           },
           "requisitions": []
@@ -4641,17 +4641,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 160 <= 5000"
+          "description": "Requisition has not timed out: 150 <= 5000"
         }
       ],
       "name": "examples/variables.yml",
-      "id": "2109520396_2e1e4d53e3_834821",
+      "id": "2154140990_2e1e4d53e3_805225",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.458Z",
-        "endTime": "2019-03-10T00:09:52.618Z",
-        "totalTime": 160,
+        "startTime": "2019-03-10T00:54:15.055Z",
+        "endTime": "2019-03-10T00:54:15.205Z",
+        "totalTime": 150,
         "timeout": 5000
       },
       "requisitions": [
@@ -4671,7 +4671,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 37 <= 5000"
+              "description": "Requisition has not timed out: 28 <= 5000"
             }
           ],
           "name": "Requisition #0",
@@ -4679,9 +4679,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.558Z",
-            "endTime": "2019-03-10T00:09:52.595Z",
-            "totalTime": 37,
+            "startTime": "2019-03-10T00:54:15.156Z",
+            "endTime": "2019-03-10T00:54:15.184Z",
+            "totalTime": 28,
             "timeout": 5000
           },
           "requisitions": []
@@ -4707,7 +4707,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 22 <= 5000"
+              "description": "Requisition has not timed out: 21 <= 5000"
             }
           ],
           "name": "Requisition #1",
@@ -4715,9 +4715,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.596Z",
-            "endTime": "2019-03-10T00:09:52.618Z",
-            "totalTime": 22,
+            "startTime": "2019-03-10T00:54:15.184Z",
+            "endTime": "2019-03-10T00:54:15.205Z",
+            "totalTime": 21,
             "timeout": 5000
           },
           "requisitions": []
@@ -4730,17 +4730,17 @@
         {
           "valid": true,
           "name": "No time out",
-          "description": "Requisition has not timed out: 159 <= 5000"
+          "description": "Requisition has not timed out: 155 <= 5000"
         }
       ],
       "name": "examples/requisition-navigation.yaml",
-      "id": "2109520397_00667e7390_195251",
+      "id": "2154140991_00667e7390_853949",
       "subscriptions": [],
       "publishers": [],
       "time": {
-        "startTime": "2019-03-10T00:09:52.459Z",
-        "endTime": "2019-03-10T00:09:52.618Z",
-        "totalTime": 159,
+        "startTime": "2019-03-10T00:54:15.055Z",
+        "endTime": "2019-03-10T00:54:15.210Z",
+        "totalTime": 155,
         "timeout": 5000
       },
       "requisitions": [
@@ -4755,7 +4755,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 37 <= 5000"
+              "description": "Requisition has not timed out: 21 <= 5000"
             }
           ],
           "name": "first",
@@ -4763,9 +4763,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.559Z",
-            "endTime": "2019-03-10T00:09:52.596Z",
-            "totalTime": 37,
+            "startTime": "2019-03-10T00:54:15.172Z",
+            "endTime": "2019-03-10T00:54:15.193Z",
+            "totalTime": 21,
             "timeout": 5000
           },
           "requisitions": []
@@ -4781,7 +4781,7 @@
             {
               "valid": true,
               "name": "No time out",
-              "description": "Requisition has not timed out: 21 <= 5000"
+              "description": "Requisition has not timed out: 16 <= 5000"
             }
           ],
           "name": "second",
@@ -4789,9 +4789,9 @@
           "subscriptions": [],
           "publishers": [],
           "time": {
-            "startTime": "2019-03-10T00:09:52.597Z",
-            "endTime": "2019-03-10T00:09:52.618Z",
-            "totalTime": 21,
+            "startTime": "2019-03-10T00:54:15.194Z",
+            "endTime": "2019-03-10T00:54:15.210Z",
+            "totalTime": 16,
             "timeout": 5000
           },
           "requisitions": []
