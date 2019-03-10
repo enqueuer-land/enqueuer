@@ -3,7 +3,6 @@ import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
 import {ReportModel} from '../models/outputs/report-model';
 import {Configuration} from '../configurations/configuration';
 
-//TODO test it
 export class SummaryTestOutput {
     private static readonly NAME_SPACING = 120;
     private static readonly LEVEL_TABULATION = 8;
