@@ -1,8 +1,41 @@
 import {CommandLineConfiguration} from './command-line-configuration';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import {TestsDescriber} from '../testers/tests-describer';
+
+jest.mock('../testers/tests-describer');
+jest.mock('../plugins/dynamic-modules-manager');
+
+const describeProtocolsMock = jest.fn(() => true);
+const describeReportFormattersMock = jest.fn(() => true);
+const describeObjectParsersMock = jest.fn(() => false);
+DynamicModulesManager.getInstance.mockImplementation(() => {
+    return {
+        getProtocolManager: () => {
+            return {
+                describeProtocols: describeProtocolsMock
+            };
+        },
+        getReportFormatterManager: () => {
+            return {
+                describeReportFormatters: describeReportFormattersMock
+            };
+        },
+        getObjectParserManager: () => {
+            return {
+                describeObjectParsers: describeObjectParsersMock
+            };
+        }
+
+    };
+});
 
 const exitMock = jest.fn();
 describe('CommandLineConfiguration', () => {
     beforeEach(() => {
+        describeProtocolsMock.mockClear();
+        describeReportFormattersMock.mockClear();
+        describeObjectParsersMock.mockClear();
+
         exitMock.mockClear();
         // @ts-ignore
         process.exit = exitMock;
@@ -84,7 +117,8 @@ describe('CommandLineConfiguration', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-p']);
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeProtocolsMock).toHaveBeenCalledWith(true);
     });
 
     it('describe protocols --protocols-description', () => {
@@ -92,23 +126,28 @@ describe('CommandLineConfiguration', () => {
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeProtocolsMock).toHaveBeenCalledWith(true);
     });
 
     it('describe protocols --protocols-description http', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description', 'http']);
+        const params = 'http';
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description', params]);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeProtocolsMock).toHaveBeenCalledWith(params);
     });
 
     it('describe formatters -f', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-f', 'json']);
+        const params = 'json';
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-f', params]);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeReportFormattersMock).toHaveBeenCalledWith(params);
     });
 
     it('describe formatters --formatters-description', () => {
@@ -116,39 +155,60 @@ describe('CommandLineConfiguration', () => {
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeReportFormattersMock).toHaveBeenCalledWith(true);
     });
 
-    it('describe assertions -e', () => {
+    it('describe parsers list -e', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-e']);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(1);
+        expect(describeObjectParsersMock).toHaveBeenCalledWith(true);
     });
 
-    it('describe assertions --parsers-list', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--parsers-list']);
+    it('describe --parsers-list', () => {
+        const params = 'csv';
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--parsers-list', params]);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(1);
+        expect(describeObjectParsersMock).toHaveBeenCalledWith(params);
     });
 
     it('describe assertions -t', () => {
+        const describeTestMock = jest.fn(() => false);
+        // @ts-ignore
+        TestsDescriber.mockImplementationOnce(() => {
+            return {
+                describeTests: describeTestMock
+            };
+        });
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-t']);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeTestMock).toHaveBeenCalledWith();
     });
 
     it('describe assertions --tests-list', () => {
+        const describeTestMock = jest.fn();
+        // @ts-ignore
+        TestsDescriber.mockImplementationOnce(() => {
+            return {
+                describeTests: describeTestMock
+            };
+        });
+
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--tests-list']);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalled();
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeTestMock).toHaveBeenCalledWith();
     });
 
     it('no file', () => {

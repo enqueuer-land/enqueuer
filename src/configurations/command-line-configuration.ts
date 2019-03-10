@@ -41,20 +41,20 @@ export class CommandLineConfiguration {
         let exitCode;
         if (this.parsedCommandLine.protocolsDescription) {
             exitCode = DynamicModulesManager.getInstance().getProtocolManager()
-                .describeProtocols(this.parsedCommandLine.protocolsDescription) ? 0 : 1;
+                .describeProtocols(this.parsedCommandLine.protocolsDescription);
         } else if (this.parsedCommandLine.formattersDescription) {
             exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
-                .describeReportFormatters(this.parsedCommandLine.formattersDescription) ? 0 : 1;
+                .describeReportFormatters(this.parsedCommandLine.formattersDescription);
         } else if (this.parsedCommandLine.parsersList) {
             exitCode = DynamicModulesManager.getInstance().getObjectParserManager()
-                .describeObjectParsers(this.parsedCommandLine.parsersList) ? 0 : 1;
+                .describeObjectParsers(this.parsedCommandLine.parsersList);
         } else if (this.parsedCommandLine.testsList) {
             new TestsDescriber().describeTests();
-            exitCode = 0;
+            exitCode = true;
         }
 
         if (exitCode !== undefined) {
-            process.exit(exitCode);
+            process.exit(exitCode ? 0 : 1);
         }
     }
 

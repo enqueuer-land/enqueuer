@@ -10,7 +10,6 @@ import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {RequisitionDefaultReports} from './models-defaults/outputs/requisition-default-reports';
 import {RequisitionParentCreator} from './components/requisition-parent-creator';
 import {Configuration} from './configurations/configuration';
-import chalk from 'chalk';
 import {SummaryTestOutput} from './outputs/summary-test-output';
 
 //TODO test it

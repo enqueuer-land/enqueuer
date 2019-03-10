@@ -9,12 +9,10 @@ export class SummaryTestOutput {
     private static readonly LEVEL_TABULATION = 8;
     private readonly report: ReportModel;
     private readonly level: number;
-    private readonly recursive: boolean;
 
-    public constructor(report: ReportModel, level: number = 0, recursive: boolean = false) {
+    public constructor(report: ReportModel, level: number = 0) {
         this.report = report;
         this.level = level;
-        this.recursive = recursive;
     }
 
     public print(): void {
@@ -30,11 +28,8 @@ export class SummaryTestOutput {
 
     private printChildren() {
         let reportLeaves = (this.report.subscriptions || []).concat(this.report.publishers || []);
-        if (this.recursive) {
-            reportLeaves = reportLeaves.concat(this.report.requisitions || []);
-        }
         for (const leaf of reportLeaves) {
-            new SummaryTestOutput(leaf, this.level + 1, this.recursive).print();
+            new SummaryTestOutput(leaf, this.level + 1).print();
         }
     }
 
