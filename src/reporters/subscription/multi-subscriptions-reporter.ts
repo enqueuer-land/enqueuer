@@ -20,26 +20,23 @@ export class MultiSubscriptionsReporter {
         }
     }
 
-    public subscribe(stoppedWaitingCallback: Function): Promise<{}[]> {
-        return Promise.all(this.subscriptionReporters.map(
-            subscription => this.promisifySubscription(subscription, stoppedWaitingCallback)
-                    ));
-    }
-
-    private promisifySubscription(subscription: SubscriptionReporter, stoppedWaitingCallback: Function) {
-        return new Promise((resolve, reject) => {
-            subscription.startTimeout(() => {
-                if (this.haveAllSubscriptionsStoppedWaiting()) {
-                    Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
-                    reject(`Subscription has timed out`);
-                    stoppedWaitingCallback();
-                }
-            });
-            subscription
-                .subscribe()
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async subscribe(stoppedWaitingCallback: Function): Promise<void> {
+        await Promise
+            .all(this.subscriptionReporters
+                .map(async subscription => {
+                    let returned = false;
+                    subscription.startTimeout(() => {
+                        if (this.haveAllSubscriptionsStoppedWaiting()) {
+                            Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
+                            stoppedWaitingCallback();
+                            if (!returned) {
+                                throw `Subscription has timed out`;
+                            }
+                        }
+                    });
+                    returned = true;
+                    return await subscription.subscribe();
+                }));
     }
 
     public receiveMessage(): Promise<void> {

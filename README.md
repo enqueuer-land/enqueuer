@@ -260,8 +260,9 @@ Every event object has 3 properties:
 
 **script**\
 Javascript code snippet executed when the event is triggered.\
+Yeah, I mean it. See it [it](https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml) by yourself.
 **store**\
-Data to be persisted\
+Data to be persisted across requisitions\
 **assertions**\
 Array of assertions. Run `$ nqr -t` to see available ones.
 

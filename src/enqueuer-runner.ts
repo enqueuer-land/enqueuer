@@ -2,7 +2,6 @@ import {Logger} from './loggers/logger';
 import {MultiTestsOutput} from './outputs/multi-tests-output';
 import * as input from './models/inputs/requisition-model';
 import * as output from './models/outputs/requisition-model';
-import {RequisitionModel} from './models/outputs/requisition-model';
 import {DateController} from './timers/date-controller';
 import {RequisitionFileParser} from './requisition-runners/requisition-file-parser';
 import {RequisitionRunner} from './requisition-runners/requisition-runner';
@@ -22,7 +21,7 @@ export class EnqueuerRunner {
 
     public async execute(): Promise<boolean> {
         const requisitionFileParser = new RequisitionFileParser(Configuration.getInstance().getFiles());
-        const requisitionModels = requisitionFileParser.parse();
+        const requisitionModels: input.RequisitionModel[] = requisitionFileParser.parse();
         const parsingErrors = requisitionFileParser.getFilesErrors();
         const enqueuerReport = RequisitionDefaultReports.createDefaultReport({name: EnqueuerRunner.reportName, id: EnqueuerRunner.reportName});
         const parent: input.RequisitionModel = new RequisitionParentCreator().create(EnqueuerRunner.reportName, requisitionModels);
@@ -50,7 +49,7 @@ export class EnqueuerRunner {
         return report.valid;
     }
 
-    private adjustFinalReport(report: RequisitionModel) {
+    private adjustFinalReport(report: output.RequisitionModel) {
         const now = new DateController();
         report.time = {
             startTime: this.startTime.toString(),
@@ -58,7 +57,7 @@ export class EnqueuerRunner {
             totalTime: now.getTime() - this.startTime.getTime()
         };
         report.valid = (report.requisitions || [])
-                .every((requisitionsReport) => requisitionsReport.valid) &&
+                .every((child) => child.valid) &&
             (report.tests || [])
                 .every((test) => test.valid);
     }
