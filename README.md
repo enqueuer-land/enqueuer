@@ -390,7 +390,7 @@ There are a few ways to set a value in the store.
 Configuration file's store as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27)
 ##### command line
 A command line argument `$ nqr --store key=value -s anotherVariable=true `
-##### event.
+##### event
 Dynamically set it through an event. 
 Be it in its [script](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) field or straight through its store [field](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3). 
 
@@ -439,7 +439,7 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 
 ----
 
-### Enqueuer Flow
+### Requisition Flow
 
 ![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
 

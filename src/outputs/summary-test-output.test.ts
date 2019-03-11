@@ -1,7 +1,6 @@
 import {SummaryTestOutput} from './summary-test-output';
 
 let consoleLogMock = jest.fn((message) => console.warn(message));
-// let consoleLogMock = jest.fn();
 console.log = consoleLogMock;
 
 describe('SummaryTestOutput', () => {
@@ -57,6 +56,7 @@ describe('SummaryTestOutput', () => {
 
         expect(consolePrintedTimes('PASS')).toBe(1);
         expect(consolePrintedTimes('FAIL')).toBe(0);
+        expect(consolePrintedTimes('NULL')).toBe(0);
         expect(consolePrintedTimes('SKIP')).toBe(0);
     });
 
@@ -71,6 +71,7 @@ describe('SummaryTestOutput', () => {
             }]
         }).print();
 
+        expect(consolePrintedTimes('NULL')).toBe(0);
         expect(consolePrintedTimes('FAIL')).toBe(1);
         expect(consolePrintedTimes('PASS')).toBe(0);
         expect(consolePrintedTimes('SKIP')).toBe(0);
@@ -114,19 +115,56 @@ describe('SummaryTestOutput', () => {
         }).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
+        expect(consolePrintedTimes('NULL')).toBe(0);
         expect(consolePrintedTimes('PASS')).toBe(0);
         expect(consolePrintedTimes('FAIL')).toBe(0);
     });
 
-    it('should print SKIP when there is no test', () => {
+    it('should print SKIP when every test is ignored', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
-            ignored: true,
-            tests: []
+            tests: [{
+                name: 'any',
+                ignored: true,
+                valid: true,
+                description: ''
+            }]
         }).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
+        expect(consolePrintedTimes('NULL')).toBe(0);
+        expect(consolePrintedTimes('PASS')).toBe(0);
+        expect(consolePrintedTimes('FAIL')).toBe(0);
+    });
+
+    it('should print SKIP when child is ignored', () => {
+        new SummaryTestOutput({
+            name: 'name',
+            valid: true,
+            tests: [{
+                name: 'any',
+                ignored: true,
+                valid: false,
+                description: ''
+            }]
+        }).print();
+
+        expect(consolePrintedTimes('SKIP')).toBe(1);
+        expect(consolePrintedTimes('NULL')).toBe(0);
+        expect(consolePrintedTimes('PASS')).toBe(0);
+        expect(consolePrintedTimes('FAIL')).toBe(0);
+    });
+
+    it('should print NULL when there is no test', () => {
+        new SummaryTestOutput({
+            name: 'name',
+            valid: true,
+            tests: []
+        }).print();
+
+        expect(consolePrintedTimes('NULL')).toBe(1);
+        expect(consolePrintedTimes('SKIP')).toBe(0);
         expect(consolePrintedTimes('PASS')).toBe(0);
         expect(consolePrintedTimes('FAIL')).toBe(0);
     });

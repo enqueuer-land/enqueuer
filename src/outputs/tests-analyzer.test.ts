@@ -104,6 +104,27 @@ describe('TestsAnalyzer', () => {
         expect(testsAnalyzer.getNotIgnoredTests().length).toBe(4);
     });
 
+    it('Should ignore even when there is test child', () => {
+        const test: RequisitionModel = {
+            name: 'name',
+            valid: true,
+            ignored: true,
+            tests: [{
+                name: 'any',
+                valid: false,
+                description: ''
+            }]
+        };
+
+        const testsAnalyzer = new TestsAnalyzer().addTest(test);
+
+        expect(testsAnalyzer.getFailingTests().length).toBe(0);
+        expect(testsAnalyzer.getPassingTests().length).toBe(0);
+        expect(testsAnalyzer.getIgnoredList().length).toBe(1);
+        expect(testsAnalyzer.getTests().length).toBe(1);
+        expect(testsAnalyzer.getNotIgnoredTests().length).toBe(0);
+    });
+
     it('Should get hierarchy', () => {
         const test: RequisitionModel = {
             name: 'a',
