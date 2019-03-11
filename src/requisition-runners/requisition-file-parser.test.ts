@@ -27,6 +27,17 @@ describe('RequisitionFileParser', () => {
         expect(parser.getFilesErrors()[0]).toEqual({'description': 'error', 'name': "Error parsing file 'anyStuff'", 'valid': false});
     });
 
+    it('Should no test found error', () => {
+        const parser: RequisitionFileParser = new RequisitionFileParser([]);
+
+        parser.parse();
+
+        expect(parser.getFilesErrors()[0]).toEqual({
+            'description': 'No test file was found',
+            'name': 'No test file was found', 'valid': false
+        });
+    });
+
     it('Should set default name', () => {
         const value = {
             id: 12345,

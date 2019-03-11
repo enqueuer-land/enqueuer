@@ -23,14 +23,18 @@ export class RequisitionFileParser {
     public parse(): RequisitionModel[] {
         this.filesErrors = [];
         const requisitions: input.RequisitionModel[] = [];
-        this.getMatchingFiles()
-            .forEach((file: string) => {
+        const matchingFiles = this.getMatchingFiles();
+        matchingFiles.forEach((file: string) => {
                 try {
                     requisitions.push(this.parseFile(file));
                 } catch (err) {
                     this.addError(`Error parsing file '${file}'`, err);
                 }
             });
+        if (matchingFiles.length === 0) {
+            const title = `No test file was found`;
+            this.addError(title, title);
+        }
         return requisitions;
     }
 
