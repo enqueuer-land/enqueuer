@@ -17,7 +17,7 @@ export class SummaryTestOutput {
         printFailingTests: true,
         maxLevel: 100,
         tabulationPerLevel: 6,
-        summarySpacing: 110
+        summarySpacing: 90
     };
 
     public constructor(report: ReportModel, options?: SummaryOptions) {
@@ -52,9 +52,15 @@ export class SummaryTestOutput {
     }
 
     private formatTitle(testAnalyzer: TestsAnalyzer): string {
-        let formattedString = this.createEmptyStringSized(2 * this.options.tabulationPerLevel);
+        const initialTabulation = this.createEmptyStringSized(2 * this.options.tabulationPerLevel);
+        const tagTitleSeparation = this.createEmptyStringSized(this.options.level * this.options.tabulationPerLevel);
+        const titleSizeSeparation: number = initialTabulation.length + 6 + tagTitleSeparation.length + this.report.name.length;
+        let formattedString = initialTabulation;
         let nameColorFunction;
-        if (this.report.ignored || testAnalyzer.getNotIgnoredTests().length === 0) {
+        if (testAnalyzer.getTests().length === 0) {
+            formattedString += `${chalk.black.bgHex('#999999')('[NULL]')} `;
+            nameColorFunction = chalk.hex('#999999');
+        } else if (this.report.ignored || testAnalyzer.getIgnoredList().length === testAnalyzer.getTests().length) {
             formattedString += `${chalk.black.bgYellow('[SKIP]')} `;
             nameColorFunction = chalk.yellow;
         } else if (this.report.valid) {
@@ -64,9 +70,9 @@ export class SummaryTestOutput {
             formattedString += `${chalk.black.bgRed('[FAIL]')} `;
             nameColorFunction = chalk.red;
         }
-        formattedString += this.createEmptyStringSized(this.options.level * this.options.tabulationPerLevel);
+        formattedString += tagTitleSeparation;
         formattedString += nameColorFunction(this.report.name);
-        formattedString += this.createEmptyStringSized(this.options.summarySpacing - formattedString.length);
+        formattedString += this.createEmptyStringSized(this.options.summarySpacing - titleSizeSeparation);
         return formattedString;
     }
 
@@ -80,7 +86,7 @@ export class SummaryTestOutput {
 
     private createSummary(testAnalyzer: TestsAnalyzer): string {
         const percentage = testAnalyzer.getPercentage();
-        const testsNumber = testAnalyzer.getTests().length;
+        const testsNumber = testAnalyzer.getNotIgnoredTests().length;
         let message = `${testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;
         const ignoredTests = testAnalyzer.getIgnoredList();
         if (ignoredTests.length > 0) {

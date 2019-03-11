@@ -134,7 +134,7 @@ describe('RequisitionFileParser', () => {
         const parser = new RequisitionFileParser(['anyStuff']);
         parser.parse();
 
-        expect(parser.getFilesErrors()[0].description).toBe('File anyStuff is not a valid requisition');
+        expect(parser.getFilesErrors()[0].name).toBe('Error parsing file \'anyStuff\'');
     });
 
     it('should add every not matching file to error', () => {

@@ -45,7 +45,7 @@ export class RequisitionFileParser {
 
         const requisitionValidator = new RequisitionValidator();
         if (!requisitionValidator.validate(requisition)) {
-            throw 'File ' + filename + ' is not a valid requisition. ' + requisitionValidator.getErrorMessage();
+            throw 'File \'' + filename + '\' is not a valid requisition. ' + requisitionValidator.getErrorMessage();
         }
 
         if (!requisition.name) {
