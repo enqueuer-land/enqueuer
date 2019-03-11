@@ -1,0 +1,15 @@
+{
+  "number": 123,
+  "onInit": {
+    "assertions": [
+      {
+        "expect": "typeof requisition.number",
+        "toBeEqualTo": "'number'"
+      },
+      {
+        "expect": "requisition.number",
+        "toBeEqualTo": 123
+      }
+    ]
+  }
+}

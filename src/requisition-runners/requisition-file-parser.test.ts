@@ -12,6 +12,7 @@ describe('RequisitionFileParser', () => {
         // @ts-ignore
         delete DynamicModulesManager.instance;
 
+        // @ts-ignore
         glob.sync.mockImplementationOnce((pattern: string) => [pattern]);
     });
 
@@ -149,7 +150,9 @@ describe('RequisitionFileParser', () => {
     });
 
     it('should add every not matching file to error', () => {
+        // @ts-ignore
         glob.sync.mockReset();
+        // @ts-ignore
         glob.sync.mockImplementationOnce(() => []);
 
         const parser = new RequisitionFileParser(['not-matching-pattern']);
