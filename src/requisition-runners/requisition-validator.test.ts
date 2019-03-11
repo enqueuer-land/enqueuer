@@ -1,8 +1,17 @@
 import {RequisitionValidator} from './requisition-validator';
 
 describe('RequisitionValidator', () => {
+    it('Should return error message', () => {
+        expect(new RequisitionValidator().getErrorMessage())
+            .toBe('Unable to find: \'onInit\', \'onFinish\', \'delay\', \'requisitions\', \'publishers\' nor \'subscriptions\'');
+    });
+
     it('Should accept onInit', () => {
         expect(new RequisitionValidator().validate({onInit: {}})).toBeTruthy();
+    });
+
+    it('Should accept delay', () => {
+        expect(new RequisitionValidator().validate({delay: {}})).toBeTruthy();
     });
 
     it('Should accept onFinish', () => {

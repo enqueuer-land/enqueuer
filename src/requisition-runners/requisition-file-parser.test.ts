@@ -134,12 +134,7 @@ describe('RequisitionFileParser', () => {
         const parser = new RequisitionFileParser(['anyStuff']);
         parser.parse();
 
-        expect(parser.getFilesErrors()[0]).toEqual({
-            'description': 'File anyStuff is not a valid requisition. ' +
-                "Unable to find: 'onInit', 'onFinish', 'requisitions', 'publishers' nor 'subscriptions'",
-            'name': "Error parsing file 'anyStuff'",
-            'valid': false
-        });
+        expect(parser.getFilesErrors()[0].description).toBe('File anyStuff is not a valid requisition');
     });
 
     it('should add every not matching file to error', () => {

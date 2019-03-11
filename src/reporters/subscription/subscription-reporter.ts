@@ -196,7 +196,7 @@ export class SubscriptionReporter {
 
     private initializeTimeout() {
         if (this.timeOut && this.subscription.timeout) {
-            Logger.debug(`${this.subscription.name} setting timeout to ${this.subscription.timeout}ms`);
+            Logger.info(`Starting subscription '${this.subscription.name}'`);
             this.timeOut.start(this.subscription.timeout);
         }
     }

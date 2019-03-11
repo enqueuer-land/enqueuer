@@ -21,6 +21,7 @@ export class MultiSubscriptionsReporter {
     }
 
     public async subscribe(stoppedWaitingCallback: Function): Promise<void> {
+        Logger.info(`Subscriptions are subscribing`);
         await Promise
             .all(this.subscriptionReporters
                 .map(async subscription => {
@@ -40,6 +41,7 @@ export class MultiSubscriptionsReporter {
     }
 
     public receiveMessage(): Promise<void> {
+        Logger.info(`Subscriptions are ready to receive message`);
         return new Promise((resolve, reject) => {
             if (this.subscriptionReporters.length <= 0) {
                 return resolve();

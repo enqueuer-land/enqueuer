@@ -4,7 +4,8 @@ export class RequisitionValidator {
 
     public validate(requisition: RequisitionModel): boolean {
         if (requisition.onInit !== undefined ||
-            requisition.onFinish !== undefined) {
+            requisition.onFinish !== undefined ||
+            requisition.delay !== undefined) {
             return true;
         }
         if (Array.isArray(requisition.publishers) && requisition.publishers.length > 0) {
@@ -19,4 +20,7 @@ export class RequisitionValidator {
         return false;
     }
 
+    public getErrorMessage(): string {
+        return 'Unable to find: \'onInit\', \'onFinish\', \'delay\', \'requisitions\', \'publishers\' nor \'subscriptions\'';
+    }
 }

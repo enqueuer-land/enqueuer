@@ -109,6 +109,7 @@ export class RequisitionRunner {
     private startRequisitionReporter(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
         return new Promise((resolve) => {
             const requisitionReporter = new RequisitionReporter(requisitionModel);
+            const delay = requisitionModel.delay || 0;
             new Timeout(() => {
                 this.runChildRequisitions(requisitionModel)
                     .then((childrenReport: output.RequisitionModel[]) => {
@@ -121,7 +122,10 @@ export class RequisitionRunner {
                             resolve(report);
                         });
                     });
-            }).start(requisitionModel.delay || 0);
+            }).start(delay);
+            if (delay > 0) {
+                Logger.info(`Delaying requisition '${requisitionModel.name}' for ${delay}ms`);
+            }
         });
     }
 

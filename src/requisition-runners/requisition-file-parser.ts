@@ -43,9 +43,9 @@ export class RequisitionFileParser {
             requisition = new RequisitionParentCreator().create(filename, requisition);
         }
 
-        if (!new RequisitionValidator().validate(requisition)) {
-            throw 'File ' + filename + ' is not a valid requisition. ' +
-            'Unable to find: \'onInit\', \'onFinish\', \'requisitions\', \'publishers\' nor \'subscriptions\'';
+        const requisitionValidator = new RequisitionValidator();
+        if (!requisitionValidator.validate(requisition)) {
+            throw 'File ' + filename + ' is not a valid requisition. ' + requisitionValidator.getErrorMessage();
         }
 
         if (!requisition.name) {

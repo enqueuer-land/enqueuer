@@ -43,12 +43,12 @@ export class RequisitionReporter {
 
     public start(onFinishCallback: RequisitionRunnerCallback): void {
         this.onFinishCallback = onFinishCallback;
+        this.initializeTimeout();
         Logger.debug('Preparing subscriptions');
         this.multiSubscriptionsReporter
             .subscribe(() => this.onAllSubscriptionsStopWaiting())
             .then(() => {
                 Logger.debug('Multisubscriptions are ready');
-                this.initializeTimeout();
                 return this.onSubscriptionsCompleted();
             })
             .catch(err => {
@@ -84,6 +84,7 @@ export class RequisitionReporter {
     }
 
     private initializeTimeout() {
+        Logger.info('Starting requisition time out');
         if (this.timeout) {
             new Timeout(async () => {
                 if (!this.publishersDoneTheirJob || !this.allSubscriptionsStoppedWaiting) {

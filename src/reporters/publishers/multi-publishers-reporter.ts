@@ -19,7 +19,9 @@ export class MultiPublishersReporter {
     }
 
     public publish(): Promise<void[]> {
-        Logger.debug(`Publishing publishers`);
+        if (this.publishers.length > 0) {
+            Logger.info(`Publishers are publishing messages`);
+        }
         return Promise.all(this.publishers.map(publisher => publisher.publish()));
     }
 
