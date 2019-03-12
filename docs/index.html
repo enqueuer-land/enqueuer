@@ -207,7 +207,7 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 <pre><code><span class="dollar-sign">$</span> npm install --global enqueuer
 </code></pre>
 
-<h4 id="create_test_file" style="padding-left: 8px">1.2. create test file</h4>
+<h4 id="create_a_test_file" style="padding-left: 8px">1.2. create a test file</h4>
 
 <p>Something like:</p>
 
@@ -258,7 +258,7 @@ subscriptions:
             toContain: `enqueuer`
 </code></pre>
 
-<h5 id="run_it_again" style="padding-left: 16px">1.2.2. run it again</h5>
+<h5 id="run_this_other_one" style="padding-left: 16px">1.2.2. run this other one</h5>
 
 <pre><code><span class="dollar-sign">$</span> nqr http-self-test.yml
 </code></pre>
@@ -306,7 +306,7 @@ Examples:
 
 <h3 id="components" style="padding-left: 0px">2. Components</h3>
 
-<p>In order to accomplish more than <a href="#create_test_file">just hitting enqueuer's repo</a> or doing a <a href="#run_it_again">quick self http hit</a>, there are a few things that you'll probably need to know.
+<p>In order to accomplish more than <a href="#create_a_test_file">just hitting enqueuer's repo</a> or doing a <a href="#run_this_other_one">quick self http hit</a>, there are a few things that you'll probably need to know.
 Don't worry, it's not too much and there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case. 
 There are only three important component concepts: <a href="#requisition">requisitions</a>, <a href="#publisher">publishers</a> and <a href="#subscription">subscriptions</a>.
 They work along with each other and are responsible for the full behavior of enqueuer.</p>
@@ -513,12 +513,14 @@ There are three events available:</p>
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.</p>
 
 <p><strong>onFinish</strong><br>
-Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.</p>
+Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
+As available parameter is <code>elapsedTime</code>, with elapsed time, in milliseconds, since the instantiation of this component. </p>
 
 <p><strong>onMessageReceived</strong><br>
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
-An additional <code>message</code> object is available having all of attributes returned from the received message.</p>
+A <code>message</code> object is available having all of attributes returned from the received message.
+<code>elapsedTime</code> is also available here, with elapsed time, in milliseconds, since the instantiation of this component.</p>
 
 <h4 id="fields" style="padding-left: 8px">3.1. fields</h4>
 

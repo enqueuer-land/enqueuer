@@ -1,26 +1,15 @@
 -   name: iterations
     iterations: 10
     onInit:
-        store:
-            iteration: (store.iteration + 1) || 0
-            lastExecutionTime: new Date().getTime();
-        assertions:
-        -   expectToBeUndefined: requisition.hakunaMatata
+        script: ++requisition.parent.parent.requisitions[1].counter;
 -   name: delayed
+    counter: 0
     delay: 3000
-    anyStuff: anyValue
     onFinish:
-        script: |-
-            delayedTime = new Date().getTime() - store.lastExecutionTime;
         assertions:
         -   name: It was executed 10 times
-            expect: store.iteration
-            toBeEqualTo: 9
-        -   name: It delayed for at least ~3 seconds
-            expect: delayedTime + 50
-            toBeGreaterThan: 3000
-        -   name: It delayed for no more than ~3 seconds
-            expect: delayedTime - 500
-            toBeLessThan: 3000
-        -   expect: requisition.anyStuff
-            toBeEqualTo: `anyValue`
+            expect: requisition.counter
+            toBeEqualTo: 10
+        -   name: Elapsed time
+            expect: elapsedTime
+            toBeGreaterThanOrEqualTo: 3000

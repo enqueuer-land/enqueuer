@@ -42,19 +42,25 @@ let onInitEventMock = jest.fn(() => {
 jest.mock('../../events/on-init-event-executor');
 OnInitEventExecutor.mockImplementation((onInitEventMock));
 
+let onFinishAddArgs = jest.fn(() => {
+    []
+});
 let onFinishTrigger = jest.fn(() => []);
 let onFinishEventMock = jest.fn(() => {
     return {
-        trigger: onFinishTrigger
+        trigger: onFinishTrigger,
+        addArgument: onFinishAddArgs,
     };
 });
 jest.mock('../../events/on-finish-event-executor');
 OnFinishEventExecutor.mockImplementation((onFinishEventMock));
 
 let onMessageReceivedTrigger = jest.fn(() => []);
+let onMessageReceivedAddArgs = jest.fn(() => []);
 let onMessageReceivedEventMock = jest.fn(() => {
     return {
-        trigger: onMessageReceivedTrigger
+        trigger: onMessageReceivedTrigger,
+        addArgument: onMessageReceivedAddArgs,
     };
 });
 jest.mock('../../events/on-message-received-event-executor');
@@ -138,15 +144,15 @@ describe('PublisherReporter', () => {
 
     });
 
-    it('Should print onMessageReceived', done => {
+    it('Should call onMessageReceived', async () => {
         const publisherReporter = new PublisherReporter(publisher);
-        publisherReporter.publish().then(() => {
+        await publisherReporter.publish();
 
-            expect(onMessageReceivedEventMock).toHaveBeenCalledWith('publisher', publisherMock());
-            expect(onMessageReceivedTrigger).toHaveBeenCalled();
-
-            done();
-        });
+        expect(onMessageReceivedEventMock).toHaveBeenCalledWith('publisher', publisherMock());
+        const addArgsCall = onMessageReceivedAddArgs.mock.calls;
+        expect(addArgsCall[0]![0]).toBe('elapsedTime');
+        expect(addArgsCall[0]![1]).toBeGreaterThan(0);
+        expect(onMessageReceivedTrigger).toHaveBeenCalled();
 
     });
 
@@ -201,6 +207,9 @@ describe('PublisherReporter', () => {
         new PublisherReporter(publisher).onFinish();
 
         expect(onFinishEventMock).toHaveBeenCalledWith('publisher', publisherMock());
+        const onFinishAddArgsCalls = onFinishAddArgs.mock.calls[0];
+        expect(onFinishAddArgsCalls[0]).toBe('elapsedTime');
+        expect(onFinishAddArgsCalls[1]).toBeGreaterThanOrEqual(0);
         expect(onFinishTrigger).toHaveBeenCalled();
     });
 

@@ -177,7 +177,9 @@ export class SubscriptionReporter {
     public onFinish() {
         Logger.trace(`Executing subscription onFinish`);
         if (!this.subscription.ignore) {
-            this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('subscription', this.subscription).trigger());
+            const onFinishEventExecutor = new OnFinishEventExecutor('subscription', this.subscription);
+            onFinishEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
+            this.report.tests = this.report.tests.concat(onFinishEventExecutor.trigger());
         }
     }
 
@@ -212,7 +214,9 @@ export class SubscriptionReporter {
         Logger.trace(`Executing subscription onMessageReceivedResponse`);
         Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
         this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-        this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('subscription', this.subscription).trigger());
+        const onMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('subscription', this.subscription);
+        onMessageReceivedEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
+        this.report.tests = this.report.tests.concat(onMessageReceivedEventExecutor.trigger());
     }
 
     private async handleKillSignal(signal: Signals, type: string): Promise<void> {

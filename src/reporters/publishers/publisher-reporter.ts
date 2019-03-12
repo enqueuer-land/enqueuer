@@ -12,7 +12,8 @@ import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
-    private publisher: Publisher;
+    private readonly publisher: Publisher;
+    private readonly startTime: Date;
 
     constructor(publisher: input.PublisherModel) {
         this.report = {
@@ -23,6 +24,7 @@ export class PublisherReporter {
             type: publisher.type,
             tests: []
         };
+        this.startTime = new Date();
         this.executeOnInitFunction(publisher);
         Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
         this.publisher = DynamicModulesManager.getInstance().getProtocolManager().createPublisher(publisher);
@@ -61,7 +63,9 @@ export class PublisherReporter {
 
     public onFinish(): void {
         if (!this.publisher.ignore) {
-            this.report.tests = this.report.tests.concat(new OnFinishEventExecutor('publisher', this.publisher).trigger());
+            const onFinishEventExecutor = new OnFinishEventExecutor('publisher', this.publisher);
+            onFinishEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
+            this.report.tests = this.report.tests.concat(onFinishEventExecutor.trigger());
         }
     }
 
@@ -86,7 +90,9 @@ export class PublisherReporter {
 
     private executeOnMessageReceivedFunction() {
         if (!this.publisher.ignore) {
-            this.report.tests = this.report.tests.concat(new OnMessageReceivedEventExecutor('publisher', this.publisher).trigger());
+            const onMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('publisher', this.publisher);
+            onMessageReceivedEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
+            this.report.tests = this.report.tests.concat(onMessageReceivedEventExecutor.trigger());
         }
     }
 

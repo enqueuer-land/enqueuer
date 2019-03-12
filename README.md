@@ -25,7 +25,7 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 #### install it
     $ npm install --global enqueuer
     
-#### create test file
+#### create a test file
 Something like:
     
     #enqueuer-repo-hit.yml
@@ -72,7 +72,7 @@ What if I want to mock a http server and hit it at the same time, you may ask. N
             -   expect: message.body
                 toContain: `enqueuer`
                 
-##### run it again
+##### run this other one
 
     $ nqr http-self-test.yml
 
@@ -117,7 +117,7 @@ Certainly you'll find what you need.
 ----
 
 ### Components
-In order to accomplish more than [just hitting enqueuer's repo](#create_test_file) or doing a [quick self http hit](#run_it_again), there are a few things that you'll probably need to know.
+In order to accomplish more than [just hitting enqueuer's repo](#create_a_test_file) or doing a [quick self http hit](#run_this_other_one), there are a few things that you'll probably need to know.
 Don't worry, it's not too much and there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case. 
 There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
 They work along with each other and are responsible for the full behavior of enqueuer.
@@ -301,11 +301,13 @@ Available in requisitions, publishers and subscriptions. It gets executed as soo
 
 **onFinish**\
 Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
+As available parameter is `elapsedTime`, with elapsed time, in milliseconds, since the instantiation of this component. 
 
 **onMessageReceived**\
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
-An additional `message` object is available having all of attributes returned from the received message.
+A `message` object is available having all of attributes returned from the received message.
+`elapsedTime` is also available here, with elapsed time, in milliseconds, since the instantiation of this component.
 
 #### fields
 Every event object has 3 properties:
