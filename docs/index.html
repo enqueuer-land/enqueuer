@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Enqueuer documentation">
     <meta name="author" content="Virgs">
-    <title>Enqueuer Doc's</title>
+    <title>Almighty Enqueuer</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -207,17 +207,69 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 <pre><code><span class="dollar-sign">$</span> npm install --global enqueuer
 </code></pre>
 
-<h4 id="run_it" style="padding-left: 8px">1.2. run it</h4>
+<h4 id="create_test_file" style="padding-left: 8px">1.2. create test file</h4>
 
-<pre><code><span class="dollar-sign">$</span> nqr configFile.yml
+<p>Something like:</p>
+
+<pre><code>#enqueuer-repo-hit.yml
+publishers:
+-   type: http
+    url: https://github.com/enqueuer-land/enqueuer
+    method: GET
+    onMessageReceived:
+        assertions:
+        -   expect: statusCode
+            toBeEqualTo: 200
 </code></pre>
 
-<p>or</p>
+<p>Pretty simple, hum? Small and concise, how it should be!</p>
 
-<pre><code><span class="dollar-sign">$</span> nqr -a testFile.yml
+<h5 id="run_it" style="padding-left: 16px">1.2.1. run it</h5>
+
+<pre><code><span class="dollar-sign">$</span> enqueuer enqueuer-repo-hit.yml
 </code></pre>
 
-<h4 id="get_help" style="padding-left: 8px">1.3. get help</h4>
+<p>What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:</p>
+
+<pre><code>#http-self-test.yml
+publishers:
+-   type: http
+    url: http://localhost:9085/readme-example
+    method: POST
+    payload: does enqueuer rock?
+    onMessageReceived:
+        script: statusCode *= 2
+        assertions:
+            -   expect: body
+                toBeEqualTo: `yes, it does`
+            -   expect: statusCode
+                toBeGreaterThan: 300
+subscriptions:
+-   type: http
+    endpoint: /readme-example
+    port: 9085
+    method: POST
+    response:
+        status: 200
+        payload: yes, it does
+    onMessageReceived:
+        assertions:
+        -   expect: message.body
+            toContain: `enqueuer`
+</code></pre>
+
+<h5 id="run_it_again" style="padding-left: 16px">1.2.2. run it again</h5>
+
+<pre><code><span class="dollar-sign">$</span> nqr http-self-test.yml
+</code></pre>
+
+<p>I told you it was simple.
+Now go nuts!
+It's all yours. Have fun.
+Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
+Certainly you'll find what you need.    </p>
+
+<h4 id="if_you_need_more" style="padding-left: 8px">1.3. if you need more</h4>
 
 <pre><code><span class="dollar-sign">$</span> nqr -h
 Usage: nqr [options]
@@ -254,7 +306,9 @@ Examples:
 
 <h3 id="components" style="padding-left: 0px">2. Components</h3>
 
-<p>There are only three important component concepts: <a href="#requisition">requisitions</a>, <a href="#publisher">publishers</a> and <a href="#subscription">subscriptions</a>.
+<p>In order to accomplish more than <a href="#create_test_file">just hitting enqueuer's repo</a> or doing a <a href="#run_it_again">quick self http hit</a>, there are a few things that you'll probably need to know.
+Don't worry, it's not too much and there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case. 
+There are only three important component concepts: <a href="#requisition">requisitions</a>, <a href="#publisher">publishers</a> and <a href="#subscription">subscriptions</a>.
 They work along with each other and are responsible for the full behavior of enqueuer.</p>
 
 <h4 id="requisition" style="padding-left: 8px">2.1. requisition</h4>

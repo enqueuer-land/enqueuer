@@ -25,14 +25,64 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 #### install it
     $ npm install --global enqueuer
     
-#### run it
-
-    $ nqr configFile.yml
-or
-
-    $ nqr -a testFile.yml
+#### create test file
+Something like:
     
-#### get help
+    #enqueuer-repo-hit.yml
+    publishers:
+    -   type: http
+        url: https://github.com/enqueuer-land/enqueuer
+        method: GET
+        onMessageReceived:
+            assertions:
+            -   expect: statusCode
+                toBeEqualTo: 200
+
+Pretty simple, hum? Small and concise, how it should be!
+    
+##### run it
+
+    $ enqueuer enqueuer-repo-hit.yml
+
+What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:
+    
+    #http-self-test.yml
+    publishers:
+    -   type: http
+        url: http://localhost:9085/readme-example
+        method: POST
+        payload: does enqueuer rock?
+        onMessageReceived:
+            script: statusCode *= 2
+            assertions:
+                -   expect: body
+                    toBeEqualTo: `yes, it does`
+                -   expect: statusCode
+                    toBeGreaterThan: 300
+    subscriptions:
+    -   type: http
+        endpoint: /readme-example
+        port: 9085
+        method: POST
+        response:
+            status: 200
+            payload: yes, it does
+        onMessageReceived:
+            assertions:
+            -   expect: message.body
+                toContain: `enqueuer`
+                
+##### run it again
+
+    $ nqr http-self-test.yml
+
+I told you it was simple.
+Now go nuts!
+It's all yours. Have fun.
+Check [this out](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), you'll find countless examples. 
+Certainly you'll find what you need.    
+    
+#### if you need more
 
     $ nqr -h
     Usage: nqr [options]
@@ -67,6 +117,8 @@ or
 ----
 
 ### Components
+In order to accomplish more than [just hitting enqueuer's repo](#create_test_file) or doing a [quick self http hit](#run_it_again), there are a few things that you'll probably need to know.
+Don't worry, it's not too much and there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case. 
 There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
 They work along with each other and are responsible for the full behavior of enqueuer.
 

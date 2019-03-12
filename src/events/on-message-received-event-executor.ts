@@ -3,7 +3,7 @@ import {EventExecutor} from './event-executor';
 import {TestModel} from '../models/outputs/test-model';
 
 export class OnMessageReceivedEventExecutor extends EventExecutor {
-    private messageReceiver: MessageReceiver;
+    private readonly messageReceiver: MessageReceiver;
 
     constructor(name: string, messageReceiver: MessageReceiver) {
         super('onMessageReceived', messageReceiver.onMessageReceived);
