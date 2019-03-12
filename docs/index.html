@@ -267,7 +267,7 @@ subscriptions:
 Now go nuts!
 It's all yours. Have fun.
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
-Certainly you'll find what you need.    </p>
+Certainly one find what you need.    </p>
 
 <h4 id="if_you_need_more" style="padding-left: 8px">1.3. if you need more</h4>
 
@@ -307,15 +307,16 @@ Examples:
 <h3 id="components" style="padding-left: 0px">2. Components</h3>
 
 <p>In order to accomplish more than <a href="#create_a_test_file">just hitting enqueuer's repo</a> or doing a <a href="#run_this_other_one">quick self http hit</a>, there are a few things that you'll probably need to know.
-Don't worry, it's not too much and there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case. 
+Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case. 
 There are only three important component concepts: <a href="#requisition">requisitions</a>, <a href="#publisher">publishers</a> and <a href="#subscription">subscriptions</a>.
 They work along with each other and are responsible for the full behavior of enqueuer.</p>
 
 <h4 id="requisition" style="padding-left: 8px">2.1. requisition</h4>
 
-<p>Test scenario description. It tells what and how test your applications and services.
-It's a collection of <a href="#publisher">publishers</a>, <a href="#subscription">subscriptions</a> and other <a href="#requisition">requisitions</a>.
-It supports multi-level test scenarios out of the box.
+<p>Test scenario description. It tells what, when, and how test your applications and services.
+Picture it as if it was a collection of <a href="#publisher">publishers</a>, <a href="#subscription">subscriptions</a> and other <a href="#requisition">requisitions</a>. It helps because this is exactly what it is.
+As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
+You don't know some od these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
 <a href="#variables">Variable replacements</a> are available through the entire requisition.</p>
 
 <p><strong>name</strong><br>
@@ -762,9 +763,11 @@ Run <code><span class="dollar-sign">$</span> nqr -e</code> to see available ones
 
 <h4 id="contributing" style="padding-left: 8px">8.1. Contributing</h4>
 
-<p>We, and by we I really mean I, are very opened do pull requests in general. As long as they make sense and add value to the product, you're free to go.
+<p>We, and by we I really mean I, are very opened to pull requests in general. As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a type fix in this README file. Go ahead.
-Just make sure it's not breaking anything running <code><span class="dollar-sign">$</span> npm run all</code> and then submit it.</p>
+Just make sure it's not breaking anything running <code><span class="dollar-sign">$</span> npm run all</code> and then submit it.
+If you like it but don't want to waste time creating a PR, no problem either. Create an issue. 
+Or, even easier, git it a github star. It's cheap and it doesn't hurt anyone.</p>
 
 <h4 id="license" style="padding-left: 8px">8.2. license</h4>
 

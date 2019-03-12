@@ -80,7 +80,7 @@ I told you it was simple.
 Now go nuts!
 It's all yours. Have fun.
 Check [this out](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), you'll find countless examples. 
-Certainly you'll find what you need.    
+Certainly one find what you need.    
     
 #### if you need more
 
@@ -118,14 +118,15 @@ Certainly you'll find what you need.
 
 ### Components
 In order to accomplish more than [just hitting enqueuer's repo](#create_a_test_file) or doing a [quick self http hit](#run_this_other_one), there are a few things that you'll probably need to know.
-Don't worry, it's not too much and there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case. 
+Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case. 
 There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
 They work along with each other and are responsible for the full behavior of enqueuer.
 
 #### requisition
-Test scenario description. It tells what and how test your applications and services.
-It's a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition).
-It supports multi-level test scenarios out of the box.
+Test scenario description. It tells what, when, and how test your applications and services.
+Picture it as if it was a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition). It helps because this is exactly what it is.
+As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
+You don't know some od these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
 [Variable replacements](#variables) are available through the entire requisition.
 
 **name**\
