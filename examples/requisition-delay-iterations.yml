@@ -7,9 +7,9 @@
     delay: 3000
     onFinish:
         assertions:
-        -   name: It was executed 10 times
-            expect: requisition.counter
-            toBeEqualTo: 10
-        -   name: Elapsed time
-            expect: elapsedTime
-            toBeGreaterThanOrEqualTo: 3000
+            -   name: It was executed 10 times
+                expect: requisition.counter
+                toBeEqualTo: 10
+            -   name: Elapsed time
+                expect: elapsedTime
+                toBeGreaterThanOrEqualTo: 3000
