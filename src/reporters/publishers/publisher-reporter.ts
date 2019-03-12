@@ -30,29 +30,24 @@ export class PublisherReporter {
         this.publisher = DynamicModulesManager.getInstance().getProtocolManager().createPublisher(publisher);
     }
 
-    public publish(): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public async publish(): Promise<void> {
+        try {
             if (this.publisher.ignore) {
                 Logger.trace(`Ignoring publisher ${this.report.name}`);
-                resolve();
             } else {
                 Logger.trace(`Publishing ${this.report.name}`);
-                this.publisher.publish()
-                    .then(() => {
-                        Logger.debug(`${this.report.name} published`);
-                        this.report.publishTime = new DateController().toString();
-                        this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
-                        this.executeOnMessageReceivedFunction();
-                        resolve();
-                    })
-                    .catch((err: any) => {
-                        Logger.error(`${this.report.name} fail publishing: ${err}`);
-                        this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
-                        reject(err);
-                    });
-
+                await this.publisher.publish();
+                Logger.debug(`${this.report.name} published`);
+                this.report.publishTime = new DateController().toString();
+                this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
+                this.executeOnMessageReceivedFunction();
             }
-        });
+        } catch (err) {
+            Logger.error(`${this.report.name} fail publishing: ${err}`);
+            this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
+            throw err;
+        }
+
     }
 
     public getReport(): PublisherModel {
