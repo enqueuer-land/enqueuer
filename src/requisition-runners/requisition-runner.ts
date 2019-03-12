@@ -59,7 +59,7 @@ export class RequisitionRunner {
         Logger.debug(`Handling child '${requisition.name}' requisitions`);
         let index: number = 0;
         for (const child of children) {
-            // child.parent = requisition;
+            //TODO check if this is needed
             child.name = child.name || `${requisition.name} [${index}]`;
             reports.push(await new RequisitionRunner(child, this.level + 1).run());
             ++index;
@@ -107,27 +107,24 @@ export class RequisitionRunner {
         }
     }
 
-    private startRequisitionReporter(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
-        return new Promise((resolve) => {
-            const requisitionReporter = new RequisitionReporter(requisitionModel);
-            const delay = requisitionModel.delay || 0;
-            new Timeout(() => {
-                this.runChildRequisitions(requisitionModel)
-                    .then((childrenReport: output.RequisitionModel[]) => {
-                        requisitionReporter.start(() => {
-                            const report = requisitionReporter.getReport();
-                            Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
-                            Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
-                            report.requisitions = childrenReport;
-                            report.valid = report.valid && report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
-                            resolve(report);
-                        });
-                    });
-            }).start(delay);
-            if (delay > 0) {
-                Logger.info(`Delaying requisition '${requisitionModel.name}' for ${delay}ms`);
-            }
-        });
+    private async startRequisitionReporter(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
+        const requisitionReporter = new RequisitionReporter(requisitionModel);
+        const report = await Promise.race([requisitionReporter.startTimeout(), this.happyPath(requisitionModel, requisitionReporter)]);
+
+        Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
+        Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
+
+        return report;
+    }
+
+    private async happyPath(requisitionModel: input.RequisitionModel, requisitionReporter: RequisitionReporter): Promise<output.RequisitionModel> {
+        await requisitionReporter.delay();
+        const childrenReport = await this.runChildRequisitions(requisitionModel);
+        const report = await requisitionReporter.execute();
+        report.requisitions = childrenReport;
+        report.valid = report.valid && report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
+        Logger.debug(`Requisition ${requisitionModel.name} went through the happy path`);
+        return report;
     }
 
     private shouldSkipRequisition(requisition: input.RequisitionModel) {

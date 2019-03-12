@@ -18,11 +18,21 @@ export class MultiPublishersReporter {
         });
     }
 
-    public publish(): Promise<void[]> {
+    public async publish(): Promise<number> {
+        let errorsCounter = 0;
         if (this.publishers.length > 0) {
             Logger.info(`Publishers are publishing messages`);
         }
-        return Promise.all(this.publishers.map(publisher => publisher.publish()));
+        await Promise.all(this.publishers.map(async publisher => {
+            try {
+                await publisher.publish();
+            } catch (err) {
+                ++errorsCounter;
+                Logger.error(err);
+            }
+        }));
+        Logger.info(`Publishers have publisher their messages`);
+        return errorsCounter;
     }
 
     public onFinish(): void {

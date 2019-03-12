@@ -6,7 +6,7 @@ import {RequisitionModel} from '../../models/inputs/requisition-model';
 
 export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
-    private onFinishCallback?: Function;
+    private timeoutPromise: Promise<any>;
 
     constructor(subscriptionsAttributes: input.SubscriptionModel[], parent: RequisitionModel) {
         if (subscriptionsAttributes) {
@@ -18,37 +18,54 @@ export class MultiSubscriptionsReporter {
                 return new SubscriptionReporter(subscription);
             });
         }
+        this.timeoutPromise = Promise.resolve();
     }
 
-    public start(onFinish: Function): void {
-        this.onFinishCallback = onFinish;
-        this.subscriptionReporters
-            .forEach(subscription => subscription.startTimeout(() => {
-                if (this.onFinishCallback && this.subscriptionReporters
-                    .every(subscription => subscription.hasFinished())) {
-                    this.onFinishCallback();
-                    this.onFinishCallback = () => {
-                    };
-                }
-            }));
+    public start(): void {
+        this.timeoutPromise = new Promise((resolve) => {
+            this.subscriptionReporters.forEach(subscription => {
+                subscription.startTimeout(() => {
+                    if (this.subscriptionReporters.every(subscription => subscription.hasFinished())) {
+                        const message = `Every subscription has finished its job`;
+                        Logger.debug(message);
+                        resolve(message);
+                    }
+                });
+            });
+        });
     }
 
-    public async subscribe(): Promise<void[]> {
+    public async subscribe(): Promise<any> {
         Logger.info(`Subscriptions are subscribing`);
-        return await Promise.all(this.subscriptionReporters.map(subscription => subscription.subscribe()));
+        return Promise.race([
+            Promise.all(this.subscriptionReporters.map(async subscription => {
+                try {
+                    await subscription.subscribe();
+                } catch (err) {
+                    Logger.error(`Error subscribing: ${err}`);
+                }
+            })),
+            this.timeoutPromise]);
+
     }
 
-    public async receiveMessage(): Promise<void[]> {
-        Logger.info(`Subscriptions are ready to receive message`);
-        return await Promise.all(this.subscriptionReporters.map(async subscription => {
-            await subscription.receiveMessage();
-            if (this.onFinishCallback && this.subscriptionReporters
-                .every(subscription => subscription.hasFinished())) {
-                this.onFinishCallback();
-                this.onFinishCallback = () => {
-                };
-            }
-        }));
+    public async receiveMessage(): Promise<number> {
+        let errorsCounter = 0;
+        Logger.info(`Subscriptions are waiting for message`);
+        await Promise.race([
+            Promise.all(this.subscriptionReporters.map(async subscription => {
+                try {
+                    await subscription.receiveMessage();
+                    Logger.debug(`A subscription received a message`);
+                } catch (err) {
+                    ++errorsCounter;
+                    Logger.error(`Error receiving message: ${err}`);
+                }
+            })),
+            this.timeoutPromise]);
+
+        Logger.debug(`Subscriptions are no longer waiting for messages`);
+        return errorsCounter;
     }
 
     public async unsubscribe(): Promise<void[]> {
