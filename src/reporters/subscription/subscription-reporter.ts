@@ -67,77 +67,68 @@ export class SubscriptionReporter {
         });
     }
 
-    public subscribe(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            if (this.subscription.ignore) {
-                Logger.trace(`Subscription ${this.subscription.name} is ignored`);
-                resolve();
-            } else {
+    public async subscribe(): Promise<void> {
+        if (this.subscription.ignore) {
+            Logger.trace(`Subscription ${this.subscription.name} is ignored`);
+        } else {
+            try {
                 Logger.trace(`Starting ${this.subscription.name} time out`);
                 this.initializeTimeout();
                 Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
-                this.subscription.subscribe()
-                    .then(() => {
-                        this.handleSubscription(reject, resolve);
-                    })
-                    .catch((err: any) => {
-                        Logger.error(`${this.subscription.name} is unable to subscribe: ${err}`);
-                        this.subscribeError = JSON.stringify(err);
-                        reject(err);
-                    });
+                await this.subscription.subscribe();
+                await this.handleSubscription();
+            } catch (err) {
+                Logger.error(`${this.subscription.name} is unable to subscribe: ${err}`);
+                this.subscribeError = JSON.stringify(err);
+                throw err;
             }
-        });
+        }
     }
 
-    public receiveMessage(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (this.subscription.ignore) {
-                resolve();
-            } else {
-                this.subscription.receiveMessage()
-                    .then((message: any) => {
-                        Logger.debug(`${this.subscription.name} received its message`);
-                        if (message !== null || message !== undefined) {
-                            this.handleMessageArrival(message);
-                            this.sendSyncResponse(resolve, message, reject);
-                        } else {
-                            Logger.warning(`${this.subscription.name} message is null or undefined`);
-                        }
-                    })
-                    .catch((err: any) => {
-                        this.subscription.unsubscribe().catch(console.log.bind(console));
-                        Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
-                        reject(err);
-                    });
+    public async receiveMessage(): Promise<any> {
+        if (!this.subscription.ignore) {
+            try {
+                const message = await this.subscription.receiveMessage();
+                Logger.debug(`${this.subscription.name} received its message`);
+                if (message !== null || message !== undefined) {
+                    this.handleMessageArrival(message);
+                    await this.sendSyncResponse();
+                    return message;
+                } else {
+                    Logger.warning(`${this.subscription.name} message is null or undefined`);
+                }
+            } catch (err) {
+                this.subscription.unsubscribe().catch(console.log.bind(console));
+                Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
+                throw err;
             }
-        });
+        }
     }
 
-    private handleSubscription(reject: any, resolve: any) {
+    private async handleSubscription(): Promise<boolean> {
+        process.once('SIGINT', this.killListener)
+            .once('SIGTERM', this.killListener);
         if (this.hasTimedOut) {
             const message = `Subscription '${this.subscription.name}' subscription because it has timed out`;
             Logger.error(message);
-            reject(message);
+            return false;
         } else {
             this.report.connectionTime = new DateController().toString();
             this.subscribed = true;
-            resolve();
+            return true;
         }
-        process.once('SIGINT', this.killListener)
-            .once('SIGTERM', this.killListener);
     }
 
-    private sendSyncResponse(resolve: any, message: any, reject: any) {
+    private async sendSyncResponse(): Promise<any> {
         if (this.subscription.response) {
-            Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-            this.subscription.sendResponse()
-                .then(() => resolve(message))
-                .catch(err => {
-                    Logger.warning(`Error ${this.subscription.type} synchronous response sending: ${err}`);
-                    reject(err);
-                });
-        } else {
-            resolve();
+            try {
+                Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
+                return await this.subscription.sendResponse();
+
+            } catch (err) {
+                Logger.warning(`Error ${this.subscription.type} synchronous response sending: ${err}`);
+                throw err;
+            }
         }
     }
 
