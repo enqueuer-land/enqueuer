@@ -6,7 +6,9 @@ import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {TestModel} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
+import {TimeModel} from '../models/outputs/time-model';
 
+//TODO merge this with RequisitionReporter
 export class RequisitionReportGenerator {
 
     private startTime: DateController = new DateController();
@@ -53,11 +55,17 @@ export class RequisitionReportGenerator {
     }
 
     private addTimesReport(): void {
-        let timesReport = this.generateTimesReport();
-        this.report.time = timesReport;
+        this.report.time = this.generateTimesReport();
         if (this.timeout) {
             this.report.time.timeout = this.timeout;
-            this.createTimeoutTest(this.report.time);
+            if (this.report.time.totalTime > this.report.time.timeout) {
+                this.report.tests.push({
+                    valid: false,
+                    name: 'No time out',
+                    description: `Requisition has timed out: ${this.report.time.totalTime} > ${this.timeout}`
+                });
+            }
+
         }
     }
 
@@ -70,13 +78,4 @@ export class RequisitionReportGenerator {
         };
     }
 
-    private createTimeoutTest(timesReport: any) {
-        if (timesReport.totalTime > timesReport.timeout) {
-            this.report.tests.push({
-                valid: false,
-                name: 'No time out',
-                description: `Requisition has timed out: ${timesReport.totalTime} > ${this.timeout}`
-            });
-        }
-    }
 }

@@ -1,4 +1,4 @@
-import {RequisitionReportGenerator} from "./requisition-report-generator";
+import {RequisitionReportGenerator} from './requisition-report-generator';
 
 let sleep = (millisecondsToWait: number): void => {
     const waitTill = new Date(new Date().getTime() + millisecondsToWait);
@@ -14,12 +14,12 @@ describe('RequisitionReportGenerator', () => {
         expect(report.time).toBeDefined();
         delete report.time;
         expect(report).toEqual({
-            "name": "testName",
-            "publishers": [],
-            "requisitions": [],
-            "subscriptions": [],
-            "tests": [],
-            "valid": true
+            'name': 'testName',
+            'publishers': [],
+            'requisitions': [],
+            'subscriptions': [],
+            'tests': [],
+            'valid': true
         });
     });
 
@@ -39,11 +39,11 @@ describe('RequisitionReportGenerator', () => {
         delete secondReport.tests;
 
         expect(secondReport).toEqual({
-            "name": "someName",
-            "publishers": [],
-            "requisitions": [],
-            "subscriptions": [],
-            "valid": true
+            'name': 'someName',
+            'publishers': [],
+            'requisitions': [],
+            'subscriptions': [],
+            'valid': true
         });
     });
 
@@ -81,7 +81,7 @@ describe('RequisitionReportGenerator', () => {
         expect(report.valid).toBeTruthy();
         expect(report.publishers.length).toBe(0);
 
-        reportGenerator.setPublishersReport([{valid: false}])
+        reportGenerator.setPublishersReport([{valid: false}]);
         report = reportGenerator.getReport();
 
         expect(report.valid).toBeFalsy();
@@ -96,7 +96,7 @@ describe('RequisitionReportGenerator', () => {
         expect(report.valid).toBeTruthy();
         expect(report.subscriptions.length).toBe(0);
 
-        reportGenerator.setSubscriptionsReport([{valid: false}])
+        reportGenerator.setSubscriptionsReport([{valid: false}]);
         report = reportGenerator.getReport();
 
         expect(report.valid).toBeFalsy();
@@ -130,6 +130,5 @@ describe('RequisitionReportGenerator', () => {
         expect(report.tests.length).toBe(1);
         expect(report.tests[0]).toEqual({valid: false, name: 'errorName', description: 'description'});
     });
-
 
 });

@@ -1,5 +1,6 @@
 import {PublisherReporter} from './publisher-reporter';
-import {MultiPublishersReporter} from "./multi-publishers-reporter";
+import {MultiPublishersReporter} from './multi-publishers-reporter';
+
 jest.mock('./publisher-reporter');
 
 let publish = jest.fn();
@@ -16,8 +17,8 @@ const recreateMock = () => {
             publish: publish,
             onFinish: onFinishMock,
             getReport: getReportMock
-        }
-    })
+        };
+    });
 };
 
 let clearMock = function () {
@@ -84,19 +85,13 @@ describe('MultiPublishersReporter', () => {
         expect(publish).toHaveBeenCalledTimes(0);
     });
 
-    it('should handle fail publishing', done => {
+    it('should handle fail publishing', async () => {
         publish.mockImplementationOnce(() => Promise.resolve());
         publish.mockImplementationOnce(() => Promise.reject('err reason'));
         recreateMock();
 
         const publishers = [{}, {}];
-        new MultiPublishersReporter(publishers)
-            .publish()
-            .catch((err) => {
-                expect(err).toBe('err reason');
-                done();
-            });
-
+        expect(await new MultiPublishersReporter(publishers).publish()).toBe(1);
         expect(publish).toHaveBeenCalledTimes(publishers.length);
     });
 

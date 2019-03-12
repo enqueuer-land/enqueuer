@@ -189,7 +189,7 @@
 
 <p>Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
-Dependencies messages have become a pain?
+Depending services have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.</p>
 
 <h3 id="enqueuer" style="padding-left: 0px">1. Enqueuer</h3>
@@ -507,7 +507,15 @@ onFinish:
 <h3 id="event" style="padding-left: 0px">3. Event</h3>
 
 <p>Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
-There are three events available:</p>
+Depending on the event's owner, there may be a variable called <code>publisher</code>, <code>subscription</code> or <code>requisition</code>.
+You're free to explore them however you want, even doing things like this:</p>
+
+<pre><code>publisher.parent.subscriptions[0].timeout = 1000;
+</code></pre>
+
+<h4 id="hooks" style="padding-left: 8px">3.1. hooks</h4>
+
+<p>There are three hook events available:</p>
 
 <p><strong>onInit</strong><br>
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.</p>
@@ -520,16 +528,20 @@ As available parameter is <code>elapsedTime</code>, with elapsed time, in millis
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
 A <code>message</code> object is available having all of attributes returned from the received message.
+Depending on the protocol implementation, there'll be additional objects to this hook.
+For instance, in the built-in http implementation, there's a <code>statusCode</code> and a <code>body</code> variables.
 <code>elapsedTime</code> is also available here, with elapsed time, in milliseconds, since the instantiation of this component.</p>
 
-<h4 id="fields" style="padding-left: 8px">3.1. fields</h4>
+<h4 id="fields" style="padding-left: 8px">3.2. fields</h4>
 
-<p>Every event object has 3 properties:</p>
+<p>Every hook object has 3 properties:</p>
 
 <p><strong>script</strong><br>
 Javascript code snippet executed when the event is triggered.<br>
 Yeah, I mean it. See it <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml">it</a> by yourself.
-<strong>store</strong><br>
+But be careful, with great power comes great responsibility.</p>
+
+<p><strong>store</strong><br>
 Data to be persisted across requisitions<br>
 <strong>assertions</strong><br>
 Array of assertions. Run <code><span class="dollar-sign">$</span> nqr -t</code> to see available ones.</p>
@@ -557,7 +569,7 @@ onMessageReceived:
     toBeGreaterThan: 3
 </code></pre>
 
-<h4 id="example" style="padding-left: 8px">3.2. example</h4>
+<h4 id="example" style="padding-left: 8px">3.3. example</h4>
 
 <p>Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/hooks.yml">this</a> test file to see it in practice.</p>
 
@@ -744,7 +756,19 @@ Run <code><span class="dollar-sign">$</span> nqr -e</code> to see available ones
 
 <p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png" alt="enqueuerInstanceFlow" title="Enqueuer Instance Flow" /></p>
 
-<p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p></div>
+<p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p>
+
+<h3 id="open_source" style="padding-left: 0px">8. Open source</h3>
+
+<h4 id="contributing" style="padding-left: 8px">8.1. Contributing</h4>
+
+<p>We, and by we I really mean I, are very opened do pull requests in general. As long as they make sense and add value to the product, you're free to go.
+We mean it, do it. Even if it's a type fix in this README file. Go ahead.
+Just make sure it's not breaking anything running <code><span class="dollar-sign">$</span> npm run all</code> and then submit it.</p>
+
+<h4 id="license" style="padding-left: 8px">8.2. license</h4>
+
+<p>MIT</p></div>
 
 </div>
 

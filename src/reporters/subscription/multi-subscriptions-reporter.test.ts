@@ -101,18 +101,22 @@ describe('MultiSubscriptionsReporter', () => {
         expect(onFinishMock).toHaveBeenCalledTimes(2);
     });
 
-    it('Sub call on finished on timeout - not subscribed', async done => {
-        startTimeoutMock = jest.fn((cb: any) => cb());
+    it('Sub timeout before subscribed', async () => {
+        startTimeoutMock = jest.fn((cb: any) => setTimeout(cb, 2000));
         hasFinishedMock = jest.fn(() => true);
-        const timeoutCb = jest.fn(() => {
-            expect(startTimeoutMock).toHaveBeenCalled();
-            done();
-        });
 
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
-        multi.start(timeoutCb);
-        await multi.subscribe();
+        multi.start();
+        const subscriptionResult = await multi.subscribe();
+        console.log(subscriptionResult);
+    });
+
+    it('Subtimeout before receiving message', async () => {
+        receiveMessageMock = jest.fn(() => Promise.reject('errDesc'));
+
+        expect(await new MultiSubscriptionsReporter([{}]).receiveMessage()).toBe(1);
+
     });
 
     it('Sub subscribed', done => {
@@ -135,17 +139,6 @@ describe('MultiSubscriptionsReporter', () => {
         multi.receiveMessage().then(() => {
             done();
         });
-    });
-
-    it('Handling receiveMessage failure', done => {
-        expect.assertions(1);
-        receiveMessageMock = jest.fn(() => Promise.reject('errDesc'));
-
-        new MultiSubscriptionsReporter([{}]).receiveMessage().catch((err) => {
-            expect(err).toBe('errDesc');
-            done();
-        });
-
     });
 
     it('Handling receiveMessage success', done => {

@@ -16,7 +16,7 @@ import SignalsListener = NodeJS.SignalsListener;
 
 export class SubscriptionReporter {
 
-    private static readonly DEFAULT_TIMEOUT: number = 5 * 1000;
+    private static readonly DEFAULT_TIMEOUT: number = 3 * 1000;
     private readonly killListener: SignalsListener;
     private readonly report: output.SubscriptionModel;
     private readonly startTime: DateController;
@@ -95,7 +95,8 @@ export class SubscriptionReporter {
                 if (message !== null || message !== undefined) {
                     this.handleMessageArrival(message);
                     await this.sendSyncResponse();
-                    return message;
+                    Logger.trace(`Subscription '${this.subscription.name}' has finished its job`);
+                    return;
                 } else {
                     Logger.warning(`Type of '${this.subscription.name}' is ${typeof message}`);
                 }
@@ -125,8 +126,8 @@ export class SubscriptionReporter {
         if (this.subscription.response) {
             try {
                 Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-                return await this.subscription.sendResponse();
-
+                await this.subscription.sendResponse();
+                return;
             } catch (err) {
                 Logger.warning(`Error ${this.subscription.type} synchronous response sending: ${err}`);
                 throw err;
