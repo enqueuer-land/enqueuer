@@ -1,14 +1,17 @@
 import {SubscriptionReporter} from './subscription-reporter';
 import {MultiSubscriptionsReporter} from './multi-subscriptions-reporter';
 
-let startTimeoutMock = jest.fn(() => {});
+let startTimeoutMock = jest.fn(() => {
+});
 let onFinishMock = jest.fn();
+let hasFinishedMock = jest.fn();
 let subscribeMock = jest.fn(() => new Promise());
 let receiveMessageMock = jest.fn(() => new Promise());
 let getReportMock;
 let SubscriptionReporterMock = jest.fn(() => {
     return {
         startTimeout: startTimeoutMock,
+        hasFinished: hasFinishedMock,
         subscribe: subscribeMock,
         onFinish: onFinishMock,
         receiveMessage: receiveMessageMock,
@@ -34,9 +37,12 @@ describe('MultiSubscriptionsReporter', () => {
                 type: 'subType2'
             }
         ];
-        startTimeoutMock = jest.fn(() => {});
-        subscribeMock = jest.fn(() => new Promise(() => {}));
-        receiveMessageMock = jest.fn(() => new Promise(() => {}));
+        startTimeoutMock = jest.fn(() => {
+        });
+        subscribeMock = jest.fn(() => new Promise(() => {
+        }));
+        receiveMessageMock = jest.fn(() => new Promise(() => {
+        }));
     });
 
     afterEach(() => {
@@ -73,12 +79,16 @@ describe('MultiSubscriptionsReporter', () => {
                 valid: false,
                 tests: [{valid: true}]
             };
-        } );
+        });
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
         const report = multi.getReport();
 
-        expect(report).toEqual([{'tests': [{'valid': true}], 'type': 'iei', 'valid': false}, {'tests': [{'valid': true}], 'type': 'iei', 'valid': false}] );
+        expect(report).toEqual([{'tests': [{'valid': true}], 'type': 'iei', 'valid': false}, {
+            'tests': [{'valid': true}],
+            'type': 'iei',
+            'valid': false
+        }]);
         expect(getReportMock).toHaveBeenCalledTimes(2);
     });
 
@@ -91,17 +101,18 @@ describe('MultiSubscriptionsReporter', () => {
         expect(onFinishMock).toHaveBeenCalledTimes(2);
     });
 
-    it('Sub throws timeout - not subscribed', done => {
+    it('Sub call on finished on timeout - not subscribed', async done => {
         startTimeoutMock = jest.fn((cb: any) => cb());
-        const timeoutCb = jest.fn();
+        hasFinishedMock = jest.fn(() => true);
+        const timeoutCb = jest.fn(() => {
+            expect(startTimeoutMock).toHaveBeenCalled();
+            done();
+        });
 
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
-        multi.subscribe(timeoutCb).catch(() => {
-            expect(startTimeoutMock).toHaveBeenCalled();
-            expect(timeoutCb).toHaveBeenCalled();
-            done();
-        });
+        multi.start(timeoutCb);
+        await multi.subscribe();
     });
 
     it('Sub subscribed', done => {
@@ -110,7 +121,8 @@ describe('MultiSubscriptionsReporter', () => {
 
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
-        multi.subscribe(timeoutCb).then(() => {
+        multi.start(timeoutCb);
+        multi.subscribe().then(() => {
             expect(startTimeoutMock).toHaveBeenCalled();
             expect(timeoutCb).not.toHaveBeenCalled();
             done();
@@ -162,7 +174,8 @@ describe('MultiSubscriptionsReporter', () => {
         receiveMessageMock.mockImplementationOnce(() => Promise.resolve());
 
         const multi = new MultiSubscriptionsReporter([{}]);
-        multi.subscribe(() => {}).then(() => {
+        multi.subscribe(() => {
+        }).then(() => {
             multi.receiveMessage().then(() => {
                 done();
             });

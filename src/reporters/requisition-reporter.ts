@@ -13,7 +13,7 @@ import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
 export type RequisitionRunnerCallback = () => void;
 
 export class RequisitionReporter {
-    public static readonly DEFAULT_TIMEOUT  = 5 * 1000;
+    public static readonly DEFAULT_TIMEOUT = 5 * 1000;
     private readonly timeout?: number;
     private readonly requisitionAttributes: RequisitionModel;
     private reportGenerator: RequisitionReportGenerator;
@@ -47,8 +47,9 @@ export class RequisitionReporter {
         this.onFinishCallback = onFinishCallback;
         this.initializeTimeout();
         Logger.debug('Preparing subscriptions');
+        this.multiSubscriptionsReporter.start(() => this.onAllSubscriptionsStopWaiting());
         this.multiSubscriptionsReporter
-            .subscribe(() => this.onAllSubscriptionsStopWaiting())
+            .subscribe()
             .then(() => {
                 Logger.debug('Multisubscriptions are ready');
                 return this.onSubscriptionsCompleted();

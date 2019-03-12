@@ -6,7 +6,7 @@ import {RequisitionModel} from '../../models/inputs/requisition-model';
 
 export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
-    private subscriptionsStoppedWaitingCounter: number = 0;
+    private onFinishCallback?: Function;
 
     constructor(subscriptionsAttributes: input.SubscriptionModel[], parent: RequisitionModel) {
         if (subscriptionsAttributes) {
@@ -20,46 +20,39 @@ export class MultiSubscriptionsReporter {
         }
     }
 
-    public async subscribe(stoppedWaitingCallback: Function): Promise<void> {
-        Logger.info(`Subscriptions are subscribing`);
-        await Promise
-            .all(this.subscriptionReporters
-                .map(async subscription => {
-                    let returned = false;
-                    subscription.startTimeout(() => {
-                        if (this.haveAllSubscriptionsStoppedWaiting()) {
-                            Logger.debug(`All pre-subscribed subscriptions stopped waiting`);
-                            stoppedWaitingCallback();
-                            if (!returned) {
-                                throw `Subscription has timed out`;
-                            }
-                        }
-                    });
-                    returned = true;
-                    return await subscription.subscribe();
-                }));
+    public start(onFinish: Function): void {
+        this.onFinishCallback = onFinish;
+        this.subscriptionReporters
+            .forEach(subscription => subscription.startTimeout(() => {
+                if (this.onFinishCallback && this.subscriptionReporters
+                    .every(subscription => subscription.hasFinished())) {
+                    this.onFinishCallback();
+                    this.onFinishCallback = () => {
+                    };
+                }
+            }));
     }
 
-    public receiveMessage(): Promise<void> {
+    public async subscribe(): Promise<void[]> {
+        Logger.info(`Subscriptions are subscribing`);
+        return await Promise.all(this.subscriptionReporters.map(subscription => subscription.subscribe()));
+    }
+
+    public async receiveMessage(): Promise<void[]> {
         Logger.info(`Subscriptions are ready to receive message`);
-        return new Promise((resolve, reject) => {
-            if (this.subscriptionReporters.length <= 0) {
-                return resolve();
+        return await Promise.all(this.subscriptionReporters.map(async subscription => {
+            await subscription.receiveMessage();
+            if (this.onFinishCallback && this.subscriptionReporters
+                .every(subscription => subscription.hasFinished())) {
+                this.onFinishCallback();
+                this.onFinishCallback = () => {
+                };
             }
-            this.subscriptionReporters.forEach(subscriptionHandler => {
-                subscriptionHandler.receiveMessage()
-                    .then(() => {
-                        if (this.haveAllSubscriptionsStoppedWaiting()) {
-                            Logger.debug(`All up-to-receive subscriptions stopped waiting`);
-                            resolve();
-                        }
-                    })
-                    .catch(err => reject(err));
-            });
-        });
+        }));
     }
 
     public async unsubscribe(): Promise<void[]> {
+        Logger.info(`Subscriptions are unsubscribing`);
         return await Promise.all(this.subscriptionReporters.map(subscription => subscription.unsubscribe()));
     }
 
@@ -69,12 +62,6 @@ export class MultiSubscriptionsReporter {
 
     public onFinish(): void {
         this.subscriptionReporters.forEach(subscriptionHandler => subscriptionHandler.onFinish());
-    }
-
-    private haveAllSubscriptionsStoppedWaiting() {
-        ++this.subscriptionsStoppedWaitingCounter;
-        Logger.debug(`Subscription stopped waiting ${this.subscriptionsStoppedWaitingCounter}/${this.subscriptionReporters.length}`);
-        return this.subscriptionsStoppedWaitingCounter >= this.subscriptionReporters.length;
     }
 
 }

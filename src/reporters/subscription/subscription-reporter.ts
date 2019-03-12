@@ -22,7 +22,6 @@ export class SubscriptionReporter {
     private readonly startTime: DateController;
     private readonly subscription: Subscription;
     private subscribeError?: string;
-    private timeOut?: Timeout;
     private hasTimedOut: boolean = false;
     private subscribed: boolean = false;
     private totalTime?: DateController;
@@ -46,39 +45,42 @@ export class SubscriptionReporter {
         }
 
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
-        this.subscription = DynamicModulesManager.getInstance().getProtocolManager()
-            .createSubscription(subscriptionAttributes);
+        this.subscription = DynamicModulesManager.getInstance().getProtocolManager().createSubscription(subscriptionAttributes);
         this.killListener = (signal: Signals) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
     }
 
+    public hasFinished(): boolean {
+        return this.subscription.ignore ||
+            this.subscription.messageReceived ||
+            this.hasTimedOut;
+    }
+
     public startTimeout(onTimeOutCallback: Function) {
-        this.subscription.messageReceived = undefined;
-        if (this.timeOut) {
-            this.timeOut.clear();
+        if (this.subscription.timeout) {
+            Logger.info(`Starting subscription '${this.subscription.name}'`);
+            new Timeout(() => {
+                if (!this.subscription.messageReceived) {
+                    this.totalTime = new DateController();
+                    const message = `Subscription '${this.subscription.name}' stopped waiting because it has timed out`;
+                    Logger.info(message);
+                    this.hasTimedOut = true;
+                    onTimeOutCallback();
+                }
+            }).start(this.subscription.timeout);
         }
-        this.timeOut = new Timeout(() => {
-            if (!this.subscription.messageReceived) {
-                this.totalTime = new DateController();
-                const message = `${this.subscription.name} stopped waiting because it has timed out`;
-                Logger.info(message);
-                this.hasTimedOut = true;
-                onTimeOutCallback();
-            }
-        });
     }
 
     public async subscribe(): Promise<void> {
         if (this.subscription.ignore) {
-            Logger.trace(`Subscription ${this.subscription.name} is ignored`);
+            Logger.trace(`Subscription '${this.subscription.name}' is ignored`);
         } else {
             try {
-                Logger.trace(`Starting ${this.subscription.name} time out`);
-                this.initializeTimeout();
-                Logger.trace(`Subscription ${this.subscription.name} is subscribing`);
+                Logger.trace(`Starting '${this.subscription.name}' time out`);
+                Logger.trace(`Subscription '${this.subscription.name}' is subscribing`);
                 await this.subscription.subscribe();
                 await this.handleSubscription();
             } catch (err) {
-                Logger.error(`${this.subscription.name} is unable to subscribe: ${err}`);
+                Logger.error(`Subscription '${this.subscription.name}' is unable to subscribe: ${err}`);
                 this.subscribeError = JSON.stringify(err);
                 throw err;
             }
@@ -95,11 +97,11 @@ export class SubscriptionReporter {
                     await this.sendSyncResponse();
                     return message;
                 } else {
-                    Logger.warning(`${this.subscription.name} message is null or undefined`);
+                    Logger.warning(`Type of '${this.subscription.name}' is ${typeof message}`);
                 }
             } catch (err) {
                 this.subscription.unsubscribe().catch(console.log.bind(console));
-                Logger.error(`${this.subscription.name} is unable to receive message: ${err}`);
+                Logger.error(`Subscription '${this.subscription.name}' is unable to receive message: ${err}`);
                 throw err;
             }
         }
@@ -185,13 +187,6 @@ export class SubscriptionReporter {
             Logger.info(`${this.subscription.name} has received message in a unable time`);
         }
         Logger.debug(`${this.subscription.name} handled message arrival`);
-    }
-
-    private initializeTimeout() {
-        if (this.timeOut && this.subscription.timeout) {
-            Logger.info(`Starting subscription '${this.subscription.name}'`);
-            this.timeOut.start(this.subscription.timeout);
-        }
     }
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
