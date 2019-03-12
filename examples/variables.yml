@@ -4,16 +4,16 @@
             key: 10
     onFinish:
         assertions:
-            -   expect: store.key
-                toBeEqualTo: 10
-            -   expect: store.otherKey / 2
-                toBeEqualTo: 1
+        -   expect: store.key
+            toBeEqualTo: 10
+        -   expect: store.otherKey / 2
+            toBeEqualTo: 1
 -   anyName: <<key>>
     onInit:
         assertions:
-            -   expect: requisition.anyName
-                toBeEqualTo: 10
-            -   expect: <<key>> + 1
-                toBeEqualTo: 11
-            -   expect: <<otherKey>> * 5
-                toBeEqualTo: 10
+        -   expect: requisition.anyName
+            toBeEqualTo: 10
+        -   expect: <<key>> + 1
+            toBeEqualTo: 11
+        -   expect: <<otherKey>> * 5
+            toBeEqualTo: 10

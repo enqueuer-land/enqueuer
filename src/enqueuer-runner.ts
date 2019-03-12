@@ -25,6 +25,7 @@ export class EnqueuerRunner {
         const parsingErrors = requisitionFileParser.getFilesErrors();
         const enqueuerReport = RequisitionDefaultReports.createDefaultReport({name: EnqueuerRunner.reportName, id: EnqueuerRunner.reportName});
         const parent: input.RequisitionModel = new RequisitionParentCreator().create(EnqueuerRunner.reportName, requisitionModels);
+        parent.requisitions!.forEach(child => child.parent = parent);
         if (Configuration.getInstance().isParallel()) {
             enqueuerReport.requisitions = await Promise
                 .all(parent.requisitions!

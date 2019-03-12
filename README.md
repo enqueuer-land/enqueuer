@@ -10,7 +10,7 @@
 
 Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
-Dependencies messages have become a pain?
+Depending services have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.
 
 ### Enqueuer
@@ -294,7 +294,14 @@ Available events are described [here](#event). A `subscription` object is availa
 ### Event
 
 Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
-There are three events available:
+Depending on the event's owner, there may be a variable called `publisher`, `subscription` or `requisition`.
+You're free to explore them however you want, even doing things like this:
+
+    publisher.parent.subscriptions[0].timeout = 1000;
+ 
+#### hooks
+
+There are three hook events available:
 
 **onInit**\
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
@@ -307,14 +314,18 @@ As available parameter is `elapsedTime`, with elapsed time, in milliseconds, sin
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
 A `message` object is available having all of attributes returned from the received message.
+Depending on the protocol implementation, there'll be additional objects to this hook.
+For instance, in the built-in http implementation, there's a `statusCode` and a `body` variables.
 `elapsedTime` is also available here, with elapsed time, in milliseconds, since the instantiation of this component.
 
 #### fields
-Every event object has 3 properties:
+Every hook object has 3 properties:
 
 **script**\
 Javascript code snippet executed when the event is triggered.\
 Yeah, I mean it. See it [it](https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml) by yourself.
+But be careful, with great power comes great responsibility.
+
 **store**\
 Data to be persisted across requisitions\
 **assertions**\
@@ -498,3 +509,15 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 ![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
 
 [![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
+
+
+### Open source
+
+#### Contributing
+We, and by we I really mean I, are very opened do pull requests in general. As long as they make sense and add value to the product, you're free to go.
+We mean it, do it. Even if it's a type fix in this README file. Go ahead.
+Just make sure it's not breaking anything running `$ npm run all` and then submit it.
+
+#### license
+MIT
+

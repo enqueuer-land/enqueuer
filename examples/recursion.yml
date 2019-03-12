@@ -4,12 +4,12 @@
     onFinish:
 -   iterations: 3
     requisitions:
+    -   iterations: 3
+        requisitions:
         -   iterations: 3
-            requisitions:
-                -   iterations: 3
-                    onInit:
-                        script: ++store.counter;
+            onInit:
+                script: ++store.counter;
 -   onInit:
         assertions:
-            -   expect: store.counter
-                toBeEqualTo: 3*3*3
+        -   expect: store.counter
+            toBeEqualTo: 3*3*3

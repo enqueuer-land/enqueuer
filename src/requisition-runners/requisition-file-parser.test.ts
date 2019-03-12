@@ -111,6 +111,29 @@ describe('RequisitionFileParser', () => {
         expect(requisitions[0].id).toBe(12345);
     });
 
+    it('Should set parents', () => {
+        const value = {
+            name: 'parent',
+            subscriptions: [{type: 123}],
+            publishers: [{type: 123}],
+            requisitions: [{delay: 123}]
+        };
+        const fileContent: string = JSON.stringify(value);
+
+        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
+            return {
+                parse: () => value
+            };
+        }, 'yml');
+
+        // @ts-ignore
+        fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
+        const requisitions = new RequisitionFileParser(['anyStuff']).parse();
+        expect(requisitions[0].subscriptions[0].parent.name).toBe(value.name);
+        expect(requisitions[0].publishers[0].parent.name).toBe(value.name);
+        expect(requisitions[0].requisitions![0].parent!.name).toBe(value.name);
+    });
+
     it('Should add if file is not yml nor json', () => {
         const notYml = 'foo bar\nfoo: bar';
 

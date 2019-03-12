@@ -2,11 +2,12 @@ import {RequisitionParentCreator} from '../components/requisition-parent-creator
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {Logger} from '../loggers/logger';
 import {TestModel} from '../models/outputs/test-model';
-import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as input from '../models/inputs/requisition-model';
+import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import {RequisitionValidator} from './requisition-validator';
+import {ComponentParentCreator} from '../components/component-parent-creator';
 
 export class RequisitionFileParser {
     private readonly patterns: string[];
@@ -25,12 +26,12 @@ export class RequisitionFileParser {
         const requisitions: input.RequisitionModel[] = [];
         const matchingFiles = this.getMatchingFiles();
         matchingFiles.forEach((file: string) => {
-                try {
-                    requisitions.push(this.parseFile(file));
-                } catch (err) {
-                    this.addError(`Error parsing file '${file}'`, err);
-                }
-            });
+            try {
+                requisitions.push(this.parseFile(file));
+            } catch (err) {
+                this.addError(`Error parsing file '${file}'`, err);
+            }
+        });
         if (matchingFiles.length === 0) {
             const title = `No test file was found`;
             this.addError(title, title);
@@ -56,7 +57,7 @@ export class RequisitionFileParser {
             requisition.name = filename;
         }
 
-        return requisition;
+        return new ComponentParentCreator().createRecursively(requisition);
     }
 
     private getMatchingFiles(): string[] {

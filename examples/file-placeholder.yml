@@ -4,19 +4,19 @@
     onInit:
         script: requisition.javascript = <<file://misc/file-code.js>>
         assertions:
-            -   name: fileRead (yml)
-                expect: requisition.yml.key
-                toBeEqualTo: `I'm persisted in config file`
-            -   name: fileRead (.json)
-                expect: requisition.json.key
-                toBeEqualTo: `value`
-            -   name: fileRead (.csv)
-                expect: requisition.csv[1].title
-                toBeEqualTo: `secondRow`
-            -   name: fileRead (.js)
-                expect: requisition.javascript(20)
-                toBeEqualTo: 40
+        -   name: fileRead (yml)
+            expect: requisition.yml.key
+            toBeEqualTo: `I'm persisted in config file`
+        -   name: fileRead (.json)
+            expect: requisition.json.key
+            toBeEqualTo: `value`
+        -   name: fileRead (.csv)
+            expect: requisition.csv[1].title
+            toBeEqualTo: `secondRow`
+        -   name: fileRead (.js)
+            expect: requisition.javascript(20)
+            toBeEqualTo: 40
 -   onInit:
         assertions:
-            -   name: it's not stored
-                expectToBeUndefined: requisition.yml
+        -   name: it's not stored
+            expectToBeUndefined: requisition.yml

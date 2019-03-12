@@ -34,18 +34,18 @@ export class RequisitionMultiplier {
 
     private cloneIt(): RequisitionModel {
         const result = new RequisitionParentCreator().create(this.requisition.name);
-        const parentBkp = this.requisition.parent;
+        const parent = this.requisition.parent;
         delete this.requisition.parent;
         const stringifiedRequisition = JSON.stringify(this.requisition);
         for (let x = 0; x < this.iterations!; ++x) {
             const clone: RequisitionModel = JSON.parse(stringifiedRequisition) as RequisitionModel;
             clone.id = result.id;
-            clone.parent = result;
+            clone.parent = parent;
             clone.iterations = 1;
             clone.name = clone.name + ` [${x}]`;
             result.requisitions!.push(clone);
         }
-        result.parent = parentBkp;
+        result.parent = parent;
         return new ComponentUniqueTagCreator().refresh(result);
     }
 

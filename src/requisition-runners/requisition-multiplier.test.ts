@@ -96,10 +96,10 @@ describe('RequisitionMultiplier', () => {
         const multiplied = new RequisitionMultiplier(original).multiply();
 
         expect(multiplied.parent.name).toBe('parent');
-        expect(multiplied.requisitions[0].parent.name).toBe(original.name);
-        expect(multiplied.requisitions[0].parent.parent.name).toBe('parent');
-        expect(multiplied.requisitions[1].parent.name).toBe(original.name);
-        expect(multiplied.requisitions[1].parent.parent.name).toBe('parent');
+        expect(multiplied.requisitions[0].parent.name).toBe('parent');
+        expect(multiplied.requisitions[0].parent.requisitions[0].name).toBe('original');
+        expect(multiplied.requisitions[1].parent.name).toBe('parent');
+        expect(multiplied.requisitions[1].parent.requisitions[1]).toBeUndefined();
     });
 
     it('Should refresh ids', () => {

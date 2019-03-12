@@ -14,6 +14,7 @@ import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {ComponentUniqueTagCreator} from '../components/component-unique-tag-creator';
 import {ObjectDecycler} from '../object-parser/object-decycler';
 import {Configuration} from '../configurations/configuration';
+import {ComponentParentBackupper} from '../components/component-parent-backupper';
 
 export class RequisitionRunner {
 
@@ -27,7 +28,7 @@ export class RequisitionRunner {
         this.name = requisition.name;
         this.id = requisition.id || requisition.name;
         requisition.id = this.id;
-        Logger.info(`Initializing requisition '${requisition.name}'`);
+
         this.requisition = new RequisitionMultiplier(requisition).multiply();
         if (!this.requisition) {
             Logger.info(`No result requisition after iterations evaluation: ${requisition.iterations}`);
@@ -58,7 +59,7 @@ export class RequisitionRunner {
         Logger.debug(`Handling child '${requisition.name}' requisitions`);
         let index: number = 0;
         for (const child of children) {
-            child.parent = requisition;
+            // child.parent = requisition;
             child.name = child.name || `${requisition.name} [${index}]`;
             reports.push(await new RequisitionRunner(child, this.level + 1).run());
             ++index;
@@ -78,11 +79,11 @@ export class RequisitionRunner {
     }
 
     private replaceVariables(): input.RequisitionModel {
-        const withId = new ComponentUniqueTagCreator().refresh(this.requisition!);
+        const uniqueComponents = new ComponentUniqueTagCreator().refresh(this.requisition!);
         Logger.debug(`Evaluating variables of requisition '${this.requisition!.name}'`);
-        const parentBkp = withId.parent;
-
-        const decycled: input.RequisitionModel = new ObjectDecycler().decycle(withId) as input.RequisitionModel;
+        const componentParentBackupper = new ComponentParentBackupper();
+        componentParentBackupper.removeParents(uniqueComponents);
+        const decycled: input.RequisitionModel = new ObjectDecycler().decycle(uniqueComponents) as input.RequisitionModel;
 
         const fileMapCreator = new FileContentMapCreator(decycled);
         const fileReplaced = new JsonPlaceholderReplacer()
@@ -91,7 +92,7 @@ export class RequisitionRunner {
         const storeReplaced = new JsonPlaceholderReplacer()
             .addVariableMap(Store.getData())
             .replace(fileReplaced) as input.RequisitionModel;
-        storeReplaced.parent = parentBkp;
+        componentParentBackupper.putParentsBack(storeReplaced);
         return storeReplaced;
     }
 
