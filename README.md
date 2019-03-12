@@ -301,11 +301,13 @@ Available in requisitions, publishers and subscriptions. It gets executed as soo
 
 **onFinish**\
 Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
+As available parameter is `elapsedTime`, with elapsed time, in milliseconds, since the instantiation of this component. 
 
 **onMessageReceived**\
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
-An additional `message` object is available having all of attributes returned from the received message.
+A `message` object is available having all of attributes returned from the received message.
+`elapsedTime` is also available here, with elapsed time, in milliseconds, since the instantiation of this component.
 
 #### fields
 Every event object has 3 properties:

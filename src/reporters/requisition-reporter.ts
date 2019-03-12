@@ -22,6 +22,7 @@ export class RequisitionReporter {
     private onFinishCallback: RequisitionRunnerCallback;
     private publishersDoneTheirJob = false;
     private allSubscriptionsStoppedWaiting = false;
+    private readonly startTime: Date;
 
     constructor(requisitionAttributes: input.RequisitionModel) {
         this.requisitionAttributes = requisitionAttributes;
@@ -31,6 +32,7 @@ export class RequisitionReporter {
         } else if (this.requisitionAttributes.timeout <= 0) {
             delete this.requisitionAttributes.timeout;
         }
+        this.startTime = new Date();
         this.timeout = this.requisitionAttributes.timeout;
         this.reportGenerator = new RequisitionReportGenerator(this.requisitionAttributes, this.timeout);
         this.reportGenerator.addTests(onInitFunctionTests);
@@ -135,7 +137,9 @@ export class RequisitionReporter {
 
     private async executeOnFinishFunction(): Promise<void> {
         this.multiSubscriptionsReporter.onFinish();
-        this.reportGenerator.addTests(new OnFinishEventExecutor('requisition', this.requisitionAttributes).trigger());
+        const onFinishEventExecutor = new OnFinishEventExecutor('requisition', this.requisitionAttributes);
+        onFinishEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
+        this.reportGenerator.addTests(onFinishEventExecutor.trigger());
         this.multiPublishersReporter.onFinish();
     }
 

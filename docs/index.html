@@ -513,12 +513,14 @@ There are three events available:</p>
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.</p>
 
 <p><strong>onFinish</strong><br>
-Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.</p>
+Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
+As available parameter is <code>elapsedTime</code>, with elapsed time, in milliseconds, since the instantiation of this component. </p>
 
 <p><strong>onMessageReceived</strong><br>
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
-An additional <code>message</code> object is available having all of attributes returned from the received message.</p>
+A <code>message</code> object is available having all of attributes returned from the received message.
+<code>elapsedTime</code> is also available here, with elapsed time, in milliseconds, since the instantiation of this component.</p>
 
 <h4 id="fields" style="padding-left: 8px">3.1. fields</h4>
 
