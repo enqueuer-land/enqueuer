@@ -56,22 +56,6 @@ describe('MultiSubscriptionsReporter', () => {
         expect(SubscriptionReporterMock).toHaveBeenNthCalledWith(2, constructorArgument[1]);
     });
 
-    it('Should add subscription default name', () => {
-        SubscriptionReporterMock.mockClear();
-        delete constructorArgument[0].name;
-        delete constructorArgument[1].name;
-        new MultiSubscriptionsReporter(constructorArgument);
-
-        expect(SubscriptionReporterMock).toHaveBeenNthCalledWith(1, {
-            name: 'Subscription #0',
-            type: 'subType'
-        });
-        expect(SubscriptionReporterMock).toHaveBeenNthCalledWith(2, {
-            name: 'Subscription #1',
-            type: 'subType2'
-        });
-    });
-
     it('Should call getReport of each', () => {
         getReportMock = jest.fn(() => {
             return {

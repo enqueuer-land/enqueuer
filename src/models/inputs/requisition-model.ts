@@ -4,15 +4,16 @@ import {Initializable} from '../events/initializable';
 import {PublisherModel} from './publisher-model';
 
 export interface RequisitionModel extends Finishable, Initializable {
-    timeout?: number;
-    id?: string;
+    timeout: number;
+    id: string;
     name: string;
     subscriptions: SubscriptionModel[];
     publishers: PublisherModel[];
     parent?: RequisitionModel;
-    delay?: number;
-    iterations?: number;
-    requisitions?: RequisitionModel[];
+    delay: number;
+    iterations: number;
+    ignore?: boolean;
+    requisitions: RequisitionModel[];
 
     [propName: string]: any;
 }

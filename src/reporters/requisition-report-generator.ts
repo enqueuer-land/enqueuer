@@ -8,7 +8,6 @@ import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {TimeModel} from '../models/outputs/time-model';
 
-//TODO merge this with RequisitionReporter
 export class RequisitionReportGenerator {
 
     private startTime: DateController = new DateController();

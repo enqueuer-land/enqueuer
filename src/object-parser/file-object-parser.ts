@@ -1,6 +1,5 @@
 import {ObjectParser} from './object-parser';
 import {MainInstance} from '../plugins/main-instance';
-import requireFromString from 'require-from-string';
 
 export class FileObjectParserTest implements ObjectParser {
     public parse(value: string): object {

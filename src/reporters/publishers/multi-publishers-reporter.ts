@@ -2,20 +2,13 @@ import {PublisherReporter} from './publisher-reporter';
 import * as output from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
 import {Logger} from '../../loggers/logger';
-import {RequisitionModel} from '../../models/inputs/requisition-model';
 
 export class MultiPublishersReporter {
     private publishers: PublisherReporter[];
 
-    constructor(publishers: input.PublisherModel[], parent: RequisitionModel) {
+    constructor(publishers: input.PublisherModel[]) {
         Logger.debug(`Instantiating publishers`);
-        this.publishers = (publishers || []).map((publisher, index) => {
-            if (!publisher.name) {
-                publisher.name = `Publisher #${index}`;
-            }
-            publisher.parent = parent;
-            return new PublisherReporter(publisher);
-        });
+        this.publishers = publishers.map((publisher) => new PublisherReporter(publisher));
     }
 
     public async publish(): Promise<number> {

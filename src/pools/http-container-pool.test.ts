@@ -1,20 +1,20 @@
-import {HttpContainerPool} from "./http-container-pool";
-import {HttpContainer} from "./http-container";
-import {Logger} from "../loggers/logger";
+import {HttpContainerPool} from './http-container-pool';
+import {HttpContainer} from './http-container';
+import {Logger} from '../loggers/logger';
 
 let acquireMock = jest.fn(() => Promise.resolve('acquireReturn'));
 let releaseMock = jest.fn((cb) => cb());
 
-jest.mock("./http-container");
+jest.mock('./http-container');
 let constructorHttpContainer = jest.fn(() => {
     return {
         acquire: acquireMock,
         release: releaseMock
-    }
+    };
 });
 HttpContainer.mockImplementation(constructorHttpContainer);
 
-jest.mock("../loggers/logger");
+jest.mock('../loggers/logger');
 const warningLogMock = jest.fn();
 Logger.warning.mockImplementation(warningLogMock);
 

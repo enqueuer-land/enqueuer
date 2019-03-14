@@ -46,15 +46,6 @@ describe('MultiPublishersReporter', () => {
         expect(PublisherReporter).toHaveBeenCalledWith({name: 'second'});
     });
 
-    it('Should set default names', () => {
-        const publishers = [{}, {}];
-        new MultiPublishersReporter(publishers);
-
-        expect(PublisherReporter).toHaveBeenCalledTimes(publishers.length);
-        expect(PublisherReporter).toHaveBeenCalledWith({name: 'Publisher #0'});
-        expect(PublisherReporter).toHaveBeenCalledWith({name: 'Publisher #1'});
-    });
-
     it('Call publishReporter constructors empty publishers', () => {
         new MultiPublishersReporter([]);
 

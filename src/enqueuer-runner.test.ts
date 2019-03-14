@@ -1,12 +1,12 @@
 import {EnqueuerRunner} from './enqueuer-runner';
 import {Configuration} from './configurations/configuration';
 import {SummaryTestOutput} from './outputs/summary-test-output';
-import {RequisitionFileParser} from './requisition-runners/requisition-file-parser';
+import {RequisitionFilesParser} from './requisition-runners/requisition-files-parser';
 import {RequisitionRunner} from './requisition-runners/requisition-runner';
 
 jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
-jest.mock('./requisition-runners/requisition-file-parser');
+jest.mock('./requisition-runners/requisition-files-parser');
 jest.mock('./requisition-runners/requisition-runner');
 
 describe('EnqueuerRunner', () => {
@@ -44,7 +44,7 @@ describe('EnqueuerRunner', () => {
         SummaryTestOutput.mockImplementation(summaryTestsMock);
 
         // @ts-ignore
-        RequisitionFileParser.mockImplementationOnce(() => {
+        RequisitionFilesParser.mockImplementationOnce(() => {
             return {
                 parse: () => parsedRequisitions,
                 getFilesErrors: () => []

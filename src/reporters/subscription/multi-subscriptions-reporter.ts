@@ -2,22 +2,14 @@ import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {SubscriptionReporter} from './subscription-reporter';
 import {Logger} from '../../loggers/logger';
-import {RequisitionModel} from '../../models/inputs/requisition-model';
 
 export class MultiSubscriptionsReporter {
     private subscriptionReporters: SubscriptionReporter[] = [];
     private timeoutPromise: Promise<any>;
 
-    constructor(subscriptionsAttributes: input.SubscriptionModel[], parent: RequisitionModel) {
-        if (subscriptionsAttributes) {
-            this.subscriptionReporters = subscriptionsAttributes.map((subscription, index) => {
-                if (!subscription.name) {
-                    subscription.name = `Subscription #${index}`;
-                }
-                subscription.parent = parent;
-                return new SubscriptionReporter(subscription);
-            });
-        }
+    constructor(subscriptionsAttributes: input.SubscriptionModel[]) {
+        Logger.debug(`Instantiating subscriptions`);
+        this.subscriptionReporters = subscriptionsAttributes.map((subscription) => new SubscriptionReporter(subscription));
         this.timeoutPromise = Promise.resolve();
     }
 

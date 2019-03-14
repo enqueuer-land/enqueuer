@@ -3,7 +3,6 @@ import {Logger} from '../loggers/logger';
 import * as input from '../models/inputs/requisition-model';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
-import {Timeout} from '../timers/timeout';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {OnInitEventExecutor} from '../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../events/on-finish-event-executor';
@@ -31,8 +30,8 @@ export class RequisitionReporter {
         this.timeout = this.requisitionAttributes.timeout;
         this.reportGenerator = new RequisitionReportGenerator(this.requisitionAttributes, this.timeout);
         this.reportGenerator.addTests(onInitFunctionTests);
-        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions, this.requisitionAttributes);
-        this.multiPublishersReporter = new MultiPublishersReporter(this.requisitionAttributes.publishers, this.requisitionAttributes);
+        this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions);
+        this.multiPublishersReporter = new MultiPublishersReporter(this.requisitionAttributes.publishers);
     }
 
     public async delay(): Promise<void> {

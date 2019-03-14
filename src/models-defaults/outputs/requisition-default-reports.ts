@@ -4,7 +4,7 @@ import {TestModel} from '../../models/outputs/test-model';
 
 export class RequisitionDefaultReports {
 
-    public static createDefaultReport(base: {name: string, id?: string, ignored?: boolean}, tests: TestModel[] = []): output.RequisitionModel {
+    public static createDefaultReport(base: { name: string, id: string, ignored?: boolean }, tests: TestModel[] = []): output.RequisitionModel {
         const valid = tests.length > 0 ? tests.every((test) => test.valid) : true;
         return {
             valid: valid,
@@ -23,7 +23,7 @@ export class RequisitionDefaultReports {
         };
     }
 
-    public static createRunningError(base: {name: string, id?: string}, err: any): output.RequisitionModel {
+    public static createRunningError(base: { name: string, id: string }, err: any): output.RequisitionModel {
         return RequisitionDefaultReports.createDefaultReport(base, [{
             valid: false,
             name: 'Requisition ran',
@@ -31,20 +31,20 @@ export class RequisitionDefaultReports {
         }]);
     }
 
-    public static createSkippedReport(base: {name: string, id?: string}): output.RequisitionModel {
+    public static createSkippedReport(base: { name: string, id: string }): output.RequisitionModel {
         return RequisitionDefaultReports.createDefaultReport(base, [{
-                valid: true,
-                name: 'Requisition skipped',
-                description: 'There is no iterations set to this requisition'
-            }]);
+            valid: true,
+            name: 'Requisition skipped',
+            description: 'There is no iterations set to this requisition'
+        }]);
     }
 
-    public static createIgnoredReport(base: {name: string, id?: string, ignored?: true}): output.RequisitionModel {
+    public static createIgnoredReport(base: { name: string, id: string, ignored?: true }): output.RequisitionModel {
         base.ignored = true;
         return RequisitionDefaultReports.createDefaultReport(base);
     }
 
-    public static createIteratorReport(base: {name: string, id?: string}): output.RequisitionModel {
+    public static createIteratorReport(base: { name: string, id: string }): output.RequisitionModel {
         return RequisitionDefaultReports.createDefaultReport(base);
     }
 

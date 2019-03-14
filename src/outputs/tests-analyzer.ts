@@ -9,7 +9,7 @@ export interface AnalyzedTest extends TestModel {
 export class TestsAnalyzer {
     private tests: AnalyzedTest[] = [];
 
-    public addTest(report: RequisitionModel): TestsAnalyzer {
+    public addTest(report: ReportModel): TestsAnalyzer {
         this.findRequisitions([report], []);
         return this;
     }
@@ -46,7 +46,7 @@ export class TestsAnalyzer {
         return percentage;
     }
 
-    private findRequisitions(requisition: RequisitionModel[] = [], hierarchy: string[]) {
+    private findRequisitions(requisition: ReportModel[] = [], hierarchy: string[]) {
         requisition.forEach((child: any) => {
             this.findRequisitions(child.requisitions, hierarchy.concat(child.name));
             this.findTests(child, hierarchy.concat(child.name));

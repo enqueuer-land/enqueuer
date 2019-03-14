@@ -33,21 +33,21 @@ describe('ComponentParentBackupper', () => {
     it('should put parents back', () => {
         const requisition: any = {
             name: 'requisition',
-            uniqueTag: 'requisition'
+            id: 'requisition'
         };
         const child = {
             name: 'child',
-            uniqueTag: 'child',
+            id: 'child',
             parent: requisition,
         };
         const publisher = {
             name: 'publisher',
-            uniqueTag: 'publisher',
+            id: 'publisher',
             parent: requisition,
         };
         const subscription = {
             name: 'subscription',
-            uniqueTag: 'subscription',
+            id: 'subscription',
             parent: requisition,
         };
         requisition.requisitions = [child];

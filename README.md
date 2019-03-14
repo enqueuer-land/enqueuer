@@ -22,6 +22,8 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 - Easily extensible behavior through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)\ 
 - Built in CLI is easy to add to your team's existing CI pipelines\
 
+Welcome to the enqueuer world.
+
 #### install it
     $ npm install --global enqueuer
     
@@ -80,7 +82,7 @@ I told you it was simple.
 Now go nuts!
 It's all yours. Have fun.
 Check [this out](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), you'll find countless examples. 
-Certainly one find what you need.    
+Certainly one is what you need.    
     
 #### if you need more
 
@@ -126,7 +128,7 @@ They work along with each other and are responsible for the full behavior of enq
 Test scenario description. It tells what, when, and how test your applications and services.
 Picture it as if it was a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition). It helps because this is exactly what it is.
 As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
-You don't know some od these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
+You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
 [Variable replacements](#variables) are available through the entire requisition.
 
 **name**\
@@ -200,7 +202,8 @@ Available events are described [here](#event). A `requisition` object is availab
 #### publisher
 
 A publisher action is triggered by enqueuer itself. It **acts** whereas a [subscription](#subscription) **reacts**.
-Every publisher has its own properties, depending on its protocol and implementation. But, usually, they all have these properties.
+It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
+Every publisher has its own properties, depending on its protocol and implementation, but usually, they all have these properties.
 
 **name**\
 Defaults to publisher index.
@@ -242,6 +245,7 @@ On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually doe
   
 #### subscription
 A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
+It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
 This means that it is not triggered by enqueuer itself. 
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
 Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. 
@@ -295,6 +299,7 @@ Available events are described [here](#event). A `subscription` object is availa
 ### Event
 
 Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
+This is where you'll write your tests. In its `assertions` field.
 Depending on the event's owner, there may be a variable called `publisher`, `subscription` or `requisition`.
 You're free to explore them however you want, even doing things like this:
 
@@ -316,7 +321,7 @@ Available in every subscription and in publishers that provide synchronous prope
 It gets executed when the subscription or publisher receives a message.
 A `message` object is available having all of attributes returned from the received message.
 Depending on the protocol implementation, there'll be additional objects to this hook.
-For instance, in the built-in http implementation, there's a `statusCode` and a `body` variables.
+For instance, in the built-in http publisher implementation, there's a `statusCode`, `headers` and a `body` among others, and the subscription implementation has `body`, `query`, `params` and `headers `, among other variables.
 `elapsedTime` is also available here, with elapsed time, in milliseconds, since the instantiation of this component.
 
 #### fields
@@ -373,7 +378,7 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
     - *.json
 
 **parallel**\
-Requisition should be executed in parallel mode
+Requisition files should be executed in parallel mode. The requisition file itself is still sequential, but the files are executes in parallel.
 
     parallel: true (false by default)
 
@@ -383,7 +388,7 @@ Defines how information are logged in the console. Accepted values are: trace; d
     log-level: trace
 
 **max-report-level-print**/
-The deepest level of report to be printed to the console. Defaults to 1 
+The deepest level of report to be printed to the console. Defaults to 1.
 
     max-report-level-print: 2
 
@@ -515,7 +520,8 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 ### Open source
 
 #### Contributing
-We, and by we I really mean I, are very opened to pull requests in general. As long as they make sense and add value to the product, you're free to go.
+We, and by 'we' I really mean 'I', are very opened to pull requests in general.
+As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a type fix in this README file. Go ahead.
 Just make sure it's not breaking anything running `$ npm run all` and then submit it.
 If you like it but don't want to waste time creating a PR, no problem either. Create an issue. 

@@ -2,16 +2,15 @@
     counter: 0
     iterations: 10
     onInit:
-        script: store.iterationsConter =  (store.iterationsConter || 0) + 1;
+        script: ++requisition.counter;
 -   name: delayed
-    counter: 0
     delay: 3000
     onInit:
         script: requisition.startTime = new Date();
     onFinish:
         assertions:
         -   name: It was executed 10 times
-            expect: store.iterationsConter
+            expect: requisition.parent.requisitions[0].counter
             toBeEqualTo: 10
         -   name: Elapsed time
             expect: elapsedTime

@@ -202,6 +202,8 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 - Easily extensible behavior through third party <a href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including your own <a href="https://github.com/enqueuer-land/plugin-scaffold">custom ones</a><br> 
 - Built in CLI is easy to add to your team's existing CI pipelines<br></p>
 
+<p>Welcome to the enqueuer world.</p>
+
 <h4 id="install_it" style="padding-left: 8px">1.1. install it</h4>
 
 <pre><code><span class="dollar-sign">$</span> npm install --global enqueuer
@@ -267,7 +269,7 @@ subscriptions:
 Now go nuts!
 It's all yours. Have fun.
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
-Certainly one find what you need.    </p>
+Certainly one is what you need.    </p>
 
 <h4 id="if_you_need_more" style="padding-left: 8px">1.3. if you need more</h4>
 
@@ -316,7 +318,7 @@ They work along with each other and are responsible for the full behavior of enq
 <p>Test scenario description. It tells what, when, and how test your applications and services.
 Picture it as if it was a collection of <a href="#publisher">publishers</a>, <a href="#subscription">subscriptions</a> and other <a href="#requisition">requisitions</a>. It helps because this is exactly what it is.
 As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
-You don't know some od these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
+You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
 <a href="#variables">Variable replacements</a> are available through the entire requisition.</p>
 
 <p><strong>name</strong><br>
@@ -399,7 +401,8 @@ onFinish:
 <h4 id="publisher" style="padding-left: 8px">2.2. publisher</h4>
 
 <p>A publisher action is triggered by enqueuer itself. It <strong>acts</strong> whereas a <a href="#subscription">subscription</a> <strong>reacts</strong>.
-Every publisher has its own properties, depending on its protocol and implementation. But, usually, they all have these properties.</p>
+It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
+Every publisher has its own properties, depending on its protocol and implementation, but usually, they all have these properties.</p>
 
 <p><strong>name</strong><br>
 Defaults to publisher index.
@@ -448,6 +451,7 @@ onFinish:
 <h4 id="subscription" style="padding-left: 8px">2.3. subscription</h4>
 
 <p>A subscription is an "under demand" event. It <strong>reacts</strong> whereas a <a href="#publisher">publisher</a> <strong>acts</strong>.
+It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
 This means that it is not triggered by enqueuer itself. 
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
 Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. </p>
@@ -508,6 +512,7 @@ onFinish:
 <h3 id="event" style="padding-left: 0px">3. Event</h3>
 
 <p>Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
+This is where you'll write your tests. In its <code>assertions</code> field.
 Depending on the event's owner, there may be a variable called <code>publisher</code>, <code>subscription</code> or <code>requisition</code>.
 You're free to explore them however you want, even doing things like this:</p>
 
@@ -530,7 +535,7 @@ Available in every subscription and in publishers that provide synchronous prope
 It gets executed when the subscription or publisher receives a message.
 A <code>message</code> object is available having all of attributes returned from the received message.
 Depending on the protocol implementation, there'll be additional objects to this hook.
-For instance, in the built-in http implementation, there's a <code>statusCode</code> and a <code>body</code> variables.
+For instance, in the built-in http publisher implementation, there's a <code>statusCode</code>, <code>headers</code> and a <code>body</code> among others, and the subscription implementation has <code>body</code>, <code>query</code>, <code>params</code> and <code>headers</code>, among other variables.
 <code>elapsedTime</code> is also available here, with elapsed time, in milliseconds, since the instantiation of this component.</p>
 
 <h4 id="fields" style="padding-left: 8px">3.2. fields</h4>
@@ -592,7 +597,7 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
 </code></pre>
 
 <p><strong>parallel</strong><br>
-Requisition should be executed in parallel mode</p>
+Requisition files should be executed in parallel mode. The requisition file itself is still sequential, but the files are executes in parallel.</p>
 
 <pre><code>parallel: true (false by default)
 </code></pre>
@@ -604,7 +609,7 @@ Defines how information are logged in the console. Accepted values are: trace; d
 </code></pre>
 
 <p><strong>max-report-level-print</strong>/
-The deepest level of report to be printed to the console. Defaults to 1 </p>
+The deepest level of report to be printed to the console. Defaults to 1.</p>
 
 <pre><code>max-report-level-print: 2
 </code></pre>
@@ -763,7 +768,8 @@ Run <code><span class="dollar-sign">$</span> nqr -e</code> to see available ones
 
 <h4 id="contributing" style="padding-left: 8px">8.1. Contributing</h4>
 
-<p>We, and by we I really mean I, are very opened to pull requests in general. As long as they make sense and add value to the product, you're free to go.
+<p>We, and by 'we' I really mean 'I', are very opened to pull requests in general.
+As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a type fix in this README file. Go ahead.
 Just make sure it's not breaking anything running <code><span class="dollar-sign">$</span> npm run all</code> and then submit it.
 If you like it but don't want to waste time creating a PR, no problem either. Create an issue. 

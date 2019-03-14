@@ -1,4 +1,3 @@
-import {RequisitionParentCreator} from '../components/requisition-parent-creator';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {Logger} from '../loggers/logger';
 import {TestModel} from '../models/outputs/test-model';
@@ -7,14 +6,14 @@ import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import {RequisitionValidator} from './requisition-validator';
-import {ComponentParentCreator} from '../components/component-parent-creator';
+import {RequisitionAdopter} from '../components/requisition-adopter';
 
-export class RequisitionFileParser {
-    private readonly patterns: string[];
+export class RequisitionFilesParser {
+
     private filesErrors: TestModel[] = [];
 
-    constructor(patterns: string[]) {
-        this.patterns = patterns;
+    constructor(private readonly patterns: string[]) {
+
     }
 
     public getFilesErrors(): TestModel[] {
@@ -41,23 +40,17 @@ export class RequisitionFileParser {
 
     private parseFile(filename: string): RequisitionModel {
         const fileBufferContent = fs.readFileSync(filename).toString();
-        let requisition: any = DynamicModulesManager
+        let fileContent: any = DynamicModulesManager
             .getInstance().getObjectParserManager()
             .tryToParseWithParsers(fileBufferContent, ['yml', 'json']);
-        if (Array.isArray(requisition)) {
-            requisition = new RequisitionParentCreator().create(filename, requisition);
-        }
 
+        const requisition = Array.isArray(fileContent) ? {requisitions: fileContent} : fileContent;
         const requisitionValidator = new RequisitionValidator();
         if (!requisitionValidator.validate(requisition)) {
-            throw 'File \'' + filename + '\' is not a valid requisition. ' + requisitionValidator.getErrorMessage();
+            throw 'File \'' + filename + '\' is not a valid fileContent. ' + requisitionValidator.getErrorMessage();
         }
-
-        if (!requisition.name) {
-            requisition.name = filename;
-        }
-
-        return new ComponentParentCreator().createRecursively(requisition);
+        requisition.name = requisition.name || filename;
+        return requisition;
     }
 
     private getMatchingFiles(): string[] {
