@@ -1,30 +1,33 @@
+tollerance: 50
+requisitions:
 -   parallel: true
     requisitions:
     -   delay: 200
         onInit:
-            script: |-
-                requisition.parent.firstRequisition = { startTime: new Date()}
-    -   delay: 200
+            script: requisition.startTime = new Date();
+    -   delay: 300
         onInit:
-            script: |-
-                requisition.parent.secondRequisition = { startTime: new Date()}
+            script: requisition.startTime = new Date();
     onFinish:
         assertions:
         -   name: started at the same time
-            expect: Math.abs(requisition.secondRequisition.startTime.getTime() - requisition.firstRequisition.startTime.getTime())
-            toBeLessThanOrEqualTo: 50
+            expect: Math.abs(requisition.requisitions[1].startTime.getTime() - requisition.requisitions[0].startTime.getTime())
+            toBeLessThanOrEqualTo: requisition.parent.tollerance
+        -   expect: elapsedTime
+            toBeLessThanOrEqualTo: 300 + requisition.parent.tollerance
 -   parallel: false
     requisitions:
     -   delay: 200
         onInit:
-            script: |-
-                requisition.parent.firstRequisition = { startTime: new Date()}
-    -   delay: 200
+            script: requisition.startTime = new Date();
+    -   delay: 300
         onInit:
             script: |-
-                requisition.parent.secondRequisition = { startTime: new Date()}
+                script: requisition.startTime = new Date();
     onFinish:
         assertions:
-        -   name: started at the same time
-            expect: Math.abs(requisition.secondRequisition.startTime.getTime() - requisition.firstRequisition.startTime.getTime())
-            toBeGreaterThanOrEqualTo: 200
+        -   name: started after the other
+            expect: requisition.requisitions[1].startTime.getTime() - requisition.requisitions[0].startTime.getTime()
+            toBeGreaterThanOrEqualTo: requisition.requisitions[0].delay
+        -   expect: elapsedTime
+            toBeLessThanOrEqualTo: 200 + 300 + requisition.parent.tollerance
