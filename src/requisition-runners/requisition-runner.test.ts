@@ -22,39 +22,44 @@ describe('RequisitionRunner', () => {
         expect(actual.tests[0].valid).toBeTruthy();
     });
 
-    // it('Should return requisition report collection', async () => {
-    //     const requisition: RequisitionModel = {
-    //         name: 'super cool',
-    //         iterations: 1,
-    //         requisitions: [
-    //             {
-    //                 name: 'first child',
-    //                 publishers: [],
-    //                 subscriptions: [],
-    //             },
-    //         ]
-    //     };
-    //
-    //     const reports = await new RequisitionRunner(requisition).run();
-    //     const report = reports[0];
-    //
-    //     expect(reports.length).toBe(1);
-    //     expect(report.time).toBeDefined();
-    //
-    //     expect(report.name).toBe(requisition.name);
-    //     expect(report.valid).toBeTruthy();
-    //     expect(report.requisitions![0].name).toBeDefined();
-    //     expect(report.requisitions![0].requisitions![0].name).toBe(requisition.requisitions![0].name);
-    //     expect(report.requisitions![0].requisitions![0].valid).toBeTruthy();
-    //     expect(report.requisitions![0].requisitions![1].name).toBe(requisition.requisitions![1].name);
-    //     expect(report.requisitions![0].requisitions![1].valid).toBeTruthy();
-    //
-    //     expect(report.requisitions![1].name).toBeDefined();
-    //     expect(report.requisitions![1].requisitions![0].name).toBe(requisition.requisitions![0].name);
-    //     expect(report.requisitions![1].requisitions![0].valid).toBeTruthy();
-    //     expect(report.requisitions![1].requisitions![1].name).toBe(requisition.requisitions![1].name);
-    //     expect(report.requisitions![1].requisitions![1].valid).toBeTruthy();
-    // });
+    it('Should return requisition report collection', async () => {
+        const requisition: RequisitionModel = {
+            name: 'super cool',
+            iterations: 5,
+            requisitions: [],
+            publishers: [],
+            subscriptions: [],
+        };
+
+        const reports = await new RequisitionRunner(requisition).run();
+        const report = reports[0];
+
+        expect(reports.length).toBe(requisition.iterations);
+        expect(report.time).toBeDefined();
+        expect(report.name).toContain(requisition.name);
+        expect(report.valid).toBeTruthy();
+    });
+
+    it('Should run children requisition report collection', async () => {
+        const requisition: RequisitionModel = {
+            name: 'super cool',
+            requisitions: [{
+                name: 'child',
+                publishers: [],
+                subscriptions: [],
+                requisitions: []
+            }],
+            publishers: [],
+            subscriptions: [],
+        };
+
+        const reports = await new RequisitionRunner(requisition).run();
+        const report = reports[0].requisitions[0];
+
+        expect(report.time).toBeDefined();
+        expect(report.name).toContain('child');
+        expect(report.valid).toBeTruthy();
+    });
 
     it('Should replace stuff', async () => {
         const keyName = 'value';

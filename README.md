@@ -525,7 +525,7 @@ As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a type fix in this README file. Go ahead.
 Just make sure it's not breaking anything running `$ npm run all` and then submit it.
 If you like it but don't want to waste time creating a PR, no problem either. Create an issue. 
-Or, even easier, git it a github star. It's cheap and it doesn't hurt anyone.
+Or, even easier, give it it a github star. It's cheap and it doesn't hurt anyone.
 
 #### license
 MIT
