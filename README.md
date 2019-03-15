@@ -158,6 +158,12 @@ Defaults to 1. Sets how many times this test will be executed. Check [this](http
 Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
+    
+**parallel**\
+Defaults to false. Immediate children requisitions should be executed in parallel mode.
+Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel.yml) to see it working.
+
+    parallel: true
 
 **publishers**\
 List of [publishers](#publisher)

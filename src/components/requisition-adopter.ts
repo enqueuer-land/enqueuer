@@ -11,6 +11,8 @@ export class RequisitionAdopter {
         requisitions: [],
         delay: 0,
         iterations: 1,
+        parallel: false,
+        ignored: false,
     };
 
     constructor(name: string, node: any) {

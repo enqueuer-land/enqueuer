@@ -98,16 +98,7 @@ export class RequisitionRunner {
     private async happyPath(requisitionReporter: RequisitionReporter): Promise<output.RequisitionModel> {
         await requisitionReporter.delay();
         Logger.debug(`Handling requisitions children of '${this.requisition.name}'`);
-        let childrenReport: output.RequisitionModel[] = [];
-        let index = 0;
-        for (const child of this.requisition.requisitions) {
-            child.parent = this.requisition;
-            const requisitionRunner = new RequisitionRunner(child, this.level + 1);
-            const requisitionModels = await requisitionRunner.run();
-            this.requisition.requisitions[index] = requisitionRunner.requisition;
-            childrenReport = childrenReport.concat(requisitionModels);
-            ++index;
-        }
+        let childrenReport: output.RequisitionModel[] = await this.executeChildren();
         const report = await requisitionReporter.execute();
         report.requisitions = childrenReport;
         report.valid = report.valid && report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
@@ -115,4 +106,29 @@ export class RequisitionRunner {
         return report;
     }
 
+    private async executeChildren(): Promise<output.RequisitionModel[]> {
+        if (this.requisition.parallel) {
+            const models = await Promise.all(this.requisition.requisitions
+                .map(async (child: input.RequisitionModel, index: number) => {
+                    return await this.executeChild(child, index);
+                }));
+            return models.reduce((acc, child) => acc.concat(child), []);
+        } else {
+            let childrenReport: output.RequisitionModel[] = [];
+            let index = 0;
+            for (const child of this.requisition.requisitions) {
+                childrenReport = childrenReport.concat(await this.executeChild(child, index));
+                ++index;
+            }
+            return childrenReport;
+        }
+    }
+
+    private async executeChild(child: input.RequisitionModel, index: number) {
+        child.parent = this.requisition;
+        const requisitionRunner = new RequisitionRunner(child, this.level + 1);
+        const requisitionModels = await requisitionRunner.run();
+        this.requisition.requisitions[index] = requisitionRunner.requisition;
+        return requisitionModels;
+    }
 }

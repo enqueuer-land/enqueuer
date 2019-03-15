@@ -1,0 +1,30 @@
+-   parallel: true
+    requisitions:
+    -   delay: 200
+        onInit:
+            script: |-
+                requisition.parent.firstRequisition = { startTime: new Date()}
+    -   delay: 200
+        onInit:
+            script: |-
+                requisition.parent.secondRequisition = { startTime: new Date()}
+    onFinish:
+        assertions:
+        -   name: started at the same time
+            expect: Math.abs(requisition.secondRequisition.startTime.getTime() - requisition.firstRequisition.startTime.getTime())
+            toBeLessThanOrEqualTo: 50
+-   parallel: false
+    requisitions:
+    -   delay: 200
+        onInit:
+            script: |-
+                requisition.parent.firstRequisition = { startTime: new Date()}
+    -   delay: 200
+        onInit:
+            script: |-
+                requisition.parent.secondRequisition = { startTime: new Date()}
+    onFinish:
+        assertions:
+        -   name: started at the same time
+            expect: Math.abs(requisition.secondRequisition.startTime.getTime() - requisition.firstRequisition.startTime.getTime())
+            toBeGreaterThanOrEqualTo: 200

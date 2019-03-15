@@ -30,9 +30,9 @@ export class EnqueuerRunner {
                 .map(async (requisition: any) => await new RequisitionRunner(requisition, 1).run()));
             enqueuerReport.requisitions = filesReport.reduce((acc, child) => acc.concat(child), []);
         } else {
-            for (const requisition of enqueuerRequisition.requisitions!) {
+            for (const requisition of enqueuerRequisition.requisitions) {
                 const requisitionReport = await new RequisitionRunner(requisition, 1).run();
-                enqueuerReport.requisitions = enqueuerReport.requisitions!.concat(requisitionReport);
+                enqueuerReport.requisitions = enqueuerReport.requisitions.concat(requisitionReport);
             }
         }
         enqueuerReport.tests = parsingErrors;
