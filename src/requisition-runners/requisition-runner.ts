@@ -65,7 +65,7 @@ export class RequisitionRunner {
     private printReport(report: output.RequisitionModel) {
         const configuration = Configuration.getInstance();
         if (this.level <= configuration.getMaxReportLevelPrint()) {
-            const summaryOptions = {maxLevel: configuration.getMaxReportLevelPrint(), level: this.level, printFailingTests: false};
+            const summaryOptions = {maxLevel: configuration.getMaxReportLevelPrint(), level: this.level, printFailingTests: this.level === 0};
             new SummaryTestOutput(report, summaryOptions).print();
         }
     }

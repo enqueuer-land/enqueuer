@@ -632,11 +632,12 @@ List of in plugins used by the test scenarios. You can <a href="https://github.c
 </code></pre>
 
 <p><strong>outputs</strong><br>
-Once enqueuer runs every requisition, it compiles a summary and sends it to every publisher listed in output.
+Once enqueuer runs every execution, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
-You can run <code><span class="dollar-sign">$</span> nqr -p</code> to check available report publishers. <br>
-Another important thing to note is the <code>format</code> value. By default a <code>json</code> summary is generated, but you can change it to whatever format you would like.
-You can run <code><span class="dollar-sign">$</span> nqr -f</code> to check available formats or event <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a></p>
+Yes, it means that you are able to send this report through <code>http</code>, <code>tcp</code>, etc. or through a <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugin one</a> or a <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a>.
+You can run <code><span class="dollar-sign">$</span> nqr -p</code> to check available report publishers installed. <br>
+Another important thing to note is the <code>format</code> value. By default a <code>json</code> summary is generated, but you can change it to whatever format you would like, such as: <a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">Xunit</a>, <a href="https://github.com/enqueuer-land/enqueuer-plugin-html-report">html</a>
+You can run <code><span class="dollar-sign">$</span> nqr -f</code> to check available installed formats or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a></p>
 
 <pre><code>outputs:
 - type: file

@@ -48,7 +48,7 @@ export class RequisitionReporter {
                 Logger.info('Starting requisition time out');
                 await new Promise((resolve) => setTimeout(() => resolve(), this.timeout));
                 if (!this.hasFinished) {
-                    Logger.info(`Requisition timed out`);
+                    Logger.info(`Requisition '${this.requisitionAttributes.name}' timed out`);
                     await this.onRequisitionFinish();
                     resolve(this.reportGenerator.getReport());
                 }

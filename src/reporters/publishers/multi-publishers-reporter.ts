@@ -24,7 +24,7 @@ export class MultiPublishersReporter {
                 Logger.error(err);
             }
         }));
-        Logger.info(`Publishers have publisher their messages`);
+        Logger.info(`Publishers have published their messages`);
         return errorsCounter;
     }
 

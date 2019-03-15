@@ -408,11 +408,12 @@ List of in plugins used by the test scenarios. You can [check them out](https://
     - enqueuer-plugin-html-report
 
 **outputs**\
-Once enqueuer runs every requisition, it compiles a summary and sends it to every publisher listed in output.
+Once enqueuer runs every execution, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
-You can run `$ nqr -p` to check available report publishers. \
-Another important thing to note is the `format` value. By default a `json` summary is generated, but you can change it to whatever format you would like.
-You can run `$ nqr -f` to check available formats or event [write your own](https://github.com/enqueuer-land/plugin-scaffold)
+Yes, it means that you are able to send this report through `http`, `tcp`, etc. or through a [plugin one](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
+You can run `$ nqr -p` to check available report publishers installed. \
+Another important thing to note is the `format` value. By default a `json` summary is generated, but you can change it to whatever format you would like, such as: [Xunit](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), [html](https://github.com/enqueuer-land/enqueuer-plugin-html-report)
+You can run `$ nqr -f` to check available installed formats or even [write your own](https://github.com/enqueuer-land/plugin-scaffold)
     
     outputs:
     - type: file
