@@ -11,6 +11,7 @@ import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {ObjectDecycler} from '../object-parser/object-decycler';
 import {Configuration} from '../configurations/configuration';
 import {ComponentParentBackupper} from '../components/component-parent-backupper';
+import {RequisitionImporter} from './requisition-importer';
 
 //TODO test it
 export class RequisitionRunner {
@@ -25,21 +26,28 @@ export class RequisitionRunner {
 
     public async run(): Promise<output.RequisitionModel[]> {
         Logger.info(`Running requisition '${this.requisition.name}'`);
+        try {
+            this.importRequisition();
+        } catch (err) {
+            Logger.error(`Error importing requisition`);
+            const report = RequisitionDefaultReports.createRunningError({name: this.requisition.name, id: this.requisition.id}, err);
+            this.printReport(report);
+            return [report];
+        }
         this.replaceVariables();
         const evaluatedIterations: number = new IterationsEvaluator().iterations(this.requisition.iterations);
-        if (evaluatedIterations > 0 && !this.requisition.ignore) {
-            return await this.iterateRequisition(evaluatedIterations);
-        }
-        let report: output.RequisitionModel;
         if (evaluatedIterations <= 0) {
             Logger.info(`Requisition will be skipped duo no iterations`);
-            report = RequisitionDefaultReports.createSkippedReport({name: this.requisition.name, id: this.requisition.id});
-        } else { //if (this.requisition.ignore);
+            const report = RequisitionDefaultReports.createSkippedReport({name: this.requisition.name, id: this.requisition.id});
+            this.printReport(report);
+            return [report];
+        } else if (this.requisition.ignore) {
             Logger.info(`Requisition will be ignored`);
-            report = RequisitionDefaultReports.createIgnoredReport({name: this.requisition.name, id: this.requisition.id});
+            const report = RequisitionDefaultReports.createIgnoredReport({name: this.requisition.name, id: this.requisition.id});
+            this.printReport(report);
+            return [report];
         }
-        this.printReport(report);
-        return [report];
+        return await this.iterateRequisition(evaluatedIterations);
     }
 
     private async iterateRequisition(evaluatedIterations: number) {
@@ -60,6 +68,12 @@ export class RequisitionRunner {
             }
         }
         return reports;
+    }
+
+    private importRequisition() {
+        if (this.requisition.import) {
+            this.requisition = new RequisitionImporter().import(this.requisition);
+        }
     }
 
     private printReport(report: output.RequisitionModel) {
@@ -131,4 +145,5 @@ export class RequisitionRunner {
         this.requisition.requisitions[index] = requisitionRunner.requisition;
         return requisitionModels;
     }
+
 }

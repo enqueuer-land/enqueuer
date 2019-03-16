@@ -1,14 +1,11 @@
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {Logger} from '../loggers/logger';
 import {TestModel} from '../models/outputs/test-model';
 import * as input from '../models/inputs/requisition-model';
 import {RequisitionModel} from '../models/inputs/requisition-model';
-import * as fs from 'fs';
 import * as glob from 'glob';
-import {RequisitionValidator} from './requisition-validator';
-import {RequisitionAdopter} from '../components/requisition-adopter';
+import {RequisitionFileParser} from './requisition-file-parser';
 
-export class RequisitionFilesParser {
+export class RequisitionFilePatternParser {
 
     private filesErrors: TestModel[] = [];
 
@@ -26,7 +23,7 @@ export class RequisitionFilesParser {
         const matchingFiles = this.getMatchingFiles();
         matchingFiles.forEach((file: string) => {
             try {
-                requisitions.push(this.parseFile(file));
+                requisitions.push(new RequisitionFileParser().parseFile(file));
             } catch (err) {
                 this.addError(`Error parsing file '${file}'`, err);
             }
@@ -36,21 +33,6 @@ export class RequisitionFilesParser {
             this.addError(title, title);
         }
         return requisitions;
-    }
-
-    private parseFile(filename: string): RequisitionModel {
-        const fileBufferContent = fs.readFileSync(filename).toString();
-        let fileContent: any = DynamicModulesManager
-            .getInstance().getObjectParserManager()
-            .tryToParseWithParsers(fileBufferContent, ['yml', 'json']);
-
-        const requisition = Array.isArray(fileContent) ? {requisitions: fileContent} : fileContent;
-        const requisitionValidator = new RequisitionValidator();
-        if (!requisitionValidator.validate(requisition)) {
-            throw 'File \'' + filename + '\' is not a valid fileContent. ' + requisitionValidator.getErrorMessage();
-        }
-        requisition.name = requisition.name || filename;
-        return requisition;
     }
 
     private getMatchingFiles(): string[] {

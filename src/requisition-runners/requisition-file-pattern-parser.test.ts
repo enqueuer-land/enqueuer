@@ -1,4 +1,4 @@
-import {RequisitionFilesParser} from './requisition-files-parser';
+import {RequisitionFilePatternParser} from './requisition-file-pattern-parser';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {YmlObjectParser} from '../object-parser/yml-object-parser';
 import * as fs from 'fs';
@@ -7,7 +7,7 @@ import * as glob from 'glob';
 jest.mock('fs');
 jest.mock('glob');
 
-describe('RequisitionFilesParser', () => {
+describe('RequisitionFilePatternParser', () => {
     beforeEach(() => {
         // @ts-ignore
         delete DynamicModulesManager.instance;
@@ -39,7 +39,7 @@ describe('RequisitionFilesParser', () => {
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
         const filename = 'anyStuff';
 
-        const requisition = new RequisitionFilesParser([filename]).parse();
+        const requisition = new RequisitionFilePatternParser([filename]).parse();
 
         expect(requisition[0].name).toBe(filename);
 
@@ -57,7 +57,7 @@ describe('RequisitionFilesParser', () => {
         fs.readFileSync.mockImplementationOnce(() => {
             throw 'error';
         });
-        const parser: RequisitionFilesParser = new RequisitionFilesParser(['anyStuff']);
+        const parser: RequisitionFilePatternParser = new RequisitionFilePatternParser(['anyStuff']);
 
         parser.parse();
 
@@ -65,7 +65,7 @@ describe('RequisitionFilesParser', () => {
     });
 
     it('Should no test found error', () => {
-        const parser: RequisitionFilesParser = new RequisitionFilesParser([]);
+        const parser: RequisitionFilePatternParser = new RequisitionFilePatternParser([]);
 
         parser.parse();
 
@@ -87,7 +87,7 @@ describe('RequisitionFilesParser', () => {
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
 
-        const parser = new RequisitionFilesParser(['anyStuff']);
+        const parser = new RequisitionFilePatternParser(['anyStuff']);
         parser.parse();
 
         const parsedErrorDescription: any = parser.getFilesErrors()[0].description;
@@ -107,7 +107,7 @@ describe('RequisitionFilesParser', () => {
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
 
-        const parser = new RequisitionFilesParser(['anyStuff']);
+        const parser = new RequisitionFilePatternParser(['anyStuff']);
         parser.parse();
 
         expect(parser.getFilesErrors()[0].name).toBe('Error parsing file \'anyStuff\'');
@@ -119,7 +119,7 @@ describe('RequisitionFilesParser', () => {
         // @ts-ignore
         glob.sync.mockImplementationOnce(() => []);
 
-        const parser = new RequisitionFilesParser(['not-matching-pattern']);
+        const parser = new RequisitionFilePatternParser(['not-matching-pattern']);
         parser.parse();
 
         expect(parser.getFilesErrors()[0]).toEqual({

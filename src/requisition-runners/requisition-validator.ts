@@ -3,8 +3,12 @@ import {RequisitionModel} from '../models/inputs/requisition-model';
 export class RequisitionValidator {
 
     public validate(requisition: RequisitionModel): boolean {
+        if (typeof requisition !== 'object' || !requisition) {
+            return false;
+        }
         if (requisition.onInit !== undefined ||
             requisition.onFinish !== undefined ||
+            requisition.import !== undefined ||
             requisition.delay !== undefined) {
             return true;
         }
@@ -21,6 +25,6 @@ export class RequisitionValidator {
     }
 
     public getErrorMessage(): string {
-        return 'Unable to find: \'onInit\', \'onFinish\', \'delay\', \'requisitions\', \'publishers\' nor \'subscriptions\'';
+        return 'Unable to find: \'onInit\', \'onFinish\', \'delay\', \'requisitions\', \'publishers\', \'subscriptions\' nor \'import\'.';
     }
 }

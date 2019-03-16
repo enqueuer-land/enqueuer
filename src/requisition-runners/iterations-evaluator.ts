@@ -5,6 +5,7 @@ export class IterationsEvaluator {
     public iterations(iterations: number): number {
         if (iterations !== undefined) {
             try {
+                //TODO be able to use 'requisition' as argument
                 const evaluated = eval(iterations.toString());
                 switch (typeof evaluated) {
                     case 'boolean':

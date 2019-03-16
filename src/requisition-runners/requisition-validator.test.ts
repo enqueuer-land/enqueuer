@@ -3,7 +3,15 @@ import {RequisitionValidator} from './requisition-validator';
 describe('RequisitionValidator', () => {
     it('Should return error message', () => {
         expect(new RequisitionValidator().getErrorMessage())
-            .toBe('Unable to find: \'onInit\', \'onFinish\', \'delay\', \'requisitions\', \'publishers\' nor \'subscriptions\'');
+            .toBe(`Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`);
+    });
+
+    it('Should reject empty', () => {
+        expect(new RequisitionValidator().validate()).toBeFalsy();
+    });
+
+    it('Should accept import', () => {
+        expect(new RequisitionValidator().validate({import: {}})).toBeTruthy();
     });
 
     it('Should accept onInit', () => {

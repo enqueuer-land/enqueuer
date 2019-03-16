@@ -15,15 +15,15 @@ export class RequisitionAdopter {
         ignored: false,
     };
 
-    constructor(name: string, node: any) {
-        this.requisition = this.baptiseRequisition(node, name);
+    constructor(node: any) {
+        this.requisition = this.baptiseRequisition(node);
     }
 
     public getRequisition(): RequisitionModel {
         return this.requisition;
     }
 
-    private baptiseRequisition(requisition: RequisitionModel, name: string, parent?: RequisitionModel): RequisitionModel {
+    private baptiseRequisition(requisition: RequisitionModel, name?: string, parent?: RequisitionModel): RequisitionModel {
         requisition = Object.assign({}, this.defaultModel, requisition, {parent}) as RequisitionModel;
         this.putNameAndId(requisition, name, parent);
         requisition.requisitions = requisition.requisitions
@@ -35,8 +35,8 @@ export class RequisitionAdopter {
         return requisition;
     }
 
-    private putNameAndId(component: RequisitionModel | PublisherModel | SubscriptionModel, name: string, parent?: RequisitionModel) {
-        if (!component.name) {
+    private putNameAndId(component: RequisitionModel | PublisherModel | SubscriptionModel, name?: string, parent?: RequisitionModel) {
+        if (!component.name && name) {
             component.name = name;
         }
         if (!component.id) {

@@ -5,7 +5,7 @@ describe('RequisitionAdopter', () => {
     it('Should set default values', () => {
         const name = 'specialName';
 
-        const parent = new RequisitionAdopter(name, {}).getRequisition();
+        const parent = new RequisitionAdopter({name}).getRequisition();
 
         expect(parent.name).toBe(name);
         expect(parent.id).toBeDefined();
@@ -20,8 +20,8 @@ describe('RequisitionAdopter', () => {
     it('Should override default values', () => {
         const name = 'specialName';
 
-        const parent = new RequisitionAdopter(name, {
-            name: 'override',
+        const parent = new RequisitionAdopter({
+            name: name,
             id: 'otherId',
             value: 123,
             delay: 10000,
@@ -49,7 +49,8 @@ describe('RequisitionAdopter', () => {
             },
             {},
         ];
-        const parent = new RequisitionAdopter(name, {
+        const parent = new RequisitionAdopter({
+            name,
             publishers: publishers,
         }).getRequisition();
 
@@ -78,7 +79,8 @@ describe('RequisitionAdopter', () => {
                 name: 'secondName'
             },
         ];
-        const parent = new RequisitionAdopter(name, {
+        const parent = new RequisitionAdopter({
+            name,
             subscriptions: subscriptions,
         }).getRequisition();
 
@@ -104,7 +106,7 @@ describe('RequisitionAdopter', () => {
             },
             {},
         ];
-        const parent = new RequisitionAdopter(name, {requisitions}).getRequisition();
+        const parent = new RequisitionAdopter({name, requisitions}).getRequisition();
 
         expect(parent.requisitions[0].name).toBe('Requisition #0');
         expect(parent.requisitions[0].extraValue).toBe(requisitions[0].extraValue);
@@ -128,7 +130,7 @@ describe('RequisitionAdopter', () => {
             }
         ];
 
-        const requisition = new RequisitionAdopter('name', {requisitions}).getRequisition();
+        const requisition = new RequisitionAdopter({name: 'name', requisitions}).getRequisition();
 
         expect(requisition.name).toBe('name');
         expect(requisition.id).toBeDefined();
@@ -157,7 +159,7 @@ describe('RequisitionAdopter', () => {
             subscriptions: [{name: 'sub'}],
         };
 
-        const requisition = new RequisitionAdopter('super', parent).getRequisition();
+        const requisition = new RequisitionAdopter(parent).getRequisition();
 
         expect(requisition.requisitions[0].parent!.name).toBe('parent');
         expect(requisition.publishers[0].parent.name).toBe('parent');

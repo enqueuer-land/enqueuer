@@ -165,6 +165,12 @@ Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/exam
 
     parallel: true
 
+**import**\
+Allows requisition files to be reused. Want to reuse the same requisition multiple times? This is you you need.
+Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/reuse.yml) to behold this feature.
+
+    import: path/to/another/requisition/file
+
 **publishers**\
 List of [publishers](#publisher)
     
