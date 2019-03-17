@@ -530,6 +530,9 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 [![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
 
 
+### Stacker
+Looking for a GUI enqueuer client? Consider checking the official enqueuer GUI: [stacker](https://lopidio.github.io/stacker/). It may be what you want.
+
 ### Open source
 
 #### Contributing
@@ -539,6 +542,14 @@ We mean it, do it. Even if it's a type fix in this README file. Go ahead.
 Just make sure it's not breaking anything running `$ npm run all` and then submit it.
 If you like it but don't want to waste time creating a PR, no problem either. Create an issue. 
 Or, even easier, give it it a github star. It's cheap and it doesn't hurt anyone.
+
+#### Still in Beta
+Enqueuer is still a beta version, so please excuse any small glitches that may occur here and there.
+They will all be gone soon. :)
+
+#### Feedback
+We'd love to get your feedback!
+If you have any comments, suggestions, etc. you can reach us [here](github.com/enqueuer-land/enqueuer).
 
 #### license
 MIT
