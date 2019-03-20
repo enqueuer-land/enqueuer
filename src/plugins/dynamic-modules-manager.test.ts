@@ -39,6 +39,7 @@ describe('DynamicModulesManager', () => {
             '../asserters/expect-to-be-less-than-asserter',
             '../asserters/expect-to-be-less-than-or-equal-to-asserter',
             '../asserters/expect-to-contain-asserter',
+            '../asserters/expect-to-be-truthy-asserter',
         ].map(expected => __dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();
 
