@@ -34,6 +34,10 @@ describe('DynamicModulesManager', () => {
             '../object-parser/file-object-parser',
             '../object-parser/yml-object-parser',
             '../asserters/expect-to-be-equal-to-asserter',
+            '../asserters/expect-to-be-greater-than-asserter',
+            '../asserters/expect-to-be-greater-than-or-equal-to-asserter',
+            '../asserters/expect-to-be-less-than-asserter',
+            '../asserters/expect-to-be-less-than-or-equal-to-asserter',
         ].map(expected => __dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();
 
