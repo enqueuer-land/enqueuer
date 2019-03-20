@@ -33,10 +33,9 @@ describe('DynamicModulesManager', () => {
             '../object-parser/csv-object-parser',
             '../object-parser/file-object-parser',
             '../object-parser/yml-object-parser',
+            '../asserters/expect-to-be-equal-to-asserter',
         ].map(expected => __dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();
-
-        expect(expectedBuiltInModules.length).toBe(actualList.length);
 
         expect(actualList.sort()).toEqual(expectedBuiltInModules.sort());
     });

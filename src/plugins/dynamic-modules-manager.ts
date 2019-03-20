@@ -6,18 +6,21 @@ import {Logger} from '../loggers/logger';
 import * as fs from 'fs';
 import * as path from 'path';
 import {ObjectParserManager} from './object-parser-manager';
+import {AsserterManager} from './asserter-manager';
 
 export class DynamicModulesManager {
     private static instance: DynamicModulesManager;
     private readonly protocolManager: ProtocolManager;
     private readonly reportFormatterManager: ReportFormatterManager;
-    private readonly builtInModules: string[];
     private readonly objectParserManager: ObjectParserManager;
+    private readonly asserterManager: AsserterManager;
+    private readonly builtInModules: string[];
 
     private constructor() {
         this.protocolManager = new ProtocolManager();
         this.reportFormatterManager = new ReportFormatterManager();
         this.objectParserManager = new ObjectParserManager();
+        this.asserterManager = new AsserterManager();
         this.builtInModules = this.findEveryEntryPointableModule();
         this.loadModules();
     }
@@ -35,6 +38,10 @@ export class DynamicModulesManager {
 
     public getProtocolManager(): ProtocolManager {
         return this.protocolManager;
+    }
+
+    public getAsserterManager(): AsserterManager {
+        return this.asserterManager;
     }
 
     public getReportFormatterManager(): ReportFormatterManager {
@@ -109,7 +116,8 @@ export class DynamicModulesManager {
                 {
                     protocolManager: this.protocolManager,
                     reportFormatterManager: this.reportFormatterManager,
-                    objectParserManager: this.objectParserManager
+                    objectParserManager: this.objectParserManager,
+                    asserterManager: this.asserterManager
                 } as MainInstance
             );
     }

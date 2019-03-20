@@ -57,12 +57,10 @@ export abstract class EventExecutor {
     }
 
     private prepareAssertions(assertions: Assertion[]): Assertion[] {
-        let assertionCounter = 0;
-        return assertions.map(assertion => {
+        return assertions.map((assertion, index) => {
             if (!assertion.name) {
-                assertion.name = `Assertion #${assertionCounter.toString()}`;
+                assertion.name = `Assertion #${++index}`;
             }
-            ++assertionCounter;
             return assertion;
         });
     }
