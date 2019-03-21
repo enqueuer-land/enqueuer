@@ -133,47 +133,47 @@ As the others components, it has some attributes. All of them are optionals. And
 You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
 [Variable replacements](#variables) are available through the entire requisition.
 
-**name**
+**name**  
 Describes what the requisition is suppose to do.
 Defaults to requisition index.
 
     name: requisition action
 
-**timeout**
+**timeout**  
 Defaults to 5000.
 Sets in milliseconds how long the requisition waits to expire.
 Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
     
-**delay**
+**delay**  
 Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) to get the full idea.
 
     delay: 0
 
-**iterations**
+**iterations**  
 Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
 
     iterations: 3
 
-**ignore**
+**ignore**  
 Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
     
-**parallel**
+**parallel**  
 Defaults to false. Immediate children requisitions should be executed in parallel mode.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel.yml) to see it working.
 
     parallel: true
 
-**import**
+**import**  
 Allows requisition files to be reused. Want to reuse the same requisition multiple times? This is you you need.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/reuse.yml) to behold this feature.
 
     import: path/to/another/requisition/file
 
-**publishers**
+**publishers**  
 List of [publishers](#publisher)
     
     publishers:
@@ -181,7 +181,7 @@ List of [publishers](#publisher)
       type: http
     - type: tcp
 
-**subscriptions**
+**subscriptions**  
 List of [subscriptions](#subscription)
 
     subscriptions:
@@ -191,7 +191,7 @@ List of [subscriptions](#subscription)
       type: file
 
 
-**requisitions**
+**requisitions**  
 A list of child scenarios. List of [requisitions](#requisition).
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
@@ -219,24 +219,24 @@ A publisher action is triggered by enqueuer itself. It **acts** whereas a [subsc
 It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
 Every publisher has its own properties, depending on its protocol and implementation, but usually, they all have these properties.
 
-**name**
+**name**  
 Defaults to publisher index.
 Describes what the publisher is supposed to do.
 
     name: publisher action
 
-**type**
+**type**  
 Mandatory. Key tag to identify which publisher will be instantiated
 
     type: http
 
-**payload**
+**payload**  
 Since a publisher usually publishes something, it's very likely you have to set a value here.
 The message itself that will be send through this IPC protocol. Be it a string, a number, a boolean value or even whole objects.
 
     payload: value
     
-**ignore**
+**ignore**  
 Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true    
@@ -264,18 +264,18 @@ This means that it is not triggered by enqueuer itself.
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
 Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. 
 
-**name**
+**name**  
 Defaults to subscription index.
 Describes what the subscription is supposed to do.
 
     name: subscription action
     
-**type**
+**type**  
 Mandatory. Key tag to identify which subscription will be instantiated
 
     type: http
 
-**avoid**
+**avoid**  
 Identifies whether or not this subscription should not receive any message. Defaults to false.
 If set and a message is received a failing test will be generated.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/avoid.yml) to see it working.
@@ -283,13 +283,13 @@ On the other hand, when it's false and no message is received in a given timeout
     
     avoid: false
 
-**timeout**
+**timeout**  
 Sets in milliseconds how long the subscription waits to expire. Defaults to 3000.
 Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
     
-**ignore**
+**ignore**  
 Defaults to false. Tells to enqueuer that this subscription should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true    
@@ -323,32 +323,33 @@ You're free to explore them however you want, even doing things like this:
 
 There are three hook events available:
 
-**onInit**
+**onInit**  
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
 
-**onFinish**
+**onFinish**  
 Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
-As available parameter is `elapsedTime`, with elapsed time, in milliseconds, since the instantiation of this component. 
+As available parameter, an `elapsedTime` variable is given, counting every milliseconds since the instantiation of this component. 
 
-**onMessageReceived**
+**onMessageReceived**  
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
 A `message` object is available having all of attributes returned from the received message.
 Depending on the protocol implementation, there'll be additional objects to this hook.
 For instance, in the built-in http publisher implementation, there's a `statusCode`, `headers` and a `body` among others, and the subscription implementation has `body`, `query`, `params` and `headers `, among other variables.
-`elapsedTime` is also available here, with elapsed time, in milliseconds, since the instantiation of this component.
+`elapsedTime` is also available here, counting every milliseconds since the instantiation of this component.
 
 #### fields
 Every hook object has 3 properties:
 
-**script**
+**script**  
 Javascript code snippet executed when the event is triggered.
 Yeah, I mean it. See it [it](https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml) by yourself.
 But be careful, with great power comes great responsibility.
 
-**store**
-Data to be persisted across requisitions
-**assertions**
+**store**  
+Data to be persisted across requisitions.  
+
+**assertions**  
 Array of assertions.
 Run `$ nqr -t` to see available ones.
 Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
@@ -386,7 +387,7 @@ To save yourself some time, a configuration file may be used.
 Configuration files tell enqueuer which tests will be executed, log-level, and which output test report files should be generated.
 This file tells how enqueuer should be executed
 
-**files**
+**files**  
 Requisition file names or glob. Enqueuer runs every file that matches an element value.
 
     files:
@@ -394,22 +395,22 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
     - 2.yml
     - *.json
 
-**parallel**
-Requisition files should be executed in parallel mode. The requisition file itself is still sequential, but the files are executes in parallel.
+**parallel**  
+Defaults to false. Requisition files should be executed in parallel mode. The requisition file itself is still sequential, but the files are executes in parallel.
 
-    parallel: true (false by default)
+    parallel: true
 
-**log-level**
-Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
+**log-level**  
+Defaults to warning. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.
 
     log-level: trace
 
-**max-report-level-print**/
-The deepest level of report to be printed to the console. Defaults to 1.
+**max-report-level-print**  
+Defaults to 1. The deepest level of report to be printed to the console.
 
     max-report-level-print: 2
 
-**plugins**
+**plugins**  
 List of in plugins used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
     
     plugins:
@@ -418,7 +419,7 @@ List of in plugins used by the test scenarios. You can [check them out](https://
     - enqueuer-plugin-mqtt
     - enqueuer-plugin-html-report
 
-**outputs**
+**outputs**  
 Once enqueuer runs every execution, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
 Yes, it means that you are able to send this report through `http`, `tcp`, etc. or through a [plugin one](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
@@ -436,7 +437,7 @@ You can run `$ nqr -f` to check available installed formats or even [write your 
     - type: standard-output (default)
       format: console
 
-**store**
+**store**  
 Values defined here use the 'key: value' pattern and are available to every test scenario throughout the entire execution
 
     store:
