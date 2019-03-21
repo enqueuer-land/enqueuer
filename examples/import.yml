@@ -1,4 +1,9 @@
-import: ./examples/reuse.yml
-onFinish:
-    assertions:
-    -   expectToBeTruthy: requisition.imported
+-   import: ./examples/reuse.yml
+    onFinish:
+        assertions:
+        -   expectToBeTruthy: requisition.imported
+-   import: ./examples/reuse.yml
+    onInit:
+        assertions:
+        -   name: overwrites
+            expectToBeUndefined: requisition.imported

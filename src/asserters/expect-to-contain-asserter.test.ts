@@ -1,5 +1,6 @@
-import {ExpectToContainAsserter} from './expect-to-contain-asserter';
+import {ExpectToContainAsserter, entryPoint} from './expect-to-contain-asserter';
 import {Assertion} from '../models/events/assertion';
+import {MainInstance} from '../plugins/main-instance';
 
 describe('ExpectToContainAsserter', () => {
     it('should contain char in string', () => {
@@ -118,6 +119,23 @@ describe('ExpectToContainAsserter', () => {
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
         expect(test.description).toBe("Expecting 'body.actual' to be a string or an array. Received a 'number'");
+    });
+
+    it('Should export an entry point', done => {
+        const mainInstance: MainInstance = {
+            // @ts-ignore
+            asserterManager: {
+                addAsserter: (templateAssertion: object, createFunction: Function) => {
+                    expect(templateAssertion).toEqual({
+                        'expect': 'actual value (string | array)',
+                        'toContain': 'element (char | object)'
+                    });
+                    expect(createFunction()).toBeInstanceOf(ExpectToContainAsserter);
+                    done();
+                }
+            }
+        };
+        entryPoint(mainInstance);
     });
 
 });

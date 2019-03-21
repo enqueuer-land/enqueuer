@@ -10,9 +10,9 @@ describe('NullAsserter', () => {
             unknown: 2,
         };
 
-        const expectToBeEqualToAsserter = new NullAsserter().assert(assertion, {});
+        const expectToBeEqualToAsserter = new NullAsserter().assert(assertion, {name: '123'});
         expect(expectToBeEqualToAsserter).toEqual({
-            'description': 'Undefined asserter: [object Object]',
+            'description': 'Undefined asserter: {"name":"assertion 0","expect":2,"unknown":2}',
             'name': 'Not known asserter',
             'valid': false
         });

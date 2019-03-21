@@ -65,10 +65,11 @@ describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
-                addAsserter: (matcherFunction: Function, createFunction: Function) => {
-                    expect(matcherFunction({expect: true})).toBeFalsy();
-                    expect(matcherFunction({toBeGreaterThanOrEqualTo: true})).toBeFalsy();
-                    expect(matcherFunction({expect: true, toBeGreaterThanOrEqualTo: true})).toBeTruthy();
+                addAsserter: (templateAssertion: object, createFunction: Function) => {
+                    expect(templateAssertion).toEqual({
+                        'expect': 'actual value',
+                        'toBeGreaterThanOrEqualTo': 'expected value'
+                    });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeGreaterThanOrEqualToAsserter);
                     done();
                 }

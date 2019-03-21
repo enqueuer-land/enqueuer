@@ -41,9 +41,10 @@ describe('ExpectToBeUnundefinedAsserter', () => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
-                addAsserter: (matcherFunction: Function, createFunction: Function) => {
-                    expect(matcherFunction({expectToBeUndefined: true})).toBeTruthy();
-                    expect(matcherFunction({expect: true})).toBeFalsy();
+                addAsserter: (templateAssertion: object, createFunction: Function) => {
+                    expect(templateAssertion).toEqual({
+                        'expectToBeUndefined': 'value expected to be undefined',
+                    });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeUndefinedAsserter);
                     done();
                 }

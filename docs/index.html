@@ -200,7 +200,7 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 - Friendly for developers and non developers <br>
 - Built in assertion library to verify response data coming from/going to your services <br>
 - Easily extensible behavior through third party <a href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including your own <a href="https://github.com/enqueuer-land/plugin-scaffold">custom ones</a> <br>
-- Built in CLI is easy to add to your team's existing CI pipelines <br>
+- CLI is easy to add to your team's existing CI pipelines <br>
 - Places tests front and center  </p>
 
 <p>Welcome to the enqueuer world.</p>
@@ -246,7 +246,7 @@ publishers:
             -   expect: body
                 toBeEqualTo: `yes, it does`
             -   expect: statusCode
-                toBeGreaterThan: 300
+                toBeLessThan: 300
 subscriptions:
 -   type: http
     endpoint: /readme-example
@@ -300,6 +300,7 @@ Examples:
   <span class="dollar-sign">$</span> enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
   <span class="dollar-sign">$</span> enqueuer test-file.yml --store someKey=true --store someOtherKey=false
   <span class="dollar-sign">$</span> nqr --protocols-description -s key=value
+  <span class="dollar-sign">$</span> nqr -t expect
   <span class="dollar-sign">$</span> nqr -l my-enqueuer-plugin-name -p plugin-protocol
   <span class="dollar-sign">$</span> nqr -p http
   <span class="dollar-sign">$</span> nqr --formatters-description json
@@ -565,7 +566,10 @@ But be careful, with great power comes great responsibility.</p>
 <p><strong>store</strong>
 Data to be persisted across requisitions
 <strong>assertions</strong>
-Array of assertions. Run <code><span class="dollar-sign">$</span> nqr -t</code> to see available ones.</p>
+Array of assertions.
+Run <code><span class="dollar-sign">$</span> nqr -t</code> to see available ones.
+Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
+You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>.</p>
 
 <pre><code>onInit:
   script: variableIdentifier = 'string value'

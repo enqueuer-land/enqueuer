@@ -29,6 +29,6 @@ export class ExpectToBeEqualToAsserter implements Asserter {
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        (assertion: Assertion) => assertion.expect !== undefined && assertion.toBeEqualTo !== undefined,
+        {expect: 'actual value', toBeEqualTo: 'expected value'},
         () => new ExpectToBeEqualToAsserter());
 }

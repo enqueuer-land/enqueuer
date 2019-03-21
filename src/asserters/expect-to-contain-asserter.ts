@@ -41,6 +41,6 @@ export class ExpectToContainAsserter implements Asserter {
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        (assertion: Assertion) => assertion.expect !== undefined && assertion.toContain !== undefined,
+        {expect: 'actual value (string | array)', toContain: 'element (char | object)'},
         () => new ExpectToContainAsserter());
 }

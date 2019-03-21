@@ -1,6 +1,5 @@
 import {Command} from 'commander';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {TestsDescriber} from '../testers/tests-describer';
 
 const packageJson = require('../../package.json');
 
@@ -24,7 +23,7 @@ export class CommandLineConfiguration {
             .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
             .option('-m, --max-report-level-print <level>', 'set max report level print', /^(\d)$/i)
             .option('-p, --protocols-description [protocol]', 'describe protocols')
-            .option('-t, --tests-list', 'list available tests assertions')
+            .option('-t, --tests-list [expectedField]', 'list available tests assertions')
             .option('-s, --store [store]', 'add variables values to this session',
                 (val: string, memo: string[]) => this.storeCommandLineAction(val, memo), [])
             .option('-l, --add-plugin [plugin]', 'add plugin',
@@ -49,8 +48,8 @@ export class CommandLineConfiguration {
             exitCode = DynamicModulesManager.getInstance().getObjectParserManager()
                 .describeObjectParsers(this.parsedCommandLine.parsersList);
         } else if (this.parsedCommandLine.testsList) {
-            new TestsDescriber().describeTests();
-            exitCode = true;
+            exitCode = DynamicModulesManager.getInstance().getAsserterManager()
+                .describeAsserters(this.parsedCommandLine.testsList);
         }
 
         if (exitCode !== undefined) {
@@ -118,6 +117,7 @@ export class CommandLineConfiguration {
         console.log('  $ enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info');
         console.log('  $ enqueuer test-file.yml --store someKey=true --store someOtherKey=false');
         console.log('  $ nqr --protocols-description -s key=value');
+        console.log('  $ nqr -t expect');
         console.log('  $ nqr -l my-enqueuer-plugin-name -p plugin-protocol');
         console.log('  $ nqr -p http');
         console.log('  $ nqr --formatters-description json');

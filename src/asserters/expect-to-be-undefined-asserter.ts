@@ -18,6 +18,6 @@ export class ExpectToBeUndefinedAsserter implements Asserter {
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        (assertion: Assertion) => assertion.expectToBeUndefined !== undefined,
+        {expectToBeUndefined: 'value expected to be undefined'},
         () => new ExpectToBeUndefinedAsserter());
 }

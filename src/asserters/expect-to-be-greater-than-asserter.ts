@@ -19,6 +19,6 @@ export class ExpectToBeGreaterThanAsserter implements Asserter {
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        (assertion: Assertion) => assertion.expect !== undefined && assertion.toBeGreaterThan !== undefined,
+        {expect: 'actual value', toBeGreaterThan: 'expected value'},
         () => new ExpectToBeGreaterThanAsserter());
 }

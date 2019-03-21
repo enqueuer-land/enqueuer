@@ -41,9 +41,10 @@ describe('ExpectToBeTruthyAsserter', () => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
-                addAsserter: (matcherFunction: Function, createFunction: Function) => {
-                    expect(matcherFunction({expectToBeTruthy: true})).toBeTruthy();
-                    expect(matcherFunction({expect: true})).toBeFalsy();
+                addAsserter: (templateAssertion: object, createFunction: Function) => {
+                    expect(templateAssertion).toEqual({
+                        'expectToBeTruthy': 'value expected to be true',
+                    });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeTruthyAsserter);
                     done();
                 }

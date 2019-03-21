@@ -65,10 +65,11 @@ describe('ExpectToBeLessThanOrEqualToAsserter', () => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
-                addAsserter: (matcherFunction: Function, createFunction: Function) => {
-                    expect(matcherFunction({expect: true})).toBeFalsy();
-                    expect(matcherFunction({toBeLessThanOrEqualTo: true})).toBeFalsy();
-                    expect(matcherFunction({expect: true, toBeLessThanOrEqualTo: true})).toBeTruthy();
+                addAsserter: (templateAssertion: object, createFunction: Function) => {
+                    expect(templateAssertion).toEqual({
+                        'expect': 'actual value',
+                        'toBeLessThanOrEqualTo': 'expected value'
+                    });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeLessThanOrEqualToAsserter);
                     done();
                 }

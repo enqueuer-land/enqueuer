@@ -18,6 +18,6 @@ export class ExpectToBeTruthyAsserter implements Asserter {
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        (assertion: Assertion) => assertion.expectToBeTruthy !== undefined,
+        {expectToBeTruthy: 'value expected to be true'},
         () => new ExpectToBeTruthyAsserter());
 }

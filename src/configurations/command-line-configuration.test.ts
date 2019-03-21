@@ -1,13 +1,13 @@
 import {CommandLineConfiguration} from './command-line-configuration';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {TestsDescriber} from '../testers/tests-describer';
 
-jest.mock('../testers/tests-describer');
 jest.mock('../plugins/dynamic-modules-manager');
 
 const describeProtocolsMock = jest.fn(() => true);
 const describeReportFormattersMock = jest.fn(() => true);
 const describeObjectParsersMock = jest.fn(() => false);
+const describeAssertersMock = jest.fn(() => false);
+// @ts-ignore
 DynamicModulesManager.getInstance.mockImplementation(() => {
     return {
         getProtocolManager: () => {
@@ -23,6 +23,11 @@ DynamicModulesManager.getInstance.mockImplementation(() => {
         getObjectParserManager: () => {
             return {
                 describeObjectParsers: describeObjectParsersMock
+            };
+        },
+        getAsserterManager: () => {
+            return {
+                describeAsserters: describeAssertersMock
             };
         }
 
@@ -179,36 +184,23 @@ describe('CommandLineConfiguration', () => {
     });
 
     it('describe assertions -t', () => {
-        const describeTestMock = jest.fn(() => false);
-        // @ts-ignore
-        TestsDescriber.mockImplementationOnce(() => {
-            return {
-                describeTests: describeTestMock
-            };
-        });
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-t']);
+        const params = 'expect';
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-t', params]);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalledWith(0);
-        expect(describeTestMock).toHaveBeenCalledWith();
+        expect(exitMock).toHaveBeenCalledWith(1);
+        expect(describeAssertersMock).toHaveBeenCalledWith(params);
     });
 
     it('describe assertions --tests-list', () => {
-        const describeTestMock = jest.fn();
-        // @ts-ignore
-        TestsDescriber.mockImplementationOnce(() => {
-            return {
-                describeTests: describeTestMock
-            };
-        });
-
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--tests-list']);
+        const params = 'expect';
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--tests-list', params]);
 
         commandLineConfiguration.verifyPrematureActions();
 
-        expect(exitMock).toHaveBeenCalledWith(0);
-        expect(describeTestMock).toHaveBeenCalledWith();
+        expect(exitMock).toHaveBeenCalledWith(1);
+        expect(describeAssertersMock).toHaveBeenCalledWith(params);
     });
 
     it('no file', () => {

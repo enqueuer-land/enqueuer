@@ -9,7 +9,7 @@ publishers:
             -   expect: body
                 toBeEqualTo: `yes, it does`
             -   expect: statusCode
-                toBeGreaterThan: 300
+                toBeLessThan: 300
 subscriptions:
 -   type: http
     endpoint: /readme-example

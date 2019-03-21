@@ -41,9 +41,8 @@ describe('ExpectToBeDefinedAsserter', () => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
-                addAsserter: (matcherFunction: Function, createFunction: Function) => {
-                    expect(matcherFunction({expectToBeDefined: true})).toBeTruthy();
-                    expect(matcherFunction({expect: true})).toBeDefined();
+                addAsserter: (templateAssertion: object, createFunction: Function) => {
+                    expect(templateAssertion).toEqual({'expectToBeDefined': 'stuff to be defined'});
                     expect(createFunction()).toBeInstanceOf(ExpectToBeDefinedAsserter);
                     done();
                 }

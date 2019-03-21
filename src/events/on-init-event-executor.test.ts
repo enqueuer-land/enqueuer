@@ -1,7 +1,6 @@
 import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';
-import {Tester} from '../testers/tester';
-import {OnInitEventExecutor} from "./on-init-event-executor";
-import {Initializable} from "./initializable";
+import {Initializable} from '../models/events/initializable';
+import {OnInitEventExecutor} from './on-init-event-executor';
 
 let addArgumentMock = jest.fn();
 let dynamicFunctionExecuteMock = jest.fn();
@@ -14,23 +13,7 @@ DynamicFunctionController.mockImplementation(() => {
     };
 });
 
-let getReportMock = jest.fn(() => {
-    return [{
-        errorDescription: 'desc',
-        valid: false,
-        label: 'label'
-    }]
-});
-
 let addTestMock = jest.fn();
-
-jest.mock('../testers/tester');
-Tester.mockImplementation(() => {
-    return {
-        addTest: addTestMock,
-        getReport: getReportMock
-    };
-});
 
 let initializable: Initializable;
 
@@ -40,20 +23,20 @@ describe('OnInitEventExecutor', () => {
         initializable = {
             onInit: {
                 store: {
-                  key: 'value'
+                    key: 'value'
                 },
                 script: 'code',
                 assertions: [
-                {
-                    name: 'equalName',
-                    expected: 2,
-                    isEqualTo: 2
-                },
-                {
-                    isDefined: 'x'
-                }]
+                    {
+                        name: 'equalName',
+                        expected: 2,
+                        isEqualTo: 2
+                    },
+                    {
+                        isDefined: 'x'
+                    }]
             }
-        }
+        };
     });
 
     it('Should add argument and pass it to the script executor', () => {
@@ -82,39 +65,4 @@ describe('OnInitEventExecutor', () => {
         expect(addArgumentMock).toHaveBeenCalledWith('store', expect.any(Object));
     });
 
-    it('Should add tester and pass it to the script executor', () => {
-        const eventExecutor: OnInitEventExecutor = new OnInitEventExecutor('initializableName', initializable);
-
-        eventExecutor.trigger();
-
-        expect(addArgumentMock).toHaveBeenCalledWith('tester', new Tester());
-    });
-
-    it('Should add tester and pass it to the script executor', () => {
-        const eventExecutor: OnInitEventExecutor = new OnInitEventExecutor('initializableName', initializable);
-        delete initializable.onInit.assertions[1];
-
-        eventExecutor.trigger();
-
-        expect(addArgumentMock).toHaveBeenCalledWith('tester', new Tester());
-    });
-
-    it('Should map Test to TestModel', () => {
-        const eventExecutor: OnInitEventExecutor = new OnInitEventExecutor('initializableName', initializable);
-
-        const testModels = eventExecutor.trigger();
-
-        expect(testModels.length).toBe(1);
-        expect(testModels[0]).toEqual({"description": "desc", "name": "label", "valid": false});
-    });
-
-    it('Should catch function creation exception', () => {
-        const eventExecutor: OnInitEventExecutor = new OnInitEventExecutor('initializableName', initializable);
-        dynamicFunctionExecuteMock = jest.fn(() => {throw 'nqr';} );
-
-        eventExecutor.trigger();
-
-        expect(addTestMock).toHaveBeenCalledWith({"errorDescription": "Error running event 'onInit': nqr", "label": "Event ran", "valid": false});
-    });
 });
-

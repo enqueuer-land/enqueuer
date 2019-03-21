@@ -1,7 +1,6 @@
 import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-controller';
-import {Tester} from '../testers/tester';
 import {OnMessageReceivedEventExecutor} from './on-message-received-event-executor';
-import {MessageReceiver} from './message-receiver';
+import {MessageReceiver} from '../models/events/message-receiver';
 
 let addArgumentMock = jest.fn();
 let dynamicFunctionExecuteMock = jest.fn();
@@ -14,31 +13,13 @@ DynamicFunctionController.mockImplementation(() => {
     };
 });
 
-let getReportMock = jest.fn(() => {
-    return [{
-        errorDescription: 'desc',
-        valid: false,
-        label: 'label'
-    }]
-});
-
-let addTestMock = jest.fn();
-
-jest.mock('../testers/tester');
-Tester.mockImplementation(() => {
-    return {
-        addTest: addTestMock,
-        getReport: getReportMock
-    };
-});
-
 let messageReceiver: MessageReceiver;
 
 describe('OnMessageReceivedEventExecutor', () => {
     beforeEach(() => {
         messageReceiver = {
             messageReceived: {
-                deep: "value"
+                deep: 'value'
             },
             onMessageReceived: {
                 script: 'code',
@@ -54,7 +35,7 @@ describe('OnMessageReceivedEventExecutor', () => {
                             isDefined: 'x'
                         }]
             }
-        }
+        };
     });
 
     it('Should add name and pass it to the script executor', () => {
@@ -90,7 +71,7 @@ describe('OnMessageReceivedEventExecutor', () => {
 
         eventExecutor.trigger();
 
-        expect(addArgumentMock).toHaveBeenCalledWith('message', {deep: "value"});
+        expect(addArgumentMock).toHaveBeenCalledWith('message', {deep: 'value'});
     });
 
     it('Should decompose message and pass it to the script executor', () => {
@@ -109,40 +90,4 @@ describe('OnMessageReceivedEventExecutor', () => {
         expect(addArgumentMock).toHaveBeenCalledWith('store', expect.any(Object));
     });
 
-    it('Should add tester and pass it to the script executor', () => {
-        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', messageReceiver);
-
-        eventExecutor.trigger();
-
-        expect(addArgumentMock).toHaveBeenCalledWith('tester', new Tester());
-    });
-
-    it('Should add tester and pass it to the script executor', () => {
-        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', messageReceiver);
-        delete messageReceiver.onMessageReceived.assertions[1];
-
-        eventExecutor.trigger();
-
-        expect(addArgumentMock).toHaveBeenCalledWith('tester', new Tester());
-    });
-
-    it('Should map Test to TestModel', () => {
-        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', messageReceiver);
-
-        const testModels = eventExecutor.trigger();
-
-        expect(testModels.length).toBe(1);
-        expect(testModels[0]).toEqual({"description": "desc", "name": "label", "valid": false});
-    });
-
-    it('Should catch function creation exception', () => {
-        const eventExecutor: OnMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('messageReceiverName', messageReceiver);
-        dynamicFunctionExecuteMock = jest.fn(() => {throw 'nqr';} );
-
-        eventExecutor.trigger();
-
-        expect(addTestMock).toHaveBeenCalledWith({"errorDescription": "Error running event 'onMessageReceived': nqr", "label": "Event ran", "valid": false});
-    });
-
 });
-

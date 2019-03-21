@@ -20,7 +20,7 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 - Friendly for developers and non developers  
 - Built in assertion library to verify response data coming from/going to your services  
 - Easily extensible behavior through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)   
-- Built in CLI is easy to add to your team's existing CI pipelines  
+- CLI is easy to add to your team's existing CI pipelines  
 - Places tests front and center  
 
 Welcome to the enqueuer world.
@@ -61,7 +61,7 @@ What if I want to mock a http server and hit it at the same time, you may ask. N
                 -   expect: body
                     toBeEqualTo: `yes, it does`
                 -   expect: statusCode
-                    toBeGreaterThan: 300
+                    toBeLessThan: 300
     subscriptions:
     -   type: http
         endpoint: /readme-example
@@ -113,6 +113,7 @@ Certainly one is what you need.
       $ enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
       $ enqueuer test-file.yml --store someKey=true --store someOtherKey=false
       $ nqr --protocols-description -s key=value
+      $ nqr -t expect
       $ nqr -l my-enqueuer-plugin-name -p plugin-protocol
       $ nqr -p http
       $ nqr --formatters-description json
@@ -348,7 +349,10 @@ But be careful, with great power comes great responsibility.
 **store**
 Data to be persisted across requisitions
 **assertions**
-Array of assertions. Run `$ nqr -t` to see available ones.
+Array of assertions.
+Run `$ nqr -t` to see available ones.
+Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
+You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or even [write your own](https://github.com/enqueuer-land/plugin-scaffold).
 
     onInit:
       script: variableIdentifier = 'string value'
