@@ -1,9 +1,15 @@
 import {Configuration} from './configuration';
 import {FileConfiguration} from './file-configuration';
 import {CommandLineConfiguration} from './command-line-configuration';
+import prettyjson from 'prettyjson';
 
 jest.mock('./file-configuration');
 jest.mock('./command-line-configuration');
+jest.mock('prettyjson');
+
+const render = jest.fn();
+// @ts-ignore
+prettyjson.render.mockImplementation(render);
 
 describe('Configuration', () => {
     beforeEach(() => {
@@ -142,6 +148,27 @@ describe('Configuration', () => {
         const instance = Configuration.getInstance();
 
         expect(instance.getOutputs()).toEqual([{format: 'console', name: 'command line report output', type: 'standard-output'}]);
+    });
+
+    it('should print configuration', () => {
+        const commandLine = createCommandLine();
+        commandLine.getVerbosity = () => 'trace';
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+
+        const instance = Configuration.getInstance();
+
+        expect(render).toHaveBeenCalledWith({
+            'configuration': {
+                'files': ['cli-firstFile', 'cli-secondFile'],
+                'logLevel': 'trace',
+                'maxReportLevelPrint': 5,
+                'outputs': [{'format': 'console', 'name': 'command line report output', 'type': 'standard-output'}],
+                'parallel': false,
+                'plugins': ['cli-amqp-plugin', 'common-plugin'],
+                'store': {'cliKey': 'value'}
+            }
+        }, expect.anything());
     });
 
     const createEmptyCommandLine = (filename?: string) => {
