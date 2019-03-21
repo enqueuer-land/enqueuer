@@ -25,3 +25,6 @@ Or, just:
   ```npm run all```
 
 And get everything at the same time.
+
+## Writing commits
+Instead of the usual `$ git commit -m "my message"`, use `$ npm run commit`. This helps to write a pretty and formatted commit message that triggers a proper release version.
