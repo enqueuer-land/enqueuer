@@ -13,7 +13,7 @@ export class ObjectParserManager {
 
     public addObjectParser(createFunction: () => ObjectParser, firstTag: string, ...tags: string[]): void {
         const strings = [firstTag].concat(tags);
-        this.addedObjectParsers.push({tags: strings, createFunction});
+        this.addedObjectParsers.unshift({tags: strings, createFunction});
     }
 
     public describeObjectParsers(describeObjectParsers: string | true): boolean {

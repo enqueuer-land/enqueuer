@@ -22,6 +22,6 @@ export class AsserterManager {
     }
 
     public addAsserter(matcherFunction: (assertion: Assertion) => boolean, createFunction: () => Asserter): void {
-        this.addedAsserters.push({matcherFunction, createFunction});
+        this.addedAsserters.unshift({matcherFunction, createFunction});
     }
 }
