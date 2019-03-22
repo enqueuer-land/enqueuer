@@ -6,14 +6,13 @@ import * as glob from 'glob';
 
 jest.mock('fs');
 jest.mock('glob');
+// @ts-ignore
+glob.sync.mockImplementation((pattern: string) => [pattern]);
 
 describe('RequisitionFilePatternParser', () => {
     beforeEach(() => {
         // @ts-ignore
         delete DynamicModulesManager.instance;
-
-        // @ts-ignore
-        glob.sync.mockImplementationOnce((pattern: string) => [pattern]);
     });
 
     it('Should parse array as just one', () => {

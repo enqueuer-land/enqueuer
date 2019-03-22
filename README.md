@@ -21,7 +21,8 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 - Built in assertion library to verify response data coming from/going to your services  
 - Easily extensible behavior through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)   
 - CLI is easy to add to your team's existing CI pipelines  
-- Places tests front and center  
+- Act and react on you system under test  
+- Place tests front and center  
 
 Welcome to the enqueuer world.
 
@@ -411,7 +412,7 @@ Defaults to 1. The deepest level of report to be printed to the console.
     max-report-level-print: 2
 
 **plugins**  
-List of in plugins used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
+List of in [plugins](#plugins) used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
     
     plugins:
     - enqueuer-plugin-amqp 
@@ -526,6 +527,81 @@ Run `$ nqr -e` to see available ones.
     
 #### example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
+
+----
+
+### Plugins
+You're probably aware by now but it doesn't hurt do emphasize it: enqueuer provides an amazingly powerful plugin extensible architecture.
+It has [several plugins available](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins), but if none of them pleases you, you're free to [create your own](https://github.com/enqueuer-land/plugin-scaffold).
+Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our [plugins list](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).  
+
+#### plugin types
+So far, you're able to extend enqueuer default behavior in four ways. Using a protocol plugin, an object parser plugin, an asserter plugin and using a report formatter plugin.
+
+##### protocol
+A protocol plugin enables you to use a different publisher/subscription types. Run `$ nqr -p [protocol-name]` to check available ones.
+[This one](https://github.com/enqueuer-land/enqueuer-plugin-amqp), for instance, provides support for amqp protocol, so you can create requisitions like this:
+    
+    publishers:
+    -   type: amqp
+        payload: enqueuermaniac
+        exchange: enqueuer.exchange
+        routingKey: enqueuer.integration.test.routing.key
+    subscriptions:
+    -   type: amqp
+        exchange: enqueuer.exchange
+        routingKey: enqueuer.integration.test.routing.#
+        onMessageReceived:
+            assertions:
+            -   expect: payload
+                toBeEqualTo: `enqueuermaniac`
+
+##### object parser
+An object parser plugin enables you to read and parse files as you wish. Run `$ nqr -e [object-parser-name]` to check available ones.
+[This one](https://github.com/enqueuer-land/enqueuer-plugin-xml-parser), for example, provides the ability to read xml files and inject their values like this:
+
+    xmlContent: <<xml://path/to/xml/file.xml>>
+
+##### asserter
+Getting tired of using assertions like this?
+    
+    assertions:
+    -   expect: 123
+        toBeEqualTo: 123
+        
+An asserter plugin provides you a nicely way to use different assertions:
+
+    assertions:
+    -   assertThat: 123
+        is: 123
+ 
+Run `$ nqr -t [assertion-name]` to list available assertions.
+
+##### report formatter
+A report formatter plugin gives you the ability to export enqueuer reports the way you want. Run `$ nqr -f [formatter-name]` to list available report formatters.
+[This one](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), for instance, generates xUnit like reports from enqueuer's output.
+
+
+#### plugin use
+In order to enqueuer get awareness that you want to you a plugin, you have to tell it, right?
+You can tell enqueuer to use a plugin in three manners. Using it as a command line argument, through the configuration file or letting enqueuer finding it in it's home directory folder.
+
+##### command line
+Tell enqueuer to use your plugin through command line this way `$ nqr -l <plugin-folder> -l <another-plugin-folder>`.
+Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
+    
+##### configuration file
+Tell enqueuer to use your plugin through configuration file this way:
+    
+    plugins: 
+    -   plugin-folder
+    -   another-plugin-folder
+
+Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
+
+##### implicitly
+When enqueuer runs, it looks for modules in `.nqr` folder in your home directory. Every enqueuer compatible module get implicitly loaded.
+In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
 
 ----
 

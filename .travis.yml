@@ -7,8 +7,6 @@ node_js:
 
 notifications:
     email:
-        recipients:
-        - guilherme.moraes@outlook.com
         on_success: never
         on_failure: always
 
@@ -18,7 +16,6 @@ before_install:
 
 script:
 - rm output/*
-- npm install
 - npm run lint
 - npm run build
 - npm link

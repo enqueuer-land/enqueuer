@@ -201,7 +201,8 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 - Built in assertion library to verify response data coming from/going to your services <br>
 - Easily extensible behavior through third party <a href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including your own <a href="https://github.com/enqueuer-land/plugin-scaffold">custom ones</a> <br>
 - CLI is easy to add to your team's existing CI pipelines <br>
-- Places tests front and center  </p>
+- Act and react on you system under test <br>
+- Place tests front and center  </p>
 
 <p>Welcome to the enqueuer world.</p>
 
@@ -635,7 +636,7 @@ Defaults to 1. The deepest level of report to be printed to the console.</p>
 </code></pre>
 
 <p><strong>plugins</strong> <br>
-List of in plugins used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>. </p>
+List of in <a href="#plugins">plugins</a> used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>. </p>
 
 <pre><code>plugins:
 - enqueuer-plugin-amqp 
@@ -779,19 +780,108 @@ Run <code><span class="dollar-sign">$</span> nqr -e</code> to see available ones
 
 <hr />
 
-<h3 id="requisition_flow" style="padding-left: 0px">7. Requisition Flow</h3>
+<h3 id="plugins" style="padding-left: 0px">7. Plugins</h3>
+
+<p>You're probably aware by now but it doesn't hurt do emphasize it: enqueuer provides an amazingly powerful plugin extensible architecture.
+It has <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">several plugins available</a>, but if none of them pleases you, you're free to <a href="https://github.com/enqueuer-land/plugin-scaffold">create your own</a>.
+Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugins list</a>.  </p>
+
+<h4 id="plugin_types" style="padding-left: 8px">7.1. plugin types</h4>
+
+<p>So far, you're able to extend enqueuer default behavior in four ways. Using a protocol plugin, an object parser plugin, an asserter plugin and using a report formatter plugin.</p>
+
+<h5 id="protocol" style="padding-left: 16px">7.1.1. protocol</h5>
+
+<p>A protocol plugin enables you to use a different publisher/subscription types. Run <code><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to check available ones.
+<a href="https://github.com/enqueuer-land/enqueuer-plugin-amqp">This one</a>, for instance, provides support for amqp protocol, so you can create requisitions like this:</p>
+
+<pre><code>publishers:
+-   type: amqp
+    payload: enqueuermaniac
+    exchange: enqueuer.exchange
+    routingKey: enqueuer.integration.test.routing.key
+subscriptions:
+-   type: amqp
+    exchange: enqueuer.exchange
+    routingKey: enqueuer.integration.test.routing.#
+    onMessageReceived:
+        assertions:
+        -   expect: payload
+            toBeEqualTo: `enqueuermaniac`
+</code></pre>
+
+<h5 id="object_parser" style="padding-left: 16px">7.1.2. object parser</h5>
+
+<p>An object parser plugin enables you to read and parse files as you wish. Run <code><span class="dollar-sign">$</span> nqr -e [object-parser-name]</code> to check available ones.
+<a href="https://github.com/enqueuer-land/enqueuer-plugin-xml-parser">This one</a>, for example, provides the ability to read xml files and inject their values like this:</p>
+
+<pre><code>xmlContent: &lt;&lt;xml://path/to/xml/file.xml&gt;&gt;
+</code></pre>
+
+<h5 id="asserter" style="padding-left: 16px">7.1.3. asserter</h5>
+
+<p>Getting tired of using assertions like this?</p>
+
+<pre><code>assertions:
+-   expect: 123
+    toBeEqualTo: 123
+</code></pre>
+
+<p>An asserter plugin provides you a nicely way to use different assertions:</p>
+
+<pre><code>assertions:
+-   assertThat: 123
+    is: 123
+</code></pre>
+
+<p>Run <code><span class="dollar-sign">$</span> nqr -t [assertion-name]</code> to list available assertions.</p>
+
+<h5 id="report_formatter" style="padding-left: 16px">7.1.4. report formatter</h5>
+
+<p>A report formatter plugin gives you the ability to export enqueuer reports the way you want. Run <code><span class="dollar-sign">$</span> nqr -f [formatter-name]</code> to list available report formatters.
+<a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">This one</a>, for instance, generates xUnit like reports from enqueuer's output.</p>
+
+<h4 id="plugin_use" style="padding-left: 8px">7.2. plugin use</h4>
+
+<p>In order to enqueuer get awareness that you want to you a plugin, you have to tell it, right?
+You can tell enqueuer to use a plugin in three manners. Using it as a command line argument, through the configuration file or letting enqueuer finding it in it's home directory folder.</p>
+
+<h5 id="command_line" style="padding-left: 16px">7.2.1. command line</h5>
+
+<p>Tell enqueuer to use your plugin through command line this way <code><span class="dollar-sign">$</span> nqr -l &lt;plugin-folder&gt; -l &lt;another-plugin-folder&gt;</code>.
+Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.</p>
+
+<h5 id="configuration_file" style="padding-left: 16px">7.2.2. configuration file</h5>
+
+<p>Tell enqueuer to use your plugin through configuration file this way:</p>
+
+<pre><code>plugins: 
+-   plugin-folder
+-   another-plugin-folder
+</code></pre>
+
+<p>Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.</p>
+
+<h5 id="implicitly" style="padding-left: 16px">7.2.3. implicitly</h5>
+
+<p>When enqueuer runs, it looks for modules in <code>.nqr</code> folder in your home directory. Every enqueuer compatible module get implicitly loaded.
+In order to be enqueuer compatible, a module has to have an <code>entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
+
+<hr />
+
+<h3 id="requisition_flow" style="padding-left: 0px">8. Requisition Flow</h3>
 
 <p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png" alt="enqueuerInstanceFlow" title="Enqueuer Instance Flow" /></p>
 
 <p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p>
 
-<h3 id="stacker" style="padding-left: 0px">8. Stacker</h3>
+<h3 id="stacker" style="padding-left: 0px">9. Stacker</h3>
 
 <p>Looking for a GUI enqueuer client? Consider checking the official enqueuer GUI: <a href="https://lopidio.github.io/stacker/">stacker</a>. It may be what you want.</p>
 
-<h3 id="open_source" style="padding-left: 0px">9. Open source</h3>
+<h3 id="open_source" style="padding-left: 0px">10. Open source</h3>
 
-<h4 id="contributing" style="padding-left: 8px">9.1. Contributing</h4>
+<h4 id="contributing" style="padding-left: 8px">10.1. Contributing</h4>
 
 <p>We, and by 'we' I really mean 'I', are very opened to pull requests in general.
  As long as they make sense and add value to the product, you're free to go.
@@ -800,12 +890,12 @@ Just make sure it's not breaking anything running <code><span class="dollar-sign
 If you like it but don't want to waste time creating a PR, no problem either.
 Create an issue. Or, even easier, give it it a github star. It's cheap and it doesn't hurt anyone.</p>
 
-<h4 id="feedback" style="padding-left: 8px">9.2. Feedback</h4>
+<h4 id="feedback" style="padding-left: 8px">10.2. Feedback</h4>
 
 <p>We'd love to get your feedback!
 If you have any comments, suggestions, etc. you can reach us <a href="github.com/enqueuer-land/enqueuer">here</a>.</p>
 
-<h4 id="license" style="padding-left: 8px">9.3. license</h4>
+<h4 id="license" style="padding-left: 8px">10.3. license</h4>
 
 <p>MIT</p></div>
 

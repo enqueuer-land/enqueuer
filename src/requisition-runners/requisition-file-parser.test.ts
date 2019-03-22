@@ -2,8 +2,12 @@ import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {YmlObjectParser} from '../object-parser/yml-object-parser';
 import * as fs from 'fs';
 import {RequisitionFileParser} from './requisition-file-parser';
+import * as glob from 'glob';
 
 jest.mock('fs');
+jest.mock('glob');
+// @ts-ignore
+glob.sync.mockImplementation((pattern: string) => [pattern]);
 
 describe('RequisitionFileParser', () => {
     beforeEach(() => {
@@ -94,7 +98,8 @@ describe('RequisitionFileParser', () => {
             new RequisitionFileParser().parseFile('any');
             expect(true).toBeFalsy();
         } catch (err) {
-            expect(err).toBe(`File 'any' is not a valid requisition. Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`);
+            expect(err).toBe(`File 'any' is not a valid requisition.` +
+                ` Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`);
         }
     });
 
