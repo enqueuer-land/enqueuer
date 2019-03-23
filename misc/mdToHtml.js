@@ -50,8 +50,9 @@ converter.hooks.set("postConversion", (text) => {
                         --difference;
                     }
                 }
-                const style = levelNumber == 4 ? `font-size: 0.95rem;` : '';
-                spyHtml += `<a class="nav-link" href="#${id}" style="${style}">${levelPrefix.replace(/\d+\.*/g, '&nbsp;&nbsp;&nbsp;') + levelPrefix + '. ' + title}</a>`;
+                const navLinkStyle = levelNumber == 4 ? `font-size: 0.95rem;` : '';
+                const navLinkClass = 'nav-link ' + (levelNumber == 4 ? 'nav-link-sub-item' : '');
+                spyHtml += `<a class="${navLinkClass}" href="#${id}" style="${navLinkStyle}">${levelPrefix.replace(/\d+\.*/g, '&nbsp;&nbsp;&nbsp;') + levelPrefix + '. ' + title}</a>`;
                 previousLevelNumber = levelNumber;
             }
             return "<h" + levelNumber + ' id="' + id + '" style="padding-left: ' + 8 * (levelNumber - 3) + 'px">' + levelPrefix + ' ';
@@ -71,7 +72,7 @@ spyHtml += `</nav></nav></nav>`;
 const htmlResult =
     topPart +
     spyHtml +
-    `<div class="container">` +
+    `<div class="nqr-main-container container" style="max-width: 90%">` +
     readMeHtmlized +
     `</div></div>` +
     bottomPart;

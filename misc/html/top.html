@@ -100,7 +100,7 @@
     }
 
     code {
-        padding: 5px 0 2px;
+        padding: 3px;
         background-color: var(--nqr-header-background-color);
     }
 
@@ -157,6 +157,10 @@
         color: var(--nqr-color) !important;
     }
 
+    .nav-link-sub-item {
+        display: none;
+    }
+
     @media (min-width: 1000px) {
         .npm-badges-container {
             display: block;
@@ -167,7 +171,14 @@
         }
 
         .navbar-fixed-left + .container {
-            padding-left: 160px;
+            padding-left: 330px;
+        }
+    }
+
+    @media (min-width: 1400px) {
+
+        .nav-link-sub-item {
+            display: block;
         }
     }
 

@@ -12,8 +12,10 @@ Depending services have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.
 
 ### What it is
+
 It's ~~not just~~ an integration testing tool. It is a platform that provides the following capabilities:  
 - Support for many protocols out of the box  
+- Chainable message flows
 - Easily mock numerous services to alleviate the headaches of functional and integration tests  
 - Friendly for developers and non developers  
 - Built in assertion library to verify response data coming from/going to your services  
@@ -237,7 +239,7 @@ Mandatory. Key tag to identify which publisher will be instantiated
 
 **payload**  
 Since a publisher usually publishes something, it's very likely you have to set a value here.
-The message itself that will be send through this IPC protocol. Be it a string, a number, a boolean value or even whole objects.
+The message itself that will be send through this protocol. Be it a string, a number, a boolean value or even whole objects.
 
     payload: value
     
@@ -644,7 +646,7 @@ In order to be enqueuer compatible, a module has to have an `entryPoint` exporte
 ----
 
 ### Open source
-We - we mean enqueuer's maintainers not the human race, unfortunately - are very opened any kind of contribution in general.
+We, by 'we' we mean enqueuer's maintainers not the human race; unfortunately, are very opened any kind of contribution in general.
 As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a typo fix in this README file. Go ahead.
 If you like it but don't want to waste time creating a pull request, no problem neither.
@@ -684,7 +686,3 @@ Push it:
 #### feedback
 We'd love to get your feedback!
 If you have any comments, suggestions, etc. you can reach us [here](github.com/enqueuer-land/enqueuer).
-
-#### license
-MIT
-
