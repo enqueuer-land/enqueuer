@@ -20,7 +20,8 @@ describe('ProtocolManager', () => {
     it('describeProtocols', () => {
         const protocolManager = new ProtocolManager();
         // @ts-ignore
-        protocolManager.addProtocol(new PublisherProtocol('mine', () => {/*not empty*/}));
+        protocolManager.addProtocol(new PublisherProtocol('mine', () => {/*not empty*/
+        }));
         expect(protocolManager.describeProtocols(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             publishers: expect.anything(),
@@ -75,14 +76,7 @@ describe('ProtocolManager', () => {
             .addAlternativeName('virgs')
             .setLibrary('request'));
         expect(protocolManager.describeProtocols('virgs')).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({
-                'publishers': [{
-                    'alternativeNames': ['virgs'],
-                    'library': {'installed': true, 'name': 'request'},
-                    'messageReceivedParams': [],
-                    'name': 'pub'
-                }], 'subscriptions': []
-            }, expect.anything()
+        expect(render).toHaveBeenCalledWith({'publishers': [{'name': 'pub'}], 'subscriptions': []}, expect.anything()
         );
     });
 
@@ -96,12 +90,7 @@ describe('ProtocolManager', () => {
         protocolManager.addProtocol(new PublisherProtocol('other', () => {/*not empty*/
         }));
         expect(protocolManager.describeProtocols(true)).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({
-                'publishers': [{'messageReceivedParams': [], 'name': 'pub'}, {
-                    'messageReceivedParams': [],
-                    'name': 'other'
-                }], 'subscriptions': []
-            }, expect.anything()
+        expect(render).toHaveBeenCalledWith({'publishers': [{'name': 'pub'}, {'name': 'other'}], 'subscriptions': []}, expect.anything()
         );
     });
 
@@ -122,12 +111,7 @@ describe('ProtocolManager', () => {
         expect(protocolManager.describeProtocols('sub')).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             'publishers': [],
-            'subscriptions': [{
-                'alternativeNames': ['altName'],
-                'library': {'installed': true, 'name': 'express'},
-                'messageReceivedParams': ['value'],
-                'name': 'sub'
-            }]
+            'subscriptions': [{'messageReceivedParams': ['value'], 'name': 'sub'}]
         }, expect.anything());
     });
 
@@ -155,3 +139,4 @@ describe('ProtocolManager', () => {
     });
 
 });
+

@@ -27,9 +27,11 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 Welcome to the enqueuer world.
 
 #### install it
+First things first, let's get the enqueuer installed on your machine.
+
     $ npm install --global enqueuer
     
-#### create a test file
+Next up, it's time create a requisition file.
 Something like:
     
     #enqueuer-repo-hit.yml
@@ -43,8 +45,7 @@ Something like:
                 toBeEqualTo: 200
 
 Pretty simple, hum? Small and concise, how it should be!
-    
-##### run it
+Run it:
 
     $ enqueuer enqueuer-repo-hit.yml
 
@@ -76,7 +77,7 @@ What if I want to mock a http server and hit it at the same time, you may ask. N
             -   expect: message.body
                 toContain: `enqueuer`
                 
-##### run this other one
+And then, run this other one:
 
     $ nqr http-self-test.yml
 
@@ -122,7 +123,7 @@ Certainly one is what you need.
 ----
 
 ### Components
-In order to accomplish more than [just hitting enqueuer's repo](#create_a_test_file) or doing a [quick self http hit](#run_this_other_one), there are a few things that you'll probably need to know.
+In order to accomplish more than just hitting enqueuer's repo or doing a quick self http hit, there are a few things that you'll probably need to know.
 Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case. 
 There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
 They work along with each other and are responsible for the full behavior of enqueuer.
@@ -224,6 +225,8 @@ It publishes something, it writes, it enqueues, hits and endpoint... These kinds
 
 ##### publisher attributes
 Every publisher has its own properties, depending on its protocol and implementation.
+The built-in [`http` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a `url`, a `method`, and a `payload`, if the method is not a GET.
+On the other hand, the built-in [`tcp` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation requires a `serverAddress` and a `port`. 
 These are the publisher attributes:
 
 **name**  
@@ -271,7 +274,10 @@ This means that it is not triggered by enqueuer itself.
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
 
 ##### subscription attributes
-Every subscription has its own properties, depending on its protocol and implementation. 
+Every subscription has its own properties, depending on its protocol and implementation.
+The built-in [`http` subscription](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands an `endpoint`, a `method`, and a `port`, if the method is not a GET.
+On the other hand, the built-in [`tcp` subscription](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires only a `port`. 
+ 
 These are the subscription attributes:
 
 **name**  
@@ -522,7 +528,7 @@ Both ways work:
             anotherKey: `another Value` 
 
 #### use a variable          
-There are two ways of using a variable:
+There are two ways two use a variable:
 
 ##### non js code snippet
 The easiest one is to type `<<variableKey>>` or `{{variableKey}}` where you want it to be replaced in a test file, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8)
@@ -540,15 +546,15 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 ### Content File Injection
 You are able to inject file content into a requisition/publisher/subscription field.
 
-    file: <<file://misc/file-content.yml>>
+    file: <<file://path/to/file.txt>>
     
 Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: `<<tag://path/to/file?query=value&other=true>>`.
 
     requisition:
-        json: <<json://misc/file-content.json>>
-        yml: <<yml://misc/file-content.yml>>
-        csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
-        file: <<file://misc/file-content.txt>>
+        json: <<json://path/to/file.json>>
+        yml: <<yml://path/to/file.yml>>
+        csv: <<csv://path/to/file.csv?header=true&delimiter=;>>
+        file: <<file://path/to/file.txt>>
     
 Once the object is parsed, your free to use it as a regular object in any event
     
@@ -562,9 +568,8 @@ Once the object is parsed, your free to use it as a regular object in any event
 It get's event better. 
 Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.
 The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`. 
-The `file` one gets parsed as a regular string.    
 Run `$ nqr -e` to see available ones.
-    
+
 #### content file injection example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
 
@@ -579,8 +584,37 @@ Albeit you don't have to share the one you created, we encourage you to do so. T
 So far, you're able to extend enqueuer default behavior in four ways. Using a protocol plugin, an object parser plugin, an asserter plugin and using a report formatter plugin.
 
 ##### protocol
-A protocol plugin enables you to use a different publisher/subscription types. Run `$ nqr -p [protocol-name]` to check available ones.
-[This one](https://github.com/enqueuer-land/enqueuer-plugin-amqp), for instance, provides support for amqp protocol, so you can create requisitions like this:
+A protocol plugin enables you to use a different publisher/subscription types. 
+Run `$ nqr -p [protocol-name]` to check available ones:
+
+    publishers: 
+    -   name:                  custom
+    -   name:                  file
+    -   name:                  http
+        messageReceivedParams: statusCode, statusMessage, body
+    -   name:                  stdout
+    -   name:                  tcp
+    -   name:                  uds
+    -   name:                  ssl
+    -   name:                  udp
+    subscriptions: 
+    -   name:                  custom
+    -   name:                  file
+        messageReceivedParams: content, name, size, modified, created
+    -   name:                  http
+        messageReceivedParams: headers, params, query, body
+    -   name:                  stdin
+    -   name:                  tcp
+        messageReceivedParams: payload, stream
+    -   name:                  uds
+        messageReceivedParams: payload, stream, path
+    -   name:                  ssl
+        messageReceivedParams: payload, stream
+    -   name:                  udp
+        messageReceivedParams: payload, remoteInfo
+
+Each one listed above has a respective example in [the examples folder](https://github.com/enqueuer-land/enqueuer/blob/master/examples).
+[This one](https://github.com/enqueuer-land/enqueuer-plugin-amqp), for instance, provides support for amqp protocol, so you can create this publisher and subscription:
     
     publishers:
     -   type: amqp
@@ -597,28 +631,52 @@ A protocol plugin enables you to use a different publisher/subscription types. R
                 toBeEqualTo: `enqueuermaniac`
 
 ##### object parser
-An object parser plugin enables you to read and parse files as you wish. Run `$ nqr -e [object-parser-name]` to check available ones.
+An object parser plugin enables you to read and parse files as you wish.
+[This test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) demonstrates how to use it,
+Run `$ nqr -e [object-parser-name]` to check available ones:
+
+    parsers: 
+    - yml, yaml
+    - json
+    - file
+    - csv
+
 [This one](https://github.com/enqueuer-land/enqueuer-plugin-xml-parser), for example, provides the ability to read xml files and inject their values like this:
 
     xmlContent: <<xml://path/to/xml/file.xml>>
 
 ##### asserter
-Getting tired of using assertions like this?
-    
-    assertions:
-    -   expect: 123
-        toBeEqualTo: 123
-        
-An asserter plugin provides you a nicely way to use different assertions:
+An asserter plugin provides you a nicely way to use different assertions than these built-in ones:
+Run `$ nqr -t` to list available ones:
 
-    assertions:
-    -   assertThat: 123
-        is: 123
- 
-Run `$ nqr -t [assertion-name]` to list available assertions.
+    asserters: 
+    -   expectToBeTruthy:           value expected to be true
+    -   expectToBeFalsy:            value expected to be falsy
+    -   expectToBeDefined:          stuff to be defined
+    -   expectToBeUndefined:        value expected to be undefined
+    -   expect:                     actual value (string | array)
+        toContain:                  element (char | object)
+    -   expect:                     actual value
+        toBeLessThanOrEqualTo:      expected value
+    -   expect:                     actual value
+        toBeLessThan:               expected value
+    -   expect:                     actual value
+        toBeGreaterThanOrEqualTo:   expected value
+    -   expect:                     actual value
+        toBeGreaterThan:            expected value
+    -   expect:                     actual value
+        toBeEqualTo:                expected value
 
 ##### report formatter
-A report formatter plugin gives you the ability to export enqueuer reports the way you want. Run `$ nqr -f [formatter-name]` to list available report formatters.
+A report formatter plugin gives you the ability to export enqueuer reports the way you want.
+Run `$ nqr -f [formatter-name]` to list available report formatters:
+
+    formatters: 
+    - console, stdout
+    - json
+    - yml, yaml
+
+Consider looking at the example of [configuration file](https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml) to see it in use.
 [This one](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), for instance, generates xUnit like reports from enqueuer's output.
 
 
@@ -655,8 +713,8 @@ Create an issue, or, even easier, give it a github star. It's cheap and it doesn
 #### contributors
 Thank you. It sounds *cliché*, but this project wouldn't be the same without the massive contribution from everyone.
 
-#### contribute
-In order to contribute to this project, you have to follow a few steps.
+#### code it
+In order to contribute with some code, you have to follow a few steps.
 First of all, get the code:
 
     $ git clone git@github.com:enqueuer-land/enqueuer.git

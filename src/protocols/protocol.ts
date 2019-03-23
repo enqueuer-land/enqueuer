@@ -32,12 +32,6 @@ export abstract class Protocol {
     public getDescription() {
         let properties: any = this.getDeepDescription();
         properties.name = this.name;
-        if (this.alternativeNames) {
-            properties.alternativeNames = this.alternativeNames;
-        }
-        if (this.library) {
-            properties.library = this.library;
-        }
         return properties;
     }
 

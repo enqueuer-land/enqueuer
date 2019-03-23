@@ -19,8 +19,11 @@ export class SubscriptionProtocol extends Protocol {
     }
 
     protected getDeepDescription(): any {
-        return {
-            messageReceivedParams: this.messageReceivedParams
-        };
+        if (this.messageReceivedParams && this.messageReceivedParams.length > 0) {
+            return {
+                messageReceivedParams: this.messageReceivedParams
+            };
+        }
+        return {};
     }
 }

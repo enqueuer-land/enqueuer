@@ -56,12 +56,7 @@ describe('Protocol', () => {
             .setLibrary('express')
             .getDescription();
         expect(property).toEqual({
-            name: 'protocol',
-            alternativeNames: ["alternativeName"],
-            library: {
-                name: "express",
-                installed: expect.any(Boolean)
-            }
+            name: 'protocol'
         });
     });
 

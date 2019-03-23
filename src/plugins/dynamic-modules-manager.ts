@@ -62,7 +62,7 @@ export class DynamicModulesManager {
 
     private findEveryEntryPointableModule(): string[] {
         const pattern = __dirname + '/../**/*\.+(ts|d.ts|js)';
-        return glob.sync(pattern, {})
+        const files = glob.sync(pattern, {})
             .map(module => module.replace('./src/', '../'))
             .map(module => module.replace(/\.d\.ts/, ''))
             .map(module => module.replace(/\.ts/, ''))
@@ -74,6 +74,8 @@ export class DynamicModulesManager {
                     return false;
                 }
             });
+        const plugins: Set<string> = new Set(files);
+        return Array.from(plugins.values());
     }
 
     private findEveryEnqueuerPluginPackage(): string[] {
