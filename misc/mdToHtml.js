@@ -1,68 +1,79 @@
 #!/usr/bin/env node
 /*jshint node:true, es5:true */
-const argv = {};
-let pagedown = require('pagedown'),
-    converter = new pagedown.Converter(),
-    fs = require('fs'),
-    top_part = fs.readFileSync(__dirname + "/html/top.html").toString(),
-    bottom_part = fs.readFileSync(__dirname + "/html/bottom.html").toString(),
-    levels, toc, nextId;
+const pagedown = require('pagedown');
+const converter = new pagedown.Converter();
+const fs = require('fs');
+const topPart = fs.readFileSync(__dirname + "/html/top.html").toString();
+const bottomPart = fs.readFileSync(__dirname + "/html/bottom.html").toString();
+const md = fs.readFileSync("README.md").toString();
+let spyHtml = `<nav id="navbar-nqr" class="navbar navbar-fixed-left">    
+    <a class="float-left" href="#">
+        <img class="navbar-logo"
+             src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
+             alt="enqueuer logo"
+             title="Enqueuer Logo">
+    </a>`;
 
 // Configure section and toc generation
 converter.hooks.set("postConversion", (text) => {
-    return text.replace(/<(h(\d))>/g, (match, p1, p2, offset, str) => {
-        let i, levelStr = "";
+    const levelCounter = {};
+    let previousLevelNumber = null;
+    return text
+        .replace(/<(h(\d))>/g, (match, header, levelNumber, offset, str) => {
+            let levelPrefix = "";
 
-        levels[p1] = levels[p1] || 0;
+            levelCounter[header] = levelCounter[header] || 0;
 
-        // Figure out section number
-        if (!argv.n) {
-            // reset lower levels
-            for (i = Number(p2) + 1; levels["h" + i]; i++) {
-                levels["h" + i] = 0;
+            // reset lower levelCounter
+            for (let i = Number(levelNumber) + 1; levelCounter["h" + i]; i++) {
+                levelCounter["h" + i] = 0;
             }
 
-            // grab higher levels
-            for (i = Number(p2) - 1; levels["h" + i]; i--) {
-                levelStr = levels["h" + i] + "." + levelStr;
+            // grab higher levelCounter
+            for (let i = Number(levelNumber) - 1; levelCounter["h" + i]; i--) {
+                levelPrefix = levelCounter["h" + i] + "." + levelPrefix;
             }
 
-            levels[p1] = levels[p1] + 1;
-            levelStr = levelStr + levels[p1] + ". ";
-        }
-        ++nextId;
+            levelCounter[header] = levelCounter[header] + 1;
+            levelPrefix = levelPrefix + levelCounter[header];
 
-        const title =  str.slice(offset+4, str.slice(offset).indexOf("</h")+offset);
-        return "<h" + p2 + ' id="' + title.replace(/ +/g, '_').toLowerCase() + '" style="padding-left: '+ 8 * (p2 - 3) +'px">' + levelStr;
-    })
-    .replace(/\\/g, '<br>')
-    .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
-    .replace(/fullLogo1/g, 'fullLogo3')
-    // .replace(/ (enqueuer)/gi, (match, p1) => '<span class="enqueuer-name"> ' + p1 + '</span>')
-    .replace(/\$/gi, () => '<span class="dollar-sign">$</span>')
+            const title = str.slice(offset + 4, str.slice(offset).indexOf("</h") + offset);
+            const id = title.replace(/ +/g, '_').toLowerCase();
+            if (levelNumber <= 3) {
+                let difference = levelNumber - previousLevelNumber;
+                if (difference > 0) {
+                    spyHtml += `<nav class="nav nav-pills flex-column">`;
+                } else if (difference < 0) {
+                    difference = Math.abs(difference);
+                    while (Math.abs(difference) > 0) {
+                        spyHtml += `</nav>`;
+                        --difference;
+                    }
+                }
+                spyHtml += `<a class="nav-link" href="#${id}">${levelPrefix + '. ' + title}</a>`;
+                previousLevelNumber = levelNumber;
+            }
+            return "<h" + levelNumber + ' id="' + id + '" style="padding-left: ' + 8 * (levelNumber - 3) + 'px">' + levelPrefix + ' ';
+        })
+        .replace(/\\/g, '<br>')
+        .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
+        .replace(/fullLogo1/g, 'fullLogo3')
+        // .replace(/ (enqueuer)/gi, (match, p1) => '<span class="enqueuer-name"> ' + p1 + '</span>')
+        .replace(/\$/gi, () => '<span class="dollar-sign">$</span>')
 });
 
 
-const md_path = "README.md";
-   let md, output, spyHtml = "";
+const readMeHtmlized = converter.makeHtml(md);
 
-// Read markdown in
-md = fs.readFileSync(md_path).toString();
-
-
-levels = {};
-nextId = 0;
-toc = [];
-output = converter.makeHtml(md);
-
-spyHtml += '';
-
+spyHtml += `</nav></nav></nav>`;
 // Bootstrap-fy
-output =
-    top_part +
+const htmlResult =
+    topPart +
     spyHtml +
-    output +
-    bottom_part;
+    `<div class="container">` +
+    readMeHtmlized +
+    `</div></div>` +
+    bottomPart;
 
-fs.writeFileSync('docs/index.html', output);
+fs.writeFileSync('docs/index.html', htmlResult);
 console.log("Html generated");

@@ -41,6 +41,10 @@
         --nqr-code-color: #e83e8c;
     }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     .enqueuer-name, .hljs-attr {
         color: var(--nqr-color);
     }
@@ -109,26 +113,61 @@
         height: 2px;
     }
 
-    .nqr-logo {
+    .navbar-logo {
         transition: 250ms all ease;
         position: absolute;
-        top: 8px;
-        left: 8px;
-        width: 25px;
+        width: 80%;
         height: auto;
-    }
-
-    .nqr-logo:hover {
-        transform: scale(1.55) rotate(180deg);
+        top: 15px;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--nqr-text-smooth-color);
     }
 
     .npm-badges-container {
         display: none;
     }
 
+    .navbar {
+        display: none;
+    }
+
+    .navbar-fixed-left {
+        width: max-content;
+        position: fixed;
+        height: 100%;
+        background-color: var(--nqr-header-background-color);
+        border: 1px solid var(--nqr-background-alternative-color);
+        border-radius: 8px;
+        padding: 5rem 1.5rem 1.5rem 1.5rem;
+        box-shadow: 5px 0 20px var(--nqr-background-alternative-color)
+    }
+
+    .nav-link {
+        padding: 0.3rem 3rem 0.3rem 0.5rem;
+        color: var(--nqr-text-smooth-color);
+    }
+
+    .nav-link.active {
+        color: var(--nqr-color) !important;
+        background-color: transparent !important;
+    }
+
+    .nav-link:hover, .nav-link.active:hover {
+        color: var(--nqr-text-color) !important;
+    }
+
+
     @media (min-width: 1000px) {
         .npm-badges-container {
             display: block;
+        }
+
+        .navbar {
+            display: block;
+        }
+
+        .navbar-fixed-left + .container {
+            padding-left: 160px;
         }
     }
 
@@ -158,8 +197,9 @@
             animation: octocat-wave 560ms ease-in-out
         }
     }
-</style>
 
+</style>
+<body data-spy="scroll" data-target="#navbar-nqr" data-offset="0">
 <a href="http://github.com/enqueuer-land/enqueuer" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250"
          style="fill:var(--nqr-color); color: var(--nqr-background-color); position: absolute; top: 0; border: 0; right: 0;"
@@ -171,28 +211,24 @@
               fill="currentColor" class="octo-body"></path>
     </svg>
 </a>
-
-<div class="container">
-    <a class="float-left" href="http://github.com/enqueuer-land/enqueuer">
-        <img class="nqr-logo"
-             src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"
+<nav id="navbar-nqr" class="navbar navbar-fixed-left">    
+    <a class="float-left" href="#">
+        <img class="navbar-logo"
+             src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
              alt="enqueuer logo"
              title="Enqueuer Logo">
-    </a>
-<p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a><a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
+    </a><nav class="nav nav-pills flex-column"><a class="nav-link" href="#enqueuer">1. Enqueuer</a><a class="nav-link" href="#components">2. Components</a><a class="nav-link" href="#event">3. Event</a><a class="nav-link" href="#configuration_file">4. Configuration File</a><a class="nav-link" href="#variables">5. Variables</a><a class="nav-link" href="#content_file_injection">6. Content File Injection</a><a class="nav-link" href="#plugins">7. Plugins</a><a class="nav-link" href="#requisition_flow">8. Requisition Flow</a><a class="nav-link" href="#open_source">9. Open source</a></nav></nav></nav><div class="container"><p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a><a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
 <a href="https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability"><img src="https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability" alt="Maintainability" title="" /></a> <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg" alt="Greenkeeper badge" title="" /></a><a href="https://snyk.io/test/npm/enqueuer"><img src="https://snyk.io/test/npm/enqueuer/badge.svg" alt="Known Vulnerabilities" title="" /></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" title="" /></a></p>
 
 <p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png" alt="enqueuerlogo" title="Enqueuer Giant Logo" /></p>
 
-<hr />
-
-<p>Have you ever struggled with testing multi IPC protocol flows?
-Want to ensure that a user journey which involves several steps with different protocols is working properly?
+<p>Want to ensure that a user journey which involves several steps with different protocols is working properly?
+Have you ever struggled with testing multi protocol flows?
 Depending services have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.</p>
 
-<h3 id="enqueuer" style="padding-left: 0px">1. Enqueuer</h3>
+<h3 id="enqueuer" style="padding-left: 0px">1 Enqueuer</h3>
 
 <p>It's <span style="text-decoration: line-through">not just</span> an integration testing tool. It is a platform that provides the following capabilities: <br>
 - Support for many protocols out of the box <br>
@@ -206,12 +242,12 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 
 <p>Welcome to the enqueuer world.</p>
 
-<h4 id="install_it" style="padding-left: 8px">1.1. install it</h4>
+<h4 id="install_it" style="padding-left: 8px">1.1 install it</h4>
 
 <pre><code><span class="dollar-sign">$</span> npm install --global enqueuer
 </code></pre>
 
-<h4 id="create_a_test_file" style="padding-left: 8px">1.2. create a test file</h4>
+<h4 id="create_a_test_file" style="padding-left: 8px">1.2 create a test file</h4>
 
 <p>Something like:</p>
 
@@ -228,7 +264,7 @@ publishers:
 
 <p>Pretty simple, hum? Small and concise, how it should be!</p>
 
-<h5 id="run_it" style="padding-left: 16px">1.2.1. run it</h5>
+<h5 id="run_it" style="padding-left: 16px">1.2.1 run it</h5>
 
 <pre><code><span class="dollar-sign">$</span> enqueuer enqueuer-repo-hit.yml
 </code></pre>
@@ -262,7 +298,7 @@ subscriptions:
             toContain: `enqueuer`
 </code></pre>
 
-<h5 id="run_this_other_one" style="padding-left: 16px">1.2.2. run this other one</h5>
+<h5 id="run_this_other_one" style="padding-left: 16px">1.2.2 run this other one</h5>
 
 <pre><code><span class="dollar-sign">$</span> nqr http-self-test.yml
 </code></pre>
@@ -273,7 +309,7 @@ It's all yours. Have fun.
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
 Certainly one is what you need.    </p>
 
-<h4 id="if_you_need_more" style="padding-left: 8px">1.3. if you need more</h4>
+<h4 id="if_you_need_more" style="padding-left: 8px">1.3 if you need more</h4>
 
 <pre><code><span class="dollar-sign">$</span> nqr -h
 Usage: nqr [options]
@@ -309,14 +345,14 @@ Examples:
 
 <hr />
 
-<h3 id="components" style="padding-left: 0px">2. Components</h3>
+<h3 id="components" style="padding-left: 0px">2 Components</h3>
 
 <p>In order to accomplish more than <a href="#create_a_test_file">just hitting enqueuer's repo</a> or doing a <a href="#run_this_other_one">quick self http hit</a>, there are a few things that you'll probably need to know.
 Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case. 
 There are only three important component concepts: <a href="#requisition">requisitions</a>, <a href="#publisher">publishers</a> and <a href="#subscription">subscriptions</a>.
 They work along with each other and are responsible for the full behavior of enqueuer.</p>
 
-<h4 id="requisition" style="padding-left: 8px">2.1. requisition</h4>
+<h4 id="requisition" style="padding-left: 8px">2.1 requisition</h4>
 
 <p>Test scenario description. It tells what, when, and how test your applications and services.
 Picture it as if it was a collection of <a href="#publisher">publishers</a>, <a href="#subscription">subscriptions</a> and other <a href="#requisition">requisitions</a>. It helps because this is exactly what it is.
@@ -401,7 +437,7 @@ Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/re
   delay: 200
 </code></pre>
 
-<h5 id="events" style="padding-left: 16px">2.1.1. events</h5>
+<h5 id="events" style="padding-left: 16px">2.1.1 events</h5>
 
 <p>Available events are described <a href="#event">here</a>. A <code>requisition</code> object is available to access and change its attributes.</p>
 
@@ -415,7 +451,7 @@ onFinish:
   - expectToBeDefined: requisition.name
 </code></pre>
 
-<h4 id="publisher" style="padding-left: 8px">2.2. publisher</h4>
+<h4 id="publisher" style="padding-left: 8px">2.2 publisher</h4>
 
 <p>A publisher action is triggered by enqueuer itself. It <strong>acts</strong> whereas a <a href="#subscription">subscription</a> <strong>reacts</strong>.
 It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
@@ -447,7 +483,7 @@ Defaults to false. Tells to enqueuer that this publisher should be skipped. Chec
 <pre><code>ignore: true    
 </code></pre>
 
-<h5 id="events" style="padding-left: 16px">2.2.1. events</h5>
+<h5 id="events" style="padding-left: 16px">2.2.1 events</h5>
 
 <p>Available events are described <a href="#event">here</a>. A <code>publisher</code> object is available to access and change its attributes.
 Depending on the protocol and its implementation, such as <code>http</code> and <code>tcp</code>, there may exist a <code>onMessageReceived</code> event and a special object given <code>message</code>. 
@@ -465,7 +501,7 @@ onFinish:
   - expectToBeDefined: publisher.type
 </code></pre>
 
-<h4 id="subscription" style="padding-left: 8px">2.3. subscription</h4>
+<h4 id="subscription" style="padding-left: 8px">2.3 subscription</h4>
 
 <p>A subscription is an "under demand" event. It <strong>reacts</strong> whereas a <a href="#publisher">publisher</a> <strong>acts</strong>.
 It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
@@ -508,7 +544,7 @@ Defaults to false. Tells to enqueuer that this subscription should be skipped. C
 <pre><code>ignore: true    
 </code></pre>
 
-<h5 id="events" style="padding-left: 16px">2.3.1. events</h5>
+<h5 id="events" style="padding-left: 16px">2.3.1 events</h5>
 
 <p>Available events are described <a href="#event">here</a>. A <code>subscription</code> object is available to access and change its attributes.  </p>
 
@@ -526,7 +562,7 @@ onFinish:
 
 <hr />
 
-<h3 id="event" style="padding-left: 0px">3. Event</h3>
+<h3 id="event" style="padding-left: 0px">3 Event</h3>
 
 <p>Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
 This is where you'll write your tests. In its <code>assertions</code> field.
@@ -536,7 +572,7 @@ You're free to explore them however you want, even doing things like this:</p>
 <pre><code>publisher.parent.subscriptions[0].timeout = 1000;
 </code></pre>
 
-<h4 id="hooks" style="padding-left: 8px">3.1. hooks</h4>
+<h4 id="hooks" style="padding-left: 8px">3.1 hooks</h4>
 
 <p>There are three hook events available:</p>
 
@@ -555,7 +591,7 @@ Depending on the protocol implementation, there'll be additional objects to this
 For instance, in the built-in http publisher implementation, there's a <code>statusCode</code>, <code>headers</code> and a <code>body</code> among others, and the subscription implementation has <code>body</code>, <code>query</code>, <code>params</code> and <code>headers</code>, among other variables.
 <code>elapsedTime</code> is also available here, counting every milliseconds since the instantiation of this component.</p>
 
-<h4 id="fields" style="padding-left: 8px">3.2. fields</h4>
+<h4 id="fields" style="padding-left: 8px">3.2 fields</h4>
 
 <p>Every hook object has 3 properties:</p>
 
@@ -596,13 +632,13 @@ onMessageReceived:
     toBeGreaterThan: 3
 </code></pre>
 
-<h4 id="example" style="padding-left: 8px">3.3. example</h4>
+<h4 id="example" style="padding-left: 8px">3.3 example</h4>
 
 <p>Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/hooks.yml">this</a> test file to see it in practice.</p>
 
 <hr />
 
-<h3 id="configuration_file" style="padding-left: 0px">4. Configuration File</h3>
+<h3 id="configuration_file" style="padding-left: 0px">4 Configuration File</h3>
 
 <p>To save yourself some time, a configuration file may be used.
 Configuration files tell enqueuer which tests will be executed, log-level, and which output test report files should be generated.
@@ -678,13 +714,13 @@ Values defined here use the 'key: value' pattern and are available to every test
       nested: thing
 </code></pre>
 
-<h4 id="example" style="padding-left: 8px">4.1. example</h4>
+<h4 id="example" style="padding-left: 8px">4.1 example</h4>
 
 <p><a href="https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml">Here's</a> a complete example of a configuration file.</p>
 
 <hr />
 
-<h3 id="variables" style="padding-left: 0px">5. Variables</h3>
+<h3 id="variables" style="padding-left: 0px">5 Variables</h3>
 
 <p>Providing power and flexibility, enqueuer allows you to use variables placeholder replacement.
 That's why there is a <code>store</code> field and you'll see a lot of <code>&lt;&lt;</code> and <code>{{</code> being used in the examples files.
@@ -703,48 +739,46 @@ It works as simple as this:</p>
 <pre><code>name: my name is enqueuer
 </code></pre>
 
-<h4 id="default_values" style="padding-left: 8px">5.1. default values</h4>
-
 <p>By default, every ENV_VAR set is loaded automatically to the store. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L11">this example</a>.</p>
 
-<h4 id="setting_a_variable" style="padding-left: 8px">5.2. setting a variable</h4>
+<h4 id="set_a_variable" style="padding-left: 8px">5.1 set a variable</h4>
 
 <p>There are a few ways to set a value in the store.</p>
 
-<h5 id="configuration_file" style="padding-left: 16px">5.2.1. configuration file</h5>
+<h5 id="configuration_file" style="padding-left: 16px">5.1.1 configuration file</h5>
 
 <p>Configuration file's store as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27">here</a></p>
 
-<h5 id="command_line" style="padding-left: 16px">5.2.2. command line</h5>
+<h5 id="command_line" style="padding-left: 16px">5.1.2 command line</h5>
 
 <p>A command line argument <code><span class="dollar-sign">$</span> nqr --store key=value -s anotherVariable=true</code></p>
 
-<h5 id="event" style="padding-left: 16px">5.2.3. event</h5>
+<h5 id="event" style="padding-left: 16px">5.1.3 event</h5>
 
 <p>Dynamically set it through an event. 
 Be it in its <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">script</a> field or straight through its store <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3">field</a>. </p>
 
-<h4 id="using_it" style="padding-left: 8px">5.3. using it</h4>
+<h4 id="use_a_variable" style="padding-left: 8px">5.2 use a variable</h4>
 
-<p>There are two ways of using them:</p>
+<p>There are two ways of using a variable:</p>
 
-<h5 id="non_js_code_snippet" style="padding-left: 16px">5.3.1. non js code snippet</h5>
+<h5 id="non_js_code_snippet" style="padding-left: 16px">5.2.1 non js code snippet</h5>
 
 <p>The easiest one is to type <code>&lt;&lt;variableKey&gt;&gt;</code> or <code>{{variableKey}}</code> where you want it to be replaced in a test file, as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8">here</a></p>
 
-<h5 id="js_code_snippet" style="padding-left: 16px">5.3.2. js code snippet</h5>
+<h5 id="js_code_snippet" style="padding-left: 16px">5.2.2 js code snippet</h5>
 
 <p>Using the <code>store</code> object. It's attributes are the keys and their values are their respective values. 
 Therefore, you're free to use <code>store.variableKey</code>, <code>console.log(store.variableKey);</code> or <code>console.log(2 * store['separated key']);</code> and get them.
 Like <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">this</a> one.</p>
 
-<h4 id="example" style="padding-left: 8px">5.4. example</h4>
+<h4 id="example" style="padding-left: 8px">5.3 example</h4>
 
 <p>Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/variables.yml">this test example</a> test to see it working.</p>
 
 <hr />
 
-<h3 id="content_file_injection" style="padding-left: 0px">6. Content File Injection</h3>
+<h3 id="content_file_injection" style="padding-left: 0px">6 Content File Injection</h3>
 
 <p>You are able to inject file content into a requisition/publisher/subscription field.</p>
 
@@ -774,23 +808,23 @@ onFinish:
 Due its fantastic plugin architecture design, you can extend its default modules and use any of <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">these</a> plugins or event <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a> to parse however you want. <br>
 Run <code><span class="dollar-sign">$</span> nqr -e</code> to see available ones.</p>
 
-<h4 id="example" style="padding-left: 8px">6.1. example</h4>
+<h4 id="example" style="padding-left: 8px">6.1 example</h4>
 
 <p>Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml">this test example</a> test to get a full picture of it.</p>
 
 <hr />
 
-<h3 id="plugins" style="padding-left: 0px">7. Plugins</h3>
+<h3 id="plugins" style="padding-left: 0px">7 Plugins</h3>
 
 <p>You're probably aware by now but it doesn't hurt do emphasize it: enqueuer provides an amazingly powerful plugin extensible architecture.
 It has <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">several plugins available</a>, but if none of them pleases you, you're free to <a href="https://github.com/enqueuer-land/plugin-scaffold">create your own</a>.
 Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugins list</a>.  </p>
 
-<h4 id="plugin_types" style="padding-left: 8px">7.1. plugin types</h4>
+<h4 id="plugin_types" style="padding-left: 8px">7.1 plugin types</h4>
 
 <p>So far, you're able to extend enqueuer default behavior in four ways. Using a protocol plugin, an object parser plugin, an asserter plugin and using a report formatter plugin.</p>
 
-<h5 id="protocol" style="padding-left: 16px">7.1.1. protocol</h5>
+<h5 id="protocol" style="padding-left: 16px">7.1.1 protocol</h5>
 
 <p>A protocol plugin enables you to use a different publisher/subscription types. Run <code><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to check available ones.
 <a href="https://github.com/enqueuer-land/enqueuer-plugin-amqp">This one</a>, for instance, provides support for amqp protocol, so you can create requisitions like this:</p>
@@ -810,7 +844,7 @@ subscriptions:
             toBeEqualTo: `enqueuermaniac`
 </code></pre>
 
-<h5 id="object_parser" style="padding-left: 16px">7.1.2. object parser</h5>
+<h5 id="object_parser" style="padding-left: 16px">7.1.2 object parser</h5>
 
 <p>An object parser plugin enables you to read and parse files as you wish. Run <code><span class="dollar-sign">$</span> nqr -e [object-parser-name]</code> to check available ones.
 <a href="https://github.com/enqueuer-land/enqueuer-plugin-xml-parser">This one</a>, for example, provides the ability to read xml files and inject their values like this:</p>
@@ -818,7 +852,7 @@ subscriptions:
 <pre><code>xmlContent: &lt;&lt;xml://path/to/xml/file.xml&gt;&gt;
 </code></pre>
 
-<h5 id="asserter" style="padding-left: 16px">7.1.3. asserter</h5>
+<h5 id="asserter" style="padding-left: 16px">7.1.3 asserter</h5>
 
 <p>Getting tired of using assertions like this?</p>
 
@@ -836,22 +870,22 @@ subscriptions:
 
 <p>Run <code><span class="dollar-sign">$</span> nqr -t [assertion-name]</code> to list available assertions.</p>
 
-<h5 id="report_formatter" style="padding-left: 16px">7.1.4. report formatter</h5>
+<h5 id="report_formatter" style="padding-left: 16px">7.1.4 report formatter</h5>
 
 <p>A report formatter plugin gives you the ability to export enqueuer reports the way you want. Run <code><span class="dollar-sign">$</span> nqr -f [formatter-name]</code> to list available report formatters.
 <a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">This one</a>, for instance, generates xUnit like reports from enqueuer's output.</p>
 
-<h4 id="plugin_use" style="padding-left: 8px">7.2. plugin use</h4>
+<h4 id="plugin_use" style="padding-left: 8px">7.2 plugin use</h4>
 
 <p>In order to enqueuer get awareness that you want to you a plugin, you have to tell it, right?
 You can tell enqueuer to use a plugin in three manners. Using it as a command line argument, through the configuration file or letting enqueuer finding it in it's home directory folder.</p>
 
-<h5 id="command_line" style="padding-left: 16px">7.2.1. command line</h5>
+<h5 id="command_line" style="padding-left: 16px">7.2.1 command line</h5>
 
 <p>Tell enqueuer to use your plugin through command line this way <code><span class="dollar-sign">$</span> nqr -l &lt;plugin-folder&gt; -l &lt;another-plugin-folder&gt;</code>.
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.</p>
 
-<h5 id="configuration_file" style="padding-left: 16px">7.2.2. configuration file</h5>
+<h5 id="configuration_file" style="padding-left: 16px">7.2.2 configuration file</h5>
 
 <p>Tell enqueuer to use your plugin through configuration file this way:</p>
 
@@ -862,26 +896,24 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 
 <p>Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.</p>
 
-<h5 id="implicitly" style="padding-left: 16px">7.2.3. implicitly</h5>
+<h5 id="implicitly" style="padding-left: 16px">7.2.3 implicitly</h5>
 
 <p>When enqueuer runs, it looks for modules in <code>.nqr</code> folder in your home directory. Every enqueuer compatible module get implicitly loaded.
 In order to be enqueuer compatible, a module has to have an <code>entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
 
 <hr />
 
-<h3 id="requisition_flow" style="padding-left: 0px">8. Requisition Flow</h3>
+<h3 id="requisition_flow" style="padding-left: 0px">8 Requisition Flow</h3>
 
 <p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png" alt="enqueuerInstanceFlow" title="Enqueuer Instance Flow" /></p>
 
 <p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p>
 
-<h3 id="stacker" style="padding-left: 0px">9. Stacker</h3>
+<hr />
 
-<p>Looking for a GUI enqueuer client? Consider checking the official enqueuer GUI: <a href="https://lopidio.github.io/stacker/">stacker</a>. It may be what you want.</p>
+<h3 id="open_source" style="padding-left: 0px">9 Open source</h3>
 
-<h3 id="open_source" style="padding-left: 0px">10. Open source</h3>
-
-<h4 id="contributing" style="padding-left: 8px">10.1. Contributing</h4>
+<h4 id="contributing" style="padding-left: 8px">9.1 contributing</h4>
 
 <p>We, and by 'we' I really mean 'I', are very opened to pull requests in general.
  As long as they make sense and add value to the product, you're free to go.
@@ -890,17 +922,14 @@ Just make sure it's not breaking anything running <code><span class="dollar-sign
 If you like it but don't want to waste time creating a PR, no problem either.
 Create an issue. Or, even easier, give it it a github star. It's cheap and it doesn't hurt anyone.</p>
 
-<h4 id="feedback" style="padding-left: 8px">10.2. Feedback</h4>
+<h4 id="feedback" style="padding-left: 8px">9.2 feedback</h4>
 
 <p>We'd love to get your feedback!
 If you have any comments, suggestions, etc. you can reach us <a href="github.com/enqueuer-land/enqueuer">here</a>.</p>
 
-<h4 id="license" style="padding-left: 8px">10.3. license</h4>
+<h4 id="license" style="padding-left: 8px">9.3 license</h4>
 
-<p>MIT</p></div>
-
-</div>
-
+<p>MIT</p></div></div></body>
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

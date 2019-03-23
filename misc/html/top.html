@@ -41,6 +41,10 @@
         --nqr-code-color: #e83e8c;
     }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     .enqueuer-name, .hljs-attr {
         color: var(--nqr-color);
     }
@@ -109,26 +113,61 @@
         height: 2px;
     }
 
-    .nqr-logo {
+    .navbar-logo {
         transition: 250ms all ease;
         position: absolute;
-        top: 8px;
-        left: 8px;
-        width: 25px;
+        width: 80%;
         height: auto;
-    }
-
-    .nqr-logo:hover {
-        transform: scale(1.55) rotate(180deg);
+        top: 15px;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--nqr-text-smooth-color);
     }
 
     .npm-badges-container {
         display: none;
     }
 
+    .navbar {
+        display: none;
+    }
+
+    .navbar-fixed-left {
+        width: max-content;
+        position: fixed;
+        height: 100%;
+        background-color: var(--nqr-header-background-color);
+        border: 1px solid var(--nqr-background-alternative-color);
+        border-radius: 8px;
+        padding: 5rem 1.5rem 1.5rem 1.5rem;
+        box-shadow: 5px 0 20px var(--nqr-background-alternative-color)
+    }
+
+    .nav-link {
+        padding: 0.3rem 3rem 0.3rem 0.5rem;
+        color: var(--nqr-text-smooth-color);
+    }
+
+    .nav-link.active {
+        color: var(--nqr-color) !important;
+        background-color: transparent !important;
+    }
+
+    .nav-link:hover, .nav-link.active:hover {
+        color: var(--nqr-text-color) !important;
+    }
+
+
     @media (min-width: 1000px) {
         .npm-badges-container {
             display: block;
+        }
+
+        .navbar {
+            display: block;
+        }
+
+        .navbar-fixed-left + .container {
+            padding-left: 160px;
         }
     }
 
@@ -158,8 +197,9 @@
             animation: octocat-wave 560ms ease-in-out
         }
     }
-</style>
 
+</style>
+<body data-spy="scroll" data-target="#navbar-nqr" data-offset="0">
 <a href="http://github.com/enqueuer-land/enqueuer" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250"
          style="fill:var(--nqr-color); color: var(--nqr-background-color); position: absolute; top: 0; border: 0; right: 0;"
@@ -171,11 +211,3 @@
               fill="currentColor" class="octo-body"></path>
     </svg>
 </a>
-
-<div class="container">
-    <a class="float-left" href="http://github.com/enqueuer-land/enqueuer">
-        <img class="nqr-logo"
-             src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"
-             alt="enqueuer logo"
-             title="Enqueuer Logo">
-    </a>

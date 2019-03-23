@@ -6,10 +6,8 @@
 
 ![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Giant Logo")
 
-----
-
-Have you ever struggled with testing multi IPC protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
+Have you ever struggled with testing multi protocol flows?
 Depending services have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.
 
@@ -470,25 +468,28 @@ Every time enqueuer sees these kind of notations, it searches in its store for a
 Then, when enqueuer parses the original map, it gets translated to this:
     
     name: my name is enqueuer
-
-#### default values
+    
 By default, every ENV_VAR set is loaded automatically to the store. Check [this example](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L11).
 
-#### setting a variable
+#### set a variable
 There are a few ways to set a value in the store.
 
 ##### configuration file
 Configuration file's store as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27)
+
 ##### command line
 A command line argument `$ nqr --store key=value -s anotherVariable=true `
+
 ##### event
 Dynamically set it through an event. 
 Be it in its [script](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) field or straight through its store [field](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3). 
 
-#### using it          
-There are two ways of using them:
+#### use a variable          
+There are two ways of using a variable:
+
 ##### non js code snippet
 The easiest one is to type `<<variableKey>>` or `{{variableKey}}` where you want it to be replaced in a test file, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8)
+
 ##### js code snippet
 Using the `store` object. It's attributes are the keys and their values are their respective values. 
 Therefore, you're free to use `store.variableKey`, `console.log(store.variableKey);` or `console.log(2 * store['separated key']);` and get them.
@@ -611,13 +612,11 @@ In order to be enqueuer compatible, a module has to have an `entryPoint` exporte
 
 [![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
 
-
-### Stacker
-Looking for a GUI enqueuer client? Consider checking the official enqueuer GUI: [stacker](https://lopidio.github.io/stacker/). It may be what you want.
+----
 
 ### Open source
 
-#### Contributing
+#### contributing
 We, and by 'we' I really mean 'I', are very opened to pull requests in general.
  As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a type fix in this README file. Go ahead.
@@ -625,7 +624,7 @@ Just make sure it's not breaking anything running `$ npm run all` and then submi
 If you like it but don't want to waste time creating a PR, no problem either.
 Create an issue. Or, even easier, give it it a github star. It's cheap and it doesn't hurt anyone.
 
-#### Feedback
+#### feedback
 We'd love to get your feedback!
 If you have any comments, suggestions, etc. you can reach us [here](github.com/enqueuer-land/enqueuer).
 
