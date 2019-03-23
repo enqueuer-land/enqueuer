@@ -132,6 +132,9 @@ As the others components, it has some attributes. All of them are optionals. And
 You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
 [Variable replacements](#variables) are available through the entire requisition.
 
+##### requisition attributes
+These are the requisition attributes:
+
 **name**  
 Describes what the requisition is suppose to do.
 Defaults to requisition index.
@@ -216,7 +219,10 @@ Available events are described [here](#event). A `requisition` object is availab
 
 A publisher action is triggered by enqueuer itself. It **acts** whereas a [subscription](#subscription) **reacts**.
 It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
-Every publisher has its own properties, depending on its protocol and implementation, but usually, they all have these properties.
+
+##### publisher attributes
+Every publisher has its own properties, depending on its protocol and implementation.
+These are the publisher attributes:
 
 **name**  
 Defaults to publisher index.
@@ -261,7 +267,10 @@ A subscription is an "under demand" event. It **reacts** whereas a [publisher](#
 It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
 This means that it is not triggered by enqueuer itself. 
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
-Every subscription has its own properties, depending on its protocol and implementation. But they all, usually, have these properties. 
+
+##### subscription attributes
+Every subscription has its own properties, depending on its protocol and implementation. 
+These are the subscription attributes:
 
 **name**  
 Defaults to subscription index.
@@ -393,7 +402,16 @@ Now that you know what are requisitions, publishers, subscriptions and events. H
 ### Configuration File
 To save yourself some time, a configuration file may be used.
 Configuration files tell enqueuer which tests will be executed, log-level, and which output test report files should be generated.
-This file tells how enqueuer should be executed
+This file tells how enqueuer should be executed.
+To run enqueuer with the configuration:
+
+    $ nqr -c path/to/configuration/file.yml
+or
+    
+    $ nqr --config-file path/to/configuration/file.yml
+
+#### configuration file attributes
+These are the configuration file attributes:
 
 **files**  
 Requisition file names or glob. Enqueuer runs every file that matches an element value.
