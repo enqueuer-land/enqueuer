@@ -709,6 +709,8 @@ As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a typo fix in this README file. Go ahead.
 If you like it but don't want to waste time creating a pull request, no problem neither.
 Create an issue, or, even easier, give it a github star. It's cheap and it doesn't hurt anyone.
+You know what? Just head up to [enqueuer's github repo](https://github.com/enqueuer-land/enqueuer) and keep staring at its webpage.
+It may help somehow. 
 
 #### contributors
 Thank you. It sounds *cliché*, but this project wouldn't be the same without the massive contribution from everyone.
@@ -743,4 +745,4 @@ Push it:
 
 #### feedback
 We'd love to get your feedback!
-If you have any comments, suggestions, etc. you can reach us [here](github.com/enqueuer-land/enqueuer).
+If you have any comments, suggestions, etc. you can reach us [here](https://github.com/enqueuer-land/enqueuer).
