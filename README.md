@@ -11,7 +11,7 @@ Have you ever struggled with testing multi protocol flows?
 Depending services have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.
 
-### Enqueuer
+### What it is
 It's ~~not just~~ an integration testing tool. It is a platform that provides the following capabilities:  
 - Support for many protocols out of the box  
 - Easily mock numerous services to alleviate the headaches of functional and integration tests  
@@ -87,7 +87,7 @@ Certainly one is what you need.
 #### if you need more
 
     $ nqr -h
-    Usage: nqr [options]
+    Usage: nqr [options] <test-file> [other-test-files...]
     
     Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
     
@@ -475,14 +475,22 @@ By default, every ENV_VAR set is loaded automatically to the store. Check [this 
 There are a few ways to set a value in the store.
 
 ##### configuration file
-Configuration file's store as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27)
+Configuration file store object. Set it as you wish, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27)
 
 ##### command line
-A command line argument `$ nqr --store key=value -s anotherVariable=true `
+A command line argument using the `key=value` format. This way: 
+    
+    $ nqr --store key=value -s anotherVariable=true
 
 ##### event
-Dynamically set it through an event. 
-Be it in its [script](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) field or straight through its store [field](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3). 
+Dynamically set it through any [event](#event). 
+Be it in its [script](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) field or straight through its store [field](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3).
+Both ways work:
+
+    onInit:
+        script: store.key = 123;
+        store:
+            anotherKey: `another Value` 
 
 #### use a variable          
 There are two ways of using a variable:

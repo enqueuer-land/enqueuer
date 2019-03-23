@@ -138,7 +138,7 @@
         background-color: var(--nqr-header-background-color);
         border: 1px solid var(--nqr-background-alternative-color);
         border-radius: 8px;
-        padding: 5rem 1.5rem 1.5rem 1.5rem;
+        padding: 5rem .5rem .5rem .5rem;
         box-shadow: 5px 0 20px var(--nqr-background-alternative-color)
     }
 
@@ -153,9 +153,11 @@
     }
 
     .nav-link:hover, .nav-link.active:hover {
+        background-color: var(--nqr-background-color) !important;
+        border-radius: 5px !important;
+        border: 1px solid var(--nqr-background-alternative-color) !important;
         color: var(--nqr-text-color) !important;
     }
-
 
     @media (min-width: 1000px) {
         .npm-badges-container {

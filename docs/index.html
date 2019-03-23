@@ -138,7 +138,7 @@
         background-color: var(--nqr-header-background-color);
         border: 1px solid var(--nqr-background-alternative-color);
         border-radius: 8px;
-        padding: 5rem 1.5rem 1.5rem 1.5rem;
+        padding: 5rem .5rem .5rem .5rem;
         box-shadow: 5px 0 20px var(--nqr-background-alternative-color)
     }
 
@@ -153,9 +153,11 @@
     }
 
     .nav-link:hover, .nav-link.active:hover {
+        background-color: var(--nqr-background-color) !important;
+        border-radius: 5px !important;
+        border: 1px solid var(--nqr-background-alternative-color) !important;
         color: var(--nqr-text-color) !important;
     }
-
 
     @media (min-width: 1000px) {
         .npm-badges-container {
@@ -217,7 +219,7 @@
              src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
              alt="enqueuer logo"
              title="Enqueuer Logo">
-    </a><nav class="nav nav-pills flex-column"><a class="nav-link" href="#enqueuer">1. Enqueuer</a><a class="nav-link" href="#components">2. Components</a><a class="nav-link" href="#event">3. Event</a><a class="nav-link" href="#configuration_file">4. Configuration File</a><a class="nav-link" href="#variables">5. Variables</a><a class="nav-link" href="#content_file_injection">6. Content File Injection</a><a class="nav-link" href="#plugins">7. Plugins</a><a class="nav-link" href="#requisition_flow">8. Requisition Flow</a><a class="nav-link" href="#open_source">9. Open source</a></nav></nav></nav><div class="container"><p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a><a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
+    </a><nav class="nav nav-pills flex-column"><a class="nav-link" href="#what_it_is">1. What it is</a><a class="nav-link" href="#components">2. Components</a><a class="nav-link" href="#event">3. Event</a><a class="nav-link" href="#configuration_file">4. Configuration File</a><a class="nav-link" href="#variables">5. Variables</a><a class="nav-link" href="#content_file_injection">6. Content File Injection</a><a class="nav-link" href="#plugins">7. Plugins</a><a class="nav-link" href="#requisition_flow">8. Requisition Flow</a><a class="nav-link" href="#open_source">9. Open source</a></nav></nav></nav><div class="container"><p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a><a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
 <a href="https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability"><img src="https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability" alt="Maintainability" title="" /></a> <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg" alt="Greenkeeper badge" title="" /></a><a href="https://snyk.io/test/npm/enqueuer"><img src="https://snyk.io/test/npm/enqueuer/badge.svg" alt="Known Vulnerabilities" title="" /></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" title="" /></a></p>
 
@@ -228,7 +230,7 @@ Have you ever struggled with testing multi protocol flows?
 Depending services have become a pain?
 Don't you worry anymore. Enqueuer is what you're looking for.</p>
 
-<h3 id="enqueuer" style="padding-left: 0px">1 Enqueuer</h3>
+<h3 id="what_it_is" style="padding-left: 0px">1 What it is</h3>
 
 <p>It's <span style="text-decoration: line-through">not just</span> an integration testing tool. It is a platform that provides the following capabilities: <br>
 - Support for many protocols out of the box <br>
@@ -312,7 +314,7 @@ Certainly one is what you need.    </p>
 <h4 id="if_you_need_more" style="padding-left: 8px">1.3 if you need more</h4>
 
 <pre><code><span class="dollar-sign">$</span> nqr -h
-Usage: nqr [options]
+Usage: nqr [options] &lt;test-file&gt; [other-test-files...]
 
 Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
 
@@ -747,16 +749,26 @@ It works as simple as this:</p>
 
 <h5 id="configuration_file" style="padding-left: 16px">5.1.1 configuration file</h5>
 
-<p>Configuration file's store as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27">here</a></p>
+<p>Configuration file store object. Set it as you wish, as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27">here</a></p>
 
 <h5 id="command_line" style="padding-left: 16px">5.1.2 command line</h5>
 
-<p>A command line argument <code><span class="dollar-sign">$</span> nqr --store key=value -s anotherVariable=true</code></p>
+<p>A command line argument using the <code>key=value</code> format. This way: </p>
+
+<pre><code><span class="dollar-sign">$</span> nqr --store key=value -s anotherVariable=true
+</code></pre>
 
 <h5 id="event" style="padding-left: 16px">5.1.3 event</h5>
 
-<p>Dynamically set it through an event. 
-Be it in its <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">script</a> field or straight through its store <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3">field</a>. </p>
+<p>Dynamically set it through any <a href="#event">event</a>. 
+Be it in its <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">script</a> field or straight through its store <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3">field</a>.
+Both ways work:</p>
+
+<pre><code>onInit:
+    script: store.key = 123;
+    store:
+        anotherKey: `another Value` 
+</code></pre>
 
 <h4 id="use_a_variable" style="padding-left: 8px">5.2 use a variable</h4>
 
