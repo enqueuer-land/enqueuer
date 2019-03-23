@@ -7,11 +7,11 @@ const topPart = fs.readFileSync(__dirname + "/html/top.html").toString();
 const bottomPart = fs.readFileSync(__dirname + "/html/bottom.html").toString();
 const md = fs.readFileSync("README.md").toString();
 let spyHtml = `<nav id="navbar-nqr" class="navbar navbar-fixed-left">    
-    <a class="float-left" href="#">
-        <img class="navbar-logo"
-             src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
-             alt="enqueuer logo"
-             title="Enqueuer Logo">
+    <a class="" href="#">
+            <img class="ml-3 navbar-logo"
+                 src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
+                 alt="enqueuer logo"
+                 title="Enqueuer Logo">        
     </a>`;
 
 // Configure section and toc generation
@@ -39,7 +39,7 @@ converter.hooks.set("postConversion", (text) => {
 
             const title = str.slice(offset + 4, str.slice(offset).indexOf("</h") + offset);
             const id = title.replace(/ +/g, '_').toLowerCase();
-            if (levelNumber <= 3) {
+            if (levelNumber <= 4) {
                 let difference = levelNumber - previousLevelNumber;
                 if (difference > 0) {
                     spyHtml += `<nav class="nav nav-pills flex-column">`;
@@ -50,7 +50,8 @@ converter.hooks.set("postConversion", (text) => {
                         --difference;
                     }
                 }
-                spyHtml += `<a class="nav-link" href="#${id}">${levelPrefix + '. ' + title}</a>`;
+                const style = levelNumber == 4 ? `font-size: 0.95rem;` : '';
+                spyHtml += `<a class="nav-link" href="#${id}" style="${style}">${levelPrefix.replace(/\d+\.*/g, '&nbsp;&nbsp;&nbsp;') + levelPrefix + '. ' + title}</a>`;
                 previousLevelNumber = levelNumber;
             }
             return "<h" + levelNumber + ' id="' + id + '" style="padding-left: ' + 8 * (levelNumber - 3) + 'px">' + levelPrefix + ' ';

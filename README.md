@@ -376,8 +376,17 @@ You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-
       - expect: message + 3
         toBeGreaterThan: 3
 
-#### example
+#### event example
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/hooks.yml) test file to see it in practice.
+
+----
+
+### Requisition Flow
+Now that you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?
+
+![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
+
+[![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
 
 ----
 
@@ -449,7 +458,7 @@ Values defined here use the 'key: value' pattern and are available to every test
         second:
           nested: thing
 
-#### example
+#### configuration file example
 [Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml) a complete example of a configuration file.
 
 ----
@@ -503,7 +512,7 @@ Using the `store` object. It's attributes are the keys and their values are thei
 Therefore, you're free to use `store.variableKey`, `console.log(store.variableKey);` or `console.log(2 * store['separated key']);` and get them.
 Like [this](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) one.
 
-#### example 
+#### variables example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/variables.yml) test to see it working.
 
 ----
@@ -513,13 +522,13 @@ You are able to inject file content into a requisition/publisher/subscription fi
 
     file: <<file://misc/file-content.yml>>
     
-Other than that, enqueuer can read it parse its content as an object using this familiar syntax: `<<tag://path/to/file?query=value&other=true>>`.
+Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: `<<tag://path/to/file?query=value&other=true>>`.
 
     requisition:
         json: <<json://misc/file-content.json>>
         yml: <<yml://misc/file-content.yml>>
         csv: <<csv://misc/file-content.csv?header=true&delimiter=;>>
-        file: <<file://misc/file-content.yml>>
+        file: <<file://misc/file-content.txt>>
     
 Once the object is parsed, your free to use it as a regular object in any event
     
@@ -527,14 +536,16 @@ Once the object is parsed, your free to use it as a regular object in any event
         script: console.log(requisition.yml.deep.field);
     onFinish:
         assertions:
-        -   expect: json.first
-            toBeEqualTo: csv[0].first 
+        -   expect: json.key
+            toBeEqualTo: csv[0].key
 
 It get's event better. 
-Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.    
+Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.
+The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`. 
+The `file` one gets parsed as a regular string.    
 Run `$ nqr -e` to see available ones.
     
-#### example 
+#### content file injection example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
 
 ----
@@ -614,23 +625,43 @@ In order to be enqueuer compatible, a module has to have an `entryPoint` exporte
 
 ----
 
-### Requisition Flow
-
-![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
-
-[![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
-
-----
-
 ### Open source
+We - we mean enqueuer's maintainers not the human race, unfortunately - are very opened any kind of contribution in general.
+As long as they make sense and add value to the product, you're free to go.
+We mean it, do it. Even if it's a typo fix in this README file. Go ahead.
+If you like it but don't want to waste time creating a pull request, no problem neither.
+Create an issue, or, even easier, give it a github star. It's cheap and it doesn't hurt anyone.
 
-#### contributing
-We, and by 'we' I really mean 'I', are very opened to pull requests in general.
- As long as they make sense and add value to the product, you're free to go.
-We mean it, do it. Even if it's a type fix in this README file. Go ahead.
-Just make sure it's not breaking anything running `$ npm run all` and then submit it.
-If you like it but don't want to waste time creating a PR, no problem either.
-Create an issue. Or, even easier, give it it a github star. It's cheap and it doesn't hurt anyone.
+#### contributors
+Thank you. It sounds *cliché*, but this project wouldn't be the same without the massive contribution from everyone.
+
+#### contribute
+In order to contribute to this project, you have to follow a few steps.
+First of all, get the code:
+
+    $ git clone git@github.com:enqueuer-land/enqueuer.git
+    $ cd enqueuer
+    
+Get its dependencies installed:
+    
+    $ npm install
+
+Build it: 
+    
+    $ npm run build
+    
+Go for it. Make the changes you want.
+After everything is done:
+
+    $ npm run all
+    
+Commit it:
+
+    $ npm run commit
+
+Push it:
+
+    $ git push
 
 #### feedback
 We'd love to get your feedback!

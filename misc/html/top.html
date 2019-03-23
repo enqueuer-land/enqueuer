@@ -114,7 +114,6 @@
     }
 
     .navbar-logo {
-        transition: 250ms all ease;
         position: absolute;
         width: 80%;
         height: auto;
@@ -143,20 +142,19 @@
     }
 
     .nav-link {
-        padding: 0.3rem 3rem 0.3rem 0.5rem;
+        padding: 0 3rem 0.1rem 0.1rem;
         color: var(--nqr-text-smooth-color);
     }
 
     .nav-link.active {
-        color: var(--nqr-color) !important;
-        background-color: transparent !important;
-    }
-
-    .nav-link:hover, .nav-link.active:hover {
         background-color: var(--nqr-background-color) !important;
         border-radius: 5px !important;
         border: 1px solid var(--nqr-background-alternative-color) !important;
         color: var(--nqr-text-color) !important;
+    }
+
+    .nav-link:hover, .nav-link.active:hover {
+        color: var(--nqr-color) !important;
     }
 
     @media (min-width: 1000px) {
