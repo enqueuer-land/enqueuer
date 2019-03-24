@@ -130,8 +130,10 @@ They work along with each other and are responsible for the full behavior of enq
 
 #### requisition
 Test scenario description. It tells what, when, and how test your applications and services.
-Picture it as if it was a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition). It helps because this is exactly what it is.
+Picture it as if it was a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition).
+It helps because this is exactly what it is.
 As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
+Every test file is a requisition.
 You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
 [Variable replacements](#variables) are available through the entire requisition.
 
