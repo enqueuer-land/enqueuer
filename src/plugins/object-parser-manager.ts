@@ -38,15 +38,15 @@ export class ObjectParserManager {
         Logger.warning(`No object parser was found with '${tag}'`);
     }
 
-    public tryToParseWithParsers(fileBufferContent: string, tags: string[] = []): string | object {
+    public tryToParseWithParsers(fileBufferContent: string, tags: string[] = []): object {
         const errorResult: any = {};
         for (const tag of tags) {
             const objectParser = this.createParser(tag);
             if (objectParser) {
                 try {
-                    const parse = objectParser.parse(fileBufferContent);
+                    const parsed = objectParser.parse(fileBufferContent);
                     Logger.debug(`Content parsed as ${tag}`);
-                    return parse;
+                    return parsed;
                 } catch (err) {
                     errorResult[tag] = err.toString();
                 }

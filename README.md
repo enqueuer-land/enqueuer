@@ -175,7 +175,7 @@ Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/exam
     parallel: true
 
 **import**  
-Allows requisition files to be reused. Want to reuse the same requisition multiple times? This is you you need.
+Allows requisition to be dynamically defined, be it by loading an external file or creating dynamically by other requisitions. Want to reuse the same requisition multiple times? This is you you need.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/reuse.yml) to behold this feature.
 
     import: path/to/another/requisition/file
@@ -228,7 +228,7 @@ It publishes something, it writes, it enqueues, hits and endpoint... These kinds
 ##### publisher attributes
 Every publisher has its own properties, depending on its protocol and implementation.
 The built-in [`http` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a `url`, a `method`, and a `payload`, if the method is not a GET.
-On the other hand, the built-in [`tcp` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation requires a `serverAddress` and a `port`. 
+On the other hand, the built-in [`tcp` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a `serverAddress` and a `port`. 
 These are the publisher attributes:
 
 **name**  

@@ -424,7 +424,7 @@ Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/ex
 </code></pre>
 
 <p><strong>import</strong> <br>
-Allows requisition files to be reused. Want to reuse the same requisition multiple times? This is you you need.
+Allows requisition to be dynamically defined, be it by loading an external file or creating dynamically by other requisitions. Want to reuse the same requisition multiple times? This is you you need.
 Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/reuse.yml">this</a> to behold this feature.</p>
 
 <pre><code class="yaml">import: path/to/another/requisition/file
@@ -483,7 +483,7 @@ It publishes something, it writes, it enqueues, hits and endpoint... These kinds
 
 <p>Every publisher has its own properties, depending on its protocol and implementation.
 The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> publisher</a> implementation, for instance, demands a <code class="yaml">url</code>, a <code class="yaml">method</code>, and a <code class="yaml">payload</code>, if the method is not a GET.
-On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">tcp</code> publisher</a> implementation requires a <code class="yaml">serverAddress</code> and a <code class="yaml">port</code>. 
+On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> publisher</a> implementation requires a <code class="yaml">serverAddress</code> and a <code class="yaml">port</code>. 
 These are the publisher attributes:</p>
 
 <p><strong>name</strong> <br>

@@ -13,7 +13,7 @@ export interface RequisitionModel extends Finishable, Initializable {
     delay: number;
     iterations: number;
     ignore?: boolean;
-    import?: string;
+    import?: RequisitionModel;
     requisitions: RequisitionModel[];
 
     [propName: string]: any;

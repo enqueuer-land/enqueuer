@@ -1,9 +1,12 @@
--   import: ./examples/reuse.yml
+-   name: static import
+    import: <<yaml://examples/reuse.yml.nqr>>
     onFinish:
         assertions:
         -   expectToBeTruthy: requisition.imported
--   import: ./examples/reuse.yml
-    onInit:
+-   name: dynamic import
+    import:
+        onInit:
+            script: requisition.dynamicallyImported = true;
+    onFinish:
         assertions:
-        -   name: overwrites
-            expectToBeUndefined: requisition.imported
+        -   expectToBeTruthy: requisition.dynamicallyImported
