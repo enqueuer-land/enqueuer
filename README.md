@@ -251,7 +251,7 @@ The message itself that will be send through this protocol. Be it a string, a nu
 **ignore**  
 Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
-    ignore: true    
+    ignore: true
     
 ##### events
 Available events are described [here](#event). A `publisher` object is available to access and change its attributes.

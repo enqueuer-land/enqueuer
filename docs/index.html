@@ -45,7 +45,11 @@
         scroll-behavior: smooth;
     }
 
-    .enqueuer-name, .hljs-attr {
+    .hljs-comment {
+        color: var(--nqr-text-smooth-color);
+    }
+
+    .enqueuer-name, .hljs-attr, .hljs-bullet {
         color: var(--nqr-color);
     }
 
@@ -54,7 +58,6 @@
     }
 
     .dollar-sign {
-        padding-left: 3px;
         color: var(--nqr-code-color);
     }
 
@@ -214,7 +217,7 @@
 <body data-spy="scroll" data-target="#navbar-nqr" data-offset="0">
 <a href="http://github.com/enqueuer-land/enqueuer" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250"
-         style="fill:var(--nqr-color); color: var(--nqr-background-color); position: absolute; top: 0; border: 0; right: 0;"
+         style="fill:var(--nqr-color); color: var(--nqr-background-color); position: fixed; top: 0; border: 0; right: 0;"
          aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
         <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
@@ -259,13 +262,13 @@ Don't you worry anymore. Enqueuer is what you're looking for.</p>
 
 <p>First things first, let's get the enqueuer installed on your machine.</p>
 
-<pre><code><span class="dollar-sign">$</span> npm install --global enqueuer
+<pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer
 </code></pre>
 
 <p>Next up, it's time create a requisition file.
 Something like:</p>
 
-<pre><code>#enqueuer-repo-hit.yml
+<pre><code class="yaml">#enqueuer-repo-hit.yml
 publishers:
 -   type: http
     url: https://github.com/enqueuer-land/enqueuer
@@ -279,12 +282,12 @@ publishers:
 <p>Pretty simple, hum? Small and concise, how it should be!
 Run it:</p>
 
-<pre><code><span class="dollar-sign">$</span> enqueuer enqueuer-repo-hit.yml
+<pre><code class="yaml"><span class="dollar-sign">$</span> enqueuer enqueuer-repo-hit.yml
 </code></pre>
 
 <p>What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:</p>
 
-<pre><code>#http-self-test.yml
+<pre><code class="yaml">#http-self-test.yml
 publishers:
 -   type: http
     url: http://localhost:9085/readme-example
@@ -313,7 +316,7 @@ subscriptions:
 
 <p>And then, run this other one:</p>
 
-<pre><code><span class="dollar-sign">$</span> nqr http-self-test.yml
+<pre><code class="yaml"><span class="dollar-sign">$</span> nqr http-self-test.yml
 </code></pre>
 
 <p>I told you it was simple.
@@ -324,7 +327,7 @@ Certainly one is what you need.    </p>
 
 <h4 id="if_you_need_more" style="padding-left: 8px">1.2 if you need more</h4>
 
-<pre><code><span class="dollar-sign">$</span> nqr -h
+<pre><code class="yaml"><span class="dollar-sign">$</span> nqr -h
 Usage: nqr [options] &lt;test-file&gt; [other-test-files...]
 
 Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
@@ -383,7 +386,7 @@ You don't know some of these attributes values yet? Don't worry, just put a vari
 Describes what the requisition is suppose to do.
 Defaults to requisition index.</p>
 
-<pre><code>name: requisition action
+<pre><code class="yaml">name: requisition action
 </code></pre>
 
 <p><strong>timeout</strong> <br>
@@ -391,45 +394,45 @@ Defaults to 5000.
 Sets in milliseconds how long the requisition waits to expire.
 Set to zero or less than zero to run it endlessly.</p>
 
-<pre><code>timeout: 3000
+<pre><code class="yaml">timeout: 3000
 </code></pre>
 
 <p><strong>delay</strong> <br>
 Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> to get the full idea.</p>
 
-<pre><code>delay: 0
+<pre><code class="yaml">delay: 0
 </code></pre>
 
 <p><strong>iterations</strong> <br>
 Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
 
-<pre><code>iterations: 3
+<pre><code class="yaml">iterations: 3
 </code></pre>
 
 <p><strong>ignore</strong> <br>
 Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
-<pre><code>ignore: true
+<pre><code class="yaml">ignore: true
 </code></pre>
 
 <p><strong>parallel</strong> <br>
 Defaults to false. Immediate children requisitions should be executed in parallel mode.
 Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel.yml">this</a> to see it working.</p>
 
-<pre><code>parallel: true
+<pre><code class="yaml">parallel: true
 </code></pre>
 
 <p><strong>import</strong> <br>
 Allows requisition files to be reused. Want to reuse the same requisition multiple times? This is you you need.
 Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/reuse.yml">this</a> to behold this feature.</p>
 
-<pre><code>import: path/to/another/requisition/file
+<pre><code class="yaml">import: path/to/another/requisition/file
 </code></pre>
 
 <p><strong>publishers</strong> <br>
 List of <a href="#publisher">publishers</a></p>
 
-<pre><code>publishers:
+<pre><code class="yaml">publishers:
 - name: some publisher name
   type: http
 - type: tcp
@@ -438,7 +441,7 @@ List of <a href="#publisher">publishers</a></p>
 <p><strong>subscriptions</strong> <br>
 List of <a href="#subscription">subscriptions</a></p>
 
-<pre><code>subscriptions:
+<pre><code class="yaml">subscriptions:
 - name: some subscription name
   type: udp
 - name: another subscription name
@@ -449,7 +452,7 @@ List of <a href="#subscription">subscriptions</a></p>
 A list of child scenarios. List of <a href="#requisition">requisitions</a>.
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> example, it may help.</p>
 
-<pre><code>requisitions:
+<pre><code class="yaml">requisitions:
 - name: some requisition name
   iterations: 2
 - name: another requisition name
@@ -458,9 +461,9 @@ Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/re
 
 <h5 id="events" style="padding-left: 16px">2.1.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code>requisition</code> object is available to access and change its attributes.</p>
+<p>Available events are described <a href="#event">here</a>. A <code class="yaml">requisition</code> object is available to access and change its attributes.</p>
 
-<pre><code>name: my name
+<pre><code class="yaml">name: my name
 onInit:
   script: requisition.delay = 3000;
   assertions:
@@ -478,43 +481,43 @@ It publishes something, it writes, it enqueues, hits and endpoint... These kinds
 <h5 id="publisher_attributes" style="padding-left: 16px">2.2.1 publisher attributes</h5>
 
 <p>Every publisher has its own properties, depending on its protocol and implementation.
-The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code>http</code> publisher</a> implementation, for instance, demands a <code>url</code>, a <code>method</code>, and a <code>payload</code>, if the method is not a GET.
-On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code>tcp</code> publisher</a> implementation requires a <code>serverAddress</code> and a <code>port</code>. 
+The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> publisher</a> implementation, for instance, demands a <code class="yaml">url</code>, a <code class="yaml">method</code>, and a <code class="yaml">payload</code>, if the method is not a GET.
+On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">tcp</code> publisher</a> implementation requires a <code class="yaml">serverAddress</code> and a <code class="yaml">port</code>. 
 These are the publisher attributes:</p>
 
 <p><strong>name</strong> <br>
 Defaults to publisher index.
 Describes what the publisher is supposed to do.</p>
 
-<pre><code>name: publisher action
+<pre><code class="yaml">name: publisher action
 </code></pre>
 
 <p><strong>type</strong> <br>
 Mandatory. Key tag to identify which publisher will be instantiated</p>
 
-<pre><code>type: http
+<pre><code class="yaml">type: http
 </code></pre>
 
 <p><strong>payload</strong> <br>
 Since a publisher usually publishes something, it's very likely you have to set a value here.
 The message itself that will be send through this protocol. Be it a string, a number, a boolean value or even whole objects.</p>
 
-<pre><code>payload: value
+<pre><code class="yaml">payload: value
 </code></pre>
 
 <p><strong>ignore</strong> <br>
 Defaults to false. Tells to enqueuer that this publisher should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
-<pre><code>ignore: true    
+<pre><code class="yaml">ignore: true
 </code></pre>
 
 <h5 id="events" style="padding-left: 16px">2.2.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code>publisher</code> object is available to access and change its attributes.
-Depending on the protocol and its implementation, such as <code>http</code> and <code>tcp</code>, there may exist a <code>onMessageReceived</code> event and a special object given <code>message</code>. 
-On the other hand, an asynchronous protocol, like: <code>udp</code> and <code>amqp</code>, usually does not provide it. </p>
+<p>Available events are described <a href="#event">here</a>. A <code class="yaml">publisher</code> object is available to access and change its attributes.
+Depending on the protocol and its implementation, such as <code class="yaml">http</code> and <code class="yaml">tcp</code>, there may exist a <code class="yaml">onMessageReceived</code> event and a special object given <code class="yaml">message</code>. 
+On the other hand, an asynchronous protocol, like: <code class="yaml">udp</code> and <code class="yaml">amqp</code>, usually does not provide it. </p>
 
-<pre><code>onInit:
+<pre><code class="yaml">onInit:
   script: publisher.ignore = false
   assertions:
   - expectToBeDefined: publisher.type
@@ -536,8 +539,8 @@ Rather than that, enqueuer waits on an external event to be triggered and then i
 <h5 id="subscription_attributes" style="padding-left: 16px">2.3.1 subscription attributes</h5>
 
 <p>Every subscription has its own properties, depending on its protocol and implementation.
-The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code>http</code> subscription</a> implementation, for instance, demands an <code>endpoint</code>, a <code>method</code>, and a <code>port</code>, if the method is not a GET.
-On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code>tcp</code> subscription</a> implementation requires only a <code>port</code>. </p>
+The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> subscription</a> implementation, for instance, demands an <code class="yaml">endpoint</code>, a <code class="yaml">method</code>, and a <code class="yaml">port</code>, if the method is not a GET.
+On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> subscription</a> implementation requires only a <code class="yaml">port</code>. </p>
 
 <p>These are the subscription attributes:</p>
 
@@ -545,13 +548,13 @@ On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueu
 Defaults to subscription index.
 Describes what the subscription is supposed to do.</p>
 
-<pre><code>name: subscription action
+<pre><code class="yaml">name: subscription action
 </code></pre>
 
 <p><strong>type</strong> <br>
 Mandatory. Key tag to identify which subscription will be instantiated</p>
 
-<pre><code>type: http
+<pre><code class="yaml">type: http
 </code></pre>
 
 <p><strong>avoid</strong> <br>
@@ -560,27 +563,27 @@ If set and a message is received a failing test will be generated.
 Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/avoid.yml">this</a> to see it working.
 On the other hand, when it's false and no message is received in a given timeout. The subscription is valid.</p>
 
-<pre><code>avoid: false
+<pre><code class="yaml">avoid: false
 </code></pre>
 
 <p><strong>timeout</strong> <br>
 Sets in milliseconds how long the subscription waits to expire. Defaults to 3000.
 Set to zero or less than zero to run it endlessly.</p>
 
-<pre><code>timeout: 3000
+<pre><code class="yaml">timeout: 3000
 </code></pre>
 
 <p><strong>ignore</strong> <br>
 Defaults to false. Tells to enqueuer that this subscription should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
-<pre><code>ignore: true    
+<pre><code class="yaml">ignore: true    
 </code></pre>
 
 <h5 id="events" style="padding-left: 16px">2.3.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code>subscription</code> object is available to access and change its attributes.  </p>
+<p>Available events are described <a href="#event">here</a>. A <code class="yaml">subscription</code> object is available to access and change its attributes.  </p>
 
-<pre><code>onInit:
+<pre><code class="yaml">onInit:
   script: subscription.avoid = false;
   assertions:
   - expectToBeDefined: subscription.type
@@ -597,11 +600,11 @@ onFinish:
 <h3 id="event" style="padding-left: 0px">3 Event</h3>
 
 <p>Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
-This is where you'll write your tests. In its <code>assertions</code> field.
-Depending on the event's owner, there may be a variable called <code>publisher</code>, <code>subscription</code> or <code>requisition</code>.
+This is where you'll write your tests. In its <code class="yaml">assertions</code> field.
+Depending on the event's owner, there may be a variable called <code class="yaml">publisher</code>, <code class="yaml">subscription</code> or <code class="yaml">requisition</code>.
 You're free to explore them however you want, even doing things like this:</p>
 
-<pre><code>publisher.parent.subscriptions[0].timeout = 1000;
+<pre><code class="yaml">publisher.parent.subscriptions[0].timeout = 1000;
 </code></pre>
 
 <h4 id="hooks" style="padding-left: 8px">3.1 hooks</h4>
@@ -613,15 +616,15 @@ Available in requisitions, publishers and subscriptions. It gets executed as soo
 
 <p><strong>onFinish</strong> <br>
 Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
-As available parameter, an <code>elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component. </p>
+As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component. </p>
 
 <p><strong>onMessageReceived</strong> <br>
 Available in every subscription and in publishers that provide synchronous properties. 
 It gets executed when the subscription or publisher receives a message.
-A <code>message</code> object is available having all of attributes returned from the received message.
+A <code class="yaml">message</code> object is available having all of attributes returned from the received message.
 Depending on the protocol implementation, there'll be additional objects to this hook.
-For instance, in the built-in http publisher implementation, there's a <code>statusCode</code>, <code>headers</code> and a <code>body</code> among others, and the subscription implementation has <code>body</code>, <code>query</code>, <code>params</code> and <code>headers</code>, among other variables.
-<code>elapsedTime</code> is also available here, counting every milliseconds since the instantiation of this component.</p>
+For instance, in the built-in http publisher implementation, there's a <code class="yaml">statusCode</code>, <code class="yaml">headers</code> and a <code class="yaml">body</code> among others, and the subscription implementation has <code class="yaml">body</code>, <code class="yaml">query</code>, <code class="yaml">params</code> and <code class="yaml">headers</code>, among other variables.
+<code class="yaml">elapsedTime</code> is also available here, counting every milliseconds since the instantiation of this component.</p>
 
 <h4 id="fields" style="padding-left: 8px">3.2 fields</h4>
 
@@ -637,11 +640,11 @@ Data to be persisted across requisitions.  </p>
 
 <p><strong>assertions</strong> <br>
 Array of assertions.
-Run <code><span class="dollar-sign">$</span> nqr -t</code> to see available ones.
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to see available ones.
 Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
 You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>.</p>
 
-<pre><code>onInit:
+<pre><code class="yaml">onInit:
   script: variableIdentifier = 'string value'
 
   assertions:
@@ -687,12 +690,12 @@ Configuration files tell enqueuer which tests will be executed, log-level, and w
 This file tells how enqueuer should be executed.
 To run enqueuer with the configuration:</p>
 
-<pre><code><span class="dollar-sign">$</span> nqr -c path/to/configuration/file.yml
+<pre><code class="yaml"><span class="dollar-sign">$</span> nqr -c path/to/configuration/file.yml
 </code></pre>
 
 <p>or</p>
 
-<pre><code><span class="dollar-sign">$</span> nqr --config-file path/to/configuration/file.yml
+<pre><code class="yaml"><span class="dollar-sign">$</span> nqr --config-file path/to/configuration/file.yml
 </code></pre>
 
 <h4 id="configuration_file_attributes" style="padding-left: 8px">5.1 configuration file attributes</h4>
@@ -702,7 +705,7 @@ To run enqueuer with the configuration:</p>
 <p><strong>files</strong> <br>
 Requisition file names or glob. Enqueuer runs every file that matches an element value.</p>
 
-<pre><code>files:
+<pre><code class="yaml">files:
 - 1.yml
 - 2.yml
 - *.json
@@ -711,25 +714,25 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
 <p><strong>parallel</strong> <br>
 Defaults to false. Requisition files should be executed in parallel mode. The requisition file itself is still sequential, but the files are executes in parallel.</p>
 
-<pre><code>parallel: true
+<pre><code class="yaml">parallel: true
 </code></pre>
 
 <p><strong>log-level</strong> <br>
 Defaults to warning. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.</p>
 
-<pre><code>log-level: trace
+<pre><code class="yaml">log-level: trace
 </code></pre>
 
 <p><strong>max-report-level-print</strong> <br>
 Defaults to 1. The deepest level of report to be printed to the console.</p>
 
-<pre><code>max-report-level-print: 2
+<pre><code class="yaml">max-report-level-print: 2
 </code></pre>
 
 <p><strong>plugins</strong> <br>
 List of in <a href="#plugins">plugins</a> used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>. </p>
 
-<pre><code>plugins:
+<pre><code class="yaml">plugins:
 - enqueuer-plugin-amqp 
 - enqueuer-plugin-ws 
 - enqueuer-plugin-mqtt
@@ -739,12 +742,12 @@ List of in <a href="#plugins">plugins</a> used by the test scenarios. You can <a
 <p><strong>outputs</strong> <br>
 Once enqueuer runs every execution, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
-Yes, it means that you are able to send this report through <code>http</code>, <code>tcp</code>, etc. or through a <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugin one</a> or a <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a>.
-You can run <code><span class="dollar-sign">$</span> nqr -p</code> to check available report publishers installed. 
-Another important thing to note is the <code>format</code> value. By default a <code>json</code> summary is generated, but you can change it to whatever format you would like, such as: <a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">Xunit</a>, <a href="https://github.com/enqueuer-land/enqueuer-plugin-html-report">html</a>
-You can run <code><span class="dollar-sign">$</span> nqr -f</code> to check available installed formats or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a></p>
+Yes, it means that you are able to send this report through <code class="yaml">http</code>, <code class="yaml">tcp</code>, etc. or through a <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugin one</a> or a <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a>.
+You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -p</code> to check available report publishers installed. 
+Another important thing to note is the <code class="yaml">format</code> value. By default a <code class="yaml">json</code> summary is generated, but you can change it to whatever format you would like, such as: <a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">Xunit</a>, <a href="https://github.com/enqueuer-land/enqueuer-plugin-html-report">html</a>
+You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -f</code> to check available installed formats or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a></p>
 
-<pre><code>outputs:
+<pre><code class="yaml">outputs:
 - type: file
   format: json (default)
   filename: output/examples.json
@@ -758,7 +761,7 @@ You can run <code><span class="dollar-sign">$</span> nqr -f</code> to check avai
 <p><strong>store</strong> <br>
 Values defined here use the 'key: value' pattern and are available to every test scenario throughout the entire execution</p>
 
-<pre><code>store:
+<pre><code class="yaml">store:
   variableKey: "my value" # Defines 'variableKey' key and its value 'my value'. 
 
   'separated key': 6
@@ -778,20 +781,20 @@ Values defined here use the 'key: value' pattern and are available to every test
 <h3 id="variables" style="padding-left: 0px">6 Variables</h3>
 
 <p>Providing power and flexibility, enqueuer allows you to use variables placeholder replacement.
-That's why there is a <code>store</code> field and you'll see a lot of <code>&lt;&lt;</code> and <code>{{</code> being used in the examples files.
+That's why there is a <code class="yaml">store</code> field and you'll see a lot of <code class="yaml">&lt;&lt;</code> and <code class="yaml">{{</code> being used in the examples files.
 It works as simple as this:</p>
 
-<pre><code>name: my name is &lt;&lt;variableKey&gt;&gt;
+<pre><code class="yaml">name: my name is &lt;&lt;variableKey&gt;&gt;
 </code></pre>
 
 <p>Every time enqueuer sees these kind of notations, it searches in its store for a key/value pair like:</p>
 
-<pre><code>variableKey: `enqueuer`
+<pre><code class="yaml">variableKey: `enqueuer`
 </code></pre>
 
 <p>Then, when enqueuer parses the original map, it gets translated to this:</p>
 
-<pre><code>name: my name is enqueuer
+<pre><code class="yaml">name: my name is enqueuer
 </code></pre>
 
 <p>By default, every ENV_VAR set is loaded automatically to the store. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L11">this example</a>.</p>
@@ -806,9 +809,9 @@ It works as simple as this:</p>
 
 <h5 id="command_line" style="padding-left: 16px">6.1.2 command line</h5>
 
-<p>A command line argument using the <code>key=value</code> format. This way: </p>
+<p>A command line argument using the <code class="yaml">key=value</code> format. This way: </p>
 
-<pre><code><span class="dollar-sign">$</span> nqr --store key=value -s anotherVariable=true
+<pre><code class="yaml"><span class="dollar-sign">$</span> nqr --store key=value -s anotherVariable=true
 </code></pre>
 
 <h5 id="event" style="padding-left: 16px">6.1.3 event</h5>
@@ -817,7 +820,7 @@ It works as simple as this:</p>
 Be it in its <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">script</a> field or straight through its store <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3">field</a>.
 Both ways work:</p>
 
-<pre><code>onInit:
+<pre><code class="yaml">onInit:
     script: store.key = 123;
     store:
         anotherKey: `another Value` 
@@ -829,12 +832,12 @@ Both ways work:</p>
 
 <h5 id="non_js_code_snippet" style="padding-left: 16px">6.2.1 non js code snippet</h5>
 
-<p>The easiest one is to type <code>&lt;&lt;variableKey&gt;&gt;</code> or <code>{{variableKey}}</code> where you want it to be replaced in a test file, as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8">here</a></p>
+<p>The easiest one is to type <code class="yaml">&lt;&lt;variableKey&gt;&gt;</code> or <code class="yaml">{{variableKey}}</code> where you want it to be replaced in a test file, as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8">here</a></p>
 
 <h5 id="js_code_snippet" style="padding-left: 16px">6.2.2 js code snippet</h5>
 
-<p>Using the <code>store</code> object. It's attributes are the keys and their values are their respective values. 
-Therefore, you're free to use <code>store.variableKey</code>, <code>console.log(store.variableKey);</code> or <code>console.log(2 * store['separated key']);</code> and get them.
+<p>Using the <code class="yaml">store</code> object. It's attributes are the keys and their values are their respective values. 
+Therefore, you're free to use <code class="yaml">store.variableKey</code>, <code class="yaml">console.log(store.variableKey);</code> or <code class="yaml">console.log(2 * store['separated key']);</code> and get them.
 Like <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">this</a> one.</p>
 
 <h4 id="variables_example" style="padding-left: 8px">6.3 variables example</h4>
@@ -847,12 +850,12 @@ Like <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5b
 
 <p>You are able to inject file content into a requisition/publisher/subscription field.</p>
 
-<pre><code>file: &lt;&lt;file://path/to/file.txt&gt;&gt;
+<pre><code class="yaml">file: &lt;&lt;file://path/to/file.txt&gt;&gt;
 </code></pre>
 
-<p>Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: <code>&lt;&lt;tag://path/to/file?query=value&amp;other=true&gt;&gt;</code>.</p>
+<p>Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: <code class="yaml">&lt;&lt;tag://path/to/file?query=value&amp;other=true&gt;&gt;</code>.</p>
 
-<pre><code>requisition:
+<pre><code class="yaml">requisition:
     json: &lt;&lt;json://path/to/file.json&gt;&gt;
     yml: &lt;&lt;yml://path/to/file.yml&gt;&gt;
     csv: &lt;&lt;csv://path/to/file.csv?header=true&amp;delimiter=;&gt;&gt;
@@ -861,7 +864,7 @@ Like <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5b
 
 <p>Once the object is parsed, your free to use it as a regular object in any event</p>
 
-<pre><code>onInit:
+<pre><code class="yaml">onInit:
     script: console.log(requisition.yml.deep.field);
 onFinish:
     assertions:
@@ -871,8 +874,8 @@ onFinish:
 
 <p>It get's event better. 
 Due its fantastic plugin architecture design, you can extend its default modules and use any of <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">these</a> plugins or event <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a> to parse however you want.
-The built-in modules for object parsers are: <code>json</code>, <code>yml</code>, <code>csv</code> and <code>file</code>. 
-Run <code><span class="dollar-sign">$</span> nqr -e</code> to see available ones.</p>
+The built-in modules for object parsers are: <code class="yaml">json</code>, <code class="yaml">yml</code>, <code class="yaml">csv</code> and <code class="yaml">file</code>. 
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e</code> to see available ones.</p>
 
 <h4 id="content_file_injection_example" style="padding-left: 8px">7.1 content file injection example</h4>
 
@@ -893,9 +896,9 @@ Albeit you don't have to share the one you created, we encourage you to do so. T
 <h5 id="protocol" style="padding-left: 16px">8.1.1 protocol</h5>
 
 <p>A protocol plugin enables you to use a different publisher/subscription types. 
-Run <code><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to check available ones:</p>
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to check available ones:</p>
 
-<pre><code>publishers: 
+<pre><code class="yaml">publishers: 
 -   name:                  custom
 -   name:                  file
 -   name:                  http
@@ -925,7 +928,7 @@ subscriptions:
 <p>Each one listed above has a respective example in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples">the examples folder</a>.
 <a href="https://github.com/enqueuer-land/enqueuer-plugin-amqp">This one</a>, for instance, provides support for amqp protocol, so you can create this publisher and subscription:</p>
 
-<pre><code>publishers:
+<pre><code class="yaml">publishers:
 -   type: amqp
     payload: enqueuermaniac
     exchange: enqueuer.exchange
@@ -944,9 +947,9 @@ subscriptions:
 
 <p>An object parser plugin enables you to read and parse files as you wish.
 <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml">This test example</a> demonstrates how to use it,
-Run <code><span class="dollar-sign">$</span> nqr -e [object-parser-name]</code> to check available ones:</p>
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e [object-parser-name]</code> to check available ones:</p>
 
-<pre><code>parsers: 
+<pre><code class="yaml">parsers: 
 - yml, yaml
 - json
 - file
@@ -955,15 +958,15 @@ Run <code><span class="dollar-sign">$</span> nqr -e [object-parser-name]</code> 
 
 <p><a href="https://github.com/enqueuer-land/enqueuer-plugin-xml-parser">This one</a>, for example, provides the ability to read xml files and inject their values like this:</p>
 
-<pre><code>xmlContent: &lt;&lt;xml://path/to/xml/file.xml&gt;&gt;
+<pre><code class="yaml">xmlContent: &lt;&lt;xml://path/to/xml/file.xml&gt;&gt;
 </code></pre>
 
 <h5 id="asserter" style="padding-left: 16px">8.1.3 asserter</h5>
 
 <p>An asserter plugin provides you a nicely way to use different assertions than these built-in ones:
-Run <code><span class="dollar-sign">$</span> nqr -t</code> to list available ones:</p>
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to list available ones:</p>
 
-<pre><code>asserters: 
+<pre><code class="yaml">asserters: 
 -   expectToBeTruthy:           value expected to be true
 -   expectToBeFalsy:            value expected to be falsy
 -   expectToBeDefined:          stuff to be defined
@@ -985,9 +988,9 @@ Run <code><span class="dollar-sign">$</span> nqr -t</code> to list available one
 <h5 id="report_formatter" style="padding-left: 16px">8.1.4 report formatter</h5>
 
 <p>A report formatter plugin gives you the ability to export enqueuer reports the way you want.
-Run <code><span class="dollar-sign">$</span> nqr -f [formatter-name]</code> to list available report formatters:</p>
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name]</code> to list available report formatters:</p>
 
-<pre><code>formatters: 
+<pre><code class="yaml">formatters: 
 - console, stdout
 - json
 - yml, yaml
@@ -1003,14 +1006,14 @@ You can tell enqueuer to use a plugin in three manners. Using it as a command li
 
 <h5 id="command_line" style="padding-left: 16px">8.2.1 command line</h5>
 
-<p>Tell enqueuer to use your plugin through command line this way <code><span class="dollar-sign">$</span> nqr -l &lt;plugin-folder&gt; -l &lt;another-plugin-folder&gt;</code>.
+<p>Tell enqueuer to use your plugin through command line this way <code class="yaml"><span class="dollar-sign">$</span> nqr -l &lt;plugin-folder&gt; -l &lt;another-plugin-folder&gt;</code>.
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.</p>
 
 <h5 id="configuration_file" style="padding-left: 16px">8.2.2 configuration file</h5>
 
 <p>Tell enqueuer to use your plugin through configuration file this way:</p>
 
-<pre><code>plugins: 
+<pre><code class="yaml">plugins: 
 -   plugin-folder
 -   another-plugin-folder
 </code></pre>
@@ -1019,8 +1022,8 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 
 <h5 id="implicitly" style="padding-left: 16px">8.2.3 implicitly</h5>
 
-<p>When enqueuer runs, it looks for modules in <code>.nqr</code> folder in your home directory. Every enqueuer compatible module get implicitly loaded.
-In order to be enqueuer compatible, a module has to have an <code>entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
+<p>When enqueuer runs, it looks for modules in <code class="yaml">.nqr</code> folder in your home directory. Every enqueuer compatible module get implicitly loaded.
+In order to be enqueuer compatible, a module has to have an <code class="yaml">entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
 
 <hr />
 
@@ -1043,34 +1046,34 @@ It may help somehow. </p>
 <p>In order to contribute with some code, you have to follow a few steps.
 First of all, get the code:</p>
 
-<pre><code><span class="dollar-sign">$</span> git clone git@github.com:enqueuer-land/enqueuer.git
+<pre><code class="yaml"><span class="dollar-sign">$</span> git clone git@github.com:enqueuer-land/enqueuer.git
 <span class="dollar-sign">$</span> cd enqueuer
 </code></pre>
 
 <p>Get its dependencies installed:</p>
 
-<pre><code><span class="dollar-sign">$</span> npm install
+<pre><code class="yaml"><span class="dollar-sign">$</span> npm install
 </code></pre>
 
 <p>Build it: </p>
 
-<pre><code><span class="dollar-sign">$</span> npm run build
+<pre><code class="yaml"><span class="dollar-sign">$</span> npm run build
 </code></pre>
 
 <p>Go for it. Make the changes you want.
 After everything is done:</p>
 
-<pre><code><span class="dollar-sign">$</span> npm run all
+<pre><code class="yaml"><span class="dollar-sign">$</span> npm run all
 </code></pre>
 
 <p>Commit it:</p>
 
-<pre><code><span class="dollar-sign">$</span> npm run commit
+<pre><code class="yaml"><span class="dollar-sign">$</span> npm run commit
 </code></pre>
 
 <p>Push it:</p>
 
-<pre><code><span class="dollar-sign">$</span> git push
+<pre><code class="yaml"><span class="dollar-sign">$</span> git push
 </code></pre>
 
 <h4 id="feedback" style="padding-left: 8px">9.3 feedback</h4>
@@ -1090,14 +1093,11 @@ If you have any comments, suggestions, etc. you can reach us <a href="https://gi
         integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
         crossorigin="anonymous"></script>
 
-<!--<script type="application/javascript"-->
-<!--src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/misc/html/highlight/highlight.pack.js"-->
-<!--crossorigin="anonymous"></script>-->
-
-<!--<script>-->
-<!--// hljs.configure({languages: ['yaml', 'shell', 'shell']});-->
-<!--hljs.initHighlightingOnLoad();-->
-<!-- </script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"
+        integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/yaml.min.js"
+        integrity="sha256-rnrMAiJbGf0etxUcBLxTBrBbte8zy7TrGOHMGFq97GA=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 <script>
     const enqueuerLogo = $("[title='Enqueuer Giant Logo']");
@@ -1107,10 +1107,6 @@ If you have any comments, suggestions, etc. you can reach us <a href="https://gi
     const enqueuerFlow = $("[title='Enqueuer Instance Flow']");
     enqueuerFlow.css({'max-width': '90%'});
     enqueuerFlow.parent().css({'text-align': 'center'});
-
-
-    // const yamlCode = $("pre code");
-    // yamlCode.parent().addClass('yaml');
 
     const npmBigBadge = $("[href='https://nodei.co/npm/enqueuer/']");
     npmBigBadge.parent().css({'text-align': 'center'});

@@ -12,14 +12,11 @@
         integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
         crossorigin="anonymous"></script>
 
-<!--<script type="application/javascript"-->
-<!--src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/misc/html/highlight/highlight.pack.js"-->
-<!--crossorigin="anonymous"></script>-->
-
-<!--<script>-->
-<!--// hljs.configure({languages: ['yaml', 'shell', 'shell']});-->
-<!--hljs.initHighlightingOnLoad();-->
-<!-- </script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"
+        integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/yaml.min.js"
+        integrity="sha256-rnrMAiJbGf0etxUcBLxTBrBbte8zy7TrGOHMGFq97GA=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 <script>
     const enqueuerLogo = $("[title='Enqueuer Giant Logo']");
@@ -29,10 +26,6 @@
     const enqueuerFlow = $("[title='Enqueuer Instance Flow']");
     enqueuerFlow.css({'max-width': '90%'});
     enqueuerFlow.parent().css({'text-align': 'center'});
-
-
-    // const yamlCode = $("pre code");
-    // yamlCode.parent().addClass('yaml');
 
     const npmBigBadge = $("[href='https://nodei.co/npm/enqueuer/']");
     npmBigBadge.parent().css({'text-align': 'center'});

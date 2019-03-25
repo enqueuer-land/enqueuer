@@ -58,6 +58,7 @@ converter.hooks.set("postConversion", (text) => {
             return "<h" + levelNumber + ' id="' + id + '" style="padding-left: ' + 8 * (levelNumber - 3) + 'px">' + levelPrefix + ' ';
         })
         .replace(/\\/g, '<br>')
+        .replace(/<code>/g, '<code class="yaml">')
         .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
         .replace(/fullLogo1/g, 'fullLogo3')
         // .replace(/ (enqueuer)/gi, (match, p1) => '<span class="enqueuer-name"> ' + p1 + '</span>')
