@@ -3,8 +3,7 @@
 const pagedown = require('pagedown');
 const converter = new pagedown.Converter();
 const fs = require('fs');
-const topPart = fs.readFileSync(__dirname + "/html/top.html").toString();
-const bottomPart = fs.readFileSync(__dirname + "/html/bottom.html").toString();
+const template = fs.readFileSync(__dirname + "/html/template.html").toString();
 const md = fs.readFileSync("README.md").toString();
 let spyHtml = `<nav id="navbar-nqr" class="navbar navbar-fixed-left">    
     <a class="" href="#">
@@ -67,16 +66,15 @@ converter.hooks.set("postConversion", (text) => {
 
 
 const readMeHtmlized = converter.makeHtml(md);
-
 spyHtml += `</nav></nav></nav>`;
-// Bootstrap-fy
-const htmlResult =
-    topPart +
-    spyHtml +
+const content = spyHtml +
     `<div class="nqr-main-container container" style="max-width: 90%">` +
     readMeHtmlized +
-    `</div></div>` +
-    bottomPart;
+    `</div></div>`;
+
+// Bootstrap-fy
+const htmlResult =
+    template.replace('<!--README CONTENT PLACEHOLDER-->', content);
 
 fs.writeFileSync('docs/index.html', htmlResult);
 console.log("Html generated");
