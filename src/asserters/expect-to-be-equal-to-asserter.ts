@@ -10,13 +10,14 @@ export class ExpectToBeEqualToAsserter implements Asserter {
         const expected = assertion.toBeEqualTo;
 
         if (typeof (actual) === 'object' && typeof (expected) === 'object') {
-            const stringifiedActual = JSON.stringify(actual, null, 2);
-            const stringifiedExpected = JSON.stringify(expected, null, 2);
+            const areEquals = this.deepEqual(actual, expected);
             return {
                 name,
-                valid: assertion.not === undefined ? stringifiedActual == stringifiedExpected : stringifiedActual != stringifiedExpected,
-                description: `Expected '${literal.expect}'${assertion.not === undefined ?
-                    '' : ' not'} to be equal to '${expected}'. Received '${actual}'`
+                valid: assertion.not === undefined ? areEquals : !areEquals,
+                description: `Expected '${JSON.stringify(literal.expect, null, 2)}'${assertion.not === undefined ?
+                    '' : ' not'} to be equal to '${JSON
+                    .stringify(expected, null, 2)}'. Received '${JSON
+                    .stringify(actual, null, 2)}'`
             };
         } else {
             return {
@@ -26,6 +27,14 @@ export class ExpectToBeEqualToAsserter implements Asserter {
                     '' : ' not'} to be equal to '${expected}'. Received '${actual}'`
             };
         }
+    }
+
+    private deepEqual(x: any, y: any): boolean {
+        const ok = Object.keys, tx = typeof x, ty = typeof y;
+        return x && y && tx === 'object' && tx === ty ? (
+            ok(x).length === ok(y).length &&
+            ok(x).every(key => this.deepEqual(x[key], y[key]))
+        ) : (x === y && (x != null && y != null || x.constructor === y.constructor));
     }
 }
 

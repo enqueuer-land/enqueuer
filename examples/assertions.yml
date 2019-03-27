@@ -6,11 +6,6 @@ onInit:
     -   expectToBeTruthy: true
     -   expectToBeFalsy: false
     -   expect: 1
-        toBeEqualTo: 1
-    -   expect: 1
-        not:
-        toBeEqualTo: 0
-    -   expect: 1
         toBeGreaterThan: 0
     -   expect: 1
         not:
@@ -36,7 +31,30 @@ onInit:
         not:
         toContain: `nqr`
     -   expect: [true, 'string', 10]
-        toContain: 10
+        toContain: `string`
     -   expect: [true, 'string', 10]
         not:
         toContain: false
+    -   expect:
+            deep:
+                object:
+                    with:
+                        array:
+                        -   1
+                        -   2
+                        -   3
+                boolean: true
+        toBeEqualTo:
+            deep:
+                boolean: true
+                object:
+                    with:
+                        array:
+                        - 1
+                        - 2
+                        - 3
+    -   expect: 1
+        toBeEqualTo: 1
+    -   expect: 1
+        not:
+        toBeEqualTo: 0

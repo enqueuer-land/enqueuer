@@ -40,7 +40,7 @@ describe('ExpectToBeEqualToAsserter', () => {
         const expectToBeEqualToAsserter = new ExpectToBeEqualToAsserter().assert(assertion, literal);
         expect(expectToBeEqualToAsserter.name).toBe('assertion 0');
         expect(expectToBeEqualToAsserter.valid).toBeTruthy();
-        expect(expectToBeEqualToAsserter.description).toBe("Expected 'body.actual' not to be equal to '0'. Received '2'");
+        expect(expectToBeEqualToAsserter.description).toBe(`Expected 'body.actual' not to be equal to '0'. Received '2'`);
     });
 
     it('should compare equal primitives fail', () => {
@@ -67,8 +67,37 @@ describe('ExpectToBeEqualToAsserter', () => {
 
         const assertion: Assertion = {
             name: 'assertion 0',
-            expect: {value: 123, deep: {nested: true, array: [4, 3, 2]}},
-            toBeEqualTo: {value: 123, deep: {nested: true, array: [4, 3, 2]}},
+            expect:         {value: 123, deep: {nested: true, array: [4, 3, 2]}},
+            toBeEqualTo:    {value: 123, deep: {nested: true, array: [4, 3, 2]}},
+        };
+
+        const literal = {
+            name: 'body.name',
+            expect: 'body.actual',
+            toBeEqualTo: 'body.expected',
+        };
+
+        const expectToBeEqualToAsserter = new ExpectToBeEqualToAsserter().assert(assertion, literal);
+        expect(expectToBeEqualToAsserter.name).toBe('assertion 0');
+        expect(expectToBeEqualToAsserter.valid).toBeTruthy();
+    });
+
+    it('should compare equal objects reordering keys', () => {
+
+        const assertion: Assertion = {
+            name: 'assertion 0',
+            expect: {
+                deep: {
+                    nested: true, array: [4, 3, 2]
+                },
+                value: 123,
+            },
+            toBeEqualTo: {
+                value: 123,
+                deep: {
+                    nested: true, array: [4, 3, 2]
+                }
+            }
         };
 
         const literal = {
@@ -150,4 +179,5 @@ describe('ExpectToBeEqualToAsserter', () => {
         entryPoint(mainInstance);
     });
 
-});
+})
+;
