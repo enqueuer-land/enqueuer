@@ -370,6 +370,7 @@ Data to be persisted across requisitions.
 **assertions**  
 Array of assertions.
 Run `$ nqr -t` to see available ones.
+Consider looking at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml) test example.
 Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
 You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or even [write your own](https://github.com/enqueuer-land/plugin-scaffold).
 
@@ -641,8 +642,7 @@ Run `$ nqr -e [object-parser-name]` to check available ones:
     xmlContent: <<xml://path/to/xml/file.xml>>
 
 ##### asserter
-An asserter plugin provides you a nicely way to use different assertions than these built-in ones:
-Run `$ nqr -t` to get the full available list:
+An asserter plugin provides you a nicely way to use different assertions than these built-in ones.
 
     asserters: 
     -   expect: 
@@ -657,12 +657,17 @@ Run `$ nqr -t` to get the full available list:
             required:    true
             type:        string, any
             description: element
-    -   expectToBeUndefined: 
-            required:    true
-            type:        any
-            description: value expected to be undefined
-    -   ...
 
+Looking at the asserter above, we can create assertions like these:
+    
+    assertions:
+    -   expect: [`a`, 1, true]
+        not:
+        toContain: `b`
+    -   expect: [`a`, 1, true]
+        toContain: 1
+
+Run `$ nqr -t` to get the full available list.
 Consider looking at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml) test example.
 ##### report formatter
 A report formatter plugin gives you the ability to export enqueuer reports the way you want.

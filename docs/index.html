@@ -642,6 +642,7 @@ Data to be persisted across requisitions.  </p>
 <p><strong>assertions</strong> <br>
 Array of assertions.
 Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to see available ones.
+Consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml">this</a> test example.
 Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
 You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>.</p>
 
@@ -957,8 +958,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e [object-parser-
 
 <h5 id="asserter" style="padding-left: 16px">8.1.3 asserter</h5>
 
-<p>An asserter plugin provides you a nicely way to use different assertions than these built-in ones:
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to get the full available list:</p>
+<p>An asserter plugin provides you a nicely way to use different assertions than these built-in ones.</p>
 
 <pre><code class="yaml">asserters: 
 -   expect: 
@@ -973,14 +973,20 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to get t
         required:    true
         type:        string, any
         description: element
--   expectToBeUndefined: 
-        required:    true
-        type:        any
-        description: value expected to be undefined
--   ...
 </code></pre>
 
-<p>Consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml">this</a> test example.</p>
+<p>Looking at the asserter above, we can create assertions like these:</p>
+
+<pre><code class="yaml">assertions:
+-   expect: [`a`, 1, true]
+    not:
+    toContain: `b`
+-   expect: [`a`, 1, true]
+    toContain: 1
+</code></pre>
+
+<p>Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to get the full available list.
+Consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml">this</a> test example.</p>
 
 <h5 id="report_formatter" style="padding-left: 16px">8.1.4 report formatter</h5>
 
