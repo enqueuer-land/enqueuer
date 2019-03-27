@@ -1,13 +1,14 @@
 import {Assertion} from '../models/events/assertion';
 import {MainInstance} from '../plugins/main-instance';
 import {entryPoint, ExpectToBeFalsyAsserter} from './expect-to-be-falsy-asserter';
+import {AssertionTemplate} from '../plugins/asserter-manager';
 
 describe('ExpectToBeFalsyAsserter', () => {
     it('should be falsy', () => {
 
         const assertion: Assertion = {
             name: 'assertion 0',
-            expectToBeFalsy: true,
+            expectToBeFalsy: false,
         };
 
         const literal = {
@@ -34,16 +35,19 @@ describe('ExpectToBeFalsyAsserter', () => {
         const test = new ExpectToBeFalsyAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expecting 'undefined' to be false");
+        expect(test.description).toBe("Expecting 'body.expected' to be false");
     });
 
     it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
-                addAsserter: (templateAssertion: object, createFunction: Function) => {
+                addAsserter: (templateAssertion: AssertionTemplate, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expectToBeFalsy': 'value expected to be falsy'
+                        expectToBeFalsy: {
+                            'description':
+                                'value expected to be false'
+                        }
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeFalsyAsserter);
                     done();

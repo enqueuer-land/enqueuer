@@ -897,7 +897,7 @@ Albeit you don't have to share the one you created, we encourage you to do so. T
 <h5 id="protocol" style="padding-left: 16px">8.1.1 protocol</h5>
 
 <p>A protocol plugin enables you to use a different publisher/subscription types. 
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to check available ones:</p>
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to get the full available list:</p>
 
 <pre><code class="yaml">publishers: 
 -   name:                  custom
@@ -906,9 +906,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -p [protocol-name]
     messageReceivedParams: statusCode, statusMessage, body
 -   name:                  stdout
 -   name:                  tcp
--   name:                  uds
--   name:                  ssl
--   name:                  udp
+-   ...
 subscriptions: 
 -   name:                  custom
 -   name:                  file
@@ -918,12 +916,7 @@ subscriptions:
 -   name:                  stdin
 -   name:                  tcp
     messageReceivedParams: payload, stream
--   name:                  uds
-    messageReceivedParams: payload, stream, path
--   name:                  ssl
-    messageReceivedParams: payload, stream
--   name:                  udp
-    messageReceivedParams: payload, remoteInfo
+-   ...
 </code></pre>
 
 <p>Each one listed above has a respective example in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples">the examples folder</a>.
@@ -965,26 +958,29 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e [object-parser-
 <h5 id="asserter" style="padding-left: 16px">8.1.3 asserter</h5>
 
 <p>An asserter plugin provides you a nicely way to use different assertions than these built-in ones:
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to list available ones:</p>
+Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to get the full available list:</p>
 
 <pre><code class="yaml">asserters: 
--   expectToBeTruthy:           value expected to be true
--   expectToBeFalsy:            value expected to be falsy
--   expectToBeDefined:          stuff to be defined
--   expectToBeUndefined:        value expected to be undefined
--   expect:                     actual value (string | array)
-    toContain:                  element (char | object)
--   expect:                     actual value
-    toBeLessThanOrEqualTo:      expected value
--   expect:                     actual value
-    toBeLessThan:               expected value
--   expect:                     actual value
-    toBeGreaterThanOrEqualTo:   expected value
--   expect:                     actual value
-    toBeGreaterThan:            expected value
--   expect:                     actual value
-    toBeEqualTo:                expected value
+-   expect: 
+        required:    true
+        type:        string, array
+        description: actual value
+    not: 
+        required:    false
+        type:        null
+        description: negates
+    toContain: 
+        required:    true
+        type:        string, any
+        description: element
+-   expectToBeUndefined: 
+        required:    true
+        type:        any
+        description: value expected to be undefined
+-   ...
 </code></pre>
+
+<p>Consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml">this</a> test example.</p>
 
 <h5 id="report_formatter" style="padding-left: 16px">8.1.4 report formatter</h5>
 

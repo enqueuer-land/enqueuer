@@ -14,14 +14,16 @@ export class ExpectToBeEqualToAsserter implements Asserter {
             const stringifiedExpected = JSON.stringify(expected, null, 2);
             return {
                 name,
-                valid: stringifiedActual == stringifiedExpected,
-                description: `Expected '${literal.expect}' to be equal to '${stringifiedExpected}'. Received '${stringifiedActual}'`
+                valid: assertion.not === undefined ? stringifiedActual == stringifiedExpected : stringifiedActual != stringifiedExpected,
+                description: `Expected '${literal.expect}'${assertion.not === undefined ?
+                    '' : ' not'} to be equal to '${expected}'. Received '${actual}'`
             };
         } else {
             return {
                 name,
-                valid: actual == expected,
-                description: `Expected '${literal.expect}' to be equal to '${expected}'. Received '${actual}'`
+                valid: assertion.not === undefined ? actual == expected : actual != expected,
+                description: `Expected '${literal.expect}'${assertion.not === undefined ?
+                    '' : ' not'} to be equal to '${expected}'. Received '${actual}'`
             };
         }
     }
@@ -29,6 +31,18 @@ export class ExpectToBeEqualToAsserter implements Asserter {
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        {expect: 'actual value', toBeEqualTo: 'expected value'},
+        {
+            expect: {
+                type: 'number',
+                description: 'actual value'
+            }, not: {
+                required: false,
+                description: 'negates',
+                type: 'null'
+            }, toBeEqualTo: {
+                type: 'number',
+                description: 'expected value'
+            }
+        },
         () => new ExpectToBeEqualToAsserter());
 }

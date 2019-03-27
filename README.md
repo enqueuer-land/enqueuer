@@ -587,7 +587,7 @@ So far, you're able to extend enqueuer default behavior in four ways. Using a pr
 
 ##### protocol
 A protocol plugin enables you to use a different publisher/subscription types. 
-Run `$ nqr -p [protocol-name]` to check available ones:
+Run `$ nqr -p [protocol-name]` to get the full available list:
 
     publishers: 
     -   name:                  custom
@@ -596,9 +596,7 @@ Run `$ nqr -p [protocol-name]` to check available ones:
         messageReceivedParams: statusCode, statusMessage, body
     -   name:                  stdout
     -   name:                  tcp
-    -   name:                  uds
-    -   name:                  ssl
-    -   name:                  udp
+    -   ...
     subscriptions: 
     -   name:                  custom
     -   name:                  file
@@ -608,12 +606,7 @@ Run `$ nqr -p [protocol-name]` to check available ones:
     -   name:                  stdin
     -   name:                  tcp
         messageReceivedParams: payload, stream
-    -   name:                  uds
-        messageReceivedParams: payload, stream, path
-    -   name:                  ssl
-        messageReceivedParams: payload, stream
-    -   name:                  udp
-        messageReceivedParams: payload, remoteInfo
+    -   ...
 
 Each one listed above has a respective example in [the examples folder](https://github.com/enqueuer-land/enqueuer/blob/master/examples).
 [This one](https://github.com/enqueuer-land/enqueuer-plugin-amqp), for instance, provides support for amqp protocol, so you can create this publisher and subscription:
@@ -649,26 +642,28 @@ Run `$ nqr -e [object-parser-name]` to check available ones:
 
 ##### asserter
 An asserter plugin provides you a nicely way to use different assertions than these built-in ones:
-Run `$ nqr -t` to list available ones:
+Run `$ nqr -t` to get the full available list:
 
     asserters: 
-    -   expectToBeTruthy:           value expected to be true
-    -   expectToBeFalsy:            value expected to be falsy
-    -   expectToBeDefined:          stuff to be defined
-    -   expectToBeUndefined:        value expected to be undefined
-    -   expect:                     actual value (string | array)
-        toContain:                  element (char | object)
-    -   expect:                     actual value
-        toBeLessThanOrEqualTo:      expected value
-    -   expect:                     actual value
-        toBeLessThan:               expected value
-    -   expect:                     actual value
-        toBeGreaterThanOrEqualTo:   expected value
-    -   expect:                     actual value
-        toBeGreaterThan:            expected value
-    -   expect:                     actual value
-        toBeEqualTo:                expected value
+    -   expect: 
+            required:    true
+            type:        string, array
+            description: actual value
+        not: 
+            required:    false
+            type:        null
+            description: negates
+        toContain: 
+            required:    true
+            type:        string, any
+            description: element
+    -   expectToBeUndefined: 
+            required:    true
+            type:        any
+            description: value expected to be undefined
+    -   ...
 
+Consider looking at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml) test example.
 ##### report formatter
 A report formatter plugin gives you the ability to export enqueuer reports the way you want.
 Run `$ nqr -f [formatter-name]` to list available report formatters:

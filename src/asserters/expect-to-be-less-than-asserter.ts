@@ -11,14 +11,27 @@ export class ExpectToBeLessThanAsserter implements Asserter {
 
         return {
             name,
-            valid: actual < expected,
-            description: `Expected '${literal.expect}' to be less than '${expected}'. Received '${actual}'`
+            valid: assertion.not === undefined ? actual < expected : actual >= expected,
+            description: `Expected '${literal.expect}'${assertion.not !== undefined ?
+                ' not' : ''} to be less than '${expected}'. Received '${actual}'`
         };
     }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        {expect: 'actual value', toBeLessThan: 'expected value'},
+        {
+            expect: {
+                type: 'number',
+                description: 'actual value'
+            }, not: {
+                required: false,
+                description: 'negates',
+                type: 'null'
+            }, toBeLessThan: {
+                type: 'number',
+                description: 'expected value'
+            }
+        },
         () => new ExpectToBeLessThanAsserter());
 }

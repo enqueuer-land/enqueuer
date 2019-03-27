@@ -27,6 +27,27 @@ describe('ExpectToBeEqualToAsserter', () => {
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 2,
+            not: null,
+            toBeEqualTo: 0,
+        };
+
+        const literal = {
+            name: 'body.name',
+            expect: 'body.actual',
+            toBeEqualTo: 'body.expected',
+        };
+
+        const expectToBeEqualToAsserter = new ExpectToBeEqualToAsserter().assert(assertion, literal);
+        expect(expectToBeEqualToAsserter.name).toBe('assertion 0');
+        expect(expectToBeEqualToAsserter.valid).toBeTruthy();
+        expect(expectToBeEqualToAsserter.description).toBe("Expected 'body.actual' not to be equal to '0'. Received '2'");
+    });
+
+    it('should compare equal primitives fail', () => {
+
+        const assertion: Assertion = {
+            name: 'assertion 0',
+            expect: 2,
             toBeEqualTo: 3,
         };
 
@@ -66,6 +87,27 @@ describe('ExpectToBeEqualToAsserter', () => {
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: {value: 123, deep: {nested: true, array: [4, 3, 2]}},
+            not: null,
+            toBeEqualTo: {value: 123, deep: {nested: true}},
+        };
+
+        const literal = {
+            name: 'body.name',
+            expect: 'body.actual',
+            toBeEqualTo: 'body.expected',
+        };
+
+        const expectToBeEqualToAsserter = new ExpectToBeEqualToAsserter().assert(assertion, literal);
+        expect(expectToBeEqualToAsserter.name).toBe('assertion 0');
+        expect(expectToBeEqualToAsserter.valid).toBeTruthy();
+        expect(expectToBeEqualToAsserter.description).toBeDefined();
+    });
+
+    it('should compare equal objects fail', () => {
+
+        const assertion: Assertion = {
+            name: 'assertion 0',
+            expect: {value: 123, deep: {nested: true, array: [4, 3, 2]}},
             toBeEqualTo: {value: 123, deep: {nested: false, array: [4, 3, 2]}},
         };
 
@@ -87,8 +129,18 @@ describe('ExpectToBeEqualToAsserter', () => {
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expect': 'actual value',
-                        'toBeEqualTo': 'expected value'
+                        'expect': {
+                            'description': 'actual value',
+                            'type': 'number'
+                        },
+                        'toBeEqualTo': {
+                            'description': 'expected value',
+                            'type': 'number'
+                        }, not: {
+                            required: false,
+                            description: 'negates',
+                            type: 'null'
+                        }
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeEqualToAsserter);
                     done();

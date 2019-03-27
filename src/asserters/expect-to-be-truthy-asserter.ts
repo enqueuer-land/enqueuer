@@ -10,14 +10,14 @@ export class ExpectToBeTruthyAsserter implements Asserter {
 
         return {
             name,
-            valid: !!expected,
-            description: `Expecting '${literal.expect}' to be true`
+            valid: expected === true,
+            description: `Expecting '${literal.expectToBeTruthy}' to be true`
         };
     }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        {expectToBeTruthy: 'value expected to be true'},
+        {expectToBeTruthy: {description: 'value expected to be true'}},
         () => new ExpectToBeTruthyAsserter());
 }

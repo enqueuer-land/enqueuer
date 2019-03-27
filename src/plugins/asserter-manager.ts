@@ -5,8 +5,24 @@ import {NullAsserter} from '../asserters/null-asserter';
 import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 
+type AssertionFieldTypes = ('string' | 'number' | 'boolean' | 'array' | 'null' | 'any');
+type AssertionField = {
+    required?: boolean;
+    type?: AssertionFieldTypes[] | AssertionFieldTypes;
+    description?: string;
+};
+
+const defaultAssertionField: AssertionField = {
+    required: true,
+    type: 'any'
+};
+
+export interface AssertionTemplate {
+    [assertionField: string]: AssertionField;
+}
+
 interface AddedAsserter {
-    templateAssertion: object;
+    template: AssertionTemplate;
     createFunction: () => Asserter;
 }
 
@@ -16,17 +32,20 @@ export class AsserterManager {
     public createAsserter(assertion: Assertion): Asserter {
         const matching = this.addedAsserters
             .filter((added: AddedAsserter) => Object
-                .keys(added.templateAssertion)
+                .keys(added.template)
+                .filter(key => added.template[key].required || added.template[key].required === undefined)
                 .every(requiredKey => assertion[requiredKey] !== undefined));
         if (matching.length > 0) {
             return matching[0].createFunction();
         }
-        Logger.error(`No asserter was found with '${assertion}', using default one`);
+        Logger.error(`No asserter was found with '${JSON.stringify(assertion, null, 2)}', using default one`);
         return new NullAsserter();
     }
 
-    public addAsserter(templateAssertion: object, createFunction: () => Asserter): void {
-        this.addedAsserters.unshift({templateAssertion, createFunction});
+    public addAsserter(templateAssertion: AssertionTemplate, createFunction: () => Asserter): void {
+        Object.keys(templateAssertion)
+            .forEach(key => templateAssertion[key] = Object.assign({}, defaultAssertionField, templateAssertion[key]));
+        this.addedAsserters.unshift({template: templateAssertion, createFunction});
     }
 
     public describeAsserters(field: string | true): boolean {
@@ -34,10 +53,10 @@ export class AsserterManager {
         if (typeof field === 'string') {
             matching = this.addedAsserters
                 .filter((added: AddedAsserter) => Object
-                    .keys(added.templateAssertion)
+                    .keys(added.template)
                     .some(key => key.toUpperCase().indexOf(field.toUpperCase()) !== -1));
         }
-        console.log(prettyjson.render({asserters: matching.map(added => added.templateAssertion).sort()}, getPrettyJsonConfig()));
+        console.log(prettyjson.render({asserters: matching.map(added => added.template).sort()}, getPrettyJsonConfig()));
         return matching.length > 0;
     }
 }

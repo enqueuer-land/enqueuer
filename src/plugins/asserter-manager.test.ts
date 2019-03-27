@@ -12,7 +12,27 @@ prettyjson.render.mockImplementation(render);
 describe('AsserterManager', () => {
     it('should create proper asserter', () => {
         const asserterManager = new AsserterManager();
-        asserterManager.addAsserter({equals: 'expected value'},
+        asserterManager.addAsserter({equals: {description: 'some', type: 'string'}},
+            () => new ExpectToBeEqualToAsserter());
+
+        const asserter = asserterManager.createAsserter({name: 'any', equals: true});
+
+        expect(asserter).toBeInstanceOf(ExpectToBeEqualToAsserter);
+    });
+
+    it('should create proper asserter ignoring not required ones', () => {
+        const asserterManager = new AsserterManager();
+        asserterManager.addAsserter({
+                equals: {
+                    description: 'some',
+                    type: 'string'
+                },
+                not: {
+                    required: false,
+                    description: 'some',
+                    type: 'null'
+                }
+            },
             () => new ExpectToBeEqualToAsserter());
 
         const asserter = asserterManager.createAsserter({name: 'any', equals: true});
@@ -22,7 +42,7 @@ describe('AsserterManager', () => {
 
     it('should create Null asserter', () => {
         const asserterManager = new AsserterManager();
-        asserterManager.addAsserter({equals: 'expected value'},
+        asserterManager.addAsserter({equals: {description: 'some', type: 'string'}},
             () => new ExpectToBeEqualToAsserter());
 
         const asserter = asserterManager.createAsserter({name: 'any'});
@@ -34,13 +54,13 @@ describe('AsserterManager', () => {
         const asserterManager = new AsserterManager();
 
         asserterManager
-            .addAsserter({expect: 'actual value', toBeEqualTo: 'expected value'},
+            .addAsserter({toBeEqualTo: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
         asserterManager
-            .addAsserter({expect: 'actual value', toBeGreaterThan: 'expected value'},
+            .addAsserter({toBeGreaterThan: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
         asserterManager
-            .addAsserter({expect: 'actual value', toBeLessThan: 'expected value'},
+            .addAsserter({toBeLessThan: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
 
         const status = asserterManager.describeAsserters('than');
@@ -48,14 +68,19 @@ describe('AsserterManager', () => {
         expect(status).toBeTruthy();
         expect(render).toHaveBeenCalledWith(
             {
-                'asserters': [
-                    {
-                        'expect': 'actual value', 'toBeLessThan': 'expected value'
-                    },
-                    {
-                        'expect': 'actual value',
-                        'toBeGreaterThan': 'expected value'
-                    }]
+                'asserters': [{
+                    'toBeLessThan': {
+                        'description': 'some',
+                        'required': true,
+                        'type': 'string'
+                    }
+                }, {
+                    'toBeGreaterThan': {
+                        'description': 'some',
+                        'required': true,
+                        'type': 'string'
+                    }
+                }]
             }, expect.anything());
     });
 
@@ -63,13 +88,13 @@ describe('AsserterManager', () => {
         const asserterManager = new AsserterManager();
 
         asserterManager
-            .addAsserter({expect: 'actual value', toBeEqualTo: 'expected value'},
+            .addAsserter({toBeEqualTo: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
         asserterManager
-            .addAsserter({expect: 'actual value', toBeGreaterThan: 'expected value'},
+            .addAsserter({toBeGreaterThan: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
         asserterManager
-            .addAsserter({expect: 'actual value', toBeLessThan: 'expected value'},
+            .addAsserter({toBeLessThan: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
 
         const status = asserterManager.describeAsserters('does not match');
@@ -82,31 +107,39 @@ describe('AsserterManager', () => {
         const asserterManager = new AsserterManager();
 
         asserterManager
-            .addAsserter({expect: 'actual value', toBeEqualTo: 'expected value'},
+            .addAsserter({toBeEqualTo: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
         asserterManager
-            .addAsserter({expect: 'actual value', toBeGreaterThan: 'expected value'},
+            .addAsserter({toBeGreaterThan: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
         asserterManager
-            .addAsserter({expect: 'actual value', toBeLessThan: 'expected value'},
+            .addAsserter({toBeLessThan: {description: 'some'}},
                 () => new ExpectToBeEqualToAsserter());
 
         const status = asserterManager.describeAsserters(true);
 
         expect(status).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
-            'asserters': [
-                {
-                    'expect': 'actual value', 'toBeLessThan': 'expected value'
-                },
-                {
-                    'expect': 'actual value', 'toBeGreaterThan': 'expected value'
-                },
-                {
-                    'expect': 'actual value', 'toBeEqualTo': 'expected value'
-                }]
+            'asserters': [{
+                'toBeLessThan': {
+                    'description': 'some',
+                    'required': true,
+                    'type': 'any'
+                }
+            }, {
+                'toBeGreaterThan': {
+                    'description': 'some',
+                    'required': true,
+                    'type': 'string'
+                }
+            }, {
+                'toBeEqualTo': {
+                    'description': 'some',
+                    'required': true,
+                    'type': 'string'
+                }
+            }]
         }, expect.anything());
-    })
-    ;
+    });
 
 });

@@ -2,7 +2,7 @@ import {Assertion} from '../models/events/assertion';
 import {MainInstance} from '../plugins/main-instance';
 import {entryPoint, ExpectToBeUndefinedAsserter} from './expect-to-be-undefined-asserter';
 
-describe('ExpectToBeUnundefinedAsserter', () => {
+describe('ExpectToBeUndefinedAsserter', () => {
     it('should be undefined', () => {
 
         const assertion: Assertion = {
@@ -34,7 +34,7 @@ describe('ExpectToBeUnundefinedAsserter', () => {
         const test = new ExpectToBeUndefinedAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expecting 'undefined' to be undefined");
+        expect(test.description).toBe("Expecting 'body.expected' to be undefined");
     });
 
     it('Should export an entry point', done => {
@@ -43,7 +43,9 @@ describe('ExpectToBeUnundefinedAsserter', () => {
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expectToBeUndefined': 'value expected to be undefined',
+                        'expectToBeUndefined': {
+                            description: 'value expected to be undefined'
+                        },
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeUndefinedAsserter);
                     done();

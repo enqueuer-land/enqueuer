@@ -27,6 +27,7 @@ describe('ExpectToContainAsserter', () => {
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 'enqueuer',
+            not: null,
             toContain: 'y',
         };
 
@@ -37,9 +38,8 @@ describe('ExpectToContainAsserter', () => {
         };
 
         const test = new ExpectToContainAsserter().assert(assertion, literal);
-        expect(test.name).toBe('assertion 0');
-        expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expecting 'body.actual' (enqueuer) to contain 'y'");
+        expect(test.valid).toBeTruthy();
+        expect(test.description).toBe("Expecting 'enqueuer' (body.actual) not to contain 'y'");
     });
 
     it('should handle contain with different types', () => {
@@ -81,7 +81,28 @@ describe('ExpectToContainAsserter', () => {
         expect(test.valid).toBeTruthy();
     });
 
-    it('should not contain char in string', () => {
+    it('should not contain element in array', () => {
+
+        const assertion: Assertion = {
+            name: 'assertion 0',
+            expect: [0, 'enqueuer', true],
+            not: 'null',
+            toContain: 'y',
+        };
+
+        const literal = {
+            name: 'body.name',
+            expect: 'body.actual',
+            toContain: 'body.expected',
+        };
+
+        const test = new ExpectToContainAsserter().assert(assertion, literal);
+        expect(test.name).toBe('assertion 0');
+        expect(test.valid).toBeTruthy();
+        expect(test.description).toBe("Expecting '0,enqueuer,true' (body.actual) not to contain 'y'");
+    });
+
+    it('should contain element in string fail', () => {
 
         const assertion: Assertion = {
             name: 'assertion 0',
@@ -98,7 +119,7 @@ describe('ExpectToContainAsserter', () => {
         const test = new ExpectToContainAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expecting 'body.actual' (0,enqueuer,true) to contain 'false'");
+        expect(test.description).toBe("Expecting '0,enqueuer,true' (body.actual) to contain 'false'");
     });
 
     it('should handle contain with type being not string nor array', () => {
@@ -127,8 +148,25 @@ describe('ExpectToContainAsserter', () => {
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expect': 'actual value (string | array)',
-                        'toContain': 'element (char | object)'
+                        'expect': {
+                            'description': 'actual value',
+                            'type': [
+                                'string',
+                                'array'
+                            ]
+                        },
+                        'toContain': {
+                            'description': 'element',
+                            'type': [
+                                'string',
+                                'any'
+                            ]
+                        }, not: {
+                            required: false,
+                            description: 'negates',
+                            type: 'null'
+                        }
+
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToContainAsserter);
                     done();

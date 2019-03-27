@@ -8,13 +8,14 @@ export class ExpectToContainAsserter implements Asserter {
         const name: string = assertion.name;
         const actual = assertion.expect;
         const expected = assertion.toContain;
+        const not = assertion.not !== undefined;
 
         if (typeof (actual) === 'string') {
             if (typeof (expected) === 'string') {
                 return {
                     name,
-                    valid: actual.indexOf(expected) != -1,
-                    description: `Expecting '${literal.expect}' (${actual}) to contain '${expected}'`
+                    valid: not ? actual.indexOf(expected) === -1 : actual.indexOf(expected) !== -1,
+                    description: `Expecting '${actual}' (${literal.expect})${not ? ' not' : ''} to contain '${expected}'`
                 };
             } else {
                 return {
@@ -26,8 +27,8 @@ export class ExpectToContainAsserter implements Asserter {
         } else if (Array.isArray((actual))) {
             return {
                 name,
-                valid: actual.includes(expected),
-                description: `Expecting '${literal.expect}' (${actual}) to contain '${expected}'`
+                valid: not ? !actual.includes(expected) : actual.includes(expected),
+                description: `Expecting '${actual}' (${literal.expect})${not ? ' not' : ''} to contain '${expected}'`
             };
         } else {
             return {
@@ -41,6 +42,20 @@ export class ExpectToContainAsserter implements Asserter {
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        {expect: 'actual value (string | array)', toContain: 'element (char | object)'},
+        {
+            expect: {
+                description: 'actual value',
+                type: ['string', 'array']
+            },
+            not: {
+                required: false,
+                description: 'negates',
+                type: 'null'
+            },
+            toContain: {
+                description: 'element',
+                type: ['string', 'any']
+            },
+        },
         () => new ExpectToContainAsserter());
 }

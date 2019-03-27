@@ -34,7 +34,7 @@ describe('ExpectToBeDefinedAsserter', () => {
         const test = new ExpectToBeDefinedAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expecting 'undefined' to be defined");
+        expect(test.description).toBe("Expecting 'body.expected' to be defined");
     });
 
     it('Should export an entry point', done => {
@@ -42,7 +42,11 @@ describe('ExpectToBeDefinedAsserter', () => {
             // @ts-ignore
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
-                    expect(templateAssertion).toEqual({'expectToBeDefined': 'stuff to be defined'});
+                    expect(templateAssertion).toEqual({
+                        'expectToBeDefined': {
+                            'description': 'stuff to be defined'
+                        }
+                    });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeDefinedAsserter);
                     done();
                 }

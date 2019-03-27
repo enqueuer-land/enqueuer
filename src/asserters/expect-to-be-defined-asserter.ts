@@ -11,14 +11,14 @@ export class ExpectToBeDefinedAsserter implements Asserter {
         return {
             name,
             valid: expected !== undefined,
-            description: `Expecting '${literal.expect}' to be defined`
+            description: `Expecting '${literal.expectToBeDefined}' to be defined`
         };
     }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        {expectToBeDefined: 'stuff to be defined'},
+        {expectToBeDefined: {description: 'stuff to be defined'}},
         () => new ExpectToBeDefinedAsserter()
     );
 }

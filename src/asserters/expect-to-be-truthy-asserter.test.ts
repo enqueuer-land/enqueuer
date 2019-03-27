@@ -34,7 +34,7 @@ describe('ExpectToBeTruthyAsserter', () => {
         const test = new ExpectToBeTruthyAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expecting 'undefined' to be true");
+        expect(test.description).toBe("Expecting 'body.expected' to be true");
     });
 
     it('Should export an entry point', done => {
@@ -43,7 +43,10 @@ describe('ExpectToBeTruthyAsserter', () => {
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expectToBeTruthy': 'value expected to be true',
+                        'expectToBeTruthy': {
+                            'description':
+                                'value expected to be true'
+                        }
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeTruthyAsserter);
                     done();

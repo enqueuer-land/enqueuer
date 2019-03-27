@@ -11,13 +11,13 @@ export class ExpectToBeUndefinedAsserter implements Asserter {
         return {
             name,
             valid: expected === undefined,
-            description: `Expecting '${literal.expect}' to be undefined`
+            description: `Expecting '${literal.expectToBeUndefined}' to be undefined`
         };
     }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
     mainInstance.asserterManager.addAsserter(
-        {expectToBeUndefined: 'value expected to be undefined'},
+        {expectToBeUndefined: {description: 'value expected to be undefined'}},
         () => new ExpectToBeUndefinedAsserter());
 }
