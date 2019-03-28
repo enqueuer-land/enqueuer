@@ -84,6 +84,7 @@ And then, run this other one:
 I told you it was simple.
 Now go nuts!
 It's all yours. Have fun.
+If you want more examples about `http`, consider looking at [this test](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml). 
 Check [this out](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), you'll find countless examples. 
 Certainly one is what you need.    
     
@@ -683,8 +684,8 @@ Consider looking at the example of [configuration file](https://github.com/enque
 
 
 #### plugin use
-In order to enqueuer get awareness that you want to you a plugin, you have to tell it, right?
-You can tell enqueuer to use a plugin in three manners. Using it as a command line argument, through the configuration file or letting enqueuer finding it in it's home directory folder.
+In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
+You can tell enqueuer to use a plugin in three manners: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.
 
 ##### command line
 Tell enqueuer to use your plugin through command line this way `$ nqr -l <plugin-folder> -l <another-plugin-folder>`.
@@ -700,7 +701,8 @@ Tell enqueuer to use your plugin through configuration file this way:
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
 
 ##### implicitly
-When enqueuer runs, it looks for modules in `.nqr` folder in your home directory. Every enqueuer compatible module get implicitly loaded.
+When enqueuer runs, it looks for modules in `.nqr` folder in your home, a.k.a. ~/ folder, in linux distributions, directory.
+Every enqueuer compatible module get implicitly loaded.
 In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
 
 ----

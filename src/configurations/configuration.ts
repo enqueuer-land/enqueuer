@@ -19,8 +19,7 @@ export class Configuration {
     private commandLineConfiguration: CommandLineConfiguration;
 
     private constructor() {
-        const commandLineArgs = process.env.NODE_ENV === 'TEST' ? ['path', 'enqueuer'] : process.argv;
-        this.commandLineConfiguration = new CommandLineConfiguration(commandLineArgs);
+        this.commandLineConfiguration = new CommandLineConfiguration(process.argv);
         const fileName = this.commandLineConfiguration.getConfigFileName();
         this.adjustFromFile(fileName);
         this.adjustFromCommandLine();

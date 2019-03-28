@@ -323,6 +323,7 @@ subscriptions:
 <p>I told you it was simple.
 Now go nuts!
 It's all yours. Have fun.
+If you want more examples about <code class="yaml">http</code>, consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml">this test</a>. 
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
 Certainly one is what you need.    </p>
 
@@ -1004,8 +1005,8 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name
 
 <h4 id="plugin_use" style="padding-left: 8px">8.2 plugin use</h4>
 
-<p>In order to enqueuer get awareness that you want to you a plugin, you have to tell it, right?
-You can tell enqueuer to use a plugin in three manners. Using it as a command line argument, through the configuration file or letting enqueuer finding it in it's home directory folder.</p>
+<p>In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
+You can tell enqueuer to use a plugin in three manners: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.</p>
 
 <h5 id="command_line" style="padding-left: 16px">8.2.1 command line</h5>
 
@@ -1025,7 +1026,8 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 
 <h5 id="implicitly" style="padding-left: 16px">8.2.3 implicitly</h5>
 
-<p>When enqueuer runs, it looks for modules in <code class="yaml">.nqr</code> folder in your home directory. Every enqueuer compatible module get implicitly loaded.
+<p>When enqueuer runs, it looks for modules in <code class="yaml">.nqr</code> folder in your home, a.k.a. ~/ folder, in linux distributions, directory.
+Every enqueuer compatible module get implicitly loaded.
 In order to be enqueuer compatible, a module has to have an <code class="yaml">entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
 
 <hr />

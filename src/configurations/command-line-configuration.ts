@@ -1,5 +1,6 @@
 import {Command} from 'commander';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import {Logger} from '../loggers/logger';
 
 const packageJson = require('../../package.json');
 
@@ -33,7 +34,13 @@ export class CommandLineConfiguration {
             .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
                 (val: string) => this.testFilesIgnoringOthers.push(val), []);
         commander.on('--help', () => this.helpDescription());
-        this.parsedCommandLine = commander.parse(commandLineArguments);
+        try {
+            this.parsedCommandLine = commander.parse(commandLineArguments || ['path', 'enqueuer']);
+        } catch (err) {
+            Logger.error(`Error parsing command line: ${err}`);
+            this.parsedCommandLine = {};
+        }
+
     }
 
     public verifyPrematureActions(): void {

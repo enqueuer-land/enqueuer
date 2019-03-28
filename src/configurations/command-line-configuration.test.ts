@@ -46,6 +46,11 @@ describe('CommandLineConfiguration', () => {
         process.exit = exitMock;
     });
 
+    it('should not throw', () => {
+        // @ts-ignore
+        expect(() => new CommandLineConfiguration(undefined)).not.toThrow();
+    });
+
     it('verbosity -b', () => {
         const logLevel = 'info';
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-b', logLevel]);
@@ -250,11 +255,6 @@ describe('CommandLineConfiguration', () => {
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-A', 'file', '--add-file-and-ignore-others', 'file2']);
 
         expect(commandLineConfiguration.getTestFilesIgnoringOthers()).toEqual(['file', 'file2']);
-    });
-
-    it('handle null process.argv', () => {
-        // @ts-ignore
-        expect(() => new CommandLineConfiguration()).toThrow();
     });
 
     it('getStore -s', () => {
