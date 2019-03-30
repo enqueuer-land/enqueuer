@@ -15,9 +15,7 @@ export class RequisitionImporter {
                 Logger.error(message);
                 throw message;
             }
-            imported.name = imported.name || 'Imported Requisition';
-
-            const merged = Object.assign({}, imported, requisition);
+            const merged = Object.assign({}, requisition, imported);
             return new RequisitionAdopter(merged).getRequisition();
         }
         return requisition;

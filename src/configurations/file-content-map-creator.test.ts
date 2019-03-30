@@ -1,6 +1,6 @@
 import {FileContentMapCreator} from './file-content-map-creator';
-import * as fs from 'fs';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import * as fs from 'fs';
 
 jest.mock('../plugins/dynamic-modules-manager');
 jest.mock('fs');

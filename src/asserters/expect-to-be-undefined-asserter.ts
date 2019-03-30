@@ -11,7 +11,7 @@ export class ExpectToBeUndefinedAsserter implements Asserter {
         return {
             name,
             valid: expected === undefined,
-            description: `Expecting '${literal.expectToBeUndefined}' to be undefined`
+            description: `Expecting '${literal.expectToBeUndefined}' to be undefined. Received: ${expected}`
         };
     }
 }

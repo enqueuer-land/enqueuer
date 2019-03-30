@@ -5,14 +5,14 @@ export class ComponentParentBackupper {
 
     public removeParents(requisition: RequisitionModel): void {
         this.parentMap[requisition.id] = requisition.parent;
-        requisition.parent = undefined;
+        delete requisition.parent;
         (requisition.requisitions || [])
             .map(child => this.removeParents(child));
         (requisition.publishers || [])
             .concat(requisition.subscriptions || [])
             .map(leaf => {
                 this.parentMap[leaf.id] = leaf.parent;
-                leaf.parent = undefined;
+                delete leaf.parent;
             });
     }
 

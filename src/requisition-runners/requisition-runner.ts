@@ -88,11 +88,10 @@ export class RequisitionRunner {
         Logger.debug(`Evaluating variables of requisition '${this.requisition.name}'`);
         const componentParentBackupper = new ComponentParentBackupper();
         componentParentBackupper.removeParents(this.requisition);
-        const decycled: input.RequisitionModel = new ObjectDecycler().decycle(this.requisition) as input.RequisitionModel;
-        const fileMapCreator = new FileContentMapCreator(decycled);
+        const fileMapCreator = new FileContentMapCreator(this.requisition);
         const fileReplaced = new JsonPlaceholderReplacer()
             .addVariableMap(fileMapCreator.getMap())
-            .replace(decycled) as input.RequisitionModel;
+            .replace(this.requisition);
         this.requisition = new JsonPlaceholderReplacer()
             .addVariableMap(Store.getData())
             .replace(fileReplaced) as input.RequisitionModel;

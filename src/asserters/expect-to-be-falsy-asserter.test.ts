@@ -35,7 +35,7 @@ describe('ExpectToBeFalsyAsserter', () => {
         const test = new ExpectToBeFalsyAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expecting 'body.expected' to be false");
+        expect(test.description).toBe("Expecting 'body.expected' to be false. Received: undefined");
     });
 
     it('Should export an entry point', done => {

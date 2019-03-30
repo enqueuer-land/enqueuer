@@ -17,20 +17,30 @@ describe('RequisitionImporter', () => {
         expect(() => new RequisitionImporter().import(requisition)).toThrow();
     });
 
-    it('should merge requisitions', () => {
+    it('should merge requisitions (imported has higher priority)', () => {
+        const imported = {
+            onInit: {
+                script: 'imported'
+            },
+            name: 'imported',
+            importedValue: 1234,
+        };
         const original = {
-            import: {
-                onInit: {},
-                name: 'imported',
-                importedValue: 1234,
-            }, name: 'original'
+            import: imported,
+            onInit: {
+                script: 'original'
+            },
+            name: 'original',
+            iterations: 1
         };
 
         // @ts-ignore
-        const imported = new RequisitionImporter().import(original);
+        const merged = new RequisitionImporter().import(original);
 
-        expect(imported.name).toBe(original.name);
-        expect(imported.import).toBe(original.import);
-        expect(imported.importedValue).toBe(1234);
+        expect(merged.name).toBe(imported.name);
+        expect(merged.import).toBeDefined();
+        expect(merged.onInit!.script).toBe(imported.onInit.script);
+        expect(merged.importedValue).toBe(1234);
+        expect(merged.iterations).toBe(1);
     });
 });

@@ -43,6 +43,7 @@ describe('RequisitionRunner', () => {
     it('Should run children requisition report collection', async () => {
         const requisition: RequisitionModel = {
             name: 'super cool',
+            // @ts-ignore
             requisitions: [{
                 name: 'child',
                 publishers: [],

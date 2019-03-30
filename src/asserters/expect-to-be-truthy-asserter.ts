@@ -11,7 +11,7 @@ export class ExpectToBeTruthyAsserter implements Asserter {
         return {
             name,
             valid: expected === true,
-            description: `Expecting '${literal.expectToBeTruthy}' to be true`
+            description: `Expecting '${literal.expectToBeTruthy}' to be true. Received: ${expected}`
         };
     }
 }

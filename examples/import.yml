@@ -4,9 +4,13 @@
         assertions:
         -   expectToBeTruthy: requisition.imported
 -   name: dynamic import
+    priority: lower
     import:
+        priority: higher
         onInit:
             script: requisition.dynamicallyImported = true;
     onFinish:
         assertions:
         -   expectToBeTruthy: requisition.dynamicallyImported
+        -   expect: requisition.priority
+            toBeEqualTo: `higher`
