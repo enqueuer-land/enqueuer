@@ -17,6 +17,7 @@ export class EnqueuerRunner {
     }
 
     public async execute(): Promise<boolean> {
+        Logger.info('Let\'s rock');
         const configuration = Configuration.getInstance();
         const requisitionFileParser = new RequisitionFilePatternParser(configuration.getFiles());
         const requisitions = requisitionFileParser.parse();

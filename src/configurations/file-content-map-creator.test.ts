@@ -27,6 +27,14 @@ describe('FileContentMapCreator', () => {
         expect(readFileSyncMock).toHaveBeenCalledWith(filename);
     });
 
+    it('Handle exceptions undefined field', () => {
+        const requisition = {value: undefined};
+
+        // @ts-ignore
+        expect(() => new FileContentMapCreator(requisition)).not.toThrow();
+
+    });
+
     it('Parse from file with right parser', () => {
         const fileContent = 'fileContent';
         const readFileSyncMock = jest.fn(() => fileContent);

@@ -22,12 +22,11 @@ export class RequisitionReporter {
         this.requisitionAttributes = requisitionAttributes;
         const onInitFunctionTests = this.executeOnInitFunction();
         if (this.requisitionAttributes.timeout === undefined) {
-            this.requisitionAttributes.timeout = RequisitionReporter.DEFAULT_TIMEOUT;
-        } else if (this.requisitionAttributes.timeout <= 0) {
-            delete this.requisitionAttributes.timeout;
+            this.timeout = RequisitionReporter.DEFAULT_TIMEOUT;
+        } else if (this.requisitionAttributes.timeout > 0) {
+            this.timeout = this.requisitionAttributes.timeout;
         }
         this.startTime = new Date();
-        this.timeout = this.requisitionAttributes.timeout;
         this.reportGenerator = new RequisitionReportGenerator(this.requisitionAttributes, this.timeout);
         this.reportGenerator.addTests(onInitFunctionTests);
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions);

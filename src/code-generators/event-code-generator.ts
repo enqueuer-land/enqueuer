@@ -37,6 +37,7 @@ export class EventCodeGenerator {
 
         dynamicFunction.addArgument(this.storeInstanceName, Store.getData());
         dynamicFunction.addArgument(this.testsInstanceName, this.tests);
+        dynamicFunction.addArgument('Logger', Logger);
 
         functionArguments.forEach(argument => {
             dynamicFunction.addArgument(argument.name, argument.value);
@@ -55,8 +56,10 @@ export class EventCodeGenerator {
         return `try {
                         ${this.script}
                     } catch (err) {
+                        const msg = \`Error executing '${this.name}.script' code: '\${err}'\`;
+                        Logger.error(msg);
                         ${this.testsInstanceName}.push({
-                                description: \`Error executing '${this.name}.script' code: '\${err}'\`,
+                                description: msg,
                                 valid: false,
                                 label: "Valid 'script snippet' code"
                             });
@@ -79,6 +82,7 @@ export class EventCodeGenerator {
             dynamicFunction.addArgument(this.storeInstanceName, Store.getData());
             dynamicFunction.addArgument(this.testsInstanceName, this.tests);
             dynamicFunction.addArgument('assertion', assertion);
+            dynamicFunction.addArgument('Logger', Logger);
 
             functionArguments.forEach(argument => {
                 dynamicFunction.addArgument(argument.name, argument.value);

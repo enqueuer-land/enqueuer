@@ -1,4 +1,3 @@
-
 export class AssertionCodeGenerator {
     private readonly testsName: string;
     private readonly assertionName: string;
@@ -18,8 +17,10 @@ export class AssertionCodeGenerator {
                 .forEach(key =>       evaluated[key] = eval(${this.assertionName}[key])   );
             ${this.testsName}.push(${this.asserterInstanceName}.assert(evaluated, ${this.assertionName}));
         } catch (err) {
+            const msg = \`Error executing assertion: '\${err}'\`;
+            Logger.error(msg);
             ${this.testsName}.push({
-                description: \`Error executing assertion: '\${err}'\`,
+                description: msg,
                 valid: false,
                 label: 'Assertion code valid'
             });

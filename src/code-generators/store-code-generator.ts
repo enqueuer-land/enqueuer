@@ -13,10 +13,12 @@ export class StoreCodeGenerator {
             code += `try {
                         ${this.storeInstanceName}['${key}'] = ${store[key]};
                     } catch (err) {
+                        const msg = \`Error executing store '${key}' code: '\${err}'\`;
+                        Logger.error(msg);
                         ${this.testsName}.push({
-                                description: \`Error executing store '${key}' code: '\${err}'\`,
+                                description: msg,
                                 valid: false,
-                                label: "Valid 'store' in event auto-generated code"
+                                label: "Valid 'store' in event code"
                             });
                     }\n`;
 

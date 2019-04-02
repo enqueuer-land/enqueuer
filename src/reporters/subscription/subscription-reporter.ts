@@ -38,14 +38,14 @@ export class SubscriptionReporter {
         };
 
         this.executeOnInitFunction(subscriptionAttributes);
-        if (subscriptionAttributes.timeout === undefined) {
-            subscriptionAttributes.timeout = SubscriptionReporter.DEFAULT_TIMEOUT;
-        } else if (subscriptionAttributes.timeout <= 0) {
-            delete subscriptionAttributes.timeout;
-        }
 
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = DynamicModulesManager.getInstance().getProtocolManager().createSubscription(subscriptionAttributes);
+        if (subscriptionAttributes.timeout === undefined) {
+            this.subscription.timeout = SubscriptionReporter.DEFAULT_TIMEOUT;
+        } else if (subscriptionAttributes.timeout <= 0) {
+            delete this.subscription.timeout;
+        }
         this.killListener = (signal: Signals) => this.handleKillSignal(signal, this.subscription.type || 'undefined');
     }
 
@@ -57,7 +57,7 @@ export class SubscriptionReporter {
 
     public startTimeout(onTimeOutCallback: Function) {
         if (this.subscription.timeout) {
-            Logger.info(`Starting subscription '${this.subscription.name}'`);
+            Logger.info(`Starting subscription '${this.subscription.name}' timeout`);
             new Timeout(() => {
                 if (!this.subscription.messageReceived) {
                     this.totalTime = new DateController();

@@ -21,7 +21,7 @@ export class FileContentMapCreator {
             const attribute = node[key];
             if (typeof attribute === 'object') {
                 this.checkChildren(attribute);
-            } else {
+            } else if (attribute !== undefined) {
                 this.findTags(JSON.stringify(attribute));
             }
         }
@@ -76,7 +76,7 @@ export class FileContentMapCreator {
             for (let i = 0; i < pairs.length; i++) {
                 const pair = pairs[i].split('=');
                 let value: any = pair[1];
-                if (value  === undefined) {
+                if (value === undefined) {
                     value = true;
                 }
                 query[pair[0]] = value;

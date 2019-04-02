@@ -15,16 +15,17 @@ export class MultiPublishersReporter {
         let errorsCounter = 0;
         if (this.publishers.length > 0) {
             Logger.info(`Publishers are publishing messages`);
+
+            await Promise.all(this.publishers.map(async publisher => {
+                try {
+                    await publisher.publish();
+                } catch (err) {
+                    ++errorsCounter;
+                    Logger.error(err);
+                }
+            }));
+            Logger.info(`Publishers have published their messages`);
         }
-        await Promise.all(this.publishers.map(async publisher => {
-            try {
-                await publisher.publish();
-            } catch (err) {
-                ++errorsCounter;
-                Logger.error(err);
-            }
-        }));
-        Logger.info(`Publishers have published their messages`);
         return errorsCounter;
     }
 

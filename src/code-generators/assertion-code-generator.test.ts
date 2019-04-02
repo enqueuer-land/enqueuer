@@ -3,7 +3,8 @@ import {AssertionCodeGenerator} from './assertion-code-generator';
 describe('AssertionCodeGenerator', () => {
 
     it('Should pass tests instance name', () => {
-        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tests', 'asserter', 'assertion');
+        const assertionCodeGenerator: AssertionCodeGenerator =
+            new AssertionCodeGenerator('tests', 'asserter', 'assertion');
         const code: string = assertionCodeGenerator.generate();
 
         expect(code).toBe('try {\n' +
@@ -13,8 +14,10 @@ describe('AssertionCodeGenerator', () => {
             '                .forEach(key =>       evaluated[key] = eval(assertion[key])   );\n' +
             '            tests.push(asserter.assert(evaluated, assertion));\n' +
             '        } catch (err) {\n' +
+            "            const msg = `Error executing assertion: '${err}'`;\n" +
+            '            Logger.error(msg);\n' +
             '            tests.push({\n' +
-            "                description: `Error executing assertion: '${err}'`,\n" +
+            '                description: msg,\n' +
             '                valid: false,\n' +
             "                label: 'Assertion code valid'\n" +
             '            });\n' +
