@@ -29,15 +29,15 @@ export class EnqueuerRunner {
                 parallel: configuration.isParallel()
             }).getRequisition();
         const parsingErrors = requisitionFileParser.getFilesErrors();
-        const enqueuerReports = await new RequisitionRunner(enqueuerRequisition, 0).run();
+        const finalReports = await new RequisitionRunner(enqueuerRequisition, 0).run();
         Logger.info('Publishing reports');
-        const publishers = new MultiTestsOutput(configuration.getOutputs());
-        await enqueuerReports.map(async report => {
-            report.valid = report.valid && report.tests.every(test => test.valid);
+        const outputs = new MultiTestsOutput(configuration.getOutputs());
+        await finalReports.map(async report => {
             report.tests = parsingErrors;
-            await publishers.execute(report);
+            report.valid = report.valid && report.tests.every(test => test.valid);
+            await outputs.publishReport(report);
         });
-        return enqueuerReports.every(report => report.valid);
+        return finalReports.every(report => report.valid);
     }
 
 }

@@ -497,7 +497,7 @@ declare module 'outputs/multi-tests-output' {
 	export class MultiTestsOutput {
 	    private outputs;
 	    constructor(outputs: PublisherModel[]);
-	    execute(report: RequisitionModel): Promise<void>;
+	    publishReport(report: RequisitionModel): Promise<void>;
 	}
 
 }
@@ -801,13 +801,44 @@ declare module 'reporters/subscription/subscription-reporter' {
 	}
 
 }
+declare module 'strings/id-generator' {
+	export class IdGenerator {
+	    private readonly value;
+	    constructor(value: any);
+	    generateId(): string;
+	}
+
+}
+declare module 'components/requisition-adopter' {
+	import { RequisitionModel } from 'models/inputs/requisition-model';
+	export class RequisitionAdopter {
+	    private readonly requisition;
+	    private defaultModel;
+	    constructor(node: any);
+	    getRequisition(): RequisitionModel;
+	    private baptiseRequisition;
+	    private putNameAndId;
+	}
+
+}
+declare module 'requisition-runners/component-importer' {
+	import { RequisitionModel } from 'models/inputs/requisition-model';
+	import { SubscriptionModel } from 'models/inputs/subscription-model';
+	import { PublisherModel } from 'models/inputs/publisher-model';
+	export class ComponentImporter {
+	    importRequisition(requisition: RequisitionModel): RequisitionModel;
+	    importSubscription(subscription: SubscriptionModel): SubscriptionModel;
+	    importPublisher(publisherModel: PublisherModel): PublisherModel;
+	}
+
+}
 declare module 'reporters/subscription/multi-subscriptions-reporter' {
 	import * as input from 'models/inputs/subscription-model';
 	import * as output from 'models/outputs/subscription-model';
 	export class MultiSubscriptionsReporter {
-	    private subscriptionReporters;
+	    private subscriptions;
 	    private timeoutPromise;
-	    constructor(subscriptionsAttributes: input.SubscriptionModel[]);
+	    constructor(subscriptions: input.SubscriptionModel[]);
 	    start(): void;
 	    subscribe(): Promise<any>;
 	    receiveMessage(): Promise<number>;
@@ -942,33 +973,6 @@ declare module 'components/component-parent-backupper' {
 	    private readonly parentMap;
 	    removeParents(requisition: RequisitionModel): void;
 	    putParentsBack(requisition: RequisitionModel): void;
-	}
-
-}
-declare module 'strings/id-generator' {
-	export class IdGenerator {
-	    private readonly value;
-	    constructor(value: any);
-	    generateId(): string;
-	}
-
-}
-declare module 'components/requisition-adopter' {
-	import { RequisitionModel } from 'models/inputs/requisition-model';
-	export class RequisitionAdopter {
-	    private readonly requisition;
-	    private defaultModel;
-	    constructor(node: any);
-	    getRequisition(): RequisitionModel;
-	    private baptiseRequisition;
-	    private putNameAndId;
-	}
-
-}
-declare module 'requisition-runners/requisition-importer' {
-	import { RequisitionModel } from 'models/inputs/requisition-model';
-	export class RequisitionImporter {
-	    import(requisition: RequisitionModel): RequisitionModel;
 	}
 
 }

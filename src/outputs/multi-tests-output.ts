@@ -20,7 +20,7 @@ export class MultiTestsOutput {
         });
     }
 
-    public async execute(report: RequisitionModel) {
+    public async publishReport(report: RequisitionModel) {
         await Promise.all(this.outputs
             .map(publisher => {
                 const formatter = publisher.formatter as ReportFormatter;

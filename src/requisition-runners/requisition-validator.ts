@@ -13,10 +13,10 @@ export class RequisitionValidator {
             return true;
         }
         if (Array.isArray(requisition.publishers) && requisition.publishers.length > 0) {
-            return requisition.publishers.every(child => child.type !== undefined);
+            return true;
         }
         if (Array.isArray(requisition.subscriptions) && requisition.subscriptions.length > 0) {
-            return requisition.subscriptions.every(child => child.type !== undefined);
+            return true;
         }
         if (Array.isArray(requisition.requisitions) && requisition.requisitions.length > 0) {
             return requisition.requisitions.every(child => this.validate(child));

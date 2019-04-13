@@ -8,10 +8,9 @@ import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-
 import {FileContentMapCreator} from '../configurations/file-content-map-creator';
 import {IterationsEvaluator} from './iterations-evaluator';
 import {SummaryTestOutput} from '../outputs/summary-test-output';
-import {ObjectDecycler} from '../object-parser/object-decycler';
 import {Configuration} from '../configurations/configuration';
 import {ComponentParentBackupper} from '../components/component-parent-backupper';
-import {RequisitionImporter} from './requisition-importer';
+import {ComponentImporter} from './component-importer';
 
 //TODO test it
 export class RequisitionRunner {
@@ -72,7 +71,7 @@ export class RequisitionRunner {
 
     private importRequisition() {
         if (this.requisition.import) {
-            this.requisition = new RequisitionImporter().import(this.requisition);
+            this.requisition = new ComponentImporter().importRequisition(this.requisition);
         }
     }
 

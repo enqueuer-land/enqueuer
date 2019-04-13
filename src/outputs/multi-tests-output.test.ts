@@ -83,7 +83,7 @@ describe('MultiTestsOutput', () => {
         const report = {};
         const output = {type: 'output', format: 'createFunction'};
         // @ts-ignore
-        await new MultiTestsOutput([output]).execute(report);
+        await new MultiTestsOutput([output]).publishReport(report);
 
         expect(publishMock).toHaveBeenCalledWith();
     });

@@ -34,20 +34,12 @@ describe('RequisitionValidator', () => {
         expect(new RequisitionValidator().validate({publishers: []})).toBeFalsy();
     });
 
-    it('Should reject publishers with no type', () => {
-        expect(new RequisitionValidator().validate({publishers: [{}]})).toBeFalsy();
-    });
-
     it('Should accept subscriptions', () => {
         expect(new RequisitionValidator().validate({subscriptions: [{type: ''}]})).toBeTruthy();
     });
 
     it('Should reject empty subscriptions', () => {
         expect(new RequisitionValidator().validate({subscriptions: []})).toBeFalsy();
-    });
-
-    it('Should reject subscriptions with no type', () => {
-        expect(new RequisitionValidator().validate({subscriptions: [{}]})).toBeFalsy();
     });
 
     it('Should go recursive', () => {

@@ -407,8 +407,6 @@ Now that you know what are requisitions, publishers, subscriptions and events. H
 
 ![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
 
-[![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)
-
 ----
 
 ### Configuration File
@@ -749,4 +747,6 @@ Push it:
 
 #### feedback
 We'd love to get your feedback!
-If you have any comments, suggestions, etc. you can reach us [here](https://github.com/enqueuer-land/enqueuer).
+If you have any comments, suggestions, etc. you can reach us [here](mailto:guilherme.moraes@outlook.com).
+
+[![NPM](https://nodei.co/npm/enqueuer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/enqueuer/)

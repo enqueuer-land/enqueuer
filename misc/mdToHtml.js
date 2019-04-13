@@ -60,7 +60,7 @@ converter.hooks.set("postConversion", (text) => {
         .replace(/<code>/g, '<code class="yaml">')
         .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
         .replace(/fullLogo1/g, 'fullLogo3')
-        // .replace(/ (enqueuer)/gi, (match, p1) => '<span class="enqueuer-name"> ' + p1 + '</span>')
+        .replace('mailto%3a', 'mailto:')
         .replace(/\$/gi, () => '<span class="dollar-sign">$</span>')
 });
 
@@ -72,9 +72,7 @@ const content = spyHtml +
     readMeHtmlized +
     `</div></div>`;
 
-// Bootstrap-fy
-const htmlResult =
-    template.replace('<!--README CONTENT PLACEHOLDER-->', content);
+const htmlResult = template.replace('<!--README CONTENT PLACEHOLDER-->', content);
 
 fs.writeFileSync('docs/index.html', htmlResult);
 console.log("Html generated");

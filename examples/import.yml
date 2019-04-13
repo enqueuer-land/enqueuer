@@ -1,9 +1,9 @@
--   name: static import
+-   name: static importRequisition
     import: <<yaml://examples/reuse.yml.nqr>>
     onFinish:
         assertions:
         -   expectToBeTruthy: requisition.imported
--   name: dynamic import
+-   name: dynamic importRequisition
     priority: lower
     import:
         priority: higher
@@ -14,3 +14,20 @@
         -   expectToBeTruthy: requisition.dynamicallyImported
         -   expect: requisition.priority
             toBeEqualTo: `higher`
+-   publishers:
+    -   import: <<json://examples/http-publisher-reuse.nqr>>
+        onFinish:
+            assertions:
+            -   expect: publisher.type
+                toBeEqualTo: `http`
+            -   expect: publisher.method
+                toBeEqualTo: `POST`
+    subscriptions:
+    -   import: <<json://examples/http-subscription-reuse.nqr>>
+        onFinish:
+            assertions:
+            -   expect: subscription.type
+                toBeEqualTo: `http`
+            -   expect: subscription.endpoint
+                toBeEqualTo: `/subscription-reuse`
+
