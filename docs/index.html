@@ -215,6 +215,7 @@
 
 </style>
 <body data-spy="scroll" data-target="#navbar-nqr" data-offset="0">
+<!--<main role="main">-->
 <a href="http://github.com/enqueuer-land/enqueuer" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250"
          style="fill:var(--nqr-color); color: var(--nqr-background-color); position: fixed; top: 0; border: 0; right: 0;"
@@ -226,7 +227,6 @@
               fill="currentColor" class="octo-body"></path>
     </svg>
 </a>
-
 <nav id="navbar-nqr" class="navbar navbar-fixed-left">    
     <a class="" href="#">
             <img class="ml-3 navbar-logo"
@@ -288,19 +288,18 @@ Run it:</p>
 
 <p>What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:</p>
 
-<pre><code class="yaml">#http-self-test.yml
-publishers:
+<pre><code class="yaml">publishers:
 -   type: http
     url: http://localhost:9085/readme-example
     method: POST
     payload: does enqueuer rock?
     onMessageReceived:
-        script: statusCode *= 2
+        script: doubleStatus = statusCode * 2
         assertions:
             -   expect: body
                 toBeEqualTo: `yes, it does`
-            -   expect: statusCode
-                toBeLessThan: 300
+            -   expect: doubleStatus
+                toBeEqualTo: 400
 subscriptions:
 -   type: http
     endpoint: /readme-example
@@ -1004,7 +1003,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name
 <h4 id="plugin_use" style="padding-left: 8px">8.2 plugin use</h4>
 
 <p>In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
-You can tell enqueuer to use a plugin in three manners: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.</p>
+You can tell enqueuer to use a plugin in three different ways: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.</p>
 
 <h5 id="command_line" style="padding-left: 16px">8.2.1 command line</h5>
 
@@ -1024,8 +1023,18 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 
 <h5 id="implicitly" style="padding-left: 16px">8.2.3 implicitly</h5>
 
-<p>When enqueuer runs, it looks for modules in <code class="yaml">.nqr</code> folder in your home, a.k.a. ~/ folder, in linux distributions, directory.
-Every enqueuer compatible module get implicitly loaded.
+<p>When enqueuer runs, it looks for modules in <code class="yaml">.nqr</code> folder in the home directory, a.k.a. ~/ folder in linux distributions.
+Therefore, if you run:</p>
+
+<pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer
+<span class="dollar-sign">$</span> mkdir ~/.nqr
+<span class="dollar-sign">$</span> cd ~/.nqr
+<span class="dollar-sign">$</span> npm install enqueuer-plugin-amqp
+<span class="dollar-sign">$</span> nqr -p amqp
+</code></pre>
+
+<p>You'll see that the <code class="yaml">enqueuer-plugin-amqp</code> plugin will be loaded.
+Every enqueuer compatible module gets implicitly loaded.
 In order to be enqueuer compatible, a module has to have an <code class="yaml">entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
 
 <hr />
@@ -1085,8 +1094,9 @@ After everything is done:</p>
 If you have any comments, suggestions, etc. you can reach us <a href="mailto:guilherme.moraes@outlook.com">here</a>.</p>
 
 <p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p></div></div>
+<!--</main>-->
 
-</body>
+
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -1125,6 +1135,5 @@ If you have any comments, suggestions, etc. you can reach us <a href="mailto:gui
 </script>
 
 <!--<script async defer src="https://buttons.github.io/buttons.js"></script>-->
-
 </body>
 </html>

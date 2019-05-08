@@ -51,19 +51,18 @@ Run it:
 
 What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:
     
-    #http-self-test.yml
     publishers:
     -   type: http
         url: http://localhost:9085/readme-example
         method: POST
         payload: does enqueuer rock?
         onMessageReceived:
-            script: statusCode *= 2
+            script: doubleStatus = statusCode * 2
             assertions:
                 -   expect: body
                     toBeEqualTo: `yes, it does`
-                -   expect: statusCode
-                    toBeLessThan: 300
+                -   expect: doubleStatus
+                    toBeEqualTo: 400
     subscriptions:
     -   type: http
         endpoint: /readme-example
@@ -683,7 +682,7 @@ Consider looking at the example of [configuration file](https://github.com/enque
 
 #### plugin use
 In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
-You can tell enqueuer to use a plugin in three manners: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.
+You can tell enqueuer to use a plugin in three different ways: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.
 
 ##### command line
 Tell enqueuer to use your plugin through command line this way `$ nqr -l <plugin-folder> -l <another-plugin-folder>`.
@@ -699,8 +698,17 @@ Tell enqueuer to use your plugin through configuration file this way:
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
 
 ##### implicitly
-When enqueuer runs, it looks for modules in `.nqr` folder in your home, a.k.a. ~/ folder, in linux distributions, directory.
-Every enqueuer compatible module get implicitly loaded.
+When enqueuer runs, it looks for modules in `.nqr` folder in the home directory, a.k.a. ~/ folder in linux distributions.
+Therefore, if you run:
+    
+    $ npm install --global enqueuer
+    $ mkdir ~/.nqr
+    $ cd ~/.nqr
+    $ npm install enqueuer-plugin-amqp
+    $ nqr -p amqp
+    
+You'll see that the `enqueuer-plugin-amqp` plugin will be loaded.
+Every enqueuer compatible module gets implicitly loaded.
 In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
 
 ----

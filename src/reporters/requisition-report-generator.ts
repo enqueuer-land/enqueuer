@@ -6,7 +6,6 @@ import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {TestModel} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
-import {TimeModel} from '../models/outputs/time-model';
 
 export class RequisitionReportGenerator {
 

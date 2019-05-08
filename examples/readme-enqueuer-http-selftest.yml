@@ -4,12 +4,12 @@ publishers:
     method: POST
     payload: does enqueuer rock?
     onMessageReceived:
-        script: statusCode *= 2
+        script: doubleStatus = statusCode * 2
         assertions:
             -   expect: body
                 toBeEqualTo: `yes, it does`
-            -   expect: statusCode
-                toBeLessThan: 300
+            -   expect: doubleStatus
+                toBeEqualTo: 400
 subscriptions:
 -   type: http
     endpoint: /readme-example

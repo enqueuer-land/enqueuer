@@ -8,31 +8,29 @@ const describeReportFormattersMock = jest.fn(() => true);
 const describeObjectParsersMock = jest.fn(() => false);
 const describeAssertersMock = jest.fn(() => false);
 // @ts-ignore
-DynamicModulesManager.getInstance.mockImplementation(() => {
-    return {
-        getProtocolManager: () => {
-            return {
-                describeProtocols: describeProtocolsMock
-            };
-        },
-        getReportFormatterManager: () => {
-            return {
-                describeReportFormatters: describeReportFormattersMock
-            };
-        },
-        getObjectParserManager: () => {
-            return {
-                describeObjectParsers: describeObjectParsersMock
-            };
-        },
-        getAsserterManager: () => {
-            return {
-                describeAsserters: describeAssertersMock
-            };
-        }
+DynamicModulesManager.getInstance.mockImplementation(() => ({
+    getProtocolManager: () => {
+        return {
+            describeProtocols: describeProtocolsMock
+        };
+    },
+    getReportFormatterManager: () => {
+        return {
+            describeReportFormatters: describeReportFormattersMock
+        };
+    },
+    getObjectParserManager: () => {
+        return {
+            describeObjectParsers: describeObjectParsersMock
+        };
+    },
+    getAsserterManager: () => {
+        return {
+            describeAsserters: describeAssertersMock
+        };
+    }
 
-    };
-});
+}));
 
 const exitMock = jest.fn();
 describe('CommandLineConfiguration', () => {
