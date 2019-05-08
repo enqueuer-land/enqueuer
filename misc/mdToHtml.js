@@ -61,6 +61,8 @@ converter.hooks.set("postConversion", (text) => {
         .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
         .replace(/fullLogo1/g, 'fullLogo3')
         .replace('mailto%3a', 'mailto:')
+        .replace('alt="screenshot-passing"',
+            'alt="screenshot-passing" style="width:100%"')
         .replace(/\$/gi, () => '<span class="dollar-sign">$</span>')
 });
 

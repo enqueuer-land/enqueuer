@@ -80,7 +80,31 @@ And then, run this other one:
 
     $ nqr http-self-test.yml
 
-I told you it was simple.
+I told you it was simple.  
+Now, let's say you want to mix different protocols to test a bit more complex flow.
+How about publishing an AMQP message and making sure that, once a service consumes that message an endpoint of your is hit?
+In order to achieve that, we have to make use of a [plugin](#plugins), given that the AMQP protocol is not a built-in module.
+In this scenario, we're talking about the [AMQP plugin](https://github.com/enqueuer-land/enqueuer-plugin-amqp).
+Once we get this [plugin installed](#plugin_use) we are able to create and run files like this:
+
+    publishers:
+    -   type: amqp
+        payload: 123456
+        exchange: enqueuer.exchange
+        routingKey: enqueuer.readme.routing.key
+    subscriptions:
+    -   type: http
+        endpoint: /polyglot-flow
+        port: 8080
+        method: GET
+        response:
+            status: 200
+            payload: polyglot message
+        onMessageReceived:
+            assertions:
+            -   expect: message.body
+                toContain: 123456
+
 Now go nuts!
 It's all yours. Have fun.
 If you want more examples about `http`, consider looking at [this test](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml). 
@@ -154,12 +178,12 @@ Set to zero or less than zero to run it endlessly.
     timeout: 3000
     
 **delay**  
-Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) to get the full idea.
+Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml) to get the full idea.
 
     delay: 0
 
 **iterations**  
-Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
+Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
 
     iterations: 3
 
@@ -170,13 +194,13 @@ Defaults to false. Tells to enqueuer that this requisitions should be skipped. C
     
 **parallel**  
 Defaults to false. Immediate children requisitions should be executed in parallel mode.
-Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel.yml) to see it working.
+Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel-requisition.yml) to see it working.
 
     parallel: true
 
 **import**  
 Allows requisition to be dynamically defined, be it by loading an external file or creating dynamically by other requisitions. Want to reuse the same requisition multiple times? This is you you need.
-Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/reuse.yml) to behold this feature.
+Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml) to behold this feature.
 
     import: path/to/another/requisition/file
 
@@ -227,7 +251,7 @@ It publishes something, it writes, it enqueues, hits and endpoint... These kinds
 
 ##### publisher attributes
 Every publisher has its own properties, depending on its protocol and implementation.
-The built-in [`http` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a `url`, a `method`, and a `payload`, if the method is not a GET.
+The built-in [`http` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a `url`, a `method`, and a `payload`, if the method is not a `GET`.
 On the other hand, the built-in [`tcp` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a `serverAddress` and a `port`. 
 These are the publisher attributes:
 
@@ -710,6 +734,14 @@ Therefore, if you run:
 You'll see that the `enqueuer-plugin-amqp` plugin will be loaded.
 Every enqueuer compatible module gets implicitly loaded.
 In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
+
+### Stacker
+Looking for ~~a really really good looking~~ an human error proof solution way of writing these requisition files by hand?  
+Consider taking a look at [stacker](https://lopidio.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
+The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI! With them, you create, manage and run requisitions and and see the result in a really nice way.
+See what I'm saying with your own eyes to get an idea of how it works:  
+
+![screenshot-passing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/http-passing-test.png)
 
 ----
 

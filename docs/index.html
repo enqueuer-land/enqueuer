@@ -17,8 +17,11 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Enqueuer documentation">
-    <meta name="author" content="Virgs">
+    <meta name="description" content="Learn everything about the almighty enqueuer documentation: not just an integration test tool, a polyglot flow testing tool">
+    <meta name="author" content="Virgs, Lopidio, Guilherme Moraes">
+    <meta name="keywords" content="stacker, nqr, testing, tool, microservice, multiprotocol, polyglot, reactive, message, tcp, mock, amqp, http, test event, event-driven, continuous integration, message testing, polyglot flow, stacker"/>
+    <meta name="robots" content="index, follow">
+
     <title>Almighty Enqueuer</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -233,7 +236,7 @@
                  src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
                  alt="enqueuer logo"
                  title="Enqueuer Logo">        
-    </a><nav class="nav nav-pills flex-column"><a class="nav-link " href="#what_it_is" style="">&nbsp;&nbsp;&nbsp;1. What it is</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#install_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1. install it</a><a class="nav-link nav-link-sub-item" href="#if_you_need_more" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2. if you need more</a></nav><a class="nav-link " href="#components" style="">&nbsp;&nbsp;&nbsp;2. Components</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#requisition" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1. requisition</a><a class="nav-link nav-link-sub-item" href="#publisher" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2. publisher</a><a class="nav-link nav-link-sub-item" href="#subscription" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3. subscription</a></nav><a class="nav-link " href="#event" style="">&nbsp;&nbsp;&nbsp;3. Event</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#hooks" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1. hooks</a><a class="nav-link nav-link-sub-item" href="#fields" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2. fields</a><a class="nav-link nav-link-sub-item" href="#event_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3. event example</a></nav><a class="nav-link " href="#requisition_flow" style="">&nbsp;&nbsp;&nbsp;4. Requisition Flow</a><a class="nav-link " href="#configuration_file" style="">&nbsp;&nbsp;&nbsp;5. Configuration File</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#configuration_file_attributes" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.1. configuration file attributes</a><a class="nav-link nav-link-sub-item" href="#configuration_file_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2. configuration file example</a></nav><a class="nav-link " href="#variables" style="">&nbsp;&nbsp;&nbsp;6. Variables</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#set_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1. set a variable</a><a class="nav-link nav-link-sub-item" href="#use_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2. use a variable</a><a class="nav-link nav-link-sub-item" href="#variables_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.3. variables example</a></nav><a class="nav-link " href="#content_file_injection" style="">&nbsp;&nbsp;&nbsp;7. Content File Injection</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#content_file_injection_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1. content file injection example</a></nav><a class="nav-link " href="#plugins" style="">&nbsp;&nbsp;&nbsp;8. Plugins</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#plugin_types" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.1. plugin types</a><a class="nav-link nav-link-sub-item" href="#plugin_use" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.2. plugin use</a></nav><a class="nav-link " href="#open_source" style="">&nbsp;&nbsp;&nbsp;9. Open source</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#contributors" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.1. contributors</a><a class="nav-link nav-link-sub-item" href="#code_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.2. code it</a><a class="nav-link nav-link-sub-item" href="#feedback" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.3. feedback</a></nav></nav></nav><div class="nqr-main-container container" style="max-width: 90%"><p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a><a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
+    </a><nav class="nav nav-pills flex-column"><a class="nav-link " href="#what_it_is" style="">&nbsp;&nbsp;&nbsp;1. What it is</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#install_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1. install it</a><a class="nav-link nav-link-sub-item" href="#if_you_need_more" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2. if you need more</a></nav><a class="nav-link " href="#components" style="">&nbsp;&nbsp;&nbsp;2. Components</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#requisition" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1. requisition</a><a class="nav-link nav-link-sub-item" href="#publisher" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2. publisher</a><a class="nav-link nav-link-sub-item" href="#subscription" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3. subscription</a></nav><a class="nav-link " href="#event" style="">&nbsp;&nbsp;&nbsp;3. Event</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#hooks" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1. hooks</a><a class="nav-link nav-link-sub-item" href="#fields" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2. fields</a><a class="nav-link nav-link-sub-item" href="#event_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3. event example</a></nav><a class="nav-link " href="#requisition_flow" style="">&nbsp;&nbsp;&nbsp;4. Requisition Flow</a><a class="nav-link " href="#configuration_file" style="">&nbsp;&nbsp;&nbsp;5. Configuration File</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#configuration_file_attributes" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.1. configuration file attributes</a><a class="nav-link nav-link-sub-item" href="#configuration_file_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2. configuration file example</a></nav><a class="nav-link " href="#variables" style="">&nbsp;&nbsp;&nbsp;6. Variables</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#set_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1. set a variable</a><a class="nav-link nav-link-sub-item" href="#use_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2. use a variable</a><a class="nav-link nav-link-sub-item" href="#variables_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.3. variables example</a></nav><a class="nav-link " href="#content_file_injection" style="">&nbsp;&nbsp;&nbsp;7. Content File Injection</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#content_file_injection_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1. content file injection example</a></nav><a class="nav-link " href="#plugins" style="">&nbsp;&nbsp;&nbsp;8. Plugins</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#plugin_types" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.1. plugin types</a><a class="nav-link nav-link-sub-item" href="#plugin_use" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.2. plugin use</a></nav><a class="nav-link " href="#stacker" style="">&nbsp;&nbsp;&nbsp;9. Stacker</a><a class="nav-link " href="#open_source" style="">&nbsp;&nbsp;&nbsp;10. Open source</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#contributors" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1. contributors</a><a class="nav-link nav-link-sub-item" href="#code_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.2. code it</a><a class="nav-link nav-link-sub-item" href="#feedback" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.3. feedback</a></nav></nav></nav><div class="nqr-main-container container" style="max-width: 90%"><p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a><a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
 <a href="https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability"><img src="https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability" alt="Maintainability" title="" /></a> <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg" alt="Greenkeeper badge" title="" /></a><a href="https://snyk.io/test/npm/enqueuer"><img src="https://snyk.io/test/npm/enqueuer/badge.svg" alt="Known Vulnerabilities" title="" /></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" title="" /></a></p>
 
@@ -319,8 +322,33 @@ subscriptions:
 <pre><code class="yaml"><span class="dollar-sign">$</span> nqr http-self-test.yml
 </code></pre>
 
-<p>I told you it was simple.
-Now go nuts!
+<p>I told you it was simple. <br>
+Now, let's say you want to mix different protocols to test a bit more complex flow.
+How about publishing an AMQP message and making sure that, once a service consumes that message an endpoint of your is hit?
+In order to achieve that, we have to make use of a <a href="#plugins">plugin</a>, given that the AMQP protocol is not a built-in module.
+In this scenario, we're talking about the <a href="https://github.com/enqueuer-land/enqueuer-plugin-amqp">AMQP plugin</a>.
+Once we get this <a href="#plugin_use">plugin installed</a> we are able to create and run files like this:</p>
+
+<pre><code class="yaml">publishers:
+-   type: amqp
+    payload: 123456
+    exchange: enqueuer.exchange
+    routingKey: enqueuer.readme.routing.key
+subscriptions:
+-   type: http
+    endpoint: /polyglot-flow
+    port: 8080
+    method: GET
+    response:
+        status: 200
+        payload: polyglot message
+    onMessageReceived:
+        assertions:
+        -   expect: message.body
+            toContain: 123456
+</code></pre>
+
+<p>Now go nuts!
 It's all yours. Have fun.
 If you want more examples about <code class="yaml">http</code>, consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml">this test</a>. 
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
@@ -399,13 +427,13 @@ Set to zero or less than zero to run it endlessly.</p>
 </code></pre>
 
 <p><strong>delay</strong> <br>
-Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> to get the full idea.</p>
+Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml">this</a> to get the full idea.</p>
 
 <pre><code class="yaml">delay: 0
 </code></pre>
 
 <p><strong>iterations</strong> <br>
-Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iteration.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
+Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
 
 <pre><code class="yaml">iterations: 3
 </code></pre>
@@ -418,14 +446,14 @@ Defaults to false. Tells to enqueuer that this requisitions should be skipped. C
 
 <p><strong>parallel</strong> <br>
 Defaults to false. Immediate children requisitions should be executed in parallel mode.
-Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel.yml">this</a> to see it working.</p>
+Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel-requisition.yml">this</a> to see it working.</p>
 
 <pre><code class="yaml">parallel: true
 </code></pre>
 
 <p><strong>import</strong> <br>
 Allows requisition to be dynamically defined, be it by loading an external file or creating dynamically by other requisitions. Want to reuse the same requisition multiple times? This is you you need.
-Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/reuse.yml">this</a> to behold this feature.</p>
+Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml">this</a> to behold this feature.</p>
 
 <pre><code class="yaml">import: path/to/another/requisition/file
 </code></pre>
@@ -482,7 +510,7 @@ It publishes something, it writes, it enqueues, hits and endpoint... These kinds
 <h5 id="publisher_attributes" style="padding-left: 16px">2.2.1 publisher attributes</h5>
 
 <p>Every publisher has its own properties, depending on its protocol and implementation.
-The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> publisher</a> implementation, for instance, demands a <code class="yaml">url</code>, a <code class="yaml">method</code>, and a <code class="yaml">payload</code>, if the method is not a GET.
+The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> publisher</a> implementation, for instance, demands a <code class="yaml">url</code>, a <code class="yaml">method</code>, and a <code class="yaml">payload</code>, if the method is not a <code class="yaml">GET</code>.
 On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> publisher</a> implementation requires a <code class="yaml">serverAddress</code> and a <code class="yaml">port</code>. 
 These are the publisher attributes:</p>
 
@@ -1037,9 +1065,18 @@ Therefore, if you run:</p>
 Every enqueuer compatible module gets implicitly loaded.
 In order to be enqueuer compatible, a module has to have an <code class="yaml">entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
 
+<h3 id="stacker" style="padding-left: 0px">9 Stacker</h3>
+
+<p>Looking for <span style="text-decoration: line-through">a really really good looking</span> an human error proof solution way of writing these requisition files by hand? <br>
+Consider taking a look at <a href="https://lopidio.github.io/stacker/">stacker</a>: open source, cross-platform, multi protocol client testing tool.
+The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI! With them, you create, manage and run requisitions and and see the result in a really nice way.
+See what I'm saying with your own eyes to get an idea of how it works:  </p>
+
+<p><img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/http-passing-test.png" alt="screenshot-passing" style="width:100%" title="" /></p>
+
 <hr />
 
-<h3 id="open_source" style="padding-left: 0px">9 Open source</h3>
+<h3 id="open_source" style="padding-left: 0px">10 Open source</h3>
 
 <p>We, by 'we' we mean enqueuer's maintainers not the human race; unfortunately, are very opened any kind of contribution in general.
 As long as they make sense and add value to the product, you're free to go.
@@ -1049,11 +1086,11 @@ Create an issue, or, even easier, give it a github star. It's cheap and it doesn
 You know what? Just head up to <a href="https://github.com/enqueuer-land/enqueuer">enqueuer's github repo</a> and keep staring at its webpage.
 It may help somehow. </p>
 
-<h4 id="contributors" style="padding-left: 8px">9.1 contributors</h4>
+<h4 id="contributors" style="padding-left: 8px">10.1 contributors</h4>
 
 <p>Thank you. It sounds <em>cliché</em>, but this project wouldn't be the same without the massive contribution from everyone.</p>
 
-<h4 id="code_it" style="padding-left: 8px">9.2 code it</h4>
+<h4 id="code_it" style="padding-left: 8px">10.2 code it</h4>
 
 <p>In order to contribute with some code, you have to follow a few steps.
 First of all, get the code:</p>
@@ -1088,7 +1125,7 @@ After everything is done:</p>
 <pre><code class="yaml"><span class="dollar-sign">$</span> git push
 </code></pre>
 
-<h4 id="feedback" style="padding-left: 8px">9.3 feedback</h4>
+<h4 id="feedback" style="padding-left: 8px">10.3 feedback</h4>
 
 <p>We'd love to get your feedback!
 If you have any comments, suggestions, etc. you can reach us <a href="mailto:guilherme.moraes@outlook.com">here</a>.</p>
