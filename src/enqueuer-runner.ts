@@ -6,6 +6,7 @@ import {RequisitionFilePatternParser} from './requisition-runners/requisition-fi
 import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {Configuration} from './configurations/configuration';
 import {RequisitionAdopter} from './components/requisition-adopter';
+import {reportModelIsPassing} from './models/outputs/report-model';
 
 export class EnqueuerRunner {
     private static reportName: string = 'enqueuer';
@@ -34,7 +35,7 @@ export class EnqueuerRunner {
         const outputs = new MultiTestsOutput(configuration.getOutputs());
         await finalReports.map(async report => {
             report.tests = parsingErrors;
-            report.valid = report.valid && report.tests.every(test => test.valid);
+            report.valid = report.valid && reportModelIsPassing(report);
             await outputs.publishReport(report);
         });
         return finalReports.every(report => report.valid);

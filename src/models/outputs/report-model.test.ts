@@ -1,4 +1,4 @@
-import {checkValidation, ReportModel} from './report-model';
+import {reportModelIsPassing, ReportModel} from './report-model';
 
 describe('ReportModel', () => {
 
@@ -24,7 +24,7 @@ describe('ReportModel', () => {
         reportModel.tests.push({valid: true, name: 'any', description: 'any'});
         reportModel.tests.push({valid: true, name: 'any', description: 'any'});
 
-        expect(checkValidation(reportModel)).toBeTruthy();
+        expect(reportModelIsPassing(reportModel)).toBeTruthy();
     });
 
     it('Should refresh valid with false', () => {
@@ -39,7 +39,21 @@ describe('ReportModel', () => {
         reportModel.tests.push({valid: true, name: 'any', description: 'any'});
         reportModel.tests.push({valid: false, name: 'any', description: 'any'});
 
-        expect(checkValidation(reportModel)).toBeFalsy();
+        expect(reportModelIsPassing(reportModel)).toBeFalsy();
+    });
+
+    it('Should take ignored tests in consideration', () => {
+        let reportModel: ReportModel = {
+            valid: true,
+            name: 'any',
+            tests: []
+        };
+
+        // @ts-ignore
+        reportModel.tests.push({valid: false, ignored: true});
+        reportModel.tests.push({valid: true, name: 'any', description: 'any'});
+
+        expect(reportModelIsPassing(reportModel)).toBeTruthy();
     });
 
 });

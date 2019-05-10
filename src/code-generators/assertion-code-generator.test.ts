@@ -10,16 +10,20 @@ describe('AssertionCodeGenerator', () => {
         expect(code).toBe('try {\n' +
             '            const evaluated = {name: assertion.name};\n' +
             '            (Object.keys(assertion) || [])\n' +
-            "                .filter(key => key !== 'name')\n" +
+            '                .filter(key => key !== \'name\')\n' +
             '                .forEach(key =>       evaluated[key] = eval(assertion[key])   );\n' +
-            '            tests.push(asserter.assert(evaluated, assertion));\n' +
+            '            const testResult = asserter.assert(evaluated, assertion);\n' +
+            '            if (assertion.ignore !== undefined && assertion.ignore !== false) {\n' +
+            '                testResult.ignored = true;\n' +
+            '            }\n' +
+            '            tests.push(testResult);\n' +
             '        } catch (err) {\n' +
-            "            const msg = `Error executing assertion: '${err}'`;\n" +
+            '            const msg = `Error executing assertion: \'${err}\'`;\n' +
             '            Logger.error(msg);\n' +
             '            tests.push({\n' +
             '                description: msg,\n' +
             '                valid: false,\n' +
-            "                label: 'Assertion code valid'\n" +
+            '                label: \'Assertion code valid\'\n' +
             '            });\n' +
             '        }');
     });

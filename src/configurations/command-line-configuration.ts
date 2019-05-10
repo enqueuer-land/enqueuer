@@ -16,7 +16,7 @@ export class CommandLineConfiguration {
             .version(process.env.npm_package_version || packageJson.version, '-v, --version')
             .allowUnknownOption()
             .usage('[options] <test-file> [other-test-files...]')
-            .description('Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer')
+            .description('Take a look at the full documentation: http://enqueuer.com')
             .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
             .option('-c, --config-file <path>', 'set configurationFile')
             .option('-e, --parsers-list [parser]', 'list available object parsers')

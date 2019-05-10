@@ -5,7 +5,6 @@ import {Timeout} from '../../timers/timeout';
 import * as input from '../../models/inputs/subscription-model';
 import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
-import {checkValidation} from '../../models/outputs/report-model';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
@@ -13,6 +12,7 @@ import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
+import {reportModelIsPassing} from '../../models/outputs/report-model';
 
 export class SubscriptionReporter {
 
@@ -154,7 +154,7 @@ export class SubscriptionReporter {
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
         this.report.messageReceived = this.subscription.messageReceived;
-        this.report.valid = this.report.valid && checkValidation(this.report);
+        this.report.valid = this.report.valid && reportModelIsPassing(this.report);
         return this.report;
     }
 

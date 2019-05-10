@@ -7,7 +7,7 @@ export class IdGenerator {
     private readonly value: string;
 
     public constructor(value: any) {
-        if (typeof (value) !== 'string') {
+        if (value && typeof (value) !== 'string') {
             this.value = JSON.stringify(new ObjectDecycler().decycle(value));
         } else {
             this.value = value as string;

@@ -1,5 +1,7 @@
-[![npm](https://img.shields.io/npm/dt/enqueuer.svg)]()[![Build Status](https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master)](https://travis-ci.org/enqueuer-land/enqueuer)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a4e5c9dbb8983b4b1915/maintainability)](https://codeclimate.com/github/enqueuer-land/enqueuer/maintainability) [![Greenkeeper badge](https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg)](https://greenkeeper.io/)[![Known Vulnerabilities](https://snyk.io/test/npm/enqueuer/badge.svg)](https://snyk.io/test/npm/enqueuer)
+[![npm](https://img.shields.io/npm/dt/enqueuer.svg)]()
+[![Build Status](https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master)](https://travis-ci.org/enqueuer-land/enqueuer)
+[![Greenkeeper badge](https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg)](https://greenkeeper.io/)
+[![Known Vulnerabilities](https://snyk.io/test/npm/enqueuer/badge.svg)](https://snyk.io/test/npm/enqueuer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -21,7 +23,7 @@ It's ~~not just~~ an integration testing tool. It is a platform that provides th
 - Built in assertion library to verify response data coming from/going to your services  
 - Easily extensible behavior through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)   
 - CLI is easy to add to your team's existing CI pipelines  
-- Act and react on you system under test  
+- Act and react on your system under test  
 - Place tests front and center  
 
 Welcome to the enqueuer world.
@@ -31,14 +33,13 @@ First things first, let's get the enqueuer installed on your machine.
 
     $ npm install --global enqueuer
     
-Next up, it's time create a requisition file.
+Alright, it's time to create a requisition file.
 Something like:
     
     #enqueuer-repo-hit.yml
     publishers:
     -   type: http
         url: https://github.com/enqueuer-land/enqueuer
-        method: GET
         onMessageReceived:
             assertions:
             -   expect: statusCode
@@ -51,6 +52,7 @@ Run it:
 
 What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:
     
+    name: readme self-test
     publishers:
     -   type: http
         url: http://localhost:9085/readme-example
@@ -60,32 +62,39 @@ What if I want to mock a http server and hit it at the same time, you may ask. N
             script: doubleStatus = statusCode * 2
             assertions:
                 -   expect: body
-                    toBeEqualTo: `yes, it does`
+                    toBeEqualTo: `mock response`
                 -   expect: doubleStatus
-                    toBeEqualTo: 400
+                    toBeGreaterThan: 300
     subscriptions:
     -   type: http
+        name: mock endpoint
         endpoint: /readme-example
         port: 9085
         method: POST
         response:
             status: 200
-            payload: yes, it does
+            payload: mock response
         onMessageReceived:
             assertions:
             -   expect: message.body
                 toContain: `enqueuer`
+            -   name: failing test
+                expectToBeTruthy: false
                 
-And then, run this other one:
+Note that the second subscription assertion is a failing one. By running this example, we get this:
 
     $ nqr http-self-test.yml
+       [FAIL]      readme self-test                                                   6 tests passing of 7 (85.71%) ran in 37ms
+       [FAIL] enqueuer                                                                6 tests passing of 7 (85.71%) ran in 42ms
+                   enqueuer › readme self-test › mock endpoint › failing test
+                               Expecting 'false' to be true. Received: false
 
-I told you it was simple.  
+I told you it was simple.
 Now, let's say you want to mix different protocols to test a bit more complex flow.
 How about publishing an AMQP message and making sure that, once a service consumes that message an endpoint of your is hit?
 In order to achieve that, we have to make use of a [plugin](#plugins), given that the AMQP protocol is not a built-in module.
 In this scenario, we're talking about the [AMQP plugin](https://github.com/enqueuer-land/enqueuer-plugin-amqp).
-Once we get this [plugin installed](#plugin_use) we are able to create and run files like this:
+Once we get this [plugin installed](#plugin_installation) we are able to create and run files like this:
 
     publishers:
     -   type: amqp
@@ -116,7 +125,7 @@ Certainly one is what you need.
     $ nqr -h
     Usage: nqr [options] <test-file> [other-test-files...]
     
-    Take a look at the full documentation: http://enqueuer-land.github.io/enqueuer
+    Take a look at the full documentation: http://enqueuer.com
     
     Options:
       -v, --version                             output the version number
@@ -704,7 +713,7 @@ Consider looking at the example of [configuration file](https://github.com/enque
 [This one](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), for instance, generates xUnit like reports from enqueuer's output.
 
 
-#### plugin use
+#### plugin installation
 In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
 You can tell enqueuer to use a plugin in three different ways: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.
 

@@ -4,6 +4,7 @@ import {IdGenerator} from '../strings/id-generator';
 import * as fs from 'fs';
 import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
+import {DateController} from '../timers/date-controller';
 
 class FilePublisher extends Publisher {
 
@@ -32,7 +33,7 @@ class FilePublisher extends Publisher {
     }
 
     private createFileName() {
-        let filename = this.filenamePrefix + new IdGenerator(this.payload).generateId();
+        let filename = this.filenamePrefix + new IdGenerator(this.payload || new DateController().getStringOnlyNumbers()).generateId();
         const needsToInsertDot = filename.lastIndexOf('.') == -1 && this.filenameExtension.lastIndexOf('.') == -1;
         if (needsToInsertDot) {
             filename += '.';

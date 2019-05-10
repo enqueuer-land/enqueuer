@@ -4,11 +4,11 @@ import * as output from '../../models/outputs/publisher-model';
 import {PublisherModel} from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
 import {Logger} from '../../loggers/logger';
-import {checkValidation} from '../../models/outputs/report-model';
 import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {OnInitEventExecutor} from '../../events/on-init-event-executor';
 import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
+import {reportModelIsPassing} from '../../models/outputs/report-model';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
@@ -52,7 +52,7 @@ export class PublisherReporter {
 
     public getReport(): PublisherModel {
         this.pushResponseMessageReceivedTest();
-        this.report.valid = this.report.valid && checkValidation(this.report);
+        this.report.valid = this.report.valid && reportModelIsPassing(this.report);
         return this.report;
     }
 

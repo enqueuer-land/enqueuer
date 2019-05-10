@@ -1,5 +1,13 @@
 -   publishers:
+    -   type: file
+        filename: /dev/null
+        onInit:
+            assertions:
+            -   ignore: true
+                expectToBeTruthy: false
+-   publishers:
     -   ignore: true
+        filename: /dev/null
         type: file
         onInit:
             assertions:

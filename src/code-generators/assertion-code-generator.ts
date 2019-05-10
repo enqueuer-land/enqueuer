@@ -15,7 +15,11 @@ export class AssertionCodeGenerator {
             (Object.keys(${this.assertionName}) || [])
                 .filter(key => key !== 'name')
                 .forEach(key =>       evaluated[key] = eval(${this.assertionName}[key])   );
-            ${this.testsName}.push(${this.asserterInstanceName}.assert(evaluated, ${this.assertionName}));
+            const testResult = ${this.asserterInstanceName}.assert(evaluated, ${this.assertionName});
+            if (assertion.ignore !== undefined && assertion.ignore !== false) {
+                testResult.ignored = true;
+            }
+            ${this.testsName}.push(testResult);
         } catch (err) {
             const msg = \`Error executing assertion: '\${err}'\`;
             Logger.error(msg);

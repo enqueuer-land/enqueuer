@@ -23,11 +23,11 @@ export class TestsAnalyzer {
     }
 
     public getNotIgnoredTests(): AnalyzedTest[] {
-        return this.tests.filter(test => !test.ignored);
+        return this.tests.filter(test => test.ignored === false || test.ignored === undefined);
     }
 
     public getIgnoredList(): AnalyzedTest[] {
-        return this.tests.filter(test => test.ignored);
+        return this.tests.filter(test => test.ignored !== false && test.ignored !== undefined);
     }
 
     public getPassingTests(): AnalyzedTest[] {

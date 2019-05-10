@@ -21,7 +21,8 @@ class HttpSubscription extends Subscription {
         this.type = this.type.toLowerCase();
         this.secureServer = this.isSecureServer();
         this.proxy = this.isProxyServer();
-        this.method = subscriptionAttributes.method.toLowerCase();
+        this.method = subscriptionAttributes.method || 'get';
+        this.method = this.method.toLowerCase();
     }
 
     public subscribe(): Promise<void> {
@@ -122,7 +123,7 @@ class HttpSubscription extends Subscription {
         Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${url}`);
         return new Promise((resolve, reject) => {
             new HttpRequester(url,
-                this.method.toLowerCase(),
+                this.method,
                 originalRequisition.headers,
                 originalRequisition.rawBody,
                 this.timeout)

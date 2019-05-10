@@ -19,6 +19,10 @@ declare module 'models/outputs/test-model' {
 	    valid: boolean;
 	    name: string;
 	}
+	export function testModelIsPassing(test: {
+	    ignored?: boolean;
+	    valid: boolean;
+	}): boolean;
 
 }
 declare module 'models/outputs/report-model' {
@@ -30,7 +34,7 @@ declare module 'models/outputs/report-model' {
 	    ignored?: boolean;
 	    tests: TestModel[];
 	}
-	export function checkValidation(reportModel: ReportModel): boolean;
+	export function reportModelIsPassing(reportModel: ReportModel): boolean;
 
 }
 declare module 'models/outputs/time-model' {
@@ -81,6 +85,7 @@ declare module 'models/outputs/requisition-model' {
 declare module 'models/events/assertion' {
 	export interface Assertion {
 	    name: string;
+	    ignore?: boolean;
 	    [propName: string]: any;
 	}
 

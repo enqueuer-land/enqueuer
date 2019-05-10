@@ -10,7 +10,7 @@ class HttpPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {
         super(publish);
-        this.method = publish.method.toUpperCase();
+        this.method = publish.method || 'get';
         this.payload = this.payload || '';
         this.headers = this.headers || {};
         this.timeout = this.timeout || 3000;

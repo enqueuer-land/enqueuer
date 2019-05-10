@@ -1,3 +1,4 @@
+name: readme self-test
 publishers:
 -   type: http
     url: http://localhost:9085/readme-example
@@ -7,18 +8,22 @@ publishers:
         script: doubleStatus = statusCode * 2
         assertions:
             -   expect: body
-                toBeEqualTo: `yes, it does`
+                toBeEqualTo: `mock response`
             -   expect: doubleStatus
-                toBeEqualTo: 400
+                toBeGreaterThan: 300
 subscriptions:
 -   type: http
+    name: mock endpoint
     endpoint: /readme-example
     port: 9085
     method: POST
     response:
         status: 200
-        payload: yes, it does
+        payload: mock response
     onMessageReceived:
         assertions:
         -   expect: message.body
             toContain: `enqueuer`
+        -   name: failing test
+            ignore:
+            expectToBeTruthy: false

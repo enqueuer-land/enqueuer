@@ -11,6 +11,7 @@ import {SummaryTestOutput} from '../outputs/summary-test-output';
 import {Configuration} from '../configurations/configuration';
 import {ComponentParentBackupper} from '../components/component-parent-backupper';
 import {ComponentImporter} from './component-importer';
+import {reportModelIsPassing} from '../models/outputs/report-model';
 
 //TODO test it
 export class RequisitionRunner {
@@ -113,7 +114,7 @@ export class RequisitionRunner {
         let childrenReport: output.RequisitionModel[] = await this.executeChildren();
         const report = await requisitionReporter.execute();
         report.requisitions = childrenReport;
-        report.valid = report.valid && report.requisitions.every((requisitionsReport) => requisitionsReport.valid);
+        report.valid = report.valid && report.requisitions.every((requisition) => reportModelIsPassing(requisition));
         Logger.debug(`Requisition ${this.requisition.name} went through the happy path`);
         return report;
     }

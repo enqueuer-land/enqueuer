@@ -3,9 +3,10 @@ import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
-import {TestModel} from '../models/outputs/test-model';
+import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
+import {reportModelIsPassing} from '../models/outputs/report-model';
 
 export class RequisitionReportGenerator {
 
@@ -29,9 +30,9 @@ export class RequisitionReportGenerator {
     }
 
     public getReport(): RequisitionModel {
-        this.report.valid = (this.report.subscriptions || []).every(report => report.valid) &&
-            (this.report.publishers || []).every(report => report.valid) &&
-            this.report.tests.every(report => report.valid);
+        this.report.valid = (this.report.subscriptions || []).every(report => reportModelIsPassing(report)) &&
+            (this.report.publishers || []).every(report => reportModelIsPassing(report)) &&
+            (this.report.tests || []).every(report => testModelIsPassing(report));
         return this.report;
     }
 
