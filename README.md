@@ -745,22 +745,23 @@ Every enqueuer compatible module gets implicitly loaded.
 In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
 
 ### Stacker
-Looking for ~~a really really good looking~~ an human error proof solution way of writing these requisition files by hand?  
+Looking for ~~a really really good looking~~ an human error proof solution way of writing these requisition files?  
 Consider taking a look at [stacker](https://lopidio.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
-The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI! With them, you create, manage and run requisitions and and see the result in a really nice way.
-See what I'm saying with your own eyes to get an idea of how it works:  
+The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
+With them, you create, manage and run requisitions and and see their results in a really nice way.
+See this amazing beauty with your own eyes to get an idea of how it works:  
 
 ![screenshot-passing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/http-passing-test.png)
 
 ----
 
 ### Open source
-We, by 'we' we mean enqueuer's maintainers not the human race; unfortunately, are very opened any kind of contribution in general.
+We (by 'we' we mean enqueuer's maintainers not the human race, unfortunately) are very opened to any kind of contributions in general.
 As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a typo fix in this README file. Go ahead.
-If you like it but don't want to waste time creating a pull request, no problem neither.
+If you like it but don't want to waste time creating a pull request, no problem either.
 Create an issue, or, even easier, give it a github star. It's cheap and it doesn't hurt anyone.
-You know what? Just head up to [enqueuer's github repo](https://github.com/enqueuer-land/enqueuer) and keep staring at its webpage.
+You know what? Just head up to [enqueuer's github repo](https://github.com/enqueuer-land/enqueuer) and keep staring at its repo.
 It may help somehow. 
 
 #### contributors
