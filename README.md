@@ -91,9 +91,9 @@ Note that the second subscription assertion is a failing one. By running this ex
 
 I told you it was simple.
 Now, let's say you want to mix different protocols to test a bit more complex flow.
-How about publishing an AMQP message and making sure that, once a service consumes that message an endpoint of your is hit?
-In order to achieve that, we have to make use of a [plugin](#plugins), given that the AMQP protocol is not a built-in module.
-In this scenario, we're talking about the [AMQP plugin](https://github.com/enqueuer-land/enqueuer-plugin-amqp).
+How about publishing an amqp message and making sure that, once a service consumes that message an endpoint of your is hit?
+In order to achieve that, we have to make use of a [plugin](#plugins), given that amqp support is provided by a plugin.
+In this scenario, we're talking about the [amqp plugin](https://github.com/enqueuer-land/enqueuer-plugin-amqp).
 Once we get this [plugin installed](#plugin_installation) we are able to create and run files like this:
 
     publishers:
@@ -452,7 +452,7 @@ or
     
     $ nqr --config-file path/to/configuration/file.yml
 
-#### configuration file attributes
+#### attributes
 These are the configuration file attributes:
 
 **files**  
@@ -518,7 +518,7 @@ Values defined here use the 'key: value' pattern and are available to every test
         second:
           nested: thing
 
-#### configuration file example
+#### example
 [Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml) a complete example of a configuration file.
 
 ----
@@ -604,7 +604,7 @@ Due its fantastic plugin architecture design, you can extend its default modules
 The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`. 
 Run `$ nqr -e` to see available ones.
 
-#### content file injection example 
+#### example 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
 
 ----
