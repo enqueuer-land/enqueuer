@@ -12,6 +12,7 @@ import {Configuration} from '../configurations/configuration';
 import {ComponentParentBackupper} from '../components/component-parent-backupper';
 import {ComponentImporter} from './component-importer';
 import {reportModelIsPassing} from '../models/outputs/report-model';
+import {RequisitionAdopter} from '../components/requisition-adopter';
 
 //TODO test it
 export class RequisitionRunner {
@@ -21,7 +22,7 @@ export class RequisitionRunner {
 
     public constructor(requisition: input.RequisitionModel, level: number = 0) {
         this.level = level || 0;
-        this.requisition = requisition;
+        this.requisition = new RequisitionAdopter(requisition).getRequisition();
     }
 
     public async run(): Promise<output.RequisitionModel[]> {

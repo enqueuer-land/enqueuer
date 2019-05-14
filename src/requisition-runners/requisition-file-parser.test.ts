@@ -1,5 +1,4 @@
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {YmlObjectParser} from '../object-parser/yml-object-parser';
 import * as fs from 'fs';
 import {RequisitionFileParser} from './requisition-file-parser';
 import * as glob from 'glob';
@@ -17,24 +16,17 @@ describe('RequisitionFileParser', () => {
     });
 
     it('Should parse array as just one', () => {
-        const requisitionsInput = [
-            {
-                onInit: {},
-                id: 0
-            },
-            {
-                publishers: [{type: true}],
-                name: 'named',
-                id: 1
-            }
-        ];
+        const requisitionInput = {
+            onInit: {},
+            id: 0
+        };
         DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
             return {
-                parse: () => requisitionsInput
+                parse: () => requisitionInput
             };
         }, 'yml');
 
-        const fileContent = JSON.stringify(requisitionsInput);
+        const fileContent = JSON.stringify(requisitionInput);
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
         const filename = 'anyStuff';
@@ -42,14 +34,8 @@ describe('RequisitionFileParser', () => {
         const requisition = new RequisitionFileParser().parseFile(filename);
 
         expect(requisition.name).toBe(filename);
-
-        expect(requisition.requisitions[0].id).toBe(requisitionsInput[0].id);
-        expect(requisition.requisitions[0].onInit).toEqual(requisitionsInput[0].onInit);
-
-        expect(requisition.requisitions[1].name).toBe(requisitionsInput[1].name);
-        expect(requisition.requisitions[1].id).toBe(requisitionsInput[1].id);
-        expect(requisition.requisitions[1].publishers).toEqual(requisitionsInput[1].publishers);
-
+        expect(requisition.id).toBe(requisitionInput.id);
+        expect(requisition.onInit).toEqual(requisitionInput.onInit);
     });
 
     it('Should throw', () => {
@@ -58,49 +44,6 @@ describe('RequisitionFileParser', () => {
             throw 'error';
         });
         expect(() => new RequisitionFileParser().parseFile('anyStuff')).toThrow();
-    });
-
-    it('Should add if file is not yml nor json', () => {
-        const notYml = 'foo bar\nfoo: bar';
-
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: (value) => new YmlObjectParser().parse(value)
-            };
-        }, 'yml');
-
-        // @ts-ignore
-        fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
-
-        try {
-            new RequisitionFileParser().parseFile('any');
-            expect(true).toBeFalsy();
-        } catch (err) {
-            expect(err.json).toBeDefined();
-            expect(err.yml).toBeDefined();
-        }
-
-    });
-
-    it('Should add error if it is not a valid requisition', () => {
-        const notYml = 'hey: bar';
-
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: (value) => new YmlObjectParser().parse(value)
-            };
-        }, 'yml');
-
-        // @ts-ignore
-        fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
-
-        try {
-            new RequisitionFileParser().parseFile('any');
-            expect(true).toBeFalsy();
-        } catch (err) {
-            expect(err).toBe(`File 'any' is not a valid requisition.` +
-                ` Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`);
-        }
     });
 
 });

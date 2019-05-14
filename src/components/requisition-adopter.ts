@@ -5,14 +5,14 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 
 export class RequisitionAdopter {
     private readonly requisition: RequisitionModel;
-    private defaultModel = {
+    private defaultModel: any = {
         subscriptions: [],
         publishers: [],
         requisitions: [],
         delay: 0,
         iterations: 1,
         parallel: false,
-        ignored: false,
+        ignore: false,
     };
 
     constructor(node: any) {
@@ -24,7 +24,7 @@ export class RequisitionAdopter {
     }
 
     private baptiseRequisition(requisition: RequisitionModel, name?: string, parent?: RequisitionModel): RequisitionModel {
-        requisition = Object.assign({}, this.defaultModel, requisition, {parent}) as RequisitionModel;
+        requisition = Object.assign({}, this.defaultModel, requisition) as RequisitionModel;
         this.putNameAndId(requisition, name, parent);
         requisition.requisitions = requisition.requisitions
             .map((child, index) => this.baptiseRequisition(child, `Requisition #${index}`, requisition) as RequisitionModel);
@@ -42,7 +42,10 @@ export class RequisitionAdopter {
         if (!component.id) {
             component.id = new IdGenerator(component).generateId();
         }
-        component.parent = parent;
+        if (!component.parent) {
+            component.parent = parent;
+        }
+
         return component;
     }
 

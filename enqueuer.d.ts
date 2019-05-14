@@ -546,6 +546,13 @@ declare module 'requisition-runners/requisition-validator' {
 	}
 
 }
+declare module 'requisition-runners/requisition-parser' {
+	import { RequisitionModel } from 'models/inputs/requisition-model';
+	export class RequisitionParser {
+	    parse(content: string): RequisitionModel;
+	}
+
+}
 declare module 'requisition-runners/requisition-file-parser' {
 	import { RequisitionModel } from 'models/inputs/requisition-model';
 	export class RequisitionFileParser {
