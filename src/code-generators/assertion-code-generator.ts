@@ -21,12 +21,12 @@ export class AssertionCodeGenerator {
             }
             ${this.testsName}.push(testResult);
         } catch (err) {
-            const msg = \`Error executing assertion: '\${err}'\`;
+            const msg = \`Invalid assertion. Error executing assertion: '\${err}'\`;
             Logger.error(msg);
             ${this.testsName}.push({
+                name: assertion.name,
                 description: msg,
-                valid: false,
-                label: 'Assertion code valid'
+                valid: false
             });
         }`;
     }

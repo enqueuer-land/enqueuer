@@ -22,7 +22,7 @@ describe('StoreCodeGenerator', () => {
             '                        tests.push({\n' +
             '                                description: msg,\n' +
             '                                valid: false,\n' +
-            '                                label: \"Valid \'store\' in event code\"\n' +
+            '                                name: \"Valid \'store\' in event code\"\n' +
             '                            });\n' +
             '                    }\n' +
             'try {\n' +
@@ -33,7 +33,7 @@ describe('StoreCodeGenerator', () => {
             '                        tests.push({\n' +
             '                                description: msg,\n' +
             '                                valid: false,\n' +
-            '                                label: \"Valid \'store\' in event code\"\n' +
+            '                                name: \"Valid \'store\' in event code\"\n' +
             '                            });\n' +
             '                    }\n');
     });

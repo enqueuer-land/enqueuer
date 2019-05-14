@@ -18,7 +18,7 @@ export class StoreCodeGenerator {
                         ${this.testsName}.push({
                                 description: msg,
                                 valid: false,
-                                label: "Valid 'store' in event code"
+                                name: "Valid 'store' in event code"
                             });
                     }\n`;
 

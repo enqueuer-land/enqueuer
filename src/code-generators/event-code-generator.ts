@@ -61,7 +61,7 @@ export class EventCodeGenerator {
                         ${this.testsInstanceName}.push({
                                 description: msg,
                                 valid: false,
-                                label: "Valid 'script snippet' code"
+                                name: "Valid 'script snippet' code"
                             });
                     }\n`;
     }

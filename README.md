@@ -125,7 +125,7 @@ Certainly one is what you need.
     $ nqr -h
     Usage: nqr [options] <test-file> [other-test-files...]
     
-    Take a look at the full documentation: https://enqueuer.com.com
+    Take a look at the full documentation: https://enqueuer.com
     
     Options:
       -v, --version                             output the version number

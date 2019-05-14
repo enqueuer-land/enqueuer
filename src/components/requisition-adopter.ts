@@ -42,7 +42,7 @@ export class RequisitionAdopter {
         if (!component.id) {
             component.id = new IdGenerator(component).generateId();
         }
-        if (!component.parent) {
+        if (parent) {
             component.parent = parent;
         }
 
