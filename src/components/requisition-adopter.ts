@@ -16,7 +16,7 @@ export class RequisitionAdopter {
     };
 
     constructor(node: any) {
-        this.requisition = this.baptiseRequisition(node);
+        this.requisition = this.baptiseRequisition(node, node.name ? node.name : `Requisition #0`);
     }
 
     public getRequisition(): RequisitionModel {

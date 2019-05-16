@@ -64,7 +64,7 @@ export class RequisitionRunner {
                 reports.push(report);
                 this.printReport(report);
             } catch (err) {
-                reports.push(RequisitionDefaultReports.createRunningError({name: this.requisition.name, id: this.requisition.id}, err));
+                reports.push(RequisitionDefaultReports.createRunningError({name: this.requisition.name, id: this.requisition.id}, err.toString()));
                 Logger.error(err);
             }
         }
@@ -81,7 +81,11 @@ export class RequisitionRunner {
         const configuration = Configuration.getInstance();
         if (this.level <= configuration.getMaxReportLevelPrint()) {
             const summaryOptions = {maxLevel: configuration.getMaxReportLevelPrint(), level: this.level, printFailingTests: this.level === 0};
-            new SummaryTestOutput(report, summaryOptions).print();
+            try {
+                new SummaryTestOutput(report, summaryOptions).print();
+            } catch (e) {
+                Logger.warning(e);
+            }
         }
     }
 

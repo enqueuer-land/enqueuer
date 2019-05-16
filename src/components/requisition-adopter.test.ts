@@ -3,11 +3,9 @@ import {RequisitionAdopter} from './requisition-adopter';
 describe('RequisitionAdopter', () => {
 
     it('Should set default values', () => {
-        const name = 'specialName';
+        const parent = new RequisitionAdopter({}).getRequisition();
 
-        const parent = new RequisitionAdopter({name}).getRequisition();
-
-        expect(parent.name).toBe(name);
+        expect(parent.name).toBe('Requisition #0');
         expect(parent.id).toBeDefined();
         expect(parent.parent).toBeUndefined();
         expect(parent.requisitions).toEqual([]);
@@ -108,6 +106,7 @@ describe('RequisitionAdopter', () => {
         ];
         const parent = new RequisitionAdopter({name, requisitions}).getRequisition();
 
+        expect(parent.name).toBe(name);
         expect(parent.requisitions[0].name).toBe('Requisition #0');
         expect(parent.requisitions[0].extraValue).toBe(requisitions[0].extraValue);
 
