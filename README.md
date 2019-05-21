@@ -136,6 +136,7 @@ Certainly one is what you need.
       -o, --stdout-requisition-output           add stdout as requisition output
       -m, --max-report-level-print <level>      set max report level print
       -p, --protocols-description [protocol]    describe protocols
+      -u, --loaded-modules-list                 list loaded modules
       -t, --tests-list                          list available tests assertions
       -s, --store [store]                       add variables values to this session (default: [])
       -l, --add-plugin [plugin]                 add plugin (default: [])

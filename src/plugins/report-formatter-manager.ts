@@ -28,14 +28,18 @@ export class ReportFormatterManager {
         this.formatters.push({tags: [firstTag].concat(tags), createFunction});
     }
 
-    public describeReportFormatters(describeFormatters: string | true): boolean {
-        const data = {
+    public getMatchingReportFormatters(describeFormatters: string | true): { formatters: string[][] } {
+        return {
             formatters: this.formatters
                 .filter((addedFormatter: AddedReportFormatter) => typeof (describeFormatters) === 'string' ? (addedFormatter.tags || [])
                     .some((tag: string) => tag.toLowerCase() === describeFormatters.toLowerCase()) : true)
                 .map((formatter: AddedReportFormatter) => formatter.tags)
         };
-        console.log(prettyjson.render(data, getPrettyJsonConfig()));
-        return data.formatters.length > 0;
+    }
+
+    public describeMatchingReportFormatters(describeFormatters: string | true): boolean {
+        const matchingReportFormatters = this.getMatchingReportFormatters(describeFormatters);
+        console.log(prettyjson.render(matchingReportFormatters, getPrettyJsonConfig()));
+        return matchingReportFormatters.formatters.length > 0;
     }
 }

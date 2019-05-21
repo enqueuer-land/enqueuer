@@ -7,29 +7,30 @@ const describeProtocolsMock = jest.fn(() => true);
 const describeReportFormattersMock = jest.fn(() => true);
 const describeObjectParsersMock = jest.fn(() => false);
 const describeAssertersMock = jest.fn(() => false);
+const describeLoadedModulesMock = jest.fn(() => false);
 // @ts-ignore
 DynamicModulesManager.getInstance.mockImplementation(() => ({
     getProtocolManager: () => {
         return {
-            describeProtocols: describeProtocolsMock
+            describeMatchingProtocols: describeProtocolsMock
         };
     },
     getReportFormatterManager: () => {
         return {
-            describeReportFormatters: describeReportFormattersMock
+            describeMatchingReportFormatters: describeReportFormattersMock
         };
     },
     getObjectParserManager: () => {
         return {
-            describeObjectParsers: describeObjectParsersMock
+            describeMatchingObjectParsers: describeObjectParsersMock
         };
     },
     getAsserterManager: () => {
         return {
-            describeAsserters: describeAssertersMock
+            describeMatchingAsserters: describeAssertersMock
         };
-    }
-
+    },
+    describeLoadedModules: describeLoadedModulesMock
 }));
 
 const exitMock = jest.fn();
@@ -38,6 +39,7 @@ describe('CommandLineConfiguration', () => {
         describeProtocolsMock.mockClear();
         describeReportFormattersMock.mockClear();
         describeObjectParsersMock.mockClear();
+        describeLoadedModulesMock.mockClear();
 
         exitMock.mockClear();
         // @ts-ignore
@@ -204,6 +206,24 @@ describe('CommandLineConfiguration', () => {
 
         expect(exitMock).toHaveBeenCalledWith(1);
         expect(describeAssertersMock).toHaveBeenCalledWith(params);
+    });
+
+    it('describe loaded modules -u', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-u']);
+
+        commandLineConfiguration.verifyPrematureActions();
+
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeLoadedModulesMock).toHaveBeenCalledWith();
+    });
+
+    it('describe loaded modules --loaded-modules-list', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--loaded-modules-list']);
+
+        commandLineConfiguration.verifyPrematureActions();
+
+        expect(exitMock).toHaveBeenCalledWith(0);
+        expect(describeLoadedModulesMock).toHaveBeenCalledWith();
     });
 
     it('no file', () => {

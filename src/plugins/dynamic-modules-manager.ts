@@ -9,6 +9,8 @@ import {AsserterManager} from './asserter-manager';
 import * as os from 'os';
 import * as glob from 'glob';
 import * as fs from 'fs';
+import prettyjson from 'prettyjson';
+import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 
 export class DynamicModulesManager {
     private static instance: DynamicModulesManager;
@@ -18,15 +20,17 @@ export class DynamicModulesManager {
     private readonly asserterManager: AsserterManager;
     private readonly builtInModules: string[];
     private readonly implicitModules: string[];
+    private explicitModules: string[];
 
     private constructor() {
         this.protocolManager = new ProtocolManager();
         this.reportFormatterManager = new ReportFormatterManager();
         this.objectParserManager = new ObjectParserManager();
         this.asserterManager = new AsserterManager();
-        this.builtInModules = this.findEveryEntryPointableModule();
-        this.implicitModules = this.findEveryEnqueuerPluginPackage();
-        this.loadModules();
+        this.builtInModules = this.findEveryEntryPointableBuiltInModule();
+        this.implicitModules = this.findEveryEnqueuerImplicitPluginPackage();
+        this.explicitModules = [];
+        this.initialModulesLoad();
     }
 
     public static getInstance() {
@@ -42,6 +46,16 @@ export class DynamicModulesManager {
 
     public getImplicitModules(): string[] {
         return this.implicitModules;
+    }
+
+    public getLoadedModules(): {
+        implicit: string[],
+        explicit: string[]
+    } {
+        return {
+            implicit: this.implicitModules,
+            explicit: this.explicitModules,
+        };
     }
 
     public getProtocolManager(): ProtocolManager {
@@ -60,7 +74,39 @@ export class DynamicModulesManager {
         return this.objectParserManager;
     }
 
-    private findEveryEntryPointableModule(): string[] {
+    public describeLoadedModules(): void {
+        console.log(prettyjson.render(this.getLoadedModules(), getPrettyJsonConfig()));
+    }
+
+    public loadModuleExplicitly(module: string): boolean {
+        if (this.loadModule(module)) {
+            Logger.info(`Success to load '${path.basename(module)}' as dynamic module`);
+            this.explicitModules.push(module);
+            return true;
+        } else {
+            Logger.error(`Fail to load '${module}' as dynamic module`);
+            return false;
+        }
+    }
+
+    private loadModule(module: string): boolean {
+        try {
+            require(module)
+                .entryPoint(
+                    {
+                        protocolManager: this.protocolManager,
+                        reportFormatterManager: this.reportFormatterManager,
+                        objectParserManager: this.objectParserManager,
+                        asserterManager: this.asserterManager
+                    } as MainInstance);
+            return true;
+        } catch (err) {
+            Logger.error(`Fail to load '${module}': ${err}`);
+        }
+        return false;
+    }
+
+    private findEveryEntryPointableBuiltInModule(): string[] {
         const pattern = __dirname + '/../**/*\.+(ts|d.ts|js)';
         const files = glob.sync(pattern, {})
             .map(module => module.replace('./src/', '../'))
@@ -78,7 +124,7 @@ export class DynamicModulesManager {
         return Array.from(plugins.values());
     }
 
-    private findEveryEnqueuerPluginPackage(): string[] {
+    private findEveryEnqueuerImplicitPluginPackage(): string[] {
         try {
             const pattern = os.homedir() + '/.nqr/node_modules/*';
             return (glob.sync(pattern, {}) || [])
@@ -100,41 +146,24 @@ export class DynamicModulesManager {
         return [];
     }
 
-    private loadModules() {
+    private initialModulesLoad() {
         Logger.info(`Loading built in modules`);
         this.builtInModules
-            .forEach(module => this.loadModule(module,
-                () => Logger.debug(`Success to load '${path.basename(module)}' as built in module`),
-                (err: any) => Logger.trace(`Fail to load '${module}' as built in  module: ${err}`)));
+            .forEach(module => this.loadModule(module) ?
+                Logger.debug(`Success to load '${path.basename(module)}' as built in module`) :
+                Logger.trace(`Fail to load '${module}' as built in  module`));
+
         Logger.info(`Loading ${this.implicitModules.length} implicitly declared plugins`);
         this.implicitModules
-            .forEach(module => this.loadModule(module,
-                () => Logger.info(`Success to load '${path.basename(module)}' as dynamic importable module`),
-                (err: any) => Logger.error(`Fail to load '${module}' as dynamic importable module: ${err}`)));
-        const explicitPlugins = Configuration.getInstance().getPlugins();
-        Logger.info(`Loading ${explicitPlugins.length} explicitly declared plugins`);
-        explicitPlugins
-            .forEach(module => this.loadModule(module,
-                () => Logger.info(`Success to load '${path.basename(module)}' as dynamic importable module`),
-                (err: any) => Logger.error(`Fail to load '${module}' as dynamic importable module: ${err}`)));
-    }
+            .forEach(module => this.loadModule(module) ?
+                Logger.info(`Success to load '${path.basename(module)}' as dynamic module`) :
+                Logger.error(`Fail to load '${module}' as dynamic module`));
 
-    private loadModule(module: string, onSucces: Function, onFail: Function) {
-        try {
-            require(module)
-                .entryPoint(
-                    {
-                        protocolManager: this.protocolManager,
-                        reportFormatterManager: this.reportFormatterManager,
-                        objectParserManager: this.objectParserManager,
-                        asserterManager: this.asserterManager
-                    } as MainInstance
-                );
-            onSucces();
-        } catch (err) {
-            onFail(err);
-        }
-
+        const configurationPlugins = Configuration.getInstance().getPlugins();
+        Logger.info(`Loading ${configurationPlugins.length} explicitly declared plugins`);
+        configurationPlugins
+            .filter(module => !this.explicitModules.includes(module))
+            .forEach(module => this.loadModuleExplicitly(module));
     }
 
 }

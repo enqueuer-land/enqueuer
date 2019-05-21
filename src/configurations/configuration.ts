@@ -4,6 +4,7 @@ import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
 import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
 export class Configuration {
     private static instance: Configuration;
@@ -37,12 +38,18 @@ export class Configuration {
         return Configuration.instance;
     }
 
-    public addPlugin(pluginName: string): Configuration {
+    public getValues(): Configuration {
+        const copy = Object.assign({}, Configuration.instance);
+        delete copy.commandLineConfiguration;
+        return copy;
+    }
+
+    public addPlugin(pluginName: string): boolean {
         Logger.info(`Plugin added to the list: ${pluginName}`);
         const plugins: Set<string> = new Set(this.plugins);
         plugins.add(pluginName);
         this.plugins = Array.from(plugins.values());
-        return this;
+        return DynamicModulesManager.getInstance().loadModuleExplicitly(pluginName);
     }
 
     public isParallel(): boolean {
@@ -116,9 +123,7 @@ export class Configuration {
     }
 
     private static printConfiguration() {
-        const configuration = JSON.parse(JSON.stringify(Configuration.instance));
-        delete configuration.commandLineConfiguration;
-        console.log(prettyjson.render({configuration: configuration}, getPrettyJsonConfig()));
+        console.log(prettyjson.render({configuration: this.getInstance().getValues()}, getPrettyJsonConfig()));
     }
 
 }

@@ -17,12 +17,12 @@ describe('ProtocolManager', () => {
         render.mockClear();
     });
 
-    it('describeProtocols', () => {
+    it('describeMatchingProtocols', () => {
         const protocolManager = new ProtocolManager();
         // @ts-ignore
         protocolManager.addProtocol(new PublisherProtocol('mine', () => {/*not empty*/
         }));
-        expect(protocolManager.describeProtocols(true)).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             publishers: expect.anything(),
             subscriptions: expect.anything()
@@ -75,7 +75,7 @@ describe('ProtocolManager', () => {
         })
             .addAlternativeName('virgs')
             .setLibrary('request'));
-        expect(protocolManager.describeProtocols('virgs')).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols('virgs')).toBeTruthy();
         expect(render).toHaveBeenCalledWith({'publishers': [{'name': 'pub'}], 'subscriptions': []}, expect.anything()
         );
     });
@@ -89,7 +89,7 @@ describe('ProtocolManager', () => {
         // @ts-ignore
         protocolManager.addProtocol(new PublisherProtocol('other', () => {/*not empty*/
         }));
-        expect(protocolManager.describeProtocols(true)).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({'publishers': [{'name': 'pub'}, {'name': 'other'}], 'subscriptions': []}, expect.anything()
         );
     });
@@ -97,7 +97,7 @@ describe('ProtocolManager', () => {
     it('error describe given publisher Protocol', () => {
         // @ts-ignore
         const protocolManager = new ProtocolManager();
-        expect(protocolManager.describeProtocols(true)).toBeFalsy();
+        expect(protocolManager.describeMatchingProtocols(true)).toBeFalsy();
         expect(render).toHaveBeenCalled();
     });
 
@@ -108,7 +108,7 @@ describe('ProtocolManager', () => {
         protocolManager.addProtocol(new SubscriptionProtocol('sub', () => {/*not empty*/
         }, ['value']).addAlternativeName('altName')
             .setLibrary('express'));
-        expect(protocolManager.describeProtocols('sub')).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols('sub')).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             'publishers': [],
             'subscriptions': [{'messageReceivedParams': ['value'], 'name': 'sub'}]
@@ -124,7 +124,7 @@ describe('ProtocolManager', () => {
         // @ts-ignore
         protocolManager.addProtocol(new SubscriptionProtocol('sub2', () => { /*not empty*/
         }));
-        expect(protocolManager.describeProtocols(true)).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             'publishers': [],
             'subscriptions': [{'messageReceivedParams': undefined, 'name': 'sub'}, {'messageReceivedParams': undefined, 'name': 'sub2'}]
@@ -134,7 +134,7 @@ describe('ProtocolManager', () => {
     it('error describe given subscription Protocol', () => {
         // @ts-ignore
         const protocolManager = new ProtocolManager();
-        expect(protocolManager.describeProtocols('value')).toBeFalsy();
+        expect(protocolManager.describeMatchingProtocols('value')).toBeFalsy();
         expect(render).toHaveBeenCalled();
     });
 

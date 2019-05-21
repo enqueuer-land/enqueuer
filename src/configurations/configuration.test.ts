@@ -7,10 +7,6 @@ jest.mock('./file-configuration');
 jest.mock('./command-line-configuration');
 jest.mock('prettyjson');
 
-const render = jest.fn();
-// @ts-ignore
-prettyjson.render.mockImplementation(render);
-
 describe('Configuration', () => {
     beforeEach(() => {
         // @ts-ignore
@@ -155,6 +151,9 @@ describe('Configuration', () => {
         commandLine.getVerbosity = () => 'trace';
         // @ts-ignore
         CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        const render = jest.fn();
+        // @ts-ignore
+        prettyjson.render.mockImplementation(render);
 
         const instance = Configuration.getInstance();
 

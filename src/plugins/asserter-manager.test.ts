@@ -63,7 +63,7 @@ describe('AsserterManager', () => {
             .addAsserter({toBeLessThan: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
 
-        const status = asserterManager.describeAsserters('than');
+        const status = asserterManager.describeMatchingAsserters('than');
 
         expect(status).toBeTruthy();
         expect(render).toHaveBeenCalledWith(
@@ -97,7 +97,7 @@ describe('AsserterManager', () => {
             .addAsserter({toBeLessThan: {description: 'some', type: 'string'}},
                 () => new ExpectToBeEqualToAsserter());
 
-        const status = asserterManager.describeAsserters('does not match');
+        const status = asserterManager.describeMatchingAsserters('does not match');
 
         expect(status).toBeFalsy();
         expect(render).toHaveBeenCalledWith({'asserters': []}, expect.anything());
@@ -116,7 +116,7 @@ describe('AsserterManager', () => {
             .addAsserter({toBeLessThan: {description: 'some'}},
                 () => new ExpectToBeEqualToAsserter());
 
-        const status = asserterManager.describeAsserters(true);
+        const status = asserterManager.describeMatchingAsserters(true);
 
         expect(status).toBeTruthy();
         expect(render).toHaveBeenCalledWith({

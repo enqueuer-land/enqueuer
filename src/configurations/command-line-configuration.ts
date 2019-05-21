@@ -25,6 +25,7 @@ export class CommandLineConfiguration {
             .option('-m, --max-report-level-print <level>', 'set max report level print', /^(\d)$/i)
             .option('-p, --protocols-description [protocol]', 'describe protocols')
             .option('-t, --tests-list [expectedField]', 'list available tests assertions')
+            .option('-u, --loaded-modules-list', 'list loaded modules')
             .option('-s, --store [store]', 'add variables values to this session',
                 (val: string, memo: string[]) => this.storeCommandLineAction(val, memo), [])
             .option('-l, --add-plugin [plugin]', 'add plugin',
@@ -44,19 +45,22 @@ export class CommandLineConfiguration {
     }
 
     public verifyPrematureActions(): void {
-        let exitCode;
+        let exitCode: boolean | undefined;
         if (this.parsedCommandLine.protocolsDescription) {
             exitCode = DynamicModulesManager.getInstance().getProtocolManager()
-                .describeProtocols(this.parsedCommandLine.protocolsDescription);
+                .describeMatchingProtocols(this.parsedCommandLine.protocolsDescription);
         } else if (this.parsedCommandLine.formattersDescription) {
             exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
-                .describeReportFormatters(this.parsedCommandLine.formattersDescription);
+                .describeMatchingReportFormatters(this.parsedCommandLine.formattersDescription);
         } else if (this.parsedCommandLine.parsersList) {
             exitCode = DynamicModulesManager.getInstance().getObjectParserManager()
-                .describeObjectParsers(this.parsedCommandLine.parsersList);
+                .describeMatchingObjectParsers(this.parsedCommandLine.parsersList);
         } else if (this.parsedCommandLine.testsList) {
             exitCode = DynamicModulesManager.getInstance().getAsserterManager()
-                .describeAsserters(this.parsedCommandLine.testsList);
+                .describeMatchingAsserters(this.parsedCommandLine.testsList);
+        } else if (this.parsedCommandLine.loadedModulesList) {
+            DynamicModulesManager.getInstance().describeLoadedModules();
+            exitCode = true;
         }
 
         if (exitCode !== undefined) {

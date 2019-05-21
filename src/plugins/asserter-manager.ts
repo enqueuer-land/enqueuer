@@ -48,7 +48,13 @@ export class AsserterManager {
         this.addedAsserters.unshift({template: templateAssertion, createFunction});
     }
 
-    public describeAsserters(field: string | true): boolean {
+    public describeMatchingAsserters(data: any): boolean {
+        const matchingAsserters = this.getMatchingAsserters(data);
+        console.log(prettyjson.render(matchingAsserters, getPrettyJsonConfig()));
+        return matchingAsserters.asserters.length > 0;
+    }
+
+    public getMatchingAsserters(field: string | true): { asserters: AssertionTemplate[] } {
         let matching: AddedAsserter[] = this.addedAsserters;
         if (typeof field === 'string') {
             matching = this.addedAsserters
@@ -56,7 +62,6 @@ export class AsserterManager {
                     .keys(added.template)
                     .some(key => key.toUpperCase().indexOf(field.toUpperCase()) !== -1));
         }
-        console.log(prettyjson.render({asserters: matching.map(added => added.template).sort()}, getPrettyJsonConfig()));
-        return matching.length > 0;
+        return {asserters: matching.map(added => added.template).sort()};
     }
 }

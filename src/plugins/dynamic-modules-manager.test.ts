@@ -3,8 +3,10 @@ import {entryPoint} from '../outputs/formatters/json-formatter';
 import {ProtocolManager} from './protocol-manager';
 import {ReportFormatterManager} from './report-formatter-manager';
 import {ObjectParserManager} from './object-parser-manager';
+import prettyjson from 'prettyjson';
 
 jest.mock('../outputs/formatters/json-formatter');
+jest.mock('prettyjson');
 
 describe('DynamicModulesManager', () => {
     beforeEach(() => {
@@ -64,5 +66,16 @@ describe('DynamicModulesManager', () => {
         expect(mainInstance.protocolManager).toBeInstanceOf(ProtocolManager);
         expect(mainInstance.reportFormatterManager).toBeInstanceOf(ReportFormatterManager);
         expect(mainInstance.objectParserManager).toBeInstanceOf(ObjectParserManager);
+    });
+
+    it('should print loaded modules', done => {
+        // @ts-ignore
+        prettyjson.render.mockImplementation((printedModules) => {
+            expect(Array.isArray(printedModules.explicit)).toBeTruthy();
+            expect(Array.isArray(printedModules.implicit)).toBeTruthy();
+            done();
+        });
+
+        DynamicModulesManager.getInstance().describeLoadedModules();
     });
 });

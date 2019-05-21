@@ -24,7 +24,7 @@ describe('ReportFormatterManager', () => {
         }, 'second');
         // @ts-ignore
 
-        expect(reportFormatterManager.describeReportFormatters(true)).toBeTruthy();
+        expect(reportFormatterManager.describeMatchingReportFormatters(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             formatters: [['first', '1st'], ['second']]
         }, expect.anything());
@@ -57,7 +57,7 @@ describe('ReportFormatterManager', () => {
         // @ts-ignore
         reportFormatterManager.addReportFormatter(() => {/**/
         }, 'second');
-        expect(reportFormatterManager.describeReportFormatters('tag')).toBeTruthy();
+        expect(reportFormatterManager.describeMatchingReportFormatters('tag')).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             formatters: [['tag', 'another']]
         }, expect.anything());
@@ -71,7 +71,7 @@ describe('ReportFormatterManager', () => {
         // @ts-ignore
         reportFormatterManager.addReportFormatter(() => {/**/
         }, 'second');
-        expect(reportFormatterManager.describeReportFormatters(true)).toBeTruthy();
+        expect(reportFormatterManager.describeMatchingReportFormatters(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             formatters: [['tag', 'another'], ['second']]
         }, expect.anything());
@@ -82,7 +82,7 @@ describe('ReportFormatterManager', () => {
         // @ts-ignore
         reportFormatterManager.addReportFormatter(() => {/**/
         }, 'tag', 'another');
-        expect(reportFormatterManager.describeReportFormatters('unknown')).toBeFalsy();
+        expect(reportFormatterManager.describeMatchingReportFormatters('unknown')).toBeFalsy();
     });
 
 });

@@ -78,7 +78,7 @@ describe('ObjectParserManager', () => {
         // @ts-ignore
         parserList.forEach(op => objectParserManager.addObjectParser(() => op, 'whatever'));
 
-        const status = objectParserManager.describeObjectParsers(true);
+        const status = objectParserManager.describeMatchingObjectParsers(true);
 
         expect(status).toBeTruthy();
         expect(render).toHaveBeenCalledWith({'parsers': [['whatever'], ['whatever']]}, expect.anything());
@@ -90,7 +90,7 @@ describe('ObjectParserManager', () => {
         // @ts-ignore
         parserList.forEach(op => objectParserManager.addObjectParser(() => op, op));
 
-        const status = objectParserManager.describeObjectParsers(parserList[1]);
+        const status = objectParserManager.describeMatchingObjectParsers(parserList[1]);
 
         expect(status).toBeTruthy();
         expect(render).toHaveBeenCalledWith({'parsers': [['ob2']]}, expect.anything());
@@ -102,7 +102,7 @@ describe('ObjectParserManager', () => {
         // @ts-ignore
         parserList.forEach(op => objectParserManager.addObjectParser(() => op, op));
 
-        const status = objectParserManager.describeObjectParsers('unknown');
+        const status = objectParserManager.describeMatchingObjectParsers('unknown');
 
         expect(status).toBeFalsy();
         expect(render).toHaveBeenCalledWith({'parsers': []}, expect.anything());

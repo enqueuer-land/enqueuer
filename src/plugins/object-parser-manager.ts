@@ -16,15 +16,19 @@ export class ObjectParserManager {
         this.addedObjectParsers.unshift({tags: strings, createFunction});
     }
 
-    public describeObjectParsers(describeObjectParsers: string | true): boolean {
-        const data = {
+    public getMatchingObjectParsers(describeObjectParsers: string | true): any {
+        return {
             parsers: this.addedObjectParsers
                 .filter((objectParser: AddedObjectParser) => typeof (describeObjectParsers) === 'string' ? (objectParser.tags || [])
                     .some((tag: string) => tag.toLowerCase() === describeObjectParsers.toLowerCase()) : true)
                 .map((objectParser: AddedObjectParser) => objectParser.tags)
         };
-        console.log(prettyjson.render(data, getPrettyJsonConfig()));
-        return data.parsers.length > 0;
+    }
+
+    public describeMatchingObjectParsers(data: any): boolean {
+        const matchingObjectParsers = this.getMatchingObjectParsers(data);
+        console.log(prettyjson.render(matchingObjectParsers, getPrettyJsonConfig()));
+        return matchingObjectParsers.parsers.length > 0;
     }
 
     public createParser(tag: string): ObjectParser | undefined {

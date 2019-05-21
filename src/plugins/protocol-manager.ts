@@ -42,10 +42,14 @@ export class ProtocolManager {
         this.protocols.push(protocol);
     }
 
-    public describeProtocols(describeProtocols: string | true): boolean {
-        const description: any = this.createDescription(describeProtocols);
-        console.log(prettyjson.render(description, getPrettyJsonConfig()));
-        return description.publishers.length + description.subscriptions.length > 0;
+    public getMatchingProtocols(describeProtocols: string | true): any {
+        return this.createDescription(describeProtocols);
+    }
+
+    public describeMatchingProtocols(description: any): boolean {
+        const matchingProtocols = this.getMatchingProtocols(description);
+        console.log(prettyjson.render(matchingProtocols, getPrettyJsonConfig()));
+        return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
     }
 
     private createDescription(protocol: string | true): {} {

@@ -285,7 +285,8 @@ declare module 'plugins/protocol-manager' {
 	    createPublisher(publisherModel: PublisherModel): Publisher;
 	    createSubscription(subscriptionModel: SubscriptionModel): Subscription;
 	    addProtocol(protocol: Protocol): void;
-	    describeProtocols(describeProtocols: string | true): boolean;
+	    getMatchingProtocols(describeProtocols: string | true): any;
+	    describeMatchingProtocols(description: any): boolean;
 	    private createDescription;
 	}
 
@@ -306,7 +307,10 @@ declare module 'plugins/report-formatter-manager' {
 	    private formatters;
 	    createReportFormatter(format: string): ReportFormatter;
 	    addReportFormatter(createFunction: () => ReportFormatter, firstTag: string, ...tags: string[]): void;
-	    describeReportFormatters(describeFormatters: string | true): boolean;
+	    getMatchingReportFormatters(describeFormatters: string | true): {
+	        formatters: string[][];
+	    };
+	    describeMatchingReportFormatters(describeFormatters: string | true): boolean;
 	}
 
 }
@@ -321,7 +325,8 @@ declare module 'plugins/object-parser-manager' {
 	export class ObjectParserManager {
 	    private addedObjectParsers;
 	    addObjectParser(createFunction: () => ObjectParser, firstTag: string, ...tags: string[]): void;
-	    describeObjectParsers(describeObjectParsers: string | true): boolean;
+	    getMatchingObjectParsers(describeObjectParsers: string | true): any;
+	    describeMatchingObjectParsers(data: any): boolean;
 	    createParser(tag: string): ObjectParser | undefined;
 	    tryToParseWithParsers(fileBufferContent: string, tags?: string[]): object;
 	}
@@ -358,7 +363,10 @@ declare module 'plugins/asserter-manager' {
 	    private addedAsserters;
 	    createAsserter(assertion: Assertion): Asserter;
 	    addAsserter(templateAssertion: AssertionTemplate, createFunction: () => Asserter): void;
-	    describeAsserters(field: string | true): boolean;
+	    describeMatchingAsserters(data: any): boolean;
+	    getMatchingAsserters(field: string | true): {
+	        asserters: AssertionTemplate[];
+	    };
 	}
 	export {};
 
@@ -454,7 +462,8 @@ declare module 'configurations/configuration' {
 	    private commandLineConfiguration;
 	    private constructor();
 	    static getInstance(): Configuration;
-	    addPlugin(pluginName: string): Configuration;
+	    getValues(): Configuration;
+	    addPlugin(pluginName: string): boolean;
 	    isParallel(): boolean;
 	    getFiles(): string[];
 	    getLogLevel(): string;
@@ -481,18 +490,25 @@ declare module 'plugins/dynamic-modules-manager' {
 	    private readonly asserterManager;
 	    private readonly builtInModules;
 	    private readonly implicitModules;
+	    private explicitModules;
 	    private constructor();
 	    static getInstance(): DynamicModulesManager;
 	    getBuiltInModules(): string[];
 	    getImplicitModules(): string[];
+	    getLoadedModules(): {
+	        implicit: string[];
+	        explicit: string[];
+	    };
 	    getProtocolManager(): ProtocolManager;
 	    getAsserterManager(): AsserterManager;
 	    getReportFormatterManager(): ReportFormatterManager;
 	    getObjectParserManager(): ObjectParserManager;
-	    private findEveryEntryPointableModule;
-	    private findEveryEnqueuerPluginPackage;
-	    private loadModules;
+	    describeLoadedModules(): void;
+	    loadModuleExplicitly(module: string): boolean;
 	    private loadModule;
+	    private findEveryEntryPointableBuiltInModule;
+	    private findEveryEnqueuerImplicitPluginPackage;
+	    private initialModulesLoad;
 	}
 
 }
