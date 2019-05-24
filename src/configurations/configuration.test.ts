@@ -13,6 +13,17 @@ describe('Configuration', () => {
         Configuration.loaded = false;
     });
 
+    it('should addFiles', () => {
+        const commandLine = createEmptyCommandLine();
+        // @ts-ignore
+        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+
+        const instance = Configuration.getInstance();
+        instance.addFiles('file1', 'file2');
+
+        expect(instance.getFiles().sort()).toEqual(['file1', 'file2'].sort());
+    });
+
     it('should call verifyPrematureActions', () => {
         const commandLine = createEmptyCommandLine();
         // @ts-ignore

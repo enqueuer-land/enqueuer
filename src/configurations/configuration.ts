@@ -58,6 +58,10 @@ export class Configuration {
         return this.parallel;
     }
 
+    public addFiles(...files: string[]): void {
+        this.files = this.files.concat(files);
+    }
+
     public getFiles(): string[] {
         return this.files;
     }
@@ -70,6 +74,10 @@ export class Configuration {
         return this.outputs;
     }
 
+    public setMaxReportLevelPrint(level: number) {
+        this.maxReportLevelPrint = level;
+    }
+
     public getMaxReportLevelPrint(): number {
         return this.maxReportLevelPrint;
     }
@@ -80,6 +88,10 @@ export class Configuration {
 
     public getPlugins(): string[] {
         return this.plugins;
+    }
+
+    public addPlugins(...plugins: string[]): void {
+        this.plugins = this.plugins.concat(plugins);
     }
 
     private adjustFromCommandLine(): void {

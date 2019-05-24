@@ -52,17 +52,17 @@ export class RequisitionRunner {
         return await this.iterateRequisition(evaluatedIterations);
     }
 
-    private async iterateRequisition(evaluatedIterations: number) {
+    private async iterateRequisition(iterations: number) {
         const reports = [];
-        for (let iteration = 0; iteration < evaluatedIterations; ++iteration) {
+        for (let iterationCounter = 0; iterationCounter < iterations; ++iterationCounter) {
             try {
                 this.replaceVariables();
                 Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name}'`);
                 const report = await this.startRequisitionReporter();
-                if (evaluatedIterations > 1) {
-                    report.name += ` [${iteration}]`;
+                if (iterations > 1) {
+                    report.name += ` [${iterationCounter}]`;
                 }
-                report.iteration = iteration;
+                report.iteration = iterationCounter;
                 reports.push(report);
                 this.printReport(report);
             } catch (err) {
