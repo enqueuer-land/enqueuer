@@ -32,7 +32,7 @@ export class RequisitionReportGenerator {
     public getReport(): RequisitionModel {
         this.report.valid = (this.report.subscriptions || []).every(report => reportModelIsPassing(report)) &&
             (this.report.publishers || []).every(report => reportModelIsPassing(report)) &&
-            (this.report.tests || []).every(report => testModelIsPassing(report));
+            (this.report.tests || []).every(test => testModelIsPassing(test));
         return this.report;
     }
 

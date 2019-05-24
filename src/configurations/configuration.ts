@@ -6,6 +6,8 @@ import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
+process.setMaxListeners(30);
+
 export class Configuration {
     private static instance: Configuration;
     private static loaded: boolean = false;

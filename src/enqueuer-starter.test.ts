@@ -18,22 +18,14 @@ Configuration.getInstance.mockImplementation(() => {
 describe('EnqueuerStarter', () => {
     it('Should translate true to 0', async () => {
         // @ts-ignore
-        EnqueuerRunner.mockImplementationOnce(() => {
-            return {
-                execute: () => true
-            };
-        });
+        EnqueuerRunner.mockImplementationOnce(() => ({execute: () => []}));
 
         expect(await new EnqueuerStarter().start()).toBe(0);
     });
 
     it('Should translate false to 1', async () => {
         // @ts-ignore
-        EnqueuerRunner.mockImplementationOnce(() => {
-            return {
-                execute: () => false
-            };
-        });
+        EnqueuerRunner.mockImplementationOnce(() => ({execute: () => [{valid: false}]}));
 
         expect(await new EnqueuerStarter().start()).toBe(1);
     });

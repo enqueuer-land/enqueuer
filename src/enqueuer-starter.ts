@@ -15,7 +15,8 @@ export class EnqueuerStarter {
     public async start(): Promise<number> {
         let statusCode = 1;
         try {
-            statusCode = await this.enqueuerRunner.execute() ? 0 : 1;
+            const reports = await this.enqueuerRunner.execute();
+            statusCode = reports.every(report => report.valid) ? 0 : 1;
         } catch (error) {
             Logger.fatal(`Execution error: ${error}`);
             statusCode = -1;

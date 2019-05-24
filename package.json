@@ -3,6 +3,7 @@
   "version": "4.3.1",
   "description": "Polyglot flow testing tool",
   "main": "js/index.js",
+  "typings": "./js/enqueuer.d.ts",
   "homepage": "https://enqueuer.com",
   "scripts": {
     "start": "node js/index.js",
@@ -17,7 +18,7 @@
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "updateHtml": "misc/mdToHtml.js",
     "all": "npm run clean && npm run lint && npm run build && npm link && npm run test && npm run updateHtml",
-    "build": "tsc && ./node_modules/.bin/dts-generator --project ./ --out enqueuer.d.ts",
+    "build": "tsc",
     "commit": "git-cz",
     "semantic-release": "semantic-release"
   },
@@ -73,10 +74,9 @@
     "@types/yamljs": "^0.2.30",
     "commitizen": "^3.0.7",
     "cz-conventional-changelog": "^2.1.0",
-    "dts-generator": "^3.0.0",
     "jest": "^24.1.0",
     "pagedown": "^1.1.0",
-    "semantic-release": "^15.13.3",
+    "semantic-release": "^15.13.14",
     "ts-jest": "^24.0.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.13.0",

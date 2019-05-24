@@ -13,6 +13,7 @@ import {ComponentParentBackupper} from '../components/component-parent-backupper
 import {ComponentImporter} from './component-importer';
 import {reportModelIsPassing} from '../models/outputs/report-model';
 import {RequisitionAdopter} from '../components/requisition-adopter';
+import {NotificationEmitter, Notifications} from '../notifications/notification-emitter';
 
 //TODO test it
 export class RequisitionRunner {
@@ -61,6 +62,7 @@ export class RequisitionRunner {
                 if (evaluatedIterations > 1) {
                     report.name += ` [${iteration}]`;
                 }
+                report.iteration = iteration;
                 reports.push(report);
                 this.printReport(report);
             } catch (err) {
@@ -78,6 +80,7 @@ export class RequisitionRunner {
     }
 
     private printReport(report: output.RequisitionModel) {
+        NotificationEmitter.emit(Notifications.REQUISITION_RAN, report);
         const configuration = Configuration.getInstance();
         if (this.level <= configuration.getMaxReportLevelPrint()) {
             const summaryOptions = {maxLevel: configuration.getMaxReportLevelPrint(), level: this.level, printFailingTests: this.level === 0};
