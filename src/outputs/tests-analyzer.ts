@@ -3,14 +3,14 @@ import {TestModel} from '../models/outputs/test-model';
 import {ReportModel} from '../models/outputs/report-model';
 
 export interface AnalyzedTest extends TestModel {
-    hierarchy: string[];
+    parent?: ReportModel;
 }
 
 export class TestsAnalyzer {
     private tests: AnalyzedTest[] = [];
 
     public addTest(report: ReportModel): TestsAnalyzer {
-        this.findRequisitions([report], []);
+        this.findRequisitions(report);
         return this;
     }
 
@@ -46,35 +46,34 @@ export class TestsAnalyzer {
         return percentage;
     }
 
-    private findRequisitions(requisition: ReportModel[] = [], hierarchy: string[]) {
-        requisition.forEach((child: any) => {
-            this.findRequisitions(child.requisitions, hierarchy.concat(child.name));
-            this.findTests(child, hierarchy.concat(child.name));
+    private findRequisitions(requisition: ReportModel, parent?: ReportModel) {
+        this.findTests(requisition, parent);
+        (requisition.requisitions || []).forEach((child: RequisitionModel) => {
+            this.findRequisitions(child, requisition);
         });
     }
 
-    private findTests(requisition: RequisitionModel, hierarchy: string[]) {
-        this.computeTests(requisition, hierarchy);
+    private findTests(requisition: ReportModel, parent?: ReportModel) {
+        this.computeTests(requisition, parent);
         for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
-            const childHierarchy = hierarchy.concat(child.name);
-            this.computeTests(child, childHierarchy);
+            this.computeTests(child, requisition);
         }
     }
 
-    private computeTests(reportModel: ReportModel, hierarchy: string[]): void {
+    private computeTests(reportModel: ReportModel, parent?: ReportModel): void {
         if (reportModel.ignored) {
             this.tests.push({
                 ignored: true,
                 description: 'Ignored',
                 valid: true,
                 name: reportModel.name,
-                hierarchy: hierarchy
+                parent: parent
             });
         } else {
             (reportModel.tests || []).forEach(test => {
                 this.tests.push({
                     ...test,
-                    hierarchy: hierarchy
+                    parent: reportModel
                 });
             });
         }

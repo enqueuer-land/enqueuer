@@ -38,7 +38,7 @@ export class SummaryTestOutput {
             new SummaryTestOutput(leaf, {
                 maxLevel: this.options.maxLevel,
                 level: this.options.level + 1,
-                printFailingTests: false
+                printFailingTests: this.options.printFailingTests
             }).print();
         }
     }
@@ -104,7 +104,7 @@ export class SummaryTestOutput {
             .forEach((failingTest: AnalyzedTest) => {
                 let initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
                 let message = initialTabulation;
-                message += this.prettifyTestHierarchyMessage(failingTest.hierarchy, failingTest.name, chalk.red);
+                message += this.prettifyTestHierarchyMessage(failingTest, chalk.red);
                 console.log(message);
                 initialTabulation += this.createEmptyStringSized(2 * this.options.tabulationPerLevel);
                 console.log(chalk.red(`${initialTabulation} ${failingTest.description}`));
@@ -120,11 +120,14 @@ export class SummaryTestOutput {
         return chalk.red;
     }
 
-    private prettifyTestHierarchyMessage(hierarchy: string[], name: string, color: Function) {
-        if (!hierarchy || hierarchy.length == 0) {
-            return '';
+    private prettifyTestHierarchyMessage(failingTest: AnalyzedTest, color: Function): string {
+        let result = '';
+        let parent = failingTest.parent;
+        while (parent !== undefined) {
+            result += color(parent.name) + chalk.gray(' › ');
+            parent = parent.parent;
         }
-        return hierarchy.map((level: string) => color(level)).join(chalk.gray(' › ')) + chalk.gray(' › ') + chalk.reset(name);
+        return result + chalk.reset(failingTest.name);
     }
 
 }

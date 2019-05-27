@@ -129,34 +129,34 @@ describe('TestsAnalyzer', () => {
         const test: RequisitionModel = {
             name: 'a',
             description: 'name',
-            tests: [{name: '0', valid: true}],
+            tests: [{name: 'a0', valid: true}],
             valid: true,
             requisitions: [{
                 name: 'b',
-                tests: [{name: '0', valid: true}],
+                tests: [{name: 'b0', valid: true}],
                 requisitions: [{
                     name: 'c',
-                    tests: [{name: '0', valid: true}],
+                    tests: [{name: 'c0', valid: true}],
                     requisitions: [{
                         name: 'd',
-                        tests: [{name: '0', ignored: true}],
+                        tests: [{name: 'd0', ignored: true}],
                     }, {
                         name: 'e',
                         ignored: true,
                     }],
                     publishers: [{
                         name: 'p',
-                        tests: [{name: '0', valid: false}]
+                        tests: [{name: 'e0', valid: false}]
                     }],
                     subscriptions: [
-                    {
-                        name: 's0',
-                        tests: [{name: '0', valid: true}]
-                    },
-                    {
-                        name: 's1',
-                        ignored: true
-                    }],
+                        {
+                            name: 's0',
+                            tests: [{name: '0', valid: true}]
+                        },
+                        {
+                            name: 's1',
+                            ignored: true
+                        }],
                 }]
             }]
         };
@@ -164,14 +164,37 @@ describe('TestsAnalyzer', () => {
         const tests = new TestsAnalyzer().addTest(test).getTests();
 
         expect(tests.length).toBe(8);
-        expect(tests[0]).toEqual({'hierarchy': ['a', 'b', 'c', 'd'], 'name': '0', 'ignored': true});
-        expect(tests[1]).toEqual({'hierarchy': ['a', 'b', 'c', 'e'], 'name': 'e', 'valid': true, ignored: true, description: 'Ignored'});
-        expect(tests[2]).toEqual({'hierarchy': ['a', 'b', 'c'], 'name': '0', 'valid': true});
-        expect(tests[3]).toEqual({'hierarchy': ['a', 'b', 'c', 's0'], 'name': '0', 'valid': true});
-        expect(tests[4]).toEqual({'hierarchy': ['a', 'b', 'c', 's1'], 'name': 's1', 'valid': true, ignored: true, description: 'Ignored'});
-        expect(tests[5]).toEqual({'hierarchy': ['a', 'b', 'c', 'p'], 'name': '0', 'valid': false});
-        expect(tests[6]).toEqual({'hierarchy': ['a', 'b'], 'name': '0', 'valid': true});
-        expect(tests[7]).toEqual({'hierarchy': ['a'], 'name': '0', 'valid': true});
-    });
+        expect(tests[0].parent!.name).toBe('a');
+        delete tests[0].parent;
+        expect(tests[0]).toEqual({'name': 'a0', 'valid': true});
 
+        expect(tests[1].parent!.name).toBe('b');
+        delete tests[1].parent;
+        expect(tests[1]).toEqual({'name': 'b0', 'valid': true});
+
+        expect(tests[2].parent!.name).toBe('c');
+        delete tests[2].parent;
+        expect(tests[2]).toEqual({'name': 'c0', 'valid': true});
+
+        expect(tests[3].parent!.name).toBe('s0');
+        delete tests[3].parent;
+        expect(tests[3]).toEqual({'name': '0', 'valid': true});
+
+        expect(tests[4].parent!.name).toBe('c');
+        delete tests[4].parent;
+        expect(tests[4]).toEqual({'description': 'Ignored', 'ignored': true, 'name': 's1', 'valid': true});
+
+        expect(tests[5].parent!.name).toBe('p');
+        delete tests[5].parent;
+        expect(tests[5]).toEqual({'name': 'e0', 'valid': false});
+
+        expect(tests[6].parent!.name).toBe('d');
+        delete tests[6].parent;
+        expect(tests[6]).toEqual({'name': 'd0', 'ignored': true});
+
+        expect(tests[7].parent!.name).toBe('c');
+        delete tests[7].parent;
+        expect(tests[7]).toEqual({'name': 'e', 'ignored': true, description: 'Ignored', valid: true});
+
+    });
 });

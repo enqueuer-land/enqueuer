@@ -8,6 +8,7 @@ export {PublisherModel as OutputPublisherModel} from './src/models/outputs/publi
 export {SubscriptionModel as OutputSubscriptionModel} from './src/models/outputs/subscription-model';
 export {TimeModel as OutputTimeModel} from './src/models/outputs/time-model';
 export {TestModel as OutputTestModel} from './src/models/outputs/test-model';
+export * from './src/outputs/tests-analyzer';
 
 export * from './src/models/events/assertion';
 export * from './src/models/events/event';
@@ -31,3 +32,4 @@ export * from './src/plugins/dynamic-modules-manager';
 export * from './src/strings/id-generator';
 
 export * from './src/notifications/notification-emitter';
+

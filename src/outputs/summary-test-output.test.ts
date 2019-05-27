@@ -198,21 +198,6 @@ describe('SummaryTestOutput', () => {
         expect(consolePrintedTimes('requisition')).toBe(0);
     });
 
-    it('should print children tests ony when print requisition', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: true,
-            tests: [],
-            publishers: [{name: 'publisher', tests: [{name: 'pubTest'}]}],
-            subscriptions: [{name: 'subscription', tests: [{name: 'subTest'}]}],
-        }).print();
-
-        expect(consolePrintedTimes('publisher')).toBe(2);
-        expect(consolePrintedTimes('subscription')).toBe(2);
-        expect(consolePrintedTimes('pubTest')).toBe(1);
-        expect(consolePrintedTimes('subTest')).toBe(1);
-    });
-
     it('should not print children if it is deeper than max', () => {
 
         new SummaryTestOutput({
