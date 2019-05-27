@@ -1,4 +1,5 @@
 import {RequisitionAdopter} from './requisition-adopter';
+import {levels} from 'log4js';
 
 describe('RequisitionAdopter', () => {
 
@@ -12,6 +13,7 @@ describe('RequisitionAdopter', () => {
         expect(parent.publishers).toEqual([]);
         expect(parent.subscriptions).toEqual([]);
         expect(parent.delay).toBe(0);
+        expect(parent.level).toBe(0);
         expect(parent.iterations).toBe(1);
     });
 
@@ -23,6 +25,7 @@ describe('RequisitionAdopter', () => {
             id: 'otherId',
             value: 123,
             delay: 10000,
+            level: 5,
             iterations: 9,
         }).getRequisition();
 
@@ -33,6 +36,7 @@ describe('RequisitionAdopter', () => {
         expect(parent.subscriptions).toEqual([]);
         expect(parent.requisitions).toEqual([]);
         expect(parent.delay).toBe(parent.delay);
+        expect(parent.level).toBe(parent.level);
         expect(parent.iterations).toBe(parent.iterations);
     });
 
@@ -119,7 +123,7 @@ describe('RequisitionAdopter', () => {
     it('should merge with default values', () => {
         const requisitions = [
             {
-                'delay': 100,
+                'delay': 200,
                 'requisitions': [
                     {
                         'delay': 100
@@ -129,7 +133,7 @@ describe('RequisitionAdopter', () => {
             }
         ];
 
-        const requisition = new RequisitionAdopter({name: 'name', requisitions}).getRequisition();
+        const requisition = new RequisitionAdopter({name: 'name', requisitions, level: 6}).getRequisition();
 
         expect(requisition.name).toBe('name');
         expect(requisition.id).toBeDefined();
@@ -137,15 +141,18 @@ describe('RequisitionAdopter', () => {
         expect(requisition.publishers).toEqual([]);
         expect(requisition.subscriptions).toEqual([]);
         expect(requisition.delay).toBe(0);
+        expect(requisition.level).toBe(6);
         expect(requisition.iterations).toBe(1);
 
         expect(requisition.requisitions[0].name).toBe('examples/no-tests.yml');
         expect(requisition.requisitions[0].id).toBeDefined();
         expect(requisition.requisitions[0].parent!.name).toBe('name');
         expect(requisition.requisitions[0].requisitions[0].delay).toBe(100);
+        expect(requisition.requisitions[0].requisitions[0].level).toBe(8);
         expect(requisition.requisitions[0].publishers).toEqual([]);
         expect(requisition.requisitions[0].subscriptions).toEqual([]);
-        expect(requisition.requisitions[0].delay).toBe(100);
+        expect(requisition.requisitions[0].delay).toBe(200);
+        expect(requisition.requisitions[0].level).toBe(7);
         expect(requisition.requisitions[0].iterations).toBe(1);
 
     });

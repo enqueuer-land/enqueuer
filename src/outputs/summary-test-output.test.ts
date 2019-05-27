@@ -79,18 +79,23 @@ describe('SummaryTestOutput', () => {
 
     it('should print failed tests', () => {
         new SummaryTestOutput({
-            name: 'name',
-            valid: false,
-            tests: [{
-                name: 'any',
+                name: 'name',
                 valid: false,
-                description: 'description'
-            }, {
-                name: 'second',
-                valid: false,
-                description: 'secDesc'
-            }]
-        }, {printTests: true, level: 0}).print();
+                tests: [{
+                    name: 'any',
+                    valid: false,
+                    description: 'description'
+                }, {
+                    name: 'second',
+                    valid: false,
+                    description: 'secDesc'
+                }]
+            },
+            {
+                // @ts-ignore
+                printTests: true,
+                level: 0
+            }).print();
 
         expect(consolePrintedTimes('FAIL')).toBe(1);
         expect(consolePrintedTimes('name')).toBe(3);

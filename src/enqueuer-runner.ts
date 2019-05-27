@@ -32,7 +32,7 @@ export class EnqueuerRunner {
                 parallel: configuration.isParallel()
             }).getRequisition();
         const parsingErrors = requisitionFileParser.getFilesErrors();
-        const finalReports = await new RequisitionRunner(this.enqueuerRequisition, 0).run();
+        const finalReports = await new RequisitionRunner(this.enqueuerRequisition, true).run();
         Logger.info('Publishing reports');
         const outputs = new MultiTestsOutput(configuration.getOutputs());
         await finalReports.map(async report => {

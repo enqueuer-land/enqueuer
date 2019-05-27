@@ -11,6 +11,7 @@ export class RequisitionAdopter {
         requisitions: [],
         delay: 0,
         iterations: 1,
+        level: 0,
         parallel: false,
         ignore: false,
     };
@@ -27,7 +28,10 @@ export class RequisitionAdopter {
         requisition = Object.assign({}, this.defaultModel, requisition) as RequisitionModel;
         this.putNameAndId(requisition, name, parent);
         requisition.requisitions = requisition.requisitions
-            .map((child, index) => this.baptiseRequisition(child, `Requisition #${index}`, requisition) as RequisitionModel);
+            .map((child, index) => {
+                child.level = requisition.level + 1;
+                return this.baptiseRequisition(child, `Requisition #${index}`, requisition) as RequisitionModel;
+            });
         requisition.publishers = requisition.publishers
             .map((publisher, index) => this.putNameAndId(publisher, `Publisher #${index}`, requisition) as PublisherModel);
         requisition.subscriptions = requisition.subscriptions

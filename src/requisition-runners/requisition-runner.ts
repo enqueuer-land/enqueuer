@@ -18,11 +18,11 @@ import {NotificationEmitter, Notifications} from '../notifications/notification-
 //TODO test it
 export class RequisitionRunner {
 
-    private readonly level: number;
+    private readonly printTests: boolean;
     private requisition: input.RequisitionModel;
 
-    public constructor(requisition: input.RequisitionModel, level: number = 0) {
-        this.level = level || 0;
+    public constructor(requisition: input.RequisitionModel, printTests: boolean = false) {
+        this.printTests = printTests;
         this.requisition = new RequisitionAdopter(requisition).getRequisition();
     }
 
@@ -82,8 +82,12 @@ export class RequisitionRunner {
     private printReport(report: output.RequisitionModel) {
         NotificationEmitter.emit(Notifications.REQUISITION_RAN, report);
         const configuration = Configuration.getInstance();
-        if (this.level <= configuration.getMaxReportLevelPrint()) {
-            const summaryOptions = {maxLevel: configuration.getMaxReportLevelPrint(), level: this.level, printFailingTests: this.level === 0};
+        if (this.requisition.level <= configuration.getMaxReportLevelPrint()) {
+            const summaryOptions = {
+                maxLevel: configuration.getMaxReportLevelPrint(),
+                printFailingTests: this.printTests,
+                level: this.requisition.level
+            };
             try {
                 new SummaryTestOutput(report, summaryOptions).print();
             } catch (e) {
@@ -147,7 +151,7 @@ export class RequisitionRunner {
 
     private async executeChild(child: input.RequisitionModel, index: number) {
         child.parent = this.requisition;
-        const requisitionRunner = new RequisitionRunner(child, this.level + 1);
+        const requisitionRunner = new RequisitionRunner(child, this.printTests);
         const requisitionModels = await requisitionRunner.run();
         this.requisition.requisitions[index] = requisitionRunner.requisition;
         return requisitionModels;
