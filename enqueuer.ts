@@ -8,14 +8,15 @@ export {PublisherModel as OutputPublisherModel} from './src/models/outputs/publi
 export {SubscriptionModel as OutputSubscriptionModel} from './src/models/outputs/subscription-model';
 export {TimeModel as OutputTimeModel} from './src/models/outputs/time-model';
 export {TestModel as OutputTestModel} from './src/models/outputs/test-model';
-export * from './src/outputs/tests-analyzer';
 
 export * from './src/models/events/assertion';
 export * from './src/models/events/event';
-export * from './src/models/events/assertion';
 export * from './src/models/events/finishable';
 export * from './src/models/events/initializable';
 export * from './src/models/events/message-receiver';
+
+export * from './src/outputs/tests-analyzer';
+export * from './src/outputs/formatters/report-formatter';
 
 export * from './src/enqueuer-runner';
 
@@ -27,9 +28,23 @@ export * from './src/loggers/logger';
 export * from './src/requisition-runners/requisition-parser';
 export * from './src/requisition-runners/requisition-runner';
 
-export * from './src/plugins/dynamic-modules-manager';
-
 export * from './src/strings/id-generator';
 
 export * from './src/notifications/notification-emitter';
 
+export * from './src/plugins/dynamic-modules-manager';
+export * from './src/plugins/protocol-manager';
+export * from './src/plugins/report-formatter-manager';
+export * from './src/plugins/main-instance';
+
+export * from './src/protocols/publisher-protocol';
+export * from './src/protocols/protocol';
+export * from './src/protocols/subscription-protocol';
+
+export * from './src/publishers/publisher';
+
+export * from './src/subscriptions/subscription';
+
+export * from './src/object-parser/object-parser';
+
+export * from './src/asserters/asserter';

@@ -1,4 +1,4 @@
-import {RequisitionDefaultReports} from "./requisition-default-reports";
+import {RequisitionDefaultReports} from './requisition-default-reports';
 
 describe('RequisitionDefaultReports', () => {
     it('default', () => {
@@ -8,12 +8,12 @@ describe('RequisitionDefaultReports', () => {
         expect(report.time!.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
-            "name": "g",
-            id: "id",
+            'name': 'g',
+            id: 'id',
             publishers: [],
-            "subscriptions": [],
-            "tests": [],
-            "valid": true,
+            'subscriptions': [],
+            'tests': [],
+            'valid': true,
             requisitions: []
         });
     });
@@ -26,11 +26,11 @@ describe('RequisitionDefaultReports', () => {
         expect(report.time!.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
-            "name": "g",
+            'name': 'g',
             publishers: [],
-            "subscriptions": [],
-            "tests": [],
-            "valid": true,
+            'subscriptions': [],
+            'tests': [],
+            'valid': true,
             requisitions: []
         });
     });
@@ -42,11 +42,11 @@ describe('RequisitionDefaultReports', () => {
         expect(report.time!.totalTime).toBeLessThan(1000);
         delete report.time;
         expect(report).toEqual({
-            "name": "lopidio",
+            'name': 'lopidio',
             publishers: [],
-            "subscriptions": [],
-            "tests": [{"description": 'err', "name": "Requisition ran", "valid": false}],
-            "valid": false,
+            'subscriptions': [],
+            'tests': [{'description': 'err', 'name': 'Requisition ran', 'valid': false}],
+            'valid': false,
             requisitions: []
         });
     });
@@ -58,33 +58,34 @@ describe('RequisitionDefaultReports', () => {
         expect(report.time!.totalTime).toBe(0);
         delete report.time;
         expect(report).toEqual({
-                "name": "virgs",
+                'name': 'virgs',
                 publishers: [],
-                "subscriptions": [],
-                "tests": [{
-                    "description": "There is no iterations set to this requisition",
-                    "name": "Requisition skipped",
-                    "valid": true
+                'subscriptions': [],
+                'tests': [{
+                    'description': 'There is no iterations set to this requisition',
+                    'name': 'Requisition skipped',
+                    'valid': true
                 }],
-                "valid": true,
+                'valid': true,
                 requisitions: []
             }
         );
     });
 
     it('createIgnoredReport', () => {
-        const report = RequisitionDefaultReports.createIgnoredReport({name: 'virgs'});
+        const report = RequisitionDefaultReports.createIgnoredReport({name: 'virgs', level: 4});
         expect(report.time!.startTime).toBeDefined();
         expect(report.time!.endTime).toBeDefined();
         expect(report.time!.totalTime).toBe(0);
         delete report.time;
         expect(report).toEqual({
-                "name": "virgs",
+                'name': 'virgs',
                 ignored: true,
+                level: 4,
                 publishers: [],
-                "subscriptions": [],
-                "tests": [],
-                "valid": true,
+                'subscriptions': [],
+                'tests': [],
+                'valid': true,
                 requisitions: []
             }
         );

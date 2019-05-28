@@ -7,8 +7,6 @@ import {Store} from '../configurations/store';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
 import {FileContentMapCreator} from '../configurations/file-content-map-creator';
 import {IterationsEvaluator} from './iterations-evaluator';
-import {SummaryTestOutput} from '../outputs/summary-test-output';
-import {Configuration} from '../configurations/configuration';
 import {ComponentParentBackupper} from '../components/component-parent-backupper';
 import {ComponentImporter} from './component-importer';
 import {reportModelIsPassing} from '../models/outputs/report-model';
@@ -18,11 +16,9 @@ import {NotificationEmitter, Notifications} from '../notifications/notification-
 //TODO test it
 export class RequisitionRunner {
 
-    private readonly printTests: boolean;
     private requisition: input.RequisitionModel;
 
-    public constructor(requisition: input.RequisitionModel, printTests: boolean = false) {
-        this.printTests = printTests;
+    public constructor(requisition: input.RequisitionModel) {
         this.requisition = new RequisitionAdopter(requisition).getRequisition();
     }
 
@@ -32,21 +28,21 @@ export class RequisitionRunner {
             this.importRequisition();
         } catch (err) {
             Logger.error(`Error importing requisition`);
-            const report = RequisitionDefaultReports.createRunningError({name: this.requisition.name, id: this.requisition.id}, err);
-            this.printReport(report);
+            const report = RequisitionDefaultReports.createRunningError(this.requisition, err);
+            this.emitNotification(report);
             return [report];
         }
         this.replaceVariables();
         const evaluatedIterations: number = new IterationsEvaluator().iterations(this.requisition.iterations);
         if (evaluatedIterations <= 0) {
             Logger.info(`Requisition will be skipped duo no iterations`);
-            const report = RequisitionDefaultReports.createSkippedReport({name: this.requisition.name, id: this.requisition.id});
-            this.printReport(report);
+            const report = RequisitionDefaultReports.createSkippedReport(this.requisition);
+            this.emitNotification(report);
             return [report];
         } else if (this.requisition.ignore) {
             Logger.info(`Requisition will be ignored`);
-            const report = RequisitionDefaultReports.createIgnoredReport({name: this.requisition.name, id: this.requisition.id});
-            this.printReport(report);
+            const report = RequisitionDefaultReports.createIgnoredReport(this.requisition);
+            this.emitNotification(report);
             return [report];
         }
         return await this.iterateRequisition(evaluatedIterations);
@@ -64,9 +60,9 @@ export class RequisitionRunner {
                 }
                 report.iteration = iterationCounter;
                 reports.push(report);
-                this.printReport(report);
+                this.emitNotification(report);
             } catch (err) {
-                reports.push(RequisitionDefaultReports.createRunningError({name: this.requisition.name, id: this.requisition.id}, err.toString()));
+                reports.push(RequisitionDefaultReports.createRunningError(this.requisition, err.toString()));
                 Logger.error(err);
             }
         }
@@ -79,21 +75,8 @@ export class RequisitionRunner {
         }
     }
 
-    private printReport(report: output.RequisitionModel) {
+    private emitNotification(report: output.RequisitionModel) {
         NotificationEmitter.emit(Notifications.REQUISITION_RAN, report);
-        const configuration = Configuration.getInstance();
-        if (this.requisition.level <= configuration.getMaxReportLevelPrint()) {
-            const summaryOptions = {
-                maxLevel: configuration.getMaxReportLevelPrint(),
-                printFailingTests: this.printTests,
-                level: this.requisition.level
-            };
-            try {
-                new SummaryTestOutput(report, summaryOptions).print();
-            } catch (e) {
-                Logger.warning(e);
-            }
-        }
     }
 
     private replaceVariables(): void {
@@ -151,7 +134,7 @@ export class RequisitionRunner {
 
     private async executeChild(child: input.RequisitionModel, index: number) {
         child.parent = this.requisition;
-        const requisitionRunner = new RequisitionRunner(child, this.printTests);
+        const requisitionRunner = new RequisitionRunner(child);
         const requisitionModels = await requisitionRunner.run();
         this.requisition.requisitions[index] = requisitionRunner.requisition;
         return requisitionModels;

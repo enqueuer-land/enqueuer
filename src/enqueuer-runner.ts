@@ -8,6 +8,8 @@ import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {Configuration} from './configurations/configuration';
 import {RequisitionAdopter} from './components/requisition-adopter';
 import {reportModelIsPassing} from './models/outputs/report-model';
+import {NotificationEmitter, Notifications} from './notifications/notification-emitter';
+import {SummaryTestOutput} from './outputs/summary-test-output';
 
 export class EnqueuerRunner {
     private static reportName: string = 'enqueuer';
@@ -17,6 +19,7 @@ export class EnqueuerRunner {
 
     constructor() {
         this.startTime = new DateController();
+        NotificationEmitter.on(Notifications.REQUISITION_RAN, (report: output.RequisitionModel) => this.printReport(report));
     }
 
     public async execute(): Promise<output.RequisitionModel[]> {
@@ -32,7 +35,7 @@ export class EnqueuerRunner {
                 parallel: configuration.isParallel()
             }).getRequisition();
         const parsingErrors = requisitionFileParser.getFilesErrors();
-        const finalReports = await new RequisitionRunner(this.enqueuerRequisition, true).run();
+        const finalReports = await new RequisitionRunner(this.enqueuerRequisition).run();
         Logger.info('Publishing reports');
         const outputs = new MultiTestsOutput(configuration.getOutputs());
         await finalReports.map(async report => {
@@ -45,6 +48,23 @@ export class EnqueuerRunner {
 
     public getEnqueuerRequisition(): input.RequisitionModel | undefined {
         return this.enqueuerRequisition;
+    }
+
+    private printReport(report: output.RequisitionModel): void {
+        const configuration = Configuration.getInstance();
+        if (report.level === undefined || report.level <= configuration.getMaxReportLevelPrint()) {
+            try {
+                if (report.level === 0) {
+                    console.log(`   ----------------`);
+                }
+                new SummaryTestOutput(report, {
+                    maxLevel: configuration.getMaxReportLevelPrint()
+                }).print();
+            } catch (e) {
+                Logger.warning(e);
+            }
+        }
+
     }
 
 }

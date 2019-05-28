@@ -1,13 +1,9 @@
 import {RequisitionModel} from '../models/outputs/requisition-model';
-import {TestModel} from '../models/outputs/test-model';
 import {ReportModel} from '../models/outputs/report-model';
-
-export interface AnalyzedTest extends TestModel {
-    parent?: ReportModel;
-}
+import {TestModel} from '../models/outputs/test-model';
 
 export class TestsAnalyzer {
-    private tests: AnalyzedTest[] = [];
+    private tests: TestModel[] = [];
 
     public addTest(report: ReportModel): TestsAnalyzer {
         this.findRequisitions(report);
@@ -18,23 +14,23 @@ export class TestsAnalyzer {
         return this.getNotIgnoredTests().every(test => test.valid);
     }
 
-    public getTests(): AnalyzedTest[] {
+    public getTests(): TestModel[] {
         return this.tests;
     }
 
-    public getNotIgnoredTests(): AnalyzedTest[] {
+    public getNotIgnoredTests(): TestModel[] {
         return this.tests.filter(test => test.ignored === false || test.ignored === undefined);
     }
 
-    public getIgnoredList(): AnalyzedTest[] {
+    public getIgnoredList(): TestModel[] {
         return this.tests.filter(test => test.ignored !== false && test.ignored !== undefined);
     }
 
-    public getPassingTests(): AnalyzedTest[] {
+    public getPassingTests(): TestModel[] {
         return this.tests.filter(test => test.valid && !test.ignored);
     }
 
-    public getFailingTests(): AnalyzedTest[] {
+    public getFailingTests(): TestModel[] {
         return this.tests.filter(test => !test.valid && !test.ignored);
     }
 
@@ -46,35 +42,29 @@ export class TestsAnalyzer {
         return percentage;
     }
 
-    private findRequisitions(requisition: ReportModel, parent?: ReportModel) {
-        this.findTests(requisition, parent);
+    private findRequisitions(requisition: ReportModel) {
+        this.findTests(requisition);
         (requisition.requisitions || []).forEach((child: RequisitionModel) => {
-            this.findRequisitions(child, requisition);
+            this.findRequisitions(child);
         });
     }
 
-    private findTests(requisition: ReportModel, parent?: ReportModel) {
-        this.computeTests(requisition, parent);
+    private findTests(requisition: ReportModel) {
+        this.computeTests(requisition);
         for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
-            this.computeTests(child, requisition);
+            this.computeTests(child);
         }
     }
 
-    private computeTests(reportModel: ReportModel, parent?: ReportModel): void {
+    private computeTests(reportModel: ReportModel): void {
         if (reportModel.ignored) {
             this.tests.push({
-                ignored: true,
-                description: 'Ignored',
-                valid: true,
-                name: reportModel.name,
-                parent: parent
+                ...reportModel,
+                description: reportModel.description || 'Ignored'
             });
         } else {
             (reportModel.tests || []).forEach(test => {
-                this.tests.push({
-                    ...test,
-                    parent: reportModel
-                });
+                this.tests.push(test);
             });
         }
     }

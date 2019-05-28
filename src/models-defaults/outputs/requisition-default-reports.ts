@@ -4,7 +4,8 @@ import {TestModel} from '../../models/outputs/test-model';
 
 export class RequisitionDefaultReports {
 
-    public static createDefaultReport(base: { name: string, id: string, ignored?: boolean }, tests: TestModel[] = []): output.RequisitionModel {
+    public static createDefaultReport(base: { name: string, id: string, ignored?: boolean, level?: number },
+                                      tests: TestModel[] = []): output.RequisitionModel {
         const valid = tests.length > 0 ? tests.every((test) => test.valid) : true;
         return {
             valid: valid,
@@ -12,6 +13,7 @@ export class RequisitionDefaultReports {
             name: base.name,
             id: base.id,
             ignored: base.ignored,
+            level: base.level,
             subscriptions: [],
             publishers: [],
             time: {

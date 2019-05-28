@@ -1,27 +1,32 @@
 import chalk from 'chalk';
-import {AnalyzedTest, TestsAnalyzer} from './tests-analyzer';
+import {TestsAnalyzer} from './tests-analyzer';
 import {ReportModel} from '../models/outputs/report-model';
+import {TestModel} from '../models/outputs/test-model';
+import {RequisitionModel} from '../models/outputs/requisition-model';
 
 export type SummaryOptions = {
-    maxLevel?: number,
-    level?: number,
-    printFailingTests?: boolean,
-    tabulationPerLevel?: number,
-    summarySpacing?: number
+    maxLevel: number,
+    level: number,
+    tabulationPerLevel: number,
+    summarySpacing: number
 };
 
 export class SummaryTestOutput {
     private readonly report: ReportModel;
-    private readonly options = {
+    private readonly options: SummaryOptions = {
         level: 0,
-        printFailingTests: true,
         maxLevel: 100,
         tabulationPerLevel: 6,
         summarySpacing: 90
     };
 
-    public constructor(report: ReportModel, options?: SummaryOptions) {
+    public constructor(report: RequisitionModel, options?: any) {
         this.report = report;
+        if (options && options.level !== undefined) {
+            this.options.level = options.level;
+        } else if (report.level) {
+            this.options.level = report.level;
+        }
         this.options = Object.assign({}, this.options, options);
     }
 
@@ -33,22 +38,20 @@ export class SummaryTestOutput {
     }
 
     private printChildren() {
-        const reportLeaves = (this.report.subscriptions || []).concat(this.report.publishers || []);
+        const reportLeaves = (this.report.subscriptions || [])
+            .concat(this.report.publishers || []);
         for (const leaf of reportLeaves) {
-            new SummaryTestOutput(leaf, {
-                maxLevel: this.options.maxLevel,
+            const options = Object.assign({}, this.options, {
                 level: this.options.level + 1,
-                printFailingTests: this.options.printFailingTests
-            }).print();
+            });
+            new SummaryTestOutput(leaf, options).print();
         }
     }
 
     private printSelf() {
         const testAnalyzer = new TestsAnalyzer().addTest(this.report);
         console.log(this.formatTitle(testAnalyzer) + this.createSummary(testAnalyzer));
-        if (this.options.printFailingTests && testAnalyzer.getFailingTests().length > 0) {
-            this.printFailingTests(testAnalyzer);
-        }
+        this.printFailingTests(this.report, []);
     }
 
     private formatTitle(testAnalyzer: TestsAnalyzer): string {
@@ -90,7 +93,7 @@ export class SummaryTestOutput {
         let message = `${testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;
         const ignoredTests = testAnalyzer.getIgnoredList();
         if (ignoredTests.length > 0) {
-            message += ` - ${ignoredTests.length} ignored -`;
+            message += chalk.yellow(` - ${ignoredTests.length} ignored -`);
         }
         if (this.report.time) {
             const totalTime = this.report.time.totalTime;
@@ -99,16 +102,24 @@ export class SummaryTestOutput {
         return this.getColor(percentage)(message);
     }
 
-    private printFailingTests(testAnalyzer: TestsAnalyzer) {
-        testAnalyzer.getFailingTests()
-            .forEach((failingTest: AnalyzedTest) => {
-                let initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
-                let message = initialTabulation;
-                message += this.prettifyTestHierarchyMessage(failingTest, chalk.red);
-                console.log(message);
-                initialTabulation += this.createEmptyStringSized(2 * this.options.tabulationPerLevel);
-                console.log(chalk.red(`${initialTabulation} ${failingTest.description}`));
-            });
+    private printFailingTests(report: ReportModel, hierarchy: string[]) {
+        if (!report.ignored && !report.valid) {
+            (report.tests || [])
+                .filter((test: TestModel) => !test.ignored && !test.valid)
+                .forEach((test: TestModel) => {
+                    const initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
+                    const hierarchyTitle = initialTabulation + this.prettifyTestHierarchyMessage(hierarchy, test.name, chalk.red);
+                    console.log(hierarchyTitle);
+                    const description = `${initialTabulation}${this.createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}`;
+                    console.log(chalk.red(description));
+                });
+
+            (report.subscriptions || [])
+                .concat(report.publishers || [])
+                .concat(report.requisitions || [])
+                .forEach(((leaf: ReportModel) => this.printFailingTests(leaf, hierarchy.concat(leaf.name))));
+
+        }
     }
 
     private getColor(percentage: number): Function {
@@ -120,14 +131,10 @@ export class SummaryTestOutput {
         return chalk.red;
     }
 
-    private prettifyTestHierarchyMessage(failingTest: AnalyzedTest, color: Function): string {
-        let result = '';
-        let parent = failingTest.parent;
-        while (parent !== undefined) {
-            result += color(parent.name) + chalk.gray(' › ');
-            parent = parent.parent;
-        }
-        return result + chalk.reset(failingTest.name);
+    private prettifyTestHierarchyMessage(hierarchy: string[], name: string, color: Function): string {
+        const reducer = (result: string, level: string) => result + color(level) + chalk.gray(' › ');
+        return hierarchy
+            .reduce(reducer, '') + chalk.reset(name);
     }
 
 }
