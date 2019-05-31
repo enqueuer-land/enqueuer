@@ -20,7 +20,7 @@ export class DynamicModulesManager {
     private readonly asserterManager: AsserterManager;
     private readonly builtInModules: string[];
     private readonly implicitModules: string[];
-    private explicitModules: string[];
+    private readonly explicitModules: string[];
 
     private constructor() {
         this.protocolManager = new ProtocolManager();
@@ -28,7 +28,8 @@ export class DynamicModulesManager {
         this.objectParserManager = new ObjectParserManager();
         this.asserterManager = new AsserterManager();
         this.builtInModules = this.findEveryEntryPointableBuiltInModule();
-        this.implicitModules = this.findEveryEnqueuerImplicitPluginPackage();
+        this.implicitModules = this.findEveryEnqueuerImplicitPluginPackage(os.homedir() + '/.nqr/node_modules/*')
+            .concat(this.findEveryEnqueuerImplicitPluginPackage(__dirname + '/../../node_modules/*'));
         this.explicitModules = [];
         this.initialModulesLoad();
     }
@@ -124,9 +125,8 @@ export class DynamicModulesManager {
         return Array.from(plugins.values());
     }
 
-    private findEveryEnqueuerImplicitPluginPackage(): string[] {
+    private findEveryEnqueuerImplicitPluginPackage(pattern: string): string[] {
         try {
-            const pattern = os.homedir() + '/.nqr/node_modules/*';
             return (glob.sync(pattern, {}) || [])
                 .map(module => module.replace(/\.js/, ''))
                 .filter(module => {

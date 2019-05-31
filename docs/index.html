@@ -1062,13 +1062,19 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 
 <h5 id="implicitly" style="padding-left: 16px">8.2.3 implicitly</h5>
 
-<p>When enqueuer runs, it looks for modules in <code class="yaml">.nqr</code> folder in the home directory, a.k.a. ~/ folder in linux distributions.
+<p>When enqueuer runs, it looks for modules in its same installation directory or in <code class="yaml">.nqr</code> folder in the home directory, a.k.a. ~/ folder in linux distributions.
 Therefore, if you run:</p>
 
 <pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer
 <span class="dollar-sign">$</span> mkdir ~/.nqr
 <span class="dollar-sign">$</span> cd ~/.nqr
 <span class="dollar-sign">$</span> npm install enqueuer-plugin-amqp
+<span class="dollar-sign">$</span> nqr -p amqp
+</code></pre>
+
+<p>Or</p>
+
+<pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer enqueuer-plugin-amqp
 <span class="dollar-sign">$</span> nqr -p amqp
 </code></pre>
 

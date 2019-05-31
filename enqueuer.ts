@@ -26,6 +26,8 @@ export * from './src/configurations/store';
 export * from './src/loggers/logger';
 
 export * from './src/requisition-runners/requisition-parser';
+export * from './src/requisition-runners/requisition-file-parser';
+export * from './src/requisition-runners/requisition-file-pattern-parser';
 export * from './src/requisition-runners/requisition-runner';
 
 export * from './src/strings/id-generator';

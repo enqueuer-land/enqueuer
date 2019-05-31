@@ -732,13 +732,17 @@ Tell enqueuer to use your plugin through configuration file this way:
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
 
 ##### implicitly
-When enqueuer runs, it looks for modules in `.nqr` folder in the home directory, a.k.a. ~/ folder in linux distributions.
+When enqueuer runs, it looks for modules in its same installation directory or in `.nqr` folder in the home directory, a.k.a. ~/ folder in linux distributions.
 Therefore, if you run:
     
     $ npm install --global enqueuer
     $ mkdir ~/.nqr
     $ cd ~/.nqr
     $ npm install enqueuer-plugin-amqp
+    $ nqr -p amqp
+Or
+    
+    $ npm install --global enqueuer enqueuer-plugin-amqp
     $ nqr -p amqp
     
 You'll see that the `enqueuer-plugin-amqp` plugin will be loaded.
