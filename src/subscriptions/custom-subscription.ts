@@ -14,7 +14,7 @@ class CustomSubscription extends Subscription {
         try {
             const moduleString: string = fs.readFileSync(this.module).toString();
             const module = requireFromString(moduleString);
-            this.custom = new module.Subscription(subscriptionModel);
+            this['custom'] = new module.Subscription(subscriptionModel);
         } catch (err) {
             Logger.error(`Error loading module '${this.module}': ${err}`);
         }

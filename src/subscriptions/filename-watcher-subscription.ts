@@ -10,7 +10,7 @@ class FileSystemWatcherSubscription extends Subscription {
 
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this.options = subscriptionAttributes.options || {nodir: true};
+        this['options'] = subscriptionAttributes.options || {nodir: true};
     }
 
     public subscribe(): Promise<void> {

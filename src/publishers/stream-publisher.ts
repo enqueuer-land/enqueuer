@@ -14,8 +14,8 @@ class StreamPublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this.timeout = this.streamTimeout;
-        this.timeout = this.timeout || 1000;
+        this['timeout'] = this.streamTimeout;
+        this['timeout'] = this.timeout || 1000;
         if (this.loadStream) {
             Logger.debug(`Loading ${this.type} client: ${this.loadStream}`);
             this.loadedStream = Store.getData()[this.loadStream];

@@ -128,7 +128,7 @@ export class StreamSubscription extends Subscription {
     }
 
     private createSslConnection() {
-        this.sslServerGotConnection = new Promise((resolve, reject) => {
+        this['sslServerGotConnection'] = new Promise((resolve, reject) => {
             try {
                 this.server = tls.createServer(this.options, (stream) => {
                     this.stream = stream;
@@ -206,7 +206,7 @@ export class StreamSubscription extends Subscription {
             if (this.saveStream) {
                 Logger.debug(`Persisting subscription ${this.type} stream ${this.saveStream}`);
                 Store.getData()[this.saveStream] = this.stream;
-                this.saveStream = undefined;
+                this['saveStream'] = undefined;
             } else if (typeof (this.stream.end) === 'function') {
                 Logger.trace(`Ending ${this.type} stream`);
                 this.stream.end();

@@ -10,10 +10,10 @@ class HttpPublisher extends Publisher {
 
     constructor(publish: PublisherModel) {
         super(publish);
-        this.method = publish.method || 'get';
+        this['method'] = publish.method || 'get';
         this.payload = this.payload || '';
-        this.headers = this.headers || {};
-        this.timeout = this.timeout || 3000;
+        this['headers'] = this.headers || {};
+        this['timeout'] = this.timeout || 3000;
     }
 
     public publish(): Promise<void> {
@@ -39,7 +39,7 @@ class HttpPublisher extends Publisher {
             const authenticator = new HttpAuthenticationFactory().create(this.authentication);
             const authentication = authenticator.generate();
             if (authentication) {
-                this.headers = Object.assign(this.headers, authentication);
+                this['headers'] = Object.assign(this.headers, authentication);
             } else {
                 Logger.warning(`No http authentication method was generated from: ${this.authentication}`);
             }

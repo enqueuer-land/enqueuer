@@ -11,7 +11,7 @@ class CustomPublisher extends Publisher {
 
     constructor(model: PublisherModel) {
         super(model);
-        this.model = model;
+        this['model'] = model;
     }
 
     public async publish(): Promise<void> {

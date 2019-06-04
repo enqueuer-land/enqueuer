@@ -21,8 +21,8 @@ class HttpSubscription extends Subscription {
         this.type = this.type.toLowerCase();
         this.secureServer = this.isSecureServer();
         this.proxy = this.isProxyServer();
-        this.method = subscriptionAttributes.method || 'get';
-        this.method = this.method.toLowerCase();
+        this['method'] = subscriptionAttributes.method || 'get';
+        this['method'] = this.method.toLowerCase();
     }
 
     public subscribe(): Promise<void> {

@@ -10,7 +10,7 @@ class FilePublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this.filenameExtension = this.filenameExtension || 'enq';
+        this['filenameExtension'] = this.filenameExtension || 'enq';
     }
 
     public publish(): Promise<void> {

@@ -133,7 +133,8 @@ export class DynamicModulesManager {
                     try {
                         const packageJson = JSON.parse(fs.readFileSync(module + '/package.json').toString());
                         if (packageJson.keywords
-                            .filter((keyword: string) => keyword === 'enqueuer' || keyword === 'nqr').length > 0) {
+                            .filter((keyword: string) => keyword.toLowerCase() === 'enqueuer' ||
+                                keyword.toLowerCase() === 'nqr').length > 0) {
                             return require(module).entryPoint !== undefined;
                         }
                     } catch (err) {

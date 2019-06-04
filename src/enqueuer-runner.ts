@@ -19,7 +19,7 @@ export class EnqueuerRunner {
 
     constructor() {
         this.startTime = new DateController();
-        NotificationEmitter.on(Notifications.REQUISITION_RAN, (report: output.RequisitionModel) => this.printReport(report));
+        NotificationEmitter.on(Notifications.REQUISITION_RAN, (report: output.RequisitionModel) => EnqueuerRunner.printReport(report));
     }
 
     public async execute(): Promise<output.RequisitionModel[]> {
@@ -50,7 +50,7 @@ export class EnqueuerRunner {
         return this.enqueuerRequisition;
     }
 
-    private printReport(report: output.RequisitionModel): void {
+    private static printReport(report: output.RequisitionModel): void {
         const configuration = Configuration.getInstance();
         if (report.level === undefined || report.level <= configuration.getMaxReportLevelPrint()) {
             try {
