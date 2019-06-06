@@ -243,7 +243,7 @@ Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recu
       delay: 200
 
 ##### events
-Available events are described [here](#event). A `requisition` object is available to access and change its attributes.
+Available events are described [here](#event). A `this` object is available to access and change requisition attributes.
 
     name: my name
     onInit:
@@ -288,7 +288,7 @@ Defaults to false. Tells to enqueuer that this publisher should be skipped. Chec
     ignore: true
     
 ##### events
-Available events are described [here](#event). A `publisher` object is available to access and change its attributes.
+Available events are described [here](#event). A `this` object is available to access and change publisher attributes.
 Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist a `onMessageReceived` event and a special object given `message`. 
 On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually does not provide it. 
 
@@ -347,7 +347,7 @@ Defaults to false. Tells to enqueuer that this subscription should be skipped. C
     ignore: true    
 
 ##### events
-Available events are described [here](#event). A `subscription` object is available to access and change its attributes.  
+Available events are described [here](#event). A `this` object is available to access and change subscription attributes.  
 
     onInit:
       script: subscription.avoid = false;

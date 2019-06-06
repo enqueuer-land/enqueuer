@@ -7,9 +7,14 @@ import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-c
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import {EventExecutor} from '../events/event-executor';
+import {Finishable} from '../models/events/finishable';
+import {MessageReceiver} from '../models/events/message-receiver';
+import {Initializable} from '../models/events/initializable';
 
 //TODO test it
 export class EventCodeGenerator {
+    private readonly thisArg: Finishable | MessageReceiver | Initializable;
     private readonly tests: TestModel[] = [];
     private readonly testsInstanceName = 'tests';
     private readonly asserterInstanceName = 'asserter';
@@ -19,7 +24,8 @@ export class EventCodeGenerator {
     private readonly name: string;
     private assertions: Assertion[];
 
-    public constructor(eventValue: Event, eventName: string = 'eventName') {
+    public constructor(eventValue: Event, eventName: string, thisArg: Finishable | MessageReceiver | Initializable) {
+        this.thisArg = thisArg;
         this.name = eventName;
         this.store = eventValue.store || {};
         this.script = eventValue.script || '';
@@ -33,7 +39,7 @@ export class EventCodeGenerator {
     }
 
     private runScriptAndStore(functionArguments: { name: string; value: any }[]) {
-        const dynamicFunction = new DynamicFunctionController(this.getScriptSnippet() + this.getStoreSnippet());
+        const dynamicFunction = new DynamicFunctionController(this.getScriptSnippet() + this.getStoreSnippet(), this.thisArg);
 
         dynamicFunction.addArgument(this.storeInstanceName, Store.getData());
         dynamicFunction.addArgument(this.testsInstanceName, this.tests);
@@ -75,7 +81,7 @@ export class EventCodeGenerator {
             const assertionCodeGenerator: AssertionCodeGenerator =
                 new AssertionCodeGenerator(this.testsInstanceName, this.asserterInstanceName, 'assertion');
 
-            const dynamicFunction = new DynamicFunctionController(assertionCodeGenerator.generate());
+            const dynamicFunction = new DynamicFunctionController(assertionCodeGenerator.generate(), this.thisArg);
 
             dynamicFunction.addArgument(this.asserterInstanceName,
                 DynamicModulesManager.getInstance().getAsserterManager().createAsserter(assertion));

@@ -501,7 +501,7 @@ Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/re
 
 <h5 id="events" style="padding-left: 16px">2.1.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">requisition</code> object is available to access and change its attributes.</p>
+<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change requisition attributes.</p>
 
 <pre><code class="yaml">name: my name
 onInit:
@@ -553,7 +553,7 @@ Defaults to false. Tells to enqueuer that this publisher should be skipped. Chec
 
 <h5 id="events" style="padding-left: 16px">2.2.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">publisher</code> object is available to access and change its attributes.
+<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change publisher attributes.
 Depending on the protocol and its implementation, such as <code class="yaml">http</code> and <code class="yaml">tcp</code>, there may exist a <code class="yaml">onMessageReceived</code> event and a special object given <code class="yaml">message</code>. 
 On the other hand, an asynchronous protocol, like: <code class="yaml">udp</code> and <code class="yaml">amqp</code>, usually does not provide it. </p>
 
@@ -621,7 +621,7 @@ Defaults to false. Tells to enqueuer that this subscription should be skipped. C
 
 <h5 id="events" style="padding-left: 16px">2.3.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">subscription</code> object is available to access and change its attributes.  </p>
+<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change subscription attributes.  </p>
 
 <pre><code class="yaml">onInit:
   script: subscription.avoid = false;

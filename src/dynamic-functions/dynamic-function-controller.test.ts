@@ -12,6 +12,18 @@ describe('DynamicFunctionController', () => {
         expect(arg.value).toBe(3);
     });
 
+    it('Should bind this', done => {
+        const self = {
+            method(value: number) {
+                expect(value).toBe(3);
+                done();
+            }
+        };
+        const testerExecutor: DynamicFunctionController = new DynamicFunctionController('this.method(3);', self);
+
+        testerExecutor.execute();
+    });
+
     it('Should throw function creation error', () => {
         const testerExecutor: DynamicFunctionController = new DynamicFunctionController('inv;alid statement');
 

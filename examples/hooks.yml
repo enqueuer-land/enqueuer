@@ -4,7 +4,9 @@ onInit:
         sequence: `requisition::onInit`
     assertions:
     -   name: Requisitions exists onInit
-        expectToBeDefined: requisition
+        expectToBeDefined: requisition.name
+    -   expect: this.name
+        toBeEqualTo: requisition.name
 publishers:
 -   type: tcp
     timeout: 2000
@@ -21,6 +23,9 @@ publishers:
         -   name: Publisher name
             expectToBeDefined: publisher.name
         -   expectToBeDefined: publisher
+        -   expectToBeDefined: this.name
+        -   expect: this.name
+            toBeEqualTo: publisher.name
     onMessageReceived:
         store:
             sequence: store.sequence + `-> publisher::onMessageReceived`
@@ -47,6 +52,8 @@ subscriptions:
         assertions:
         -   name: Subscription exists onInit
             expectToBeDefined: subscription
+        -   expect: this.name
+            toBeEqualTo: subscription.name
         -   name: Subscription name
             expect: subscription.name
             toBeEqualTo: `changed`

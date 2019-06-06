@@ -7,7 +7,7 @@ export class OnFinishEventExecutor extends EventExecutor {
     private readonly finishable: Finishable;
 
     constructor(name: string, finishable: Finishable) {
-        super('onFinish', finishable.onFinish);
+        super(finishable, 'onFinish', finishable.onFinish);
         this.finishable = finishable;
         this.addArgument(name, this.finishable);
     }
