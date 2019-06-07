@@ -16,22 +16,15 @@ class HttpPublisher extends Publisher {
         this['timeout'] = this.timeout || 3000;
     }
 
-    public publish(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.insertAuthentication();
+    public publish(): Promise<any> {
+        this.insertAuthentication();
 
-            new HttpRequester(this.url,
-                this.method.toLowerCase(),
-                this.headers,
-                this.payload,
-                this.timeout)
-                .request()
-                .then((response: any) => {
-                    this.messageReceived = response;
-                    resolve();
-                })
-                .catch(err => reject(err));
-        });
+        return new HttpRequester(this.url,
+            this.method.toLowerCase(),
+            this.headers,
+            this.payload,
+            this.timeout)
+            .request();
     }
 
     private insertAuthentication() {

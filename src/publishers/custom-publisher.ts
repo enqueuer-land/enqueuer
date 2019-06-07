@@ -14,12 +14,12 @@ class CustomPublisher extends Publisher {
         this['model'] = model;
     }
 
-    public async publish(): Promise<void> {
+    public async publish(): Promise<any> {
         try {
             const moduleString: string = fs.readFileSync(this.module).toString();
             const module = requireFromString(moduleString);
             const custom = new module.Publisher(this.model);
-            this.messageReceived = await custom.publish({store: Store.getData(), logger: Logger});
+            return await custom.publish({store: Store.getData(), logger: Logger});
         } catch (err) {
             Logger.error(`Error loading module '${this.module}': ${err}`);
         }

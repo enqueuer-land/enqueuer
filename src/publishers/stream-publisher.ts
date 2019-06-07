@@ -22,7 +22,7 @@ class StreamPublisher extends Publisher {
         }
     }
 
-    public publish(): Promise<void> {
+    public publish(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.loadStream) {
                 this.sendReusingStream(resolve, reject);
@@ -112,7 +112,7 @@ class StreamPublisher extends Publisher {
         stream.once('end', () => {
             Logger.debug(`${this.type} client ended`);
             this.finalize(stream);
-            resolve();
+            resolve(this.messageReceived);
         })
             .on('data', (msg: Buffer) => {
                 Logger.debug(`${this.type} client got data '${msg.toString()}'`);

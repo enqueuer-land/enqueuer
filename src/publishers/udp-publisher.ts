@@ -10,7 +10,7 @@ class UdpPublisher extends Publisher {
         super(publisherAttributes);
     }
 
-    public publish(): Promise<void> {
+    public publish(): Promise<any> {
         return new Promise((resolve, reject) => {
             const client = dgram.createSocket('udp4');
             Logger.debug('Udp client trying to send message');

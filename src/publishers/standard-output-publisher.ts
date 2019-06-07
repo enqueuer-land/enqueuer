@@ -9,7 +9,7 @@ class StandardOutputPublisher extends Publisher {
         super(publisherProperties);
     }
 
-    public publish(): Promise<void> {
+    public publish(): Promise<any> {
         if (typeof(this.payload) === 'object') {
             this.payload = JSON.stringify(this.payload, null, 2);
         }

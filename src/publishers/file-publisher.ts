@@ -13,7 +13,7 @@ class FilePublisher extends Publisher {
         this['filenameExtension'] = this.filenameExtension || 'enq';
     }
 
-    public publish(): Promise<void> {
+    public publish(): Promise<any> {
         const filename = this.getFileName();
         let value = this.payload;
 

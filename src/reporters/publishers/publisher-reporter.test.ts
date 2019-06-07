@@ -172,7 +172,7 @@ describe('PublisherReporter', () => {
             expect(report.name).toBe(publisher.name);
             const responseMessageTest = report.tests[1];
             expect(responseMessageTest.name).toBe('Response message received');
-            expect(responseMessageTest.valid).toBeFalsy();
+            expect(responseMessageTest.valid).toBeTruthy();
 
             done();
         });

@@ -21,5 +21,5 @@ export abstract class Publisher {
         this.name = publisherAttributes.name;
     }
 
-    public abstract publish(): Promise<void>;
+    public abstract publish(): Promise<any>;
 }
