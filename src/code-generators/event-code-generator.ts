@@ -58,7 +58,7 @@ export class EventCodeGenerator {
         return `try {
                         ${this.script}
                     } catch (err) {
-                        const msg = \`Error executing '${this.name}.script' code: '\${err}'\`;
+                        const msg = \`Error executing '${this.name}' script: '\${err}'\`;
                         Logger.error(msg);
                         ${this.testsInstanceName}.push({
                                 description: msg,
@@ -93,7 +93,7 @@ export class EventCodeGenerator {
             try {
                 dynamicFunction.execute();
             } catch (err) {
-                const message = `Error running event '${this.name}.assertion ${assertion.name}': ${err}`;
+                const message = `Error running event '${this.name}' '${assertion.name}': ${err}`;
                 Logger.error(message);
                 this.tests.push({valid: false, name: 'Assertion ran', description: message});
             }

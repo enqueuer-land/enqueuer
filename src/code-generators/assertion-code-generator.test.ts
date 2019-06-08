@@ -18,7 +18,7 @@ describe('AssertionCodeGenerator', () => {
             '            }\n' +
             '            tests.push(testResult);\n' +
             '        } catch (err) {\n' +
-            '            const msg = `Invalid assertion. Error executing assertion: \'${err}\'`;\n' +
+            '            const msg = `Error executing assertion: \'${err}\'`;\n' +
             '            Logger.error(msg);\n' +
             '            tests.push({\n' +
             '                name: assertion.name,\n' +

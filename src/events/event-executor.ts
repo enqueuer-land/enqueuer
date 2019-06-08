@@ -47,7 +47,7 @@ export class EventExecutor {
     private baptizeAssertions(assertions: Assertion[]): Assertion[] {
         return assertions.map((assertion, index) => {
             if (!assertion.name) {
-                assertion.name = `${this.eventName}.Assertion #${index}`;
+                assertion.name = `'${this.eventName}' Assertion #${index}`;
             }
             return assertion;
         });

@@ -11,7 +11,7 @@ publishers:
         -   expect: body
             toBeEqualTo: `original -> proxy -> real -> proxied again`
 subscriptions:
--   name: proxy
+-   name: proxy subscription
     type: http-proxy
     endpoint: /proxy
     port: 23085
