@@ -11,8 +11,8 @@ import {HttpAuthenticationFactory} from '../http-authentications/http-authentica
 class HttpSubscription extends Subscription {
 
     private readonly proxy: boolean;
+    private readonly secureServer: boolean;
     private responseToClientHandler?: any;
-    private secureServer: boolean;
     private expressApp: any;
 
     constructor(subscriptionAttributes: SubscriptionModel) {
@@ -25,18 +25,14 @@ class HttpSubscription extends Subscription {
         this['method'] = this.method.toLowerCase();
     }
 
-    public subscribe(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            HttpContainerPool.getApp(this.port, this.secureServer, this.credentials)
-                .then((app: any) => {
-                    this.expressApp = app;
-                    resolve();
-                }).catch(err => {
-                const message = `Error in ${this.type} subscription: ${err}`;
-                Logger.error(message);
-                reject(message);
-            });
-        });
+    public async subscribe(): Promise<void> {
+        try {
+            this.expressApp = await HttpContainerPool.getApp(this.port, this.secureServer, this.credentials);
+        } catch (err) {
+            const message = `Error in ${this.type} subscription: ${err}`;
+            Logger.error(message);
+            throw err;
+        }
     }
 
     public unsubscribe(): Promise<void> {
@@ -74,8 +70,9 @@ class HttpSubscription extends Subscription {
         }
     }
 
-    private realServerMessageReceiving() {
+    private realServerMessageReceiving(): Promise<any> {
         return new Promise((resolve) => {
+            Logger.debug(`Listening to (${this.method})${this.port}${this.endpoint}`);
             this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
                 Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
                 this.responseToClientHandler = responseHandler;
@@ -84,20 +81,27 @@ class HttpSubscription extends Subscription {
         });
     }
 
-    private proxyServerMessageReceiving() {
+    private proxyServerMessageReceiving(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
+            Logger.debug(`Listening to (${this.method})${this.port}${this.endpoint}/*`);
+            this.expressApp[this.method](this.endpoint + '/*', (originalRequest: any, responseHandler: any, next: any) => {
                 this.responseToClientHandler = responseHandler;
-                Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
-                this.redirectCall(request)
+                Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${originalRequest.rawBody}`);
+                this.redirect['url'] = this.redirect.url + originalRequest.url.replace(this.endpoint, '');
+                this.redirect['headers'] = originalRequest.headers;
+                this.redirect['payload'] = originalRequest.rawBody;
+                this.executeHookEvent('onOriginalMessageReceived', this.createMessageReceivedStructure(originalRequest));
+
+                this.redirectCall()
                     .then((redirectionResponse: any) => {
                         Logger.trace(`${this.type}:${this.port} got redirection response: ` +
                             `${JSON.stringify(redirectionResponse, null, 2)}`);
                         this.response = {
                             status: redirectionResponse.statusCode,
                             payload: redirectionResponse.body,
+                            headers: redirectionResponse.headers
                         };
-                        resolve(this.createMessageReceivedStructure(request));
+                        resolve(redirectionResponse);
                         next();
                     })
                     .catch(err => {
@@ -114,23 +118,19 @@ class HttpSubscription extends Subscription {
             headers: message.headers,
             params: message.params,
             query: message.query,
+            url: message.url,
             body: message.rawBody
         };
     }
 
-    private redirectCall(originalRequisition: any): Promise<void> {
-        const url = this.redirect + originalRequisition.url;
-        Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${url}`);
-        return new Promise((resolve, reject) => {
-            new HttpRequester(url,
-                this.method,
-                originalRequisition.headers,
-                originalRequisition.rawBody,
-                this.timeout)
-                .request()
-                .then((response: any) => resolve(response))
-                .catch(err => reject(err));
-        });
+    private redirectCall(): Promise<void> {
+        Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${this.url}`);
+        return new HttpRequester(this.redirect.url,
+            this.redirect.method || 'get',
+            this.redirect.headers,
+            this.redirect.payload,
+            this.redirect.timeout || 3000)
+            .request();
     }
 
     private isSecureServer(): boolean {
@@ -155,10 +155,18 @@ class HttpSubscription extends Subscription {
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new SubscriptionProtocol('http',
         (subscriptionModel: SubscriptionModel) => new HttpSubscription(subscriptionModel),
-        ['headers',
-            'params',
-            'query',
-            'body'])
+        {
+            onMessageReceived: ['headers',
+                'params',
+                'query',
+                'url',
+                'body'],
+            onOriginalMessageReceived: ['headers',
+                'params',
+                'query',
+                'url',
+                'body']
+        })
         .addAlternativeName('https', 'http-proxy', 'https-proxy', 'http-server', 'https-server')
         .setLibrary('express');
 

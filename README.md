@@ -377,6 +377,7 @@ By default, there are three hook events available:
 
 **onInit**  
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
+As available parameter, an `elapsedTime` variable is given, counting every milliseconds since the instantiation of this component.
 
 **onFinish**  
 Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
@@ -392,7 +393,6 @@ For instance, in the built-in http publisher implementation, there's a `statusCo
 
 **custom**
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
-As a good practice, is suggested, when implementing your own protocol library, to start the hook name with on preposition.
 Such as onError, onFileNotFound and onRedirect... 
 [Http-proxy subscription test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
 

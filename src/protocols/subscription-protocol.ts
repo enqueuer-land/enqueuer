@@ -1,16 +1,14 @@
-import {Protocol, ProtocolType} from './protocol';
+import {HookEventsDescription, Protocol, ProtocolType} from './protocol';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Subscription} from '../subscriptions/subscription';
 
 export class SubscriptionProtocol extends Protocol {
-    private readonly messageReceivedParams: string[];
     private readonly createFunction: (subscriptionModel: SubscriptionModel) => Subscription;
 
     public constructor(name: string,
                        createFunction: (subscriptionModel: SubscriptionModel) => Subscription,
-                       messageReceivedParams: string[]) {
-        super(name, ProtocolType.SUBSCRIPTION);
-        this.messageReceivedParams = messageReceivedParams;
+                       hookEventsDescription: string[] | HookEventsDescription = {}) {
+        super(name, ProtocolType.SUBSCRIPTION, hookEventsDescription);
         this.createFunction = createFunction;
     }
 
@@ -18,12 +16,4 @@ export class SubscriptionProtocol extends Protocol {
         return this.createFunction(subscription);
     }
 
-    protected getDeepDescription(): any {
-        if (this.messageReceivedParams && this.messageReceivedParams.length > 0) {
-            return {
-                messageReceivedParams: this.messageReceivedParams
-            };
-        }
-        return {};
-    }
 }

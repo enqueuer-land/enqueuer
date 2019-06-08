@@ -1,4 +1,5 @@
 import {Logger} from '../loggers/logger';
+import {DefaulHookEvents} from '../models/events/event';
 
 type Library = {
     name: string;
@@ -10,19 +11,35 @@ export enum ProtocolType {
     SUBSCRIPTION
 }
 
+export interface HookEventsDescription {
+    [prop: string]: string[];
+}
+
 export abstract class Protocol {
-    readonly type: ProtocolType;
+    private readonly type: ProtocolType;
     private readonly name: string;
+    private readonly hookEventsDescription: HookEventsDescription = {};
     private alternativeNames?: string[];
     private library?: Library;
 
-    protected constructor(name: string, type: ProtocolType) {
+    protected constructor(name: string, type: ProtocolType, hookEventsDescription: string[] | HookEventsDescription = {}) {
         this.name = name;
         this.type = type;
+        if (Array.isArray(hookEventsDescription)) {
+            this.hookEventsDescription[DefaulHookEvents.ON_MESSAGE_RECEIVED] = hookEventsDescription;
+        } else {
+            this.hookEventsDescription = hookEventsDescription;
+        }
+        this.hookEventsDescription[DefaulHookEvents.ON_INIT] = [];
+        this.hookEventsDescription[DefaulHookEvents.ON_FINISH] = [];
     }
 
-    protected getDeepDescription(): any {
-        return {};
+    public isSubscription(): boolean {
+        return this.type === ProtocolType.SUBSCRIPTION;
+    }
+
+    public isPublisher(): boolean {
+        return this.type === ProtocolType.PUBLISHER;
     }
 
     public getName(): string {
@@ -30,9 +47,13 @@ export abstract class Protocol {
     }
 
     public getDescription() {
-        let properties: any = this.getDeepDescription();
-        properties.name = this.name;
-        return properties;
+        const description: any = {
+            name: this.name
+        };
+        if (Object.keys(this.hookEventsDescription).length > 0) {
+            description.hookEvents = this.hookEventsDescription;
+        }
+        return description;
     }
 
     public addAlternativeName(...alternativeNames: string[]): Protocol {
@@ -55,7 +76,7 @@ export abstract class Protocol {
         if (typeof type === 'string') {
             try {
                 return [this.name].concat(this.alternativeNames || [])
-                    .filter((name: string) => name.toUpperCase() === type.toUpperCase()).length > 0;
+                    .some((name: string) => name.toUpperCase().includes(type.toUpperCase()));
             } catch (exc) {
                 Logger.warning(`Error comparing protocols with given type '${type}': ${exc}`);
             }

@@ -14,7 +14,8 @@ DynamicModulesManager.getInstance.mockImplementation(() => {
 let publishMock = jest.fn(() => Promise.resolve({}));
 let publisherMock = jest.fn(() => {
     return {
-        publish: publishMock
+        publish: publishMock,
+        registerHookEventExecutor: () => ({})
     };
 });
 
@@ -123,66 +124,21 @@ describe('PublisherReporter', () => {
 
         await new PublisherReporter(publisher).publish();
 
-        expect(EventExecutor).toHaveBeenNthCalledWith(2, {publish: expect.any(Function)}, 'onMessageReceived', 'publisher');
+        expect(EventExecutor).toHaveBeenNthCalledWith(2, {
+            publish: expect.any(Function),
+            registerHookEventExecutor: expect.any(Function),
+        }, 'onMessageReceived', 'publisher');
     });
 
-    it('Should add onMessageReceived tests - no message', done => {
-        publisherMock = jest.fn(() => {
-            return {
-                publish: publishMock,
-                onMessageReceived: {
-                    assertions: 'blah'
-                }
-            };
-        });
-        const publisherReporter = new PublisherReporter(publisher);
-        publisherReporter.publish().then(() => {
-
-            const report = publisherReporter.getReport();
-            expect(report.name).toBe(publisher.name);
-            const responseMessageTest = report.tests[1];
-            expect(responseMessageTest.name).toBe('Response message received');
-            expect(responseMessageTest.valid).toBeTruthy();
-
-            done();
-        });
-
-    });
-
-    it('Should add onMessageReceived tests - message', done => {
-        publisherMock = jest.fn(() => {
-            return {
-                publish: publishMock,
-                messageReceived: 'hey',
-                onMessageReceived: {
-                    assertions: 'blah'
-                }
-            };
-        });
-        const publisherReporter = new PublisherReporter(publisher);
-        publisherReporter.publish().then(() => {
-
-            const report = publisherReporter.getReport();
-            expect(report.name).toBe(publisher.name);
-            const responseMessageTest = report.tests[1];
-            expect(responseMessageTest.name).toBe('Response message received');
-            expect(responseMessageTest.valid).toBeTruthy();
-
-            done();
-        });
-
-    });
-
-    it('Should print onFinish', async () => {
+    it('Should call onFinish', async () => {
         EventExecutor.mockClear();
         EventExecutor.mockImplementation = jest.fn();
 
         await new PublisherReporter(publisher).onFinish();
 
         expect(EventExecutor).toHaveBeenNthCalledWith(2, {
-            messageReceived: 'hey',
-            onMessageReceived: {'assertions': 'blah'},
-            publish: expect.any(Function)
+            publish: expect.any(Function),
+            registerHookEventExecutor: expect.any(Function),
         }, 'onFinish', 'publisher');
     });
 

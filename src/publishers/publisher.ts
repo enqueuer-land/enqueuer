@@ -12,6 +12,7 @@ export abstract class Publisher {
     public ignore: boolean = false;
 
     [propName: string]: any;
+
     protected constructor(publisherAttributes: PublisherModel) {
         Object.keys(publisherAttributes).forEach(key => {
             this[key] = publisherAttributes[key];
@@ -22,4 +23,15 @@ export abstract class Publisher {
     }
 
     public abstract publish(): Promise<any>;
+
+    public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
+        this['hookEventExecutor'] = hookEventExecutor;
+    }
+
+    protected executeHookEvent(hookName: string, args: any) {
+        if (this['hookEventExecutor']) {
+            this['hookEventExecutor'](hookName, args);
+        }
+    }
+
 }

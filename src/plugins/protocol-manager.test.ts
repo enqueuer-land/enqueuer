@@ -76,7 +76,10 @@ describe('ProtocolManager', () => {
             .addAlternativeName('virgs')
             .setLibrary('request'));
         expect(protocolManager.describeMatchingProtocols('virgs')).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({'publishers': [{'name': 'pub'}], 'subscriptions': []}, expect.anything()
+        expect(render).toHaveBeenCalledWith({
+                'publishers': [{'hookEvents': {'onFinish': [], 'onInit': []}, 'name': 'pub'}],
+                'subscriptions': []
+            }, expect.anything()
         );
     });
 
@@ -90,7 +93,12 @@ describe('ProtocolManager', () => {
         protocolManager.addProtocol(new PublisherProtocol('other', () => {/*not empty*/
         }));
         expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({'publishers': [{'name': 'pub'}, {'name': 'other'}], 'subscriptions': []}, expect.anything()
+        expect(render).toHaveBeenCalledWith({
+                'publishers': [{
+                    'hookEvents': {'onFinish': [], 'onInit': []},
+                    'name': 'pub'
+                }, {'hookEvents': {'onFinish': [], 'onInit': []}, 'name': 'other'}], 'subscriptions': []
+            }, expect.anything()
         );
     });
 
@@ -111,7 +119,7 @@ describe('ProtocolManager', () => {
         expect(protocolManager.describeMatchingProtocols('sub')).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             'publishers': [],
-            'subscriptions': [{'messageReceivedParams': ['value'], 'name': 'sub'}]
+            'subscriptions': [{'hookEvents': {'onFinish': [], 'onInit': [], 'onMessageReceived': ['value']}, 'name': 'sub'}]
         }, expect.anything());
     });
 
@@ -127,7 +135,10 @@ describe('ProtocolManager', () => {
         expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             'publishers': [],
-            'subscriptions': [{'messageReceivedParams': undefined, 'name': 'sub'}, {'messageReceivedParams': undefined, 'name': 'sub2'}]
+            'subscriptions': [{'hookEvents': {'onFinish': [], 'onInit': []}, 'name': 'sub'}, {
+                'hookEvents': {'onFinish': [], 'onInit': []},
+                'name': 'sub2'
+            }]
         }, expect.anything());
     });
 
@@ -139,4 +150,3 @@ describe('ProtocolManager', () => {
     });
 
 });
-

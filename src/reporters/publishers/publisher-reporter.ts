@@ -28,6 +28,7 @@ export class PublisherReporter {
         this.executeOnInitFunction(publisher);
         Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
         this.publisher = DynamicModulesManager.getInstance().getProtocolManager().createPublisher(publisher);
+        this.publisher.registerHookEventExecutor((eventName: string, args: any) => this.executeHookEvent(eventName, args));
     }
 
     public async publish(): Promise<void> {
@@ -51,19 +52,19 @@ export class PublisherReporter {
     }
 
     public getReport(): PublisherModel {
-        this.pushResponseMessageReceivedTest();
         this.report.valid = this.report.valid && reportModelIsPassing(this.report);
         return this.report;
     }
 
     public onFinish(): void {
         if (!this.publisher.ignore) {
-            this.executeHookEvent(DefaulHookEvents.ON_FINISH, {elapsedTime: new Date().getTime() - this.startTime.getTime()});
+            this.executeHookEvent(DefaulHookEvents.ON_FINISH);
         }
     }
 
-    protected executeHookEvent(eventName: string, args: any): void {
+    protected executeHookEvent(eventName: string, args: any = {}): void {
         if (!this.publisher.ignore) {
+            args.elapsedTime = new Date().getTime() - this.startTime.getTime();
             const eventExecutor = new EventExecutor(this.publisher, eventName, 'publisher');
             Object.keys(args).forEach((key: string) => {
                 eventExecutor.addArgument(key, args[key]);
@@ -72,32 +73,10 @@ export class PublisherReporter {
         }
     }
 
-    private pushResponseMessageReceivedTest() {
-        this.report.messageReceived = this.messageReceived || this.publisher.messageReceived;
-        const publisherHasAssertions = this.publisher.onMessageReceived &&
-            this.publisher.onMessageReceived.assertions &&
-            this.publisher.onMessageReceived.assertions.length > 0;
-        if (publisherHasAssertions) {
-            let responseTest = {
-                name: 'Response message received',
-                valid: false,
-                description: 'No response message was received'
-            };
-            if (this.report.messageReceived) {
-                responseTest.valid = true;
-                responseTest.description = 'Response message was received';
-            }
-            this.report.tests.push(responseTest);
-        }
-    }
-
     private executeOnMessageReceivedFunction() {
         if (!this.publisher.ignore) {
             const message = this.messageReceived || this.publisher.messageReceived;
-            const args: any = {
-                elapsedTime: new Date().getTime() - this.startTime.getTime(),
-                message
-            };
+            const args: any = {message};
 
             if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
                 Object.keys(message).forEach((key) => args[key] = message[key]);

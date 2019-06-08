@@ -652,7 +652,8 @@ You're free to explore them however you want, even doing things like this:</p>
 <p>By default, there are three hook events available:</p>
 
 <p><strong>onInit</strong> <br>
-Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.</p>
+Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
+As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component.</p>
 
 <p><strong>onFinish</strong> <br>
 Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
@@ -668,7 +669,6 @@ For instance, in the built-in http publisher implementation, there's a <code cla
 
 <p><strong>custom</strong>
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
-As a good practice, is suggested, when implementing your own protocol library, to start the hook name with on preposition.
 Such as onError, onFileNotFound and onRedirect... 
 <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml">Http-proxy subscription test file</a> is an excellent example, check it out.</p>
 

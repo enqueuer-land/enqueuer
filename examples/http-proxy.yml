@@ -1,67 +1,49 @@
 publishers:
 -   name: publisher proxy
     type: http
-    url: http://localhost:23085/proxy/idValue?query=proxied
+    url: http://localhost:23085/proxy/enqueuer/123456?query=proxied
     method: PATCH
-    payload:
-        proxy: test
-    headers:
-        content-type: application/json
-    authentication:
-        basic:
-            user: user
-            password: password
+    payload: original
     onMessageReceived:
         assertions:
-        -   name: Status Code
-            expect: statusCode
-            toBeEqualTo: 333
-        -   name: Body
-            expect: body
-            toBeEqualTo: `responsePayload`
+        -   expect: statusCode
+            toBeEqualTo: 400
+        -   expect: body
+            toBeEqualTo: `original -> proxy -> real -> proxied again`
 subscriptions:
--   name: proxy server
+-   name: proxy
     type: http-proxy
-    endpoint: /proxy/:id
+    endpoint: /proxy
     port: 23085
     method: PATCH
-    redirect: http://localhost:23086
-    authentication:
-        basic:
-            user: user
-            password: password
-    onMessageReceived:
+    redirect:
+        url: http://localhost:23086/real
+        method: POST
+    onOriginalMessageReceived:
+        script: this.redirect.payload = body + ` -> proxy`;
         assertions:
-        -   name: Payload
-            expect: JSON.parse(message.body).proxy
-            toBeEqualTo: `test`
-        -   name: Params
-            expect: params.id
-            toBeEqualTo: `idValue`
-        -   name: Query
-            expect: query.query
-            toBeEqualTo: `proxied`
--   name: real server
+        -   expect: body
+            toBeEqualTo: `original`
+    onMessageReceived:
+        script: this.response.payload = body + ` -> proxied again`; this.response.status = 2 * statusCode;
+        assertions:
+        -   expect: body
+            toBeEqualTo: `original -> proxy -> real`
+        -   expect: statusCode
+            toBeEqualTo: 200
+-   name: real
     type: http
-    endpoint: /proxy/:firstId
+    endpoint: /real/enqueuer/:id
     port: 23086
-    method: PATCH
-    timeout: 2000
-    authentication:
-        basic:
-            user: user
-            password: password
+    method: POST
     response:
-        status: 333
-        payload: responsePayload
+        status: 200
     onMessageReceived:
+        script: this.response.payload = body + ' -> real';
         assertions:
-        -   name: Payload
-            expect: JSON.parse(message.body).proxy
-            toBeEqualTo: `test`
-        -   name: Params
-            expect: params.firstId
-            toBeEqualTo: `idValue`
-        -   name: Query
-            expect: query.query
+        -   expect: body
+            toBeEqualTo: `original -> proxy`
+        -   expect: params.id
+            toBeEqualTo: 123456
+        -   expect: query.query
             toBeEqualTo: `proxied`

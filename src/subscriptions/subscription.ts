@@ -15,6 +15,7 @@ export abstract class Subscription {
     public ignore: boolean = false;
 
     [propName: string]: any;
+
     protected constructor(subscriptionAttributes: SubscriptionModel) {
         Object.keys(subscriptionAttributes).forEach(key => {
             this[key] = subscriptionAttributes[key];
@@ -24,7 +25,9 @@ export abstract class Subscription {
     }
 
     public abstract subscribe(): Promise<void>;
+
     public abstract receiveMessage(): Promise<any>;
+
     public async unsubscribe(): Promise<void> {
         //do nothing
     }
@@ -36,4 +39,15 @@ export abstract class Subscription {
     public onMessageReceivedTests(): TestModel[] {
         return [];
     }
+
+    public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
+        this['hookEventExecutor'] = hookEventExecutor;
+    }
+
+    protected executeHookEvent(hookName: string, args: any) {
+        if (this['hookEventExecutor']) {
+            this['hookEventExecutor'](hookName, args);
+        }
+    }
+
 }

@@ -40,6 +40,7 @@ export class SubscriptionReporter {
 
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
         this.subscription = DynamicModulesManager.getInstance().getProtocolManager().createSubscription(subscriptionAttributes);
+        this.subscription.registerHookEventExecutor((eventName: string, args: any) => this.executeHookEvent(eventName, args));
         if (subscriptionAttributes.timeout === undefined) {
             this.subscription.timeout = SubscriptionReporter.DEFAULT_TIMEOUT;
         } else if (subscriptionAttributes.timeout <= 0) {
@@ -170,12 +171,13 @@ export class SubscriptionReporter {
     public onFinish() {
         Logger.trace(`Executing subscription onFinish`);
         if (!this.subscription.ignore) {
-            this.executeHookEvent(DefaulHookEvents.ON_FINISH, {elapsedTime: new Date().getTime() - this.startTime.getTime()});
+            this.executeHookEvent(DefaulHookEvents.ON_FINISH);
         }
     }
 
-    protected executeHookEvent(eventName: string, args: any): void {
+    protected executeHookEvent(eventName: string, args: any = {}): void {
         if (!this.subscription.ignore) {
+            args.elapsedTime = new Date().getTime() - this.startTime.getTime();
             const eventExecutor = new EventExecutor(this.subscription, eventName, 'subscription');
             Object.keys(args).forEach((key: string) => {
                 eventExecutor.addArgument(key, args[key]);
@@ -207,7 +209,6 @@ export class SubscriptionReporter {
 
     private executeOnMessageReceivedFunction() {
         const args: any = {
-            elapsedTime: new Date().getTime() - this.startTime.getTime(),
             message: this.subscription.messageReceived
         };
 
