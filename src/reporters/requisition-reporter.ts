@@ -4,9 +4,10 @@ import * as input from '../models/inputs/requisition-model';
 import {RequisitionModel} from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
-import {OnInitEventExecutor} from '../events/on-init-event-executor';
-import {OnFinishEventExecutor} from '../events/on-finish-event-executor';
 import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
+import {EventExecutor} from '../events/event-executor';
+import {DefaulHookEvents} from '../models/events/event';
+import {TestModel} from '../models/outputs/test-model';
 
 export class RequisitionReporter {
     public static readonly DEFAULT_TIMEOUT = 5 * 1000;
@@ -82,16 +83,16 @@ export class RequisitionReporter {
         await this.multiSubscriptionsReporter.unsubscribe();
     }
 
-    private executeOnInitFunction() {
+    private executeOnInitFunction(): TestModel[] {
         Logger.debug(`Executing requisition onInit hook function`);
-        return new OnInitEventExecutor('requisition', this.requisitionAttributes).trigger();
+        return new EventExecutor(this.requisitionAttributes, DefaulHookEvents.ON_INIT, 'requisition').execute();
     }
 
     private async executeOnFinishFunction(): Promise<void> {
         this.multiSubscriptionsReporter.onFinish();
-        const onFinishEventExecutor = new OnFinishEventExecutor('requisition', this.requisitionAttributes);
+        const onFinishEventExecutor = new EventExecutor(this.requisitionAttributes, DefaulHookEvents.ON_FINISH, 'requisition');
         onFinishEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
-        this.reportGenerator.addTests(onFinishEventExecutor.trigger());
+        this.reportGenerator.addTests(onFinishEventExecutor.execute());
         this.multiPublishersReporter.onFinish();
     }
 

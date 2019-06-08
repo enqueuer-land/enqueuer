@@ -505,12 +505,12 @@ Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/re
 
 <pre><code class="yaml">name: my name
 onInit:
-  script: requisition.delay = 3000;
+  script: this.delay = 3000;
   assertions:
-  - expectToBeDefined: requisition.name
+  - expectToBeDefined: this.name
 onFinish:  
   assertions:
-  - expectToBeDefined: requisition.name
+  - expectToBeDefined: this.name
 </code></pre>
 
 <h4 id="publisher" style="padding-left: 8px">2.2 publisher</h4>
@@ -554,19 +554,19 @@ Defaults to false. Tells to enqueuer that this publisher should be skipped. Chec
 <h5 id="events" style="padding-left: 16px">2.2.2 events</h5>
 
 <p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change publisher attributes.
-Depending on the protocol and its implementation, such as <code class="yaml">http</code> and <code class="yaml">tcp</code>, there may exist a <code class="yaml">onMessageReceived</code> event and a special object given <code class="yaml">message</code>. 
-On the other hand, an asynchronous protocol, like: <code class="yaml">udp</code> and <code class="yaml">amqp</code>, usually does not provide it. </p>
+Depending on the protocol and its implementation, such as <code class="yaml">http</code> and <code class="yaml">tcp</code>, there may exist special events, such as <code class="yaml">onMessageReceived</code> event and a special object given <code class="yaml">message</code>. 
+On the other hand, an asynchronous protocol, like: <code class="yaml">udp</code> and <code class="yaml">amqp</code>, usually do not provide it. </p>
 
 <pre><code class="yaml">onInit:
-  script: publisher.ignore = false
+  script: this.ignore = false
   assertions:
-  - expectToBeDefined: publisher.type
+  - expectToBeDefined: this.type
 onMessageReceived: #Provided in synchronous protocols  
   assertions:
   - expectToBeDefined: message
 onFinish:  
   assertions:
-  - expectToBeDefined: publisher.type
+  - expectToBeDefined: this.type
 </code></pre>
 
 <h4 id="subscription" style="padding-left: 8px">2.3 subscription</h4>
@@ -624,15 +624,15 @@ Defaults to false. Tells to enqueuer that this subscription should be skipped. C
 <p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change subscription attributes.  </p>
 
 <pre><code class="yaml">onInit:
-  script: subscription.avoid = false;
+  script: this.avoid = false;
   assertions:
-  - expectToBeDefined: subscription.type
+  - expectToBeDefined: this.type
 onMessageReceived:  
   assertions:
   - expectToBeDefined: message
 onFinish:  
   assertions:
-  - expectToBeDefined: subscription.type
+  - expectToBeDefined: this.type
 </code></pre>
 
 <hr />
@@ -641,7 +641,7 @@ onFinish:
 
 <p>Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
 This is where you'll write your tests. In its <code class="yaml">assertions</code> field.
-Depending on the event's owner, there may be a variable called <code class="yaml">publisher</code>, <code class="yaml">subscription</code> or <code class="yaml">requisition</code>.
+There will be a variable called <code class="yaml">this</code> and, depending on the event's owner, it has an alias <code class="yaml">publisher</code>, <code class="yaml">subscription</code> or <code class="yaml">requisition</code>.
 You're free to explore them however you want, even doing things like this:</p>
 
 <pre><code class="yaml">publisher.parent.subscriptions[0].timeout = 1000;
@@ -649,7 +649,7 @@ You're free to explore them however you want, even doing things like this:</p>
 
 <h4 id="hooks" style="padding-left: 8px">3.1 hooks</h4>
 
-<p>There are three hook events available:</p>
+<p>By default, there are three hook events available:</p>
 
 <p><strong>onInit</strong> <br>
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.</p>
@@ -665,6 +665,12 @@ A <code class="yaml">message</code> object is available having all of attributes
 Depending on the protocol implementation, there'll be additional objects to this hook.
 For instance, in the built-in http publisher implementation, there's a <code class="yaml">statusCode</code>, <code class="yaml">headers</code> and a <code class="yaml">body</code> among others, and the subscription implementation has <code class="yaml">body</code>, <code class="yaml">query</code>, <code class="yaml">params</code> and <code class="yaml">headers</code>, among other variables.
 <code class="yaml">elapsedTime</code> is also available here, counting every milliseconds since the instantiation of this component.</p>
+
+<p><strong>custom</strong>
+Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
+As a good practice, is suggested, when implementing your own protocol library, to start the hook name with on preposition.
+Such as onError, onFileNotFound and onRedirect... 
+<a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml">Http-proxy subscription test file</a> is an excellent example, check it out.</p>
 
 <h4 id="fields" style="padding-left: 8px">3.2 fields</h4>
 

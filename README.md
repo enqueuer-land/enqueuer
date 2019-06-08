@@ -247,12 +247,12 @@ Available events are described [here](#event). A `this` object is available to a
 
     name: my name
     onInit:
-      script: requisition.delay = 3000;
+      script: this.delay = 3000;
       assertions:
-      - expectToBeDefined: requisition.name
+      - expectToBeDefined: this.name
     onFinish:  
       assertions:
-      - expectToBeDefined: requisition.name
+      - expectToBeDefined: this.name
 
 #### publisher
 
@@ -289,19 +289,19 @@ Defaults to false. Tells to enqueuer that this publisher should be skipped. Chec
     
 ##### events
 Available events are described [here](#event). A `this` object is available to access and change publisher attributes.
-Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist a `onMessageReceived` event and a special object given `message`. 
-On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually does not provide it. 
+Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist special events, such as `onMessageReceived` event and a special object given `message`. 
+On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually do not provide it. 
 
     onInit:
-      script: publisher.ignore = false
+      script: this.ignore = false
       assertions:
-      - expectToBeDefined: publisher.type
+      - expectToBeDefined: this.type
     onMessageReceived: #Provided in synchronous protocols  
       assertions:
       - expectToBeDefined: message
     onFinish:  
       assertions:
-      - expectToBeDefined: publisher.type
+      - expectToBeDefined: this.type
   
 #### subscription
 A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
@@ -350,15 +350,15 @@ Defaults to false. Tells to enqueuer that this subscription should be skipped. C
 Available events are described [here](#event). A `this` object is available to access and change subscription attributes.  
 
     onInit:
-      script: subscription.avoid = false;
+      script: this.avoid = false;
       assertions:
-      - expectToBeDefined: subscription.type
+      - expectToBeDefined: this.type
     onMessageReceived:  
       assertions:
       - expectToBeDefined: message
     onFinish:  
       assertions:
-      - expectToBeDefined: subscription.type
+      - expectToBeDefined: this.type
       
 ----
 
@@ -366,14 +366,14 @@ Available events are described [here](#event). A `this` object is available to a
 
 Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
 This is where you'll write your tests. In its `assertions` field.
-Depending on the event's owner, there may be a variable called `publisher`, `subscription` or `requisition`.
+There will be a variable called `this` and, depending on the event's owner, it has an alias `publisher`, `subscription` or `requisition`.
 You're free to explore them however you want, even doing things like this:
 
     publisher.parent.subscriptions[0].timeout = 1000;
  
 #### hooks
 
-There are three hook events available:
+By default, there are three hook events available:
 
 **onInit**  
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
@@ -389,6 +389,12 @@ A `message` object is available having all of attributes returned from the recei
 Depending on the protocol implementation, there'll be additional objects to this hook.
 For instance, in the built-in http publisher implementation, there's a `statusCode`, `headers` and a `body` among others, and the subscription implementation has `body`, `query`, `params` and `headers `, among other variables.
 `elapsedTime` is also available here, counting every milliseconds since the instantiation of this component.
+
+**custom**
+Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
+As a good practice, is suggested, when implementing your own protocol library, to start the hook name with on preposition.
+Such as onError, onFileNotFound and onRedirect... 
+[Http-proxy subscription test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
 
 #### fields
 Every hook object has 3 properties:

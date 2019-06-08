@@ -4,11 +4,10 @@ import * as output from '../../models/outputs/publisher-model';
 import {PublisherModel} from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
 import {Logger} from '../../loggers/logger';
-import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
-import {OnInitEventExecutor} from '../../events/on-init-event-executor';
-import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import {reportModelIsPassing} from '../../models/outputs/report-model';
+import {EventExecutor} from '../../events/event-executor';
+import {DefaulHookEvents} from '../../models/events/event';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
@@ -59,9 +58,17 @@ export class PublisherReporter {
 
     public onFinish(): void {
         if (!this.publisher.ignore) {
-            const onFinishEventExecutor = new OnFinishEventExecutor('publisher', this.publisher);
-            onFinishEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
-            this.report.tests = this.report.tests.concat(onFinishEventExecutor.trigger());
+            this.executeHookEvent(DefaulHookEvents.ON_FINISH, {elapsedTime: new Date().getTime() - this.startTime.getTime()});
+        }
+    }
+
+    protected executeHookEvent(eventName: string, args: any): void {
+        if (!this.publisher.ignore) {
+            const eventExecutor = new EventExecutor(this.publisher, eventName, 'publisher');
+            Object.keys(args).forEach((key: string) => {
+                eventExecutor.addArgument(key, args[key]);
+            });
+            this.report.tests = this.report.tests.concat(eventExecutor.execute());
         }
     }
 
@@ -86,15 +93,22 @@ export class PublisherReporter {
 
     private executeOnMessageReceivedFunction() {
         if (!this.publisher.ignore) {
-            const onMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('publisher', this.publisher);
-            onMessageReceivedEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
-            this.report.tests = this.report.tests.concat(onMessageReceivedEventExecutor.trigger());
+            const message = this.messageReceived || this.publisher.messageReceived;
+            const args: any = {
+                elapsedTime: new Date().getTime() - this.startTime.getTime(),
+                message
+            };
+
+            if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
+                Object.keys(message).forEach((key) => args[key] = message[key]);
+            }
+            this.executeHookEvent(DefaulHookEvents.ON_MESSAGE_RECEIVED, args);
         }
     }
 
     private executeOnInitFunction(publisher: input.PublisherModel) {
         if (!publisher.ignore) {
-            this.report.tests = this.report.tests.concat(new OnInitEventExecutor('publisher', publisher).trigger());
+            this.report.tests = this.report.tests.concat(new EventExecutor(publisher, DefaulHookEvents.ON_INIT, 'publisher').execute());
         }
     }
 

@@ -5,14 +5,13 @@ import {Timeout} from '../../timers/timeout';
 import * as input from '../../models/inputs/subscription-model';
 import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
-import {OnInitEventExecutor} from '../../events/on-init-event-executor';
-import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
-import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
 import {reportModelIsPassing} from '../../models/outputs/report-model';
+import {EventExecutor} from '../../events/event-executor';
+import {DefaulHookEvents} from '../../models/events/event';
 
 export class SubscriptionReporter {
 
@@ -171,9 +170,17 @@ export class SubscriptionReporter {
     public onFinish() {
         Logger.trace(`Executing subscription onFinish`);
         if (!this.subscription.ignore) {
-            const onFinishEventExecutor = new OnFinishEventExecutor('subscription', this.subscription);
-            onFinishEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
-            this.report.tests = this.report.tests.concat(onFinishEventExecutor.trigger());
+            this.executeHookEvent(DefaulHookEvents.ON_FINISH, {elapsedTime: new Date().getTime() - this.startTime.getTime()});
+        }
+    }
+
+    protected executeHookEvent(eventName: string, args: any): void {
+        if (!this.subscription.ignore) {
+            const eventExecutor = new EventExecutor(this.subscription, eventName, 'subscription');
+            Object.keys(args).forEach((key: string) => {
+                eventExecutor.addArgument(key, args[key]);
+            });
+            this.report.tests = this.report.tests.concat(eventExecutor.execute());
         }
     }
 
@@ -193,17 +200,22 @@ export class SubscriptionReporter {
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         if (!subscriptionAttributes.ignore) {
             Logger.debug(`Executing subscription::onInit hook function`);
-            this.report.tests = this.report.tests.concat(new OnInitEventExecutor('subscription', subscriptionAttributes).trigger());
+            this.report.tests = this.report.tests
+                .concat(new EventExecutor(subscriptionAttributes, DefaulHookEvents.ON_INIT, 'subscription').execute());
         }
     }
 
     private executeOnMessageReceivedFunction() {
-        Logger.trace(`Executing subscription onMessageReceivedResponse`);
-        Logger.trace(`${this.subscription.name} executing hook ${this.subscription.type} specific`);
-        this.report.tests = this.subscription.onMessageReceivedTests().concat(this.report.tests);
-        const onMessageReceivedEventExecutor = new OnMessageReceivedEventExecutor('subscription', this.subscription);
-        onMessageReceivedEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
-        this.report.tests = this.report.tests.concat(onMessageReceivedEventExecutor.trigger());
+        const args: any = {
+            elapsedTime: new Date().getTime() - this.startTime.getTime(),
+            message: this.subscription.messageReceived
+        };
+
+        if (typeof (this.subscription.messageReceived) == 'object' && !Buffer.isBuffer(this.subscription.messageReceived)) {
+            Object.keys(this.subscription.messageReceived).forEach((key) => args[key] = this.subscription.messageReceived[key]);
+        }
+        this.executeHookEvent(DefaulHookEvents.ON_MESSAGE_RECEIVED, args);
+
     }
 
     private async handleKillSignal(signal: Signals, type: string): Promise<void> {

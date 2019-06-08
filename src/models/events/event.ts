@@ -1,5 +1,11 @@
 import {Assertion} from './assertion';
 
+export enum DefaulHookEvents {
+    ON_INIT = 'onInit',
+    ON_MESSAGE_RECEIVED = 'onMessageReceived',
+    ON_FINISH = 'onFinish',
+}
+
 export interface Event {
     script?: string;
     assertions?: Assertion[];

@@ -1,4 +1,3 @@
-import {Event} from '../models/events/event';
 import {AssertionCodeGenerator} from './assertion-code-generator';
 import {Assertion} from '../models/events/assertion';
 import {StoreCodeGenerator} from './store-code-generator';
@@ -7,14 +6,10 @@ import {DynamicFunctionController} from '../dynamic-functions/dynamic-function-c
 import {Store} from '../configurations/store';
 import {Logger} from '../loggers/logger';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {EventExecutor} from '../events/event-executor';
-import {Finishable} from '../models/events/finishable';
-import {MessageReceiver} from '../models/events/message-receiver';
-import {Initializable} from '../models/events/initializable';
 
 //TODO test it
 export class EventCodeGenerator {
-    private readonly thisArg: Finishable | MessageReceiver | Initializable;
+    private readonly thisArg: any;
     private readonly tests: TestModel[] = [];
     private readonly testsInstanceName = 'tests';
     private readonly asserterInstanceName = 'asserter';
@@ -24,9 +19,10 @@ export class EventCodeGenerator {
     private readonly name: string;
     private assertions: Assertion[];
 
-    public constructor(eventValue: Event, eventName: string, thisArg: Finishable | MessageReceiver | Initializable) {
+    public constructor(thisArg: any, eventName: string) {
         this.thisArg = thisArg;
         this.name = eventName;
+        const eventValue: any = this.thisArg[eventName] || {};
         this.store = eventValue.store || {};
         this.script = eventValue.script || '';
         this.assertions = eventValue.assertions || [];
@@ -67,7 +63,7 @@ export class EventCodeGenerator {
                         ${this.testsInstanceName}.push({
                                 description: msg,
                                 valid: false,
-                                name: "Valid 'script snippet' code"
+                                name: "Valid 'script' code"
                             });
                     }\n`;
     }

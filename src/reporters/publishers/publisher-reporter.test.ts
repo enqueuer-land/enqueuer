@@ -1,9 +1,7 @@
-import {OnInitEventExecutor} from '../../events/on-init-event-executor';
-import {OnFinishEventExecutor} from '../../events/on-finish-event-executor';
-import {OnMessageReceivedEventExecutor} from '../../events/on-message-received-event-executor';
 import {PublisherReporter} from './publisher-reporter';
 import {ProtocolManager} from '../../plugins/protocol-manager';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
+import {EventExecutor} from '../../events/event-executor';
 
 jest.mock('../../plugins/dynamic-modules-manager');
 // @ts-ignore
@@ -13,7 +11,7 @@ DynamicModulesManager.getInstance.mockImplementation(() => {
     };
 });
 
-let publishMock = jest.fn(() => Promise.resolve(true));
+let publishMock = jest.fn(() => Promise.resolve({}));
 let publisherMock = jest.fn(() => {
     return {
         publish: publishMock
@@ -28,43 +26,17 @@ ProtocolManager.mockImplementation(() => {
     };
 });
 
+jest.mock('../../events/event-executor');
+EventExecutor.mockImplementation(() => ({
+    execute: () => [],
+    addArgument: () => {
+    }
+}));
+
 const publisher = {
     name: 'pubName',
     id: 'id'
 };
-
-let onInitTrigger = jest.fn(() => []);
-let onInitEventMock = jest.fn(() => {
-    return {
-        trigger: onInitTrigger
-    };
-});
-jest.mock('../../events/on-init-event-executor');
-OnInitEventExecutor.mockImplementation((onInitEventMock));
-
-let onFinishAddArgs = jest.fn(() => {
-    []
-});
-let onFinishTrigger = jest.fn(() => []);
-let onFinishEventMock = jest.fn(() => {
-    return {
-        trigger: onFinishTrigger,
-        addArgument: onFinishAddArgs,
-    };
-});
-jest.mock('../../events/on-finish-event-executor');
-OnFinishEventExecutor.mockImplementation((onFinishEventMock));
-
-let onMessageReceivedTrigger = jest.fn(() => []);
-let onMessageReceivedAddArgs = jest.fn(() => []);
-let onMessageReceivedEventMock = jest.fn(() => {
-    return {
-        trigger: onMessageReceivedTrigger,
-        addArgument: onMessageReceivedAddArgs,
-    };
-});
-jest.mock('../../events/on-message-received-event-executor');
-OnMessageReceivedEventExecutor.mockImplementation((onMessageReceivedEventMock));
 
 describe('PublisherReporter', () => {
     beforeEach(() => {
@@ -77,11 +49,12 @@ describe('PublisherReporter', () => {
         expect(publisherMock).toHaveBeenCalledWith(publisher);
     });
 
-    it('Should print onInit', () => {
+    it('Should call onInit', () => {
+        EventExecutor.mockImplementation = jest.fn();
+
         new PublisherReporter(publisher);
 
-        expect(onInitEventMock).toHaveBeenCalledWith('publisher', publisher);
-        expect(onInitTrigger).toHaveBeenCalled();
+        expect(EventExecutor).toHaveBeenCalledWith(publisher, 'onInit', 'publisher');
     });
 
     it('Should resolve onMessageReceived', done => {
@@ -145,15 +118,12 @@ describe('PublisherReporter', () => {
     });
 
     it('Should call onMessageReceived', async () => {
-        const publisherReporter = new PublisherReporter(publisher);
-        await publisherReporter.publish();
+        EventExecutor.mockClear();
+        EventExecutor.mockImplementation = jest.fn();
 
-        expect(onMessageReceivedEventMock).toHaveBeenCalledWith('publisher', publisherMock());
-        const addArgsCall = onMessageReceivedAddArgs.mock.calls;
-        expect(addArgsCall[0]![0]).toBe('elapsedTime');
-        expect(addArgsCall[0]![1]).toBeGreaterThan(0);
-        expect(onMessageReceivedTrigger).toHaveBeenCalled();
+        await new PublisherReporter(publisher).publish();
 
+        expect(EventExecutor).toHaveBeenNthCalledWith(2, {publish: expect.any(Function)}, 'onMessageReceived', 'publisher');
     });
 
     it('Should add onMessageReceived tests - no message', done => {
@@ -203,14 +173,17 @@ describe('PublisherReporter', () => {
 
     });
 
-    it('Should print onFinish', () => {
-        new PublisherReporter(publisher).onFinish();
+    it('Should print onFinish', async () => {
+        EventExecutor.mockClear();
+        EventExecutor.mockImplementation = jest.fn();
 
-        expect(onFinishEventMock).toHaveBeenCalledWith('publisher', publisherMock());
-        const onFinishAddArgsCalls = onFinishAddArgs.mock.calls[0];
-        expect(onFinishAddArgsCalls[0]).toBe('elapsedTime');
-        expect(onFinishAddArgsCalls[1]).toBeGreaterThanOrEqual(0);
-        expect(onFinishTrigger).toHaveBeenCalled();
+        await new PublisherReporter(publisher).onFinish();
+
+        expect(EventExecutor).toHaveBeenNthCalledWith(2, {
+            messageReceived: 'hey',
+            onMessageReceived: {'assertions': 'blah'},
+            publish: expect.any(Function)
+        }, 'onFinish', 'publisher');
     });
 
 });
