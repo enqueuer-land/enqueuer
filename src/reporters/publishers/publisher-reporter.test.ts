@@ -11,7 +11,7 @@ DynamicModulesManager.getInstance.mockImplementation(() => {
     };
 });
 
-let publishMock = jest.fn(() => Promise.resolve({}));
+let publishMock = jest.fn(() => Promise.resolve('publishResult'));
 let publisherMock = jest.fn(() => {
     return {
         publish: publishMock,
@@ -116,18 +116,6 @@ describe('PublisherReporter', () => {
             done();
         });
 
-    });
-
-    it('Should call onMessageReceived', async () => {
-        EventExecutor.mockClear();
-        EventExecutor.mockImplementation = jest.fn();
-
-        await new PublisherReporter(publisher).publish();
-
-        expect(EventExecutor).toHaveBeenNthCalledWith(2, {
-            publish: expect.any(Function),
-            registerHookEventExecutor: expect.any(Function),
-        }, 'onMessageReceived', 'publisher');
     });
 
     it('Should call onFinish', async () => {

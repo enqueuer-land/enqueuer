@@ -12,6 +12,7 @@ import SignalsListener = NodeJS.SignalsListener;
 import {reportModelIsPassing} from '../../models/outputs/report-model';
 import {EventExecutor} from '../../events/event-executor';
 import {DefaulHookEvents} from '../../models/events/event';
+import {ObjectDecycler} from '../../object-parser/object-decycler';
 
 export class SubscriptionReporter {
 
@@ -153,7 +154,6 @@ export class SubscriptionReporter {
         });
         this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
-        this.report.messageReceived = this.subscription.messageReceived;
         this.report.valid = this.report.valid && reportModelIsPassing(this.report);
         return this.report;
     }
@@ -175,13 +175,14 @@ export class SubscriptionReporter {
         }
     }
 
-    protected executeHookEvent(eventName: string, args: any = {}): void {
-        if (!this.subscription.ignore) {
+    protected executeHookEvent(eventName: string, args: any = {}, subscription: any = this.subscription): void {
+        if (!subscription.ignore) {
             args.elapsedTime = new Date().getTime() - this.startTime.getTime();
-            const eventExecutor = new EventExecutor(this.subscription, eventName, 'subscription');
+            const eventExecutor = new EventExecutor(subscription, eventName, 'subscription');
             Object.keys(args).forEach((key: string) => {
                 eventExecutor.addArgument(key, args[key]);
             });
+            this.report[eventName] = new ObjectDecycler().decycle(args);
             this.report.tests = this.report.tests.concat(eventExecutor.execute());
         }
     }
@@ -201,9 +202,7 @@ export class SubscriptionReporter {
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         if (!subscriptionAttributes.ignore) {
-            Logger.debug(`Executing subscription::onInit hook function`);
-            this.report.tests = this.report.tests
-                .concat(new EventExecutor(subscriptionAttributes, DefaulHookEvents.ON_INIT, 'subscription').execute());
+            this.executeHookEvent(DefaulHookEvents.ON_INIT, {}, subscriptionAttributes);
         }
     }
 

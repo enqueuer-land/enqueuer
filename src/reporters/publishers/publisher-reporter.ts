@@ -8,12 +8,12 @@ import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import {reportModelIsPassing} from '../../models/outputs/report-model';
 import {EventExecutor} from '../../events/event-executor';
 import {DefaulHookEvents} from '../../models/events/event';
+import {ObjectDecycler} from '../../object-parser/object-decycler';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
     private readonly publisher: Publisher;
     private readonly startTime: Date;
-    private messageReceived: any;
 
     constructor(publisher: input.PublisherModel) {
         this.report = {
@@ -37,11 +37,14 @@ export class PublisherReporter {
                 Logger.trace(`Ignoring publisher ${this.report.name}`);
             } else {
                 Logger.trace(`Publishing ${this.report.name}`);
-                this.messageReceived = await this.publisher.publish();
+                const messageReceived = await this.publisher.publish();
                 Logger.debug(`${this.report.name} published`);
                 this.report.publishTime = new DateController().toString();
                 this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
-                this.executeOnMessageReceivedFunction();
+
+                // NOTE: Old publishers don't return message received from published() method. They set attribute publisher.messageReceived
+                const message = messageReceived || this.publisher.messageReceived;
+                this.executeOnMessageReceivedFunction(message);
             }
         } catch (err) {
             Logger.error(`${this.report.name} fail publishing: ${err}`);
@@ -62,20 +65,20 @@ export class PublisherReporter {
         }
     }
 
-    protected executeHookEvent(eventName: string, args: any = {}): void {
-        if (!this.publisher.ignore) {
+    protected executeHookEvent(eventName: string, args: any = {}, publisher: any = this.publisher): void {
+        if (!publisher.ignore) {
             args.elapsedTime = new Date().getTime() - this.startTime.getTime();
-            const eventExecutor = new EventExecutor(this.publisher, eventName, 'publisher');
+            const eventExecutor = new EventExecutor(publisher, eventName, 'publisher');
             Object.keys(args).forEach((key: string) => {
                 eventExecutor.addArgument(key, args[key]);
             });
+            this.report[eventName] = new ObjectDecycler().decycle(args);
             this.report.tests = this.report.tests.concat(eventExecutor.execute());
         }
     }
 
-    private executeOnMessageReceivedFunction() {
-        if (!this.publisher.ignore) {
-            const message = this.messageReceived || this.publisher.messageReceived;
+    private executeOnMessageReceivedFunction(message: string) {
+        if (!this.publisher.ignore && this.publisher.onMessageReceived && message) {
             const args: any = {message};
 
             if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
@@ -87,7 +90,7 @@ export class PublisherReporter {
 
     private executeOnInitFunction(publisher: input.PublisherModel) {
         if (!publisher.ignore) {
-            this.report.tests = this.report.tests.concat(new EventExecutor(publisher, DefaulHookEvents.ON_INIT, 'publisher').execute());
+            this.executeHookEvent(DefaulHookEvents.ON_INIT, {}, publisher);
         }
     }
 
