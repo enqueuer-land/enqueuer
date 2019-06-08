@@ -40,7 +40,7 @@ Something like:
     publishers:
     -   type: http
         url: https://github.com/enqueuer-land/enqueuer
-        onMessageReceived:
+        onResponseReceived:
             assertions:
             -   expect: statusCode
                 toBeEqualTo: 200
@@ -58,7 +58,7 @@ What if I want to mock a http server and hit it at the same time, you may ask. N
         url: http://localhost:9085/readme-example
         method: POST
         payload: does enqueuer rock?
-        onMessageReceived:
+        onResponseReceived:
             script: doubleStatus = statusCode * 2
             assertions:
                 -   expect: body
@@ -384,16 +384,16 @@ Available in requisitions, publishers and subscriptions. It gets executed when t
 As available parameter, an `elapsedTime` variable is given, counting every milliseconds since the instantiation of this component. 
 
 **onMessageReceived**  
-Available in every subscription and in publishers that provide synchronous properties. 
-It gets executed when the subscription or publisher receives a message.
+Available in every subscription and in some publishers that provide synchronous properties. Depending on its author's will. 
+It gets executed when the component receives a message.
 A `message` object is available having all of attributes returned from the received message.
 Depending on the protocol implementation, there'll be additional objects to this hook.
-For instance, in the built-in http publisher implementation, there's a `statusCode`, `headers` and a `body` among others, and the subscription implementation has `body`, `query`, `params` and `headers `, among other variables.
+For instance, in the built-in http publisher implementation, there's a `statusCode`, `headers`, a `body` and others, and the subscription implementation has `body`, `query`, `params` and `headers `, among other variables.
 `elapsedTime` is also available here, counting every milliseconds since the instantiation of this component.
 
 **custom**
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
-Such as onError, onFileNotFound and onRedirect... 
+Such as `onError`, `onResponseReceived`, `onFileNotFound` and `onRedirect`... 
 [Http-proxy subscription test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
 
 #### fields

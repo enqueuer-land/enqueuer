@@ -8,7 +8,7 @@
         headers:
             content-type: application/json
             nqr: publisher
-        onMessageReceived:
+        onResponseReceived:
             assertions:
             -   name: Status Code
                 expect: statusCode
@@ -23,7 +23,7 @@
         url: http://localhost:23075/samePort
         method: POST
         payload: virgs
-        onMessageReceived:
+        onResponseReceived:
             assertions:
             -   name: Status Code
                 expect: statusCode
@@ -80,7 +80,7 @@
             duplicated: true
         headers:
             content-type: application/json
-        onMessageReceived:
+        onResponseReceived:
             assertions:
             -   name: Status Code
                 expect: statusCode

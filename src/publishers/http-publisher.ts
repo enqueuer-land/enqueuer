@@ -16,15 +16,17 @@ class HttpPublisher extends Publisher {
         this['timeout'] = this.timeout || 3000;
     }
 
-    public publish(): Promise<any> {
+    public async publish(): Promise<any> {
         this.insertAuthentication();
 
-        return new HttpRequester(this.url,
+        const response = await new HttpRequester(this.url,
             this.method.toLowerCase(),
             this.headers,
             this.payload,
             this.timeout)
             .request();
+        this.executeHookEvent('onResponseReceived', response);
+        return response;
     }
 
     private insertAuthentication() {
@@ -43,7 +45,7 @@ class HttpPublisher extends Publisher {
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new PublisherProtocol('http',
         (publisherModel: PublisherModel) => new HttpPublisher(publisherModel),
-        ['statusCode', 'statusMessage', 'body'])
+        {onResponseReceived: ['statusCode', 'statusMessage', 'body']})
         .addAlternativeName('http-client', 'https', 'https-client')
         .setLibrary('request');
 
