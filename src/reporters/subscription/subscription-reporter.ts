@@ -175,7 +175,7 @@ export class SubscriptionReporter {
         }
     }
 
-    protected executeHookEvent(eventName: string, args: any = {}, subscription: any = this.subscription): void {
+    private executeHookEvent(eventName: string, args: any = {}, subscription: any = this.subscription): void {
         if (!subscription.ignore) {
             args.elapsedTime = new Date().getTime() - this.startTime.getTime();
             const eventExecutor = new EventExecutor(subscription, eventName, 'subscription');

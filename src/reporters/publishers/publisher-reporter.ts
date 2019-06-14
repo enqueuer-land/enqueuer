@@ -65,7 +65,7 @@ export class PublisherReporter {
         }
     }
 
-    protected executeHookEvent(eventName: string, args: any = {}, publisher: any = this.publisher): void {
+    private executeHookEvent(eventName: string, args: any = {}, publisher: any = this.publisher): void {
         if (!publisher.ignore) {
             args.elapsedTime = new Date().getTime() - this.startTime.getTime();
             const eventExecutor = new EventExecutor(publisher, eventName, 'publisher');

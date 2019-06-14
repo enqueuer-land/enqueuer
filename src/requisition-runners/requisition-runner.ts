@@ -55,9 +55,6 @@ export class RequisitionRunner {
                 this.replaceVariables();
                 Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name}'`);
                 const report = await this.startRequisitionReporter();
-                if (iterations > 1) {
-                    report.name += ` [${iterationCounter}]`;
-                }
                 report.iteration = iterationCounter;
                 reports.push(report);
                 this.emitNotification(report);
