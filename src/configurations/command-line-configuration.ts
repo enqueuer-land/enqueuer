@@ -47,8 +47,11 @@ export class CommandLineConfiguration {
     public verifyPrematureActions(): void {
         let exitCode: boolean | undefined;
         if (this.parsedCommandLine.protocolsDescription) {
+            const protocolsMatcherArg = typeof this.parsedCommandLine.protocolsDescription === 'string' ?
+                this.parsedCommandLine.protocolsDescription :
+                undefined;
             exitCode = DynamicModulesManager.getInstance().getProtocolManager()
-                .describeMatchingProtocols(this.parsedCommandLine.protocolsDescription);
+                .describeMatchingProtocols(protocolsMatcherArg);
         } else if (this.parsedCommandLine.formattersDescription) {
             exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
                 .describeMatchingReportFormatters(this.parsedCommandLine.formattersDescription);

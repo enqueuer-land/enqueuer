@@ -22,7 +22,7 @@ describe('ProtocolManager', () => {
         // @ts-ignore
         protocolManager.addProtocol(new PublisherProtocol('mine', () => {/*not empty*/
         }));
-        expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             publishers: expect.anything(),
             subscriptions: expect.anything()
@@ -92,7 +92,7 @@ describe('ProtocolManager', () => {
         // @ts-ignore
         protocolManager.addProtocol(new PublisherProtocol('other', () => {/*not empty*/
         }));
-        expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
                 'publishers': [{
                     'hookEvents': {'onFinish': [], 'onInit': []},
@@ -132,7 +132,7 @@ describe('ProtocolManager', () => {
         // @ts-ignore
         protocolManager.addProtocol(new SubscriptionProtocol('sub2', () => { /*not empty*/
         }));
-        expect(protocolManager.describeMatchingProtocols(true)).toBeTruthy();
+        expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
             'publishers': [],
             'subscriptions': [{'hookEvents': {'onFinish': [], 'onInit': []}, 'name': 'sub'}, {

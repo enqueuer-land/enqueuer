@@ -90,6 +90,28 @@ export class DynamicModulesManager {
         }
     }
 
+    public findEveryEnqueuerImplicitPluginPackage(pattern: string): string[] {
+        try {
+            return (glob.sync(pattern, {}) || [])
+                .map(module => module.replace(/\.js/, ''))
+                .filter(module => {
+                    try {
+                        const packageJson = JSON.parse(fs.readFileSync(module + '/package.json').toString());
+                        if (packageJson.keywords
+                            .filter((keyword: string) => keyword.toLowerCase() === 'enqueuer' ||
+                                keyword.toLowerCase() === 'nqr').length > 0) {
+                            return require(module).entryPoint !== undefined;
+                        }
+                    } catch (err) {
+                    }
+                    return false;
+                });
+        } catch (err) {
+
+        }
+        return [];
+    }
+
     private loadModule(module: string): boolean {
         try {
             require(module)
@@ -123,28 +145,6 @@ export class DynamicModulesManager {
             });
         const plugins: Set<string> = new Set(files);
         return Array.from(plugins.values());
-    }
-
-    private findEveryEnqueuerImplicitPluginPackage(pattern: string): string[] {
-        try {
-            return (glob.sync(pattern, {}) || [])
-                .map(module => module.replace(/\.js/, ''))
-                .filter(module => {
-                    try {
-                        const packageJson = JSON.parse(fs.readFileSync(module + '/package.json').toString());
-                        if (packageJson.keywords
-                            .filter((keyword: string) => keyword.toLowerCase() === 'enqueuer' ||
-                                keyword.toLowerCase() === 'nqr').length > 0) {
-                            return require(module).entryPoint !== undefined;
-                        }
-                    } catch (err) {
-                    }
-                    return false;
-                });
-        } catch (err) {
-
-        }
-        return [];
     }
 
     private initialModulesLoad() {

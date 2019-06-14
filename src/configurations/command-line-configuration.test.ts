@@ -128,7 +128,7 @@ describe('CommandLineConfiguration', () => {
         commandLineConfiguration.verifyPrematureActions();
 
         expect(exitMock).toHaveBeenCalledWith(0);
-        expect(describeProtocolsMock).toHaveBeenCalledWith(true);
+        expect(describeProtocolsMock).toHaveBeenCalledWith(undefined);
     });
 
     it('describe protocols --protocols-description', () => {
@@ -137,7 +137,7 @@ describe('CommandLineConfiguration', () => {
         commandLineConfiguration.verifyPrematureActions();
 
         expect(exitMock).toHaveBeenCalledWith(0);
-        expect(describeProtocolsMock).toHaveBeenCalledWith(true);
+        expect(describeProtocolsMock).toHaveBeenCalledWith(undefined);
     });
 
     it('describe protocols --protocols-description http', () => {
