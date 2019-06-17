@@ -6,7 +6,7 @@ import * as output from '../models/outputs/requisition-model';
 import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
 import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
 import {EventExecutor} from '../events/event-executor';
-import {DefaulHookEvents} from '../models/events/event';
+import {DefaultHookEvents} from '../models/events/event';
 import {TestModel} from '../models/outputs/test-model';
 
 export class RequisitionReporter {
@@ -85,12 +85,12 @@ export class RequisitionReporter {
 
     private executeOnInitFunction(): TestModel[] {
         Logger.debug(`Executing requisition onInit hook function`);
-        return new EventExecutor(this.requisitionAttributes, DefaulHookEvents.ON_INIT, 'requisition').execute();
+        return new EventExecutor(this.requisitionAttributes, DefaultHookEvents.ON_INIT, 'requisition').execute();
     }
 
     private async executeOnFinishFunction(): Promise<void> {
         this.multiSubscriptionsReporter.onFinish();
-        const onFinishEventExecutor = new EventExecutor(this.requisitionAttributes, DefaulHookEvents.ON_FINISH, 'requisition');
+        const onFinishEventExecutor = new EventExecutor(this.requisitionAttributes, DefaultHookEvents.ON_FINISH, 'requisition');
         onFinishEventExecutor.addArgument('elapsedTime', new Date().getTime() - this.startTime.getTime());
         this.reportGenerator.addTests(onFinishEventExecutor.execute());
         this.multiPublishersReporter.onFinish();

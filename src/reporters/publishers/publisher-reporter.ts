@@ -7,7 +7,7 @@ import {Logger} from '../../loggers/logger';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import {reportModelIsPassing} from '../../models/outputs/report-model';
 import {EventExecutor} from '../../events/event-executor';
-import {DefaulHookEvents} from '../../models/events/event';
+import {DefaultHookEvents} from '../../models/events/event';
 import {ObjectDecycler} from '../../object-parser/object-decycler';
 
 export class PublisherReporter {
@@ -61,7 +61,7 @@ export class PublisherReporter {
 
     public onFinish(): void {
         if (!this.publisher.ignore) {
-            this.executeHookEvent(DefaulHookEvents.ON_FINISH);
+            this.executeHookEvent(DefaultHookEvents.ON_FINISH);
         }
     }
 
@@ -84,13 +84,13 @@ export class PublisherReporter {
             if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
                 Object.keys(message).forEach((key) => args[key] = message[key]);
             }
-            this.executeHookEvent(DefaulHookEvents.ON_MESSAGE_RECEIVED, args);
+            this.executeHookEvent(DefaultHookEvents.ON_MESSAGE_RECEIVED, args);
         }
     }
 
     private executeOnInitFunction(publisher: input.PublisherModel) {
         if (!publisher.ignore) {
-            this.executeHookEvent(DefaulHookEvents.ON_INIT, {}, publisher);
+            this.executeHookEvent(DefaultHookEvents.ON_INIT, {}, publisher);
         }
     }
 

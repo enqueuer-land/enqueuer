@@ -1,6 +1,6 @@
 import {Assertion} from './assertion';
 
-export enum DefaulHookEvents {
+export enum DefaultHookEvents {
     ON_INIT = 'onInit',
     ON_MESSAGE_RECEIVED = 'onMessageReceived',
     ON_FINISH = 'onFinish',

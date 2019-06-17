@@ -1,5 +1,5 @@
 import {Logger} from '../loggers/logger';
-import {DefaulHookEvents} from '../models/events/event';
+import {DefaultHookEvents} from '../models/events/event';
 
 type Library = {
     name: string;
@@ -26,12 +26,12 @@ export abstract class Protocol {
         this.name = name;
         this.type = type;
         if (Array.isArray(hookEventsDescription)) {
-            this.hookEventsDescription[DefaulHookEvents.ON_MESSAGE_RECEIVED] = hookEventsDescription;
+            this.hookEventsDescription[DefaultHookEvents.ON_MESSAGE_RECEIVED] = hookEventsDescription;
         } else {
             this.hookEventsDescription = hookEventsDescription;
         }
-        this.hookEventsDescription[DefaulHookEvents.ON_INIT] = [];
-        this.hookEventsDescription[DefaulHookEvents.ON_FINISH] = [];
+        this.hookEventsDescription[DefaultHookEvents.ON_INIT] = [];
+        this.hookEventsDescription[DefaultHookEvents.ON_FINISH] = [];
     }
 
     public isSubscription(): boolean {

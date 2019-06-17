@@ -11,7 +11,7 @@ import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
 import {reportModelIsPassing} from '../../models/outputs/report-model';
 import {EventExecutor} from '../../events/event-executor';
-import {DefaulHookEvents} from '../../models/events/event';
+import {DefaultHookEvents} from '../../models/events/event';
 import {ObjectDecycler} from '../../object-parser/object-decycler';
 
 export class SubscriptionReporter {
@@ -171,7 +171,7 @@ export class SubscriptionReporter {
     public onFinish() {
         Logger.trace(`Executing subscription onFinish`);
         if (!this.subscription.ignore) {
-            this.executeHookEvent(DefaulHookEvents.ON_FINISH);
+            this.executeHookEvent(DefaultHookEvents.ON_FINISH);
         }
     }
 
@@ -202,7 +202,7 @@ export class SubscriptionReporter {
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         if (!subscriptionAttributes.ignore) {
-            this.executeHookEvent(DefaulHookEvents.ON_INIT, {}, subscriptionAttributes);
+            this.executeHookEvent(DefaultHookEvents.ON_INIT, {}, subscriptionAttributes);
         }
     }
 
@@ -214,7 +214,7 @@ export class SubscriptionReporter {
         if (typeof (this.subscription.messageReceived) == 'object' && !Buffer.isBuffer(this.subscription.messageReceived)) {
             Object.keys(this.subscription.messageReceived).forEach((key) => args[key] = this.subscription.messageReceived[key]);
         }
-        this.executeHookEvent(DefaulHookEvents.ON_MESSAGE_RECEIVED, args);
+        this.executeHookEvent(DefaultHookEvents.ON_MESSAGE_RECEIVED, args);
 
     }
 
