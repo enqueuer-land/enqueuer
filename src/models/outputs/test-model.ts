@@ -5,6 +5,6 @@ export interface TestModel {
     name: string;
 }
 
-export function testModelIsPassing(test: {ignored?: boolean, valid: boolean}): boolean {
+export function testModelIsPassing(test: TestModel): boolean {
     return test.ignored || test.valid;
 }

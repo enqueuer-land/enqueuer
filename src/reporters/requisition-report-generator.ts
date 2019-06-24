@@ -3,10 +3,11 @@ import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
-import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
-import {reportModelIsPassing} from '../models/outputs/report-model';
+import {DefaultHookEvents} from '../models/events/event';
+import {HookModel} from '../models/outputs/hook-model';
+import {HookReporter} from './hook-reporter';
 
 export class RequisitionReportGenerator {
 
@@ -30,27 +31,18 @@ export class RequisitionReportGenerator {
     }
 
     public getReport(): RequisitionModel {
-        this.report.valid = (this.report.subscriptions || []).every(report => reportModelIsPassing(report)) &&
-            (this.report.publishers || []).every(report => reportModelIsPassing(report)) &&
-            (this.report.tests || []).every(test => testModelIsPassing(test));
         return this.report;
     }
 
     public finish(): void {
         this.addTimesReport();
+        this.report.valid = (this.report.subscriptions || []).every(report => report.valid) &&
+            (this.report.publishers || []).every(report => report.valid) &&
+            Object.keys(this.report.hooks || {}).every((key: string) => this.report.hooks ? this.report.hooks[key].valid : true);
     }
 
-    public addError(error: TestModel) {
-        const errorTest: TestModel = {
-            valid: false,
-            name: error.name,
-            description: error.description
-        };
-        this.report.tests.push(errorTest);
-    }
-
-    public addTests(tests: TestModel[]) {
-        this.report.tests = this.report.tests.concat(tests);
+    public addTest(hookName: string, hook: HookModel) {
+        this.report.hooks![hookName] = new HookReporter(this.report.hooks![hookName]).addValues(hook);
     }
 
     private addTimesReport(): void {
@@ -58,10 +50,12 @@ export class RequisitionReportGenerator {
         if (this.timeout) {
             this.report.time.timeout = this.timeout;
             if (this.report.time.totalTime > this.report.time.timeout) {
-                this.report.tests.push({
-                    valid: false,
-                    name: 'No time out',
-                    description: `Requisition has timed out: ${this.report.time.totalTime} > ${this.timeout}`
+                this.addTest(DefaultHookEvents.ON_FINISH, {
+                    valid: false, tests: [{
+                        valid: false,
+                        name: 'No time out',
+                        description: `Requisition has timed out: ${this.report.time.totalTime} > ${this.timeout}`
+                    }]
                 });
             }
 

@@ -22,7 +22,7 @@ subscriptions:
         payload: mock response
     onMessageReceived:
         assertions:
-        -   expect: message.body
+        -   expect: body
             toContain: `enqueuer`
         -   name: failing test
             ignore:

@@ -2,6 +2,7 @@ import {PublisherReporter} from './publisher-reporter';
 import {ProtocolManager} from '../../plugins/protocol-manager';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
 import {EventExecutor} from '../../events/event-executor';
+import {DefaultHookEvents} from '../../models/events/event';
 
 jest.mock('../../plugins/dynamic-modules-manager');
 // @ts-ignore
@@ -91,9 +92,10 @@ describe('PublisherReporter', () => {
     it('Should add Publisher test - success', done => {
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().then(() => {
+            publisherReporter.onFinish();
             const report = publisherReporter.getReport();
             expect(report.name).toBe(publisher.name);
-            const publisherTest = report.tests[0];
+            const publisherTest = report.hooks[DefaultHookEvents.ON_FINISH].tests[0];
             expect(publisherTest.name).toBe('Published');
             expect(publisherTest.valid).toBeTruthy();
 
@@ -107,9 +109,10 @@ describe('PublisherReporter', () => {
         publishMock = jest.fn(() => Promise.reject(reason));
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().catch(() => {
+            publisherReporter.onFinish();
             const report = publisherReporter.getReport();
             expect(report.name).toBe(publisher.name);
-            const publisherTest = report.tests[0];
+            const publisherTest = report.hooks[DefaultHookEvents.ON_FINISH].tests[0];
             expect(publisherTest.name).toBe('Published');
             expect(publisherTest.valid).toBeFalsy();
 

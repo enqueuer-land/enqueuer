@@ -9,11 +9,9 @@ import {FileContentMapCreator} from '../configurations/file-content-map-creator'
 import {IterationsEvaluator} from './iterations-evaluator';
 import {ComponentParentBackupper} from '../components/component-parent-backupper';
 import {ComponentImporter} from './component-importer';
-import {reportModelIsPassing} from '../models/outputs/report-model';
 import {RequisitionAdopter} from '../components/requisition-adopter';
 import {NotificationEmitter, Notifications} from '../notifications/notification-emitter';
 
-//TODO test it
 export class RequisitionRunner {
 
     private requisition: input.RequisitionModel;
@@ -56,6 +54,7 @@ export class RequisitionRunner {
                 Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name}'`);
                 const report = await this.startRequisitionReporter();
                 report.iteration = iterationCounter;
+                report.totalIterations = iterations;
                 reports.push(report);
                 this.emitNotification(report);
             } catch (err) {
@@ -106,7 +105,9 @@ export class RequisitionRunner {
         let childrenReport: output.RequisitionModel[] = await this.executeChildren();
         const report = await requisitionReporter.execute();
         report.requisitions = childrenReport;
-        report.valid = report.valid && report.requisitions.every((requisition) => reportModelIsPassing(requisition));
+        report.valid = report.valid &&
+            report.requisitions.every((requisition) => requisition.valid || requisition.ignored) &&
+            Object.keys(report.hooks || {}).every((key: string) => report.hooks ? report.hooks[key].valid : true);
         Logger.debug(`Requisition ${this.requisition.name} went through the happy path`);
         return report;
     }

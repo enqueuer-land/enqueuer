@@ -7,16 +7,16 @@ import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
-import Signals = NodeJS.Signals;
-import SignalsListener = NodeJS.SignalsListener;
-import {reportModelIsPassing} from '../../models/outputs/report-model';
 import {EventExecutor} from '../../events/event-executor';
 import {DefaultHookEvents} from '../../models/events/event';
 import {ObjectDecycler} from '../../object-parser/object-decycler';
+import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
+import Signals = NodeJS.Signals;
+import SignalsListener = NodeJS.SignalsListener;
 
 export class SubscriptionReporter {
 
-    private static readonly DEFAULT_TIMEOUT: number = 3 * 1000;
+    public static readonly DEFAULT_TIMEOUT: number = 3 * 1000;
     private readonly killListener: SignalsListener;
     private readonly report: output.SubscriptionModel;
     private readonly startTime: DateController;
@@ -33,7 +33,10 @@ export class SubscriptionReporter {
             name: subscriptionAttributes.name,
             ignored: subscriptionAttributes.ignore,
             type: subscriptionAttributes.type,
-            tests: [],
+            hooks: {
+                [DefaultHookEvents.ON_INIT]: {valid: true, tests: []},
+                [DefaultHookEvents.ON_FINISH]: {valid: true, tests: []}
+            },
             valid: true
         };
 
@@ -81,8 +84,9 @@ export class SubscriptionReporter {
                 await this.subscription.subscribe();
                 await this.handleSubscription();
             } catch (err) {
-                Logger.error(`Subscription '${this.subscription.name}' is unable to subscribe: ${err}`);
-                this.subscribeError = JSON.stringify(err);
+                const message = `Subscription '${this.subscription.name}' is unable to subscribe: ${err}`;
+                Logger.error(message);
+                this.subscribeError = `${err}`;
                 throw err;
             }
         }
@@ -91,16 +95,11 @@ export class SubscriptionReporter {
     public async receiveMessage(): Promise<any> {
         if (!this.subscription.ignore) {
             try {
-                const message = await this.subscription.receiveMessage();
+                await this.subscription.receiveMessage();
                 Logger.debug(`${this.subscription.name} received its message`);
-                if (message !== null || message !== undefined) {
-                    this.handleMessageArrival(message);
-                    await this.sendSyncResponse();
-                    Logger.trace(`Subscription '${this.subscription.name}' has finished its job`);
-                    return;
-                } else {
-                    Logger.warning(`Type of '${this.subscription.name}' is ${typeof message}`);
-                }
+                this.handleMessageArrival();
+                await this.sendSyncResponse();
+                Logger.trace(`Subscription '${this.subscription.name}' has finished its job`);
             } catch (err) {
                 this.subscription.unsubscribe().catch(console.log.bind(console));
                 Logger.error(`Subscription '${this.subscription.name}' is unable to receive message: ${err}`);
@@ -117,7 +116,7 @@ export class SubscriptionReporter {
             Logger.error(message);
             return false;
         } else {
-            this.report.connectionTime = new DateController().toString();
+            this.report.subscriptionTime = new DateController().toString();
             this.subscribed = true;
             return true;
         }
@@ -144,17 +143,24 @@ export class SubscriptionReporter {
             this.totalTime = new DateController();
         }
         time.totalTime = this.totalTime.getTime() - this.startTime.getTime();
+        //TODO check it
         const finalReporter = new SubscriptionFinalReporter({
             subscribed: this.subscribed,
             avoidable: this.subscription.avoid,
-            hasMessage: !!this.subscription.messageReceived,
+            hasMessage: this.subscription.messageReceived,
             time: time,
             subscribeError: this.subscribeError,
             ignore: this.subscription.ignore
         });
-        this.report.tests = this.report.tests.concat(finalReporter.getReport());
 
-        this.report.valid = this.report.valid && reportModelIsPassing(this.report);
+        const finalReport = finalReporter.getReport();
+        this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH]
+            .tests.concat(finalReport);
+        this.report.hooks![DefaultHookEvents.ON_FINISH].valid = this.report.hooks![DefaultHookEvents.ON_FINISH].valid
+            && finalReport.every(report => report.ignored || report.valid);
+
+        this.report.valid = this.report.valid && Object.keys(this.report.hooks || {})
+            .every((key: string) => this.report.hooks ? this.report.hooks[key].valid : true);
         return this.report;
     }
 
@@ -179,21 +185,27 @@ export class SubscriptionReporter {
         if (!subscription.ignore) {
             args.elapsedTime = new Date().getTime() - this.startTime.getTime();
             const eventExecutor = new EventExecutor(subscription, eventName, 'subscription');
-            Object.keys(args).forEach((key: string) => {
-                eventExecutor.addArgument(key, args[key]);
-            });
-            this.report[eventName] = new ObjectDecycler().decycle(args);
-            this.report.tests = this.report.tests.concat(eventExecutor.execute());
+            if (typeof args === 'object') {
+                Object.keys(args).forEach((key: string) => {
+                    eventExecutor.addArgument(key, args[key]);
+                });
+            }
+            const tests = eventExecutor.execute();
+            const valid = tests.every((test: TestModel) => testModelIsPassing(test));
+            this.report.hooks![eventName] = {
+                arguments: new ObjectDecycler().decycle(args),
+                tests: tests,
+                valid: valid
+            };
+            this.report.valid = this.report.valid && valid;
         }
     }
 
-    private handleMessageArrival(message: any) {
-        Logger.debug(`${this.subscription.name} message: ${JSON.stringify(message, null, 2)}`.substr(0, 150) + '...');
+    private handleMessageArrival() {
         if (!this.hasTimedOut) {
             Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
+            this.subscription.messageReceived = true;
             this.totalTime = new DateController();
-            this.subscription.messageReceived = message;
-            this.executeOnMessageReceivedFunction();
         } else {
             Logger.info(`${this.subscription.name} has received message in a unable time`);
         }
@@ -204,18 +216,6 @@ export class SubscriptionReporter {
         if (!subscriptionAttributes.ignore) {
             this.executeHookEvent(DefaultHookEvents.ON_INIT, {}, subscriptionAttributes);
         }
-    }
-
-    private executeOnMessageReceivedFunction() {
-        const args: any = {
-            message: this.subscription.messageReceived
-        };
-
-        if (typeof (this.subscription.messageReceived) == 'object' && !Buffer.isBuffer(this.subscription.messageReceived)) {
-            Object.keys(this.subscription.messageReceived).forEach((key) => args[key] = this.subscription.messageReceived[key]);
-        }
-        this.executeHookEvent(DefaultHookEvents.ON_MESSAGE_RECEIVED, args);
-
     }
 
     private async handleKillSignal(signal: Signals, type: string): Promise<void> {

@@ -10,7 +10,7 @@ export class NullSubscription extends Subscription {
         return Promise.reject(`Undefined subscription: '${this.type}'`);
     }
 
-    public async receiveMessage(): Promise<any> {
+    public async receiveMessage(): Promise<void> {
         return Promise.reject(`Undefined subscription: '${this.type}'`);
     }
 

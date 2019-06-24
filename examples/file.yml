@@ -17,7 +17,7 @@ subscriptions:
         assertions:
         -   name: Some time has passed
             expect: now
-            toBeGreaterThanOrEqualTo: message.content
+            toBeGreaterThanOrEqualTo: content
         -   name: Filename
             expect: name
             toContain: `temp/`

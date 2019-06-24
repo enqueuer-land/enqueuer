@@ -5,15 +5,16 @@ import {PublisherModel} from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
 import {Logger} from '../../loggers/logger';
 import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
-import {reportModelIsPassing} from '../../models/outputs/report-model';
 import {EventExecutor} from '../../events/event-executor';
 import {DefaultHookEvents} from '../../models/events/event';
 import {ObjectDecycler} from '../../object-parser/object-decycler';
+import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
     private readonly publisher: Publisher;
     private readonly startTime: Date;
+    private published: boolean = false;
 
     constructor(publisher: input.PublisherModel) {
         this.report = {
@@ -21,8 +22,11 @@ export class PublisherReporter {
             name: publisher.name,
             ignored: publisher.ignore,
             valid: true,
-            type: publisher.type,
-            tests: []
+            hooks: {
+                [DefaultHookEvents.ON_INIT]: {valid: true, tests: []},
+                [DefaultHookEvents.ON_FINISH]: {valid: true, tests: []}
+            },
+            type: publisher.type
         };
         this.startTime = new Date();
         this.executeOnInitFunction(publisher);
@@ -37,31 +41,33 @@ export class PublisherReporter {
                 Logger.trace(`Ignoring publisher ${this.report.name}`);
             } else {
                 Logger.trace(`Publishing ${this.report.name}`);
-                const messageReceived = await this.publisher.publish();
+                await this.publisher.publish();
                 Logger.debug(`${this.report.name} published`);
                 this.report.publishTime = new DateController().toString();
-                this.report.tests.push({name: 'Published', valid: true, description: 'Published successfully'});
-
-                // NOTE: Old publishers don't return message received from published() method. They set attribute publisher.messageReceived
-                const message = messageReceived || this.publisher.messageReceived;
-                this.executeOnMessageReceivedFunction(message);
+                this.published = true;
             }
         } catch (err) {
             Logger.error(`${this.report.name} fail publishing: ${err}`);
-            this.report.tests.push({name: 'Published', valid: false, description: err.toString()});
+            this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({name: 'Published', valid: false, description: err.toString()});
+            this.report.valid = false;
             throw err;
         }
 
     }
 
     public getReport(): PublisherModel {
-        this.report.valid = this.report.valid && reportModelIsPassing(this.report);
         return this.report;
     }
 
     public onFinish(): void {
         if (!this.publisher.ignore) {
             this.executeHookEvent(DefaultHookEvents.ON_FINISH);
+            this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
+                name: 'Published',
+                valid: this.published,
+                description: 'Published successfully'
+            });
+            this.report.valid = this.report.valid && this.published;
         }
     }
 
@@ -72,19 +78,15 @@ export class PublisherReporter {
             Object.keys(args).forEach((key: string) => {
                 eventExecutor.addArgument(key, args[key]);
             });
-            this.report[eventName] = new ObjectDecycler().decycle(args);
-            this.report.tests = this.report.tests.concat(eventExecutor.execute());
-        }
-    }
+            const tests = eventExecutor.execute();
+            const valid = tests.every((test: TestModel) => testModelIsPassing(test));
+            this.report.hooks![eventName] = {
+                arguments: new ObjectDecycler().decycle(args),
+                tests: tests,
+                valid: valid
+            };
 
-    private executeOnMessageReceivedFunction(message: string) {
-        if (!this.publisher.ignore && this.publisher.onMessageReceived && message) {
-            const args: any = {message};
-
-            if (typeof (message) == 'object' && !Buffer.isBuffer(message)) {
-                Object.keys(message).forEach((key) => args[key] = message[key]);
-            }
-            this.executeHookEvent(DefaultHookEvents.ON_MESSAGE_RECEIVED, args);
+            this.report.valid = this.report.valid && valid;
         }
     }
 

@@ -10,11 +10,12 @@ class StandardInputSubscription extends Subscription {
         super(subscriptionModel);
     }
 
-    public receiveMessage(): Promise<any> {
+    public receiveMessage(): Promise<void> {
         return new Promise((resolve) => {
             process.stdin.on('end', () => {
                 if (this.value) {
-                    resolve(this.value);
+                    resolve();
+                    this.executeHookEvent('onMessageReceived', {message: this.value});
                 }
             });
         });
@@ -42,7 +43,17 @@ class StandardInputSubscription extends Subscription {
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new SubscriptionProtocol('stdin',
         (subscriptionModel: SubscriptionModel) => new StandardInputSubscription(subscriptionModel),
-        [])
+        {
+            schema: {
+                hooks: {
+                    onMessageReceived: {
+                        arguments: {
+                            message: {},
+                        }
+                    }
+                }
+            }
+        })
         .addAlternativeName('standard-input');
 
     mainInstance.protocolManager.addProtocol(protocol);

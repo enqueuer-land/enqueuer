@@ -13,11 +13,11 @@ class FilePublisher extends Publisher {
         this['filenameExtension'] = this.filenameExtension || 'enq';
     }
 
-    public publish(): Promise<any> {
+    public publish(): Promise<void> {
         const filename = this.getFileName();
         let value = this.payload;
 
-        if (typeof(value) === 'object') {
+        if (typeof (value) === 'object') {
             value = JSON.stringify(value, null, 2);
         }
 
@@ -44,7 +44,33 @@ class FilePublisher extends Publisher {
 
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new PublisherProtocol('file',
-        (publisherModel: PublisherModel) => new FilePublisher(publisherModel));
-
+        (publisherModel: PublisherModel) => new FilePublisher(publisherModel), {
+            description: 'The file publisher provides an implementation of filesystem writers',
+            libraryHomepage: 'https://nodejs.org/api/fs.html',
+            schema: {
+                attributes: {
+                    filenameExtension: {
+                        description: 'Used when there is no file name defined, succeeds the auto generated file name',
+                        required: false,
+                        type: 'string'
+                    },
+                    filenamePrefix: {
+                        description: 'Used when there is no file name defined, precedes the auto generated file name',
+                        required: false,
+                        type: 'string'
+                    },
+                    filename: {
+                        description: 'The file name',
+                        required: false,
+                        type: 'string'
+                    },
+                    payload: {
+                        type: 'text',
+                        required: true
+                    },
+                }
+            }
+        }
+    );
     mainInstance.protocolManager.addProtocol(protocol);
 }

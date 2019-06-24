@@ -14,7 +14,7 @@ class CustomSubscription extends Subscription {
         try {
             const moduleString: string = fs.readFileSync(this.module).toString();
             const module = requireFromString(moduleString);
-            this['custom'] = new module.Subscription(subscriptionModel);
+            this['custom'] = new module.Subscription(this);
         } catch (err) {
             Logger.error(`Error loading module '${this.module}': ${err}`);
         }
@@ -24,7 +24,7 @@ class CustomSubscription extends Subscription {
         return this.custom.subscribe({store: Store.getData(), logger: Logger});
     }
 
-    public async receiveMessage(): Promise<any> {
+    public async receiveMessage(): Promise<void> {
         return this.custom.receiveMessage({store: Store.getData(), logger: Logger});
     }
 
@@ -43,7 +43,6 @@ class CustomSubscription extends Subscription {
 
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new SubscriptionProtocol('custom',
-        (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel),
-        []);
+        (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel));
     mainInstance.protocolManager.addProtocol(protocol);
 }

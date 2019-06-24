@@ -1,4 +1,5 @@
 import {RequisitionReportGenerator} from './requisition-report-generator';
+import {DefaultHookEvents} from '../models/events/event';
 
 let sleep = (millisecondsToWait: number): void => {
     const waitTill = new Date(new Date().getTime() + millisecondsToWait);
@@ -14,11 +15,17 @@ describe('RequisitionReportGenerator', () => {
         expect(report.time).toBeDefined();
         delete report.time;
         expect(report).toEqual({
+            'hooks': {
+                'onFinish': {arguments: {}, 'tests': [], 'valid': true},
+                'onInit': {arguments: {}, 'tests': [], 'valid': true}
+            },
+            'id': undefined,
+            'ignored': undefined,
+            'level': undefined,
             'name': 'testName',
             'publishers': [],
             'requisitions': [],
             'subscriptions': [],
-            'tests': [],
             'valid': true
         });
     });
@@ -39,6 +46,13 @@ describe('RequisitionReportGenerator', () => {
         delete secondReport.tests;
 
         expect(secondReport).toEqual({
+            'hooks': {
+                'onFinish': {arguments: {}, 'tests': [], 'valid': true},
+                'onInit': {arguments: {}, 'tests': [], 'valid': true}
+            },
+            'id': undefined,
+            'ignored': undefined,
+            'level': undefined,
             'name': 'someName',
             'publishers': [],
             'requisitions': [],
@@ -55,10 +69,11 @@ describe('RequisitionReportGenerator', () => {
 
         const report = reportGenerator.getReport();
         expect(report.valid).toBeFalsy();
-        expect(report.tests.length).toBe(1);
-        expect(report.tests[0].name).toBe('No time out');
-        expect(report.tests[0].valid).toBeFalsy();
-        expect(report.tests[0].description).toBeDefined();
+        expect(report.hooks[DefaultHookEvents.ON_FINISH].tests.length).toBe(1);
+        expect(report.hooks[DefaultHookEvents.ON_FINISH].valid).toBeFalsy();
+        expect(report.hooks[DefaultHookEvents.ON_FINISH].tests[0].name).toBe('No time out');
+        expect(report.hooks[DefaultHookEvents.ON_FINISH].tests[0].valid).toBeFalsy();
+        expect(report.hooks[DefaultHookEvents.ON_FINISH].tests[0].description).toBeDefined();
     });
 
     it('Time report without timeout', () => {
@@ -82,6 +97,7 @@ describe('RequisitionReportGenerator', () => {
         expect(report.publishers.length).toBe(0);
 
         reportGenerator.setPublishersReport([{valid: false}]);
+        reportGenerator.finish();
         report = reportGenerator.getReport();
 
         expect(report.valid).toBeFalsy();
@@ -97,6 +113,7 @@ describe('RequisitionReportGenerator', () => {
         expect(report.subscriptions.length).toBe(0);
 
         reportGenerator.setSubscriptionsReport([{valid: false}]);
+        reportGenerator.finish();
         report = reportGenerator.getReport();
 
         expect(report.valid).toBeFalsy();
@@ -107,28 +124,17 @@ describe('RequisitionReportGenerator', () => {
     it('Adding tests', () => {
         const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
 
-        let report = reportGenerator.getReport();
-        expect(report.valid).toBeTruthy();
-
-        reportGenerator.addTests([{valid: false}]);
-        report = reportGenerator.getReport();
-
-        expect(report.valid).toBeFalsy();
-    });
-
-    it('Adding error', () => {
-        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
-
-        let report = reportGenerator.getReport();
-        expect(report.valid).toBeTruthy();
-
-        const error = {valid: true, name: 'errorName', description: 'description'};
-        reportGenerator.addError(error);
-        report = reportGenerator.getReport();
+        reportGenerator.addTest('hookName', {valid: false, arguments: {a: 1}, tests: [{name: 'a', valid: false}]});
+        reportGenerator.addTest('hookName', {valid: true, arguments: {b: 3}, tests: [{name: 'b', valid: true}]});
+        reportGenerator.finish();
+        const report = reportGenerator.getReport();
 
         expect(report.valid).toBeFalsy();
-        expect(report.tests.length).toBe(1);
-        expect(report.tests[0]).toEqual({valid: false, name: 'errorName', description: 'description'});
+        expect(report.hooks.hookName).toEqual({
+            'arguments': {'a': 1, 'b': 3},
+            'tests': [{'name': 'a', 'valid': false}, {'name': 'b', 'valid': true}],
+            'valid': false
+        });
     });
 
 });

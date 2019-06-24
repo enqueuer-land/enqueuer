@@ -17,16 +17,16 @@ class FileSystemWatcherSubscription extends Subscription {
         return Promise.resolve();
     }
 
-    public async receiveMessage(): Promise<any> {
+    public async receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
             let interval = setInterval(() => {
                 const files = glob.sync(this.fileNamePattern, this.options);
                 if (files.length > 0) {
                     const filename = files[0];
                     try {
-                        resolve(this.extractFileInformation(filename));
-                    }
-                    catch (error) {
+                        this.executeHookEvent('onMessageReceived', this.extractFileInformation(filename));
+                        resolve();
+                    } catch (error) {
                         Logger.warning(`Error reading file ${filename}: ${error}`);
                         reject(error);
                     }
@@ -51,7 +51,35 @@ class FileSystemWatcherSubscription extends Subscription {
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new SubscriptionProtocol('file',
         (subscriptionModel: SubscriptionModel) => new FileSystemWatcherSubscription(subscriptionModel),
-        ['content', 'name', 'size', 'modified', 'created'])
+        {
+            description: 'The file subscription provides an implementation of filesystem readers',
+            libraryHomepage: 'https://github.com/isaacs/node-glob',
+            schema: {
+                attributes: {
+                    fileNamePattern: {
+                        description: 'Glob pattern to identify files to be watched',
+                        required: true,
+                        type: 'string'
+                    },
+                    options: {
+                        description: 'https://github.com/isaacs/node-glob#options',
+                        type: 'object',
+                        required: false
+                    },
+                },
+                hooks: {
+                    onMessageReceived: {
+                        arguments: {
+                            name: {},
+                            content: {},
+                            size: {},
+                            modified: {},
+                            created: {}
+                        }
+                    }
+                }
+            }
+        })
         .addAlternativeName('file-system-watcher', 'file-watcher');
 
     mainInstance.protocolManager.addProtocol(protocol);

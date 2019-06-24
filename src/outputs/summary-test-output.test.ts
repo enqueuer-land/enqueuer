@@ -13,11 +13,7 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
-            tests: [{
-                name: 'testName',
-                valid: true,
-                description: ''
-            }]
+            hooks: {},
         }).print();
 
         expect(consolePrintedTimes('name')).toBe(1);
@@ -28,15 +24,21 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: false,
-            tests: [{
-                name: 'failing',
-                valid: false,
-                description: ''
-            }, {
-                name: 'passingTest',
-                valid: true,
-                description: ''
-            }]
+            hooks: {
+                onEvent: {
+                    valid: false,
+                    tests: [{
+                        name: 'failing',
+                        valid: false,
+                        description: ''
+                    }, {
+                        name: 'passingTest',
+                        valid: true,
+                        description: ''
+                    }]
+
+                }
+            },
         }, {printFailingTests: true, level: 0}).print();
 
         expect(consolePrintedTimes('failing')).toBe(1);
@@ -47,11 +49,16 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
-            tests: [{
-                name: 'any',
-                valid: true,
-                description: ''
-            }]
+            hooks: {
+                onStuff: {
+                    valid: true,
+                    tests: [{
+                        name: 'any',
+                        valid: true,
+                        description: ''
+                    }]
+                }
+            }
         }).print();
 
         expect(consolePrintedTimes('PASS')).toBe(1);
@@ -64,11 +71,17 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: false,
-            tests: [{
-                name: 'any',
-                valid: false,
-                description: ''
-            }]
+            hooks: {
+                onStuff: {
+                    valid: false,
+
+                    tests: [{
+                        name: 'any',
+                        valid: false,
+                        description: ''
+                    }]
+                }
+            }
         }).print();
 
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -82,15 +95,21 @@ describe('SummaryTestOutput', () => {
             {
                 name: 'name',
                 valid: false,
-                tests: [{
-                    name: 'any',
-                    valid: false,
-                    description: 'description'
-                }, {
-                    name: 'second',
-                    valid: false,
-                    description: 'secDesc'
-                }]
+                hooks: {
+                    onStuff: {
+                        valid: false,
+
+                        tests: [{
+                            name: 'any',
+                            valid: false,
+                            description: 'description'
+                        }, {
+                            name: 'second',
+                            valid: false,
+                            description: 'secDesc'
+                        }]
+                    }
+                }
             }).print();
 
         expect(consolePrintedTimes('FAIL')).toBe(1);
@@ -108,11 +127,17 @@ describe('SummaryTestOutput', () => {
             name: 'name',
             valid: true,
             ignored: true,
-            tests: [{
-                name: 'any',
-                valid: false,
-                description: ''
-            }]
+            hooks: {
+                onStuff: {
+                    valid: false,
+
+                    tests: [{
+                        name: 'any',
+                        valid: false,
+                        description: ''
+                    }]
+                }
+            }
         }).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
@@ -125,12 +150,18 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
-            tests: [{
-                name: 'any',
-                ignored: true,
-                valid: true,
-                description: ''
-            }]
+            hooks: {
+                onStuff: {
+                    valid: true,
+
+                    tests: [{
+                        name: 'any',
+                        ignored: true,
+                        valid: true,
+                        description: ''
+                    }]
+                }
+            }
         }).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
@@ -143,12 +174,18 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
-            tests: [{
-                name: 'any',
-                ignored: true,
-                valid: false,
-                description: ''
-            }]
+            hooks: {
+                onStuff: {
+                    valid: true,
+
+                    tests: [{
+                        name: 'any',
+                        ignored: true,
+                        valid: false,
+                        description: ''
+                    }]
+                }
+            }
         }).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
@@ -160,8 +197,13 @@ describe('SummaryTestOutput', () => {
     it('should print NULL when there is no test', () => {
         new SummaryTestOutput({
             name: 'name',
-            valid: true,
-            tests: []
+            valid: true, hooks: {
+                onStuff: {
+                    valid: true,
+
+                    tests: []
+                }
+            }
         }).print();
 
         expect(consolePrintedTimes('NULL')).toBe(1);
@@ -178,7 +220,6 @@ describe('SummaryTestOutput', () => {
             time: {
                 totalTime: totalTime
             },
-            tests: []
         }).print();
 
         expect(consolePrintedTimes(totalTime)).toBe(1);
@@ -204,7 +245,6 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
-            tests: [],
             publishers: [{name: 'publisher', valid: false}],
             subscriptions: [{name: 'subscription', valid: false}],
         }, {maxLevel: 0, level: 0}).print();

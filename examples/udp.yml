@@ -10,7 +10,7 @@
         port: 23072
         timeout: 1000
         onMessageReceived:
-            script: payload = Buffer.from(message.payload);
+            script: payload = Buffer.from(payload);
             assertions:
             -   name: Payload
                 expect: payload

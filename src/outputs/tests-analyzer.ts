@@ -1,6 +1,7 @@
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {ReportModel} from '../models/outputs/report-model';
 import {TestModel} from '../models/outputs/test-model';
+import {HookModel} from '../models/outputs/hook-model';
 
 export class TestsAnalyzer {
     private tests: TestModel[] = [];
@@ -50,21 +51,22 @@ export class TestsAnalyzer {
     }
 
     private findTests(requisition: ReportModel) {
-        this.computeTests(requisition);
+        this.computeComponent(requisition as RequisitionModel);
         for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
-            this.computeTests(child);
+            this.computeComponent(child);
         }
     }
 
-    private computeTests(reportModel: ReportModel): void {
+    private computeComponent(reportModel: ReportModel): void {
         if (reportModel.ignored) {
             this.tests.push({
                 ...reportModel,
                 description: reportModel.description || 'Ignored'
             });
         } else {
-            (reportModel.tests || []).forEach(test => {
-                this.tests.push(test);
+            Object.keys(reportModel.hooks || {}).forEach((key: string) => {
+                const hook = reportModel.hooks![key] as HookModel;
+                this.tests = this.tests.concat(hook.tests || []);
             });
         }
     }

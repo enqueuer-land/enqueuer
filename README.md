@@ -76,7 +76,7 @@ What if I want to mock a http server and hit it at the same time, you may ask. N
             payload: mock response
         onMessageReceived:
             assertions:
-            -   expect: message.body
+            -   expect: body
                 toContain: `enqueuer`
             -   name: failing test
                 expectToBeTruthy: false
@@ -111,7 +111,7 @@ Once we get this [plugin installed](#plugin_installation) we are able to create 
             payload: polyglot message
         onMessageReceived:
             assertions:
-            -   expect: message.body
+            -   expect: body
                 toContain: 123456
 
 Now go nuts!
@@ -376,20 +376,12 @@ You're free to explore them however you want, even doing things like this:
 By default, there are three hook events available:
 
 **onInit**  
-Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
+Available in requisitions, publishers and subscriptions. It gets executed as soon as the component is initialized.
 As available parameter, an `elapsedTime` variable is given, counting every milliseconds since the instantiation of this component.
 
 **onFinish**  
-Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
+Available in requisitions, publishers and subscriptions. It gets executed when the component is about to finish.
 As available parameter, an `elapsedTime` variable is given, counting every milliseconds since the instantiation of this component. 
-
-**onMessageReceived**  
-Available in every subscription and in some publishers that provide synchronous properties. Depending on its author's will. 
-It gets executed when the component receives a message.
-A `message` object is available having all of attributes returned from the received message.
-Depending on the protocol implementation, there'll be additional objects to this hook.
-For instance, in the built-in http publisher implementation, there's a `statusCode`, `headers`, a `body` and others, and the subscription implementation has `body`, `query`, `params` and `headers `, among other variables.
-`elapsedTime` is also available here, counting every milliseconds since the instantiation of this component.
 
 **custom**
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.

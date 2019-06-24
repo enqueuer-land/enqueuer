@@ -1,7 +1,6 @@
 timeout: 3000
 publishers:
--   name: publisher description
-    type: HTTPS
+-   type: HTTPS
     url: https://localhost:4430/enqueuer
     method: POST
     payload:
@@ -31,5 +30,5 @@ subscriptions:
     onMessageReceived:
         assertions:
         -   name: Https payload
-            expect: JSON.parse(message.body).https
+            expect: JSON.parse(body).https
             toBeEqualTo: `works!`

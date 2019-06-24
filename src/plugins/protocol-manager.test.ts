@@ -49,7 +49,7 @@ describe('ProtocolManager', () => {
         protocolManager.addProtocol(new SubscriptionProtocol('mine', (arg) => {
             subscription.arg = arg;
             return subscription;
-        }, []));
+        }));
         // @ts-ignore
         const actual = protocolManager.createSubscription({type: 'mine'});
         expect(actual).toEqual({arg: {type: 'mine'}});
@@ -77,8 +77,33 @@ describe('ProtocolManager', () => {
             .setLibrary('request'));
         expect(protocolManager.describeMatchingProtocols('virgs')).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
-                'publishers': [{'hookEvents': {'onFinish': [], 'onInit': []}, 'name': 'pub'}],
-                'subscriptions': []
+                'publishers': [{
+                    'name': 'pub',
+                    'schema': {
+                        'attributes': {
+                            'ignore': {
+                                'defaultValue': false,
+                                'description': 'Defines if the component should be ignored',
+                                'required': false,
+                                'type': 'boolean'
+                            }, 'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'}
+                        },
+                        'hooks': {
+                            'onFinish': {
+                                'arguments': {
+                                    'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                    'this': {'description': 'Pointer to the component'}
+                                }, 'description': 'Executed when the component is about to finish'
+                            },
+                            'onInit': {
+                                'arguments': {
+                                    'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                    'this': {'description': 'Pointer to the component'}
+                                }, 'description': 'Executed as soon as the component is initialized'
+                            }
+                        }
+                    }
+                }], 'subscriptions': []
             }, expect.anything()
         );
     });
@@ -95,17 +120,66 @@ describe('ProtocolManager', () => {
         expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
                 'publishers': [{
-                    'hookEvents': {'onFinish': [], 'onInit': []},
-                    'name': 'pub'
-                }, {'hookEvents': {'onFinish': [], 'onInit': []}, 'name': 'other'}], 'subscriptions': []
+                    'name': 'pub',
+                    'schema': {
+                        'attributes': {
+                            'ignore': {
+                                'defaultValue': false,
+                                'description': 'Defines if the component should be ignored',
+                                'required': false,
+                                'type': 'boolean'
+                            }, 'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'}
+                        },
+                        'hooks': {
+                            'onFinish': {
+                                'arguments': {
+                                    'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                    'this': {'description': 'Pointer to the component'}
+                                }, 'description': 'Executed when the component is about to finish'
+                            },
+                            'onInit': {
+                                'arguments': {
+                                    'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                    'this': {'description': 'Pointer to the component'}
+                                }, 'description': 'Executed as soon as the component is initialized'
+                            }
+                        }
+                    }
+                }, {
+                    'name': 'other',
+                    'schema': {
+                        'attributes': {
+                            'ignore': {
+                                'defaultValue': false,
+                                'description': 'Defines if the component should be ignored',
+                                'required': false,
+                                'type': 'boolean'
+                            }, 'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'}
+                        },
+                        'hooks': {
+                            'onFinish': {
+                                'arguments': {
+                                    'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                    'this': {'description': 'Pointer to the component'}
+                                }, 'description': 'Executed when the component is about to finish'
+                            },
+                            'onInit': {
+                                'arguments': {
+                                    'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                    'this': {'description': 'Pointer to the component'}
+                                }, 'description': 'Executed as soon as the component is initialized'
+                            }
+                        }
+                    }
+                }], 'subscriptions': []
             }, expect.anything()
         );
     });
 
-    it('error describe given publisher Protocol', () => {
+    it('error describing Protocol', () => {
         // @ts-ignore
         const protocolManager = new ProtocolManager();
-        expect(protocolManager.describeMatchingProtocols(true)).toBeFalsy();
+        expect(protocolManager.describeMatchingProtocols()).toBeFalsy();
         expect(render).toHaveBeenCalled();
     });
 
@@ -118,8 +192,46 @@ describe('ProtocolManager', () => {
             .setLibrary('express'));
         expect(protocolManager.describeMatchingProtocols('sub')).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
-            'publishers': [],
-            'subscriptions': [{'hookEvents': {'onFinish': [], 'onInit': [], 'onMessageReceived': ['value']}, 'name': 'sub'}]
+            'publishers': [], 'subscriptions': [{
+                '0': 'value', 'name': 'sub', 'schema': {
+                    'attributes': {
+                        'avoid': {
+                            'defaultValue': false,
+                            'description': 'Defines if the subscription should be avoided',
+                            'required': false,
+                            'type': 'boolean'
+                        },
+                        'ignore': {
+                            'defaultValue': false,
+                            'description': 'Defines if the component should be ignored',
+                            'required': false,
+                            'type': 'boolean'
+                        },
+                        'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'},
+                        'timeout': {
+                            'defaultValue': 3000,
+                            'description': 'Defines the subscription time out',
+                            'required': false,
+                            'suffix': 'ms',
+                            'type': 'int'
+                        }
+                    },
+                    'hooks': {
+                        'onFinish': {
+                            'arguments': {
+                                'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                'this': {'description': 'Pointer to the component'}
+                            }, 'description': 'Executed when the component is about to finish'
+                        },
+                        'onInit': {
+                            'arguments': {
+                                'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                'this': {'description': 'Pointer to the component'}
+                            }, 'description': 'Executed as soon as the component is initialized'
+                        }
+                    }
+                }
+            }]
         }, expect.anything());
     });
 
@@ -134,19 +246,86 @@ describe('ProtocolManager', () => {
         }));
         expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
         expect(render).toHaveBeenCalledWith({
-            'publishers': [],
-            'subscriptions': [{'hookEvents': {'onFinish': [], 'onInit': []}, 'name': 'sub'}, {
-                'hookEvents': {'onFinish': [], 'onInit': []},
-                'name': 'sub2'
+            'publishers': [], 'subscriptions': [{
+                'name': 'sub', 'schema': {
+                    'attributes': {
+                        'avoid': {
+                            'defaultValue': false,
+                            'description': 'Defines if the subscription should be avoided',
+                            'required': false,
+                            'type': 'boolean'
+                        },
+                        'ignore': {
+                            'defaultValue': false,
+                            'description': 'Defines if the component should be ignored',
+                            'required': false,
+                            'type': 'boolean'
+                        },
+                        'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'},
+                        'timeout': {
+                            'defaultValue': 3000,
+                            'description': 'Defines the subscription time out',
+                            'required': false,
+                            'suffix': 'ms',
+                            'type': 'int'
+                        }
+                    },
+                    'hooks': {
+                        'onFinish': {
+                            'arguments': {
+                                'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                'this': {'description': 'Pointer to the component'}
+                            }, 'description': 'Executed when the component is about to finish'
+                        },
+                        'onInit': {
+                            'arguments': {
+                                'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                'this': {'description': 'Pointer to the component'}
+                            }, 'description': 'Executed as soon as the component is initialized'
+                        }
+                    }
+                }
+            }, {
+                'name': 'sub2', 'schema': {
+                    'attributes': {
+                        'avoid': {
+                            'defaultValue': false,
+                            'description': 'Defines if the subscription should be avoided',
+                            'required': false,
+                            'type': 'boolean'
+                        },
+                        'ignore': {
+                            'defaultValue': false,
+                            'description': 'Defines if the component should be ignored',
+                            'required': false,
+                            'type': 'boolean'
+                        },
+                        'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'},
+                        'timeout': {
+                            'defaultValue': 3000,
+                            'description': 'Defines the subscription time out',
+                            'required': false,
+                            'suffix': 'ms',
+                            'type': 'int'
+                        }
+                    },
+                    'hooks': {
+                        'onFinish': {
+                            'arguments': {
+                                'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                'this': {'description': 'Pointer to the component'}
+                            }, 'description': 'Executed when the component is about to finish'
+                        },
+                        'onInit': {
+                            'arguments': {
+                                'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
+                                'this': {'description': 'Pointer to the component'}
+                            }, 'description': 'Executed as soon as the component is initialized'
+                        }
+                    }
+                }
             }]
         }, expect.anything());
-    });
-
-    it('error describe given subscription Protocol', () => {
-        // @ts-ignore
-        const protocolManager = new ProtocolManager();
-        expect(protocolManager.describeMatchingProtocols('value')).toBeFalsy();
-        expect(render).toHaveBeenCalled();
     });
 
 });

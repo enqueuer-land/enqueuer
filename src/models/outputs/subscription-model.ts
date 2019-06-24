@@ -1,9 +1,9 @@
-import { ReportModel } from './report-model';
+import {ReportModel} from './report-model';
 
 export interface SubscriptionModel extends ReportModel {
     id: string;
     type: string;
     messageReceived?: any;
-    connectionTime?: Date | string;
+    subscriptionTime?: Date | string;
     messageReceivedTime?: Date | string;
 }

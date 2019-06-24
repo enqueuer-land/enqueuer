@@ -1,5 +1,6 @@
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Event} from '../models/events/event';
+import {Logger} from '../loggers/logger';
 
 export abstract class Publisher {
     public type: string;
@@ -22,15 +23,17 @@ export abstract class Publisher {
         this.name = publisherAttributes.name;
     }
 
-    public abstract publish(): Promise<any>;
+    public abstract publish(): Promise<void>;
 
     public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
         this['hookEventExecutor'] = hookEventExecutor;
     }
 
-    protected executeHookEvent(hookName: string, args: any) {
+    protected executeHookEvent(hookName: string, args: any = {}) {
         if (this['hookEventExecutor']) {
             this['hookEventExecutor'](hookName, args);
+        } else {
+            Logger.warning(`Hook event executor not registered in publisher`);
         }
     }
 

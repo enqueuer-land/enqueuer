@@ -42,25 +42,21 @@ export class ProtocolManager {
         this.protocols.push(protocol);
     }
 
-    public getMatchingProtocols(describeProtocols?: string): any {
-        return this.getDescription(describeProtocols);
-    }
-
-    public describeMatchingProtocols(description?: string): boolean {
-        const matchingProtocols = this.getMatchingProtocols(description);
+    public describeMatchingProtocols(description: string = ''): boolean {
+        const matchingProtocols = this.getProtocolsDescription(description);
         console.log(prettyjson.render(matchingProtocols, getPrettyJsonConfig()));
         return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
     }
 
-    private getDescription(protocol?: string): {} {
+    public getProtocolsDescription(protocol: string = ''): { publishers: {}[], subscriptions: {}[] } {
         return {
             publishers: this.protocols
                 .filter((protocol: Protocol) => protocol.isPublisher())
-                .filter((publisher: Protocol) => protocol ? publisher.matches(protocol) : true)
+                .filter((publisher: Protocol) => publisher.matches(protocol))
                 .map(protocol => protocol.getDescription()),
             subscriptions: this.protocols
                 .filter((protocol: Protocol) => protocol.isSubscription())
-                .filter((subscription: Protocol) => protocol ? subscription.matches(protocol) : true)
+                .filter((subscription: Protocol) => subscription.matches(protocol))
                 .map(protocol => protocol.getDescription())
         };
     }

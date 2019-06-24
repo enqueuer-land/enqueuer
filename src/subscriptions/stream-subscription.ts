@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import {Timeout} from '../timers/timeout';
 import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import {ProtocolDocumentation} from '../protocols/protocol-documentation';
 
 export class StreamSubscription extends Subscription {
 
@@ -23,7 +24,7 @@ export class StreamSubscription extends Subscription {
         }
     }
 
-    public async receiveMessage(): Promise<any> {
+    public async receiveMessage(): Promise<void> {
         if (this.loadStream) {
             return await this.waitForData();
         } else if ('ssl' === (this.type || '').toLowerCase()) {
@@ -33,18 +34,18 @@ export class StreamSubscription extends Subscription {
             return new Promise((resolve, reject) => {
                 this.server.once('connection', (stream: any) => {
                     this.gotConnection(stream)
-                        .then((message: any) => resolve(message))
+                        .then(() => resolve())
                         .catch((err: any) => reject(err));
                 });
             });
         }
     }
 
-    private async gotConnection(stream: any): Promise<any> {
+    private async gotConnection(stream: any): Promise<void> {
         this.stream = stream;
         Logger.debug(`${this.type} readableStream got a connection ${this.stream}`);
         this.sendGreeting();
-        return await this.waitForData();
+        await this.waitForData();
     }
 
     public subscribe(): Promise<void> {
@@ -157,7 +158,7 @@ export class StreamSubscription extends Subscription {
         }
     }
 
-    private waitForData(): Promise<any> {
+    private waitForData(): Promise<void> {
         return new Promise((resolve, reject) => {
             let message: any = {
                 payload: undefined,
@@ -182,22 +183,32 @@ export class StreamSubscription extends Subscription {
         });
     }
 
+    // ssl 8 - 8
+
     private onEnd(message: any, resolve: any, reject: any) {
         if (message.payload !== undefined) {
-            resolve(message);
+            this['finished'] = true;
+            if (!this.finished) {
+                this.executeHookEvent('onMessageReceived', message);
+            }
+            resolve();
         } else {
             reject();
         }
     }
 
     private onData(msg: any, message: any, resolve: any) {
-        Logger.debug(`${this.type} readableStream got data ${msg}`);
-        if (message.payload === undefined) {
-            message.payload = '';
-        }
-        message.payload += msg;
-        if (!this.streamTimeout) {
-            resolve(message);
+        if (!this.finished) {
+            Logger.debug(`'${this.type}' readableStream got data '${msg}'`);
+            if (message.payload === undefined) {
+                message.payload = '';
+            }
+            message.payload += msg;
+            if (!this.streamTimeout) {
+                this['finished'] = true;
+                this.executeHookEvent('onMessageReceived', message);
+                resolve();
+            }
         }
     }
 
@@ -218,17 +229,68 @@ export class StreamSubscription extends Subscription {
 
 export function entryPoint(mainInstance: MainInstance): void {
     const createFunction = (subscriptionModel: SubscriptionModel) => new StreamSubscription(subscriptionModel);
-    const tcp = new SubscriptionProtocol('tcp',
-        createFunction,
-        ['payload', 'stream']);
+    const docs: ProtocolDocumentation = {
+        description: 'The stream subscription provides implementations of TCP/UDS servers',
+        libraryHomepage: 'https://nodejs.org/api/net.html',
+        schema: {
+            attributes: {
+                response: {
+                    required: true,
+                    type: 'text'
+                },
+                greeting: {
+                    required: false,
+                    type: 'text'
+                },
+                port: {
+                    description: 'Defined when using TCP',
+                    required: false,
+                    type: 'int'
+                },
+                path: {
+                    description: 'Defined when using UDS',
+                    required: false,
+                    type: 'string'
+                },
+                saveStream: {
+                    description: 'Set it when you want to reuse this stream',
+                    required: false,
+                    type: 'string'
+                },
+                loadStream: {
+                    description: 'Set it when you want to reuse an opened stream',
+                    required: false,
+                    type: 'string'
+                },
+                streamTimeout: {
+                    description: 'Timeout to stop listening after the first byte is read',
+                    required: false,
+                    type: 'int'
+                },
+                options: {
+                    description: 'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
+                    required: false,
+                    type: 'object'
+                },
+            },
+            hooks: {
+                onMessageReceived: {
+                    arguments: {
+                        payload: {},
+                        stream: {},
+                        path: {
+                            description: 'Defined only when it is a UDS server',
+                        }
+                    }
+                }
+            }
+        }
+    };
+    const tcp = new SubscriptionProtocol('tcp', createFunction, docs);
 
-    const uds = new SubscriptionProtocol('uds',
-        createFunction,
-        ['payload', 'stream', 'path']);
+    const uds = new SubscriptionProtocol('uds', createFunction, docs);
 
-    const ssl = new SubscriptionProtocol('ssl',
-        createFunction,
-        ['payload', 'stream']);
+    const ssl = new SubscriptionProtocol('ssl', createFunction, docs);
 
     mainInstance.protocolManager.addProtocol(tcp);
     mainInstance.protocolManager.addProtocol(uds);

@@ -44,7 +44,7 @@
                 subscription.response.payload = 'dynamically changed payload'
             assertions:
             -   name: Payload
-                expect: JSON.parse(message.body).enqueuer
+                expect: JSON.parse(body).enqueuer
                 toBeEqualTo: `virgs`
             -   name: Params
                 expect: params.firstId
@@ -100,7 +100,7 @@
         onMessageReceived:
             assertions:
             -   name: Payload
-                expectToBeTruthy: JSON.parse(message.body).duplicated
+                expectToBeTruthy: JSON.parse(body).duplicated
 -   name: requisition 2 (port 23076)
     timeout: 5000
     subscriptions:
@@ -119,3 +119,16 @@
         port: 23076
         timeout: 1000
         avoid: true
+-   publishers:
+    -   type: http
+        url: http://localhost:23080/number-payload
+        method: POST
+        payload: virgs
+    subscriptions:
+    -   type: http
+        endpoint: /number-payload
+        port: 23080
+        method: POST
+        response:
+            status: 444
+            payload: 4.45

@@ -16,7 +16,7 @@ class HttpPublisher extends Publisher {
         this['timeout'] = this.timeout || 3000;
     }
 
-    public async publish(): Promise<any> {
+    public async publish(): Promise<void> {
         this.insertAuthentication();
 
         const response = await new HttpRequester(this.url,
@@ -26,7 +26,8 @@ class HttpPublisher extends Publisher {
             this.timeout)
             .request();
         this.executeHookEvent('onResponseReceived', response);
-        return response;
+        //NOTE: Deprecation proposes
+        this.executeHookEvent('onMessageReceived', response);
     }
 
     private insertAuthentication() {
@@ -45,7 +46,50 @@ class HttpPublisher extends Publisher {
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new PublisherProtocol('http',
         (publisherModel: PublisherModel) => new HttpPublisher(publisherModel),
-        {onResponseReceived: ['statusCode', 'statusMessage', 'body']})
+        {
+            description: 'The HTTP publisher provides an implementation of http requisitions',
+            libraryHomepage: 'https://github.com/request/request',
+            schema: {
+                attributes: {
+                    url: {
+                        required: true,
+                        type: 'string',
+                        example: 'https://github.com/enqueuer-land/enqueuer'
+                    },
+                    method: {
+                        required: false,
+                        type: 'string',
+                        defaultValue: 'GET',
+                        listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
+                    },
+                    payload: {
+                        required: true,
+                        type: 'text'
+                    },
+                    timeout: {
+                        required: false,
+                        type: 'int',
+                        defaultValue: 3000,
+                        suffix: 'ms'
+                    },
+                    headers: {
+                        description: '',
+                        type: 'object',
+                        defaultValue: {}
+                    },
+                },
+                hooks: {
+                    onResponseReceived: {
+                        description: 'Hook called when the publisher gets a response from the server',
+                        arguments: {
+                            statusCode: {},
+                            headers: {},
+                            body: {},
+                        }
+                    }
+                }
+            }
+        })
         .addAlternativeName('http-client', 'https', 'https-client')
         .setLibrary('request');
 

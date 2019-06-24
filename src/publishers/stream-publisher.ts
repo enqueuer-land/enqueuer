@@ -7,6 +7,7 @@ import * as tls from 'tls';
 import {Timeout} from '../timers/timeout';
 import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
+import {ProtocolDocumentation} from '../protocols/protocol-documentation';
 
 class StreamPublisher extends Publisher {
 
@@ -14,7 +15,6 @@ class StreamPublisher extends Publisher {
 
     constructor(publisherAttributes: PublisherModel) {
         super(publisherAttributes);
-        this['timeout'] = this.streamTimeout;
         this['timeout'] = this.timeout || 1000;
         if (this.loadStream) {
             Logger.debug(`Loading ${this.type} client: ${this.loadStream}`);
@@ -22,7 +22,7 @@ class StreamPublisher extends Publisher {
         }
     }
 
-    public publish(): Promise<any> {
+    public publish(): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.loadStream) {
                 this.sendReusingStream(resolve, reject);
@@ -112,21 +112,24 @@ class StreamPublisher extends Publisher {
         stream.once('end', () => {
             Logger.debug(`${this.type} client ended`);
             this.finalize(stream);
-            resolve(this.messageReceived);
-        })
-            .on('data', (msg: Buffer) => {
-                Logger.debug(`${this.type} client got data '${msg.toString()}'`);
-                if (!this.messageReceived) {
-                    this.messageReceived = {
-                        payload: '',
-                        stream: stream.address()
-                    };
-                }
-                this.messageReceived.payload += msg;
-            });
+            resolve();
+        }).on('data', (msg: Buffer) => {
+            Logger.debug(`${this.type} client got data '${msg.toString()}'`);
+            if (!this.messageReceived) {
+                this.messageReceived = {
+                    payload: '',
+                    stream: stream.address()
+                };
+            }
+            this.messageReceived.payload += msg;
+        });
     }
 
     private finalize(stream: any) {
+        if (this.messageReceived) {
+            this.executeHookEvent('onMessageReceived', this.messageReceived);
+        }
+
         if (!this.saveStream) {
             Logger.trace(`Ending writable stream`);
             stream.end();
@@ -138,7 +141,7 @@ class StreamPublisher extends Publisher {
     }
 
     private stringifyPayload() {
-        if (typeof(this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
+        if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
             return JSON.stringify(this.payload);
         }
         return this.payload;
@@ -147,13 +150,67 @@ class StreamPublisher extends Publisher {
 
 export function entryPoint(mainInstance: MainInstance): void {
     const createFunction = (publisherModel: PublisherModel) => new StreamPublisher(publisherModel);
+    const docs: ProtocolDocumentation = {
+        description: 'The stream subscription provides implementations of TCP/UDS servers',
+        libraryHomepage: 'https://nodejs.org/api/net.html',
+        schema: {
+            attributes: {
+                payload: {
+                    required: true,
+                    type: 'text'
+                },
+                serverAddress: {
+                    required: false,
+                    type: 'string'
+                },
+                port: {
+                    description: 'Defined when using TCP',
+                    required: false,
+                    type: 'int'
+                },
+                path: {
+                    description: 'Defined when using UDS',
+                    required: false,
+                    type: 'string'
+                },
+                saveStream: {
+                    description: 'Set it when you want to reuse this stream',
+                    required: false,
+                    type: 'string'
+                },
+                loadStream: {
+                    description: 'Set it when you want to reuse an opened stream',
+                    required: false,
+                    type: 'string'
+                },
+                timeout: {
+                    description: 'Timeout to stop listening after the first byte is read',
+                    required: false,
+                    type: 'int'
+                },
+                options: {
+                    description: 'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
+                    required: false,
+                    type: 'object'
+                },
+            },
+            hooks: {
+                onMessageReceived: {
+                    arguments: {
+                        payload: {},
+                        stream: {}
+                    }
+                }
+            }
+        }
+    };
+
     const tcp = new PublisherProtocol('tcp',
-        createFunction);
+        createFunction, docs);
     const uds = new PublisherProtocol('uds',
-        createFunction)
-        .addAlternativeName('uds-client');
+        createFunction, docs);
     const ssl = new PublisherProtocol('ssl',
-        createFunction);
+        createFunction, docs);
 
     mainInstance.protocolManager.addProtocol(tcp);
     mainInstance.protocolManager.addProtocol(uds);

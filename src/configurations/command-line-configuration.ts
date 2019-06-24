@@ -26,6 +26,7 @@ export class CommandLineConfiguration {
             .option('-p, --protocols-description [protocol]', 'describe protocols')
             .option('-t, --tests-list [expectedField]', 'list available tests assertions')
             .option('-u, --loaded-modules-list', 'list loaded modules')
+            .option('-i, --show-passing-tests', 'show passing tests')
             .option('-s, --store [store]', 'add variables values to this session',
                 (val: string, memo: string[]) => this.storeCommandLineAction(val, memo), [])
             .option('-l, --add-plugin [plugin]', 'add plugin',
@@ -81,6 +82,10 @@ export class CommandLineConfiguration {
 
     public getConfigFileName(): string | undefined {
         return this.parsedCommandLine.configFile;
+    }
+
+    public getShowPassingTests(): boolean {
+        return this.parsedCommandLine.showPassingTests;
     }
 
     public getStore(): any {

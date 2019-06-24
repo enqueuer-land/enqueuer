@@ -16,7 +16,7 @@ class UdpSubscription extends Subscription {
         }
     }
 
-    public receiveMessage(): Promise<any> {
+    public receiveMessage(): Promise<void> {
         return new Promise((resolve, reject) => {
                 this.server.on('error', (err: any) => {
                     this.server.close();
@@ -25,7 +25,8 @@ class UdpSubscription extends Subscription {
 
                 this.server.on('message', (msg: Buffer, remoteInfo: any) => {
                     this.server.close();
-                    resolve({payload: msg, remoteInfo: remoteInfo});
+                    this.executeHookEvent('onMessageReceived', {payload: msg, remoteInfo: remoteInfo});
+                    resolve();
                 });
             }
         );
@@ -50,7 +51,32 @@ class UdpSubscription extends Subscription {
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new SubscriptionProtocol('udp',
         (subscriptionModel: SubscriptionModel) => new UdpSubscription(subscriptionModel),
-        ['payload', 'remoteInfo'])
+        {
+            description: 'The udp subscription provides an implementation of UDP Datagram sockets servers',
+            libraryHomepage: 'https://nodejs.org/api/dgram.html',
+            schema: {
+                attributes: {
+                    port: {
+                        required: true,
+                        type: 'int'
+                    },
+                    response: {
+                        required: true,
+                        type: 'string'
+                    },
+                },
+                hooks: {
+                    onMessageReceived: {
+                        arguments: {
+                            payload: {},
+                            remoteInfo: {
+                                description: 'Remote address information',
+                            }
+                        }
+                    }
+                }
+            },
+        })
         .addAlternativeName('udp-server');
 
     mainInstance.protocolManager.addProtocol(protocol);

@@ -1,6 +1,5 @@
 import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {Logger} from '../loggers/logger';
-import {TestModel} from '../models/outputs/test-model';
 import {Event} from '../models/events/event';
 
 export abstract class Subscription {
@@ -26,7 +25,7 @@ export abstract class Subscription {
 
     public abstract subscribe(): Promise<void>;
 
-    public abstract receiveMessage(): Promise<any>;
+    public abstract receiveMessage(): Promise<void>;
 
     public async unsubscribe(): Promise<void> {
         //do nothing
@@ -36,17 +35,15 @@ export abstract class Subscription {
         Logger.debug(`Subscription of ${this.type} does not provide synchronous response`);
     }
 
-    public onMessageReceivedTests(): TestModel[] {
-        return [];
-    }
-
     public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
         this['hookEventExecutor'] = hookEventExecutor;
     }
 
-    protected executeHookEvent(hookName: string, args: any) {
+    protected executeHookEvent(hookName: string, args: any = {}) {
         if (this['hookEventExecutor']) {
             this['hookEventExecutor'](hookName, args);
+        } else {
+            Logger.warning(`Hook event executor not registered in subscription`);
         }
     }
 

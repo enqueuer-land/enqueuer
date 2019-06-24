@@ -19,7 +19,8 @@ describe('RequisitionRunner', () => {
         expect(actual.name).toBe(requisition.name);
         expect(actual.id).toBe(requisition.id);
         expect(actual.valid).toBeTruthy();
-        expect(actual.tests[0].valid).toBeTruthy();
+        expect(actual.hooks!.onInit.valid).toBeTruthy();
+        expect(actual.hooks!.onFinish.valid).toBeTruthy();
     });
 
     it('Should return requisition report collection', async () => {

@@ -9,8 +9,8 @@ class StandardOutputPublisher extends Publisher {
         super(publisherProperties);
     }
 
-    public publish(): Promise<any> {
-        if (typeof(this.payload) === 'object') {
+    public publish(): Promise<void> {
+        if (typeof (this.payload) === 'object') {
             this.payload = JSON.stringify(this.payload, null, 2);
         }
         console.log(this.payload);
@@ -20,7 +20,16 @@ class StandardOutputPublisher extends Publisher {
 
 export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new PublisherProtocol('stdout',
-        (publisherModel: PublisherModel) => new StandardOutputPublisher(publisherModel))
+        (publisherModel: PublisherModel) => new StandardOutputPublisher(publisherModel), {
+            schema: {
+                attributes: {
+                    payload: {
+                        type: 'text',
+                        required: true
+                    }
+                }
+            }
+        })
         .addAlternativeName('standard-output');
 
     mainInstance.protocolManager.addProtocol(protocol);

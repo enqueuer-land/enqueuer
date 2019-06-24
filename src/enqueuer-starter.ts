@@ -1,5 +1,4 @@
 import {Logger} from './loggers/logger';
-import {Configuration} from './configurations/configuration';
 import {EnqueuerRunner} from './enqueuer-runner';
 
 export class EnqueuerStarter {
@@ -7,8 +6,6 @@ export class EnqueuerStarter {
     private enqueuerRunner: EnqueuerRunner;
 
     constructor() {
-        const logLevel = Configuration.getInstance().getLogLevel();
-        Logger.setLoggerLevel(logLevel);
         this.enqueuerRunner = new EnqueuerRunner();
     }
 

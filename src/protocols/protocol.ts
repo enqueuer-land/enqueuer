@@ -1,5 +1,7 @@
 import {Logger} from '../loggers/logger';
 import {DefaultHookEvents} from '../models/events/event';
+import {ProtocolDocumentation} from './protocol-documentation';
+import {SubscriptionReporter} from '../reporters/subscription/subscription-reporter';
 
 type Library = {
     name: string;
@@ -11,27 +13,93 @@ export enum ProtocolType {
     SUBSCRIPTION
 }
 
-export interface HookEventsDescription {
-    [prop: string]: string[];
-}
-
 export abstract class Protocol {
     private readonly type: ProtocolType;
     private readonly name: string;
-    private readonly hookEventsDescription: HookEventsDescription = {};
+    private readonly documentation: ProtocolDocumentation;
     private alternativeNames?: string[];
     private library?: Library;
 
-    protected constructor(name: string, type: ProtocolType, hookEventsDescription: string[] | HookEventsDescription = {}) {
+    protected constructor(name: string, type: ProtocolType, protocolDocumentation?: ProtocolDocumentation) {
         this.name = name;
         this.type = type;
-        if (Array.isArray(hookEventsDescription)) {
-            this.hookEventsDescription[DefaultHookEvents.ON_MESSAGE_RECEIVED] = hookEventsDescription;
-        } else {
-            this.hookEventsDescription = hookEventsDescription;
+        this.documentation = this.createDefaultDocumentation();
+        if (protocolDocumentation) {
+            this.documentation = protocolDocumentation;
         }
-        this.hookEventsDescription[DefaultHookEvents.ON_INIT] = [];
-        this.hookEventsDescription[DefaultHookEvents.ON_FINISH] = [];
+        this.addDefaultValues(type);
+    }
+
+    private addDefaultValues(type: ProtocolType) {
+        if (!this.documentation.schema) {
+            this.documentation.schema = {};
+        }
+        if (!this.documentation.schema.hooks) {
+            this.documentation.schema.hooks = {};
+        }
+        this.documentation.schema.hooks = Object.assign({}, this.documentation.schema.hooks, {
+            [DefaultHookEvents.ON_INIT]: {
+                arguments: {},
+                description: 'Executed as soon as the component is initialized',
+            },
+            [DefaultHookEvents.ON_FINISH]: {
+                arguments: {},
+                description: 'Executed when the component is about to finish',
+            }
+        });
+        Object.keys(this.documentation.schema.hooks).forEach((key: string) => {
+            this.documentation.schema!.hooks![key].arguments.elapsedTime = {
+                description: 'Number of milliseconds since the instantiation of the component'
+            };
+            this.documentation.schema!.hooks![key].arguments.this = {
+                description: 'Pointer to the component'
+            };
+        });
+        if (!this.documentation.schema.attributes) {
+            this.documentation.schema.attributes = {};
+        }
+        this.documentation.schema.attributes.ignore = {
+            type: 'boolean',
+            required: false,
+            defaultValue: false,
+            description: 'Defines if the component should be ignored'
+        };
+        this.documentation.schema.attributes.name = {
+            type: 'string',
+            required: false,
+            description: 'Defines the component name'
+        };
+        if (type == ProtocolType.SUBSCRIPTION) {
+            this.documentation.schema.attributes.timeout = {
+                type: 'int',
+                suffix: 'ms',
+                required: false,
+                defaultValue: SubscriptionReporter.DEFAULT_TIMEOUT,
+                description: 'Defines the subscription time out'
+            };
+            this.documentation.schema.attributes.avoid = {
+                type: 'boolean',
+                required: false,
+                defaultValue: false,
+                description: 'Defines if the subscription should be avoided'
+            };
+        }
+    }
+
+    private createDefaultDocumentation() {
+        return {
+            schema: {
+                attributes: {},
+                hooks: {
+                    [DefaultHookEvents.ON_INIT]: {
+                        arguments: {}
+                    },
+                    [DefaultHookEvents.ON_FINISH]: {
+                        arguments: {}
+                    }
+                }
+            }
+        };
     }
 
     public isSubscription(): boolean {
@@ -46,14 +114,11 @@ export abstract class Protocol {
         return this.name;
     }
 
-    public getDescription() {
-        const description: any = {
-            name: this.name
-        };
-        if (Object.keys(this.hookEventsDescription).length > 0) {
-            description.hookEvents = this.hookEventsDescription;
+    public getDescription(): {} {
+        if (Object.keys(this.documentation).length > 0) {
+            return {...this.documentation, name: this.name};
         }
-        return description;
+        return {name: this.name};
     }
 
     public addAlternativeName(...alternativeNames: string[]): Protocol {

@@ -20,6 +20,7 @@ export class Configuration {
     private store: any = {};
     private plugins: string[] = [];
     private commandLineConfiguration: CommandLineConfiguration;
+    private showPassingTests: boolean = false;
 
     private constructor() {
         this.commandLineConfiguration = new CommandLineConfiguration(process.argv);
@@ -56,6 +57,10 @@ export class Configuration {
 
     public isParallel(): boolean {
         return this.parallel;
+    }
+
+    public getShowPassingTests(): boolean {
+        return this.showPassingTests;
     }
 
     public addFiles(...files: string[]): void {
@@ -100,11 +105,12 @@ export class Configuration {
         this.logLevel = this.commandLineConfiguration.getVerbosity() || this.logLevel;
         this.plugins = [...new Set(this.plugins.concat(this.commandLineConfiguration.getPlugins() || []))];
         this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
+        this.showPassingTests = this.commandLineConfiguration.getShowPassingTests();
         const filesIgnoringOthers = this.commandLineConfiguration.getTestFilesIgnoringOthers();
         if (filesIgnoringOthers && filesIgnoringOthers.length > 0) {
             this.files = filesIgnoringOthers;
         }
-        if (this.commandLineConfiguration.getStdoutRequisitionOutput() !== false) {
+        if (this.commandLineConfiguration.getStdoutRequisitionOutput()) {
             this.outputs.push({type: 'standard-output', format: 'console', name: 'command line report output'});
         }
         const fileMaxReportLevelPrint = this.commandLineConfiguration.getMaxReportLevelPrint();

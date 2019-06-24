@@ -1,5 +1,6 @@
--   timeout: 3000
-    publishers:
+timeout: 7000
+requisitions:
+-   publishers:
     -   type: uds
         path: /tmp/unix.sock
         timeout: 2000
@@ -23,6 +24,8 @@
             -   name: Message received is enqueuer
                 expect: payload
                 toBeEqualTo: store.udsPayload
+            -   expect: path
+                toBeEqualTo: `/tmp/unix.sock`
 -   publishers:
     -   type: uds
         path: /tmp/unix2.sock
@@ -38,7 +41,8 @@
         saveStream: udsSubStreamName
         onMessageReceived:
             assertions:
-            -   expect: message.payload
+            -   name: real error
+                expect: payload
                 toBeEqualTo: store.udsPayload
         timeout: <<uds2Timeout>>
 -   publishers:

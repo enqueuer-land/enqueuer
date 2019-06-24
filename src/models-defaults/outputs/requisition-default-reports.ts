@@ -1,21 +1,33 @@
 import * as output from '../../models/outputs/requisition-model';
 import {DateController} from '../../timers/date-controller';
 import {TestModel} from '../../models/outputs/test-model';
+import {DefaultHookEvents} from '../../models/events/event';
 
 export class RequisitionDefaultReports {
 
     public static createDefaultReport(base: { name: string, id: string, ignored?: boolean, level?: number },
-                                      tests: TestModel[] = []): output.RequisitionModel {
-        const valid = tests.length > 0 ? tests.every((test) => test.valid) : true;
+                                      onFinishTests: TestModel[] = []): output.RequisitionModel {
+        const valid = onFinishTests.every((test) => test.valid);
         return {
             valid: valid,
-            tests: tests,
             name: base.name,
             id: base.id,
             ignored: base.ignored,
             level: base.level,
             subscriptions: [],
             publishers: [],
+            hooks: {
+                [DefaultHookEvents.ON_INIT]: {
+                    arguments: {},
+                    valid: true,
+                    tests: [],
+                },
+                [DefaultHookEvents.ON_FINISH]: {
+                    arguments: {},
+                    valid: valid,
+                    tests: onFinishTests,
+                },
+            },
             time: {
                 startTime: new DateController().toString(),
                 endTime: new DateController().toString(),

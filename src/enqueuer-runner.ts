@@ -7,7 +7,6 @@ import {RequisitionFilePatternParser} from './requisition-runners/requisition-fi
 import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {Configuration} from './configurations/configuration';
 import {RequisitionAdopter} from './components/requisition-adopter';
-import {reportModelIsPassing} from './models/outputs/report-model';
 import {NotificationEmitter, Notifications} from './notifications/notification-emitter';
 import {SummaryTestOutput} from './outputs/summary-test-output';
 
@@ -23,8 +22,10 @@ export class EnqueuerRunner {
     }
 
     public async execute(): Promise<output.RequisitionModel[]> {
-        Logger.info('Let\'s rock');
+        Logger.setLoggerLevel('info');
+        Logger.info("Let\'s rock");
         const configuration = Configuration.getInstance();
+        Logger.setLoggerLevel(configuration.getLogLevel());
         const requisitionFileParser = new RequisitionFilePatternParser(configuration.getFiles());
         const requisitions = requisitionFileParser.parse();
         this.enqueuerRequisition = new RequisitionAdopter(
@@ -35,19 +36,19 @@ export class EnqueuerRunner {
                 parallel: configuration.isParallel()
             }).getRequisition();
         const parsingErrors = requisitionFileParser.getFilesErrors();
+        const valid = parsingErrors.length === 0;
         const finalReports = await new RequisitionRunner(this.enqueuerRequisition).run();
         Logger.info('Publishing reports');
         const outputs = new MultiTestsOutput(configuration.getOutputs());
         await finalReports.map(async report => {
-            report.tests = parsingErrors;
-            report.valid = report.valid && reportModelIsPassing(report);
+            report.hooks!.onParsed = {
+                valid: valid,
+                tests: parsingErrors
+            };
+            report.valid = report.valid && valid;
             await outputs.publishReport(report);
         });
         return finalReports;
-    }
-
-    public getEnqueuerRequisition(): input.RequisitionModel | undefined {
-        return this.enqueuerRequisition;
     }
 
     private static printReport(report: output.RequisitionModel): void {
@@ -57,8 +58,10 @@ export class EnqueuerRunner {
                 if (report.level === 0) {
                     console.log(`   ----------------`);
                 }
+
                 new SummaryTestOutput(report, {
-                    maxLevel: configuration.getMaxReportLevelPrint()
+                    maxLevel: configuration.getMaxReportLevelPrint(),
+                    showPassingTests: configuration.getShowPassingTests()
                 }).print();
             } catch (e) {
                 Logger.warning(e);

@@ -7,7 +7,7 @@ export class NullPublisher extends Publisher {
         super(publisherModel);
     }
 
-    public publish(): Promise<any> {
+    public publish(): Promise<void> {
         return Promise.reject(`Undefined publisher: '${this.type}'`);
     }
 }

@@ -29,7 +29,8 @@ class Subscription {
 
             this.server.on('message', (msg, remoteInfo) => {
                 this.server.close();
-                resolve({payload: msg, remoteInfo: remoteInfo});
+                this.subscription.executeHookEvent('onMessageReceived', {payload: msg, remoteInfo: remoteInfo});
+                resolve();
             });
         });
     };

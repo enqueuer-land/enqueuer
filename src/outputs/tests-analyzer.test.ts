@@ -21,41 +21,48 @@ describe('TestsAnalyzer', () => {
         const test: RequisitionModel = {
             name: 'name',
             valid: true,
-            tests: [{valid: true}],
+            hooks: {
+                onInit: {valid: true, tests: [{valid: true}]}
+            },
             requisitions: [{
                 name: 'name',
                 valid: true,
-                tests: [{valid: true}],
-
+                // @ts-ignore
                 time: {},
+                // @ts-ignore
                 publishers: [{
                     name: 'name',
-                    valid: true,
-                    tests: [{valid: false}],
-
+                    valid: false,
+                    hooks: {
+                        onInit: {valid: false, tests: [{valid: false}]},
+                        onFinish: {valid: true, tests: [{valid: true}]}
+                    }
                 }]
             }]
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
 
-        expect(testsAnalyzer.getFailingTests().length).toBe(1);
         expect(testsAnalyzer.getTests().length).toBe(3);
+        expect(testsAnalyzer.getFailingTests().length).toBe(1);
         expect(testsAnalyzer.getPercentage()).toBe(66.66);
     });
 
-    it('Should count inner tests (inner runnable is undefined)', () => {
+    it('Should count inner tests', () => {
 
         const test: RequisitionModel = {
             name: 'name',
             valid: true,
-            tests: [],
+            hooks: {
+                onInit: {valid: true, tests: [{valid: true}]}
+            },
+
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
 
         expect(testsAnalyzer.getFailingTests().length).toBe(0);
-        expect(testsAnalyzer.getTests().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(1);
         expect(testsAnalyzer.getPercentage()).toBe(100);
     });
 
@@ -64,7 +71,9 @@ describe('TestsAnalyzer', () => {
         const test: RequisitionModel = {
             name: 'name',
             valid: true,
-            tests: [{valid: true}, {ignored: true}, {valid: true, ignored: true}],
+            hooks: {
+                onInit: {valid: true, tests: [{valid: true}, {ignored: true}, {valid: true, ignored: true}]}
+            },
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
@@ -91,8 +100,19 @@ describe('TestsAnalyzer', () => {
         const test: RequisitionModel = {
             name: 'name',
             description: 'name',
-            tests: [{valid: true}, {valid: true}, {valid: true}, {valid: false}, {valid: true, ignored: true}],
-            valid: true,
+            hooks:
+                {
+                    onEvent: {
+                        valid: false,
+                        tests: [
+                            {valid: true},
+                            {valid: true},
+                            {valid: true},
+                            {valid: false},
+                            {valid: false, ignored: true}]
+                    }
+                },
+            valid: false,
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
@@ -109,11 +129,15 @@ describe('TestsAnalyzer', () => {
             name: 'name',
             valid: true,
             ignored: true,
-            tests: [{
-                name: 'any',
-                valid: false,
-                description: ''
-            }]
+            hooks: {
+                onInit: {
+                    valid: false, tests: [{
+                        name: 'any',
+                        valid: false,
+                        description: ''
+                    }]
+                }
+            }
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);

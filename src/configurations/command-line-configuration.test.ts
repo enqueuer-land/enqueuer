@@ -109,6 +109,24 @@ describe('CommandLineConfiguration', () => {
         expect(commandLineConfiguration.getStdoutRequisitionOutput()).toBeTruthy();
     });
 
+    it('default passing tests', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
+
+        expect(commandLineConfiguration.getShowPassingTests()).toBeFalsy();
+    });
+
+    it('set passing tests -i', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-i']);
+
+        expect(commandLineConfiguration.getShowPassingTests()).toBeTruthy();
+    });
+
+    it('set passing tests --show-passing-tests', () => {
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--show-passing-tests']);
+
+        expect(commandLineConfiguration.getShowPassingTests()).toBeTruthy();
+    });
+
     it('getConfigFileName -c', () => {
         const configFile = 'minusC';
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-c', configFile]);

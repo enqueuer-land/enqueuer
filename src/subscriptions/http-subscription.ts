@@ -45,7 +45,7 @@ class HttpSubscription extends Subscription {
             Object.keys(this.response.headers || {}).forEach(key => {
                 this.responseToClientHandler.header(key, this.response.headers[key]);
             });
-            this.responseToClientHandler.status(this.response.status).send(this.response.payload);
+            this.responseToClientHandler.status(this.response.status).send('' + this.response.payload);
             Logger.debug(`${this.type} response sent`);
             return Promise.resolve();
         } catch (err) {
@@ -53,16 +53,16 @@ class HttpSubscription extends Subscription {
         }
     }
 
-    public onMessageReceivedTests(): TestModel[] {
-        if (this.authentication && this.messageReceived) {
+    public onMessageReceivedTests(messageReceived: any): TestModel[] {
+        if (this.authentication && messageReceived) {
             Logger.debug(`${this.type} authenticating message with ${JSON.stringify(Object.keys(this.authentication), null, 2)}`);
             const verifier = new HttpAuthenticationFactory().create(this.authentication);
-            return verifier.verify(this.messageReceived.headers.authorization);
+            return verifier.verify(messageReceived.headers.authorization);
         }
         return [];
     }
 
-    public receiveMessage(): Promise<any> {
+    public receiveMessage(): Promise<void> {
         if (this.proxy) {
             return this.proxyServerMessageReceiving();
         } else {
@@ -70,18 +70,20 @@ class HttpSubscription extends Subscription {
         }
     }
 
-    private realServerMessageReceiving(): Promise<any> {
+    private realServerMessageReceiving(): Promise<void> {
         return new Promise((resolve) => {
             Logger.debug(`Listening to (${this.method})${this.port}${this.endpoint}`);
             this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
                 Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
                 this.responseToClientHandler = responseHandler;
-                resolve(this.createMessageReceivedStructure(request));
+                this.onMessageReceivedTests(request);
+                this.executeHookEvent('onMessageReceived', this.createMessageReceivedStructure(request));
+                resolve();
             });
         });
     }
 
-    private proxyServerMessageReceiving(): Promise<any> {
+    private proxyServerMessageReceiving(): Promise<void> {
         return new Promise((resolve, reject) => {
             Logger.debug(`Listening to (${this.method})${this.port}${this.endpoint}/*`);
             this.expressApp[this.method](this.endpoint + '/*', (originalRequest: any, responseHandler: any, next: any) => {
@@ -90,6 +92,7 @@ class HttpSubscription extends Subscription {
                 this.redirect['url'] = this.redirect.url + originalRequest.url.replace(this.endpoint, '');
                 this.redirect['headers'] = originalRequest.headers;
                 this.redirect['payload'] = originalRequest.rawBody;
+                this.onMessageReceivedTests(originalRequest);
                 this.executeHookEvent('onOriginalMessageReceived', this.createMessageReceivedStructure(originalRequest));
 
                 this.redirectCall()
@@ -101,7 +104,8 @@ class HttpSubscription extends Subscription {
                             payload: redirectionResponse.body,
                             headers: redirectionResponse.headers
                         };
-                        resolve(redirectionResponse);
+                        this.executeHookEvent('onMessageReceived', redirectionResponse);
+                        resolve();
                         next();
                     })
                     .catch(err => {
@@ -156,17 +160,117 @@ export function entryPoint(mainInstance: MainInstance): void {
     const protocol = new SubscriptionProtocol('http',
         (subscriptionModel: SubscriptionModel) => new HttpSubscription(subscriptionModel),
         {
-            onMessageReceived: ['headers',
-                'params',
-                'query',
-                'url',
-                'body'],
-            onOriginalMessageReceived: ['headers',
-                'params',
-                'query',
-                'url',
-                'body']
-        })
+            description: 'The HTTP subscription provides implementations of http servers and proxies',
+            libraryHomepage: 'https://expressjs.com/',
+            schema: {
+                attributes: {
+                    endpoint: {
+                        required: true,
+                        type: 'string',
+                        example: '/almighty/enqueuer'
+                    },
+                    method: {
+                        required: false,
+                        type: 'string',
+                        defaultValue: 'GET',
+                        listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
+                    },
+                    port: {
+                        required: true,
+                        type: 'int'
+                    },
+                    timeout: {
+                        required: false,
+                        type: 'int',
+                        defaultValue: 3000,
+                        suffix: 'ms'
+                    },
+                    credentials: {
+                        required: false,
+                        description: 'Values used when being used as a secure server',
+                        type: {
+                            key: {
+                                required: true,
+                                type: 'string'
+                            },
+                            cert: {
+                                required: true,
+                                type: 'string'
+                            }
+                        }
+                    },
+                    redirect: {
+                        description: 'Values used when being used as a proxy subscription',
+                        type: {
+                            url: {
+                                required: true,
+                                type: 'string',
+                                example: 'https://github.com/enqueuer-land/enqueuer'
+                            },
+                            method: {
+                                required: false,
+                                type: 'string',
+                                defaultValue: 'GET',
+                                listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
+                            },
+                            timeout: {
+                                required: false,
+                                type: 'int',
+                                defaultValue: 3000,
+                                suffix: 'ms'
+                            },
+                            headers: {
+                                description: '',
+                                type: 'object',
+                                defaultValue: {}
+                            },
+
+                        }
+                    },
+                    headers: {
+                        description: '',
+                        type: 'object',
+                        defaultValue: {}
+                    },
+                    response: {
+                        description: 'Response to be given when not being used as proxy',
+                        type: {
+                            status: {
+                                required: true,
+                                type: 'int'
+                            },
+                            payload: {
+                                required: true,
+                                type: 'any'
+                            }
+                        },
+                        defaultValue: {}
+                    },
+                },
+                hooks: {
+                    onMessageReceived: {
+                        description: '',
+                        arguments: {
+                            params: {},
+                            query: {},
+                            body: {},
+                            url: {},
+                        }
+                    },
+                    onOriginalMessageReceived: {
+                        description: 'Useful when using a proxy subscription. ' +
+                            'Gets called when the proxy is hit, before actually proxying the message',
+                        arguments: {
+                            params: {},
+                            query: {},
+                            body: {},
+                            url: {},
+                        }
+                    }
+                }
+            }
+        }
+    )
         .addAlternativeName('https', 'http-proxy', 'https-proxy', 'http-server', 'https-server')
         .setLibrary('express');
 

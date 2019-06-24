@@ -317,7 +317,7 @@ subscriptions:
         payload: mock response
     onMessageReceived:
         assertions:
-        -   expect: message.body
+        -   expect: body
             toContain: `enqueuer`
         -   name: failing test
             expectToBeTruthy: false
@@ -354,7 +354,7 @@ subscriptions:
         payload: polyglot message
     onMessageReceived:
         assertions:
-        -   expect: message.body
+        -   expect: body
             toContain: 123456
 </code></pre>
 
@@ -652,20 +652,12 @@ You're free to explore them however you want, even doing things like this:</p>
 <p>By default, there are three hook events available:</p>
 
 <p><strong>onInit</strong> <br>
-Available in requisitions, publishers and subscriptions. It gets executed as soon as the test is initialized.
+Available in requisitions, publishers and subscriptions. It gets executed as soon as the component is initialized.
 As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component.</p>
 
 <p><strong>onFinish</strong> <br>
-Available in requisitions, publishers and subscriptions. It gets executed when the test is about to finish.
+Available in requisitions, publishers and subscriptions. It gets executed when the component is about to finish.
 As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component. </p>
-
-<p><strong>onMessageReceived</strong> <br>
-Available in every subscription and in some publishers that provide synchronous properties. Depending on its author's will. 
-It gets executed when the component receives a message.
-A <code class="yaml">message</code> object is available having all of attributes returned from the received message.
-Depending on the protocol implementation, there'll be additional objects to this hook.
-For instance, in the built-in http publisher implementation, there's a <code class="yaml">statusCode</code>, <code class="yaml">headers</code>, a <code class="yaml">body</code> and others, and the subscription implementation has <code class="yaml">body</code>, <code class="yaml">query</code>, <code class="yaml">params</code> and <code class="yaml">headers</code>, among other variables.
-<code class="yaml">elapsedTime</code> is also available here, counting every milliseconds since the instantiation of this component.</p>
 
 <p><strong>custom</strong>
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.

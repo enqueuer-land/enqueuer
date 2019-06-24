@@ -3,6 +3,7 @@ export {PublisherModel as InputPublisherModel} from './models/inputs/publisher-m
 export {SubscriptionModel as InputSubscriptionModel} from './models/inputs/subscription-model';
 
 export {ReportModel as OutputReportModel} from './models/outputs/report-model';
+export {HookModel as OutputHookModel} from './models/outputs/hook-model';
 export {RequisitionModel as OutputRequisitionModel} from './models/outputs/requisition-model';
 export {PublisherModel as OutputPublisherModel} from './models/outputs/publisher-model';
 export {SubscriptionModel as OutputSubscriptionModel} from './models/outputs/subscription-model';
