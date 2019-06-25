@@ -41,6 +41,7 @@ export * from './plugins/report-formatter-manager';
 export * from './plugins/main-instance';
 
 export * from './protocols/protocol';
+export * from './protocols/protocol-documentation';
 export * from './protocols/publisher-protocol';
 export * from './protocols/subscription-protocol';
 

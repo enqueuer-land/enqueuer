@@ -13,6 +13,7 @@ import {ObjectDecycler} from '../../object-parser/object-decycler';
 import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
+import {HookReporter} from '../hook-reporter';
 
 export class SubscriptionReporter {
 
@@ -122,16 +123,15 @@ export class SubscriptionReporter {
         }
     }
 
-    private async sendSyncResponse(): Promise<any> {
-        if (this.subscription.response) {
-            try {
-                Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
-                await this.subscription.sendResponse();
-                return;
-            } catch (err) {
-                Logger.warning(`Error ${this.subscription.type} synchronous response sending: ${err}`);
-                throw err;
-            }
+    private async sendSyncResponse(): Promise<void> {
+        try {
+            Logger.debug(`Subscription ${this.subscription.type} sending synchronous response`);
+            await this.subscription.sendResponse();
+        } catch (err) {
+            Logger.warning(`Error ${this.subscription.type} synchronous response sending: ${err}`);
+            this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH]
+                .tests.concat({valid: false, name: 'Response sent', description: `${err}`});
+
         }
     }
 
@@ -143,7 +143,6 @@ export class SubscriptionReporter {
             this.totalTime = new DateController();
         }
         time.totalTime = this.totalTime.getTime() - this.startTime.getTime();
-        //TODO check it
         const finalReporter = new SubscriptionFinalReporter({
             subscribed: this.subscribed,
             avoidable: this.subscription.avoid,
@@ -192,12 +191,12 @@ export class SubscriptionReporter {
             }
             const tests = eventExecutor.execute();
             const valid = tests.every((test: TestModel) => testModelIsPassing(test));
-            this.report.hooks![eventName] = {
+            const hookModel = {
                 arguments: new ObjectDecycler().decycle(args),
                 tests: tests,
                 valid: valid
             };
-            this.report.valid = this.report.valid && valid;
+            this.report.hooks![eventName] = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
         }
     }
 

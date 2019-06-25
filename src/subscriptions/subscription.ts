@@ -32,7 +32,6 @@ export abstract class Subscription {
     }
 
     public async sendResponse(): Promise<void> {
-        Logger.debug(`Subscription of ${this.type} does not provide synchronous response`);
     }
 
     public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {

@@ -69,6 +69,9 @@ export class StreamSubscription extends Subscription {
     }
 
     public sendResponse(): Promise<void> {
+        if (!this.response) {
+            return Promise.resolve();
+        }
         return new Promise((resolve) => {
             if (this.stream) {
                 if (this.stream.write) {

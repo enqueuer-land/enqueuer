@@ -28,7 +28,7 @@ interface ProtocolAttributeObject {
 }
 
 export interface ProtocolAttribute {
-    type: 'string' | 'number' | 'text' | 'boolean' | ProtocolAttributeObject | 'object' | 'any' | 'int';
+    type: 'string' | 'number' | 'text' | 'boolean' | ProtocolAttributeObject | 'object' | 'any' | 'int' | 'list';
     description?: string;
     required?: boolean;
     defaultValue?: any;
