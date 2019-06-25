@@ -1,6 +1,6 @@
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {ReportModel} from '../models/outputs/report-model';
-import {TestModel} from '../models/outputs/test-model';
+import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
 import {HookModel} from '../models/outputs/hook-model';
 
 export class TestsAnalyzer {
@@ -28,15 +28,15 @@ export class TestsAnalyzer {
     }
 
     public getPassingTests(): TestModel[] {
-        return this.tests.filter(test => test.valid && !test.ignored);
+        return this.tests.filter(test => testModelIsPassing(test));
     }
 
     public getFailingTests(): TestModel[] {
-        return this.tests.filter(test => !test.valid && !test.ignored);
+        return this.tests.filter(test => !testModelIsPassing(test));
     }
 
     public getPercentage(): number {
-        let percentage = Math.trunc(10000 * this.getPassingTests().length / this.getNotIgnoredTests().length) / 100;
+        let percentage = Math.trunc(10000 * this.getPassingTests().length / this.getTests().length) / 100;
         if (isNaN(percentage)) {
             percentage = 100;
         }

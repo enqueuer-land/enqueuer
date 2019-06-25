@@ -7,10 +7,10 @@ publishers:
     onResponseReceived:
         script: doubleStatus = statusCode * 2
         assertions:
-            -   expect: body
-                toBeEqualTo: `mock response`
-            -   expect: doubleStatus
-                toBeGreaterThan: 300
+        -   expect: body
+            toBeEqualTo: `mock response`
+        -   expect: doubleStatus
+            toBeGreaterThan: 300
 subscriptions:
 -   type: http
     name: mock endpoint

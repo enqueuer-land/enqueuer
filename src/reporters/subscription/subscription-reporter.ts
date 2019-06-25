@@ -156,7 +156,7 @@ export class SubscriptionReporter {
         this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH]
             .tests.concat(finalReport);
         this.report.hooks![DefaultHookEvents.ON_FINISH].valid = this.report.hooks![DefaultHookEvents.ON_FINISH].valid
-            && finalReport.every(report => report.ignored || report.valid);
+            && finalReport.every(report => testModelIsPassing(report));
 
         this.report.valid = this.report.valid && Object.keys(this.report.hooks || {})
             .every((key: string) => this.report.hooks ? this.report.hooks[key].valid : true);

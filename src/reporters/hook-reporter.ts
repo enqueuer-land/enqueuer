@@ -1,4 +1,5 @@
 import {HookModel} from '../models/outputs/hook-model';
+import {testModelIsPassing} from '../models/outputs/test-model';
 
 export class HookReporter {
     private readonly hook: HookModel;
@@ -15,7 +16,7 @@ export class HookReporter {
     public addValues(hookModel: HookModel = {valid: true, tests: [], arguments: {}}): HookModel {
         this.hook.tests = this.hook.tests.concat(hookModel.tests);
         this.hook.arguments = Object.assign({}, this.hook.arguments, hookModel.arguments);
-        this.hook.valid = this.hook.tests.every(test => test.valid || test.ignored);
+        this.hook.valid = this.hook.tests.every(test => testModelIsPassing(test));
         return this.hook;
     }
 }

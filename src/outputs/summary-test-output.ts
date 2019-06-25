@@ -1,10 +1,11 @@
-import chalk from 'chalk';
+import chalk, {Chalk} from 'chalk';
 import {TestsAnalyzer} from './tests-analyzer';
-import {TestModel} from '../models/outputs/test-model';
+import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {ReportModel} from '../models/outputs/report-model';
+import {HookModel} from '../models/outputs/hook-model';
 
 export type SummaryOptions = {
     maxLevel: number,
@@ -108,29 +109,10 @@ export class SummaryTestOutput {
     }
 
     private printFailingTests(report: ReportModel, hierarchy: string[]) {
-        const passing = !report.ignored && !report.valid;
-        if (passing || this.options.showPassingTests) {
-            Object.keys(report.hooks || {}).forEach((key: string) => {
-                report.hooks![key].tests
-                    .filter((test: TestModel) => (!test.ignored && !test.valid) || this.options.showPassingTests)
-                    .forEach((test: TestModel) => {
-                        const initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
-                        let color;
-                        if (test.ignored) {
-                            color = chalk.yellow;
-                        } else if (test.valid) {
-                            color = chalk.green;
-                        } else {
-                            color = chalk.red;
-                        }
-                        const hierarchyTitle = initialTabulation + this.prettifyTestHierarchyMessage(hierarchy.concat(key), test.name, color);
-                        console.log(hierarchyTitle);
-                        const description = `${initialTabulation}${this
-                            .createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}`;
-                        console.log(color(description));
-                    });
-
-            });
+        const failing = !testModelIsPassing(report);
+        if (failing || this.options.showPassingTests) {
+            Object.keys(report.hooks || {})
+                .forEach((key: string) => this.printHookTests(report.hooks![key], key, hierarchy));
 
             (report.subscriptions || [])
                 .concat(report.publishers || [])
@@ -143,6 +125,31 @@ export class SummaryTestOutput {
         }
     }
 
+    private printHookTests(hook: HookModel, hookName: string, hierarchy: string[]) {
+        hook.tests
+            .filter((test: TestModel) => !testModelIsPassing(test) || this.options.showPassingTests)
+            .forEach((test: TestModel, index: number) => {
+                const initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
+                let color: Chalk;
+                if (test.ignored) {
+                    color = chalk.yellow;
+                } else if (test.valid) {
+                    color = chalk.green;
+                } else {
+                    color = chalk.red;
+                }
+                if (index === 0) {
+                    const hierarchyMessage = initialTabulation + hierarchy
+                        .map(level => color(level) + chalk.gray(' › '))
+                        .concat(hookName)
+                        .join('');
+                    console.log(hierarchyMessage);
+                }
+                console.log(color(`${initialTabulation}${this.createEmptyStringSized(this.options.tabulationPerLevel)}${test.name}`));
+                console.log(color(`${initialTabulation}${this.createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}`));
+            });
+    }
+
     private getColor(percentage: number): Function {
         if (percentage == 100) {
             return chalk.green;
@@ -150,12 +157,6 @@ export class SummaryTestOutput {
             return chalk.yellow;
         }
         return chalk.red;
-    }
-
-    private prettifyTestHierarchyMessage(hierarchy: string[], name: string, color: Function): string {
-        const reducer = (result: string, level: string) => result + color(level) + chalk.gray(' › ');
-        return hierarchy
-            .reduce(reducer, '') + chalk.reset(name);
     }
 
 }

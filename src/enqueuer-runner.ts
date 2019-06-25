@@ -22,9 +22,9 @@ export class EnqueuerRunner {
     }
 
     public async execute(): Promise<output.RequisitionModel[]> {
-        Logger.setLoggerLevel('info');
-        Logger.info("Let\'s rock");
         const configuration = Configuration.getInstance();
+        Logger.setLoggerLevel('info');
+        Logger.info('Rocking and rolling');
         Logger.setLoggerLevel(configuration.getLogLevel());
         const requisitionFileParser = new RequisitionFilePatternParser(configuration.getFiles());
         const requisitions = requisitionFileParser.parse();

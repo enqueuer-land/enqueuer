@@ -471,7 +471,7 @@ Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/ex
 </code></pre>
 
 <p><strong>publishers</strong> <br>
-List of <a href="#publisher">publishers</a></p>
+List of <a href="#publisher">publishers</a>. They're executed simultaneously, therefore, the order is <strong>irrelevant</strong>.</p>
 
 <pre><code class="yaml">publishers:
 - name: some publisher name
@@ -480,7 +480,7 @@ List of <a href="#publisher">publishers</a></p>
 </code></pre>
 
 <p><strong>subscriptions</strong> <br>
-List of <a href="#subscription">subscriptions</a></p>
+List of <a href="#subscription">subscriptions</a>. They're executed simultaneously, therefore, the order is <strong>irrelevant</strong>.</p>
 
 <pre><code class="yaml">subscriptions:
 - name: some subscription name
@@ -490,7 +490,9 @@ List of <a href="#subscription">subscriptions</a></p>
 </code></pre>
 
 <p><strong>requisitions</strong> <br>
-A list of child scenarios. List of <a href="#requisition">requisitions</a>.
+A list of child scenarios. List of <a href="#requisition">requisitions</a>. 
+By default, they're executed <strong>sequentially</strong>, therefore, the order is <em>relevant</em>.
+Unless the <em>parallel</em> attribute is set to true, what makes them get executed <strong>simultaneously</strong>, 
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> example, it may help.</p>
 
 <pre><code class="yaml">requisitions:
@@ -517,7 +519,9 @@ onFinish:
 <h4 id="publisher" style="padding-left: 8px">2.2 publisher</h4>
 
 <p>A publisher action is triggered by enqueuer itself. It <strong>acts</strong> whereas a <a href="#subscription">subscription</a> <strong>reacts</strong>.
-It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.</p>
+It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
+It's worth noting that it always <strong>creates</strong> a message. 
+That's the reason why there's an implicitly created test in <strong>onFinish</strong> hook verifying if the message got published.</p>
 
 <h5 id="publisher_attributes" style="padding-left: 16px">2.2.1 publisher attributes</h5>
 
@@ -575,7 +579,9 @@ onFinish:
 <p>A subscription is an "under demand" event. It <strong>reacts</strong> whereas a <a href="#publisher">publisher</a> <strong>acts</strong>.
 It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
 This means that it is not triggered by enqueuer itself. 
-Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.</p>
+Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
+It's worth noting that it always <strong>receives</strong> a message. 
+That's the reason why there's an implicitly created test in <strong>onFinish</strong> hook verifying if a message got received.</p>
 
 <h5 id="subscription_attributes" style="padding-left: 16px">2.3.1 subscription attributes</h5>
 

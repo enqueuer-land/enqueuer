@@ -216,7 +216,7 @@ Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/exam
     import: path/to/another/requisition/file
 
 **publishers**  
-List of [publishers](#publisher)
+List of [publishers](#publisher). They're executed simultaneously, therefore, the order is **irrelevant**.
     
     publishers:
     - name: some publisher name
@@ -224,7 +224,7 @@ List of [publishers](#publisher)
     - type: tcp
 
 **subscriptions**  
-List of [subscriptions](#subscription)
+List of [subscriptions](#subscription). They're executed simultaneously, therefore, the order is **irrelevant**.
 
     subscriptions:
     - name: some subscription name
@@ -234,7 +234,9 @@ List of [subscriptions](#subscription)
 
 
 **requisitions**  
-A list of child scenarios. List of [requisitions](#requisition).
+A list of child scenarios. List of [requisitions](#requisition). 
+By default, they're executed **sequentially**, therefore, the order is *relevant*.
+Unless the *parallel* attribute is set to true, what makes them get executed **simultaneously**, 
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
     requisitions:
@@ -259,6 +261,8 @@ Available events are described [here](#event). A `this` object is available to a
 
 A publisher action is triggered by enqueuer itself. It **acts** whereas a [subscription](#subscription) **reacts**.
 It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
+It's worth noting that it always **creates** a message. 
+That's the reason why there's an implicitly created test in **onFinish** hook verifying if the message got published.
 
 ##### publisher attributes
 Every publisher has its own properties, depending on its protocol and implementation.
@@ -309,6 +313,8 @@ A subscription is an "under demand" event. It **reacts** whereas a [publisher](#
 It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
 This means that it is not triggered by enqueuer itself. 
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
+It's worth noting that it always **receives** a message. 
+That's the reason why there's an implicitly created test in **onFinish** hook verifying if a message got received.
 
 ##### subscription attributes
 Every subscription has its own properties, depending on its protocol and implementation.
