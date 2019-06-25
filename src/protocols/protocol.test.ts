@@ -25,12 +25,12 @@ describe('Protocol', () => {
     });
 
     it('namesMatch alternative', () => {
-        const match = new Protocol('', undefined, ).addAlternativeName('gui').matches('gui');
+        const match = new Protocol('', undefined,).addAlternativeName('gui').matches('gui');
         expect(match).toBeTruthy();
     });
 
     it('names dont Match alternative', () => {
-        const match = new Protocol('', undefined, ).addAlternativeName('one', 'two').matches('gui', 0);
+        const match = new Protocol('', undefined,).addAlternativeName('one', 'two').matches('gui', 0);
         expect(match).toBeFalsy();
     });
 
@@ -79,6 +79,11 @@ describe('Protocol', () => {
             'description': 'description', 'homepage': 'homepage', 'libraryHomepage': 'libraryHomepage', 'name': 'protocol', 'schema': {
                 'attributes': {
                     'attributeName': {'description': 'AttributeDescription', 'type': 'string'},
+                    'type': {
+                        'description': 'Protocol identifier',
+                        'required': true,
+                        'type': 'string'
+                    },
                     'avoid': {
                         'defaultValue': false,
                         'description': 'Defines if the subscription should be avoided',
@@ -138,6 +143,11 @@ describe('Protocol', () => {
         expect(property).toEqual({
             'name': 'protocol', 'schema': {
                 'attributes': {
+                    'type': {
+                        'description': 'Protocol identifier',
+                        'required': true,
+                        'type': 'string'
+                    },
                     'avoid': {
                         'defaultValue': false,
                         'description': 'Defines if the subscription should be avoided',

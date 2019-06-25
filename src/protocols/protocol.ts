@@ -48,11 +48,15 @@ export abstract class Protocol {
             }
         });
         Object.keys(this.documentation.schema.hooks).forEach((key: string) => {
-            this.documentation.schema!.hooks![key].arguments.elapsedTime = {
-                description: 'Number of milliseconds since the instantiation of the component'
-            };
-            this.documentation.schema!.hooks![key].arguments.this = {
-                description: 'Pointer to the component'
+            const hookArguments = this.documentation.schema!.hooks![key].arguments;
+            this.documentation.schema!.hooks![key].arguments = {
+                ...hookArguments,
+                elapsedTime: {
+                    description: 'Number of milliseconds since the instantiation of the component'
+                },
+                this: {
+                    description: 'Pointer to the component'
+                }
             };
         });
         if (!this.documentation.schema.attributes) {
@@ -68,6 +72,11 @@ export abstract class Protocol {
             type: 'string',
             required: false,
             description: 'Defines the component name'
+        };
+        this.documentation.schema.attributes.type = {
+            type: 'string',
+            required: true,
+            description: 'Protocol identifier'
         };
         if (type == ProtocolType.SUBSCRIPTION) {
             this.documentation.schema.attributes.timeout = {

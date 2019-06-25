@@ -16,7 +16,7 @@ export interface ProtocolSchema {
 
 export interface ProtocolEventHook {
     description?: string;
-    arguments: {
+    arguments?: {
         [argumentName: string]: {
             description?: string;
         }

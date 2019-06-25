@@ -81,6 +81,11 @@ describe('ProtocolManager', () => {
                     'name': 'pub',
                     'schema': {
                         'attributes': {
+                            'type': {
+                                'description': 'Protocol identifier',
+                                'required': true,
+                                'type': 'string'
+                            },
                             'ignore': {
                                 'defaultValue': false,
                                 'description': 'Defines if the component should be ignored',
@@ -123,6 +128,11 @@ describe('ProtocolManager', () => {
                     'name': 'pub',
                     'schema': {
                         'attributes': {
+                            'type': {
+                                'description': 'Protocol identifier',
+                                'required': true,
+                                'type': 'string'
+                            },
                             'ignore': {
                                 'defaultValue': false,
                                 'description': 'Defines if the component should be ignored',
@@ -149,6 +159,11 @@ describe('ProtocolManager', () => {
                     'name': 'other',
                     'schema': {
                         'attributes': {
+                            'type': {
+                                'description': 'Protocol identifier',
+                                'required': true,
+                                'type': 'string'
+                            },
                             'ignore': {
                                 'defaultValue': false,
                                 'description': 'Defines if the component should be ignored',
@@ -195,6 +210,12 @@ describe('ProtocolManager', () => {
             'publishers': [], 'subscriptions': [{
                 '0': 'value', 'name': 'sub', 'schema': {
                     'attributes': {
+                        'type': {
+                            'description': 'Protocol identifier',
+                            'required': true,
+                            'type': 'string'
+                        },
+
                         'avoid': {
                             'defaultValue': false,
                             'description': 'Defines if the subscription should be avoided',
@@ -249,6 +270,12 @@ describe('ProtocolManager', () => {
             'publishers': [], 'subscriptions': [{
                 'name': 'sub', 'schema': {
                     'attributes': {
+                        'type': {
+                            'description': 'Protocol identifier',
+                            'required': true,
+                            'type': 'string'
+                        },
+
                         'avoid': {
                             'defaultValue': false,
                             'description': 'Defines if the subscription should be avoided',
@@ -288,6 +315,12 @@ describe('ProtocolManager', () => {
             }, {
                 'name': 'sub2', 'schema': {
                     'attributes': {
+                        'type': {
+                            'description': 'Protocol identifier',
+                            'required': true,
+                            'type': 'string'
+                        },
+
                         'avoid': {
                             'defaultValue': false,
                             'description': 'Defines if the subscription should be avoided',
