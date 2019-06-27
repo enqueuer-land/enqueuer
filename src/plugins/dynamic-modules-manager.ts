@@ -12,6 +12,8 @@ import * as fs from 'fs';
 import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 
+const enqueuerPackageJson = require('../../package.json');
+
 export class DynamicModulesManager {
     private static instance: DynamicModulesManager;
     private readonly protocolManager: ProtocolManager;
@@ -97,9 +99,11 @@ export class DynamicModulesManager {
                 .filter(module => {
                     try {
                         const packageJson = JSON.parse(fs.readFileSync(module + '/package.json').toString());
-                        if (packageJson.keywords
+                        const hasKeyWords = packageJson.keywords
                             .filter((keyword: string) => keyword.toLowerCase() === 'enqueuer' ||
-                                keyword.toLowerCase() === 'nqr').length > 0) {
+                                keyword.toLowerCase() === 'nqr').length > 0;
+                        const versionMatches = DynamicModulesManager.versionMatches(packageJson);
+                        if (hasKeyWords && versionMatches) {
                             return require(module).entryPoint !== undefined;
                         }
                     } catch (err) {
@@ -110,6 +114,17 @@ export class DynamicModulesManager {
 
         }
         return [];
+    }
+
+    //TODO test it
+    private static versionMatches(packageJson: { dependencies: any, devDependencies: any, peerDependencies: any }): boolean {
+        const regexp = /[ ^d]*(\d+)/;
+        const currentMajorVersion = (process.env.npm_package_version || enqueuerPackageJson.version).match(regexp)[0];
+        const pluginMajorEnqueuerVersion = (packageJson.dependencies.enqueuer ||
+            packageJson.devDependencies.enqueuer ||
+            packageJson.peerDependencies.enqueuer)
+            .version.match(regexp)[0];
+        return currentMajorVersion <= pluginMajorEnqueuerVersion;
     }
 
     private loadModule(module: string): boolean {

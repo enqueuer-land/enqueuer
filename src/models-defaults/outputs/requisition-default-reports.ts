@@ -5,15 +5,18 @@ import {DefaultHookEvents} from '../../models/events/event';
 
 export class RequisitionDefaultReports {
 
-    public static createDefaultReport(base: { name: string, id: string, ignored?: boolean, level?: number },
+    public static createDefaultReport(base: {
+                                          name: string,
+                                          id: string,
+                                          ignored?: boolean,
+                                          level?: number,
+                                          iterations?: number,
+                                          totalIterations?: number
+                                      },
                                       onFinishTests: TestModel[] = []): output.RequisitionModel {
         const valid = onFinishTests.every((test) => test.valid);
-        return {
+        return Object.assign({}, base, {
             valid: valid,
-            name: base.name,
-            id: base.id,
-            ignored: base.ignored,
-            level: base.level,
             subscriptions: [],
             publishers: [],
             hooks: {
@@ -34,7 +37,7 @@ export class RequisitionDefaultReports {
                 totalTime: 0
             },
             requisitions: []
-        };
+        });
     }
 
     public static createRunningError(base: { name: string, id: string }, err: any): output.RequisitionModel {

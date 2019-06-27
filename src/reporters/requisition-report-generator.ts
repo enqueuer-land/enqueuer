@@ -31,14 +31,14 @@ export class RequisitionReportGenerator {
     }
 
     public getReport(): RequisitionModel {
+        this.report.valid = (this.report.subscriptions || []).every(report => report.valid) &&
+            (this.report.publishers || []).every(report => report.valid) &&
+            Object.keys(this.report.hooks || {}).every((key: string) => this.report.hooks ? this.report.hooks[key].valid : true);
         return this.report;
     }
 
     public finish(): void {
         this.addTimesReport();
-        this.report.valid = (this.report.subscriptions || []).every(report => report.valid) &&
-            (this.report.publishers || []).every(report => report.valid) &&
-            Object.keys(this.report.hooks || {}).every((key: string) => this.report.hooks ? this.report.hooks[key].valid : true);
     }
 
     public addTest(hookName: string, hook: HookModel) {

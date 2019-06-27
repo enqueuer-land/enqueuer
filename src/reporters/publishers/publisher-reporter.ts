@@ -47,7 +47,7 @@ export class PublisherReporter {
                 this.published = true;
             }
         } catch (err) {
-            Logger.error(`${this.report.name} fail publishing: ${err}`);
+            Logger.error(`'${this.report.name}' fail publishing: ${err}`);
             this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({name: 'Published', valid: false, description: err.toString()});
             this.report.valid = false;
             throw err;

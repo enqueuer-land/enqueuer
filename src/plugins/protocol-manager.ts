@@ -51,11 +51,13 @@ export class ProtocolManager {
     public getProtocolsDescription(protocol: string = ''): { publishers: {}[], subscriptions: {}[] } {
         return {
             publishers: this.protocols
-                .filter((protocol: Protocol) => protocol.isPublisher())
+            //NOTE: function check for retro compatibilities proposes
+                .filter((protocol: Protocol) => protocol.isPublisher && protocol.isPublisher())
                 .filter((publisher: Protocol) => publisher.matches(protocol))
                 .map(protocol => protocol.getDescription()),
             subscriptions: this.protocols
-                .filter((protocol: Protocol) => protocol.isSubscription())
+            //NOTE: function check for retro compatibilities proposes
+                .filter((protocol: Protocol) => protocol.isSubscription && protocol.isSubscription())
                 .filter((subscription: Protocol) => subscription.matches(protocol))
                 .map(protocol => protocol.getDescription())
         };

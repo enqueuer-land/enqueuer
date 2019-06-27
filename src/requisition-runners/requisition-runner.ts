@@ -16,6 +16,8 @@ import {testModelIsPassing} from '../models/outputs/test-model';
 export class RequisitionRunner {
 
     private requisition: input.RequisitionModel;
+    private childrenRequisitionRunner: RequisitionRunner[] = [];
+    private requisitionReporter?: RequisitionReporter;
 
     public constructor(requisition: input.RequisitionModel) {
         this.requisition = new RequisitionAdopter(requisition).getRequisition();
@@ -47,15 +49,15 @@ export class RequisitionRunner {
         return await this.iterateRequisition(evaluatedIterations);
     }
 
-    private async iterateRequisition(iterations: number) {
+    private async iterateRequisition(iterations: number): Promise<output.RequisitionModel[]> {
         const reports = [];
         for (let iterationCounter = 0; iterationCounter < iterations; ++iterationCounter) {
             try {
                 this.replaceVariables();
+                this.requisition.iteration = iterationCounter;
+                this.requisition.totalIterations = iterations;
                 Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name}'`);
                 const report = await this.startRequisitionReporter();
-                report.iteration = iterationCounter;
-                report.totalIterations = iterations;
                 reports.push(report);
                 this.emitNotification(report);
             } catch (err) {
@@ -70,6 +72,12 @@ export class RequisitionRunner {
         if (this.requisition.import) {
             this.requisition = new ComponentImporter().importRequisition(this.requisition);
         }
+    }
+
+    private async interrupt(): Promise<output.RequisitionModel> {
+        const report: output.RequisitionModel = await this.requisitionReporter!.interrupt();
+        this.emitNotification(report);
+        return report;
     }
 
     private emitNotification(report: output.RequisitionModel) {
@@ -91,8 +99,10 @@ export class RequisitionRunner {
     }
 
     private async startRequisitionReporter(): Promise<output.RequisitionModel> {
-        const requisitionReporter = new RequisitionReporter(this.requisition);
-        const report = await Promise.race([requisitionReporter.startTimeout(), this.happyPath(requisitionReporter)]);
+        this.requisitionReporter = new RequisitionReporter(this.requisition);
+        const report = await Promise.race([
+            this.timeoutPath(),
+            this.happyPath()]);
 
         Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
         Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
@@ -100,11 +110,19 @@ export class RequisitionRunner {
         return report;
     }
 
-    private async happyPath(requisitionReporter: RequisitionReporter): Promise<output.RequisitionModel> {
-        await requisitionReporter.delay();
+    private async timeoutPath(): Promise<output.RequisitionModel> {
+        const report = await this.requisitionReporter!.startTimeout();
+        report.requisitions = await Promise.all(this.childrenRequisitionRunner.map(childRunner => childRunner.interrupt()));
+        Logger.debug(`Requisition '${this.requisition.name}' timed out`);
+
+        return report;
+    }
+
+    private async happyPath(): Promise<output.RequisitionModel> {
+        await this.requisitionReporter!.delay();
         Logger.debug(`Handling requisitions children of '${this.requisition.name}'`);
         let childrenReport: output.RequisitionModel[] = await this.executeChildren();
-        const report = await requisitionReporter.execute();
+        const report = await this.requisitionReporter!.execute();
         report.requisitions = childrenReport;
         report.valid = report.valid &&
             report.requisitions.every((requisition) => testModelIsPassing(requisition)) &&
@@ -133,9 +151,10 @@ export class RequisitionRunner {
 
     private async executeChild(child: input.RequisitionModel, index: number) {
         child.parent = this.requisition;
-        const requisitionRunner = new RequisitionRunner(child);
-        const requisitionModels = await requisitionRunner.run();
-        this.requisition.requisitions[index] = requisitionRunner.requisition;
+        const childRunner = new RequisitionRunner(child);
+        this.childrenRequisitionRunner.push(childRunner);
+        const requisitionModels = await childRunner.run();
+        this.requisition.requisitions[index] = childRunner.requisition;
         return requisitionModels;
     }
 

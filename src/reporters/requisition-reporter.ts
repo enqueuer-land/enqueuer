@@ -21,14 +21,14 @@ export class RequisitionReporter {
 
     constructor(requisitionAttributes: input.RequisitionModel) {
         this.requisitionAttributes = requisitionAttributes;
-        this.reportGenerator = new RequisitionReportGenerator(this.requisitionAttributes, this.timeout);
-        this.startTime = new Date();
-        this.executeOnInitFunction();
         if (this.requisitionAttributes.timeout === undefined) {
             this.timeout = RequisitionReporter.DEFAULT_TIMEOUT;
         } else if (this.requisitionAttributes.timeout > 0) {
             this.timeout = this.requisitionAttributes.timeout;
         }
+        this.reportGenerator = new RequisitionReportGenerator(this.requisitionAttributes, this.timeout);
+        this.startTime = new Date();
+        this.executeOnInitFunction();
         this.multiSubscriptionsReporter = new MultiSubscriptionsReporter(this.requisitionAttributes.subscriptions);
         this.multiPublishersReporter = new MultiPublishersReporter(this.requisitionAttributes.publishers);
     }
@@ -67,6 +67,22 @@ export class RequisitionReporter {
         }
         if (!this.hasFinished) {
             await this.onRequisitionFinish();
+        }
+        return this.reportGenerator.getReport();
+    }
+
+    public async interrupt(): Promise<output.RequisitionModel> {
+        if (!this.hasFinished) {
+            await this.onRequisitionFinish();
+            this.reportGenerator.addTest(DefaultHookEvents.ON_FINISH,
+                {
+                    valid: false,
+                    tests: [{
+                        valid: false,
+                        name: 'Requisition interrupted',
+                        description: 'Not finished yet. There was not enough time to finish the requisition'
+                    }]
+                });
         }
         return this.reportGenerator.getReport();
     }

@@ -146,7 +146,8 @@ export class SummaryTestOutput {
                     console.log(hierarchyMessage);
                 }
                 console.log(color(`${initialTabulation}${this.createEmptyStringSized(this.options.tabulationPerLevel)}${test.name}`));
-                console.log(color(`${initialTabulation}${this.createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}`));
+                console.log(chalk.reset(`${initialTabulation}${this
+                    .createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}\n`));
             });
     }
 
