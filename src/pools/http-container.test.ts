@@ -8,7 +8,8 @@ jest.mock('../handlers/handler-listener');
 describe('HttpContainer', () => {
     it('Should create http server', () => {
         const mockApp = {
-            use: () => {}
+            use: () => {
+            }
         };
         express.mockImplementationOnce(() => {
             return mockApp;
@@ -21,7 +22,8 @@ describe('HttpContainer', () => {
 
     it('Should call handleListen when no server exists', done => {
         const appReturn = {
-            use: () => {}
+            use: () => {
+            }
         };
         express.mockImplementationOnce(() => appReturn);
         const mockListen = jest.fn();
@@ -41,7 +43,8 @@ describe('HttpContainer', () => {
 
     it('Should handle handleListen fail', done => {
         const appReturn = {
-            use: () => {}
+            use: () => {
+            }
         };
         express.mockImplementationOnce(() => appReturn);
         HandlerListener.mockImplementationOnce(() => {
@@ -58,7 +61,8 @@ describe('HttpContainer', () => {
 
     it('Should not recall handleListen when no server exists', done => {
         const appReturn = {
-            use: () => {}
+            use: () => {
+            }
         };
         express.mockImplementationOnce(() => appReturn);
         const mockListen = jest.fn();
@@ -78,16 +82,14 @@ describe('HttpContainer', () => {
         });
     });
 
-    it('Should call onClose immediately when no server exists', () => {
+    it('Should return number of existent instances', async () => {
         express.mockImplementationOnce(() => {
             return {
-                use: () => {}
+                use: () => {
+                }
             };
         });
-
-        const onCloseMock = jest.fn();
-        new HttpContainer(123, false).release(onCloseMock);
-
-        expect(onCloseMock).toHaveBeenCalled();
+        const httpContainer = new HttpContainer(123, false);
+        expect(await httpContainer.release()).toBe(-1);
     });
 });

@@ -44,7 +44,7 @@ export class RequisitionReporter {
     public async startTimeout(): Promise<output.RequisitionModel> {
         return new Promise(async (resolve) => {
             if (this.timeout) {
-                Logger.info('Starting requisition time out');
+                Logger.debug('Starting requisition time out');
                 await new Promise((resolve) => setTimeout(() => resolve(), this.timeout));
                 if (!this.hasFinished) {
                     Logger.info(`Requisition '${this.requisitionAttributes.name}' timed out`);

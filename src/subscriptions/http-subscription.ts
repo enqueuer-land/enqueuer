@@ -72,21 +72,27 @@ class HttpSubscription extends Subscription {
 
     private realServerMessageReceiving(): Promise<void> {
         return new Promise((resolve) => {
-            Logger.debug(`Listening to (${this.method})${this.port}${this.endpoint}`);
-            this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) => {
-                Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${request.rawBody}`);
+            Logger.debug(`Listening to (${this.method.toUpperCase()}) ${this.port}:${this.endpoint}`);
+            const realServerFunction = (request: any, responseHandler: any, next: any) => {
+                Logger.debug(`${this.type.toUpperCase()}:${this.port} got hit (${this.method.toUpperCase()}) ${this.endpoint}: ${request.rawBody}`);
+                if (this.responseToClientHandler) {
+                    next();
+                }
                 this.responseToClientHandler = responseHandler;
                 this.onMessageReceivedTests(request);
                 this.executeHookEvent('onMessageReceived', this.createMessageReceivedStructure(request));
                 resolve();
-            });
+            };
+            this.expressApp[this.method](this.endpoint,
+                (request: any, responseHandler: any, next: any) =>
+                    realServerFunction(request, responseHandler, next));
         });
     }
 
     private proxyServerMessageReceiving(): Promise<void> {
         return new Promise((resolve, reject) => {
             Logger.debug(`Listening to (${this.method})${this.port}${this.endpoint}/*`);
-            this.expressApp[this.method](this.endpoint + '/*', (originalRequest: any, responseHandler: any, next: any) => {
+            const proxyNamedFunction = (originalRequest: any, responseHandler: any, next: any) => {
                 this.responseToClientHandler = responseHandler;
                 Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${originalRequest.rawBody}`);
                 this.redirect['url'] = this.redirect.url + originalRequest.url.replace(this.endpoint, '');
@@ -113,7 +119,8 @@ class HttpSubscription extends Subscription {
                         next();
                     });
 
-            });
+            };
+            this.expressApp[this.method](this.endpoint + '/*', proxyNamedFunction);
         });
     }
 

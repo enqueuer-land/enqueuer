@@ -42,23 +42,20 @@ export class MultiSubscriptionsReporter {
             this.timeoutPromise]);
     }
 
-    public async receiveMessage(): Promise<number> {
-        let errorsCounter = 0;
-        Logger.info(`Subscriptions are waiting for message`);
+    public async receiveMessage(): Promise<void> {
+        Logger.debug(`Subscriptions are waiting for messages`);
         await Promise.race([
             Promise.all(this.subscriptions.map(async subscription => {
                 try {
                     await subscription.receiveMessage();
                     Logger.debug(`A subscription received a message`);
                 } catch (err) {
-                    ++errorsCounter;
                     Logger.error(`Error receiving message: ${err}`);
                 }
             })),
             this.timeoutPromise]);
 
         Logger.debug(`Subscriptions are no longer waiting for messages`);
-        return errorsCounter;
     }
 
     public async unsubscribe(): Promise<void[]> {

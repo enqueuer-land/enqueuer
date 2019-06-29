@@ -1,42 +1,39 @@
 import {Logger} from '../loggers/logger';
 import {HttpContainer} from './http-container';
+import * as core from 'express-serve-static-core';
 
 export class HttpContainerPool {
     private static instance: HttpContainerPool;
-    private containers: { [propName: number]: HttpContainer} = {};
+    private containers: { [propName: number]: HttpContainer } = {};
 
-    public static getApp(port: number, secure: boolean = false, credentials?: any): Promise<any> {
+    public static async getApp(port: number, secure: boolean = false, credentials?: any): Promise<core.Express> {
         const self = HttpContainerPool.getInstance();
-        Logger.debug(`Getting a Http/s server ${port}`);
+        Logger.trace(`Getting a Http server ${port}`);
         let httpContainer: HttpContainer = self.containers[port];
         if (!httpContainer) {
-            Logger.debug(`Creating a new Http/s server ${port}`);
-            httpContainer = new HttpContainer(port, secure, credentials);
+            Logger.trace(`Creating a new Http server ${port}`);
+            httpContainer = new HttpContainer(port, credentials);
             self.containers[port] = httpContainer;
-            return httpContainer.acquire();
+            return await httpContainer.acquire();
         } else {
-            Logger.trace(`Reusing Http/s server ${port}`);
-            return httpContainer.acquire();
+            Logger.trace(`Reusing Http server ${port}`);
+            return await httpContainer.acquire();
         }
     }
 
-    public static releaseApp(port: number): Promise<void> {
-        return new Promise((resolve) => {
-            const self = HttpContainerPool.getInstance();
-            Logger.trace(`Current containers: {${Object.keys(self.containers)}}`);
-            Logger.debug(`Releasing (${port}) http/s container`);
-            const httpContainer = self.containers[port];
-            if (httpContainer) {
-                httpContainer.release(() => {
-                    delete self.containers[port];
-                    Logger.debug(`Http container (${port}) is closed`);
-                    resolve();
-                });
-            } else {
-                Logger.info(`No bound http-container to be released (${port})`);
-                resolve();
+    public static async releaseApp(port: number): Promise<void> {
+        const self = HttpContainerPool.getInstance();
+
+        Logger.trace(`Current containers: {${Object.keys(self.containers)}}`);
+        const httpContainer = self.containers[port];
+        if (httpContainer) {
+            const number = await httpContainer.release();
+            if (number === 0) {
+                delete self.containers[port];
             }
-        });
+        } else {
+            Logger.trace(`No bound http-container to be released (${port})`);
+        }
     }
 
     private static getInstance(): HttpContainerPool {

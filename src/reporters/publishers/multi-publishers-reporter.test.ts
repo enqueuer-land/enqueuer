@@ -82,7 +82,7 @@ describe('MultiPublishersReporter', () => {
         recreateMock();
 
         const publishers = [{}, {}];
-        expect(await new MultiPublishersReporter(publishers).publish()).toBe(1);
+        await new MultiPublishersReporter(publishers).publish();
         expect(publish).toHaveBeenCalledTimes(publishers.length);
     });
 

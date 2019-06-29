@@ -97,9 +97,12 @@ describe('MultiSubscriptionsReporter', () => {
     });
 
     it('Subtimeout before receiving message', async () => {
-        receiveMessageMock = jest.fn(() => Promise.reject('errDesc'));
+        receiveMessageMock = jest.fn(() => Promise.resolve());
 
-        expect(await new MultiSubscriptionsReporter([{}]).receiveMessage()).toBe(1);
+        const subscriptions = [{}];
+        const multiSubscriptionsReporter = new MultiSubscriptionsReporter(subscriptions);
+        await multiSubscriptionsReporter.receiveMessage();
+        expect(receiveMessageMock).toHaveBeenCalledTimes(subscriptions.length);
 
     });
 

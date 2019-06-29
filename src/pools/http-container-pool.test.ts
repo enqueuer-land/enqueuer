@@ -28,16 +28,15 @@ describe('HttpContainerPool', () => {
 
     it('create new App', done => {
         const port = 987;
-        const secure = true;
         const credentials = {key: 'value'};
 
-        const appPromise = HttpContainerPool.getApp(port, secure, credentials);
+        const appPromise = HttpContainerPool.getApp(port, true, credentials);
 
         appPromise.then((some) => {
             expect(some).toEqual('acquireReturn');
             done();
         });
-        expect(constructorHttpContainer).toHaveBeenCalledWith(port, secure, credentials);
+        expect(constructorHttpContainer).toHaveBeenCalledWith(port, credentials);
         expect(acquireMock).toHaveBeenCalled();
     });
 
@@ -57,18 +56,6 @@ describe('HttpContainerPool', () => {
             expect(constructorHttpContainer).toHaveBeenCalledTimes(1);
             expect(acquireMock).toHaveBeenCalledTimes(2);
         });
-    });
-
-    it('release App', done => {
-        const port = 987;
-
-        HttpContainerPool.getApp(port)
-            .then(() => HttpContainerPool.releaseApp(port))
-            .then(() => {
-                expect(releaseMock).toHaveBeenCalledTimes(1);
-                done();
-            });
-
     });
 
     it('release non existent App', done => {

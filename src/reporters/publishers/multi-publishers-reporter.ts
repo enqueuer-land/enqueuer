@@ -12,22 +12,19 @@ export class MultiPublishersReporter {
         this.publishers = publishers.map(publisher => new PublisherReporter(new ComponentImporter().importPublisher(publisher)));
     }
 
-    public async publish(): Promise<number> {
-        let errorsCounter = 0;
+    public async publish(): Promise<void> {
         if (this.publishers.length > 0) {
-            Logger.info(`Publishers are publishing messages`);
+            Logger.debug(`Publishers are publishing messages`);
 
             await Promise.all(this.publishers.map(async publisher => {
                 try {
                     await publisher.publish();
                 } catch (err) {
-                    ++errorsCounter;
                     Logger.error(err);
                 }
             }));
-            Logger.info(`Publishers have published their messages`);
+            Logger.debug(`Publishers have published their messages`);
         }
-        return errorsCounter;
     }
 
     public onFinish(): void {

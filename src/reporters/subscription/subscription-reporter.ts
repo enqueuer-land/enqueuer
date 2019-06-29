@@ -62,7 +62,7 @@ export class SubscriptionReporter {
 
     public startTimeout(onTimeOutCallback: Function) {
         if (this.subscription.timeout) {
-            Logger.info(`Starting subscription '${this.subscription.name}' timeout`);
+            Logger.debug(`Starting subscription '${this.subscription.name}' timeout`);
             new Timeout(() => {
                 if (!this.subscription.messageReceived) {
                     this.totalTime = new DateController();
