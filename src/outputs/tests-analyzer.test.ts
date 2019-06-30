@@ -155,4 +155,20 @@ describe('TestsAnalyzer', () => {
         expect(testsAnalyzer.getNotIgnoredTests().length).toBe(0);
     });
 
+    it('Should print regular tests', () => {
+        const test: ReportModel = {
+            name: 'name',
+            valid: false,
+            tests: [createTest(false), createTest(true)]
+        };
+
+        const testsAnalyzer = new TestsAnalyzer().addTest(test);
+
+        expect(testsAnalyzer.getFailingTests().length).toBe(1);
+        expect(testsAnalyzer.getPassingTests().length).toBe(1);
+        expect(testsAnalyzer.getIgnoredList().length).toBe(0);
+        expect(testsAnalyzer.getTests().length).toBe(2);
+        expect(testsAnalyzer.getNotIgnoredTests().length).toBe(2);
+    });
+
 });

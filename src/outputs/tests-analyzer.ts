@@ -68,6 +68,7 @@ export class TestsAnalyzer {
                 const hook = reportModel.hooks![key] as HookModel;
                 this.tests = this.tests.concat(hook.tests || []);
             });
+            this.tests = this.tests.concat(reportModel.tests || []);
         }
     }
 

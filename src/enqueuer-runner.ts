@@ -62,13 +62,16 @@ export class EnqueuerRunner {
         const configuration = Configuration.getInstance();
         if (report.level === undefined || report.level <= configuration.getMaxReportLevelPrint()) {
             try {
+                let printChildren = true;
                 if (report.level === 0) {
                     console.log(`   ----------------`);
+                    printChildren = false;
                 }
 
                 new SummaryTestOutput(report, {
                     maxLevel: configuration.getMaxReportLevelPrint(),
-                    showPassingTests: configuration.getShowPassingTests()
+                    showPassingTests: configuration.getShowPassingTests(),
+                    printChildren: printChildren
                 }).print();
             } catch (e) {
                 Logger.warning(e);

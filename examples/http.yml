@@ -2,11 +2,13 @@ publishers:
 -   type: http
     url: http://localhost:23075/resource
     method: POST
-    payload: virgs
-    onMessageReceived:
+    payload: enqueuer
+    onResponseReceived:
         assertions:
         -   expect: statusCode
-            toBeEqualTo: 444
+            toBeGreaterThan: 400
+        -   expect: body
+            toBeEqualTo: "'blah'"
 subscriptions:
 -   type: http
     endpoint: /resource
@@ -15,3 +17,8 @@ subscriptions:
     response:
         status: 444
         payload: blah
+    onMessageReceived:
+        assertions:
+        -   expect: body
+            toContain: "'queue'"
+

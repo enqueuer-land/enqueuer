@@ -76,5 +76,5 @@ const content = spyHtml +
 
 const htmlResult = template.replace('<!--README CONTENT PLACEHOLDER-->', content);
 
-fs.writeFileSync('docs/index.html', htmlResult);
+fs.writeFileSync('docs/docs.html', htmlResult);
 console.log("Html generated");

@@ -97,7 +97,8 @@ describe('EnqueuerRunner', () => {
             'valid': true
         }, {
             'maxLevel': true,
-            'showPassingTests': 2
+            'showPassingTests': 2,
+            printChildren: true
         });
         expect(printMock).toHaveBeenCalledTimes(1);
     });

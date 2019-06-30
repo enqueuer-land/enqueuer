@@ -17,11 +17,14 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Learn everything about the almighty enqueuer documentation: not just an integration test tool, a polyglot flow testing tool">
+    <meta name="description"
+          content="Learn everything about the almighty enqueuer documentation: not just an integration test tool, a polyglot flow testing tool">
     <meta name="author" content="Virgs, Lopidio, Guilherme Moraes">
-    <meta name="keywords" content="stacker, nqr, testing, tool, microservice, multiprotocol, polyglot, reactive, message, tcp, mock, amqp, http, test event, event-driven, continuous integration, message testing, polyglot flow, stacker"/>
+    <meta name="keywords"
+          content="stacker, nqr, testing, tool, microservice, multiprotocol, polyglot, reactive, message, tcp, mock, amqp, http, test event, event-driven, continuous integration, message testing, polyglot flow, stacker"/>
     <meta name="robots" content="index, follow">
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"/>
+    <link rel="shortcut icon"
+          href="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"/>
 
     <title>Almighty Enqueuer</title>
 
@@ -39,7 +42,7 @@
         --nqr-link: #309fb6;
         --nqr-text-color: #eeeeee;
         --nqr-text-smooth-color: #a4a4a4;
-        --nqr-header-background-color: #2b2a2e;
+        --nqr-header-background-color: #2b2b2b;
         --nqr-background-color: #353535;
         --nqr-background-alternative-color: #424242;
         --nqr-code-color: #e83e8c;
@@ -49,29 +52,12 @@
         scroll-behavior: smooth;
     }
 
-    .hljs-comment {
-        color: var(--nqr-text-smooth-color);
-    }
-
-    .enqueuer-name, .hljs-attr, .hljs-bullet {
+    a {
         color: var(--nqr-color);
     }
 
-    a {
-        color: var(--nqr-link);
-    }
-
-    .dollar-sign {
-        color: var(--nqr-code-color);
-    }
-
     body {
-        background-color: var(--nqr-background-color);
         text-align: justify;
-    }
-
-    p {
-        color: var(--nqr-text-smooth-color);
     }
 
     h1, h2, h6, strong {
@@ -81,1082 +67,116 @@
     h3, h4, h5 {
         color: var(--nqr-color);
         font-size: 2.5em;
-        text-transform: capitalize;
-        font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;;
-        letter-spacing: 2px;
     }
 
-    h4 {
-        font-size: 1.75em;
-    }
+    /*h4 {*/
+    /*    font-size: 1.75em;*/
+    /*}*/
+    /**/
+    /*h5 {*/
+    /*    font-size: 1.2em;*/
+    /*}*/
 
-    h5 {
-        font-size: 1.2em;
-    }
+    /*hr {*/
+    /*    background-color: var(--nqr-background-alternative-color);*/
+    /*    margin-top: 2rem;*/
+    /*    margin-bottom: 5rem;*/
+    /*    border: 0;*/
+    /*    border-top: 1px solid rgba(0, 0, 0, .1);*/
+    /*    height: 2px;*/
+    /*}*/
 
-    pre {
-        border: 1px solid var(--nqr-background-alternative-color);
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-family: "Source Code Pro", monospace;
-        font-size: .9em;
+    .nqr-button {
+        width: 40%;
         background-color: var(--nqr-header-background-color);
-        line-height: 1.45;
-        word-wrap: break-word;
-        color: var(--nqr-text-color);
+        margin-right: 2px;
+        margin-left: 2px;
+        font-size: 1.5em;
+        border: 1px solid var(--nqr-text-color);
     }
 
-    code {
-        padding: 3px;
-        background-color: var(--nqr-header-background-color);
+    .nqr-button:hover {
+        box-shadow: 0 0 20px var(--nqr-color);
     }
 
-    hr {
-        background-color: var(--nqr-background-alternative-color);
-        margin-top: 2rem;
-        margin-bottom: 5rem;
-        border: 0;
-        border-top: 1px solid rgba(0, 0, 0, .1);
-        height: 2px;
-    }
-
-    .navbar-logo {
-        position: absolute;
-        width: 80%;
+    .code-sample {
         height: auto;
-        top: 15px;
-        padding-bottom: 0.5rem;
-        margin-bottom: 5rem;
-        border-bottom: 1px solid var(--nqr-text-smooth-color);
+        max-width: 100%;
+        box-shadow: 4px 4px 2px 2px var(--nqr-background-color);
     }
-
-    .npm-badges-container {
-        display: none;
-    }
-
-    .navbar {
-        display: none;
-    }
-
-    .navbar-fixed-left {
-        width: 25vw;
-        position: fixed;
-        height: 100%;
-        background-color: var(--nqr-header-background-color);
-        border: 1px solid var(--nqr-background-alternative-color);
-        border-radius: 8px;
-        padding: 6.5rem .5rem .5rem .5rem;
-        box-shadow: 5px 0 20px var(--nqr-background-alternative-color)
-    }
-
-    .nav-link {
-        padding: 0 3rem 0.1rem 0.1rem;
-        color: var(--nqr-text-smooth-color);
-    }
-
-    .nav-link.active {
-        background-color: var(--nqr-background-color) !important;
-        /*border-radius: 5px !important;*/
-        border-left: 2px solid var(--nqr-color) !important;
-        color: var(--nqr-text-color) !important;
-    }
-
-    .nav-link:hover, .nav-link.active:hover {
-        color: var(--nqr-color) !important;
-    }
-
-    .nav-link-sub-item {
-        display: none;
-    }
-
-    @media (min-width: 1000px) {
-        .npm-badges-container {
-            display: block;
-        }
-
-        .navbar {
-            display: block;
-        }
-
-        .navbar-fixed-left + .container {
-            padding-left: 25vw;
-        }
-    }
-
-    @media (min-width: 1400px) {
-
-        .nav-link-sub-item {
-            display: block;
-        }
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: octocat-wave 560ms ease-in-out;
-    }
-
-
-    @keyframes octocat-wave {
-        0%, 100% {
-            transform: rotate(0)
-        }
-        20%, 60% {
-            transform: rotate(-25deg)
-        }
-        40%, 80% {
-            transform: rotate(10deg)
-        }
-    }
-
-    @media (max-width: 500px) {
-        .github-corner:hover .octo-arm {
-            animation: none
-        }
-
-        .github-corner .octo-arm {
-            animation: octocat-wave 560ms ease-in-out
-        }
-    }
-
 </style>
-<body data-spy="scroll" data-target="#navbar-nqr" data-offset="0">
-<!--<main role="main">-->
-<a href="https://github.com/enqueuer-land/enqueuer" class="github-corner" aria-label="View source on GitHub">
-    <svg width="80" height="80" viewBox="0 0 250 250"
-         style="fill:var(--nqr-color); color: var(--nqr-background-color); position: fixed; top: 0; border: 0; right: 0;"
-         aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
-<nav id="navbar-nqr" class="navbar navbar-fixed-left">    
-    <a class="" href="#">
-            <img class="ml-3 navbar-logo"
-                 src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
-                 alt="enqueuer logo"
-                 title="Enqueuer Logo">        
-    </a><nav class="nav nav-pills flex-column"><a class="nav-link " href="#what_it_is" style="">&nbsp;&nbsp;&nbsp;1. What it is</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#install_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1. install it</a><a class="nav-link nav-link-sub-item" href="#if_you_need_more" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2. if you need more</a></nav><a class="nav-link " href="#components" style="">&nbsp;&nbsp;&nbsp;2. Components</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#requisition" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1. requisition</a><a class="nav-link nav-link-sub-item" href="#publisher" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2. publisher</a><a class="nav-link nav-link-sub-item" href="#subscription" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3. subscription</a></nav><a class="nav-link " href="#event" style="">&nbsp;&nbsp;&nbsp;3. Event</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#hooks" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1. hooks</a><a class="nav-link nav-link-sub-item" href="#fields" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2. fields</a><a class="nav-link nav-link-sub-item" href="#event_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3. event example</a></nav><a class="nav-link " href="#requisition_flow" style="">&nbsp;&nbsp;&nbsp;4. Requisition Flow</a><a class="nav-link " href="#configuration_file" style="">&nbsp;&nbsp;&nbsp;5. Configuration File</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#attributes" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.1. attributes</a><a class="nav-link nav-link-sub-item" href="#example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2. example</a></nav><a class="nav-link " href="#variables" style="">&nbsp;&nbsp;&nbsp;6. Variables</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#set_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1. set a variable</a><a class="nav-link nav-link-sub-item" href="#use_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2. use a variable</a><a class="nav-link nav-link-sub-item" href="#variables_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.3. variables example</a></nav><a class="nav-link " href="#content_file_injection" style="">&nbsp;&nbsp;&nbsp;7. Content File Injection</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1. example</a></nav><a class="nav-link " href="#plugins" style="">&nbsp;&nbsp;&nbsp;8. Plugins</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#plugin_types" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.1. plugin types</a><a class="nav-link nav-link-sub-item" href="#plugin_installation" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.2. plugin installation</a></nav><a class="nav-link " href="#stacker" style="">&nbsp;&nbsp;&nbsp;9. Stacker</a><a class="nav-link " href="#open_source" style="">&nbsp;&nbsp;&nbsp;10. Open source</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#contributors" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1. contributors</a><a class="nav-link nav-link-sub-item" href="#code_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.2. code it</a><a class="nav-link nav-link-sub-item" href="#feedback" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.3. feedback</a></nav></nav></nav><div class="nqr-main-container container" style="max-width: 90%"><p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a>
-<a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
-<a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg" alt="Greenkeeper badge" title="" /></a>
-<a href="https://snyk.io/test/npm/enqueuer"><img src="https://snyk.io/test/npm/enqueuer/badge.svg" alt="Known Vulnerabilities" title="" /></a>
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" title="" /></a></p>
-
-<p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png" alt="enqueuerlogo" title="Enqueuer Giant Logo" /></p>
-
-<p>Want to ensure that a user journey which involves several steps with different protocols is working properly?
-Have you ever struggled with testing multi protocol flows?
-Depending services have become a pain?
-Don't you worry anymore. Enqueuer is what you're looking for.</p>
-
-<h3 id="what_it_is" style="padding-left: 0px">1 What it is</h3>
-
-<p>It's <span style="text-decoration: line-through">not just</span> an integration testing tool. It is a platform that provides the following capabilities: <br>
-- Support for many protocols out of the box <br>
-- Chainable message flows
-- Easily mock numerous services to alleviate the headaches of functional and integration tests <br>
-- Friendly for developers and non developers <br>
-- Built in assertion library to verify response data coming from/going to your services <br>
-- Easily extensible behavior through third party <a href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including your own <a href="https://github.com/enqueuer-land/plugin-scaffold">custom ones</a> <br>
-- CLI is easy to add to your team's existing CI pipelines <br>
-- Act and react on your system under test <br>
-- Place tests front and center  </p>
-
-<p>Welcome to the enqueuer world.</p>
-
-<h4 id="install_it" style="padding-left: 8px">1.1 install it</h4>
-
-<p>First things first, let's get the enqueuer installed on your machine.</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer
-</code></pre>
-
-<p>Alright, it's time to create a requisition file.
-Something like:</p>
-
-<pre><code class="yaml">#enqueuer-repo-hit.yml
-publishers:
--   type: http
-    url: https://github.com/enqueuer-land/enqueuer
-    onResponseReceived:
-        assertions:
-        -   expect: statusCode
-            toBeEqualTo: 200
-</code></pre>
-
-<p>Pretty simple, hum? Small and concise, how it should be!
-Run it:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> enqueuer enqueuer-repo-hit.yml
-</code></pre>
-
-<p>What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:</p>
-
-<pre><code class="yaml">name: readme self-test
-publishers:
--   type: http
-    url: http://localhost:9085/readme-example
-    method: POST
-    payload: does enqueuer rock?
-    onResponseReceived:
-        script: doubleStatus = statusCode * 2
-        assertions:
-            -   expect: body
-                toBeEqualTo: `mock response`
-            -   expect: doubleStatus
-                toBeGreaterThan: 300
-subscriptions:
--   type: http
-    name: mock endpoint
-    endpoint: /readme-example
-    port: 9085
-    method: POST
-    response:
-        status: 200
-        payload: mock response
-    onMessageReceived:
-        assertions:
-        -   expect: body
-            toContain: `enqueuer`
-        -   name: failing test
-            expectToBeTruthy: false
-</code></pre>
-
-<p>Note that the second subscription assertion is a failing one. By running this example, we get this:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> nqr http-self-test.yml
-   [FAIL]      readme self-test                                                   6 tests passing of 7 (85.71%) ran in 37ms
-   [FAIL] enqueuer                                                                6 tests passing of 7 (85.71%) ran in 42ms
-               enqueuer › readme self-test › mock endpoint › failing test
-                           Expecting 'false' to be true. Received: false
-</code></pre>
-
-<p>I told you it was simple.
-Now, let's say you want to mix different protocols to test a bit more complex flow.
-How about publishing an amqp message and making sure that, once a service consumes that message an endpoint of your is hit?
-In order to achieve that, we have to make use of a <a href="#plugins">plugin</a>, given that amqp support is provided by a plugin.
-In this scenario, we're talking about the <a href="https://github.com/enqueuer-land/enqueuer-plugin-amqp">amqp plugin</a>.
-Once we get this <a href="#plugin_installation">plugin installed</a> we are able to create and run files like this:</p>
-
-<pre><code class="yaml">publishers:
--   type: amqp
-    payload: 123456
-    exchange: enqueuer.exchange
-    routingKey: enqueuer.readme.routing.key
-subscriptions:
--   type: http
-    endpoint: /polyglot-flow
-    port: 8080
-    method: GET
-    response:
-        status: 200
-        payload: polyglot message
-    onMessageReceived:
-        assertions:
-        -   expect: body
-            toContain: 123456
-</code></pre>
-
-<p>Now go nuts!
-It's all yours. Have fun.
-If you want more examples about <code class="yaml">http</code>, consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml">this test</a>. 
-Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
-Certainly one is what you need.    </p>
-
-<h4 id="if_you_need_more" style="padding-left: 8px">1.2 if you need more</h4>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> nqr -h
-Usage: nqr [options] &lt;test-file&gt; [other-test-files...]
-
-Take a look at the full documentation: https://enqueuer.com
-
-Options:
-  -v, --version                             output the version number
-  -b, --verbosity &lt;level&gt;                   set verbosity (default: "warn")
-  -c, --config-file &lt;path&gt;                  set configurationFile
-  -e, --parsers-list [parser]               list available object parsers
-  -f, --formatters-description [formatter]  describe report formatters
-  -o, --stdout-requisition-output           add stdout as requisition output
-  -m, --max-report-level-print &lt;level&gt;      set max report level print
-  -p, --protocols-description [protocol]    describe protocols
-  -t, --tests-list [expectedField]          list available tests assertions
-  -u, --loaded-modules-list                 list loaded modules
-  -i, --show-passing-tests                  show passing tests
-  -s, --store [store]                       add variables values to this session (default: [])
-  -l, --add-plugin [plugin]                 add plugin (default: [])
-  -a, --add-file &lt;file&gt;                     add file to be tested (default: [])
-  -A, --add-file-and-ignore-others &lt;file&gt;   add file to be tested and ignore others (default: [])
-  -h, --help                                output usage information
-
-Examples:
-  <span class="dollar-sign">$</span> nqr --config-file config-file.yml --verbosity error --store key=value
-  <span class="dollar-sign">$</span> enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
-  <span class="dollar-sign">$</span> enqueuer test-file.yml --store someKey=true --store someOtherKey=false
-  <span class="dollar-sign">$</span> nqr --protocols-description -s key=value
-  <span class="dollar-sign">$</span> nqr -t expect
-  <span class="dollar-sign">$</span> nqr -l my-enqueuer-plugin-name -p plugin-protocol
-  <span class="dollar-sign">$</span> nqr -p http
-  <span class="dollar-sign">$</span> nqr --formatters-description json
-</code></pre>
-
-<hr />
-
-<h3 id="components" style="padding-left: 0px">2 Components</h3>
-
-<p>In order to accomplish more than just hitting enqueuer's repo or doing a quick self http hit, there are a few things that you'll probably need to know.
-Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case. 
-There are only three important component concepts: <a href="#requisition">requisitions</a>, <a href="#publisher">publishers</a> and <a href="#subscription">subscriptions</a>.
-They work along with each other and are responsible for the full behavior of enqueuer.</p>
-
-<h4 id="requisition" style="padding-left: 8px">2.1 requisition</h4>
-
-<p>Test scenario description. It tells what, when, and how test your applications and services.
-Picture it as if it was a collection of <a href="#publisher">publishers</a>, <a href="#subscription">subscriptions</a> and other <a href="#requisition">requisitions</a>.
-It helps because this is exactly what it is.
-As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
-Every test file is a requisition.
-You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
-<a href="#variables">Variable replacements</a> are available through the entire requisition.</p>
-
-<h5 id="requisition_attributes" style="padding-left: 16px">2.1.1 requisition attributes</h5>
-
-<p>These are the requisition attributes:</p>
-
-<p><strong>name</strong> <br>
-Describes what the requisition is suppose to do.
-Defaults to requisition index.</p>
-
-<pre><code class="yaml">name: requisition action
-</code></pre>
-
-<p><strong>timeout</strong> <br>
-Defaults to 5000.
-Sets in milliseconds how long the requisition waits to expire.
-Set to zero or less than zero to run it endlessly.</p>
-
-<pre><code class="yaml">timeout: 3000
-</code></pre>
-
-<p><strong>delay</strong> <br>
-Defaults to 0. Sets in milliseconds how long the test waits before starting. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml">this</a> to get the full idea.</p>
-
-<pre><code class="yaml">delay: 0
-</code></pre>
-
-<p><strong>iterations</strong> <br>
-Defaults to 1. Sets how many times this test will be executed. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml">this</a> and <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> to get the full idea.</p>
-
-<pre><code class="yaml">iterations: 3
-</code></pre>
-
-<p><strong>ignore</strong> <br>
-Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
-
-<pre><code class="yaml">ignore: true
-</code></pre>
-
-<p><strong>parallel</strong> <br>
-Defaults to false. Immediate children requisitions should be executed in parallel mode.
-Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel-requisition.yml">this</a> to see it working.</p>
-
-<pre><code class="yaml">parallel: true
-</code></pre>
-
-<p><strong>import</strong> <br>
-Allows requisition to be dynamically defined, be it by loading an external file or creating dynamically by other requisitions. Want to reuse the same requisition multiple times? This is you you need.
-Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml">this</a> to behold this feature.</p>
-
-<pre><code class="yaml">import: path/to/another/requisition/file
-</code></pre>
-
-<p><strong>publishers</strong> <br>
-List of <a href="#publisher">publishers</a>. They're executed simultaneously, therefore, the order is <strong>irrelevant</strong>.</p>
-
-<pre><code class="yaml">publishers:
-- name: some publisher name
-  type: http
-- type: tcp
-</code></pre>
-
-<p><strong>subscriptions</strong> <br>
-List of <a href="#subscription">subscriptions</a>. They're executed simultaneously, therefore, the order is <strong>irrelevant</strong>.</p>
-
-<pre><code class="yaml">subscriptions:
-- name: some subscription name
-  type: udp
-- name: another subscription name
-  type: file
-</code></pre>
-
-<p><strong>requisitions</strong> <br>
-A list of child scenarios. List of <a href="#requisition">requisitions</a>. 
-By default, they're executed <strong>sequentially</strong>, therefore, the order is <em>relevant</em>.
-Unless the <em>parallel</em> attribute is set to true, what makes them get executed <strong>simultaneously</strong>, 
-Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> example, it may help.</p>
-
-<pre><code class="yaml">requisitions:
-- name: some requisition name
-  iterations: 2
-- name: another requisition name
-  delay: 200
-</code></pre>
-
-<h5 id="events" style="padding-left: 16px">2.1.2 events</h5>
-
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change requisition attributes.</p>
-
-<pre><code class="yaml">name: my name
-onInit:
-  script: this.delay = 3000;
-  assertions:
-  - expectToBeDefined: this.name
-onFinish:  
-  assertions:
-  - expectToBeDefined: this.name
-</code></pre>
-
-<h4 id="publisher" style="padding-left: 8px">2.2 publisher</h4>
-
-<p>A publisher action is triggered by enqueuer itself. It <strong>acts</strong> whereas a <a href="#subscription">subscription</a> <strong>reacts</strong>.
-It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
-It's worth noting that it always <strong>creates</strong> a message. 
-That's the reason why there's an implicitly created test in <strong>onFinish</strong> hook verifying if the message got published.</p>
-
-<h5 id="publisher_attributes" style="padding-left: 16px">2.2.1 publisher attributes</h5>
-
-<p>Every publisher has its own properties, depending on its protocol and implementation.
-The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> publisher</a> implementation, for instance, demands a <code class="yaml">url</code>, a <code class="yaml">method</code>, and a <code class="yaml">payload</code>, if the method is not a <code class="yaml">GET</code>.
-On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> publisher</a> implementation requires a <code class="yaml">serverAddress</code> and a <code class="yaml">port</code>. 
-These are the publisher attributes:</p>
-
-<p><strong>name</strong> <br>
-Defaults to publisher index.
-Describes what the publisher is supposed to do.</p>
-
-<pre><code class="yaml">name: publisher action
-</code></pre>
-
-<p><strong>type</strong> <br>
-Mandatory. Key tag to identify which publisher will be instantiated</p>
-
-<pre><code class="yaml">type: http
-</code></pre>
-
-<p><strong>payload</strong> <br>
-Since a publisher usually publishes something, it's very likely you have to set a value here.
-The message itself that will be send through this protocol. Be it a string, a number, a boolean value or even whole objects.</p>
-
-<pre><code class="yaml">payload: value
-</code></pre>
-
-<p><strong>ignore</strong> <br>
-Defaults to false. Tells to enqueuer that this publisher should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
-
-<pre><code class="yaml">ignore: true
-</code></pre>
-
-<h5 id="events" style="padding-left: 16px">2.2.2 events</h5>
-
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change publisher attributes.
-Depending on the protocol and its implementation, such as <code class="yaml">http</code> and <code class="yaml">tcp</code>, there may exist special events, such as <code class="yaml">onMessageReceived</code> event and a special object given <code class="yaml">message</code>. 
-On the other hand, an asynchronous protocol, like: <code class="yaml">udp</code> and <code class="yaml">amqp</code>, usually do not provide it. </p>
-
-<pre><code class="yaml">onInit:
-  script: this.ignore = false
-  assertions:
-  - expectToBeDefined: this.type
-onMessageReceived: #Provided in synchronous protocols  
-  assertions:
-  - expectToBeDefined: message
-onFinish:  
-  assertions:
-  - expectToBeDefined: this.type
-</code></pre>
-
-<h4 id="subscription" style="padding-left: 8px">2.3 subscription</h4>
-
-<p>A subscription is an "under demand" event. It <strong>reacts</strong> whereas a <a href="#publisher">publisher</a> <strong>acts</strong>.
-It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
-This means that it is not triggered by enqueuer itself. 
-Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
-It's worth noting that it always <strong>receives</strong> a message. 
-That's the reason why there's an implicitly created test in <strong>onFinish</strong> hook verifying if a message got received.</p>
-
-<h5 id="subscription_attributes" style="padding-left: 16px">2.3.1 subscription attributes</h5>
-
-<p>Every subscription has its own properties, depending on its protocol and implementation.
-The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> subscription</a> implementation, for instance, demands an <code class="yaml">endpoint</code>, a <code class="yaml">method</code>, and a <code class="yaml">port</code>, if the method is not a GET.
-On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> subscription</a> implementation requires only a <code class="yaml">port</code>. </p>
-
-<p>These are the subscription attributes:</p>
-
-<p><strong>name</strong> <br>
-Defaults to subscription index.
-Describes what the subscription is supposed to do.</p>
-
-<pre><code class="yaml">name: subscription action
-</code></pre>
-
-<p><strong>type</strong> <br>
-Mandatory. Key tag to identify which subscription will be instantiated</p>
-
-<pre><code class="yaml">type: http
-</code></pre>
-
-<p><strong>avoid</strong> <br>
-Identifies whether or not this subscription should not receive any message. Defaults to false.
-If set and a message is received a failing test will be generated.
-Take a look at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/avoid.yml">this</a> to see it working.
-On the other hand, when it's false and no message is received in a given timeout. The subscription is valid.</p>
-
-<pre><code class="yaml">avoid: false
-</code></pre>
-
-<p><strong>timeout</strong> <br>
-Sets in milliseconds how long the subscription waits to expire. Defaults to 3000.
-Set to zero or less than zero to run it endlessly.</p>
-
-<pre><code class="yaml">timeout: 3000
-</code></pre>
-
-<p><strong>ignore</strong> <br>
-Defaults to false. Tells to enqueuer that this subscription should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
-
-<pre><code class="yaml">ignore: true    
-</code></pre>
-
-<h5 id="events" style="padding-left: 16px">2.3.2 events</h5>
-
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change subscription attributes.  </p>
-
-<pre><code class="yaml">onInit:
-  script: this.avoid = false;
-  assertions:
-  - expectToBeDefined: this.type
-onMessageReceived:  
-  assertions:
-  - expectToBeDefined: message
-onFinish:  
-  assertions:
-  - expectToBeDefined: this.type
-</code></pre>
-
-<hr />
-
-<h3 id="event" style="padding-left: 0px">3 Event</h3>
-
-<p>Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
-This is where you'll write your tests. In its <code class="yaml">assertions</code> field.
-There will be a variable called <code class="yaml">this</code> and, depending on the event's owner, it has an alias <code class="yaml">publisher</code>, <code class="yaml">subscription</code> or <code class="yaml">requisition</code>.
-You're free to explore them however you want, even doing things like this:</p>
-
-<pre><code class="yaml">publisher.parent.subscriptions[0].timeout = 1000;
-</code></pre>
-
-<h4 id="hooks" style="padding-left: 8px">3.1 hooks</h4>
-
-<p>By default, there are three hook events available:</p>
-
-<p><strong>onInit</strong> <br>
-Available in requisitions, publishers and subscriptions. It gets executed as soon as the component is initialized.
-As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component.</p>
-
-<p><strong>onFinish</strong> <br>
-Available in requisitions, publishers and subscriptions. It gets executed when the component is about to finish.
-As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component. </p>
-
-<p><strong>custom</strong>
-Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
-Such as <code class="yaml">onError</code>, <code class="yaml">onResponseReceived</code>, <code class="yaml">onFileNotFound</code> and <code class="yaml">onRedirect</code>... 
-<a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml">Http-proxy subscription test file</a> is an excellent example, check it out.</p>
-
-<h4 id="fields" style="padding-left: 8px">3.2 fields</h4>
-
-<p>Every hook object has 3 properties:</p>
-
-<p><strong>script</strong> <br>
-Javascript code snippet executed when the event is triggered.
-Yeah, I mean it. See it <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml">it</a> by yourself.
-But be careful, with great power comes great responsibility.</p>
-
-<p><strong>store</strong> <br>
-Data to be persisted across requisitions.  </p>
-
-<p><strong>assertions</strong> <br>
-Array of assertions.
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to see available ones.
-Consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml">this</a> test example.
-Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
-You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>.</p>
-
-<pre><code class="yaml">onInit:
-  script: variableIdentifier = 'string value'
-
-  assertions:
-  - expect: variableIdentifier
-    toBeEqualTo: `string value`
-
-onMessageReceived:
-  script: |-
-    message += 3;
-    console.log(`Message received plus 3 is: <span class="dollar-sign">$</span>{message}`);
-
-  store:
-    key: message
-
-  assertions:
-  - name: anyValue #optional
-    expect: message
-    toBeEqualTo: store.key
-  - expect: message + 3
-    toBeGreaterThan: 3
-</code></pre>
-
-<h4 id="event_example" style="padding-left: 8px">3.3 event example</h4>
-
-<p>Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/hooks.yml">this</a> test file to see it in practice.</p>
-
-<hr />
-
-<h3 id="requisition_flow" style="padding-left: 0px">4 Requisition Flow</h3>
-
-<p>Now that you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?</p>
-
-<p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png" alt="enqueuerInstanceFlow" title="Enqueuer Instance Flow" /></p>
-
-<hr />
-
-<h3 id="configuration_file" style="padding-left: 0px">5 Configuration File</h3>
-
-<p>To save yourself some time, a configuration file may be used.
-Configuration files tell enqueuer which tests will be executed, log-level, and which output test report files should be generated.
-This file tells how enqueuer should be executed.
-To run enqueuer with the configuration:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> nqr -c path/to/configuration/file.yml
-</code></pre>
-
-<p>or</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> nqr --config-file path/to/configuration/file.yml
-</code></pre>
-
-<h4 id="attributes" style="padding-left: 8px">5.1 attributes</h4>
-
-<p>These are the configuration file attributes:</p>
-
-<p><strong>files</strong> <br>
-Requisition file names or glob. Enqueuer runs every file that matches an element value.</p>
-
-<pre><code class="yaml">files:
-- 1.yml
-- 2.yml
-- *.json
-</code></pre>
-
-<p><strong>parallel</strong> <br>
-Defaults to false. Requisition files should be executed in parallel mode. The requisition file itself is still sequential, but the files are executes in parallel.</p>
-
-<pre><code class="yaml">parallel: true
-</code></pre>
-
-<p><strong>log-level</strong> <br>
-Defaults to warning. Defines how information are logged in the console. Accepted values are: trace; debug; info; warning (default); error; and fatal.</p>
-
-<pre><code class="yaml">log-level: trace
-</code></pre>
-
-<p><strong>max-report-level-print</strong> <br>
-Defaults to 1. The deepest level of report to be printed to the console.</p>
-
-<pre><code class="yaml">max-report-level-print: 2
-</code></pre>
-
-<p><strong>plugins</strong> <br>
-List of in <a href="#plugins">plugins</a> used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>. </p>
-
-<pre><code class="yaml">plugins:
-- enqueuer-plugin-amqp 
-- enqueuer-plugin-ws 
-- enqueuer-plugin-mqtt
-- enqueuer-plugin-html-report
-</code></pre>
-
-<p><strong>outputs</strong> <br>
-Once enqueuer runs every execution, it compiles a summary and sends it to every publisher listed in output.
-An important thing to note is that every available report publisher is available here.
-Yes, it means that you are able to send this report through <code class="yaml">http</code>, <code class="yaml">tcp</code>, etc. or through a <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugin one</a> or a <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a>.
-You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -p</code> to check available report publishers installed. 
-Another important thing to note is the <code class="yaml">format</code> value. By default a <code class="yaml">json</code> summary is generated, but you can change it to whatever format you would like, such as: <a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">Xunit</a>, <a href="https://github.com/enqueuer-land/enqueuer-plugin-html-report">html</a>
-You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -f</code> to check available installed formats or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a></p>
-
-<pre><code class="yaml">outputs:
-- type: file
-  format: json (default)
-  filename: output/examples.json
-- type: file
-  format: yml
-  filename: output/examples.yml
-- type: standard-output (default)
-  format: console
-</code></pre>
-
-<p><strong>store</strong> <br>
-Values defined here use the 'key: value' pattern and are available to every test scenario throughout the entire execution</p>
-
-<pre><code class="yaml">store:
-  variableKey: "my value" # Defines 'variableKey' key and its value 'my value'. 
-
-  'separated key': 6
-
-  object: # You can even define whole objects here:
-    first: first value
-    second:
-      nested: thing
-</code></pre>
-
-<h4 id="example" style="padding-left: 8px">5.2 example</h4>
-
-<p><a href="https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml">Here's</a> a complete example of a configuration file.</p>
-
-<hr />
-
-<h3 id="variables" style="padding-left: 0px">6 Variables</h3>
-
-<p>Providing power and flexibility, enqueuer allows you to use variables placeholder replacement.
-That's why there is a <code class="yaml">store</code> field and you'll see a lot of <code class="yaml">&lt;&lt;</code> and <code class="yaml">{{</code> being used in the examples files.
-It works as simple as this:</p>
-
-<pre><code class="yaml">name: my name is &lt;&lt;variableKey&gt;&gt;
-</code></pre>
-
-<p>Every time enqueuer sees these kind of notations, it searches in its store for a key/value pair like:</p>
-
-<pre><code class="yaml">variableKey: `enqueuer`
-</code></pre>
-
-<p>Then, when enqueuer parses the original map, it gets translated to this:</p>
-
-<pre><code class="yaml">name: my name is enqueuer
-</code></pre>
-
-<p>By default, every ENV_VAR set is loaded automatically to the store. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L11">this example</a>.</p>
-
-<h4 id="set_a_variable" style="padding-left: 8px">6.1 set a variable</h4>
-
-<p>There are a few ways to set a value in the store.</p>
-
-<h5 id="configuration_file" style="padding-left: 16px">6.1.1 configuration file</h5>
-
-<p>Configuration file store object. Set it as you wish, as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27">here</a></p>
-
-<h5 id="command_line" style="padding-left: 16px">6.1.2 command line</h5>
-
-<p>A command line argument using the <code class="yaml">key=value</code> format. This way: </p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> nqr --store key=value -s anotherVariable=true
-</code></pre>
-
-<h5 id="event" style="padding-left: 16px">6.1.3 event</h5>
-
-<p>Dynamically set it through any <a href="#event">event</a>. 
-Be it in its <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">script</a> field or straight through its store <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3">field</a>.
-Both ways work:</p>
-
-<pre><code class="yaml">onInit:
-    script: store.key = 123;
-    store:
-        anotherKey: `another Value` 
-</code></pre>
-
-<h4 id="use_a_variable" style="padding-left: 8px">6.2 use a variable</h4>
-
-<p>There are two ways two use a variable:</p>
-
-<h5 id="non_js_code_snippet" style="padding-left: 16px">6.2.1 non js code snippet</h5>
-
-<p>The easiest one is to type <code class="yaml">&lt;&lt;variableKey&gt;&gt;</code> or <code class="yaml">{{variableKey}}</code> where you want it to be replaced in a test file, as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8">here</a></p>
-
-<h5 id="js_code_snippet" style="padding-left: 16px">6.2.2 js code snippet</h5>
-
-<p>Using the <code class="yaml">store</code> object. It's attributes are the keys and their values are their respective values. 
-Therefore, you're free to use <code class="yaml">store.variableKey</code>, <code class="yaml">console.log(store.variableKey);</code> or <code class="yaml">console.log(2 * store['separated key']);</code> and get them.
-Like <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">this</a> one.</p>
-
-<h4 id="variables_example" style="padding-left: 8px">6.3 variables example</h4>
-
-<p>Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/variables.yml">this test example</a> test to see it working.</p>
-
-<hr />
-
-<h3 id="content_file_injection" style="padding-left: 0px">7 Content File Injection</h3>
-
-<p>You are able to inject file content into a requisition/publisher/subscription field.</p>
-
-<pre><code class="yaml">file: &lt;&lt;file://path/to/file.txt&gt;&gt;
-</code></pre>
-
-<p>Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: <code class="yaml">&lt;&lt;tag://path/to/file?query=value&amp;other=true&gt;&gt;</code>.</p>
-
-<pre><code class="yaml">requisition:
-    json: &lt;&lt;json://path/to/file.json&gt;&gt;
-    yml: &lt;&lt;yml://path/to/file.yml&gt;&gt;
-    csv: &lt;&lt;csv://path/to/file.csv?header=true&amp;delimiter=;&gt;&gt;
-    file: &lt;&lt;file://path/to/file.txt&gt;&gt;
-</code></pre>
-
-<p>Once the object is parsed, your free to use it as a regular object in any event</p>
-
-<pre><code class="yaml">onInit:
-    script: console.log(requisition.yml.deep.field);
-onFinish:
-    assertions:
-    -   expect: json.key
-        toBeEqualTo: csv[0].key
-</code></pre>
-
-<p>It get's event better. 
-Due its fantastic plugin architecture design, you can extend its default modules and use any of <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">these</a> plugins or event <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a> to parse however you want.
-The built-in modules for object parsers are: <code class="yaml">json</code>, <code class="yaml">yml</code>, <code class="yaml">csv</code> and <code class="yaml">file</code>. 
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e</code> to see available ones.</p>
-
-<h4 id="example" style="padding-left: 8px">7.1 example</h4>
-
-<p>Check out <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml">this test example</a> test to get a full picture of it.</p>
-
-<hr />
-
-<h3 id="plugins" style="padding-left: 0px">8 Plugins</h3>
-
-<p>You're probably aware by now but it doesn't hurt do emphasize it: enqueuer provides an amazingly powerful plugin extensible architecture.
-It has <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">several plugins available</a>, but if none of them pleases you, you're free to <a href="https://github.com/enqueuer-land/plugin-scaffold">create your own</a>.
-Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugins list</a>.  </p>
-
-<h4 id="plugin_types" style="padding-left: 8px">8.1 plugin types</h4>
-
-<p>So far, you're able to extend enqueuer default behavior in four ways. Using a protocol plugin, an object parser plugin, an asserter plugin and using a report formatter plugin.</p>
-
-<h5 id="protocol" style="padding-left: 16px">8.1.1 protocol</h5>
-
-<p>A protocol plugin enables you to use a different publisher/subscription types. 
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to get the full available list:</p>
-
-<pre><code class="yaml">publishers: 
--   name:                  custom
--   name:                  file
--   name:                  http
-    messageReceivedParams: statusCode, statusMessage, body
--   name:                  stdout
--   name:                  tcp
--   ...
-subscriptions: 
--   name:                  custom
--   name:                  file
-    messageReceivedParams: content, name, size, modified, created
--   name:                  http
-    messageReceivedParams: headers, params, query, body
--   name:                  stdin
--   name:                  tcp
-    messageReceivedParams: payload, stream
--   ...
-</code></pre>
-
-<p>Each one listed above has a respective example in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples">the examples folder</a>.
-<a href="https://github.com/enqueuer-land/enqueuer-plugin-amqp">This one</a>, for instance, provides support for amqp protocol, so you can create this publisher and subscription:</p>
-
-<pre><code class="yaml">publishers:
--   type: amqp
-    payload: enqueuermaniac
-    exchange: enqueuer.exchange
-    routingKey: enqueuer.integration.test.routing.key
-subscriptions:
--   type: amqp
-    exchange: enqueuer.exchange
-    routingKey: enqueuer.integration.test.routing.#
-    onMessageReceived:
-        assertions:
-        -   expect: payload
-            toBeEqualTo: `enqueuermaniac`
-</code></pre>
-
-<h5 id="object_parser" style="padding-left: 16px">8.1.2 object parser</h5>
-
-<p>An object parser plugin enables you to read and parse files as you wish.
-<a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml">This test example</a> demonstrates how to use it,
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e [object-parser-name]</code> to check available ones:</p>
-
-<pre><code class="yaml">parsers: 
-- yml, yaml
-- json
-- file
-- csv
-</code></pre>
-
-<p><a href="https://github.com/enqueuer-land/enqueuer-plugin-xml-parser">This one</a>, for example, provides the ability to read xml files and inject their values like this:</p>
-
-<pre><code class="yaml">xmlContent: &lt;&lt;xml://path/to/xml/file.xml&gt;&gt;
-</code></pre>
-
-<h5 id="asserter" style="padding-left: 16px">8.1.3 asserter</h5>
-
-<p>An asserter plugin provides you a nicely way to use different assertions than these built-in ones.</p>
-
-<pre><code class="yaml">asserters: 
--   expect: 
-        required:    true
-        type:        string, array
-        description: actual value
-    not: 
-        required:    false
-        type:        null
-        description: negates
-    toContain: 
-        required:    true
-        type:        string, any
-        description: element
-</code></pre>
-
-<p>Looking at the asserter above, we can create assertions like these:</p>
-
-<pre><code class="yaml">assertions:
--   expect: [`a`, 1, true]
-    not:
-    toContain: `b`
--   expect: [`a`, 1, true]
-    toContain: 1
-</code></pre>
-
-<p>Run <code class="yaml"><span class="dollar-sign">$</span> nqr -t</code> to get the full available list.
-Consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml">this</a> test example.</p>
-
-<h5 id="report_formatter" style="padding-left: 16px">8.1.4 report formatter</h5>
-
-<p>A report formatter plugin gives you the ability to export enqueuer reports the way you want.
-Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name]</code> to list available report formatters:</p>
-
-<pre><code class="yaml">formatters: 
-- console, stdout
-- json
-- yml, yaml
-</code></pre>
-
-<p>Consider looking at the example of <a href="https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml">configuration file</a> to see it in use.
-<a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">This one</a>, for instance, generates xUnit like reports from enqueuer's output.</p>
-
-<h4 id="plugin_installation" style="padding-left: 8px">8.2 plugin installation</h4>
-
-<p>In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
-You can tell enqueuer to use a plugin in three different ways: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.</p>
-
-<h5 id="command_line" style="padding-left: 16px">8.2.1 command line</h5>
-
-<p>Tell enqueuer to use your plugin through command line this way <code class="yaml"><span class="dollar-sign">$</span> nqr -l &lt;plugin-folder&gt; -l &lt;another-plugin-folder&gt;</code>.
-Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.</p>
-
-<h5 id="configuration_file" style="padding-left: 16px">8.2.2 configuration file</h5>
-
-<p>Tell enqueuer to use your plugin through configuration file this way:</p>
-
-<pre><code class="yaml">plugins: 
--   plugin-folder
--   another-plugin-folder
-</code></pre>
-
-<p>Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.</p>
-
-<h5 id="implicitly" style="padding-left: 16px">8.2.3 implicitly</h5>
-
-<p>When enqueuer runs, it looks for modules in its same installation directory or in <code class="yaml">.nqr</code> folder in the home directory, a.k.a. ~/ folder in linux distributions.
-Therefore, if you run:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer
-<span class="dollar-sign">$</span> mkdir ~/.nqr
-<span class="dollar-sign">$</span> cd ~/.nqr
-<span class="dollar-sign">$</span> npm install enqueuer-plugin-amqp
-<span class="dollar-sign">$</span> nqr -p amqp
-</code></pre>
-
-<p>Or</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer enqueuer-plugin-amqp
-<span class="dollar-sign">$</span> nqr -p amqp
-</code></pre>
-
-<p>You'll see that the <code class="yaml">enqueuer-plugin-amqp</code> plugin will be loaded.
-Every enqueuer compatible module gets implicitly loaded.
-In order to be enqueuer compatible, a module has to have an <code class="yaml">entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
-
-<h3 id="stacker" style="padding-left: 0px">9 Stacker</h3>
-
-<p>Looking for <span style="text-decoration: line-through">a really really good looking</span> an human error proof solution way of writing these requisition files? <br>
-Consider taking a look at <a href="https://lopidio.github.io/stacker/">stacker</a>: open source, cross-platform, multi protocol client testing tool.
-The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
-With them, you create, manage and run requisitions and and see their results in a really nice way.
-See this amazing beauty with your own eyes to get an idea of how it works:  </p>
-
-<p><img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/http-passing-test.png" alt="screenshot-passing" style="width:100%" title="" /></p>
-
-<hr />
-
-<h3 id="open_source" style="padding-left: 0px">10 Open source</h3>
-
-<p>We (by 'we' we mean enqueuer's maintainers not the human race, unfortunately) are very opened to any kind of contributions in general.
-As long as they make sense and add value to the product, you're free to go.
-We mean it, do it. Even if it's a typo fix in this README file. Go ahead.
-If you like it but don't want to waste time creating a pull request, no problem either.
-Create an issue, or, even easier, give it a github star. It's cheap and it doesn't hurt anyone.
-You know what? Just head up to <a href="https://github.com/enqueuer-land/enqueuer">enqueuer's github repo</a> and keep staring at its repo.
-It may help somehow. </p>
-
-<h4 id="contributors" style="padding-left: 8px">10.1 contributors</h4>
-
-<p>Thank you. It sounds <em>cliché</em>, but this project wouldn't be the same without the massive contribution from everyone.</p>
-
-<h4 id="code_it" style="padding-left: 8px">10.2 code it</h4>
-
-<p>In order to contribute with some code, you have to follow a few steps.
-First of all, get the code:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> git clone git@github.com:enqueuer-land/enqueuer.git
-<span class="dollar-sign">$</span> cd enqueuer
-</code></pre>
-
-<p>Get its dependencies installed:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm install
-</code></pre>
-
-<p>Build it: </p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm run build
-</code></pre>
-
-<p>Go for it. Make the changes you want.
-After everything is done:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm run all
-</code></pre>
-
-<p>Commit it:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm run commit
-</code></pre>
-
-<p>Push it:</p>
-
-<pre><code class="yaml"><span class="dollar-sign">$</span> git push
-</code></pre>
-
-<h4 id="feedback" style="padding-left: 8px">10.3 feedback</h4>
-
-<p>We'd love to get your feedback!
-If you have any comments, suggestions, etc. you can reach us <a href="mailto:guilherme.moraes@outlook.com">here</a>.</p>
-
-<p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p></div></div>
-<!--</main>-->
-
-
+<body>
+<div>
+    <main role="main" class="container p-0 m-0" style="width: 100%; max-width: 100%">
+        <div style="background-image: linear-gradient(var(--nqr-background-color), var(--nqr-header-background-color));"
+             class="pb-4">
+            <img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
+                 alt="enqueuer logo" title="Enqueuer Giant Logo"
+                 class="rounded mx-auto d-block pt-5 pb-4"
+                 style="max-width: 95%"/>
+
+            <h2 class="py-3" style="text-align: center">Polyglot flow testing tool</h2>
+            <div class="row justify-content-end" style="color: var(--nqr-text-smooth-color)">
+                <div class="col-md-9 col-sm-11 pl-5 pt-4" style="text-align: left;">
+                    <p>
+                        Make sure your set of services is working properly by mocking its inputs and asserting against
+                        its outputs
+                    </p>
+                    <p>
+                        Enqueuer is a platform that provides the following capabilities: <br>
+                        - Support for multi protocols<br>
+                        - Chainable message flows <br>
+                        - Friendly for developers and non developers <br>
+                        - Easily extensible through third party <a
+                            href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including <a
+                            href="https://github.com/enqueuer-land/plugin-scaffold">yours</a> <br>
+                        - Automated end-to-end testing <br>
+                        - Place tests front and center
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid m-0 row justify-content-around py-5"
+             style="background-image: linear-gradient(var(--nqr-header-background-color) 70%, var(--nqr-color))">
+
+            <!--        style="background-color: var(&#45;&#45;nqr-header-background-color)">-->
+            <div class="col-md-3 col-8 ml-md-4 py-2 py-md-0">
+                <p style="color: var(--nqr-text-smooth-color); text-align: center">examples/http.yml</p>
+                <img class="rounded code-sample" src="images/http.png"/>
+            </div>
+            <div class="col-md-7 mr-md-4 col-12 py-2 py-md-0">
+                <p style="color: var(--nqr-text-smooth-color); text-align: center"><span
+                        style="color: var(--nqr-color)">$ </span>nqr examples/http.yml</p>
+                <img class="rounded code-sample" src="images/http-result.png"/>
+            </div>
+        </div>
+
+        <div class="container-fluid py-5"
+             style="background-image: linear-gradient(var(--nqr-color), var(--nqr-text-color) 10%)">
+            <div class="row justify-content-around">
+                <div class="col-10 col-md-4" style="text-align: center">
+
+                    <img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqr.png"
+                         alt="enqueuer logo" title="Enqueuer Giant Logo"
+                         class="rounded"
+                         style="max-width: 50%"/>
+                </div>
+                <div class="col-2 col-md-4 my-auto" style="text-align: center">
+                    <a href="https://enqueuer.com/docs">
+                        <button type="button" class="btn nqr-button" style="color: var(--nqr-text-color)">
+                            Read the docs
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+</body>
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -1170,30 +190,5 @@ If you have any comments, suggestions, etc. you can reach us <a href="mailto:gui
         integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
         crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"
-        integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/yaml.min.js"
-        integrity="sha256-rnrMAiJbGf0etxUcBLxTBrBbte8zy7TrGOHMGFq97GA=" crossorigin="anonymous"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-<script>
-    const enqueuerLogo = $("[title='Enqueuer Giant Logo']");
-    enqueuerLogo.css({'max-width': '100%', padding: '15vh 0 15vh'});
-    enqueuerLogo.parent().css({'text-align': 'center'});
-
-    const enqueuerFlow = $("[title='Enqueuer Instance Flow']");
-    enqueuerFlow.css({'max-width': '90%'});
-    enqueuerFlow.parent().css({'text-align': 'center'});
-
-    const npmBigBadge = $("[href='https://nodei.co/npm/enqueuer/']");
-    npmBigBadge.parent().css({'text-align': 'center'});
-
-    const npmBadges = $("[href='https://travis-ci.org/enqueuer-land/enqueuer']");
-    npmBadges.parent().css({'text-align': 'center'});
-    npmBadges.parent().addClass("npm-badges-container");
-
-</script>
-
-<!--<script async defer src="https://buttons.github.io/buttons.js"></script>-->
 </body>
 </html>

@@ -5,28 +5,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
-
 ![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Giant Logo")
 
-Want to ensure that a user journey which involves several steps with different protocols is working properly?
-Have you ever struggled with testing multi protocol flows?
-Depending services have become a pain?
-Don't you worry anymore. Enqueuer is what you're looking for.
+### Welcome
 
-### What it is
-
-It's ~~not just~~ an integration testing tool. It is a platform that provides the following capabilities:  
-- Support for many protocols out of the box  
-- Chainable message flows
-- Easily mock numerous services to alleviate the headaches of functional and integration tests  
-- Friendly for developers and non developers  
-- Built in assertion library to verify response data coming from/going to your services  
-- Easily extensible behavior through third party [plugins](http://github.com/enqueuer-land/plugins-list), including your own [custom ones](https://github.com/enqueuer-land/plugin-scaffold)   
-- CLI is easy to add to your team's existing CI pipelines  
-- Act and react on your system under test  
-- Place tests front and center  
-
-Welcome to the enqueuer world.
+Be our guest and have fun.
 
 #### install it
 First things first, let's get the enqueuer installed on your machine.
@@ -50,23 +33,12 @@ Run it:
 
     $ enqueuer enqueuer-repo-hit.yml
 
-What if I want to mock a http server and hit it at the same time, you may ask. Not a big deal for enqueuer lovers:
+What if I want to mock a http server, you may ask. Not a big deal for enqueuer lovers:
     
-    name: readme self-test
-    publishers:
-    -   type: http
-        url: http://localhost:9085/readme-example
-        method: POST
-        payload: does enqueuer rock?
-        onResponseReceived:
-            script: doubleStatus = statusCode * 2
-            assertions:
-                -   expect: body
-                    toBeEqualTo: `mock response`
-                -   expect: doubleStatus
-                    toBeGreaterThan: 300
+    timeout: -1
     subscriptions:
     -   type: http
+        timeout: -1
         name: mock endpoint
         endpoint: /readme-example
         port: 9085
@@ -78,17 +50,9 @@ What if I want to mock a http server and hit it at the same time, you may ask. N
             assertions:
             -   expect: body
                 toContain: `enqueuer`
-            -   name: failing test
-                expectToBeTruthy: false
                 
-Note that the second subscription assertion is a failing one. By running this example, we get this:
-
-    $ nqr http-self-test.yml
-       [FAIL]      readme self-test                                                   6 tests passing of 7 (85.71%) ran in 37ms
-       [FAIL] enqueuer                                                                6 tests passing of 7 (85.71%) ran in 42ms
-                   enqueuer › readme self-test › mock endpoint › failing test
-                               Expecting 'false' to be true. Received: false
-
+Now go ahead and try hitting it using the browser.
+Tip: remove timeout values and check what happens.
 I told you it was simple.
 Now, let's say you want to mix different protocols to test a bit more complex flow.
 How about publishing an amqp message and making sure that, once a service consumes that message an endpoint of your is hit?

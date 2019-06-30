@@ -13,6 +13,7 @@ export type SummaryOptions = {
     tabulationPerLevel: number,
     summarySpacing: number,
     showPassingTests: boolean
+    printChildren: boolean,
 };
 
 export class SummaryTestOutput {
@@ -22,7 +23,8 @@ export class SummaryTestOutput {
         maxLevel: 100,
         tabulationPerLevel: 6,
         summarySpacing: 90,
-        showPassingTests: false
+        showPassingTests: false,
+        printChildren: true
     };
 
     public constructor(report: ReportModel, options?: any) {
@@ -37,20 +39,46 @@ export class SummaryTestOutput {
 
     public print(): void {
         if (this.options.maxLevel === undefined || this.options.level <= this.options.maxLevel) {
-            this.printChildren();
             this.printSelf();
+            if (this.options.printChildren) {
+                this.printChildren();
+            }
         }
     }
 
     private printChildren(): void {
         const reportLeaves = (this.report.subscriptions || [])
-            .concat(this.report.publishers || []);
+            .concat(this.report.publishers || [])
+            .concat(this.buildLeavesFromHooks() || [])
+            .concat(this.buildLeavesFromAssertion());
         for (const leaf of reportLeaves) {
-            const options = Object.assign({}, this.options, {
-                level: this.options.level + 1,
-            });
+            const options = Object.assign({}, this.options,
+                {
+                    level: this.options.level + 1,
+                });
             new SummaryTestOutput(leaf, options).print();
         }
+    }
+
+    private buildLeavesFromHooks() {
+        return Object.keys(this.report.hooks || {}).reduce((acc, key) => {
+            const leaf: any = {
+                ...this.report.hooks![key],
+                name: key,
+            };
+            return acc.concat(leaf);
+        }, []);
+    }
+
+    private buildLeavesFromAssertion() {
+        const reduce = (this.report.tests || []).reduce((acc: ReportModel[], test: TestModel) => {
+            const leaf: any = {
+                ...test,
+                isAssertion: true
+            };
+            return acc.concat(leaf);
+        }, []);
+        return reduce;
     }
 
     private printSelf() {
@@ -65,13 +93,13 @@ export class SummaryTestOutput {
         const titleSizeSeparation: number = initialTabulation.length + 6 + tagTitleSeparation.length + this.report.name.length;
         let formattedString = initialTabulation;
         let nameColorFunction;
-        if (testAnalyzer.getTests().length === 0) {
+        if (testAnalyzer.getTests().length === 0 && !this.report.isAssertion) {
             formattedString += `${chalk.black.bgHex('#999999')('[NULL]')} `;
             nameColorFunction = chalk.hex('#999999');
-        } else if (this.report.ignored || testAnalyzer.getIgnoredList().length === testAnalyzer.getTests().length) {
+        } else if (this.report.ignored || (testAnalyzer.getIgnoredList().length === testAnalyzer.getTests().length && !this.report.isAssertion)) {
             formattedString += `${chalk.black.bgYellow('[SKIP]')} `;
             nameColorFunction = chalk.yellow;
-        } else if (testAnalyzer.getFailingTests().length > 0) {
+        } else if (testAnalyzer.getFailingTests().length > 0 || !testModelIsPassing(this.report)) {
             formattedString += `${chalk.black.bgRed('[FAIL]')} `;
             nameColorFunction = chalk.red;
         } else { //if (this.report.valid)
@@ -94,6 +122,9 @@ export class SummaryTestOutput {
     }
 
     private createSummary(testAnalyzer: TestsAnalyzer): string {
+        if (this.report.isAssertion) {
+            return '';
+        }
         const percentage = testAnalyzer.getPercentage();
         const testsNumber = testAnalyzer.getNotIgnoredTests().length;
         let message = `${testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;

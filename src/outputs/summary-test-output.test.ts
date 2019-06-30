@@ -39,7 +39,7 @@ describe('SummaryTestOutput', () => {
 
                 }
             },
-        }, {printFailingTests: true, level: 0}).print();
+        }, {printFailingTests: true, level: 0, printChildren: false}).print();
 
         expect(consolePrintedTimes('failing')).toBe(1);
         expect(consolePrintedTimes('passingTest')).toBe(0);
@@ -59,7 +59,7 @@ describe('SummaryTestOutput', () => {
                     }]
                 }
             }
-        }).print();
+        }, {printChildren: false}).print();
 
         expect(consolePrintedTimes('PASS')).toBe(1);
         expect(consolePrintedTimes('FAIL')).toBe(0);
@@ -82,7 +82,7 @@ describe('SummaryTestOutput', () => {
                     }]
                 }
             }
-        }).print();
+        }, {printChildren: false}).print();
 
         expect(consolePrintedTimes('NULL')).toBe(0);
         expect(consolePrintedTimes('FAIL')).toBe(1);
@@ -110,7 +110,7 @@ describe('SummaryTestOutput', () => {
                         }]
                     }
                 }
-            }).print();
+            }, {printChildren: false}).print();
 
         expect(consolePrintedTimes('FAIL')).toBe(1);
         // expect(consolePrintedTimes('name')).toBe(3);
@@ -138,7 +138,7 @@ describe('SummaryTestOutput', () => {
                     }]
                 }
             }
-        }).print();
+        }, {printChildren: false}).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -162,7 +162,7 @@ describe('SummaryTestOutput', () => {
                     }]
                 }
             }
-        }).print();
+        }, {printChildren: false}).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -186,7 +186,7 @@ describe('SummaryTestOutput', () => {
                     }]
                 }
             }
-        }).print();
+        }, {printChildren: false}).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -204,7 +204,7 @@ describe('SummaryTestOutput', () => {
                     tests: []
                 }
             }
-        }).print();
+        }, {printChildren: false}).print();
 
         expect(consolePrintedTimes('NULL')).toBe(1);
         expect(consolePrintedTimes('SKIP')).toBe(0);
