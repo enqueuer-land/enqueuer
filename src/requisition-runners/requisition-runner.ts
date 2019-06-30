@@ -149,7 +149,7 @@ export class RequisitionRunner {
         }
     }
 
-    private async executeChild(child: input.RequisitionModel, index: number) {
+    private async executeChild(child: input.RequisitionModel, index: number): Promise<output.RequisitionModel[]> {
         child.parent = this.requisition;
         const childRunner = new RequisitionRunner(child);
         this.childrenRequisitionRunner.push(childRunner);

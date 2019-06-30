@@ -18,8 +18,9 @@ export class EnqueuerStarter {
             Logger.fatal(`Execution error: ${error}`);
             statusCode = -1;
         }
-        Logger.info(`Hope you had a great time`);
         Logger.info('Enqueuer execution is over (' + (statusCode === 0) + ')');
+        Logger.setLoggerLevel('info');
+        Logger.info(`Hope you had a great time`);
         return statusCode;
 
     }

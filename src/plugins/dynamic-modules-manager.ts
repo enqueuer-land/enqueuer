@@ -98,15 +98,20 @@ export class DynamicModulesManager {
                 .map(module => module.replace(/\.js/, ''))
                 .filter(module => {
                     try {
-                        const packageJson = JSON.parse(fs.readFileSync(module + '/package.json').toString());
-                        const hasKeyWords = packageJson.keywords
-                            .filter((keyword: string) => keyword.toLowerCase() === 'enqueuer' ||
-                                keyword.toLowerCase() === 'nqr').length > 0;
-                        const versionMatches = DynamicModulesManager.versionMatches(packageJson);
-                        if (hasKeyWords && versionMatches) {
-                            return require(module).entryPoint !== undefined;
+                        const packageJsonPath = module + '/package.json';
+                        if (fs.existsSync(packageJsonPath)) {
+                            const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
+                            const keyWordsMatch = (packageJson.keywords || [])
+                                .find((keyword: string) => keyword.toLowerCase() === 'enqueuer' || keyword.toLowerCase() === 'nqr');
+                            if (keyWordsMatch) {
+                                const versionMatches = DynamicModulesManager.versionMatches(packageJson);
+                                if (versionMatches) {
+                                    return require(module).entryPoint !== undefined;
+                                }
+                            }
                         }
                     } catch (err) {
+                        Logger.trace(err);
                     }
                     return false;
                 });
@@ -116,15 +121,20 @@ export class DynamicModulesManager {
         return [];
     }
 
-    //TODO test it
-    private static versionMatches(packageJson: { dependencies: any, devDependencies: any, peerDependencies: any }): boolean {
-        const regexp = /[ ^d]*(\d+)/;
+    private static versionMatches(packageJson: { name: string, dependencies: any, devDependencies: any, peerDependencies: any }): boolean {
+        const regexp = /[^\d]*(\d+)/;
         const currentMajorVersion = (process.env.npm_package_version || enqueuerPackageJson.version).match(regexp)[0];
-        const pluginMajorEnqueuerVersion = (packageJson.dependencies.enqueuer ||
-            packageJson.devDependencies.enqueuer ||
-            packageJson.peerDependencies.enqueuer)
-            .version.match(regexp)[0];
-        return currentMajorVersion <= pluginMajorEnqueuerVersion;
+        const enqueuerVersion = (packageJson.dependencies || {}).enqueuer ||
+            (packageJson.devDependencies || {}).enqueuer ||
+            (packageJson.peerDependencies || {}).enqueuer ||
+            '0.0.0';
+        const pluginMajorEnqueuerVersion = enqueuerVersion.match(regexp)[1];
+
+        Logger.trace(`name: ${packageJson.name} => currentMajorVersion (${
+            +currentMajorVersion}) <= pluginMajorEnqueuerVersion (${
+            +pluginMajorEnqueuerVersion}): ${
+        +currentMajorVersion <= +pluginMajorEnqueuerVersion}`);
+        return +currentMajorVersion <= +pluginMajorEnqueuerVersion;
     }
 
     private loadModule(module: string): boolean {

@@ -15,10 +15,16 @@ export class RequisitionDefaultReports {
                                       },
                                       onFinishTests: TestModel[] = []): output.RequisitionModel {
         const valid = onFinishTests.every((test) => test.valid);
-        return Object.assign({}, base, {
+        return {
             valid: valid,
+            name: base.name,
+            id: base.id,
+            ignored: base.ignored,
+            level: base.level,
             subscriptions: [],
             publishers: [],
+            iterations: base.iterations,
+            totalIterations: base.totalIterations,
             hooks: {
                 [DefaultHookEvents.ON_INIT]: {
                     arguments: {},
@@ -37,7 +43,7 @@ export class RequisitionDefaultReports {
                 totalTime: 0
             },
             requisitions: []
-        });
+        };
     }
 
     public static createRunningError(base: { name: string, id: string }, err: any): output.RequisitionModel {

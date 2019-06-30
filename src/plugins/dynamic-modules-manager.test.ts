@@ -78,4 +78,15 @@ describe('DynamicModulesManager', () => {
 
         DynamicModulesManager.getInstance().describeLoadedModules();
     });
+
+    it('should check enqueuer version of plugins', () => {
+        // @ts-ignore
+        expect(DynamicModulesManager.versionMatches({dependencies: {enqueuer: '^5.0.0'}})).toBeTruthy();
+        // @ts-ignore
+        expect(DynamicModulesManager.versionMatches({devDependencies: {enqueuer: '5.0.0'}})).toBeTruthy();
+        // @ts-ignore
+        expect(DynamicModulesManager.versionMatches({peerDependencies: {enqueuer: '5.0.0'}})).toBeTruthy();
+        // @ts-ignore
+        expect(DynamicModulesManager.versionMatches({})).toBeFalsy();
+    });
 });

@@ -23,10 +23,14 @@ export class MultiTestsOutput {
     public async publishReport(report: RequisitionModel) {
         await Promise.all(this.outputs
             .map(publisher => {
-                const formatter = publisher.formatter as ReportFormatter;
-                Logger.trace(`Formatting as ${publisher.format}`);
-                publisher.payload = formatter.format(report);
-                return publisher.publish();
+                try {
+                    const formatter = publisher.formatter as ReportFormatter;
+                    Logger.trace(`Formatting as ${publisher.format}`);
+                    publisher.payload = formatter.format(report);
+                    return publisher.publish();
+                } catch (err) {
+                    Logger.warning(`Error publishing report: ${JSON.stringify(report)}: ${err}`);
+                }
             }));
     }
 }

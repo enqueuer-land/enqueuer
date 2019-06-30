@@ -33,6 +33,7 @@ export class Configuration {
         if (Configuration.loaded === false) {
             Configuration.loaded = true;
             Configuration.instance = new Configuration();
+            Logger.setLoggerLevel(Configuration.instance.getLogLevel());
             Configuration.instance.commandLineConfiguration.verifyPrematureActions();
             if (Configuration.instance.logLevel === 'trace') {
                 this.printConfiguration();

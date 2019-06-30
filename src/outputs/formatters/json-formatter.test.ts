@@ -16,6 +16,16 @@ describe('JsonReportFormatter', () => {
         expect(format).toBe(new JsonObjectParser().stringify(test));
     });
 
+    it('Should throw', () => {
+        const test: RequisitionModel = {
+            name: 'name',
+            valid: true,
+            tests: []
+        };
+        test.cycle = test;
+        expect(() => new JsonReportFormatter().format(test)).toThrow();
+    });
+
     it('Should export an entry point', done => {
         const mainInstance: any = {
             reportFormatterManager: {

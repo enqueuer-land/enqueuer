@@ -9,6 +9,8 @@ import {Configuration} from './configurations/configuration';
 import {RequisitionAdopter} from './components/requisition-adopter';
 import {NotificationEmitter, Notifications} from './notifications/notification-emitter';
 import {SummaryTestOutput} from './outputs/summary-test-output';
+import {PublisherModel} from './models/inputs/publisher-model';
+import {TestModel} from './models/outputs/test-model';
 
 export class EnqueuerRunner {
     private static reportName: string = 'enqueuer';
@@ -36,10 +38,15 @@ export class EnqueuerRunner {
                 parallel: configuration.isParallel()
             }).getRequisition();
         const parsingErrors = requisitionFileParser.getFilesErrors();
-        const valid = parsingErrors.length === 0;
         const finalReports = await new RequisitionRunner(this.enqueuerRequisition).run();
+        await this.publishReports(configuration.getOutputs(), finalReports, parsingErrors);
+        return finalReports;
+    }
+
+    private async publishReports(configurationOutputs: PublisherModel[], finalReports: output.RequisitionModel[], parsingErrors: TestModel[]) {
         Logger.info('Publishing reports');
-        const outputs = new MultiTestsOutput(configuration.getOutputs());
+        const valid = parsingErrors.length === 0;
+        const outputs = new MultiTestsOutput(configurationOutputs);
         await finalReports.map(async report => {
             report.hooks!.onParsed = {
                 valid: valid,
