@@ -4,6 +4,7 @@ import {LogLevel} from './log-level';
 
 jest.mock('../timers/date-controller');
 
+// @ts-ignore
 DateController.mockImplementation(() => {
     return {
         toString: () => 'date',

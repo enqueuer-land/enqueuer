@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import {TestsAnalyzer} from './tests-analyzer';
 import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
@@ -6,6 +5,7 @@ import {PublisherModel} from '../models/outputs/publisher-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {ReportModel} from '../models/outputs/report-model';
 import {HookModel} from '../models/outputs/hook-model';
+import colorizer from './colorizer';
 
 export type SummaryOptions = {
     maxLevel: number,
@@ -92,19 +92,19 @@ export class SummaryTestOutput {
         const tagTitleSeparation = this.createEmptyStringSized(this.options.level * this.options.tabulationPerLevel);
         const titleSizeSeparation: number = initialTabulation.length + 6 + tagTitleSeparation.length + this.report.name.length;
         let formattedString = initialTabulation;
-        let nameColorFunction;
+        let nameColorFunction: any;
         if (testAnalyzer.getTests().length === 0 && !this.report.isAssertion) {
-            formattedString += `${chalk.black.bgHex('#999999')('[NULL]')} `;
-            nameColorFunction = chalk.hex('#999999');
+            formattedString += `${colorizer.black.bgHex('#999999')('[NULL]')} `;
+            nameColorFunction = colorizer.hex('#999999');
         } else if (this.report.ignored || (testAnalyzer.getIgnoredList().length === testAnalyzer.getTests().length && !this.report.isAssertion)) {
-            formattedString += `${chalk.black.bgYellow('[SKIP]')} `;
-            nameColorFunction = chalk.yellow;
+            formattedString += `${colorizer.black.bgYellow('[SKIP]')} `;
+            nameColorFunction = colorizer.yellow;
         } else if (testAnalyzer.getFailingTests().length > 0 || !testModelIsPassing(this.report)) {
-            formattedString += `${chalk.black.bgRed('[FAIL]')} `;
-            nameColorFunction = chalk.red;
+            formattedString += `${colorizer.black.bgRed('[FAIL]')} `;
+            nameColorFunction = colorizer.red;
         } else { //if (this.report.valid)
-            formattedString += `${chalk.black.bgGreen('[PASS]')} `;
-            nameColorFunction = chalk.green;
+            formattedString += `${colorizer.black.bgGreen('[PASS]')} `;
+            nameColorFunction = colorizer.green;
         }
         formattedString += tagTitleSeparation;
         const iterationCounter: string = (this.report.totalIterations > 1) ? ` [${this.report.iteration}]` : '';
@@ -130,7 +130,7 @@ export class SummaryTestOutput {
         let message = `${testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;
         const ignoredTests = testAnalyzer.getIgnoredList();
         if (ignoredTests.length > 0) {
-            message += chalk.yellow(` - ${ignoredTests.length} ignored -`);
+            message += colorizer.yellow(` - ${ignoredTests.length} ignored -`);
         }
         if (this.report.time) {
             const totalTime = this.report.time.totalTime;
@@ -163,32 +163,32 @@ export class SummaryTestOutput {
                 const initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
                 let color: any;
                 if (test.ignored) {
-                    color = chalk.yellow;
+                    color = colorizer.yellow;
                 } else if (test.valid) {
-                    color = chalk.green;
+                    color = colorizer.green;
                 } else {
-                    color = chalk.red;
+                    color = colorizer.red;
                 }
                 if (index === 0) {
                     const hierarchyMessage = initialTabulation + hierarchy
-                        .map(level => color(level) + chalk.gray(' › '))
+                        .map(level => color(level) + colorizer.gray(' › '))
                         .concat(hookName)
                         .join('');
                     console.log(hierarchyMessage);
                 }
                 console.log(color(`${initialTabulation}${this.createEmptyStringSized(this.options.tabulationPerLevel)}${test.name}`));
-                console.log(chalk.reset(`${initialTabulation}${this
+                console.log(colorizer.reset(`${initialTabulation}${this
                     .createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}\n`));
             });
     }
 
     private getColor(percentage: number): Function {
         if (percentage == 100) {
-            return chalk.green;
+            return colorizer.green;
         } else if (percentage > 50) {
-            return chalk.yellow;
+            return colorizer.yellow;
         }
-        return chalk.red;
+        return colorizer.red;
     }
 
 }

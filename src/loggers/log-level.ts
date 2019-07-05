@@ -1,24 +1,4 @@
-let colorizer: {
-    cyan: Function;
-    blue: Function;
-    green: Function;
-    yellow: Function;
-    magenta: Function;
-    red: Function;
-};
-
-try {
-    colorizer = require('chalk');
-} catch (e) {
-    colorizer = {
-        cyan: (message: string) => message,
-        blue: (message: string) => message,
-        green: (message: string) => message,
-        yellow: (message: string) => message,
-        magenta: (message: string) => message,
-        red: (message: string) => message,
-    };
-}
+import colorizer from '../outputs/colorizer';
 
 export class LogLevel {
     private static priorityCounter: number = 0;
