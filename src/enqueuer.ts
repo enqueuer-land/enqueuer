@@ -25,6 +25,7 @@ export * from './configurations/configuration';
 export * from './configurations/store';
 
 export * from './loggers/logger';
+export * from './loggers/log-level';
 
 export * from './requisition-runners/requisition-parser';
 export * from './requisition-runners/requisition-file-parser';

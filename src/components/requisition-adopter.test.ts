@@ -1,5 +1,4 @@
 import {RequisitionAdopter} from './requisition-adopter';
-import {levels} from 'log4js';
 
 describe('RequisitionAdopter', () => {
 

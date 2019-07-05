@@ -5,6 +5,7 @@ import {Logger} from '../loggers/logger';
 import prettyjson from 'prettyjson';
 import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import {LogLevel} from '../loggers/log-level';
 
 process.setMaxListeners(30);
 
@@ -33,7 +34,7 @@ export class Configuration {
         if (Configuration.loaded === false) {
             Configuration.loaded = true;
             Configuration.instance = new Configuration();
-            Logger.setLoggerLevel(Configuration.instance.getLogLevel());
+            Logger.setLoggerLevel(LogLevel.buildFromString(Configuration.instance.getLogLevel()));
             Configuration.instance.commandLineConfiguration.verifyPrematureActions();
             if (Configuration.instance.logLevel === 'trace') {
                 this.printConfiguration();

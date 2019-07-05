@@ -56,7 +56,8 @@ export class RequisitionRunner {
                 this.replaceVariables();
                 this.requisition.iteration = iterationCounter;
                 this.requisition.totalIterations = iterations;
-                Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name}'`);
+                const iterationSuffix: string = (iterations > 1) ? ` [${iterationCounter}]` : '';
+                Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name + iterationSuffix}'`);
                 const report = await this.startRequisitionReporter();
                 reports.push(report);
                 this.emitNotification(report);
@@ -104,7 +105,8 @@ export class RequisitionRunner {
             this.timeoutPath(),
             this.happyPath()]);
 
-        Logger.info(`Requisition '${report.name}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
+        const iterationCounter: string = (+report.totalIterations! > 1) ? ` [${report.iteration}]` : '';
+        Logger.info(`Requisition '${report.name + iterationCounter}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
         Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
 
         return report;

@@ -30,7 +30,7 @@ export class MultiSubscriptionsReporter {
     }
 
     public async subscribe(): Promise<any> {
-        Logger.info(`Subscriptions are subscribing`);
+        Logger.debug(`Subscriptions are subscribing`);
         return Promise.race([
             Promise.all(this.subscriptions.map(async subscription => {
                 try {
@@ -59,7 +59,7 @@ export class MultiSubscriptionsReporter {
     }
 
     public async unsubscribe(): Promise<void[]> {
-        Logger.info(`Subscriptions are unsubscribing`);
+        Logger.debug(`Subscriptions are unsubscribing`);
         return await Promise.all(this.subscriptions.map(subscription => subscription.unsubscribe()));
     }
 

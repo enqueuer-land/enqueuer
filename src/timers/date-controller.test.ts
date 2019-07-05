@@ -1,18 +1,17 @@
-import {DateController} from "./date-controller";
+import {DateController} from './date-controller';
 
 let leftPad = (number: number, targetLength: number): string => {
-    var output = number + '';
+    let output = number + '';
     while (output.length < targetLength) {
         output = '0' + output;
     }
     return output;
-}
-
+};
 
 describe('DateController', function() {
 
     it('should be protected against wrong initialization', function() {
-        const date = new DateController(null);
+        const date = new DateController();
 
         expect(date).not.toBeNull();
     });
@@ -37,9 +36,7 @@ describe('DateController', function() {
                 leftPad(currentDate.getSeconds(), 2) +
                 leftPad(currentDate.getMilliseconds(), 4);
 
-
-
-        const actualToString = new DateController(currentDate).getStringOnlyNumbers()
+        const actualToString = new DateController(currentDate).getStringOnlyNumbers();
 
         expect(actualToString.substr(0, actualToString.length - 2)).toBe(expectedToString);
     });
@@ -47,11 +44,10 @@ describe('DateController', function() {
     it('should get time', function() {
         const currentDate = new Date();
 
-        const expectedTime = currentDate.getTime()
+        const expectedTime = currentDate.getTime();
         const actualTime = new DateController(currentDate).getTime();
 
         expect(actualTime).toBe(expectedTime);
     });
-
 
 });

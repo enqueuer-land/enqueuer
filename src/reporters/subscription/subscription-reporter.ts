@@ -218,9 +218,9 @@ export class SubscriptionReporter {
     }
 
     private async handleKillSignal(signal: Signals, type: string): Promise<void> {
-        Logger.fatal(`Subscription reporter '${type}' handling kill signal ${signal}`);
+        Logger.debug(`Subscription reporter '${type}' handling kill signal ${signal}`);
         await this.unsubscribe();
-        Logger.fatal(`Subscription reporter '${type}' unsubscribed`);
+        Logger.debug(`Subscription reporter '${type}' unsubscribed`);
     }
 
 }

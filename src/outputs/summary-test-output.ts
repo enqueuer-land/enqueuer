@@ -1,4 +1,4 @@
-import chalk, {Chalk} from 'chalk';
+import chalk from 'chalk';
 import {TestsAnalyzer} from './tests-analyzer';
 import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
@@ -161,7 +161,7 @@ export class SummaryTestOutput {
             .filter((test: TestModel) => !testModelIsPassing(test) || this.options.showPassingTests)
             .forEach((test: TestModel, index: number) => {
                 const initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
-                let color: Chalk;
+                let color: any;
                 if (test.ignored) {
                     color = chalk.yellow;
                 } else if (test.valid) {

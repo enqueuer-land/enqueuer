@@ -10,7 +10,7 @@ export class RequisitionDefaultReports {
                                           id: string,
                                           ignored?: boolean,
                                           level?: number,
-                                          iterations?: number,
+                                          iteration?: number,
                                           totalIterations?: number
                                       },
                                       onFinishTests: TestModel[] = []): output.RequisitionModel {
@@ -23,7 +23,7 @@ export class RequisitionDefaultReports {
             level: base.level,
             subscriptions: [],
             publishers: [],
-            iterations: base.iterations,
+            iteration: base.iteration,
             totalIterations: base.totalIterations,
             hooks: {
                 [DefaultHookEvents.ON_INIT]: {

@@ -5,6 +5,7 @@ import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {SummaryTestOutput} from './outputs/summary-test-output';
 import {NotificationEmitter, Notifications} from './notifications/notification-emitter';
 import {Logger} from './loggers/logger';
+import {LogLevel} from './loggers/log-level';
 
 jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
@@ -66,8 +67,8 @@ describe('EnqueuerRunner', () => {
 
         const runner = new EnqueuerRunner().execute();
 
-        expect(loggerLevelMock).toHaveBeenNthCalledWith(1, 'info');
-        expect(loggerLevelMock).toHaveBeenNthCalledWith(2, loggerLevel);
+        expect(loggerLevelMock).toHaveBeenNthCalledWith(1, LogLevel.INFO);
+        expect(loggerLevelMock).toHaveBeenNthCalledWith(2, LogLevel.WARN);
     });
 
     it('should call configuration methods once', async () => {

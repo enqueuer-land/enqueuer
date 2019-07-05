@@ -1,80 +1,53 @@
-import * as log4js from 'log4js';
+import {LogLevel} from './log-level';
+import {DateController} from '../timers/date-controller';
 
 export class Logger {
 
-    private static logger?: any;
+    private static logLevel?: LogLevel;
 
-    public static setLoggerLevel(level?: string): void {
-        if (level) {
-            Logger.getLogger().level = level.toLowerCase();
-        }
+    public static setLoggerLevel(level: LogLevel): void {
+        Logger.logLevel = level;
     }
 
     public static trace(message: string) {
-        Logger.getLogger().trace(message);
+        Logger.logIfNecessary(message, LogLevel.TRACE);
     }
 
     public static debug(message: string) {
-        Logger.getLogger().debug(message);
+        Logger.logIfNecessary(message, LogLevel.DEBUG);
     }
 
     public static info(message: string) {
-        Logger.getLogger().info(message);
+        Logger.logIfNecessary(message, LogLevel.INFO);
     }
 
     public static warning(message: string) {
-        Logger.getLogger().warn(message);
+        Logger.logIfNecessary(message, LogLevel.WARN);
     }
 
     public static error(message: string) {
-        Logger.getLogger().error(message);
+        Logger.logIfNecessary(message, LogLevel.ERROR);
     }
 
     public static fatal(message: string) {
-        Logger.getLogger().fatal(message);
+        Logger.logIfNecessary(message, LogLevel.FATAL);
     }
 
-    private static getLogger(): any {
-        if (!Logger.logger) {
-            log4js.configure({
-                appenders: {
-                    out: {
-                        type: 'stdout',
-                        layout: {
-                            type: 'pattern',
-                            pattern: '%[[%d] [%p] - %m%]',
-                        }
-                    }
-                },
-                categories: {default: {appenders: ['out'], level: 'info'}}
-            });
-            Logger.logger = log4js.getLogger();
-
+    private static getLogger(): LogLevel {
+        if (!Logger.logLevel) {
+            Logger.logLevel = LogLevel.WARN;
         }
-        return Logger.logger;
+        return Logger.logLevel;
     }
-}
 
-if (process.argv.length > 1 && process.argv[1].toString().match('jest')) {
-    console.log = function () {
-        //empty
-    };
-    Logger.trace = () => {
-        /*do nothing*/
-    };
-    Logger.debug = () => {
-        /*do nothing*/
-    };
-    Logger.info = () => {
-        /*do nothing*/
-    };
-    Logger.warning = () => {
-        /*do nothing*/
-    };
-    Logger.error = () => {
-        /*do nothing*/
-    };
-    Logger.fatal = () => {
-        /*do nothing*/
-    };
+    private static logIfNecessary(message: string, level: LogLevel) {
+        const logger = Logger.getLogger();
+        if (logger.hasPriorityLessThanOrEqualTo(level)) {
+            const date = new DateController().toString();
+            const category = level.toString();
+            const pattern = `[${date}] [${category}] - ${message}`;
+            console.log(level.getColorFunction()(pattern));
+        }
+    }
+
 }

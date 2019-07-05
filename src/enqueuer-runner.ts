@@ -11,6 +11,7 @@ import {NotificationEmitter, Notifications} from './notifications/notification-e
 import {SummaryTestOutput} from './outputs/summary-test-output';
 import {PublisherModel} from './models/inputs/publisher-model';
 import {TestModel} from './models/outputs/test-model';
+import {LogLevel} from './loggers/log-level';
 
 export class EnqueuerRunner {
     private static reportName: string = 'enqueuer';
@@ -25,9 +26,9 @@ export class EnqueuerRunner {
 
     public async execute(): Promise<output.RequisitionModel[]> {
         const configuration = Configuration.getInstance();
-        Logger.setLoggerLevel('info');
+        Logger.setLoggerLevel(LogLevel.INFO);
         Logger.info('Rocking and rolling');
-        Logger.setLoggerLevel(configuration.getLogLevel());
+        Logger.setLoggerLevel(LogLevel.buildFromString(configuration.getLogLevel()));
         const requisitionFileParser = new RequisitionFilePatternParser(configuration.getFiles());
         const requisitions = requisitionFileParser.parse();
         this.enqueuerRequisition = new RequisitionAdopter(

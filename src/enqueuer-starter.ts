@@ -1,5 +1,6 @@
 import {Logger} from './loggers/logger';
 import {EnqueuerRunner} from './enqueuer-runner';
+import {LogLevel} from './loggers/log-level';
 
 export class EnqueuerStarter {
 
@@ -19,7 +20,7 @@ export class EnqueuerStarter {
             statusCode = -1;
         }
         Logger.info('Enqueuer execution is over (' + (statusCode === 0) + ')');
-        Logger.setLoggerLevel('info');
+        Logger.setLoggerLevel(LogLevel.INFO);
         Logger.info(`Hope you had a great time`);
         return statusCode;
 

@@ -2,7 +2,7 @@ import {RequisitionDefaultReports} from './requisition-default-reports';
 
 describe('RequisitionDefaultReports', () => {
     it('default', () => {
-        const report = RequisitionDefaultReports.createDefaultReport({name: 'g', id: 'id', level: 13, iterations: 1, totalIterations: 5});
+        const report = RequisitionDefaultReports.createDefaultReport({name: 'g', id: 'id', level: 13, iteration: 1, totalIterations: 5});
         expect(report.time!.startTime).toBeDefined();
         expect(report.time!.endTime).toBeDefined();
         expect(report.time!.totalTime).toBeLessThan(1000);
@@ -13,7 +13,7 @@ describe('RequisitionDefaultReports', () => {
                 'onInit': {arguments: {}, 'tests': [], 'valid': true}
             },
             'id': 'id',
-            iterations: 1,
+            iteration: 1,
             totalIterations: 5,
             'ignored': undefined,
             'level': 13,
