@@ -9,8 +9,7 @@ import {AsserterManager} from './asserter-manager';
 import * as os from 'os';
 import * as glob from 'glob';
 import * as fs from 'fs';
-import prettyjson from 'prettyjson';
-import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
+import {prettifyJson} from '../outputs/prettify-json';
 
 const enqueuerPackageJson = require('../../package.json');
 
@@ -78,7 +77,7 @@ export class DynamicModulesManager {
     }
 
     public describeLoadedModules(): void {
-        console.log(prettyjson.render(this.getLoadedModules(), getPrettyJsonConfig()));
+        console.log(prettifyJson(this.getLoadedModules()));
     }
 
     public loadModuleExplicitly(module: string): boolean {

@@ -2,8 +2,7 @@ import {Assertion} from '../models/events/assertion';
 import {Logger} from '../loggers/logger';
 import {Asserter} from '../asserters/asserter';
 import {NullAsserter} from '../asserters/null-asserter';
-import prettyjson from 'prettyjson';
-import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
+import {prettifyJson} from '../outputs/prettify-json';
 
 type AssertionFieldTypes = ('string' | 'number' | 'boolean' | 'array' | 'null' | 'any');
 type AssertionField = {
@@ -50,7 +49,7 @@ export class AsserterManager {
 
     public describeMatchingAsserters(data: any): boolean {
         const matchingAsserters = this.getMatchingAsserters(data);
-        console.log(prettyjson.render(matchingAsserters, getPrettyJsonConfig()));
+        console.log(prettifyJson(matchingAsserters));
         return matchingAsserters.asserters.length > 0;
     }
 

@@ -1,7 +1,6 @@
 import {ObjectParser} from '../object-parser/object-parser';
-import prettyjson from 'prettyjson';
-import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 import {Logger} from '../loggers/logger';
+import {prettifyJson} from '../outputs/prettify-json';
 
 interface AddedObjectParser {
     tags: string[];
@@ -27,7 +26,7 @@ export class ObjectParserManager {
 
     public describeMatchingObjectParsers(data: any): boolean {
         const matchingObjectParsers = this.getMatchingObjectParsers(data);
-        console.log(prettyjson.render(matchingObjectParsers, getPrettyJsonConfig()));
+        console.log(prettifyJson(matchingObjectParsers));
         return matchingObjectParsers.parsers.length > 0;
     }
 

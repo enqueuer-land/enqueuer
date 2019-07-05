@@ -1,8 +1,5 @@
 import {RequisitionModel} from '../../models/outputs/requisition-model';
 import {ConsoleFormatter, entryPoint} from './console-formatter';
-import prettyjson from 'prettyjson';
-import {getPrettyJsonConfig} from '../prettyjson-config';
-import {ObjectDecycler} from '../../object-parser/object-decycler';
 
 describe('ConsoleFormatter', () => {
 
@@ -15,7 +12,6 @@ describe('ConsoleFormatter', () => {
         const format = new ConsoleFormatter().format(test);
 
         expect(typeof (format)).toBe('string');
-        expect(format).toBe(prettyjson.render(new ObjectDecycler().decycle(test), getPrettyJsonConfig()));
     });
 
     it('Should export an entry point', done => {

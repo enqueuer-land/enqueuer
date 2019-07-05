@@ -2,10 +2,9 @@ import {CommandLineConfiguration} from './command-line-configuration';
 import {FileConfiguration} from './file-configuration';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Logger} from '../loggers/logger';
-import prettyjson from 'prettyjson';
-import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {LogLevel} from '../loggers/log-level';
+import {prettifyJson} from '../outputs/prettify-json';
 
 process.setMaxListeners(30);
 
@@ -145,7 +144,7 @@ export class Configuration {
     }
 
     private static printConfiguration() {
-        console.log(prettyjson.render({configuration: this.getInstance().getValues()}, getPrettyJsonConfig()));
+        console.log(prettifyJson({configuration: this.getInstance().getValues()}));
     }
 
 }

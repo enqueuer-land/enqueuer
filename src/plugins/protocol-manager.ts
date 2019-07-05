@@ -1,4 +1,3 @@
-import prettyjson from 'prettyjson';
 import {PublisherModel} from '../models/inputs/publisher-model';
 import {Publisher} from '../publishers/publisher';
 import {SubscriptionModel} from '../models/inputs/subscription-model';
@@ -8,8 +7,8 @@ import {NullPublisher} from '../publishers/null-publisher';
 import {Protocol} from '../protocols/protocol';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
 import {Logger} from '../loggers/logger';
+import {prettifyJson} from '../outputs/prettify-json';
 
 export class ProtocolManager {
     private protocols: Protocol[] = [];
@@ -44,7 +43,7 @@ export class ProtocolManager {
 
     public describeMatchingProtocols(description: string = ''): boolean {
         const matchingProtocols = this.getProtocolsDescription(description);
-        console.log(prettyjson.render(matchingProtocols, getPrettyJsonConfig()));
+        console.log(prettifyJson(matchingProtocols));
         return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
     }
 

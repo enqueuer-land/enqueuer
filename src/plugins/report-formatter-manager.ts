@@ -1,8 +1,7 @@
-import prettyjson from 'prettyjson';
 import {ReportFormatter} from '../outputs/formatters/report-formatter';
 import {JsonReportFormatter} from '../outputs/formatters/json-formatter';
 import {Logger} from '../loggers/logger';
-import {getPrettyJsonConfig} from '../outputs/prettyjson-config';
+import {prettifyJson} from '../outputs/prettify-json';
 
 interface AddedReportFormatter {
     tags: string[];
@@ -39,7 +38,7 @@ export class ReportFormatterManager {
 
     public describeMatchingReportFormatters(describeFormatters: string | true): boolean {
         const matchingReportFormatters = this.getMatchingReportFormatters(describeFormatters);
-        console.log(prettyjson.render(matchingReportFormatters, getPrettyJsonConfig()));
+        console.log(prettifyJson(matchingReportFormatters));
         return matchingReportFormatters.formatters.length > 0;
     }
 }
