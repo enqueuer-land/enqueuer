@@ -28,6 +28,8 @@
             -   name: Status Code
                 expect: statusCode
                 toBeEqualTo: 444
+            -   expect: JSON.parse(body).deep
+                toBeEqualTo: `object`
     subscriptions:
     -   type: http
         endpoint: /enqueuer/:firstId
@@ -62,7 +64,8 @@
         method: POST
         response:
             status: 444
-            payload: blah
+            payload:
+                deep: object
     -   name: yet another, but avoidable
         type: http
         endpoint: /avoidable
@@ -114,8 +117,7 @@
 -   name: check port releasing (23076)
     timeout: 5000
     subscriptions:
-    -   name: same port subscription
-        type: tcp
+    -   type: tcp
         port: 23076
         timeout: 1000
         avoid: true
@@ -125,7 +127,8 @@
         method: POST
         payload: virgs
     subscriptions:
-    -   type: http
+    -   name: numbered payload
+        type: http
         endpoint: /number-payload
         port: 23080
         method: POST

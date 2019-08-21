@@ -45,7 +45,8 @@ class HttpSubscription extends Subscription {
             Object.keys(this.response.headers || {}).forEach(key => {
                 this.responseToClientHandler.header(key, this.response.headers[key]);
             });
-            this.responseToClientHandler.status(this.response.status).send('' + this.response.payload);
+            const body = typeof this.response.payload === 'number' ? '' + this.response.payload : this.response.payload;
+            this.responseToClientHandler.status(this.response.status).send(body);
             Logger.debug(`${this.type} response sent`);
             return Promise.resolve();
         } catch (err) {
