@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -26,7 +25,7 @@
     <link rel="shortcut icon"
           href="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"/>
 
-    <title>Almighty Enqueuer</title>
+    <title>Enqueuer</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -69,25 +68,8 @@
         font-size: 2.5em;
     }
 
-    /*h4 {*/
-    /*    font-size: 1.75em;*/
-    /*}*/
-    /**/
-    /*h5 {*/
-    /*    font-size: 1.2em;*/
-    /*}*/
-
-    /*hr {*/
-    /*    background-color: var(--nqr-background-alternative-color);*/
-    /*    margin-top: 2rem;*/
-    /*    margin-bottom: 5rem;*/
-    /*    border: 0;*/
-    /*    border-top: 1px solid rgba(0, 0, 0, .1);*/
-    /*    height: 2px;*/
-    /*}*/
-
     .nqr-button {
-        width: 40%;
+        width: 100%;
         background-color: var(--nqr-header-background-color);
         margin-right: 2px;
         margin-left: 2px;
@@ -116,7 +98,7 @@
                  style="max-width: 95%"/>
 
             <h2 class="py-3" style="text-align: center">Polyglot flow testing tool</h2>
-            <div class="row justify-content-end" style="color: var(--nqr-text-smooth-color)">
+            <div class="container-fluid row justify-content-end" style="color: var(--nqr-text-smooth-color)">
                 <div class="col-md-9 col-sm-11 pl-5 pt-4" style="text-align: left;">
                     <p>
                         Make sure your set of services is working properly by mocking its inputs and asserting against
@@ -138,15 +120,15 @@
         </div>
 
 
-        <div class="container-fluid m-0 row justify-content-around py-5"
+        <div class="container-fluid m-0 row justify-content-around py-2 py-md-5"
              style="background-image: linear-gradient(var(--nqr-header-background-color) 70%, var(--nqr-color))">
 
             <!--        style="background-color: var(&#45;&#45;nqr-header-background-color)">-->
-            <div class="col-md-3 col-8 ml-md-4 py-2 py-md-0">
+            <div class="col-md-3 col-8 ml-md-4 py-2 pb-5 pb-md-0 py-md-0">
                 <p style="color: var(--nqr-text-smooth-color); text-align: center">examples/http.yml</p>
                 <img class="rounded code-sample" src="images/http.png"/>
             </div>
-            <div class="col-md-7 mr-md-4 col-12 py-2 py-md-0">
+            <div class="col-md-7 mr-md-4 col-12 py-2 pt-3 pt-md-0 py-md-0">
                 <p style="color: var(--nqr-text-smooth-color); text-align: center"><span
                         style="color: var(--nqr-color)">$ </span>nqr examples/http.yml</p>
                 <img class="rounded code-sample" src="images/http-result.png"/>
@@ -155,17 +137,16 @@
 
         <div class="container-fluid py-5"
              style="background-image: linear-gradient(var(--nqr-color), var(--nqr-text-color) 10%)">
-            <div class="row justify-content-around">
-                <div class="col-10 col-md-4" style="text-align: center">
-
+            <div class="row justify-content-around align-items-center">
+                <div class="col-12 col-md-4 pb-5 pb-md-0" style="text-align: center">
                     <img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqr.png"
                          alt="enqueuer logo" title="Enqueuer Giant Logo"
                          class="rounded"
                          style="max-width: 50%"/>
                 </div>
-                <div class="col-2 col-md-4 my-auto" style="text-align: center">
+                <div class="col-12 col-md-4 pb-5 pb-md-0" style="text-align: center">
                     <a href="https://enqueuer.com/docs">
-                        <button type="button" class="btn nqr-button" style="color: var(--nqr-text-color)">
+                        <button type="button" class="btn btn-lg nqr-button" style="color: var(--nqr-text-color)">
                             Read the docs
                         </button>
                     </a>
