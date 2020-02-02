@@ -118,6 +118,9 @@ Certainly one is what you need.
       $ nqr -l my-enqueuer-plugin-name -p plugin-protocol
       $ nqr -p http
       $ nqr --formatters-description json
+      
+    Contributing:
+      https://github.com/enqueuer-land/enqueuer
 
 ----
 

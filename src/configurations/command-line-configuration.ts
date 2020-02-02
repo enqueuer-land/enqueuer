@@ -140,6 +140,11 @@ export class CommandLineConfiguration {
         console.log('  $ nqr -l my-enqueuer-plugin-name -p plugin-protocol');
         console.log('  $ nqr -p http');
         console.log('  $ nqr --formatters-description json');
+
+        console.log('');
+        console.log('Contributing:');
+        console.log('  https://github.com/enqueuer-land/enqueuer');
+
     }
 
 }
