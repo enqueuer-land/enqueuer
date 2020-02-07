@@ -6,7 +6,7 @@ import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import {LogLevel} from '../loggers/log-level';
 import {prettifyJson} from '../outputs/prettify-json';
 
-process.setMaxListeners(30);
+// process.setMaxListeners(30);
 
 export class Configuration {
     private static instance: Configuration;

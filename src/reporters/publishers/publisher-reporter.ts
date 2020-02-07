@@ -45,10 +45,16 @@ export class PublisherReporter {
                 Logger.debug(`${this.report.name} published`);
                 this.report.publishTime = new DateController().toString();
                 this.published = true;
+                this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
+                    name: 'Published', valid: this.published, description: 'Published successfully'
+                });
+
             }
         } catch (err) {
             Logger.error(`'${this.report.name}' fail publishing: ${err}`);
-            this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({name: 'Published', valid: false, description: err.toString()});
+            this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
+                name: 'Published', valid: false, description: err.toString()
+            });
             this.report.valid = false;
             throw err;
         }
@@ -62,11 +68,6 @@ export class PublisherReporter {
     public onFinish(): void {
         if (!this.publisher.ignore) {
             this.executeHookEvent(DefaultHookEvents.ON_FINISH);
-            this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
-                name: 'Published',
-                valid: this.published,
-                description: 'Published successfully'
-            });
             this.report.valid = this.report.valid && this.published;
         }
     }
@@ -78,7 +79,12 @@ export class PublisherReporter {
             Object.keys(args).forEach((key: string) => {
                 eventExecutor.addArgument(key, args[key]);
             });
-            const tests = eventExecutor.execute();
+            const previousHook = this.report.hooks![eventName];
+            let previousTests: TestModel[] = [];
+            if (previousHook && previousHook.tests) {
+                previousTests = previousHook.tests || [];
+            }
+            const tests = previousTests.concat(eventExecutor.execute());
             const valid = tests.every((test: TestModel) => testModelIsPassing(test));
             this.report.hooks![eventName] = {
                 arguments: new ObjectDecycler().decycle(args),
