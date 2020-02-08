@@ -572,8 +572,8 @@ Once the object is parsed, your free to use it as a regular object in any event
         -   expect: json.key
             toBeEqualTo: csv[0].key
 
-It get's event better. 
-Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.
+It get's even better. 
+Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](#plugins_list) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.
 The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`. 
 Run `$ nqr -e` to see available ones.
 
@@ -685,6 +685,12 @@ Run `$ nqr -f [formatter-name]` to list available report formatters:
 Consider looking at the example of [configuration file](https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml) to see it in use.
 [This one](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), for instance, generates xUnit like reports from enqueuer's output.
 
+#### plugins list
+Enqueuer offers support to the plugins listed bellow.
+
+{{plugins list placeholder}}
+
+Want to see yours here too? [Write your own](https://github.com/enqueuer-land/plugin-scaffold) and make a PR [here](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).
 
 #### plugin installation
 In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
@@ -723,12 +729,12 @@ In order to be enqueuer compatible, a module has to have an `entryPoint` exporte
 
 ### Stacker
 Looking for ~~a really really good looking~~ an human error proof solution way of writing these requisition files?  
-Consider taking a look at [stacker](https://lopidio.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
+Consider taking a look at [stacker](https://virgs.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
 The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
 With them, you create, manage and run requisitions and and see their results in a really nice way.
 See this amazing beauty with your own eyes to get an idea of how it works:  
 
-![screenshot-passing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/http-passing-test.png)
+![screenshot-passing](https://raw.githubusercontent.com/virgs/stacker/master/docs/img/http-passing-test.png)
 
 ----
 
