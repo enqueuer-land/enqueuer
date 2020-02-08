@@ -378,7 +378,7 @@ Array of assertions.
 Run `$ nqr -t` to see available ones.
 Consider looking at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml) test example.
 Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
-You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or even [write your own](https://github.com/enqueuer-land/plugin-scaffold).
+You can [check them out](#plugins_list) or even [write your own](https://github.com/enqueuer-land/plugin-scaffold).
 
     onInit:
       script: variableIdentifier = 'string value'
@@ -584,8 +584,8 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 
 ### Plugins
 You're probably aware by now but it doesn't hurt do emphasize it: enqueuer provides an amazingly powerful plugin extensible architecture.
-It has [several plugins available](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins), but if none of them pleases you, you're free to [create your own](https://github.com/enqueuer-land/plugin-scaffold).
-Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our [plugins list](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).  
+It has [several plugins available](#plugins_list), but if none of them pleases you, you're free to [create your own](https://github.com/enqueuer-land/plugin-scaffold).
+Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our [plugins repository](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).  
 
 #### plugin types
 So far, you're able to extend enqueuer default behavior in four ways. Using a protocol plugin, an object parser plugin, an asserter plugin and using a report formatter plugin.
@@ -686,7 +686,7 @@ Consider looking at the example of [configuration file](https://github.com/enque
 [This one](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), for instance, generates xUnit like reports from enqueuer's output.
 
 #### plugins list
-Enqueuer offers support to the plugins listed bellow.
+Enqueuer community offers support to the following plugins:
 
 {{plugins list placeholder}}
 

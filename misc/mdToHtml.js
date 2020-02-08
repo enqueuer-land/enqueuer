@@ -98,7 +98,7 @@ fetchPlugins()
             return ` <div class="row no-gutters py-1">
                           <div class="col-3"><a href="${user.url}" target="_blank"><img src="${user.picture}" style="width: 15%" class="img-fluid rounded mx-auto px-2 rounded-circle">${user.name}</a></div>
                           <div class="col-3"><a href="${plugin.githubUrl}" style="overflow: scroll; height: inherit" target="_blank">${plugin.name}</a></div>
-                          <div class="col-6" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap; text-overflow: ellipsis">${plugin.description}</div>
+                          <div class="col-6" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap;">${plugin.description}</div>
                     </div>
                     `;
         })

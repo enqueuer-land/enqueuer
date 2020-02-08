@@ -8,10 +8,12 @@
 ![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Giant Logo")
 
 ## Why
+
 Make sure your set of services is working properly by mocking its inputs and asserting against
 its outputs
 
 ## What
+
 Enqueuer is a platform that provides the following capabilities:
 - Support for multi protocols<br>
 - Chainable message flows <br>
@@ -22,9 +24,10 @@ Enqueuer is a platform that provides the following capabilities:
 - Automated end-to-end testing <br>
 - Place tests front and center
 
-## How
+## Official page
 
-<div style="text-align: center"><img src="docs/images/http.png" width="50" height="auto"></div>
-<div style="text-align: center"><img src="docs/images/http-result.png" width="50" height="auto"></div>
+[https://enqueuer.com](https://enqueuer.com)  
+
+## Docs
 
 [Check out the full documentation](https://enqueuer.com/docs)
