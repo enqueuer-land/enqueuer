@@ -6,7 +6,7 @@ const pagedown = require('pagedown');
 const converter = new pagedown.Converter();
 const fs = require('fs');
 const template = fs.readFileSync(__dirname + "/html/template.html").toString();
-const md = fs.readFileSync("README.md").toString();
+const md = fs.readFileSync("docs/README.md").toString();
 let spyHtml = `<nav id="navbar-nqr" class="navbar navbar-fixed-left">    
     <a class="" href="#">
             <img class="ml-3 navbar-logo"
