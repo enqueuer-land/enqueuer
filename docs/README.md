@@ -748,7 +748,11 @@ You know what? Just head up to [enqueuer's github repo](https://github.com/enque
 It may help somehow. 
 
 #### contributors
-Thank you. It sounds *cliché*, but this project wouldn't be the same without the massive contribution from everyone.
+Thanks goes to these wonderful people:
+
+{{contributors list placeholder}}
+
+It sounds *cliché*, but this project wouldn't be the same without the massive contribution of everyone.
 
 #### code it
 In order to contribute with some code, you have to follow a few steps.

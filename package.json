@@ -21,7 +21,7 @@
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "updateHtml": "misc/mdToHtml.js",
-    "all": "npm run clean && npm run lint && npm run build && npm link && npm run test && npm run updateHtml",
+    "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
     "build": "tsc",
     "commit": "git-cz",
     "semantic-release": "semantic-release"

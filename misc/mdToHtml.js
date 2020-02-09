@@ -69,10 +69,10 @@ converter.hooks.set("postConversion", (text) => {
 });
 
 
-function fetchPlugins() {
+function httpGet(url) {
     return new Promise((resolve, reject) => {
         const request = http
-            .request(`https://raw.githubusercontent.com/enqueuer-land/plugins-list/master/plugins.json`, (resp) => {
+            .request(url, {headers: {'User-Agent': 'enqueuer-readme'}}, (resp) => {
                 let data = '';
                 resp
                     .on('data', (chunk) => {
@@ -89,14 +89,19 @@ function fetchPlugins() {
     });
 }
 
-fetchPlugins()
+const pluginsListContributors = [];
+const contributorsUsersList = [];
+
+httpGet(`https://raw.githubusercontent.com/enqueuer-land/plugins-list/master/plugins.json`)
     .then(payload => payload.data)
     .then(plugins => plugins
         .sort((first, second) => first.name.localeCompare(second.name))
         .map((plugin) => {
-            const user = getUser(plugin.githubUrl);
-            return ` <div class="row no-gutters py-1">
-                          <div class="col-3"><a href="${user.url}" target="_blank"><img src="${user.picture}" style="width: 15%" class="img-fluid rounded mx-auto px-2 rounded-circle">${user.name}</a></div>
+            const info = getInfo(plugin.githubUrl);
+            contributorsUsersList.push(info);
+            pluginsListContributors.push({contributors_url: info.contributors_url});
+            return ` <div class="row no-gutters py-1 plugins-list-row">
+                          <div class="col-3"><a href="${info.userUrl}" target="_blank"><img src="${info.picture}" style="width: 15%" class="img-fluid rounded mx-auto px-2 rounded-circle">${info.name}</a></div>
                           <div class="col-3"><a href="${plugin.githubUrl}" style="overflow: scroll; height: inherit" target="_blank">${plugin.name}</a></div>
                           <div class="col-6" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap;">${plugin.description}</div>
                     </div>
@@ -118,22 +123,39 @@ fetchPlugins()
     })
     .then(createHtml);
 
-function getUser(repo) {
+function getInfo(repo) {
     if (!repo) {
         return null;
     }
 
-    let path = url.parse(repo).path;
-    if (path.length && path.charAt(0) === '/') {
-        path = path.slice(1);
+    let user = url.parse(repo).path;
+    if (user.length && user.charAt(0) === '/') {
+        user = user.slice(1);
     }
-    path = path.split('/')[0];
-    return {picture: `http://github.com/${path}.png`, name: path, url: `http://github.com/${path}`};
+    const split = user.split('/');
+    const repoName = split[1];
+    user = split[0];
+    return {
+        contributors_url: `https://api.github.com/repos/${user}/${repoName}/contributors`,
+        picture: `http://github.com/${user}.png`,
+        name: user,
+        userUrl: `http://github.com/${user}`,
+        html_url: `http://github.com/${user}`
+    };
 }
 
 
-function createHtml(pluginsListTable) {
-    const readMeHtmlized = converter.makeHtml(md).replace('{{plugins list placeholder}}', pluginsListTable);
+async function createHtml(pluginsListTable) {
+    const contributors = Object.values((await getContributors())
+        .concat(contributorsUsersList)
+        .reduce((acc, contributor) => {
+            acc[contributor.name] = contributor;
+            return acc;
+        }, {}));
+    const contributorsHtml = createContributorsHtml(contributors);
+    const readMeHtmlized = converter.makeHtml(md)
+        .replace('{{plugins list placeholder}}', pluginsListTable)
+        .replace('{{contributors list placeholder}}', contributorsHtml);
     spyHtml += `</nav></nav></nav>`;
     const content = spyHtml +
         `<div class="nqr-main-container container" style="max-width: 90%">` +
@@ -145,3 +167,49 @@ function createHtml(pluginsListTable) {
     fs.writeFileSync('docs/docs.html', htmlResult);
     console.log("Html generated");
 }
+
+createContributorsHtml = function (contributors) {
+    return `<div class="container-fluid mx-auto p-2" style="width: 100%">
+                   <div class="row py-1 align-items-center justify-content-center mx-auto" style="width: 90%">` +
+        contributors
+            .map((contributor) => {
+                return ` <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
+                            <a href="${contributor.html_url}" target="_blank">
+                                <img src="${contributor.picture}" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
+                            </a>
+                         </div>`;
+            })
+            .join('') +
+        `</div>
+           </div>`;
+}
+
+async function getContributors() {
+    return new Promise((resolve, reject) => {
+        httpGet(`https://api.github.com/orgs/enqueuer-land/repos?per_page=200`)
+            .then(payload => payload.data)
+            .then(data => {
+                return Promise.all(data.concat(pluginsListContributors).map(repo => httpGet(repo.contributors_url).then(payload => payload.data)))
+            })
+            .then(repoContributors => repoContributors.reduce((acc, repoContributor) => acc.concat(repoContributor), []))
+            .then(contributors => contributors.reduce((acc, contributor) => {
+                if (contributor.type === 'User' /*&& contributor.login !== 'enqueuer-land'*/) {
+                    acc[contributor.login] = {
+                        avatar_url: contributor.avatar_url,
+                        html_url: contributor.html_url,
+                        login: contributor.login,
+                    };
+                }
+                return acc;
+            }, {}))
+            .then(contributors => Object.values(contributors))
+            .then(contributors => contributors.map(contributor => ({
+                picture: `http://github.com/${contributor.login}.png`,
+                name: contributor.login,
+                html_url: `http://github.com/${contributor.login}`
+            })))
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
