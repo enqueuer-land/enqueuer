@@ -101,9 +101,18 @@ httpGet(`https://raw.githubusercontent.com/enqueuer-land/plugins-list/master/plu
             contributorsUsersList.push(info);
             pluginsListContributors.push({contributors_url: info.contributors_url});
             return ` <div class="row no-gutters py-1 plugins-list-row">
-                          <div class="col-3"><a href="${info.userUrl}" target="_blank"><img src="${info.picture}" style="width: 15%" class="img-fluid rounded mx-auto px-2 rounded-circle">${info.name}</a></div>
-                          <div class="col-3"><a href="${plugin.githubUrl}" style="overflow: scroll; height: inherit" target="_blank">${plugin.name}</a></div>
-                          <div class="col-6" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap;">${plugin.description}</div>
+                          <div class="col-12 col-md-6 col-lg-3" style="">
+                            <a href="${info.userUrl}" target="_blank" style="overflow: scroll; white-space: nowrap;">
+                                <img src="${info.picture}" style="width: 15%;" class="img-fluid rounded mx-auto px-2 rounded-circle">
+                                ${info.name}
+                            </a>
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-3 pl-5 pl-lg-0">
+                            <a href="${plugin.githubUrl}" style="overflow: scroll; white-space: nowrap;" target="_blank">${plugin.name}</a>
+                          </div>
+                          <div class="col-12 col-lg-6 pb-3 pl-5 pl-lg-0 pb-sm-1 pb-lg-0" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap;">
+                            ${plugin.description}
+                          </div>
                     </div>
                     `;
         })
@@ -112,9 +121,9 @@ httpGet(`https://raw.githubusercontent.com/enqueuer-land/plugins-list/master/plu
         return `
                     <div class="container px-0 pt-2"> <!--style="background-color: var(&#45;&#45;nqr-header-background-color)"-->
                       <div class="row no-gutters pb-1">
-                        <div class="col-3"><h5 class="px-1">Author</h5></div>
-                        <div class="col-3"><h5 class="px-1">Name</h5></div>
-                        <div class="col-6"><h5 class="px-1">Description</h5></div>
+                        <div class="col-12 col-md-6 col-lg-3"><h5 class="px-1">Author</h5></div>
+                        <div class="col-12 col-md-6 col-lg-3"><h5 class="px-1">Name</h5></div>
+                        <div class="col-12 col-lg-6 pb-3 pb-sm-1 pb-lg-0"><h5 class="px-1">Description</h5></div>
                       </div>
                     </div>
                     <div class="container-fluid px-0 pb-1" >
