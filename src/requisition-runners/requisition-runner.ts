@@ -11,7 +11,7 @@ import {ComponentParentBackupper} from '../components/component-parent-backupper
 import {ComponentImporter} from './component-importer';
 import {RequisitionAdopter} from '../components/requisition-adopter';
 import {NotificationEmitter, Notifications} from '../notifications/notification-emitter';
-import {testModelIsPassing} from '../models/outputs/test-model';
+import {testModelIsNotFailing} from '../models/outputs/test-model';
 
 export class RequisitionRunner {
 
@@ -127,7 +127,7 @@ export class RequisitionRunner {
         const report = await this.requisitionReporter!.execute();
         report.requisitions = childrenReport;
         report.valid = report.valid &&
-            report.requisitions.every((requisition) => testModelIsPassing(requisition)) &&
+            report.requisitions.every((requisition) => testModelIsNotFailing(requisition)) &&
             Object.keys(report.hooks || {}).every((key: string) => report.hooks ? report.hooks[key].valid : true);
         Logger.debug(`Requisition ${this.requisition.name} went through the happy path`);
         return report;

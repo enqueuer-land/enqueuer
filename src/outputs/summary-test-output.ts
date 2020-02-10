@@ -1,5 +1,5 @@
 import {TestsAnalyzer} from './tests-analyzer';
-import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
+import {TestModel, testModelIsFailing, testModelIsNotFailing, testModelIsPassing} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
@@ -140,7 +140,7 @@ export class SummaryTestOutput {
     }
 
     private printFailingTests(report: ReportModel, hierarchy: string[]) {
-        const failing = !testModelIsPassing(report);
+        const failing = testModelIsFailing(report);
         if (failing || this.options.showPassingTests) {
             Object.keys(report.hooks || {})
                 .forEach((key: string) => this.printHookTests(report.hooks![key], key, hierarchy));

@@ -80,17 +80,20 @@ describe('TestsAnalyzer', () => {
 
         const test: ReportModel = {
             name: 'name',
-            valid: true,
+            valid: false,
             hooks: {
-                onInit: {valid: true, tests: [createTest(false, true), createTest(true, true)]}
+                onInit: {valid: true, tests: [createTest(false, true), createTest(true, true)]},
+                onFinish: {valid: false, tests: [createTest(true, false), createTest(false, undefined)]}
             },
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
 
-        expect(testsAnalyzer.getFailingTests().length).toBe(0);
-        expect(testsAnalyzer.getTests().length).toBe(2);
-        expect(testsAnalyzer.getPercentage()).toBe(100);
+        expect(testsAnalyzer.getFailingTests().length).toBe(1);
+        expect(testsAnalyzer.getTests().length).toBe(4);
+        expect(testsAnalyzer.getPassingTests().length).toBe(1);
+        expect(testsAnalyzer.getNotIgnoredTests().length).toBe(2);
+        expect(testsAnalyzer.getPercentage()).toBe(50);
     });
 
     it('Should ignore ignored test to validate', () => {
@@ -128,7 +131,7 @@ describe('TestsAnalyzer', () => {
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
 
         expect(testsAnalyzer.getFailingTests().length).toBe(1);
-        expect(testsAnalyzer.getPassingTests().length).toBe(4);
+        expect(testsAnalyzer.getPassingTests().length).toBe(3);
         expect(testsAnalyzer.getIgnoredList().length).toBe(1);
         expect(testsAnalyzer.getTests().length).toBe(5);
         expect(testsAnalyzer.getNotIgnoredTests().length).toBe(4);
@@ -149,7 +152,7 @@ describe('TestsAnalyzer', () => {
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
 
         expect(testsAnalyzer.getFailingTests().length).toBe(0);
-        expect(testsAnalyzer.getPassingTests().length).toBe(1);
+        expect(testsAnalyzer.getPassingTests().length).toBe(0);
         expect(testsAnalyzer.getIgnoredList().length).toBe(1);
         expect(testsAnalyzer.getTests().length).toBe(1);
         expect(testsAnalyzer.getNotIgnoredTests().length).toBe(0);

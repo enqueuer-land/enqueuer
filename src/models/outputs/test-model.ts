@@ -6,5 +6,22 @@ export interface TestModel {
 }
 
 export function testModelIsPassing(test: { valid: boolean, ignored?: boolean }): boolean {
-    return test.ignored || test.valid;
+    if (test.ignored === true) {
+        return false;
+    }
+    return test.valid === true;
+}
+
+export function testModelIsFailing(test: { valid: boolean, ignored?: boolean }): boolean {
+    if (test.ignored === true) {
+        return false;
+    }
+    return test.valid === false;
+}
+
+export function testModelIsNotFailing(test: { valid: boolean, ignored?: boolean }): boolean {
+    if (test.ignored === true) {
+        return true;
+    }
+    return test.valid !== false;
 }

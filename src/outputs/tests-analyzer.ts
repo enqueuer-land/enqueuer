@@ -24,23 +24,23 @@ export class TestsAnalyzer {
     }
 
     public getIgnoredList(): TestModel[] {
-        return this.tests.filter(test => test.ignored !== false && test.ignored !== undefined);
+        return this.tests.filter(test => test.ignored === true && test.ignored !== undefined);
     }
 
     public getPassingTests(): TestModel[] {
-        return this.tests.filter(test => testModelIsPassing(test));
+        return this.tests.filter(test => test.valid === true && (test.ignored === false || test.ignored === undefined));
     }
 
     public getFailingTests(): TestModel[] {
-        return this.tests.filter(test => !testModelIsPassing(test));
+        return this.tests.filter(test => test.valid === false && (test.ignored === false || test.ignored === undefined));
     }
 
     public getPercentage(): number {
-        let percentage = Math.trunc(10000 * this.getPassingTests().length / this.getTests().length) / 100;
-        if (isNaN(percentage)) {
-            percentage = 100;
+        const notIgnoredTestsLength = this.getNotIgnoredTests().length;
+        if (notIgnoredTestsLength === 0) {
+            return 100;
         }
-        return percentage;
+        return Math.trunc(10000 * this.getPassingTests().length / notIgnoredTestsLength) / 100;
     }
 
     private findRequisitions(requisition: ReportModel) {
