@@ -26,7 +26,7 @@ describe('EnqueuerRunner', () => {
                 valid: true,
                 hooks: {}
             };
-            NotificationEmitter.emit(Notifications.REQUISITION_RAN, report);
+            NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, {requisition: report});
             return [report];
         })
     };
@@ -90,7 +90,7 @@ describe('EnqueuerRunner', () => {
 
         await new EnqueuerRunner().execute();
         expect(SummaryTestOutput).toHaveBeenCalledWith({
-            'hooks':
+            hooks:
                 {
                     'onParsed': {'tests': [], 'valid': true}
                 },

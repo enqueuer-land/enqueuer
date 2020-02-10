@@ -127,14 +127,14 @@ export class SummaryTestOutput {
         }
         const percentage = testAnalyzer.getPercentage();
         const testsNumber = testAnalyzer.getNotIgnoredTests().length;
-        let message = `${testAnalyzer.getPassingTests().length} tests passing of ${testsNumber} (${percentage}%)`;
-        const ignoredTests = testAnalyzer.getIgnoredList();
-        if (ignoredTests.length > 0) {
-            message += colorizer.yellow(` - ${ignoredTests.length} ignored -`);
-        }
+        let message = `${testAnalyzer.getPassingTests().length}\t tests passing of ${testsNumber}\t (${percentage}%)`;
         if (this.report.time) {
             const totalTime = this.report.time.totalTime;
-            message += ` ran in ${totalTime}ms`;
+            message += `\t| executed in ${totalTime}ms`;
+        }
+        const ignoredTests = testAnalyzer.getIgnoredList();
+        if (ignoredTests.length > 0) {
+            message += colorizer.yellow(`\t| ${ignoredTests.length} tests ignored`);
         }
         return this.getColor(percentage)(message);
     }

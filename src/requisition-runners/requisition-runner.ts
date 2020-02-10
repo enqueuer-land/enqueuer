@@ -24,13 +24,14 @@ export class RequisitionRunner {
     }
 
     public async run(): Promise<output.RequisitionModel[]> {
+        NotificationEmitter.emit(Notifications.REQUISITION_STARTED, {requisition: this.requisition});
         Logger.info(`Running requisition '${this.requisition.name}'`);
         try {
             this.importRequisition();
         } catch (err) {
             Logger.error(`Error importing requisition`);
             const report = RequisitionDefaultReports.createRunningError(this.requisition, err);
-            this.emitNotification(report);
+            this.emitOnFinishNotification(report);
             return [report];
         }
         this.replaceVariables();
@@ -38,12 +39,12 @@ export class RequisitionRunner {
         if (evaluatedIterations <= 0) {
             Logger.info(`Requisition will be skipped duo no iterations`);
             const report = RequisitionDefaultReports.createSkippedReport(this.requisition);
-            this.emitNotification(report);
+            this.emitOnFinishNotification(report);
             return [report];
         } else if (this.requisition.ignore) {
             Logger.info(`Requisition will be ignored`);
             const report = RequisitionDefaultReports.createIgnoredReport(this.requisition);
-            this.emitNotification(report);
+            this.emitOnFinishNotification(report);
             return [report];
         }
         return await this.iterateRequisition(evaluatedIterations);
@@ -60,7 +61,7 @@ export class RequisitionRunner {
                 Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name + iterationSuffix}'`);
                 const report = await this.startRequisitionReporter();
                 reports.push(report);
-                this.emitNotification(report);
+                this.emitOnFinishNotification(report);
             } catch (err) {
                 reports.push(RequisitionDefaultReports.createRunningError(this.requisition, err.toString()));
                 Logger.error(err);
@@ -77,12 +78,12 @@ export class RequisitionRunner {
 
     private async interrupt(): Promise<output.RequisitionModel> {
         const report: output.RequisitionModel = await this.requisitionReporter!.interrupt();
-        this.emitNotification(report);
+        this.emitOnFinishNotification(report);
         return report;
     }
 
-    private emitNotification(report: output.RequisitionModel) {
-        NotificationEmitter.emit(Notifications.REQUISITION_RAN, report);
+    private emitOnFinishNotification(report: output.RequisitionModel) {
+        NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, {requisition: report});
     }
 
     private replaceVariables(): void {

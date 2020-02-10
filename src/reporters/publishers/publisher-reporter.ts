@@ -9,6 +9,8 @@ import {EventExecutor} from '../../events/event-executor';
 import {DefaultHookEvents} from '../../models/events/event';
 import {ObjectDecycler} from '../../object-parser/object-decycler';
 import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
+import {NotificationEmitter, Notifications} from '../../notifications/notification-emitter';
+import {HookModel} from '../../models/outputs/hook-model';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
@@ -69,6 +71,7 @@ export class PublisherReporter {
         if (!this.publisher.ignore) {
             this.executeHookEvent(DefaultHookEvents.ON_FINISH);
             this.report.valid = this.report.valid && this.published;
+            NotificationEmitter.emit(Notifications.PUBLISHER_FINISHED, {publisher: this.report});
         }
     }
 
@@ -86,11 +89,17 @@ export class PublisherReporter {
             }
             const tests = previousTests.concat(eventExecutor.execute());
             const valid = tests.every((test: TestModel) => testModelIsPassing(test));
-            this.report.hooks![eventName] = {
+            const hookResult: HookModel = {
                 arguments: new ObjectDecycler().decycle(args),
                 tests: tests,
                 valid: valid
             };
+            this.report.hooks![eventName] = hookResult;
+            NotificationEmitter.emit(Notifications.HOOK_FINISHED, {
+                hookName: eventName,
+                hook: hookResult,
+                publisher: this.publisher
+            });
 
             this.report.valid = this.report.valid && valid;
         }
@@ -98,6 +107,7 @@ export class PublisherReporter {
 
     private executeOnInitFunction(publisher: input.PublisherModel) {
         if (!publisher.ignore) {
+            NotificationEmitter.emit(Notifications.PUBLISHER_STARTED, {publisher: publisher});
             this.executeHookEvent(DefaultHookEvents.ON_INIT, {}, publisher);
         }
     }

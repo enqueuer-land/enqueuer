@@ -4,11 +4,11 @@ describe('NotificationEmitter', () => {
     it('Should emit notification', done => {
         const emittedNotification = {booleanValue: true, stringValue: 'string'};
 
-        NotificationEmitter.on(Notifications.REQUISITION_RAN, (receivedNotification: any) => {
+        NotificationEmitter.on(Notifications.REQUISITION_FINISHED, (receivedNotification: any) => {
             expect(receivedNotification).toEqual(emittedNotification);
             done();
         });
 
-        NotificationEmitter.emit(Notifications.REQUISITION_RAN, emittedNotification);
+        NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, emittedNotification);
     });
 });

@@ -14,6 +14,7 @@ import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
 import {HookReporter} from '../hook-reporter';
+import {NotificationEmitter, Notifications} from '../../notifications/notification-emitter';
 
 export class SubscriptionReporter {
 
@@ -177,6 +178,7 @@ export class SubscriptionReporter {
         Logger.trace(`Executing subscription onFinish`);
         if (!this.subscription.ignore) {
             this.executeHookEvent(DefaultHookEvents.ON_FINISH);
+            NotificationEmitter.emit(Notifications.SUBSCRIPTION_FINISHED, {subscription: this.report});
         }
     }
 
@@ -196,7 +198,13 @@ export class SubscriptionReporter {
                 tests: tests,
                 valid: valid
             };
-            this.report.hooks![eventName] = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
+            const hookResult = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
+            this.report.hooks![eventName] = hookResult;
+            NotificationEmitter.emit(Notifications.HOOK_FINISHED, {
+                hookName: eventName,
+                hook: hookResult,
+                subscription: this.subscription
+            });
         }
     }
 
@@ -213,6 +221,7 @@ export class SubscriptionReporter {
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         if (!subscriptionAttributes.ignore) {
+            NotificationEmitter.emit(Notifications.SUBSCRIPTION_STARTED, {subscription: subscriptionAttributes});
             this.executeHookEvent(DefaultHookEvents.ON_INIT, {}, subscriptionAttributes);
         }
     }

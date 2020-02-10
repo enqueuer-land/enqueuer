@@ -8,6 +8,7 @@ import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
 import {EventExecutor} from '../events/event-executor';
 import {DefaultHookEvents} from '../models/events/event';
 import {TestModel} from '../models/outputs/test-model';
+import {NotificationEmitter, Notifications} from '../notifications/notification-emitter';
 
 export class RequisitionReporter {
     public static readonly DEFAULT_TIMEOUT = 5 * 1000;
@@ -105,8 +106,17 @@ export class RequisitionReporter {
         const elapsedTime = new Date().getTime() - this.startTime.getTime();
         eventExecutor.addArgument('elapsedTime', elapsedTime);
         const testModels = eventExecutor.execute();
-        this.reportGenerator.addTest(DefaultHookEvents.ON_INIT,
-            {valid: testModels.every(test => test.valid), tests: testModels, arguments: {elapsedTime: elapsedTime}});
+        const hookResult = {
+            valid: testModels.every(test => test.valid),
+            tests: testModels,
+            arguments: {elapsedTime: elapsedTime}
+        };
+        this.reportGenerator.addTest(DefaultHookEvents.ON_INIT, hookResult);
+        NotificationEmitter.emit(Notifications.HOOK_FINISHED, {
+            hookName: DefaultHookEvents.ON_INIT,
+            hook: hookResult,
+            requisition: this.requisitionAttributes
+        });
         return testModels;
     }
 
@@ -116,8 +126,17 @@ export class RequisitionReporter {
         const elapsedTime = new Date().getTime() - this.startTime.getTime();
         onFinishEventExecutor.addArgument('elapsedTime', elapsedTime);
         const testModels = onFinishEventExecutor.execute();
-        this.reportGenerator.addTest(DefaultHookEvents.ON_FINISH,
-            {valid: testModels.every(test => test.valid), tests: testModels, arguments: {elapsedTime: elapsedTime}});
+        const hookResult = {
+            valid: testModels.every(test => test.valid),
+            tests: testModels,
+            arguments: {elapsedTime: elapsedTime}
+        };
+        this.reportGenerator.addTest(DefaultHookEvents.ON_FINISH, hookResult);
+        NotificationEmitter.emit(Notifications.HOOK_FINISHED, {
+            hookName: DefaultHookEvents.ON_FINISH,
+            hook: hookResult,
+            requisition: this.requisitionAttributes
+        });
         this.multiPublishersReporter.onFinish();
     }
 

@@ -21,7 +21,7 @@ export class EnqueuerRunner {
 
     constructor() {
         this.startTime = new DateController();
-        NotificationEmitter.on(Notifications.REQUISITION_RAN, (report: output.RequisitionModel) => EnqueuerRunner.printReport(report));
+        NotificationEmitter.on(Notifications.REQUISITION_FINISHED, (report: any) => EnqueuerRunner.printReport(report.requisition));
     }
 
     public async execute(): Promise<output.RequisitionModel[]> {
