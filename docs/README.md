@@ -33,7 +33,8 @@ Run it:
 
     $ enqueuer enqueuer-repo-hit.yml
 
-What if I want to mock a http server, you may ask. Not a big deal for enqueuer lovers:
+Now you know how to hit a http server. 
+What if I want to mock a http server response, you may ask. Not a big deal for enqueuer lovers:
     
     timeout: -1
     subscriptions:
@@ -51,14 +52,40 @@ What if I want to mock a http server, you may ask. Not a big deal for enqueuer l
             -   expect: body
                 toContain: `enqueuer`
                 
-Now go ahead and try hitting it using the browser.
-Tip: remove timeout values and check what happens.
-I told you it was simple.
+Now go ahead and try hitting it using the browser.  
+Tip: remove timeout values and check what happens.  
+I told you it was simple.  
+Yes, of course you can hit your own mocked http server:
+
+    publishers:
+    -   type: http
+        url: http://localhost:23075/resource
+        method: POST
+        payload: enqueuer
+        onResponseReceived:
+            assertions:
+            -   expect: statusCode
+                toBeGreaterThan: 400
+            -   expect: body
+                toBeEqualTo: "'blah'"
+    subscriptions:
+    -   type: http
+        endpoint: /resource
+        port: 23075
+        method: POST
+        response:
+            status: 444
+            payload: blah
+        onMessageReceived:
+            assertions:
+            -   expect: body
+                toContain: "'queue'"
+    
 Now, let's say you want to mix different protocols to test a bit more complex flow.
 How about publishing an amqp message and making sure that, once a service consumes that message an endpoint of your is hit?
 In order to achieve that, we have to make use of a [plugin](#plugins), given that amqp support is provided by a plugin.
 In this scenario, we're talking about the [amqp plugin](https://github.com/enqueuer-land/enqueuer-plugin-amqp).
-Once we get this [plugin installed](#plugin_installation) we are able to create and run files like this:
+Once we get this [plugin installed](#plugins_installation) we are able to create and run files like this:
 
     publishers:
     -   type: amqp
@@ -692,7 +719,7 @@ Enqueuer community offers support to the following plugins:
 
 Want to see yours here too? [Write your own](https://github.com/enqueuer-land/plugin-scaffold) and make a PR [here](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).
 
-#### plugin installation
+#### plugins installation
 In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
 You can tell enqueuer to use a plugin in three different ways: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.
 
