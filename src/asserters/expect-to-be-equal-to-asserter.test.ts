@@ -67,8 +67,8 @@ describe('ExpectToBeEqualToAsserter', () => {
 
         const assertion: Assertion = {
             name: 'assertion 0',
-            expect:         {value: 123, deep: {nested: true, array: [4, 3, 2]}},
-            toBeEqualTo:    {value: 123, deep: {nested: true, array: [4, 3, 2]}},
+            expect:         {value: 123, cycle: {nested: true, array: [4, 3, 2]}},
+            toBeEqualTo:    {value: 123, cycle: {nested: true, array: [4, 3, 2]}},
         };
 
         const literal = {
@@ -87,14 +87,14 @@ describe('ExpectToBeEqualToAsserter', () => {
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: {
-                deep: {
+                cycle: {
                     nested: true, array: [4, 3, 2]
                 },
                 value: 123,
             },
             toBeEqualTo: {
                 value: 123,
-                deep: {
+                cycle: {
                     nested: true, array: [4, 3, 2]
                 }
             }
@@ -115,9 +115,9 @@ describe('ExpectToBeEqualToAsserter', () => {
 
         const assertion: Assertion = {
             name: 'assertion 0',
-            expect: {value: 123, deep: {nested: true, array: [4, 3, 2]}},
+            expect: {value: 123, cycle: {nested: true, array: [4, 3, 2]}},
             not: null,
-            toBeEqualTo: {value: 123, deep: {nested: true}},
+            toBeEqualTo: {value: 123, cycle: {nested: true}},
         };
 
         const literal = {
@@ -136,8 +136,8 @@ describe('ExpectToBeEqualToAsserter', () => {
 
         const assertion: Assertion = {
             name: 'assertion 0',
-            expect: {value: 123, deep: {nested: true, array: [4, 3, 2]}},
-            toBeEqualTo: {value: 123, deep: {nested: false, array: [4, 3, 2]}},
+            expect: {value: 123, cycle: {nested: true, array: [4, 3, 2]}},
+            toBeEqualTo: {value: 123, cycle: {nested: false, array: [4, 3, 2]}},
         };
 
         const literal = {

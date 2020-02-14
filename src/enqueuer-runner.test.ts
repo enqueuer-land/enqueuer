@@ -3,9 +3,10 @@ import {Configuration} from './configurations/configuration';
 import {RequisitionFilePatternParser} from './requisition-runners/requisition-file-pattern-parser';
 import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {SummaryTestOutput} from './outputs/summary-test-output';
-import {NotificationEmitter, Notifications} from './notifications/notification-emitter';
+import {NotificationEmitter} from './notifications/notification-emitter';
 import {Logger} from './loggers/logger';
 import {LogLevel} from './loggers/log-level';
+import {Notifications} from "./notifications/notifications";
 
 jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
@@ -84,6 +85,7 @@ describe('EnqueuerRunner', () => {
     it('should call Summary', async () => {
 
         const printMock = jest.fn();
+        // @ts-ignore
         SummaryTestOutput.mockImplementationOnce(() => ({
             print: printMock
         }));
@@ -106,6 +108,7 @@ describe('EnqueuerRunner', () => {
 
     it('should log Summary error', () => {
 
+        // @ts-ignore
         SummaryTestOutput.mockImplementationOnce(() => {
             throw 'error';
         });

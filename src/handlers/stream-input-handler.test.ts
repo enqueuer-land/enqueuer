@@ -86,7 +86,7 @@ describe('StreamInputHandler', () => {
         };
 
         const message = {
-            deep: {
+            cycle: {
                 'object': 2
             }
         };

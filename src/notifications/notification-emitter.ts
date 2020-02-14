@@ -1,16 +1,6 @@
 import {EventEmitter} from 'events';
 import {Logger} from '../loggers/logger';
-
-export enum Notifications {
-    REQUISITION_FINISHED,
-    PUBLISHER_FINISHED,
-    SUBSCRIPTION_FINISHED,
-    HOOK_FINISHED,
-
-    REQUISITION_STARTED,
-    PUBLISHER_STARTED,
-    SUBSCRIPTION_STARTED,
-}
+import {Notifications} from './notifications';
 
 export class NotificationEmitter {
     private static readonly notificationEmitter = new NotificationEmitter();

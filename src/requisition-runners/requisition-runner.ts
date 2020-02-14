@@ -10,8 +10,9 @@ import {IterationsEvaluator} from './iterations-evaluator';
 import {ComponentParentBackupper} from '../components/component-parent-backupper';
 import {ComponentImporter} from './component-importer';
 import {RequisitionAdopter} from '../components/requisition-adopter';
-import {NotificationEmitter, Notifications} from '../notifications/notification-emitter';
+import {NotificationEmitter} from '../notifications/notification-emitter';
 import {testModelIsNotFailing} from '../models/outputs/test-model';
+import {Notifications} from '../notifications/notifications';
 
 export class RequisitionRunner {
 

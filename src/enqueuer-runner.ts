@@ -7,11 +7,12 @@ import {RequisitionFilePatternParser} from './requisition-runners/requisition-fi
 import {RequisitionRunner} from './requisition-runners/requisition-runner';
 import {Configuration} from './configurations/configuration';
 import {RequisitionAdopter} from './components/requisition-adopter';
-import {NotificationEmitter, Notifications} from './notifications/notification-emitter';
+import {NotificationEmitter} from './notifications/notification-emitter';
 import {SummaryTestOutput} from './outputs/summary-test-output';
 import {PublisherModel} from './models/inputs/publisher-model';
 import {TestModel} from './models/outputs/test-model';
 import {LogLevel} from './loggers/log-level';
+import {Notifications} from './notifications/notifications';
 
 export class EnqueuerRunner {
     private static reportName: string = 'enqueuer';

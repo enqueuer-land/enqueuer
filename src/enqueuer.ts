@@ -35,6 +35,7 @@ export * from './requisition-runners/requisition-runner';
 export * from './strings/id-generator';
 
 export * from './notifications/notification-emitter';
+export * from './notifications/notifications';
 
 export * from './plugins/dynamic-modules-manager';
 export * from './plugins/protocol-manager';

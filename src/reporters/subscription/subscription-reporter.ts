@@ -14,7 +14,8 @@ import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
 import {HookReporter} from '../hook-reporter';
-import {NotificationEmitter, Notifications} from '../../notifications/notification-emitter';
+import {NotificationEmitter} from '../../notifications/notification-emitter';
+import {Notifications} from '../../notifications/notifications';
 
 export class SubscriptionReporter {
 

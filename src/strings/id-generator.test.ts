@@ -30,7 +30,7 @@ describe('IdGenerator', () => {
 
     it('generateId of objects', () => {
         const value = {
-            deep: {
+            cycle: {
                 deeper: {
                     deepest: true
                 }
@@ -40,7 +40,7 @@ describe('IdGenerator', () => {
         hash.update(JSON.stringify(value), 'utf8');
 
         const idGenerator: IdGenerator = new IdGenerator(value);
-        const expected = '1137400576_f1524b820';
+        const expected = '1137400576_d569243bb';
 
         let generatedId = idGenerator.generateId();
 

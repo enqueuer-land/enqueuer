@@ -8,7 +8,8 @@ import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
 import {EventExecutor} from '../events/event-executor';
 import {DefaultHookEvents} from '../models/events/event';
 import {TestModel} from '../models/outputs/test-model';
-import {NotificationEmitter, Notifications} from '../notifications/notification-emitter';
+import {NotificationEmitter} from '../notifications/notification-emitter';
+import {Notifications} from '../notifications/notifications';
 
 export class RequisitionReporter {
     public static readonly DEFAULT_TIMEOUT = 5 * 1000;

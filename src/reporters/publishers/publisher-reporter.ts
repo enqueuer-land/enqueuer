@@ -9,8 +9,9 @@ import {EventExecutor} from '../../events/event-executor';
 import {DefaultHookEvents} from '../../models/events/event';
 import {ObjectDecycler} from '../../object-parser/object-decycler';
 import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
-import {NotificationEmitter, Notifications} from '../../notifications/notification-emitter';
+import {NotificationEmitter} from '../../notifications/notification-emitter';
 import {HookModel} from '../../models/outputs/hook-model';
+import {Notifications} from '../../notifications/notifications';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;

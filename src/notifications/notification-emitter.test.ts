@@ -1,4 +1,5 @@
-import {NotificationEmitter, Notifications} from './notification-emitter';
+import {NotificationEmitter} from './notification-emitter';
+import {Notifications} from './notifications';
 
 describe('NotificationEmitter', () => {
     it('Should emit notification', done => {
