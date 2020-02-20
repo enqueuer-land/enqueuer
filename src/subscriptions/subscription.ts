@@ -25,7 +25,7 @@ export abstract class Subscription {
 
     public abstract subscribe(): Promise<void>;
 
-    public abstract receiveMessage(): Promise<void>;
+    public abstract receiveMessage(): Promise<any>;
 
     public async unsubscribe(): Promise<void> {
         //do nothing

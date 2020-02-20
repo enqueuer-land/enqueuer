@@ -44,12 +44,12 @@ export class PublisherReporter {
                 Logger.trace(`Ignoring publisher ${this.report.name}`);
             } else {
                 Logger.trace(`Publishing ${this.report.name}`);
-                await this.publisher.publish();
+                const response = await this.publisher.publish();
                 Logger.debug(`${this.report.name} published`);
                 this.report.publishTime = new DateController().toString();
                 this.published = true;
                 this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
-                    name: 'Published', valid: this.published, description: 'Published successfully'
+                    name: 'Published', valid: this.published, description: this.processMessage(response)
                 });
 
             }
@@ -61,7 +61,16 @@ export class PublisherReporter {
             this.report.valid = false;
             throw err;
         }
+    }
 
+    private processMessage(messageReceived: any): string {
+        if (messageReceived) {
+            if (typeof messageReceived === 'object') {
+                return JSON.stringify(new ObjectDecycler().decycle(messageReceived), null, 2);
+            }
+            return messageReceived;
+        }
+        return 'Published successfully';
     }
 
     public getReport(): PublisherModel {

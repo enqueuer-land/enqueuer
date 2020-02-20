@@ -16,7 +16,7 @@ class HttpPublisher extends Publisher {
         this['timeout'] = this.timeout || 3000;
     }
 
-    public async publish(): Promise<void> {
+    public async publish(): Promise<any> {
         this.insertAuthentication();
 
         const response = await new HttpRequester(this.url,
@@ -26,8 +26,19 @@ class HttpPublisher extends Publisher {
             this.timeout)
             .request();
         this.executeHookEvent('onResponseReceived', response);
-        //NOTE: Deprecation proposes
+        //NOTE: Deprecation purpose
         this.executeHookEvent('onMessageReceived', response);
+        return this.processResponseToBePrinted(response);
+    }
+
+    private processResponseToBePrinted(response: any) {
+        try {
+            if (response.body) {
+                response.body = JSON.parse(response.body);
+            }
+        } catch (e) {
+        }
+        return response;
     }
 
     private insertAuthentication() {

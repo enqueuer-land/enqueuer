@@ -1,7 +1,7 @@
 import {TestModel} from '../../models/outputs/test-model';
 
 export type Time = { timeout?: number; totalTime: number };
-export type Summary = { subscribed: boolean, avoidable: boolean, hasMessage: boolean, time?: Time, ignore?: boolean, subscribeError?: string };
+export type Summary = { subscribed: boolean, avoidable: boolean, messageReceived?: any, time?: Time, ignore?: boolean, subscribeError?: string };
 
 export class SubscriptionFinalReporter {
     private messageReceivedTestName: string = `Message received`;
@@ -11,7 +11,7 @@ export class SubscriptionFinalReporter {
 
     private readonly subscribed: boolean;
     private readonly avoidable: boolean;
-    private readonly hasMessage: boolean = false;
+    private readonly messageReceived?: any = false;
     private readonly ignore: boolean;
     private readonly time?: Time;
     private readonly subscribeError?: string;
@@ -19,7 +19,7 @@ export class SubscriptionFinalReporter {
     constructor(summary: Summary) {
         this.subscribed = summary.subscribed;
         this.avoidable = summary.avoidable;
-        this.hasMessage = summary.hasMessage;
+        this.messageReceived = summary.messageReceived;
         this.time = summary.time;
         this.subscribeError = summary.subscribeError;
         this.ignore = !!summary.ignore;
@@ -59,11 +59,11 @@ export class SubscriptionFinalReporter {
     }
 
     private createMessageTests(): TestModel[] {
-        if (this.hasMessage) {
+        if (this.messageReceived) {
             return [{
                 valid: true,
                 name: this.messageReceivedTestName,
-                description: `Subscription has received its message`
+                description: this.messageReceived
             }];
         } else {
             return [{
@@ -86,7 +86,7 @@ export class SubscriptionFinalReporter {
     }
 
     private createAvoidableTests(): TestModel[] {
-        if (this.hasMessage) {
+        if (this.messageReceived) {
             return [{
                 valid: false,
                 name: this.subscriptionAvoidedTestName,

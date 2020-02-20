@@ -23,7 +23,7 @@ export abstract class Publisher {
         this.name = publisherAttributes.name;
     }
 
-    public abstract publish(): Promise<void>;
+    public abstract publish(): Promise<any>;
 
     public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
         this['hookEventExecutor'] = hookEventExecutor;

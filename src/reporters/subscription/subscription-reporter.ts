@@ -98,7 +98,8 @@ export class SubscriptionReporter {
     public async receiveMessage(): Promise<any> {
         if (!this.subscription.ignore) {
             try {
-                await this.subscription.receiveMessage();
+                const messageReceived = await this.processMessage(await this.subscription.receiveMessage());
+                this.subscription.messageReceived = messageReceived;
                 Logger.debug(`${this.subscription.name} received its message`);
                 this.handleMessageArrival();
                 await this.sendSyncResponse();
@@ -109,6 +110,16 @@ export class SubscriptionReporter {
                 throw err;
             }
         }
+    }
+
+    private processMessage(messageReceived: any): string {
+        if (messageReceived) {
+            if (typeof messageReceived === 'object') {
+                return JSON.stringify(new ObjectDecycler().decycle(messageReceived), null, 2);
+            }
+            return messageReceived;
+        }
+        return `Subscription has received its message`;
     }
 
     private async handleSubscription(): Promise<boolean> {
@@ -148,7 +159,7 @@ export class SubscriptionReporter {
         const finalReporter = new SubscriptionFinalReporter({
             subscribed: this.subscribed,
             avoidable: this.subscription.avoid,
-            hasMessage: this.subscription.messageReceived,
+            messageReceived: this.subscription.messageReceived,
             time: time,
             subscribeError: this.subscribeError,
             ignore: this.subscription.ignore
@@ -158,7 +169,7 @@ export class SubscriptionReporter {
         this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH]
             .tests.concat(finalReport);
         this.report.hooks![DefaultHookEvents.ON_FINISH].valid = this.report.hooks![DefaultHookEvents.ON_FINISH].valid
-            && finalReport.every(report => testModelIsPassing(report));
+            && finalReport.every((report: TestModel) => testModelIsPassing(report));
 
         this.report.valid = this.report.valid && Object.keys(this.report.hooks || {})
             .every((key: string) => this.report.hooks ? this.report.hooks[key].valid : true);
@@ -212,7 +223,6 @@ export class SubscriptionReporter {
     private handleMessageArrival() {
         if (!this.hasTimedOut) {
             Logger.debug(`${this.subscription.name} stop waiting because it has received its message`);
-            this.subscription.messageReceived = true;
             this.totalTime = new DateController();
         } else {
             Logger.info(`${this.subscription.name} has received message in a unable time`);

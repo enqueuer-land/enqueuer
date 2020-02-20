@@ -63,7 +63,7 @@ class HttpSubscription extends Subscription {
         return [];
     }
 
-    public receiveMessage(): Promise<void> {
+    public receiveMessage(): Promise<any> {
         if (this.proxy) {
             return this.proxyServerMessageReceiving();
         } else {
@@ -71,7 +71,7 @@ class HttpSubscription extends Subscription {
         }
     }
 
-    private realServerMessageReceiving(): Promise<void> {
+    private realServerMessageReceiving(): Promise<any> {
         return new Promise((resolve) => {
             Logger.debug(`Listening to (${this.method.toUpperCase()}) ${this.port}:${this.endpoint}`);
             const realServerFunction = (request: any, responseHandler: any, next: any) => {
@@ -81,13 +81,24 @@ class HttpSubscription extends Subscription {
                 }
                 this.responseToClientHandler = responseHandler;
                 this.onMessageReceivedTests(request);
-                this.executeHookEvent('onMessageReceived', this.createMessageReceivedStructure(request));
-                resolve();
+                const receivedStructure = this.createMessageReceivedStructure(request);
+                this.executeHookEvent('onMessageReceived', receivedStructure);
+                resolve(this.processResponseToBePrinted(receivedStructure));
             };
             this.expressApp[this.method](this.endpoint,
                 (request: any, responseHandler: any, next: any) =>
                     realServerFunction(request, responseHandler, next));
         });
+    }
+
+    private processResponseToBePrinted(response: any) {
+        try {
+            if (response.body) {
+                response.body = JSON.parse(response.body);
+            }
+        } catch (e) {
+        }
+        return response;
     }
 
     private proxyServerMessageReceiving(): Promise<void> {
