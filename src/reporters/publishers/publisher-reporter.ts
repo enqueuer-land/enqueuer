@@ -17,6 +17,7 @@ export class PublisherReporter {
     private readonly report: output.PublisherModel;
     private readonly publisher: Publisher;
     private readonly startTime: Date;
+    private readonly executedHooks: string[];
     private published: boolean = false;
 
     constructor(publisher: input.PublisherModel) {
@@ -31,6 +32,7 @@ export class PublisherReporter {
             },
             type: publisher.type
         };
+        this.executedHooks = [];
         this.startTime = new Date();
         this.executeOnInitFunction(publisher);
         Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
@@ -79,7 +81,7 @@ export class PublisherReporter {
 
     public onFinish(): void {
         if (!this.publisher.ignore) {
-            this.executeHookEvent(DefaultHookEvents.ON_FINISH);
+            this.executeHookEvent(DefaultHookEvents.ON_FINISH, {executedHooks: this.executedHooks});
             this.report.valid = this.report.valid && this.published;
             NotificationEmitter.emit(Notifications.PUBLISHER_FINISHED, {publisher: this.report});
         }
@@ -87,6 +89,7 @@ export class PublisherReporter {
 
     private executeHookEvent(eventName: string, args: any = {}, publisher: any = this.publisher): void {
         if (!publisher.ignore) {
+            this.executedHooks.push(eventName);
             args.elapsedTime = new Date().getTime() - this.startTime.getTime();
             const eventExecutor = new EventExecutor(publisher, eventName, 'publisher');
             Object.keys(args).forEach((key: string) => {
