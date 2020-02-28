@@ -38,7 +38,7 @@ export class RequisitionFilePatternParser {
     private getMatchingFiles(): string[] {
         let result: string[] = [];
         this.patterns.map((pattern: string) => {
-            const items = glob.sync(pattern);
+            const items = glob.sync(pattern, {nodir: true});
             if (items.length > 0) {
                 result = result.concat(items.sort());
             } else {
