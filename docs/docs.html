@@ -454,6 +454,12 @@ Defaults to 1. Sets how many times this test will be executed. Check <a href="ht
 <pre><code class="yaml">iterations: 3
 </code></pre>
 
+<p><strong>id</strong> <br>
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    </p>
+
+<pre><code class="yaml">id: ID-0123456789
+</code></pre>
+
 <p><strong>ignore</strong> <br>
 Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
@@ -508,7 +514,8 @@ Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/re
 
 <h5 id="events" style="padding-left: 16px">2.1.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change requisition attributes.</p>
+<p>Requisitions have <code class="yaml">onInit</code> and <code class="yaml">onFinish</code> events.
+Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change requisition attributes.</p>
 
 <pre><code class="yaml">name: my name
 onInit:
@@ -558,6 +565,12 @@ The message itself that will be send through this protocol. Be it a string, a nu
 Defaults to false. Tells to enqueuer that this publisher should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
 <pre><code class="yaml">ignore: true
+</code></pre>
+
+<p><strong>id</strong> <br>
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    </p>
+
+<pre><code class="yaml">id: ID-0123456789
 </code></pre>
 
 <h5 id="events" style="padding-left: 16px">2.2.2 events</h5>
@@ -628,6 +641,12 @@ Set to zero or less than zero to run it endlessly.</p>
 Defaults to false. Tells to enqueuer that this subscription should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
 <pre><code class="yaml">ignore: true    
+</code></pre>
+
+<p><strong>id</strong> <br>
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    </p>
+
+<pre><code class="yaml">id: ID-0123456789
 </code></pre>
 
 <h5 id="events" style="padding-left: 16px">2.3.2 events</h5>

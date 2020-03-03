@@ -192,6 +192,11 @@ Defaults to 1. Sets how many times this test will be executed. Check [this](http
 
     iterations: 3
 
+**id**  
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    
+
+    id: ID-0123456789
+
 **ignore**  
 Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
@@ -240,6 +245,7 @@ Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recu
       delay: 200
 
 ##### events
+Requisitions have `onInit` and `onFinish` events.
 Available events are described [here](#event). A `this` object is available to access and change requisition attributes.
 
     name: my name
@@ -285,6 +291,11 @@ The message itself that will be send through this protocol. Be it a string, a nu
 Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
+
+**id**  
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    
+
+    id: ID-0123456789
     
 ##### events
 Available events are described [here](#event). A `this` object is available to access and change publisher attributes.
@@ -347,6 +358,11 @@ Defaults to false. Tells to enqueuer that this subscription should be skipped. C
 
     ignore: true    
 
+**id**  
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    
+
+    id: ID-0123456789
+    
 ##### events
 Available events are described [here](#event). A `this` object is available to access and change subscription attributes.  
 
