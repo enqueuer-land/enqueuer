@@ -99,7 +99,7 @@ export class SubscriptionReporter {
     public async receiveMessage(): Promise<any> {
         if (!this.subscription.ignore) {
             try {
-                const messageReceived = await this.processMessage(await this.subscription.receiveMessage());
+                const messageReceived = this.processMessage(await this.subscription.receiveMessage());
                 this.subscription.messageReceived = messageReceived;
                 Logger.debug(`${this.subscription.name} received its message`);
                 this.handleMessageArrival();

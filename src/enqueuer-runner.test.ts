@@ -6,7 +6,7 @@ import {SummaryTestOutput} from './outputs/summary-test-output';
 import {NotificationEmitter} from './notifications/notification-emitter';
 import {Logger} from './loggers/logger';
 import {LogLevel} from './loggers/log-level';
-import {Notifications} from "./notifications/notifications";
+import {Notifications} from './notifications/notifications';
 
 jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
