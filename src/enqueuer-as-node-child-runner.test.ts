@@ -6,6 +6,7 @@ import {AssertDescriber} from './run-as-child/assert-describer';
 import {ModuleAdder} from './run-as-child/module-adder';
 import {ProtocolDescriber} from './run-as-child/protocol-describer';
 import {StoreCleaner} from './run-as-child/store-cleaner';
+import {StoreSetter} from './run-as-child/store-setter';
 
 
 jest.mock('./notifications/notification-emitter');
@@ -14,6 +15,7 @@ jest.mock('./run-as-child/assert-describer');
 jest.mock('./run-as-child/module-adder');
 jest.mock('./run-as-child/protocol-describer');
 jest.mock('./run-as-child/store-cleaner');
+jest.mock('./run-as-child/store-setter');
 
 const processOnMock = jest.fn();
 process.on = processOnMock;
@@ -33,6 +35,8 @@ ModuleAdder.mockImplementation(replierConstructorMock);
 ProtocolDescriber.mockImplementation(replierConstructorMock);
 // @ts-ignore
 StoreCleaner.mockImplementation(replierConstructorMock);
+// @ts-ignore
+StoreSetter.mockImplementation(replierConstructorMock);
 
 let notificationEmitterOnMock = jest.fn();
 // @ts-ignore
