@@ -12,7 +12,7 @@ export class ExpectToBeLessThanOrEqualToAsserter implements Asserter {
         return {
             name,
             valid: assertion.not === undefined ? actual <= expected : actual > expected,
-            description: `Expected '${literal.expect}'${assertion.not === undefined ?
+            description: `Expected '${literal.expect}'${assertion.not !== undefined ?
                 ' not' : ''} to be less than or equal to '${expected}'. Received '${actual}'`
         };
     }

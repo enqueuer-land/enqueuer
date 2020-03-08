@@ -16,7 +16,7 @@ class HttpPublisher extends Publisher {
         this['timeout'] = this.timeout || 3000;
     }
 
-    public async publish(): Promise<any> {
+    public async publish(): Promise<object> {
         this.insertAuthentication();
 
         const response = await new HttpRequester(this.url,
@@ -31,14 +31,19 @@ class HttpPublisher extends Publisher {
         return this.processResponseToBePrinted(response);
     }
 
-    private processResponseToBePrinted(response: any) {
+    private processResponseToBePrinted(response: any): object {
+        const toBePrinted: any = {
+            statusCode: response.statusCode,
+            headers: response.headers
+        };
         try {
             if (response.body) {
-                response.body = JSON.parse(response.body);
+                toBePrinted.body = JSON.parse(response.body);
             }
         } catch (e) {
+            toBePrinted.body = response.body;
         }
-        return response;
+        return toBePrinted;
     }
 
     private insertAuthentication() {

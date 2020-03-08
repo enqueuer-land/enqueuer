@@ -40,7 +40,7 @@ describe('ExpectToBeLessThanOrEqualToAsserter', () => {
         const test = new ExpectToBeLessThanOrEqualToAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expected 'body.actual' to be less than or equal to '2'. Received '1'");
+        expect(test.description).toBe("Expected 'body.actual' not to be less than or equal to '2'. Received '1'");
     });
 
     it('should compare equal', () => {
@@ -79,7 +79,7 @@ describe('ExpectToBeLessThanOrEqualToAsserter', () => {
         const test = new ExpectToBeLessThanOrEqualToAsserter().assert(assertion, literal);
         expect(test.name).toBe('assertion 0');
         expect(test.valid).toBeFalsy();
-        expect(test.description).toBe("Expected 'body.actual' not to be less than or equal to '3'. Received '4'");
+        expect(test.description).toBe("Expected 'body.actual' to be less than or equal to '3'. Received '4'");
     });
 
     it('Should export an entry point', done => {
