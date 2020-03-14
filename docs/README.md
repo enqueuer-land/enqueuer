@@ -777,7 +777,7 @@ The official enqueuer's best friend forever. Do amazing things and change the wo
 With them, you create, manage and run requisitions and and see their results in a really nice way.
 See this amazing beauty with your own eyes to get an idea of how it works:  
 
-![screenshot-passing](https://raw.githubusercontent.com/virgs/stacker/master/docs/img/http-passing-test.png)
+![screenshot-passing](https://raw.githubusercontent.com/virgs/stacker/master/docs/screenshot-1.png)
 
 ----
 
