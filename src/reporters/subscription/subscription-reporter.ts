@@ -24,7 +24,7 @@ export class SubscriptionReporter {
     private readonly report: output.SubscriptionModel;
     private readonly startTime: DateController;
     private readonly subscription: Subscription;
-    private readonly executedHooks: string[];
+    private readonly executedHooks: { [propName: string]: string[] };
     private subscribeError?: string;
     private hasTimedOut: boolean = false;
     private subscribed: boolean = false;
@@ -43,7 +43,7 @@ export class SubscriptionReporter {
             },
             valid: true
         };
-        this.executedHooks = [];
+        this.executedHooks = {};
         this.executeOnInitFunction(subscriptionAttributes);
 
         Logger.debug(`Instantiating subscription ${subscriptionAttributes.type}`);
@@ -197,7 +197,7 @@ export class SubscriptionReporter {
 
     private executeHookEvent(eventName: string, args: any = {}, subscription: any = this.subscription): void {
         if (!subscription.ignore) {
-            this.executedHooks.push(eventName);
+            this.executedHooks[eventName] = Object.keys(args);
             args.elapsedTime = new Date().getTime() - this.startTime.getTime();
             const eventExecutor = new EventExecutor(subscription, eventName, 'subscription');
             if (typeof args === 'object') {
