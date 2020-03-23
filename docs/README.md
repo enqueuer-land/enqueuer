@@ -772,12 +772,12 @@ In order to be enqueuer compatible, a module has to have an `entryPoint` exporte
 
 ### Stacker
 Looking for ~~a really really good looking~~ an human error proof solution way of writing these requisition files?  
-Consider taking a look at [stacker](https://virgs.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
+Consider taking a look at [stacker](https://enqueuer-land.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
 The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
 With them, you create, manage and run requisitions and and see their results in a really nice way.
 See this amazing beauty with your own eyes to get an idea of how it works:  
 
-![screenshot-passing](https://raw.githubusercontent.com/virgs/stacker/master/docs/screenshot-1.png)
+![screenshot-passing](https://raw.githubusercontent.com/enqueuer-land/stacker/master/docs/screenshot-1.png)
 
 ----
 
