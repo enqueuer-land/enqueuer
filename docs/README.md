@@ -771,7 +771,7 @@ Every enqueuer compatible module gets implicitly loaded.
 In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
 
 ### Stacker
-Looking for ~~a really really good looking~~ an human error proof solution way of writing these requisition files?  
+Looking for an human error proof solution way of writing these requisition files?  
 Consider taking a look at [stacker](https://enqueuer-land.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
 The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
 With them, you create, manage and run requisitions and and see their results in a really nice way.

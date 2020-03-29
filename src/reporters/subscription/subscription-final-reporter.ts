@@ -54,7 +54,7 @@ export class SubscriptionFinalReporter {
         return [{
             valid: false,
             name: this.subscribedTestName,
-            description: this.subscribeError || ''
+            description: this.subscribeError || 'Subscription failed to subscribe'
         }];
     }
 
