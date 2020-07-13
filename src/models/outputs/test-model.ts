@@ -1,4 +1,5 @@
 export interface TestModel {
+    implicit?: boolean;
     ignored?: boolean;
     description: string;
     valid: boolean;

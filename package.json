@@ -18,7 +18,7 @@
     "validateOutput": "yval --from=json output/examples.json && yval --from=yaml output/examples.yml",
     "codeCoverage": "NODE_ENV=TEST node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null && nqr -e > /dev/null",
-    "lint": "node_modules/.bin/tslint --project tsconfig.json",
+    "lint": "node_modules/.bin/tslint --project tsconfig.json --fix",
     "clean": "rm -rf js/ && find ./src -name '*.js' -type f -delete && rm -f temp/*",
     "updateHtml": "misc/mdToHtml.js",
     "all": "npm run clean && npm run lint && npm run build && npm link && npm run test",
