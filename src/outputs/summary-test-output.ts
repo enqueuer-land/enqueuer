@@ -133,9 +133,9 @@ export class SummaryTestOutput {
             const totalTime = this.report.time.totalTime;
             message += `\t| executed in ${totalTime}ms`;
         }
-        if (Configuration.getInstance().getShowImplicitTestsCount()) {
-            message += `\t| (${testAnalyzer.getPassingTests().filter(test => test.implicit).length}/${testAnalyzer
-                .getNotIgnoredTests().filter(test => test.implicit).length} of implicitly declared)`;
+        if (Configuration.getInstance().getShowExplicitTestsOnly()) {
+            message += `\t| (${testAnalyzer.getPassingTests().filter(test => !test.implicit).length}/${testAnalyzer
+                .getNotIgnoredTests().filter(test => !test.implicit).length} of explicitly declared)`;
         }
         const ignoredTests = testAnalyzer.getIgnoredList();
         if (ignoredTests.length > 0) {

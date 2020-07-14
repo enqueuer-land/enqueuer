@@ -179,7 +179,7 @@ describe('Configuration', () => {
                 'maxReportLevelPrint': 5,
                 'outputs': [{'format': 'console', 'name': 'command line report output', 'type': 'standard-output'}],
                 'parallel': false,
-                'showImplicitTestsCount': false,
+                'showExplicitTestsOnly': false,
                 'showPassingTests': true,
                 'plugins': ['cli-amqp-plugin', 'common-plugin'],
                 'store': {'cliKey': 'value'}
@@ -195,7 +195,7 @@ describe('Configuration', () => {
             getVerbosity: () => undefined,
             getPlugins: () => undefined,
             getShowPassingTests: () => undefined,
-            getShowImplicitTestsCount: () => undefined,
+            getShowExplicitTestsOnly: () => undefined,
             getStore: () => undefined,
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => false,
@@ -216,7 +216,7 @@ describe('Configuration', () => {
                 };
             },
             getShowPassingTests: () => true,
-            getShowImplicitTestsCount: () => false,
+            getShowExplicitTestsOnly: () => false,
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => true,
             getMaxReportLevelPrint: () => 5

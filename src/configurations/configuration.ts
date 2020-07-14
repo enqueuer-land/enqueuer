@@ -21,7 +21,7 @@ export class Configuration {
     private plugins: string[] = [];
     private commandLineConfiguration: CommandLineConfiguration;
     private showPassingTests: boolean = false;
-    private showImplicitTestsCount: boolean = false;
+    private showExplicitTestsOnly: boolean = false;
 
     private constructor() {
         this.commandLineConfiguration = new CommandLineConfiguration(process.argv);
@@ -65,8 +65,8 @@ export class Configuration {
         return this.showPassingTests;
     }
 
-    public getShowImplicitTestsCount(): boolean {
-        return this.showImplicitTestsCount;
+    public getShowExplicitTestsOnly(): boolean {
+        return this.showExplicitTestsOnly;
     }
 
     public addFiles(...files: string[]): void {
@@ -112,7 +112,7 @@ export class Configuration {
         this.plugins = [...new Set(this.plugins.concat(this.commandLineConfiguration.getPlugins() || []))];
         this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
         this.showPassingTests = this.commandLineConfiguration.getShowPassingTests();
-        this.showImplicitTestsCount = this.commandLineConfiguration.getShowImplicitTestsCount();
+        this.showExplicitTestsOnly = this.commandLineConfiguration.getShowExplicitTestsOnly();
         const filesIgnoringOthers = this.commandLineConfiguration.getTestFilesIgnoringOthers();
         if (filesIgnoringOthers && filesIgnoringOthers.length > 0) {
             this.files = filesIgnoringOthers;
