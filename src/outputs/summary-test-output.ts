@@ -1,11 +1,12 @@
 import {TestsAnalyzer} from './tests-analyzer';
-import {TestModel, testModelIsFailing, testModelIsNotFailing, testModelIsPassing} from '../models/outputs/test-model';
+import {TestModel, testModelIsFailing, testModelIsPassing} from '../models/outputs/test-model';
 import {RequisitionModel} from '../models/outputs/requisition-model';
 import {PublisherModel} from '../models/outputs/publisher-model';
 import {SubscriptionModel} from '../models/outputs/subscription-model';
 import {ReportModel} from '../models/outputs/report-model';
 import {HookModel} from '../models/outputs/hook-model';
 import colorizer from './colorizer';
+import {Configuration} from '../configurations/configuration';
 
 export type SummaryOptions = {
     maxLevel: number,
@@ -131,6 +132,10 @@ export class SummaryTestOutput {
         if (this.report.time) {
             const totalTime = this.report.time.totalTime;
             message += `\t| executed in ${totalTime}ms`;
+        }
+        if (Configuration.getInstance().getShowExplicitTestsOnly()) {
+            message += `\t| (${testAnalyzer.getPassingTests().filter(test => !test.implicit).length}/${testAnalyzer
+                .getNotIgnoredTests().filter(test => !test.implicit).length} of explicitly declared)`;
         }
         const ignoredTests = testAnalyzer.getIgnoredList();
         if (ignoredTests.length > 0) {

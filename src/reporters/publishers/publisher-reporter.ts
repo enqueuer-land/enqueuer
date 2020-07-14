@@ -51,14 +51,14 @@ export class PublisherReporter {
                 this.report.publishTime = new DateController().toString();
                 this.published = true;
                 this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
-                    name: 'Published', valid: this.published, description: this.processMessage(response)
+                    name: 'Published', valid: this.published, description: this.processMessage(response), implicit: true
                 });
 
             }
         } catch (err) {
             Logger.error(`'${this.report.name}' fail publishing: ${err}`);
             this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
-                name: 'Published', valid: false, description: err.toString()
+                name: 'Published', valid: false, description: err.toString(), implicit: true
             });
             this.report.valid = false;
             throw err;
