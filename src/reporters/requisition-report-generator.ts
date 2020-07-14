@@ -53,12 +53,12 @@ export class RequisitionReportGenerator {
                 this.addTest(DefaultHookEvents.ON_FINISH, {
                     valid: false, tests: [{
                         valid: false,
+                        implicit: true,
                         name: 'No time out',
                         description: `Requisition has timed out: ${this.report.time.totalTime} > ${this.timeout}`
                     }]
                 });
             }
-
         }
     }
 

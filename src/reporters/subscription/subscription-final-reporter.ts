@@ -52,6 +52,7 @@ export class SubscriptionFinalReporter {
 
     private createNotSubscribedTests(): TestModel[] {
         return [{
+            implicit: true,
             valid: false,
             name: this.subscribedTestName,
             description: this.subscribeError || 'Subscription failed to subscribe'
@@ -61,12 +62,14 @@ export class SubscriptionFinalReporter {
     private createMessageTests(): TestModel[] {
         if (this.messageReceived) {
             return [{
+                implicit: true,
                 valid: true,
                 name: this.messageReceivedTestName,
                 description: this.messageReceived
             }];
         } else {
             return [{
+                implicit: true,
                 valid: false,
                 name: this.messageReceivedTestName,
                 description: `Subscription has not received its message`
@@ -77,6 +80,7 @@ export class SubscriptionFinalReporter {
     private createTimeoutTests(): TestModel[] {
         if (!this.avoidable && this.time) {
             return [{
+                implicit: true,
                 valid: false,
                 name: this.noTimeOutTestName,
                 description: `Not avoidable subscription has timed out: ${this.time.totalTime} > ${this.time.timeout}`
@@ -88,6 +92,7 @@ export class SubscriptionFinalReporter {
     private createAvoidableTests(): TestModel[] {
         if (this.messageReceived) {
             return [{
+                implicit: true,
                 valid: false,
                 name: this.subscriptionAvoidedTestName,
                 description: `Avoidable subscription should not receive messages`
@@ -95,6 +100,7 @@ export class SubscriptionFinalReporter {
         } else {
             return [{
                 valid: true,
+                implicit: true,
                 name: this.subscriptionAvoidedTestName,
                 description: `Avoidable subscription has not received any message`
             }];

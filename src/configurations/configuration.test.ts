@@ -154,7 +154,11 @@ describe('Configuration', () => {
 
         const instance = Configuration.getInstance();
 
-        expect(instance.getOutputs()).toEqual([{format: 'console', name: 'command line report output', type: 'standard-output'}]);
+        expect(instance.getOutputs()).toEqual([{
+            format: 'console',
+            name: 'command line report output',
+            type: 'standard-output'
+        }]);
     });
 
     it('should print configuration', () => {
@@ -175,6 +179,7 @@ describe('Configuration', () => {
                 'maxReportLevelPrint': 5,
                 'outputs': [{'format': 'console', 'name': 'command line report output', 'type': 'standard-output'}],
                 'parallel': false,
+                'showExplicitTestsOnly': false,
                 'showPassingTests': true,
                 'plugins': ['cli-amqp-plugin', 'common-plugin'],
                 'store': {'cliKey': 'value'}
@@ -190,6 +195,7 @@ describe('Configuration', () => {
             getVerbosity: () => undefined,
             getPlugins: () => undefined,
             getShowPassingTests: () => undefined,
+            getShowExplicitTestsOnly: () => undefined,
             getStore: () => undefined,
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => false,
@@ -210,6 +216,7 @@ describe('Configuration', () => {
                 };
             },
             getShowPassingTests: () => true,
+            getShowExplicitTestsOnly: () => false,
             getTestFilesIgnoringOthers: () => undefined,
             getStdoutRequisitionOutput: () => true,
             getMaxReportLevelPrint: () => 5

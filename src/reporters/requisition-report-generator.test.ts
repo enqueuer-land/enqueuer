@@ -72,6 +72,7 @@ describe('RequisitionReportGenerator', () => {
         expect(report.hooks[DefaultHookEvents.ON_FINISH].tests.length).toBe(1);
         expect(report.hooks[DefaultHookEvents.ON_FINISH].valid).toBeFalsy();
         expect(report.hooks[DefaultHookEvents.ON_FINISH].tests[0].name).toBe('No time out');
+        expect(report.hooks[DefaultHookEvents.ON_FINISH].tests[0].implicit).toBeTruthy();
         expect(report.hooks[DefaultHookEvents.ON_FINISH].tests[0].valid).toBeFalsy();
         expect(report.hooks[DefaultHookEvents.ON_FINISH].tests[0].description).toBeDefined();
     });

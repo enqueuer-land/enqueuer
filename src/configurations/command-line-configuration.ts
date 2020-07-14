@@ -19,6 +19,7 @@ export class CommandLineConfiguration {
             .description('Take a look at the full documentation: https://enqueuer.com')
             .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
             .option('-c, --config-file <path>', 'set configurationFile')
+            .option('-d, --show-explicit-tests-only', 'show explicit tests only', false)
             .option('-e, --parsers-list [parser]', 'list available object parsers')
             .option('-f, --formatters-description [formatter]', 'describe report formatters')
             .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
@@ -78,6 +79,10 @@ export class CommandLineConfiguration {
 
     public getStdoutRequisitionOutput(): boolean {
         return !!this.parsedCommandLine.stdoutRequisitionOutput;
+    }
+
+    public getShowExplicitTestsOnly(): boolean {
+        return !!this.parsedCommandLine.showExplicitTestsOnly;
     }
 
     public getConfigFileName(): string | undefined {
