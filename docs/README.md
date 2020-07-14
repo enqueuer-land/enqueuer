@@ -122,6 +122,7 @@ Certainly one is what you need.
       -v, --version                             output the version number
       -b, --verbosity <level>                   set verbosity (default: "warn")
       -c, --config-file <path>                  set configurationFile
+      -d, --show-explicit-tests-only            show explicit tests only
       -e, --parsers-list [parser]               list available object parsers
       -f, --formatters-description [formatter]  describe report formatters
       -o, --stdout-requisition-output           add stdout as requisition output
