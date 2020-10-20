@@ -395,16 +395,26 @@ By default, there are three hook events available:
 
 **onInit**  
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the component is initialized.
-As available parameter, an `elapsedTime` variable is given, counting every milliseconds since the instantiation of this component.
+As available parameter, an `elapsedTime` variable is given, counting every millisecond since the instantiation of this component.
 
 **onFinish**  
 Available in requisitions, publishers and subscriptions. It gets executed when the component is about to finish.
-As available parameter, an `elapsedTime` variable is given, counting every milliseconds since the instantiation of this component. 
+As available parameter, an `elapsedTime` variable is given, counting every millisecond since the instantiation of this component. 
 
 **custom**
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
 Such as `onError`, `onResponseReceived`, `onFileNotFound` and `onRedirect`... 
 [Http-proxy subscription test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
+
+***available variables***
+Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use `argumentNames` as a regular argument. So, let's say you have this requisition:
+
+    onFinish:
+      script: console.log(argumentNames)
+
+You'd get this printed out to the console:
+
+    [ 'requisition', 'elapsedTime' ]
 
 #### fields
 Every hook object has 3 properties:
@@ -412,7 +422,7 @@ Every hook object has 3 properties:
 **script**  
 Javascript code snippet executed when the event is triggered.
 Yeah, I mean it. See it [it](https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml) by yourself.
-But be careful, with great power comes great responsibility.
+Be careful, with great power comes great responsibility.
 
 **store**  
 Data to be persisted across requisitions.  
@@ -452,7 +462,7 @@ Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/hook
 ----
 
 ### Requisition Flow
-Now that you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?
+Now you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?
 
 ![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
 

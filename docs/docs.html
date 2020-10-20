@@ -376,6 +376,7 @@ Options:
   -v, --version                             output the version number
   -b, --verbosity &lt;level&gt;                   set verbosity (default: "warn")
   -c, --config-file &lt;path&gt;                  set configurationFile
+  -d, --show-explicit-tests-only            show explicit tests only
   -e, --parsers-list [parser]               list available object parsers
   -f, --formatters-description [formatter]  describe report formatters
   -o, --stdout-requisition-output           add stdout as requisition output
@@ -683,16 +684,28 @@ You're free to explore them however you want, even doing things like this:</p>
 
 <p><strong>onInit</strong> <br>
 Available in requisitions, publishers and subscriptions. It gets executed as soon as the component is initialized.
-As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component.</p>
+As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every millisecond since the instantiation of this component.</p>
 
 <p><strong>onFinish</strong> <br>
 Available in requisitions, publishers and subscriptions. It gets executed when the component is about to finish.
-As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every milliseconds since the instantiation of this component. </p>
+As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every millisecond since the instantiation of this component. </p>
 
 <p><strong>custom</strong>
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
 Such as <code class="yaml">onError</code>, <code class="yaml">onResponseReceived</code>, <code class="yaml">onFileNotFound</code> and <code class="yaml">onRedirect</code>... 
 <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml">Http-proxy subscription test file</a> is an excellent example, check it out.</p>
+
+<p><em><strong>available variables</em></strong>
+Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use <code class="yaml">argumentNames</code> as a regular argument. So, let's say you have this requisition:</p>
+
+<pre><code class="yaml">onFinish:
+  script: console.log(argumentNames)
+</code></pre>
+
+<p>You'd get this printed out to the console:</p>
+
+<pre><code class="yaml">[ 'requisition', 'elapsedTime' ]
+</code></pre>
 
 <h4 id="fields" style="padding-left: 8px">3.2 fields</h4>
 
@@ -701,7 +714,7 @@ Such as <code class="yaml">onError</code>, <code class="yaml">onResponseReceived
 <p><strong>script</strong> <br>
 Javascript code snippet executed when the event is triggered.
 Yeah, I mean it. See it <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml">it</a> by yourself.
-But be careful, with great power comes great responsibility.</p>
+Be careful, with great power comes great responsibility.</p>
 
 <p><strong>store</strong> <br>
 Data to be persisted across requisitions.  </p>
@@ -744,7 +757,7 @@ onMessageReceived:
 
 <h3 id="requisition_flow" style="padding-left: 0px">4 Requisition Flow</h3>
 
-<p>Now that you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?</p>
+<p>Now you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?</p>
 
 <p><img src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png" alt="enqueuerInstanceFlow" title="Enqueuer Instance Flow" /></p>
 

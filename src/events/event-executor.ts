@@ -26,6 +26,7 @@ export class EventExecutor {
     public execute(): TestModel[] {
         Logger.debug(`Executing '${this.eventName}' hook`);
         Logger.trace(`'${this.eventName}': ${JSON.stringify(this.event)}`);
+        this.arguments.unshift({name: 'argumentNames', value: this.arguments.map(item => item.name)});
         return new EventCodeGenerator(this.thisArg, this.eventName).run(this.arguments);
     }
 

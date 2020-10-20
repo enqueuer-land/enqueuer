@@ -49,6 +49,7 @@ export class EnqueuerRunner {
         Logger.info('Publishing reports');
         const valid = parsingErrors.length === 0;
         const outputs = new MultiTestsOutput(configurationOutputs);
+        //TODO fix this useless await
         await finalReports.map(async report => {
             report.hooks!.onParsed = {
                 valid: valid,

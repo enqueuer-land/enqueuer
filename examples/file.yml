@@ -6,7 +6,7 @@ publishers:
     filenamePrefix: temp/fileTest
     filenameExtension: file
     onInit:
-        script: publisher.payload=new Date().getTime();
+        script: publisher.payload = new Date().getTime().toString();
 subscriptions:
 -   name: subscription description
     type: file-system-watcher
