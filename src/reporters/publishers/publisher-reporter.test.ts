@@ -12,7 +12,7 @@ DynamicModulesManager.getInstance.mockImplementation(() => {
     };
 });
 
-let publishMock = jest.fn(() => Promise.resolve('publishResult'));
+let publishMock = jest.fn(() => Promise.resolve('publishResult')) as any;
 let publisherMock = jest.fn(() => {
     return {
         publish: publishMock,
@@ -29,6 +29,7 @@ ProtocolManager.mockImplementation(() => {
 });
 
 jest.mock('../../events/event-executor');
+// @ts-expect-error
 EventExecutor.mockImplementation(() => ({
     execute: () => [],
     addArgument: () => {
@@ -38,7 +39,7 @@ EventExecutor.mockImplementation(() => ({
 const publisher = {
     name: 'pubName',
     id: 'id'
-};
+} as any;
 
 describe('PublisherReporter', () => {
     beforeEach(() => {
@@ -52,6 +53,7 @@ describe('PublisherReporter', () => {
     });
 
     it('Should call onInit', () => {
+        // @ts-expect-error
         EventExecutor.mockImplementation = jest.fn();
 
         new PublisherReporter(publisher);
@@ -80,7 +82,7 @@ describe('PublisherReporter', () => {
     });
 
     it('Should keep id', done => {
-        const publisherReporter = new PublisherReporter(publisher);
+        const publisherReporter = new PublisherReporter(publisher as any);
         publisherReporter.publish().then(() => {
             const report = publisherReporter.getReport();
             expect(report.id).toBe(publisher.id);
@@ -90,12 +92,12 @@ describe('PublisherReporter', () => {
     });
 
     it('Should add Publisher test - success', done => {
-        const publisherReporter = new PublisherReporter(publisher);
+        const publisherReporter = new PublisherReporter(publisher as any);
         publisherReporter.publish().then(() => {
             publisherReporter.onFinish();
             const report = publisherReporter.getReport();
             expect(report.name).toBe(publisher.name);
-            const publisherTest = report.hooks[DefaultHookEvents.ON_FINISH].tests[0];
+            const publisherTest = report.hooks![DefaultHookEvents.ON_FINISH].tests[0];
             expect(publisherTest.name).toBe('Published');
             expect(publisherTest.valid).toBeTruthy();
 
@@ -107,12 +109,12 @@ describe('PublisherReporter', () => {
     it('Should add Publisher test - fail', done => {
         const reason = 'reasonMessage';
         publishMock = jest.fn(() => Promise.reject(reason));
-        const publisherReporter = new PublisherReporter(publisher);
+        const publisherReporter = new PublisherReporter(publisher as any);
         publisherReporter.publish().catch(() => {
             publisherReporter.onFinish();
             const report = publisherReporter.getReport();
             expect(report.name).toBe(publisher.name);
-            const publisherTest = report.hooks[DefaultHookEvents.ON_FINISH].tests[0];
+            const publisherTest = report.hooks![DefaultHookEvents.ON_FINISH].tests[0];
             expect(publisherTest.name).toBe('Published');
             expect(publisherTest.valid).toBeFalsy();
 
@@ -122,7 +124,9 @@ describe('PublisherReporter', () => {
     });
 
     it('Should call onFinish', async () => {
+        // @ts-expect-error
         EventExecutor.mockClear();
+        // @ts-expect-error
         EventExecutor.mockImplementation = jest.fn();
 
         await new PublisherReporter(publisher).onFinish();

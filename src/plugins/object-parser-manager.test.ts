@@ -18,7 +18,7 @@ describe('ObjectParserManager', () => {
     });
 
     it('should ignore case', () => {
-        const myObject = 'myObject';
+        const myObject = 'myObject' as any;
         const tags = 'tagsLowerUpperCase';
 
         // @ts-ignore

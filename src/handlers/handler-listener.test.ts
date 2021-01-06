@@ -1,6 +1,5 @@
-import {HandlerListener} from "./handler-listener";
-import {HandlerListener} from "./handler-listener";
-import {Logger} from "../loggers/logger";
+import {HandlerListener} from './handler-listener';
+import {Logger} from '../loggers/logger';
 
 let onErrorMock = jest.fn();
 let listenMock = jest.fn();
@@ -11,9 +10,13 @@ const traceMock = jest.fn();
 const debugMock = jest.fn();
 const errorMock = jest.fn();
 jest.mock("../loggers/logger");
+// @ts-expect-error
 Logger.warning.mockImplementation(warningMock);
+// @ts-expect-error
 Logger.trace.mockImplementation(traceMock);
+// @ts-expect-error
 Logger.debug.mockImplementation(debugMock);
+// @ts-expect-error
 Logger.error.mockImplementation(errorMock);
 
 // global.setTimeout.mockImplementation(cb => cb());
@@ -36,6 +39,7 @@ describe('HandleListener', () => {
         closeMock.mockClear();
         errorMock.mockClear();
         warningMock.mockClear();
+        // @ts-expect-error
         setTimeout.mockClear();
     });
 

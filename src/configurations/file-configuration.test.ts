@@ -5,6 +5,7 @@ import * as fs from 'fs';
 jest.mock('../object-parser/yml-object-parser');
 jest.mock('fs');
 
+// @ts-expect-error
 fs.readFileSync.mockImplementation(() => 'fileContent');
 
 describe('FileConfiguration', () => {
@@ -25,6 +26,7 @@ describe('FileConfiguration', () => {
     });
 
     it('get values', () => {
+        // @ts-expect-error
         YmlObjectParser.mockImplementationOnce(() => {
             return {
                 parse: () => {

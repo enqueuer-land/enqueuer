@@ -26,6 +26,7 @@ describe('RequisitionDefaultReports', () => {
     });
 
     it('createIteratorReport', () => {
+        // @ts-expect-error
         const report = RequisitionDefaultReports.createIteratorReport({name: 'g'});
         expect(report.id).toBeUndefined();
         expect(report.time!.startTime).toBeDefined();
@@ -49,6 +50,7 @@ describe('RequisitionDefaultReports', () => {
     });
 
     it('createRunningError', () => {
+        // @ts-expect-error
         const report = RequisitionDefaultReports.createRunningError({name: 'lopidio'}, 'err');
         expect(report.time!.startTime).toBeDefined();
         expect(report.time!.endTime).toBeDefined();
@@ -74,6 +76,7 @@ describe('RequisitionDefaultReports', () => {
     });
 
     it('createSkippedReport', () => {
+        // @ts-expect-error
         const report = RequisitionDefaultReports.createSkippedReport({name: 'virgs'});
         expect(report.time!.startTime).toBeDefined();
         expect(report.time!.endTime).toBeDefined();
@@ -99,7 +102,8 @@ describe('RequisitionDefaultReports', () => {
     });
 
     it('createIgnoredReport', () => {
-        const report = RequisitionDefaultReports.createIgnoredReport({name: 'virgs', level: 4});
+        // @ts-expect-error
+        const report = RequisitionDefaultReports.createIgnoredReport({name: 'virgs'});
         expect(report.time!.startTime).toBeDefined();
         expect(report.time!.endTime).toBeDefined();
         expect(report.time!.totalTime).toBe(0);
@@ -111,7 +115,6 @@ describe('RequisitionDefaultReports', () => {
             },
             'id': undefined,
             'ignored': true,
-            'level': 4,
             'name': 'virgs',
             'publishers': [],
             'requisitions': [],

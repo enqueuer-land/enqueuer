@@ -7,9 +7,12 @@ jest.mock('net');
 describe('StreamInputHandler', () => {
     it('Should create server and listener', () => {
         const server = 'server';
+        // @ts-expect-error
         HandlerListener.mockImplementationOnce();
+        // @ts-expect-error
         net.createServer.mockImplementationOnce(() => server);
 
+        // @ts-expect-error
         new StreamInputHandler();
 
         expect(HandlerListener).toHaveBeenCalledWith(server);
@@ -19,6 +22,7 @@ describe('StreamInputHandler', () => {
     it('Should call listen', () => {
         const handlerName = 'handlerName';
         const listen = jest.fn(() => new Promise(() => {}));
+        // @ts-expect-error
         HandlerListener.mockImplementationOnce(() => {
             return {
                 listen: listen,
@@ -32,11 +36,13 @@ describe('StreamInputHandler', () => {
     });
 
     it('Should update handler', done => {
+        // @ts-expect-error
         net.createServer.mockImplementationOnce(() => {
             return {
                 on: () => {}
             }
         });
+        // @ts-expect-error
         HandlerListener.mockImplementationOnce(() => {
             return {
                 listen: () => Promise.resolve(),
@@ -55,6 +61,7 @@ describe('StreamInputHandler', () => {
 
     it('Should unsubscribe', () => {
         const closeMock = jest.fn();
+        // @ts-expect-error
         net.createServer.mockImplementationOnce(() => {
             return {
                 close: closeMock

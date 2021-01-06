@@ -46,6 +46,7 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
+        // @ts-expect-error
         DynamicModulesManager.getInstance.mockImplementation(() => {
             return {
                 getObjectParserManager: () => {
@@ -80,6 +81,7 @@ describe('FileContentMapCreator', () => {
         const replaceableKey = tag + '://' + filename;
         const requisition = {value: '<<' + replaceableKey + '>>'};
 
+        // @ts-expect-error
         DynamicModulesManager.getInstance.mockImplementation(() => {
             return {
                 getObjectParserManager: () => {
@@ -116,7 +118,7 @@ describe('FileContentMapCreator', () => {
 
         const requisition = {value: '<<some://filename?delimiter=;&header=false&other>>'};
 
-        // @ts-ignore
+        // @ts-expect-error
         DynamicModulesManager.getInstance.mockImplementation(() => {
             return {
                 getObjectParserManager: () => {

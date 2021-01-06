@@ -8,7 +8,7 @@ describe('ConsoleFormatter', () => {
             name: 'name',
             valid: true,
             tests: []
-        };
+        } as any;
         const format = new ConsoleFormatter().format(test);
 
         expect(typeof (format)).toBe('string');

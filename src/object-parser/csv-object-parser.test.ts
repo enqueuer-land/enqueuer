@@ -10,6 +10,7 @@ describe('CsvObjectParser', () => {
     });
 
     test('should parse empty objects', () => {
+        // @ts-expect-error
         const stringified = new CsvObjectParser().parse({}, {});
 
         expect(stringified).toEqual([]);

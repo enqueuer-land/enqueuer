@@ -12,6 +12,7 @@ let getReportMock = jest.fn(() => {
 });
 
 const recreateMock = () => {
+    // @ts-expect-error
     PublisherReporter.mockImplementation(() => {
         return {
             publish: publish,
@@ -22,6 +23,7 @@ const recreateMock = () => {
 };
 
 let clearMock = function () {
+    // @ts-expect-error
     PublisherReporter.mockClear();
     publish.mockClear();
     onFinishMock.mockClear();
@@ -38,7 +40,7 @@ describe('MultiPublishersReporter', () => {
     });
 
     it('Call publishReporter constructors', () => {
-        const publishers = [{name: 'first'}, {name: 'second'}];
+        const publishers = [{name: 'first'}, {name: 'second'}] as any;
         new MultiPublishersReporter(publishers);
 
         expect(PublisherReporter).toHaveBeenCalledTimes(publishers.length);
@@ -56,7 +58,7 @@ describe('MultiPublishersReporter', () => {
         publish.mockImplementation(() => Promise.resolve());
         recreateMock();
 
-        const publishers = [{}, {}];
+        const publishers = [{}, {}] as any;
         new MultiPublishersReporter(publishers)
             .publish()
             .then(() => {
@@ -81,20 +83,20 @@ describe('MultiPublishersReporter', () => {
         publish.mockImplementationOnce(() => Promise.reject('err reason'));
         recreateMock();
 
-        const publishers = [{}, {}];
+        const publishers = [{}, {}] as any;
         await new MultiPublishersReporter(publishers).publish();
         expect(publish).toHaveBeenCalledTimes(publishers.length);
     });
 
     it('should call onFinish', () => {
-        const publishers = [{}, {}];
+        const publishers = [{}, {}] as any;
 
         new MultiPublishersReporter(publishers).onFinish();
         expect(onFinishMock).toHaveBeenCalledTimes(publishers.length);
     });
 
     it('should call getReport', () => {
-        const publishers = [{}, {}];
+        const publishers = [{}, {}] as any;
 
         const report = new MultiPublishersReporter(publishers).getReport();
         expect(report.length).toBe(publishers.length);

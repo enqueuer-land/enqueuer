@@ -5,9 +5,11 @@ let startTimeoutMock = jest.fn(() => {
 });
 let onFinishMock = jest.fn();
 let hasFinishedMock = jest.fn();
+// @ts-expect-error
 let subscribeMock = jest.fn(() => new Promise());
+// @ts-expect-error
 let receiveMessageMock = jest.fn(() => new Promise());
-let getReportMock;
+let getReportMock: any;
 let SubscriptionReporterMock = jest.fn(() => {
     return {
         startTimeout: startTimeoutMock,
@@ -20,11 +22,12 @@ let SubscriptionReporterMock = jest.fn(() => {
 });
 
 jest.mock('../subscription/subscription-reporter');
+// @ts-expect-error
 SubscriptionReporter.mockImplementation(SubscriptionReporterMock);
 
 describe('MultiSubscriptionsReporter', () => {
 
-    let constructorArgument;
+    let constructorArgument: any;
 
     beforeEach(() => {
         constructorArgument = [
@@ -46,6 +49,7 @@ describe('MultiSubscriptionsReporter', () => {
     });
 
     afterEach(() => {
+        // @ts-expect-error
         SubscriptionReporter.mockImplementation(SubscriptionReporterMock);
     });
 
@@ -86,6 +90,7 @@ describe('MultiSubscriptionsReporter', () => {
     });
 
     it('Sub timeout before subscribed', async () => {
+        // @ts-expect-error
         startTimeoutMock = jest.fn((cb: any) => setTimeout(cb, 2000));
         hasFinishedMock = jest.fn(() => true);
 
@@ -99,7 +104,7 @@ describe('MultiSubscriptionsReporter', () => {
     it('Subtimeout before receiving message', async () => {
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
-        const subscriptions = [{}];
+        const subscriptions = [{}] as any;
         const multiSubscriptionsReporter = new MultiSubscriptionsReporter(subscriptions);
         await multiSubscriptionsReporter.receiveMessage();
         expect(receiveMessageMock).toHaveBeenCalledTimes(subscriptions.length);
@@ -112,7 +117,7 @@ describe('MultiSubscriptionsReporter', () => {
 
         const multi = new MultiSubscriptionsReporter(constructorArgument);
 
-        multi.start(timeoutCb);
+        multi.start();
         multi.subscribe().then(() => {
             expect(startTimeoutMock).toHaveBeenCalled();
             expect(timeoutCb).not.toHaveBeenCalled();
@@ -132,6 +137,7 @@ describe('MultiSubscriptionsReporter', () => {
         expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
+        // @ts-expect-error
         new MultiSubscriptionsReporter([{}]).receiveMessage().then(() => {
             done();
         });
@@ -152,8 +158,9 @@ describe('MultiSubscriptionsReporter', () => {
         expect.assertions(0);
         subscribeMock = jest.fn(() => Promise.resolve());
         receiveMessageMock.mockImplementationOnce(() => Promise.resolve());
-
+        // @ts-expect-error
         const multi = new MultiSubscriptionsReporter([{}]);
+        // @ts-expect-error
         multi.subscribe(() => {
         }).then(() => {
             multi.receiveMessage().then(() => {

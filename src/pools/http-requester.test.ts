@@ -20,6 +20,7 @@ describe('HttpRequester', () => {
             expect(options.timeout).toBe(timeout);
             cb(undefined, 'response');
         });
+        // @ts-expect-error
         request.mockImplementationOnce(requestMock);
         new HttpRequester(url, method, headers, body, timeout).request().then((result) => {
             expect(result).toBe('response');
@@ -33,6 +34,7 @@ describe('HttpRequester', () => {
             expect(options.timeout).toBe(3000);
             cb('error')
         });
+        // @ts-expect-error
         request.mockImplementationOnce(requestMock);
         new HttpRequester('', '', undefined, '').request().catch((result) => {
             expect(result).toBe("Http request error: error");

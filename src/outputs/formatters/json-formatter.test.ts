@@ -9,7 +9,7 @@ describe('JsonReportFormatter', () => {
             name: 'name',
             valid: true,
             tests: []
-        };
+        } as any;
         const format = new JsonReportFormatter().format(test);
 
         expect(typeof (format)).toBe('string');
@@ -21,7 +21,7 @@ describe('JsonReportFormatter', () => {
             name: 'name',
             valid: true,
             tests: []
-        };
+        } as any;
         test.cycle = test;
         expect(() => new JsonReportFormatter().format(test)).toThrow();
     });

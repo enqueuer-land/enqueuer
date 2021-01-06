@@ -46,6 +46,7 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
+        // @ts-expect-error
         const value: any = digest.firstHash();
 
         expect(value).toBe('a429de301f1bd4aa42fbf8d52e5d6b28');
@@ -60,6 +61,7 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
+        // @ts-expect-error
         const value: any = digest.secondHash();
 
         expect(value).toBe('b6a6df472ee01a9dbccba5f5e6271ca8');
@@ -128,7 +130,7 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.every(test => test.valid)).toBeTruthy();
+        expect(tests.every((test: { valid: any; }) => test.valid)).toBeTruthy();
     });
 
     it('prefix was not found', () => {
@@ -141,8 +143,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some(test => !test.valid)).toBeTruthy();
-        expect(tests.find(test => test.name == '"Digest" authentication prefix').valid).toBeFalsy();
+        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: { name: string; }) => test.name == '"Digest" authentication prefix').valid).toBeFalsy();
     });
 
     it('response is not ok', () => {
@@ -174,8 +176,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some(test => !test.valid)).toBeTruthy();
-        expect(tests.find(test => test.name == '"Response" authentication value').valid).toBeFalsy();
+        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: { name: string; }) => test.name == '"Response" authentication value').valid).toBeFalsy();
     });
 
     it('some value (username) does not match', () => {
@@ -207,8 +209,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some(test => !test.valid)).toBeTruthy();
-        expect(tests.find(test => test.name == `"username" value does not match`).valid).toBeFalsy();
+        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: { name: string; }) => test.name == `"username" value does not match`).valid).toBeFalsy();
     });
 
     it('essential fields are missing as constructor attribute', () => {
@@ -231,8 +233,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some(test => !test.valid)).toBeTruthy();
-        expect(tests.find(test => test.name == `"username" was not found as attribute`).valid).toBeFalsy();
+        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: { name: string; }) => test.name == `"username" was not found as attribute`).valid).toBeFalsy();
     });
 
     it('essential fields are missing as authorization string', () => {
@@ -263,8 +265,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some(test => !test.valid)).toBeTruthy();
-        expect(tests.find(test => test.name == `Every field was found`).valid).toBeFalsy();
+        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: { name: string; }) => test.name == `Every field was found`).valid).toBeFalsy();
     });
 
 });

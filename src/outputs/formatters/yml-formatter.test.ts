@@ -9,7 +9,7 @@ describe('YmlReportFormatter', () => {
             name: 'name',
             valid: true,
             tests: []
-        };
+        } as any;
         const format = new YmlReportFormatter().format(test);
 
         expect(typeof (format)).toBe('string');

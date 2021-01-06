@@ -5,36 +5,43 @@ describe('Protocol', () => {
 
     it('getName', () => {
         const name = 'gui';
+        // @ts-expect-error
         const match = new Protocol(name, undefined).getName();
         expect(match).toBe(name);
     });
 
     it('namesMatchExactly name', () => {
+        // @ts-expect-error
         const match = new Protocol('gui', undefined).matches('gui');
         expect(match).toBeTruthy();
     });
 
     it('should ignore case going', () => {
+        // @ts-expect-error
         const match = new Protocol('gui', undefined).matches('GUI');
         expect(match).toBeTruthy();
     });
 
     it('should ignore case coming', () => {
+        // @ts-expect-error
         const match = new Protocol('GUI', undefined).matches('gui');
         expect(match).toBeTruthy();
     });
 
     it('namesMatch alternative', () => {
+        // @ts-expect-error
         const match = new Protocol('', undefined,).addAlternativeName('gui').matches('gui');
         expect(match).toBeTruthy();
     });
 
     it('names dont Match alternative', () => {
+        // @ts-expect-error
         const match = new Protocol('', undefined,).addAlternativeName('one', 'two').matches('gui', 0);
         expect(match).toBeFalsy();
     });
 
     it('alternative names are unique', () => {
+        // @ts-expect-error
         const match = new Protocol('one', undefined).addAlternativeName('one', 'two').addAlternativeName('two', 'three');
         // @ts-ignore
         expect(match.alternativeNames).toEqual(['one', 'two', 'three']);
@@ -47,6 +54,7 @@ describe('Protocol', () => {
     });
 
     it('isLibraryInstalled false', () => {
+        // @ts-expect-error
         const available = new Protocol('', undefined).setLibrary('zero-mq-not-defined-at-least-I-hope').isLibraryInstalled();
         expect(available).toBeFalsy();
     });

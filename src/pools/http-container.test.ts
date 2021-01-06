@@ -11,6 +11,7 @@ describe('HttpContainer', () => {
             use: () => {
             }
         };
+        // @ts-expect-error
         express.mockImplementationOnce(() => {
             return mockApp;
         });
@@ -25,8 +26,10 @@ describe('HttpContainer', () => {
             use: () => {
             }
         };
+        // @ts-expect-error
         express.mockImplementationOnce(() => appReturn);
         const mockListen = jest.fn();
+        // @ts-expect-error
         HandlerListener.mockImplementationOnce(() => {
             return {
                 listen: mockListen
@@ -46,7 +49,9 @@ describe('HttpContainer', () => {
             use: () => {
             }
         };
+        // @ts-expect-error
         express.mockImplementationOnce(() => appReturn);
+        // @ts-expect-error
         HandlerListener.mockImplementationOnce(() => {
             return {
                 listen: jest.fn(() => Promise.reject('reason'))
@@ -64,8 +69,10 @@ describe('HttpContainer', () => {
             use: () => {
             }
         };
+        // @ts-expect-error
         express.mockImplementationOnce(() => appReturn);
         const mockListen = jest.fn();
+        // @ts-expect-error
         HandlerListener.mockImplementationOnce(() => {
             return {
                 listen: mockListen
@@ -83,6 +90,7 @@ describe('HttpContainer', () => {
     });
 
     it('Should return number of existent instances', async () => {
+        // @ts-expect-error
         express.mockImplementationOnce(() => {
             return {
                 use: () => {

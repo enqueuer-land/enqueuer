@@ -12,10 +12,12 @@ let constructorHttpContainer = jest.fn(() => {
         release: releaseMock
     };
 });
+// @ts-expect-error
 HttpContainer.mockImplementation(constructorHttpContainer);
 
 jest.mock('../loggers/logger');
 const warningLogMock = jest.fn();
+// @ts-expect-error
 Logger.warning.mockImplementation(warningLogMock);
 
 describe('HttpContainerPool', () => {
