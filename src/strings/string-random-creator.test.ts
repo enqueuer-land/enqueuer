@@ -2,6 +2,7 @@ import {DateController} from "../timers/date-controller";
 import {StringRandomCreator} from "./string-random-creator";
 
 jest.mock("../timers/date-controller");
+// @ts-expect-error
 DateController.mockImplementation(() => {
     return {
         getStringOnlyNumbers: () => {

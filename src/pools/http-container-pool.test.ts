@@ -28,46 +28,36 @@ describe('HttpContainerPool', () => {
         constructorHttpContainer.mockClear();
     });
 
-    it('create new App', done => {
+    it('create new App', async () => {
         const port = 987;
         const credentials = {key: 'value'};
 
-        const appPromise = HttpContainerPool.getApp(port, true, credentials);
+        const result = await HttpContainerPool.getApp(port, true, credentials);
 
-        appPromise.then((some) => {
-            expect(some).toEqual('acquireReturn');
-            done();
-        });
+        expect(result).toEqual('acquireReturn');
         expect(constructorHttpContainer).toHaveBeenCalledWith(port, credentials);
         expect(acquireMock).toHaveBeenCalled();
     });
 
-    it('reuse App', done => {
+    it('reuse App', async () => {
 
         const port = 987;
         const secure = true;
         const credentials = {key: 'value'};
 
-        HttpContainerPool.getApp(port, secure, credentials).then(() => {
-            const appPromise = HttpContainerPool.getApp(port, secure, credentials);
+        await HttpContainerPool.getApp(port, secure, credentials);
+        const result = await HttpContainerPool.getApp(port, secure, credentials);
 
-            appPromise.then((some) => {
-                expect(some).toBe('acquireReturn');
-                done();
-            });
-            expect(constructorHttpContainer).toHaveBeenCalledTimes(1);
-            expect(acquireMock).toHaveBeenCalledTimes(2);
-        });
+        expect(result).toBe('acquireReturn');
+        expect(constructorHttpContainer).not.toHaveBeenCalled();
+        expect(acquireMock).toHaveBeenCalledTimes(2);
     });
 
-    it('release non existent App', done => {
+    it('release non existent App', async () => {
         const port = 3245612;
-        HttpContainerPool.releaseApp(port).then(() => {
+        await HttpContainerPool.releaseApp(port);
 
-            expect(releaseMock).not.toHaveBeenCalled();
-            done();
-        });
-
+        expect(releaseMock).not.toHaveBeenCalled();
     });
 
 });

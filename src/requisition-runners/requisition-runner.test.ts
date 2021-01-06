@@ -30,7 +30,7 @@ describe('RequisitionRunner', () => {
             requisitions: [],
             publishers: [],
             subscriptions: [],
-        };
+        } as any;
 
         const reports = await new RequisitionRunner(requisition).run();
         const report = reports[0];
