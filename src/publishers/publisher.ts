@@ -26,12 +26,12 @@ export abstract class Publisher {
     public abstract publish(): Promise<any>;
 
     public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
-        this['hookEventExecutor'] = hookEventExecutor;
+        this.hookEventExecutorFunctor = hookEventExecutor;
     }
 
     protected executeHookEvent(hookName: string, args: any = {}) {
-        if (this['hookEventExecutor']) {
-            this['hookEventExecutor'](hookName, args);
+        if (this.hookEventExecutorFunctor) {
+            this.hookEventExecutorFunctor(hookName, args);
         } else {
             Logger.warning(`Hook event executor not registered in publisher`);
         }

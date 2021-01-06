@@ -1,6 +1,9 @@
 import {CommandLineConfiguration} from './command-line-configuration';
 import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 
+const consoleLogMock = jest.fn((message) => console.warn(message));
+console.log = consoleLogMock;
+
 jest.mock('../plugins/dynamic-modules-manager');
 
 const describeProtocolsMock = jest.fn(() => true);
@@ -40,6 +43,7 @@ describe('CommandLineConfiguration', () => {
         describeReportFormattersMock.mockClear();
         describeObjectParsersMock.mockClear();
         describeLoadedModulesMock.mockClear();
+        consoleLogMock.mockClear();
 
         exitMock.mockClear();
         // @ts-ignore
@@ -273,17 +277,14 @@ describe('CommandLineConfiguration', () => {
     });
 
     it('render help', () => {
-        const consoleMock = jest.fn();
-        console.log = consoleMock;
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-h']);
-        expect(consoleMock).toHaveBeenCalled();
+        new CommandLineConfiguration(['node', 'test', '-h']);
+        expect(consoleLogMock).toHaveBeenCalled();
     });
 
     it('get version', () => {
         const packageJson = require('../../package.json');
 
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-v']);
-
         expect(commandLineConfiguration.getVersion()).toBe(packageJson.version);
     });
 

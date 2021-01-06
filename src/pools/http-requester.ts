@@ -23,16 +23,24 @@ export class HttpRequester {
             request(options,
                 (error: any, response: any) => {
                     if (error) {
-                        reject('Http request error: '  + error);
+                        reject('Http request error: ' + error);
                     } else {
-                        resolve(response);
+                        //Needed because, for some reason, response.headers was not being shown as response key.
+                        //Therefore, the test http-more-examples.yml was failing
+                        const newResponse = Object.entries(response)
+                            .reduce((acc: any, [key, value]) => {
+                                acc[key] = value;
+                                return acc;
+                            }, {});
+                        newResponse.headers = response.headers;
+                        resolve(newResponse);
                     }
                 });
         });
     }
 
     private createOptions() {
-        let options: any = {
+        const options: any = {
             url: this.url,
             method: this.method,
             timeout: this.timeout,
@@ -61,11 +69,10 @@ export class HttpRequester {
         try {
             JSON.parse(this.body);
             return this.body;
-        }
-        catch (exc) {
+        } catch (exc) {
             //do nothing
         }
-        if (typeof(this.body) != 'string') {
+        if (typeof (this.body) != 'string') {
             this.body = JSON.stringify(this.body);
         }
 
