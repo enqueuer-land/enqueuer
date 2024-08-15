@@ -1,18 +1,18 @@
-import {Logger} from '../loggers/logger';
-import {RequisitionReporter} from '../reporters/requisition-reporter';
+import { Logger } from '../loggers/logger';
+import { RequisitionReporter } from '../reporters/requisition-reporter';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
-import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
-import {Store} from '../configurations/store';
-import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
-import {FileContentMapCreator} from '../configurations/file-content-map-creator';
-import {IterationsEvaluator} from './iterations-evaluator';
-import {ComponentParentBackupper} from '../components/component-parent-backupper';
-import {ComponentImporter} from './component-importer';
-import {RequisitionAdopter} from '../components/requisition-adopter';
-import {NotificationEmitter} from '../notifications/notification-emitter';
-import {testModelIsNotFailing} from '../models/outputs/test-model';
-import {Notifications} from '../notifications/notifications';
+import { JsonPlaceholderReplacer } from 'json-placeholder-replacer';
+import { Store } from '../configurations/store';
+import { RequisitionDefaultReports } from '../models-defaults/outputs/requisition-default-reports';
+import { FileContentMapCreator } from '../configurations/file-content-map-creator';
+import { IterationsEvaluator } from './iterations-evaluator';
+import { ComponentParentBackupper } from '../components/component-parent-backupper';
+import { ComponentImporter } from './component-importer';
+import { RequisitionAdopter } from '../components/requisition-adopter';
+import { NotificationEmitter } from '../notifications/notification-emitter';
+import { testModelIsNotFailing } from '../models/outputs/test-model';
+import { Notifications } from '../notifications/notifications';
 
 export class RequisitionRunner {
 
@@ -25,7 +25,7 @@ export class RequisitionRunner {
     }
 
     public async run(): Promise<output.RequisitionModel[]> {
-        NotificationEmitter.emit(Notifications.REQUISITION_STARTED, {requisition: this.requisition});
+        NotificationEmitter.emit(Notifications.REQUISITION_STARTED, { requisition: this.requisition });
         Logger.info(`Running requisition '${this.requisition.name}'`);
         try {
             this.importRequisition();
@@ -64,8 +64,8 @@ export class RequisitionRunner {
                 reports.push(report);
                 this.emitOnFinishNotification(report);
             } catch (err) {
-                reports.push(RequisitionDefaultReports.createRunningError(this.requisition, err.toString()));
-                Logger.error(err);
+                reports.push(RequisitionDefaultReports.createRunningError(this.requisition, '' + err));
+                Logger.error('' + err);
             }
         }
         return reports;
@@ -84,7 +84,7 @@ export class RequisitionRunner {
     }
 
     private emitOnFinishNotification(report: output.RequisitionModel) {
-        NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, {requisition: report});
+        NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, { requisition: report });
     }
 
     private replaceVariables(): void {

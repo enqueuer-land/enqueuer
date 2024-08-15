@@ -1,8 +1,8 @@
-import {Logger} from '../loggers/logger';
-import {RequisitionModel} from '../models/inputs/requisition-model';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import { Logger } from '../loggers/logger';
+import { RequisitionModel } from '../models/inputs/requisition-model';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 import * as fs from 'fs';
-import {ObjectParser} from '../object-parser/object-parser';
+import { ObjectParser } from '../object-parser/object-parser';
 
 export class FileContentMapCreator {
 
@@ -30,8 +30,9 @@ export class FileContentMapCreator {
     private findTags(node: string) {
         const angleBrackets = /<<[\w\s]+:\/\/[^>>]+>>/g;
         const curlyBrackets = /{{[\w\s]+:\/\/[^}}]+}}/g;
-        const match = (node.match(angleBrackets) || []).concat(node.match(curlyBrackets) || []);
-        match.forEach((value: string) => {
+        const curly: string[] = node.match(curlyBrackets) || [];
+        const angle: string[] = node.match(angleBrackets) || [];
+        angle.concat(...curly).forEach((value: string) => {
             const key: string = value.substr(2, value.length - 4);
             this.map[key] = this.insertIntoMap(key);
         });
@@ -49,8 +50,8 @@ export class FileContentMapCreator {
                 }
                 return fileContent;
             } catch (err) {
-                Logger.warning(err.toString());
-                return err.toString();
+                Logger.warning('FileContentMapCreator' + err);
+                return '' + err;
             }
         }
         return this.map[key];
@@ -89,7 +90,7 @@ export class FileContentMapCreator {
         try {
             return objectParser.parse(fileContent, query);
         } catch (err) {
-            Logger.error(err.toString());
+            Logger.error('' + err);
             return fileContent;
         }
     }

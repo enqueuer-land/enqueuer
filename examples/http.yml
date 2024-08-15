@@ -1,24 +1,23 @@
 publishers:
--   type: http
-    url: http://localhost:23075/resource
-    method: POST
-    payload: enqueuer
-    onResponseReceived:
-        assertions:
-        -   expect: statusCode
-            toBeGreaterThan: 400
-        -   expect: body
-            toBeEqualTo: "'blah'"
+    - type: http
+      url: http://localhost:23075/resource
+      method: POST
+      payload: enqueuer
+      onResponseReceived:
+          assertions:
+              - expect: statusCode
+                toBeGreaterThan: 190
+              - expect: body
+                toBeEqualTo: "'blah'"
 subscriptions:
--   type: http
-    endpoint: /resource
-    port: 23075
-    method: POST
-    response:
-        status: 444
-        payload: blah
-    onMessageReceived:
-        assertions:
-        -   expect: body
-            toContain: "'queue'"
-
+    - type: http
+      endpoint: /resource
+      port: 23075
+      method: POST
+      response:
+          status: 200
+          payload: blah
+      onMessageReceived:
+          assertions:
+              - expect: body
+                toContain: "'queue'"

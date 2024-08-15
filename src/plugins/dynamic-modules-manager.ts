@@ -1,15 +1,15 @@
-import {MainInstance} from './main-instance';
-import {ProtocolManager} from './protocol-manager';
-import {ReportFormatterManager} from './report-formatter-manager';
-import {Configuration} from '../configurations/configuration';
-import {Logger} from '../loggers/logger';
+import { MainInstance } from './main-instance';
+import { ProtocolManager } from './protocol-manager';
+import { ReportFormatterManager } from './report-formatter-manager';
+import { Configuration } from '../configurations/configuration';
+import { Logger } from '../loggers/logger';
 import * as path from 'path';
-import {ObjectParserManager} from './object-parser-manager';
-import {AsserterManager} from './asserter-manager';
+import { ObjectParserManager } from './object-parser-manager';
+import { AsserterManager } from './asserter-manager';
 import * as os from 'os';
 import * as glob from 'glob';
 import * as fs from 'fs';
-import {prettifyJson} from '../outputs/prettify-json';
+import { prettifyJson } from '../outputs/prettify-json';
 
 const enqueuerPackageJson = require('../../package.json');
 
@@ -110,7 +110,7 @@ export class DynamicModulesManager {
                             }
                         }
                     } catch (err) {
-                        Logger.trace(err);
+                        Logger.trace(`Dynamic modules manager` + err);
                     }
                     return false;
                 });
@@ -129,10 +129,7 @@ export class DynamicModulesManager {
             '0.0.0';
         const pluginMajorEnqueuerVersion = enqueuerVersion.match(regexp)[1];
 
-        Logger.trace(`name: ${packageJson.name} => currentMajorVersion (${
-            +currentMajorVersion}) <= pluginMajorEnqueuerVersion (${
-            +pluginMajorEnqueuerVersion}): ${
-        +currentMajorVersion <= +pluginMajorEnqueuerVersion}`);
+        Logger.trace(`name: ${packageJson.name} => currentMajorVersion (${+currentMajorVersion}) <= pluginMajorEnqueuerVersion (${+pluginMajorEnqueuerVersion}): ${+currentMajorVersion <= +pluginMajorEnqueuerVersion}`);
         return +currentMajorVersion <= +pluginMajorEnqueuerVersion;
     }
 

@@ -1,5 +1,5 @@
-import {Configuration} from './configuration';
-import {Logger} from '../loggers/logger';
+import { Configuration } from './configuration';
+import { Logger } from '../loggers/logger';
 
 export class Store {
     private static data: any = undefined;
@@ -15,7 +15,7 @@ export class Store {
                 const configurationStore = Configuration.getInstance().getStore();
                 Store.data = Object.assign({}, configurationStore, Store.data);
             } catch (err) {
-                Logger.warning(err);
+                Logger.warning(`Store errored: ` + err);
             }
         }
         return Store.data;

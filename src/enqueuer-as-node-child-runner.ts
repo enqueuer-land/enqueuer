@@ -1,16 +1,16 @@
-import {Logger} from './loggers/logger';
-import {ModuleAdder} from './run-as-child/module-adder';
-import {StoreSetter} from './run-as-child/store-setter';
-import {StoreCleaner} from './run-as-child/store-cleaner';
-import {ParentReplier} from './run-as-child/parent-replier';
-import {Notifications} from './notifications/notifications';
-import {ObjectDecycler} from './object-parser/object-decycler';
-import {AssertDescriber} from './run-as-child/assert-describer';
-import {ProtocolDescriber} from './run-as-child/protocol-describer';
-import {ChildSendingEvents} from './run-as-child/child-sending-events';
-import {NotificationEmitter} from './notifications/notification-emitter';
-import {ChildReceivingEvents} from './run-as-child/child-receiving-events';
-import {ChildRequisitionRunner} from './run-as-child/child-requisition-runner';
+import { Logger } from './loggers/logger';
+import { ModuleAdder } from './run-as-child/module-adder';
+import { StoreSetter } from './run-as-child/store-setter';
+import { StoreCleaner } from './run-as-child/store-cleaner';
+import { ParentReplier } from './run-as-child/parent-replier';
+import { Notifications } from './notifications/notifications';
+import { ObjectDecycler } from './object-parser/object-decycler';
+import { AssertDescriber } from './run-as-child/assert-describer';
+import { ProtocolDescriber } from './run-as-child/protocol-describer';
+import { ChildSendingEvents } from './run-as-child/child-sending-events';
+import { NotificationEmitter } from './notifications/notification-emitter';
+import { ChildReceivingEvents } from './run-as-child/child-receiving-events';
+import { ChildRequisitionRunner } from './run-as-child/child-requisition-runner';
 
 export class EnqueuerAsNodeChildRunner {
     private readonly processors: {
@@ -58,7 +58,7 @@ export class EnqueuerAsNodeChildRunner {
     }
 
     public registerListeners(): void {
-        process.on('message', async message => {
+        process.on('message', async (message: { event: string }) => {
             Logger.debug(`Received from parent: ${message.event}: ${JSON.stringify(message)}`);
             const processor = this.processors[message.event];
             if (processor) {

@@ -1,6 +1,6 @@
-import {Command} from 'commander';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {Logger} from '../loggers/logger';
+import { Command, Option } from 'commander';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
+import { Logger } from '../loggers/logger';
 
 const packageJson = require('../../package.json');
 
@@ -17,28 +17,39 @@ export class CommandLineConfiguration {
             .allowUnknownOption()
             .usage('[options] <test-file> [other-test-files...]')
             .description('Take a look at the full documentation: https://enqueuer.com')
-            .option('-b, --verbosity <level>', 'set verbosity', /^(trace|debug|info|warn|error|fatal)$/i, 'warn')
+            .addOption(new Option('-b, --verbosity <level>', 'set verbosity').choices(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('warn'))
             .option('-c, --config-file <path>', 'set configurationFile')
             .option('-d, --show-explicit-tests-only', 'show explicit tests only', false)
             .option('-e, --parsers-list [parser]', 'list available object parsers')
             .option('-f, --formatters-description [formatter]', 'describe report formatters')
             .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
-            .option('-m, --max-report-level-print <level>', 'set max report level print', /^(\d)$/i)
+            .option('-m, --max-report-level-print <level>', 'set max report level print', parseInt)
             .option('-p, --protocols-description [protocol]', 'describe protocols')
             .option('-t, --tests-list [expectedField]', 'list available tests assertions')
             .option('-u, --loaded-modules-list', 'list loaded modules')
             .option('-i, --show-passing-tests', 'show passing tests')
+            .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
+                (val: string) => {
+                    this.testFilesIgnoringOthers.push(val);
+                    return val
+                })
             .option('-s, --store [store]', 'add variables values to this session',
                 (val: string, memo: string[]) => this.storeCommandLineAction(val, memo), [])
             .option('-l, --add-plugin [plugin]', 'add plugin',
-                (val: string) => this.plugins.push(val), [])
-            .option('-a, --add-file <file>', 'add file to be tested',
-                (val: string) => this.testFiles.push(val), [])
-            .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
-                (val: string) => this.testFilesIgnoringOthers.push(val), []);
+                (val: string) => {
+                    this.plugins.push(val);
+                    return val
+                })
+            .argument('<test-file>', 'file to be tested')
+            .argument('[other-test-files]', 'other files to be tested')
+            .action((testFile, otherTestFiles) => {
+                this.testFiles.push(testFile, ...otherTestFiles || [])
+            })
         commander.on('--help', () => this.helpDescription());
         try {
             this.parsedCommandLine = commander.parse(commandLineArguments || ['path', 'enqueuer']);
+            const options = commander.opts();
+
         } catch (err) {
             Logger.error(`Error parsing command line: ${err}`);
             this.parsedCommandLine = {};

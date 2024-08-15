@@ -1,27 +1,26 @@
-import {Assertion} from '../models/events/assertion';
-import {TestModel} from '../models/outputs/test-model';
-import {Asserter} from './asserter';
-import {MainInstance} from '../plugins/main-instance';
+import { Assertion } from '../models/events/assertion';
+import { TestModel } from '../models/outputs/test-model';
+import { Asserter } from './asserter';
+import { MainInstance } from '../plugins/main-instance';
 
 export class ExpectToBeEqualToAsserter implements Asserter {
     public assert(assertion: Assertion, literal: any): TestModel {
-        const name: string = assertion.name;
         const actual = assertion.expect;
         const expected = assertion.toBeEqualTo;
 
         if (typeof (actual) === 'object' && typeof (expected) === 'object') {
             const areEquals = this.deepEqual(actual, expected);
             return {
-                name,
+                name: assertion.name,
                 valid: assertion.not === undefined ? areEquals : !areEquals,
                 description: `Expected '${JSON.stringify(literal.expect, null, 2)}'${assertion.not === undefined ?
                     '' : ' not'} to be equal to '${JSON
-                    .stringify(expected, null, 2)}'. Received '${JSON
-                    .stringify(actual, null, 2)}'`
+                        .stringify(expected, null, 2)}'. Received '${JSON
+                            .stringify(actual, null, 2)}'`
             };
         } else {
             return {
-                name,
+                name: assertion.name,
                 valid: assertion.not === undefined ? actual == expected : actual != expected,
                 description: `Expected '${literal.expect}'${assertion.not === undefined ?
                     '' : ' not'} to be equal to '${expected}'. Received '${actual}'`

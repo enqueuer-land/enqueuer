@@ -1,17 +1,17 @@
-import {Publisher} from '../../publishers/publisher';
-import {DateController} from '../../timers/date-controller';
+import { Publisher } from '../../publishers/publisher';
+import { DateController } from '../../timers/date-controller';
 import * as output from '../../models/outputs/publisher-model';
-import {PublisherModel} from '../../models/outputs/publisher-model';
+import { PublisherModel } from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
-import {Logger} from '../../loggers/logger';
-import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
-import {EventExecutor} from '../../events/event-executor';
-import {DefaultHookEvents} from '../../models/events/event';
-import {ObjectDecycler} from '../../object-parser/object-decycler';
-import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
-import {NotificationEmitter} from '../../notifications/notification-emitter';
-import {HookModel} from '../../models/outputs/hook-model';
-import {Notifications} from '../../notifications/notifications';
+import { Logger } from '../../loggers/logger';
+import { DynamicModulesManager } from '../../plugins/dynamic-modules-manager';
+import { EventExecutor } from '../../events/event-executor';
+import { DefaultHookEvents } from '../../models/events/event';
+import { ObjectDecycler } from '../../object-parser/object-decycler';
+import { TestModel, testModelIsPassing } from '../../models/outputs/test-model';
+import { NotificationEmitter } from '../../notifications/notification-emitter';
+import { HookModel } from '../../models/outputs/hook-model';
+import { Notifications } from '../../notifications/notifications';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
@@ -27,8 +27,8 @@ export class PublisherReporter {
             ignored: publisher.ignore,
             valid: true,
             hooks: {
-                [DefaultHookEvents.ON_INIT]: {valid: true, tests: []},
-                [DefaultHookEvents.ON_FINISH]: {valid: true, tests: []}
+                [DefaultHookEvents.ON_INIT]: { valid: true, tests: [] },
+                [DefaultHookEvents.ON_FINISH]: { valid: true, tests: [] }
             },
             type: publisher.type
         };
@@ -58,7 +58,7 @@ export class PublisherReporter {
         } catch (err) {
             Logger.error(`'${this.report.name}' fail publishing: ${err}`);
             this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
-                name: 'Published', valid: false, description: err.toString(), implicit: true
+                name: 'Published', valid: false, description: '' + err, implicit: true
             });
             this.report.valid = false;
             throw err;
@@ -81,9 +81,9 @@ export class PublisherReporter {
 
     public onFinish(): void {
         if (!this.publisher.ignore) {
-            this.executeHookEvent(DefaultHookEvents.ON_FINISH, {executedHooks: this.executedHooks});
+            this.executeHookEvent(DefaultHookEvents.ON_FINISH, { executedHooks: this.executedHooks });
             this.report.valid = this.report.valid && this.published;
-            NotificationEmitter.emit(Notifications.PUBLISHER_FINISHED, {publisher: this.report});
+            NotificationEmitter.emit(Notifications.PUBLISHER_FINISHED, { publisher: this.report });
         }
     }
 
@@ -120,7 +120,7 @@ export class PublisherReporter {
 
     private executeOnInitFunction(publisher: input.PublisherModel) {
         if (!publisher.ignore) {
-            NotificationEmitter.emit(Notifications.PUBLISHER_STARTED, {publisher: publisher});
+            NotificationEmitter.emit(Notifications.PUBLISHER_STARTED, { publisher: publisher });
             this.executeHookEvent(DefaultHookEvents.ON_INIT, {}, publisher);
         }
     }

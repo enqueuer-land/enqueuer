@@ -1,8 +1,8 @@
-import {PublisherReporter} from './publisher-reporter';
+import { PublisherReporter } from './publisher-reporter';
 import * as output from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
-import {Logger} from '../../loggers/logger';
-import {ComponentImporter} from '../../requisition-runners/component-importer';
+import { Logger } from '../../loggers/logger';
+import { ComponentImporter } from '../../requisition-runners/component-importer';
 
 export class MultiPublishersReporter {
     private publishers: PublisherReporter[];
@@ -20,7 +20,7 @@ export class MultiPublishersReporter {
                 try {
                     await publisher.publish();
                 } catch (err) {
-                    Logger.error(err);
+                    Logger.error(`Publishers errored: ` + err);
                 }
             }));
             Logger.debug(`Publishers have published their messages`);

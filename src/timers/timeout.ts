@@ -1,6 +1,6 @@
 export class Timeout {
 
-    private timer?: NodeJS.Timer;
+    private timeoutId?: ReturnType<typeof setTimeout>;
     private callback: Function;
 
     public constructor(callBack: Function) {
@@ -8,16 +8,16 @@ export class Timeout {
     }
 
     public start(period: number) {
-        this.timer = global.setTimeout(() => {
+        this.timeoutId = global.setTimeout(() => {
             this.clear();
             this.callback();
         }, period);
     }
 
     public clear() {
-        if (this.timer) {
-            global.clearTimeout(this.timer);
-            delete this.timer;
+        if (this.timeoutId) {
+            global.clearTimeout(this.timeoutId);
+            delete this.timeoutId;
         }
     }
 }

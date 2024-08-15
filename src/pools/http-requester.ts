@@ -1,5 +1,5 @@
-import request from 'request';
-import {Logger} from '../loggers/logger';
+import axios from 'axios';
+import { Logger } from '../loggers/logger';
 
 export class HttpRequester {
     private readonly url: string;
@@ -16,27 +16,23 @@ export class HttpRequester {
         this.timeout = timeout;
     }
 
-    public request(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            Logger.info(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
-            const options = this.createOptions();
-            request(options,
-                (error: any, response: any) => {
-                    if (error) {
-                        reject('Http request error: ' + error);
-                    } else {
-                        //Needed because, for some reason, response.headers was not being shown as response key.
-                        //Therefore, the test http-more-examples.yml was failing
-                        const newResponse = Object.entries(response)
-                            .reduce((acc: any, [key, value]) => {
-                                acc[key] = value;
-                                return acc;
-                            }, {});
-                        newResponse.headers = response.headers;
-                        resolve(newResponse);
-                    }
-                });
-        });
+    public async request(): Promise<any> {
+        Logger.info(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
+        const options = this.createOptions();
+        try {
+            const response = await axios(options)
+            //Needed because, for some reason, response.headers was not being shown as response key.
+            //Therefore, the test http-more-examples.yml was failing
+            const newResponse = Object.entries(response)
+                .reduce((acc: any, [key, value]) => {
+                    acc[key] = value;
+                    return acc;
+                }, {});
+            newResponse.headers = response.headers;
+            return newResponse;
+        } catch (err) {
+            throw ('Http request error: ' + err);
+        }
     }
 
     private createOptions() {

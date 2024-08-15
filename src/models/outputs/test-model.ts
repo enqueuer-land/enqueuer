@@ -3,7 +3,7 @@ export interface TestModel {
     ignored?: boolean;
     description: string;
     valid: boolean;
-    name: string;
+    name?: string;
 }
 
 export function testModelIsPassing(test: { valid: boolean, ignored?: boolean }): boolean {

@@ -1,7 +1,7 @@
-import {Subscription} from './subscription';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {MainInstance} from '../plugins/main-instance';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import { Subscription } from './subscription';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
+import { MainInstance } from '../plugins/main-instance';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 
 class StandardInputSubscription extends Subscription {
     private value?: string;
@@ -15,7 +15,7 @@ class StandardInputSubscription extends Subscription {
             process.stdin.on('end', () => {
                 if (this.value) {
                     resolve();
-                    this.executeHookEvent('onMessageReceived', {message: this.value});
+                    this.executeHookEvent('onMessageReceived', { message: this.value });
                 }
             });
         });
@@ -26,7 +26,7 @@ class StandardInputSubscription extends Subscription {
         process.stdin.resume();
         process.stdin.on('data', (chunk) => {
             if (!this.value) {
-                this.value = chunk;
+                this.value = chunk.toString();
             } else {
                 this.value += chunk;
             }

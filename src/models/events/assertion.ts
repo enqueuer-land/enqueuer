@@ -1,5 +1,5 @@
 export interface Assertion {
-    name: string;
+    name?: string;
     ignore?: boolean;
     [propName: string]: any;
 }

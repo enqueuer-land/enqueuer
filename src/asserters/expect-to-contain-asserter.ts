@@ -1,11 +1,10 @@
-import {Assertion} from '../models/events/assertion';
-import {TestModel} from '../models/outputs/test-model';
-import {Asserter} from './asserter';
-import {MainInstance} from '../plugins/main-instance';
+import { Assertion } from '../models/events/assertion';
+import { TestModel } from '../models/outputs/test-model';
+import { Asserter } from './asserter';
+import { MainInstance } from '../plugins/main-instance';
 
 export class ExpectToContainAsserter implements Asserter {
     public assert(assertion: Assertion, literal: any): TestModel {
-        const name: string = assertion.name;
         const actual = assertion.expect;
         const expected = assertion.toContain;
         const not = assertion.not !== undefined;
@@ -13,26 +12,26 @@ export class ExpectToContainAsserter implements Asserter {
         if (typeof (actual) === 'string') {
             if (typeof (expected) === 'string') {
                 return {
-                    name,
+                    name: assertion.name,
                     valid: not ? actual.indexOf(expected) === -1 : actual.indexOf(expected) !== -1,
                     description: `Expecting '${actual}' (${literal.expect})${not ? ' not' : ''} to contain '${expected}'`
                 };
             } else {
                 return {
-                    name,
+                    name: assertion.name,
                     valid: false,
                     description: `Expecting 'toContain' to be a 'string'. Received a '${typeof (expected)}' instead`
                 };
             }
         } else if (Array.isArray((actual))) {
             return {
-                name,
+                name: assertion.name,
                 valid: not ? !actual.includes(expected) : actual.includes(expected),
                 description: `Expecting '${actual}' (${literal.expect})${not ? ' not' : ''} to contain '${expected}'`
             };
         } else {
             return {
-                name,
+                name: assertion.name,
                 valid: false,
                 description: `Expecting '${literal.expect}' to be a string or an array. Received a '${typeof (actual)}'`
             };

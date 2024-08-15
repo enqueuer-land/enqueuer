@@ -1,12 +1,12 @@
-import {Subscription} from './subscription';
-import {Logger} from '../loggers/logger';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {HttpContainerPool} from '../pools/http-container-pool';
-import {TestModel} from '../models/outputs/test-model';
-import {HttpRequester} from '../pools/http-requester';
-import {MainInstance} from '../plugins/main-instance';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-import {HttpAuthenticationFactory} from '../http-authentications/http-authentication-factory';
+import { Subscription } from './subscription';
+import { Logger } from '../loggers/logger';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
+import { HttpContainerPool } from '../pools/http-container-pool';
+import { TestModel } from '../models/outputs/test-model';
+import { HttpRequester } from '../pools/http-requester';
+import { MainInstance } from '../plugins/main-instance';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
+import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
 
 class HttpSubscription extends Subscription {
 
