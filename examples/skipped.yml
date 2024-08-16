@@ -1,36 +1,36 @@
--   iterations: <<skipped>>
-    onInit:
-        script: |-
-            if (!store.skippedExecutions) {
-                store.skippedExecutions = 0;
-            }
-            ++store.skippedExecutions;
-        store:
-            skipped: 0
--   onInit:
-        assertions:
-        -   expect: store.skippedExecutions
-            toBeEqualTo: 5
--   iterations: 1 === 0
-    onInit:
-        assertions:
-        -   expectToBeTruthy: false
--   iterations: -1
-    onInit:
-        assertions:
-        -   expectToBeTruthy: false
--   iterations: 0
-    onInit:
-        assertions:
-        -   expectToBeTruthy: false
--   iterations: `1`
-    onInit:
-        assertions:
-        -   expectToBeTruthy: true
--   iterations: 1 === 1
-    onInit:
-        store:
-            executed: true
--   onInit:
-        assertions:
-        -   expectToBeDefined: store.executed
+- iterations: <<skipped>>
+  onInit:
+    script: |-
+      if (!store.skippedExecutions) {
+          store.skippedExecutions = 0;
+      }
+      ++store.skippedExecutions;
+    store:
+      skipped: 0
+- onInit:
+    assertions:
+      - expect: store.skippedExecutions
+        toBeEqualTo: 5
+- iterations: 1 === 0
+  onInit:
+    assertions:
+      - expectToBeTruthy: false
+- iterations: -1
+  onInit:
+    assertions:
+      - expectToBeTruthy: false
+- iterations: 0
+  onInit:
+    assertions:
+      - expectToBeTruthy: false
+- iterations: "'1'"
+  onInit:
+    assertions:
+      - expectToBeTruthy: true
+- iterations: 1 === 1
+  onInit:
+    store:
+      executed: true
+- onInit:
+    assertions:
+      - expectToBeDefined: store.executed

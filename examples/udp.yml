@@ -1,20 +1,20 @@
--   publishers:
-    -   type: udp
-        name: publisher description
-        serverAddress: localhost
-        port: 23072
-        payload: it
-    subscriptions:
-    -   name: subscription description
-        type: udp
-        port: 23072
-        timeout: 1000
-        onMessageReceived:
-            script: payload = Buffer.from(payload);
-            assertions:
-            -   name: Payload
-                expect: payload
-                toBeEqualTo: `it`
-            -   name: Remote Address
-                expect: remoteInfo.address
-                toBeEqualTo: `127.0.0.1`
+- publishers:
+    - type: udp
+      name: publisher description
+      serverAddress: localhost
+      port: 23072
+      payload: it
+  subscriptions:
+    - name: subscription description
+      type: udp
+      port: 23072
+      timeout: 1000
+      onMessageReceived:
+        script: payload = Buffer.from(payload);
+        assertions:
+          - name: Payload
+            expect: payload
+            toBeEqualTo: "'it'"
+          - name: Remote Address
+            expect: remoteInfo.address
+            toBeEqualTo: "'127.0.0.1'"

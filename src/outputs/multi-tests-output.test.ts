@@ -7,10 +7,10 @@ import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 jest.mock('../plugins/dynamic-modules-manager');
 // @ts-ignore
 DynamicModulesManager.getInstance.mockImplementation(() => {
-    return {
-        getProtocolManager: () => new ProtocolManager(),
-        getReportFormatterManager: () => new ReportFormatterManager()
-    };
+  return {
+    getProtocolManager: () => new ProtocolManager(),
+    getReportFormatterManager: () => new ReportFormatterManager()
+  };
 });
 
 jest.mock('../plugins/report-formatter-manager');
@@ -19,9 +19,9 @@ jest.mock('./summary-test-output');
 
 const print = jest.fn();
 let constructorSummary = jest.fn(() => {
-    return {
-        print: print
-    };
+  return {
+    print: print
+  };
 });
 // @ts-ignore
 SummaryTestOutput.mockImplementation(constructorSummary);
@@ -29,61 +29,61 @@ SummaryTestOutput.mockImplementation(constructorSummary);
 const publishMock = jest.fn();
 let format = jest.fn();
 const create = jest.fn(() => {
-    return {
-        format: format
-    };
+  return {
+    format: format
+  };
 });
 
 const createPublisherMock = jest.fn(() => {
-    return {
-        publish: publishMock
-    };
+  return {
+    publish: publishMock
+  };
 });
 // @ts-ignore
 ProtocolManager.mockImplementation(() => {
-    return {
-        createPublisher: createPublisherMock
-    };
+  return {
+    createPublisher: createPublisherMock
+  };
 });
 const formatMock = jest.fn();
 const createReportFormatterMock = jest.fn(() => {
-    return {
-        format: formatMock
-    };
+  return {
+    format: formatMock
+  };
 });
 // @ts-ignore
 ReportFormatterManager.mockImplementation(() => {
-    return {
-        createReportFormatter: createReportFormatterMock
-    };
+  return {
+    createReportFormatter: createReportFormatterMock
+  };
 });
 
 describe('MultiTestsOutput', () => {
-    beforeEach(() => {
-        print.mockClear();
-        constructorSummary.mockClear();
-        // @ts-ignore
-        SummaryTestOutput.mockClear();
-        publishMock.mockClear();
-        format.mockClear();
-        create.mockClear();
-        createPublisherMock.mockClear();
-    });
+  beforeEach(() => {
+    print.mockClear();
+    constructorSummary.mockClear();
+    // @ts-ignore
+    SummaryTestOutput.mockClear();
+    publishMock.mockClear();
+    format.mockClear();
+    create.mockClear();
+    createPublisherMock.mockClear();
+  });
 
-    it('Should create an output and a createFunction', () => {
-        const output = { type: 'output', format: 'createFunction' };
-        // @ts-ignore
-        const multiTestsOutput = new MultiTestsOutput([output]);
+  it('Should create an output and a createFunction', () => {
+    const output = { type: 'output', format: 'createFunction' };
+    // @ts-ignore
+    const multiTestsOutput = new MultiTestsOutput([output]);
 
-        expect(createPublisherMock).toHaveBeenCalledWith(output);
-    });
+    expect(createPublisherMock).toHaveBeenCalledWith(output);
+  });
 
-    it('Should format before printing', async () => {
-        const report = {};
-        const output = { type: 'output', format: 'createFunction' };
-        // @ts-ignore
-        await new MultiTestsOutput([output]).publishReport(report);
+  it('Should format before printing', async () => {
+    const report = {};
+    const output = { type: 'output', format: 'createFunction' };
+    // @ts-ignore
+    await new MultiTestsOutput([output]).publishReport(report);
 
-        expect(publishMock).toHaveBeenCalledWith();
-    });
+    expect(publishMock).toHaveBeenCalledWith();
+  });
 });

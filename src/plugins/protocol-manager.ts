@@ -11,57 +11,57 @@ import { Logger } from '../loggers/logger';
 import { prettifyJson } from '../outputs/prettify-json';
 
 export class ProtocolManager {
-    private protocols: Protocol[] = [];
+  private protocols: Protocol[] = [];
 
-    public createPublisher(publisherModel: PublisherModel): Publisher {
-        const matchingPublishers = this.protocols
-            .filter((protocol: Protocol) => protocol.isPublisher())
-            .filter((protocol: Protocol) => protocol.matches(publisherModel.type))
-            .map((protocol: Protocol) => (protocol as PublisherProtocol).create(publisherModel));
-        if (matchingPublishers.length > 0) {
-            return matchingPublishers[0];
-        }
-        Logger.error(`No publisher was found with '${publisherModel.type}'`);
-        return new NullPublisher(publisherModel);
+  public createPublisher(publisherModel: PublisherModel): Publisher {
+    const matchingPublishers = this.protocols
+      .filter((protocol: Protocol) => protocol.isPublisher())
+      .filter((protocol: Protocol) => protocol.matches(publisherModel.type))
+      .map((protocol: Protocol) => (protocol as PublisherProtocol).create(publisherModel));
+    if (matchingPublishers.length > 0) {
+      return matchingPublishers[0];
     }
+    Logger.error(`No publisher was found with '${publisherModel.type}'`);
+    return new NullPublisher(publisherModel);
+  }
 
-    public createSubscription(subscriptionModel: SubscriptionModel): Subscription {
-        const matchingSubscriptions = this.protocols
-            .filter((protocol: Protocol) => protocol.isSubscription())
-            .filter((protocol: Protocol) => protocol.matches(subscriptionModel.type))
-            .map((protocol: Protocol) => (protocol as SubscriptionProtocol).create(subscriptionModel));
-        if (matchingSubscriptions.length > 0) {
-            return matchingSubscriptions[0];
-        }
-        Logger.error(`No subscription was found with '${subscriptionModel.type}'`);
-        return new NullSubscription(subscriptionModel);
+  public createSubscription(subscriptionModel: SubscriptionModel): Subscription {
+    const matchingSubscriptions = this.protocols
+      .filter((protocol: Protocol) => protocol.isSubscription())
+      .filter((protocol: Protocol) => protocol.matches(subscriptionModel.type))
+      .map((protocol: Protocol) => (protocol as SubscriptionProtocol).create(subscriptionModel));
+    if (matchingSubscriptions.length > 0) {
+      return matchingSubscriptions[0];
     }
+    Logger.error(`No subscription was found with '${subscriptionModel.type}'`);
+    return new NullSubscription(subscriptionModel);
+  }
 
-    public addProtocol(protocol: Protocol): void {
-        this.protocols.push(protocol);
-    }
+  public addProtocol(protocol: Protocol): void {
+    this.protocols.push(protocol);
+  }
 
-    public describeMatchingProtocols(description: string = ''): boolean {
-        const matchingProtocols = this.getProtocolsDescription(description);
-        console.log(prettifyJson(matchingProtocols));
-        return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
-    }
+  public describeMatchingProtocols(description: string = ''): boolean {
+    const matchingProtocols = this.getProtocolsDescription(description);
+    console.log(prettifyJson(matchingProtocols));
+    return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
+  }
 
-    public getProtocolsDescription(protocol: string = ''): {
-        publishers: {}[];
-        subscriptions: {}[];
-    } {
-        return {
-            publishers: this.protocols
-                //NOTE: function check for retro compatibilities proposes
-                .filter((protocol: Protocol) => protocol.isPublisher && protocol.isPublisher())
-                .filter((publisher: Protocol) => publisher.matches(protocol))
-                .map(protocol => protocol.getDescription()),
-            subscriptions: this.protocols
-                //NOTE: function check for retro compatibilities proposes
-                .filter((protocol: Protocol) => protocol.isSubscription && protocol.isSubscription())
-                .filter((subscription: Protocol) => subscription.matches(protocol))
-                .map(protocol => protocol.getDescription())
-        };
-    }
+  public getProtocolsDescription(protocol: string = ''): {
+    publishers: {}[];
+    subscriptions: {}[];
+  } {
+    return {
+      publishers: this.protocols
+        //NOTE: function check for retro compatibilities proposes
+        .filter((protocol: Protocol) => protocol.isPublisher && protocol.isPublisher())
+        .filter((publisher: Protocol) => publisher.matches(protocol))
+        .map(protocol => protocol.getDescription()),
+      subscriptions: this.protocols
+        //NOTE: function check for retro compatibilities proposes
+        .filter((protocol: Protocol) => protocol.isSubscription && protocol.isSubscription())
+        .filter((subscription: Protocol) => subscription.matches(protocol))
+        .map(protocol => protocol.getDescription())
+    };
+  }
 }

@@ -10,165 +10,165 @@ const render = jest.fn();
 prettyjson.render.mockImplementation(render);
 
 describe('AsserterManager', () => {
-    it('should create proper asserter', () => {
-        const asserterManager = new AsserterManager();
-        asserterManager.addAsserter(
-            { equals: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
+  it('should create proper asserter', () => {
+    const asserterManager = new AsserterManager();
+    asserterManager.addAsserter(
+      { equals: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
 
-        const asserter = asserterManager.createAsserter({
-            name: 'any',
-            equals: true
-        });
-
-        expect(asserter).toBeInstanceOf(ExpectToBeEqualToAsserter);
+    const asserter = asserterManager.createAsserter({
+      name: 'any',
+      equals: true
     });
 
-    it('should create proper asserter ignoring not required ones', () => {
-        const asserterManager = new AsserterManager();
-        asserterManager.addAsserter(
-            {
-                equals: {
-                    description: 'some',
-                    type: 'string'
-                },
-                not: {
-                    required: false,
-                    description: 'some',
-                    type: 'null'
-                }
-            },
-            () => new ExpectToBeEqualToAsserter()
-        );
+    expect(asserter).toBeInstanceOf(ExpectToBeEqualToAsserter);
+  });
 
-        const asserter = asserterManager.createAsserter({
-            name: 'any',
-            equals: true
-        });
+  it('should create proper asserter ignoring not required ones', () => {
+    const asserterManager = new AsserterManager();
+    asserterManager.addAsserter(
+      {
+        equals: {
+          description: 'some',
+          type: 'string'
+        },
+        not: {
+          required: false,
+          description: 'some',
+          type: 'null'
+        }
+      },
+      () => new ExpectToBeEqualToAsserter()
+    );
 
-        expect(asserter).toBeInstanceOf(ExpectToBeEqualToAsserter);
+    const asserter = asserterManager.createAsserter({
+      name: 'any',
+      equals: true
     });
 
-    it('should create Null asserter', () => {
-        const asserterManager = new AsserterManager();
-        asserterManager.addAsserter(
-            { equals: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
+    expect(asserter).toBeInstanceOf(ExpectToBeEqualToAsserter);
+  });
 
-        const asserter = asserterManager.createAsserter({ name: 'any' });
+  it('should create Null asserter', () => {
+    const asserterManager = new AsserterManager();
+    asserterManager.addAsserter(
+      { equals: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
 
-        expect(asserter).toBeInstanceOf(NullAsserter);
-    });
+    const asserter = asserterManager.createAsserter({ name: 'any' });
 
-    it('should describe every matching asserter', () => {
-        const asserterManager = new AsserterManager();
+    expect(asserter).toBeInstanceOf(NullAsserter);
+  });
 
-        asserterManager.addAsserter(
-            { toBeEqualTo: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
-        asserterManager.addAsserter(
-            { toBeGreaterThan: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
-        asserterManager.addAsserter(
-            { toBeLessThan: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
+  it('should describe every matching asserter', () => {
+    const asserterManager = new AsserterManager();
 
-        const status = asserterManager.describeMatchingAsserters('than');
+    asserterManager.addAsserter(
+      { toBeEqualTo: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
+    asserterManager.addAsserter(
+      { toBeGreaterThan: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
+    asserterManager.addAsserter(
+      { toBeLessThan: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
 
-        expect(status).toBeTruthy();
-        expect(render).toHaveBeenCalledWith(
-            {
-                asserters: [
-                    {
-                        toBeLessThan: {
-                            description: 'some',
-                            required: true,
-                            type: 'string'
-                        }
-                    },
-                    {
-                        toBeGreaterThan: {
-                            description: 'some',
-                            required: true,
-                            type: 'string'
-                        }
-                    }
-                ]
-            },
-            expect.anything()
-        );
-    });
+    const status = asserterManager.describeMatchingAsserters('than');
 
-    it('should not describe', () => {
-        const asserterManager = new AsserterManager();
+    expect(status).toBeTruthy();
+    expect(render).toHaveBeenCalledWith(
+      {
+        asserters: [
+          {
+            toBeLessThan: {
+              description: 'some',
+              required: true,
+              type: 'string'
+            }
+          },
+          {
+            toBeGreaterThan: {
+              description: 'some',
+              required: true,
+              type: 'string'
+            }
+          }
+        ]
+      },
+      expect.anything()
+    );
+  });
 
-        asserterManager.addAsserter(
-            { toBeEqualTo: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
-        asserterManager.addAsserter(
-            { toBeGreaterThan: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
-        asserterManager.addAsserter(
-            { toBeLessThan: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
+  it('should not describe', () => {
+    const asserterManager = new AsserterManager();
 
-        const status = asserterManager.describeMatchingAsserters('does not match');
+    asserterManager.addAsserter(
+      { toBeEqualTo: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
+    asserterManager.addAsserter(
+      { toBeGreaterThan: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
+    asserterManager.addAsserter(
+      { toBeLessThan: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
 
-        expect(status).toBeFalsy();
-        expect(render).toHaveBeenCalledWith({ asserters: [] }, expect.anything());
-    });
+    const status = asserterManager.describeMatchingAsserters('does not match');
 
-    it('should describe every asserter', () => {
-        const asserterManager = new AsserterManager();
+    expect(status).toBeFalsy();
+    expect(render).toHaveBeenCalledWith({ asserters: [] }, expect.anything());
+  });
 
-        asserterManager.addAsserter(
-            { toBeEqualTo: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
-        asserterManager.addAsserter(
-            { toBeGreaterThan: { description: 'some', type: 'string' } },
-            () => new ExpectToBeEqualToAsserter()
-        );
-        asserterManager.addAsserter({ toBeLessThan: { description: 'some' } }, () => new ExpectToBeEqualToAsserter());
+  it('should describe every asserter', () => {
+    const asserterManager = new AsserterManager();
 
-        const status = asserterManager.describeMatchingAsserters(true);
+    asserterManager.addAsserter(
+      { toBeEqualTo: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
+    asserterManager.addAsserter(
+      { toBeGreaterThan: { description: 'some', type: 'string' } },
+      () => new ExpectToBeEqualToAsserter()
+    );
+    asserterManager.addAsserter({ toBeLessThan: { description: 'some' } }, () => new ExpectToBeEqualToAsserter());
 
-        expect(status).toBeTruthy();
-        expect(render).toHaveBeenCalledWith(
-            {
-                asserters: [
-                    {
-                        toBeLessThan: {
-                            description: 'some',
-                            required: true,
-                            type: 'any'
-                        }
-                    },
-                    {
-                        toBeGreaterThan: {
-                            description: 'some',
-                            required: true,
-                            type: 'string'
-                        }
-                    },
-                    {
-                        toBeEqualTo: {
-                            description: 'some',
-                            required: true,
-                            type: 'string'
-                        }
-                    }
-                ]
-            },
-            expect.anything()
-        );
-    });
+    const status = asserterManager.describeMatchingAsserters(true);
+
+    expect(status).toBeTruthy();
+    expect(render).toHaveBeenCalledWith(
+      {
+        asserters: [
+          {
+            toBeLessThan: {
+              description: 'some',
+              required: true,
+              type: 'any'
+            }
+          },
+          {
+            toBeGreaterThan: {
+              description: 'some',
+              required: true,
+              type: 'string'
+            }
+          },
+          {
+            toBeEqualTo: {
+              description: 'some',
+              required: true,
+              type: 'string'
+            }
+          }
+        ]
+      },
+      expect.anything()
+    );
+  });
 });

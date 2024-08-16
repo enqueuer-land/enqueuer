@@ -1,60 +1,71 @@
 definedVariable: value
 onInit:
-    assertions:
-    -   expectToBeDefined: requisition.definedVariable
-    -   expectToBeUndefined: requisition.undefinedVariable
-    -   expectToBeTruthy: true
-    -   expectToBeFalsy: false
-    -   expect: 1
-        toBeGreaterThan: 0
-    -   expect: 1
-        not:
-        toBeGreaterThan: 2
-    -   expect: 1
-        toBeGreaterThanOrEqualTo: 0
-    -   expect: 1
-        not:
-        toBeGreaterThanOrEqualTo: 2
-    -   expect: 1
-        toBeLessThan: 2
-    -   expect: 1
-        not:
-        toBeLessThan: 0
-    -   expect: 1
-        toBeLessThanOrEqualTo: 2
-    -   expect: 1
-        not:
-        toBeLessThanOrEqualTo: 0
-    -   expect: `enqueuer`
-        toContain: `queue`
-    -   expect: `enqueuer`
-        not:
-        toContain: `nqr`
-    -   expect: [true, 'string', 10]
-        toContain: `string`
-    -   expect: [true, 'string', 10]
-        not:
-        toContain: false
-    -   expect:
-            deep:
-                object:
-                    with:
-                        array:
-                        -   1
-                        -   2
-                        -   3
-                boolean: true
-        toBeEqualTo:
-            deep:
-                boolean: true
-                object:
-                    with:
-                        array:
-                        - 1
-                        - 2
-                        - 3
-    -   expect: 1
-        toBeEqualTo: 1
-    -   expect: 1
-        not:
-        toBeEqualTo: 0
+  assertions:
+    - expectToBeDefined: requisition.definedVariable
+    - expectToBeUndefined: requisition.undefinedVariable
+    - expectToBeTruthy: true
+    - expectToBeFalsy: false
+    - expect: 1
+      toBeGreaterThan: 0
+    - expect: 1
+      not:
+      toBeGreaterThan: 2
+    - expect: 1
+      toBeGreaterThanOrEqualTo: 0
+    - expect: 1
+      not:
+      toBeGreaterThanOrEqualTo: 2
+    - expect: 1
+      toBeLessThan: 2
+    - expect: 1
+      not:
+      toBeLessThan: 0
+    - expect: 1
+      toBeLessThanOrEqualTo: 2
+    - expect: 1
+      not:
+      toBeLessThanOrEqualTo: 0
+    - expect: "'enqueuer'"
+      toContain: "'queue'"
+    - expect: "'enqueuer'"
+      not:
+      toContain: "'nqr'"
+    - expect: [true, 'string', 10]
+      toContain: "'string'"
+    - expect: [true, 'string', 10]
+      not:
+      toContain: false
+    - expect:
+        deep:
+          object:
+            with:
+              array:
+                - 1
+                - 2
+                - 3
+          boolean: true
+      toBeEqualTo:
+        deep:
+          boolean: true
+          object:
+            with:
+              array:
+                - 1
+                - 2
+                - 3
+    - expect: 1
+      toBeEqualTo: 1
+    - expect: 1
+      not:
+      toBeEqualTo: 0
+    - expect: "'blue'"
+      toBeAnyOf:
+        - red
+        - green
+        - blue
+    - expect: "'yellow'"
+      not:
+      toBeAnyOf:
+        - red
+        - green
+        - blue

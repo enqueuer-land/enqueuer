@@ -5,97 +5,97 @@ jest.mock('./publisher-reporter');
 
 let publish = jest.fn();
 let onFinishMock = jest.fn(() => {
-    return 'onFinishMockStr';
+  return 'onFinishMockStr';
 });
 let getReportMock = jest.fn(() => {
-    return 'getReportMockStr';
+  return 'getReportMockStr';
 });
 
 const recreateMock = () => {
-    // @ts-expect-error
-    PublisherReporter.mockImplementation(() => {
-        return {
-            publish: publish,
-            onFinish: onFinishMock,
-            getReport: getReportMock
-        };
-    });
+  // @ts-expect-error
+  PublisherReporter.mockImplementation(() => {
+    return {
+      publish: publish,
+      onFinish: onFinishMock,
+      getReport: getReportMock
+    };
+  });
 };
 
 let clearMock = function () {
-    // @ts-expect-error
-    PublisherReporter.mockClear();
-    publish.mockClear();
-    onFinishMock.mockClear();
-    getReportMock.mockReset();
+  // @ts-expect-error
+  PublisherReporter.mockClear();
+  publish.mockClear();
+  onFinishMock.mockClear();
+  getReportMock.mockReset();
 };
 
 describe('MultiPublishersReporter', () => {
-    beforeEach(() => {
-        recreateMock();
+  beforeEach(() => {
+    recreateMock();
+  });
+
+  afterEach(() => {
+    clearMock();
+  });
+
+  it('Call publishReporter constructors', () => {
+    const publishers = [{ name: 'first' }, { name: 'second' }] as any;
+    new MultiPublishersReporter(publishers);
+
+    expect(PublisherReporter).toHaveBeenCalledTimes(publishers.length);
+    expect(PublisherReporter).toHaveBeenCalledWith({ name: 'first' });
+    expect(PublisherReporter).toHaveBeenCalledWith({ name: 'second' });
+  });
+
+  it('Call publishReporter constructors empty publishers', () => {
+    new MultiPublishersReporter([]);
+
+    expect(PublisherReporter).toHaveBeenCalledTimes(0);
+  });
+
+  it('should handle success', done => {
+    publish.mockImplementation(() => Promise.resolve());
+    recreateMock();
+
+    const publishers = [{}, {}] as any;
+    new MultiPublishersReporter(publishers).publish().then(() => {
+      done();
     });
 
-    afterEach(() => {
-        clearMock();
+    expect(publish).toHaveBeenCalledTimes(publishers.length);
+  });
+
+  it('should handle be success when no publisher is given', done => {
+    new MultiPublishersReporter([]).publish().then(() => {
+      done();
     });
 
-    it('Call publishReporter constructors', () => {
-        const publishers = [{ name: 'first' }, { name: 'second' }] as any;
-        new MultiPublishersReporter(publishers);
+    expect(publish).toHaveBeenCalledTimes(0);
+  });
 
-        expect(PublisherReporter).toHaveBeenCalledTimes(publishers.length);
-        expect(PublisherReporter).toHaveBeenCalledWith({ name: 'first' });
-        expect(PublisherReporter).toHaveBeenCalledWith({ name: 'second' });
-    });
+  it('should handle fail publishing', async () => {
+    publish.mockImplementationOnce(() => Promise.resolve());
+    publish.mockImplementationOnce(() => Promise.reject('err reason'));
+    recreateMock();
 
-    it('Call publishReporter constructors empty publishers', () => {
-        new MultiPublishersReporter([]);
+    const publishers = [{}, {}] as any;
+    await new MultiPublishersReporter(publishers).publish();
+    expect(publish).toHaveBeenCalledTimes(publishers.length);
+  });
 
-        expect(PublisherReporter).toHaveBeenCalledTimes(0);
-    });
+  it('should call onFinish', () => {
+    const publishers = [{}, {}] as any;
 
-    it('should handle success', done => {
-        publish.mockImplementation(() => Promise.resolve());
-        recreateMock();
+    new MultiPublishersReporter(publishers).onFinish();
+    expect(onFinishMock).toHaveBeenCalledTimes(publishers.length);
+  });
 
-        const publishers = [{}, {}] as any;
-        new MultiPublishersReporter(publishers).publish().then(() => {
-            done();
-        });
+  it('should call getReport', () => {
+    const publishers = [{}, {}] as any;
 
-        expect(publish).toHaveBeenCalledTimes(publishers.length);
-    });
-
-    it('should handle be success when no publisher is given', done => {
-        new MultiPublishersReporter([]).publish().then(() => {
-            done();
-        });
-
-        expect(publish).toHaveBeenCalledTimes(0);
-    });
-
-    it('should handle fail publishing', async () => {
-        publish.mockImplementationOnce(() => Promise.resolve());
-        publish.mockImplementationOnce(() => Promise.reject('err reason'));
-        recreateMock();
-
-        const publishers = [{}, {}] as any;
-        await new MultiPublishersReporter(publishers).publish();
-        expect(publish).toHaveBeenCalledTimes(publishers.length);
-    });
-
-    it('should call onFinish', () => {
-        const publishers = [{}, {}] as any;
-
-        new MultiPublishersReporter(publishers).onFinish();
-        expect(onFinishMock).toHaveBeenCalledTimes(publishers.length);
-    });
-
-    it('should call getReport', () => {
-        const publishers = [{}, {}] as any;
-
-        const report = new MultiPublishersReporter(publishers).getReport();
-        expect(report.length).toBe(publishers.length);
-        expect(getReportMock).toHaveBeenCalledTimes(publishers.length);
-    });
+    const report = new MultiPublishersReporter(publishers).getReport();
+    expect(report.length).toBe(publishers.length);
+    expect(getReportMock).toHaveBeenCalledTimes(publishers.length);
+  });
 });

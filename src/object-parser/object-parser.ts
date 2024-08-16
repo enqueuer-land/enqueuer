@@ -1,3 +1,3 @@
 export interface ObjectParser {
-    parse(value: string, query?: any): object;
+  parse(value: string, query?: any): object;
 }

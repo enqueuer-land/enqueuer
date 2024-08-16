@@ -5,11 +5,11 @@ import { ObjectDecycler } from '../../object-parser/object-decycler';
 import { prettifyJson } from '../prettify-json';
 
 export class ConsoleFormatter implements ReportFormatter {
-    public format(report: RequisitionModel): string {
-        return prettifyJson(new ObjectDecycler().decycle(report));
-    }
+  public format(report: RequisitionModel): string {
+    return prettifyJson(new ObjectDecycler().decycle(report));
+  }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    mainInstance.reportFormatterManager.addReportFormatter(() => new ConsoleFormatter(), 'console', 'stdout');
+  mainInstance.reportFormatterManager.addReportFormatter(() => new ConsoleFormatter(), 'console', 'stdout');
 }

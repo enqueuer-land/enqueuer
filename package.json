@@ -1,119 +1,120 @@
 {
-    "name": "enqueuer",
-    "version": "5.0.4",
-    "description": "Polyglot flow testing tool",
-    "main": "./js/enqueuer.js",
-    "typings": "./js/enqueuer.d.ts",
-    "types": "enqueuer.d.ts",
-    "directories": {
-        "lib": "js"
-    },
-    "homepage": "https://enqueuer.com",
-    "scripts": {
-        "start": "node js/index.js",
-        "prepublishOnly": "npm run all",
-        "test": "npm run codeCoverage && npm run examplesTest && npm run listsDescriptions",
-        "unitTest": "NODE_ENV=TEST node_modules/.bin/jest --silent",
-        "examplesTest": "node js/index.js -c conf/config-example.yml examples/requisition-navigation.yaml < misc/stdin && npm run validateOutput",
-        "validateOutput": "yval --from=json output/examples.json && yval --from=yaml output/examples.yml",
-        "codeCoverage": "NODE_ENV=TEST node_modules/.bin/jest --detectOpenHandles --coverage --silent",
-        "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null && nqr -e > /dev/null",
-        "format": "npx prettier . '!**/*.{yml,yaml,html}' --write",
-        "updateHtml": "misc/mdToHtml.js",
-        "all": "npm run clean && npm run format && npm run build && npm link && npm run test",
-        "build": "tsc",
-        "commit": "git-cz",
-        "semantic-release": "semantic-release"
-    },
-    "keywords": [
-        "testing",
-        "nqr",
-        "tool",
-        "microservice",
-        "multiprotocol",
-        "polyglot",
-        "reactive",
-        "message",
-        "tcp",
-        "mock",
-        "http",
-        "test"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/enqueuer-land/enqueuer"
-    },
-    "author": {
-        "name": "Virgs",
-        "email": "guilherme.moraes@outlook.com",
-        "url": "http://github.com/virgs"
-    },
-    "license": "MIT",
-    "bin": {
-        "enqueuer": "js/index.js",
-        "nqr": "js/index.js"
-    },
-    "dependencies": {
-        "chalk": "^4.1.2",
-        "commander": "^12.1.0",
-        "express": "^4.19.2",
-        "glob": "^11.0.0",
-        "jest": "^29.7.0",
-        "json-placeholder-replacer": "^2.0.5",
-        "prettyjson": "^1.2.5",
-        "require-from-string": "^2.0.2",
-        "yamljs": "^0.3.0"
-    },
-    "devDependencies": {
-        "@types/commander": "^2.12.0",
-        "@types/express": "^4.17.21",
-        "@types/glob": "^8.1.0",
-        "@types/jest": "^29.5.12",
-        "@types/node": "^22.3.0",
-        "@types/object-hash": "^3.0.6",
-        "@types/prettyjson": "0.0.33",
-        "@types/require-from-string": "^1.2.3",
-        "@types/yamljs": "^0.2.34",
-        "commitizen": "^4.3.0",
-        "cz-conventional-changelog": "^3.3.0",
-        "pagedown": "^1.1.0",
-        "semantic-release": "^24.0.0",
-        "ts-jest": "^29.2.4",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.5.4",
-        "yval": "0.0.3"
-    },
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-conventional-changelog"
-        }
-    },
-    "jest": {
-        "collectCoverage": true,
-        "collectCoverageFrom": [
-            "src/**/*.ts",
-            "!src/publishers/**",
-            "!src/subscriptions/**",
-            "!src/index.ts"
-        ],
-        "coverageThreshold": {
-            "global": {
-                "statements": 80,
-                "branches": 80,
-                "functions": 80,
-                "lines": 80
-            }
-        },
-        "transform": {
-            "^.+\\.tsx?$": "ts-jest"
-        },
-        "testRegex": ".*\\.test\\.ts$",
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json"
-        ]
+  "name": "enqueuer",
+  "version": "5.0.4",
+  "description": "Polyglot flow testing tool",
+  "main": "./js/enqueuer.js",
+  "typings": "./js/enqueuer.d.ts",
+  "types": "enqueuer.d.ts",
+  "directories": {
+    "lib": "js"
+  },
+  "homepage": "https://enqueuer.com",
+  "scripts": {
+    "start": "node js/index.js",
+    "prepublishOnly": "npm run all",
+    "test": "npm run codeCoverage && npm run examplesTest && npm run listsDescriptions",
+    "unitTest": "NODE_ENV=TEST node_modules/.bin/jest --silent",
+    "examplesTest": "node js/index.js -c conf/config-example.yml examples/requisition-navigation.yaml < misc/stdin && npm run validateOutput",
+    "validateOutput": "yval --from=json output/examples.json && yval --from=yaml output/examples.yml",
+    "codeCoverage": "NODE_ENV=TEST node_modules/.bin/jest --detectOpenHandles --coverage --silent",
+    "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null && nqr -e > /dev/null",
+    "format": "prettier . '!**/*.{html}' --write",
+    "updateHtml": "misc/mdToHtml.js",
+    "all": "npm run clean && npm run format && npm run build && npm link && npm run test",
+    "build": "tsc",
+    "commit": "git-cz",
+    "semantic-release": "semantic-release"
+  },
+  "keywords": [
+    "testing",
+    "nqr",
+    "tool",
+    "microservice",
+    "multiprotocol",
+    "polyglot",
+    "reactive",
+    "message",
+    "tcp",
+    "mock",
+    "http",
+    "test"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enqueuer-land/enqueuer"
+  },
+  "author": {
+    "name": "Virgs",
+    "email": "guilherme.moraes@outlook.com",
+    "url": "http://github.com/virgs"
+  },
+  "license": "MIT",
+  "bin": {
+    "enqueuer": "js/index.js",
+    "nqr": "js/index.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "express": "^4.19.2",
+    "glob": "^11.0.0",
+    "jest": "^29.7.0",
+    "json-placeholder-replacer": "^2.0.5",
+    "prettyjson": "^1.2.5",
+    "require-from-string": "^2.0.2",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.0",
+    "@types/express": "^4.17.21",
+    "@types/glob": "^8.1.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.3.0",
+    "@types/object-hash": "^3.0.6",
+    "@types/prettyjson": "0.0.33",
+    "@types/require-from-string": "^1.2.3",
+    "@types/yamljs": "^0.2.34",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "pagedown": "^1.1.0",
+    "prettier": "^3.3.3",
+    "semantic-release": "^24.0.0",
+    "ts-jest": "^29.2.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "yval": "0.0.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/publishers/**",
+      "!src/subscriptions/**",
+      "!src/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": ".*\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  }
 }

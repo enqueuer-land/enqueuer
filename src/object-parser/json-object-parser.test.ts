@@ -2,69 +2,69 @@ import { entryPoint, JsonObjectParser } from './json-object-parser';
 import { MainInstance } from '../plugins/main-instance';
 
 describe('JsonObjectParser', () => {
-    test('should keep string numbers as string', () => {
-        const value = '{\n' + '  "firstLevel": {\n' + '    "secondLevel": "123.00"\n' + '  }\n' + '}';
+  test('should keep string numbers as string', () => {
+    const value = '{\n' + '  "firstLevel": {\n' + '    "secondLevel": "123.00"\n' + '  }\n' + '}';
 
-        const parsed: any = new JsonObjectParser().parse(value);
+    const parsed: any = new JsonObjectParser().parse(value);
 
-        expect(typeof parsed.firstLevel.secondLevel).toEqual('string');
-        expect(parsed.firstLevel.secondLevel).toEqual('123.00');
+    expect(typeof parsed.firstLevel.secondLevel).toEqual('string');
+    expect(parsed.firstLevel.secondLevel).toEqual('123.00');
+  });
+
+  test('should stringify with space', () => {
+    const value = { firstLevel: { secondLevel: 'value' } };
+    const space = 4;
+
+    const stringified = new JsonObjectParser().stringify(value, {
+      space: space
     });
 
-    test('should stringify with space', () => {
-        const value = { firstLevel: { secondLevel: 'value' } };
-        const space = 4;
+    expect(stringified).toBe(JSON.stringify(value, null, space));
+  });
 
-        const stringified = new JsonObjectParser().stringify(value, {
-            space: space
-        });
+  test('should stringify with default space', () => {
+    const value = { firstLevel: { secondLevel: 'value' } };
+    const defaultSpace = 2;
 
-        expect(stringified).toBe(JSON.stringify(value, null, space));
-    });
+    const stringified = new JsonObjectParser().stringify(value);
 
-    test('should stringify with default space', () => {
-        const value = { firstLevel: { secondLevel: 'value' } };
-        const defaultSpace = 2;
+    expect(stringified).toBe(JSON.stringify(value, null, defaultSpace));
+  });
 
-        const stringified = new JsonObjectParser().stringify(value);
+  test('should stringify undefined objects', () => {
+    // @ts-ignore
+    const stringified = new JsonObjectParser().stringify(undefined);
 
-        expect(stringified).toBe(JSON.stringify(value, null, defaultSpace));
-    });
+    expect(stringified).toBe('{}');
+  });
 
-    test('should stringify undefined objects', () => {
-        // @ts-ignore
-        const stringified = new JsonObjectParser().stringify(undefined);
+  test('should stringify cycle reference', () => {
+    let value: any = { firstLevel: { secondLevel: {} } };
+    value.firstLevel.secondLevel.thirdLevel = value;
+    const expected = '{\n' + '  "firstLevel": {\n' + '    "secondLevel": {}\n' + '  }\n' + '}';
 
-        expect(stringified).toBe('{}');
-    });
+    const stringified = new JsonObjectParser().stringify(value);
 
-    test('should stringify cycle reference', () => {
-        let value: any = { firstLevel: { secondLevel: {} } };
-        value.firstLevel.secondLevel.thirdLevel = value;
-        const expected = '{\n' + '  "firstLevel": {\n' + '    "secondLevel": {}\n' + '  }\n' + '}';
+    expect(stringified).toBe(expected);
+  });
 
-        const stringified = new JsonObjectParser().stringify(value);
+  test('should throw parse error', () => {
+    const notJson = 'foo bar\nfoo: bar';
 
-        expect(stringified).toBe(expected);
-    });
+    expect(() => new JsonObjectParser().parse(notJson)).toThrow();
+  });
 
-    test('should throw parse error', () => {
-        const notJson = 'foo bar\nfoo: bar';
-
-        expect(() => new JsonObjectParser().parse(notJson)).toThrow();
-    });
-
-    it('Should export an entry point', done => {
-        const mainInstance: MainInstance = {
-            // @ts-ignore
-            objectParserManager: {
-                addObjectParser: (createFunction: any, ...tags: any) => {
-                    expect(createFunction()).toBeInstanceOf(JsonObjectParser);
-                    expect(tags).toEqual(['json']);
-                    done();
-                }
-            }
-        };
-        entryPoint(mainInstance);
-    });
+  it('Should export an entry point', done => {
+    const mainInstance: MainInstance = {
+      // @ts-ignore
+      objectParserManager: {
+        addObjectParser: (createFunction: any, ...tags: any) => {
+          expect(createFunction()).toBeInstanceOf(JsonObjectParser);
+          expect(tags).toEqual(['json']);
+          done();
+        }
+      }
+    };
+    entryPoint(mainInstance);
+  });
 });

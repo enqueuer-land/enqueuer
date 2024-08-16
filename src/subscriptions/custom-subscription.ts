@@ -8,51 +8,51 @@ import { MainInstance } from '../plugins/main-instance';
 import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 
 class CustomSubscription extends Subscription {
-    constructor(subscriptionModel: SubscriptionModel) {
-        super(subscriptionModel);
-        try {
-            const moduleString: string = fs.readFileSync(this.module).toString();
-            const module = requireFromString(moduleString);
-            this['custom'] = new module.Subscription(this);
-        } catch (err) {
-            Logger.error(`Error loading module '${this.module}': ${err}`);
-        }
+  constructor(subscriptionModel: SubscriptionModel) {
+    super(subscriptionModel);
+    try {
+      const moduleString: string = fs.readFileSync(this.module).toString();
+      const module = requireFromString(moduleString);
+      this['custom'] = new module.Subscription(this);
+    } catch (err) {
+      Logger.error(`Error loading module '${this.module}': ${err}`);
     }
+  }
 
-    public async subscribe(): Promise<void> {
-        return this.custom.subscribe({ store: Store.getData(), logger: Logger });
-    }
+  public async subscribe(): Promise<void> {
+    return this.custom.subscribe({ store: Store.getData(), logger: Logger });
+  }
 
-    public async receiveMessage(): Promise<void> {
-        return this.custom.receiveMessage({
-            store: Store.getData(),
-            logger: Logger
-        });
-    }
+  public async receiveMessage(): Promise<void> {
+    return this.custom.receiveMessage({
+      store: Store.getData(),
+      logger: Logger
+    });
+  }
 
-    public async unsubscribe(): Promise<any> {
-        if (this.custom.unsubscribe) {
-            return this.custom.unsubscribe({
-                store: Store.getData(),
-                logger: Logger
-            });
-        }
+  public async unsubscribe(): Promise<any> {
+    if (this.custom.unsubscribe) {
+      return this.custom.unsubscribe({
+        store: Store.getData(),
+        logger: Logger
+      });
     }
+  }
 
-    public async sendResponse(): Promise<any> {
-        if (this.custom.sendResponse) {
-            return this.custom.sendResponse({
-                store: Store.getData(),
-                logger: Logger
-            });
-        }
+  public async sendResponse(): Promise<any> {
+    if (this.custom.sendResponse) {
+      return this.custom.sendResponse({
+        store: Store.getData(),
+        logger: Logger
+      });
     }
+  }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new SubscriptionProtocol(
-        'custom',
-        (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel)
-    );
-    mainInstance.protocolManager.addProtocol(protocol);
+  const protocol = new SubscriptionProtocol(
+    'custom',
+    (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel)
+  );
+  mainInstance.protocolManager.addProtocol(protocol);
 }

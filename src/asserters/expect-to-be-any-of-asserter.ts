@@ -3,26 +3,25 @@ import { TestModel } from '../models/outputs/test-model';
 import { Asserter } from './asserter';
 import { MainInstance } from '../plugins/main-instance';
 
-export class ExpectToBeEqualToAsserter implements Asserter {
+export class ExpectToBeAnyOfAsserter implements Asserter {
   public assert(assertion: Assertion, literal: any): TestModel {
     const actual = assertion.expect;
-    const expected = assertion.toBeEqualTo;
+    const isAnyOfList = assertion.toBeAnyOf.some((expected: string) => this.checkEquality(expected, actual));
 
+    return {
+      name: assertion.name,
+      valid: assertion.not === undefined ? isAnyOfList : !isAnyOfList,
+      description: `Expected '${literal.expect}'${
+        assertion.not === undefined ? '' : ' not'
+      } to be any of '[${assertion.toBeAnyOf.join(', ')}]'. Received '${actual}'`
+    };
+  }
+
+  private checkEquality(expected: string, actual: string): boolean {
     if (typeof actual === 'object' && typeof expected === 'object') {
-      const areEquals = this.deepEqual(actual, expected);
-      return {
-        name: assertion.name,
-        valid: assertion.not === undefined ? areEquals : !areEquals,
-        description: `Expected '${JSON.stringify(literal.expect, null, 2)}'${
-          assertion.not === undefined ? '' : ' not'
-        } to be equal to '${JSON.stringify(expected, null, 2)}'. Received '${JSON.stringify(actual, null, 2)}'`
-      };
+      return this.deepEqual(actual, expected);
     } else {
-      return {
-        name: assertion.name,
-        valid: assertion.not === undefined ? actual == expected : actual != expected,
-        description: `Expected '${literal.expect}'${assertion.not === undefined ? '' : ' not'} to be equal to '${expected}'. Received '${actual}'`
-      };
+      return actual == expected;
     }
   }
 
@@ -48,11 +47,11 @@ export function entryPoint(mainInstance: MainInstance): void {
         description: 'negates',
         type: 'null'
       },
-      toBeEqualTo: {
-        type: 'number',
+      toBeAnyOf: {
+        type: 'list',
         description: 'expected value'
       }
     },
-    () => new ExpectToBeEqualToAsserter()
+    () => new ExpectToBeAnyOfAsserter()
   );
 }

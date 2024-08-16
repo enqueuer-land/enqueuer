@@ -4,11 +4,10 @@
   onInit:
     script: |
       requisition.javascript = <<file://misc/file-code.js>>
-      console.log(requisition)
     assertions:
       - name: fileRead (yml)
         expect: requisition.yml.key
-        toBeEqualTo: "'I'm persisted in config file'"
+        toBeEqualTo: "'ymlValue'"
       - name: fileRead (.json)
         expect: requisition.json.key
         toBeEqualTo: "'value'"
@@ -18,8 +17,6 @@
       - name: fileRead (.js)
         expect: requisition.javascript(20)
         toBeEqualTo: 40
-  store:
-    filePlaceholderInjection: I'm persisted in config file
 - onInit:
     assertions:
       - name: it's not stored

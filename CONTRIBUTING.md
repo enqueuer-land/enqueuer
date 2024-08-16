@@ -7,8 +7,8 @@ Feel free to reach me out anytime at guilherme.moraes@outlook.com
 
 If you are opening a pull request/issue/suggestion (_thanks!_), please include:
 
--   a description of the fix/improvement
--   test(s) that could prove that the sutff is working
+- a description of the fix/improvement
+- test(s) that could prove that the sutff is working
 
 ## Running the tests
 

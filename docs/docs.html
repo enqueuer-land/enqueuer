@@ -301,7 +301,7 @@ subscriptions:
     onMessageReceived:
         assertions:
         -   expect: body
-            toContain: `enqueuer`
+            toContain: "'enqueuer'"
 </code></pre>
 
 <p>Now go ahead and try hitting it using the browser. <br>
@@ -319,7 +319,7 @@ Yes, of course you can hit your own mocked http server:</p>
         -   expect: statusCode
             toBeGreaterThan: 400
         -   expect: body
-            toBeEqualTo: "'blah'"
+            toBeEqualTo:  "'blah'"
 subscriptions:
 -   type: http
     endpoint: /resource
@@ -331,7 +331,7 @@ subscriptions:
     onMessageReceived:
         assertions:
         -   expect: body
-            toContain: "'queue'"
+            toContain:  "'queue'"
 </code></pre>
 
 <p>Now, let's say you want to mix different protocols to test a bit more complex flow.
@@ -731,12 +731,12 @@ You can <a href="#plugins_list">check them out</a> or even <a href="https://gith
 
   assertions:
   - expect: variableIdentifier
-    toBeEqualTo: `string value`
+    toBeEqualTo: "'string value'"
 
 onMessageReceived:
   script: |-
     message += 3;
-    console.log(`Message received plus 3 is: <span class="dollar-sign">$</span>{message}`);
+    console.log('"Message received plus 3 is: <span class="dollar-sign">$</span>{message}'");
 
   store:
     key: message
@@ -869,7 +869,7 @@ It works as simple as this:</p>
 
 <p>Every time enqueuer sees these kind of notations, it searches in its store for a key/value pair like:</p>
 
-<pre><code class="yaml">variableKey: `enqueuer`
+<pre><code class="yaml">variableKey: "'enqueuer'"
 </code></pre>
 
 <p>Then, when enqueuer parses the original map, it gets translated to this:</p>
@@ -903,7 +903,7 @@ Both ways work:</p>
 <pre><code class="yaml">onInit:
     script: store.key = 123;
     store:
-        anotherKey: `another Value` 
+        anotherKey: "'another Value'" 
 </code></pre>
 
 <h4 id="use_a_variable" style="padding-left: 8px">6.2 use a variable</h4>
@@ -1013,7 +1013,7 @@ subscriptions:
     onMessageReceived:
         assertions:
         -   expect: payload
-            toBeEqualTo: `enqueuermaniac`
+            toBeEqualTo: "'enqueuermaniac'"
 </code></pre>
 
 <h5 id="object_parser" style="padding-left: 16px">8.1.2 object parser</h5>
@@ -1056,10 +1056,10 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e [object-parser-
 <p>Looking at the asserter above, we can create assertions like these:</p>
 
 <pre><code class="yaml">assertions:
--   expect: [`a`, 1, true]
+-   expect: ['"a'", 1, true]
     not:
-    toContain: `b`
--   expect: [`a`, 1, true]
+    toContain: "'b'"
+-   expect: ['"a'", 1, true]
     toContain: 1
 </code></pre>
 

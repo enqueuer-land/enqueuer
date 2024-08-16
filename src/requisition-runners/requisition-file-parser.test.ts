@@ -9,41 +9,41 @@ jest.mock('glob');
 glob.sync.mockImplementation((pattern: string) => [pattern]);
 
 describe('RequisitionFileParser', () => {
-    beforeEach(() => {
-        // @ts-ignore
-        delete DynamicModulesManager.instance;
-    });
+  beforeEach(() => {
+    // @ts-ignore
+    delete DynamicModulesManager.instance;
+  });
 
-    it('Should parse array as just one', () => {
-        const requisitionInput = {
-            onInit: {},
-            id: 0
+  it('Should parse array as just one', () => {
+    const requisitionInput = {
+      onInit: {},
+      id: 0
+    };
+    DynamicModulesManager.getInstance()
+      .getObjectParserManager()
+      .addObjectParser(() => {
+        return {
+          parse: () => requisitionInput
         };
-        DynamicModulesManager.getInstance()
-            .getObjectParserManager()
-            .addObjectParser(() => {
-                return {
-                    parse: () => requisitionInput
-                };
-            }, 'yml');
+      }, 'yml');
 
-        const fileContent = JSON.stringify(requisitionInput);
-        // @ts-ignore
-        fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
-        const filename = 'anyStuff';
+    const fileContent = JSON.stringify(requisitionInput);
+    // @ts-ignore
+    fs.readFileSync.mockImplementationOnce(() => Buffer.from(fileContent));
+    const filename = 'anyStuff';
 
-        const requisition = new RequisitionFileParser().parseFile(filename);
+    const requisition = new RequisitionFileParser().parseFile(filename);
 
-        expect(requisition.name).toBe(filename);
-        expect(requisition.id).toBe(requisitionInput.id);
-        expect(requisition.onInit).toEqual(requisitionInput.onInit);
+    expect(requisition.name).toBe(filename);
+    expect(requisition.id).toBe(requisitionInput.id);
+    expect(requisition.onInit).toEqual(requisitionInput.onInit);
+  });
+
+  it('Should throw', () => {
+    // @ts-ignore
+    fs.readFileSync.mockImplementationOnce(() => {
+      throw 'error';
     });
-
-    it('Should throw', () => {
-        // @ts-ignore
-        fs.readFileSync.mockImplementationOnce(() => {
-            throw 'error';
-        });
-        expect(() => new RequisitionFileParser().parseFile('anyStuff')).toThrow();
-    });
+    expect(() => new RequisitionFileParser().parseFile('anyStuff')).toThrow();
+  });
 });

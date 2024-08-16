@@ -17,14 +17,14 @@ its outputs
 
 Enqueuer is a platform that provides the following capabilities:
 
--   Support for multi protocols<br>
--   Chainable message flows <br>
--   Friendly for developers and non developers <br>
--   Easily extensible through third party <a
-      href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including <a
-      href="https://github.com/enqueuer-land/plugin-scaffold">yours</a> <br>
--   Automated end-to-end testing <br>
--   Place tests front and center
+- Support for multi protocols<br>
+- Chainable message flows <br>
+- Friendly for developers and non developers <br>
+- Easily extensible through third party <a
+    href="http://github.com/enqueuer-land/plugins-list">plugins</a>, including <a
+    href="https://github.com/enqueuer-land/plugin-scaffold">yours</a> <br>
+- Automated end-to-end testing <br>
+- Place tests front and center
 
 ## Official page
 

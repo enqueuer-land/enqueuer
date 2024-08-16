@@ -4,82 +4,82 @@ import { Configuration } from './configuration';
 jest.mock('./configuration');
 
 describe('Store', () => {
-    beforeEach(() => {
-        // @ts-ignore
-        Store.data = undefined;
+  beforeEach(() => {
+    // @ts-ignore
+    Store.data = undefined;
+  });
+
+  it('Catch getData exception', () => {
+    // @ts-ignore
+    Configuration.getInstance.mockImplementationOnce(() => {
+      throw `err`;
     });
 
-    it('Catch getData exception', () => {
-        // @ts-ignore
-        Configuration.getInstance.mockImplementationOnce(() => {
-            throw `err`;
-        });
+    expect(() => Store.getData()).not.toThrow();
+  });
 
-        expect(() => Store.getData()).not.toThrow();
+  it('should get data from configuration', () => {
+    // @ts-ignore
+    Configuration.getInstance.mockImplementationOnce(() => {
+      return {
+        getStore: () => {
+          return {
+            key: 'value'
+          };
+        }
+      };
     });
 
-    it('should get data from configuration', () => {
-        // @ts-ignore
-        Configuration.getInstance.mockImplementationOnce(() => {
-            return {
-                getStore: () => {
-                    return {
-                        key: 'value'
-                    };
-                }
-            };
-        });
+    expect(Store.getData().key).toBe('value');
+  });
 
-        expect(Store.getData().key).toBe('value');
+  it('should refresh data', () => {
+    // @ts-ignore
+    Configuration.getInstance.mockImplementationOnce(() => {
+      return {
+        getStore: () => {
+          return {};
+        }
+      };
     });
 
-    it('should refresh data', () => {
-        // @ts-ignore
-        Configuration.getInstance.mockImplementationOnce(() => {
-            return {
-                getStore: () => {
-                    return {};
-                }
-            };
-        });
+    Store.getData().key = 5;
+    expect(Store.getData().key).toBe(5);
 
-        Store.getData().key = 5;
-        expect(Store.getData().key).toBe(5);
+    Store.refreshData();
 
-        Store.refreshData();
+    expect(Store.getData().key).toBeUndefined();
+  });
 
-        expect(Store.getData().key).toBeUndefined();
+  it('data call just once', () => {
+    const getValuesMock = jest.fn(() => {
+      return {
+        getStore: () => {
+          return {};
+        }
+      };
     });
+    // @ts-ignore
+    Configuration.getInstance.mockImplementationOnce(getValuesMock);
 
-    it('data call just once', () => {
-        const getValuesMock = jest.fn(() => {
-            return {
-                getStore: () => {
-                    return {};
-                }
-            };
-        });
-        // @ts-ignore
-        Configuration.getInstance.mockImplementationOnce(getValuesMock);
+    Store.getData();
+    Store.getData();
+    Store.getData();
 
-        Store.getData();
-        Store.getData();
-        Store.getData();
+    expect(getValuesMock).toBeCalledTimes(1);
+  });
 
-        expect(getValuesMock).toBeCalledTimes(1);
+  it('should get env var', () => {
+    const getValuesMock = jest.fn(() => {
+      return {
+        getStore: () => {
+          return {};
+        }
+      };
     });
+    // @ts-ignore
+    Configuration.getInstance.mockImplementationOnce(getValuesMock);
 
-    it('should get env var', () => {
-        const getValuesMock = jest.fn(() => {
-            return {
-                getStore: () => {
-                    return {};
-                }
-            };
-        });
-        // @ts-ignore
-        Configuration.getInstance.mockImplementationOnce(getValuesMock);
-
-        expect(Store.getData().PATH).toBeDefined();
-    });
+    expect(Store.getData().PATH).toBeDefined();
+  });
 });

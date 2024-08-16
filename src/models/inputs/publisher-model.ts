@@ -3,8 +3,8 @@ import { Initializable } from '../events/initializable';
 import { MessageReceiver } from '../events/message-receiver';
 
 export interface PublisherModel extends Finishable, Initializable, MessageReceiver {
-    type: string;
-    name: string;
+  type: string;
+  name: string;
 
-    [propName: string]: any;
+  [propName: string]: any;
 }

@@ -1,12 +1,12 @@
 delay: 500
 timeout: 3000
 publishers:
--   type: tcp
+  - type: tcp
     serverAddress: localhost
     port: 23081
     payload: anything
     onMessageReceived:
-        assertions:
-        -   name: Back and forth
-            expect: payload
-            toBeEqualTo: `anyValue`
+      assertions:
+        - name: Back and forth
+          expect: payload
+          toBeEqualTo: "'anyValue'"

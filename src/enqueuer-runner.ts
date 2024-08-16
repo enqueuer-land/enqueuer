@@ -15,75 +15,75 @@ import { LogLevel } from './loggers/log-level';
 import { Notifications } from './notifications/notifications';
 
 export class EnqueuerRunner {
-    private static reportName: string = 'enqueuer';
+  private static reportName: string = 'enqueuer';
 
-    private enqueuerRequisition?: input.RequisitionModel;
+  private enqueuerRequisition?: input.RequisitionModel;
 
-    constructor() {
-        NotificationEmitter.on(
-            Notifications.REQUISITION_FINISHED,
-            async (report: any) => await EnqueuerRunner.printReport(report.requisition)
-        );
-    }
+  constructor() {
+    NotificationEmitter.on(
+      Notifications.REQUISITION_FINISHED,
+      async (report: any) => await EnqueuerRunner.printReport(report.requisition)
+    );
+  }
 
-    public async execute(): Promise<output.RequisitionModel[]> {
-        const configuration = Configuration.getInstance();
-        Logger.setLoggerLevel(LogLevel.INFO);
-        Logger.info('Rocking and rolling');
-        Logger.setLoggerLevel(LogLevel.buildFromString(configuration.getLogLevel()));
-        const requisitionFileParser = new RequisitionFilePatternParser(configuration.getFiles());
-        const requisitions = requisitionFileParser.parse();
-        this.enqueuerRequisition = new RequisitionAdopter({
-            requisitions,
-            name: EnqueuerRunner.reportName,
-            timeout: -1,
-            parallel: configuration.isParallel()
-        }).getRequisition();
-        const parsingErrors = requisitionFileParser.getFilesErrors();
-        const finalReports = await new RequisitionRunner(this.enqueuerRequisition).run();
-        await this.publishReports(configuration.getOutputs(), finalReports, parsingErrors);
-        return finalReports;
-    }
+  public async execute(): Promise<output.RequisitionModel[]> {
+    const configuration = Configuration.getInstance();
+    Logger.setLoggerLevel(LogLevel.INFO);
+    Logger.info('Rocking and rolling');
+    Logger.setLoggerLevel(LogLevel.buildFromString(configuration.getLogLevel()));
+    const requisitionFileParser = new RequisitionFilePatternParser(configuration.getFiles());
+    const requisitions = requisitionFileParser.parse();
+    this.enqueuerRequisition = new RequisitionAdopter({
+      requisitions,
+      name: EnqueuerRunner.reportName,
+      timeout: -1,
+      parallel: configuration.isParallel()
+    }).getRequisition();
+    const parsingErrors = requisitionFileParser.getFilesErrors();
+    const finalReports = await new RequisitionRunner(this.enqueuerRequisition).run();
+    await this.publishReports(configuration.getOutputs(), finalReports, parsingErrors);
+    return finalReports;
+  }
 
-    private async publishReports(
-        configurationOutputs: PublisherModel[],
-        finalReports: output.RequisitionModel[],
-        parsingErrors: TestModel[]
-    ) {
-        Logger.info('Publishing reports');
-        const valid = parsingErrors.length === 0;
-        const outputs = new MultiTestsOutput(configurationOutputs);
-        //TODO fix this useless await
-        await finalReports.map(async report => {
-            report.hooks!.onParsed = {
-                valid: valid,
-                tests: parsingErrors
-            };
-            report.valid = report.valid && valid;
-            await outputs.publishReport(report);
-        });
-        return finalReports;
-    }
+  private async publishReports(
+    configurationOutputs: PublisherModel[],
+    finalReports: output.RequisitionModel[],
+    parsingErrors: TestModel[]
+  ) {
+    Logger.info('Publishing reports');
+    const valid = parsingErrors.length === 0;
+    const outputs = new MultiTestsOutput(configurationOutputs);
+    //TODO fix this useless await
+    await finalReports.map(async report => {
+      report.hooks!.onParsed = {
+        valid: valid,
+        tests: parsingErrors
+      };
+      report.valid = report.valid && valid;
+      await outputs.publishReport(report);
+    });
+    return finalReports;
+  }
 
-    private static async printReport(report: output.RequisitionModel): Promise<void> {
-        const configuration = Configuration.getInstance();
-        if (report.level === undefined || report.level <= configuration.getMaxReportLevelPrint()) {
-            try {
-                let printChildren = true;
-                if (report.level === 0) {
-                    console.log(`   ----------------`);
-                    printChildren = false;
-                }
-
-                const summaryTestOutput = new SummaryTestOutput(report, {
-                    maxLevel: configuration.getMaxReportLevelPrint(),
-                    showPassingTests: configuration.getShowPassingTests(),
-                    printChildren: printChildren
-                });
-                await summaryTestOutput.print();
-            } catch (err) {
-                Logger.warning(`Runner errored: ` + err);
-            }
+  private static async printReport(report: output.RequisitionModel): Promise<void> {
+    const configuration = Configuration.getInstance();
+    if (report.level === undefined || report.level <= configuration.getMaxReportLevelPrint()) {
+      try {
+        let printChildren = true;
+        if (report.level === 0) {
+          console.log(`   ----------------`);
+          printChildren = false;
         }
+
+        const summaryTestOutput = new SummaryTestOutput(report, {
+          maxLevel: configuration.getMaxReportLevelPrint(),
+          showPassingTests: configuration.getShowPassingTests(),
+          printChildren: printChildren
+        });
+        await summaryTestOutput.print();
+      } catch (err) {
+        Logger.warning(`Runner errored: ` + err);
+      }
     }
+  }
 }

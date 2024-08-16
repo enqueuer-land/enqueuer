@@ -12,18 +12,18 @@ const requisitionRunnerConstructorMock = jest.fn(() => ({ run: runMock }));
 RequisitionRunner.mockImplementation(requisitionRunnerConstructorMock);
 
 describe('ChildRequisitionRunner', () => {
-    beforeEach(() => {
-        processSendMock.mockClear();
-        requisitionRunnerConstructorMock.mockClear();
-        runMock.mockClear();
-    });
+  beforeEach(() => {
+    processSendMock.mockClear();
+    requisitionRunnerConstructorMock.mockClear();
+    runMock.mockClear();
+  });
 
-    it('should run enqueuer runner when a message arrives', async () => {
-        const requisition = 'value';
-        const message = { value: 'value' };
-        await new ChildRequisitionRunner().process(message);
+  it('should run enqueuer runner when a message arrives', async () => {
+    const requisition = 'value';
+    const message = { value: 'value' };
+    await new ChildRequisitionRunner().process(message);
 
-        expect(requisitionRunnerConstructorMock).toHaveBeenCalledWith('value');
-        expect(runMock).toHaveBeenCalled();
-    });
+    expect(requisitionRunnerConstructorMock).toHaveBeenCalledWith('value');
+    expect(runMock).toHaveBeenCalled();
+  });
 });

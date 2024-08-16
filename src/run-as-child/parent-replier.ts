@@ -1,3 +1,3 @@
 export interface ParentReplier {
-    process(message: any): Promise<boolean>;
+  process(message: any): Promise<boolean>;
 }

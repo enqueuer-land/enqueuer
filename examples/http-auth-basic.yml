@@ -1,34 +1,34 @@
 timeout: 3000
 publishers:
--   type: http
+  - type: http
     url: http://localhost:23068/basic
     method: POST
     payload: basic auth
     headers:
-        content-type: application/json
+      content-type: application/json
     authentication:
-        basic:
-            user: user
-            password: password
+      basic:
+        user: user
+        password: password
     onMessageReceived:
-        assertions:
-        -   expect: body
-            toBeEqualTo: `basic auth response`
+      assertions:
+        - expect: body
+          toBeEqualTo: "'basic auth response'"
 subscriptions:
--   type: http
+  - type: http
     endpoint: /basic
     port: 23068
     method: POST
     timeout: 10000
     authentication:
-        basic:
-            user: user
-            password: password
+      basic:
+        user: user
+        password: password
     response:
-        status: 200
-        payload: basic auth response
+      status: 200
+      payload: basic auth response
     onMessageReceived:
-        assertions:
-        -   name: Payload
-            expect: body
-            toBeEqualTo: `basic auth`
+      assertions:
+        - name: Payload
+          expect: body
+          toBeEqualTo: "'basic auth'"

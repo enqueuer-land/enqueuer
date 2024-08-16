@@ -1,10 +1,10 @@
 subscriptions:
--   name: subscription description
+  - name: subscription description
     id: anyIdTest
     type: standard-input
     timeout: 3000
     onMessageReceived:
-        assertions:
-        -   name: payload
-            expect: message
-            toBeEqualTo: `enqueuer standard-input payload`
+      assertions:
+        - name: payload
+          expect: message
+          toBeEqualTo: "'enqueuer standard-input payload'"

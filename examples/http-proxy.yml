@@ -1,49 +1,49 @@
 publishers:
--   name: publisher proxy
+  - name: publisher proxy
     type: http
     url: http://localhost:23085/proxy/enqueuer/123456?query=proxied
     method: PATCH
     payload: original
     onMessageReceived:
-        assertions:
-        -   expect: statusCode
-            toBeEqualTo: 400
-        -   expect: body
-            toBeEqualTo: `original -> proxy -> real -> proxied again`
+      assertions:
+        - expect: statusCode
+          toBeEqualTo: 400
+        - expect: body
+          toBeEqualTo: "'original -> proxy -> real -> proxied again'"
 subscriptions:
--   name: proxy subscription
+  - name: proxy subscription
     type: http-proxy
     endpoint: /proxy
     port: 23085
     method: PATCH
     redirect:
-        url: http://localhost:23086/real
-        method: POST
+      url: http://localhost:23086/real
+      method: POST
     onOriginalMessageReceived:
-        script: this.redirect.payload = body + ` -> proxy`;
-        assertions:
-        -   expect: body
-            toBeEqualTo: `original`
+      script: this.redirect.payload = body + "' -> proxy'";
+      assertions:
+        - expect: body
+          toBeEqualTo: "'original'"
     onMessageReceived:
-        script: this.response.payload = body + ` -> proxied again`; this.response.status = 2 * statusCode;
-        assertions:
-        -   expect: body
-            toBeEqualTo: `original -> proxy -> real`
-        -   expect: statusCode
-            toBeEqualTo: 200
--   name: real
+      script: this.response.payload = body + "' -> proxied again'"; this.response.status = 2 * statusCode;
+      assertions:
+        - expect: body
+          toBeEqualTo: "'original -> proxy -> real'"
+        - expect: statusCode
+          toBeEqualTo: 200
+  - name: real
     type: http
     endpoint: /real/enqueuer/:id
     port: 23086
     method: POST
     response:
-        status: 200
+      status: 200
     onMessageReceived:
-        script: this.response.payload = body + ' -> real';
-        assertions:
-        -   expect: body
-            toBeEqualTo: `original -> proxy`
-        -   expect: params.id
-            toBeEqualTo: 123456
-        -   expect: query.query
-            toBeEqualTo: `proxied`
+      script: this.response.payload = body + ' -> real';
+      assertions:
+        - expect: body
+          toBeEqualTo: "'original -> proxy'"
+        - expect: params.id
+          toBeEqualTo: 123456
+        - expect: query.query
+          toBeEqualTo: "'proxied'"

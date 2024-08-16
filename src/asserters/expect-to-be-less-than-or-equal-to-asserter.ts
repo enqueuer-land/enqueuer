@@ -4,37 +4,37 @@ import { Asserter } from './asserter';
 import { MainInstance } from '../plugins/main-instance';
 
 export class ExpectToBeLessThanOrEqualToAsserter implements Asserter {
-    public assert(assertion: Assertion, literal: any): TestModel {
-        const actual = assertion.expect;
-        const expected = assertion.toBeLessThanOrEqualTo;
+  public assert(assertion: Assertion, literal: any): TestModel {
+    const actual = assertion.expect;
+    const expected = assertion.toBeLessThanOrEqualTo;
 
-        return {
-            name: assertion.name,
-            valid: assertion.not === undefined ? actual <= expected : actual > expected,
-            description: `Expected '${literal.expect}'${
-                assertion.not !== undefined ? ' not' : ''
-            } to be less than or equal to '${expected}'. Received '${actual}'`
-        };
-    }
+    return {
+      name: assertion.name,
+      valid: assertion.not === undefined ? actual <= expected : actual > expected,
+      description: `Expected '${literal.expect}'${
+        assertion.not !== undefined ? ' not' : ''
+      } to be less than or equal to '${expected}'. Received '${actual}'`
+    };
+  }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    mainInstance.asserterManager.addAsserter(
-        {
-            expect: {
-                type: 'number',
-                description: 'actual value'
-            },
-            not: {
-                required: false,
-                description: 'negates',
-                type: 'null'
-            },
-            toBeLessThanOrEqualTo: {
-                type: 'number',
-                description: 'expected value'
-            }
-        },
-        () => new ExpectToBeLessThanOrEqualToAsserter()
-    );
+  mainInstance.asserterManager.addAsserter(
+    {
+      expect: {
+        type: 'number',
+        description: 'actual value'
+      },
+      not: {
+        required: false,
+        description: 'negates',
+        type: 'null'
+      },
+      toBeLessThanOrEqualTo: {
+        type: 'number',
+        description: 'expected value'
+      }
+    },
+    () => new ExpectToBeLessThanOrEqualToAsserter()
+  );
 }

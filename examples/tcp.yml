@@ -1,63 +1,65 @@
--   timeout: 3000
-    publishers:
-    -   type: tcp
-        timeout: 1000
-        serverAddress: localhost
-        port: 23069
-        payload: Hey Jude
-        onMessageReceived:
-            assertions:
-            -   expect: payload
-                toBeEqualTo: `Do not make it bad`
-    subscriptions:
-    -   type: tcp
-        port: 23069
-        timeout: 1000
-        response: Do not make it bad
-        onMessageReceived:
-            assertions:
-            -   expect: payload
-                toBeEqualTo: `Hey Jude`
-            -   expect: stream.address
-                toContain: `127.0.0.1`
--   timeout: 3000
-    publishers:
-    -   type: tcp
-        timeout: 800
-        serverAddress: localhost
-        port: 23070
-        payload: I do not care
-        saveStream: tcpPublisherSocket
-        onMessageReceived:
-            assertions:
-            -   expect: payload
-                toBeEqualTo: `EnqueuerRocks`
-    subscriptions:
-    -   type: tcp
-        port: 23070
-        timeout: 500
-        saveStream: tcpSubscriptionSocket
-        greeting: Enqueuer
-        response: Rocks
-        onMessageReceived:
-            assertions:
-            -   expect: payload
-                toBeEqualTo: `I do not care`
--   timeout: 3000
-    publishers:
-    -   type: tcp
-        payload: The socket is still open
-        loadStream: tcpPublisherSocket
-        onMessageReceived:
-            assertions:
-            -   expect: payload
-                toBeEqualTo: `<<tcpPayload>>`
-    subscriptions:
-    -   type: tcp
-        loadStream: tcpSubscriptionSocket
-        response: <<tcpPayload>>
-        timeout: 1000
-        onMessageReceived:
-            assertions:
-            -   expect: payload
-                toBeEqualTo: `The socket is still open`
+- timeout: 3000
+  publishers:
+    - type: tcp
+      timeout: 1000
+      serverAddress: localhost
+      port: 23069
+      payload: Hey Jude
+      onMessageReceived:
+        assertions:
+          - expect: payload
+            toBeEqualTo: "'Do not make it bad'"
+  subscriptions:
+    - type: tcp
+      port: 23069
+      timeout: 1000
+      response: Do not make it bad
+      onMessageReceived:
+        assertions:
+          - expect: payload
+            toBeEqualTo: "'Hey Jude'"
+          - expect: stream.address
+            toBeAnyOf:
+              - "'127.0.0.1'"
+              - ::1
+- timeout: 3000
+  publishers:
+    - type: tcp
+      timeout: 800
+      serverAddress: localhost
+      port: 23070
+      payload: I do not care
+      saveStream: tcpPublisherSocket
+      onMessageReceived:
+        assertions:
+          - expect: payload
+            toBeEqualTo: "'EnqueuerRocks'"
+  subscriptions:
+    - type: tcp
+      port: 23070
+      timeout: 500
+      saveStream: tcpSubscriptionSocket
+      greeting: Enqueuer
+      response: Rocks
+      onMessageReceived:
+        assertions:
+          - expect: payload
+            toBeEqualTo: "'I do not care'"
+- timeout: 3000
+  publishers:
+    - type: tcp
+      payload: The socket is still open
+      loadStream: tcpPublisherSocket
+      onMessageReceived:
+        assertions:
+          - expect: payload
+            toBeEqualTo: "'<<tcpPayload>>'"
+  subscriptions:
+    - type: tcp
+      loadStream: tcpSubscriptionSocket
+      response: <<tcpPayload>>
+      timeout: 1000
+      onMessageReceived:
+        assertions:
+          - expect: payload
+            toBeEqualTo: "'The socket is still open'"

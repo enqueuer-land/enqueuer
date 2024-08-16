@@ -1,22 +1,22 @@
 publishers:
--   type: custom
+  - type: custom
     module: misc/custom-protocol.js
     name: publisher description
     serverAddress: localhost
     port: 23071
     payload: it
 subscriptions:
--   name: subscription description
+  - name: subscription description
     type: custom
     port: 23071
     module: misc/custom-protocol.js
     timeout: 1000
     onMessageReceived:
-        script: payload = Buffer.from(payload);
-        assertions:
-        -   name: Payload
-            expect: payload
-            toBeEqualTo: `it`
-        -   name: Remote Adderss
-            expect: remoteInfo.address
-            toBeEqualTo: `127.0.0.1`
+      script: payload = Buffer.from(payload);
+      assertions:
+        - name: Payload
+          expect: payload
+          toBeEqualTo: "'it'"
+        - name: Remote Adderss
+          expect: remoteInfo.address
+          toBeEqualTo: "'127.0.0.1'"

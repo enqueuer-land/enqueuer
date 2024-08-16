@@ -4,69 +4,69 @@ import { ObjectDecycler } from './object-decycler';
 import { MainInstance } from '../plugins/main-instance';
 
 describe('YmlObjectParser', () => {
-    test('should stringify with param', () => {
-        const value = { firstLevel: { secondLevel: 'value' } };
+  test('should stringify with param', () => {
+    const value = { firstLevel: { secondLevel: 'value' } };
 
-        const stringified = new YmlObjectParser().stringify(value, {
-            space: 4,
-            inline: 1
-        });
-
-        expect(stringified).toBe(yaml.stringify(value, 1, 4));
+    const stringified = new YmlObjectParser().stringify(value, {
+      space: 4,
+      inline: 1
     });
 
-    test('should stringify default', () => {
-        const value = { firstLevel: { secondLevel: 'value' } };
-        const defaultInline = 100;
-        const defaultSpace = 2;
+    expect(stringified).toBe(yaml.stringify(value, 1, 4));
+  });
 
-        const stringified = new YmlObjectParser().stringify(value);
+  test('should stringify default', () => {
+    const value = { firstLevel: { secondLevel: 'value' } };
+    const defaultInline = 100;
+    const defaultSpace = 2;
 
-        expect(stringified).toBe(yaml.stringify(value, defaultInline, defaultSpace));
-    });
+    const stringified = new YmlObjectParser().stringify(value);
 
-    test('should keep string numbers as string', () => {
-        const value = 'firstLevel:\n' + "  secondLevel: '123.00'\n";
+    expect(stringified).toBe(yaml.stringify(value, defaultInline, defaultSpace));
+  });
 
-        const parsed: any = new YmlObjectParser().parse(value);
+  test('should keep string numbers as string', () => {
+    const value = 'firstLevel:\n' + "  secondLevel: '123.00'\n";
 
-        expect(typeof parsed.firstLevel.secondLevel).toEqual('string');
-        expect(parsed.firstLevel.secondLevel).toEqual('123.00');
-    });
+    const parsed: any = new YmlObjectParser().parse(value);
 
-    test('should stringify cycle reference', () => {
-        let value: any = { firstLevel: { secondLevel: {} } };
-        value.firstLevel.secondLevel.thirdLevel = value;
+    expect(typeof parsed.firstLevel.secondLevel).toEqual('string');
+    expect(parsed.firstLevel.secondLevel).toEqual('123.00');
+  });
 
-        const stringified = new YmlObjectParser().stringify(value);
+  test('should stringify cycle reference', () => {
+    let value: any = { firstLevel: { secondLevel: {} } };
+    value.firstLevel.secondLevel.thirdLevel = value;
 
-        expect(stringified).toBe(yaml.stringify(new ObjectDecycler().decycle(value), 100, 2));
-    });
+    const stringified = new YmlObjectParser().stringify(value);
 
-    test('should stringify undefined objects', () => {
-        // @ts-ignore
-        const stringified = new YmlObjectParser().stringify(undefined);
+    expect(stringified).toBe(yaml.stringify(new ObjectDecycler().decycle(value), 100, 2));
+  });
 
-        expect(stringified).toBe('{}');
-    });
+  test('should stringify undefined objects', () => {
+    // @ts-ignore
+    const stringified = new YmlObjectParser().stringify(undefined);
 
-    test('should throw parse error', () => {
-        const notYml = 'foo bar\nfoo: bar';
+    expect(stringified).toBe('{}');
+  });
 
-        expect(() => new YmlObjectParser().parse(notYml)).toThrow();
-    });
+  test('should throw parse error', () => {
+    const notYml = 'foo bar\nfoo: bar';
 
-    it('Should export an entry point', done => {
-        const mainInstance: MainInstance = {
-            // @ts-ignore
-            objectParserManager: {
-                addObjectParser: (createFunction: any, ...tags: any) => {
-                    expect(createFunction()).toBeInstanceOf(YmlObjectParser);
-                    expect(tags.sort()).toEqual(['yml', 'yaml'].sort());
-                    done();
-                }
-            }
-        };
-        entryPoint(mainInstance);
-    });
+    expect(() => new YmlObjectParser().parse(notYml)).toThrow();
+  });
+
+  it('Should export an entry point', done => {
+    const mainInstance: MainInstance = {
+      // @ts-ignore
+      objectParserManager: {
+        addObjectParser: (createFunction: any, ...tags: any) => {
+          expect(createFunction()).toBeInstanceOf(YmlObjectParser);
+          expect(tags.sort()).toEqual(['yml', 'yaml'].sort());
+          done();
+        }
+      }
+    };
+    entryPoint(mainInstance);
+  });
 });
