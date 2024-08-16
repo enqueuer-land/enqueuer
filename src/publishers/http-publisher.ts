@@ -67,7 +67,7 @@ export function entryPoint(mainInstance: MainInstance): void {
         (publisherModel: PublisherModel) => new HttpPublisher(publisherModel),
         {
             description: 'The HTTP publisher provides an implementation of http requisitions',
-            libraryHomepage: 'https://github.com/request/request',
+            libraryHomepage: 'https://github.com/axios/axios',
             schema: {
                 attributes: {
                     url: {

@@ -5,7 +5,7 @@ import { Logger } from '../loggers/logger';
 const packageJson = require('../../package.json');
 
 export class CommandLineConfiguration {
-    private parsedCommandLine: any;
+    private options: any;
     private readonly commandLineStore: any = {};
     private readonly plugins: string[] = [];
     private readonly testFiles: string[] = [];
@@ -15,18 +15,13 @@ export class CommandLineConfiguration {
         const commander = new Command()
             .version(process.env.npm_package_version || packageJson.version, '-v, --version')
             .allowUnknownOption()
-            .usage('[options] <test-file> [other-test-files...]')
+            .usage('[options] [test-files...]')
             .description('Take a look at the full documentation: https://enqueuer.com')
             .addOption(new Option('-b, --verbosity <level>', 'set verbosity').choices(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('warn'))
             .option('-c, --config-file <path>', 'set configurationFile')
             .option('-d, --show-explicit-tests-only', 'show explicit tests only', false)
-            .option('-e, --parsers-list [parser]', 'list available object parsers')
-            .option('-f, --formatters-description [formatter]', 'describe report formatters')
             .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
             .option('-m, --max-report-level-print <level>', 'set max report level print', parseInt)
-            .option('-p, --protocols-description [protocol]', 'describe protocols')
-            .option('-t, --tests-list [expectedField]', 'list available tests assertions')
-            .option('-u, --loaded-modules-list', 'list loaded modules')
             .option('-i, --show-passing-tests', 'show passing tests')
             .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others',
                 (val: string) => {
@@ -40,41 +35,46 @@ export class CommandLineConfiguration {
                     this.plugins.push(val);
                     return val
                 })
-            .argument('<test-file>', 'file to be tested')
-            .argument('[other-test-files]', 'other files to be tested')
-            .action((testFile, otherTestFiles) => {
-                this.testFiles.push(testFile, ...otherTestFiles || [])
+            .option('-e, --parsers-list [parser]', 'list available object parsers')
+            .option('-f, --formatters-description [formatter]', 'describe report formatters', false)
+            .option('-p, --protocols-description [protocol]', 'describe protocols', false)
+            .option('-t, --tests-list [expectedField]', 'list available tests assertions', false)
+            .option('-u, --loaded-modules-list', 'list loaded modules', false)
+            // .argument('<test-file>', 'file to be tested')
+            .argument('[test-files...]', 'other files to be tested')
+            .action((testFiles) => {
+                this.testFiles.push(...testFiles || [])
             })
+
         commander.on('--help', () => this.helpDescription());
         try {
-            this.parsedCommandLine = commander.parse(commandLineArguments || ['path', 'enqueuer']);
-            const options = commander.opts();
-
+            commander.parse(commandLineArguments || ['path', 'enqueuer']);
+            this.options = commander.opts();
         } catch (err) {
             Logger.error(`Error parsing command line: ${err}`);
-            this.parsedCommandLine = {};
+            this.options = {};
         }
 
     }
 
     public verifyPrematureActions(): void {
         let exitCode: boolean | undefined;
-        if (this.parsedCommandLine.protocolsDescription) {
-            const protocolsMatcherArg = typeof this.parsedCommandLine.protocolsDescription === 'string' ?
-                this.parsedCommandLine.protocolsDescription :
+        if (this.options.protocolsDescription) {
+            const protocolsMatcherArg = typeof this.options.protocolsDescription === 'string' ?
+                this.options.protocolsDescription :
                 undefined;
             exitCode = DynamicModulesManager.getInstance().getProtocolManager()
                 .describeMatchingProtocols(protocolsMatcherArg);
-        } else if (this.parsedCommandLine.formattersDescription) {
+        } else if (this.options.formattersDescription) {
             exitCode = DynamicModulesManager.getInstance().getReportFormatterManager()
-                .describeMatchingReportFormatters(this.parsedCommandLine.formattersDescription);
-        } else if (this.parsedCommandLine.parsersList) {
+                .describeMatchingReportFormatters(this.options.formattersDescription);
+        } else if (this.options.parsersList) {
             exitCode = DynamicModulesManager.getInstance().getObjectParserManager()
-                .describeMatchingObjectParsers(this.parsedCommandLine.parsersList);
-        } else if (this.parsedCommandLine.testsList) {
+                .describeMatchingObjectParsers(this.options.parsersList);
+        } else if (this.options.testsList) {
             exitCode = DynamicModulesManager.getInstance().getAsserterManager()
-                .describeMatchingAsserters(this.parsedCommandLine.testsList);
-        } else if (this.parsedCommandLine.loadedModulesList) {
+                .describeMatchingAsserters(this.options.testsList);
+        } else if (this.options.loadedModulesList) {
             DynamicModulesManager.getInstance().describeLoadedModules();
             exitCode = true;
         }
@@ -85,23 +85,23 @@ export class CommandLineConfiguration {
     }
 
     public getVerbosity(): string {
-        return this.parsedCommandLine.verbosity;
+        return this.options.verbosity;
     }
 
     public getStdoutRequisitionOutput(): boolean {
-        return !!this.parsedCommandLine.stdoutRequisitionOutput;
+        return !!this.options.stdoutRequisitionOutput;
     }
 
     public getShowExplicitTestsOnly(): boolean {
-        return !!this.parsedCommandLine.showExplicitTestsOnly;
+        return !!this.options.showExplicitTestsOnly;
     }
 
     public getConfigFileName(): string | undefined {
-        return this.parsedCommandLine.configFile;
+        return this.options.configFile;
     }
 
     public getShowPassingTests(): boolean {
-        return this.parsedCommandLine.showPassingTests;
+        return this.options.showPassingTests;
     }
 
     public getStore(): any {
@@ -113,7 +113,7 @@ export class CommandLineConfiguration {
         if (testFiles.length > 0) {
             return testFiles;
         }
-        const args = this.parsedCommandLine.args;
+        const args = this.options.args;
         if (args && args.length > 0) {
             return args;
         }
@@ -129,11 +129,11 @@ export class CommandLineConfiguration {
     }
 
     public getMaxReportLevelPrint(): number | undefined {
-        return this.parsedCommandLine.maxReportLevelPrint;
+        return this.options.maxReportLevelPrint;
     }
 
     public getVersion(): string {
-        return this.parsedCommandLine._version;
+        return this.options._version;
     }
 
     private storeCommandLineAction(val: string, memo: string[]) {

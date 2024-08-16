@@ -110,7 +110,7 @@ export class DynamicModulesManager {
                             }
                         }
                     } catch (err) {
-                        Logger.trace(`Dynamic modules manager` + err);
+                        Logger.trace(`Dynamic modules manager: ` + err);
                     }
                     return false;
                 });

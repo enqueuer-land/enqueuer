@@ -1,6 +1,6 @@
-import {Logger} from './loggers/logger';
-import {EnqueuerRunner} from './enqueuer-runner';
-import {LogLevel} from './loggers/log-level';
+import { Logger } from './loggers/logger';
+import { EnqueuerRunner } from './enqueuer-runner';
+import { LogLevel } from './loggers/log-level';
 
 export class EnqueuerStarter {
 

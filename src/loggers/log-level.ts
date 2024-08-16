@@ -1,14 +1,14 @@
-import colorizer from '../outputs/colorizer';
+import chalk from 'chalk';
 
 export class LogLevel {
     private static priorityCounter: number = 0;
 
-    public static readonly TRACE: LogLevel = new LogLevel(colorizer.cyan);
-    public static readonly DEBUG: LogLevel = new LogLevel(colorizer.blue);
-    public static readonly INFO: LogLevel = new LogLevel(colorizer.green);
-    public static readonly WARN: LogLevel = new LogLevel(colorizer.yellow);
-    public static readonly ERROR: LogLevel = new LogLevel(colorizer.magenta);
-    public static readonly FATAL: LogLevel = new LogLevel(colorizer.red);
+    public static readonly TRACE: LogLevel = new LogLevel(chalk.cyan);
+    public static readonly DEBUG: LogLevel = new LogLevel(chalk.blue);
+    public static readonly INFO: LogLevel = new LogLevel(chalk.green);
+    public static readonly WARN: LogLevel = new LogLevel(chalk.yellow);
+    public static readonly ERROR: LogLevel = new LogLevel(chalk.magenta);
+    public static readonly FATAL: LogLevel = new LogLevel(chalk.red);
 
     private readonly priority: number;
     private readonly colorFunction: Function;

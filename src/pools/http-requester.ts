@@ -23,13 +23,13 @@ export class HttpRequester {
             const response = await axios(options)
             //Needed because, for some reason, response.headers was not being shown as response key.
             //Therefore, the test http-more-examples.yml was failing
-            const newResponse = Object.entries(response)
-                .reduce((acc: any, [key, value]) => {
-                    acc[key] = value;
-                    return acc;
-                }, {});
-            newResponse.headers = response.headers;
-            return newResponse;
+            // const newResponse = Object.entries(response)
+            //     .reduce((acc: any, [key, value]) => {
+            //         acc[key] = value;
+            //         return acc;
+            //     }, {});
+            // newResponse.headers = response.headers;
+            return response;
         } catch (err) {
             throw ('Http request error: ' + err);
         }

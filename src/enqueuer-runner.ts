@@ -17,12 +17,10 @@ import { Notifications } from './notifications/notifications';
 export class EnqueuerRunner {
     private static reportName: string = 'enqueuer';
 
-    private readonly startTime: DateController;
     private enqueuerRequisition?: input.RequisitionModel;
 
     constructor() {
-        this.startTime = new DateController();
-        NotificationEmitter.on(Notifications.REQUISITION_FINISHED, (report: any) => EnqueuerRunner.printReport(report.requisition));
+        NotificationEmitter.on(Notifications.REQUISITION_FINISHED, async (report: any) => await EnqueuerRunner.printReport(report.requisition));
     }
 
     public async execute(): Promise<output.RequisitionModel[]> {
@@ -61,7 +59,7 @@ export class EnqueuerRunner {
         return finalReports;
     }
 
-    private static printReport(report: output.RequisitionModel): void {
+    private static async printReport(report: output.RequisitionModel): Promise<void> {
         const configuration = Configuration.getInstance();
         if (report.level === undefined || report.level <= configuration.getMaxReportLevelPrint()) {
             try {
@@ -71,11 +69,12 @@ export class EnqueuerRunner {
                     printChildren = false;
                 }
 
-                new SummaryTestOutput(report, {
+                const summaryTestOutput = new SummaryTestOutput(report, {
                     maxLevel: configuration.getMaxReportLevelPrint(),
                     showPassingTests: configuration.getShowPassingTests(),
                     printChildren: printChildren
-                }).print();
+                });
+                await summaryTestOutput.print();
             } catch (err) {
                 Logger.warning(`Runner errored: ` + err);
             }
