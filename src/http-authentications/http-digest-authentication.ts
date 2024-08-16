@@ -38,7 +38,7 @@ export class HttpDigestAuthentication implements HttpAuthentication {
 
     public generate(): any {
         const response = this.generateResponse();
-        return {'authorization': this.createDigestValue(response)};
+        return {authorization: this.createDigestValue(response)};
     }
 
     public verify(authorization: string): TestModel[] {
@@ -89,9 +89,7 @@ export class HttpDigestAuthentication implements HttpAuthentication {
     }
 
     private md5(value: string): string {
-        return createHash('MD5')
-            .update(value)
-            .digest('hex');
+        return createHash('MD5').update(value).digest('hex');
     }
 
     private createDigestValue(response: string) {
@@ -109,7 +107,7 @@ export class HttpDigestAuthentication implements HttpAuthentication {
     private analyzeToken(token: string, essentialFields: any): TestModel {
         let value = token.split('=');
         const key = value[0].trimRight().trimLeft();
-        const self = (essentialFields)[key];
+        const self = essentialFields[key];
         delete essentialFields[key];
         if (key == 'response') {
             return this.checkResponseValue(value[1]);

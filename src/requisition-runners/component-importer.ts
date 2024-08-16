@@ -6,7 +6,6 @@ import {SubscriptionModel} from '../models/inputs/subscription-model';
 import {PublisherModel} from '../models/inputs/publisher-model';
 
 export class ComponentImporter {
-
     public importRequisition(requisition: RequisitionModel): RequisitionModel {
         const importValue = requisition.import;
         if (importValue) {
@@ -38,5 +37,4 @@ export class ComponentImporter {
         }
         return publisherModel;
     }
-
 }

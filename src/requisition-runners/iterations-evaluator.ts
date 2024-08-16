@@ -1,7 +1,6 @@
 import {Logger} from '../loggers/logger';
 
 export class IterationsEvaluator {
-
     public iterations(iterations: number): number {
         if (iterations !== undefined) {
             try {

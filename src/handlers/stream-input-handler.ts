@@ -13,16 +13,17 @@ export class StreamInputHandler {
     }
 
     public async subscribe(onMessageReceived: (requisition: any) => void): Promise<void> {
-        return this.handlerListener.listen(this.handler)
-            .then(() => {
-                this.handler = this.handlerListener.getHandler();
-                this.server.on('connection', (stream: any) => {
-                    stream.on('data', (msg: any) => onMessageReceived({
+        return this.handlerListener.listen(this.handler).then(() => {
+            this.handler = this.handlerListener.getHandler();
+            this.server.on('connection', (stream: any) => {
+                stream.on('data', (msg: any) =>
+                    onMessageReceived({
                         message: this.stringifyPayloadReceived(msg.payload || msg),
                         stream: stream
-                    }));
-                });
+                    })
+                );
             });
+        });
     }
 
     public getHandler(): string | number {
@@ -54,7 +55,7 @@ export class StreamInputHandler {
     }
 
     private stringifyPayloadReceived(message: string | Buffer): string {
-        const messageType = typeof(message);
+        const messageType = typeof message;
         if (messageType == 'string') {
             return message as string;
         }
@@ -62,7 +63,7 @@ export class StreamInputHandler {
     }
 
     private stringifyPayloadToSend(payload: any): string | Buffer {
-        if (typeof(payload) == 'string' || Buffer.isBuffer(payload)) {
+        if (typeof payload == 'string' || Buffer.isBuffer(payload)) {
             return payload;
         }
         return JSON.stringify(payload || {});

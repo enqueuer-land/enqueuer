@@ -1,4 +1,4 @@
-version: "2"         # required to adjust maintainability checks
+version: '2' # required to adjust maintainability checks
 checks:
   argument-count:
     config:
@@ -32,12 +32,12 @@ checks:
       threshold: # language-specific defaults. an override will affect all languages.
 
 exclude_patterns:
--   "conf/"
--   "dist/"
--   "misc/"
--   "Tests/"
--   "node_modules/"
--   "**/*.d.ts"
--   "**/*.js"
--   "**/*test.ts"
--   "**/*comp.ts"
+  - 'conf/'
+  - 'dist/'
+  - 'misc/'
+  - 'Tests/'
+  - 'node_modules/'
+  - '**/*.d.ts'
+  - '**/*.js'
+  - '**/*test.ts'
+  - '**/*comp.ts'

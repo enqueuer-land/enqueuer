@@ -3,7 +3,6 @@ import {entryPoint, JsonReportFormatter} from './json-formatter';
 import {JsonObjectParser} from '../../object-parser/json-object-parser';
 
 describe('JsonReportFormatter', () => {
-
     it('Should stringify it', () => {
         const test: RequisitionModel = {
             name: 'name',
@@ -12,7 +11,7 @@ describe('JsonReportFormatter', () => {
         } as any;
         const format = new JsonReportFormatter().format(test);
 
-        expect(typeof (format)).toBe('string');
+        expect(typeof format).toBe('string');
         expect(format).toBe(new JsonObjectParser().stringify(test));
     });
 
@@ -26,7 +25,7 @@ describe('JsonReportFormatter', () => {
         expect(() => new JsonReportFormatter().format(test)).toThrow();
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: any = {
             reportFormatterManager: {
                 addReportFormatter: (createFunction: any, ...tags: any) => {
@@ -39,5 +38,4 @@ describe('JsonReportFormatter', () => {
 
         entryPoint(mainInstance);
     });
-
 });

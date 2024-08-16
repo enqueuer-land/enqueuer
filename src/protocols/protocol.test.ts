@@ -2,7 +2,6 @@ import {Protocol, ProtocolType} from './protocol';
 import {ProtocolDocumentation} from './protocol-documentation';
 
 describe('Protocol', () => {
-
     it('getName', () => {
         const name = 'gui';
         // @ts-expect-error
@@ -30,13 +29,13 @@ describe('Protocol', () => {
 
     it('namesMatch alternative', () => {
         // @ts-expect-error
-        const match = new Protocol('', undefined,).addAlternativeName('gui').matches('gui');
+        const match = new Protocol('', undefined).addAlternativeName('gui').matches('gui');
         expect(match).toBeTruthy();
     });
 
     it('names dont Match alternative', () => {
         // @ts-expect-error
-        const match = new Protocol('', undefined,).addAlternativeName('one', 'two').matches('gui', 0);
+        const match = new Protocol('', undefined).addAlternativeName('one', 'two').matches('gui', 0);
         expect(match).toBeFalsy();
     });
 
@@ -73,7 +72,7 @@ describe('Protocol', () => {
                 },
                 hooks: {
                     onEvent: {
-                        arguments: {'hookArg': {}}
+                        arguments: {hookArg: {}}
                     }
                 }
             }
@@ -84,58 +83,75 @@ describe('Protocol', () => {
             .setLibrary('express')
             .getDescription();
         expect(property).toEqual({
-            'description': 'description', 'homepage': 'homepage', 'libraryHomepage': 'libraryHomepage', 'name': 'protocol', 'schema': {
-                'attributes': {
-                    'attributeName': {'description': 'AttributeDescription', 'type': 'string'},
-                    'type': {
-                        'description': 'Protocol identifier',
-                        'required': true,
-                        'type': 'string'
+            description: 'description',
+            homepage: 'homepage',
+            libraryHomepage: 'libraryHomepage',
+            name: 'protocol',
+            schema: {
+                attributes: {
+                    attributeName: {
+                        description: 'AttributeDescription',
+                        type: 'string'
                     },
-                    'avoid': {
-                        'defaultValue': false,
-                        'description': 'Defines if the subscription should be avoided',
-                        'required': false,
-                        'type': 'boolean'
+                    type: {
+                        description: 'Protocol identifier',
+                        required: true,
+                        type: 'string'
                     },
-                    'ignore': {
-                        'defaultValue': false,
-                        'description': 'Defines if the component should be ignored',
-                        'required': false,
-                        'type': 'boolean'
+                    avoid: {
+                        defaultValue: false,
+                        description: 'Defines if the subscription should be avoided',
+                        required: false,
+                        type: 'boolean'
                     },
-                    'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'},
-                    'timeout': {
-                        'defaultValue': 3000,
-                        'description': 'Defines the subscription time out',
-                        'required': false,
-                        'suffix': 'ms',
-                        'type': 'int'
+                    ignore: {
+                        defaultValue: false,
+                        description: 'Defines if the component should be ignored',
+                        required: false,
+                        type: 'boolean'
+                    },
+                    name: {
+                        description: 'Defines the component name',
+                        required: false,
+                        type: 'string'
+                    },
+                    timeout: {
+                        defaultValue: 3000,
+                        description: 'Defines the subscription time out',
+                        required: false,
+                        suffix: 'ms',
+                        type: 'int'
                     }
                 },
-                'hooks': {
-                    'onEvent': {
-                        'arguments': {
-                            'hookArg': {},
-                            'elapsedTime': {
-                                'description': 'Number of milliseconds since the instantiation of the component'
+                hooks: {
+                    onEvent: {
+                        arguments: {
+                            hookArg: {},
+                            elapsedTime: {
+                                description: 'Number of milliseconds since the instantiation of the component'
                             },
-                            'this': {
-                                'description': 'Pointer to the component'
+                            this: {
+                                description: 'Pointer to the component'
                             }
                         }
                     },
-                    'onFinish': {
-                        'arguments': {
-                            'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
-                            'this': {'description': 'Pointer to the component'}
-                        }, 'description': 'Executed when the component is about to finish'
+                    onFinish: {
+                        arguments: {
+                            elapsedTime: {
+                                description: 'Number of milliseconds since the instantiation of the component'
+                            },
+                            this: {description: 'Pointer to the component'}
+                        },
+                        description: 'Executed when the component is about to finish'
                     },
-                    'onInit': {
-                        'arguments': {
-                            'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
-                            'this': {'description': 'Pointer to the component'}
-                        }, 'description': 'Executed as soon as the component is initialized'
+                    onInit: {
+                        arguments: {
+                            elapsedTime: {
+                                description: 'Number of milliseconds since the instantiation of the component'
+                            },
+                            this: {description: 'Pointer to the component'}
+                        },
+                        description: 'Executed as soon as the component is initialized'
                     }
                 }
             }
@@ -149,50 +165,60 @@ describe('Protocol', () => {
             .setLibrary('express')
             .getDescription();
         expect(property).toEqual({
-            'name': 'protocol', 'schema': {
-                'attributes': {
-                    'type': {
-                        'description': 'Protocol identifier',
-                        'required': true,
-                        'type': 'string'
+            name: 'protocol',
+            schema: {
+                attributes: {
+                    type: {
+                        description: 'Protocol identifier',
+                        required: true,
+                        type: 'string'
                     },
-                    'avoid': {
-                        'defaultValue': false,
-                        'description': 'Defines if the subscription should be avoided',
-                        'required': false,
-                        'type': 'boolean'
+                    avoid: {
+                        defaultValue: false,
+                        description: 'Defines if the subscription should be avoided',
+                        required: false,
+                        type: 'boolean'
                     },
-                    'ignore': {
-                        'defaultValue': false,
-                        'description': 'Defines if the component should be ignored',
-                        'required': false,
-                        'type': 'boolean'
+                    ignore: {
+                        defaultValue: false,
+                        description: 'Defines if the component should be ignored',
+                        required: false,
+                        type: 'boolean'
                     },
-                    'name': {'description': 'Defines the component name', 'required': false, 'type': 'string'},
-                    'timeout': {
-                        'defaultValue': 3000,
-                        'description': 'Defines the subscription time out',
-                        'required': false,
-                        'suffix': 'ms',
-                        'type': 'int'
+                    name: {
+                        description: 'Defines the component name',
+                        required: false,
+                        type: 'string'
+                    },
+                    timeout: {
+                        defaultValue: 3000,
+                        description: 'Defines the subscription time out',
+                        required: false,
+                        suffix: 'ms',
+                        type: 'int'
                     }
                 },
-                'hooks': {
-                    'onFinish': {
-                        'arguments': {
-                            'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
-                            'this': {'description': 'Pointer to the component'}
-                        }, 'description': 'Executed when the component is about to finish'
+                hooks: {
+                    onFinish: {
+                        arguments: {
+                            elapsedTime: {
+                                description: 'Number of milliseconds since the instantiation of the component'
+                            },
+                            this: {description: 'Pointer to the component'}
+                        },
+                        description: 'Executed when the component is about to finish'
                     },
-                    'onInit': {
-                        'arguments': {
-                            'elapsedTime': {'description': 'Number of milliseconds since the instantiation of the component'},
-                            'this': {'description': 'Pointer to the component'}
-                        }, 'description': 'Executed as soon as the component is initialized'
+                    onInit: {
+                        arguments: {
+                            elapsedTime: {
+                                description: 'Number of milliseconds since the instantiation of the component'
+                            },
+                            this: {description: 'Pointer to the component'}
+                        },
+                        description: 'Executed as soon as the component is initialized'
                     }
                 }
             }
         });
     });
-
 });

@@ -3,7 +3,6 @@ import {RequisitionModel} from '../models/inputs/requisition-model';
 import {Store} from '../configurations/store';
 
 describe('RequisitionRunner', () => {
-
     it('Should return requisition reporter skipped', async () => {
         // @ts-ignore
         const requisition: RequisitionModel = {
@@ -29,7 +28,7 @@ describe('RequisitionRunner', () => {
             iterations: 5,
             requisitions: [],
             publishers: [],
-            subscriptions: [],
+            subscriptions: []
         } as any;
 
         const reports = await new RequisitionRunner(requisition).run();
@@ -45,14 +44,16 @@ describe('RequisitionRunner', () => {
         const requisition: RequisitionModel = {
             name: 'super cool',
             // @ts-ignore
-            requisitions: [{
-                name: 'child',
-                publishers: [],
-                subscriptions: [],
-                requisitions: []
-            }],
+            requisitions: [
+                {
+                    name: 'child',
+                    publishers: [],
+                    subscriptions: [],
+                    requisitions: []
+                }
+            ],
             publishers: [],
-            subscriptions: [],
+            subscriptions: []
         };
 
         const reports = await new RequisitionRunner(requisition).run();
@@ -68,7 +69,7 @@ describe('RequisitionRunner', () => {
         Store.getData().keyName = keyName;
         // @ts-ignore
         const requisition: RequisitionModel = {
-            name: '<<keyName>>',
+            name: '<<keyName>>'
         };
 
         const reports = await new RequisitionRunner(requisition).run();
@@ -77,5 +78,4 @@ describe('RequisitionRunner', () => {
         expect(reports.length).toBe(1);
         expect(report.name).toBe(keyName);
     });
-
 });

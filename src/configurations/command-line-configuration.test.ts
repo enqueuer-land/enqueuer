@@ -70,15 +70,15 @@ describe('CommandLineConfiguration', () => {
     });
 
     it('verbosity -m', () => {
-        const maxLevel = '3';
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-m', maxLevel]);
+        const maxLevel = 3;
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-m', maxLevel.toString()]);
 
         expect(commandLineConfiguration.getMaxReportLevelPrint()).toBe(maxLevel);
     });
 
     it('verbosity --max-report-level-print', () => {
-        const maxLevel = '3';
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--max-report-level-print', maxLevel]);
+        const maxLevel = 3;
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--max-report-level-print', maxLevel.toString()]);
 
         expect(commandLineConfiguration.getMaxReportLevelPrint()).toBe(maxLevel);
     });
@@ -258,14 +258,13 @@ describe('CommandLineConfiguration', () => {
     it('add file <no dash>', () => {
         const testFile1 = 'filename1';
         const testFile2 = 'filename2';
-        const commandLineConfiguration = new CommandLineConfiguration(
-            ['node', 'test', '--some', 'test', testFile1, '--other', 'stuff', testFile2]);
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-e', testFile1, '-b', 'debug', testFile2]);
 
         expect(commandLineConfiguration.getTestFiles().sort()).toEqual([testFile2, testFile1].sort());
     });
 
     it('add test file', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-a', 'file', '--add-file', 'file2']);
+        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', 'file', 'file2']);
 
         expect(commandLineConfiguration.getTestFiles()).toEqual(['file', 'file2']);
     });
@@ -310,5 +309,4 @@ describe('CommandLineConfiguration', () => {
 
         expect(commandLineConfiguration.getStore()).toEqual(store);
     });
-
 });

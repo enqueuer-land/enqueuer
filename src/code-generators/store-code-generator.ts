@@ -9,7 +9,7 @@ export class StoreCodeGenerator {
 
     public generate(store: any): string {
         let code = '';
-        Object.keys(store).forEach(key => {
+        Object.keys(store).forEach((key) => {
             code += `try {
                         ${this.storeInstanceName}['${key}'] = ${store[key]};
                     } catch (err) {
@@ -21,9 +21,7 @@ export class StoreCodeGenerator {
                                 name: "Valid 'store' in event code"
                             });
                     }\n`;
-
         });
         return code;
     }
-
 }

@@ -1,36 +1,36 @@
 parallel: true
 requisitions:
--   iterations: 2
+  - iterations: 2
     subscriptions:
-    -   type: http
+      - type: http
         endpoint: /first
         port: 23023
         response:
-            status: 200
-            payload: first
--   iterations: 2
+          status: 200
+          payload: first
+  - iterations: 2
     subscriptions:
-    -   type: http
+      - type: http
         endpoint: /second
         port: 23023
         response:
-            status: 200
-            payload: second
--   iterations: 2
+          status: 200
+          payload: second
+  - iterations: 2
     delay: 200
     publishers:
-    -   type: http
+      - type: http
         url: http://localhost:23023/first
         onResponseReceived:
-            assertions:
-            -   expect: statusCode
-                toBeEqualTo: 200
--   iterations: 2
+          assertions:
+            - expect: statusCode
+              toBeEqualTo: 200
+  - iterations: 2
     delay: 200
     publishers:
-    -   type: http
+      - type: http
         url: http://localhost:23023/second
         onResponseReceived:
-            assertions:
-            -   expect: statusCode
-                toBeEqualTo: 200
+          assertions:
+            - expect: statusCode
+              toBeEqualTo: 200

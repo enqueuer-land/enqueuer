@@ -54,26 +54,22 @@ describe('MultiPublishersReporter', () => {
         expect(PublisherReporter).toHaveBeenCalledTimes(0);
     });
 
-    it('should handle success', done => {
+    it('should handle success', (done) => {
         publish.mockImplementation(() => Promise.resolve());
         recreateMock();
 
         const publishers = [{}, {}] as any;
-        new MultiPublishersReporter(publishers)
-            .publish()
-            .then(() => {
-                done();
-            });
+        new MultiPublishersReporter(publishers).publish().then(() => {
+            done();
+        });
 
         expect(publish).toHaveBeenCalledTimes(publishers.length);
     });
 
-    it('should handle be success when no publisher is given', done => {
-        new MultiPublishersReporter([])
-            .publish()
-            .then(() => {
-                done();
-            });
+    it('should handle be success when no publisher is given', (done) => {
+        new MultiPublishersReporter([]).publish().then(() => {
+            done();
+        });
 
         expect(publish).toHaveBeenCalledTimes(0);
     });

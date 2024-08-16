@@ -1,11 +1,10 @@
-import { Logger } from '../loggers/logger';
-import { RequisitionModel } from '../models/inputs/requisition-model';
-import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
+import {Logger} from '../loggers/logger';
+import {RequisitionModel} from '../models/inputs/requisition-model';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
 import * as fs from 'fs';
-import { ObjectParser } from '../object-parser/object-parser';
+import {ObjectParser} from '../object-parser/object-parser';
 
 export class FileContentMapCreator {
-
     private map: any = {};
 
     public constructor(value: RequisitionModel) {
@@ -33,7 +32,7 @@ export class FileContentMapCreator {
         const curly: string[] = node.match(curlyBrackets) || [];
         const angle: string[] = node.match(angleBrackets) || [];
         angle.concat(...curly).forEach((value: string) => {
-            const key: string = value.substr(2, value.length - 4);
+            const key: string = value.substring(2, value.length - 4);
             this.map[key] = this.insertIntoMap(key);
         });
     }
@@ -41,23 +40,27 @@ export class FileContentMapCreator {
     private insertIntoMap(key: string): object | string {
         if (!this.map[key]) {
             try {
-                const query = this.parsePlaceHolder(key);
-                const fileContent = fs.readFileSync(query.filename).toString();
-                const objectParser = DynamicModulesManager.getInstance().getObjectParserManager().createParser(query.tag);
+                const options = this.parsePlaceholder(key);
+                const fileContent = fs.readFileSync(options.filename).toString();
+                const objectParser = DynamicModulesManager.getInstance().getObjectParserManager().createParser(options.tag);
                 if (objectParser !== undefined) {
-                    Logger.trace(`Trying to parse content as '${query.tag}' parser`);
-                    return this.getValue(objectParser, fileContent, query);
+                    Logger.trace(`Trying to parse content as '${options.tag}' parser`);
+                    return this.getValue(objectParser, fileContent, options);
                 }
                 return fileContent;
             } catch (err) {
-                Logger.warning('FileContentMapCreator' + err);
+                Logger.warning('FileContentMapCreator: ' + err);
                 return '' + err;
             }
         }
         return this.map[key];
     }
 
-    private parsePlaceHolder(key: string) {
+    private parsePlaceholder(key: string): {
+        tag: string;
+        filename: string;
+        [propname: string]: string;
+    } {
         const separator: string = '://';
         const separatorIndex = key.indexOf(separator);
         const tag = key.substring(0, separatorIndex);

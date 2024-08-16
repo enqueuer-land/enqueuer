@@ -1,18 +1,17 @@
-import { Subscription } from './subscription';
-import { SubscriptionModel } from '../models/inputs/subscription-model';
+import {Subscription} from './subscription';
+import {SubscriptionModel} from '../models/inputs/subscription-model';
 import * as net from 'net';
 import * as tls from 'tls';
-import { Logger } from '../loggers/logger';
-import { Store } from '../configurations/store';
-import { HandlerListener } from '../handlers/handler-listener';
+import {Logger} from '../loggers/logger';
+import {Store} from '../configurations/store';
+import {HandlerListener} from '../handlers/handler-listener';
 import * as fs from 'fs';
-import { Timeout } from '../timers/timeout';
-import { MainInstance } from '../plugins/main-instance';
-import { SubscriptionProtocol } from '../protocols/subscription-protocol';
-import { ProtocolDocumentation } from '../protocols/protocol-documentation';
+import {Timeout} from '../timers/timeout';
+import {MainInstance} from '../plugins/main-instance';
+import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import {ProtocolDocumentation} from '../protocols/protocol-documentation';
 
 export class StreamSubscription extends Subscription {
-
     private server: any;
     private stream: any;
     private sslServerGotConnection?: Promise<void>;
@@ -100,7 +99,6 @@ export class StreamSubscription extends Subscription {
                     .then(() => resolve())
                     .catch((err) => reject(err));
             }
-
         });
     }
 
@@ -111,7 +109,7 @@ export class StreamSubscription extends Subscription {
                     Logger.debug(`${this.type} readableStream is ready ${this.port || this.path}`);
                     resolve();
                 })
-                .catch(err => {
+                .catch((err) => {
                     const message = `${this.type} readableStream errored ${this.port || this.path}: ${err}`;
                     Logger.error(message);
                     reject(message);
@@ -222,13 +220,12 @@ export class StreamSubscription extends Subscription {
                 Logger.debug(`Persisting subscription ${this.type} stream ${this.saveStream}`);
                 Store.getData()[this.saveStream] = this.stream;
                 this['saveStream'] = undefined;
-            } else if (typeof (this.stream.end) === 'function') {
+            } else if (typeof this.stream.end === 'function') {
                 Logger.trace(`Ending ${this.type} stream`);
                 this.stream.end();
             }
         }
     }
-
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
@@ -275,7 +272,7 @@ export function entryPoint(mainInstance: MainInstance): void {
                     description: 'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
                     required: false,
                     type: 'object'
-                },
+                }
             },
             hooks: {
                 onMessageReceived: {
@@ -283,7 +280,7 @@ export function entryPoint(mainInstance: MainInstance): void {
                         payload: {},
                         stream: {},
                         path: {
-                            description: 'Defined only when it is a UDS server',
+                            description: 'Defined only when it is a UDS server'
                         }
                     }
                 }

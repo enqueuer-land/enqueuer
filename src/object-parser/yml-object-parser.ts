@@ -9,19 +9,20 @@ export class YmlObjectParser implements ObjectParser {
     }
 
     public stringify(value: object, params: any = {}): string {
-        const parsedParams = this.parseParams(params);
-        return yaml.stringify(new ObjectDecycler().decycle(value || {}), parsedParams.inline, parsedParams.space);
+        const config = this.createStringifyConfiguration(params);
+        return yaml.stringify(new ObjectDecycler().decycle(value || {}), config.inline, config.space);
     }
 
-    private parseParams(params: any): any {
-        return Object.assign({},
+    private createStringifyConfiguration(params: any): any {
+        return Object.assign(
+            {},
             {
                 inline: 100,
                 space: 2
             },
-            params);
+            params
+        );
     }
-
 }
 
 export function entryPoint(mainInstance: MainInstance): void {

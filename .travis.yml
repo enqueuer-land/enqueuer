@@ -3,28 +3,28 @@ dist: xenial
 os: linux
 
 node_js:
-- v12.6.0
-- 14
-- lts/*
+  - v12.6.0
+  - 14
+  - lts/*
 
 notifications:
-    email:
-        on_success: never
-        on_failure: always
+  email:
+    on_success: never
+    on_failure: always
 
 before_install:
-- npm install
-- npm install codecov -g
+  - npm install
+  - npm install codecov -g
 
 script:
-- rm output/*
-- npm run lint
-- npm run build
-- npm link
-- npm run codeCoverage
-- npm run examplesTest
-- npm run listsDescriptions
+  - rm output/*
+  - npm run lint
+  - npm run build
+  - npm link
+  - npm run codeCoverage
+  - npm run examplesTest
+  - npm run listsDescriptions
 
 after_success:
-- codecov
-- npx semantic-release
+  - codecov
+  - npx semantic-release

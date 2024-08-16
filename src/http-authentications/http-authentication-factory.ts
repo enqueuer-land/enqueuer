@@ -14,6 +14,5 @@ export class HttpAuthenticationFactory {
             return new HttpDigestAuthentication(component);
         }
         return new HttpNoAuthentication(component);
-
     }
 }

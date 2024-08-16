@@ -10,7 +10,7 @@ export interface ProtocolSchema {
         [attributeName: string]: ProtocolAttribute;
     };
     hooks?: {
-        [hookName: string]: ProtocolEventHook
+        [hookName: string]: ProtocolEventHook;
     };
 }
 
@@ -19,7 +19,7 @@ export interface ProtocolEventHook {
     arguments?: {
         [argumentName: string]: {
             description?: string;
-        }
+        };
     };
 }
 

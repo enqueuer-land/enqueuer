@@ -6,7 +6,7 @@ export interface ReportModel {
     ignored?: boolean;
 
     hooks?: {
-        [name: string]: HookModel
+        [name: string]: HookModel;
     };
 
     [propName: string]: any;

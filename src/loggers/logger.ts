@@ -2,7 +2,6 @@ import {LogLevel} from './log-level';
 import {DateController} from '../timers/date-controller';
 
 export class Logger {
-
     private static logLevel?: LogLevel;
 
     public static setLoggerLevel(level: LogLevel): void {
@@ -49,5 +48,4 @@ export class Logger {
             console.log(level.getColorFunction()(pattern));
         }
     }
-
 }

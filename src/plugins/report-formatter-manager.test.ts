@@ -9,7 +9,6 @@ const render = jest.fn();
 prettyjson.render.mockImplementation(render);
 
 describe('ReportFormatterManager', () => {
-
     beforeEach(() => {
         render.mockClear();
     });
@@ -17,27 +16,36 @@ describe('ReportFormatterManager', () => {
     it('describeFormats', () => {
         const reportFormatterManager = new ReportFormatterManager();
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
-        }, 'first', '1st');
+        reportFormatterManager.addReportFormatter(
+            () => {
+                /**/
+            },
+            'first',
+            '1st'
+        );
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
+        reportFormatterManager.addReportFormatter(() => {
+            /**/
         }, 'second');
         // @ts-ignore
 
         expect(reportFormatterManager.describeMatchingReportFormatters(true)).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({
-            formatters: [['first', '1st'], ['second']]
-        }, expect.anything());
+        expect(render).toHaveBeenCalledWith(
+            {
+                formatters: [['first', '1st'], ['second']]
+            },
+            expect.anything()
+        );
     });
 
-    it('should create right formatter', done => {
+    it('should create right formatter', (done) => {
         // @ts-ignore
         const reportFormatterManager = new ReportFormatterManager();
         reportFormatterManager.addReportFormatter(() => done(), 'tag');
         reportFormatterManager.createReportFormatter('tag');
     });
 
-    it('should create right formatter ignoring case', done => {
+    it('should create right formatter ignoring case', (done) => {
         // @ts-ignore
         const reportFormatterManager = new ReportFormatterManager();
         reportFormatterManager.addReportFormatter(() => done(), 'TaG');
@@ -52,37 +60,59 @@ describe('ReportFormatterManager', () => {
     it('describe given formatter', () => {
         const reportFormatterManager = new ReportFormatterManager();
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
-        }, 'tag', 'another');
+        reportFormatterManager.addReportFormatter(
+            () => {
+                /**/
+            },
+            'tag',
+            'another'
+        );
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
+        reportFormatterManager.addReportFormatter(() => {
+            /**/
         }, 'second');
         expect(reportFormatterManager.describeMatchingReportFormatters('tag')).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({
-            formatters: [['tag', 'another']]
-        }, expect.anything());
+        expect(render).toHaveBeenCalledWith(
+            {
+                formatters: [['tag', 'another']]
+            },
+            expect.anything()
+        );
     });
 
     it('describe given formatter not string param', () => {
         const reportFormatterManager = new ReportFormatterManager();
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
-        }, 'tag', 'another');
+        reportFormatterManager.addReportFormatter(
+            () => {
+                /**/
+            },
+            'tag',
+            'another'
+        );
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
+        reportFormatterManager.addReportFormatter(() => {
+            /**/
         }, 'second');
         expect(reportFormatterManager.describeMatchingReportFormatters(true)).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({
-            formatters: [['tag', 'another'], ['second']]
-        }, expect.anything());
+        expect(render).toHaveBeenCalledWith(
+            {
+                formatters: [['tag', 'another'], ['second']]
+            },
+            expect.anything()
+        );
     });
 
     it('error describe given formatter', () => {
         const reportFormatterManager = new ReportFormatterManager();
         // @ts-ignore
-        reportFormatterManager.addReportFormatter(() => {/**/
-        }, 'tag', 'another');
+        reportFormatterManager.addReportFormatter(
+            () => {
+                /**/
+            },
+            'tag',
+            'another'
+        );
         expect(reportFormatterManager.describeMatchingReportFormatters('unknown')).toBeFalsy();
     });
-
 });

@@ -3,7 +3,6 @@ import {ObjectDecycler} from './object-decycler';
 import {MainInstance} from '../plugins/main-instance';
 
 export class JsonObjectParser implements ObjectParser {
-
     public parse(value: string): object {
         return JSON.parse(value);
     }
@@ -13,11 +12,13 @@ export class JsonObjectParser implements ObjectParser {
     }
 
     private parseQuery(query: any): any {
-        return Object.assign({},
+        return Object.assign(
+            {},
             {
                 space: 2
             },
-            query);
+            query
+        );
     }
 }
 

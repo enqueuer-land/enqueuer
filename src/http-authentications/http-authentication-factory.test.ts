@@ -5,7 +5,6 @@ import {HttpBearerAuthentication} from './http-bearer-authentication';
 import {HttpDigestAuthentication} from './http-digest-authentication';
 
 describe('HttpAuthenticationFactory', () => {
-
     it('should return default', () => {
         expect(new HttpAuthenticationFactory().create({})).toBeInstanceOf(HttpNoAuthentication);
     });
@@ -21,5 +20,4 @@ describe('HttpAuthenticationFactory', () => {
     it('should return digest', () => {
         expect(new HttpAuthenticationFactory().create({digest: true})).toBeInstanceOf(HttpDigestAuthentication);
     });
-
 });

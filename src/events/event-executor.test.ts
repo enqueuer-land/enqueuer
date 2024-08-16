@@ -3,7 +3,6 @@ import {EventExecutor} from './event-executor';
 let initializable: any;
 
 describe('EventExecutor', () => {
-
     beforeEach(() => {
         initializable = {
             value: 4,
@@ -20,12 +19,13 @@ describe('EventExecutor', () => {
                     },
                     {
                         isDefined: 'x'
-                    }]
+                    }
+                ]
             }
         };
     });
 
-    it('Should add argument and pass it to the script executor', done => {
+    it('Should add argument and pass it to the script executor', (done) => {
         const eventExecutor: EventExecutor = new EventExecutor(initializable, 'onInit');
         initializable.method = (value: number) => {
             expect(value).toBe(initializable.value);
@@ -33,7 +33,6 @@ describe('EventExecutor', () => {
         };
 
         eventExecutor.execute();
-
     });
 
     it('Should return empty array if no event is passed', () => {
@@ -43,5 +42,4 @@ describe('EventExecutor', () => {
 
         expect(testModels.length).toBe(0);
     });
-
 });

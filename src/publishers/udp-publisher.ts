@@ -24,35 +24,31 @@ class UdpPublisher extends Publisher {
                 Logger.debug('Udp client sent message');
                 resolve();
             });
-
         });
     }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new PublisherProtocol('udp',
-        (publisherModel: PublisherModel) => new UdpPublisher(publisherModel),
-        {
-            description: 'The udp publisher provides an implementation of UDP Datagram sockets clients',
-            libraryHomepage: 'https://nodejs.org/api/dgram.html',
-            schema: {
-                attributes: {
-                    payload: {
-                        required: true,
-                        type: 'text'
-                    },
-                    serverAddress: {
-                        required: true,
-                        type: 'string'
-                    },
-                    port: {
-                        required: true,
-                        type: 'int'
-                    },
+    const protocol = new PublisherProtocol('udp', (publisherModel: PublisherModel) => new UdpPublisher(publisherModel), {
+        description: 'The udp publisher provides an implementation of UDP Datagram sockets clients',
+        libraryHomepage: 'https://nodejs.org/api/dgram.html',
+        schema: {
+            attributes: {
+                payload: {
+                    required: true,
+                    type: 'text'
+                },
+                serverAddress: {
+                    required: true,
+                    type: 'string'
+                },
+                port: {
+                    required: true,
+                    type: 'int'
                 }
-            },
+            }
         }
-    ).addAlternativeName('udp-client');
+    }).addAlternativeName('udp-client');
 
     mainInstance.protocolManager.addProtocol(protocol);
 }

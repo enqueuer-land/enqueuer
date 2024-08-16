@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { Logger } from '../loggers/logger';
+// import fetch from 'node-fetch';
+import {Logger} from '../loggers/logger';
 
 export class HttpRequester {
     private readonly url: string;
@@ -20,24 +20,25 @@ export class HttpRequester {
         Logger.info(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
         const options = this.createOptions();
         try {
-            const response = await axios(options)
-            //Needed because, for some reason, response.headers was not being shown as response key.
-            //Therefore, the test http-more-examples.yml was failing
-            // const newResponse = Object.entries(response)
-            //     .reduce((acc: any, [key, value]) => {
-            //         acc[key] = value;
-            //         return acc;
-            //     }, {});
-            // newResponse.headers = response.headers;
-            return response;
+            const response = await fetch(this.url, options);
+            const headers: any = {};
+            response.headers.forEach((value, key) => {
+                headers[key] = value;
+            });
+            const result = {
+                status: response.status,
+                statusCode: response.status,
+                body: await response.text(),
+                headers: headers
+            };
+            return result;
         } catch (err) {
-            throw ('Http request error: ' + err);
+            throw 'Http request error: ' + err;
         }
     }
 
     private createOptions() {
         const options: any = {
-            url: this.url,
             method: this.method,
             timeout: this.timeout,
             headers: this.headers,
@@ -68,7 +69,7 @@ export class HttpRequester {
         } catch (exc) {
             //do nothing
         }
-        if (typeof (this.body) != 'string') {
+        if (typeof this.body != 'string') {
             this.body = JSON.stringify(this.body);
         }
 

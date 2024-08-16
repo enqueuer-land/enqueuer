@@ -13,7 +13,7 @@ export class RequisitionAdopter {
         iterations: 1,
         level: 0,
         parallel: false,
-        ignore: false,
+        ignore: false
     };
 
     constructor(node: any) {
@@ -27,15 +27,16 @@ export class RequisitionAdopter {
     private baptiseRequisition(requisition: RequisitionModel, name?: string, parent?: RequisitionModel): RequisitionModel {
         requisition = Object.assign({}, this.defaultModel, requisition) as RequisitionModel;
         this.putNameAndId(requisition, name, parent);
-        requisition.requisitions = requisition.requisitions
-            .map((child, index) => {
-                child.level = requisition.level + 1;
-                return this.baptiseRequisition(child, `Requisition #${index}`, requisition) as RequisitionModel;
-            });
-        requisition.publishers = requisition.publishers
-            .map((publisher, index) => this.putNameAndId(publisher, `Publisher #${index}`, requisition) as PublisherModel);
-        requisition.subscriptions = requisition.subscriptions
-            .map((subscription, index) => this.putNameAndId(subscription, `Subscription #${index}`, requisition) as SubscriptionModel);
+        requisition.requisitions = requisition.requisitions.map((child, index) => {
+            child.level = requisition.level + 1;
+            return this.baptiseRequisition(child, `Requisition #${index}`, requisition) as RequisitionModel;
+        });
+        requisition.publishers = requisition.publishers.map(
+            (publisher, index) => this.putNameAndId(publisher, `Publisher #${index}`, requisition) as PublisherModel
+        );
+        requisition.subscriptions = requisition.subscriptions.map(
+            (subscription, index) => this.putNameAndId(subscription, `Subscription #${index}`, requisition) as SubscriptionModel
+        );
         return requisition;
     }
 
@@ -52,5 +53,4 @@ export class RequisitionAdopter {
 
         return component;
     }
-
 }

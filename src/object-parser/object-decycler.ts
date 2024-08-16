@@ -1,5 +1,4 @@
 export class ObjectDecycler {
-
     private readonly circularReplacer?: string;
     private cache = new Map();
 
@@ -13,7 +12,7 @@ export class ObjectDecycler {
     }
 
     private isObject(value: any) {
-        return typeof(value) === 'object';
+        return typeof value === 'object';
     }
 
     private isNotNull(value: any) {

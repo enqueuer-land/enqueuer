@@ -1,18 +1,17 @@
-import {DateController} from "../timers/date-controller";
-import {StringRandomCreator} from "./string-random-creator";
+import {DateController} from '../timers/date-controller';
+import {StringRandomCreator} from './string-random-creator';
 
-jest.mock("../timers/date-controller");
+jest.mock('../timers/date-controller');
 // @ts-expect-error
 DateController.mockImplementation(() => {
     return {
         getStringOnlyNumbers: () => {
-            return "20180409113740057612"
+            return '20180409113740057612';
         }
     };
 });
 
 describe('StringRandomCreator', () => {
-
     it('length', () => {
         const length = 10;
         const creator: StringRandomCreator = new StringRandomCreator();
@@ -24,17 +23,17 @@ describe('StringRandomCreator', () => {
 
     it('possibles', () => {
         const length = 10;
-        const creator: StringRandomCreator = new StringRandomCreator("A");
+        const creator: StringRandomCreator = new StringRandomCreator('A');
 
         let created = creator.create(length);
 
         expect(created.length).toBe(length);
-        expect(created).toBe("AAAAAAAAAA");
+        expect(created).toBe('AAAAAAAAAA');
     });
 
     it('empty possibles', () => {
         const length = 10;
-        const possibles = "";
+        const possibles = '';
         const creator: StringRandomCreator = new StringRandomCreator(possibles);
 
         let created = creator.create(length);
@@ -42,5 +41,4 @@ describe('StringRandomCreator', () => {
         expect(created.length).toBe(possibles.length);
         expect(created).toBe(possibles);
     });
-
 });

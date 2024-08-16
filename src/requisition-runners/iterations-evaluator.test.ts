@@ -1,9 +1,7 @@
 import {IterationsEvaluator} from './iterations-evaluator';
 
 describe('IterationsEvaluator', () => {
-
     it('Should return 1 when undefined', () => {
-
         // @ts-ignore
         expect(new IterationsEvaluator().iterations()).toBe(1);
     });

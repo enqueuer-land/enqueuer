@@ -27,7 +27,9 @@ describe('EnqueuerRunner', () => {
                 valid: true,
                 hooks: {}
             };
-            NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, {requisition: report});
+            NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, {
+                requisition: report
+            });
             return [report];
         })
     };
@@ -73,7 +75,6 @@ describe('EnqueuerRunner', () => {
     });
 
     it('should call configuration methods once', async () => {
-
         await new EnqueuerRunner().execute();
 
         expect(configurationMethodsMock.isParallel).toHaveBeenCalledTimes(1);
@@ -83,7 +84,6 @@ describe('EnqueuerRunner', () => {
     });
 
     it('should call Summary', async () => {
-
         const printMock = jest.fn();
         // @ts-ignore
         SummaryTestOutput.mockImplementationOnce(() => ({
@@ -91,23 +91,24 @@ describe('EnqueuerRunner', () => {
         }));
 
         await new EnqueuerRunner().execute();
-        expect(SummaryTestOutput).toHaveBeenCalledWith({
-            hooks:
-                {
-                    'onParsed': {'tests': [], 'valid': true}
+        expect(SummaryTestOutput).toHaveBeenCalledWith(
+            {
+                hooks: {
+                    onParsed: {tests: [], valid: true}
                 },
-            'name': 'mocked report',
-            'valid': true
-        }, {
-            'maxLevel': true,
-            'showPassingTests': 2,
-            printChildren: true
-        });
+                name: 'mocked report',
+                valid: true
+            },
+            {
+                maxLevel: true,
+                showPassingTests: 2,
+                printChildren: true
+            }
+        );
         expect(printMock).toHaveBeenCalledTimes(1);
     });
 
     it('should log Summary error', () => {
-
         // @ts-ignore
         SummaryTestOutput.mockImplementationOnce(() => {
             throw 'error';
@@ -115,5 +116,4 @@ describe('EnqueuerRunner', () => {
 
         expect(async () => await new EnqueuerRunner().execute()).not.toThrowError();
     });
-
 });

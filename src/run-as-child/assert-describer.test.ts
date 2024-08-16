@@ -9,18 +9,20 @@ process.send = processSendMock;
 // @ts-ignore
 DynamicModulesManager.getInstance.mockImplementation(() => {
     return {
-        getAsserterManager: () => ({getMatchingAsserters: () => 'mockedAsserter'})
+        getAsserterManager: () => ({
+            getMatchingAsserters: () => 'mockedAsserter'
+        })
     };
 });
 
 describe('AssertDescriber', () => {
-
     it('should describe asserters when a message arrives', async () => {
         const message = {value: 'value'};
         await new AssertDescriber().process(message);
 
-        expect(processSendMock).toHaveBeenCalledWith({event: 'ASSERTERS_LIST', value: 'mockedAsserter'});
+        expect(processSendMock).toHaveBeenCalledWith({
+            event: 'ASSERTERS_LIST',
+            value: 'mockedAsserter'
+        });
     });
-
-
 });

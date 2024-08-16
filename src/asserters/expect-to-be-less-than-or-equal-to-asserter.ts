@@ -1,7 +1,7 @@
-import { Assertion } from '../models/events/assertion';
-import { TestModel } from '../models/outputs/test-model';
-import { Asserter } from './asserter';
-import { MainInstance } from '../plugins/main-instance';
+import {Assertion} from '../models/events/assertion';
+import {TestModel} from '../models/outputs/test-model';
+import {Asserter} from './asserter';
+import {MainInstance} from '../plugins/main-instance';
 
 export class ExpectToBeLessThanOrEqualToAsserter implements Asserter {
     public assert(assertion: Assertion, literal: any): TestModel {
@@ -11,8 +11,9 @@ export class ExpectToBeLessThanOrEqualToAsserter implements Asserter {
         return {
             name: assertion.name,
             valid: assertion.not === undefined ? actual <= expected : actual > expected,
-            description: `Expected '${literal.expect}'${assertion.not !== undefined ?
-                ' not' : ''} to be less than or equal to '${expected}'. Received '${actual}'`
+            description: `Expected '${literal.expect}'${
+                assertion.not !== undefined ? ' not' : ''
+            } to be less than or equal to '${expected}'. Received '${actual}'`
         };
     }
 }
@@ -23,14 +24,17 @@ export function entryPoint(mainInstance: MainInstance): void {
             expect: {
                 type: 'number',
                 description: 'actual value'
-            }, not: {
+            },
+            not: {
                 required: false,
                 description: 'negates',
                 type: 'null'
-            }, toBeLessThanOrEqualTo: {
+            },
+            toBeLessThanOrEqualTo: {
                 type: 'number',
                 description: 'expected value'
             }
         },
-        () => new ExpectToBeLessThanOrEqualToAsserter());
+        () => new ExpectToBeLessThanOrEqualToAsserter()
+    );
 }

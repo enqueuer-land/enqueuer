@@ -1,12 +1,11 @@
--   file: <<json://misc/array.json>>
-    delay: 0 # makes this a valid requisition
--   subscriptions:
-    -   type: tcp
-        timeout: 100
-        port: 23700
-        avoid: true
-        onInit:
-            assertions:
-            -   expect: subscription.parent.parent.requisitions[0].file.length
-                toBeEqualTo: 10
-
+- file: <<json://misc/array.json>>
+  delay: 0 # makes this a valid requisition
+- subscriptions:
+    - type: tcp
+      timeout: 100
+      port: 23700
+      avoid: true
+      onInit:
+        assertions:
+          - expect: subscription.parent.parent.requisitions[0].file.length
+            toBeEqualTo: 10

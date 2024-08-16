@@ -8,7 +8,6 @@ import {ProtocolDescriber} from './run-as-child/protocol-describer';
 import {StoreCleaner} from './run-as-child/store-cleaner';
 import {StoreSetter} from './run-as-child/store-setter';
 
-
 jest.mock('./notifications/notification-emitter');
 jest.mock('./run-as-child/child-requisition-runner');
 jest.mock('./run-as-child/assert-describer');
@@ -135,8 +134,7 @@ describe('EnqueuerAsNodeChildRunner', () => {
             .map((key: any) => Notifications[key])
             .filter((key: any) => typeof key === 'number');
 
-        expect(notificationEmitterOnMock.mock.calls.map((call: any) => call[0]))
-            .toEqual(everyNotificationKey);
+        expect(notificationEmitterOnMock.mock.calls.map((call: any) => call[0])).toEqual(everyNotificationKey);
     });
 
     it('should proxy message when notification is emitted', async () => {
@@ -153,5 +151,4 @@ describe('EnqueuerAsNodeChildRunner', () => {
             }
         });
     });
-
 });

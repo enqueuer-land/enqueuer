@@ -32,23 +32,30 @@ describe('TestsAnalyzer', () => {
             name: 'name',
             valid: true,
             hooks: {
-                onInit: {valid: true, tests: [{valid: true, description: 'description', name: 'name'}]}
+                onInit: {
+                    valid: true,
+                    tests: [{valid: true, description: 'description', name: 'name'}]
+                }
             },
-            requisitions: [{
-                name: 'name',
-                valid: true,
-                // @ts-ignore
-                time: {},
-                // @ts-ignore
-                publishers: [{
+            requisitions: [
+                {
                     name: 'name',
-                    valid: false,
-                    hooks: {
-                        onInit: {valid: false, tests: [createTest(false)]},
-                        onFinish: {valid: true, tests: [createTest(true)]}
-                    }
-                }]
-            }]
+                    valid: true,
+                    // @ts-ignore
+                    time: {},
+                    // @ts-ignore
+                    publishers: [
+                        {
+                            name: 'name',
+                            valid: false,
+                            hooks: {
+                                onInit: {valid: false, tests: [createTest(false)]},
+                                onFinish: {valid: true, tests: [createTest(true)]}
+                            }
+                        }
+                    ]
+                }
+            ]
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
@@ -59,14 +66,12 @@ describe('TestsAnalyzer', () => {
     });
 
     it('Should count inner tests', () => {
-
         const test: ReportModel = {
             name: 'name',
             valid: true,
             hooks: {
                 onInit: {valid: true, tests: [createTest(true)]}
-            },
-
+            }
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
@@ -77,14 +82,19 @@ describe('TestsAnalyzer', () => {
     });
 
     it('Should ignore ignored test to calculate percentage', () => {
-
         const test: ReportModel = {
             name: 'name',
             valid: false,
             hooks: {
-                onInit: {valid: true, tests: [createTest(false, true), createTest(true, true)]},
-                onFinish: {valid: false, tests: [createTest(true, false), createTest(false, undefined)]}
-            },
+                onInit: {
+                    valid: true,
+                    tests: [createTest(false, true), createTest(true, true)]
+                },
+                onFinish: {
+                    valid: false,
+                    tests: [createTest(true, false), createTest(false, undefined)]
+                }
+            }
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
@@ -97,11 +107,10 @@ describe('TestsAnalyzer', () => {
     });
 
     it('Should ignore ignored test to validate', () => {
-
         const test: ReportModel = {
             name: 'name',
             valid: true,
-            tests: [createTest(true), createTest(true, true), createTest(true, true)],
+            tests: [createTest(true), createTest(true, true), createTest(true, true)]
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
@@ -113,19 +122,13 @@ describe('TestsAnalyzer', () => {
         const test: ReportModel = {
             name: 'name',
             description: 'name',
-            hooks:
-                {
-                    onEvent: {
-                        valid: false,
-                        tests: [
-                            createTest(true),
-                            createTest(true),
-                            createTest(true),
-                            createTest(false),
-                            createTest(false, true)]
-                    }
-                },
-            valid: false,
+            hooks: {
+                onEvent: {
+                    valid: false,
+                    tests: [createTest(true), createTest(true), createTest(true), createTest(false), createTest(false, true)]
+                }
+            },
+            valid: false
         };
 
         const testsAnalyzer = new TestsAnalyzer().addTest(test);
@@ -144,7 +147,8 @@ describe('TestsAnalyzer', () => {
             ignored: true,
             hooks: {
                 onInit: {
-                    valid: false, tests: [createTest(false)]
+                    valid: false,
+                    tests: [createTest(false)]
                 }
             }
         };
@@ -173,5 +177,4 @@ describe('TestsAnalyzer', () => {
         expect(testsAnalyzer.getTests().length).toBe(2);
         expect(testsAnalyzer.getNotIgnoredTests().length).toBe(2);
     });
-
 });

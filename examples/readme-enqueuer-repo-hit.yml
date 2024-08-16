@@ -1,7 +1,7 @@
 publishers:
--   type: http
+  - type: http
     url: https://github.com/enqueuer-land/enqueuer
     onResponseReceived:
-        assertions:
-        -   expect: statusCode
-            toBeEqualTo: 200
+      assertions:
+        - expect: statusCode
+          toBeEqualTo: 200

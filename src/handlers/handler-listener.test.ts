@@ -9,7 +9,7 @@ const warningMock = jest.fn();
 const traceMock = jest.fn();
 const debugMock = jest.fn();
 const errorMock = jest.fn();
-jest.mock("../loggers/logger");
+jest.mock('../loggers/logger');
 // @ts-expect-error
 Logger.warning.mockImplementation(warningMock);
 // @ts-expect-error
@@ -27,12 +27,11 @@ const createServerMock = () => {
         on: onErrorMock,
         listen: listenMock,
         close: closeMock,
-        address: jest.fn(),
+        address: jest.fn()
     };
 };
 
 describe('HandleListener', () => {
-
     beforeEach(() => {
         onErrorMock = jest.fn();
         listenMock.mockClear();
@@ -43,27 +42,26 @@ describe('HandleListener', () => {
         setTimeout.mockClear();
     });
 
-    it('Happy path', done => {
+    it('Happy path', (done) => {
         const handler = 987;
 
         listenMock = jest.fn((argHandler, cb) => {
             expect(argHandler).toBe(handler);
-            return cb()
+            return cb();
         });
 
         const listener = new HandlerListener(createServerMock());
-        listener.listen(handler)
-            .then(() => {
-                expect(listenMock).toHaveBeenCalledTimes(1);
-                expect(listenMock).toHaveBeenCalledWith(handler, expect.any(Function));
-                expect(onErrorMock).toHaveBeenCalledTimes(1);
-                expect(setTimeout).toHaveBeenCalledTimes(0);
-                expect(listener.getHandler()).toBe(handler);
-                done();
-            });
+        listener.listen(handler).then(() => {
+            expect(listenMock).toHaveBeenCalledTimes(1);
+            expect(listenMock).toHaveBeenCalledWith(handler, expect.any(Function));
+            expect(onErrorMock).toHaveBeenCalledTimes(1);
+            expect(setTimeout).toHaveBeenCalledTimes(0);
+            expect(listener.getHandler()).toBe(handler);
+            done();
+        });
     });
 
-    it('Should bind to "error" event', done => {
+    it('Should bind to "error" event', (done) => {
         const handler = 987;
 
         onErrorMock = jest.fn((eventName, cb) => {
@@ -72,19 +70,17 @@ describe('HandleListener', () => {
         });
 
         const listener = new HandlerListener(createServerMock());
-        listener.listen(handler)
-            .catch((err) => {
-                expect(err).toBe('Error listening to handler (987) "error"');
-                expect(listenMock).toHaveBeenCalledTimes(1);
-                expect(onErrorMock).toHaveBeenCalledTimes(1);
-                expect(setTimeout).toHaveBeenCalledTimes(0);
-                expect(warningMock).toHaveBeenCalledTimes(1);
-                done();
-            });
-
+        listener.listen(handler).catch((err) => {
+            expect(err).toBe('Error listening to handler (987) "error"');
+            expect(listenMock).toHaveBeenCalledTimes(1);
+            expect(onErrorMock).toHaveBeenCalledTimes(1);
+            expect(setTimeout).toHaveBeenCalledTimes(0);
+            expect(warningMock).toHaveBeenCalledTimes(1);
+            done();
+        });
     });
 
-    it('Should catch listen exception', done => {
+    it('Should catch listen exception', (done) => {
         const handler = 987;
         const exception = 'exception';
 
@@ -93,40 +89,38 @@ describe('HandleListener', () => {
         });
 
         const listener = new HandlerListener(createServerMock());
-        listener.listen(handler)
-            .catch((err) => {
-                expect(err).toBe(`Error listening to handler (${handler}) "${exception}"`);
-                expect(listenMock).toHaveBeenCalledTimes(1);
-                expect(onErrorMock).toHaveBeenCalledTimes(1);
-                expect(setTimeout).toHaveBeenCalledTimes(0);
-                expect(warningMock).toHaveBeenCalledTimes(1);
-                done();
-            });
-
+        listener.listen(handler).catch((err) => {
+            expect(err).toBe(`Error listening to handler (${handler}) "${exception}"`);
+            expect(listenMock).toHaveBeenCalledTimes(1);
+            expect(onErrorMock).toHaveBeenCalledTimes(1);
+            expect(setTimeout).toHaveBeenCalledTimes(0);
+            expect(warningMock).toHaveBeenCalledTimes(1);
+            done();
+        });
     });
 
-    it('Retry just once when it\'s not EADDRINUSE', done => {
+    it("Retry just once when it's not EADDRINUSE", (done) => {
         const handler = 987;
         jest.runAllTimers();
 
-        listenMock.mockImplementationOnce((argHandler, cb) => cb({
-            code: 'It\'s not EADDRINUSE'
-        }));
+        listenMock.mockImplementationOnce((argHandler, cb) =>
+            cb({
+                code: "It's not EADDRINUSE"
+            })
+        );
 
         const listener = new HandlerListener(createServerMock());
 
-        listener.listen(handler)
-            .catch((err) => {
-                expect(err).toBeDefined();
-                expect(listenMock).toHaveBeenCalledTimes(1);
-                expect(setTimeout).toHaveBeenCalledTimes(0);
-                expect(errorMock).toHaveBeenCalledTimes(1);
-                done();
-            });
-
+        listener.listen(handler).catch((err) => {
+            expect(err).toBeDefined();
+            expect(listenMock).toHaveBeenCalledTimes(1);
+            expect(setTimeout).toHaveBeenCalledTimes(0);
+            expect(errorMock).toHaveBeenCalledTimes(1);
+            done();
+        });
     });
 
-    it('Retry after retryInterval if error is EADDRINUSE', done => {
+    it('Retry after retryInterval if error is EADDRINUSE', (done) => {
         const handler = 987;
         const numAttempts = 2;
         const retryInterval = 2;
@@ -134,83 +128,79 @@ describe('HandleListener', () => {
         listenMock.mockImplementationOnce((argHandler, cb) => {
             return cb({
                 code: HandlerListener.ADDRESS_IN_USE
-            })
+            });
         });
         listenMock.mockImplementationOnce((argHandler, cb) => {
-            return cb()
+            return cb();
         });
 
         const listener = new HandlerListener(createServerMock(), numAttempts, retryInterval);
 
-        listener.listen(handler)
-            .then(() => {
-                expect(listenMock).toHaveBeenCalledTimes(numAttempts);
-                expect(closeMock).toHaveBeenCalledTimes(numAttempts - 1);
-                expect(setTimeout).toHaveBeenCalledTimes(1);
-                expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), retryInterval);
-                done();
-            });
+        listener.listen(handler).then(() => {
+            expect(listenMock).toHaveBeenCalledTimes(numAttempts);
+            expect(closeMock).toHaveBeenCalledTimes(numAttempts - 1);
+            expect(setTimeout).toHaveBeenCalledTimes(1);
+            expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), retryInterval);
+            done();
+        });
 
         // Fast-forward until all timers have been executed
         jest.runAllTimers();
-
-
     });
 
-    it('Try max attempts num if error is EADDRINUSE', done => {
+    it('Try max attempts num if error is EADDRINUSE', (done) => {
         const handler = 987;
         const numAttempts = 15;
 
         for (let i = 0; i < numAttempts - 1; ++i) {
-            listenMock.mockImplementationOnce((argHandler, cb) => cb({
-                code: 'EADDRINUSE'
-            }));
+            listenMock.mockImplementationOnce((argHandler, cb) =>
+                cb({
+                    code: 'EADDRINUSE'
+                })
+            );
         }
         listenMock.mockImplementationOnce((argHandler, cb) => {
-            return cb()
+            return cb();
         });
 
         const listener = new HandlerListener(createServerMock(), numAttempts);
 
-        listener.listen(handler)
-            .then(() => {
-                expect(listenMock).toHaveBeenCalledTimes(numAttempts);
-                expect(closeMock).toHaveBeenCalledTimes(numAttempts - 1);
-                expect(setTimeout).toHaveBeenCalledTimes(numAttempts - 1);
-                expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
-                done();
-            });
+        listener.listen(handler).then(() => {
+            expect(listenMock).toHaveBeenCalledTimes(numAttempts);
+            expect(closeMock).toHaveBeenCalledTimes(numAttempts - 1);
+            expect(setTimeout).toHaveBeenCalledTimes(numAttempts - 1);
+            expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
+            done();
+        });
 
         // Fast-forward until all timers have been executed
         jest.runAllTimers();
-
     });
 
-    it('Should fail it try max attempts is over when error is EADDRINUSE', done => {
+    it('Should fail it try max attempts is over when error is EADDRINUSE', (done) => {
         const handler = 'virgs';
         const numAttempts = 15;
 
         for (let i = 0; i < numAttempts; ++i) {
-            listenMock.mockImplementationOnce((argHandler, cb) => cb({
-                code: HandlerListener.ADDRESS_IN_USE
-            }));
+            listenMock.mockImplementationOnce((argHandler, cb) =>
+                cb({
+                    code: HandlerListener.ADDRESS_IN_USE
+                })
+            );
         }
 
         const listener = new HandlerListener(createServerMock(), numAttempts);
 
-        listener.listen(handler)
-            .catch((err) => {
-                expect(err).toBe(`Could not bind to handler ${handler}`);
-                expect(listenMock).toHaveBeenCalledTimes(numAttempts);
-                expect(closeMock).toHaveBeenCalledTimes(numAttempts);
-                expect(setTimeout).toHaveBeenCalledTimes(numAttempts);
-                expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 300);
-                done();
-            });
+        listener.listen(handler).catch((err) => {
+            expect(err).toBe(`Could not bind to handler ${handler}`);
+            expect(listenMock).toHaveBeenCalledTimes(numAttempts);
+            expect(closeMock).toHaveBeenCalledTimes(numAttempts);
+            expect(setTimeout).toHaveBeenCalledTimes(numAttempts);
+            expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 300);
+            done();
+        });
 
         // Fast-forward until all timers have been executed
         jest.runAllTimers();
-
     });
-
 });

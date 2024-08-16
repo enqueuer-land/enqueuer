@@ -1,6 +1,6 @@
-import { ObjectParser } from '../object-parser/object-parser';
-import { Logger } from '../loggers/logger';
-import { prettifyJson } from '../outputs/prettify-json';
+import {ObjectParser} from '../object-parser/object-parser';
+import {Logger} from '../loggers/logger';
+import {prettifyJson} from '../outputs/prettify-json';
 
 interface AddedObjectParser {
     tags: string[];
@@ -12,14 +12,17 @@ export class ObjectParserManager {
 
     public addObjectParser(createFunction: () => ObjectParser, firstTag: string, ...tags: string[]): void {
         const strings = [firstTag].concat(tags);
-        this.addedObjectParsers.unshift({ tags: strings, createFunction });
+        this.addedObjectParsers.unshift({tags: strings, createFunction});
     }
 
     public getMatchingObjectParsers(describeObjectParsers: string | true): any {
         return {
             parsers: this.addedObjectParsers
-                .filter((objectParser: AddedObjectParser) => typeof (describeObjectParsers) === 'string' ? (objectParser.tags || [])
-                    .some((tag: string) => tag.toLowerCase() === describeObjectParsers.toLowerCase()) : true)
+                .filter((objectParser: AddedObjectParser) =>
+                    typeof describeObjectParsers === 'string'
+                        ? (objectParser.tags || []).some((tag: string) => tag.toLowerCase() === describeObjectParsers.toLowerCase())
+                        : true
+                )
                 .map((objectParser: AddedObjectParser) => objectParser.tags)
         };
     }
@@ -32,8 +35,9 @@ export class ObjectParserManager {
 
     public createParser(tag: string): ObjectParser | undefined {
         const matchingObjectParsers = this.addedObjectParsers
-            .filter((addedFormatter: AddedObjectParser) => (addedFormatter.tags || [])
-                .some((parserKey: string) => parserKey.toLowerCase() === tag.toLowerCase()))
+            .filter((addedFormatter: AddedObjectParser) =>
+                (addedFormatter.tags || []).some((parserKey: string) => parserKey.toLowerCase() === tag.toLowerCase())
+            )
             .map((addedFormatter: AddedObjectParser) => addedFormatter.createFunction());
         if (matchingObjectParsers.length > 0) {
             return matchingObjectParsers[0];
@@ -59,5 +63,4 @@ export class ObjectParserManager {
         }
         throw errorResult;
     }
-
 }

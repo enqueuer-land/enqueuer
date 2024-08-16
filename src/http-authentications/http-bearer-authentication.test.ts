@@ -1,7 +1,6 @@
 import {HttpBearerAuthentication} from './http-bearer-authentication';
 
 describe('HttpBearerAuthentication', () => {
-
     const BEARER_TOKEN = 'Bearer dXNlcjpwYXNzd29yZA';
 
     const DEFAULT_AUTH = {
@@ -56,6 +55,6 @@ describe('HttpBearerAuthentication', () => {
         // @ts-ignore
         const verify = authorization.verify();
 
-        expect(verify.some(test => test.valid)).toBeFalsy();
+        expect(verify.some((test) => test.valid)).toBeFalsy();
     });
 });

@@ -1,14 +1,14 @@
--   onInit:
-        store:
-            counter: 0
--   iterations: 3
-    requisitions:
-    -   iterations: 3
-        requisitions:
-        -   iterations: 3
-            onInit:
-                script: ++store.counter;
--   onInit:
-        assertions:
-        -   expect: store.counter
-            toBeEqualTo: 3*3*3
+- onInit:
+    store:
+      counter: 0
+- iterations: 3
+  requisitions:
+    - iterations: 3
+      requisitions:
+        - iterations: 3
+          onInit:
+            script: ++store.counter;
+- onInit:
+    assertions:
+      - expect: store.counter
+        toBeEqualTo: 3*3*3

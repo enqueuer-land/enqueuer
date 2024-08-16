@@ -24,13 +24,14 @@ describe('HttpDigestAuthentication', () => {
         const value: any = digest.generate();
 
         const expected = {
-            authorization: 'Digest username="guest",' +
-            ' realm="nqrRealm",' +
-            ' nonce="58bac26865505",' +
-            ' uri="/auth/02-2617.php",' +
-            ' algorithm="MD5-sess",' +
-            ' response="9e254ee246ca9f39a82048580b2e7e53",' +
-            ' opaque="opaque"'
+            authorization:
+                'Digest username="guest",' +
+                ' realm="nqrRealm",' +
+                ' nonce="58bac26865505",' +
+                ' uri="/auth/02-2617.php",' +
+                ' algorithm="MD5-sess",' +
+                ' response="9e254ee246ca9f39a82048580b2e7e53",' +
+                ' opaque="opaque"'
         };
 
         expect(value).toEqual(expected);
@@ -89,13 +90,14 @@ describe('HttpDigestAuthentication', () => {
         const value: any = digest.generate();
 
         const expected = {
-            authorization: 'Digest username="guest",' +
-            ' realm="nqrRealm",' +
-            ' nonce="58bac26865505",' +
-            ' uri="/auth/02-2617.php",' +
-            ' algorithm="MD5",' +
-            ' response="a42e17afd5200c6f2dab4e278cfe39bf",' +
-            ' opaque="opaque"'
+            authorization:
+                'Digest username="guest",' +
+                ' realm="nqrRealm",' +
+                ' nonce="58bac26865505",' +
+                ' uri="/auth/02-2617.php",' +
+                ' algorithm="MD5",' +
+                ' response="a42e17afd5200c6f2dab4e278cfe39bf",' +
+                ' opaque="opaque"'
         };
 
         expect(value).toEqual(expected);
@@ -120,7 +122,8 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = 'Digest username="guest",' +
+        const authorization =
+            'Digest username="guest",' +
             ' realm="nqrRealm",' +
             ' nonce="58bac26865505",' +
             ' uri="/auth/02-2617.php",' +
@@ -130,7 +133,7 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.every((test: { valid: any; }) => test.valid)).toBeTruthy();
+        expect(tests.every((test: {valid: any}) => test.valid)).toBeTruthy();
     });
 
     it('prefix was not found', () => {
@@ -143,8 +146,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
-        expect(tests.find((test: { name: string; }) => test.name == '"Digest" authentication prefix').valid).toBeFalsy();
+        expect(tests.some((test: {valid: any}) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: {name: string}) => test.name == '"Digest" authentication prefix').valid).toBeFalsy();
     });
 
     it('response is not ok', () => {
@@ -166,7 +169,8 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = 'Digest username="guest",' +
+        const authorization =
+            'Digest username="guest",' +
             ' realm="nqrRealm",' +
             ' nonce="58bac26865505",' +
             ' uri="/auth/02-2617.php",' +
@@ -176,8 +180,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
-        expect(tests.find((test: { name: string; }) => test.name == '"Response" authentication value').valid).toBeFalsy();
+        expect(tests.some((test: {valid: any}) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: {name: string}) => test.name == '"Response" authentication value').valid).toBeFalsy();
     });
 
     it('some value (username) does not match', () => {
@@ -199,7 +203,8 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = 'Digest username="guest",' +
+        const authorization =
+            'Digest username="guest",' +
             ' realm="nqrRealm",' +
             ' nonce="58bac26865505",' +
             ' uri="/auth/02-2617.php",' +
@@ -209,8 +214,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
-        expect(tests.find((test: { name: string; }) => test.name == `"username" value does not match`).valid).toBeFalsy();
+        expect(tests.some((test: {valid: any}) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: {name: string}) => test.name == `"username" value does not match`).valid).toBeFalsy();
     });
 
     it('essential fields are missing as constructor attribute', () => {
@@ -223,7 +228,8 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = 'Digest username="guest",' +
+        const authorization =
+            'Digest username="guest",' +
             ' realm="nqrRealm",' +
             ' nonce="58bac26865505",' +
             ' uri="/auth/02-2617.php",' +
@@ -233,8 +239,8 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
-        expect(tests.find((test: { name: string; }) => test.name == `"username" was not found as attribute`).valid).toBeFalsy();
+        expect(tests.some((test: {valid: any}) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: {name: string}) => test.name == `"username" was not found as attribute`).valid).toBeFalsy();
     });
 
     it('essential fields are missing as authorization string', () => {
@@ -256,7 +262,8 @@ describe('HttpDigestAuthentication', () => {
         };
         const digest: HttpDigestAuthentication = new HttpDigestAuthentication(authentication);
 
-        const authorization = 'Digest username="guest",' +
+        const authorization =
+            'Digest username="guest",' +
             ' realm="nqrRealm",' +
             ' nonce="58bac26865505",' +
             ' uri="/auth/02-2617.php",' +
@@ -265,8 +272,7 @@ describe('HttpDigestAuthentication', () => {
 
         const tests: any = digest.verify(authorization);
 
-        expect(tests.some((test: { valid: any; }) => !test.valid)).toBeTruthy();
-        expect(tests.find((test: { name: string; }) => test.name == `Every field was found`).valid).toBeFalsy();
+        expect(tests.some((test: {valid: any}) => !test.valid)).toBeTruthy();
+        expect(tests.find((test: {name: string}) => test.name == `Every field was found`).valid).toBeFalsy();
     });
-
 });

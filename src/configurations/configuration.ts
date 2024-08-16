@@ -1,10 +1,10 @@
-import { CommandLineConfiguration } from './command-line-configuration';
-import { FileConfiguration } from './file-configuration';
-import { PublisherModel } from '../models/inputs/publisher-model';
-import { Logger } from '../loggers/logger';
-import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
-import { LogLevel } from '../loggers/log-level';
-import { prettifyJson } from '../outputs/prettify-json';
+import {CommandLineConfiguration} from './command-line-configuration';
+import {FileConfiguration} from './file-configuration';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {Logger} from '../loggers/logger';
+import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import {LogLevel} from '../loggers/log-level';
+import {prettifyJson} from '../outputs/prettify-json';
 
 process.setMaxListeners(30);
 
@@ -44,7 +44,9 @@ export class Configuration {
     }
 
     public getValues(): Configuration {
-        return Object.assign({}, Configuration.instance, { commandLineConfiguration: undefined });
+        return Object.assign({}, Configuration.instance, {
+            commandLineConfiguration: undefined
+        });
     }
 
     public addPlugin(pluginName: string): boolean {
@@ -116,13 +118,16 @@ export class Configuration {
             this.files = filesIgnoringOthers;
         }
         if (this.commandLineConfiguration.getStdoutRequisitionOutput()) {
-            this.outputs.push({ type: 'standard-output', format: 'console', name: 'command line report output' });
+            this.outputs.push({
+                type: 'standard-output',
+                format: 'console',
+                name: 'command line report output'
+            });
         }
         const fileMaxReportLevelPrint = this.commandLineConfiguration.getMaxReportLevelPrint();
         if (fileMaxReportLevelPrint !== undefined) {
             this.maxReportLevelPrint = fileMaxReportLevelPrint;
         }
-
     }
 
     private adjustFromFile(filename?: string) {
@@ -148,7 +153,6 @@ export class Configuration {
     }
 
     private static printConfiguration() {
-        console.log(prettifyJson({ configuration: this.getInstance().getValues() }));
+        console.log(prettifyJson({configuration: this.getInstance().getValues()}));
     }
-
 }

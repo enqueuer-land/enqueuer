@@ -2,7 +2,7 @@ import {NotificationEmitter} from './notification-emitter';
 import {Notifications} from './notifications';
 
 describe('NotificationEmitter', () => {
-    it('Should emit notification', done => {
+    it('Should emit notification', (done) => {
         const emittedNotification = {booleanValue: true, stringValue: 'string'};
 
         NotificationEmitter.on(Notifications.REQUISITION_FINISHED, (receivedNotification: any) => {

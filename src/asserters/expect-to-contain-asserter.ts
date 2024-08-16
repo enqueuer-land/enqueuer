@@ -1,7 +1,7 @@
-import { Assertion } from '../models/events/assertion';
-import { TestModel } from '../models/outputs/test-model';
-import { Asserter } from './asserter';
-import { MainInstance } from '../plugins/main-instance';
+import {Assertion} from '../models/events/assertion';
+import {TestModel} from '../models/outputs/test-model';
+import {Asserter} from './asserter';
+import {MainInstance} from '../plugins/main-instance';
 
 export class ExpectToContainAsserter implements Asserter {
     public assert(assertion: Assertion, literal: any): TestModel {
@@ -9,8 +9,8 @@ export class ExpectToContainAsserter implements Asserter {
         const expected = assertion.toContain;
         const not = assertion.not !== undefined;
 
-        if (typeof (actual) === 'string') {
-            if (typeof (expected) === 'string') {
+        if (typeof actual === 'string') {
+            if (typeof expected === 'string') {
                 return {
                     name: assertion.name,
                     valid: not ? actual.indexOf(expected) === -1 : actual.indexOf(expected) !== -1,
@@ -20,10 +20,10 @@ export class ExpectToContainAsserter implements Asserter {
                 return {
                     name: assertion.name,
                     valid: false,
-                    description: `Expecting 'toContain' to be a 'string'. Received a '${typeof (expected)}' instead`
+                    description: `Expecting 'toContain' to be a 'string'. Received a '${typeof expected}' instead`
                 };
             }
-        } else if (Array.isArray((actual))) {
+        } else if (Array.isArray(actual)) {
             return {
                 name: assertion.name,
                 valid: not ? !actual.includes(expected) : actual.includes(expected),
@@ -33,7 +33,7 @@ export class ExpectToContainAsserter implements Asserter {
             return {
                 name: assertion.name,
                 valid: false,
-                description: `Expecting '${literal.expect}' to be a string or an array. Received a '${typeof (actual)}'`
+                description: `Expecting '${literal.expect}' to be a string or an array. Received a '${typeof actual}'`
             };
         }
     }
@@ -54,7 +54,8 @@ export function entryPoint(mainInstance: MainInstance): void {
             toContain: {
                 description: 'element',
                 type: ['string', 'any']
-            },
+            }
         },
-        () => new ExpectToContainAsserter());
+        () => new ExpectToContainAsserter()
+    );
 }

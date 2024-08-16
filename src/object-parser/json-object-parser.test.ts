@@ -2,13 +2,8 @@ import {entryPoint, JsonObjectParser} from './json-object-parser';
 import {MainInstance} from '../plugins/main-instance';
 
 describe('JsonObjectParser', () => {
-
     test('should keep string numbers as string', () => {
-        const value = '{\n' +
-            '  "firstLevel": {\n' +
-            '    "secondLevel": "123.00"\n' +
-            '  }\n' +
-            '}';
+        const value = '{\n' + '  "firstLevel": {\n' + '    "secondLevel": "123.00"\n' + '  }\n' + '}';
 
         const parsed: any = new JsonObjectParser().parse(value);
 
@@ -20,7 +15,9 @@ describe('JsonObjectParser', () => {
         const value = {firstLevel: {secondLevel: 'value'}};
         const space = 4;
 
-        const stringified = new JsonObjectParser().stringify(value, {space: space});
+        const stringified = new JsonObjectParser().stringify(value, {
+            space: space
+        });
 
         expect(stringified).toBe(JSON.stringify(value, null, space));
     });
@@ -44,11 +41,7 @@ describe('JsonObjectParser', () => {
     test('should stringify cycle reference', () => {
         let value: any = {firstLevel: {secondLevel: {}}};
         value.firstLevel.secondLevel.thirdLevel = value;
-        const expected = '{\n' +
-            '  "firstLevel": {\n' +
-            '    "secondLevel": {}\n' +
-            '  }\n' +
-            '}';
+        const expected = '{\n' + '  "firstLevel": {\n' + '    "secondLevel": {}\n' + '  }\n' + '}';
 
         const stringified = new JsonObjectParser().stringify(value);
 
@@ -61,7 +54,7 @@ describe('JsonObjectParser', () => {
         expect(() => new JsonObjectParser().parse(notJson)).toThrow();
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             objectParserManager: {
@@ -74,5 +67,4 @@ describe('JsonObjectParser', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

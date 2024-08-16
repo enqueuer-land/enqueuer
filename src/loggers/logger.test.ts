@@ -7,7 +7,7 @@ jest.mock('../timers/date-controller');
 // @ts-ignore
 DateController.mockImplementation(() => {
     return {
-        toString: () => 'date',
+        toString: () => 'date'
     };
 });
 
@@ -29,14 +29,12 @@ describe('Logger', () => {
 
         expect(consoleLogMock).toHaveBeenCalled();
         expect(message).toContain('[date] [FATAL] - message');
-
     });
 
     it('should not print less priority messages', () => {
         Logger.trace('message');
 
         expect(consoleLogMock).not.toHaveBeenCalled();
-
     });
 
     it('should change priority', () => {
@@ -48,7 +46,6 @@ describe('Logger', () => {
         Logger.trace('message');
 
         expect(consoleLogMock).toHaveBeenCalled();
-
     });
 
     it('should PRINT category', () => {

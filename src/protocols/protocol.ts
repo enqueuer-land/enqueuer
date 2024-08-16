@@ -40,11 +40,11 @@ export abstract class Protocol {
         this.documentation.schema.hooks = Object.assign({}, this.documentation.schema.hooks, {
             [DefaultHookEvents.ON_INIT]: {
                 arguments: {},
-                description: 'Executed as soon as the component is initialized',
+                description: 'Executed as soon as the component is initialized'
             },
             [DefaultHookEvents.ON_FINISH]: {
                 arguments: {},
-                description: 'Executed when the component is about to finish',
+                description: 'Executed when the component is about to finish'
             }
         });
         Object.keys(this.documentation.schema.hooks).forEach((key: string) => {
@@ -149,8 +149,7 @@ export abstract class Protocol {
     public matches(type: string): boolean {
         if (typeof type === 'string') {
             try {
-                return [this.name].concat(this.alternativeNames || [])
-                    .some((name: string) => name.toUpperCase().includes(type.toUpperCase()));
+                return [this.name].concat(this.alternativeNames || []).some((name: string) => name.toUpperCase().includes(type.toUpperCase()));
             } catch (exc) {
                 Logger.warning(`Error comparing protocols with given type '${type}': ${exc}`);
             }
@@ -174,5 +173,4 @@ export abstract class Protocol {
             installed: this.isLibraryInstalled(name)
         };
     }
-
 }

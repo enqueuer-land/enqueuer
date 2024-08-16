@@ -2,7 +2,6 @@ import {StoreCleaner} from './store-cleaner';
 import {Store} from '../configurations/store';
 
 describe('StoreCleaner', () => {
-
     it('should clean store when a message arrives', async () => {
         Store.getData().test = true;
 
@@ -11,5 +10,4 @@ describe('StoreCleaner', () => {
 
         expect(Store.getData().test).toBeUndefined();
     });
-
 });

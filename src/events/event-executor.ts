@@ -5,7 +5,7 @@ import {TestModel} from '../models/outputs/test-model';
 import {EventCodeGenerator} from '../code-generators/event-code-generator';
 
 export class EventExecutor {
-    private arguments: { name: string, value: any }[] = [];
+    private arguments: {name: string; value: any}[] = [];
     private readonly thisArg: any;
     private readonly event: Event;
     private readonly eventName: string;
@@ -26,7 +26,10 @@ export class EventExecutor {
     public execute(): TestModel[] {
         Logger.debug(`Executing '${this.eventName}' hook`);
         Logger.trace(`'${this.eventName}': ${JSON.stringify(this.event)}`);
-        this.arguments.unshift({name: 'argumentNames', value: this.arguments.map(item => item.name)});
+        this.arguments.unshift({
+            name: 'argumentNames',
+            value: this.arguments.map((item) => item.name)
+        });
         return new EventCodeGenerator(this.thisArg, this.eventName).run(this.arguments);
     }
 

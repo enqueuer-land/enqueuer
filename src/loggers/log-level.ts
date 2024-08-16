@@ -54,7 +54,6 @@ export class LogLevel {
             return 'FATAL';
         } //else if (this.getPriority() === LogLevel.WARN.getPriority()) {
         return 'WARN';
-
     }
 
     public getColorFunction(): Function {
@@ -64,5 +63,4 @@ export class LogLevel {
     public hasPriorityLessThanOrEqualTo(other: LogLevel): boolean {
         return this.priority <= other.priority;
     }
-
 }

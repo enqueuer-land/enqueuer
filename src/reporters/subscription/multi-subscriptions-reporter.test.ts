@@ -1,8 +1,7 @@
 import {SubscriptionReporter} from './subscription-reporter';
 import {MultiSubscriptionsReporter} from './multi-subscriptions-reporter';
 
-let startTimeoutMock = jest.fn(() => {
-});
+let startTimeoutMock = jest.fn(() => {});
 let onFinishMock = jest.fn();
 let hasFinishedMock = jest.fn();
 // @ts-expect-error
@@ -26,7 +25,6 @@ jest.mock('../subscription/subscription-reporter');
 SubscriptionReporter.mockImplementation(SubscriptionReporterMock);
 
 describe('MultiSubscriptionsReporter', () => {
-
     let constructorArgument: any;
 
     beforeEach(() => {
@@ -40,12 +38,9 @@ describe('MultiSubscriptionsReporter', () => {
                 type: 'subType2'
             }
         ];
-        startTimeoutMock = jest.fn(() => {
-        });
-        subscribeMock = jest.fn(() => new Promise(() => {
-        }));
-        receiveMessageMock = jest.fn(() => new Promise(() => {
-        }));
+        startTimeoutMock = jest.fn(() => {});
+        subscribeMock = jest.fn(() => new Promise(() => {}));
+        receiveMessageMock = jest.fn(() => new Promise(() => {}));
     });
 
     afterEach(() => {
@@ -72,11 +67,14 @@ describe('MultiSubscriptionsReporter', () => {
 
         const report = multi.getReport();
 
-        expect(report).toEqual([{'tests': [{'valid': true}], 'type': 'iei', 'valid': false}, {
-            'tests': [{'valid': true}],
-            'type': 'iei',
-            'valid': false
-        }]);
+        expect(report).toEqual([
+            {tests: [{valid: true}], type: 'iei', valid: false},
+            {
+                tests: [{valid: true}],
+                type: 'iei',
+                valid: false
+            }
+        ]);
         expect(getReportMock).toHaveBeenCalledTimes(2);
     });
 
@@ -108,10 +106,9 @@ describe('MultiSubscriptionsReporter', () => {
         const multiSubscriptionsReporter = new MultiSubscriptionsReporter(subscriptions);
         await multiSubscriptionsReporter.receiveMessage();
         expect(receiveMessageMock).toHaveBeenCalledTimes(subscriptions.length);
-
     });
 
-    it('Sub subscribed', done => {
+    it('Sub subscribed', (done) => {
         subscribeMock = jest.fn(() => Promise.resolve());
         let timeoutCb = jest.fn();
 
@@ -125,7 +122,7 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-    it('Handling receiveMessage no subscription', done => {
+    it('Handling receiveMessage no subscription', (done) => {
         const multi = new MultiSubscriptionsReporter([]);
 
         multi.receiveMessage().then(() => {
@@ -133,7 +130,7 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-    it('Handling receiveMessage success', done => {
+    it('Handling receiveMessage success', (done) => {
         expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
@@ -141,33 +138,30 @@ describe('MultiSubscriptionsReporter', () => {
         new MultiSubscriptionsReporter([{}]).receiveMessage().then(() => {
             done();
         });
-
     });
 
-    it('Should receiveMessage be success when there is no subscription', done => {
+    it('Should receiveMessage be success when there is no subscription', (done) => {
         expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
         new MultiSubscriptionsReporter([]).receiveMessage().then(() => {
             done();
         });
-
     });
 
-    it('Handling happy path', done => {
+    it('Handling happy path', (done) => {
         expect.assertions(0);
         subscribeMock = jest.fn(() => Promise.resolve());
         receiveMessageMock.mockImplementationOnce(() => Promise.resolve());
         // @ts-expect-error
         const multi = new MultiSubscriptionsReporter([{}]);
         // @ts-expect-error
-        multi.subscribe(() => {
-        }).then(() => {
-            multi.receiveMessage().then(() => {
-                done();
+        multi
+            .subscribe(() => {})
+            .then(() => {
+                multi.receiveMessage().then(() => {
+                    done();
+                });
             });
-
-        });
     });
-
 });

@@ -23,7 +23,7 @@ describe('ComponentImporter', () => {
                 script: 'imported'
             },
             name: 'imported',
-            importedValue: 1234,
+            importedValue: 1234
         };
         const original = {
             import: imported,
@@ -50,7 +50,7 @@ describe('ComponentImporter', () => {
                 script: 'imported'
             },
             name: 'imported',
-            importedValue: 1234,
+            importedValue: 1234
         };
         const original = {
             import: imported,
@@ -76,7 +76,7 @@ describe('ComponentImporter', () => {
                 script: 'imported'
             },
             name: 'imported',
-            importedValue: 1234,
+            importedValue: 1234
         };
         const original = {
             import: imported,

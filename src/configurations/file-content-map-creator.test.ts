@@ -5,7 +5,6 @@ import * as fs from 'fs';
 jest.mock('../plugins/dynamic-modules-manager');
 jest.mock('fs');
 describe('FileContentMapCreator', () => {
-
     it('Handle exceptions', () => {
         const readFileSyncMock = jest.fn(() => {
             throw 'err';
@@ -32,7 +31,6 @@ describe('FileContentMapCreator', () => {
 
         // @ts-ignore
         expect(() => new FileContentMapCreator(requisition)).not.toThrow();
-
     });
 
     it('Parse from file with right parser', () => {
@@ -116,7 +114,9 @@ describe('FileContentMapCreator', () => {
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(readFileSync);
 
-        const requisition = {value: '<<some://filename?delimiter=;&header=false&other>>'};
+        const requisition = {
+            value: '<<some://filename?delimiter=;&header=false&other>>'
+        };
 
         // @ts-expect-error
         DynamicModulesManager.getInstance.mockImplementation(() => {
@@ -140,7 +140,13 @@ describe('FileContentMapCreator', () => {
         // @ts-ignore
         new FileContentMapCreator(requisition).getMap();
         expect(text).toBe(fileContent);
-        expect(query).toEqual({delimiter: ';', header: 'false', other: true, tag: 'some', filename: 'filename'});
+        expect(query).toEqual({
+            delimiter: ';',
+            header: 'false',
+            other: true,
+            tag: 'some',
+            filename: 'filename'
+        });
     });
 
     it('Load each key just once', () => {
@@ -155,7 +161,7 @@ describe('FileContentMapCreator', () => {
         const requisition = {
             value: '<<' + replaceableKey + '>>',
             second: '{{' + replaceableKey + '}}',
-            third: '<<' + replaceableKey + '>>',
+            third: '<<' + replaceableKey + '>>'
         };
 
         // @ts-ignore
@@ -185,7 +191,7 @@ describe('FileContentMapCreator', () => {
 
     it('Handle empty matches', () => {
         const requisition = {
-            key: '((I am not a file))',
+            key: '((I am not a file))'
         };
 
         // @ts-ignore
@@ -194,5 +200,4 @@ describe('FileContentMapCreator', () => {
         const expected: any = {};
         expect(fileMap.getMap()).toEqual(expected);
     });
-
 });

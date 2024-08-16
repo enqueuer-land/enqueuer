@@ -32,8 +32,7 @@ jest.mock('../../events/event-executor');
 // @ts-expect-error
 EventExecutor.mockImplementation(() => ({
     execute: () => [],
-    addArgument: () => {
-    }
+    addArgument: () => {}
 }));
 
 const publisher = {
@@ -61,15 +60,14 @@ describe('PublisherReporter', () => {
         expect(EventExecutor).toHaveBeenCalledWith(publisher, 'onInit', 'publisher');
     });
 
-    it('Should resolve onMessageReceived', done => {
+    it('Should resolve onMessageReceived', (done) => {
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().then(() => {
             done();
         });
-
     });
 
-    it('Should reject onMessageReceived', done => {
+    it('Should reject onMessageReceived', (done) => {
         const reason = 'reasonMessage';
         publishMock = jest.fn(() => Promise.reject(reason));
         const publisherReporter = new PublisherReporter(publisher);
@@ -78,20 +76,18 @@ describe('PublisherReporter', () => {
 
             done();
         });
-
     });
 
-    it('Should keep id', done => {
+    it('Should keep id', (done) => {
         const publisherReporter = new PublisherReporter(publisher as any);
         publisherReporter.publish().then(() => {
             const report = publisherReporter.getReport();
             expect(report.id).toBe(publisher.id);
             done();
         });
-
     });
 
-    it('Should add Publisher test - success', done => {
+    it('Should add Publisher test - success', (done) => {
         const publisherReporter = new PublisherReporter(publisher as any);
         publisherReporter.publish().then(() => {
             publisherReporter.onFinish();
@@ -103,10 +99,9 @@ describe('PublisherReporter', () => {
 
             done();
         });
-
     });
 
-    it('Should add Publisher test - fail', done => {
+    it('Should add Publisher test - fail', (done) => {
         const reason = 'reasonMessage';
         publishMock = jest.fn(() => Promise.reject(reason));
         const publisherReporter = new PublisherReporter(publisher as any);
@@ -120,7 +115,6 @@ describe('PublisherReporter', () => {
 
             done();
         });
-
     });
 
     it('Should call onFinish', async () => {
@@ -131,10 +125,14 @@ describe('PublisherReporter', () => {
 
         await new PublisherReporter(publisher).onFinish();
 
-        expect(EventExecutor).toHaveBeenNthCalledWith(2, {
-            publish: expect.any(Function),
-            registerHookEventExecutor: expect.any(Function),
-        }, 'onFinish', 'publisher');
+        expect(EventExecutor).toHaveBeenNthCalledWith(
+            2,
+            {
+                publish: expect.any(Function),
+                registerHookEventExecutor: expect.any(Function)
+            },
+            'onFinish',
+            'publisher'
+        );
     });
-
 });

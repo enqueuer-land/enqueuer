@@ -13,7 +13,6 @@ DateController.mockImplementation(() => {
 });
 
 describe('IdGenerator', () => {
-
     it('generateId', () => {
         const text: string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
         const hash = createHash('sha256');
@@ -47,5 +46,4 @@ describe('IdGenerator', () => {
         expect(generatedId.substring(0, 20)).toBe(expected);
         expect(generatedId.length).toBeGreaterThan(20);
     });
-
 });

@@ -5,26 +5,27 @@ Feel free to reach me out anytime at guilherme.moraes@outlook.com
 
 ## New Stuff
 
-If you are opening a pull request/issue/suggestion (*thanks!*), please include:
+If you are opening a pull request/issue/suggestion (_thanks!_), please include:
 
-- a description of the fix/improvement
-- test(s) that could prove that the sutff is working
+-   a description of the fix/improvement
+-   test(s) that could prove that the sutff is working
 
 ## Running the tests
 
 To build:
 
-  ```npm run build```
+`npm run build`
 
 To run the test:
-  
-   ```npm tst```
+
+`npm tst`
 
 Or, just:
-  
-  ```npm run all```
+
+`npm run all`
 
 And get everything at the same time.
 
 ## Writing commits
+
 Instead of the usual `$ git commit -m "my message"`, use `$ npm run commit`. This helps to write a pretty and formatted commit message that triggers a proper release version.

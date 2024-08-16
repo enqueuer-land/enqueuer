@@ -9,17 +9,19 @@ process.send = processSendMock;
 // @ts-ignore
 DynamicModulesManager.getInstance.mockImplementation(() => {
     return {
-        getProtocolManager: () => ({getProtocolsDescription: () => 'mockedProtocol'})
+        getProtocolManager: () => ({
+            getProtocolsDescription: () => 'mockedProtocol'
+        })
     };
 });
 describe('ProtocolDescriber', () => {
-
     it('should describe protocols when a message arrives', async () => {
         const message = {value: 'value'};
         await new ProtocolDescriber().process(message);
 
-        expect(processSendMock).toHaveBeenCalledWith({event: 'PROTOCOLS_LIST', value: 'mockedProtocol'});
+        expect(processSendMock).toHaveBeenCalledWith({
+            event: 'PROTOCOLS_LIST',
+            value: 'mockedProtocol'
+        });
     });
-
-
 });

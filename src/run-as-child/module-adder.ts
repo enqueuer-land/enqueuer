@@ -6,5 +6,4 @@ export class ModuleAdder implements ParentReplier {
         Configuration.getInstance().addPlugin(message.value);
         return true;
     }
-
 }

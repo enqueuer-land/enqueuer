@@ -3,7 +3,6 @@ import {TestModel} from '../models/outputs/test-model';
 import {Logger} from '../loggers/logger';
 
 export class HttpBearerAuthentication implements HttpAuthentication {
-
     private readonly token: any;
 
     public constructor(authentication: any) {
@@ -11,7 +10,7 @@ export class HttpBearerAuthentication implements HttpAuthentication {
     }
 
     public generate(): any {
-        return {'authorization': 'Bearer ' + this.token};
+        return {authorization: 'Bearer ' + this.token};
     }
 
     public verify(authorization: string): TestModel[] {
@@ -32,10 +31,10 @@ export class HttpBearerAuthentication implements HttpAuthentication {
         let test = {
             name: '"Bearer" authentication',
             valid: false,
-            description: 'Fail to authenticate \'Bearer\' authentication'
+            description: "Fail to authenticate 'Bearer' authentication"
         };
         if (tests.length > 0) {
-            if (tests.every(test => test.valid)) {
+            if (tests.every((test) => test.valid)) {
                 test.valid = true;
                 test.description = `Bearer authentication is valid`;
             }

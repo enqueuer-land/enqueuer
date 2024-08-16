@@ -7,7 +7,6 @@ import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
 class FileSystemWatcherSubscription extends Subscription {
-
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
         this['options'] = subscriptionAttributes.options || {nodir: true};
@@ -49,7 +48,8 @@ class FileSystemWatcherSubscription extends Subscription {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new SubscriptionProtocol('file',
+    const protocol = new SubscriptionProtocol(
+        'file',
         (subscriptionModel: SubscriptionModel) => new FileSystemWatcherSubscription(subscriptionModel),
         {
             description: 'The file subscription provides an implementation of filesystem readers',
@@ -65,7 +65,7 @@ export function entryPoint(mainInstance: MainInstance): void {
                         description: 'https://github.com/isaacs/node-glob#options',
                         type: 'object',
                         required: false
-                    },
+                    }
                 },
                 hooks: {
                     onMessageReceived: {
@@ -79,8 +79,8 @@ export function entryPoint(mainInstance: MainInstance): void {
                     }
                 }
             }
-        })
-        .addAlternativeName('file-system-watcher', 'file-watcher');
+        }
+    ).addAlternativeName('file-system-watcher', 'file-watcher');
 
     mainInstance.protocolManager.addProtocol(protocol);
 }

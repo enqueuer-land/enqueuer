@@ -8,7 +8,6 @@ const render = jest.fn();
 prettyjson.render.mockImplementation(render);
 
 describe('ObjectParserManager', () => {
-
     beforeEach(() => {
         render.mockClear();
     });
@@ -69,43 +68,41 @@ describe('ObjectParserManager', () => {
                 other: 'other error'
             });
         }
-
     });
 
     it('should describe every ObjectParser', () => {
         const parserList = ['ob1', 'ob2'];
         const objectParserManager = new ObjectParserManager();
         // @ts-ignore
-        parserList.forEach(op => objectParserManager.addObjectParser(() => op, 'whatever'));
+        parserList.forEach((op) => objectParserManager.addObjectParser(() => op, 'whatever'));
 
         const status = objectParserManager.describeMatchingObjectParsers(true);
 
         expect(status).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({'parsers': [['whatever'], ['whatever']]}, expect.anything());
+        expect(render).toHaveBeenCalledWith({parsers: [['whatever'], ['whatever']]}, expect.anything());
     });
 
     it('should describe given ObjectParser', () => {
         const parserList = ['ob1', 'ob2'];
         const objectParserManager = new ObjectParserManager();
         // @ts-ignore
-        parserList.forEach(op => objectParserManager.addObjectParser(() => op, op));
+        parserList.forEach((op) => objectParserManager.addObjectParser(() => op, op));
 
         const status = objectParserManager.describeMatchingObjectParsers(parserList[1]);
 
         expect(status).toBeTruthy();
-        expect(render).toHaveBeenCalledWith({'parsers': [['ob2']]}, expect.anything());
+        expect(render).toHaveBeenCalledWith({parsers: [['ob2']]}, expect.anything());
     });
 
     it('should error when describing no given ObjectParser', () => {
         const parserList = ['ob1', 'ob2'];
         const objectParserManager = new ObjectParserManager();
         // @ts-ignore
-        parserList.forEach(op => objectParserManager.addObjectParser(() => op, op));
+        parserList.forEach((op) => objectParserManager.addObjectParser(() => op, op));
 
         const status = objectParserManager.describeMatchingObjectParsers('unknown');
 
         expect(status).toBeFalsy();
-        expect(render).toHaveBeenCalledWith({'parsers': []}, expect.anything());
+        expect(render).toHaveBeenCalledWith({parsers: []}, expect.anything());
     });
-
 });

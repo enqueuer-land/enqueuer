@@ -1,5 +1,4 @@
 export class Timeout {
-
     private timeoutId?: ReturnType<typeof setTimeout>;
     private callback: Function;
 

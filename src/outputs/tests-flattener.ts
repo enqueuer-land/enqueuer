@@ -7,7 +7,7 @@ export interface FlattenTest extends TestModel {
 
 export class TestsFlattener {
     public flatten(node: ReportModel): FlattenTest[] {
-        const iterationCounter = (node.totalIterations > 1) ? ` [${node.iteration}]` : '';
+        const iterationCounter = node.totalIterations > 1 ? ` [${node.iteration}]` : '';
         const name = node.name + iterationCounter;
         return this.goDeep({...node, name}, [name]);
     }
@@ -23,7 +23,7 @@ export class TestsFlattener {
             .concat(node.publishers || [])
             .concat(node.requisitions || [])
             .reduce((acc: FlattenTest[], component: ReportModel) => {
-                const iterationCounter = (component.totalIterations > 1) ? ` [${component.iteration}]` : '';
+                const iterationCounter = component.totalIterations > 1 ? ` [${component.iteration}]` : '';
                 const name = component.name + iterationCounter;
                 return acc.concat(this.goDeep({...component, name}, hierarchy.concat(name)));
             }, []);
@@ -33,14 +33,17 @@ export class TestsFlattener {
         if (!node.hooks) {
             return [];
         }
-        return Object.keys(node.hooks)
-            .reduce((acc, hookName) => acc
-                .concat(node.hooks![hookName].tests
-                    .map((test: TestModel) => {
+        return Object.keys(node.hooks).reduce(
+            (acc, hookName) =>
+                acc.concat(
+                    node.hooks![hookName].tests.map((test: TestModel) => {
                         return {
                             ...test,
                             hierarchy: hierarchy.concat(hookName)
                         } as FlattenTest;
-                    })), [] as FlattenTest[]);
+                    })
+                ),
+            [] as FlattenTest[]
+        );
     }
 }

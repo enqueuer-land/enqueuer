@@ -4,17 +4,16 @@ import {entryPoint, ExpectToBeGreaterThanOrEqualToAsserter} from './expect-to-be
 
 describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
     it('should compare greater', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 3,
-            toBeGreaterThanOrEqualTo: 2,
+            toBeGreaterThanOrEqualTo: 2
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeGreaterThanOrEqualTo: 'body.expected',
+            toBeGreaterThanOrEqualTo: 'body.expected'
         };
 
         const test = new ExpectToBeGreaterThanOrEqualToAsserter().assert(assertion, literal);
@@ -23,18 +22,17 @@ describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
     });
 
     it('should compare not greater', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 3,
             not: null,
-            toBeGreaterThanOrEqualTo: 4,
+            toBeGreaterThanOrEqualTo: 4
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeGreaterThanOrEqualTo: 'body.expected',
+            toBeGreaterThanOrEqualTo: 'body.expected'
         };
 
         const test = new ExpectToBeGreaterThanOrEqualToAsserter().assert(assertion, literal);
@@ -44,17 +42,16 @@ describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
     });
 
     it('should compare equal', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 3,
-            toBeGreaterThanOrEqualTo: 3,
+            toBeGreaterThanOrEqualTo: 3
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeGreaterThanOrEqualTo: 'body.expected',
+            toBeGreaterThanOrEqualTo: 'body.expected'
         };
 
         const test = new ExpectToBeGreaterThanOrEqualToAsserter().assert(assertion, literal);
@@ -63,17 +60,16 @@ describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
     });
 
     it('should compare greater fail', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 2,
-            toBeGreaterThanOrEqualTo: 3,
+            toBeGreaterThanOrEqualTo: 3
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeGreaterThanOrEqualTo: 'body.expected',
+            toBeGreaterThanOrEqualTo: 'body.expected'
         };
 
         const test = new ExpectToBeGreaterThanOrEqualToAsserter().assert(assertion, literal);
@@ -82,20 +78,21 @@ describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
         expect(test.description).toBe("Expected 'body.actual' to be greater than or equal to '3'. Received '2'");
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expect': {
-                            'description': 'actual value',
-                            'type': 'number'
+                        expect: {
+                            description: 'actual value',
+                            type: 'number'
                         },
-                        'toBeGreaterThanOrEqualTo': {
-                            'description': 'expected value',
-                            'type': 'number'
-                        }, not: {
+                        toBeGreaterThanOrEqualTo: {
+                            description: 'expected value',
+                            type: 'number'
+                        },
+                        not: {
                             required: false,
                             description: 'negates',
                             type: 'null'
@@ -108,5 +105,4 @@ describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

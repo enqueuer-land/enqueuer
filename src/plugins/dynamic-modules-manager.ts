@@ -1,15 +1,15 @@
-import { MainInstance } from './main-instance';
-import { ProtocolManager } from './protocol-manager';
-import { ReportFormatterManager } from './report-formatter-manager';
-import { Configuration } from '../configurations/configuration';
-import { Logger } from '../loggers/logger';
+import {MainInstance} from './main-instance';
+import {ProtocolManager} from './protocol-manager';
+import {ReportFormatterManager} from './report-formatter-manager';
+import {Configuration} from '../configurations/configuration';
+import {Logger} from '../loggers/logger';
 import * as path from 'path';
-import { ObjectParserManager } from './object-parser-manager';
-import { AsserterManager } from './asserter-manager';
+import {ObjectParserManager} from './object-parser-manager';
+import {AsserterManager} from './asserter-manager';
 import * as os from 'os';
 import * as glob from 'glob';
 import * as fs from 'fs';
-import { prettifyJson } from '../outputs/prettify-json';
+import {prettifyJson} from '../outputs/prettify-json';
 
 const enqueuerPackageJson = require('../../package.json');
 
@@ -29,8 +29,9 @@ export class DynamicModulesManager {
         this.objectParserManager = new ObjectParserManager();
         this.asserterManager = new AsserterManager();
         this.builtInModules = this.findEveryEntryPointableBuiltInModule();
-        this.implicitModules = this.findEveryEnqueuerImplicitPluginPackage(os.homedir() + '/.nqr/node_modules/*')
-            .concat(this.findEveryEnqueuerImplicitPluginPackage(__dirname + '/../../node_modules/*'));
+        this.implicitModules = this.findEveryEnqueuerImplicitPluginPackage(os.homedir() + '/.nqr/node_modules/*').concat(
+            this.findEveryEnqueuerImplicitPluginPackage(__dirname + '/../../node_modules/*')
+        );
         this.explicitModules = [];
         this.initialModulesLoad();
     }
@@ -51,12 +52,12 @@ export class DynamicModulesManager {
     }
 
     public getLoadedModules(): {
-        implicit: string[],
-        explicit: string[]
+        implicit: string[];
+        explicit: string[];
     } {
         return {
             implicit: this.implicitModules,
-            explicit: this.explicitModules,
+            explicit: this.explicitModules
         };
     }
 
@@ -94,14 +95,16 @@ export class DynamicModulesManager {
     public findEveryEnqueuerImplicitPluginPackage(pattern: string): string[] {
         try {
             return (glob.sync(pattern, {}) || [])
-                .map(module => module.replace(/\.js/, ''))
-                .filter(module => {
+                .map((module) => module.replace(/\.js/, ''))
+                .filter((module) => !module.includes('.test'))
+                .filter((module) => {
                     try {
                         const packageJsonPath = module + '/package.json';
                         if (fs.existsSync(packageJsonPath)) {
                             const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
-                            const keyWordsMatch = (packageJson.keywords || [])
-                                .find((keyword: string) => keyword.toLowerCase() === 'enqueuer' || keyword.toLowerCase() === 'nqr');
+                            const keyWordsMatch = (packageJson.keywords || []).find(
+                                (keyword: string) => keyword.toLowerCase() === 'enqueuer' || keyword.toLowerCase() === 'nqr'
+                            );
                             if (keyWordsMatch) {
                                 const versionMatches = DynamicModulesManager.versionMatches(packageJson);
                                 if (versionMatches) {
@@ -114,35 +117,34 @@ export class DynamicModulesManager {
                     }
                     return false;
                 });
-        } catch (err) {
-
-        }
+        } catch (err) {}
         return [];
     }
 
-    private static versionMatches(packageJson: { name: string, dependencies: any, devDependencies: any, peerDependencies: any }): boolean {
+    private static versionMatches(packageJson: {name: string; dependencies: any; devDependencies: any; peerDependencies: any}): boolean {
         const regexp = /[^\d]*(\d+)/;
         const currentMajorVersion = (process.env.npm_package_version || enqueuerPackageJson.version).match(regexp)[0];
-        const enqueuerVersion = (packageJson.dependencies || {}).enqueuer ||
+        const enqueuerVersion =
+            (packageJson.dependencies || {}).enqueuer ||
             (packageJson.devDependencies || {}).enqueuer ||
             (packageJson.peerDependencies || {}).enqueuer ||
             '0.0.0';
         const pluginMajorEnqueuerVersion = enqueuerVersion.match(regexp)[1];
 
-        Logger.trace(`name: ${packageJson.name} => currentMajorVersion (${+currentMajorVersion}) <= pluginMajorEnqueuerVersion (${+pluginMajorEnqueuerVersion}): ${+currentMajorVersion <= +pluginMajorEnqueuerVersion}`);
+        Logger.trace(
+            `name: ${packageJson.name} => currentMajorVersion (${+currentMajorVersion}) <= pluginMajorEnqueuerVersion (${+pluginMajorEnqueuerVersion}): ${+currentMajorVersion <= +pluginMajorEnqueuerVersion}`
+        );
         return +currentMajorVersion <= +pluginMajorEnqueuerVersion;
     }
 
     private loadModule(module: string): boolean {
         try {
-            require(module)
-                .entryPoint(
-                    {
-                        protocolManager: this.protocolManager,
-                        reportFormatterManager: this.reportFormatterManager,
-                        objectParserManager: this.objectParserManager,
-                        asserterManager: this.asserterManager
-                    } as MainInstance);
+            require(module).entryPoint({
+                protocolManager: this.protocolManager,
+                reportFormatterManager: this.reportFormatterManager,
+                objectParserManager: this.objectParserManager,
+                asserterManager: this.asserterManager
+            } as MainInstance);
             return true;
         } catch (err) {
             Logger.error(`Fail to load '${module}': ${err}`);
@@ -151,13 +153,15 @@ export class DynamicModulesManager {
     }
 
     private findEveryEntryPointableBuiltInModule(): string[] {
-        const pattern = __dirname + '/../**/*\.+(ts|d.ts|js)';
-        const files = glob.sync(pattern, {})
-            .map(module => module.replace('./src/', '../'))
-            .map(module => module.replace(/\.d\.ts/, ''))
-            .map(module => module.replace(/\.ts/, ''))
-            .map(module => module.replace(/\.js/, ''))
-            .filter(module => {
+        const pattern = __dirname + '/../**/*.+(ts|d.ts|js)';
+        const files = glob
+            .sync(pattern, {})
+            .map((module) => module.replace('./src/', '../'))
+            .map((module) => module.replace(/\.d\.ts/, ''))
+            .map((module) => module.replace(/\.ts/, ''))
+            .map((module) => module.replace(/\.js/, ''))
+            .filter((module) => !module.includes('.test'))
+            .filter((module) => {
                 try {
                     return require(module).entryPoint !== undefined;
                 } catch (err) {
@@ -170,22 +174,21 @@ export class DynamicModulesManager {
 
     private initialModulesLoad() {
         Logger.info(`Loading built in modules`);
-        this.builtInModules
-            .forEach(module => this.loadModule(module) ?
-                Logger.debug(`Success to load '${path.basename(module)}' as built in module`) :
-                Logger.trace(`Fail to load '${module}' as built in  module`));
+        this.builtInModules.forEach((module) =>
+            this.loadModule(module)
+                ? Logger.debug(`Success to load '${path.basename(module)}' as built in module`)
+                : Logger.trace(`Fail to load '${module}' as built in  module`)
+        );
 
         Logger.info(`Loading ${this.implicitModules.length} implicitly declared plugins`);
-        this.implicitModules
-            .forEach(module => this.loadModule(module) ?
-                Logger.info(`Success to load '${path.basename(module)}' as dynamic module`) :
-                Logger.error(`Fail to load '${module}' as dynamic module`));
+        this.implicitModules.forEach((module) =>
+            this.loadModule(module)
+                ? Logger.info(`Success to load '${path.basename(module)}' as dynamic module`)
+                : Logger.error(`Fail to load '${module}' as dynamic module`)
+        );
 
         const configurationPlugins = Configuration.getInstance().getPlugins();
         Logger.info(`Loading ${configurationPlugins.length} explicitly declared plugins`);
-        configurationPlugins
-            .filter(module => !this.explicitModules.includes(module))
-            .forEach(module => this.loadModuleExplicitly(module));
+        configurationPlugins.filter((module) => !this.explicitModules.includes(module)).forEach((module) => this.loadModuleExplicitly(module));
     }
-
 }

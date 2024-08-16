@@ -26,6 +26,4 @@ describe('ChildRequisitionRunner', () => {
         expect(requisitionRunnerConstructorMock).toHaveBeenCalledWith('value');
         expect(runMock).toHaveBeenCalled();
     });
-
-
 });

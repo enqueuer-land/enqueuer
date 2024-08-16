@@ -1,5 +1,4 @@
 export class StringRandomCreator {
-
     private possible: string;
 
     public constructor(possible: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') {
@@ -14,6 +13,5 @@ export class StringRandomCreator {
         }
 
         return text;
-    }
-
+    };
 }

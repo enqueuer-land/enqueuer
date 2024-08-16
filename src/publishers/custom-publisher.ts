@@ -8,7 +8,6 @@ import {MainInstance} from '../plugins/main-instance';
 import {PublisherProtocol} from '../protocols/publisher-protocol';
 
 class CustomPublisher extends Publisher {
-
     constructor(model: PublisherModel) {
         super(model);
         this['model'] = model;
@@ -27,8 +26,7 @@ class CustomPublisher extends Publisher {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new PublisherProtocol('custom',
-        (publisherModel: PublisherModel) => new CustomPublisher(publisherModel));
+    const protocol = new PublisherProtocol('custom', (publisherModel: PublisherModel) => new CustomPublisher(publisherModel));
 
     mainInstance.protocolManager.addProtocol(protocol);
 }

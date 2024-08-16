@@ -1,7 +1,6 @@
 import {HttpBasicAuthentication} from './http-basic-authentication';
 
 describe('HttpBasicAuthentication', () => {
-
     it('tests number', () => {
         const authentication = {
             basic: {
@@ -97,15 +96,16 @@ describe('HttpBasicAuthentication', () => {
         // @ts-ignore
         const verify = authorization.verify();
 
-        expect(verify.some(test => test.valid)).toBeFalsy();
+        expect(verify.some((test) => test.valid)).toBeFalsy();
     });
 
     it('Empty auth credentials', () => {
-        const authorization: HttpBasicAuthentication = new HttpBasicAuthentication({basic: ''});
+        const authorization: HttpBasicAuthentication = new HttpBasicAuthentication({
+            basic: ''
+        });
 
         const verify = authorization.verify('Basic QWxhZGRpbjpPcGVuU2VzYW1l');
 
         expect(verify.every((test) => test.valid)).toBeFalsy();
     });
-
 });

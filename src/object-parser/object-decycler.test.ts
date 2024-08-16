@@ -21,5 +21,4 @@ describe('ObjectDecycler', () => {
 
         expect(stringified).toEqual(expected);
     });
-
 });

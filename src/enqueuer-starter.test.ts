@@ -14,7 +14,9 @@ describe('EnqueuerStarter', () => {
 
     it('Should translate false to 1', async () => {
         // @ts-ignore
-        EnqueuerRunner.mockImplementationOnce(() => ({execute: () => [{valid: false}]}));
+        EnqueuerRunner.mockImplementationOnce(() => ({
+            execute: () => [{valid: false}]
+        }));
 
         expect(await new EnqueuerStarter().start()).toBe(1);
     });
@@ -31,6 +33,4 @@ describe('EnqueuerStarter', () => {
 
         expect(await new EnqueuerStarter().start()).toBe(-1);
     });
-
-
 });

@@ -1,14 +1,14 @@
 subscriptions:
--   type: tcp
+  - type: tcp
     timeout: 2000
     port: 23232
     avoid: true
--   type: HTTP
+  - type: HTTP
     endpoint: /not/reachable
     port: 23084
     method: POST
     timeout: 3000
     response:
-        status: 200
-        payload: https
+      status: 200
+      payload: https
     avoid: true

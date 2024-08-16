@@ -8,7 +8,6 @@ import {MainInstance} from '../plugins/main-instance';
 import {SubscriptionProtocol} from '../protocols/subscription-protocol';
 
 class CustomSubscription extends Subscription {
-
     constructor(subscriptionModel: SubscriptionModel) {
         super(subscriptionModel);
         try {
@@ -25,24 +24,32 @@ class CustomSubscription extends Subscription {
     }
 
     public async receiveMessage(): Promise<void> {
-        return this.custom.receiveMessage({store: Store.getData(), logger: Logger});
+        return this.custom.receiveMessage({
+            store: Store.getData(),
+            logger: Logger
+        });
     }
 
     public async unsubscribe(): Promise<any> {
         if (this.custom.unsubscribe) {
-            return this.custom.unsubscribe({store: Store.getData(), logger: Logger});
+            return this.custom.unsubscribe({
+                store: Store.getData(),
+                logger: Logger
+            });
         }
     }
 
     public async sendResponse(): Promise<any> {
         if (this.custom.sendResponse) {
-            return this.custom.sendResponse({store: Store.getData(), logger: Logger});
+            return this.custom.sendResponse({
+                store: Store.getData(),
+                logger: Logger
+            });
         }
     }
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new SubscriptionProtocol('custom',
-        (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel));
+    const protocol = new SubscriptionProtocol('custom', (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel));
     mainInstance.protocolManager.addProtocol(protocol);
 }

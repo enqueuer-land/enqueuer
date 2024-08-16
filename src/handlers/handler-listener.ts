@@ -55,8 +55,9 @@ export class HandlerListener {
     private handleError(err: any, handler: number | string, resolve: any, reject: any) {
         if (err.code === HandlerListener.ADDRESS_IN_USE) {
             --this.remainingAttempts;
-            Logger.warning(`Handler ${handler} is busy.` +
-                ` Waiting for ${this.retryTimeout}ms before trying again for ${this.remainingAttempts} more times...`);
+            Logger.warning(
+                `Handler ${handler} is busy.` + ` Waiting for ${this.retryTimeout}ms before trying again for ${this.remainingAttempts} more times...`
+            );
             setTimeout(() => {
                 Logger.debug(`Closing server`);
                 this.server.close();

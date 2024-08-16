@@ -2,7 +2,6 @@ import {MainInstance} from '../plugins/main-instance';
 import {FileObjectParserTest, entryPoint} from './file-object-parser';
 
 describe('FileObjectParserTest', () => {
-
     test('should parse', () => {
         const code = 'anyStuff';
 
@@ -11,7 +10,7 @@ describe('FileObjectParserTest', () => {
         expect(code).toBe(code);
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             objectParserManager: {
@@ -24,5 +23,4 @@ describe('FileObjectParserTest', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

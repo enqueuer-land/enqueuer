@@ -13,11 +13,12 @@ export class HttpNoAuthentication implements HttpAuthentication {
     }
 
     public verify(requisition: string): TestModel[] {
-        return [{
-            name: 'Http authentication',
-            description: `No supported http authentication method was found from: ${this.authentication}`,
-            valid: false
-        }];
+        return [
+            {
+                name: 'Http authentication',
+                description: `No supported http authentication method was found from: ${this.authentication}`,
+                valid: false
+            }
+        ];
     }
-
 }

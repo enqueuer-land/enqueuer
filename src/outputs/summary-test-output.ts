@@ -1,21 +1,21 @@
-import { TestsAnalyzer } from './tests-analyzer';
-import { TestModel, testModelIsFailing, testModelIsPassing } from '../models/outputs/test-model';
-import { RequisitionModel } from '../models/outputs/requisition-model';
-import { PublisherModel } from '../models/outputs/publisher-model';
-import { SubscriptionModel } from '../models/outputs/subscription-model';
-import { ReportModel } from '../models/outputs/report-model';
-import { HookModel } from '../models/outputs/hook-model';
+import {TestsAnalyzer} from './tests-analyzer';
+import {TestModel, testModelIsFailing, testModelIsPassing} from '../models/outputs/test-model';
+import {RequisitionModel} from '../models/outputs/requisition-model';
+import {PublisherModel} from '../models/outputs/publisher-model';
+import {SubscriptionModel} from '../models/outputs/subscription-model';
+import {ReportModel} from '../models/outputs/report-model';
+import {HookModel} from '../models/outputs/hook-model';
 import cgalk from 'chalk';
-import { Configuration } from '../configurations/configuration';
+import {Configuration} from '../configurations/configuration';
 import chalk from 'chalk';
 
 export type SummaryOptions = {
-    maxLevel: number,
-    level: number,
-    tabulationPerLevel: number,
-    summarySpacing: number,
-    showPassingTests: boolean
-    printChildren: boolean,
+    maxLevel: number;
+    level: number;
+    tabulationPerLevel: number;
+    summarySpacing: number;
+    showPassingTests: boolean;
+    printChildren: boolean;
 };
 
 export class SummaryTestOutput {
@@ -54,10 +54,9 @@ export class SummaryTestOutput {
             .concat(this.buildLeavesFromHooks() || [])
             .concat(this.buildLeavesFromAssertion());
         for (const leaf of reportLeaves) {
-            const options = Object.assign({}, this.options,
-                {
-                    level: this.options.level + 1,
-                });
+            const options = Object.assign({}, this.options, {
+                level: this.options.level + 1
+            });
             new SummaryTestOutput(leaf, options).print();
         }
     }
@@ -66,7 +65,7 @@ export class SummaryTestOutput {
         return Object.keys(this.report.hooks || {}).reduce((acc, key) => {
             const leaf: any = {
                 ...this.report.hooks![key],
-                name: key,
+                name: key
             };
             return acc.concat(leaf);
         }, []);
@@ -104,12 +103,13 @@ export class SummaryTestOutput {
         } else if (testAnalyzer.getFailingTests().length > 0 || !testModelIsPassing(this.report)) {
             formattedString += `${chalk.black.bgRed('[FAIL]')} `;
             nameColorFunction = chalk.red;
-        } else { //if (this.report.valid)
+        } else {
+            //if (this.report.valid)
             formattedString += `${chalk.black.bgGreen('[PASS]')} `;
             nameColorFunction = chalk.green;
         }
         formattedString += tagTitleSeparation;
-        const iterationCounter: string = (this.report.totalIterations > 1) ? ` [${this.report.iteration}]` : '';
+        const iterationCounter: string = this.report.totalIterations > 1 ? ` [${this.report.iteration}]` : '';
         formattedString += nameColorFunction(this.report.name + iterationCounter);
         formattedString += this.createEmptyStringSized(this.options.summarySpacing - titleSizeSeparation);
         return formattedString;
@@ -135,8 +135,9 @@ export class SummaryTestOutput {
             message += `\t| executed in ${totalTime}ms`;
         }
         if (Configuration.getInstance().getShowExplicitTestsOnly()) {
-            message += `\t| (${testAnalyzer.getPassingTests().filter(test => !test.implicit).length}/${testAnalyzer
-                .getNotIgnoredTests().filter(test => !test.implicit).length} of explicitly declared)`;
+            message += `\t| (${testAnalyzer.getPassingTests().filter((test) => !test.implicit).length}/${
+                testAnalyzer.getNotIgnoredTests().filter((test) => !test.implicit).length
+            } of explicitly declared)`;
         }
         const ignoredTests = testAnalyzer.getIgnoredList();
         if (ignoredTests.length > 0) {
@@ -148,17 +149,15 @@ export class SummaryTestOutput {
     private printFailingTests(report: ReportModel, hierarchy: string[]) {
         const failing = testModelIsFailing(report);
         if (failing || this.options.showPassingTests) {
-            Object.keys(report.hooks || {})
-                .forEach((key: string) => this.printHookTests(report.hooks![key], key, hierarchy));
+            Object.keys(report.hooks || {}).forEach((key: string) => this.printHookTests(report.hooks![key], key, hierarchy));
 
             (report.subscriptions || [])
                 .concat(report.publishers || [])
                 .concat(report.requisitions || [])
-                .forEach(((leaf: RequisitionModel | PublisherModel | SubscriptionModel) => {
-                    const iterationCounter: string = (leaf.totalIterations > 1) ? ` [${leaf.iteration}]` : '';
+                .forEach((leaf: RequisitionModel | PublisherModel | SubscriptionModel) => {
+                    const iterationCounter: string = leaf.totalIterations > 1 ? ` [${leaf.iteration}]` : '';
                     this.printFailingTests(leaf, hierarchy.concat(leaf.name + iterationCounter));
-                }));
-
+                });
         }
     }
 
@@ -176,15 +175,18 @@ export class SummaryTestOutput {
                     color = chalk.red;
                 }
                 if (index === 0) {
-                    const hierarchyMessage = initialTabulation + hierarchy
-                        .map(level => color(level) + chalk.gray(' › '))
-                        .concat(hookName)
-                        .join('');
+                    const hierarchyMessage =
+                        initialTabulation +
+                        hierarchy
+                            .map((level) => color(level) + chalk.gray(' › '))
+                            .concat(hookName)
+                            .join('');
                     console.log(hierarchyMessage);
                 }
                 console.log(color(`${initialTabulation}${this.createEmptyStringSized(this.options.tabulationPerLevel)}${test.name}`));
-                console.log(chalk.reset(`${initialTabulation}${this
-                    .createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}\n`));
+                console.log(
+                    chalk.reset(`${initialTabulation}${this.createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}\n`)
+                );
             });
     }
 
@@ -196,5 +198,4 @@ export class SummaryTestOutput {
         }
         return chalk.red;
     }
-
 }

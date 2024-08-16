@@ -4,7 +4,6 @@ let consoleLogMock = jest.fn((message) => console.warn(message));
 console.log = consoleLogMock;
 
 describe('SummaryTestOutput', () => {
-
     beforeEach(() => {
         consoleLogMock.mockClear();
     });
@@ -13,7 +12,7 @@ describe('SummaryTestOutput', () => {
         new SummaryTestOutput({
             name: 'name',
             valid: true,
-            hooks: {},
+            hooks: {}
         }).print();
 
         expect(consolePrintedTimes('name')).toBe(1);
@@ -21,45 +20,55 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should print failed tests name', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: false,
-            hooks: {
-                onEvent: {
-                    valid: false,
-                    tests: [{
-                        name: 'failing',
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: false,
+                hooks: {
+                    onEvent: {
                         valid: false,
-                        description: ''
-                    }, {
-                        name: 'passingTest',
-                        valid: true,
-                        description: ''
-                    }]
-
+                        tests: [
+                            {
+                                name: 'failing',
+                                valid: false,
+                                description: ''
+                            },
+                            {
+                                name: 'passingTest',
+                                valid: true,
+                                description: ''
+                            }
+                        ]
+                    }
                 }
             },
-        }, {printFailingTests: true, level: 0, printChildren: false}).print();
+            {printFailingTests: true, level: 0, printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('failing')).toBe(1);
         expect(consolePrintedTimes('passingTest')).toBe(0);
     });
 
     it('should print PASS', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: true,
-            hooks: {
-                onStuff: {
-                    valid: true,
-                    tests: [{
-                        name: 'any',
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: true,
+                hooks: {
+                    onStuff: {
                         valid: true,
-                        description: ''
-                    }]
+                        tests: [
+                            {
+                                name: 'any',
+                                valid: true,
+                                description: ''
+                            }
+                        ]
+                    }
                 }
-            }
-        }, {printChildren: false}).print();
+            },
+            {printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('PASS')).toBe(1);
         expect(consolePrintedTimes('FAIL')).toBe(0);
@@ -68,21 +77,26 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should print FAIL', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: false,
-            hooks: {
-                onStuff: {
-                    valid: false,
-
-                    tests: [{
-                        name: 'any',
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: false,
+                hooks: {
+                    onStuff: {
                         valid: false,
-                        description: ''
-                    }]
+
+                        tests: [
+                            {
+                                name: 'any',
+                                valid: false,
+                                description: ''
+                            }
+                        ]
+                    }
                 }
-            }
-        }, {printChildren: false}).print();
+            },
+            {printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('NULL')).toBe(0);
         expect(consolePrintedTimes('FAIL')).toBe(1);
@@ -99,18 +113,23 @@ describe('SummaryTestOutput', () => {
                     onStuff: {
                         valid: false,
 
-                        tests: [{
-                            name: 'any',
-                            valid: false,
-                            description: 'description'
-                        }, {
-                            name: 'second',
-                            valid: false,
-                            description: 'secDesc'
-                        }]
+                        tests: [
+                            {
+                                name: 'any',
+                                valid: false,
+                                description: 'description'
+                            },
+                            {
+                                name: 'second',
+                                valid: false,
+                                description: 'secDesc'
+                            }
+                        ]
                     }
                 }
-            }, {printChildren: false}).print();
+            },
+            {printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('FAIL')).toBe(1);
         // expect(consolePrintedTimes('name')).toBe(3);
@@ -123,22 +142,27 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should print SKIP when ignored', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: true,
-            ignored: true,
-            hooks: {
-                onStuff: {
-                    valid: false,
-
-                    tests: [{
-                        name: 'any',
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: true,
+                ignored: true,
+                hooks: {
+                    onStuff: {
                         valid: false,
-                        description: ''
-                    }]
+
+                        tests: [
+                            {
+                                name: 'any',
+                                valid: false,
+                                description: ''
+                            }
+                        ]
+                    }
                 }
-            }
-        }, {printChildren: false}).print();
+            },
+            {printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -147,22 +171,27 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should print SKIP when every test is ignored', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: true,
-            hooks: {
-                onStuff: {
-                    valid: true,
-
-                    tests: [{
-                        name: 'any',
-                        ignored: true,
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: true,
+                hooks: {
+                    onStuff: {
                         valid: true,
-                        description: ''
-                    }]
+
+                        tests: [
+                            {
+                                name: 'any',
+                                ignored: true,
+                                valid: true,
+                                description: ''
+                            }
+                        ]
+                    }
                 }
-            }
-        }, {printChildren: false}).print();
+            },
+            {printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -171,22 +200,27 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should print SKIP when child is ignored', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: true,
-            hooks: {
-                onStuff: {
-                    valid: true,
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: true,
+                hooks: {
+                    onStuff: {
+                        valid: true,
 
-                    tests: [{
-                        name: 'any',
-                        ignored: true,
-                        valid: false,
-                        description: ''
-                    }]
+                        tests: [
+                            {
+                                name: 'any',
+                                ignored: true,
+                                valid: false,
+                                description: ''
+                            }
+                        ]
+                    }
                 }
-            }
-        }, {printChildren: false}).print();
+            },
+            {printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -195,16 +229,20 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should print NULL when there is no test', () => {
-        new SummaryTestOutput({
-            name: 'name',
-            valid: true, hooks: {
-                onStuff: {
-                    valid: true,
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: true,
+                hooks: {
+                    onStuff: {
+                        valid: true,
 
-                    tests: []
+                        tests: []
+                    }
                 }
-            }
-        }, {printChildren: false}).print();
+            },
+            {printChildren: false}
+        ).print();
 
         expect(consolePrintedTimes('NULL')).toBe(1);
         expect(consolePrintedTimes('SKIP')).toBe(0);
@@ -219,7 +257,7 @@ describe('SummaryTestOutput', () => {
             valid: true,
             time: {
                 totalTime: totalTime
-            },
+            }
         }).print();
 
         expect(consolePrintedTimes(totalTime)).toBe(1);
@@ -232,7 +270,7 @@ describe('SummaryTestOutput', () => {
             tests: [],
             publishers: [{name: 'publisher'}],
             subscriptions: [{name: 'subscription'}],
-            requisitions: [{name: 'requisition'}],
+            requisitions: [{name: 'requisition'}]
         }).print();
 
         expect(consolePrintedTimes('publisher')).toBe(1);
@@ -241,13 +279,15 @@ describe('SummaryTestOutput', () => {
     });
 
     it('should not print children if it is deeper than max', () => {
-
-        new SummaryTestOutput({
-            name: 'name',
-            valid: true,
-            publishers: [{name: 'publisher', valid: false}],
-            subscriptions: [{name: 'subscription', valid: false}],
-        }, {maxLevel: 0, level: 0}).print();
+        new SummaryTestOutput(
+            {
+                name: 'name',
+                valid: true,
+                publishers: [{name: 'publisher', valid: false}],
+                subscriptions: [{name: 'subscription', valid: false}]
+            },
+            {maxLevel: 0, level: 0}
+        ).print();
 
         expect(consolePrintedTimes('name')).toBe(1);
         expect(consolePrintedTimes('publisher')).toBe(0);

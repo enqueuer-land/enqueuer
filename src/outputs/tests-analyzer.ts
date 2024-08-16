@@ -12,7 +12,7 @@ export class TestsAnalyzer {
     }
 
     public isValid(): boolean {
-        return this.getNotIgnoredTests().every(test => test.valid);
+        return this.getNotIgnoredTests().every((test) => test.valid);
     }
 
     public getTests(): TestModel[] {
@@ -20,19 +20,19 @@ export class TestsAnalyzer {
     }
 
     public getNotIgnoredTests(): TestModel[] {
-        return this.tests.filter(test => test.ignored === false || test.ignored === undefined);
+        return this.tests.filter((test) => test.ignored === false || test.ignored === undefined);
     }
 
     public getIgnoredList(): TestModel[] {
-        return this.tests.filter(test => test.ignored === true && test.ignored !== undefined);
+        return this.tests.filter((test) => test.ignored === true && test.ignored !== undefined);
     }
 
     public getPassingTests(): TestModel[] {
-        return this.tests.filter(test => test.valid === true && (test.ignored === false || test.ignored === undefined));
+        return this.tests.filter((test) => test.valid === true && (test.ignored === false || test.ignored === undefined));
     }
 
     public getFailingTests(): TestModel[] {
-        return this.tests.filter(test => test.valid === false && (test.ignored === false || test.ignored === undefined));
+        return this.tests.filter((test) => test.valid === false && (test.ignored === false || test.ignored === undefined));
     }
 
     public getPercentage(): number {
@@ -40,7 +40,7 @@ export class TestsAnalyzer {
         if (notIgnoredTestsLength === 0) {
             return 100;
         }
-        return Math.trunc(10000 * this.getPassingTests().length / notIgnoredTestsLength) / 100;
+        return Math.trunc((10000 * this.getPassingTests().length) / notIgnoredTestsLength) / 100;
     }
 
     private findRequisitions(requisition: ReportModel) {
@@ -71,5 +71,4 @@ export class TestsAnalyzer {
             this.tests = this.tests.concat(reportModel.tests || []);
         }
     }
-
 }

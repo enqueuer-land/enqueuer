@@ -15,7 +15,7 @@ export abstract class Publisher {
     [propName: string]: any;
 
     protected constructor(publisherAttributes: PublisherModel) {
-        Object.keys(publisherAttributes).forEach(key => {
+        Object.keys(publisherAttributes).forEach((key) => {
             this[key] = publisherAttributes[key];
         });
         this.type = publisherAttributes.type;
@@ -36,5 +36,4 @@ export abstract class Publisher {
             Logger.warning(`Hook event executor not registered in publisher`);
         }
     }
-
 }

@@ -2,8 +2,9 @@ import {RequisitionValidator} from './requisition-validator';
 
 describe('RequisitionValidator', () => {
     it('Should return error message', () => {
-        expect(new RequisitionValidator().getErrorMessage())
-            .toBe(`Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`);
+        expect(new RequisitionValidator().getErrorMessage()).toBe(
+            `Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`
+        );
     });
 
     it('Should reject empty', () => {
@@ -52,13 +53,19 @@ describe('RequisitionValidator', () => {
     });
 
     it('Should go recursive', () => {
-        expect(new RequisitionValidator().validate({
-            requisitions: [{
-                // @ts-expect-error
-                requisitions: [{
-                    onInit: {}
-                }]
-            }]
-        })).toBeTruthy();
+        expect(
+            new RequisitionValidator().validate({
+                requisitions: [
+                    {
+                        // @ts-expect-error
+                        requisitions: [
+                            {
+                                onInit: {}
+                            }
+                        ]
+                    }
+                ]
+            })
+        ).toBeTruthy();
     });
 });

@@ -16,7 +16,7 @@ export abstract class Subscription {
     [propName: string]: any;
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {
-        Object.keys(subscriptionAttributes).forEach(key => {
+        Object.keys(subscriptionAttributes).forEach((key) => {
             this[key] = subscriptionAttributes[key];
         });
         this.type = subscriptionAttributes.type;
@@ -31,8 +31,7 @@ export abstract class Subscription {
         //do nothing
     }
 
-    public async sendResponse(): Promise<void> {
-    }
+    public async sendResponse(): Promise<void> {}
 
     public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
         this['hookEventExecutor'] = hookEventExecutor;
@@ -45,5 +44,4 @@ export abstract class Subscription {
             Logger.warning(`Hook event executor not registered in subscription`);
         }
     }
-
 }

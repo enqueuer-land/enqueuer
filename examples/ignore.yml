@@ -1,47 +1,47 @@
--   publishers:
-    -   ignore: true
-        filename: /dev/null
-        type: file
-        onInit:
-            assertions:
-            -   expectToBeTruthy: false
-        onFinish:
-            assertions:
-            -   expectToBeTruthy: false
--   subscriptions:
-    -   ignore: true
-        type: file
-        onInit:
-            assertions:
-            -   expectToBeTruthy: false
-        onFinish:
-            assertions:
-            -   expectToBeTruthy: false
--   ignore: true
-    requisitions:
-    -   onInit:
-            assertions:
-            -   expectToBeTruthy: false
-        onFinish:
-            assertions:
-            -   expectToBeTruthy: false
-    publishers:
-    -   onInit:
-            assertions:
-            -   expectToBeTruthy: false
-        onFinish:
-            assertions:
-            -   expectToBeTruthy: false
-    subscriptions:
-    -   onInit:
-            assertions:
-            -   expectToBeTruthy: false
-        onFinish:
-            assertions:
-            -   expectToBeTruthy: false
-    onInit:
+- publishers:
+    - ignore: true
+      filename: /dev/null
+      type: file
+      onInit:
         assertions:
-        -   expectToBeTruthy: false
-    onFinish:
+          - expectToBeTruthy: false
+      onFinish:
         assertions:
-        -   expectToBeTruthy: false
+          - expectToBeTruthy: false
+- subscriptions:
+    - ignore: true
+      type: file
+      onInit:
+        assertions:
+          - expectToBeTruthy: false
+      onFinish:
+        assertions:
+          - expectToBeTruthy: false
+- ignore: true
+  requisitions:
+    - onInit:
+        assertions:
+          - expectToBeTruthy: false
+      onFinish:
+        assertions:
+          - expectToBeTruthy: false
+  publishers:
+    - onInit:
+        assertions:
+          - expectToBeTruthy: false
+      onFinish:
+        assertions:
+          - expectToBeTruthy: false
+  subscriptions:
+    - onInit:
+        assertions:
+          - expectToBeTruthy: false
+      onFinish:
+        assertions:
+          - expectToBeTruthy: false
+  onInit:
+    assertions:
+      - expectToBeTruthy: false
+  onFinish:
+    assertions:
+      - expectToBeTruthy: false

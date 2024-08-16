@@ -1,7 +1,6 @@
 import {RequisitionAdopter} from './requisition-adopter';
 
 describe('RequisitionAdopter', () => {
-
     it('Should set default values', () => {
         const parent = new RequisitionAdopter({}).getRequisition();
 
@@ -25,7 +24,7 @@ describe('RequisitionAdopter', () => {
             value: 123,
             delay: 10000,
             level: 5,
-            iterations: 9,
+            iterations: 9
         }).getRequisition();
 
         expect(parent.value).toBe(parent.value);
@@ -48,11 +47,11 @@ describe('RequisitionAdopter', () => {
                 name: 'firstName',
                 extraValue: 123
             },
-            {},
+            {}
         ];
         const parent = new RequisitionAdopter({
             name,
-            publishers: publishers,
+            publishers: publishers
         }).getRequisition();
 
         expect(parent.publishers[0].name).toBe(publishers[0].name);
@@ -78,11 +77,11 @@ describe('RequisitionAdopter', () => {
             },
             {
                 name: 'secondName'
-            },
+            }
         ];
         const parent = new RequisitionAdopter({
             name,
-            subscriptions: subscriptions,
+            subscriptions: subscriptions
         }).getRequisition();
 
         expect(parent.subscriptions[0].name).toBe('Subscription #0');
@@ -105,9 +104,12 @@ describe('RequisitionAdopter', () => {
             {
                 extraValue: 123
             },
-            {},
+            {}
         ];
-        const parent = new RequisitionAdopter({name, requisitions}).getRequisition();
+        const parent = new RequisitionAdopter({
+            name,
+            requisitions
+        }).getRequisition();
 
         expect(parent.name).toBe(name);
         expect(parent.requisitions[0].name).toBe('Requisition #0');
@@ -122,17 +124,21 @@ describe('RequisitionAdopter', () => {
     it('should merge with default values', () => {
         const requisitions = [
             {
-                'delay': 200,
-                'requisitions': [
+                delay: 200,
+                requisitions: [
                     {
-                        'delay': 100
+                        delay: 100
                     }
                 ],
-                'name': 'examples/no-tests.yml'
+                name: 'examples/no-tests.yml'
             }
         ];
 
-        const requisition = new RequisitionAdopter({name: 'name', requisitions, level: 6}).getRequisition();
+        const requisition = new RequisitionAdopter({
+            name: 'name',
+            requisitions,
+            level: 6
+        }).getRequisition();
 
         expect(requisition.name).toBe('name');
         expect(requisition.id).toBeDefined();
@@ -153,7 +159,6 @@ describe('RequisitionAdopter', () => {
         expect(requisition.requisitions[0].delay).toBe(200);
         expect(requisition.requisitions[0].level).toBe(7);
         expect(requisition.requisitions[0].iterations).toBe(1);
-
     });
 
     it('should set parents', () => {
@@ -161,7 +166,7 @@ describe('RequisitionAdopter', () => {
             name: 'parent',
             requisitions: [{name: 'req'}],
             publishers: [{name: 'pub'}],
-            subscriptions: [{name: 'sub'}],
+            subscriptions: [{name: 'sub'}]
         };
 
         const requisition = new RequisitionAdopter(parent).getRequisition();
@@ -170,5 +175,4 @@ describe('RequisitionAdopter', () => {
         expect(requisition.publishers[0].parent.name).toBe('parent');
         expect(requisition.subscriptions[0].parent.name).toBe('parent');
     });
-
 });

@@ -13,8 +13,9 @@ export class ReportFormatterManager {
 
     public createReportFormatter(format: string): ReportFormatter {
         const matchingFormatters = this.formatters
-            .filter((addedFormatter: AddedReportFormatter) => (addedFormatter.tags || [])
-                .some((tag: string) => tag.toLowerCase() === format.toLowerCase()))
+            .filter((addedFormatter: AddedReportFormatter) =>
+                (addedFormatter.tags || []).some((tag: string) => tag.toLowerCase() === format.toLowerCase())
+            )
             .map((addedFormatter: AddedReportFormatter) => addedFormatter.createFunction());
         if (matchingFormatters.length > 0) {
             return matchingFormatters[0];
@@ -27,11 +28,16 @@ export class ReportFormatterManager {
         this.formatters.push({tags: [firstTag].concat(tags), createFunction});
     }
 
-    public getMatchingReportFormatters(describeFormatters: string | true): { formatters: string[][] } {
+    public getMatchingReportFormatters(describeFormatters: string | true): {
+        formatters: string[][];
+    } {
         return {
             formatters: this.formatters
-                .filter((addedFormatter: AddedReportFormatter) => typeof (describeFormatters) === 'string' ? (addedFormatter.tags || [])
-                    .some((tag: string) => tag.toLowerCase() === describeFormatters.toLowerCase()) : true)
+                .filter((addedFormatter: AddedReportFormatter) =>
+                    typeof describeFormatters === 'string'
+                        ? (addedFormatter.tags || []).some((tag: string) => tag.toLowerCase() === describeFormatters.toLowerCase())
+                        : true
+                )
                 .map((formatter: AddedReportFormatter) => formatter.tags)
         };
     }

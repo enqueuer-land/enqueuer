@@ -27,11 +27,13 @@ describe('RequisitionFilePatternParser', () => {
                 id: 1
             }
         ];
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: () => requisitionsInput
-            };
-        }, 'yml');
+        DynamicModulesManager.getInstance()
+            .getObjectParserManager()
+            .addObjectParser(() => {
+                return {
+                    parse: () => requisitionsInput
+                };
+            }, 'yml');
 
         const fileContent = JSON.stringify(requisitionsInput);
         // @ts-ignore
@@ -48,7 +50,6 @@ describe('RequisitionFilePatternParser', () => {
         expect(requisition[0].requisitions[1].name).toBe(requisitionsInput[1].name);
         expect(requisition[0].requisitions[1].id).toBe(requisitionsInput[1].id);
         expect(requisition[0].requisitions[1].publishers).toEqual(requisitionsInput[1].publishers);
-
     });
 
     it('Should add invalid file error', () => {
@@ -60,7 +61,11 @@ describe('RequisitionFilePatternParser', () => {
 
         parser.parse();
 
-        expect(parser.getFilesErrors()[0]).toEqual({'description': 'error', 'name': "Error parsing file 'anyStuff'", 'valid': false});
+        expect(parser.getFilesErrors()[0]).toEqual({
+            description: 'error',
+            name: "Error parsing file 'anyStuff'",
+            valid: false
+        });
     });
 
     it('Should no test found error', () => {
@@ -69,19 +74,22 @@ describe('RequisitionFilePatternParser', () => {
         parser.parse();
 
         expect(parser.getFilesErrors()[0]).toEqual({
-            'description': 'No test file was found',
-            'name': 'No test file was found', 'valid': false
+            description: 'No test file was found',
+            name: 'No test file was found',
+            valid: false
         });
     });
 
     it('Should add if file is not yml nor json', () => {
         const notYml = 'foo bar\nfoo: bar';
 
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: (value) => new YmlObjectParser().parse(value)
-            };
-        }, 'yml');
+        DynamicModulesManager.getInstance()
+            .getObjectParserManager()
+            .addObjectParser(() => {
+                return {
+                    parse: (value) => new YmlObjectParser().parse(value)
+                };
+            }, 'yml');
 
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
@@ -97,11 +105,13 @@ describe('RequisitionFilePatternParser', () => {
     it('Should add error if it is not a valid requisition', () => {
         const notYml = 'hey: bar';
 
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: (value) => new YmlObjectParser().parse(value)
-            };
-        }, 'yml');
+        DynamicModulesManager.getInstance()
+            .getObjectParserManager()
+            .addObjectParser(() => {
+                return {
+                    parse: (value) => new YmlObjectParser().parse(value)
+                };
+            }, 'yml');
 
         // @ts-ignore
         fs.readFileSync.mockImplementationOnce(() => Buffer.from(notYml));
@@ -109,7 +119,7 @@ describe('RequisitionFilePatternParser', () => {
         const parser = new RequisitionFilePatternParser(['anyStuff']);
         parser.parse();
 
-        expect(parser.getFilesErrors()[0].name).toBe('Error parsing file \'anyStuff\'');
+        expect(parser.getFilesErrors()[0].name).toBe("Error parsing file 'anyStuff'");
     });
 
     it('should add every not matching file to error', () => {
@@ -122,10 +132,9 @@ describe('RequisitionFilePatternParser', () => {
         parser.parse();
 
         expect(parser.getFilesErrors()[0]).toEqual({
-            'description': "No file was found with: 'not-matching-pattern'",
-            'name': "No file was found with: 'not-matching-pattern'",
-            'valid': false
+            description: "No file was found with: 'not-matching-pattern'",
+            name: "No file was found with: 'not-matching-pattern'",
+            valid: false
         });
     });
-
 });

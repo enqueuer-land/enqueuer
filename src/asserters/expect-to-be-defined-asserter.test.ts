@@ -4,15 +4,14 @@ import {entryPoint, ExpectToBeDefinedAsserter} from './expect-to-be-defined-asse
 
 describe('ExpectToBeDefinedAsserter', () => {
     it('should be defined', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
-            expectToBeDefined: 2,
+            expectToBeDefined: 2
         };
 
         const literal = {
             name: 'body.name',
-            expectToBeDefined: 'body.expected',
+            expectToBeDefined: 'body.expected'
         };
 
         const test = new ExpectToBeDefinedAsserter().assert(assertion, literal);
@@ -21,14 +20,13 @@ describe('ExpectToBeDefinedAsserter', () => {
     });
 
     it('should not be defined', () => {
-
         const assertion: Assertion = {
-            name: 'assertion 0',
+            name: 'assertion 0'
         };
 
         const literal = {
             name: 'body.name',
-            expectToBeDefined: 'body.expected',
+            expectToBeDefined: 'body.expected'
         };
 
         const test = new ExpectToBeDefinedAsserter().assert(assertion, literal);
@@ -37,14 +35,14 @@ describe('ExpectToBeDefinedAsserter', () => {
         expect(test.description).toBe("Expecting 'body.expected' to be defined");
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expectToBeDefined': {
-                            'description': 'stuff to be defined'
+                        expectToBeDefined: {
+                            description: 'stuff to be defined'
                         }
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeDefinedAsserter);
@@ -54,5 +52,4 @@ describe('ExpectToBeDefinedAsserter', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

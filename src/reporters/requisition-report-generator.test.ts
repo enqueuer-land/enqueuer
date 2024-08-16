@@ -9,25 +9,25 @@ let sleep = (millisecondsToWait: number): void => {
 };
 
 describe('RequisitionReportGenerator', () => {
-
     it('Create default report', () => {
         // @ts-expect-error
-        const report = new RequisitionReportGenerator({name: 'testName'}).getReport();
+        const report = new RequisitionReportGenerator({
+            name: 'testName'
+        }).getReport();
         expect(report.time).toBeDefined();
-        delete report.time;
         expect(report).toEqual({
-            'hooks': {
-                'onFinish': {arguments: {}, 'tests': [], 'valid': true},
-                'onInit': {arguments: {}, 'tests': [], 'valid': true}
+            hooks: {
+                onFinish: {arguments: {}, tests: [], valid: true},
+                onInit: {arguments: {}, tests: [], valid: true}
             },
-            'id': undefined,
-            'ignored': undefined,
-            'level': undefined,
-            'name': 'testName',
-            'publishers': [],
-            'requisitions': [],
-            'subscriptions': [],
-            'valid': true
+            id: undefined,
+            ignored: undefined,
+            level: undefined,
+            name: 'testName',
+            publishers: [],
+            requisitions: [],
+            subscriptions: [],
+            valid: true
         });
     });
 
@@ -44,22 +44,21 @@ describe('RequisitionReportGenerator', () => {
         const secondReport = reportGenerator.getReport();
         expect(new Date(secondReport.time.startTime).getTime()).toBeGreaterThanOrEqual(firstStartTime);
         expect(secondReport.time.timeout).toBeGreaterThanOrEqual(timeout);
-        delete secondReport.time;
         delete secondReport.tests;
 
         expect(secondReport).toEqual({
-            'hooks': {
-                'onFinish': {arguments: {}, 'tests': [], 'valid': true},
-                'onInit': {arguments: {}, 'tests': [], 'valid': true}
+            hooks: {
+                onFinish: {arguments: {}, tests: [], valid: true},
+                onInit: {arguments: {}, tests: [], valid: true}
             },
-            'id': undefined,
-            'ignored': undefined,
-            'level': undefined,
-            'name': 'someName',
-            'publishers': [],
-            'requisitions': [],
-            'subscriptions': [],
-            'valid': true
+            id: undefined,
+            ignored: undefined,
+            level: undefined,
+            name: 'someName',
+            publishers: [],
+            requisitions: [],
+            subscriptions: [],
+            valid: true
         });
     });
 
@@ -82,7 +81,9 @@ describe('RequisitionReportGenerator', () => {
 
     it('Time report without timeout', () => {
         // @ts-expect-error
-        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({
+            name: 'someName'
+        });
 
         reportGenerator.finish();
 
@@ -96,7 +97,9 @@ describe('RequisitionReportGenerator', () => {
 
     it('Adding publisher report', () => {
         // @ts-expect-error
-        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({
+            name: 'someName'
+        });
 
         let report = reportGenerator.getReport();
         expect(report.valid).toBeTruthy();
@@ -114,7 +117,9 @@ describe('RequisitionReportGenerator', () => {
 
     it('Adding subscription report', () => {
         // @ts-expect-error
-        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({
+            name: 'someName'
+        });
 
         let report = reportGenerator.getReport();
         expect(report.valid).toBeTruthy();
@@ -132,21 +137,33 @@ describe('RequisitionReportGenerator', () => {
 
     it('Adding tests', () => {
         // @ts-expect-error
-        const reportGenerator = new RequisitionReportGenerator({name: 'someName'});
+        const reportGenerator = new RequisitionReportGenerator({
+            name: 'someName'
+        });
 
         // @ts-expect-error
-        reportGenerator.addTest('hookName', {valid: false, arguments: {a: 1}, tests: [{name: 'a', valid: false}]});
+        reportGenerator.addTest('hookName', {
+            valid: false,
+            arguments: {a: 1},
+            tests: [{name: 'a', valid: false}]
+        });
         // @ts-expect-error
-        reportGenerator.addTest('hookName', {valid: true, arguments: {b: 3}, tests: [{name: 'b', valid: true}]});
+        reportGenerator.addTest('hookName', {
+            valid: true,
+            arguments: {b: 3},
+            tests: [{name: 'b', valid: true}]
+        });
         reportGenerator.finish();
         const report = reportGenerator.getReport();
 
         expect(report.valid).toBeFalsy();
         expect(report.hooks!.hookName).toEqual({
-            'arguments': {'a': 1, 'b': 3},
-            'tests': [{'name': 'a', 'valid': false}, {'name': 'b', 'valid': true}],
-            'valid': false
+            arguments: {a: 1, b: 3},
+            tests: [
+                {name: 'a', valid: false},
+                {name: 'b', valid: true}
+            ],
+            valid: false
         });
     });
-
 });

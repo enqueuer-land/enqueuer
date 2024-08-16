@@ -4,7 +4,7 @@ import * as core from 'express-serve-static-core';
 
 export class HttpContainerPool {
     private static instance: HttpContainerPool;
-    private containers: { [propName: number]: HttpContainer } = {};
+    private containers: {[propName: number]: HttpContainer} = {};
 
     public static async getApp(port: number, secure: boolean = false, credentials?: any): Promise<core.Express> {
         const self = HttpContainerPool.getInstance();

@@ -1,9 +1,9 @@
-import { Configuration } from './configuration';
-import { FileConfiguration } from './file-configuration';
-import { CommandLineConfiguration } from './command-line-configuration';
+import {Configuration} from './configuration';
+import {FileConfiguration} from './file-configuration';
+import {CommandLineConfiguration} from './command-line-configuration';
 import prettyjson from 'prettyjson';
-import { expect, jest } from '@jest/globals';
 
+const mockedCommandLineConfiguration = CommandLineConfiguration as jest.Mock;
 
 jest.mock('./file-configuration');
 jest.mock('./command-line-configuration');
@@ -28,9 +28,8 @@ describe('Configuration', () => {
 
     it('should call verifyPrematureActions', () => {
         const commandLine = createEmptyCommandLine();
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
-        commandLine.verifyPrematureActions = jest.fn();
+        mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        commandLine.verifyPrematureActions = jest.fn(() => true);
 
         const instance = Configuration.getInstance();
 
@@ -38,8 +37,7 @@ describe('Configuration', () => {
     });
 
     it('should check default values', () => {
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine());
+        mockedCommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine());
 
         const instance = Configuration.getInstance();
 
@@ -55,24 +53,21 @@ describe('Configuration', () => {
 
     it('should work with only command line', () => {
         const commandLine = createCommandLine();
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
 
         const instance = Configuration.getInstance();
 
         expect(instance.getFiles()).toEqual(['cli-firstFile', 'cli-secondFile']);
         expect(instance.getLogLevel()).toBe('cli-debug');
-        expect(instance.getStore()).toEqual({ cliKey: 'value' });
+        expect(instance.getStore()).toEqual({cliKey: 'value'});
         expect(instance.getPlugins()).toEqual(['cli-amqp-plugin', 'common-plugin']);
         expect(instance.isParallel()).toBeFalsy();
         expect(instance.getMaxReportLevelPrint()).toBe(5);
     });
 
     it('should work with only conf file', () => {
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine('confFile'));
-        // @ts-ignore
-        FileConfiguration.mockImplementationOnce(() => createFileConfiguration());
+        mockedCommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine('confFile'));
+        (FileConfiguration as jest.Mock).mockImplementationOnce(() => createFileConfiguration());
 
         const instance = Configuration.getInstance();
 
@@ -80,13 +75,15 @@ describe('Configuration', () => {
         expect(instance.getFiles()).toEqual(['confFile-1', 'confFile-2']);
         expect(instance.getLogLevel()).toBe('confFile-fatal');
         expect(instance.getMaxReportLevelPrint()).toBe(13);
-        expect(instance.getStore()).toEqual({ confFileStore: 'yml', confFileKey: 'file report output' });
+        expect(instance.getStore()).toEqual({
+            confFileStore: 'yml',
+            confFileKey: 'file report output'
+        });
         expect(instance.getPlugins()).toEqual(['confFile-plugin', 'confFile-plugin-2', 'common-plugin']);
     });
 
     it('should handle file not found', () => {
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine('not to throw'));
+        mockedCommandLineConfiguration.mockImplementationOnce(() => createEmptyCommandLine('not to throw'));
         // @ts-ignore
         FileConfiguration.mockImplementationOnce(() => {
             throw 'error';
@@ -98,8 +95,7 @@ describe('Configuration', () => {
     it('should merge command line with conf file', () => {
         const commandLine = createCommandLine('conf-file');
         const fileConfiguration = createFileConfiguration();
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
         // @ts-ignore
         FileConfiguration.mockImplementationOnce(() => fileConfiguration);
 
@@ -118,8 +114,7 @@ describe('Configuration', () => {
         const commandLine = createCommandLine('conf-file');
         // @ts-ignore
         commandLine.getTestFilesIgnoringOthers = () => uniqueFiles;
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
         // @ts-ignore
         FileConfiguration.mockImplementationOnce(() => fileConfiguration);
 
@@ -132,8 +127,7 @@ describe('Configuration', () => {
         const commandLine = createCommandLine('conf-file');
         const fileConfiguration = createFileConfiguration();
         const manuallyAddedPlugins = ['common-plugin', 'manuallyAddedPlugin'];
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
         // @ts-ignore
         FileConfiguration.mockImplementationOnce(() => fileConfiguration);
 
@@ -151,16 +145,17 @@ describe('Configuration', () => {
     it('should create cli output formatter', () => {
         const commandLine = createCommandLine();
         commandLine.getStdoutRequisitionOutput = () => true;
-        // @ts-ignore
-        CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+        mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
 
         const instance = Configuration.getInstance();
 
-        expect(instance.getOutputs()).toEqual([{
-            format: 'console',
-            name: 'command line report output',
-            type: 'standard-output'
-        }]);
+        expect(instance.getOutputs()).toEqual([
+            {
+                format: 'console',
+                name: 'command line report output',
+                type: 'standard-output'
+            }
+        ]);
     });
 
     it('should print configuration', () => {
@@ -174,19 +169,28 @@ describe('Configuration', () => {
 
         const instance = Configuration.getInstance();
 
-        expect(render).toHaveBeenCalledWith({
-            'configuration': {
-                'files': ['cli-firstFile', 'cli-secondFile'],
-                'logLevel': 'trace',
-                'maxReportLevelPrint': 5,
-                'outputs': [{ 'format': 'console', 'name': 'command line report output', 'type': 'standard-output' }],
-                'parallel': false,
-                'showExplicitTestsOnly': false,
-                'showPassingTests': true,
-                'plugins': ['cli-amqp-plugin', 'common-plugin'],
-                'store': { 'cliKey': 'value' }
-            }
-        }, expect.anything());
+        expect(render).toHaveBeenCalledWith(
+            {
+                configuration: {
+                    files: ['cli-firstFile', 'cli-secondFile'],
+                    logLevel: 'trace',
+                    maxReportLevelPrint: 5,
+                    outputs: [
+                        {
+                            format: 'console',
+                            name: 'command line report output',
+                            type: 'standard-output'
+                        }
+                    ],
+                    parallel: false,
+                    showExplicitTestsOnly: false,
+                    showPassingTests: true,
+                    plugins: ['cli-amqp-plugin', 'common-plugin'],
+                    store: {cliKey: 'value'}
+                }
+            },
+            expect.anything()
+        );
     });
 
     const createEmptyCommandLine = (filename?: string) => {
@@ -229,16 +233,19 @@ describe('Configuration', () => {
         return {
             getLogLevel: () => 'confFile-fatal',
             getOutputs: () => {
-                return { type: 'confFile-type', format: 'yml', name: 'confFile report output' };
+                return {
+                    type: 'confFile-type',
+                    format: 'yml',
+                    name: 'confFile report output'
+                };
             },
             getStore: () => {
-                return { confFileStore: 'yml', confFileKey: 'file report output' };
+                return {confFileStore: 'yml', confFileKey: 'file report output'};
             },
             getPlugins: () => ['confFile-plugin', 'confFile-plugin-2', 'common-plugin'],
             isParallelExecution: () => true,
             getFiles: () => ['confFile-1', 'confFile-2'],
-            getMaxReportLevelPrint: () => 13,
+            getMaxReportLevelPrint: () => 13
         };
     };
-
 });

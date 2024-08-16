@@ -5,17 +5,16 @@ import {AssertionTemplate} from '../plugins/asserter-manager';
 
 describe('ExpectToBeLessThanAsserter', () => {
     it('should compare less', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 1,
-            toBeLessThan: 3,
+            toBeLessThan: 3
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeLessThan: 'body.expected',
+            toBeLessThan: 'body.expected'
         };
 
         const test = new ExpectToBeLessThanAsserter().assert(assertion, literal);
@@ -24,18 +23,17 @@ describe('ExpectToBeLessThanAsserter', () => {
     });
 
     it('should compare not less', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 4,
             not: null,
-            toBeLessThan: 3,
+            toBeLessThan: 3
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeLessThan: 'body.expected',
+            toBeLessThan: 'body.expected'
         };
 
         const test = new ExpectToBeLessThanAsserter().assert(assertion, literal);
@@ -43,17 +41,16 @@ describe('ExpectToBeLessThanAsserter', () => {
     });
 
     it('should compare less fail', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 4,
-            toBeLessThan: 3,
+            toBeLessThan: 3
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeLessThan: 'body.expected',
+            toBeLessThan: 'body.expected'
         };
 
         const test = new ExpectToBeLessThanAsserter().assert(assertion, literal);
@@ -63,18 +60,17 @@ describe('ExpectToBeLessThanAsserter', () => {
     });
 
     it('should compare not less fail', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
             expect: 2,
             not: null,
-            toBeLessThan: 3,
+            toBeLessThan: 3
         };
 
         const literal = {
             name: 'body.name',
             expect: 'body.actual',
-            toBeLessThan: 'body.expected',
+            toBeLessThan: 'body.expected'
         };
 
         const test = new ExpectToBeLessThanAsserter().assert(assertion, literal);
@@ -83,7 +79,7 @@ describe('ExpectToBeLessThanAsserter', () => {
         expect(test.description).toBe("Expected 'body.actual' not to be less than '3'. Received '2'");
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
@@ -92,10 +88,12 @@ describe('ExpectToBeLessThanAsserter', () => {
                         expect: {
                             type: 'number',
                             description: 'actual value'
-                        }, toBeLessThan: {
+                        },
+                        toBeLessThan: {
                             type: 'number',
                             description: 'expected value'
-                        }, not: {
+                        },
+                        not: {
                             required: false,
                             description: 'negates',
                             type: 'null'
@@ -108,5 +106,4 @@ describe('ExpectToBeLessThanAsserter', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

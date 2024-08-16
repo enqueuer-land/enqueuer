@@ -1,8 +1,8 @@
-import { Logger } from '../loggers/logger';
+import {Logger} from '../loggers/logger';
 import express from 'express';
 import https from 'https';
-import http, { Server } from 'http';
-import { HandlerListener } from '../handlers/handler-listener';
+import http, {Server} from 'http';
+import {HandlerListener} from '../handlers/handler-listener';
 import * as core from 'express-serve-static-core';
 
 export class HttpContainer {
@@ -40,7 +40,7 @@ export class HttpContainer {
         Logger.trace(`Releasing container ${this.port} (${this.counter})`);
         if (this.counter == 0) {
             Logger.trace(`Closing container ${this.port}`);
-            this.closePromise = new Promise(((resolve, reject) => {
+            this.closePromise = new Promise((resolve, reject) => {
                 this.sockets.forEach((socket: any) => socket.destroy());
                 this.server.close((err: any) => {
                     if (err) {
@@ -49,7 +49,7 @@ export class HttpContainer {
                     Logger.trace(`Container ${this.port} is closed`);
                     resolve(0);
                 });
-            }));
+            });
         } else {
             this.closePromise = Promise.resolve();
         }
@@ -90,5 +90,4 @@ export class HttpContainer {
         });
         return app;
     }
-
 }

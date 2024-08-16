@@ -1,4 +1,4 @@
-import {StreamInputHandler} from "./stream-input-handler";
+import {StreamInputHandler} from './stream-input-handler';
 import {HandlerListener} from './handler-listener';
 import * as net from 'net';
 jest.mock('./handler-listener');
@@ -27,7 +27,7 @@ describe('StreamInputHandler', () => {
             return {
                 listen: listen,
                 getHandler: handlerName
-            }
+            };
         });
 
         new StreamInputHandler(handlerName).subscribe(() => {});
@@ -35,28 +35,28 @@ describe('StreamInputHandler', () => {
         expect(listen).toHaveBeenCalledWith(handlerName);
     });
 
-    it('Should update handler', done => {
+    it('Should update handler', (done) => {
         // @ts-expect-error
         net.createServer.mockImplementationOnce(() => {
             return {
                 on: () => {}
-            }
+            };
         });
         // @ts-expect-error
         HandlerListener.mockImplementationOnce(() => {
             return {
                 listen: () => Promise.resolve(),
                 getHandler: () => 54321
-            }
+            };
         });
 
         const streamInputHandler = new StreamInputHandler('handlerName');
-        streamInputHandler.subscribe(() => {}).then(() => {
-
-            expect(streamInputHandler.getHandler()).toBe(54321);
-            done();
-        });
-
+        streamInputHandler
+            .subscribe(() => {})
+            .then(() => {
+                expect(streamInputHandler.getHandler()).toBe(54321);
+                done();
+            });
     });
 
     it('Should unsubscribe', () => {
@@ -65,13 +65,12 @@ describe('StreamInputHandler', () => {
         net.createServer.mockImplementationOnce(() => {
             return {
                 close: closeMock
-            }
+            };
         });
 
         new StreamInputHandler('handlerName').unsubscribe();
 
         expect(closeMock).toBeCalled();
-
     });
 
     it('Should close', () => {
@@ -83,10 +82,9 @@ describe('StreamInputHandler', () => {
         new StreamInputHandler('handlerName').close(stream);
 
         expect(endMock).toBeCalled();
-
     });
 
-    it('Should sendResponse object', done => {
+    it('Should sendResponse object', (done) => {
         const writeMock = jest.fn((value, cb) => cb());
         const stream = {
             write: writeMock
@@ -94,21 +92,19 @@ describe('StreamInputHandler', () => {
 
         const message = {
             cycle: {
-                'object': 2
+                object: 2
             }
         };
         new StreamInputHandler('handlerName').sendResponse(stream, message).then(() => {
-
             const mockCalls = writeMock.mock.calls;
             const messageSent = mockCalls[0][0];
 
             expect(JSON.parse(messageSent)).toEqual(message);
             done();
         });
-
     });
 
-    it('Should sendResponse string', done => {
+    it('Should sendResponse string', (done) => {
         const writeMock = jest.fn();
         const stream = {
             write: writeMock
@@ -119,21 +115,18 @@ describe('StreamInputHandler', () => {
 
         expect(writeMock).toHaveBeenCalledWith('message', expect.any(Function));
         done();
-
     });
 
-    it('Should handler sendResponse error', done => {
+    it('Should handler sendResponse error', (done) => {
         const stream = {
-            write: () => {throw 'error'}
+            write: () => {
+                throw 'error';
+            }
         };
 
-        new StreamInputHandler('handlerName')
-            .sendResponse(stream, {})
-            .catch((err) => {
-                expect(err).toBe("Error sending input handler: error");
-                done();
-            });
-
+        new StreamInputHandler('handlerName').sendResponse(stream, {}).catch((err) => {
+            expect(err).toBe('Error sending input handler: error');
+            done();
+        });
     });
-
 });

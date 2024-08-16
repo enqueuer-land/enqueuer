@@ -7,11 +7,11 @@ export class FileConfiguration {
 
     public constructor(filename: string) {
         try {
-            const fileContent = fs.readFileSync(filename).toString();
+            const fileContent = fs.readFileSync(filename.trim()).toString();
             const ymlObjectParser = new YmlObjectParser();
             this.parsedFile = ymlObjectParser.parse(fileContent);
         } catch (err) {
-            throw (`Error loading configuration file: ${err}`);
+            throw `Error loading configuration file: ${err}`;
         }
     }
 

@@ -5,15 +5,14 @@ import {AssertionTemplate} from '../plugins/asserter-manager';
 
 describe('ExpectToBeFalsyAsserter', () => {
     it('should be falsy', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
-            expectToBeFalsy: false,
+            expectToBeFalsy: false
         };
 
         const literal = {
             name: 'body.name',
-            expectToBeFalsy: 'body.expected',
+            expectToBeFalsy: 'body.expected'
         };
 
         const test = new ExpectToBeFalsyAsserter().assert(assertion, literal);
@@ -22,14 +21,13 @@ describe('ExpectToBeFalsyAsserter', () => {
     });
 
     it('should not be falsy', () => {
-
         const assertion: Assertion = {
-            name: 'assertion 0',
+            name: 'assertion 0'
         };
 
         const literal = {
             name: 'body.name',
-            expectToBeFalsy: 'body.expected',
+            expectToBeFalsy: 'body.expected'
         };
 
         const test = new ExpectToBeFalsyAsserter().assert(assertion, literal);
@@ -38,15 +36,14 @@ describe('ExpectToBeFalsyAsserter', () => {
         expect(test.description).toBe("Expecting 'body.expected' to be false. Received: undefined");
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
                 addAsserter: (templateAssertion: AssertionTemplate, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
                         expectToBeFalsy: {
-                            'description':
-                                'value expected to be false'
+                            description: 'value expected to be false'
                         }
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeFalsyAsserter);
@@ -56,5 +53,4 @@ describe('ExpectToBeFalsyAsserter', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

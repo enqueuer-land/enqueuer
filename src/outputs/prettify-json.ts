@@ -1,5 +1,5 @@
 const configuration = {
-    defaultIndentation: 4,
+    defaultIndentation: 2,
     inlineArrays: true,
     emptyArrayMsg: '-',
     keysColor: 'green',

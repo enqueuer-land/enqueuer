@@ -1,4 +1,4 @@
-const dgram = require("dgram");
+const dgram = require('dgram');
 
 class Subscription {
     constructor(subscription) {
@@ -6,7 +6,6 @@ class Subscription {
     }
 
     subscribe(context) {
-
         return new Promise((resolve, reject) => {
             this.server = dgram.createSocket('udp4');
             try {
@@ -18,7 +17,7 @@ class Subscription {
                 reject(message);
             }
         });
-    };
+    }
 
     receiveMessage(context) {
         return new Promise((resolve, reject) => {
@@ -29,11 +28,14 @@ class Subscription {
 
             this.server.on('message', (msg, remoteInfo) => {
                 this.server.close();
-                this.subscription.executeHookEvent('onMessageReceived', {payload: msg, remoteInfo: remoteInfo});
+                this.subscription.executeHookEvent('onMessageReceived', {
+                    payload: msg,
+                    remoteInfo: remoteInfo
+                });
                 resolve();
             });
         });
-    };
+    }
 }
 
 class Publisher {
@@ -55,9 +57,8 @@ class Publisher {
                 context.logger.debug('Udp client sent message');
                 resolve();
             });
-
         });
-    };
+    }
 }
 
 module.exports = {Subscription, Publisher};

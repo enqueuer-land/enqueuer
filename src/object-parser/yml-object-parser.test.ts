@@ -4,11 +4,13 @@ import {ObjectDecycler} from './object-decycler';
 import {MainInstance} from '../plugins/main-instance';
 
 describe('YmlObjectParser', () => {
-
     test('should stringify with param', () => {
         const value = {firstLevel: {secondLevel: 'value'}};
 
-        const stringified = new YmlObjectParser().stringify(value, {space: 4, inline: 1});
+        const stringified = new YmlObjectParser().stringify(value, {
+            space: 4,
+            inline: 1
+        });
 
         expect(stringified).toBe(yaml.stringify(value, 1, 4));
     });
@@ -24,8 +26,7 @@ describe('YmlObjectParser', () => {
     });
 
     test('should keep string numbers as string', () => {
-        const value = 'firstLevel:\n' +
-            "  secondLevel: '123.00'\n";
+        const value = 'firstLevel:\n' + "  secondLevel: '123.00'\n";
 
         const parsed: any = new YmlObjectParser().parse(value);
 
@@ -55,7 +56,7 @@ describe('YmlObjectParser', () => {
         expect(() => new YmlObjectParser().parse(notYml)).toThrow();
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             objectParserManager: {
@@ -68,5 +69,4 @@ describe('YmlObjectParser', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

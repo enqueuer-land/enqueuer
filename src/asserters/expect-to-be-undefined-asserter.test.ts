@@ -4,14 +4,13 @@ import {entryPoint, ExpectToBeUndefinedAsserter} from './expect-to-be-undefined-
 
 describe('ExpectToBeUndefinedAsserter', () => {
     it('should be undefined', () => {
-
         const assertion: Assertion = {
-            name: 'assertion 0',
+            name: 'assertion 0'
         };
 
         const literal = {
             name: 'body.name',
-            expectToBeUndefined: 'body.expected',
+            expectToBeUndefined: 'body.expected'
         };
 
         const test = new ExpectToBeUndefinedAsserter().assert(assertion, literal);
@@ -20,15 +19,14 @@ describe('ExpectToBeUndefinedAsserter', () => {
     });
 
     it('should not be undefined', () => {
-
         const assertion: Assertion = {
             name: 'assertion 0',
-            expectToBeUndefined: 2,
+            expectToBeUndefined: 2
         };
 
         const literal = {
             name: 'body.name',
-            expectToBeUndefined: 'body.expected',
+            expectToBeUndefined: 'body.expected'
         };
 
         const test = new ExpectToBeUndefinedAsserter().assert(assertion, literal);
@@ -37,15 +35,15 @@ describe('ExpectToBeUndefinedAsserter', () => {
         expect(test.description).toBe("Expecting 'body.expected' to be undefined. Received: 2");
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {
                 addAsserter: (templateAssertion: object, createFunction: Function) => {
                     expect(templateAssertion).toEqual({
-                        'expectToBeUndefined': {
+                        expectToBeUndefined: {
                             description: 'value expected to be undefined'
-                        },
+                        }
                     });
                     expect(createFunction()).toBeInstanceOf(ExpectToBeUndefinedAsserter);
                     done();
@@ -54,5 +52,4 @@ describe('ExpectToBeUndefinedAsserter', () => {
         };
         entryPoint(mainInstance);
     });
-
 });

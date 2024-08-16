@@ -1,7 +1,14 @@
 import {TestModel} from '../../models/outputs/test-model';
 
-export type Time = { timeout?: number; totalTime: number };
-export type Summary = { subscribed: boolean, avoidable: boolean, messageReceived?: any, time?: Time, ignore?: boolean, subscribeError?: string };
+export type Time = {timeout?: number; totalTime: number};
+export type Summary = {
+    subscribed: boolean;
+    avoidable: boolean;
+    messageReceived?: any;
+    time?: Time;
+    ignore?: boolean;
+    subscribeError?: string;
+};
 
 export class SubscriptionFinalReporter {
     private messageReceivedTestName: string = `Message received`;
@@ -51,59 +58,71 @@ export class SubscriptionFinalReporter {
     }
 
     private createNotSubscribedTests(): TestModel[] {
-        return [{
-            implicit: true,
-            valid: false,
-            name: this.subscribedTestName,
-            description: this.subscribeError || 'Subscription failed to subscribe'
-        }];
+        return [
+            {
+                implicit: true,
+                valid: false,
+                name: this.subscribedTestName,
+                description: this.subscribeError || 'Subscription failed to subscribe'
+            }
+        ];
     }
 
     private createMessageTests(): TestModel[] {
         if (this.messageReceived) {
-            return [{
-                implicit: true,
-                valid: true,
-                name: this.messageReceivedTestName,
-                description: this.messageReceived
-            }];
+            return [
+                {
+                    implicit: true,
+                    valid: true,
+                    name: this.messageReceivedTestName,
+                    description: this.messageReceived
+                }
+            ];
         } else {
-            return [{
-                implicit: true,
-                valid: false,
-                name: this.messageReceivedTestName,
-                description: `Subscription has not received its message`
-            }];
+            return [
+                {
+                    implicit: true,
+                    valid: false,
+                    name: this.messageReceivedTestName,
+                    description: `Subscription has not received its message`
+                }
+            ];
         }
     }
 
     private createTimeoutTests(): TestModel[] {
         if (!this.avoidable && this.time) {
-            return [{
-                implicit: true,
-                valid: false,
-                name: this.noTimeOutTestName,
-                description: `Not avoidable subscription has timed out: ${this.time.totalTime} > ${this.time.timeout}`
-            }];
+            return [
+                {
+                    implicit: true,
+                    valid: false,
+                    name: this.noTimeOutTestName,
+                    description: `Not avoidable subscription has timed out: ${this.time.totalTime} > ${this.time.timeout}`
+                }
+            ];
         }
         return [];
     }
 
     private createAvoidableTests(): TestModel[] {
         if (this.messageReceived) {
-            return [{
-                implicit: true,
-                valid: false,
-                name: this.subscriptionAvoidedTestName,
-                description: `Avoidable subscription should not receive messages`
-            }];
+            return [
+                {
+                    implicit: true,
+                    valid: false,
+                    name: this.subscriptionAvoidedTestName,
+                    description: `Avoidable subscription should not receive messages`
+                }
+            ];
         } else {
-            return [{
-                valid: true,
-                implicit: true,
-                name: this.subscriptionAvoidedTestName,
-                description: `Avoidable subscription has not received any message`
-            }];
+            return [
+                {
+                    valid: true,
+                    implicit: true,
+                    name: this.subscriptionAvoidedTestName,
+                    description: `Avoidable subscription has not received any message`
+                }
+            ];
         }
     }
 }

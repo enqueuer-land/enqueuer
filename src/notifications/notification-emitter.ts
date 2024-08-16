@@ -7,9 +7,7 @@ export class NotificationEmitter {
 
     private readonly eventEmitter = new EventEmitter();
 
-    private constructor() {
-
-    }
+    private constructor() {}
 
     public static on(event: Notifications, listener: (...args: any[]) => void): NotificationEmitter {
         NotificationEmitter.notificationEmitter.eventEmitter.on(Notifications[event], listener);
@@ -21,5 +19,4 @@ export class NotificationEmitter {
         NotificationEmitter.notificationEmitter.eventEmitter.emit(Notifications[event], ...args);
         return NotificationEmitter.notificationEmitter;
     }
-
 }

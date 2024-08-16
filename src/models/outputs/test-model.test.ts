@@ -40,8 +40,6 @@ describe('TestModel', () => {
         expect(testModelIsPassing(test)).toBeFalsy();
     });
 
-
-
     it('Valid is not failing', () => {
         const test: TestModel = {
             description: '',
@@ -65,7 +63,7 @@ describe('TestModel', () => {
         const test: TestModel = {
             description: '',
             name: '',
-            valid: false,
+            valid: false
         };
         expect(testModelIsNotFailing(test)).toBeFalsy();
     });
@@ -94,7 +92,7 @@ describe('TestModel', () => {
         const test: TestModel = {
             description: '',
             name: '',
-            valid: false,
+            valid: false
         };
         expect(testModelIsFailing(test)).toBeTruthy();
     });

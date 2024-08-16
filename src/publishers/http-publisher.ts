@@ -1,13 +1,12 @@
-import { Publisher } from './publisher';
-import { Logger } from '../loggers/logger';
-import { PublisherModel } from '../models/inputs/publisher-model';
-import { HttpRequester } from '../pools/http-requester';
-import { MainInstance } from '../plugins/main-instance';
-import { PublisherProtocol } from '../protocols/publisher-protocol';
-import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
+import {Publisher} from './publisher';
+import {Logger} from '../loggers/logger';
+import {PublisherModel} from '../models/inputs/publisher-model';
+import {HttpRequester} from '../pools/http-requester';
+import {MainInstance} from '../plugins/main-instance';
+import {PublisherProtocol} from '../protocols/publisher-protocol';
+import {HttpAuthenticationFactory} from '../http-authentications/http-authentication-factory';
 
 class HttpPublisher extends Publisher {
-
     constructor(publish: PublisherModel) {
         super(publish);
         this['method'] = publish.method || 'get';
@@ -19,19 +18,9 @@ class HttpPublisher extends Publisher {
     public async publish(): Promise<object> {
         this.insertAuthentication();
 
-        const response = await new HttpRequester(this.url,
-            this.method.toLowerCase(),
-            this.headers,
-            this.payload,
-            this.timeout)
-            .request();
-        const structuredResponse = {
-            ...response,
-            body: response.data,
-            statusCode: response.status
-        }
-        this.executeHookEvent('onResponseReceived', structuredResponse);
-        return this.processResponseToBePrinted(structuredResponse);
+        const response = await new HttpRequester(this.url, this.method.toLowerCase(), this.headers, this.payload, this.timeout).request();
+        this.executeHookEvent('onResponseReceived', response);
+        return this.processResponseToBePrinted(response);
     }
 
     private processResponseToBePrinted(response: any): object {
@@ -63,52 +52,50 @@ class HttpPublisher extends Publisher {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new PublisherProtocol('http',
-        (publisherModel: PublisherModel) => new HttpPublisher(publisherModel),
-        {
-            description: 'The HTTP publisher provides an implementation of http requisitions',
-            libraryHomepage: 'https://github.com/axios/axios',
-            schema: {
-                attributes: {
-                    url: {
-                        required: true,
-                        type: 'string',
-                        example: 'https://github.com/enqueuer-land/enqueuer'
-                    },
-                    method: {
-                        required: false,
-                        type: 'string',
-                        defaultValue: 'GET',
-                        listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
-                    },
-                    payload: {
-                        required: true,
-                        type: 'text'
-                    },
-                    timeout: {
-                        required: false,
-                        type: 'int',
-                        defaultValue: 3000,
-                        suffix: 'ms'
-                    },
-                    headers: {
-                        description: '',
-                        type: 'object',
-                        defaultValue: {}
-                    },
+    const protocol = new PublisherProtocol('http', (publisherModel: PublisherModel) => new HttpPublisher(publisherModel), {
+        description: 'The HTTP publisher provides an implementation of http requisitions',
+        libraryHomepage: 'https://github.com/axios/axios',
+        schema: {
+            attributes: {
+                url: {
+                    required: true,
+                    type: 'string',
+                    example: 'https://github.com/enqueuer-land/enqueuer'
                 },
-                hooks: {
-                    onResponseReceived: {
-                        description: 'Hook called when the publisher gets a response from the server',
-                        arguments: {
-                            statusCode: {},
-                            headers: {},
-                            body: {},
-                        }
+                method: {
+                    required: false,
+                    type: 'string',
+                    defaultValue: 'GET',
+                    listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
+                },
+                payload: {
+                    required: true,
+                    type: 'text'
+                },
+                timeout: {
+                    required: false,
+                    type: 'int',
+                    defaultValue: 3000,
+                    suffix: 'ms'
+                },
+                headers: {
+                    description: '',
+                    type: 'object',
+                    defaultValue: {}
+                }
+            },
+            hooks: {
+                onResponseReceived: {
+                    description: 'Hook called when the publisher gets a response from the server',
+                    arguments: {
+                        statusCode: {},
+                        headers: {},
+                        body: {}
                     }
                 }
             }
-        })
+        }
+    })
         .addAlternativeName('http-client', 'https', 'https-client')
         .setLibrary('request');
 

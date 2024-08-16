@@ -1,26 +1,31 @@
-timeout: 60000
 publishers:
   - type: http
     url: http://localhost:23075/resource
     method: POST
+    headers:
+      requestHeaderKey: requestHeaderValue
     payload: enqueuer
-    timeout: 60000
     onResponseReceived:
       assertions:
         - expect: statusCode
-          toBeGreaterThan: 190
+          toBeGreaterThan: 400
         - expect: body
           toBeEqualTo: "'blah'"
+        - expect: headers.responseheaderkey
+          toBeEqualTo: "'responseHeaderValue'"
 subscriptions:
   - type: http
     endpoint: /resource
-    timeout: 60000
     port: 23075
     method: POST
     response:
-      status: 200
+      headers:
+        responseHeaderKey: responseHeaderValue
+      status: 444
       payload: blah
     onMessageReceived:
       assertions:
         - expect: body
           toContain: "'queue'"
+        - expect: headers.requestheaderkey
+          toBeEqualTo: "'requestHeaderValue'"

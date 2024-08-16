@@ -16,7 +16,7 @@ export class HookReporter {
     public addValues(hookModel: HookModel = {valid: true, tests: [], arguments: {}}): HookModel {
         this.hook.tests = this.hook.tests.concat(hookModel.tests);
         this.hook.arguments = Object.assign({}, this.hook.arguments, hookModel.arguments);
-        this.hook.valid = this.hook.tests.every(test => testModelIsNotFailing(test));
+        this.hook.valid = this.hook.tests.every((test) => testModelIsNotFailing(test));
         return this.hook;
     }
 }

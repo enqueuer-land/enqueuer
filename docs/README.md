@@ -4,21 +4,21 @@
 [![Known Vulnerabilities](https://snyk.io/test/npm/enqueuer/badge.svg)](https://snyk.io/test/npm/enqueuer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-
-![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png "Enqueuer Giant Logo")
+![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png 'Enqueuer Giant Logo')
 
 ### Welcome
 
 Be our guest and have fun.
 
 #### install it
+
 First things first, let's get the enqueuer installed on your machine.
 
     $ npm install --global enqueuer
-    
+
 Alright, it's time to create a requisition file.
 Something like:
-    
+
     #enqueuer-repo-hit.yml
     publishers:
     -   type: http
@@ -33,9 +33,9 @@ Run it:
 
     $ enqueuer enqueuer-repo-hit.yml
 
-Now you know how to hit a http server. 
+Now you know how to hit a http server.
 What if I want to mock a http server response, you may ask. Not a big deal for enqueuer lovers:
-    
+
     timeout: -1
     subscriptions:
     -   type: http
@@ -51,7 +51,7 @@ What if I want to mock a http server response, you may ask. Not a big deal for e
             assertions:
             -   expect: body
                 toContain: `enqueuer`
-                
+
 Now go ahead and try hitting it using the browser.  
 Tip: remove timeout values and check what happens.  
 I told you it was simple.  
@@ -80,7 +80,7 @@ Yes, of course you can hit your own mocked http server:
             assertions:
             -   expect: body
                 toContain: "'queue'"
-    
+
 Now, let's say you want to mix different protocols to test a bit more complex flow.
 How about publishing an amqp message and making sure that, once a service consumes that message an endpoint of your is hit?
 In order to achieve that, we have to make use of a [plugin](#plugins), given that amqp support is provided by a plugin.
@@ -107,17 +107,17 @@ Once we get this [plugin installed](#plugins_installation) we are able to create
 
 Now go nuts!
 It's all yours. Have fun.
-If you want more examples about `http`, consider looking at [this test](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml). 
-Check [this out](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), you'll find countless examples. 
-Certainly one is what you need.    
-    
+If you want more examples about `http`, consider looking at [this test](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml).
+Check [this out](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), you'll find countless examples.
+Certainly one is what you need.
+
 #### if you need more
 
     $ nqr -h
     Usage: nqr [options] <test-file> [other-test-files...]
-    
+
     Take a look at the full documentation: https://enqueuer.com
-    
+
     Options:
       -v, --version                             output the version number
       -b, --verbosity <level>                   set verbosity (default: "warn")
@@ -136,7 +136,7 @@ Certainly one is what you need.
       -a, --add-file <file>                     add file to be tested (default: [])
       -A, --add-file-and-ignore-others <file>   add file to be tested and ignore others (default: [])
       -h, --help                                output usage information
-    
+
     Examples:
       $ nqr --config-file config-file.yml --verbosity error --store key=value
       $ enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
@@ -146,28 +146,31 @@ Certainly one is what you need.
       $ nqr -l my-enqueuer-plugin-name -p plugin-protocol
       $ nqr -p http
       $ nqr --formatters-description json
-      
+
     Contributing:
       https://github.com/enqueuer-land/enqueuer
 
-----
+---
 
 ### Components
+
 In order to accomplish more than just hitting enqueuer's repo or doing a quick self http hit, there are a few things that you'll probably need to know.
-Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case. 
+Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case.
 There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
 They work along with each other and are responsible for the full behavior of enqueuer.
 
 #### requisition
+
 Test scenario description. It tells what, when, and how test your applications and services.
 Picture it as if it was a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition).
 It helps because this is exactly what it is.
 As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
 Every test file is a requisition.
-You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
+You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later.
 [Variable replacements](#variables) are available through the entire requisition.
 
 ##### requisition attributes
+
 These are the requisition attributes:
 
 **name**  
@@ -182,7 +185,7 @@ Sets in milliseconds how long the requisition waits to expire.
 Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
-    
+
 **delay**  
 Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml) to get the full idea.
 
@@ -194,7 +197,7 @@ Defaults to 1. Sets how many times this test will be executed. Check [this](http
     iterations: 3
 
 **id**  
-Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.
 
     id: ID-0123456789
 
@@ -202,7 +205,7 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
-    
+
 **parallel**  
 Defaults to false. Immediate children requisitions should be executed in parallel mode.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel-requisition.yml) to see it working.
@@ -217,7 +220,7 @@ Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/exam
 
 **publishers**  
 List of [publishers](#publisher). They're executed simultaneously, therefore, the order is **irrelevant**.
-    
+
     publishers:
     - name: some publisher name
       type: http
@@ -232,11 +235,10 @@ List of [subscriptions](#subscription). They're executed simultaneously, therefo
     - name: another subscription name
       type: file
 
-
 **requisitions**  
-A list of child scenarios. List of [requisitions](#requisition). 
-By default, they're executed **sequentially**, therefore, the order is *relevant*.
-Unless the *parallel* attribute is set to true, what makes them get executed **simultaneously**, 
+A list of child scenarios. List of [requisitions](#requisition).
+By default, they're executed **sequentially**, therefore, the order is _relevant_.
+Unless the _parallel_ attribute is set to true, what makes them get executed **simultaneously**,
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
     requisitions:
@@ -246,6 +248,7 @@ Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recu
       delay: 200
 
 ##### events
+
 Requisitions have `onInit` and `onFinish` events.
 Available events are described [here](#event). A `this` object is available to access and change requisition attributes.
 
@@ -254,7 +257,7 @@ Available events are described [here](#event). A `this` object is available to a
       script: this.delay = 3000;
       assertions:
       - expectToBeDefined: this.name
-    onFinish:  
+    onFinish:
       assertions:
       - expectToBeDefined: this.name
 
@@ -262,13 +265,14 @@ Available events are described [here](#event). A `this` object is available to a
 
 A publisher action is triggered by enqueuer itself. It **acts** whereas a [subscription](#subscription) **reacts**.
 It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
-It's worth noting that it always **creates** a message. 
+It's worth noting that it always **creates** a message.
 That's the reason why there's an implicitly created test in **onFinish** hook verifying if the message got published.
 
 ##### publisher attributes
+
 Every publisher has its own properties, depending on its protocol and implementation.
 The built-in [`http` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a `url`, a `method`, and a `payload`, if the method is not a `GET`.
-On the other hand, the built-in [`tcp` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a `serverAddress` and a `port`. 
+On the other hand, the built-in [`tcp` publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a `serverAddress` and a `port`.
 These are the publisher attributes:
 
 **name**  
@@ -287,46 +291,49 @@ Since a publisher usually publishes something, it's very likely you have to set 
 The message itself that will be send through this protocol. Be it a string, a number, a boolean value or even whole objects.
 
     payload: value
-    
+
 **ignore**  
 Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
 
 **id**  
-Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.
 
     id: ID-0123456789
-    
+
 ##### events
+
 Available events are described [here](#event). A `this` object is available to access and change publisher attributes.
-Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist special events, such as `onMessageReceived` event and a special object given `message`. 
-On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually do not provide it. 
+Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist special events, such as `onMessageReceived` event and a special object given `message`.
+On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually do not provide it.
 
     onInit:
       script: this.ignore = false
       assertions:
       - expectToBeDefined: this.type
-    onMessageReceived: #Provided in synchronous protocols  
+    onMessageReceived: #Provided in synchronous protocols
       assertions:
       - expectToBeDefined: message
-    onFinish:  
+    onFinish:
       assertions:
       - expectToBeDefined: this.type
-  
+
 #### subscription
+
 A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
 It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
-This means that it is not triggered by enqueuer itself. 
+This means that it is not triggered by enqueuer itself.
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
-It's worth noting that it always **receives** a message. 
+It's worth noting that it always **receives** a message.
 That's the reason why there's an implicitly created test in **onFinish** hook verifying if a message got received.
 
 ##### subscription attributes
+
 Every subscription has its own properties, depending on its protocol and implementation.
 The built-in [`http` subscription](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands an `endpoint`, a `method`, and a `port`, if the method is not a GET.
-On the other hand, the built-in [`tcp` subscription](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires only a `port`. 
- 
+On the other hand, the built-in [`tcp` subscription](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires only a `port`.
+
 These are the subscription attributes:
 
 **name**  
@@ -334,7 +341,7 @@ Defaults to subscription index.
 Describes what the subscription is supposed to do.
 
     name: subscription action
-    
+
 **type**  
 Mandatory. Key tag to identify which subscription will be instantiated
 
@@ -345,7 +352,7 @@ Identifies whether or not this subscription should not receive any message. Defa
 If set and a message is received a failing test will be generated.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/avoid.yml) to see it working.
 On the other hand, when it's false and no message is received in a given timeout. The subscription is valid.
-    
+
     avoid: false
 
 **timeout**  
@@ -353,32 +360,33 @@ Sets in milliseconds how long the subscription waits to expire. Defaults to 3000
 Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
-    
+
 **ignore**  
 Defaults to false. Tells to enqueuer that this subscription should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
-    ignore: true    
+    ignore: true
 
 **id**  
-Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.
 
     id: ID-0123456789
-    
+
 ##### events
-Available events are described [here](#event). A `this` object is available to access and change subscription attributes.  
+
+Available events are described [here](#event). A `this` object is available to access and change subscription attributes.
 
     onInit:
       script: this.avoid = false;
       assertions:
       - expectToBeDefined: this.type
-    onMessageReceived:  
+    onMessageReceived:
       assertions:
       - expectToBeDefined: message
-    onFinish:  
+    onFinish:
       assertions:
       - expectToBeDefined: this.type
-      
-----
+
+---
 
 ### Event
 
@@ -388,7 +396,7 @@ There will be a variable called `this` and, depending on the event's owner, it h
 You're free to explore them however you want, even doing things like this:
 
     publisher.parent.subscriptions[0].timeout = 1000;
- 
+
 #### hooks
 
 By default, there are three hook events available:
@@ -399,14 +407,14 @@ As available parameter, an `elapsedTime` variable is given, counting every milli
 
 **onFinish**  
 Available in requisitions, publishers and subscriptions. It gets executed when the component is about to finish.
-As available parameter, an `elapsedTime` variable is given, counting every millisecond since the instantiation of this component. 
+As available parameter, an `elapsedTime` variable is given, counting every millisecond since the instantiation of this component.
 
 **custom**
 Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
-Such as `onError`, `onResponseReceived`, `onFileNotFound` and `onRedirect`... 
+Such as `onError`, `onResponseReceived`, `onFileNotFound` and `onRedirect`...
 [Http-proxy subscription test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
 
-***available variables***
+**_available variables_**
 Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use `argumentNames` as a regular argument. So, let's say you have this requisition:
 
     onFinish:
@@ -417,6 +425,7 @@ You'd get this printed out to the console:
     [ 'requisition', 'elapsedTime' ]
 
 #### fields
+
 Every hook object has 3 properties:
 
 **script**  
@@ -425,7 +434,7 @@ Yeah, I mean it. See it [it](https://github.com/enqueuer-land/enqueuer/blob/mast
 Be careful, with great power comes great responsibility.
 
 **store**  
-Data to be persisted across requisitions.  
+Data to be persisted across requisitions.
 
 **assertions**  
 Array of assertions.
@@ -436,19 +445,19 @@ You can [check them out](#plugins_list) or even [write your own](https://github.
 
     onInit:
       script: variableIdentifier = 'string value'
-    
+
       assertions:
       - expect: variableIdentifier
         toBeEqualTo: `string value`
-    
+
     onMessageReceived:
       script: |-
         message += 3;
         console.log(`Message received plus 3 is: ${message}`);
-    
+
       store:
         key: message
-    
+
       assertions:
       - name: anyValue #optional
         expect: message
@@ -457,29 +466,34 @@ You can [check them out](#plugins_list) or even [write your own](https://github.
         toBeGreaterThan: 3
 
 #### event example
+
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/hooks.yml) test file to see it in practice.
 
-----
+---
 
 ### Requisition Flow
+
 Now you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?
 
-![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png "Enqueuer Instance Flow")
+![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png 'Enqueuer Instance Flow')
 
-----
+---
 
 ### Configuration File
+
 To save yourself some time, a configuration file may be used.
 Configuration files tell enqueuer which tests will be executed, log-level, and which output test report files should be generated.
 This file tells how enqueuer should be executed.
 To run enqueuer with the configuration:
 
     $ nqr -c path/to/configuration/file.yml
+
 or
-    
+
     $ nqr --config-file path/to/configuration/file.yml
 
 #### attributes
+
 These are the configuration file attributes:
 
 **files**  
@@ -506,11 +520,11 @@ Defaults to 1. The deepest level of report to be printed to the console.
     max-report-level-print: 2
 
 **plugins**  
-List of in [plugins](#plugins) used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold). 
-    
+List of in [plugins](#plugins) used by the test scenarios. You can [check them out](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or [write your own](https://github.com/enqueuer-land/plugin-scaffold).
+
     plugins:
-    - enqueuer-plugin-amqp 
-    - enqueuer-plugin-ws 
+    - enqueuer-plugin-amqp
+    - enqueuer-plugin-ws
     - enqueuer-plugin-mqtt
     - enqueuer-plugin-html-report
 
@@ -518,10 +532,10 @@ List of in [plugins](#plugins) used by the test scenarios. You can [check them o
 Once enqueuer runs every execution, it compiles a summary and sends it to every publisher listed in output.
 An important thing to note is that every available report publisher is available here.
 Yes, it means that you are able to send this report through `http`, `tcp`, etc. or through a [plugin one](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
-You can run `$ nqr -p` to check available report publishers installed. 
+You can run `$ nqr -p` to check available report publishers installed.
 Another important thing to note is the `format` value. By default a `json` summary is generated, but you can change it to whatever format you would like, such as: [Xunit](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), [html](https://github.com/enqueuer-land/enqueuer-plugin-html-report)
 You can run `$ nqr -f` to check available installed formats or even [write your own](https://github.com/enqueuer-land/plugin-scaffold)
-    
+
     outputs:
     - type: file
       format: json (default)
@@ -536,21 +550,23 @@ You can run `$ nqr -f` to check available installed formats or even [write your 
 Values defined here use the 'key: value' pattern and are available to every test scenario throughout the entire execution
 
     store:
-      variableKey: "my value" # Defines 'variableKey' key and its value 'my value'. 
-      
+      variableKey: "my value" # Defines 'variableKey' key and its value 'my value'.
+
       'separated key': 6
-      
+
       object: # You can even define whole objects here:
         first: first value
         second:
           nested: thing
 
 #### example
+
 [Here's](https://github.com/enqueuer-land/enqueuer/blob/master/conf/config-example.yml) a complete example of a configuration file.
 
-----
+---
 
 ### Variables
+
 Providing power and flexibility, enqueuer allows you to use variables placeholder replacement.
 That's why there is a `store` field and you'll see a lot of `<<` and `{{` being used in the examples files.
 It works as simple as this:
@@ -558,57 +574,66 @@ It works as simple as this:
     name: my name is <<variableKey>>
 
 Every time enqueuer sees these kind of notations, it searches in its store for a key/value pair like:
-    
+
     variableKey: `enqueuer`
 
 Then, when enqueuer parses the original map, it gets translated to this:
-    
+
     name: my name is enqueuer
-    
+
 By default, every ENV_VAR set is loaded automatically to the store. Check [this example](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L11).
 
 #### set a variable
+
 There are a few ways to set a value in the store.
 
 ##### configuration file
+
 Configuration file store object. Set it as you wish, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/conf/singleRun.yml#L27)
 
 ##### command line
-A command line argument using the `key=value` format. This way: 
-    
+
+A command line argument using the `key=value` format. This way:
+
     $ nqr --store key=value -s anotherVariable=true
 
 ##### event
-Dynamically set it through any [event](#event). 
+
+Dynamically set it through any [event](#event).
 Be it in its [script](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) field or straight through its store [field](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3).
 Both ways work:
 
     onInit:
         script: store.key = 123;
         store:
-            anotherKey: `another Value` 
+            anotherKey: `another Value`
 
-#### use a variable          
+#### use a variable
+
 There are two ways two use a variable:
 
 ##### non js code snippet
+
 The easiest one is to type `<<variableKey>>` or `{{variableKey}}` where you want it to be replaced in a test file, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8)
 
 ##### js code snippet
-Using the `store` object. It's attributes are the keys and their values are their respective values. 
+
+Using the `store` object. It's attributes are the keys and their values are their respective values.
 Therefore, you're free to use `store.variableKey`, `console.log(store.variableKey);` or `console.log(2 * store['separated key']);` and get them.
 Like [this](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) one.
 
-#### variables example 
+#### variables example
+
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/variables.yml) test to see it working.
 
-----
+---
 
 ### Content File Injection
+
 You are able to inject file content into a requisition/publisher/subscription field.
 
     file: <<file://path/to/file.txt>>
-    
+
 Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: `<<tag://path/to/file?query=value&other=true>>`.
 
     requisition:
@@ -616,9 +641,9 @@ Other than that, enqueuer can read it and parse its content as an object using t
         yml: <<yml://path/to/file.yml>>
         csv: <<csv://path/to/file.csv?header=true&delimiter=;>>
         file: <<file://path/to/file.txt>>
-    
+
 Once the object is parsed, your free to use it as a regular object in any event
-    
+
     onInit:
         script: console.log(requisition.yml.deep.field);
     onFinish:
@@ -626,29 +651,33 @@ Once the object is parsed, your free to use it as a regular object in any event
         -   expect: json.key
             toBeEqualTo: csv[0].key
 
-It get's even better. 
+It get's even better.
 Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](#plugins_list) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.
-The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`. 
+The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`.
 Run `$ nqr -e` to see available ones.
 
-#### example 
+#### example
+
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
 
-----
+---
 
 ### Plugins
+
 You're probably aware by now but it doesn't hurt do emphasize it: enqueuer provides an amazingly powerful plugin extensible architecture.
 It has [several plugins available](#plugins_list), but if none of them pleases you, you're free to [create your own](https://github.com/enqueuer-land/plugin-scaffold).
-Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our [plugins repository](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).  
+Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our [plugins repository](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).
 
 #### plugin types
+
 So far, you're able to extend enqueuer default behavior in four ways. Using a protocol plugin, an object parser plugin, an asserter plugin and using a report formatter plugin.
 
 ##### protocol
-A protocol plugin enables you to use a different publisher/subscription types. 
+
+A protocol plugin enables you to use a different publisher/subscription types.
 Run `$ nqr -p [protocol-name]` to get the full available list:
 
-    publishers: 
+    publishers:
     -   name:                  custom
     -   name:                  file
     -   name:                  http
@@ -656,7 +685,7 @@ Run `$ nqr -p [protocol-name]` to get the full available list:
     -   name:                  stdout
     -   name:                  tcp
     -   ...
-    subscriptions: 
+    subscriptions:
     -   name:                  custom
     -   name:                  file
         messageReceivedParams: content, name, size, modified, created
@@ -669,7 +698,7 @@ Run `$ nqr -p [protocol-name]` to get the full available list:
 
 Each one listed above has a respective example in [the examples folder](https://github.com/enqueuer-land/enqueuer/blob/master/examples).
 [This one](https://github.com/enqueuer-land/enqueuer-plugin-amqp), for instance, provides support for amqp protocol, so you can create this publisher and subscription:
-    
+
     publishers:
     -   type: amqp
         payload: enqueuermaniac
@@ -685,11 +714,12 @@ Each one listed above has a respective example in [the examples folder](https://
                 toBeEqualTo: `enqueuermaniac`
 
 ##### object parser
+
 An object parser plugin enables you to read and parse files as you wish.
 [This test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) demonstrates how to use it,
 Run `$ nqr -e [object-parser-name]` to check available ones:
 
-    parsers: 
+    parsers:
     - yml, yaml
     - json
     - file
@@ -700,24 +730,25 @@ Run `$ nqr -e [object-parser-name]` to check available ones:
     xmlContent: <<xml://path/to/xml/file.xml>>
 
 ##### asserter
+
 An asserter plugin provides you a nicely way to use different assertions than these built-in ones.
 
-    asserters: 
-    -   expect: 
+    asserters:
+    -   expect:
             required:    true
             type:        string, array
             description: actual value
-        not: 
+        not:
             required:    false
             type:        null
             description: negates
-        toContain: 
+        toContain:
             required:    true
             type:        string, any
             description: element
 
 Looking at the asserter above, we can create assertions like these:
-    
+
     assertions:
     -   expect: [`a`, 1, true]
         not:
@@ -727,11 +758,13 @@ Looking at the asserter above, we can create assertions like these:
 
 Run `$ nqr -t` to get the full available list.
 Consider looking at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml) test example.
+
 ##### report formatter
+
 A report formatter plugin gives you the ability to export enqueuer reports the way you want.
 Run `$ nqr -f [formatter-name]` to list available report formatters:
 
-    formatters: 
+    formatters:
     - console, stdout
     - json
     - yml, yaml
@@ -740,6 +773,7 @@ Consider looking at the example of [configuration file](https://github.com/enque
 [This one](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), for instance, generates xUnit like reports from enqueuer's output.
 
 #### plugins list
+
 Enqueuer community offers support to the following plugins:
 
 {{plugins list placeholder}}
@@ -747,87 +781,96 @@ Enqueuer community offers support to the following plugins:
 Want to see yours here too? [Write your own](https://github.com/enqueuer-land/plugin-scaffold) and make a PR [here](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins).
 
 #### plugins installation
+
 In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
 You can tell enqueuer to use a plugin in three different ways: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.
 
 ##### command line
+
 Tell enqueuer to use your plugin through command line this way `$ nqr -l <plugin-folder> -l <another-plugin-folder>`.
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
-    
+
 ##### configuration file
+
 Tell enqueuer to use your plugin through configuration file this way:
-    
-    plugins: 
+
+    plugins:
     -   plugin-folder
     -   another-plugin-folder
 
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
 
 ##### implicitly
+
 When enqueuer runs, it looks for modules in its same installation directory or in `.nqr` folder in the home directory, a.k.a. ~/ folder in linux distributions.
 Therefore, if you run:
-    
+
     $ npm install --global enqueuer
     $ mkdir ~/.nqr
     $ cd ~/.nqr
     $ npm install enqueuer-plugin-amqp
     $ nqr -p amqp
+
 Or
-    
+
     $ npm install --global enqueuer enqueuer-plugin-amqp
     $ nqr -p amqp
-    
+
 You'll see that the `enqueuer-plugin-amqp` plugin will be loaded.
 Every enqueuer compatible module gets implicitly loaded.
 In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
 
 ### Stacker
+
 Looking for an human error proof solution way of writing these requisition files?  
 Consider taking a look at [stacker](https://enqueuer-land.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
 The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
 With them, you create, manage and run requisitions and and see their results in a really nice way.
-See this amazing beauty with your own eyes to get an idea of how it works:  
+See this amazing beauty with your own eyes to get an idea of how it works:
 
 ![screenshot-passing](https://raw.githubusercontent.com/enqueuer-land/stacker/master/docs/screenshot-1.png)
 
-----
+---
 
 ### Open source
+
 We (by 'we' we mean enqueuer's maintainers not the human race, unfortunately) are very opened to any kind of contributions in general.
 As long as they make sense and add value to the product, you're free to go.
 We mean it, do it. Even if it's a typo fix in this README file. Go ahead.
 If you like it but don't want to waste time creating a pull request, no problem either.
 Create an issue, or, even easier, give it a github star. It's cheap and it doesn't hurt anyone.
 You know what? Just head up to [enqueuer's github repo](https://github.com/enqueuer-land/enqueuer) and keep staring at its repo.
-It may help somehow. 
+It may help somehow.
 
 #### contributors
+
 Thanks goes to these wonderful people:
 
 {{contributors list placeholder}}
 
-It sounds *cliché*, but this project wouldn't be the same without the massive contribution of everyone.
+It sounds _cliché_, but this project wouldn't be the same without the massive contribution of everyone.
 
 #### code it
+
 In order to contribute with some code, you have to follow a few steps.
 First of all, get the code:
 
     $ git clone git@github.com:enqueuer-land/enqueuer.git
     $ cd enqueuer
-    
+
 Get its dependencies installed:
-    
+
     $ npm install
 
-Build it: 
-    
+Build it:
+
     $ npm run build
-    
+
 Go for it. Make the changes you want.
 After everything is done:
 
     $ npm run all
-    
+
 Commit it:
 
     $ npm run commit
@@ -837,6 +880,7 @@ Push it:
     $ git push
 
 #### feedback
+
 We'd love to get your feedback!
 If you have any comments, suggestions, etc. you can reach us [here](mailto:guilherme.moraes@outlook.com).
 

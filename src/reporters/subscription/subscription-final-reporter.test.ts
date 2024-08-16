@@ -1,14 +1,13 @@
 import {SubscriptionFinalReporter} from './subscription-final-reporter';
 
 describe('SubscriptionFinalReporter', () => {
-
     it('No subscribed, no avoidable, no message, no timeout', () => {
         const subscribed = false;
         const avoidable = false;
         const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter({
             subscribed: subscribed,
             avoidable: avoidable
-        }, );
+        });
 
         const report = finalReporter.getReport();
 
@@ -297,5 +296,4 @@ describe('SubscriptionFinalReporter', () => {
         expect(report[0].name).toBe('Subscription avoided');
         expect(report[0].implicit).toBeTruthy();
     });
-
 });

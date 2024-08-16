@@ -10,7 +10,6 @@ import {PublisherProtocol} from '../protocols/publisher-protocol';
 import {ProtocolDocumentation} from '../protocols/protocol-documentation';
 
 class StreamPublisher extends Publisher {
-
     private readonly loadedStream: any;
 
     constructor(publisherAttributes: PublisherModel) {
@@ -29,7 +28,6 @@ class StreamPublisher extends Publisher {
             } else {
                 this.sendCreatingStream(resolve, reject);
             }
-
         });
     }
 
@@ -50,9 +48,10 @@ class StreamPublisher extends Publisher {
             .then((stream: any) => {
                 Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port || this.path}`);
                 this.publishData(stream, resolve, reject);
-            }).catch(err => {
-            reject(err);
-        });
+            })
+            .catch((err) => {
+                reject(err);
+            });
     }
 
     private createStream(): Promise<any> {
@@ -109,20 +108,22 @@ class StreamPublisher extends Publisher {
             resolve();
         }).start(this.timeout);
 
-        stream.once('end', () => {
-            Logger.debug(`${this.type} client ended`);
-            this.finalize(stream);
-            resolve();
-        }).on('data', (msg: Buffer) => {
-            Logger.debug(`${this.type} client got data '${msg.toString()}'`);
-            if (!this.messageReceived) {
-                this.messageReceived = {
-                    payload: '',
-                    stream: stream.address()
-                };
-            }
-            this.messageReceived.payload += msg;
-        });
+        stream
+            .once('end', () => {
+                Logger.debug(`${this.type} client ended`);
+                this.finalize(stream);
+                resolve();
+            })
+            .on('data', (msg: Buffer) => {
+                Logger.debug(`${this.type} client got data '${msg.toString()}'`);
+                if (!this.messageReceived) {
+                    this.messageReceived = {
+                        payload: '',
+                        stream: stream.address()
+                    };
+                }
+                this.messageReceived.payload += msg;
+            });
     }
 
     private finalize(stream: any) {
@@ -141,7 +142,7 @@ class StreamPublisher extends Publisher {
     }
 
     private stringifyPayload() {
-        if (typeof (this.payload) != 'string' && !Buffer.isBuffer(this.payload)) {
+        if (typeof this.payload != 'string' && !Buffer.isBuffer(this.payload)) {
             return JSON.stringify(this.payload);
         }
         return this.payload;
@@ -192,7 +193,7 @@ export function entryPoint(mainInstance: MainInstance): void {
                     description: 'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
                     required: false,
                     type: 'object'
-                },
+                }
             },
             hooks: {
                 onMessageReceived: {
@@ -205,12 +206,9 @@ export function entryPoint(mainInstance: MainInstance): void {
         }
     };
 
-    const tcp = new PublisherProtocol('tcp',
-        createFunction, docs);
-    const uds = new PublisherProtocol('uds',
-        createFunction, docs);
-    const ssl = new PublisherProtocol('ssl',
-        createFunction, docs);
+    const tcp = new PublisherProtocol('tcp', createFunction, docs);
+    const uds = new PublisherProtocol('uds', createFunction, docs);
+    const ssl = new PublisherProtocol('ssl', createFunction, docs);
 
     mainInstance.protocolManager.addProtocol(tcp);
     mainInstance.protocolManager.addProtocol(uds);

@@ -6,7 +6,6 @@ describe('RequisitionParser', () => {
     beforeEach(() => {
         // @ts-ignore
         delete DynamicModulesManager.instance;
-
     });
 
     it('Should parse array as just one', () => {
@@ -21,11 +20,13 @@ describe('RequisitionParser', () => {
                 id: 1
             }
         ];
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: () => requisitionsInput
-            };
-        }, 'yml');
+        DynamicModulesManager.getInstance()
+            .getObjectParserManager()
+            .addObjectParser(() => {
+                return {
+                    parse: () => requisitionsInput
+                };
+            }, 'yml');
 
         const fileContent = JSON.stringify(requisitionsInput);
         const requisition = new RequisitionParser().parse(fileContent);
@@ -36,7 +37,6 @@ describe('RequisitionParser', () => {
         expect(requisition.requisitions[1].name).toBe(requisitionsInput[1].name);
         expect(requisition.requisitions[1].id).toBe(requisitionsInput[1].id);
         expect(requisition.requisitions[1].publishers).toEqual(requisitionsInput[1].publishers);
-
     });
 
     it('Should throw', () => {
@@ -46,11 +46,13 @@ describe('RequisitionParser', () => {
     it('Should add errors if file is not yml nor json', () => {
         const notYml = 'foo bar\nfoo: bar';
 
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: (value) => new YmlObjectParser().parse(value)
-            };
-        }, 'yml');
+        DynamicModulesManager.getInstance()
+            .getObjectParserManager()
+            .addObjectParser(() => {
+                return {
+                    parse: (value) => new YmlObjectParser().parse(value)
+                };
+            }, 'yml');
 
         try {
             new RequisitionParser().parse('any:1\nany:1');
@@ -59,25 +61,27 @@ describe('RequisitionParser', () => {
             expect(err.json).toBeDefined();
             expect(err.yml).toBeDefined();
         }
-
     });
 
     it('Should add error if it is not a valid requisition', () => {
         const notYml = 'hey: bar';
 
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: (value) => new YmlObjectParser().parse(value)
-            };
-        }, 'yml');
+        DynamicModulesManager.getInstance()
+            .getObjectParserManager()
+            .addObjectParser(() => {
+                return {
+                    parse: (value) => new YmlObjectParser().parse(value)
+                };
+            }, 'yml');
 
         try {
             new RequisitionParser().parse(notYml);
             expect(true).toBeFalsy();
         } catch (err) {
-            expect(err).toBe(`'hey: bar' is not a valid requisition.` +
-                ` Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`);
+            expect(err).toBe(
+                `'hey: bar' is not a valid requisition.` +
+                    ` Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`
+            );
         }
     });
-
 });

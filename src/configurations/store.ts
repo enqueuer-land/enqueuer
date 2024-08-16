@@ -1,5 +1,5 @@
-import { Configuration } from './configuration';
-import { Logger } from '../loggers/logger';
+import {Configuration} from './configuration';
+import {Logger} from '../loggers/logger';
 
 export class Store {
     private static data: any = undefined;

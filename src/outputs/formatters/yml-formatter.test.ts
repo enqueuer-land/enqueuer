@@ -3,7 +3,6 @@ import {RequisitionModel} from '../../models/outputs/requisition-model';
 import {YmlObjectParser} from '../../object-parser/yml-object-parser';
 
 describe('YmlReportFormatter', () => {
-
     it('Should stringify it', () => {
         const test: RequisitionModel = {
             name: 'name',
@@ -12,11 +11,11 @@ describe('YmlReportFormatter', () => {
         } as any;
         const format = new YmlReportFormatter().format(test);
 
-        expect(typeof (format)).toBe('string');
+        expect(typeof format).toBe('string');
         expect(format).toBe(new YmlObjectParser().stringify(test));
     });
 
-    it('Should export an entry point', done => {
+    it('Should export an entry point', (done) => {
         const mainInstance: any = {
             reportFormatterManager: {
                 addReportFormatter: (createFunction: any, ...tags: any) => {
@@ -28,7 +27,5 @@ describe('YmlReportFormatter', () => {
         };
 
         entryPoint(mainInstance);
-
     });
-
 });

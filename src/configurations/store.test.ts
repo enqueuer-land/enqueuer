@@ -4,7 +4,6 @@ import {Configuration} from './configuration';
 jest.mock('./configuration');
 
 describe('Store', () => {
-
     beforeEach(() => {
         // @ts-ignore
         Store.data = undefined;
@@ -83,5 +82,4 @@ describe('Store', () => {
 
         expect(Store.getData().PATH).toBeDefined();
     });
-
 });

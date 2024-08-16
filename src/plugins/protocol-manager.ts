@@ -47,18 +47,21 @@ export class ProtocolManager {
         return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
     }
 
-    public getProtocolsDescription(protocol: string = ''): { publishers: {}[], subscriptions: {}[] } {
+    public getProtocolsDescription(protocol: string = ''): {
+        publishers: {}[];
+        subscriptions: {}[];
+    } {
         return {
             publishers: this.protocols
-            //NOTE: function check for retro compatibilities proposes
+                //NOTE: function check for retro compatibilities proposes
                 .filter((protocol: Protocol) => protocol.isPublisher && protocol.isPublisher())
                 .filter((publisher: Protocol) => publisher.matches(protocol))
-                .map(protocol => protocol.getDescription()),
+                .map((protocol) => protocol.getDescription()),
             subscriptions: this.protocols
-            //NOTE: function check for retro compatibilities proposes
+                //NOTE: function check for retro compatibilities proposes
                 .filter((protocol: Protocol) => protocol.isSubscription && protocol.isSubscription())
                 .filter((subscription: Protocol) => subscription.matches(protocol))
-                .map(protocol => protocol.getDescription())
+                .map((protocol) => protocol.getDescription())
         };
     }
 }

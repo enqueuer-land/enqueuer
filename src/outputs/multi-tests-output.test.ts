@@ -36,7 +36,7 @@ const create = jest.fn(() => {
 
 const createPublisherMock = jest.fn(() => {
     return {
-        publish: publishMock,
+        publish: publishMock
     };
 });
 // @ts-ignore
@@ -48,7 +48,7 @@ ProtocolManager.mockImplementation(() => {
 const formatMock = jest.fn();
 const createReportFormatterMock = jest.fn(() => {
     return {
-        format: formatMock,
+        format: formatMock
     };
 });
 // @ts-ignore
@@ -79,7 +79,6 @@ describe('MultiTestsOutput', () => {
     });
 
     it('Should format before printing', async () => {
-
         const report = {};
         const output = {type: 'output', format: 'createFunction'};
         // @ts-ignore
@@ -87,5 +86,4 @@ describe('MultiTestsOutput', () => {
 
         expect(publishMock).toHaveBeenCalledWith();
     });
-
 });

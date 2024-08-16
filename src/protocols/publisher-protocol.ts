@@ -6,9 +6,7 @@ import {ProtocolDocumentation} from './protocol-documentation';
 export class PublisherProtocol extends Protocol {
     private readonly createFunction: (publisherModel: PublisherModel) => Publisher;
 
-    public constructor(name: string,
-                       createFunction: (publisherModel: PublisherModel) => Publisher,
-                       documentation?: ProtocolDocumentation) {
+    public constructor(name: string, createFunction: (publisherModel: PublisherModel) => Publisher, documentation?: ProtocolDocumentation) {
         super(name, ProtocolType.PUBLISHER, documentation);
         this.createFunction = createFunction;
     }

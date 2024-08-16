@@ -21,7 +21,6 @@ const warningLogMock = jest.fn();
 Logger.warning.mockImplementation(warningLogMock);
 
 describe('HttpContainerPool', () => {
-
     beforeEach(() => {
         acquireMock.mockClear();
         releaseMock.mockClear();
@@ -40,7 +39,6 @@ describe('HttpContainerPool', () => {
     });
 
     it('reuse App', async () => {
-
         const port = 987;
         const secure = true;
         const credentials = {key: 'value'};
@@ -59,5 +57,4 @@ describe('HttpContainerPool', () => {
 
         expect(releaseMock).not.toHaveBeenCalled();
     });
-
 });

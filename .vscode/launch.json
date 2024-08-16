@@ -8,11 +8,11 @@
             "name": "Launch",
             "program": "${workspaceFolder}/js/index.js",
             "request": "launch",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
+            "skipFiles": ["<node_internals>/**"],
             "args": [
-                "-et"
+                // "-et"
+                // "-c./conf/config-example.yml"
+                "examples/file-placeholder.yml"
                 // "./examples/http.yml"
             ],
             "type": "node"
@@ -34,9 +34,7 @@
             "name": "Test current file",
             "envFile": "${workspaceFolder}/.env",
             "program": "${workspaceFolder}/node_modules/.bin/jest",
-            "args": [
-                "${fileBasenameNoExtension}"
-            ],
+            "args": ["${fileBasenameNoExtension}"],
             "console": "integratedTerminal",
             "windows": {
                 "program": "${workspaceFolder}/node_modules/jest/bin/jest"

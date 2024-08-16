@@ -12,7 +12,6 @@ describe('RequisitionFileParser', () => {
     beforeEach(() => {
         // @ts-ignore
         delete DynamicModulesManager.instance;
-
     });
 
     it('Should parse array as just one', () => {
@@ -20,11 +19,13 @@ describe('RequisitionFileParser', () => {
             onInit: {},
             id: 0
         };
-        DynamicModulesManager.getInstance().getObjectParserManager().addObjectParser(() => {
-            return {
-                parse: () => requisitionInput
-            };
-        }, 'yml');
+        DynamicModulesManager.getInstance()
+            .getObjectParserManager()
+            .addObjectParser(() => {
+                return {
+                    parse: () => requisitionInput
+                };
+            }, 'yml');
 
         const fileContent = JSON.stringify(requisitionInput);
         // @ts-ignore
@@ -45,5 +46,4 @@ describe('RequisitionFileParser', () => {
         });
         expect(() => new RequisitionFileParser().parseFile('anyStuff')).toThrow();
     });
-
 });

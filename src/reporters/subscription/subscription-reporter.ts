@@ -1,30 +1,29 @@
-import { Logger } from '../../loggers/logger';
-import { DateController } from '../../timers/date-controller';
-import { Subscription } from '../../subscriptions/subscription';
-import { Timeout } from '../../timers/timeout';
+import {Logger} from '../../loggers/logger';
+import {DateController} from '../../timers/date-controller';
+import {Subscription} from '../../subscriptions/subscription';
+import {Timeout} from '../../timers/timeout';
 import * as input from '../../models/inputs/subscription-model';
-import { SubscriptionModel } from '../../models/inputs/subscription-model';
+import {SubscriptionModel} from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
-import { SubscriptionFinalReporter } from './subscription-final-reporter';
-import { DynamicModulesManager } from '../../plugins/dynamic-modules-manager';
-import { EventExecutor } from '../../events/event-executor';
-import { DefaultHookEvents } from '../../models/events/event';
-import { ObjectDecycler } from '../../object-parser/object-decycler';
-import { TestModel, testModelIsPassing } from '../../models/outputs/test-model';
+import {SubscriptionFinalReporter} from './subscription-final-reporter';
+import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
+import {EventExecutor} from '../../events/event-executor';
+import {DefaultHookEvents} from '../../models/events/event';
+import {ObjectDecycler} from '../../object-parser/object-decycler';
+import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
 import Signals = NodeJS.Signals;
 import SignalsListener = NodeJS.SignalsListener;
-import { HookReporter } from '../hook-reporter';
-import { NotificationEmitter } from '../../notifications/notification-emitter';
-import { Notifications } from '../../notifications/notifications';
+import {HookReporter} from '../hook-reporter';
+import {NotificationEmitter} from '../../notifications/notification-emitter';
+import {Notifications} from '../../notifications/notifications';
 
 export class SubscriptionReporter {
-
     public static readonly DEFAULT_TIMEOUT: number = 3 * 1000;
     private readonly killListener: SignalsListener;
     private readonly report: output.SubscriptionModel;
     private readonly startTime: DateController;
     private readonly subscription: Subscription;
-    private readonly executedHooks: { [propName: string]: string[] };
+    private readonly executedHooks: {[propName: string]: string[]};
     private subscribeError?: string;
     private hasTimedOut: boolean = false;
     private subscribed: boolean = false;
@@ -38,8 +37,8 @@ export class SubscriptionReporter {
             ignored: subscriptionAttributes.ignore,
             type: subscriptionAttributes.type,
             hooks: {
-                [DefaultHookEvents.ON_INIT]: { valid: true, tests: [] },
-                [DefaultHookEvents.ON_FINISH]: { valid: true, tests: [] }
+                [DefaultHookEvents.ON_INIT]: {valid: true, tests: []},
+                [DefaultHookEvents.ON_FINISH]: {valid: true, tests: []}
             },
             valid: true
         };
@@ -58,9 +57,7 @@ export class SubscriptionReporter {
     }
 
     public hasFinished(): boolean {
-        return this.subscription.ignore ||
-            this.subscription.messageReceived ||
-            this.hasTimedOut;
+        return this.subscription.ignore || this.subscription.messageReceived || this.hasTimedOut;
     }
 
     public startTimeout(onTimeOutCallback: Function) {
@@ -124,8 +121,7 @@ export class SubscriptionReporter {
     }
 
     private async handleSubscription(): Promise<boolean> {
-        process.once('SIGINT', this.killListener)
-            .once('SIGTERM', this.killListener);
+        process.once('SIGINT', this.killListener).once('SIGTERM', this.killListener);
         if (this.hasTimedOut) {
             const message = `Subscription '${this.subscription.name}' subscription because it has timed out`;
             Logger.error(message);
@@ -143,9 +139,11 @@ export class SubscriptionReporter {
             await this.subscription.sendResponse();
         } catch (err) {
             Logger.warning(`Error ${this.subscription.type} synchronous response sending: ${err}`);
-            this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH]
-                .tests.concat({ valid: false, name: 'Response sent', description: `${err}` });
-
+            this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH].tests.concat({
+                valid: false,
+                name: 'Response sent',
+                description: `${err}`
+            });
         }
     }
 
@@ -167,19 +165,18 @@ export class SubscriptionReporter {
         });
 
         const finalReport = finalReporter.getReport();
-        this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH]
-            .tests.concat(finalReport);
-        this.report.hooks![DefaultHookEvents.ON_FINISH].valid = this.report.hooks![DefaultHookEvents.ON_FINISH].valid
-            && finalReport.every((report: TestModel) => testModelIsPassing(report));
+        this.report.hooks![DefaultHookEvents.ON_FINISH].tests = this.report.hooks![DefaultHookEvents.ON_FINISH].tests.concat(finalReport);
+        this.report.hooks![DefaultHookEvents.ON_FINISH].valid =
+            this.report.hooks![DefaultHookEvents.ON_FINISH].valid && finalReport.every((report: TestModel) => testModelIsPassing(report));
 
-        this.report.valid = this.report.valid && Object.keys(this.report.hooks || {})
-            .every((key: string) => this.report.hooks ? this.report.hooks[key].valid : true);
+        this.report.valid =
+            this.report.valid &&
+            Object.keys(this.report.hooks || {}).every((key: string) => (this.report.hooks ? this.report.hooks[key].valid : true));
         return this.report;
     }
 
     public async unsubscribe(): Promise<void> {
-        process.removeListener('SIGINT', this.killListener)
-            .removeListener('SIGTERM', this.killListener);
+        process.removeListener('SIGINT', this.killListener).removeListener('SIGTERM', this.killListener);
 
         Logger.debug(`Unsubscribing subscription ${this.subscription.type}`);
         if (this.subscribed) {
@@ -190,8 +187,12 @@ export class SubscriptionReporter {
     public onFinish() {
         Logger.trace(`Executing subscription onFinish`);
         if (!this.subscription.ignore) {
-            this.executeHookEvent(DefaultHookEvents.ON_FINISH, { executedHooks: this.executedHooks });
-            NotificationEmitter.emit(Notifications.SUBSCRIPTION_FINISHED, { subscription: this.report });
+            this.executeHookEvent(DefaultHookEvents.ON_FINISH, {
+                executedHooks: this.executedHooks
+            });
+            NotificationEmitter.emit(Notifications.SUBSCRIPTION_FINISHED, {
+                subscription: this.report
+            });
         }
     }
 
@@ -234,7 +235,9 @@ export class SubscriptionReporter {
 
     private executeOnInitFunction(subscriptionAttributes: SubscriptionModel) {
         if (!subscriptionAttributes.ignore) {
-            NotificationEmitter.emit(Notifications.SUBSCRIPTION_STARTED, { subscription: subscriptionAttributes });
+            NotificationEmitter.emit(Notifications.SUBSCRIPTION_STARTED, {
+                subscription: subscriptionAttributes
+            });
             this.executeHookEvent(DefaultHookEvents.ON_INIT, {}, subscriptionAttributes);
         }
     }
@@ -244,5 +247,4 @@ export class SubscriptionReporter {
         await this.unsubscribe();
         Logger.debug(`Subscription reporter '${type}' unsubscribed`);
     }
-
 }

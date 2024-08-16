@@ -45,8 +45,8 @@ describe('DynamicModulesManager', () => {
             'asserters/expect-to-be-truthy-asserter',
             'asserters/expect-to-be-falsy-asserter',
             'asserters/expect-to-be-defined-asserter',
-            'asserters/expect-to-be-undefined-asserter',
-        ].map(expected => dirname + '/' + expected);
+            'asserters/expect-to-be-undefined-asserter'
+        ].map((expected) => dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();
 
         expect(actualList.sort()).toEqual(expectedBuiltInModules.sort());
@@ -68,7 +68,7 @@ describe('DynamicModulesManager', () => {
         expect(mainInstance.objectParserManager).toBeInstanceOf(ObjectParserManager);
     });
 
-    it('should print loaded modules', done => {
+    it('should print loaded modules', (done) => {
         // @ts-ignore
         prettyjson.render.mockImplementation((printedModules) => {
             expect(Array.isArray(printedModules.explicit)).toBeTruthy();
@@ -81,11 +81,23 @@ describe('DynamicModulesManager', () => {
 
     it('should check enqueuer version of plugins', () => {
         // @ts-ignore
-        expect(DynamicModulesManager.versionMatches({dependencies: {enqueuer: '^5.0.0'}})).toBeTruthy();
+        expect(
+            DynamicModulesManager.versionMatches({
+                dependencies: {enqueuer: '^5.0.0'}
+            })
+        ).toBeTruthy();
         // @ts-ignore
-        expect(DynamicModulesManager.versionMatches({devDependencies: {enqueuer: '5.0.0'}})).toBeTruthy();
+        expect(
+            DynamicModulesManager.versionMatches({
+                devDependencies: {enqueuer: '5.0.0'}
+            })
+        ).toBeTruthy();
         // @ts-ignore
-        expect(DynamicModulesManager.versionMatches({peerDependencies: {enqueuer: '5.0.0'}})).toBeTruthy();
+        expect(
+            DynamicModulesManager.versionMatches({
+                peerDependencies: {enqueuer: '5.0.0'}
+            })
+        ).toBeTruthy();
         // @ts-ignore
         expect(DynamicModulesManager.versionMatches({})).toBeFalsy();
     });
