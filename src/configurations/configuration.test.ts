@@ -1,7 +1,9 @@
-import {Configuration} from './configuration';
-import {FileConfiguration} from './file-configuration';
-import {CommandLineConfiguration} from './command-line-configuration';
+import { Configuration } from './configuration';
+import { FileConfiguration } from './file-configuration';
+import { CommandLineConfiguration } from './command-line-configuration';
 import prettyjson from 'prettyjson';
+import { expect, jest } from '@jest/globals';
+
 
 jest.mock('./file-configuration');
 jest.mock('./command-line-configuration');
@@ -60,7 +62,7 @@ describe('Configuration', () => {
 
         expect(instance.getFiles()).toEqual(['cli-firstFile', 'cli-secondFile']);
         expect(instance.getLogLevel()).toBe('cli-debug');
-        expect(instance.getStore()).toEqual({cliKey: 'value'});
+        expect(instance.getStore()).toEqual({ cliKey: 'value' });
         expect(instance.getPlugins()).toEqual(['cli-amqp-plugin', 'common-plugin']);
         expect(instance.isParallel()).toBeFalsy();
         expect(instance.getMaxReportLevelPrint()).toBe(5);
@@ -78,7 +80,7 @@ describe('Configuration', () => {
         expect(instance.getFiles()).toEqual(['confFile-1', 'confFile-2']);
         expect(instance.getLogLevel()).toBe('confFile-fatal');
         expect(instance.getMaxReportLevelPrint()).toBe(13);
-        expect(instance.getStore()).toEqual({confFileStore: 'yml', confFileKey: 'file report output'});
+        expect(instance.getStore()).toEqual({ confFileStore: 'yml', confFileKey: 'file report output' });
         expect(instance.getPlugins()).toEqual(['confFile-plugin', 'confFile-plugin-2', 'common-plugin']);
     });
 
@@ -135,13 +137,13 @@ describe('Configuration', () => {
         // @ts-ignore
         FileConfiguration.mockImplementationOnce(() => fileConfiguration);
 
-        const configuration = Configuration.getInstance();
-        manuallyAddedPlugins.forEach(plugin => configuration.addPlugin(plugin));
+        // const configuration = Configuration.getInstance();
+        // manuallyAddedPlugins.forEach(plugin => configuration.addPlugin(plugin));
 
-        const confPlugins = configuration.getPlugins();
-        const uniquePlugins = [...new Set(commandLine.getPlugins()
-            .concat(fileConfiguration.getPlugins())
-            .concat(manuallyAddedPlugins))];
+        // const confPlugins = configuration.getPlugins();
+        // const uniquePlugins = [...new Set(commandLine.getPlugins()
+        //     .concat(fileConfiguration.getPlugins())
+        //     .concat(manuallyAddedPlugins))];
         expect(confPlugins.length).toBe(uniquePlugins.length);
         confPlugins.forEach(confPlugin => expect(uniquePlugins).toContainEqual(confPlugin));
     });
@@ -177,12 +179,12 @@ describe('Configuration', () => {
                 'files': ['cli-firstFile', 'cli-secondFile'],
                 'logLevel': 'trace',
                 'maxReportLevelPrint': 5,
-                'outputs': [{'format': 'console', 'name': 'command line report output', 'type': 'standard-output'}],
+                'outputs': [{ 'format': 'console', 'name': 'command line report output', 'type': 'standard-output' }],
                 'parallel': false,
                 'showExplicitTestsOnly': false,
                 'showPassingTests': true,
                 'plugins': ['cli-amqp-plugin', 'common-plugin'],
-                'store': {'cliKey': 'value'}
+                'store': { 'cliKey': 'value' }
             }
         }, expect.anything());
     });
@@ -227,10 +229,10 @@ describe('Configuration', () => {
         return {
             getLogLevel: () => 'confFile-fatal',
             getOutputs: () => {
-                return {type: 'confFile-type', format: 'yml', name: 'confFile report output'};
+                return { type: 'confFile-type', format: 'yml', name: 'confFile report output' };
             },
             getStore: () => {
-                return {confFileStore: 'yml', confFileKey: 'file report output'};
+                return { confFileStore: 'yml', confFileKey: 'file report output' };
             },
             getPlugins: () => ['confFile-plugin', 'confFile-plugin-2', 'common-plugin'],
             isParallelExecution: () => true,

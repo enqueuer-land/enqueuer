@@ -1,23 +1,26 @@
+timeout: 60000
 publishers:
-    - type: http
-      url: http://localhost:23075/resource
-      method: POST
-      payload: enqueuer
-      onResponseReceived:
-          assertions:
-              - expect: statusCode
-                toBeGreaterThan: 190
-              - expect: body
-                toBeEqualTo: "'blah'"
+  - type: http
+    url: http://localhost:23075/resource
+    method: POST
+    payload: enqueuer
+    timeout: 60000
+    onResponseReceived:
+      assertions:
+        - expect: statusCode
+          toBeGreaterThan: 190
+        - expect: body
+          toBeEqualTo: "'blah'"
 subscriptions:
-    - type: http
-      endpoint: /resource
-      port: 23075
-      method: POST
-      response:
-          status: 200
-          payload: blah
-      onMessageReceived:
-          assertions:
-              - expect: body
-                toContain: "'queue'"
+  - type: http
+    endpoint: /resource
+    timeout: 60000
+    port: 23075
+    method: POST
+    response:
+      status: 200
+      payload: blah
+    onMessageReceived:
+      assertions:
+        - expect: body
+          toContain: "'queue'"

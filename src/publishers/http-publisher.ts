@@ -1,10 +1,10 @@
-import {Publisher} from './publisher';
-import {Logger} from '../loggers/logger';
-import {PublisherModel} from '../models/inputs/publisher-model';
-import {HttpRequester} from '../pools/http-requester';
-import {MainInstance} from '../plugins/main-instance';
-import {PublisherProtocol} from '../protocols/publisher-protocol';
-import {HttpAuthenticationFactory} from '../http-authentications/http-authentication-factory';
+import { Publisher } from './publisher';
+import { Logger } from '../loggers/logger';
+import { PublisherModel } from '../models/inputs/publisher-model';
+import { HttpRequester } from '../pools/http-requester';
+import { MainInstance } from '../plugins/main-instance';
+import { PublisherProtocol } from '../protocols/publisher-protocol';
+import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
 
 class HttpPublisher extends Publisher {
 
@@ -25,10 +25,13 @@ class HttpPublisher extends Publisher {
             this.payload,
             this.timeout)
             .request();
-        this.executeHookEvent('onResponseReceived', response);
-        //NOTE: Deprecation purpose
-        this.executeHookEvent('onMessageReceived', response);
-        return this.processResponseToBePrinted(response);
+        const structuredResponse = {
+            ...response,
+            body: response.data,
+            statusCode: response.status
+        }
+        this.executeHookEvent('onResponseReceived', structuredResponse);
+        return this.processResponseToBePrinted(structuredResponse);
     }
 
     private processResponseToBePrinted(response: any): object {
