@@ -1,6 +1,6 @@
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 import * as fs from 'fs';
-import {RequisitionFileParser} from './requisition-file-parser';
+import { RequisitionFileParser } from './requisition-file-parser';
 import * as glob from 'glob';
 
 jest.mock('fs');

@@ -1,5 +1,5 @@
-import {RequisitionModel} from '../models/inputs/requisition-model';
-import {RequisitionParser} from './requisition-parser';
+import { RequisitionModel } from '../models/inputs/requisition-model';
+import { RequisitionParser } from './requisition-parser';
 import * as fs from 'fs';
 
 export class RequisitionFileParser {

@@ -1,6 +1,6 @@
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {YmlObjectParser} from '../object-parser/yml-object-parser';
-import {RequisitionParser} from './requisition-parser';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
+import { YmlObjectParser } from '../object-parser/yml-object-parser';
+import { RequisitionParser } from './requisition-parser';
 
 describe('RequisitionParser', () => {
     beforeEach(() => {
@@ -15,7 +15,7 @@ describe('RequisitionParser', () => {
                 id: 0
             },
             {
-                publishers: [{type: true}],
+                publishers: [{ type: true }],
                 name: 'named',
                 id: 1
             }
@@ -50,7 +50,7 @@ describe('RequisitionParser', () => {
             .getObjectParserManager()
             .addObjectParser(() => {
                 return {
-                    parse: (value) => new YmlObjectParser().parse(value)
+                    parse: value => new YmlObjectParser().parse(value)
                 };
             }, 'yml');
 
@@ -70,7 +70,7 @@ describe('RequisitionParser', () => {
             .getObjectParserManager()
             .addObjectParser(() => {
                 return {
-                    parse: (value) => new YmlObjectParser().parse(value)
+                    parse: value => new YmlObjectParser().parse(value)
                 };
             }, 'yml');
 

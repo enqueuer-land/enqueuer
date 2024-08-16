@@ -1,5 +1,5 @@
-import {EnqueuerStarter} from './enqueuer-starter';
-import {EnqueuerRunner} from './enqueuer-runner';
+import { EnqueuerStarter } from './enqueuer-starter';
+import { EnqueuerRunner } from './enqueuer-runner';
 
 jest.mock('./enqueuer-runner');
 jest.mock('./configurations/configuration');
@@ -7,7 +7,7 @@ jest.mock('./configurations/configuration');
 describe('EnqueuerStarter', () => {
     it('Should translate true to 0', async () => {
         // @ts-ignore
-        EnqueuerRunner.mockImplementationOnce(() => ({execute: () => []}));
+        EnqueuerRunner.mockImplementationOnce(() => ({ execute: () => [] }));
 
         expect(await new EnqueuerStarter().start()).toBe(0);
     });
@@ -15,7 +15,7 @@ describe('EnqueuerStarter', () => {
     it('Should translate false to 1', async () => {
         // @ts-ignore
         EnqueuerRunner.mockImplementationOnce(() => ({
-            execute: () => [{valid: false}]
+            execute: () => [{ valid: false }]
         }));
 
         expect(await new EnqueuerStarter().start()).toBe(1);

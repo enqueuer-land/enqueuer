@@ -1,4 +1,4 @@
-import {ReportModel} from './report-model';
+import { ReportModel } from './report-model';
 
 export interface PublisherModel extends ReportModel {
     id: string;

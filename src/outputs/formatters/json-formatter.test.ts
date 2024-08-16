@@ -1,6 +1,6 @@
-import {RequisitionModel} from '../../models/outputs/requisition-model';
-import {entryPoint, JsonReportFormatter} from './json-formatter';
-import {JsonObjectParser} from '../../object-parser/json-object-parser';
+import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { entryPoint, JsonReportFormatter } from './json-formatter';
+import { JsonObjectParser } from '../../object-parser/json-object-parser';
 
 describe('JsonReportFormatter', () => {
     it('Should stringify it', () => {
@@ -25,7 +25,7 @@ describe('JsonReportFormatter', () => {
         expect(() => new JsonReportFormatter().format(test)).toThrow();
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: any = {
             reportFormatterManager: {
                 addReportFormatter: (createFunction: any, ...tags: any) => {

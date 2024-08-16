@@ -1,6 +1,6 @@
-import {HttpAuthentication} from './http-authentication';
-import {TestModel} from '../models/outputs/test-model';
-import {createHash} from 'crypto';
+import { HttpAuthentication } from './http-authentication';
+import { TestModel } from '../models/outputs/test-model';
+import { createHash } from 'crypto';
 
 export class HttpDigestAuthentication implements HttpAuthentication {
     public static MD5_SESS = 'MD5-sess';
@@ -38,7 +38,7 @@ export class HttpDigestAuthentication implements HttpAuthentication {
 
     public generate(): any {
         const response = this.generateResponse();
-        return {authorization: this.createDigestValue(response)};
+        return { authorization: this.createDigestValue(response) };
     }
 
     public verify(authorization: string): TestModel[] {
@@ -48,7 +48,7 @@ export class HttpDigestAuthentication implements HttpAuthentication {
         const params = parts.slice(1).join(' ');
         const tokens = params.split(/,(?=(?:[^"]|"[^"]*")*$)/) || [];
         const essentialFields = this.buildEssentialFields();
-        tokens.forEach((token) => tests.push(this.analyzeToken(token, essentialFields)));
+        tokens.forEach(token => tests.push(this.analyzeToken(token, essentialFields)));
         tests.push(this.checkEssentialFieldsMissingInAuthorization(essentialFields));
         return tests;
     }

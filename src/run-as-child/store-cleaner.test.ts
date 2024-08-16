@@ -1,5 +1,5 @@
-import {StoreCleaner} from './store-cleaner';
-import {Store} from '../configurations/store';
+import { StoreCleaner } from './store-cleaner';
+import { Store } from '../configurations/store';
 
 describe('StoreCleaner', () => {
     it('should clean store when a message arrives', async () => {

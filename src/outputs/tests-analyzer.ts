@@ -1,7 +1,7 @@
-import {RequisitionModel} from '../models/outputs/requisition-model';
-import {ReportModel} from '../models/outputs/report-model';
-import {TestModel, testModelIsPassing} from '../models/outputs/test-model';
-import {HookModel} from '../models/outputs/hook-model';
+import { RequisitionModel } from '../models/outputs/requisition-model';
+import { ReportModel } from '../models/outputs/report-model';
+import { TestModel, testModelIsPassing } from '../models/outputs/test-model';
+import { HookModel } from '../models/outputs/hook-model';
 
 export class TestsAnalyzer {
     private tests: TestModel[] = [];
@@ -12,7 +12,7 @@ export class TestsAnalyzer {
     }
 
     public isValid(): boolean {
-        return this.getNotIgnoredTests().every((test) => test.valid);
+        return this.getNotIgnoredTests().every(test => test.valid);
     }
 
     public getTests(): TestModel[] {
@@ -20,19 +20,21 @@ export class TestsAnalyzer {
     }
 
     public getNotIgnoredTests(): TestModel[] {
-        return this.tests.filter((test) => test.ignored === false || test.ignored === undefined);
+        return this.tests.filter(test => test.ignored === false || test.ignored === undefined);
     }
 
     public getIgnoredList(): TestModel[] {
-        return this.tests.filter((test) => test.ignored === true && test.ignored !== undefined);
+        return this.tests.filter(test => test.ignored === true && test.ignored !== undefined);
     }
 
     public getPassingTests(): TestModel[] {
-        return this.tests.filter((test) => test.valid === true && (test.ignored === false || test.ignored === undefined));
+        return this.tests.filter(test => test.valid === true && (test.ignored === false || test.ignored === undefined));
     }
 
     public getFailingTests(): TestModel[] {
-        return this.tests.filter((test) => test.valid === false && (test.ignored === false || test.ignored === undefined));
+        return this.tests.filter(
+            test => test.valid === false && (test.ignored === false || test.ignored === undefined)
+        );
     }
 
     public getPercentage(): number {

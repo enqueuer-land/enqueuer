@@ -1,6 +1,6 @@
-import {SummaryTestOutput} from './summary-test-output';
+import { SummaryTestOutput } from './summary-test-output';
 
-let consoleLogMock = jest.fn((message) => console.warn(message));
+let consoleLogMock = jest.fn(message => console.warn(message));
 console.log = consoleLogMock;
 
 describe('SummaryTestOutput', () => {
@@ -42,7 +42,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printFailingTests: true, level: 0, printChildren: false}
+            { printFailingTests: true, level: 0, printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('failing')).toBe(1);
@@ -67,7 +67,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printChildren: false}
+            { printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('PASS')).toBe(1);
@@ -95,7 +95,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printChildren: false}
+            { printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('NULL')).toBe(0);
@@ -128,7 +128,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printChildren: false}
+            { printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('FAIL')).toBe(1);
@@ -161,7 +161,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printChildren: false}
+            { printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
@@ -190,7 +190,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printChildren: false}
+            { printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
@@ -219,7 +219,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printChildren: false}
+            { printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('SKIP')).toBe(1);
@@ -241,7 +241,7 @@ describe('SummaryTestOutput', () => {
                     }
                 }
             },
-            {printChildren: false}
+            { printChildren: false }
         ).print();
 
         expect(consolePrintedTimes('NULL')).toBe(1);
@@ -268,9 +268,9 @@ describe('SummaryTestOutput', () => {
             name: 'name',
             valid: true,
             tests: [],
-            publishers: [{name: 'publisher'}],
-            subscriptions: [{name: 'subscription'}],
-            requisitions: [{name: 'requisition'}]
+            publishers: [{ name: 'publisher' }],
+            subscriptions: [{ name: 'subscription' }],
+            requisitions: [{ name: 'requisition' }]
         }).print();
 
         expect(consolePrintedTimes('publisher')).toBe(1);
@@ -283,10 +283,10 @@ describe('SummaryTestOutput', () => {
             {
                 name: 'name',
                 valid: true,
-                publishers: [{name: 'publisher', valid: false}],
-                subscriptions: [{name: 'subscription', valid: false}]
+                publishers: [{ name: 'publisher', valid: false }],
+                subscriptions: [{ name: 'subscription', valid: false }]
             },
-            {maxLevel: 0, level: 0}
+            { maxLevel: 0, level: 0 }
         ).print();
 
         expect(consolePrintedTimes('name')).toBe(1);

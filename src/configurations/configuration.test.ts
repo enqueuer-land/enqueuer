@@ -1,6 +1,6 @@
-import {Configuration} from './configuration';
-import {FileConfiguration} from './file-configuration';
-import {CommandLineConfiguration} from './command-line-configuration';
+import { Configuration } from './configuration';
+import { FileConfiguration } from './file-configuration';
+import { CommandLineConfiguration } from './command-line-configuration';
 import prettyjson from 'prettyjson';
 
 const mockedCommandLineConfiguration = CommandLineConfiguration as jest.Mock;
@@ -59,7 +59,7 @@ describe('Configuration', () => {
 
         expect(instance.getFiles()).toEqual(['cli-firstFile', 'cli-secondFile']);
         expect(instance.getLogLevel()).toBe('cli-debug');
-        expect(instance.getStore()).toEqual({cliKey: 'value'});
+        expect(instance.getStore()).toEqual({ cliKey: 'value' });
         expect(instance.getPlugins()).toEqual(['cli-amqp-plugin', 'common-plugin']);
         expect(instance.isParallel()).toBeFalsy();
         expect(instance.getMaxReportLevelPrint()).toBe(5);
@@ -186,7 +186,7 @@ describe('Configuration', () => {
                     showExplicitTestsOnly: false,
                     showPassingTests: true,
                     plugins: ['cli-amqp-plugin', 'common-plugin'],
-                    store: {cliKey: 'value'}
+                    store: { cliKey: 'value' }
                 }
             },
             expect.anything()
@@ -240,7 +240,7 @@ describe('Configuration', () => {
                 };
             },
             getStore: () => {
-                return {confFileStore: 'yml', confFileKey: 'file report output'};
+                return { confFileStore: 'yml', confFileKey: 'file report output' };
             },
             getPlugins: () => ['confFile-plugin', 'confFile-plugin-2', 'common-plugin'],
             isParallelExecution: () => true,

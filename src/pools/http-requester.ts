@@ -1,5 +1,5 @@
 // import fetch from 'node-fetch';
-import {Logger} from '../loggers/logger';
+import { Logger } from '../loggers/logger';
 
 export class HttpRequester {
     private readonly url: string;
@@ -46,7 +46,8 @@ export class HttpRequester {
         };
         options.data = options.body = this.handleObjectPayload();
         if (this.method.toUpperCase() != 'GET') {
-            options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
+            options.headers['Content-Length'] =
+                options.headers['Content-Length'] || this.setContentLength(options.data);
         }
         return options;
     }

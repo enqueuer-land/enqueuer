@@ -1,4 +1,4 @@
-import {HookModel} from './hook-model';
+import { HookModel } from './hook-model';
 
 export interface ReportModel {
     name: string;

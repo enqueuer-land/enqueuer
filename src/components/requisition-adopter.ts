@@ -1,7 +1,7 @@
-import {IdGenerator} from '../strings/id-generator';
-import {RequisitionModel} from '../models/inputs/requisition-model';
-import {PublisherModel} from '../models/inputs/publisher-model';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
+import { IdGenerator } from '../strings/id-generator';
+import { RequisitionModel } from '../models/inputs/requisition-model';
+import { PublisherModel } from '../models/inputs/publisher-model';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
 
 export class RequisitionAdopter {
     private readonly requisition: RequisitionModel;
@@ -24,7 +24,11 @@ export class RequisitionAdopter {
         return this.requisition;
     }
 
-    private baptiseRequisition(requisition: RequisitionModel, name?: string, parent?: RequisitionModel): RequisitionModel {
+    private baptiseRequisition(
+        requisition: RequisitionModel,
+        name?: string,
+        parent?: RequisitionModel
+    ): RequisitionModel {
         requisition = Object.assign({}, this.defaultModel, requisition) as RequisitionModel;
         this.putNameAndId(requisition, name, parent);
         requisition.requisitions = requisition.requisitions.map((child, index) => {
@@ -35,12 +39,17 @@ export class RequisitionAdopter {
             (publisher, index) => this.putNameAndId(publisher, `Publisher #${index}`, requisition) as PublisherModel
         );
         requisition.subscriptions = requisition.subscriptions.map(
-            (subscription, index) => this.putNameAndId(subscription, `Subscription #${index}`, requisition) as SubscriptionModel
+            (subscription, index) =>
+                this.putNameAndId(subscription, `Subscription #${index}`, requisition) as SubscriptionModel
         );
         return requisition;
     }
 
-    private putNameAndId(component: RequisitionModel | PublisherModel | SubscriptionModel, name?: string, parent?: RequisitionModel) {
+    private putNameAndId(
+        component: RequisitionModel | PublisherModel | SubscriptionModel,
+        name?: string,
+        parent?: RequisitionModel
+    ) {
         if (!component.name && name) {
             component.name = name;
         }

@@ -1,11 +1,11 @@
-import {YmlObjectParser, entryPoint} from './yml-object-parser';
+import { YmlObjectParser, entryPoint } from './yml-object-parser';
 import * as yaml from 'yamljs';
-import {ObjectDecycler} from './object-decycler';
-import {MainInstance} from '../plugins/main-instance';
+import { ObjectDecycler } from './object-decycler';
+import { MainInstance } from '../plugins/main-instance';
 
 describe('YmlObjectParser', () => {
     test('should stringify with param', () => {
-        const value = {firstLevel: {secondLevel: 'value'}};
+        const value = { firstLevel: { secondLevel: 'value' } };
 
         const stringified = new YmlObjectParser().stringify(value, {
             space: 4,
@@ -16,7 +16,7 @@ describe('YmlObjectParser', () => {
     });
 
     test('should stringify default', () => {
-        const value = {firstLevel: {secondLevel: 'value'}};
+        const value = { firstLevel: { secondLevel: 'value' } };
         const defaultInline = 100;
         const defaultSpace = 2;
 
@@ -35,7 +35,7 @@ describe('YmlObjectParser', () => {
     });
 
     test('should stringify cycle reference', () => {
-        let value: any = {firstLevel: {secondLevel: {}}};
+        let value: any = { firstLevel: { secondLevel: {} } };
         value.firstLevel.secondLevel.thirdLevel = value;
 
         const stringified = new YmlObjectParser().stringify(value);
@@ -56,7 +56,7 @@ describe('YmlObjectParser', () => {
         expect(() => new YmlObjectParser().parse(notYml)).toThrow();
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             objectParserManager: {

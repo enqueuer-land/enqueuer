@@ -1,6 +1,6 @@
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
-import {entryPoint, ExpectToBeGreaterThanOrEqualToAsserter} from './expect-to-be-greater-than-or-equal-to-asserter';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
+import { entryPoint, ExpectToBeGreaterThanOrEqualToAsserter } from './expect-to-be-greater-than-or-equal-to-asserter';
 
 describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
     it('should compare greater', () => {
@@ -78,7 +78,7 @@ describe('ExpectToBeGreaterThanOrEqualToAsserter', () => {
         expect(test.description).toBe("Expected 'body.actual' to be greater than or equal to '3'. Received '2'");
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

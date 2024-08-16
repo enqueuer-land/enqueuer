@@ -1,6 +1,6 @@
-import {ObjectParser} from './object-parser';
-import {ObjectDecycler} from './object-decycler';
-import {MainInstance} from '../plugins/main-instance';
+import { ObjectParser } from './object-parser';
+import { ObjectDecycler } from './object-decycler';
+import { MainInstance } from '../plugins/main-instance';
 
 export class JsonObjectParser implements ObjectParser {
     public parse(value: string): object {

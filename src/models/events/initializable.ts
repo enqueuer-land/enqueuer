@@ -1,4 +1,4 @@
-import {Event} from './event';
+import { Event } from './event';
 
 export interface Initializable {
     onInit?: Event;

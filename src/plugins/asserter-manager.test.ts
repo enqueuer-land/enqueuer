@@ -1,6 +1,6 @@
-import {AsserterManager} from './asserter-manager';
-import {ExpectToBeEqualToAsserter} from '../asserters/expect-to-be-equal-to-asserter';
-import {NullAsserter} from '../asserters/null-asserter';
+import { AsserterManager } from './asserter-manager';
+import { ExpectToBeEqualToAsserter } from '../asserters/expect-to-be-equal-to-asserter';
+import { NullAsserter } from '../asserters/null-asserter';
 import prettyjson from 'prettyjson';
 
 jest.mock('prettyjson');
@@ -12,7 +12,10 @@ prettyjson.render.mockImplementation(render);
 describe('AsserterManager', () => {
     it('should create proper asserter', () => {
         const asserterManager = new AsserterManager();
-        asserterManager.addAsserter({equals: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
+        asserterManager.addAsserter(
+            { equals: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
 
         const asserter = asserterManager.createAsserter({
             name: 'any',
@@ -49,9 +52,12 @@ describe('AsserterManager', () => {
 
     it('should create Null asserter', () => {
         const asserterManager = new AsserterManager();
-        asserterManager.addAsserter({equals: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
+        asserterManager.addAsserter(
+            { equals: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
 
-        const asserter = asserterManager.createAsserter({name: 'any'});
+        const asserter = asserterManager.createAsserter({ name: 'any' });
 
         expect(asserter).toBeInstanceOf(NullAsserter);
     });
@@ -59,9 +65,18 @@ describe('AsserterManager', () => {
     it('should describe every matching asserter', () => {
         const asserterManager = new AsserterManager();
 
-        asserterManager.addAsserter({toBeEqualTo: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
-        asserterManager.addAsserter({toBeGreaterThan: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
-        asserterManager.addAsserter({toBeLessThan: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
+        asserterManager.addAsserter(
+            { toBeEqualTo: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
+        asserterManager.addAsserter(
+            { toBeGreaterThan: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
+        asserterManager.addAsserter(
+            { toBeLessThan: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
 
         const status = asserterManager.describeMatchingAsserters('than');
 
@@ -92,22 +107,37 @@ describe('AsserterManager', () => {
     it('should not describe', () => {
         const asserterManager = new AsserterManager();
 
-        asserterManager.addAsserter({toBeEqualTo: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
-        asserterManager.addAsserter({toBeGreaterThan: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
-        asserterManager.addAsserter({toBeLessThan: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
+        asserterManager.addAsserter(
+            { toBeEqualTo: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
+        asserterManager.addAsserter(
+            { toBeGreaterThan: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
+        asserterManager.addAsserter(
+            { toBeLessThan: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
 
         const status = asserterManager.describeMatchingAsserters('does not match');
 
         expect(status).toBeFalsy();
-        expect(render).toHaveBeenCalledWith({asserters: []}, expect.anything());
+        expect(render).toHaveBeenCalledWith({ asserters: [] }, expect.anything());
     });
 
     it('should describe every asserter', () => {
         const asserterManager = new AsserterManager();
 
-        asserterManager.addAsserter({toBeEqualTo: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
-        asserterManager.addAsserter({toBeGreaterThan: {description: 'some', type: 'string'}}, () => new ExpectToBeEqualToAsserter());
-        asserterManager.addAsserter({toBeLessThan: {description: 'some'}}, () => new ExpectToBeEqualToAsserter());
+        asserterManager.addAsserter(
+            { toBeEqualTo: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
+        asserterManager.addAsserter(
+            { toBeGreaterThan: { description: 'some', type: 'string' } },
+            () => new ExpectToBeEqualToAsserter()
+        );
+        asserterManager.addAsserter({ toBeLessThan: { description: 'some' } }, () => new ExpectToBeEqualToAsserter());
 
         const status = asserterManager.describeMatchingAsserters(true);
 

@@ -1,9 +1,9 @@
-import {ProtocolManager} from './protocol-manager';
+import { ProtocolManager } from './protocol-manager';
 import prettyjson from 'prettyjson';
-import {NullPublisher} from '../publishers/null-publisher';
-import {NullSubscription} from '../subscriptions/null-subscription';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-import {PublisherProtocol} from '../protocols/publisher-protocol';
+import { NullPublisher } from '../publishers/null-publisher';
+import { NullSubscription } from '../subscriptions/null-subscription';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
+import { PublisherProtocol } from '../protocols/publisher-protocol';
 
 jest.mock('prettyjson');
 
@@ -39,14 +39,14 @@ describe('ProtocolManager', () => {
         // @ts-ignore
         const protocolManager = new ProtocolManager();
         protocolManager.addProtocol(
-            new PublisherProtocol('mine', (arg) => {
+            new PublisherProtocol('mine', arg => {
                 publisher.arg = arg;
                 return publisher;
             })
         );
         // @ts-ignore
-        const actual = protocolManager.createPublisher({type: 'mine'});
-        expect(actual).toEqual({arg: {type: 'mine'}});
+        const actual = protocolManager.createPublisher({ type: 'mine' });
+        expect(actual).toEqual({ arg: { type: 'mine' } });
     });
 
     it('should create right Subscription', () => {
@@ -54,14 +54,14 @@ describe('ProtocolManager', () => {
         // @ts-ignore
         const protocolManager = new ProtocolManager();
         protocolManager.addProtocol(
-            new SubscriptionProtocol('mine', (arg) => {
+            new SubscriptionProtocol('mine', arg => {
                 subscription.arg = arg;
                 return subscription;
             })
         );
         // @ts-ignore
-        const actual = protocolManager.createSubscription({type: 'mine'});
-        expect(actual).toEqual({arg: {type: 'mine'}});
+        const actual = protocolManager.createSubscription({ type: 'mine' });
+        expect(actual).toEqual({ arg: { type: 'mine' } });
     });
 
     it('should create NullPublisher', () => {
@@ -116,18 +116,20 @@ describe('ProtocolManager', () => {
                                 onFinish: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed when the component is about to finish'
                                 },
                                 onInit: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed as soon as the component is initialized'
                                 }
@@ -185,18 +187,20 @@ describe('ProtocolManager', () => {
                                 onFinish: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed when the component is about to finish'
                                 },
                                 onInit: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed as soon as the component is initialized'
                                 }
@@ -228,18 +232,20 @@ describe('ProtocolManager', () => {
                                 onFinish: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed when the component is about to finish'
                                 },
                                 onInit: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed as soon as the component is initialized'
                                 }
@@ -320,18 +326,20 @@ describe('ProtocolManager', () => {
                                 onFinish: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed when the component is about to finish'
                                 },
                                 onInit: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed as soon as the component is initialized'
                                 }
@@ -403,18 +411,20 @@ describe('ProtocolManager', () => {
                                 onFinish: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed when the component is about to finish'
                                 },
                                 onInit: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed as soon as the component is initialized'
                                 }
@@ -460,18 +470,20 @@ describe('ProtocolManager', () => {
                                 onFinish: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed when the component is about to finish'
                                 },
                                 onInit: {
                                     arguments: {
                                         elapsedTime: {
-                                            description: 'Number of milliseconds since the instantiation of the component'
+                                            description:
+                                                'Number of milliseconds since the instantiation of the component'
                                         },
-                                        this: {description: 'Pointer to the component'}
+                                        this: { description: 'Pointer to the component' }
                                     },
                                     description: 'Executed as soon as the component is initialized'
                                 }

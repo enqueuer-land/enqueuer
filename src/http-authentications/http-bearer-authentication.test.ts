@@ -1,4 +1,4 @@
-import {HttpBearerAuthentication} from './http-bearer-authentication';
+import { HttpBearerAuthentication } from './http-bearer-authentication';
 
 describe('HttpBearerAuthentication', () => {
     const BEARER_TOKEN = 'Bearer dXNlcjpwYXNzd29yZA';
@@ -21,14 +21,14 @@ describe('HttpBearerAuthentication', () => {
 
         const verify = authorization.verify(BEARER_TOKEN);
 
-        expect(verify.every((test) => test.valid)).toBeTruthy();
+        expect(verify.every(test => test.valid)).toBeTruthy();
     });
 
     it('Verify token unmatch', () => {
         const authorization: HttpBearerAuthentication = new HttpBearerAuthentication(DEFAULT_AUTH);
 
         const verify = authorization.verify('Bearer tokenUnmatch');
-        const bearerTokenTest = verify.filter((test) => test.name == '"Bearer" authentication token')[0];
+        const bearerTokenTest = verify.filter(test => test.name == '"Bearer" authentication token')[0];
 
         expect(bearerTokenTest.valid).toBeFalsy();
     });
@@ -38,7 +38,7 @@ describe('HttpBearerAuthentication', () => {
 
         const verify = authorization.verify('WrongPrefix dXNlcjpwYXNzd29yZA');
 
-        expect(verify.filter((test) => !test.valid)[0].name).toBe('"Bearer" authentication prefix');
+        expect(verify.filter(test => !test.valid)[0].name).toBe('"Bearer" authentication prefix');
     });
 
     it('Generate authorization based on token', () => {
@@ -55,6 +55,6 @@ describe('HttpBearerAuthentication', () => {
         // @ts-ignore
         const verify = authorization.verify();
 
-        expect(verify.some((test) => test.valid)).toBeFalsy();
+        expect(verify.some(test => test.valid)).toBeFalsy();
     });
 });

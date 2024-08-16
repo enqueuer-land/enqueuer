@@ -1,6 +1,6 @@
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
-import {entryPoint, ExpectToBeTruthyAsserter} from './expect-to-be-truthy-asserter';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
+import { entryPoint, ExpectToBeTruthyAsserter } from './expect-to-be-truthy-asserter';
 
 describe('ExpectToBeTruthyAsserter', () => {
     it('should be truthy', () => {
@@ -35,7 +35,7 @@ describe('ExpectToBeTruthyAsserter', () => {
         expect(test.description).toBe("Expecting 'body.expected' to be true. Received: undefined");
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

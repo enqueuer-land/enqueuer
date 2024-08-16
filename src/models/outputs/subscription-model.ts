@@ -1,4 +1,4 @@
-import {ReportModel} from './report-model';
+import { ReportModel } from './report-model';
 
 export interface SubscriptionModel extends ReportModel {
     id: string;

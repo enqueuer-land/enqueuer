@@ -1,9 +1,9 @@
-import {HttpContainerPool} from './http-container-pool';
-import {HttpContainer} from './http-container';
-import {Logger} from '../loggers/logger';
+import { HttpContainerPool } from './http-container-pool';
+import { HttpContainer } from './http-container';
+import { Logger } from '../loggers/logger';
 
 let acquireMock = jest.fn(() => Promise.resolve('acquireReturn'));
-let releaseMock = jest.fn((cb) => cb());
+let releaseMock = jest.fn(cb => cb());
 
 jest.mock('./http-container');
 let constructorHttpContainer = jest.fn(() => {
@@ -29,7 +29,7 @@ describe('HttpContainerPool', () => {
 
     it('create new App', async () => {
         const port = 987;
-        const credentials = {key: 'value'};
+        const credentials = { key: 'value' };
 
         const result = await HttpContainerPool.getApp(port, true, credentials);
 
@@ -41,7 +41,7 @@ describe('HttpContainerPool', () => {
     it('reuse App', async () => {
         const port = 987;
         const secure = true;
-        const credentials = {key: 'value'};
+        const credentials = { key: 'value' };
 
         await HttpContainerPool.getApp(port, secure, credentials);
         const result = await HttpContainerPool.getApp(port, secure, credentials);

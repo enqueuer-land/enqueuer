@@ -21,7 +21,7 @@ class Subscription {
 
     receiveMessage(context) {
         return new Promise((resolve, reject) => {
-            this.server.on('error', (err) => {
+            this.server.on('error', err => {
                 this.server.close();
                 reject(err);
             });
@@ -48,17 +48,22 @@ class Publisher {
             const client = dgram.createSocket('udp4');
             context.logger.debug('Udp client trying to send message');
 
-            client.send(Buffer.from(this.publisher.payload), this.publisher.port, this.publisher.serverAddress, (error) => {
-                if (error) {
-                    client.close();
-                    reject(error);
-                    return;
+            client.send(
+                Buffer.from(this.publisher.payload),
+                this.publisher.port,
+                this.publisher.serverAddress,
+                error => {
+                    if (error) {
+                        client.close();
+                        reject(error);
+                        return;
+                    }
+                    context.logger.debug('Udp client sent message');
+                    resolve();
                 }
-                context.logger.debug('Udp client sent message');
-                resolve();
-            });
+            );
         });
     }
 }
 
-module.exports = {Subscription, Publisher};
+module.exports = { Subscription, Publisher };

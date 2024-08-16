@@ -1,4 +1,4 @@
-import {LogLevel} from './log-level';
+import { LogLevel } from './log-level';
 
 describe('LogLevel', () => {
     it('should have correct priorities', () => {

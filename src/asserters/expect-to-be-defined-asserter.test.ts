@@ -1,6 +1,6 @@
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
-import {entryPoint, ExpectToBeDefinedAsserter} from './expect-to-be-defined-asserter';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
+import { entryPoint, ExpectToBeDefinedAsserter } from './expect-to-be-defined-asserter';
 
 describe('ExpectToBeDefinedAsserter', () => {
     it('should be defined', () => {
@@ -35,7 +35,7 @@ describe('ExpectToBeDefinedAsserter', () => {
         expect(test.description).toBe("Expecting 'body.expected' to be defined");
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

@@ -1,5 +1,5 @@
-import {Subscription} from './subscription';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
+import { Subscription } from './subscription';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
 
 export class NullSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {

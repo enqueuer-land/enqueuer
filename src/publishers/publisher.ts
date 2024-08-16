@@ -1,6 +1,6 @@
-import {PublisherModel} from '../models/inputs/publisher-model';
-import {Event} from '../models/events/event';
-import {Logger} from '../loggers/logger';
+import { PublisherModel } from '../models/inputs/publisher-model';
+import { Event } from '../models/events/event';
+import { Logger } from '../loggers/logger';
 
 export abstract class Publisher {
     public type: string;
@@ -15,7 +15,7 @@ export abstract class Publisher {
     [propName: string]: any;
 
     protected constructor(publisherAttributes: PublisherModel) {
-        Object.keys(publisherAttributes).forEach((key) => {
+        Object.keys(publisherAttributes).forEach(key => {
             this[key] = publisherAttributes[key];
         });
         this.type = publisherAttributes.type;

@@ -1,15 +1,15 @@
-import {RequisitionReportGenerator} from './requisition-report-generator';
-import {Logger} from '../loggers/logger';
+import { RequisitionReportGenerator } from './requisition-report-generator';
+import { Logger } from '../loggers/logger';
 import * as input from '../models/inputs/requisition-model';
-import {RequisitionModel} from '../models/inputs/requisition-model';
+import { RequisitionModel } from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
-import {MultiSubscriptionsReporter} from './subscription/multi-subscriptions-reporter';
-import {MultiPublishersReporter} from './publishers/multi-publishers-reporter';
-import {EventExecutor} from '../events/event-executor';
-import {DefaultHookEvents} from '../models/events/event';
-import {TestModel} from '../models/outputs/test-model';
-import {NotificationEmitter} from '../notifications/notification-emitter';
-import {Notifications} from '../notifications/notifications';
+import { MultiSubscriptionsReporter } from './subscription/multi-subscriptions-reporter';
+import { MultiPublishersReporter } from './publishers/multi-publishers-reporter';
+import { EventExecutor } from '../events/event-executor';
+import { DefaultHookEvents } from '../models/events/event';
+import { TestModel } from '../models/outputs/test-model';
+import { NotificationEmitter } from '../notifications/notification-emitter';
+import { Notifications } from '../notifications/notifications';
 
 export class RequisitionReporter {
     public static readonly DEFAULT_TIMEOUT = 5 * 1000;
@@ -44,7 +44,7 @@ export class RequisitionReporter {
     }
 
     public async startTimeout(): Promise<output.RequisitionModel> {
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             if (this.timeout) {
                 Logger.debug('Starting requisition time out');
                 await this.sleep(this.timeout);
@@ -61,12 +61,15 @@ export class RequisitionReporter {
         try {
             this.multiSubscriptionsReporter.start();
             await this.multiSubscriptionsReporter.subscribe();
-            await Promise.all([this.multiSubscriptionsReporter.receiveMessage(), this.multiPublishersReporter.publish()]);
+            await Promise.all([
+                this.multiSubscriptionsReporter.receiveMessage(),
+                this.multiPublishersReporter.publish()
+            ]);
         } catch (err) {
             Logger.error(`Requisition error: ${err}`);
             this.reportGenerator.addTest(DefaultHookEvents.ON_FINISH, {
                 valid: false,
-                tests: [{name: 'Requisition error', description: '' + err, valid: false}]
+                tests: [{ name: 'Requisition error', description: '' + err, valid: false }]
             });
         }
         if (!this.hasFinished) {
@@ -93,7 +96,7 @@ export class RequisitionReporter {
     }
 
     private async sleep(delay: number): Promise<void> {
-        return await new Promise((timeoutResolve) => setTimeout(() => timeoutResolve(), delay));
+        return await new Promise(timeoutResolve => setTimeout(() => timeoutResolve(), delay));
     }
 
     private async onRequisitionFinish(): Promise<void> {
@@ -114,9 +117,9 @@ export class RequisitionReporter {
         eventExecutor.addArgument('elapsedTime', elapsedTime);
         const testModels = eventExecutor.execute();
         const hookResult = {
-            valid: testModels.every((test) => test.valid),
+            valid: testModels.every(test => test.valid),
             tests: testModels,
-            arguments: {elapsedTime: elapsedTime}
+            arguments: { elapsedTime: elapsedTime }
         };
         this.reportGenerator.addTest(DefaultHookEvents.ON_INIT, hookResult);
         NotificationEmitter.emit(Notifications.HOOK_FINISHED, {
@@ -129,14 +132,18 @@ export class RequisitionReporter {
 
     private async executeOnFinishFunction(): Promise<void> {
         this.multiSubscriptionsReporter.onFinish();
-        const onFinishEventExecutor = new EventExecutor(this.requisitionAttributes, DefaultHookEvents.ON_FINISH, 'requisition');
+        const onFinishEventExecutor = new EventExecutor(
+            this.requisitionAttributes,
+            DefaultHookEvents.ON_FINISH,
+            'requisition'
+        );
         const elapsedTime = new Date().getTime() - this.startTime.getTime();
         onFinishEventExecutor.addArgument('elapsedTime', elapsedTime);
         const testModels = onFinishEventExecutor.execute();
         const hookResult = {
-            valid: testModels.every((test) => test.valid),
+            valid: testModels.every(test => test.valid),
             tests: testModels,
-            arguments: {elapsedTime: elapsedTime}
+            arguments: { elapsedTime: elapsedTime }
         };
         this.reportGenerator.addTest(DefaultHookEvents.ON_FINISH, hookResult);
         NotificationEmitter.emit(Notifications.HOOK_FINISHED, {

@@ -1,4 +1,4 @@
-import {HandlerListener} from './handler-listener';
+import { HandlerListener } from './handler-listener';
 import * as net from 'net';
 
 export class StreamInputHandler {

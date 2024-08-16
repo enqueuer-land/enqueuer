@@ -1,5 +1,5 @@
-import {CsvObjectParser, entryPoint} from './csv-object-parser';
-import {MainInstance} from '../plugins/main-instance';
+import { CsvObjectParser, entryPoint } from './csv-object-parser';
+import { MainInstance } from '../plugins/main-instance';
 
 describe('CsvObjectParser', () => {
     test('should stringify undefined objects', () => {
@@ -24,8 +24,8 @@ describe('CsvObjectParser', () => {
     test('should parse with ; and header as default', () => {
         const value = 'title1;title2;title3\n' + 'a1;a2;a3\n' + 'b1;b2;b3\r\n';
         const expected = [
-            {title1: 'a1', title2: 'a2', title3: 'a3'},
-            {title1: 'b1', title2: 'b2', title3: 'b3'}
+            { title1: 'a1', title2: 'a2', title3: 'a3' },
+            { title1: 'b1', title2: 'b2', title3: 'b3' }
         ];
 
         const parsed = new CsvObjectParser().parse(value);
@@ -77,7 +77,7 @@ b1\tb2\tb3';
         expect(stringified).toBe('[CYCLIC REFERENCE]');
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             objectParserManager: {

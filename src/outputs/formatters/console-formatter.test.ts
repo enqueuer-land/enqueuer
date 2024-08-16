@@ -1,5 +1,5 @@
-import {RequisitionModel} from '../../models/outputs/requisition-model';
-import {ConsoleFormatter, entryPoint} from './console-formatter';
+import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { ConsoleFormatter, entryPoint } from './console-formatter';
 
 describe('ConsoleFormatter', () => {
     it('Should stringify it', () => {
@@ -13,7 +13,7 @@ describe('ConsoleFormatter', () => {
         expect(typeof format).toBe('string');
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: any = {
             reportFormatterManager: {
                 addReportFormatter: (createFunction: any, ...tags: any) => {

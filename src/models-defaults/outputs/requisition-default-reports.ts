@@ -1,7 +1,7 @@
 import * as output from '../../models/outputs/requisition-model';
-import {DateController} from '../../timers/date-controller';
-import {TestModel} from '../../models/outputs/test-model';
-import {DefaultHookEvents} from '../../models/events/event';
+import { DateController } from '../../timers/date-controller';
+import { TestModel } from '../../models/outputs/test-model';
+import { DefaultHookEvents } from '../../models/events/event';
 
 export class RequisitionDefaultReports {
     public static createDefaultReport(
@@ -15,7 +15,7 @@ export class RequisitionDefaultReports {
         },
         onFinishTests: TestModel[] = []
     ): output.RequisitionModel {
-        const valid = onFinishTests.every((test) => test.valid);
+        const valid = onFinishTests.every(test => test.valid);
         return {
             valid: valid,
             name: base.name,
@@ -47,7 +47,7 @@ export class RequisitionDefaultReports {
         };
     }
 
-    public static createRunningError(base: {name: string; id: string}, err: any): output.RequisitionModel {
+    public static createRunningError(base: { name: string; id: string }, err: any): output.RequisitionModel {
         return RequisitionDefaultReports.createDefaultReport(base, [
             {
                 valid: false,
@@ -57,7 +57,7 @@ export class RequisitionDefaultReports {
         ]);
     }
 
-    public static createSkippedReport(base: {name: string; id: string}): output.RequisitionModel {
+    public static createSkippedReport(base: { name: string; id: string }): output.RequisitionModel {
         return RequisitionDefaultReports.createDefaultReport(base, [
             {
                 valid: true,
@@ -67,12 +67,12 @@ export class RequisitionDefaultReports {
         ]);
     }
 
-    public static createIgnoredReport(base: {name: string; id: string; ignored?: true}): output.RequisitionModel {
+    public static createIgnoredReport(base: { name: string; id: string; ignored?: true }): output.RequisitionModel {
         base.ignored = true;
         return RequisitionDefaultReports.createDefaultReport(base);
     }
 
-    public static createIteratorReport(base: {name: string; id: string}): output.RequisitionModel {
+    public static createIteratorReport(base: { name: string; id: string }): output.RequisitionModel {
         return RequisitionDefaultReports.createDefaultReport(base);
     }
 }

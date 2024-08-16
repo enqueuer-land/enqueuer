@@ -1,6 +1,6 @@
-import {RequisitionRunner} from './requisition-runner';
-import {RequisitionModel} from '../models/inputs/requisition-model';
-import {Store} from '../configurations/store';
+import { RequisitionRunner } from './requisition-runner';
+import { RequisitionModel } from '../models/inputs/requisition-model';
+import { Store } from '../configurations/store';
 
 describe('RequisitionRunner', () => {
     it('Should return requisition reporter skipped', async () => {

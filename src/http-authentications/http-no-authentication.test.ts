@@ -1,4 +1,4 @@
-import {HttpNoAuthentication} from './http-no-authentication';
+import { HttpNoAuthentication } from './http-no-authentication';
 
 describe('HttpNoAuthentication', () => {
     it('generate', () => {
@@ -14,6 +14,6 @@ describe('HttpNoAuthentication', () => {
 
         const value = no.verify(no.generate());
 
-        expect(value.every((test) => !test.valid)).toBeTruthy();
+        expect(value.every(test => !test.valid)).toBeTruthy();
     });
 });

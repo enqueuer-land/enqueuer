@@ -1,11 +1,11 @@
-import {Event} from '../models/events/event';
-import {Assertion} from '../models/events/assertion';
-import {Logger} from '../loggers/logger';
-import {TestModel} from '../models/outputs/test-model';
-import {EventCodeGenerator} from '../code-generators/event-code-generator';
+import { Event } from '../models/events/event';
+import { Assertion } from '../models/events/assertion';
+import { Logger } from '../loggers/logger';
+import { TestModel } from '../models/outputs/test-model';
+import { EventCodeGenerator } from '../code-generators/event-code-generator';
 
 export class EventExecutor {
-    private arguments: {name: string; value: any}[] = [];
+    private arguments: { name: string; value: any }[] = [];
     private readonly thisArg: any;
     private readonly event: Event;
     private readonly eventName: string;
@@ -20,7 +20,7 @@ export class EventExecutor {
     }
 
     public addArgument(name: string, value: any): void {
-        this.arguments.push({name: name, value: value});
+        this.arguments.push({ name: name, value: value });
     }
 
     public execute(): TestModel[] {
@@ -28,7 +28,7 @@ export class EventExecutor {
         Logger.trace(`'${this.eventName}': ${JSON.stringify(this.event)}`);
         this.arguments.unshift({
             name: 'argumentNames',
-            value: this.arguments.map((item) => item.name)
+            value: this.arguments.map(item => item.name)
         });
         return new EventCodeGenerator(this.thisArg, this.eventName).run(this.arguments);
     }

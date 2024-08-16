@@ -1,18 +1,18 @@
-import {Logger} from '../loggers/logger';
-import {RequisitionReporter} from '../reporters/requisition-reporter';
+import { Logger } from '../loggers/logger';
+import { RequisitionReporter } from '../reporters/requisition-reporter';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
-import {JsonPlaceholderReplacer} from 'json-placeholder-replacer';
-import {Store} from '../configurations/store';
-import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
-import {FileContentMapCreator} from '../configurations/file-content-map-creator';
-import {IterationsEvaluator} from './iterations-evaluator';
-import {ComponentParentBackupper} from '../components/component-parent-backupper';
-import {ComponentImporter} from './component-importer';
-import {RequisitionAdopter} from '../components/requisition-adopter';
-import {NotificationEmitter} from '../notifications/notification-emitter';
-import {testModelIsNotFailing} from '../models/outputs/test-model';
-import {Notifications} from '../notifications/notifications';
+import { JsonPlaceholderReplacer } from 'json-placeholder-replacer';
+import { Store } from '../configurations/store';
+import { RequisitionDefaultReports } from '../models-defaults/outputs/requisition-default-reports';
+import { FileContentMapCreator } from '../configurations/file-content-map-creator';
+import { IterationsEvaluator } from './iterations-evaluator';
+import { ComponentParentBackupper } from '../components/component-parent-backupper';
+import { ComponentImporter } from './component-importer';
+import { RequisitionAdopter } from '../components/requisition-adopter';
+import { NotificationEmitter } from '../notifications/notification-emitter';
+import { testModelIsNotFailing } from '../models/outputs/test-model';
+import { Notifications } from '../notifications/notifications';
 
 export class RequisitionRunner {
     private requisition: input.RequisitionModel;
@@ -60,7 +60,9 @@ export class RequisitionRunner {
                 this.requisition.iteration = iterationCounter;
                 this.requisition.totalIterations = iterations;
                 const iterationSuffix: string = iterations > 1 ? ` [${iterationCounter}]` : '';
-                Logger.trace(`Requisition runner starting requisition reporter for '${this.requisition.name + iterationSuffix}'`);
+                Logger.trace(
+                    `Requisition runner starting requisition reporter for '${this.requisition.name + iterationSuffix}'`
+                );
                 const report = await this.startRequisitionReporter();
                 reports.push(report);
                 this.emitOnFinishNotification(report);
@@ -95,8 +97,12 @@ export class RequisitionRunner {
         const componentParentBackupper = new ComponentParentBackupper();
         componentParentBackupper.removeParents(this.requisition);
         const fileMapCreator = new FileContentMapCreator(this.requisition);
-        const fileReplaced = new JsonPlaceholderReplacer().addVariableMap(fileMapCreator.getMap()).replace(this.requisition);
-        this.requisition = new JsonPlaceholderReplacer().addVariableMap(Store.getData()).replace(fileReplaced) as input.RequisitionModel;
+        const fileReplaced = new JsonPlaceholderReplacer()
+            .addVariableMap(fileMapCreator.getMap())
+            .replace(this.requisition);
+        this.requisition = new JsonPlaceholderReplacer()
+            .addVariableMap(Store.getData())
+            .replace(fileReplaced) as input.RequisitionModel;
         componentParentBackupper.putParentsBack(this.requisition);
     }
 
@@ -105,7 +111,9 @@ export class RequisitionRunner {
         const report = await Promise.race([this.timeoutPath(), this.happyPath()]);
 
         const iterationCounter: string = +report.totalIterations! > 1 ? ` [${report.iteration}]` : '';
-        Logger.info(`Requisition '${report.name + iterationCounter}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`);
+        Logger.info(
+            `Requisition '${report.name + iterationCounter}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`
+        );
         Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
 
         return report;
@@ -113,7 +121,9 @@ export class RequisitionRunner {
 
     private async timeoutPath(): Promise<output.RequisitionModel> {
         const report = await this.requisitionReporter!.startTimeout();
-        report.requisitions = await Promise.all(this.childrenRequisitionRunner.map((childRunner) => childRunner.interrupt()));
+        report.requisitions = await Promise.all(
+            this.childrenRequisitionRunner.map(childRunner => childRunner.interrupt())
+        );
         Logger.debug(`Requisition '${this.requisition.name}' timed out`);
 
         return report;
@@ -127,7 +137,7 @@ export class RequisitionRunner {
         report.requisitions = childrenReport;
         report.valid =
             report.valid &&
-            report.requisitions.every((requisition) => testModelIsNotFailing(requisition)) &&
+            report.requisitions.every(requisition => testModelIsNotFailing(requisition)) &&
             Object.keys(report.hooks || {}).every((key: string) => (report.hooks ? report.hooks[key].valid : true));
         Logger.debug(`Requisition ${this.requisition.name} went through the happy path`);
         return report;

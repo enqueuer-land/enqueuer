@@ -1,7 +1,7 @@
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
-import {entryPoint, ExpectToBeFalsyAsserter} from './expect-to-be-falsy-asserter';
-import {AssertionTemplate} from '../plugins/asserter-manager';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
+import { entryPoint, ExpectToBeFalsyAsserter } from './expect-to-be-falsy-asserter';
+import { AssertionTemplate } from '../plugins/asserter-manager';
 
 describe('ExpectToBeFalsyAsserter', () => {
     it('should be falsy', () => {
@@ -36,7 +36,7 @@ describe('ExpectToBeFalsyAsserter', () => {
         expect(test.description).toBe("Expecting 'body.expected' to be false. Received: undefined");
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

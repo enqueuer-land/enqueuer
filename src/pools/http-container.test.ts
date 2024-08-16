@@ -1,5 +1,5 @@
-import {HandlerListener} from '../handlers/handler-listener';
-import {HttpContainer} from './http-container';
+import { HandlerListener } from '../handlers/handler-listener';
+import { HttpContainer } from './http-container';
 import express = require('express');
 
 jest.mock('express');
@@ -20,7 +20,7 @@ describe('HttpContainer', () => {
         expect(express).toBeCalledWith();
     });
 
-    it('Should call handleListen when no server exists', (done) => {
+    it('Should call handleListen when no server exists', done => {
         const appReturn = {
             use: () => {}
         };
@@ -34,7 +34,7 @@ describe('HttpContainer', () => {
             };
         });
 
-        new HttpContainer(123, false).acquire().then((app) => {
+        new HttpContainer(123, false).acquire().then(app => {
             expect(mockListen).toHaveBeenCalled();
             expect(mockListen).toHaveBeenCalledTimes(1);
             expect(app).toEqual(appReturn);
@@ -42,7 +42,7 @@ describe('HttpContainer', () => {
         });
     });
 
-    it('Should handle handleListen fail', (done) => {
+    it('Should handle handleListen fail', done => {
         const appReturn = {
             use: () => {}
         };
@@ -55,13 +55,13 @@ describe('HttpContainer', () => {
             };
         });
 
-        new HttpContainer(123, false).acquire().catch((err) => {
+        new HttpContainer(123, false).acquire().catch(err => {
             expect(err).toEqual('reason');
             done();
         });
     });
 
-    it('Should not recall handleListen when no server exists', (done) => {
+    it('Should not recall handleListen when no server exists', done => {
         const appReturn = {
             use: () => {}
         };

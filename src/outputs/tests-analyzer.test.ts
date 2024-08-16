@@ -1,7 +1,7 @@
-import {TestsAnalyzer} from './tests-analyzer';
-import {RequisitionModel} from '../models/outputs/requisition-model';
-import {ReportModel} from '../models/outputs/report-model';
-import {TestModel} from '../models/outputs/test-model';
+import { TestsAnalyzer } from './tests-analyzer';
+import { RequisitionModel } from '../models/outputs/requisition-model';
+import { ReportModel } from '../models/outputs/report-model';
+import { TestModel } from '../models/outputs/test-model';
 
 describe('TestsAnalyzer', () => {
     const createTest = (valid: boolean, ignored?: boolean): TestModel => {
@@ -34,7 +34,7 @@ describe('TestsAnalyzer', () => {
             hooks: {
                 onInit: {
                     valid: true,
-                    tests: [{valid: true, description: 'description', name: 'name'}]
+                    tests: [{ valid: true, description: 'description', name: 'name' }]
                 }
             },
             requisitions: [
@@ -49,8 +49,8 @@ describe('TestsAnalyzer', () => {
                             name: 'name',
                             valid: false,
                             hooks: {
-                                onInit: {valid: false, tests: [createTest(false)]},
-                                onFinish: {valid: true, tests: [createTest(true)]}
+                                onInit: { valid: false, tests: [createTest(false)] },
+                                onFinish: { valid: true, tests: [createTest(true)] }
                             }
                         }
                     ]
@@ -70,7 +70,7 @@ describe('TestsAnalyzer', () => {
             name: 'name',
             valid: true,
             hooks: {
-                onInit: {valid: true, tests: [createTest(true)]}
+                onInit: { valid: true, tests: [createTest(true)] }
             }
         };
 
@@ -125,7 +125,13 @@ describe('TestsAnalyzer', () => {
             hooks: {
                 onEvent: {
                     valid: false,
-                    tests: [createTest(true), createTest(true), createTest(true), createTest(false), createTest(false, true)]
+                    tests: [
+                        createTest(true),
+                        createTest(true),
+                        createTest(true),
+                        createTest(false),
+                        createTest(false, true)
+                    ]
                 }
             },
             valid: false

@@ -1,6 +1,6 @@
-import {Command, Option} from 'commander';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {Logger} from '../loggers/logger';
+import { Command, Option } from 'commander';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
+import { Logger } from '../loggers/logger';
 
 const packageJson = require('../../package.json');
 
@@ -9,26 +9,27 @@ export class CommandLineConfiguration {
     private readonly commandLineStore: any = {};
     private readonly plugins: string[] = [];
     private readonly testFiles: string[] = [];
-    private readonly testFilesIgnoringOthers: string[] = [];
 
     public constructor(commandLineArguments: string[]) {
         const commander = new Command()
-            .version(process.env.npm_package_version || packageJson.version, '-v, --version', 'output the current version')
+            .version(
+                process.env.npm_package_version || packageJson.version,
+                '-v, --version',
+                'output the current version'
+            )
             .allowUnknownOption()
             .usage('[options] [test-files...]')
             .description('Take a look at the full documentation: https://enqueuer.com')
             .addOption(
-                new Option('-b, --verbosity <level>', 'set verbosity').choices(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('warn')
+                new Option('-b, --verbosity <level>', 'set verbosity')
+                    .choices(['trace', 'debug', 'info', 'warn', 'error', 'fatal'])
+                    .default('warn')
             )
             .option('-c, --config-file <path>', 'set configurationFile')
             .option('-d, --show-explicit-tests-only', 'show explicit tests only', false)
             .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
             .option('-m, --max-report-level-print <level>', 'set max report level print', parseInt)
             .option('-i, --show-passing-tests', 'show passing tests')
-            .option('-A, --add-file-and-ignore-others <file>', 'add file to be tested and ignore others', (val: string) => {
-                this.testFilesIgnoringOthers.push(val);
-                return val;
-            })
             .option(
                 '-s, --store [store]',
                 'add variables values to this session',
@@ -63,16 +64,23 @@ export class CommandLineConfiguration {
     public verifyPrematureActions(): void {
         let exitCode: boolean | undefined;
         if (this.options.protocolsDescription) {
-            const protocolsMatcherArg = typeof this.options.protocolsDescription === 'string' ? this.options.protocolsDescription : undefined;
-            exitCode = DynamicModulesManager.getInstance().getProtocolManager().describeMatchingProtocols(protocolsMatcherArg);
+            const protocolsMatcherArg =
+                typeof this.options.protocolsDescription === 'string' ? this.options.protocolsDescription : undefined;
+            exitCode = DynamicModulesManager.getInstance()
+                .getProtocolManager()
+                .describeMatchingProtocols(protocolsMatcherArg);
         } else if (this.options.formattersDescription) {
             exitCode = DynamicModulesManager.getInstance()
                 .getReportFormatterManager()
                 .describeMatchingReportFormatters(this.options.formattersDescription);
         } else if (this.options.parsersList) {
-            exitCode = DynamicModulesManager.getInstance().getObjectParserManager().describeMatchingObjectParsers(this.options.parsersList);
+            exitCode = DynamicModulesManager.getInstance()
+                .getObjectParserManager()
+                .describeMatchingObjectParsers(this.options.parsersList);
         } else if (this.options.testsList) {
-            exitCode = DynamicModulesManager.getInstance().getAsserterManager().describeMatchingAsserters(this.options.testsList);
+            exitCode = DynamicModulesManager.getInstance()
+                .getAsserterManager()
+                .describeMatchingAsserters(this.options.testsList);
         } else if (this.options.loadedModulesList) {
             DynamicModulesManager.getInstance().describeLoadedModules();
             exitCode = true;
@@ -119,10 +127,6 @@ export class CommandLineConfiguration {
         return [];
     }
 
-    public getTestFilesIgnoringOthers(): string[] {
-        return this.testFilesIgnoringOthers;
-    }
-
     public getPlugins(): string[] {
         return this.plugins;
     }
@@ -148,7 +152,7 @@ export class CommandLineConfiguration {
         console.log('');
         console.log('Examples:');
         console.log('  $ nqr --config-file config-file.yml --verbosity error --store key=value');
-        console.log('  $ enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info');
+        console.log('  $ enqueuer -c config-file.yml test-file.yml another-test-file.yml -b info');
         console.log('  $ enqueuer test-file.yml --store someKey=true --store someOtherKey=false');
         console.log('  $ nqr --protocols-description -s key=value');
         console.log('  $ nqr -t expect');

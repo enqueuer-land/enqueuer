@@ -1,4 +1,4 @@
-import {SubscriptionFinalReporter} from './subscription-final-reporter';
+import { SubscriptionFinalReporter } from './subscription-final-reporter';
 
 describe('SubscriptionFinalReporter', () => {
     it('No subscribed, no avoidable, no message, no timeout', () => {
@@ -60,7 +60,7 @@ describe('SubscriptionFinalReporter', () => {
             subscribed: subscribed,
             avoidable: avoidable,
             messageReceived: 'messageReceived',
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();
@@ -93,7 +93,7 @@ describe('SubscriptionFinalReporter', () => {
         const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter({
             subscribed: subscribed,
             avoidable: avoidable,
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();
@@ -128,7 +128,7 @@ describe('SubscriptionFinalReporter', () => {
             subscribed: subscribed,
             avoidable: avoidable,
             messageReceived: 'messageReceived',
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();
@@ -161,7 +161,7 @@ describe('SubscriptionFinalReporter', () => {
         const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter({
             subscribed: subscribed,
             avoidable: avoidable,
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();
@@ -181,7 +181,7 @@ describe('SubscriptionFinalReporter', () => {
             ignore: true,
             subscribed: subscribed,
             avoidable: avoidable,
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();
@@ -214,7 +214,7 @@ describe('SubscriptionFinalReporter', () => {
             subscribed: subscribed,
             avoidable: avoidable,
             messageReceived: 'messageReceived',
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();
@@ -251,7 +251,7 @@ describe('SubscriptionFinalReporter', () => {
         const finalReporter: SubscriptionFinalReporter = new SubscriptionFinalReporter({
             subscribed: subscribed,
             avoidable: avoidable,
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();
@@ -286,7 +286,7 @@ describe('SubscriptionFinalReporter', () => {
             subscribed: subscribed,
             avoidable: avoidable,
             messageReceived: 'messageReceived',
-            time: {timeout: 1000, totalTime: 1001}
+            time: { timeout: 1000, totalTime: 1001 }
         });
 
         const report = finalReporter.getReport();

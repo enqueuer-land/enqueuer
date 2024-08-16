@@ -1,8 +1,8 @@
-import {ComponentImporter} from './component-importer';
+import { ComponentImporter } from './component-importer';
 
 describe('ComponentImporter', () => {
     it('should return the same if there is no importRequisition', () => {
-        const requisition = {name: 'name', value: 1234};
+        const requisition = { name: 'name', value: 1234 };
 
         // @ts-ignore
         const imported = new ComponentImporter().importRequisition(requisition);
@@ -11,7 +11,7 @@ describe('ComponentImporter', () => {
     });
 
     it('should throw on not valid', () => {
-        const requisition = {import: 'throw file'};
+        const requisition = { import: 'throw file' };
 
         // @ts-ignore
         expect(() => new ComponentImporter().importRequisition(requisition)).toThrow();

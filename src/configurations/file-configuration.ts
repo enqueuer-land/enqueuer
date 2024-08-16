@@ -1,5 +1,5 @@
-import {PublisherModel} from '../models/inputs/publisher-model';
-import {YmlObjectParser} from '../object-parser/yml-object-parser';
+import { PublisherModel } from '../models/inputs/publisher-model';
+import { YmlObjectParser } from '../object-parser/yml-object-parser';
 import * as fs from 'fs';
 
 export class FileConfiguration {

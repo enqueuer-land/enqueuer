@@ -1,12 +1,12 @@
-import {NotificationEmitter} from './notifications/notification-emitter';
-import {EnqueuerAsNodeChildRunner} from './enqueuer-as-node-child-runner';
-import {Notifications} from './notifications/notifications';
-import {ChildRequisitionRunner} from './run-as-child/child-requisition-runner';
-import {AssertDescriber} from './run-as-child/assert-describer';
-import {ModuleAdder} from './run-as-child/module-adder';
-import {ProtocolDescriber} from './run-as-child/protocol-describer';
-import {StoreCleaner} from './run-as-child/store-cleaner';
-import {StoreSetter} from './run-as-child/store-setter';
+import { NotificationEmitter } from './notifications/notification-emitter';
+import { EnqueuerAsNodeChildRunner } from './enqueuer-as-node-child-runner';
+import { Notifications } from './notifications/notifications';
+import { ChildRequisitionRunner } from './run-as-child/child-requisition-runner';
+import { AssertDescriber } from './run-as-child/assert-describer';
+import { ModuleAdder } from './run-as-child/module-adder';
+import { ProtocolDescriber } from './run-as-child/protocol-describer';
+import { StoreCleaner } from './run-as-child/store-cleaner';
+import { StoreSetter } from './run-as-child/store-setter';
 
 jest.mock('./notifications/notification-emitter');
 jest.mock('./run-as-child/child-requisition-runner');
@@ -23,7 +23,7 @@ const processSendMock = jest.fn();
 process.send = processSendMock;
 
 const replierProcessMock = jest.fn();
-const replierConstructorMock = jest.fn(() => ({process: replierProcessMock}));
+const replierConstructorMock = jest.fn(() => ({ process: replierProcessMock }));
 // @ts-ignore
 ChildRequisitionRunner.mockImplementation(replierConstructorMock);
 // @ts-ignore
@@ -74,7 +74,7 @@ describe('EnqueuerAsNodeChildRunner', () => {
     });
 
     it('should do nothing when message is unknown', async () => {
-        const message = {event: 'UNKNOWN'};
+        const message = { event: 'UNKNOWN' };
 
         await new EnqueuerAsNodeChildRunner().execute();
 
@@ -84,7 +84,7 @@ describe('EnqueuerAsNodeChildRunner', () => {
     });
 
     it('should add modules list when requested', async () => {
-        const message = {event: 'ADD_MODULE', value: 'value'};
+        const message = { event: 'ADD_MODULE', value: 'value' };
 
         await new EnqueuerAsNodeChildRunner().execute();
 
@@ -95,7 +95,7 @@ describe('EnqueuerAsNodeChildRunner', () => {
     });
 
     it('should get protocols list when requested', async () => {
-        const message = {event: 'GET_PROTOCOLS', value: 'value'};
+        const message = { event: 'GET_PROTOCOLS', value: 'value' };
 
         await new EnqueuerAsNodeChildRunner().execute();
 
@@ -106,7 +106,7 @@ describe('EnqueuerAsNodeChildRunner', () => {
     });
 
     it('should get asserters list when requested', async () => {
-        const message = {event: 'GET_ASSERTERS', value: 'value'};
+        const message = { event: 'GET_ASSERTERS', value: 'value' };
 
         await new EnqueuerAsNodeChildRunner().execute();
 
@@ -117,7 +117,7 @@ describe('EnqueuerAsNodeChildRunner', () => {
     });
 
     it('should run enqueuer runner when a message arrives', async () => {
-        const message = {event: 'RUN_REQUISITION', value: 'value'};
+        const message = { event: 'RUN_REQUISITION', value: 'value' };
 
         await new EnqueuerAsNodeChildRunner().execute();
 
@@ -140,10 +140,10 @@ describe('EnqueuerAsNodeChildRunner', () => {
     it('should proxy message when notification is emitted', async () => {
         await new EnqueuerAsNodeChildRunner().execute();
 
-        const report = {cycle: {}};
+        const report = { cycle: {} };
         report.cycle = report;
 
-        notificationEmitterOnMock.mock.calls[0][1]({report});
+        notificationEmitterOnMock.mock.calls[0][1]({ report });
         expect(processSendMock).toHaveBeenCalledWith({
             event: 'REQUISITION_FINISHED',
             value: {

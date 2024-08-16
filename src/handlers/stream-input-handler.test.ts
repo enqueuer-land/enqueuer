@@ -1,5 +1,5 @@
-import {StreamInputHandler} from './stream-input-handler';
-import {HandlerListener} from './handler-listener';
+import { StreamInputHandler } from './stream-input-handler';
+import { HandlerListener } from './handler-listener';
 import * as net from 'net';
 jest.mock('./handler-listener');
 jest.mock('net');
@@ -35,7 +35,7 @@ describe('StreamInputHandler', () => {
         expect(listen).toHaveBeenCalledWith(handlerName);
     });
 
-    it('Should update handler', (done) => {
+    it('Should update handler', done => {
         // @ts-expect-error
         net.createServer.mockImplementationOnce(() => {
             return {
@@ -84,7 +84,7 @@ describe('StreamInputHandler', () => {
         expect(endMock).toBeCalled();
     });
 
-    it('Should sendResponse object', (done) => {
+    it('Should sendResponse object', done => {
         const writeMock = jest.fn((value, cb) => cb());
         const stream = {
             write: writeMock
@@ -104,7 +104,7 @@ describe('StreamInputHandler', () => {
         });
     });
 
-    it('Should sendResponse string', (done) => {
+    it('Should sendResponse string', done => {
         const writeMock = jest.fn();
         const stream = {
             write: writeMock
@@ -117,14 +117,14 @@ describe('StreamInputHandler', () => {
         done();
     });
 
-    it('Should handler sendResponse error', (done) => {
+    it('Should handler sendResponse error', done => {
         const stream = {
             write: () => {
                 throw 'error';
             }
         };
 
-        new StreamInputHandler('handlerName').sendResponse(stream, {}).catch((err) => {
+        new StreamInputHandler('handlerName').sendResponse(stream, {}).catch(err => {
             expect(err).toBe('Error sending input handler: error');
             done();
         });

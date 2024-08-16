@@ -1,11 +1,11 @@
-import {Publisher} from './publisher';
-import {Store} from '../configurations/store';
-import {Logger} from '../loggers/logger';
-import {PublisherModel} from '../models/inputs/publisher-model';
+import { Publisher } from './publisher';
+import { Store } from '../configurations/store';
+import { Logger } from '../loggers/logger';
+import { PublisherModel } from '../models/inputs/publisher-model';
 import * as fs from 'fs';
 import requireFromString from 'require-from-string';
-import {MainInstance} from '../plugins/main-instance';
-import {PublisherProtocol} from '../protocols/publisher-protocol';
+import { MainInstance } from '../plugins/main-instance';
+import { PublisherProtocol } from '../protocols/publisher-protocol';
 
 class CustomPublisher extends Publisher {
     constructor(model: PublisherModel) {
@@ -18,7 +18,7 @@ class CustomPublisher extends Publisher {
             const moduleString: string = fs.readFileSync(this.module).toString();
             const module = requireFromString(moduleString);
             const custom = new module.Publisher(this);
-            return await custom.publish({store: Store.getData(), logger: Logger});
+            return await custom.publish({ store: Store.getData(), logger: Logger });
         } catch (err) {
             Logger.error(`Error loading module '${this.module}': ${err}`);
         }
@@ -26,7 +26,10 @@ class CustomPublisher extends Publisher {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new PublisherProtocol('custom', (publisherModel: PublisherModel) => new CustomPublisher(publisherModel));
+    const protocol = new PublisherProtocol(
+        'custom',
+        (publisherModel: PublisherModel) => new CustomPublisher(publisherModel)
+    );
 
     mainInstance.protocolManager.addProtocol(protocol);
 }

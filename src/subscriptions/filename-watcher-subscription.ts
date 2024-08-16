@@ -1,15 +1,15 @@
-import {Subscription} from './subscription';
-import {Logger} from '../loggers/logger';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
+import { Subscription } from './subscription';
+import { Logger } from '../loggers/logger';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
 import * as fs from 'fs';
 import * as glob from 'glob';
-import {MainInstance} from '../plugins/main-instance';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import { MainInstance } from '../plugins/main-instance';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 
 class FileSystemWatcherSubscription extends Subscription {
     constructor(subscriptionAttributes: SubscriptionModel) {
         super(subscriptionAttributes);
-        this['options'] = subscriptionAttributes.options || {nodir: true};
+        this['options'] = subscriptionAttributes.options || { nodir: true };
     }
 
     public subscribe(): Promise<void> {

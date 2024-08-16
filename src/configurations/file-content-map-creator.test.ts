@@ -1,5 +1,5 @@
-import {FileContentMapCreator} from './file-content-map-creator';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import { FileContentMapCreator } from './file-content-map-creator';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 import * as fs from 'fs';
 
 jest.mock('../plugins/dynamic-modules-manager');
@@ -15,7 +15,7 @@ describe('FileContentMapCreator', () => {
         const tag = 'any';
         const filename = 'examples/file-content.any';
         const replaceableKey = tag + '://' + filename;
-        const requisition = {value: '<<' + replaceableKey + '>>'};
+        const requisition = { value: '<<' + replaceableKey + '>>' };
 
         // @ts-ignore
         const fileMap = new FileContentMapCreator(requisition);
@@ -27,7 +27,7 @@ describe('FileContentMapCreator', () => {
     });
 
     it('Handle exceptions undefined field', () => {
-        const requisition = {value: undefined};
+        const requisition = { value: undefined };
 
         // @ts-ignore
         expect(() => new FileContentMapCreator(requisition)).not.toThrow();
@@ -42,7 +42,7 @@ describe('FileContentMapCreator', () => {
         const tag = 'tag';
         const filename = 'examples/file-content.tag';
         const replaceableKey = tag + '://' + filename;
-        const requisition = {value: '<<' + replaceableKey + '>>'};
+        const requisition = { value: '<<' + replaceableKey + '>>' };
 
         // @ts-expect-error
         DynamicModulesManager.getInstance.mockImplementation(() => {
@@ -77,7 +77,7 @@ describe('FileContentMapCreator', () => {
         const tag = 'unknown';
         const filename = 'examples/file-content.unknown';
         const replaceableKey = tag + '://' + filename;
-        const requisition = {value: '<<' + replaceableKey + '>>'};
+        const requisition = { value: '<<' + replaceableKey + '>>' };
 
         // @ts-expect-error
         DynamicModulesManager.getInstance.mockImplementation(() => {

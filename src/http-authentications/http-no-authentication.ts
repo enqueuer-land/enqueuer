@@ -1,5 +1,5 @@
-import {HttpAuthentication} from './http-authentication';
-import {TestModel} from '../models/outputs/test-model';
+import { HttpAuthentication } from './http-authentication';
+import { TestModel } from '../models/outputs/test-model';
 
 export class HttpNoAuthentication implements HttpAuthentication {
     private readonly authentication: any;

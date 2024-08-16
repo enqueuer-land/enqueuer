@@ -1,5 +1,5 @@
-import {LogLevel} from './log-level';
-import {DateController} from '../timers/date-controller';
+import { LogLevel } from './log-level';
+import { DateController } from '../timers/date-controller';
 
 export class Logger {
     private static logLevel?: LogLevel;

@@ -1,5 +1,5 @@
-import {FileConfiguration} from './file-configuration';
-import {YmlObjectParser} from '../object-parser/yml-object-parser';
+import { FileConfiguration } from './file-configuration';
+import { YmlObjectParser } from '../object-parser/yml-object-parser';
 import * as fs from 'fs';
 
 jest.mock('../object-parser/yml-object-parser');

@@ -1,6 +1,6 @@
-import {ObjectParser} from '../object-parser/object-parser';
-import {Logger} from '../loggers/logger';
-import {prettifyJson} from '../outputs/prettify-json';
+import { ObjectParser } from '../object-parser/object-parser';
+import { Logger } from '../loggers/logger';
+import { prettifyJson } from '../outputs/prettify-json';
 
 interface AddedObjectParser {
     tags: string[];
@@ -12,7 +12,7 @@ export class ObjectParserManager {
 
     public addObjectParser(createFunction: () => ObjectParser, firstTag: string, ...tags: string[]): void {
         const strings = [firstTag].concat(tags);
-        this.addedObjectParsers.unshift({tags: strings, createFunction});
+        this.addedObjectParsers.unshift({ tags: strings, createFunction });
     }
 
     public getMatchingObjectParsers(describeObjectParsers: string | true): any {
@@ -20,7 +20,9 @@ export class ObjectParserManager {
             parsers: this.addedObjectParsers
                 .filter((objectParser: AddedObjectParser) =>
                     typeof describeObjectParsers === 'string'
-                        ? (objectParser.tags || []).some((tag: string) => tag.toLowerCase() === describeObjectParsers.toLowerCase())
+                        ? (objectParser.tags || []).some(
+                              (tag: string) => tag.toLowerCase() === describeObjectParsers.toLowerCase()
+                          )
                         : true
                 )
                 .map((objectParser: AddedObjectParser) => objectParser.tags)

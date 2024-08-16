@@ -1,5 +1,5 @@
-import {RequisitionReportGenerator} from './requisition-report-generator';
-import {DefaultHookEvents} from '../models/events/event';
+import { RequisitionReportGenerator } from './requisition-report-generator';
+import { DefaultHookEvents } from '../models/events/event';
 
 let sleep = (millisecondsToWait: number): void => {
     const waitTill = new Date(new Date().getTime() + millisecondsToWait);
@@ -17,8 +17,8 @@ describe('RequisitionReportGenerator', () => {
         expect(report.time).toBeDefined();
         expect(report).toEqual({
             hooks: {
-                onFinish: {arguments: {}, tests: [], valid: true},
-                onInit: {arguments: {}, tests: [], valid: true}
+                onFinish: { arguments: {}, tests: [], valid: true },
+                onInit: { arguments: {}, tests: [], valid: true }
             },
             id: undefined,
             ignored: undefined,
@@ -34,7 +34,7 @@ describe('RequisitionReportGenerator', () => {
     it('Time report with timeout', () => {
         const timeout = 1000;
         // @ts-expect-error
-        const reportGenerator = new RequisitionReportGenerator({name: 'someName'}, timeout);
+        const reportGenerator = new RequisitionReportGenerator({ name: 'someName' }, timeout);
         const firstReport = reportGenerator.getReport();
         const firstStartTime = new Date(firstReport.time.startTime.valueOf()).getTime();
 
@@ -48,8 +48,8 @@ describe('RequisitionReportGenerator', () => {
 
         expect(secondReport).toEqual({
             hooks: {
-                onFinish: {arguments: {}, tests: [], valid: true},
-                onInit: {arguments: {}, tests: [], valid: true}
+                onFinish: { arguments: {}, tests: [], valid: true },
+                onInit: { arguments: {}, tests: [], valid: true }
             },
             id: undefined,
             ignored: undefined,
@@ -65,7 +65,7 @@ describe('RequisitionReportGenerator', () => {
     it('Time out test fail', () => {
         const timeout = 10;
         // @ts-expect-error
-        const reportGenerator = new RequisitionReportGenerator({name: 'someName'}, timeout);
+        const reportGenerator = new RequisitionReportGenerator({ name: 'someName' }, timeout);
         sleep(50);
         reportGenerator.finish();
 
@@ -106,7 +106,7 @@ describe('RequisitionReportGenerator', () => {
         expect(report.publishers.length).toBe(0);
 
         // @ts-expect-error
-        reportGenerator.setPublishersReport([{valid: false}]);
+        reportGenerator.setPublishersReport([{ valid: false }]);
         reportGenerator.finish();
         report = reportGenerator.getReport();
 
@@ -126,7 +126,7 @@ describe('RequisitionReportGenerator', () => {
         expect(report.subscriptions.length).toBe(0);
 
         // @ts-expect-error
-        reportGenerator.setSubscriptionsReport([{valid: false}]);
+        reportGenerator.setSubscriptionsReport([{ valid: false }]);
         reportGenerator.finish();
         report = reportGenerator.getReport();
 
@@ -144,24 +144,24 @@ describe('RequisitionReportGenerator', () => {
         // @ts-expect-error
         reportGenerator.addTest('hookName', {
             valid: false,
-            arguments: {a: 1},
-            tests: [{name: 'a', valid: false}]
+            arguments: { a: 1 },
+            tests: [{ name: 'a', valid: false }]
         });
         // @ts-expect-error
         reportGenerator.addTest('hookName', {
             valid: true,
-            arguments: {b: 3},
-            tests: [{name: 'b', valid: true}]
+            arguments: { b: 3 },
+            tests: [{ name: 'b', valid: true }]
         });
         reportGenerator.finish();
         const report = reportGenerator.getReport();
 
         expect(report.valid).toBeFalsy();
         expect(report.hooks!.hookName).toEqual({
-            arguments: {a: 1, b: 3},
+            arguments: { a: 1, b: 3 },
             tests: [
-                {name: 'a', valid: false},
-                {name: 'b', valid: true}
+                { name: 'a', valid: false },
+                { name: 'b', valid: true }
             ],
             valid: false
         });

@@ -1,8 +1,8 @@
-import {Logger} from '../loggers/logger';
+import { Logger } from '../loggers/logger';
 import express from 'express';
 import https from 'https';
-import http, {Server} from 'http';
-import {HandlerListener} from '../handlers/handler-listener';
+import http, { Server } from 'http';
+import { HandlerListener } from '../handlers/handler-listener';
 import * as core from 'express-serve-static-core';
 
 export class HttpContainer {

@@ -1,6 +1,6 @@
-import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Logger} from '../loggers/logger';
-import {Event} from '../models/events/event';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
+import { Logger } from '../loggers/logger';
+import { Event } from '../models/events/event';
 
 export abstract class Subscription {
     public name: string;
@@ -16,7 +16,7 @@ export abstract class Subscription {
     [propName: string]: any;
 
     protected constructor(subscriptionAttributes: SubscriptionModel) {
-        Object.keys(subscriptionAttributes).forEach((key) => {
+        Object.keys(subscriptionAttributes).forEach(key => {
             this[key] = subscriptionAttributes[key];
         });
         this.type = subscriptionAttributes.type;

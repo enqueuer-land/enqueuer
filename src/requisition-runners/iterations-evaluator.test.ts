@@ -1,4 +1,4 @@
-import {IterationsEvaluator} from './iterations-evaluator';
+import { IterationsEvaluator } from './iterations-evaluator';
 
 describe('IterationsEvaluator', () => {
     it('Should return 1 when undefined', () => {

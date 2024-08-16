@@ -1,10 +1,10 @@
-import {CommandLineConfiguration} from './command-line-configuration';
-import {FileConfiguration} from './file-configuration';
-import {PublisherModel} from '../models/inputs/publisher-model';
-import {Logger} from '../loggers/logger';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {LogLevel} from '../loggers/log-level';
-import {prettifyJson} from '../outputs/prettify-json';
+import { CommandLineConfiguration } from './command-line-configuration';
+import { FileConfiguration } from './file-configuration';
+import { PublisherModel } from '../models/inputs/publisher-model';
+import { Logger } from '../loggers/logger';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
+import { LogLevel } from '../loggers/log-level';
+import { prettifyJson } from '../outputs/prettify-json';
 
 process.setMaxListeners(30);
 
@@ -113,10 +113,6 @@ export class Configuration {
         this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
         this.showPassingTests = this.commandLineConfiguration.getShowPassingTests();
         this.showExplicitTestsOnly = this.commandLineConfiguration.getShowExplicitTestsOnly();
-        const filesIgnoringOthers = this.commandLineConfiguration.getTestFilesIgnoringOthers();
-        if (filesIgnoringOthers && filesIgnoringOthers.length > 0) {
-            this.files = filesIgnoringOthers;
-        }
         if (this.commandLineConfiguration.getStdoutRequisitionOutput()) {
             this.outputs.push({
                 type: 'standard-output',
@@ -153,6 +149,6 @@ export class Configuration {
     }
 
     private static printConfiguration() {
-        console.log(prettifyJson({configuration: this.getInstance().getValues()}));
+        console.log(prettifyJson({ configuration: this.getInstance().getValues() }));
     }
 }

@@ -1,6 +1,6 @@
-import {TestModel} from '../../models/outputs/test-model';
+import { TestModel } from '../../models/outputs/test-model';
 
-export type Time = {timeout?: number; totalTime: number};
+export type Time = { timeout?: number; totalTime: number };
 export type Summary = {
     subscribed: boolean;
     avoidable: boolean;

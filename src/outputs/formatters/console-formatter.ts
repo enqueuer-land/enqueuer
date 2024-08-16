@@ -1,8 +1,8 @@
-import {ReportFormatter} from './report-formatter';
-import {RequisitionModel} from '../../models/outputs/requisition-model';
-import {MainInstance} from '../../plugins/main-instance';
-import {ObjectDecycler} from '../../object-parser/object-decycler';
-import {prettifyJson} from '../prettify-json';
+import { ReportFormatter } from './report-formatter';
+import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { MainInstance } from '../../plugins/main-instance';
+import { ObjectDecycler } from '../../object-parser/object-decycler';
+import { prettifyJson } from '../prettify-json';
 
 export class ConsoleFormatter implements ReportFormatter {
     public format(report: RequisitionModel): string {

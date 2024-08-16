@@ -1,5 +1,5 @@
-import {Configuration} from '../configurations/configuration';
-import {ModuleAdder} from './module-adder';
+import { Configuration } from '../configurations/configuration';
+import { ModuleAdder } from './module-adder';
 
 jest.mock('../configurations/configuration');
 
@@ -12,7 +12,7 @@ Configuration.getInstance.mockImplementation(() => {
 });
 describe('ModuleAdder', () => {
     it('should add module when a message arrives', async () => {
-        const message = {value: 'value'};
+        const message = { value: 'value' };
         await new ModuleAdder().process(message);
 
         expect(addPluginMock).toHaveBeenCalledWith('value');

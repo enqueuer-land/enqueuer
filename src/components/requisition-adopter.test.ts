@@ -1,4 +1,4 @@
-import {RequisitionAdopter} from './requisition-adopter';
+import { RequisitionAdopter } from './requisition-adopter';
 
 describe('RequisitionAdopter', () => {
     it('Should set default values', () => {
@@ -164,9 +164,9 @@ describe('RequisitionAdopter', () => {
     it('should set parents', () => {
         const parent = {
             name: 'parent',
-            requisitions: [{name: 'req'}],
-            publishers: [{name: 'pub'}],
-            subscriptions: [{name: 'sub'}]
+            requisitions: [{ name: 'req' }],
+            publishers: [{ name: 'pub' }],
+            subscriptions: [{ name: 'sub' }]
         };
 
         const requisition = new RequisitionAdopter(parent).getRequisition();

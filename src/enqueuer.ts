@@ -1,14 +1,14 @@
-export {RequisitionModel as InputRequisitionModel} from './models/inputs/requisition-model';
-export {PublisherModel as InputPublisherModel} from './models/inputs/publisher-model';
-export {SubscriptionModel as InputSubscriptionModel} from './models/inputs/subscription-model';
+export { RequisitionModel as InputRequisitionModel } from './models/inputs/requisition-model';
+export { PublisherModel as InputPublisherModel } from './models/inputs/publisher-model';
+export { SubscriptionModel as InputSubscriptionModel } from './models/inputs/subscription-model';
 
-export {ReportModel as OutputReportModel} from './models/outputs/report-model';
-export {HookModel as OutputHookModel} from './models/outputs/hook-model';
-export {RequisitionModel as OutputRequisitionModel} from './models/outputs/requisition-model';
-export {PublisherModel as OutputPublisherModel} from './models/outputs/publisher-model';
-export {SubscriptionModel as OutputSubscriptionModel} from './models/outputs/subscription-model';
-export {TimeModel as OutputTimeModel} from './models/outputs/time-model';
-export {TestModel as OutputTestModel} from './models/outputs/test-model';
+export { ReportModel as OutputReportModel } from './models/outputs/report-model';
+export { HookModel as OutputHookModel } from './models/outputs/hook-model';
+export { RequisitionModel as OutputRequisitionModel } from './models/outputs/requisition-model';
+export { PublisherModel as OutputPublisherModel } from './models/outputs/publisher-model';
+export { SubscriptionModel as OutputSubscriptionModel } from './models/outputs/subscription-model';
+export { TimeModel as OutputTimeModel } from './models/outputs/time-model';
+export { TestModel as OutputTestModel } from './models/outputs/test-model';
 
 export * from './models/events/assertion';
 export * from './models/events/event';

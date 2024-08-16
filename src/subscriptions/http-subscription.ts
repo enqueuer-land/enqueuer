@@ -1,12 +1,12 @@
-import {Subscription} from './subscription';
-import {Logger} from '../loggers/logger';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {HttpContainerPool} from '../pools/http-container-pool';
-import {TestModel} from '../models/outputs/test-model';
-import {HttpRequester} from '../pools/http-requester';
-import {MainInstance} from '../plugins/main-instance';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-import {HttpAuthenticationFactory} from '../http-authentications/http-authentication-factory';
+import { Subscription } from './subscription';
+import { Logger } from '../loggers/logger';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
+import { HttpContainerPool } from '../pools/http-container-pool';
+import { TestModel } from '../models/outputs/test-model';
+import { HttpRequester } from '../pools/http-requester';
+import { MainInstance } from '../plugins/main-instance';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
+import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
 
 class HttpSubscription extends Subscription {
     private readonly proxy: boolean;
@@ -41,7 +41,7 @@ class HttpSubscription extends Subscription {
     public sendResponse(): Promise<void> {
         Logger.trace(`${this.type} sending response: ${JSON.stringify(this.response)}`);
         try {
-            Object.keys(this.response.headers || {}).forEach((key) => {
+            Object.keys(this.response.headers || {}).forEach(key => {
                 this.responseToClientHandler.header(key, this.response.headers[key]);
             });
             const body = typeof this.response.payload === 'number' ? '' + this.response.payload : this.response.payload;
@@ -55,7 +55,9 @@ class HttpSubscription extends Subscription {
 
     public onMessageReceivedTests(messageReceived: any): TestModel[] {
         if (this.authentication && messageReceived) {
-            Logger.debug(`${this.type} authenticating message with ${JSON.stringify(Object.keys(this.authentication), null, 2)}`);
+            Logger.debug(
+                `${this.type} authenticating message with ${JSON.stringify(Object.keys(this.authentication), null, 2)}`
+            );
             const verifier = new HttpAuthenticationFactory().create(this.authentication);
             return verifier.verify(messageReceived.headers.authorization);
         }
@@ -71,10 +73,12 @@ class HttpSubscription extends Subscription {
     }
 
     private realServerMessageReceiving(): Promise<any> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             Logger.debug(`Listening to (${this.method.toUpperCase()}) ${this.port}:${this.endpoint}`);
             const realServerFunction = (request: any, responseHandler: any, next: any) => {
-                Logger.debug(`${this.type.toUpperCase()}:${this.port} got hit (${this.method.toUpperCase()}) ${this.endpoint}: ${request.rawBody}`);
+                Logger.debug(
+                    `${this.type.toUpperCase()}:${this.port} got hit (${this.method.toUpperCase()}) ${this.endpoint}: ${request.rawBody}`
+                );
                 if (this.responseToClientHandler) {
                     next();
                 }
@@ -104,16 +108,24 @@ class HttpSubscription extends Subscription {
             Logger.debug(`Listening to (${this.method})${this.port}${this.endpoint}/*`);
             const proxyNamedFunction = (originalRequest: any, responseHandler: any, next: any) => {
                 this.responseToClientHandler = responseHandler;
-                Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${originalRequest.rawBody}`);
+                Logger.debug(
+                    `${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${originalRequest.rawBody}`
+                );
                 this.redirect['url'] = this.redirect.url + originalRequest.url.replace(this.endpoint, '');
                 this.redirect['headers'] = originalRequest.headers;
                 this.redirect['payload'] = originalRequest.rawBody;
                 this.onMessageReceivedTests(originalRequest);
-                this.executeHookEvent('onOriginalMessageReceived', this.createMessageReceivedStructure(originalRequest));
+                this.executeHookEvent(
+                    'onOriginalMessageReceived',
+                    this.createMessageReceivedStructure(originalRequest)
+                );
 
                 this.redirectCall()
                     .then((redirectionResponse: any) => {
-                        Logger.trace(`${this.type}:${this.port} got redirection response: ` + `${JSON.stringify(redirectionResponse, null, 2)}`);
+                        Logger.trace(
+                            `${this.type}:${this.port} got redirection response: ` +
+                                `${JSON.stringify(redirectionResponse, null, 2)}`
+                        );
                         this.response = {
                             status: redirectionResponse.statusCode,
                             payload: redirectionResponse.body,
@@ -123,7 +135,7 @@ class HttpSubscription extends Subscription {
                         resolve();
                         next();
                     })
-                    .catch((err) => {
+                    .catch(err => {
                         reject(err);
                         next();
                     });
@@ -173,116 +185,121 @@ class HttpSubscription extends Subscription {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new SubscriptionProtocol('http', (subscriptionModel: SubscriptionModel) => new HttpSubscription(subscriptionModel), {
-        description: 'The HTTP subscription provides implementations of http servers and proxies',
-        libraryHomepage: 'https://expressjs.com/',
-        schema: {
-            attributes: {
-                endpoint: {
-                    required: true,
-                    type: 'string',
-                    example: '/almighty/enqueuer'
-                },
-                method: {
-                    required: false,
-                    type: 'string',
-                    defaultValue: 'GET',
-                    listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
-                },
-                port: {
-                    required: true,
-                    type: 'int'
-                },
-                timeout: {
-                    required: false,
-                    type: 'int',
-                    defaultValue: 3000,
-                    suffix: 'ms'
-                },
-                credentials: {
-                    required: false,
-                    description: 'Values used when being used as a secure server',
-                    type: {
-                        key: {
-                            required: true,
-                            type: 'string'
-                        },
-                        cert: {
-                            required: true,
-                            type: 'string'
-                        }
-                    }
-                },
-                redirect: {
-                    description: 'Values used when being used as a proxy subscription',
-                    type: {
-                        url: {
-                            required: true,
-                            type: 'string',
-                            example: 'https://github.com/enqueuer-land/enqueuer'
-                        },
-                        method: {
-                            required: false,
-                            type: 'string',
-                            defaultValue: 'GET',
-                            listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
-                        },
-                        timeout: {
-                            required: false,
-                            type: 'int',
-                            defaultValue: 3000,
-                            suffix: 'ms'
-                        },
-                        headers: {
-                            description: '',
-                            type: 'object',
-                            defaultValue: {}
-                        }
-                    }
-                },
-                headers: {
-                    description: '',
-                    type: 'object',
-                    defaultValue: {}
-                },
-                response: {
-                    description: 'Response to be given when not being used as proxy',
-                    type: {
-                        status: {
-                            required: true,
-                            type: 'int'
-                        },
-                        payload: {
-                            required: true,
-                            type: 'any'
+    const protocol = new SubscriptionProtocol(
+        'http',
+        (subscriptionModel: SubscriptionModel) => new HttpSubscription(subscriptionModel),
+        {
+            description: 'The HTTP subscription provides implementations of http servers and proxies',
+            libraryHomepage: 'https://expressjs.com/',
+            schema: {
+                attributes: {
+                    endpoint: {
+                        required: true,
+                        type: 'string',
+                        example: '/almighty/enqueuer'
+                    },
+                    method: {
+                        required: false,
+                        type: 'string',
+                        defaultValue: 'GET',
+                        listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
+                    },
+                    port: {
+                        required: true,
+                        type: 'int'
+                    },
+                    timeout: {
+                        required: false,
+                        type: 'int',
+                        defaultValue: 3000,
+                        suffix: 'ms'
+                    },
+                    credentials: {
+                        required: false,
+                        description: 'Values used when being used as a secure server',
+                        type: {
+                            key: {
+                                required: true,
+                                type: 'string'
+                            },
+                            cert: {
+                                required: true,
+                                type: 'string'
+                            }
                         }
                     },
-                    defaultValue: {}
-                }
-            },
-            hooks: {
-                onMessageReceived: {
-                    description: '',
-                    arguments: {
-                        params: {},
-                        query: {},
-                        body: {},
-                        url: {}
+                    redirect: {
+                        description: 'Values used when being used as a proxy subscription',
+                        type: {
+                            url: {
+                                required: true,
+                                type: 'string',
+                                example: 'https://github.com/enqueuer-land/enqueuer'
+                            },
+                            method: {
+                                required: false,
+                                type: 'string',
+                                defaultValue: 'GET',
+                                listValues: ['GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'HEAD', 'DELETE']
+                            },
+                            timeout: {
+                                required: false,
+                                type: 'int',
+                                defaultValue: 3000,
+                                suffix: 'ms'
+                            },
+                            headers: {
+                                description: '',
+                                type: 'object',
+                                defaultValue: {}
+                            }
+                        }
+                    },
+                    headers: {
+                        description: '',
+                        type: 'object',
+                        defaultValue: {}
+                    },
+                    response: {
+                        description: 'Response to be given when not being used as proxy',
+                        type: {
+                            status: {
+                                required: true,
+                                type: 'int'
+                            },
+                            payload: {
+                                required: true,
+                                type: 'any'
+                            }
+                        },
+                        defaultValue: {}
                     }
                 },
-                onOriginalMessageReceived: {
-                    description:
-                        'Useful when using a proxy subscription. ' + 'Gets called when the proxy is hit, before actually proxying the message',
-                    arguments: {
-                        params: {},
-                        query: {},
-                        body: {},
-                        url: {}
+                hooks: {
+                    onMessageReceived: {
+                        description: '',
+                        arguments: {
+                            params: {},
+                            query: {},
+                            body: {},
+                            url: {}
+                        }
+                    },
+                    onOriginalMessageReceived: {
+                        description:
+                            'Useful when using a proxy subscription. ' +
+                            'Gets called when the proxy is hit, before actually proxying the message',
+                        arguments: {
+                            params: {},
+                            query: {},
+                            body: {},
+                            url: {}
+                        }
                     }
                 }
             }
         }
-    })
+    )
         .addAlternativeName('https', 'http-proxy', 'https-proxy', 'http-server', 'https-server')
         .setLibrary('express');
 

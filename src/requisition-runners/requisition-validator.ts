@@ -1,4 +1,4 @@
-import {RequisitionModel} from '../models/inputs/requisition-model';
+import { RequisitionModel } from '../models/inputs/requisition-model';
 
 export class RequisitionValidator {
     public validate(requisition: RequisitionModel): boolean {
@@ -20,7 +20,7 @@ export class RequisitionValidator {
             return true;
         }
         if (Array.isArray(requisition.requisitions) && requisition.requisitions.length > 0) {
-            return requisition.requisitions.every((child) => this.validate(child));
+            return requisition.requisitions.every(child => this.validate(child));
         }
         return false;
     }

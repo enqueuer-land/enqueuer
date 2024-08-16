@@ -1,16 +1,16 @@
-import {Logger} from './loggers/logger';
-import {ModuleAdder} from './run-as-child/module-adder';
-import {StoreSetter} from './run-as-child/store-setter';
-import {StoreCleaner} from './run-as-child/store-cleaner';
-import {ParentReplier} from './run-as-child/parent-replier';
-import {Notifications} from './notifications/notifications';
-import {ObjectDecycler} from './object-parser/object-decycler';
-import {AssertDescriber} from './run-as-child/assert-describer';
-import {ProtocolDescriber} from './run-as-child/protocol-describer';
-import {ChildSendingEvents} from './run-as-child/child-sending-events';
-import {NotificationEmitter} from './notifications/notification-emitter';
-import {ChildReceivingEvents} from './run-as-child/child-receiving-events';
-import {ChildRequisitionRunner} from './run-as-child/child-requisition-runner';
+import { Logger } from './loggers/logger';
+import { ModuleAdder } from './run-as-child/module-adder';
+import { StoreSetter } from './run-as-child/store-setter';
+import { StoreCleaner } from './run-as-child/store-cleaner';
+import { ParentReplier } from './run-as-child/parent-replier';
+import { Notifications } from './notifications/notifications';
+import { ObjectDecycler } from './object-parser/object-decycler';
+import { AssertDescriber } from './run-as-child/assert-describer';
+import { ProtocolDescriber } from './run-as-child/protocol-describer';
+import { ChildSendingEvents } from './run-as-child/child-sending-events';
+import { NotificationEmitter } from './notifications/notification-emitter';
+import { ChildReceivingEvents } from './run-as-child/child-receiving-events';
+import { ChildRequisitionRunner } from './run-as-child/child-requisition-runner';
 
 export class EnqueuerAsNodeChildRunner {
     private readonly processors: {
@@ -32,7 +32,7 @@ export class EnqueuerAsNodeChildRunner {
         Logger.info('Enqueuer is rocking and rolling');
         this.registerInternProxies();
         this.registerListeners();
-        return new Promise<number>((resolve) => {
+        return new Promise<number>(resolve => {
             if (process.env.NODE_ENV && process.env.NODE_ENV.toUpperCase() === 'TEST') {
                 resolve(0);
             }
@@ -56,14 +56,14 @@ export class EnqueuerAsNodeChildRunner {
     }
 
     public registerListeners(): void {
-        process.on('message', async (message: {event: string}) => {
+        process.on('message', async (message: { event: string }) => {
             Logger.debug(`Received from parent: ${message.event}: ${JSON.stringify(message)}`);
             const processor = this.processors[message.event];
             if (processor) {
                 await processor.process(message);
             }
         });
-        process.on('exit', (code) => {
+        process.on('exit', code => {
             process.send!({
                 event: ChildSendingEvents.PROCESS_EXIT,
                 value: code

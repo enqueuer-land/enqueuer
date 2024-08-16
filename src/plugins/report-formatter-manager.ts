@@ -1,7 +1,7 @@
-import {ReportFormatter} from '../outputs/formatters/report-formatter';
-import {JsonReportFormatter} from '../outputs/formatters/json-formatter';
-import {Logger} from '../loggers/logger';
-import {prettifyJson} from '../outputs/prettify-json';
+import { ReportFormatter } from '../outputs/formatters/report-formatter';
+import { JsonReportFormatter } from '../outputs/formatters/json-formatter';
+import { Logger } from '../loggers/logger';
+import { prettifyJson } from '../outputs/prettify-json';
 
 interface AddedReportFormatter {
     tags: string[];
@@ -25,7 +25,7 @@ export class ReportFormatterManager {
     }
 
     public addReportFormatter(createFunction: () => ReportFormatter, firstTag: string, ...tags: string[]): void {
-        this.formatters.push({tags: [firstTag].concat(tags), createFunction});
+        this.formatters.push({ tags: [firstTag].concat(tags), createFunction });
     }
 
     public getMatchingReportFormatters(describeFormatters: string | true): {
@@ -35,7 +35,9 @@ export class ReportFormatterManager {
             formatters: this.formatters
                 .filter((addedFormatter: AddedReportFormatter) =>
                     typeof describeFormatters === 'string'
-                        ? (addedFormatter.tags || []).some((tag: string) => tag.toLowerCase() === describeFormatters.toLowerCase())
+                        ? (addedFormatter.tags || []).some(
+                              (tag: string) => tag.toLowerCase() === describeFormatters.toLowerCase()
+                          )
                         : true
                 )
                 .map((formatter: AddedReportFormatter) => formatter.tags)

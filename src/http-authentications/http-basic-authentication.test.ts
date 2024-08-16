@@ -1,4 +1,4 @@
-import {HttpBasicAuthentication} from './http-basic-authentication';
+import { HttpBasicAuthentication } from './http-basic-authentication';
 
 describe('HttpBasicAuthentication', () => {
     it('tests number', () => {
@@ -39,7 +39,7 @@ describe('HttpBasicAuthentication', () => {
 
         const verify = authorization.verify('Basic dXNlcjpwYXNzd29yZA');
 
-        expect(verify.every((test) => test.valid)).toBeTruthy();
+        expect(verify.every(test => test.valid)).toBeTruthy();
     });
 
     it('No basic prefix', () => {
@@ -53,7 +53,7 @@ describe('HttpBasicAuthentication', () => {
 
         const verify = authorization.verify('WrongPrefix dXNlcjpwYXNzd29yZA');
 
-        expect(verify.filter((test) => !test.valid)[0].name).toBe('"Basic" authentication prefix');
+        expect(verify.filter(test => !test.valid)[0].name).toBe('"Basic" authentication prefix');
     });
 
     it('alladin:OpenSesame', () => {
@@ -81,7 +81,7 @@ describe('HttpBasicAuthentication', () => {
 
         const verify = authorization.verify('Basic QWxhZGRpbjpPcGVuU2VzYW1l');
 
-        expect(verify.every((test) => test.valid)).toBeTruthy();
+        expect(verify.every(test => test.valid)).toBeTruthy();
     });
 
     it('Empty authentication is falsy', () => {
@@ -96,7 +96,7 @@ describe('HttpBasicAuthentication', () => {
         // @ts-ignore
         const verify = authorization.verify();
 
-        expect(verify.some((test) => test.valid)).toBeFalsy();
+        expect(verify.some(test => test.valid)).toBeFalsy();
     });
 
     it('Empty auth credentials', () => {
@@ -106,6 +106,6 @@ describe('HttpBasicAuthentication', () => {
 
         const verify = authorization.verify('Basic QWxhZGRpbjpPcGVuU2VzYW1l');
 
-        expect(verify.every((test) => test.valid)).toBeFalsy();
+        expect(verify.every(test => test.valid)).toBeFalsy();
     });
 });

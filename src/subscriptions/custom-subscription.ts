@@ -1,11 +1,11 @@
-import {Subscription} from './subscription';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Store} from '../configurations/store';
-import {Logger} from '../loggers/logger';
+import { Subscription } from './subscription';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
+import { Store } from '../configurations/store';
+import { Logger } from '../loggers/logger';
 import * as fs from 'fs';
 import requireFromString from 'require-from-string';
-import {MainInstance} from '../plugins/main-instance';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import { MainInstance } from '../plugins/main-instance';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 
 class CustomSubscription extends Subscription {
     constructor(subscriptionModel: SubscriptionModel) {
@@ -20,7 +20,7 @@ class CustomSubscription extends Subscription {
     }
 
     public async subscribe(): Promise<void> {
-        return this.custom.subscribe({store: Store.getData(), logger: Logger});
+        return this.custom.subscribe({ store: Store.getData(), logger: Logger });
     }
 
     public async receiveMessage(): Promise<void> {
@@ -50,6 +50,9 @@ class CustomSubscription extends Subscription {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new SubscriptionProtocol('custom', (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel));
+    const protocol = new SubscriptionProtocol(
+        'custom',
+        (subscriptionModel: SubscriptionModel) => new CustomSubscription(subscriptionModel)
+    );
     mainInstance.protocolManager.addProtocol(protocol);
 }

@@ -1,15 +1,15 @@
-import {Subscription} from './subscription';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
+import { Subscription } from './subscription';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
 import * as net from 'net';
 import * as tls from 'tls';
-import {Logger} from '../loggers/logger';
-import {Store} from '../configurations/store';
-import {HandlerListener} from '../handlers/handler-listener';
+import { Logger } from '../loggers/logger';
+import { Store } from '../configurations/store';
+import { HandlerListener } from '../handlers/handler-listener';
 import * as fs from 'fs';
-import {Timeout} from '../timers/timeout';
-import {MainInstance} from '../plugins/main-instance';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-import {ProtocolDocumentation} from '../protocols/protocol-documentation';
+import { Timeout } from '../timers/timeout';
+import { MainInstance } from '../plugins/main-instance';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
+import { ProtocolDocumentation } from '../protocols/protocol-documentation';
 
 export class StreamSubscription extends Subscription {
     private server: any;
@@ -72,7 +72,7 @@ export class StreamSubscription extends Subscription {
         if (!this.response) {
             return Promise.resolve();
         }
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             if (this.stream) {
                 if (this.stream.write) {
                     Logger.debug(`${this.type} readableStream (${this.stream.localPort}) sending response`);
@@ -91,13 +91,15 @@ export class StreamSubscription extends Subscription {
         return new Promise((resolve, reject) => {
             try {
                 this.tryToLoadStream();
-                Logger.debug(`${this.type} readableStream is reusing ${this.type} stream running on ${this.stream.localPort}`);
+                Logger.debug(
+                    `${this.type} readableStream is reusing ${this.type} stream running on ${this.stream.localPort}`
+                );
                 resolve();
             } catch (err) {
                 Logger.error(`Stream subscription errored: ` + err);
                 this.createServer()
                     .then(() => resolve())
-                    .catch((err) => reject(err));
+                    .catch(err => reject(err));
             }
         });
     }
@@ -109,7 +111,7 @@ export class StreamSubscription extends Subscription {
                     Logger.debug(`${this.type} readableStream is ready ${this.port || this.path}`);
                     resolve();
                 })
-                .catch((err) => {
+                .catch(err => {
                     const message = `${this.type} readableStream errored ${this.port || this.path}: ${err}`;
                     Logger.error(message);
                     reject(message);
@@ -133,7 +135,7 @@ export class StreamSubscription extends Subscription {
     private async createSslConnection() {
         this.sslServerGotConnection = new Promise((resolve, reject) => {
             try {
-                this.server = tls.createServer(this.options, (stream) => {
+                this.server = tls.createServer(this.options, stream => {
                     this.stream = stream;
                     resolve();
                 });
@@ -269,7 +271,8 @@ export function entryPoint(mainInstance: MainInstance): void {
                     type: 'int'
                 },
                 options: {
-                    description: 'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
+                    description:
+                        'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
                     required: false,
                     type: 'object'
                 }

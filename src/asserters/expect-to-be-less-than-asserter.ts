@@ -1,7 +1,7 @@
-import {Assertion} from '../models/events/assertion';
-import {TestModel} from '../models/outputs/test-model';
-import {Asserter} from './asserter';
-import {MainInstance} from '../plugins/main-instance';
+import { Assertion } from '../models/events/assertion';
+import { TestModel } from '../models/outputs/test-model';
+import { Asserter } from './asserter';
+import { MainInstance } from '../plugins/main-instance';
 
 export class ExpectToBeLessThanAsserter implements Asserter {
     public assert(assertion: Assertion, literal: any): TestModel {

@@ -1,8 +1,8 @@
-import {Logger} from '../loggers/logger';
-import {RequisitionModel} from '../models/inputs/requisition-model';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import { Logger } from '../loggers/logger';
+import { RequisitionModel } from '../models/inputs/requisition-model';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 import * as fs from 'fs';
-import {ObjectParser} from '../object-parser/object-parser';
+import { ObjectParser } from '../object-parser/object-parser';
 
 export class FileContentMapCreator {
     private map: any = {};
@@ -42,7 +42,9 @@ export class FileContentMapCreator {
             try {
                 const options = this.parsePlaceholder(key);
                 const fileContent = fs.readFileSync(options.filename).toString();
-                const objectParser = DynamicModulesManager.getInstance().getObjectParserManager().createParser(options.tag);
+                const objectParser = DynamicModulesManager.getInstance()
+                    .getObjectParserManager()
+                    .createParser(options.tag);
                 if (objectParser !== undefined) {
                     Logger.trace(`Trying to parse content as '${options.tag}' parser`);
                     return this.getValue(objectParser, fileContent, options);

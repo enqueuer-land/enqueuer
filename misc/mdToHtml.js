@@ -16,7 +16,7 @@ let spyHtml = `<nav id="navbar-nqr" class="navbar navbar-fixed-left">
     </a>`;
 
 // Configure section and toc generation
-converter.hooks.set('postConversion', (text) => {
+converter.hooks.set('postConversion', text => {
     const levelCounter = {};
     let previousLevelNumber = null;
     return text
@@ -56,7 +56,17 @@ converter.hooks.set('postConversion', (text) => {
                 spyHtml += `<a class="${navLinkClass}" href="#${id}" style="${navLinkStyle}">${levelPrefix.replace(/\d+\.*/g, '&nbsp;&nbsp;&nbsp;') + levelPrefix + '. ' + title}</a>`;
                 previousLevelNumber = levelNumber;
             }
-            return '<h' + levelNumber + ' id="' + id + '" style="padding-left: ' + 8 * (levelNumber - 3) + 'px">' + levelPrefix + ' ';
+            return (
+                '<h' +
+                levelNumber +
+                ' id="' +
+                id +
+                '" style="padding-left: ' +
+                8 * (levelNumber - 3) +
+                'px">' +
+                levelPrefix +
+                ' '
+            );
         })
         .replace(/\\/g, '<br>')
         .replace(/<code>/g, '<code class="yaml">')
@@ -70,15 +80,15 @@ converter.hooks.set('postConversion', (text) => {
 function httpGet(url) {
     return new Promise((resolve, reject) => {
         const request = http
-            .request(url, {headers: {'User-Agent': 'enqueuer-readme'}}, (resp) => {
+            .request(url, { headers: { 'User-Agent': 'enqueuer-readme' } }, resp => {
                 let data = '';
-                resp.on('data', (chunk) => {
+                resp.on('data', chunk => {
                     data += chunk;
                 }).on('end', () => {
-                    resolve({data: JSON.parse(data), statusCode: resp.statusCode});
+                    resolve({ data: JSON.parse(data), statusCode: resp.statusCode });
                 });
             })
-            .on('error', (err) => {
+            .on('error', err => {
                 reject(err);
             });
         request.write('');
@@ -90,11 +100,11 @@ const pluginsListContributors = [];
 const contributorsUsersList = [];
 
 httpGet(`https://raw.githubusercontent.com/enqueuer-land/plugins-list/master/plugins.json`)
-    .then((payload) => payload.data)
-    .then((plugins) =>
+    .then(payload => payload.data)
+    .then(plugins =>
         plugins
             .sort((first, second) => first.name.localeCompare(second.name))
-            .map((plugin) => {
+            .map(plugin => {
                 const info = getInfo(plugin.githubUrl);
                 contributorsUsersList.push(info);
                 pluginsListContributors.push({
@@ -118,7 +128,7 @@ httpGet(`https://raw.githubusercontent.com/enqueuer-land/plugins-list/master/plu
             })
             .join('')
     )
-    .then((innerHtml) => {
+    .then(innerHtml => {
         return `
                     <div class="container px-0 pt-2"> <!--style="background-color: var(&#45;&#45;nqr-header-background-color)"-->
                       <div class="row no-gutters pb-1">
@@ -167,7 +177,8 @@ async function createHtml(pluginsListTable) {
         .replace('{{plugins list placeholder}}', pluginsListTable)
         .replace('{{contributors list placeholder}}', contributorsHtml);
     spyHtml += `</nav></nav></nav>`;
-    const content = spyHtml + `<div class="nqr-main-container container" style="max-width: 90%">` + readMeHtmlized + `</div></div>`;
+    const content =
+        spyHtml + `<div class="nqr-main-container container" style="max-width: 90%">` + readMeHtmlized + `</div></div>`;
 
     const htmlResult = template.replace('<!--README CONTENT PLACEHOLDER-->', content);
 
@@ -180,7 +191,7 @@ createContributorsHtml = function (contributors) {
         `<div class="container-fluid mx-auto p-2" style="width: 100%">
                    <div class="row py-1 align-items-center justify-content-center mx-auto" style="width: 90%">` +
         contributors
-            .map((contributor) => {
+            .map(contributor => {
                 return ` <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
                             <a href="${contributor.html_url}" target="_blank">
                                 <img src="${contributor.picture}" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
@@ -196,14 +207,18 @@ createContributorsHtml = function (contributors) {
 async function getContributors() {
     return new Promise((resolve, reject) => {
         httpGet(`https://api.github.com/orgs/enqueuer-land/repos?per_page=200`)
-            .then((payload) => payload.data)
-            .then((data) => {
+            .then(payload => payload.data)
+            .then(data => {
                 return Promise.all(
-                    data.concat(pluginsListContributors).map((repo) => httpGet(repo.contributors_url).then((payload) => payload.data))
+                    data
+                        .concat(pluginsListContributors)
+                        .map(repo => httpGet(repo.contributors_url).then(payload => payload.data))
                 );
             })
-            .then((repoContributors) => repoContributors.reduce((acc, repoContributor) => acc.concat(repoContributor), []))
-            .then((contributors) =>
+            .then(repoContributors =>
+                repoContributors.reduce((acc, repoContributor) => acc.concat(repoContributor), [])
+            )
+            .then(contributors =>
                 contributors.reduce((acc, contributor) => {
                     if (contributor.type === 'User' /*&& contributor.login !== 'enqueuer-land'*/) {
                         acc[contributor.login] = {
@@ -215,9 +230,9 @@ async function getContributors() {
                     return acc;
                 }, {})
             )
-            .then((contributors) => Object.values(contributors))
-            .then((contributors) =>
-                contributors.map((contributor) => ({
+            .then(contributors => Object.values(contributors))
+            .then(contributors =>
+                contributors.map(contributor => ({
                     picture: `http://github.com/${contributor.login}.png`,
                     name: contributor.login,
                     html_url: `http://github.com/${contributor.login}`

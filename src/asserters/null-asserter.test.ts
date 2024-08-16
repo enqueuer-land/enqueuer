@@ -1,5 +1,5 @@
-import {Assertion} from '../models/events/assertion';
-import {NullAsserter} from './null-asserter';
+import { Assertion } from '../models/events/assertion';
+import { NullAsserter } from './null-asserter';
 
 describe('NullAsserter', () => {
     it('should return invalid', () => {

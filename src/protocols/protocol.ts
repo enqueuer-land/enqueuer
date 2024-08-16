@@ -1,7 +1,7 @@
-import {Logger} from '../loggers/logger';
-import {DefaultHookEvents} from '../models/events/event';
-import {ProtocolDocumentation} from './protocol-documentation';
-import {SubscriptionReporter} from '../reporters/subscription/subscription-reporter';
+import { Logger } from '../loggers/logger';
+import { DefaultHookEvents } from '../models/events/event';
+import { ProtocolDocumentation } from './protocol-documentation';
+import { SubscriptionReporter } from '../reporters/subscription/subscription-reporter';
 
 type Library = {
     name: string;
@@ -125,9 +125,9 @@ export abstract class Protocol {
 
     public getDescription(): {} {
         if (Object.keys(this.documentation).length > 0) {
-            return {...this.documentation, name: this.name};
+            return { ...this.documentation, name: this.name };
         }
-        return {name: this.name};
+        return { name: this.name };
     }
 
     public addAlternativeName(...alternativeNames: string[]): Protocol {
@@ -149,7 +149,9 @@ export abstract class Protocol {
     public matches(type: string): boolean {
         if (typeof type === 'string') {
             try {
-                return [this.name].concat(this.alternativeNames || []).some((name: string) => name.toUpperCase().includes(type.toUpperCase()));
+                return [this.name]
+                    .concat(this.alternativeNames || [])
+                    .some((name: string) => name.toUpperCase().includes(type.toUpperCase()));
             } catch (exc) {
                 Logger.warning(`Error comparing protocols with given type '${type}': ${exc}`);
             }

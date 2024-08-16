@@ -1,9 +1,9 @@
-import {Logger} from '../loggers/logger';
-import {TestModel} from '../models/outputs/test-model';
+import { Logger } from '../loggers/logger';
+import { TestModel } from '../models/outputs/test-model';
 import * as input from '../models/inputs/requisition-model';
-import {RequisitionModel} from '../models/inputs/requisition-model';
+import { RequisitionModel } from '../models/inputs/requisition-model';
 import * as glob from 'glob';
-import {RequisitionFileParser} from './requisition-file-parser';
+import { RequisitionFileParser } from './requisition-file-parser';
 
 export class RequisitionFilePatternParser {
     private filesErrors: TestModel[] = [];
@@ -35,7 +35,7 @@ export class RequisitionFilePatternParser {
     private getMatchingFiles(): string[] {
         let result: string[] = [];
         this.patterns.map((pattern: string) => {
-            const items = glob.sync(pattern, {nodir: true});
+            const items = glob.sync(pattern, { nodir: true });
             if (items.length > 0) {
                 result = result.concat(items.sort());
             } else {
@@ -51,6 +51,6 @@ export class RequisitionFilePatternParser {
 
     private addError(title: string, message: string) {
         Logger.error(message);
-        this.filesErrors.push({name: title, valid: false, description: message});
+        this.filesErrors.push({ name: title, valid: false, description: message });
     }
 }

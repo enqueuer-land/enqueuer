@@ -1,5 +1,5 @@
-import {ReportModel} from '../models/outputs/report-model';
-import {TestModel} from '../models/outputs/test-model';
+import { ReportModel } from '../models/outputs/report-model';
+import { TestModel } from '../models/outputs/test-model';
 
 export interface FlattenTest extends TestModel {
     hierarchy: string[];
@@ -9,7 +9,7 @@ export class TestsFlattener {
     public flatten(node: ReportModel): FlattenTest[] {
         const iterationCounter = node.totalIterations > 1 ? ` [${node.iteration}]` : '';
         const name = node.name + iterationCounter;
-        return this.goDeep({...node, name}, [name]);
+        return this.goDeep({ ...node, name }, [name]);
     }
 
     private goDeep(node: ReportModel, hierarchy: string[]): FlattenTest[] {
@@ -25,7 +25,7 @@ export class TestsFlattener {
             .reduce((acc: FlattenTest[], component: ReportModel) => {
                 const iterationCounter = component.totalIterations > 1 ? ` [${component.iteration}]` : '';
                 const name = component.name + iterationCounter;
-                return acc.concat(this.goDeep({...component, name}, hierarchy.concat(name)));
+                return acc.concat(this.goDeep({ ...component, name }, hierarchy.concat(name)));
             }, []);
     }
 

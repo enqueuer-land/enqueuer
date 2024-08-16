@@ -1,4 +1,4 @@
-import {TestModel} from '../models/outputs/test-model';
+import { TestModel } from '../models/outputs/test-model';
 
 export interface HttpAuthentication {
     generate(): any;

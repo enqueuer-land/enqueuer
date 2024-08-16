@@ -1,12 +1,12 @@
-import {TestsAnalyzer} from './tests-analyzer';
-import {TestModel, testModelIsFailing, testModelIsPassing} from '../models/outputs/test-model';
-import {RequisitionModel} from '../models/outputs/requisition-model';
-import {PublisherModel} from '../models/outputs/publisher-model';
-import {SubscriptionModel} from '../models/outputs/subscription-model';
-import {ReportModel} from '../models/outputs/report-model';
-import {HookModel} from '../models/outputs/hook-model';
+import { TestsAnalyzer } from './tests-analyzer';
+import { TestModel, testModelIsFailing, testModelIsPassing } from '../models/outputs/test-model';
+import { RequisitionModel } from '../models/outputs/requisition-model';
+import { PublisherModel } from '../models/outputs/publisher-model';
+import { SubscriptionModel } from '../models/outputs/subscription-model';
+import { ReportModel } from '../models/outputs/report-model';
+import { HookModel } from '../models/outputs/hook-model';
 import cgalk from 'chalk';
-import {Configuration} from '../configurations/configuration';
+import { Configuration } from '../configurations/configuration';
 import chalk from 'chalk';
 
 export type SummaryOptions = {
@@ -91,13 +91,17 @@ export class SummaryTestOutput {
     private formatTitle(testAnalyzer: TestsAnalyzer): string {
         const initialTabulation = this.createEmptyStringSized(2 * this.options.tabulationPerLevel);
         const tagTitleSeparation = this.createEmptyStringSized(this.options.level * this.options.tabulationPerLevel);
-        const titleSizeSeparation: number = initialTabulation.length + 6 + tagTitleSeparation.length + this.report.name.length;
+        const titleSizeSeparation: number =
+            initialTabulation.length + 6 + tagTitleSeparation.length + this.report.name.length;
         let formattedString = initialTabulation;
         let nameColorFunction: any;
         if (testAnalyzer.getTests().length === 0 && !this.report.isAssertion) {
             formattedString += `${chalk.black.bgHex('#999999')('[NULL]')} `;
             nameColorFunction = chalk.hex('#999999');
-        } else if (this.report.ignored || (testAnalyzer.getIgnoredList().length === testAnalyzer.getTests().length && !this.report.isAssertion)) {
+        } else if (
+            this.report.ignored ||
+            (testAnalyzer.getIgnoredList().length === testAnalyzer.getTests().length && !this.report.isAssertion)
+        ) {
             formattedString += `${chalk.black.bgYellow('[SKIP]')} `;
             nameColorFunction = chalk.yellow;
         } else if (testAnalyzer.getFailingTests().length > 0 || !testModelIsPassing(this.report)) {
@@ -135,8 +139,8 @@ export class SummaryTestOutput {
             message += `\t| executed in ${totalTime}ms`;
         }
         if (Configuration.getInstance().getShowExplicitTestsOnly()) {
-            message += `\t| (${testAnalyzer.getPassingTests().filter((test) => !test.implicit).length}/${
-                testAnalyzer.getNotIgnoredTests().filter((test) => !test.implicit).length
+            message += `\t| (${testAnalyzer.getPassingTests().filter(test => !test.implicit).length}/${
+                testAnalyzer.getNotIgnoredTests().filter(test => !test.implicit).length
             } of explicitly declared)`;
         }
         const ignoredTests = testAnalyzer.getIgnoredList();
@@ -149,7 +153,9 @@ export class SummaryTestOutput {
     private printFailingTests(report: ReportModel, hierarchy: string[]) {
         const failing = testModelIsFailing(report);
         if (failing || this.options.showPassingTests) {
-            Object.keys(report.hooks || {}).forEach((key: string) => this.printHookTests(report.hooks![key], key, hierarchy));
+            Object.keys(report.hooks || {}).forEach((key: string) =>
+                this.printHookTests(report.hooks![key], key, hierarchy)
+            );
 
             (report.subscriptions || [])
                 .concat(report.publishers || [])
@@ -165,7 +171,9 @@ export class SummaryTestOutput {
         hook.tests
             .filter((test: TestModel) => !testModelIsPassing(test) || this.options.showPassingTests)
             .forEach((test: TestModel, index: number) => {
-                const initialTabulation = this.createEmptyStringSized((this.options.level + 4) * this.options.tabulationPerLevel);
+                const initialTabulation = this.createEmptyStringSized(
+                    (this.options.level + 4) * this.options.tabulationPerLevel
+                );
                 let color: any;
                 if (test.ignored) {
                     color = chalk.yellow;
@@ -178,14 +186,20 @@ export class SummaryTestOutput {
                     const hierarchyMessage =
                         initialTabulation +
                         hierarchy
-                            .map((level) => color(level) + chalk.gray(' › '))
+                            .map(level => color(level) + chalk.gray(' › '))
                             .concat(hookName)
                             .join('');
                     console.log(hierarchyMessage);
                 }
-                console.log(color(`${initialTabulation}${this.createEmptyStringSized(this.options.tabulationPerLevel)}${test.name}`));
                 console.log(
-                    chalk.reset(`${initialTabulation}${this.createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}\n`)
+                    color(
+                        `${initialTabulation}${this.createEmptyStringSized(this.options.tabulationPerLevel)}${test.name}`
+                    )
+                );
+                console.log(
+                    chalk.reset(
+                        `${initialTabulation}${this.createEmptyStringSized(2 * this.options.tabulationPerLevel)}${test.description}\n`
+                    )
                 );
             });
     }

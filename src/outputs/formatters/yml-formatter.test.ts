@@ -1,6 +1,6 @@
-import {entryPoint, YmlReportFormatter} from './yml-formatter';
-import {RequisitionModel} from '../../models/outputs/requisition-model';
-import {YmlObjectParser} from '../../object-parser/yml-object-parser';
+import { entryPoint, YmlReportFormatter } from './yml-formatter';
+import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { YmlObjectParser } from '../../object-parser/yml-object-parser';
 
 describe('YmlReportFormatter', () => {
     it('Should stringify it', () => {
@@ -15,7 +15,7 @@ describe('YmlReportFormatter', () => {
         expect(format).toBe(new YmlObjectParser().stringify(test));
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: any = {
             reportFormatterManager: {
                 addReportFormatter: (createFunction: any, ...tags: any) => {

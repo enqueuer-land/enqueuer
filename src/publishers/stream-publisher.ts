@@ -1,13 +1,13 @@
-import {Publisher} from './publisher';
-import {PublisherModel} from '../models/inputs/publisher-model';
+import { Publisher } from './publisher';
+import { PublisherModel } from '../models/inputs/publisher-model';
 import * as net from 'net';
-import {Logger} from '../loggers/logger';
-import {Store} from '../configurations/store';
+import { Logger } from '../loggers/logger';
+import { Store } from '../configurations/store';
 import * as tls from 'tls';
-import {Timeout} from '../timers/timeout';
-import {MainInstance} from '../plugins/main-instance';
-import {PublisherProtocol} from '../protocols/publisher-protocol';
-import {ProtocolDocumentation} from '../protocols/protocol-documentation';
+import { Timeout } from '../timers/timeout';
+import { MainInstance } from '../plugins/main-instance';
+import { PublisherProtocol } from '../protocols/publisher-protocol';
+import { ProtocolDocumentation } from '../protocols/protocol-documentation';
 
 class StreamPublisher extends Publisher {
     private readonly loadedStream: any;
@@ -49,7 +49,7 @@ class StreamPublisher extends Publisher {
                 Logger.debug(`${this.type} client connected to: ${this.serverAddress}:${this.port || this.path}`);
                 this.publishData(stream, resolve, reject);
             })
-            .catch((err) => {
+            .catch(err => {
                 reject(err);
             });
     }
@@ -190,7 +190,8 @@ export function entryPoint(mainInstance: MainInstance): void {
                     type: 'int'
                 },
                 options: {
-                    description: 'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
+                    description:
+                        'Defined when using SSL. https://nodejs.org/api/net.html#net_net_createserver_options_connectionlistener',
                     required: false,
                     type: 'object'
                 }

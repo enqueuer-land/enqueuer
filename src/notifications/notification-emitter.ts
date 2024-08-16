@@ -1,6 +1,6 @@
-import {EventEmitter} from 'events';
-import {Logger} from '../loggers/logger';
-import {Notifications} from './notifications';
+import { EventEmitter } from 'events';
+import { Logger } from '../loggers/logger';
+import { Notifications } from './notifications';
 
 export class NotificationEmitter {
     private static readonly notificationEmitter = new NotificationEmitter();

@@ -1,23 +1,23 @@
-import {Publisher} from '../../publishers/publisher';
-import {DateController} from '../../timers/date-controller';
+import { Publisher } from '../../publishers/publisher';
+import { DateController } from '../../timers/date-controller';
 import * as output from '../../models/outputs/publisher-model';
-import {PublisherModel} from '../../models/outputs/publisher-model';
+import { PublisherModel } from '../../models/outputs/publisher-model';
 import * as input from '../../models/inputs/publisher-model';
-import {Logger} from '../../loggers/logger';
-import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
-import {EventExecutor} from '../../events/event-executor';
-import {DefaultHookEvents} from '../../models/events/event';
-import {ObjectDecycler} from '../../object-parser/object-decycler';
-import {TestModel, testModelIsPassing} from '../../models/outputs/test-model';
-import {NotificationEmitter} from '../../notifications/notification-emitter';
-import {HookModel} from '../../models/outputs/hook-model';
-import {Notifications} from '../../notifications/notifications';
+import { Logger } from '../../loggers/logger';
+import { DynamicModulesManager } from '../../plugins/dynamic-modules-manager';
+import { EventExecutor } from '../../events/event-executor';
+import { DefaultHookEvents } from '../../models/events/event';
+import { ObjectDecycler } from '../../object-parser/object-decycler';
+import { TestModel, testModelIsPassing } from '../../models/outputs/test-model';
+import { NotificationEmitter } from '../../notifications/notification-emitter';
+import { HookModel } from '../../models/outputs/hook-model';
+import { Notifications } from '../../notifications/notifications';
 
 export class PublisherReporter {
     private readonly report: output.PublisherModel;
     private readonly publisher: Publisher;
     private readonly startTime: Date;
-    private readonly executedHooks: {[propName: string]: string[]};
+    private readonly executedHooks: { [propName: string]: string[] };
     private published: boolean = false;
 
     constructor(publisher: input.PublisherModel) {
@@ -27,8 +27,8 @@ export class PublisherReporter {
             ignored: publisher.ignore,
             valid: true,
             hooks: {
-                [DefaultHookEvents.ON_INIT]: {valid: true, tests: []},
-                [DefaultHookEvents.ON_FINISH]: {valid: true, tests: []}
+                [DefaultHookEvents.ON_INIT]: { valid: true, tests: [] },
+                [DefaultHookEvents.ON_FINISH]: { valid: true, tests: [] }
             },
             type: publisher.type
         };
@@ -37,7 +37,9 @@ export class PublisherReporter {
         this.executeOnInitFunction(publisher);
         Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
         this.publisher = DynamicModulesManager.getInstance().getProtocolManager().createPublisher(publisher);
-        this.publisher.registerHookEventExecutor((eventName: string, args: any) => this.executeHookEvent(eventName, args));
+        this.publisher.registerHookEventExecutor((eventName: string, args: any) =>
+            this.executeHookEvent(eventName, args)
+        );
     }
 
     public async publish(): Promise<void> {

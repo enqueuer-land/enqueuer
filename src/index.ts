@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import {EnqueuerStarter} from './enqueuer-starter';
-import {EnqueuerAsNodeChildRunner} from './enqueuer-as-node-child-runner';
+import { EnqueuerStarter } from './enqueuer-starter';
+import { EnqueuerAsNodeChildRunner } from './enqueuer-as-node-child-runner';
 
 // It's the executable
 if (require.main === module) {

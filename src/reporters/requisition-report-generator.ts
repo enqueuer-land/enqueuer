@@ -1,13 +1,13 @@
-import {DateController} from '../timers/date-controller';
+import { DateController } from '../timers/date-controller';
 import * as input from '../models/inputs/requisition-model';
 import * as output from '../models/outputs/requisition-model';
-import {RequisitionModel} from '../models/outputs/requisition-model';
-import {SubscriptionModel} from '../models/outputs/subscription-model';
-import {PublisherModel} from '../models/outputs/publisher-model';
-import {RequisitionDefaultReports} from '../models-defaults/outputs/requisition-default-reports';
-import {DefaultHookEvents} from '../models/events/event';
-import {HookModel} from '../models/outputs/hook-model';
-import {HookReporter} from './hook-reporter';
+import { RequisitionModel } from '../models/outputs/requisition-model';
+import { SubscriptionModel } from '../models/outputs/subscription-model';
+import { PublisherModel } from '../models/outputs/publisher-model';
+import { RequisitionDefaultReports } from '../models-defaults/outputs/requisition-default-reports';
+import { DefaultHookEvents } from '../models/events/event';
+import { HookModel } from '../models/outputs/hook-model';
+import { HookReporter } from './hook-reporter';
 
 export class RequisitionReportGenerator {
     private startTime: DateController = new DateController();
@@ -31,9 +31,11 @@ export class RequisitionReportGenerator {
 
     public getReport(): RequisitionModel {
         this.report.valid =
-            (this.report.subscriptions || []).every((report) => report.valid) &&
-            (this.report.publishers || []).every((report) => report.valid) &&
-            Object.keys(this.report.hooks || {}).every((key: string) => (this.report.hooks ? this.report.hooks[key].valid : true));
+            (this.report.subscriptions || []).every(report => report.valid) &&
+            (this.report.publishers || []).every(report => report.valid) &&
+            Object.keys(this.report.hooks || {}).every((key: string) =>
+                this.report.hooks ? this.report.hooks[key].valid : true
+            );
         return this.report;
     }
 

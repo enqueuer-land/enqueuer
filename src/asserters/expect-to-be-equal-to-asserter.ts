@@ -1,7 +1,7 @@
-import {Assertion} from '../models/events/assertion';
-import {TestModel} from '../models/outputs/test-model';
-import {Asserter} from './asserter';
-import {MainInstance} from '../plugins/main-instance';
+import { Assertion } from '../models/events/assertion';
+import { TestModel } from '../models/outputs/test-model';
+import { Asserter } from './asserter';
+import { MainInstance } from '../plugins/main-instance';
 
 export class ExpectToBeEqualToAsserter implements Asserter {
     public assert(assertion: Assertion, literal: any): TestModel {
@@ -31,7 +31,7 @@ export class ExpectToBeEqualToAsserter implements Asserter {
             tx = typeof x,
             ty = typeof y;
         return x && y && tx === 'object' && tx === ty
-            ? ok(x).length === ok(y).length && ok(x).every((key) => this.deepEqual(x[key], y[key]))
+            ? ok(x).length === ok(y).length && ok(x).every(key => this.deepEqual(x[key], y[key]))
             : x === y && ((x != null && y != null) || x.constructor === y.constructor);
     }
 }

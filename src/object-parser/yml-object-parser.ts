@@ -1,7 +1,7 @@
-import {ObjectParser} from './object-parser';
+import { ObjectParser } from './object-parser';
 import * as yaml from 'yamljs';
-import {ObjectDecycler} from './object-decycler';
-import {MainInstance} from '../plugins/main-instance';
+import { ObjectDecycler } from './object-decycler';
+import { MainInstance } from '../plugins/main-instance';
 
 export class YmlObjectParser implements ObjectParser {
     public parse(value: string): object {

@@ -1,8 +1,8 @@
-import {MultiTestsOutput} from './multi-tests-output';
-import {SummaryTestOutput} from './summary-test-output';
-import {ProtocolManager} from '../plugins/protocol-manager';
-import {ReportFormatterManager} from '../plugins/report-formatter-manager';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import { MultiTestsOutput } from './multi-tests-output';
+import { SummaryTestOutput } from './summary-test-output';
+import { ProtocolManager } from '../plugins/protocol-manager';
+import { ReportFormatterManager } from '../plugins/report-formatter-manager';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 
 jest.mock('../plugins/dynamic-modules-manager');
 // @ts-ignore
@@ -71,7 +71,7 @@ describe('MultiTestsOutput', () => {
     });
 
     it('Should create an output and a createFunction', () => {
-        const output = {type: 'output', format: 'createFunction'};
+        const output = { type: 'output', format: 'createFunction' };
         // @ts-ignore
         const multiTestsOutput = new MultiTestsOutput([output]);
 
@@ -80,7 +80,7 @@ describe('MultiTestsOutput', () => {
 
     it('Should format before printing', async () => {
         const report = {};
-        const output = {type: 'output', format: 'createFunction'};
+        const output = { type: 'output', format: 'createFunction' };
         // @ts-ignore
         await new MultiTestsOutput([output]).publishReport(report);
 

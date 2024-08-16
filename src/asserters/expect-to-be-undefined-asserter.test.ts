@@ -1,6 +1,6 @@
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
-import {entryPoint, ExpectToBeUndefinedAsserter} from './expect-to-be-undefined-asserter';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
+import { entryPoint, ExpectToBeUndefinedAsserter } from './expect-to-be-undefined-asserter';
 
 describe('ExpectToBeUndefinedAsserter', () => {
     it('should be undefined', () => {
@@ -35,7 +35,7 @@ describe('ExpectToBeUndefinedAsserter', () => {
         expect(test.description).toBe("Expecting 'body.expected' to be undefined. Received: 2");
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

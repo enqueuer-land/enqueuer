@@ -1,6 +1,6 @@
-import {entryPoint, ExpectToBeEqualToAsserter} from './expect-to-be-equal-to-asserter';
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
+import { entryPoint, ExpectToBeEqualToAsserter } from './expect-to-be-equal-to-asserter';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
 
 describe('ExpectToBeEqualToAsserter', () => {
     it('should compare equal primitives', () => {
@@ -38,7 +38,9 @@ describe('ExpectToBeEqualToAsserter', () => {
         const expectToBeEqualToAsserter = new ExpectToBeEqualToAsserter().assert(assertion, literal);
         expect(expectToBeEqualToAsserter.name).toBe('assertion 0');
         expect(expectToBeEqualToAsserter.valid).toBeTruthy();
-        expect(expectToBeEqualToAsserter.description).toBe(`Expected 'body.actual' not to be equal to '0'. Received '2'`);
+        expect(expectToBeEqualToAsserter.description).toBe(
+            `Expected 'body.actual' not to be equal to '0'. Received '2'`
+        );
     });
 
     it('should compare equal primitives fail', () => {
@@ -63,8 +65,8 @@ describe('ExpectToBeEqualToAsserter', () => {
     it('should compare equal objects', () => {
         const assertion: Assertion = {
             name: 'assertion 0',
-            expect: {value: 123, cycle: {nested: true, array: [4, 3, 2]}},
-            toBeEqualTo: {value: 123, cycle: {nested: true, array: [4, 3, 2]}}
+            expect: { value: 123, cycle: { nested: true, array: [4, 3, 2] } },
+            toBeEqualTo: { value: 123, cycle: { nested: true, array: [4, 3, 2] } }
         };
 
         const literal = {
@@ -111,9 +113,9 @@ describe('ExpectToBeEqualToAsserter', () => {
     it('should compare not equal objects', () => {
         const assertion: Assertion = {
             name: 'assertion 0',
-            expect: {value: 123, cycle: {nested: true, array: [4, 3, 2]}},
+            expect: { value: 123, cycle: { nested: true, array: [4, 3, 2] } },
             not: null,
-            toBeEqualTo: {value: 123, cycle: {nested: true}}
+            toBeEqualTo: { value: 123, cycle: { nested: true } }
         };
 
         const literal = {
@@ -131,8 +133,8 @@ describe('ExpectToBeEqualToAsserter', () => {
     it('should compare equal objects fail', () => {
         const assertion: Assertion = {
             name: 'assertion 0',
-            expect: {value: 123, cycle: {nested: true, array: [4, 3, 2]}},
-            toBeEqualTo: {value: 123, cycle: {nested: false, array: [4, 3, 2]}}
+            expect: { value: 123, cycle: { nested: true, array: [4, 3, 2] } },
+            toBeEqualTo: { value: 123, cycle: { nested: false, array: [4, 3, 2] } }
         };
 
         const literal = {
@@ -147,7 +149,7 @@ describe('ExpectToBeEqualToAsserter', () => {
         expect(expectToBeEqualToAsserter.description).toBeDefined();
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

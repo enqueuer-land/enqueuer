@@ -1,8 +1,8 @@
-import {Assertion} from '../models/events/assertion';
-import {Logger} from '../loggers/logger';
-import {Asserter} from '../asserters/asserter';
-import {NullAsserter} from '../asserters/null-asserter';
-import {prettifyJson} from '../outputs/prettify-json';
+import { Assertion } from '../models/events/assertion';
+import { Logger } from '../loggers/logger';
+import { Asserter } from '../asserters/asserter';
+import { NullAsserter } from '../asserters/null-asserter';
+import { prettifyJson } from '../outputs/prettify-json';
 
 type AssertionFieldTypes = 'string' | 'number' | 'boolean' | 'array' | 'null' | 'any';
 type AssertionField = {
@@ -31,8 +31,8 @@ export class AsserterManager {
     public createAsserter(assertion: Assertion): Asserter {
         const matching = this.addedAsserters.filter((added: AddedAsserter) =>
             Object.keys(added.template)
-                .filter((key) => added.template[key].required || added.template[key].required === undefined)
-                .every((requiredKey) => assertion[requiredKey] !== undefined)
+                .filter(key => added.template[key].required || added.template[key].required === undefined)
+                .every(requiredKey => assertion[requiredKey] !== undefined)
         );
         if (matching.length > 0) {
             return matching[0].createFunction();
@@ -42,7 +42,9 @@ export class AsserterManager {
     }
 
     public addAsserter(templateAssertion: AssertionTemplate, createFunction: () => Asserter): void {
-        Object.keys(templateAssertion).forEach((key) => (templateAssertion[key] = Object.assign({}, defaultAssertionField, templateAssertion[key])));
+        Object.keys(templateAssertion).forEach(
+            key => (templateAssertion[key] = Object.assign({}, defaultAssertionField, templateAssertion[key]))
+        );
         this.addedAsserters.unshift({
             template: templateAssertion,
             createFunction
@@ -61,9 +63,9 @@ export class AsserterManager {
         let matching: AddedAsserter[] = this.addedAsserters;
         if (typeof field === 'string') {
             matching = this.addedAsserters.filter((added: AddedAsserter) =>
-                Object.keys(added.template).some((key) => key.toUpperCase().indexOf(field.toUpperCase()) !== -1)
+                Object.keys(added.template).some(key => key.toUpperCase().indexOf(field.toUpperCase()) !== -1)
             );
         }
-        return {asserters: matching.map((added) => added.template).sort()};
+        return { asserters: matching.map(added => added.template).sort() };
     }
 }

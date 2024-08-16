@@ -1,6 +1,6 @@
-import {HttpAuthentication} from './http-authentication';
-import {TestModel} from '../models/outputs/test-model';
-import {Logger} from '../loggers/logger';
+import { HttpAuthentication } from './http-authentication';
+import { TestModel } from '../models/outputs/test-model';
+import { Logger } from '../loggers/logger';
 
 export class HttpBasicAuthentication implements HttpAuthentication {
     private readonly user: any;
@@ -47,7 +47,7 @@ export class HttpBasicAuthentication implements HttpAuthentication {
             description: "Fail to authenticate 'Basic' authentication"
         };
         if (this.tests.length > 0) {
-            if (this.tests.every((test) => test.valid)) {
+            if (this.tests.every(test => test.valid)) {
                 test.valid = true;
                 test.description = `Basic authentication is valid`;
             }

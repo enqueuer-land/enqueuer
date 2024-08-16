@@ -1,6 +1,6 @@
-import {RequisitionFilePatternParser} from './requisition-file-pattern-parser';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {YmlObjectParser} from '../object-parser/yml-object-parser';
+import { RequisitionFilePatternParser } from './requisition-file-pattern-parser';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
+import { YmlObjectParser } from '../object-parser/yml-object-parser';
 import * as fs from 'fs';
 import * as glob from 'glob';
 
@@ -22,7 +22,7 @@ describe('RequisitionFilePatternParser', () => {
                 id: 0
             },
             {
-                publishers: [{type: true}],
+                publishers: [{ type: true }],
                 name: 'named',
                 id: 1
             }
@@ -87,7 +87,7 @@ describe('RequisitionFilePatternParser', () => {
             .getObjectParserManager()
             .addObjectParser(() => {
                 return {
-                    parse: (value) => new YmlObjectParser().parse(value)
+                    parse: value => new YmlObjectParser().parse(value)
                 };
             }, 'yml');
 
@@ -109,7 +109,7 @@ describe('RequisitionFilePatternParser', () => {
             .getObjectParserManager()
             .addObjectParser(() => {
                 return {
-                    parse: (value) => new YmlObjectParser().parse(value)
+                    parse: value => new YmlObjectParser().parse(value)
                 };
             }, 'yml');
 

@@ -1,6 +1,6 @@
-import {Logger} from './logger';
-import {DateController} from '../timers/date-controller';
-import {LogLevel} from './log-level';
+import { Logger } from './logger';
+import { DateController } from '../timers/date-controller';
+import { LogLevel } from './log-level';
 
 jest.mock('../timers/date-controller');
 

@@ -1,4 +1,4 @@
-import {DateController} from './date-controller';
+import { DateController } from './date-controller';
 
 let leftPad = (number: number, targetLength: number): string => {
     let output = number + '';

@@ -1,4 +1,4 @@
-import {HttpRequester} from './http-requester';
+import { HttpRequester } from './http-requester';
 
 jest.mock('fetch');
 
@@ -6,12 +6,12 @@ describe('HttpRequester', () => {
     it('Should resolve request result', async () => {
         const url = 'url';
         const method = 'method';
-        const headers = {key: 'value'};
+        const headers = { key: 'value' };
         const body = {
             body: true
         };
         const timeout = 100;
-        const response = {body: 'body', headers: {headerA: 'a', 'header-1': 1}};
+        const response = { body: 'body', headers: { headerA: 'a', 'header-1': 1 } };
 
         const requestMock = jest.fn((options, cb) => {
             expect(options.url).toBe(url);
@@ -26,7 +26,7 @@ describe('HttpRequester', () => {
 
     it('Should reject request result', async () => {
         const requestMock = jest.fn((options, cb) => {
-            expect(options.headers).toEqual({'Content-Length': 0});
+            expect(options.headers).toEqual({ 'Content-Length': 0 });
             expect(options.timeout).toBe(3000);
             cb('error');
         });

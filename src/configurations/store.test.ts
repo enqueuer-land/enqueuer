@@ -1,5 +1,5 @@
-import {Store} from './store';
-import {Configuration} from './configuration';
+import { Store } from './store';
+import { Configuration } from './configuration';
 
 jest.mock('./configuration');
 

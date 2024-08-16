@@ -1,8 +1,8 @@
 import * as input from '../../models/inputs/subscription-model';
 import * as output from '../../models/outputs/subscription-model';
-import {SubscriptionReporter} from './subscription-reporter';
-import {Logger} from '../../loggers/logger';
-import {ComponentImporter} from '../../requisition-runners/component-importer';
+import { SubscriptionReporter } from './subscription-reporter';
+import { Logger } from '../../loggers/logger';
+import { ComponentImporter } from '../../requisition-runners/component-importer';
 
 export class MultiSubscriptionsReporter {
     private subscriptions: SubscriptionReporter[] = [];
@@ -10,15 +10,17 @@ export class MultiSubscriptionsReporter {
 
     constructor(subscriptions: input.SubscriptionModel[]) {
         Logger.debug(`Instantiating subscriptions`);
-        this.subscriptions = subscriptions.map((subscription) => new SubscriptionReporter(new ComponentImporter().importSubscription(subscription)));
+        this.subscriptions = subscriptions.map(
+            subscription => new SubscriptionReporter(new ComponentImporter().importSubscription(subscription))
+        );
         this.timeoutPromise = Promise.resolve();
     }
 
     public start(): void {
-        this.timeoutPromise = new Promise((resolve) => {
-            this.subscriptions.forEach((subscription) => {
+        this.timeoutPromise = new Promise(resolve => {
+            this.subscriptions.forEach(subscription => {
                 subscription.startTimeout(() => {
-                    if (this.subscriptions.every((subscription) => subscription.hasFinished())) {
+                    if (this.subscriptions.every(subscription => subscription.hasFinished())) {
                         const message = `Every subscription has finished its job`;
                         Logger.debug(message);
                         resolve(message);
@@ -32,7 +34,7 @@ export class MultiSubscriptionsReporter {
         Logger.debug(`Subscriptions are subscribing`);
         return Promise.race([
             Promise.all(
-                this.subscriptions.map(async (subscription) => {
+                this.subscriptions.map(async subscription => {
                     try {
                         await subscription.subscribe();
                     } catch (err) {
@@ -48,7 +50,7 @@ export class MultiSubscriptionsReporter {
         Logger.debug(`Subscriptions are waiting for messages`);
         await Promise.race([
             Promise.all(
-                this.subscriptions.map(async (subscription) => {
+                this.subscriptions.map(async subscription => {
                     try {
                         await subscription.receiveMessage();
                         Logger.debug(`A subscription received a message`);
@@ -65,14 +67,14 @@ export class MultiSubscriptionsReporter {
 
     public async unsubscribe(): Promise<void[]> {
         Logger.debug(`Subscriptions are unsubscribing`);
-        return await Promise.all(this.subscriptions.map((subscription) => subscription.unsubscribe()));
+        return await Promise.all(this.subscriptions.map(subscription => subscription.unsubscribe()));
     }
 
     public getReport(): output.SubscriptionModel[] {
-        return this.subscriptions.map((subscription) => subscription.getReport());
+        return this.subscriptions.map(subscription => subscription.getReport());
     }
 
     public onFinish(): void {
-        this.subscriptions.forEach((subscriptionHandler) => subscriptionHandler.onFinish());
+        this.subscriptions.forEach(subscriptionHandler => subscriptionHandler.onFinish());
     }
 }

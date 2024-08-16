@@ -1,5 +1,5 @@
-import {HandlerListener} from './handler-listener';
-import {Logger} from '../loggers/logger';
+import { HandlerListener } from './handler-listener';
+import { Logger } from '../loggers/logger';
 
 let onErrorMock = jest.fn();
 let listenMock = jest.fn();
@@ -42,7 +42,7 @@ describe('HandleListener', () => {
         setTimeout.mockClear();
     });
 
-    it('Happy path', (done) => {
+    it('Happy path', done => {
         const handler = 987;
 
         listenMock = jest.fn((argHandler, cb) => {
@@ -61,7 +61,7 @@ describe('HandleListener', () => {
         });
     });
 
-    it('Should bind to "error" event', (done) => {
+    it('Should bind to "error" event', done => {
         const handler = 987;
 
         onErrorMock = jest.fn((eventName, cb) => {
@@ -70,7 +70,7 @@ describe('HandleListener', () => {
         });
 
         const listener = new HandlerListener(createServerMock());
-        listener.listen(handler).catch((err) => {
+        listener.listen(handler).catch(err => {
             expect(err).toBe('Error listening to handler (987) "error"');
             expect(listenMock).toHaveBeenCalledTimes(1);
             expect(onErrorMock).toHaveBeenCalledTimes(1);
@@ -80,7 +80,7 @@ describe('HandleListener', () => {
         });
     });
 
-    it('Should catch listen exception', (done) => {
+    it('Should catch listen exception', done => {
         const handler = 987;
         const exception = 'exception';
 
@@ -89,7 +89,7 @@ describe('HandleListener', () => {
         });
 
         const listener = new HandlerListener(createServerMock());
-        listener.listen(handler).catch((err) => {
+        listener.listen(handler).catch(err => {
             expect(err).toBe(`Error listening to handler (${handler}) "${exception}"`);
             expect(listenMock).toHaveBeenCalledTimes(1);
             expect(onErrorMock).toHaveBeenCalledTimes(1);
@@ -99,7 +99,7 @@ describe('HandleListener', () => {
         });
     });
 
-    it("Retry just once when it's not EADDRINUSE", (done) => {
+    it("Retry just once when it's not EADDRINUSE", done => {
         const handler = 987;
         jest.runAllTimers();
 
@@ -111,7 +111,7 @@ describe('HandleListener', () => {
 
         const listener = new HandlerListener(createServerMock());
 
-        listener.listen(handler).catch((err) => {
+        listener.listen(handler).catch(err => {
             expect(err).toBeDefined();
             expect(listenMock).toHaveBeenCalledTimes(1);
             expect(setTimeout).toHaveBeenCalledTimes(0);
@@ -120,7 +120,7 @@ describe('HandleListener', () => {
         });
     });
 
-    it('Retry after retryInterval if error is EADDRINUSE', (done) => {
+    it('Retry after retryInterval if error is EADDRINUSE', done => {
         const handler = 987;
         const numAttempts = 2;
         const retryInterval = 2;
@@ -148,7 +148,7 @@ describe('HandleListener', () => {
         jest.runAllTimers();
     });
 
-    it('Try max attempts num if error is EADDRINUSE', (done) => {
+    it('Try max attempts num if error is EADDRINUSE', done => {
         const handler = 987;
         const numAttempts = 15;
 
@@ -177,7 +177,7 @@ describe('HandleListener', () => {
         jest.runAllTimers();
     });
 
-    it('Should fail it try max attempts is over when error is EADDRINUSE', (done) => {
+    it('Should fail it try max attempts is over when error is EADDRINUSE', done => {
         const handler = 'virgs';
         const numAttempts = 15;
 
@@ -191,7 +191,7 @@ describe('HandleListener', () => {
 
         const listener = new HandlerListener(createServerMock(), numAttempts);
 
-        listener.listen(handler).catch((err) => {
+        listener.listen(handler).catch(err => {
             expect(err).toBe(`Could not bind to handler ${handler}`);
             expect(listenMock).toHaveBeenCalledTimes(numAttempts);
             expect(closeMock).toHaveBeenCalledTimes(numAttempts);

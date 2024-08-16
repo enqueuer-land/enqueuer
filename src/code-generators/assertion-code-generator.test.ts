@@ -1,8 +1,12 @@
-import {AssertionCodeGenerator} from './assertion-code-generator';
+import { AssertionCodeGenerator } from './assertion-code-generator';
 
 describe('AssertionCodeGenerator', () => {
     it('Should pass tests instance name', () => {
-        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator('tests', 'asserter', 'assertion');
+        const assertionCodeGenerator: AssertionCodeGenerator = new AssertionCodeGenerator(
+            'tests',
+            'asserter',
+            'assertion'
+        );
         const code: string = assertionCodeGenerator.generate();
 
         expect(code).toBe(

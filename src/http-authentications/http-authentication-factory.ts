@@ -1,8 +1,8 @@
-import {HttpAuthentication} from './http-authentication';
-import {HttpBasicAuthentication} from './http-basic-authentication';
-import {HttpBearerAuthentication} from './http-bearer-authentication';
-import {HttpDigestAuthentication} from './http-digest-authentication';
-import {HttpNoAuthentication} from './http-no-authentication';
+import { HttpAuthentication } from './http-authentication';
+import { HttpBasicAuthentication } from './http-basic-authentication';
+import { HttpBearerAuthentication } from './http-bearer-authentication';
+import { HttpDigestAuthentication } from './http-digest-authentication';
+import { HttpNoAuthentication } from './http-no-authentication';
 
 export class HttpAuthenticationFactory {
     public create(component: any): HttpAuthentication {

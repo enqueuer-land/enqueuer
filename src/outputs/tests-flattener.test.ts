@@ -1,5 +1,5 @@
-import {TestsFlattener} from './tests-flattener';
-import {ReportModel} from '../models/outputs/report-model';
+import { TestsFlattener } from './tests-flattener';
+import { ReportModel } from '../models/outputs/report-model';
 
 describe('TestsFlattener', () => {
     it('Flattens requisitions', () => {

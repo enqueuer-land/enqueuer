@@ -1,6 +1,6 @@
-import {IdGenerator} from './id-generator';
-import {createHash} from 'crypto';
-import {DateController} from '../timers/date-controller';
+import { IdGenerator } from './id-generator';
+import { createHash } from 'crypto';
+import { DateController } from '../timers/date-controller';
 
 jest.mock('../timers/date-controller');
 // @ts-ignore

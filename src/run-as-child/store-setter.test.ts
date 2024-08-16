@@ -1,5 +1,5 @@
-import {StoreSetter} from './store-setter';
-import {Store} from '../configurations/store';
+import { StoreSetter } from './store-setter';
+import { Store } from '../configurations/store';
 
 describe('StoreSetter', () => {
     it('should set store when a message arrives', async () => {

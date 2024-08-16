@@ -1,7 +1,7 @@
-import {CommandLineConfiguration} from './command-line-configuration';
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
+import { CommandLineConfiguration } from './command-line-configuration';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 
-const consoleLogMock = jest.fn((message) => console.warn(message));
+const consoleLogMock = jest.fn(message => console.warn(message));
 console.log = consoleLogMock;
 
 jest.mock('../plugins/dynamic-modules-manager');
@@ -78,7 +78,12 @@ describe('CommandLineConfiguration', () => {
 
     it('verbosity --max-report-level-print', () => {
         const maxLevel = 3;
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--max-report-level-print', maxLevel.toString()]);
+        const commandLineConfiguration = new CommandLineConfiguration([
+            'node',
+            'test',
+            '--max-report-level-print',
+            maxLevel.toString()
+        ]);
 
         expect(commandLineConfiguration.getMaxReportLevelPrint()).toBe(maxLevel);
     });
@@ -164,7 +169,12 @@ describe('CommandLineConfiguration', () => {
 
     it('describe protocols --protocols-description http', () => {
         const params = 'http';
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--protocols-description', params]);
+        const commandLineConfiguration = new CommandLineConfiguration([
+            'node',
+            'test',
+            '--protocols-description',
+            params
+        ]);
 
         commandLineConfiguration.verifyPrematureActions();
 
@@ -258,7 +268,15 @@ describe('CommandLineConfiguration', () => {
     it('add file <no dash>', () => {
         const testFile1 = 'filename1';
         const testFile2 = 'filename2';
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-e', testFile1, '-b', 'debug', testFile2]);
+        const commandLineConfiguration = new CommandLineConfiguration([
+            'node',
+            'test',
+            '-e',
+            testFile1,
+            '-b',
+            'debug',
+            testFile2
+        ]);
 
         expect(commandLineConfiguration.getTestFiles().sort()).toEqual([testFile2, testFile1].sort());
     });
@@ -270,7 +288,14 @@ describe('CommandLineConfiguration', () => {
     });
 
     it('add plugin', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-l', 'plugin1', '--add-plugin', 'plugin2']);
+        const commandLineConfiguration = new CommandLineConfiguration([
+            'node',
+            'test',
+            '-l',
+            'plugin1',
+            '--add-plugin',
+            'plugin2'
+        ]);
 
         expect(commandLineConfiguration.getPlugins()).toEqual(['plugin1', 'plugin2']);
     });
@@ -285,12 +310,6 @@ describe('CommandLineConfiguration', () => {
 
         const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-v']);
         expect(commandLineConfiguration.getVersion()).toBe(packageJson.version);
-    });
-
-    it('add test file ignoring', () => {
-        const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-A', 'file', '--add-file-and-ignore-others', 'file2']);
-
-        expect(commandLineConfiguration.getTestFilesIgnoringOthers()).toEqual(['file', 'file2']);
     });
 
     it('getStore -s', () => {

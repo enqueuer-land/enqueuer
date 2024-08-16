@@ -1,6 +1,6 @@
-import {HttpAuthentication} from './http-authentication';
-import {TestModel} from '../models/outputs/test-model';
-import {Logger} from '../loggers/logger';
+import { HttpAuthentication } from './http-authentication';
+import { TestModel } from '../models/outputs/test-model';
+import { Logger } from '../loggers/logger';
 
 export class HttpBearerAuthentication implements HttpAuthentication {
     private readonly token: any;
@@ -10,7 +10,7 @@ export class HttpBearerAuthentication implements HttpAuthentication {
     }
 
     public generate(): any {
-        return {authorization: 'Bearer ' + this.token};
+        return { authorization: 'Bearer ' + this.token };
     }
 
     public verify(authorization: string): TestModel[] {
@@ -34,7 +34,7 @@ export class HttpBearerAuthentication implements HttpAuthentication {
             description: "Fail to authenticate 'Bearer' authentication"
         };
         if (tests.length > 0) {
-            if (tests.every((test) => test.valid)) {
+            if (tests.every(test => test.valid)) {
                 test.valid = true;
                 test.description = `Bearer authentication is valid`;
             }

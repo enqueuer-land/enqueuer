@@ -1,8 +1,8 @@
-import {DynamicModulesManager} from './dynamic-modules-manager';
-import {entryPoint} from '../outputs/formatters/json-formatter';
-import {ProtocolManager} from './protocol-manager';
-import {ReportFormatterManager} from './report-formatter-manager';
-import {ObjectParserManager} from './object-parser-manager';
+import { DynamicModulesManager } from './dynamic-modules-manager';
+import { entryPoint } from '../outputs/formatters/json-formatter';
+import { ProtocolManager } from './protocol-manager';
+import { ReportFormatterManager } from './report-formatter-manager';
+import { ObjectParserManager } from './object-parser-manager';
 import prettyjson from 'prettyjson';
 
 jest.mock('../outputs/formatters/json-formatter');
@@ -46,7 +46,7 @@ describe('DynamicModulesManager', () => {
             'asserters/expect-to-be-falsy-asserter',
             'asserters/expect-to-be-defined-asserter',
             'asserters/expect-to-be-undefined-asserter'
-        ].map((expected) => dirname + '/' + expected);
+        ].map(expected => dirname + '/' + expected);
         const actualList: string[] = DynamicModulesManager.getInstance().getBuiltInModules();
 
         expect(actualList.sort()).toEqual(expectedBuiltInModules.sort());
@@ -68,9 +68,9 @@ describe('DynamicModulesManager', () => {
         expect(mainInstance.objectParserManager).toBeInstanceOf(ObjectParserManager);
     });
 
-    it('should print loaded modules', (done) => {
+    it('should print loaded modules', done => {
         // @ts-ignore
-        prettyjson.render.mockImplementation((printedModules) => {
+        prettyjson.render.mockImplementation(printedModules => {
             expect(Array.isArray(printedModules.explicit)).toBeTruthy();
             expect(Array.isArray(printedModules.implicit)).toBeTruthy();
             done();
@@ -83,19 +83,19 @@ describe('DynamicModulesManager', () => {
         // @ts-ignore
         expect(
             DynamicModulesManager.versionMatches({
-                dependencies: {enqueuer: '^5.0.0'}
+                dependencies: { enqueuer: '^5.0.0' }
             })
         ).toBeTruthy();
         // @ts-ignore
         expect(
             DynamicModulesManager.versionMatches({
-                devDependencies: {enqueuer: '5.0.0'}
+                devDependencies: { enqueuer: '5.0.0' }
             })
         ).toBeTruthy();
         // @ts-ignore
         expect(
             DynamicModulesManager.versionMatches({
-                peerDependencies: {enqueuer: '5.0.0'}
+                peerDependencies: { enqueuer: '5.0.0' }
             })
         ).toBeTruthy();
         // @ts-ignore

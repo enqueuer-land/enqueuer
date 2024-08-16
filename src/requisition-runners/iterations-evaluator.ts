@@ -1,4 +1,4 @@
-import {Logger} from '../loggers/logger';
+import { Logger } from '../loggers/logger';
 
 export class IterationsEvaluator {
     public iterations(iterations: number): number {

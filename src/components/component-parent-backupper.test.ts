@@ -1,4 +1,4 @@
-import {ComponentParentBackupper} from './component-parent-backupper';
+import { ComponentParentBackupper } from './component-parent-backupper';
 
 describe('ComponentParentBackupper', () => {
     it('should remove parents', () => {

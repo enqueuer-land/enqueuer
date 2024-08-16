@@ -1,9 +1,9 @@
-import {Subscription} from './subscription';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
+import { Subscription } from './subscription';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
 import * as dgram from 'dgram';
-import {Logger} from '../loggers/logger';
-import {MainInstance} from '../plugins/main-instance';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
+import { Logger } from '../loggers/logger';
+import { MainInstance } from '../plugins/main-instance';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 
 class UdpSubscription extends Subscription {
     private server: any;
@@ -50,32 +50,36 @@ class UdpSubscription extends Subscription {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const protocol = new SubscriptionProtocol('udp', (subscriptionModel: SubscriptionModel) => new UdpSubscription(subscriptionModel), {
-        description: 'The udp subscription provides an implementation of UDP Datagram sockets servers',
-        libraryHomepage: 'https://nodejs.org/api/dgram.html',
-        schema: {
-            attributes: {
-                port: {
-                    required: true,
-                    type: 'int'
+    const protocol = new SubscriptionProtocol(
+        'udp',
+        (subscriptionModel: SubscriptionModel) => new UdpSubscription(subscriptionModel),
+        {
+            description: 'The udp subscription provides an implementation of UDP Datagram sockets servers',
+            libraryHomepage: 'https://nodejs.org/api/dgram.html',
+            schema: {
+                attributes: {
+                    port: {
+                        required: true,
+                        type: 'int'
+                    },
+                    response: {
+                        required: true,
+                        type: 'string'
+                    }
                 },
-                response: {
-                    required: true,
-                    type: 'string'
-                }
-            },
-            hooks: {
-                onMessageReceived: {
-                    arguments: {
-                        payload: {},
-                        remoteInfo: {
-                            description: 'Remote address information'
+                hooks: {
+                    onMessageReceived: {
+                        arguments: {
+                            payload: {},
+                            remoteInfo: {
+                                description: 'Remote address information'
+                            }
                         }
                     }
                 }
             }
         }
-    }).addAlternativeName('udp-server');
+    ).addAlternativeName('udp-server');
 
     mainInstance.protocolManager.addProtocol(protocol);
 }

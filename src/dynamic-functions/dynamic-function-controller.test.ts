@@ -1,9 +1,9 @@
-import {DynamicFunctionController} from './dynamic-function-controller';
+import { DynamicFunctionController } from './dynamic-function-controller';
 
 describe('DynamicFunctionController', () => {
     it('Should add argument and pass it to the function', () => {
         const testerExecutor: DynamicFunctionController = new DynamicFunctionController('name.value++;');
-        const arg = {value: 2};
+        const arg = { value: 2 };
 
         testerExecutor.addArgument('name', arg);
         testerExecutor.execute();
@@ -11,7 +11,7 @@ describe('DynamicFunctionController', () => {
         expect(arg.value).toBe(3);
     });
 
-    it('Should bind this', (done) => {
+    it('Should bind this', done => {
         const self = {
             method(value: number) {
                 expect(value).toBe(3);

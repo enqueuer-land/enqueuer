@@ -1,4 +1,4 @@
-import {RequisitionDefaultReports} from './requisition-default-reports';
+import { RequisitionDefaultReports } from './requisition-default-reports';
 
 describe('RequisitionDefaultReports', () => {
     it('default', () => {
@@ -15,8 +15,8 @@ describe('RequisitionDefaultReports', () => {
         delete report.time;
         expect(report).toEqual({
             hooks: {
-                onFinish: {arguments: {}, tests: [], valid: true},
-                onInit: {arguments: {}, tests: [], valid: true}
+                onFinish: { arguments: {}, tests: [], valid: true },
+                onInit: { arguments: {}, tests: [], valid: true }
             },
             id: 'id',
             iteration: 1,
@@ -43,8 +43,8 @@ describe('RequisitionDefaultReports', () => {
         delete report.time;
         expect(report).toEqual({
             hooks: {
-                onFinish: {arguments: {}, tests: [], valid: true},
-                onInit: {arguments: {}, tests: [], valid: true}
+                onFinish: { arguments: {}, tests: [], valid: true },
+                onInit: { arguments: {}, tests: [], valid: true }
             },
             id: undefined,
             ignored: undefined,
@@ -59,7 +59,7 @@ describe('RequisitionDefaultReports', () => {
 
     it('createRunningError', () => {
         // @ts-expect-error
-        const report = RequisitionDefaultReports.createRunningError({name: 'lopidio'}, 'err');
+        const report = RequisitionDefaultReports.createRunningError({ name: 'lopidio' }, 'err');
         expect(report.time!.startTime).toBeDefined();
         expect(report.time!.endTime).toBeDefined();
         expect(report.time!.totalTime).toBeLessThan(1000);
@@ -68,10 +68,10 @@ describe('RequisitionDefaultReports', () => {
             hooks: {
                 onFinish: {
                     arguments: {},
-                    tests: [{description: 'err', name: 'Requisition ran', valid: false}],
+                    tests: [{ description: 'err', name: 'Requisition ran', valid: false }],
                     valid: false
                 },
-                onInit: {arguments: {}, tests: [], valid: true}
+                onInit: { arguments: {}, tests: [], valid: true }
             },
             id: undefined,
             ignored: undefined,
@@ -106,7 +106,7 @@ describe('RequisitionDefaultReports', () => {
                     ],
                     valid: true
                 },
-                onInit: {arguments: {}, tests: [], valid: true}
+                onInit: { arguments: {}, tests: [], valid: true }
             },
             id: undefined,
             ignored: undefined,
@@ -130,8 +130,8 @@ describe('RequisitionDefaultReports', () => {
         delete report.time;
         expect(report).toEqual({
             hooks: {
-                onFinish: {arguments: {}, tests: [], valid: true},
-                onInit: {arguments: {}, tests: [], valid: true}
+                onFinish: { arguments: {}, tests: [], valid: true },
+                onInit: { arguments: {}, tests: [], valid: true }
             },
             id: undefined,
             ignored: true,

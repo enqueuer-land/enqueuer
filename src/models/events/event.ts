@@ -1,4 +1,4 @@
-import {Assertion} from './assertion';
+import { Assertion } from './assertion';
 
 export enum DefaultHookEvents {
     ON_INIT = 'onInit',
@@ -8,5 +8,5 @@ export enum DefaultHookEvents {
 export interface Event {
     script?: string;
     assertions?: Assertion[];
-    store?: {[propName: string]: any};
+    store?: { [propName: string]: any };
 }

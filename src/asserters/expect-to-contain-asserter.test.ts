@@ -1,6 +1,6 @@
-import {ExpectToContainAsserter, entryPoint} from './expect-to-contain-asserter';
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
+import { ExpectToContainAsserter, entryPoint } from './expect-to-contain-asserter';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
 
 describe('ExpectToContainAsserter', () => {
     it('should contain char in string', () => {
@@ -135,7 +135,7 @@ describe('ExpectToContainAsserter', () => {
         expect(test.description).toBe("Expecting 'body.actual' to be a string or an array. Received a 'number'");
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

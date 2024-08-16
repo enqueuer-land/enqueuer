@@ -1,5 +1,5 @@
-import {Protocol, ProtocolType} from './protocol';
-import {ProtocolDocumentation} from './protocol-documentation';
+import { Protocol, ProtocolType } from './protocol';
+import { ProtocolDocumentation } from './protocol-documentation';
 
 describe('Protocol', () => {
     it('getName', () => {
@@ -41,7 +41,9 @@ describe('Protocol', () => {
 
     it('alternative names are unique', () => {
         // @ts-expect-error
-        const match = new Protocol('one', undefined).addAlternativeName('one', 'two').addAlternativeName('two', 'three');
+        const match = new Protocol('one', undefined)
+            .addAlternativeName('one', 'two')
+            .addAlternativeName('two', 'three');
         // @ts-ignore
         expect(match.alternativeNames).toEqual(['one', 'two', 'three']);
     });
@@ -54,7 +56,9 @@ describe('Protocol', () => {
 
     it('isLibraryInstalled false', () => {
         // @ts-expect-error
-        const available = new Protocol('', undefined).setLibrary('zero-mq-not-defined-at-least-I-hope').isLibraryInstalled();
+        const available = new Protocol('', undefined)
+            .setLibrary('zero-mq-not-defined-at-least-I-hope')
+            .isLibraryInstalled();
         expect(available).toBeFalsy();
     });
 
@@ -72,7 +76,7 @@ describe('Protocol', () => {
                 },
                 hooks: {
                     onEvent: {
-                        arguments: {hookArg: {}}
+                        arguments: { hookArg: {} }
                     }
                 }
             }
@@ -140,7 +144,7 @@ describe('Protocol', () => {
                             elapsedTime: {
                                 description: 'Number of milliseconds since the instantiation of the component'
                             },
-                            this: {description: 'Pointer to the component'}
+                            this: { description: 'Pointer to the component' }
                         },
                         description: 'Executed when the component is about to finish'
                     },
@@ -149,7 +153,7 @@ describe('Protocol', () => {
                             elapsedTime: {
                                 description: 'Number of milliseconds since the instantiation of the component'
                             },
-                            this: {description: 'Pointer to the component'}
+                            this: { description: 'Pointer to the component' }
                         },
                         description: 'Executed as soon as the component is initialized'
                     }
@@ -204,7 +208,7 @@ describe('Protocol', () => {
                             elapsedTime: {
                                 description: 'Number of milliseconds since the instantiation of the component'
                             },
-                            this: {description: 'Pointer to the component'}
+                            this: { description: 'Pointer to the component' }
                         },
                         description: 'Executed when the component is about to finish'
                     },
@@ -213,7 +217,7 @@ describe('Protocol', () => {
                             elapsedTime: {
                                 description: 'Number of milliseconds since the instantiation of the component'
                             },
-                            this: {description: 'Pointer to the component'}
+                            this: { description: 'Pointer to the component' }
                         },
                         description: 'Executed as soon as the component is initialized'
                     }

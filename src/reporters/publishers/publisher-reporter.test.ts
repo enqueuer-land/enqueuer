@@ -1,8 +1,8 @@
-import {PublisherReporter} from './publisher-reporter';
-import {ProtocolManager} from '../../plugins/protocol-manager';
-import {DynamicModulesManager} from '../../plugins/dynamic-modules-manager';
-import {EventExecutor} from '../../events/event-executor';
-import {DefaultHookEvents} from '../../models/events/event';
+import { PublisherReporter } from './publisher-reporter';
+import { ProtocolManager } from '../../plugins/protocol-manager';
+import { DynamicModulesManager } from '../../plugins/dynamic-modules-manager';
+import { EventExecutor } from '../../events/event-executor';
+import { DefaultHookEvents } from '../../models/events/event';
 
 jest.mock('../../plugins/dynamic-modules-manager');
 // @ts-ignore
@@ -60,25 +60,25 @@ describe('PublisherReporter', () => {
         expect(EventExecutor).toHaveBeenCalledWith(publisher, 'onInit', 'publisher');
     });
 
-    it('Should resolve onMessageReceived', (done) => {
+    it('Should resolve onMessageReceived', done => {
         const publisherReporter = new PublisherReporter(publisher);
         publisherReporter.publish().then(() => {
             done();
         });
     });
 
-    it('Should reject onMessageReceived', (done) => {
+    it('Should reject onMessageReceived', done => {
         const reason = 'reasonMessage';
         publishMock = jest.fn(() => Promise.reject(reason));
         const publisherReporter = new PublisherReporter(publisher);
-        publisherReporter.publish().catch((err) => {
+        publisherReporter.publish().catch(err => {
             expect(err).toBe(reason);
 
             done();
         });
     });
 
-    it('Should keep id', (done) => {
+    it('Should keep id', done => {
         const publisherReporter = new PublisherReporter(publisher as any);
         publisherReporter.publish().then(() => {
             const report = publisherReporter.getReport();
@@ -87,7 +87,7 @@ describe('PublisherReporter', () => {
         });
     });
 
-    it('Should add Publisher test - success', (done) => {
+    it('Should add Publisher test - success', done => {
         const publisherReporter = new PublisherReporter(publisher as any);
         publisherReporter.publish().then(() => {
             publisherReporter.onFinish();
@@ -101,7 +101,7 @@ describe('PublisherReporter', () => {
         });
     });
 
-    it('Should add Publisher test - fail', (done) => {
+    it('Should add Publisher test - fail', done => {
         const reason = 'reasonMessage';
         publishMock = jest.fn(() => Promise.reject(reason));
         const publisherReporter = new PublisherReporter(publisher as any);

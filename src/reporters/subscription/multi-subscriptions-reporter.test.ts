@@ -1,5 +1,5 @@
-import {SubscriptionReporter} from './subscription-reporter';
-import {MultiSubscriptionsReporter} from './multi-subscriptions-reporter';
+import { SubscriptionReporter } from './subscription-reporter';
+import { MultiSubscriptionsReporter } from './multi-subscriptions-reporter';
 
 let startTimeoutMock = jest.fn(() => {});
 let onFinishMock = jest.fn();
@@ -60,7 +60,7 @@ describe('MultiSubscriptionsReporter', () => {
             return {
                 type: 'iei',
                 valid: false,
-                tests: [{valid: true}]
+                tests: [{ valid: true }]
             };
         });
         const multi = new MultiSubscriptionsReporter(constructorArgument);
@@ -68,9 +68,9 @@ describe('MultiSubscriptionsReporter', () => {
         const report = multi.getReport();
 
         expect(report).toEqual([
-            {tests: [{valid: true}], type: 'iei', valid: false},
+            { tests: [{ valid: true }], type: 'iei', valid: false },
             {
-                tests: [{valid: true}],
+                tests: [{ valid: true }],
                 type: 'iei',
                 valid: false
             }
@@ -108,7 +108,7 @@ describe('MultiSubscriptionsReporter', () => {
         expect(receiveMessageMock).toHaveBeenCalledTimes(subscriptions.length);
     });
 
-    it('Sub subscribed', (done) => {
+    it('Sub subscribed', done => {
         subscribeMock = jest.fn(() => Promise.resolve());
         let timeoutCb = jest.fn();
 
@@ -122,7 +122,7 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-    it('Handling receiveMessage no subscription', (done) => {
+    it('Handling receiveMessage no subscription', done => {
         const multi = new MultiSubscriptionsReporter([]);
 
         multi.receiveMessage().then(() => {
@@ -130,7 +130,7 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-    it('Handling receiveMessage success', (done) => {
+    it('Handling receiveMessage success', done => {
         expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
@@ -140,7 +140,7 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-    it('Should receiveMessage be success when there is no subscription', (done) => {
+    it('Should receiveMessage be success when there is no subscription', done => {
         expect.assertions(0);
         receiveMessageMock = jest.fn(() => Promise.resolve());
 
@@ -149,7 +149,7 @@ describe('MultiSubscriptionsReporter', () => {
         });
     });
 
-    it('Handling happy path', (done) => {
+    it('Handling happy path', done => {
         expect.assertions(0);
         subscribeMock = jest.fn(() => Promise.resolve());
         receiveMessageMock.mockImplementationOnce(() => Promise.resolve());

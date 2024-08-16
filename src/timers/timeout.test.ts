@@ -1,10 +1,10 @@
-import {Timeout} from './timeout';
-import {DateController} from './date-controller';
+import { Timeout } from './timeout';
+import { DateController } from './date-controller';
 
 jest.useFakeTimers();
 
 describe('Timeout', function () {
-    test('should call callback after given time', (done) => {
+    test('should call callback after given time', done => {
         const startTime = new DateController().getTime();
         const toleranceInMilliseconds = 100;
         const period: number = 2;

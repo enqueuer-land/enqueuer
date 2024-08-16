@@ -1,5 +1,5 @@
-import {ObjectParser} from './object-parser';
-import {MainInstance} from '../plugins/main-instance';
+import { ObjectParser } from './object-parser';
+import { MainInstance } from '../plugins/main-instance';
 
 export class FileObjectParser implements ObjectParser {
     public parse(value: string): object {

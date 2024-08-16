@@ -1,12 +1,12 @@
-import {EnqueuerRunner} from './enqueuer-runner';
-import {Configuration} from './configurations/configuration';
-import {RequisitionFilePatternParser} from './requisition-runners/requisition-file-pattern-parser';
-import {RequisitionRunner} from './requisition-runners/requisition-runner';
-import {SummaryTestOutput} from './outputs/summary-test-output';
-import {NotificationEmitter} from './notifications/notification-emitter';
-import {Logger} from './loggers/logger';
-import {LogLevel} from './loggers/log-level';
-import {Notifications} from './notifications/notifications';
+import { EnqueuerRunner } from './enqueuer-runner';
+import { Configuration } from './configurations/configuration';
+import { RequisitionFilePatternParser } from './requisition-runners/requisition-file-pattern-parser';
+import { RequisitionRunner } from './requisition-runners/requisition-runner';
+import { SummaryTestOutput } from './outputs/summary-test-output';
+import { NotificationEmitter } from './notifications/notification-emitter';
+import { Logger } from './loggers/logger';
+import { LogLevel } from './loggers/log-level';
+import { Notifications } from './notifications/notifications';
 
 jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
@@ -19,7 +19,7 @@ const loggerLevel = 'enqueuer-starter-level';
 
 describe('EnqueuerRunner', () => {
     let configurationMethodsMock: any;
-    let parsedRequisitions = [{name: 'I am fake'}];
+    let parsedRequisitions = [{ name: 'I am fake' }];
     let requisitionRunnerMethods = {
         run: jest.fn(async () => {
             const report = {
@@ -94,7 +94,7 @@ describe('EnqueuerRunner', () => {
         expect(SummaryTestOutput).toHaveBeenCalledWith(
             {
                 hooks: {
-                    onParsed: {tests: [], valid: true}
+                    onParsed: { tests: [], valid: true }
                 },
                 name: 'mocked report',
                 valid: true

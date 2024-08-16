@@ -1,4 +1,4 @@
-import {TestModel, testModelIsFailing, testModelIsNotFailing, testModelIsPassing} from './test-model';
+import { TestModel, testModelIsFailing, testModelIsNotFailing, testModelIsPassing } from './test-model';
 
 describe('TestModel', () => {
     it('Valid is passing', () => {

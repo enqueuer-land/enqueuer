@@ -1,6 +1,6 @@
-import {Assertion} from '../models/events/assertion';
-import {MainInstance} from '../plugins/main-instance';
-import {entryPoint, ExpectToBeLessThanOrEqualToAsserter} from './expect-to-be-less-than-or-equal-to-asserter';
+import { Assertion } from '../models/events/assertion';
+import { MainInstance } from '../plugins/main-instance';
+import { entryPoint, ExpectToBeLessThanOrEqualToAsserter } from './expect-to-be-less-than-or-equal-to-asserter';
 
 describe('ExpectToBeLessThanOrEqualToAsserter', () => {
     it('should compare less', () => {
@@ -78,7 +78,7 @@ describe('ExpectToBeLessThanOrEqualToAsserter', () => {
         expect(test.description).toBe("Expected 'body.actual' to be less than or equal to '3'. Received '4'");
     });
 
-    it('Should export an entry point', (done) => {
+    it('Should export an entry point', done => {
         const mainInstance: MainInstance = {
             // @ts-ignore
             asserterManager: {

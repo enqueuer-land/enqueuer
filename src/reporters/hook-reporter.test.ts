@@ -1,4 +1,4 @@
-import {HookReporter} from './hook-reporter';
+import { HookReporter } from './hook-reporter';
 
 describe('HookReporter', () => {
     it('Empty constructor', () => {
@@ -17,14 +17,14 @@ describe('HookReporter', () => {
                 }
             ],
             valid: true,
-            arguments: {a: 1}
+            arguments: { a: 1 }
         });
 
         expect(hookModel).toEqual({
-            arguments: {a: 1},
+            arguments: { a: 1 },
             tests: [
-                {description: 'some', name: 'a', valid: false},
-                {description: 'some2', name: 'b', valid: true}
+                { description: 'some', name: 'a', valid: false },
+                { description: 'some2', name: 'b', valid: true }
             ],
             valid: false
         });
@@ -39,7 +39,7 @@ describe('HookReporter', () => {
                 }
             ],
             valid: true,
-            arguments: {c: 1}
+            arguments: { c: 1 }
         });
         const hookModel = hookReporter.addValues({
             tests: [
@@ -55,11 +55,11 @@ describe('HookReporter', () => {
                 }
             ],
             valid: true,
-            arguments: {a: 1}
+            arguments: { a: 1 }
         });
 
         expect(hookModel).toEqual({
-            arguments: {a: 1, c: 1},
+            arguments: { a: 1, c: 1 },
             tests: [
                 {
                     description: 'some',

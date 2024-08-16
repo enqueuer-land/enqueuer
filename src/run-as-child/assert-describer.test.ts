@@ -1,5 +1,5 @@
-import {DynamicModulesManager} from '../plugins/dynamic-modules-manager';
-import {AssertDescriber} from './assert-describer';
+import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
+import { AssertDescriber } from './assert-describer';
 
 jest.mock('../plugins/dynamic-modules-manager');
 
@@ -17,7 +17,7 @@ DynamicModulesManager.getInstance.mockImplementation(() => {
 
 describe('AssertDescriber', () => {
     it('should describe asserters when a message arrives', async () => {
-        const message = {value: 'value'};
+        const message = { value: 'value' };
         await new AssertDescriber().process(message);
 
         expect(processSendMock).toHaveBeenCalledWith({

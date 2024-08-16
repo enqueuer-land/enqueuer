@@ -1,5 +1,5 @@
-import {PublisherReporter} from './publisher-reporter';
-import {MultiPublishersReporter} from './multi-publishers-reporter';
+import { PublisherReporter } from './publisher-reporter';
+import { MultiPublishersReporter } from './multi-publishers-reporter';
 
 jest.mock('./publisher-reporter');
 
@@ -40,12 +40,12 @@ describe('MultiPublishersReporter', () => {
     });
 
     it('Call publishReporter constructors', () => {
-        const publishers = [{name: 'first'}, {name: 'second'}] as any;
+        const publishers = [{ name: 'first' }, { name: 'second' }] as any;
         new MultiPublishersReporter(publishers);
 
         expect(PublisherReporter).toHaveBeenCalledTimes(publishers.length);
-        expect(PublisherReporter).toHaveBeenCalledWith({name: 'first'});
-        expect(PublisherReporter).toHaveBeenCalledWith({name: 'second'});
+        expect(PublisherReporter).toHaveBeenCalledWith({ name: 'first' });
+        expect(PublisherReporter).toHaveBeenCalledWith({ name: 'second' });
     });
 
     it('Call publishReporter constructors empty publishers', () => {
@@ -54,7 +54,7 @@ describe('MultiPublishersReporter', () => {
         expect(PublisherReporter).toHaveBeenCalledTimes(0);
     });
 
-    it('should handle success', (done) => {
+    it('should handle success', done => {
         publish.mockImplementation(() => Promise.resolve());
         recreateMock();
 
@@ -66,7 +66,7 @@ describe('MultiPublishersReporter', () => {
         expect(publish).toHaveBeenCalledTimes(publishers.length);
     });
 
-    it('should handle be success when no publisher is given', (done) => {
+    it('should handle be success when no publisher is given', done => {
         new MultiPublishersReporter([]).publish().then(() => {
             done();
         });

@@ -1,4 +1,4 @@
-import {EventExecutor} from './event-executor';
+import { EventExecutor } from './event-executor';
 
 let initializable: any;
 
@@ -25,7 +25,7 @@ describe('EventExecutor', () => {
         };
     });
 
-    it('Should add argument and pass it to the script executor', (done) => {
+    it('Should add argument and pass it to the script executor', done => {
         const eventExecutor: EventExecutor = new EventExecutor(initializable, 'onInit');
         initializable.method = (value: number) => {
             expect(value).toBe(initializable.value);

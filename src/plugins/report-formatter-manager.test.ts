@@ -1,6 +1,6 @@
 import prettyjson from 'prettyjson';
-import {ReportFormatterManager} from './report-formatter-manager';
-import {JsonReportFormatter} from '../outputs/formatters/json-formatter';
+import { ReportFormatterManager } from './report-formatter-manager';
+import { JsonReportFormatter } from '../outputs/formatters/json-formatter';
 
 jest.mock('prettyjson');
 
@@ -38,14 +38,14 @@ describe('ReportFormatterManager', () => {
         );
     });
 
-    it('should create right formatter', (done) => {
+    it('should create right formatter', done => {
         // @ts-ignore
         const reportFormatterManager = new ReportFormatterManager();
         reportFormatterManager.addReportFormatter(() => done(), 'tag');
         reportFormatterManager.createReportFormatter('tag');
     });
 
-    it('should create right formatter ignoring case', (done) => {
+    it('should create right formatter ignoring case', done => {
         // @ts-ignore
         const reportFormatterManager = new ReportFormatterManager();
         reportFormatterManager.addReportFormatter(() => done(), 'TaG');

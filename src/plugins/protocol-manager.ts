@@ -1,14 +1,14 @@
-import {PublisherModel} from '../models/inputs/publisher-model';
-import {Publisher} from '../publishers/publisher';
-import {SubscriptionModel} from '../models/inputs/subscription-model';
-import {Subscription} from '../subscriptions/subscription';
-import {NullSubscription} from '../subscriptions/null-subscription';
-import {NullPublisher} from '../publishers/null-publisher';
-import {Protocol} from '../protocols/protocol';
-import {PublisherProtocol} from '../protocols/publisher-protocol';
-import {SubscriptionProtocol} from '../protocols/subscription-protocol';
-import {Logger} from '../loggers/logger';
-import {prettifyJson} from '../outputs/prettify-json';
+import { PublisherModel } from '../models/inputs/publisher-model';
+import { Publisher } from '../publishers/publisher';
+import { SubscriptionModel } from '../models/inputs/subscription-model';
+import { Subscription } from '../subscriptions/subscription';
+import { NullSubscription } from '../subscriptions/null-subscription';
+import { NullPublisher } from '../publishers/null-publisher';
+import { Protocol } from '../protocols/protocol';
+import { PublisherProtocol } from '../protocols/publisher-protocol';
+import { SubscriptionProtocol } from '../protocols/subscription-protocol';
+import { Logger } from '../loggers/logger';
+import { prettifyJson } from '../outputs/prettify-json';
 
 export class ProtocolManager {
     private protocols: Protocol[] = [];
@@ -56,12 +56,12 @@ export class ProtocolManager {
                 //NOTE: function check for retro compatibilities proposes
                 .filter((protocol: Protocol) => protocol.isPublisher && protocol.isPublisher())
                 .filter((publisher: Protocol) => publisher.matches(protocol))
-                .map((protocol) => protocol.getDescription()),
+                .map(protocol => protocol.getDescription()),
             subscriptions: this.protocols
                 //NOTE: function check for retro compatibilities proposes
                 .filter((protocol: Protocol) => protocol.isSubscription && protocol.isSubscription())
                 .filter((subscription: Protocol) => subscription.matches(protocol))
-                .map((protocol) => protocol.getDescription())
+                .map(protocol => protocol.getDescription())
         };
     }
 }

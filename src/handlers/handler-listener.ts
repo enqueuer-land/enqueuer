@@ -1,4 +1,4 @@
-import {Logger} from '../loggers/logger';
+import { Logger } from '../loggers/logger';
 
 export class HandlerListener {
     public static ADDRESS_IN_USE = 'EADDRINUSE';
@@ -56,7 +56,8 @@ export class HandlerListener {
         if (err.code === HandlerListener.ADDRESS_IN_USE) {
             --this.remainingAttempts;
             Logger.warning(
-                `Handler ${handler} is busy.` + ` Waiting for ${this.retryTimeout}ms before trying again for ${this.remainingAttempts} more times...`
+                `Handler ${handler} is busy.` +
+                    ` Waiting for ${this.retryTimeout}ms before trying again for ${this.remainingAttempts} more times...`
             );
             setTimeout(() => {
                 Logger.debug(`Closing server`);
