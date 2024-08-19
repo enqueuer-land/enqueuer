@@ -38,7 +38,9 @@ export class PublisherReporter {
     this.executeOnInitFunction(publisher);
     Logger.debug(`Trying to instantiate publisher from '${publisher.type}'`);
     this.publisher = DynamicModulesManager.getInstance().getProtocolManager().createPublisher(publisher);
-    this.publisher.registerHookEventExecutor((eventName: string, args: any) => this.executeHookEvent(eventName, args));
+    this.publisher.registerHookEventExecutor((eventName: string, args: any) =>
+      this.executeHookEvent(eventName, { ...args, elapsedTime: new Date().getTime() - this.startTime.getTime() })
+    );
   }
 
   public async publish(): Promise<void> {
@@ -88,7 +90,8 @@ export class PublisherReporter {
   public onFinish(): void {
     if (!this.publisher.ignore) {
       this.executeHookEvent(DefaultHookEvents.ON_FINISH, {
-        executedHooks: this.executedHooks
+        executedHooks: this.executedHooks,
+        elapsedTime: new Date().getTime() - this.startTime.getTime()
       });
       this.report.valid = this.report.valid && this.published;
       NotificationEmitter.emit(Notifications.PUBLISHER_FINISHED, {
@@ -107,9 +110,6 @@ export class PublisherReporter {
       });
       const previousHook = this.report.hooks![eventName];
       let previousTests: TestModel[] = previousHook?.tests ?? [];
-      // if (previousHook && previousHook.tests) {
-      //   previousTests = previousHook.tests || [];
-      // }
       const tests = previousTests.concat(eventExecutor.execute());
       const valid = tests.every((test: TestModel) => testModelIsPassing(test));
       const decycledArgs = new ObjectDecycler().decycle(args);
@@ -118,7 +118,10 @@ export class PublisherReporter {
         tests: tests,
         valid: valid
       };
-      console.log('pubs: ' + eventName + JSON.stringify(decycledArgs));
+      if (eventExecutor.isDebugMode()) {
+        console.table(Object.keys(decycledArgs).join('; '));
+        // console.table(decycledArgs);
+      }
       //TODO investigate why this line wasn't added this file originally
       const hookResult = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
       this.report.hooks![eventName] = hookModel;

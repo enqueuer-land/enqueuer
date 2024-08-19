@@ -1,6 +1,6 @@
-valid: false
+valid: true
 name: enqueuer
-id: 1201330953_376b7abb4f_572290
+id: 1600420077_5b6ac45cbb_728021
 level: 0
 subscriptions: []
 publishers: []
@@ -16,16 +16,98 @@ hooks:
     valid: true
     tests: []
     arguments:
-      elapsedTime: 1
+      elapsedTime: 5
   onParsed:
-    valid: false
-    tests:
-      -
-        name: 'Error parsing file ''examples/http.yml'''
-        valid: false
-        description: "YML error: <ParseException> Unable to parse. (line 1: 'publishers');\nJSON error: SyntaxError: Unexpected token 'p', \"publishers\"... is not valid JSON"
+    valid: true
+    tests: []
 time:
-  startTime: '2024-08-19T19:01:33.955Z'
-  endTime: '2024-08-19T19:01:33.957Z'
-  totalTime: 2
-requisitions: []
+  startTime: '2024-08-19T23:00:42.079Z'
+  endTime: '2024-08-19T23:00:42.084Z'
+  totalTime: 5
+requisitions:
+  -
+    valid: true
+    name: examples/requisition-navigation.yaml
+    id: 1600420077_1ec8ee316a_188085
+    level: 1
+    subscriptions: []
+    publishers: []
+    iteration: 0
+    totalIterations: 1
+    hooks:
+      onInit:
+        valid: true
+        tests: []
+        arguments:
+          elapsedTime: 0
+      onFinish:
+        valid: true
+        tests: []
+        arguments:
+          elapsedTime: 2
+    time:
+      startTime: '2024-08-19T23:00:42.081Z'
+      endTime: '2024-08-19T23:00:42.083Z'
+      totalTime: 2
+      timeout: 5000
+    requisitions:
+      -
+        valid: true
+        name: first
+        id: 1600420077_bcea2d3c4a_211333
+        level: 2
+        subscriptions: []
+        publishers: []
+        iteration: 0
+        totalIterations: 1
+        hooks:
+          onInit:
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''requisition.parent.requisitions[1].name'' to be equal to ''second''. Received ''second'''
+            arguments:
+              elapsedTime: 0
+          onFinish:
+            valid: true
+            tests: []
+            arguments:
+              elapsedTime: 1
+        time:
+          startTime: '2024-08-19T23:00:42.081Z'
+          endTime: '2024-08-19T23:00:42.082Z'
+          totalTime: 1
+          timeout: 5000
+        requisitions: []
+      -
+        valid: true
+        name: second
+        id: 1600420077_7f4ecab7c3_275092
+        level: 2
+        subscriptions: []
+        publishers: []
+        iteration: 0
+        totalIterations: 1
+        hooks:
+          onInit:
+            valid: true
+            tests:
+              -
+                name: 'Assertion #0'
+                valid: true
+                description: 'Expected ''requisition.parent.requisitions[0].name'' to be equal to ''first''. Received ''first'''
+            arguments:
+              elapsedTime: 0
+          onFinish:
+            valid: true
+            tests: []
+            arguments:
+              elapsedTime: 0
+        time:
+          startTime: '2024-08-19T23:00:42.083Z'
+          endTime: '2024-08-19T23:00:42.083Z'
+          totalTime: 0
+          timeout: 5000
+        requisitions: []

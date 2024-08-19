@@ -2,7 +2,7 @@ import { Logger } from '../loggers/logger';
 
 const DEFAULT_TIMEOUT = 5000;
 
-export class HttpRequester {
+export class HttpPublisherFetcher {
   private readonly url: string;
   private readonly method: string;
   private readonly headers: any;
@@ -38,21 +38,20 @@ export class HttpRequester {
     }
   }
 
-  private createOptions() {
-    const options: any = {
+  private createOptions(): RequestInit {
+    const payload = this.handleObjectPayload();
+    return {
       method: this.method,
-      timeout: this.timeout,
-      headers: this.headers,
-      rejectUnauthorized: false
+      signal: AbortSignal.timeout(this.timeout),
+      headers: {
+        'Content-Length': this.method.toUpperCase() != 'GET' ? this.setContentLength(payload) : undefined,
+        ...this.headers
+      },
+      body: payload
     };
-    options.data = options.body = this.handleObjectPayload();
-    if (this.method.toUpperCase() != 'GET') {
-      options.headers['Content-Length'] = options.headers['Content-Length'] || this.setContentLength(options.data);
-    }
-    return options;
   }
 
-  private setContentLength(value: string): number {
+  private setContentLength(value: string = ''): number {
     if (Buffer.isBuffer(value)) {
       return value.length;
     } else {

@@ -129,22 +129,18 @@ export class Configuration {
 
   private adjustFromFile(filename?: string) {
     if (filename !== undefined) {
-      try {
-        const fileConfiguration = new FileConfiguration(filename);
-        if (fileConfiguration) {
-          this.parallel = fileConfiguration.isParallelExecution() || this.parallel;
-          this.logLevel = fileConfiguration.getLogLevel() || this.logLevel;
-          this.files = this.files.concat(fileConfiguration.getFiles());
-          this.outputs = this.outputs.concat(fileConfiguration.getOutputs());
-          this.plugins = this.plugins.concat(fileConfiguration.getPlugins());
-          this.store = Object.assign({}, fileConfiguration.getStore(), this.store);
-          const fileMaxReportLevelPrint = fileConfiguration.getMaxReportLevelPrint();
-          if (fileMaxReportLevelPrint !== undefined) {
-            this.maxReportLevelPrint = fileMaxReportLevelPrint;
-          }
+      const fileConfiguration = new FileConfiguration(filename);
+      if (fileConfiguration) {
+        this.parallel = fileConfiguration.isParallelExecution() || this.parallel;
+        this.logLevel = fileConfiguration.getLogLevel() || this.logLevel;
+        this.files = this.files.concat(fileConfiguration.getFiles());
+        this.outputs = this.outputs.concat(fileConfiguration.getOutputs());
+        this.plugins = this.plugins.concat(fileConfiguration.getPlugins());
+        this.store = Object.assign({}, fileConfiguration.getStore(), this.store);
+        const fileMaxReportLevelPrint = fileConfiguration.getMaxReportLevelPrint();
+        if (fileMaxReportLevelPrint !== undefined) {
+          this.maxReportLevelPrint = fileMaxReportLevelPrint;
         }
-      } catch (err) {
-        Logger.error('Configuration: ' + err);
       }
     }
   }

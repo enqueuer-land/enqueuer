@@ -23,8 +23,6 @@ subscriptions:
         responseHeaderKey: responseHeaderValue
       status: 444
       payload: blah
-    onInit:
-      debug: true
     onMessageReceived:
       assertions:
         - expect: body

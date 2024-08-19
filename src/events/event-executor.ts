@@ -19,6 +19,10 @@ export class EventExecutor {
     }
   }
 
+  public isDebugMode(): boolean {
+    return !!this.event.debug;
+  }
+
   public addArgument(name: string, value: any): void {
     this.arguments.push({ name: name, value: value });
   }
@@ -35,12 +39,14 @@ export class EventExecutor {
 
   private initializeEvent(event: Event): Event {
     let result: Event = {
+      debug: false,
       script: '',
       store: {},
       assertions: []
     };
     if (event) {
       result = {
+        debug: !!event.debug,
         script: event.script || '',
         store: event.store || {},
         assertions: this.baptizeAssertions(event.assertions || [])

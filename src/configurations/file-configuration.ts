@@ -11,7 +11,7 @@ export class FileConfiguration {
       const ymlObjectParser = new YmlObjectParser();
       this.parsedFile = ymlObjectParser.parse(fileContent);
     } catch (err) {
-      throw `Error loading configuration file: ${err}`;
+      throw `Error loading configuration file [${filename}]: ${err}`;
     }
   }
 

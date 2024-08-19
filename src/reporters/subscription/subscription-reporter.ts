@@ -50,7 +50,7 @@ export class SubscriptionReporter {
       .getProtocolManager()
       .createSubscription(subscriptionAttributes);
     this.subscription.registerHookEventExecutor((eventName: string, args: any) =>
-      this.executeHookEvent(eventName, args)
+      this.executeHookEvent(eventName, { ...args, elapsedTime: new Date().getTime() - this.startTime.getTime() })
     );
     if (subscriptionAttributes.timeout === undefined) {
       this.subscription.timeout = SubscriptionReporter.DEFAULT_TIMEOUT;
@@ -198,7 +198,8 @@ export class SubscriptionReporter {
     Logger.trace(`Executing subscription onFinish`);
     if (!this.subscription.ignore) {
       this.executeHookEvent(DefaultHookEvents.ON_FINISH, {
-        executedHooks: this.executedHooks
+        executedHooks: this.executedHooks,
+        elapsedTime: new Date().getTime() - this.startTime.getTime()
       });
       NotificationEmitter.emit(Notifications.SUBSCRIPTION_FINISHED, {
         subscription: this.report
@@ -206,25 +207,27 @@ export class SubscriptionReporter {
     }
   }
 
-  private executeHookEvent(eventName: string, args: any = {}, subscription: any = this.subscription): void {
+  private executeHookEvent(eventName: string, additionalArgs: any = {}, subscription: any = this.subscription): void {
     if (!subscription.ignore) {
-      this.executedHooks[eventName] = Object.keys(args);
-      args.elapsedTime = new Date().getTime() - this.startTime.getTime();
+      this.executedHooks[eventName] = Object.keys(additionalArgs);
       const eventExecutor = new EventExecutor(subscription, eventName, 'subscription');
-      if (typeof args === 'object') {
-        Object.keys(args).forEach((key: string) => {
-          eventExecutor.addArgument(key, args[key]);
+      if (typeof additionalArgs === 'object') {
+        Object.keys(additionalArgs).forEach((key: string) => {
+          eventExecutor.addArgument(key, additionalArgs[key]);
         });
       }
       const tests = eventExecutor.execute();
       const valid = tests.every((test: TestModel) => testModelIsPassing(test));
-      const decycledArgs = new ObjectDecycler().decycle(args);
+      const decycledArgs = new ObjectDecycler().decycle(additionalArgs);
       const hookModel = {
         arguments: decycledArgs,
         tests: tests,
         valid: valid
       };
-      console.log('subs: ' + eventName + JSON.stringify(decycledArgs));
+      if (eventExecutor.isDebugMode()) {
+        // console.table(decycledArgs);
+        console.table(Object.keys(decycledArgs).join('; '));
+      }
       const hookResult = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
       this.report.hooks![eventName] = hookResult;
       NotificationEmitter.emit(Notifications.HOOK_FINISHED, {

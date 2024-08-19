@@ -6,6 +6,7 @@ export enum DefaultHookEvents {
 }
 
 export interface Event {
+  debug?: boolean;
   script?: string;
   assertions?: Assertion[];
   store?: { [propName: string]: any };

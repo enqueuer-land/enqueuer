@@ -1,7 +1,7 @@
 import { Publisher } from './publisher';
 import { Logger } from '../loggers/logger';
 import { PublisherModel } from '../models/inputs/publisher-model';
-import { HttpRequester } from '../pools/http-requester';
+import { HttpPublisherFetcher } from '../pools/http-requester';
 import { MainInstance } from '../plugins/main-instance';
 import { PublisherProtocol } from '../protocols/publisher-protocol';
 import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
@@ -20,7 +20,7 @@ class HttpPublisher extends Publisher {
   public async publish(): Promise<object> {
     this.insertAuthentication();
 
-    const response = await new HttpRequester(
+    const response = await new HttpPublisherFetcher(
       this.url,
       this.method.toLowerCase(),
       this.headers,

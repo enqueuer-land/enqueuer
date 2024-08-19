@@ -6,7 +6,7 @@ export class HttpContainerPool {
   private static instance: HttpContainerPool;
   private containers: { [propName: number]: HttpContainer } = {};
 
-  public static async getApp(port: number, secure: boolean = false, credentials?: any): Promise<core.Express> {
+  public static async getApp(port: number, credentials?: any): Promise<core.Express> {
     const self = HttpContainerPool.getInstance();
     Logger.trace(`Getting a Http server ${port}`);
     let httpContainer: HttpContainer = self.containers[port];

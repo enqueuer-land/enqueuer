@@ -3,7 +3,7 @@ import { Logger } from '../loggers/logger';
 import { SubscriptionModel } from '../models/inputs/subscription-model';
 import { HttpContainerPool } from '../pools/http-container-pool';
 import { TestModel } from '../models/outputs/test-model';
-import { HttpRequester } from '../pools/http-requester';
+import { HttpPublisherFetcher } from '../pools/http-requester';
 import { MainInstance } from '../plugins/main-instance';
 import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
@@ -12,7 +12,6 @@ const DEFAULT_TIMEOUT = 5000;
 
 class HttpSubscription extends Subscription {
   private readonly proxy: boolean;
-  private readonly secureServer: boolean;
   private responseToClientHandler?: any;
   private expressApp: any;
 
@@ -20,7 +19,6 @@ class HttpSubscription extends Subscription {
     super(subscriptionAttributes);
 
     this.type = this.type.toLowerCase();
-    this.secureServer = this.isSecureServer();
     this.proxy = this.isProxyServer();
     this['method'] = subscriptionAttributes.method || 'get';
     this['method'] = this.method.toLowerCase();
@@ -28,7 +26,7 @@ class HttpSubscription extends Subscription {
 
   public async subscribe(): Promise<void> {
     try {
-      this.expressApp = await HttpContainerPool.getApp(this.port, this.secureServer, this.credentials);
+      this.expressApp = await HttpContainerPool.getApp(this.port, this.credentials);
     } catch (err) {
       const message = `Error in ${this.type} subscription: ${err}`;
       Logger.error(message);
@@ -152,24 +150,13 @@ class HttpSubscription extends Subscription {
 
   private redirectCall(): Promise<void> {
     Logger.info(`Redirecting call from ${this.endpoint} (${this.port}) to ${this.url}`);
-    return new HttpRequester(
+    return new HttpPublisherFetcher(
       this.redirect.url,
       this.redirect.method || 'get',
       this.redirect.headers,
       this.redirect.payload,
       this.redirect.timeout || DEFAULT_TIMEOUT
     ).request();
-  }
-
-  private isSecureServer(): boolean {
-    if (this.type) {
-      if (this.type.indexOf('https') != -1) {
-        return true;
-      } else if (this.type.indexOf('http') != -1) {
-        return false;
-      }
-    }
-    throw `Http server type is not known: ${this.type}`;
   }
 
   private isProxyServer(): boolean {
