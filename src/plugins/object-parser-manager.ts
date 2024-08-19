@@ -46,7 +46,7 @@ export class ObjectParserManager {
   }
 
   public tryToParseWithParsers(fileBufferContent: string, tags: string[] = []): object {
-    const errorResult: any = {};
+    const errorMessages: string[] = [];
     for (const tag of tags) {
       const objectParser = this.createParser(tag);
       if (objectParser) {
@@ -55,12 +55,12 @@ export class ObjectParserManager {
           Logger.debug(`Content parsed as ${tag}`);
           return parsed;
         } catch (err) {
-          errorResult[tag] = err;
+          errorMessages.push(`${tag.toLocaleUpperCase()} error: ${err}`);
         }
       } else {
-        errorResult[tag] = `No object parser was found with '${tag}'`;
+        errorMessages.push(`No parser was found with: ${tag}`);
       }
     }
-    throw errorResult;
+    throw errorMessages.join(';\n');
   }
 }

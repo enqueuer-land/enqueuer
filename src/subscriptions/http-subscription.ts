@@ -8,6 +8,8 @@ import { MainInstance } from '../plugins/main-instance';
 import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
 
+const DEFAULT_TIMEOUT = 5000;
+
 class HttpSubscription extends Subscription {
   private readonly proxy: boolean;
   private readonly secureServer: boolean;
@@ -155,7 +157,7 @@ class HttpSubscription extends Subscription {
       this.redirect.method || 'get',
       this.redirect.headers,
       this.redirect.payload,
-      this.redirect.timeout || 3000
+      this.redirect.timeout || DEFAULT_TIMEOUT
     ).request();
   }
 
@@ -205,7 +207,7 @@ export function entryPoint(mainInstance: MainInstance): void {
           timeout: {
             required: false,
             type: 'int',
-            defaultValue: 3000,
+            defaultValue: DEFAULT_TIMEOUT,
             suffix: 'ms'
           },
           credentials: {
@@ -239,7 +241,7 @@ export function entryPoint(mainInstance: MainInstance): void {
               timeout: {
                 required: false,
                 type: 'int',
-                defaultValue: 3000,
+                defaultValue: DEFAULT_TIMEOUT,
                 suffix: 'ms'
               },
               headers: {
@@ -295,7 +297,7 @@ export function entryPoint(mainInstance: MainInstance): void {
     }
   )
     .addAlternativeName('https', 'http-proxy', 'https-proxy', 'http-server', 'https-server')
-    .setLibrary('express');
+    .setLibrary('fetch');
 
   mainInstance.protocolManager.addProtocol(protocol);
 }

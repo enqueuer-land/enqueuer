@@ -107,6 +107,7 @@ export class Configuration {
 
   private adjustFromCommandLine(): void {
     this.files = this.files.concat(this.commandLineConfiguration.getTestFiles() || []);
+    this.parallel = this.commandLineConfiguration.isParallelExecution() || this.parallel;
 
     this.logLevel = this.commandLineConfiguration.getVerbosity() || this.logLevel;
     this.plugins = [...new Set(this.plugins.concat(this.commandLineConfiguration.getPlugins() || []))];

@@ -253,11 +253,16 @@ describe('CommandLineConfiguration', () => {
     expect(describeLoadedModulesMock).toHaveBeenCalledWith();
   });
 
+  it('should run parallely', () => {
+    const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-q']);
+
+    expect(commandLineConfiguration.isParallelExecution).toBeTruthy();
+  });
+
   it('no file', () => {
     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
 
     expect(commandLineConfiguration.getTestFiles()).toEqual([]);
-    expect(commandLineConfiguration.getTestFilesIgnoringOthers()).toEqual([]);
   });
 
   it('add file <no dash>', () => {

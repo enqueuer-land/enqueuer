@@ -1,4 +1,6 @@
-[![npm](https://img.shields.io/npm/dt/enqueuer.svg)]()
+# Enqueuer
+
+[![npm](https://img.shields.io/npm/dt/enqueuer.svg)](https://www.npmjs.com/package/enqueuer)
 [![Build Status](https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master)](https://travis-ci.org/enqueuer-land/enqueuer)
 [![Greenkeeper badge](https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io/test/npm/enqueuer/badge.svg)](https://snyk.io/test/npm/enqueuer)
@@ -14,7 +16,7 @@ Be our guest and have fun.
 
 First things first, let's get the enqueuer installed on your machine.
 
-    $ npm install --global enqueuer
+    npm install --global enqueuer
 
 Alright, it's time to create a requisition file.
 Something like:
@@ -114,42 +116,44 @@ Certainly one is what you need.
 #### if you need more
 
     $ nqr -h
-    Usage: nqr [options] <test-file> [other-test-files...]
+    
+    Usage: index [options] [test-files...]
 
     Take a look at the full documentation: https://enqueuer.com
 
+    Arguments:
+    test-files                                other files to be tested
+
     Options:
-      -v, --version                             output the version number
-      -b, --verbosity <level>                   set verbosity (default: "warn")
-      -c, --config-file <path>                  set configurationFile
-      -d, --show-explicit-tests-only            show explicit tests only
-      -e, --parsers-list [parser]               list available object parsers
-      -f, --formatters-description [formatter]  describe report formatters
-      -o, --stdout-requisition-output           add stdout as requisition output
-      -m, --max-report-level-print <level>      set max report level print
-      -p, --protocols-description [protocol]    describe protocols
-      -t, --tests-list [expectedField]          list available tests assertions
-      -u, --loaded-modules-list                 list loaded modules
-      -i, --show-passing-tests                  show passing tests
-      -s, --store [store]                       add variables values to this session (default: [])
-      -l, --add-plugin [plugin]                 add plugin (default: [])
-      -a, --add-file <file>                     add file to be tested (default: [])
-      -A, --add-file-and-ignore-others <file>   add file to be tested and ignore others (default: [])
-      -h, --help                                output usage information
+    -v, --version                             output the current version
+    -b, --verbosity <level>                   set verbosity (choices: "trace", "debug", "info", "warn", "error", "fatal", default: "warn")
+    -c, --config-file <path>                  set configurationFile
+    -d, --show-explicit-tests-only            show explicit tests only (default: false)
+    -o, --stdout-requisition-output           add stdout as requisition output (default: false)
+    -m, --max-report-level-print <level>      set max report level print
+    -i, --show-passing-tests                  show passing tests
+    -s, --store [store]                       add variables values to this session (default: [])
+    -l, --add-plugin [plugin]                 add plugin
+    -e, --parsers-list [parser]               list available object parsers
+    -q, --parallel                            should run tests files parallely (default: false)    
+    -f, --formatters-description [formatter]  describe report formatters (default: false)
+    -p, --protocols-description [protocol]    describe protocols (default: false)
+    -t, --tests-list [expectedField]          list available tests assertions (default: false)
+    -u, --loaded-modules-list                 list loaded modules (default: false)
+    -h, --help                                display help for command
 
     Examples:
-      $ nqr --config-file config-file.yml --verbosity error --store key=value
-      $ enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
-      $ enqueuer test-file.yml --store someKey=true --store someOtherKey=false
-      $ nqr --protocols-description -s key=value
-      $ nqr -t expect
-      $ nqr -l my-enqueuer-plugin-name -p plugin-protocol
-      $ nqr -p http
-      $ nqr --formatters-description json
+    $ nqr --config-file config-file.yml --verbosity error --store key=value
+    $ enqueuer -c config-file.yml test-file.yml another-test-file.yml -b info
+    $ enqueuer test-file.yml --store someKey=true --store someOtherKey=false
+    $ nqr --protocols-description -s key=value
+    $ nqr -t expect
+    $ nqr -l my-enqueuer-plugin-name -p plugin-protocol
+    $ nqr -p http
+    $ nqr --formatters-description json
 
     Contributing:
-      https://github.com/enqueuer-land/enqueuer
-
+    https://github.com/enqueuer-land/enqueuer
 ---
 
 ### Components

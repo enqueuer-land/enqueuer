@@ -1,0 +1,42 @@
+{
+  "valid": false,
+  "name": "enqueuer",
+  "id": "1201330953_376b7abb4f_572290",
+  "level": 0,
+  "subscriptions": [],
+  "publishers": [],
+  "iteration": 0,
+  "totalIterations": 1,
+  "hooks": {
+    "onInit": {
+      "valid": true,
+      "tests": [],
+      "arguments": {
+        "elapsedTime": 0
+      }
+    },
+    "onFinish": {
+      "valid": true,
+      "tests": [],
+      "arguments": {
+        "elapsedTime": 1
+      }
+    },
+    "onParsed": {
+      "valid": false,
+      "tests": [
+        {
+          "name": "Error parsing file 'examples/http.yml'",
+          "valid": false,
+          "description": "YML error: <ParseException> Unable to parse. (line 1: 'publishers');\nJSON error: SyntaxError: Unexpected token 'p', \"publishers\"... is not valid JSON"
+        }
+      ]
+    }
+  },
+  "time": {
+    "startTime": "2024-08-19T19:01:33.955Z",
+    "endTime": "2024-08-19T19:01:33.957Z",
+    "totalTime": 2
+  },
+  "requisitions": []
+}

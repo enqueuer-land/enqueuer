@@ -178,11 +178,11 @@ export class DynamicModulesManager {
   }
 
   private initialModulesLoad() {
-    Logger.info(`Loading built in modules`);
+    Logger.debug(`Loading built in modules`);
     this.builtInModules.forEach(module =>
       this.loadModule(module)
-        ? Logger.debug(`Success to load '${path.basename(module)}' as built in module`)
-        : Logger.trace(`Fail to load '${module}' as built in  module`)
+        ? Logger.trace(`Success to load '${path.basename(module)}' as built in module`)
+        : Logger.warning(`Fail to load '${module}' as built in  module`)
     );
 
     Logger.info(`Loading ${this.implicitModules.length} implicitly declared plugins`);

@@ -10,6 +10,7 @@ import { DefaultHookEvents } from '../models/events/event';
 import { TestModel } from '../models/outputs/test-model';
 import { NotificationEmitter } from '../notifications/notification-emitter';
 import { Notifications } from '../notifications/notifications';
+import { HookReporter } from './hook-reporter';
 
 export class RequisitionReporter {
   public static readonly DEFAULT_TIMEOUT = 5 * 1000;
@@ -137,15 +138,15 @@ export class RequisitionReporter {
     const elapsedTime = new Date().getTime() - this.startTime.getTime();
     onFinishEventExecutor.addArgument('elapsedTime', elapsedTime);
     const testModels = onFinishEventExecutor.execute();
-    const hookResult = {
+    const hookModel = {
       valid: testModels.every(test => test.valid),
       tests: testModels,
       arguments: { elapsedTime: elapsedTime }
     };
-    this.reportGenerator.addTest(DefaultHookEvents.ON_FINISH, hookResult);
+    this.reportGenerator.addTest(DefaultHookEvents.ON_FINISH, hookModel);
     NotificationEmitter.emit(Notifications.HOOK_FINISHED, {
       hookName: DefaultHookEvents.ON_FINISH,
-      hook: hookResult,
+      hook: hookModel,
       requisition: this.requisitionAttributes
     });
     this.multiPublishersReporter.onFinish();

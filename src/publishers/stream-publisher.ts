@@ -78,7 +78,7 @@ class StreamPublisher extends Publisher {
     const stream = new net.Socket();
     stream.connect(this.port, this.serverAddress, () => resolve(stream));
     stream.on('error', (error: any) => {
-      Logger.error(`${this.type} client error: ${error}`);
+      Logger.error(`${this.type} client error: ${error} [${error.code}]`);
       reject(error);
     });
   }

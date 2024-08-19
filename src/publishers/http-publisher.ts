@@ -6,13 +6,15 @@ import { MainInstance } from '../plugins/main-instance';
 import { PublisherProtocol } from '../protocols/publisher-protocol';
 import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
 
+const DEFAULT_TIMEOUT = 5000;
+
 class HttpPublisher extends Publisher {
   constructor(publish: PublisherModel) {
     super(publish);
     this['method'] = publish.method || 'get';
     this.payload = this.payload || '';
     this['headers'] = this.headers || {};
-    this['timeout'] = this.timeout || 3000;
+    this['timeout'] = this.timeout || DEFAULT_TIMEOUT;
   }
 
   public async publish(): Promise<object> {
@@ -63,7 +65,7 @@ export function entryPoint(mainInstance: MainInstance): void {
     (publisherModel: PublisherModel) => new HttpPublisher(publisherModel),
     {
       description: 'The HTTP publisher provides an implementation of http requisitions',
-      libraryHomepage: 'https://github.com/axios/axios',
+      libraryHomepage: 'https://nodejs.org/dist/latest-v18.x/docs/api/globals.html',
       schema: {
         attributes: {
           url: {
@@ -84,7 +86,7 @@ export function entryPoint(mainInstance: MainInstance): void {
           timeout: {
             required: false,
             type: 'int',
-            defaultValue: 3000,
+            defaultValue: DEFAULT_TIMEOUT,
             suffix: 'ms'
           },
           headers: {
@@ -107,7 +109,7 @@ export function entryPoint(mainInstance: MainInstance): void {
     }
   )
     .addAlternativeName('http-client', 'https', 'https-client')
-    .setLibrary('request');
+    .setLibrary('fetch');
 
   mainInstance.protocolManager.addProtocol(protocol);
 }

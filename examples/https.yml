@@ -1,4 +1,3 @@
-timeout: 3000
 publishers:
   - type: HTTPS
     url: https://localhost:4430/enqueuer
@@ -20,7 +19,6 @@ subscriptions:
     endpoint: /enqueuer
     port: 4430
     method: POST
-    timeout: 3000
     credentials:
       key: <<privateKey>>
       cert: <<certificate>>

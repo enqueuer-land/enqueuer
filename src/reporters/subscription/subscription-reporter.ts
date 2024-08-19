@@ -218,11 +218,13 @@ export class SubscriptionReporter {
       }
       const tests = eventExecutor.execute();
       const valid = tests.every((test: TestModel) => testModelIsPassing(test));
+      const decycledArgs = new ObjectDecycler().decycle(args);
       const hookModel = {
-        arguments: new ObjectDecycler().decycle(args),
+        arguments: decycledArgs,
         tests: tests,
         valid: valid
       };
+      console.log('subs: ' + eventName + JSON.stringify(decycledArgs));
       const hookResult = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
       this.report.hooks![eventName] = hookResult;
       NotificationEmitter.emit(Notifications.HOOK_FINISHED, {

@@ -34,12 +34,12 @@ export abstract class Subscription {
   public async sendResponse(): Promise<void> {}
 
   public registerHookEventExecutor(hookEventExecutor: (eventName: string, args: any) => void) {
-    this['hookEventExecutor'] = hookEventExecutor;
+    this.hookEventExecutor = hookEventExecutor;
   }
 
   protected executeHookEvent(hookName: string, args: any = {}) {
-    if (this['hookEventExecutor']) {
-      this['hookEventExecutor'](hookName, args);
+    if (this.hookEventExecutor) {
+      this.hookEventExecutor(hookName, args);
     } else {
       Logger.warning(`Hook event executor not registered in subscription`);
     }

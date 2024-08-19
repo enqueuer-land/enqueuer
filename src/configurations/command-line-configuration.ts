@@ -37,11 +37,11 @@ export class CommandLineConfiguration {
         return val;
       })
       .option('-e, --parsers-list [parser]', 'list available object parsers')
+      .option('-q, --parallel', 'should run tests files parallely', false)
       .option('-f, --formatters-description [formatter]', 'describe report formatters', false)
       .option('-p, --protocols-description [protocol]', 'describe protocols', false)
       .option('-t, --tests-list [expectedField]', 'list available tests assertions', false)
       .option('-u, --loaded-modules-list', 'list loaded modules', false)
-      // .argument('<test-file>', 'file to be tested')
       .argument('[test-files...]', 'other files to be tested')
       .action((testFiles: string[]) => {
         this.testFiles.push(...(testFiles || []));
@@ -105,6 +105,10 @@ export class CommandLineConfiguration {
 
   public getShowPassingTests(): boolean {
     return this.options.showPassingTests;
+  }
+
+  public isParallelExecution(): boolean {
+    return !!this.options.parallel;
   }
 
   public getStore(): any {

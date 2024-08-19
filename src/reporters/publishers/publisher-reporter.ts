@@ -12,6 +12,7 @@ import { TestModel, testModelIsPassing } from '../../models/outputs/test-model';
 import { NotificationEmitter } from '../../notifications/notification-emitter';
 import { HookModel } from '../../models/outputs/hook-model';
 import { Notifications } from '../../notifications/notifications';
+import { HookReporter } from '../hook-reporter';
 
 export class PublisherReporter {
   private readonly report: output.PublisherModel;
@@ -105,18 +106,22 @@ export class PublisherReporter {
         eventExecutor.addArgument(key, args[key]);
       });
       const previousHook = this.report.hooks![eventName];
-      let previousTests: TestModel[] = [];
-      if (previousHook && previousHook.tests) {
-        previousTests = previousHook.tests || [];
-      }
+      let previousTests: TestModel[] = previousHook?.tests ?? [];
+      // if (previousHook && previousHook.tests) {
+      //   previousTests = previousHook.tests || [];
+      // }
       const tests = previousTests.concat(eventExecutor.execute());
       const valid = tests.every((test: TestModel) => testModelIsPassing(test));
-      const hookResult: HookModel = {
-        arguments: new ObjectDecycler().decycle(args),
+      const decycledArgs = new ObjectDecycler().decycle(args);
+      const hookModel: HookModel = {
+        arguments: decycledArgs,
         tests: tests,
         valid: valid
       };
-      this.report.hooks![eventName] = hookResult;
+      console.log('pubs: ' + eventName + JSON.stringify(decycledArgs));
+      //TODO investigate why this line wasn't added this file originally
+      const hookResult = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
+      this.report.hooks![eventName] = hookModel;
       NotificationEmitter.emit(Notifications.HOOK_FINISHED, {
         hookName: eventName,
         hook: hookResult,

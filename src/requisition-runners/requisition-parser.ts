@@ -11,7 +11,7 @@ export class RequisitionParser {
     const requisition = Array.isArray(parsed) ? { requisitions: parsed } : parsed;
     const requisitionValidator = new RequisitionValidator();
     if (!requisitionValidator.validate(requisition)) {
-      throw "'" + value + "' is not a valid requisition. " + requisitionValidator.getErrorMessage();
+      throw "'" + value + "' is not a valid requisition: " + requisitionValidator.getErrorMessage();
     }
     return requisition;
   }

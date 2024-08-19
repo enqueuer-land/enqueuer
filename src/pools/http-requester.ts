@@ -1,5 +1,6 @@
-// import fetch from 'node-fetch';
 import { Logger } from '../loggers/logger';
+
+const DEFAULT_TIMEOUT = 5000;
 
 export class HttpRequester {
   private readonly url: string;
@@ -8,7 +9,7 @@ export class HttpRequester {
   private readonly timeout: number;
   private body: any;
 
-  constructor(url: string, method: string, headers: any = {}, body: any, timeout: number = 3000) {
+  constructor(url: string, method: string, headers: any = {}, body: any, timeout: number = DEFAULT_TIMEOUT) {
     this.url = url;
     this.method = method;
     this.headers = headers;

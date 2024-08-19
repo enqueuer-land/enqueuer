@@ -22,7 +22,7 @@ export class RequisitionFilePatternParser {
       try {
         requisitions.push(new RequisitionFileParser().parseFile(file));
       } catch (err) {
-        this.addError(`Error parsing file '${file}'`, '' + err);
+        this.addError(`Error parsing file '${file}'`, '' + (err as Error));
       }
     });
     if (matchingFiles.length === 0) {

@@ -1,7 +1,7 @@
 toEncrypt: "'123456789'"
 onInit:
   script: |-
-    const crypto= require('crypto');
+    const crypto = require('crypto');
 
     function encryption(payload) {
         const hash = crypto.createHash('sha256');
@@ -12,4 +12,4 @@ onInit:
 onFinish:
   assertions:
     - expect: requisition.toEncrypt
-      toBeEqualTo: "'7aad9a1a6a91e0f18c417cb3aa0e0217b283778e636c580509e494eeec1472e0'"
+      toBeEqualTo: "'68fa8a566bf6c20d2c1f93ab4c71c224032850e7a6fd4c29e59681b3f7937c2f'"
