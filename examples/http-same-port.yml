@@ -1,7 +1,7 @@
 - timeout: 3000
   publishers:
     - type: http
-      url: http://localhost:23075/enqueuer/idStuff?query=2345
+      url: http://localhost:23065/enqueuer/idStuff?query=2345
       method: POST
       payload:
         enqueuer: virgs
@@ -22,7 +22,7 @@
   subscriptions:
     - type: http
       endpoint: /enqueuer/:firstId
-      port: 23075
+      port: 23065
       method: POST
       timeout: 10000
       response:
@@ -50,7 +50,7 @@
     - name: avoidable
       type: http
       endpoint: /avoidable
-      port: 23075
+      port: 23065
       method: POST
       avoid: true
       timeout: 200
@@ -58,7 +58,7 @@
   publishers:
     - name: publisher description
       type: http
-      url: http://localhost:23075/enqueuer/idStuff?query=111
+      url: http://localhost:23065/enqueuer/idStuff?query=111
       method: POST
       payload:
         duplicated: true
@@ -76,7 +76,7 @@
     - name: fourth
       type: http
       endpoint: /enqueuer/:secondId
-      port: 23075
+      port: 23065
       method: POST
       timeout: 50000
       response:

@@ -17,13 +17,13 @@
       avoid: true
 - publishers:
     - type: http
-      url: http://localhost:23080/number-payload
+      url: http://localhost:23095/number-payload
       method: POST
       payload: virgs
   subscriptions:
     - type: http
       endpoint: /number-payload
-      port: 23080
+      port: 23095
       method: POST
       response:
         status: 444
