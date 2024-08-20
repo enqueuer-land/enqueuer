@@ -8,7 +8,6 @@
       headers:
         content-type: application/json
         nqr: publisher
-        Connection: keep-alive
       onResponseReceived:
         assertions:
           - name: Status Code
@@ -29,6 +28,7 @@
       response:
         headers:
           nqr: subscription
+          connection: close
         status: 321
         payload: responsePayload
       onMessageReceived:
@@ -50,12 +50,11 @@
     - name: avoidable
       type: http
       endpoint: /avoidable
-      port: 23080
+      port: 23075
       method: POST
       avoid: true
       timeout: 200
 - timeout: 35000
-  # delay: 5000
   publishers:
     - name: publisher description
       type: http
@@ -65,7 +64,6 @@
         duplicated: true
       headers:
         content-type: application/json
-        # Connection: keep-alive
       onResponseReceived:
         assertions:
           - name: Status Code

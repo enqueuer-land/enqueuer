@@ -2,7 +2,7 @@ publishers:
   - name: publisher proxy
     type: http
     url: http://localhost:23085/proxy/enqueuer/123456?query=proxied
-    method: PATCH
+    method: put
     payload: original
     onMessageReceived:
       assertions:
@@ -13,14 +13,14 @@ publishers:
 subscriptions:
   - name: proxy subscription
     type: http-proxy
-    endpoint: /proxy
+    endpoint: /proxy/enqueuer/:id
     port: 23085
-    method: PATCH
+    method: put
     redirect:
-      url: http://localhost:23086/real
+      url: http://localhost:23086/real/enqueuer/999?query=proxied
       method: POST
     onOriginalMessageReceived:
-      script: this.redirect.payload = body + "' -> proxy'";
+      script: this.redirect.payload = body + " -> proxy";
       assertions:
         - expect: body
           toBeEqualTo: "'original'"
@@ -44,6 +44,6 @@ subscriptions:
         - expect: body
           toBeEqualTo: "'original -> proxy'"
         - expect: params.id
-          toBeEqualTo: 123456
+          toBeEqualTo: 999
         - expect: query.query
           toBeEqualTo: "'proxied'"

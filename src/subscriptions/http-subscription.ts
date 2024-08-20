@@ -113,9 +113,8 @@ class HttpSubscription extends Subscription {
       const proxyNamedFunction = (originalRequest: any, responseHandler: any, next: any) => {
         this.responseToClientHandler = responseHandler;
         Logger.debug(`${this.type}:${this.port} got hit (${this.method}) ${this.endpoint}: ${originalRequest.rawBody}`);
-        this.redirect['url'] = this.redirect.url + originalRequest.url.replace(this.endpoint, '');
-        this.redirect['headers'] = originalRequest.headers;
-        this.redirect['payload'] = originalRequest.rawBody;
+        this.redirect.headers = originalRequest.headers;
+        this.redirect.payload = originalRequest.rawBody;
         this.onMessageReceivedTests(originalRequest);
         this.executeHookEvent('onOriginalMessageReceived', this.createMessageReceivedStructure(originalRequest));
 
@@ -138,7 +137,9 @@ class HttpSubscription extends Subscription {
             next();
           });
       };
-      this.expressApp[this.method](this.endpoint + '/*', proxyNamedFunction);
+      this.expressApp[this.method](this.endpoint, (request: any, responseHandler: any, next: any) =>
+        proxyNamedFunction(request, responseHandler, next)
+      );
     });
   }
 
