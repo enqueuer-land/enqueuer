@@ -64,9 +64,7 @@ describe('ObjectParserManager', () => {
       objectParserManager.tryToParseWithParsers('stuff', ['other']);
       expect(true).toBeFalsy();
     } catch (err) {
-      expect(err).toEqual({
-        other: 'other error'
-      });
+      expect(err).toBe('OTHER error: other error');
     }
   });
 

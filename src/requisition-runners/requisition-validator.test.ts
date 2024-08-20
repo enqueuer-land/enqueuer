@@ -57,8 +57,8 @@ describe('RequisitionValidator', () => {
       new RequisitionValidator().validate({
         requisitions: [
           {
-            // @ts-expect-error
             requisitions: [
+              // @ts-expect-error
               {
                 onInit: {}
               }

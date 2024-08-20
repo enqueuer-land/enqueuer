@@ -31,7 +31,7 @@ describe('HttpContainerPool', () => {
     const port = 987;
     const credentials = { key: 'value' };
 
-    const result = await HttpContainerPool.getApp(port, true, credentials);
+    const result = await HttpContainerPool.getApp(port, credentials);
 
     expect(result).toEqual('acquireReturn');
     expect(constructorHttpContainer).toHaveBeenCalledWith(port, credentials);
@@ -40,11 +40,10 @@ describe('HttpContainerPool', () => {
 
   it('reuse App', async () => {
     const port = 987;
-    const secure = true;
     const credentials = { key: 'value' };
 
-    await HttpContainerPool.getApp(port, secure, credentials);
-    const result = await HttpContainerPool.getApp(port, secure, credentials);
+    await HttpContainerPool.getApp(port, credentials);
+    const result = await HttpContainerPool.getApp(port, credentials);
 
     expect(result).toBe('acquireReturn');
     expect(constructorHttpContainer).not.toHaveBeenCalled();

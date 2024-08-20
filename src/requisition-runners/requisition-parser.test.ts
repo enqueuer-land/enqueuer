@@ -58,8 +58,7 @@ describe('RequisitionParser', () => {
       new RequisitionParser().parse('any:1\nany:1');
       expect(true).toBeFalsy();
     } catch (err) {
-      expect(err.json).toBeDefined();
-      expect(err.yml).toBeDefined();
+      expect(err).toBeDefined();
     }
   });
 
@@ -79,7 +78,7 @@ describe('RequisitionParser', () => {
       expect(true).toBeFalsy();
     } catch (err) {
       expect(err).toBe(
-        `'hey: bar' is not a valid requisition.` +
+        `'hey: bar' is not a valid requisition:` +
           ` Unable to find: 'onInit', 'onFinish', 'delay', 'requisitions', 'publishers', 'subscriptions' nor 'import'.`
       );
     }

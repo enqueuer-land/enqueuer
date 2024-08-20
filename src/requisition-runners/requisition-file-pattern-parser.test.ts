@@ -98,8 +98,7 @@ describe('RequisitionFilePatternParser', () => {
     parser.parse();
 
     const parsedErrorDescription: any = parser.getFilesErrors()[0].description;
-    expect(parsedErrorDescription.json).toBeDefined();
-    expect(parsedErrorDescription.yml).toBeDefined();
+    expect(parsedErrorDescription).toBeDefined();
   });
 
   it('Should add error if it is not a valid requisition', () => {

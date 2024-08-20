@@ -1,6 +1,10 @@
 import { HandlerListener } from './handler-listener';
 import { Logger } from '../loggers/logger';
 
+// global.setTimeout.mockImplementation(cb => cb());
+jest.useFakeTimers();
+jest.spyOn(global, 'setTimeout');
+
 let onErrorMock = jest.fn();
 let listenMock = jest.fn();
 let closeMock = jest.fn();
@@ -18,9 +22,6 @@ Logger.trace.mockImplementation(traceMock);
 Logger.debug.mockImplementation(debugMock);
 // @ts-expect-error
 Logger.error.mockImplementation(errorMock);
-
-// global.setTimeout.mockImplementation(cb => cb());
-jest.useFakeTimers();
 
 const createServerMock = () => {
   return {

@@ -1,11 +1,11 @@
 import { MainInstance } from '../plugins/main-instance';
-import { FileObjectParserTest, entryPoint } from './file-object-parser';
+import { FileObjectParser, entryPoint } from './file-object-parser';
 
 describe('FileObjectParserTest', () => {
   test('should parse', () => {
     const code = 'anyStuff';
 
-    const parsed: any = new FileObjectParserTest().parse(code);
+    const parsed: any = new FileObjectParser().parse(code);
 
     expect(code).toBe(code);
   });
@@ -15,7 +15,7 @@ describe('FileObjectParserTest', () => {
       // @ts-ignore
       objectParserManager: {
         addObjectParser: (createFunction: any, ...tags: any) => {
-          expect(createFunction()).toBeInstanceOf(FileObjectParserTest);
+          expect(createFunction()).toBeInstanceOf(FileObjectParser);
           expect(tags.sort()).toEqual(['file'].sort());
           done();
         }

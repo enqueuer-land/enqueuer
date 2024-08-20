@@ -43,8 +43,8 @@ describe('TestsAnalyzer', () => {
           valid: true,
           // @ts-ignore
           time: {},
-          // @ts-ignore
           publishers: [
+            // @ts-ignore
             {
               name: 'name',
               valid: false,

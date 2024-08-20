@@ -15,8 +15,8 @@ describe('ReportFormatterManager', () => {
 
   it('describeFormats', () => {
     const reportFormatterManager = new ReportFormatterManager();
-    // @ts-ignore
     reportFormatterManager.addReportFormatter(
+      // @ts-ignore
       () => {
         /**/
       },
@@ -59,8 +59,8 @@ describe('ReportFormatterManager', () => {
 
   it('describe given formatter', () => {
     const reportFormatterManager = new ReportFormatterManager();
-    // @ts-ignore
     reportFormatterManager.addReportFormatter(
+      // @ts-ignore
       () => {
         /**/
       },
@@ -82,8 +82,8 @@ describe('ReportFormatterManager', () => {
 
   it('describe given formatter not string param', () => {
     const reportFormatterManager = new ReportFormatterManager();
-    // @ts-ignore
     reportFormatterManager.addReportFormatter(
+      // @ts-ignore
       () => {
         /**/
       },
@@ -105,8 +105,8 @@ describe('ReportFormatterManager', () => {
 
   it('error describe given formatter', () => {
     const reportFormatterManager = new ReportFormatterManager();
-    // @ts-ignore
     reportFormatterManager.addReportFormatter(
+      // @ts-ignore
       () => {
         /**/
       },

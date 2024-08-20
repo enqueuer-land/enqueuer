@@ -32,6 +32,7 @@ jest.mock('../../events/event-executor');
 // @ts-expect-error
 EventExecutor.mockImplementation(() => ({
   execute: () => [],
+  isDebugMode: () => [],
   addArgument: () => {}
 }));
 

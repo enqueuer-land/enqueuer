@@ -2,6 +2,7 @@ import { Timeout } from './timeout';
 import { DateController } from './date-controller';
 
 jest.useFakeTimers();
+jest.spyOn(global, 'setTimeout');
 
 describe('Timeout', function () {
   test('should call callback after given time', done => {

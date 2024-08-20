@@ -18,8 +18,8 @@ describe('ProtocolManager', () => {
 
   it('describeMatchingProtocols', () => {
     const protocolManager = new ProtocolManager();
-    // @ts-ignore
     protocolManager.addProtocol(
+      // @ts-ignore
       new PublisherProtocol('mine', () => {
         /*not empty*/
       })
@@ -79,8 +79,8 @@ describe('ProtocolManager', () => {
   it('describe given publisher Protocol', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
-    // @ts-ignore
     protocolManager.addProtocol(
+      // @ts-ignore
       new PublisherProtocol('pub', () => {
         /*not empty*/
       })
@@ -144,14 +144,14 @@ describe('ProtocolManager', () => {
   it('describe given publisher Protocol not string param', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
-    // @ts-ignore
     protocolManager.addProtocol(
+      // @ts-ignore
       new PublisherProtocol('pub', () => {
         /*not empty*/
       })
     );
-    // @ts-ignore
     protocolManager.addProtocol(
+      // @ts-ignore
       new PublisherProtocol('other', () => {
         /*not empty*/
       })
@@ -263,10 +263,10 @@ describe('ProtocolManager', () => {
   it('describe given subscription Protocol', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
-    // @ts-ignore
     protocolManager.addProtocol(
       new SubscriptionProtocol(
         'sub',
+        // @ts-ignore
         () => {
           /*not empty*/
         },
@@ -347,14 +347,14 @@ describe('ProtocolManager', () => {
   it('describe given subscription Protocol not string param', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
-    // @ts-ignore
     protocolManager.addProtocol(
+      // @ts-ignore
       new SubscriptionProtocol('sub', () => {
         /*not empty*/
       })
     );
-    // @ts-ignore
     protocolManager.addProtocol(
+      // @ts-ignore
       new SubscriptionProtocol('sub2', () => {
         /*not empty*/
       })

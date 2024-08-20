@@ -155,8 +155,8 @@ describe('MultiSubscriptionsReporter', () => {
     receiveMessageMock.mockImplementationOnce(() => Promise.resolve());
     // @ts-expect-error
     const multi = new MultiSubscriptionsReporter([{}]);
-    // @ts-expect-error
     multi
+      // @ts-expect-error
       .subscribe(() => {})
       .then(() => {
         multi.receiveMessage().then(() => {

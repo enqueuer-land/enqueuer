@@ -12,11 +12,15 @@ describe('RequisitionDefaultReports', () => {
     expect(report.time!.startTime).toBeDefined();
     expect(report.time!.endTime).toBeDefined();
     expect(report.time!.totalTime).toBeLessThan(1000);
-    delete report.time;
     expect(report).toEqual({
       hooks: {
         onFinish: { arguments: {}, tests: [], valid: true },
         onInit: { arguments: {}, tests: [], valid: true }
+      },
+      time: {
+        endTime: expect.any(String),
+        startTime: expect.any(String),
+        totalTime: expect.any(Number)
       },
       id: 'id',
       iteration: 1,
@@ -37,14 +41,15 @@ describe('RequisitionDefaultReports', () => {
       name: 'g'
     });
     expect(report.id).toBeUndefined();
-    expect(report.time!.startTime).toBeDefined();
-    expect(report.time!.endTime).toBeDefined();
-    expect(report.time!.totalTime).toBeLessThan(1000);
-    delete report.time;
     expect(report).toEqual({
       hooks: {
         onFinish: { arguments: {}, tests: [], valid: true },
         onInit: { arguments: {}, tests: [], valid: true }
+      },
+      time: {
+        endTime: expect.any(String),
+        startTime: expect.any(String),
+        totalTime: expect.any(Number)
       },
       id: undefined,
       ignored: undefined,
@@ -60,10 +65,6 @@ describe('RequisitionDefaultReports', () => {
   it('createRunningError', () => {
     // @ts-expect-error
     const report = RequisitionDefaultReports.createRunningError({ name: 'lopidio' }, 'err');
-    expect(report.time!.startTime).toBeDefined();
-    expect(report.time!.endTime).toBeDefined();
-    expect(report.time!.totalTime).toBeLessThan(1000);
-    delete report.time;
     expect(report).toEqual({
       hooks: {
         onFinish: {
@@ -72,6 +73,11 @@ describe('RequisitionDefaultReports', () => {
           valid: false
         },
         onInit: { arguments: {}, tests: [], valid: true }
+      },
+      time: {
+        endTime: expect.any(String),
+        startTime: expect.any(String),
+        totalTime: expect.any(Number)
       },
       id: undefined,
       ignored: undefined,
@@ -89,10 +95,6 @@ describe('RequisitionDefaultReports', () => {
     const report = RequisitionDefaultReports.createSkippedReport({
       name: 'virgs'
     });
-    expect(report.time!.startTime).toBeDefined();
-    expect(report.time!.endTime).toBeDefined();
-    expect(report.time!.totalTime).toBe(0);
-    delete report.time;
     expect(report).toEqual({
       hooks: {
         onFinish: {
@@ -107,6 +109,11 @@ describe('RequisitionDefaultReports', () => {
           valid: true
         },
         onInit: { arguments: {}, tests: [], valid: true }
+      },
+      time: {
+        endTime: expect.any(String),
+        startTime: expect.any(String),
+        totalTime: expect.any(Number)
       },
       id: undefined,
       ignored: undefined,
@@ -124,15 +131,18 @@ describe('RequisitionDefaultReports', () => {
     const report = RequisitionDefaultReports.createIgnoredReport({
       name: 'virgs'
     });
-    expect(report.time!.startTime).toBeDefined();
-    expect(report.time!.endTime).toBeDefined();
-    expect(report.time!.totalTime).toBe(0);
-    delete report.time;
     expect(report).toEqual({
       hooks: {
         onFinish: { arguments: {}, tests: [], valid: true },
         onInit: { arguments: {}, tests: [], valid: true }
       },
+      time: {
+        endTime: expect.any(String),
+        startTime: expect.any(String),
+        totalTime: expect.any(Number)
+      },
+      iteration: undefined,
+      totalIterations: undefined,
       id: undefined,
       ignored: true,
       name: 'virgs',

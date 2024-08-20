@@ -20,6 +20,13 @@ describe('RequisitionReportGenerator', () => {
         onFinish: { arguments: {}, tests: [], valid: true },
         onInit: { arguments: {}, tests: [], valid: true }
       },
+      iteration: undefined,
+      totalIterations: undefined,
+      time: {
+        endTime: expect.any(String),
+        startTime: expect.any(String),
+        totalTime: expect.any(Number)
+      },
       id: undefined,
       ignored: undefined,
       level: undefined,
@@ -50,6 +57,14 @@ describe('RequisitionReportGenerator', () => {
       hooks: {
         onFinish: { arguments: {}, tests: [], valid: true },
         onInit: { arguments: {}, tests: [], valid: true }
+      },
+      iteration: undefined,
+      totalIterations: undefined,
+      time: {
+        endTime: expect.any(String),
+        startTime: expect.any(String),
+        timeout: 1000,
+        totalTime: expect.any(Number)
       },
       id: undefined,
       ignored: undefined,
@@ -141,16 +156,16 @@ describe('RequisitionReportGenerator', () => {
       name: 'someName'
     });
 
-    // @ts-expect-error
     reportGenerator.addTest('hookName', {
       valid: false,
       arguments: { a: 1 },
+      // @ts-expect-error
       tests: [{ name: 'a', valid: false }]
     });
-    // @ts-expect-error
     reportGenerator.addTest('hookName', {
       valid: true,
       arguments: { b: 3 },
+      // @ts-expect-error
       tests: [{ name: 'b', valid: true }]
     });
     reportGenerator.finish();

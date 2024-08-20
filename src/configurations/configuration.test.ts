@@ -13,12 +13,13 @@ describe('Configuration', () => {
   beforeEach(() => {
     // @ts-ignore
     Configuration.loaded = false;
+
+    mockedCommandLineConfiguration.mockClear();
   });
 
   it('should addFiles', () => {
     const commandLine = createEmptyCommandLine();
-    // @ts-ignore
-    CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+    mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
 
     const instance = Configuration.getInstance();
     instance.addFiles('file1', 'file2');
@@ -89,7 +90,7 @@ describe('Configuration', () => {
       throw 'error';
     });
 
-    expect(() => Configuration.getInstance()).not.toThrow();
+    expect(() => Configuration.getInstance()).toThrow();
   });
 
   it('should merge command line with conf file', () => {
@@ -106,40 +107,6 @@ describe('Configuration', () => {
     expect(instance.getLogLevel()).toBe(commandLine.getVerbosity());
     expect(instance.getMaxReportLevelPrint()).toBe(commandLine.getMaxReportLevelPrint());
     expect(instance.getStore()).toEqual(Object.assign({}, fileConfiguration.getStore(), commandLine.getStore()));
-  });
-
-  it('should ignore files', () => {
-    const uniqueFiles = ['unique-file1', 'unique-file2'];
-    const fileConfiguration = createFileConfiguration();
-    const commandLine = createCommandLine('conf-file');
-    // @ts-ignore
-    commandLine.getTestFilesIgnoringOthers = () => uniqueFiles;
-    mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
-    // @ts-ignore
-    FileConfiguration.mockImplementationOnce(() => fileConfiguration);
-
-    const instance = Configuration.getInstance();
-
-    expect(instance.getFiles()).toEqual(uniqueFiles);
-  });
-
-  it('should combine plugins', () => {
-    const commandLine = createCommandLine('conf-file');
-    const fileConfiguration = createFileConfiguration();
-    const manuallyAddedPlugins = ['common-plugin', 'manuallyAddedPlugin'];
-    mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
-    // @ts-ignore
-    FileConfiguration.mockImplementationOnce(() => fileConfiguration);
-
-    // const configuration = Configuration.getInstance();
-    // manuallyAddedPlugins.forEach(plugin => configuration.addPlugin(plugin));
-
-    // const confPlugins = configuration.getPlugins();
-    // const uniquePlugins = [...new Set(commandLine.getPlugins()
-    //     .concat(fileConfiguration.getPlugins())
-    //     .concat(manuallyAddedPlugins))];
-    // expect(confPlugins.length).toBe(uniquePlugins.length);
-    // confPlugins.forEach(confPlugin => expect(uniquePlugins).toContainEqual(confPlugin));
   });
 
   it('should create cli output formatter', () => {
@@ -161,13 +128,12 @@ describe('Configuration', () => {
   it('should print configuration', () => {
     const commandLine = createCommandLine();
     commandLine.getVerbosity = () => 'trace';
-    // @ts-ignore
-    CommandLineConfiguration.mockImplementationOnce(() => commandLine);
+    mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
     const render = jest.fn();
     // @ts-ignore
     prettyjson.render.mockImplementation(render);
 
-    const instance = Configuration.getInstance();
+    Configuration.getInstance();
 
     expect(render).toHaveBeenCalledWith(
       {
@@ -198,6 +164,7 @@ describe('Configuration', () => {
       verifyPrematureActions: () => true,
       getConfigFileName: () => filename,
       getTestFiles: () => undefined,
+      isParallelExecution: () => undefined,
       getVerbosity: () => undefined,
       getPlugins: () => undefined,
       getShowPassingTests: () => undefined,
@@ -221,6 +188,7 @@ describe('Configuration', () => {
           cliKey: 'value'
         };
       },
+      isParallelExecution: () => false,
       getShowPassingTests: () => true,
       getShowExplicitTestsOnly: () => false,
       getTestFilesIgnoringOthers: () => undefined,

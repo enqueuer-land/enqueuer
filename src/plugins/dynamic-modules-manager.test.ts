@@ -44,6 +44,7 @@ describe('DynamicModulesManager', () => {
       'asserters/expect-to-contain-asserter',
       'asserters/expect-to-be-truthy-asserter',
       'asserters/expect-to-be-falsy-asserter',
+      'asserters/expect-to-be-any-of-asserter',
       'asserters/expect-to-be-defined-asserter',
       'asserters/expect-to-be-undefined-asserter'
     ].map(expected => dirname + '/' + expected);
@@ -80,20 +81,20 @@ describe('DynamicModulesManager', () => {
   });
 
   it('should check enqueuer version of plugins', () => {
-    // @ts-ignore
     expect(
+      // @ts-ignore
       DynamicModulesManager.versionMatches({
         dependencies: { enqueuer: '^5.0.0' }
       })
     ).toBeTruthy();
-    // @ts-ignore
     expect(
+      // @ts-ignore
       DynamicModulesManager.versionMatches({
         devDependencies: { enqueuer: '5.0.0' }
       })
     ).toBeTruthy();
-    // @ts-ignore
     expect(
+      // @ts-ignore
       DynamicModulesManager.versionMatches({
         peerDependencies: { enqueuer: '5.0.0' }
       })

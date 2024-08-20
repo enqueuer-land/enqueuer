@@ -272,13 +272,13 @@ describe('CommandLineConfiguration', () => {
       'node',
       'test',
       '-e',
-      testFile1,
       '-b',
       'debug',
+      testFile1,
       testFile2
     ]);
 
-    expect(commandLineConfiguration.getTestFiles().sort()).toEqual([testFile2, testFile1].sort());
+    expect(commandLineConfiguration.getTestFiles().sort()).toEqual([testFile1, testFile2].sort());
   });
 
   it('add test file', () => {

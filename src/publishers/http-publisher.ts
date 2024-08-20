@@ -1,7 +1,7 @@
 import { Publisher } from './publisher';
 import { Logger } from '../loggers/logger';
 import { PublisherModel } from '../models/inputs/publisher-model';
-import { HttpPublisherFetcher } from '../pools/http-requester';
+import { HttpPublisherFetcher } from '../pools/http-publisher-fetcher';
 import { MainInstance } from '../plugins/main-instance';
 import { PublisherProtocol } from '../protocols/publisher-protocol';
 import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';

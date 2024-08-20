@@ -3,7 +3,7 @@ import { Logger } from '../loggers/logger';
 import { SubscriptionModel } from '../models/inputs/subscription-model';
 import { HttpContainerPool } from '../pools/http-container-pool';
 import { TestModel } from '../models/outputs/test-model';
-import { HttpPublisherFetcher } from '../pools/http-requester';
+import { HttpPublisherFetcher } from '../pools/http-publisher-fetcher';
 import { MainInstance } from '../plugins/main-instance';
 import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
