@@ -1,4 +1,5 @@
 import { Logger } from '../loggers/logger';
+import https from 'https';
 
 const DEFAULT_TIMEOUT = 5000;
 
@@ -34,21 +35,33 @@ export class HttpPublisherFetcher {
       };
       return result;
     } catch (err) {
-      throw 'Http request error: ' + err;
+      const error = err as Error;
+      //@ts-expect-error
+      throw `Http request error: ${err}: ${error?.cause ?? error?.message}`;
     }
   }
 
   private createOptions(): RequestInit {
     const payload = this.handleObjectPayload();
-    return {
+    const headers: any = {};
+    if (this.method.toUpperCase() != 'GET') {
+      headers['Content-Length'] = this.setContentLength(payload);
+    }
+    const newLocal = {
       method: this.method,
       signal: AbortSignal.timeout(this.timeout),
       headers: {
-        'Content-Length': this.method.toUpperCase() != 'GET' ? this.setContentLength(payload) : undefined,
+        ...headers,
         ...this.headers
       },
-      body: payload
+      body: payload,
+      agent: new https.Agent({
+        keepAlive: true,
+        maxSockets: Infinity,
+        keepAliveMsecs: 20000
+      })
     };
+    return newLocal;
   }
 
   private setContentLength(value: string = ''): number {

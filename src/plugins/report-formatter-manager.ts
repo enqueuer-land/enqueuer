@@ -44,6 +44,7 @@ export class ReportFormatterManager {
 
   public describeMatchingReportFormatters(describeFormatters: string | true): boolean {
     const matchingReportFormatters = this.getMatchingReportFormatters(describeFormatters);
+    console.log(`Describing report formatters matching: ${describeFormatters}`);
     console.log(prettifyJson(matchingReportFormatters));
     return matchingReportFormatters.formatters.length > 0;
   }

@@ -29,6 +29,7 @@ export class ObjectParserManager {
 
   public describeMatchingObjectParsers(data: any): boolean {
     const matchingObjectParsers = this.getMatchingObjectParsers(data);
+    console.log(`Describing object parsers matching: ${data}`);
     console.log(prettifyJson(matchingObjectParsers));
     return matchingObjectParsers.parsers.length > 0;
   }

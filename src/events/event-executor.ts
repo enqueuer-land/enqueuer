@@ -9,11 +9,14 @@ export class EventExecutor {
   private readonly thisArg: any;
   private readonly event: Event;
   private readonly eventName: string;
+  private readonly componentName?: string;
 
   public constructor(thisArg: any, eventName: string, componentName?: string) {
+    this.componentName = componentName;
     this.thisArg = thisArg;
     this.eventName = eventName;
     this.event = this.initializeEvent(this.thisArg[eventName]);
+    this.componentName = componentName;
     if (componentName) {
       this.addArgument(componentName, thisArg);
     }
@@ -28,7 +31,7 @@ export class EventExecutor {
   }
 
   public execute(): TestModel[] {
-    Logger.debug(`Executing '${this.eventName}' hook`);
+    Logger.debug(`Executing ${this.componentName ?? 'component'}'s '${this.eventName}' hook`);
     Logger.trace(`'${this.eventName}': ${JSON.stringify(this.event)}`);
     this.arguments.unshift({
       name: 'argumentNames',

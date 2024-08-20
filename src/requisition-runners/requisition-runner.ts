@@ -112,7 +112,7 @@ export class RequisitionRunner {
 
     const iterationCounter: string = +report.totalIterations! > 1 ? ` [${report.iteration}]` : '';
     Logger.info(
-      `Requisition '${report.name + iterationCounter}' is over (${report.valid}) - ${report.time ? report.time.totalTime : 0}ms`
+      `Requisition '${report.name + iterationCounter}' is over (status: ${report.valid ? 'OK' : 'Errored'}) - ${report.time ? report.time.totalTime : 0}ms`
     );
     Logger.trace(`Store keys: ${Object.keys(Store.getData()).join('; ')}`);
 
@@ -122,8 +122,7 @@ export class RequisitionRunner {
   private async timeoutPath(): Promise<output.RequisitionModel> {
     const report = await this.requisitionReporter!.startTimeout();
     report.requisitions = await Promise.all(this.childrenRequisitionRunner.map(childRunner => childRunner.interrupt()));
-    Logger.debug(`Requisition '${this.requisition.name}' timed out`);
-
+    Logger.debug(`Requisition '${this.requisition.name}' timed out (${this.requisition.timeout}ms)`);
     return report;
   }
 
@@ -137,7 +136,7 @@ export class RequisitionRunner {
       report.valid &&
       report.requisitions.every(requisition => testModelIsNotFailing(requisition)) &&
       Object.keys(report.hooks || {}).every((key: string) => (report.hooks ? report.hooks[key].valid : true));
-    Logger.debug(`Requisition ${this.requisition.name} went through the happy path`);
+    Logger.debug(`Requisition ${this.requisition.name} didn't time out`);
     return report;
   }
 

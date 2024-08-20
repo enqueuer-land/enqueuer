@@ -43,6 +43,7 @@ export class ProtocolManager {
 
   public describeMatchingProtocols(description: string = ''): boolean {
     const matchingProtocols = this.getProtocolsDescription(description);
+    console.log(`Describing protocols matching: ${description}`);
     console.log(prettifyJson(matchingProtocols));
     return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
   }

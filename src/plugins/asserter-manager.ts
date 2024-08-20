@@ -53,6 +53,7 @@ export class AsserterManager {
 
   public describeMatchingAsserters(data: any): boolean {
     const matchingAsserters = this.getMatchingAsserters(data);
+    console.log(`Describing asserters matching: ${data}`);
     console.log(prettifyJson(matchingAsserters));
     return matchingAsserters.asserters.length > 0;
   }

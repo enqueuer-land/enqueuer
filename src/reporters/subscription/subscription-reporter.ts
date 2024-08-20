@@ -70,7 +70,7 @@ export class SubscriptionReporter {
       new Timeout(() => {
         if (!this.subscription.messageReceived) {
           this.totalTime = new DateController();
-          const message = `Subscription '${this.subscription.name}' stopped waiting because it has timed out`;
+          const message = `Subscription '${this.subscription.name}' stopped waiting because it has timed out (${this.subscription.timeout}ms)`;
           Logger.info(message);
           this.hasTimedOut = true;
           onTimeOutCallback();
@@ -195,7 +195,6 @@ export class SubscriptionReporter {
   }
 
   public onFinish() {
-    Logger.trace(`Executing subscription onFinish`);
     if (!this.subscription.ignore) {
       this.executeHookEvent(DefaultHookEvents.ON_FINISH, {
         executedHooks: this.executedHooks,

@@ -1,0 +1,90 @@
+- timeout: 3000
+  publishers:
+    - type: http
+      url: http://localhost:23075/enqueuer/idStuff?query=2345
+      method: POST
+      payload:
+        enqueuer: virgs
+      headers:
+        content-type: application/json
+        nqr: publisher
+        Connection: keep-alive
+      onResponseReceived:
+        assertions:
+          - name: Status Code
+            expect: statusCode
+            toBeEqualTo: 321
+          - name: Body
+            expect: body
+            toBeEqualTo: "'dynamically changed payload'"
+          - name: Header
+            expect: headers.nqr
+            toBeEqualTo: "'subscription'"
+  subscriptions:
+    - type: http
+      endpoint: /enqueuer/:firstId
+      port: 23075
+      method: POST
+      timeout: 10000
+      response:
+        headers:
+          nqr: subscription
+        status: 321
+        payload: responsePayload
+      onMessageReceived:
+        script: |-
+          subscription.response.payload = 'dynamically changed payload'
+        assertions:
+          - name: Payload
+            expect: JSON.parse(body).enqueuer
+            toBeEqualTo: "'virgs'"
+          - name: Params
+            expect: params.firstId
+            toBeEqualTo: "'idStuff'"
+          - name: Query
+            expect: query.query
+            toBeEqualTo: 2345
+          - name: Header
+            expect: headers.nqr
+            toBeEqualTo: "'publisher'"
+    - name: avoidable
+      type: http
+      endpoint: /avoidable
+      port: 23080
+      method: POST
+      avoid: true
+      timeout: 200
+- timeout: 35000
+  # delay: 5000
+  publishers:
+    - name: publisher description
+      type: http
+      url: http://localhost:23075/enqueuer/idStuff?query=111
+      method: POST
+      payload:
+        duplicated: true
+      headers:
+        content-type: application/json
+        # Connection: keep-alive
+      onResponseReceived:
+        assertions:
+          - name: Status Code
+            expect: statusCode
+            toBeEqualTo: 321
+          - name: Body
+            expect: body
+            toBeEqualTo: "'duplicatedResponsePayload'"
+  subscriptions:
+    - name: fourth
+      type: http
+      endpoint: /enqueuer/:secondId
+      port: 23075
+      method: POST
+      timeout: 50000
+      response:
+        status: 321
+        payload: duplicatedResponsePayload
+      onMessageReceived:
+        assertions:
+          - name: Payload
+            expectToBeTruthy: JSON.parse(body).duplicated

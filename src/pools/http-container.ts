@@ -22,7 +22,7 @@ export class HttpContainer {
   }
 
   public async acquire(): Promise<core.Express> {
-    Logger.debug(`Acquiring container ${this.port} (${this.counter})`);
+    Logger.trace(`Acquiring container ${this.port} (${this.counter})`);
     ++this.counter;
     if (this.counter == 1) {
       if (this.closePromise) {
@@ -74,7 +74,7 @@ export class HttpContainer {
     return http.createServer(this.app);
   }
 
-  private createApp(): any {
+  private createApp(): core.Express {
     const app = express();
     app.use((req: any, res: any, next: any) => {
       req.setEncoding('utf8');

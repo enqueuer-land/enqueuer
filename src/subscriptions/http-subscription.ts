@@ -7,13 +7,14 @@ import { HttpPublisherFetcher } from '../pools/http-requester';
 import { MainInstance } from '../plugins/main-instance';
 import { SubscriptionProtocol } from '../protocols/subscription-protocol';
 import { HttpAuthenticationFactory } from '../http-authentications/http-authentication-factory';
+import * as core from 'express-serve-static-core';
 
 const DEFAULT_TIMEOUT = 5000;
 
 class HttpSubscription extends Subscription {
   private readonly proxy: boolean;
   private responseToClientHandler?: any;
-  private expressApp: any;
+  private expressApp?: core.Express | any;
 
   constructor(subscriptionAttributes: SubscriptionModel) {
     super(subscriptionAttributes);
@@ -26,9 +27,12 @@ class HttpSubscription extends Subscription {
 
   public async subscribe(): Promise<void> {
     try {
-      this.expressApp = await HttpContainerPool.getApp(this.port, this.credentials);
+      const app = await HttpContainerPool.getApp(this.port, this.credentials);
+      this.expressApp = app;
+      this.expressApp.keepAliveTimeout = 60 * 1000 + 1000;
+      this.expressApp.headersTimeout = 60 * 1000 + 2000;
     } catch (err) {
-      const message = `Error in ${this.type} subscription: ${err}`;
+      const message = `Error in [${this.type}] ${this.name} subscription: ${err}`;
       Logger.error(message);
       throw err;
     }

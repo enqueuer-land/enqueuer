@@ -18,7 +18,10 @@ export class EnqueuerStarter {
       Logger.fatal(`Execution error: ${error}`);
       statusCode = -1;
     }
-    Logger.info('Enqueuer execution is over (' + (statusCode === 0) + ')');
+    if (statusCode === 0) {
+      Logger.info('Enqueuer execution status was succesfull');
+    }
+    Logger.info('There was a failure in enqueuer execution tests');
     Logger.setLoggerLevel(LogLevel.INFO);
     Logger.info(`Hope you had a great time`);
     return statusCode;

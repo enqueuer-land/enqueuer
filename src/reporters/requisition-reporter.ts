@@ -46,11 +46,12 @@ export class RequisitionReporter {
 
   public async startTimeout(): Promise<output.RequisitionModel> {
     return new Promise(async resolve => {
-      if (this.timeout) {
+      const timeout = this.timeout;
+      if (timeout) {
         Logger.debug('Starting requisition time out');
-        await this.sleep(this.timeout);
+        await this.sleep(timeout);
         if (!this.hasFinished) {
-          Logger.info(`Requisition '${this.requisitionAttributes.name}' timed out`);
+          Logger.info(`Requisition '${this.requisitionAttributes.name}' has timed out (${timeout}ms)`);
           await this.onRequisitionFinish();
           resolve(this.reportGenerator.getReport());
         }
@@ -85,7 +86,7 @@ export class RequisitionReporter {
           {
             valid: false,
             name: 'Requisition interrupted',
-            description: 'Not finished yet. There was not enough time to finish the requisition'
+            description: `Requisition interrupted`
           }
         ]
       });
@@ -109,7 +110,7 @@ export class RequisitionReporter {
   }
 
   private executeOnInitFunction(): TestModel[] {
-    Logger.debug(`Executing requisition onInit hook function`);
+    Logger.debug(`Executing requisition's 'onInit' hook function`);
     const eventExecutor = new EventExecutor(this.requisitionAttributes, DefaultHookEvents.ON_INIT, 'requisition');
     const elapsedTime = new Date().getTime() - this.startTime.getTime();
     eventExecutor.addArgument('elapsedTime', elapsedTime);

@@ -98,11 +98,15 @@ export class DynamicModulesManager {
         .map(module => module.replace(/\.js/, ''))
         .filter(module => !module.includes('.test'))
         .filter(module => {
+          const packageJsonPath = module + '/package.json';
           try {
-            const packageJsonPath = module + '/package.json';
             if (fs.existsSync(packageJsonPath)) {
               const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
-              const keyWordsMatch = (packageJson.keywords || []).find(
+              const keyWords =
+                typeof packageJson.keywords != 'object'
+                  ? (packageJson.keywords?.toString().split(',') ?? [])
+                  : (packageJson.keywords ?? []);
+              const keyWordsMatch = (keyWords || []).find(
                 (keyword: string) => keyword.toLowerCase() === 'enqueuer' || keyword.toLowerCase() === 'nqr'
               );
               if (keyWordsMatch) {
