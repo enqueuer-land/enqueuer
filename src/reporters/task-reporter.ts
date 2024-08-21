@@ -61,7 +61,7 @@ export class TaskReporter {
   public async execute(): Promise<output.TaskModel> {
     try {
       this.multiSensorsReporter.start();
-      await this.multiSensorsReporter.getReady();
+      await this.multiSensorsReporter.prepare();
       await Promise.all([this.multiSensorsReporter.receiveMessage(), this.multiActuatorsReporter.act()]);
     } catch (err) {
       Logger.error(`Task error: ${err}`);
@@ -99,7 +99,7 @@ export class TaskReporter {
 
   private async onTaskFinish(): Promise<void> {
     this.hasFinished = true;
-    await this.multiSensorsReporter.close();
+    await this.multiSensorsReporter.unprepare();
     await this.executeOnFinishFunction();
     Logger.info(`Start gathering reports`);
 

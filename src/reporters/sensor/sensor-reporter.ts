@@ -77,14 +77,14 @@ export class SensorReporter {
     }
   }
 
-  public async getReady(): Promise<void> {
+  public async prepare(): Promise<void> {
     if (this.sensor.ignore) {
       Logger.trace(`Sensor '${this.sensor.name}' is ignored`);
     } else {
       try {
         Logger.trace(`Starting '${this.sensor.name}' time out`);
         Logger.trace(`Sensor '${this.sensor.name}' is getting ready`);
-        await this.sensor.getReady();
+        await this.sensor.prepare();
         await this.handleSensor();
       } catch (err) {
         const message = `Sensor '${this.sensor.name}' is unable to getReady: ${err}`;
@@ -105,7 +105,7 @@ export class SensorReporter {
         await this.sendSyncResponse();
         Logger.trace(`Sensor '${this.sensor.name}' has finished its job`);
       } catch (err) {
-        this.sensor.close().catch(console.log.bind(console));
+        this.sensor.unprepare().catch(console.log.bind(console));
         Logger.error(`Sensor '${this.sensor.name}' is unable to receive message: ${err}`);
         throw err;
       }
@@ -183,12 +183,12 @@ export class SensorReporter {
     return this.report;
   }
 
-  public async close(): Promise<void> {
+  public async unprepare(): Promise<void> {
     process.removeListener('SIGINT', this.killListener).removeListener('SIGTERM', this.killListener);
 
     Logger.debug(`Closing sensor ${this.sensor.type}`);
     if (this.getReadyd) {
-      return this.sensor.close();
+      return this.sensor.unprepare();
     }
   }
 
@@ -256,7 +256,7 @@ export class SensorReporter {
 
   private async handleKillSignal(signal: Signals, type: string): Promise<void> {
     Logger.debug(`Sensor reporter '${type}' handling kill signal ${signal}`);
-    await this.close();
+    await this.unprepare();
     Logger.debug(`Sensor reporter '${type}' closed`);
   }
 }

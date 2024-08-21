@@ -9,10 +9,10 @@ import { SensorProtocol } from '../protocols/sensor-protocol';
 class FileSystemWatcherSensor extends Sensor {
   constructor(sensorAttributes: SensorModel) {
     super(sensorAttributes);
-    this['options'] = sensorAttributes.options || { nodir: true };
+    this.options = sensorAttributes.options || { nodir: true };
   }
 
-  public getReady(): Promise<void> {
+  public prepare(): Promise<void> {
     return Promise.resolve();
   }
 

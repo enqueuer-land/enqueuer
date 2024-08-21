@@ -95,7 +95,7 @@ describe('MultiSensorsReporter', () => {
     const multi = new MultiSensorsReporter(constructorArgument);
 
     multi.start();
-    const sensorResult = await multi.getReady();
+    const sensorResult = await multi.prepare();
     console.log(sensorResult);
   });
 
@@ -115,7 +115,7 @@ describe('MultiSensorsReporter', () => {
     const multi = new MultiSensorsReporter(constructorArgument);
 
     multi.start();
-    multi.getReady().then(() => {
+    multi.prepare().then(() => {
       expect(startTimeoutMock).toHaveBeenCalled();
       expect(timeoutCb).not.toHaveBeenCalled();
       done();
@@ -157,7 +157,7 @@ describe('MultiSensorsReporter', () => {
     const multi = new MultiSensorsReporter([{}]);
     multi
       // @ts-expect-error
-      .getReady(() => {})
+      .prepare(() => {})
       .then(() => {
         multi.receiveMessage().then(() => {
           done();

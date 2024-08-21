@@ -13,7 +13,7 @@ class CustomSensor extends Sensor {
     try {
       const moduleString: string = fs.readFileSync(this.module).toString();
       const module = requireFromString(moduleString);
-      this['custom'] = new module.Sensor(this);
+      this.custom = new module.Sensor(this);
     } catch (err) {
       Logger.error(`Error loading module '${this.module}': ${err}`);
     }
@@ -32,7 +32,7 @@ class CustomSensor extends Sensor {
 
   public async unprepare(): Promise<any> {
     if (this.custom.close) {
-      return this.custom.close({
+      return this.custom.unprepare({
         store: Store.getData(),
         logger: Logger
       });

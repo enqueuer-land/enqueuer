@@ -34,7 +34,7 @@ class UdpSensor extends Sensor {
     });
   }
 
-  public getReady(): Promise<void> {
+  public prepare(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.server = dgram.createSocket('udp4');
       try {
