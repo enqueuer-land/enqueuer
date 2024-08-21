@@ -10,7 +10,7 @@ import { ProtocolDescriber } from './run-as-child/protocol-describer';
 import { ChildSendingEvents } from './run-as-child/child-sending-events';
 import { NotificationEmitter } from './notifications/notification-emitter';
 import { ChildReceivingEvents } from './run-as-child/child-receiving-events';
-import { ChildRequisitionRunner } from './run-as-child/child-requisition-runner';
+import { ChildTaskRunner } from './run-as-child/child-task-runner';
 
 export class EnqueuerAsNodeChildRunner {
   private readonly processors: {
@@ -24,7 +24,7 @@ export class EnqueuerAsNodeChildRunner {
       [ChildReceivingEvents.SET_STORE]: new StoreSetter(),
       [ChildReceivingEvents.GET_ASSERTERS]: new AssertDescriber(),
       [ChildReceivingEvents.GET_PROTOCOLS]: new ProtocolDescriber(),
-      [ChildReceivingEvents.RUN_REQUISITION]: new ChildRequisitionRunner()
+      [ChildReceivingEvents.RUN_REQUISITION]: new ChildTaskRunner()
     };
   }
 

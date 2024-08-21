@@ -268,14 +268,14 @@ describe('SummaryTestOutput', () => {
       name: 'name',
       valid: true,
       tests: [],
-      publishers: [{ name: 'publisher' }],
-      subscriptions: [{ name: 'subscription' }],
-      requisitions: [{ name: 'requisition' }]
+      actuators: [{ name: 'actuator' }],
+      sensors: [{ name: 'sensor' }],
+      tasks: [{ name: 'task' }]
     }).print();
 
-    expect(consolePrintedTimes('publisher')).toBe(1);
-    expect(consolePrintedTimes('subscription')).toBe(1);
-    expect(consolePrintedTimes('requisition')).toBe(0);
+    expect(consolePrintedTimes('actuator')).toBe(1);
+    expect(consolePrintedTimes('sensor')).toBe(1);
+    expect(consolePrintedTimes('task')).toBe(0);
   });
 
   it('should not print children if it is deeper than max', () => {
@@ -283,16 +283,16 @@ describe('SummaryTestOutput', () => {
       {
         name: 'name',
         valid: true,
-        publishers: [{ name: 'publisher', valid: false }],
-        subscriptions: [{ name: 'subscription', valid: false }]
+        actuators: [{ name: 'actuator', valid: false }],
+        sensors: [{ name: 'sensor', valid: false }]
       },
       { maxLevel: 0, level: 0 }
     ).print();
 
     expect(consolePrintedTimes('name')).toBe(1);
-    expect(consolePrintedTimes('publisher')).toBe(0);
-    expect(consolePrintedTimes('subscription')).toBe(0);
-    expect(consolePrintedTimes('requisition')).toBe(0);
+    expect(consolePrintedTimes('actuator')).toBe(0);
+    expect(consolePrintedTimes('sensor')).toBe(0);
+    expect(consolePrintedTimes('task')).toBe(0);
   });
 
   const consolePrintedTimes = (text: any): number => {

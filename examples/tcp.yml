@@ -1,5 +1,5 @@
 - timeout: 3000
-  publishers:
+  actuators:
     - type: tcp
       timeout: 1000
       serverAddress: localhost
@@ -9,7 +9,7 @@
         assertions:
           - expect: payload
             toBeEqualTo: "'Do not make it bad'"
-  subscriptions:
+  sensors:
     - type: tcp
       port: 23069
       timeout: 1000
@@ -23,22 +23,22 @@
               - "'127.0.0.1'"
               - ::1
 - timeout: 3000
-  publishers:
+  actuators:
     - type: tcp
       timeout: 800
       serverAddress: localhost
       port: 23070
       payload: I do not care
-      saveStream: tcpPublisherSocket
+      saveStream: tcpActuatorSocket
       onMessageReceived:
         assertions:
           - expect: payload
             toBeEqualTo: "'EnqueuerRocks'"
-  subscriptions:
+  sensors:
     - type: tcp
       port: 23070
       timeout: 500
-      saveStream: tcpSubscriptionSocket
+      saveStream: tcpSensorSocket
       greeting: Enqueuer
       response: Rocks
       onMessageReceived:
@@ -46,17 +46,17 @@
           - expect: payload
             toBeEqualTo: "'I do not care'"
 - timeout: 3000
-  publishers:
+  actuators:
     - type: tcp
       payload: The socket is still open
-      loadStream: tcpPublisherSocket
+      loadStream: tcpActuatorSocket
       onMessageReceived:
         assertions:
           - expect: payload
             toBeEqualTo: "'<<tcpPayload>>'"
-  subscriptions:
+  sensors:
     - type: tcp
-      loadStream: tcpSubscriptionSocket
+      loadStream: tcpSensorSocket
       response: <<tcpPayload>>
       timeout: 1000
       onMessageReceived:

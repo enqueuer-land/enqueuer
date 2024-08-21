@@ -1,4 +1,4 @@
-import { PublisherModel } from '../models/inputs/publisher-model';
+import { ActuatorModel } from '../models/inputs/actuator-model';
 import { YmlObjectParser } from '../object-parser/yml-object-parser';
 import * as fs from 'fs';
 
@@ -19,7 +19,7 @@ export class FileConfiguration {
     return this.parsedFile['log-level'];
   }
 
-  public getOutputs(): PublisherModel[] {
+  public getOutputs(): ActuatorModel[] {
     return this.parsedFile.outputs || [];
   }
 

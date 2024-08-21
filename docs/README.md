@@ -18,11 +18,11 @@ First things first, let's get the enqueuer installed on your machine.
 
     npm install --global enqueuer
 
-Alright, it's time to create a requisition file.
+Alright, it's time to create a task file.
 Something like:
 
     #enqueuer-repo-hit.yml
-    publishers:
+    actuators:
     -   type: http
         url: https://github.com/enqueuer-land/enqueuer
         onResponseReceived:
@@ -39,7 +39,7 @@ Now you know how to hit a http server.
 What if I want to mock a http server response, you may ask. Not a big deal for enqueuer lovers:
 
     timeout: -1
-    subscriptions:
+    sensors:
     -   type: http
         timeout: -1
         name: mock endpoint
@@ -59,7 +59,7 @@ Tip: remove timeout values and check what happens.
 I told you it was simple.  
 Yes, of course you can hit your own mocked http server:
 
-    publishers:
+    actuators:
     -   type: http
         url: http://localhost:23075/resource
         method: POST
@@ -70,7 +70,7 @@ Yes, of course you can hit your own mocked http server:
                 toBeGreaterThan: 400
             -   expect: body
                 toBeEqualTo: "'blah'"
-    subscriptions:
+    sensors:
     -   type: http
         endpoint: /resource
         port: 23075
@@ -89,12 +89,12 @@ In order to achieve that, we have to make use of a [plugin](#plugins), given tha
 In this scenario, we're talking about the [amqp plugin](https://github.com/enqueuer-land/enqueuer-plugin-amqp).
 Once we get this [plugin installed](#plugins_installation) we are able to create and run files like this:
 
-    publishers:
+    actuators:
     -   type: amqp
         payload: 123456
         exchange: enqueuer.exchange
         routingKey: enqueuer.readme.routing.key
-    subscriptions:
+    sensors:
     -   type: http
         endpoint: /polyglot-flow
         port: 8080
@@ -129,7 +129,7 @@ Certainly one is what you need.
     -b, --verbosity <level>                   set verbosity (choices: "trace", "debug", "info", "warn", "error", "fatal", default: "warn")
     -c, --config-file <path>                  set configurationFile
     -d, --show-explicit-tests-only            show explicit tests only (default: false)
-    -o, --stdout-requisition-output           add stdout as requisition output (default: false)
+    -o, --stdout-task-output           add stdout as task output (default: false)
     -m, --max-report-level-print <level>      set max report level print
     -i, --show-passing-tests                  show passing tests
     -s, --store [store]                       add variables values to this session (default: [])
@@ -160,43 +160,43 @@ Certainly one is what you need.
 
 In order to accomplish more than just hitting enqueuer's repo or doing a quick self http hit, there are a few things that you'll probably need to know.
 Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples [here](https://github.com/enqueuer-land/enqueuer/blob/master/examples/), just in case.
-There are only three important component concepts: [requisitions](#requisition), [publishers](#publisher) and [subscriptions](#subscription).
+There are only three important component concepts: [tasks](#task), [actuators](#actuator) and [sensors](#sensor).
 They work along with each other and are responsible for the full behavior of enqueuer.
 
-#### requisition
+#### task
 
 Test scenario description. It tells what, when, and how test your applications and services.
-Picture it as if it was a collection of [publishers](#publisher), [subscriptions](#subscription) and other [requisitions](#requisition).
+Picture it as if it was a collection of [actuators](#actuator), [sensors](#sensor) and other [tasks](#task).
 It helps because this is exactly what it is.
 As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
-Every test file is a requisition.
+Every test file is a task.
 You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later.
-[Variable replacements](#variables) are available through the entire requisition.
+[Variable replacements](#variables) are available through the entire task.
 
-##### requisition attributes
+##### task attributes
 
-These are the requisition attributes:
+These are the task attributes:
 
 **name**  
-Describes what the requisition is suppose to do.
-Defaults to requisition index.
+Describes what the task is suppose to do.
+Defaults to task index.
 
-    name: requisition action
+    name: task action
 
 **timeout**  
 Defaults to 5000.
-Sets in milliseconds how long the requisition waits to expire.
+Sets in milliseconds how long the task waits to expire.
 Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
 
 **delay**  
-Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml) to get the full idea.
+Defaults to 0. Sets in milliseconds how long the test waits before starting. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/task-delay-iterations.yml) to get the full idea.
 
     delay: 0
 
 **iterations**  
-Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/requisition-delay-iterations.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
+Defaults to 1. Sets how many times this test will be executed. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/task-delay-iterations.yml) and [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) to get the full idea.
 
     iterations: 3
 
@@ -206,55 +206,55 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
     id: ID-0123456789
 
 **ignore**  
-Defaults to false. Tells to enqueuer that this requisitions should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+Defaults to false. Tells to enqueuer that this tasks should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
 
 **parallel**  
-Defaults to false. Immediate children requisitions should be executed in parallel mode.
-Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel-requisition.yml) to see it working.
+Defaults to false. Immediate children tasks should be executed in parallel mode.
+Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/parallel-task.yml) to see it working.
 
     parallel: true
 
 **import**  
-Allows requisition to be dynamically defined, be it by loading an external file or creating dynamically by other requisitions. Want to reuse the same requisition multiple times? This is you you need.
+Allows task to be dynamically defined, be it by loading an external file or creating dynamically by other tasks. Want to reuse the same task multiple times? This is you you need.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/import.yml) to behold this feature.
 
-    import: path/to/another/requisition/file
+    import: path/to/another/task/file
 
-**publishers**  
-List of [publishers](#publisher). They're executed simultaneously, therefore, the order is **irrelevant**.
+**actuators**  
+List of [actuators](#actuator). They're executed simultaneously, therefore, the order is **irrelevant**.
 
-    publishers:
-    - name: some publisher name
+    actuators:
+    - name: some actuator name
       type: http
     - type: tcp
 
-**subscriptions**  
-List of [subscriptions](#subscription). They're executed simultaneously, therefore, the order is **irrelevant**.
+**sensors**  
+List of [sensors](#sensor). They're executed simultaneously, therefore, the order is **irrelevant**.
 
-    subscriptions:
-    - name: some subscription name
+    sensors:
+    - name: some sensor name
       type: udp
-    - name: another subscription name
+    - name: another sensor name
       type: file
 
-**requisitions**  
-A list of child scenarios. List of [requisitions](#requisition).
+**tasks**  
+A list of child scenarios. List of [tasks](#task).
 By default, they're executed **sequentially**, therefore, the order is _relevant_.
 Unless the _parallel_ attribute is set to true, what makes them get executed **simultaneously**,
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
-    requisitions:
-    - name: some requisition name
+    tasks:
+    - name: some task name
       iterations: 2
-    - name: another requisition name
+    - name: another task name
       delay: 200
 
 ##### events
 
-Requisitions have "'onInit'" and "'onFinish'" events.
-Available events are described [here](#event). A "'this'" object is available to access and change requisition attributes.
+Tasks have "'onInit'" and "'onFinish'" events.
+Available events are described [here](#event). A "'this'" object is available to access and change task attributes.
 
     name: my name
     onInit:
@@ -265,39 +265,39 @@ Available events are described [here](#event). A "'this'" object is available to
       assertions:
       - expectToBeDefined: this.name
 
-#### publisher
+#### actuator
 
-A publisher action is triggered by enqueuer itself. It **acts** whereas a [subscription](#subscription) **reacts**.
+A actuator action is triggered by enqueuer itself. It **acts** whereas a [sensor](#sensor) **reacts**.
 It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
 It's worth noting that it always **creates** a message.
 That's the reason why there's an implicitly created test in **onFinish** hook verifying if the message got published.
 
-##### publisher attributes
+##### actuator attributes
 
-Every publisher has its own properties, depending on its protocol and implementation.
-The built-in ['"http'" publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a "'url'", a "'method'", and a "'payload'", if the method is not a "'GET'".
-On the other hand, the built-in ['"tcp'" publisher](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a "'serverAddress'" and a "'port'".
-These are the publisher attributes:
+Every actuator has its own properties, depending on its protocol and implementation.
+The built-in ['"http'" actuator](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a "'url'", a "'method'", and a "'payload'", if the method is not a "'GET'".
+On the other hand, the built-in ['"tcp'" actuator](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a "'serverAddress'" and a "'port'".
+These are the actuator attributes:
 
 **name**  
-Defaults to publisher index.
-Describes what the publisher is supposed to do.
+Defaults to actuator index.
+Describes what the actuator is supposed to do.
 
-    name: publisher action
+    name: actuator action
 
 **type**  
-Mandatory. Key tag to identify which publisher will be instantiated
+Mandatory. Key tag to identify which actuator will be instantiated
 
     type: http
 
 **payload**  
-Since a publisher usually publishes something, it's very likely you have to set a value here.
+Since a actuator usually publishes something, it's very likely you have to set a value here.
 The message itself that will be send through this protocol. Be it a string, a number, a boolean value or even whole objects.
 
     payload: value
 
 **ignore**  
-Defaults to false. Tells to enqueuer that this publisher should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+Defaults to false. Tells to enqueuer that this actuator should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
 
@@ -308,7 +308,7 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 
 ##### events
 
-Available events are described [here](#event). A "'this'" object is available to access and change publisher attributes.
+Available events are described [here](#event). A "'this'" object is available to access and change actuator attributes.
 Depending on the protocol and its implementation, such as "'http'" and "'tcp'", there may exist special events, such as "'onMessageReceived'" event and a special object given "'message'".
 On the other hand, an asynchronous protocol, like: "'udp'" and "'amqp'", usually do not provide it.
 
@@ -323,50 +323,50 @@ On the other hand, an asynchronous protocol, like: "'udp'" and "'amqp'", usually
       assertions:
       - expectToBeDefined: this.type
 
-#### subscription
+#### sensor
 
-A subscription is an "under demand" event. It **reacts** whereas a [publisher](#publisher) **acts**.
+A sensor is an "under demand" event. It **reacts** whereas a [actuator](#actuator) **acts**.
 It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
 This means that it is not triggered by enqueuer itself.
-Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the subscription.
+Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the sensor.
 It's worth noting that it always **receives** a message.
 That's the reason why there's an implicitly created test in **onFinish** hook verifying if a message got received.
 
-##### subscription attributes
+##### sensor attributes
 
-Every subscription has its own properties, depending on its protocol and implementation.
-The built-in ['"http'" subscription](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands an "'endpoint'", a "'method'", and a "'port'", if the method is not a GET.
-On the other hand, the built-in ['"tcp'" subscription](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires only a "'port'".
+Every sensor has its own properties, depending on its protocol and implementation.
+The built-in ['"http'" sensor](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands an "'endpoint'", a "'method'", and a "'port'", if the method is not a GET.
+On the other hand, the built-in ['"tcp'" sensor](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires only a "'port'".
 
-These are the subscription attributes:
+These are the sensor attributes:
 
 **name**  
-Defaults to subscription index.
-Describes what the subscription is supposed to do.
+Defaults to sensor index.
+Describes what the sensor is supposed to do.
 
-    name: subscription action
+    name: sensor action
 
 **type**  
-Mandatory. Key tag to identify which subscription will be instantiated
+Mandatory. Key tag to identify which sensor will be instantiated
 
     type: http
 
 **avoid**  
-Identifies whether or not this subscription should not receive any message. Defaults to false.
+Identifies whether or not this sensor should not receive any message. Defaults to false.
 If set and a message is received a failing test will be generated.
 Take a look at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/avoid.yml) to see it working.
-On the other hand, when it's false and no message is received in a given timeout. The subscription is valid.
+On the other hand, when it's false and no message is received in a given timeout. The sensor is valid.
 
     avoid: false
 
 **timeout**  
-Sets in milliseconds how long the subscription waits to expire. Defaults to 3000.
+Sets in milliseconds how long the sensor waits to expire. Defaults to 3000.
 Set to zero or less than zero to run it endlessly.
 
     timeout: 3000
 
 **ignore**  
-Defaults to false. Tells to enqueuer that this subscription should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
+Defaults to false. Tells to enqueuer that this sensor should be skipped. Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml) to see it working.
 
     ignore: true
 
@@ -377,7 +377,7 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 
 ##### events
 
-Available events are described [here](#event). A "'this'" object is available to access and change subscription attributes.
+Available events are described [here](#event). A "'this'" object is available to access and change sensor attributes.
 
     onInit:
       script: this.avoid = false;
@@ -394,39 +394,39 @@ Available events are described [here](#event). A "'this'" object is available to
 
 ### Event
 
-Events are hook methods executed by enqueuer when an action occurs on publishers, subscriptions or requisitions.
+Events are hook methods executed by enqueuer when an action occurs on actuators, sensors or tasks.
 This is where you'll write your tests. In its "'assertions'" field.
-There will be a variable called "'this'" and, depending on the event's owner, it has an alias "'publisher'", "'subscription'" or "'requisition'".
+There will be a variable called "'this'" and, depending on the event's owner, it has an alias "'actuator'", "'sensor'" or "'task'".
 You're free to explore them however you want, even doing things like this:
 
-    publisher.parent.subscriptions[0].timeout = 1000;
+    actuator.parent.sensors[0].timeout = 1000;
 
 #### hooks
 
 By default, there are three hook events available:
 
 **onInit**  
-Available in requisitions, publishers and subscriptions. It gets executed as soon as the component is initialized.
+Available in tasks, actuators and sensors. It gets executed as soon as the component is initialized.
 As available parameter, an "'elapsedTime'" variable is given, counting every millisecond since the instantiation of this component.
 
 **onFinish**  
-Available in requisitions, publishers and subscriptions. It gets executed when the component is about to finish.
+Available in tasks, actuators and sensors. It gets executed when the component is about to finish.
 As available parameter, an "'elapsedTime'" variable is given, counting every millisecond since the instantiation of this component.
 
 **custom**
-Depending on the protocol implementation/library/author's mood, the publisher/subscription may have additional hooks.
+Depending on the protocol implementation/library/author's mood, the actuator/sensor may have additional hooks.
 Such as "'onError'", "'onResponseReceived'", "'onFileNotFound'" and "'onRedirect'"...
-[Http-proxy subscription test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
+[Http-proxy sensor test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
 
 **_available variables_**
-Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use "'argumentNames'" as a regular argument. So, let's say you have this requisition:
+Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use "'argumentNames'" as a regular argument. So, let's say you have this task:
 
     onFinish:
       script: console.log(argumentNames)
 
 You'd get this printed out to the console:
 
-    [ 'requisition', 'elapsedTime' ]
+    [ 'task', 'elapsedTime' ]
 
 #### fields
 
@@ -438,7 +438,7 @@ Yeah, I mean it. See it [it](https://github.com/enqueuer-land/enqueuer/blob/mast
 Be careful, with great power comes great responsibility.
 
 **store**  
-Data to be persisted across requisitions.
+Data to be persisted across tasks.
 
 **assertions**  
 Array of assertions.
@@ -475,9 +475,9 @@ Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/hook
 
 ---
 
-### Requisition Flow
+### Task Flow
 
-Now you know what are requisitions, publishers, subscriptions and events. How about seeing how they interact with each other in a fancier way?
+Now you know what are tasks, actuators, sensors and events. How about seeing how they interact with each other in a fancier way?
 
 ![enqueuerInstanceFlow](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/nqrFlow.png 'Enqueuer Instance Flow')
 
@@ -501,7 +501,7 @@ or
 These are the configuration file attributes:
 
 **files**  
-Requisition file names or glob. Enqueuer runs every file that matches an element value.
+Task file names or glob. Enqueuer runs every file that matches an element value.
 
     files:
     - 1.yml
@@ -509,7 +509,7 @@ Requisition file names or glob. Enqueuer runs every file that matches an element
     - *.json
 
 **parallel**  
-Defaults to false. Requisition files should be executed in parallel mode. The requisition file itself is still sequential, but the files are executes in parallel.
+Defaults to false. Task files should be executed in parallel mode. The task file itself is still sequential, but the files are executes in parallel.
 
     parallel: true
 
@@ -533,10 +533,10 @@ List of in [plugins](#plugins) used by the test scenarios. You can [check them o
     - enqueuer-plugin-html-report
 
 **outputs**  
-Once enqueuer runs every execution, it compiles a summary and sends it to every publisher listed in output.
-An important thing to note is that every available report publisher is available here.
+Once enqueuer runs every execution, it compiles a summary and sends it to every actuator listed in output.
+An important thing to note is that every available report actuator is available here.
 Yes, it means that you are able to send this report through "'http'", "'tcp'", etc. or through a [plugin one](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
-You can run "'$ nqr -p'" to check available report publishers installed.
+You can run "'$ nqr -p'" to check available report actuators installed.
 Another important thing to note is the "'format'" value. By default a "'json'" summary is generated, but you can change it to whatever format you would like, such as: [Xunit](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), [html](https://github.com/enqueuer-land/enqueuer-plugin-html-report)
 You can run "'$ nqr -f'" to check available installed formats or even [write your own](https://github.com/enqueuer-land/plugin-scaffold)
 
@@ -634,13 +634,13 @@ Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/mas
 
 ### Content File Injection
 
-You are able to inject file content into a requisition/publisher/subscription field.
+You are able to inject file content into a task/actuator/sensor field.
 
     file: <<file://path/to/file.txt>>
 
 Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: "'<<tag://path/to/file?query=value&other=true>>'".
 
-    requisition:
+    task:
         json: <<json://path/to/file.json>>
         yml: <<yml://path/to/file.yml>>
         csv: <<csv://path/to/file.csv?header=true&delimiter=;>>
@@ -649,7 +649,7 @@ Other than that, enqueuer can read it and parse its content as an object using t
 Once the object is parsed, your free to use it as a regular object in any event
 
     onInit:
-        script: console.log(requisition.yml.deep.field);
+        script: console.log(task.yml.deep.field);
     onFinish:
         assertions:
         -   expect: json.key
@@ -678,10 +678,10 @@ So far, you're able to extend enqueuer default behavior in four ways. Using a pr
 
 ##### protocol
 
-A protocol plugin enables you to use a different publisher/subscription types.
+A protocol plugin enables you to use a different actuator/sensor types.
 Run "'$ nqr -p [protocol-name]'" to get the full available list:
 
-    publishers:
+    actuators:
     -   name:                  custom
     -   name:                  file
     -   name:                  http
@@ -689,7 +689,7 @@ Run "'$ nqr -p [protocol-name]'" to get the full available list:
     -   name:                  stdout
     -   name:                  tcp
     -   ...
-    subscriptions:
+    sensors:
     -   name:                  custom
     -   name:                  file
         messageReceivedParams: content, name, size, modified, created
@@ -701,14 +701,14 @@ Run "'$ nqr -p [protocol-name]'" to get the full available list:
     -   ...
 
 Each one listed above has a respective example in [the examples folder](https://github.com/enqueuer-land/enqueuer/blob/master/examples).
-[This one](https://github.com/enqueuer-land/enqueuer-plugin-amqp), for instance, provides support for amqp protocol, so you can create this publisher and subscription:
+[This one](https://github.com/enqueuer-land/enqueuer-plugin-amqp), for instance, provides support for amqp protocol, so you can create this actuator and sensor:
 
-    publishers:
+    actuators:
     -   type: amqp
         payload: enqueuermaniac
         exchange: enqueuer.exchange
         routingKey: enqueuer.integration.test.routing.key
-    subscriptions:
+    sensors:
     -   type: amqp
         exchange: enqueuer.exchange
         routingKey: enqueuer.integration.test.routing.#
@@ -826,10 +826,10 @@ In order to be enqueuer compatible, a module has to have an "'entryPoint'" expor
 
 ### Stacker
 
-Looking for an human error proof solution way of writing these requisition files?  
+Looking for an human error proof solution way of writing these task files?  
 Consider taking a look at [stacker](https://enqueuer-land.github.io/stacker/): open source, cross-platform, multi protocol client testing tool.
 The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
-With them, you create, manage and run requisitions and and see their results in a really nice way.
+With them, you create, manage and run tasks and and see their results in a really nice way.
 See this amazing beauty with your own eyes to get an idea of how it works:
 
 ![screenshot-passing](https://raw.githubusercontent.com/enqueuer-land/stacker/master/docs/screenshot-1.png)

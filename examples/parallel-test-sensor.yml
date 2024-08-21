@@ -1,0 +1,11 @@
+timeout: 10000
+sensors:
+  - type: tcp
+    timeout: 10000
+    port: 23081
+    response: anyValue
+    onMessageReceived:
+      assertions:
+        - name: Paralleling
+          expect: payload
+          toBeEqualTo: "'anything'"

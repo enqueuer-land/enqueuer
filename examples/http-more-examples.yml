@@ -1,7 +1,7 @@
-- name: requisition 2 (port 23076)
+- name: task 2 (port 23076)
   timeout: 5000
-  subscriptions:
-    - name: subscription description
+  sensors:
+    - name: sensor description
       type: http
       endpoint: /differentPort
       port: 23076
@@ -10,17 +10,17 @@
       avoid: true
 - name: check port releasing (23076)
   timeout: 5000
-  subscriptions:
+  sensors:
     - type: tcp
       port: 23076
       timeout: 1000
       avoid: true
-- publishers:
+- actuators:
     - type: http
       url: http://localhost:23095/number-payload
       method: POST
       payload: virgs
-  subscriptions:
+  sensors:
     - type: http
       endpoint: /number-payload
       port: 23095

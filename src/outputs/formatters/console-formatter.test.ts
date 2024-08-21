@@ -1,9 +1,9 @@
-import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { TaskModel } from '../../models/outputs/task-model';
 import { ConsoleFormatter, entryPoint } from './console-formatter';
 
 describe('ConsoleFormatter', () => {
   it('Should stringify it', () => {
-    const test: RequisitionModel = {
+    const test: TaskModel = {
       name: 'name',
       valid: true,
       tests: []

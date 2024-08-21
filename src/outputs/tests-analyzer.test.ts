@@ -1,5 +1,5 @@
 import { TestsAnalyzer } from './tests-analyzer';
-import { RequisitionModel } from '../models/outputs/requisition-model';
+import { TaskModel } from '../models/outputs/task-model';
 import { ReportModel } from '../models/outputs/report-model';
 import { TestModel } from '../models/outputs/test-model';
 
@@ -28,7 +28,7 @@ describe('TestsAnalyzer', () => {
   });
 
   it('Should trunc percentage to two decimals number', () => {
-    const test: RequisitionModel = {
+    const test: TaskModel = {
       name: 'name',
       valid: true,
       hooks: {
@@ -37,13 +37,13 @@ describe('TestsAnalyzer', () => {
           tests: [{ valid: true, description: 'description', name: 'name' }]
         }
       },
-      requisitions: [
+      tasks: [
         {
           name: 'name',
           valid: true,
           // @ts-ignore
           time: {},
-          publishers: [
+          actuators: [
             // @ts-ignore
             {
               name: 'name',

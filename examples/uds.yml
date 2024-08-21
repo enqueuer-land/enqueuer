@@ -1,12 +1,12 @@
 timeout: 10000
-requisitions:
-  - publishers:
+tasks:
+  - actuators:
       - type: uds
         path: /tmp/unix.sock
         timeout: 3000
         payload: I'll be replaced in onInit
         onInit:
-          script: publisher.payload = 'enqueuer'
+          script: actuator.payload = 'enqueuer'
           store:
             udsPayload: "'enqueuer'"
             uds2Timeout: "'3000'"
@@ -14,7 +14,7 @@ requisitions:
           assertions:
             - expect: payload
               toBeEqualTo: "'responsePayload'"
-    subscriptions:
+    sensors:
       - type: uds
         path: /tmp/unix.sock
         response: responsePayload
@@ -26,16 +26,16 @@ requisitions:
               toBeEqualTo: store.udsPayload
             - expect: path
               toBeEqualTo: "'/tmp/unix.sock'"
-  - publishers:
+  - actuators:
       - type: uds
         path: /tmp/unix2.sock
         payload: <<udsPayload>>
         saveStream: udsPubStreamName
         onInit:
           assertions:
-            - expect: publisher.payload
+            - expect: actuator.payload
               toBeEqualTo: store.udsPayload
-    subscriptions:
+    sensors:
       - type: uds
         path: /tmp/unix2.sock
         saveStream: udsSubStreamName
@@ -45,7 +45,7 @@ requisitions:
               expect: payload
               toBeEqualTo: store.udsPayload
         timeout: <<uds2Timeout>>
-  - publishers:
+  - actuators:
       - type: uds
         timeout: 3000
         payload: I am still opened
@@ -54,7 +54,7 @@ requisitions:
           assertions:
             - expect: payload
               toBeEqualTo: "'I am still bidirectional'"
-    subscriptions:
+    sensors:
       - type: uds
         loadStream: udsPubStreamName
         response: I am still bidirectional

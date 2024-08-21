@@ -1,12 +1,12 @@
-publishers:
+actuators:
   - type: custom
     module: misc/custom-protocol.js
-    name: publisher description
+    name: actuator description
     serverAddress: localhost
     port: 23071
     payload: it
-subscriptions:
-  - name: subscription description
+sensors:
+  - name: sensor description
     type: custom
     port: 23071
     module: misc/custom-protocol.js

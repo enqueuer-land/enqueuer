@@ -1,12 +1,12 @@
-export { RequisitionModel as InputRequisitionModel } from './models/inputs/requisition-model';
-export { PublisherModel as InputPublisherModel } from './models/inputs/publisher-model';
-export { SubscriptionModel as InputSubscriptionModel } from './models/inputs/subscription-model';
+export { TaskModel as InputTaskModel } from './models/inputs/task-model';
+export { ActuatorModel as InputActuatorModel } from './models/inputs/actuator-model';
+export { SensorModel as InputSensorModel } from './models/inputs/sensor-model';
 
 export { ReportModel as OutputReportModel } from './models/outputs/report-model';
 export { HookModel as OutputHookModel } from './models/outputs/hook-model';
-export { RequisitionModel as OutputRequisitionModel } from './models/outputs/requisition-model';
-export { PublisherModel as OutputPublisherModel } from './models/outputs/publisher-model';
-export { SubscriptionModel as OutputSubscriptionModel } from './models/outputs/subscription-model';
+export { TaskModel as OutputTaskModel } from './models/outputs/task-model';
+export { ActuatorModel as OutputActuatorModel } from './models/outputs/actuator-model';
+export { SensorModel as OutputSensorModel } from './models/outputs/sensor-model';
 export { TimeModel as OutputTimeModel } from './models/outputs/time-model';
 export { TestModel as OutputTestModel } from './models/outputs/test-model';
 
@@ -27,10 +27,10 @@ export * from './configurations/store';
 export * from './loggers/logger';
 export * from './loggers/log-level';
 
-export * from './requisition-runners/requisition-parser';
-export * from './requisition-runners/requisition-file-parser';
-export * from './requisition-runners/requisition-file-pattern-parser';
-export * from './requisition-runners/requisition-runner';
+export * from './task-runners/task-parser';
+export * from './task-runners/task-file-parser';
+export * from './task-runners/task-file-pattern-parser';
+export * from './task-runners/task-runner';
 
 export * from './strings/id-generator';
 
@@ -44,12 +44,12 @@ export * from './plugins/main-instance';
 
 export * from './protocols/protocol';
 export * from './protocols/protocol-documentation';
-export * from './protocols/publisher-protocol';
-export * from './protocols/subscription-protocol';
+export * from './protocols/actuator-protocol';
+export * from './protocols/sensor-protocol';
 
-export * from './publishers/publisher';
+export * from './actuators/actuator';
 
-export * from './subscriptions/subscription';
+export * from './sensors/sensor';
 
 export * from './object-parser/object-parser';
 

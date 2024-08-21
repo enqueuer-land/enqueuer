@@ -1,9 +1,9 @@
 parallel: true
 timeout: 10000
-requisitions:
+tasks:
   - iterations: 2
     timeout: 10000
-    subscriptions:
+    sensors:
       - type: http
         timeout: 10000
         endpoint: /first
@@ -13,7 +13,7 @@ requisitions:
           payload: first
   - iterations: 2
     timeout: 10000
-    subscriptions:
+    sensors:
       - type: http
         timeout: 10000
         endpoint: /second
@@ -24,7 +24,7 @@ requisitions:
   - iterations: 2
     delay: 200
     timeout: 10000
-    publishers:
+    actuators:
       - type: http
         url: http://localhost:23023/first
         onResponseReceived:
@@ -34,7 +34,7 @@ requisitions:
   - iterations: 2
     delay: 200
     timeout: 10000
-    publishers:
+    actuators:
       - type: http
         url: http://localhost:23023/second
         onResponseReceived:

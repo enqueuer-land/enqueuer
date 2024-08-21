@@ -1,10 +1,10 @@
-import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { TaskModel } from '../../models/outputs/task-model';
 import { entryPoint, JsonReportFormatter } from './json-formatter';
 import { JsonObjectParser } from '../../object-parser/json-object-parser';
 
 describe('JsonReportFormatter', () => {
   it('Should stringify it', () => {
-    const test: RequisitionModel = {
+    const test: TaskModel = {
       name: 'name',
       valid: true,
       tests: []
@@ -16,7 +16,7 @@ describe('JsonReportFormatter', () => {
   });
 
   it('Should throw', () => {
-    const test: RequisitionModel = {
+    const test: TaskModel = {
       name: 'name',
       valid: true,
       tests: []

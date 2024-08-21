@@ -1,32 +1,32 @@
-- name: static importRequisition
+- name: static importTask
   import: <<yaml://examples/reuse.yml.nqr>>
   onFinish:
     assertions:
-      - expectToBeTruthy: requisition.imported
-- name: dynamic importRequisition
+      - expectToBeTruthy: task.imported
+- name: dynamic importTask
   priority: lower
   import:
     priority: higher
     onInit:
-      script: requisition.dynamicallyImported = true;
+      script: task.dynamicallyImported = true;
   onFinish:
     assertions:
-      - expectToBeTruthy: requisition.dynamicallyImported
-      - expect: requisition.priority
+      - expectToBeTruthy: task.dynamicallyImported
+      - expect: task.priority
         toBeEqualTo: "'higher'"
-- publishers:
-    - import: <<json://examples/http-publisher-reuse.nqr>>
+- actuators:
+    - import: <<json://examples/http-actuator-reuse.nqr>>
       onFinish:
         assertions:
-          - expect: publisher.type
+          - expect: actuator.type
             toBeEqualTo: "'http'"
-          - expect: publisher.method
+          - expect: actuator.method
             toBeEqualTo: "'POST'"
-  subscriptions:
-    - import: <<json://examples/http-subscription-reuse.nqr>>
+  sensors:
+    - import: <<json://examples/http-sensor-reuse.nqr>>
       onFinish:
         assertions:
-          - expect: subscription.type
+          - expect: sensor.type
             toBeEqualTo: "'http'"
-          - expect: subscription.endpoint
-            toBeEqualTo: "'/subscription-reuse'"
+          - expect: sensor.endpoint
+            toBeEqualTo: "'/sensor-reuse'"

@@ -1,4 +1,4 @@
-import { RequisitionModel } from '../models/outputs/requisition-model';
+import { TaskModel } from '../models/outputs/task-model';
 import { ReportModel } from '../models/outputs/report-model';
 import { TestModel, testModelIsPassing } from '../models/outputs/test-model';
 import { HookModel } from '../models/outputs/hook-model';
@@ -7,7 +7,7 @@ export class TestsAnalyzer {
   private tests: TestModel[] = [];
 
   public addTest(report: ReportModel): TestsAnalyzer {
-    this.findRequisitions(report);
+    this.findTasks(report);
     return this;
   }
 
@@ -43,16 +43,16 @@ export class TestsAnalyzer {
     return Math.trunc((10000 * this.getPassingTests().length) / notIgnoredTestsLength) / 100;
   }
 
-  private findRequisitions(requisition: ReportModel) {
-    this.findTests(requisition);
-    (requisition.requisitions || []).forEach((child: RequisitionModel) => {
-      this.findRequisitions(child);
+  private findTasks(task: ReportModel) {
+    this.findTests(task);
+    (task.tasks || []).forEach((child: TaskModel) => {
+      this.findTasks(child);
     });
   }
 
-  private findTests(requisition: ReportModel) {
-    this.computeComponent(requisition as RequisitionModel);
-    for (const child of (requisition.subscriptions || []).concat(requisition.publishers || [])) {
+  private findTests(task: ReportModel) {
+    this.computeComponent(task as TaskModel);
+    for (const child of (task.sensors || []).concat(task.actuators || [])) {
       this.computeComponent(child);
     }
   }

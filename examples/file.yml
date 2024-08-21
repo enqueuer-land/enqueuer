@@ -1,14 +1,14 @@
 timeout: 3000
-publishers:
+actuators:
   - type: file
-    name: publisher description
-    payload: filePublisher
+    name: actuator description
+    payload: fileActuator
     filenamePrefix: temp/fileTest
     filenameExtension: file
     onInit:
-      script: publisher.payload = new Date().getTime().toString();
-subscriptions:
-  - name: subscription description
+      script: actuator.payload = new Date().getTime().toString();
+sensors:
+  - name: sensor description
     type: file-system-watcher
     timeout: 3000
     fileNamePattern: temp/fileTest*

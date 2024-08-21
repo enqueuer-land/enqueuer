@@ -19,9 +19,9 @@ export class TestsFlattener {
   }
 
   private deepTests(node: ReportModel, hierarchy: string[]) {
-    return (node.subscriptions || [])
-      .concat(node.publishers || [])
-      .concat(node.requisitions || [])
+    return (node.sensors || [])
+      .concat(node.actuators || [])
+      .concat(node.tasks || [])
       .reduce((acc: FlattenTest[], component: ReportModel) => {
         const iterationCounter = component.totalIterations > 1 ? ` [${component.iteration}]` : '';
         const name = component.name + iterationCounter;

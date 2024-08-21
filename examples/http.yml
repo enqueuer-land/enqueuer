@@ -1,4 +1,4 @@
-publishers:
+actuators:
   - type: http
     url: http://localhost:23075/resource
     method: POST
@@ -13,7 +13,7 @@ publishers:
           toBeEqualTo: "'blah'"
         - expect: headers.responseheaderkey
           toBeEqualTo: "'responseHeaderValue'"
-subscriptions:
+sensors:
   - type: http
     endpoint: /resource
     port: 23075

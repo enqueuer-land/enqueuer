@@ -1,0 +1,33 @@
+tollerance: 100
+tasks:
+  - parallel: true
+    tasks:
+      - delay: 200
+        onInit:
+          script: task.startTime = new Date();
+      - delay: 300
+        onInit:
+          script: task.startTime = new Date();
+    onFinish:
+      assertions:
+        - name: started at the same time
+          expect: Math.abs(task.tasks[1].startTime.getTime() - task.tasks[0].startTime.getTime())
+          toBeLessThanOrEqualTo: task.parent.tollerance
+        - expect: elapsedTime
+          toBeLessThanOrEqualTo: 300 + task.parent.tollerance
+  - parallel: false
+    tasks:
+      - delay: 200
+        onInit:
+          script: task.startTime = new Date();
+      - delay: 300
+        onInit:
+          script: |-
+            script: task.startTime = new Date();
+    onFinish:
+      assertions:
+        - name: started after the other
+          expect: task.tasks[1].startTime.getTime() - task.tasks[0].startTime.getTime()
+          toBeGreaterThanOrEqualTo: task.tasks[0].delay
+        - expect: elapsedTime
+          toBeLessThanOrEqualTo: 200 + 300 + task.parent.tollerance

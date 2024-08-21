@@ -1,8 +1,8 @@
 definedVariable: value
 onInit:
   assertions:
-    - expectToBeDefined: requisition.definedVariable
-    - expectToBeUndefined: requisition.undefinedVariable
+    - expectToBeDefined: task.definedVariable
+    - expectToBeUndefined: task.undefinedVariable
     - expectToBeTruthy: true
     - expectToBeFalsy: false
     - expect: 1

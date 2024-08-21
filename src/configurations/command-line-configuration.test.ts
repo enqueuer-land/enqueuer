@@ -103,19 +103,19 @@ describe('CommandLineConfiguration', () => {
   it('default console output', () => {
     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test']);
 
-    expect(commandLineConfiguration.getStdoutRequisitionOutput()).toBeFalsy();
+    expect(commandLineConfiguration.getStdoutTaskOutput()).toBeFalsy();
   });
 
   it('set console output -o', () => {
     const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '-o']);
 
-    expect(commandLineConfiguration.getStdoutRequisitionOutput()).toBeTruthy();
+    expect(commandLineConfiguration.getStdoutTaskOutput()).toBeTruthy();
   });
 
-  it('set console output --stdout-requisition-output', () => {
-    const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--stdout-requisition-output']);
+  it('set console output --stdout-task-output', () => {
+    const commandLineConfiguration = new CommandLineConfiguration(['node', 'test', '--stdout-task-output']);
 
-    expect(commandLineConfiguration.getStdoutRequisitionOutput()).toBeTruthy();
+    expect(commandLineConfiguration.getStdoutTaskOutput()).toBeTruthy();
   });
 
   it('default passing tests', () => {

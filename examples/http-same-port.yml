@@ -1,5 +1,5 @@
 - timeout: 3000
-  publishers:
+  actuators:
     - type: http
       url: http://localhost:23065/enqueuer/idStuff?query=2345
       method: POST
@@ -7,7 +7,7 @@
         enqueuer: virgs
       headers:
         content-type: application/json
-        nqr: publisher
+        nqr: actuator
       onResponseReceived:
         assertions:
           - name: Status Code
@@ -18,8 +18,8 @@
             toBeEqualTo: "'dynamically changed payload'"
           - name: Header
             expect: headers.nqr
-            toBeEqualTo: "'subscription'"
-  subscriptions:
+            toBeEqualTo: "'sensor'"
+  sensors:
     - type: http
       endpoint: /enqueuer/:firstId
       port: 23065
@@ -27,13 +27,13 @@
       timeout: 10000
       response:
         headers:
-          nqr: subscription
+          nqr: sensor
           connection: close
         status: 321
         payload: responsePayload
       onMessageReceived:
         script: |-
-          subscription.response.payload = 'dynamically changed payload'
+          sensor.response.payload = 'dynamically changed payload'
         assertions:
           - name: Payload
             expect: JSON.parse(body).enqueuer
@@ -46,7 +46,7 @@
             toBeEqualTo: 2345
           - name: Header
             expect: headers.nqr
-            toBeEqualTo: "'publisher'"
+            toBeEqualTo: "'actuator'"
     - name: avoidable
       type: http
       endpoint: /avoidable
@@ -55,8 +55,8 @@
       avoid: true
       timeout: 200
 - timeout: 35000
-  publishers:
-    - name: publisher description
+  actuators:
+    - name: actuator description
       type: http
       url: http://localhost:23065/enqueuer/idStuff?query=111
       method: POST
@@ -72,7 +72,7 @@
           - name: Body
             expect: body
             toBeEqualTo: "'duplicatedResponsePayload'"
-  subscriptions:
+  sensors:
     - name: fourth
       type: http
       endpoint: /enqueuer/:secondId

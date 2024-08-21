@@ -1,0 +1,19 @@
+- name: iterations
+  counter: 0
+  iterations: 10
+  onInit:
+    script: ++task.counter;
+- name: delayed
+  delay: 3000
+  onInit:
+    script: task.startTime = new Date();
+  onFinish:
+    assertions:
+      - name: It was executed 10 times
+        expect: task.parent.tasks[0].counter
+        toBeEqualTo: 10
+      - name: Elapsed time
+        expect: elapsedTime
+        toBeGreaterThanOrEqualTo: 2950
+      - expect: new Date().getTime() - task.startTime.getTime()
+        toBeGreaterThanOrEqualTo: 2950

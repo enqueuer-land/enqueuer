@@ -1,5 +1,5 @@
 timeout: 3000
-publishers:
+actuators:
   - type: http
     url: http://localhost:23068/basic
     method: POST
@@ -14,7 +14,7 @@ publishers:
       assertions:
         - expect: body
           toBeEqualTo: "'basic auth response'"
-subscriptions:
+sensors:
   - type: http
     endpoint: /basic
     port: 23068

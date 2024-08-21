@@ -1,5 +1,5 @@
 timeout: 3000
-publishers:
+actuators:
   - type: http
     url: http://localhost:23067/digest
     method: POST
@@ -23,7 +23,7 @@ publishers:
         - name: Body
           expect: body
           toBeEqualTo: "'responsePayload'"
-subscriptions:
+sensors:
   - type: http
     endpoint: /digest
     port: 23067

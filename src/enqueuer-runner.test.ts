@@ -1,7 +1,7 @@
 import { EnqueuerRunner } from './enqueuer-runner';
 import { Configuration } from './configurations/configuration';
-import { RequisitionFilePatternParser } from './requisition-runners/requisition-file-pattern-parser';
-import { RequisitionRunner } from './requisition-runners/requisition-runner';
+import { TaskFilePatternParser } from './task-runners/task-file-pattern-parser';
+import { TaskRunner } from './task-runners/task-runner';
 import { SummaryTestOutput } from './outputs/summary-test-output';
 import { NotificationEmitter } from './notifications/notification-emitter';
 import { Logger } from './loggers/logger';
@@ -10,8 +10,8 @@ import { Notifications } from './notifications/notifications';
 
 jest.mock('./outputs/summary-test-output');
 jest.mock('./configurations/configuration');
-jest.mock('./requisition-runners/requisition-file-pattern-parser');
-jest.mock('./requisition-runners/requisition-runner');
+jest.mock('./task-runners/task-file-pattern-parser');
+jest.mock('./task-runners/task-runner');
 
 jest.mock('./loggers/logger');
 
@@ -19,8 +19,8 @@ const loggerLevel = 'enqueuer-starter-level';
 
 describe('EnqueuerRunner', () => {
   let configurationMethodsMock: any;
-  let parsedRequisitions = [{ name: 'I am fake' }];
-  let requisitionRunnerMethods = {
+  let parsedTasks = [{ name: 'I am fake' }];
+  let taskRunnerMethods = {
     run: jest.fn(async () => {
       const report = {
         name: 'mocked report',
@@ -28,13 +28,13 @@ describe('EnqueuerRunner', () => {
         hooks: {}
       };
       NotificationEmitter.emit(Notifications.REQUISITION_FINISHED, {
-        requisition: report
+        task: report
       });
       return [report];
     })
   };
 
-  let requisitionRunnerMock = jest.fn(() => requisitionRunnerMethods);
+  let taskRunnerMock = jest.fn(() => taskRunnerMethods);
 
   let parallel = true;
   beforeEach(() => {
@@ -50,17 +50,17 @@ describe('EnqueuerRunner', () => {
     Configuration.getInstance.mockImplementation(() => configurationMethodsMock);
 
     // @ts-ignore
-    RequisitionFilePatternParser.mockImplementationOnce(() => {
+    TaskFilePatternParser.mockImplementationOnce(() => {
       return {
-        parse: () => parsedRequisitions,
+        parse: () => parsedTasks,
         getFilesErrors: () => []
       };
     });
 
     // @ts-ignore
-    RequisitionRunner.mockImplementationOnce(requisitionRunnerMock);
-    requisitionRunnerMethods.run.mockClear();
-    requisitionRunnerMock.mockClear();
+    TaskRunner.mockImplementationOnce(taskRunnerMock);
+    taskRunnerMethods.run.mockClear();
+    taskRunnerMock.mockClear();
   });
 
   it('Should set logger level', () => {

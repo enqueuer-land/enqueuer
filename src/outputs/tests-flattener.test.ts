@@ -2,9 +2,9 @@ import { TestsFlattener } from './tests-flattener';
 import { ReportModel } from '../models/outputs/report-model';
 
 describe('TestsFlattener', () => {
-  it('Flattens requisitions', () => {
-    const requisition: ReportModel = {
-      name: 'requisition',
+  it('Flattens tasks', () => {
+    const task: ReportModel = {
+      name: 'task',
       valid: true,
       hooks: {
         onHook: {
@@ -20,20 +20,20 @@ describe('TestsFlattener', () => {
       }
     };
 
-    const flattenTests = new TestsFlattener().flatten(requisition);
+    const flattenTests = new TestsFlattener().flatten(task);
     expect(flattenTests).toEqual([
       {
         description: 'description',
-        hierarchy: ['requisition', 'onHook'],
+        hierarchy: ['task', 'onHook'],
         name: 'test',
         valid: true
       }
     ]);
   });
 
-  it('Concatenates requisition #', () => {
-    const requisition: ReportModel = {
-      name: 'requisition',
+  it('Concatenates task #', () => {
+    const task: ReportModel = {
+      name: 'task',
       iteration: 4,
       totalIterations: 5,
       valid: true,
@@ -51,11 +51,11 @@ describe('TestsFlattener', () => {
       }
     };
 
-    const flattenTests = new TestsFlattener().flatten(requisition);
+    const flattenTests = new TestsFlattener().flatten(task);
     expect(flattenTests).toEqual([
       {
         description: 'description',
-        hierarchy: ['requisition [4]', 'onHook'],
+        hierarchy: ['task [4]', 'onHook'],
         name: 'test',
         valid: true
       }
@@ -63,25 +63,25 @@ describe('TestsFlattener', () => {
   });
 
   it('Handle empty hooks', () => {
-    const requisition: ReportModel = {
-      name: 'requisition',
+    const task: ReportModel = {
+      name: 'task',
       iteration: 4,
       totalIterations: 5,
       valid: true,
       hooks: {}
     };
 
-    const flattenTests = new TestsFlattener().flatten(requisition);
+    const flattenTests = new TestsFlattener().flatten(task);
     expect(flattenTests).toEqual([]);
   });
 
-  it('Flatten deeper publishers', () => {
-    const requisition: ReportModel = {
-      name: 'requisition',
+  it('Flatten deeper actuators', () => {
+    const task: ReportModel = {
+      name: 'task',
       valid: true,
-      publishers: [
+      actuators: [
         {
-          name: 'publisher',
+          name: 'actuator',
           hooks: {
             onHook: {
               valid: true,
@@ -98,24 +98,24 @@ describe('TestsFlattener', () => {
       ]
     };
 
-    const flattenTests = new TestsFlattener().flatten(requisition);
+    const flattenTests = new TestsFlattener().flatten(task);
     expect(flattenTests).toEqual([
       {
         description: 'description',
-        hierarchy: ['requisition', 'publisher', 'onHook'],
+        hierarchy: ['task', 'actuator', 'onHook'],
         name: 'test',
         valid: true
       }
     ]);
   });
 
-  it('Flatten deeper subscriptions', () => {
-    const requisition: ReportModel = {
-      name: 'requisition',
+  it('Flatten deeper sensors', () => {
+    const task: ReportModel = {
+      name: 'task',
       valid: true,
-      subscriptions: [
+      sensors: [
         {
-          name: 'subscription',
+          name: 'sensor',
           hooks: {
             onHook: {
               valid: true,
@@ -132,24 +132,24 @@ describe('TestsFlattener', () => {
       ]
     };
 
-    const flattenTests = new TestsFlattener().flatten(requisition);
+    const flattenTests = new TestsFlattener().flatten(task);
     expect(flattenTests).toEqual([
       {
         description: 'description',
-        hierarchy: ['requisition', 'subscription', 'onHook'],
+        hierarchy: ['task', 'sensor', 'onHook'],
         name: 'test',
         valid: true
       }
     ]);
   });
 
-  it('Flatten deeper requisitions', () => {
-    const requisition: ReportModel = {
-      name: 'requisition',
+  it('Flatten deeper tasks', () => {
+    const task: ReportModel = {
+      name: 'task',
       valid: true,
-      requisitions: [
+      tasks: [
         {
-          name: 'requisition',
+          name: 'task',
           iteration: 3,
           totalIterations: 5,
           hooks: {
@@ -168,11 +168,11 @@ describe('TestsFlattener', () => {
       ]
     };
 
-    const flattenTests = new TestsFlattener().flatten(requisition);
+    const flattenTests = new TestsFlattener().flatten(task);
     expect(flattenTests).toEqual([
       {
         description: 'description',
-        hierarchy: ['requisition', 'requisition [3]', 'onHook'],
+        hierarchy: ['task', 'task [3]', 'onHook'],
         name: 'test',
         valid: true
       }

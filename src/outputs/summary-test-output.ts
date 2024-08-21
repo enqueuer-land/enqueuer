@@ -1,8 +1,8 @@
 import { TestsAnalyzer } from './tests-analyzer';
 import { TestModel, testModelIsFailing, testModelIsPassing } from '../models/outputs/test-model';
-import { RequisitionModel } from '../models/outputs/requisition-model';
-import { PublisherModel } from '../models/outputs/publisher-model';
-import { SubscriptionModel } from '../models/outputs/subscription-model';
+import { TaskModel } from '../models/outputs/task-model';
+import { ActuatorModel } from '../models/outputs/actuator-model';
+import { SensorModel } from '../models/outputs/sensor-model';
 import { ReportModel } from '../models/outputs/report-model';
 import { HookModel } from '../models/outputs/hook-model';
 import cgalk from 'chalk';
@@ -49,8 +49,8 @@ export class SummaryTestOutput {
   }
 
   private printChildren(): void {
-    const reportLeaves = (this.report.subscriptions || [])
-      .concat(this.report.publishers || [])
+    const reportLeaves = (this.report.sensors || [])
+      .concat(this.report.actuators || [])
       .concat(this.buildLeavesFromHooks() || [])
       .concat(this.buildLeavesFromAssertion());
     for (const leaf of reportLeaves) {
@@ -155,10 +155,10 @@ export class SummaryTestOutput {
     if (failing || this.options.showPassingTests) {
       Object.keys(report.hooks || {}).forEach((key: string) => this.printHookTests(report.hooks![key], key, hierarchy));
 
-      (report.subscriptions || [])
-        .concat(report.publishers || [])
-        .concat(report.requisitions || [])
-        .forEach((leaf: RequisitionModel | PublisherModel | SubscriptionModel) => {
+      (report.sensors || [])
+        .concat(report.actuators || [])
+        .concat(report.tasks || [])
+        .forEach((leaf: TaskModel | ActuatorModel | SensorModel) => {
           const iterationCounter: string = leaf.totalIterations > 1 ? ` [${leaf.iteration}]` : '';
           this.printFailingTests(leaf, hierarchy.concat(leaf.name + iterationCounter));
         });

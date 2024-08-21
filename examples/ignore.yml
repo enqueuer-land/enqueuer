@@ -1,4 +1,4 @@
-- publishers:
+- actuators:
     - ignore: true
       filename: /dev/null
       type: file
@@ -8,7 +8,7 @@
       onFinish:
         assertions:
           - expectToBeTruthy: false
-- subscriptions:
+- sensors:
     - ignore: true
       type: file
       onInit:
@@ -18,21 +18,21 @@
         assertions:
           - expectToBeTruthy: false
 - ignore: true
-  requisitions:
+  tasks:
     - onInit:
         assertions:
           - expectToBeTruthy: false
       onFinish:
         assertions:
           - expectToBeTruthy: false
-  publishers:
+  actuators:
     - onInit:
         assertions:
           - expectToBeTruthy: false
       onFinish:
         assertions:
           - expectToBeTruthy: false
-  subscriptions:
+  sensors:
     - onInit:
         assertions:
           - expectToBeTruthy: false

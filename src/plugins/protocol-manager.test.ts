@@ -1,9 +1,9 @@
 import { ProtocolManager } from './protocol-manager';
 import prettyjson from 'prettyjson';
-import { NullPublisher } from '../publishers/null-publisher';
-import { NullSubscription } from '../subscriptions/null-subscription';
-import { SubscriptionProtocol } from '../protocols/subscription-protocol';
-import { PublisherProtocol } from '../protocols/publisher-protocol';
+import { NullActuator } from '../actuators/null-actuator';
+import { NullSensor } from '../sensors/null-sensor';
+import { SensorProtocol } from '../protocols/sensor-protocol';
+import { ActuatorProtocol } from '../protocols/actuator-protocol';
 
 jest.mock('prettyjson');
 
@@ -20,68 +20,68 @@ describe('ProtocolManager', () => {
     const protocolManager = new ProtocolManager();
     protocolManager.addProtocol(
       // @ts-ignore
-      new PublisherProtocol('mine', () => {
+      new ActuatorProtocol('mine', () => {
         /*not empty*/
       })
     );
     expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
     expect(render).toHaveBeenCalledWith(
       {
-        publishers: expect.anything(),
-        subscriptions: expect.anything()
+        actuators: expect.anything(),
+        sensors: expect.anything()
       },
       expect.anything()
     );
   });
 
-  it('should create right Publisher', () => {
-    const publisher: any = {};
+  it('should create right Actuator', () => {
+    const actuator: any = {};
     // @ts-ignore
     const protocolManager = new ProtocolManager();
     protocolManager.addProtocol(
-      new PublisherProtocol('mine', arg => {
-        publisher.arg = arg;
-        return publisher;
+      new ActuatorProtocol('mine', arg => {
+        actuator.arg = arg;
+        return actuator;
       })
     );
     // @ts-ignore
-    const actual = protocolManager.createPublisher({ type: 'mine' });
+    const actual = protocolManager.createActuator({ type: 'mine' });
     expect(actual).toEqual({ arg: { type: 'mine' } });
   });
 
-  it('should create right Subscription', () => {
-    const subscription: any = {};
+  it('should create right Sensor', () => {
+    const sensor: any = {};
     // @ts-ignore
     const protocolManager = new ProtocolManager();
     protocolManager.addProtocol(
-      new SubscriptionProtocol('mine', arg => {
-        subscription.arg = arg;
-        return subscription;
+      new SensorProtocol('mine', arg => {
+        sensor.arg = arg;
+        return sensor;
       })
     );
     // @ts-ignore
-    const actual = protocolManager.createSubscription({ type: 'mine' });
+    const actual = protocolManager.createSensor({ type: 'mine' });
     expect(actual).toEqual({ arg: { type: 'mine' } });
   });
 
-  it('should create NullPublisher', () => {
+  it('should create NullActuator', () => {
     // @ts-ignore
-    const publisher = new ProtocolManager().createPublisher({});
-    expect(publisher).toBeInstanceOf(NullPublisher);
+    const actuator = new ProtocolManager().createActuator({});
+    expect(actuator).toBeInstanceOf(NullActuator);
   });
 
-  it('should create NullSubscription', () => {
+  it('should create NullSensor', () => {
     // @ts-ignore
-    const publisher = new ProtocolManager().createSubscription({});
-    expect(publisher).toBeInstanceOf(NullSubscription);
+    const actuator = new ProtocolManager().createSensor({});
+    expect(actuator).toBeInstanceOf(NullSensor);
   });
 
-  it('describe given publisher Protocol', () => {
+  it('describe given actuator Protocol', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
     protocolManager.addProtocol(
       // @ts-ignore
-      new PublisherProtocol('pub', () => {
+      new ActuatorProtocol('pub', () => {
         /*not empty*/
       })
         .addAlternativeName('virgs')
@@ -90,7 +90,7 @@ describe('ProtocolManager', () => {
     expect(protocolManager.describeMatchingProtocols('virgs')).toBeTruthy();
     expect(render).toHaveBeenCalledWith(
       {
-        publishers: [
+        actuators: [
           {
             name: 'pub',
             schema: {
@@ -135,31 +135,31 @@ describe('ProtocolManager', () => {
             }
           }
         ],
-        subscriptions: []
+        sensors: []
       },
       expect.anything()
     );
   });
 
-  it('describe given publisher Protocol not string param', () => {
+  it('describe given actuator Protocol not string param', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
     protocolManager.addProtocol(
       // @ts-ignore
-      new PublisherProtocol('pub', () => {
+      new ActuatorProtocol('pub', () => {
         /*not empty*/
       })
     );
     protocolManager.addProtocol(
       // @ts-ignore
-      new PublisherProtocol('other', () => {
+      new ActuatorProtocol('other', () => {
         /*not empty*/
       })
     );
     expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
     expect(render).toHaveBeenCalledWith(
       {
-        publishers: [
+        actuators: [
           {
             name: 'pub',
             schema: {
@@ -247,7 +247,7 @@ describe('ProtocolManager', () => {
             }
           }
         ],
-        subscriptions: []
+        sensors: []
       },
       expect.anything()
     );
@@ -260,11 +260,11 @@ describe('ProtocolManager', () => {
     expect(render).toHaveBeenCalled();
   });
 
-  it('describe given subscription Protocol', () => {
+  it('describe given sensor Protocol', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
     protocolManager.addProtocol(
-      new SubscriptionProtocol(
+      new SensorProtocol(
         'sub',
         // @ts-ignore
         () => {
@@ -278,8 +278,8 @@ describe('ProtocolManager', () => {
     expect(protocolManager.describeMatchingProtocols('sub')).toBeTruthy();
     expect(render).toHaveBeenCalledWith(
       {
-        publishers: [],
-        subscriptions: [
+        actuators: [],
+        sensors: [
           {
             '0': 'value',
             name: 'sub',
@@ -293,7 +293,7 @@ describe('ProtocolManager', () => {
 
                 avoid: {
                   defaultValue: false,
-                  description: 'Defines if the subscription should be avoided',
+                  description: 'Defines if the sensor should be avoided',
                   required: false,
                   type: 'boolean'
                 },
@@ -310,7 +310,7 @@ describe('ProtocolManager', () => {
                 },
                 timeout: {
                   defaultValue: 3000,
-                  description: 'Defines the subscription time out',
+                  description: 'Defines the sensor time out',
                   required: false,
                   suffix: 'ms',
                   type: 'int'
@@ -344,26 +344,26 @@ describe('ProtocolManager', () => {
     );
   });
 
-  it('describe given subscription Protocol not string param', () => {
+  it('describe given sensor Protocol not string param', () => {
     // @ts-ignore
     const protocolManager = new ProtocolManager();
     protocolManager.addProtocol(
       // @ts-ignore
-      new SubscriptionProtocol('sub', () => {
+      new SensorProtocol('sub', () => {
         /*not empty*/
       })
     );
     protocolManager.addProtocol(
       // @ts-ignore
-      new SubscriptionProtocol('sub2', () => {
+      new SensorProtocol('sub2', () => {
         /*not empty*/
       })
     );
     expect(protocolManager.describeMatchingProtocols()).toBeTruthy();
     expect(render).toHaveBeenCalledWith(
       {
-        publishers: [],
-        subscriptions: [
+        actuators: [],
+        sensors: [
           {
             name: 'sub',
             schema: {
@@ -376,7 +376,7 @@ describe('ProtocolManager', () => {
 
                 avoid: {
                   defaultValue: false,
-                  description: 'Defines if the subscription should be avoided',
+                  description: 'Defines if the sensor should be avoided',
                   required: false,
                   type: 'boolean'
                 },
@@ -393,7 +393,7 @@ describe('ProtocolManager', () => {
                 },
                 timeout: {
                   defaultValue: 3000,
-                  description: 'Defines the subscription time out',
+                  description: 'Defines the sensor time out',
                   required: false,
                   suffix: 'ms',
                   type: 'int'
@@ -433,7 +433,7 @@ describe('ProtocolManager', () => {
 
                 avoid: {
                   defaultValue: false,
-                  description: 'Defines if the subscription should be avoided',
+                  description: 'Defines if the sensor should be avoided',
                   required: false,
                   type: 'boolean'
                 },
@@ -450,7 +450,7 @@ describe('ProtocolManager', () => {
                 },
                 timeout: {
                   defaultValue: 3000,
-                  description: 'Defines the subscription time out',
+                  description: 'Defines the sensor time out',
                   required: false,
                   suffix: 'ms',
                   type: 'int'

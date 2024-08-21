@@ -1,4 +1,4 @@
-- publishers:
+- actuators:
     - type: ssl
       port: 23082
       serverAddress: localhost
@@ -12,7 +12,7 @@
         assertions:
           - expect: payload
             toBeEqualTo: "'hisecureResponse'"
-  subscriptions:
+  sensors:
     - type: ssl
       port: 23082
       saveStream: sslSecond
@@ -27,7 +27,7 @@
         assertions:
           - expect: payload
             toBeEqualTo: "'secureMessage'"
-- publishers:
+- actuators:
     - type: ssl
       loadStream: sslFirst
       timeout: 2000
@@ -36,7 +36,7 @@
         assertions:
           - expect: payload
             toBeEqualTo: "'reusingSecureResponse'"
-  subscriptions:
+  sensors:
     - type: ssl
       loadStream: sslSecond
       response: reusingSecureResponse

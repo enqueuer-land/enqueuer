@@ -8,8 +8,8 @@ onInit:
         hash.update(payload, 'utf8');
         return hash.digest('hex');
     }
-    requisition.toEncrypt = encryption(requisition.toEncrypt);
+    task.toEncrypt = encryption(task.toEncrypt);
 onFinish:
   assertions:
-    - expect: requisition.toEncrypt
+    - expect: task.toEncrypt
       toBeEqualTo: "'68fa8a566bf6c20d2c1f93ab4c71c224032850e7a6fd4c29e59681b3f7937c2f'"

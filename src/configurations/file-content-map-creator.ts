@@ -1,5 +1,5 @@
 import { Logger } from '../loggers/logger';
-import { RequisitionModel } from '../models/inputs/requisition-model';
+import { TaskModel } from '../models/inputs/task-model';
 import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 import * as fs from 'fs';
 import { ObjectParser } from '../object-parser/object-parser';
@@ -7,7 +7,7 @@ import { ObjectParser } from '../object-parser/object-parser';
 export class FileContentMapCreator {
   private map: any = {};
 
-  public constructor(value: RequisitionModel) {
+  public constructor(value: TaskModel) {
     this.checkChildren(value);
   }
 

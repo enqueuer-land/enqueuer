@@ -1,0 +1,12 @@
+delay: 1000
+timeout: 10000
+actuators:
+  - type: tcp
+    serverAddress: 127.0.0.1
+    port: 23081
+    payload: anything
+    onMessageReceived:
+      assertions:
+        - name: Back and forth
+          expect: payload
+          toBeEqualTo: "'anyValue'"

@@ -1,7 +1,7 @@
 import { Logger } from '../loggers/logger';
 import { DefaultHookEvents } from '../models/events/event';
 import { ProtocolDocumentation } from './protocol-documentation';
-import { SubscriptionReporter } from '../reporters/subscription/subscription-reporter';
+import { SensorReporter } from '../reporters/sensor/sensor-reporter';
 
 type Library = {
   name: string;
@@ -83,14 +83,14 @@ export abstract class Protocol {
         type: 'int',
         suffix: 'ms',
         required: false,
-        defaultValue: SubscriptionReporter.DEFAULT_TIMEOUT,
-        description: 'Defines the subscription time out'
+        defaultValue: SensorReporter.DEFAULT_TIMEOUT,
+        description: 'Defines the sensor time out'
       };
       this.documentation.schema.attributes.avoid = {
         type: 'boolean',
         required: false,
         defaultValue: false,
-        description: 'Defines if the subscription should be avoided'
+        description: 'Defines if the sensor should be avoided'
       };
     }
   }
@@ -111,11 +111,11 @@ export abstract class Protocol {
     };
   }
 
-  public isSubscription(): boolean {
+  public isSensor(): boolean {
     return this.type === ProtocolType.SUBSCRIPTION;
   }
 
-  public isPublisher(): boolean {
+  public isActuator(): boolean {
     return this.type === ProtocolType.PUBLISHER;
   }
 

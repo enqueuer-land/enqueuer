@@ -1,15 +1,15 @@
 import { Logger } from './loggers/logger';
 import { MultiTestsOutput } from './outputs/multi-tests-output';
-import * as input from './models/inputs/requisition-model';
-import * as output from './models/outputs/requisition-model';
+import * as input from './models/inputs/task-model';
+import * as output from './models/outputs/task-model';
 import { DateController } from './timers/date-controller';
-import { RequisitionFilePatternParser } from './requisition-runners/requisition-file-pattern-parser';
-import { RequisitionRunner } from './requisition-runners/requisition-runner';
+import { TaskFilePatternParser } from './task-runners/task-file-pattern-parser';
+import { TaskRunner } from './task-runners/task-runner';
 import { Configuration } from './configurations/configuration';
-import { RequisitionAdopter } from './components/requisition-adopter';
+import { TaskAdopter } from './components/task-adopter';
 import { NotificationEmitter } from './notifications/notification-emitter';
 import { SummaryTestOutput } from './outputs/summary-test-output';
-import { PublisherModel } from './models/inputs/publisher-model';
+import { ActuatorModel } from './models/inputs/actuator-model';
 import { TestModel } from './models/outputs/test-model';
 import { LogLevel } from './loggers/log-level';
 import { Notifications } from './notifications/notifications';
@@ -17,37 +17,37 @@ import { Notifications } from './notifications/notifications';
 export class EnqueuerRunner {
   private static reportName: string = 'enqueuer';
 
-  private enqueuerRequisition?: input.RequisitionModel;
+  private enqueuerTask?: input.TaskModel;
 
   constructor() {
     NotificationEmitter.on(
       Notifications.REQUISITION_FINISHED,
-      async (report: any) => await EnqueuerRunner.printReport(report.requisition)
+      async (report: any) => await EnqueuerRunner.printReport(report.task)
     );
   }
 
-  public async execute(): Promise<output.RequisitionModel[]> {
+  public async execute(): Promise<output.TaskModel[]> {
     const configuration = Configuration.getInstance();
     Logger.setLoggerLevel(LogLevel.INFO);
     Logger.info('Rocking and rolling');
     Logger.setLoggerLevel(LogLevel.buildFromString(configuration.getLogLevel()));
-    const requisitionFileParser = new RequisitionFilePatternParser(configuration.getFiles());
-    const requisitions = requisitionFileParser.parse();
-    this.enqueuerRequisition = new RequisitionAdopter({
-      requisitions,
+    const taskFileParser = new TaskFilePatternParser(configuration.getFiles());
+    const tasks = taskFileParser.parse();
+    this.enqueuerTask = new TaskAdopter({
+      tasks,
       name: EnqueuerRunner.reportName,
       timeout: -1,
       parallel: configuration.isParallel()
-    }).getRequisition();
-    const parsingErrors = requisitionFileParser.getFilesErrors();
-    const finalReports = await new RequisitionRunner(this.enqueuerRequisition).run();
+    }).getTask();
+    const parsingErrors = taskFileParser.getFilesErrors();
+    const finalReports = await new TaskRunner(this.enqueuerTask).run();
     await this.publishReports(configuration.getOutputs(), finalReports, parsingErrors);
     return finalReports;
   }
 
   private async publishReports(
-    configurationOutputs: PublisherModel[],
-    finalReports: output.RequisitionModel[],
+    configurationOutputs: ActuatorModel[],
+    finalReports: output.TaskModel[],
     parsingErrors: TestModel[]
   ) {
     Logger.info('Publishing reports');
@@ -65,7 +65,7 @@ export class EnqueuerRunner {
     return finalReports;
   }
 
-  private static async printReport(report: output.RequisitionModel): Promise<void> {
+  private static async printReport(report: output.TaskModel): Promise<void> {
     const configuration = Configuration.getInstance();
     if (report.level === undefined || report.level <= configuration.getMaxReportLevelPrint()) {
       try {

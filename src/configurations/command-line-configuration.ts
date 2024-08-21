@@ -23,7 +23,7 @@ export class CommandLineConfiguration {
       )
       .option('-c, --config-file <path>', 'set configurationFile')
       .option('-d, --show-explicit-tests-only', 'show explicit tests only', false)
-      .option('-o, --stdout-requisition-output', 'add stdout as requisition output', false)
+      .option('-o, --stdout-task-output', 'add stdout as task output', false)
       .option('-m, --max-report-level-print <level>', 'set max report level print', parseInt)
       .option('-i, --show-passing-tests', 'show passing tests')
       .option(
@@ -91,8 +91,8 @@ export class CommandLineConfiguration {
     return this.options.verbosity;
   }
 
-  public getStdoutRequisitionOutput(): boolean {
-    return !!this.options.stdoutRequisitionOutput;
+  public getStdoutTaskOutput(): boolean {
+    return !!this.options.stdoutTaskOutput;
   }
 
   public getShowExplicitTestsOnly(): boolean {

@@ -1,40 +1,40 @@
-import { PublisherModel } from '../models/inputs/publisher-model';
-import { Publisher } from '../publishers/publisher';
-import { SubscriptionModel } from '../models/inputs/subscription-model';
-import { Subscription } from '../subscriptions/subscription';
-import { NullSubscription } from '../subscriptions/null-subscription';
-import { NullPublisher } from '../publishers/null-publisher';
+import { ActuatorModel } from '../models/inputs/actuator-model';
+import { Actuator } from '../actuators/actuator';
+import { SensorModel } from '../models/inputs/sensor-model';
+import { Sensor } from '../sensors/sensor';
+import { NullSensor } from '../sensors/null-sensor';
+import { NullActuator } from '../actuators/null-actuator';
 import { Protocol } from '../protocols/protocol';
-import { PublisherProtocol } from '../protocols/publisher-protocol';
-import { SubscriptionProtocol } from '../protocols/subscription-protocol';
+import { ActuatorProtocol } from '../protocols/actuator-protocol';
+import { SensorProtocol } from '../protocols/sensor-protocol';
 import { Logger } from '../loggers/logger';
 import { prettifyJson } from '../outputs/prettify-json';
 
 export class ProtocolManager {
   private protocols: Protocol[] = [];
 
-  public createPublisher(publisherModel: PublisherModel): Publisher {
-    const matchingPublishers = this.protocols
-      .filter((protocol: Protocol) => protocol.isPublisher())
-      .filter((protocol: Protocol) => protocol.matches(publisherModel.type))
-      .map((protocol: Protocol) => (protocol as PublisherProtocol).create(publisherModel));
-    if (matchingPublishers.length > 0) {
-      return matchingPublishers[0];
+  public createActuator(actuatorModel: ActuatorModel): Actuator {
+    const matchingActuators = this.protocols
+      .filter((protocol: Protocol) => protocol.isActuator())
+      .filter((protocol: Protocol) => protocol.matches(actuatorModel.type))
+      .map((protocol: Protocol) => (protocol as ActuatorProtocol).create(actuatorModel));
+    if (matchingActuators.length > 0) {
+      return matchingActuators[0];
     }
-    Logger.error(`No publisher was found with '${publisherModel.type}'`);
-    return new NullPublisher(publisherModel);
+    Logger.error(`No actuator was found with '${actuatorModel.type}'`);
+    return new NullActuator(actuatorModel);
   }
 
-  public createSubscription(subscriptionModel: SubscriptionModel): Subscription {
-    const matchingSubscriptions = this.protocols
-      .filter((protocol: Protocol) => protocol.isSubscription())
-      .filter((protocol: Protocol) => protocol.matches(subscriptionModel.type))
-      .map((protocol: Protocol) => (protocol as SubscriptionProtocol).create(subscriptionModel));
-    if (matchingSubscriptions.length > 0) {
-      return matchingSubscriptions[0];
+  public createSensor(sensorModel: SensorModel): Sensor {
+    const matchingSensors = this.protocols
+      .filter((protocol: Protocol) => protocol.isSensor())
+      .filter((protocol: Protocol) => protocol.matches(sensorModel.type))
+      .map((protocol: Protocol) => (protocol as SensorProtocol).create(sensorModel));
+    if (matchingSensors.length > 0) {
+      return matchingSensors[0];
     }
-    Logger.error(`No subscription was found with '${subscriptionModel.type}'`);
-    return new NullSubscription(subscriptionModel);
+    Logger.error(`No sensor was found with '${sensorModel.type}'`);
+    return new NullSensor(sensorModel);
   }
 
   public addProtocol(protocol: Protocol): void {
@@ -45,23 +45,23 @@ export class ProtocolManager {
     const matchingProtocols = this.getProtocolsDescription(description);
     console.log(`Describing protocols matching: ${description}`);
     console.log(prettifyJson(matchingProtocols));
-    return matchingProtocols.publishers.length + matchingProtocols.subscriptions.length > 0;
+    return matchingProtocols.actuators.length + matchingProtocols.sensors.length > 0;
   }
 
   public getProtocolsDescription(protocol: string = ''): {
-    publishers: {}[];
-    subscriptions: {}[];
+    actuators: {}[];
+    sensors: {}[];
   } {
     return {
-      publishers: this.protocols
+      actuators: this.protocols
         //NOTE: function check for retro compatibilities proposes
-        .filter((protocol: Protocol) => protocol.isPublisher && protocol.isPublisher())
-        .filter((publisher: Protocol) => publisher.matches(protocol))
+        .filter((protocol: Protocol) => protocol.isActuator && protocol.isActuator())
+        .filter((actuator: Protocol) => actuator.matches(protocol))
         .map(protocol => protocol.getDescription()),
-      subscriptions: this.protocols
+      sensors: this.protocols
         //NOTE: function check for retro compatibilities proposes
-        .filter((protocol: Protocol) => protocol.isSubscription && protocol.isSubscription())
-        .filter((subscription: Protocol) => subscription.matches(protocol))
+        .filter((protocol: Protocol) => protocol.isSensor && protocol.isSensor())
+        .filter((sensor: Protocol) => sensor.matches(protocol))
         .map(protocol => protocol.getDescription())
     };
   }

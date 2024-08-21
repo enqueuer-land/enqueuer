@@ -1,5 +1,5 @@
-publishers:
-  - name: publisher proxy
+actuators:
+  - name: actuator proxy
     type: http
     url: http://localhost:23085/proxy/enqueuer/123456?query=proxied
     method: put
@@ -10,8 +10,8 @@ publishers:
           toBeEqualTo: 400
         - expect: body
           toBeEqualTo: "'original -> proxy -> real -> proxied again'"
-subscriptions:
-  - name: proxy subscription
+sensors:
+  - name: proxy sensor
     type: http-proxy
     endpoint: /proxy/enqueuer/:id
     port: 23085

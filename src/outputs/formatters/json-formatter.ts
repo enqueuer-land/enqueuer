@@ -1,10 +1,10 @@
 import { ReportFormatter } from './report-formatter';
-import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { TaskModel } from '../../models/outputs/task-model';
 import { MainInstance } from '../../plugins/main-instance';
 import { Logger } from '../../loggers/logger';
 
 export class JsonReportFormatter implements ReportFormatter {
-  public format(report: RequisitionModel): string {
+  public format(report: TaskModel): string {
     try {
       return JSON.stringify(report, null, 2);
     } catch (err) {

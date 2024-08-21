@@ -1,7 +1,7 @@
 import { NotificationEmitter } from './notifications/notification-emitter';
 import { EnqueuerAsNodeChildRunner } from './enqueuer-as-node-child-runner';
 import { Notifications } from './notifications/notifications';
-import { ChildRequisitionRunner } from './run-as-child/child-requisition-runner';
+import { ChildTaskRunner } from './run-as-child/child-task-runner';
 import { AssertDescriber } from './run-as-child/assert-describer';
 import { ModuleAdder } from './run-as-child/module-adder';
 import { ProtocolDescriber } from './run-as-child/protocol-describer';
@@ -9,7 +9,7 @@ import { StoreCleaner } from './run-as-child/store-cleaner';
 import { StoreSetter } from './run-as-child/store-setter';
 
 jest.mock('./notifications/notification-emitter');
-jest.mock('./run-as-child/child-requisition-runner');
+jest.mock('./run-as-child/child-task-runner');
 jest.mock('./run-as-child/assert-describer');
 jest.mock('./run-as-child/module-adder');
 jest.mock('./run-as-child/protocol-describer');
@@ -25,7 +25,7 @@ process.send = processSendMock;
 const replierProcessMock = jest.fn();
 const replierConstructorMock = jest.fn(() => ({ process: replierProcessMock }));
 // @ts-ignore
-ChildRequisitionRunner.mockImplementation(replierConstructorMock);
+ChildTaskRunner.mockImplementation(replierConstructorMock);
 // @ts-ignore
 AssertDescriber.mockImplementation(replierConstructorMock);
 // @ts-ignore

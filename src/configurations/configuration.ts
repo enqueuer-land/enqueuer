@@ -1,6 +1,6 @@
 import { CommandLineConfiguration } from './command-line-configuration';
 import { FileConfiguration } from './file-configuration';
-import { PublisherModel } from '../models/inputs/publisher-model';
+import { ActuatorModel } from '../models/inputs/actuator-model';
 import { Logger } from '../loggers/logger';
 import { DynamicModulesManager } from '../plugins/dynamic-modules-manager';
 import { LogLevel } from '../loggers/log-level';
@@ -15,7 +15,7 @@ export class Configuration {
   private parallel: boolean = false;
   private files: string[] = [];
   private logLevel: string = 'warn';
-  private outputs: PublisherModel[] = [];
+  private outputs: ActuatorModel[] = [];
   private maxReportLevelPrint: number = 1;
   private store: any = {};
   private plugins: string[] = [];
@@ -81,7 +81,7 @@ export class Configuration {
     return this.logLevel;
   }
 
-  public getOutputs(): PublisherModel[] {
+  public getOutputs(): ActuatorModel[] {
     return this.outputs;
   }
 
@@ -114,7 +114,7 @@ export class Configuration {
     this.store = Object.assign({}, this.store, this.commandLineConfiguration.getStore());
     this.showPassingTests = this.commandLineConfiguration.getShowPassingTests();
     this.showExplicitTestsOnly = this.commandLineConfiguration.getShowExplicitTestsOnly();
-    if (this.commandLineConfiguration.getStdoutRequisitionOutput()) {
+    if (this.commandLineConfiguration.getStdoutTaskOutput()) {
       this.outputs.push({
         type: 'standard-output',
         format: 'console',

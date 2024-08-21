@@ -1,10 +1,10 @@
 import { entryPoint, YmlReportFormatter } from './yml-formatter';
-import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { TaskModel } from '../../models/outputs/task-model';
 import { YmlObjectParser } from '../../object-parser/yml-object-parser';
 
 describe('YmlReportFormatter', () => {
   it('Should stringify it', () => {
-    const test: RequisitionModel = {
+    const test: TaskModel = {
       name: 'name',
       valid: true,
       tests: []

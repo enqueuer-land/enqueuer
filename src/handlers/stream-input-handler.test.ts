@@ -30,7 +30,7 @@ describe('StreamInputHandler', () => {
       };
     });
 
-    new StreamInputHandler(handlerName).subscribe(() => {});
+    new StreamInputHandler(handlerName).getReady(() => {});
 
     expect(listen).toHaveBeenCalledWith(handlerName);
   });
@@ -52,14 +52,14 @@ describe('StreamInputHandler', () => {
 
     const streamInputHandler = new StreamInputHandler('handlerName');
     streamInputHandler
-      .subscribe(() => {})
+      .getReady(() => {})
       .then(() => {
         expect(streamInputHandler.getHandler()).toBe(54321);
         done();
       });
   });
 
-  it('Should unsubscribe', () => {
+  it('Should close', () => {
     const closeMock = jest.fn();
     // @ts-expect-error
     net.createServer.mockImplementationOnce(() => {
@@ -68,7 +68,7 @@ describe('StreamInputHandler', () => {
       };
     });
 
-    new StreamInputHandler('handlerName').unsubscribe();
+    new StreamInputHandler('handlerName').close();
 
     expect(closeMock).toBeCalled();
   });
@@ -79,12 +79,12 @@ describe('StreamInputHandler', () => {
       end: endMock
     };
 
-    new StreamInputHandler('handlerName').close(stream);
+    new StreamInputHandler('handlerName').end(stream);
 
     expect(endMock).toBeCalled();
   });
 
-  it('Should sendResponse object', done => {
+  it('Should respond object', done => {
     const writeMock = jest.fn((value, cb) => cb());
     const stream = {
       write: writeMock
@@ -95,7 +95,7 @@ describe('StreamInputHandler', () => {
         object: 2
       }
     };
-    new StreamInputHandler('handlerName').sendResponse(stream, message).then(() => {
+    new StreamInputHandler('handlerName').respond(stream, message).then(() => {
       const mockCalls = writeMock.mock.calls;
       const messageSent = mockCalls[0][0];
 
@@ -104,27 +104,27 @@ describe('StreamInputHandler', () => {
     });
   });
 
-  it('Should sendResponse string', done => {
+  it('Should respond string', done => {
     const writeMock = jest.fn();
     const stream = {
       write: writeMock
     };
 
     const message = 'message';
-    new StreamInputHandler('handlerName').sendResponse(stream, message);
+    new StreamInputHandler('handlerName').respond(stream, message);
 
     expect(writeMock).toHaveBeenCalledWith('message', expect.any(Function));
     done();
   });
 
-  it('Should handler sendResponse error', done => {
+  it('Should handler respond error', done => {
     const stream = {
       write: () => {
         throw 'error';
       }
     };
 
-    new StreamInputHandler('handlerName').sendResponse(stream, {}).catch(err => {
+    new StreamInputHandler('handlerName').respond(stream, {}).catch(err => {
       expect(err).toBe('Error sending input handler: error');
       done();
     });

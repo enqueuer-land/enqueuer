@@ -26,7 +26,7 @@ let constructorSummary = jest.fn(() => {
 // @ts-ignore
 SummaryTestOutput.mockImplementation(constructorSummary);
 
-const publishMock = jest.fn();
+const actMock = jest.fn();
 let format = jest.fn();
 const create = jest.fn(() => {
   return {
@@ -34,15 +34,15 @@ const create = jest.fn(() => {
   };
 });
 
-const createPublisherMock = jest.fn(() => {
+const createActuatorMock = jest.fn(() => {
   return {
-    publish: publishMock
+    act: actMock
   };
 });
 // @ts-ignore
 ProtocolManager.mockImplementation(() => {
   return {
-    createPublisher: createPublisherMock
+    createActuator: createActuatorMock
   };
 });
 const formatMock = jest.fn();
@@ -64,10 +64,10 @@ describe('MultiTestsOutput', () => {
     constructorSummary.mockClear();
     // @ts-ignore
     SummaryTestOutput.mockClear();
-    publishMock.mockClear();
+    actMock.mockClear();
     format.mockClear();
     create.mockClear();
-    createPublisherMock.mockClear();
+    createActuatorMock.mockClear();
   });
 
   it('Should create an output and a createFunction', () => {
@@ -75,7 +75,7 @@ describe('MultiTestsOutput', () => {
     // @ts-ignore
     const multiTestsOutput = new MultiTestsOutput([output]);
 
-    expect(createPublisherMock).toHaveBeenCalledWith(output);
+    expect(createActuatorMock).toHaveBeenCalledWith(output);
   });
 
   it('Should format before printing', async () => {
@@ -84,6 +84,6 @@ describe('MultiTestsOutput', () => {
     // @ts-ignore
     await new MultiTestsOutput([output]).publishReport(report);
 
-    expect(publishMock).toHaveBeenCalledWith();
+    expect(actMock).toHaveBeenCalledWith();
   });
 });

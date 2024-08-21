@@ -12,7 +12,7 @@ export class StreamInputHandler {
     this.handlerListener = new HandlerListener(this.server);
   }
 
-  public async subscribe(onMessageReceived: (requisition: any) => void): Promise<void> {
+  public async getReady(onMessageReceived: (task: any) => void): Promise<void> {
     return this.handlerListener.listen(this.handler).then(() => {
       this.handler = this.handlerListener.getHandler();
       this.server.on('connection', (stream: any) => {
@@ -30,7 +30,7 @@ export class StreamInputHandler {
     return this.handler;
   }
 
-  public async unsubscribe(): Promise<void> {
+  public async close(): Promise<void> {
     if (this.server) {
       this.server.close();
       // @ts-ignore
@@ -38,7 +38,7 @@ export class StreamInputHandler {
     }
   }
 
-  public sendResponse(stream: any, message: any): Promise<void> {
+  public respond(stream: any, message: any): Promise<void> {
     return new Promise((resolve, reject) => {
       const strMsg = this.stringifyPayloadToSend(message);
       try {
@@ -49,7 +49,7 @@ export class StreamInputHandler {
     });
   }
 
-  public close(stream: any) {
+  public end(stream: any) {
     stream.end();
     stream = null;
   }

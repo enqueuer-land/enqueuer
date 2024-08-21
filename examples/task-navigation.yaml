@@ -1,0 +1,10 @@
+- name: first
+  onInit:
+    assertions:
+      - expect: task.parent.tasks[1].name
+        toBeEqualTo: "'second'"
+- name: second
+  onInit:
+    assertions:
+      - expect: task.parent.tasks[0].name
+        toBeEqualTo: "'first'"

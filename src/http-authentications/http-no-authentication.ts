@@ -12,7 +12,7 @@ export class HttpNoAuthentication implements HttpAuthentication {
     return null;
   }
 
-  public verify(requisition: string): TestModel[] {
+  public verify(task: string): TestModel[] {
     return [
       {
         name: 'Http authentication',

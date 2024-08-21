@@ -15,10 +15,10 @@ describe('FileContentMapCreator', () => {
     const tag = 'any';
     const filename = 'examples/file-content.any';
     const replaceableKey = tag + '://' + filename;
-    const requisition = { value: '<<' + replaceableKey + '>>' };
+    const task = { value: '<<' + replaceableKey + '>>' };
 
     // @ts-ignore
-    const fileMap = new FileContentMapCreator(requisition);
+    const fileMap = new FileContentMapCreator(task);
 
     const expected: any = {};
     expected[replaceableKey] = 'err';
@@ -27,10 +27,10 @@ describe('FileContentMapCreator', () => {
   });
 
   it('Handle exceptions undefined field', () => {
-    const requisition = { value: undefined };
+    const task = { value: undefined };
 
     // @ts-ignore
-    expect(() => new FileContentMapCreator(requisition)).not.toThrow();
+    expect(() => new FileContentMapCreator(task)).not.toThrow();
   });
 
   it('Parse from file with right parser', () => {
@@ -42,7 +42,7 @@ describe('FileContentMapCreator', () => {
     const tag = 'tag';
     const filename = 'examples/file-content.tag';
     const replaceableKey = tag + '://' + filename;
-    const requisition = { value: '<<' + replaceableKey + '>>' };
+    const task = { value: '<<' + replaceableKey + '>>' };
 
     // @ts-expect-error
     DynamicModulesManager.getInstance.mockImplementation(() => {
@@ -60,7 +60,7 @@ describe('FileContentMapCreator', () => {
     });
 
     // @ts-ignore
-    const fileMap = new FileContentMapCreator(requisition);
+    const fileMap = new FileContentMapCreator(task);
 
     const expected: any = {};
     expected[replaceableKey] = fileContent;
@@ -77,7 +77,7 @@ describe('FileContentMapCreator', () => {
     const tag = 'unknown';
     const filename = 'examples/file-content.unknown';
     const replaceableKey = tag + '://' + filename;
-    const requisition = { value: '<<' + replaceableKey + '>>' };
+    const task = { value: '<<' + replaceableKey + '>>' };
 
     // @ts-expect-error
     DynamicModulesManager.getInstance.mockImplementation(() => {
@@ -97,7 +97,7 @@ describe('FileContentMapCreator', () => {
     });
 
     // @ts-ignore
-    const fileMap = new FileContentMapCreator(requisition);
+    const fileMap = new FileContentMapCreator(task);
 
     const expected: any = {};
     expected[replaceableKey] = fileContent;
@@ -114,7 +114,7 @@ describe('FileContentMapCreator', () => {
     // @ts-ignore
     fs.readFileSync.mockImplementationOnce(readFileSync);
 
-    const requisition = {
+    const task = {
       value: '<<some://filename?delimiter=;&header=false&other>>'
     };
 
@@ -138,7 +138,7 @@ describe('FileContentMapCreator', () => {
     });
 
     // @ts-ignore
-    new FileContentMapCreator(requisition).getMap();
+    new FileContentMapCreator(task).getMap();
     expect(text).toBe(fileContent);
     expect(query).toEqual({
       delimiter: ';',
@@ -158,7 +158,7 @@ describe('FileContentMapCreator', () => {
     const tag = 'tag';
     const filename = 'examples/file-content';
     const replaceableKey = tag + '://' + filename;
-    const requisition = {
+    const task = {
       value: '<<' + replaceableKey + '>>',
       second: '{{' + replaceableKey + '}}',
       third: '<<' + replaceableKey + '>>'
@@ -180,7 +180,7 @@ describe('FileContentMapCreator', () => {
     });
 
     // @ts-ignore
-    const fileMap = new FileContentMapCreator(requisition);
+    const fileMap = new FileContentMapCreator(task);
 
     const expected: any = {};
     expected[replaceableKey] = fileContent;
@@ -190,12 +190,12 @@ describe('FileContentMapCreator', () => {
   });
 
   it('Handle empty matches', () => {
-    const requisition = {
+    const task = {
       key: '((I am not a file))'
     };
 
     // @ts-ignore
-    const fileMap = new FileContentMapCreator(requisition);
+    const fileMap = new FileContentMapCreator(task);
 
     const expected: any = {};
     expect(fileMap.getMap()).toEqual(expected);

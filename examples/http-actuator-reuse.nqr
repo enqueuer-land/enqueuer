@@ -1,0 +1,14 @@
+{
+  "type": "http",
+  "url": "http://localhost:23075/sensor-reuse",
+  "method": "POST",
+  "payload": "virgs",
+  "onMessageReceived": {
+    "assertions": [
+      {
+        "expect": "statusCode",
+        "toBeEqualTo": 444
+      }
+    ]
+  }
+}

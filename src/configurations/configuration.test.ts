@@ -111,7 +111,7 @@ describe('Configuration', () => {
 
   it('should create cli output formatter', () => {
     const commandLine = createCommandLine();
-    commandLine.getStdoutRequisitionOutput = () => true;
+    commandLine.getStdoutTaskOutput = () => true;
     mockedCommandLineConfiguration.mockImplementationOnce(() => commandLine);
 
     const instance = Configuration.getInstance();
@@ -171,7 +171,7 @@ describe('Configuration', () => {
       getShowExplicitTestsOnly: () => undefined,
       getStore: () => undefined,
       getTestFilesIgnoringOthers: () => undefined,
-      getStdoutRequisitionOutput: () => false,
+      getStdoutTaskOutput: () => false,
       getMaxReportLevelPrint: () => undefined
     };
   };
@@ -192,7 +192,7 @@ describe('Configuration', () => {
       getShowPassingTests: () => true,
       getShowExplicitTestsOnly: () => false,
       getTestFilesIgnoringOthers: () => undefined,
-      getStdoutRequisitionOutput: () => true,
+      getStdoutTaskOutput: () => true,
       getMaxReportLevelPrint: () => 5
     };
   };

@@ -1,4 +1,4 @@
-publishers:
+actuators:
   - type: HTTPS
     url: https://127.0.0.1:4430/enqueuer
     method: POST
@@ -14,7 +14,7 @@ publishers:
         - name: Body
           expect: body
           toBeEqualTo: "'https'"
-subscriptions:
+sensors:
   - type: https
     endpoint: /enqueuer
     port: 4430

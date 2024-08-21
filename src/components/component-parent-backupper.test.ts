@@ -2,63 +2,63 @@ import { ComponentParentBackupper } from './component-parent-backupper';
 
 describe('ComponentParentBackupper', () => {
   it('should remove parents', () => {
-    const requisition: any = {
-      name: 'requisition'
+    const task: any = {
+      name: 'task'
     };
     const child = {
-      name: 'publisher',
-      parent: requisition
+      name: 'actuator',
+      parent: task
     };
-    const publisher = {
-      name: 'publisher',
-      parent: requisition
+    const actuator = {
+      name: 'actuator',
+      parent: task
     };
-    const subscription = {
-      name: 'subscription',
-      parent: requisition
+    const sensor = {
+      name: 'sensor',
+      parent: task
     };
 
-    requisition.requisitions = [child];
-    requisition.publishers = [publisher];
-    requisition.subscriptions = [subscription];
+    task.tasks = [child];
+    task.actuators = [actuator];
+    task.sensors = [sensor];
 
-    new ComponentParentBackupper().removeParents(requisition);
+    new ComponentParentBackupper().removeParents(task);
 
-    expect(requisition.requisitions[0].parent).toBeUndefined();
-    expect(requisition.publishers[0].parent).toBeUndefined();
-    expect(requisition.subscriptions[0].parent).toBeUndefined();
+    expect(task.tasks[0].parent).toBeUndefined();
+    expect(task.actuators[0].parent).toBeUndefined();
+    expect(task.sensors[0].parent).toBeUndefined();
   });
 
   it('should put parents back', () => {
-    const requisition: any = {
-      name: 'requisition',
-      id: 'requisition'
+    const task: any = {
+      name: 'task',
+      id: 'task'
     };
     const child = {
       name: 'child',
       id: 'child',
-      parent: requisition
+      parent: task
     };
-    const publisher = {
-      name: 'publisher',
-      id: 'publisher',
-      parent: requisition
+    const actuator = {
+      name: 'actuator',
+      id: 'actuator',
+      parent: task
     };
-    const subscription = {
-      name: 'subscription',
-      id: 'subscription',
-      parent: requisition
+    const sensor = {
+      name: 'sensor',
+      id: 'sensor',
+      parent: task
     };
-    requisition.requisitions = [child];
-    requisition.publishers = [publisher];
-    requisition.subscriptions = [subscription];
+    task.tasks = [child];
+    task.actuators = [actuator];
+    task.sensors = [sensor];
 
     const componentParentBackupper = new ComponentParentBackupper();
-    componentParentBackupper.removeParents(requisition);
-    componentParentBackupper.putParentsBack(requisition);
+    componentParentBackupper.removeParents(task);
+    componentParentBackupper.putParentsBack(task);
 
-    expect(requisition.requisitions[0].parent.name).toBe(requisition.name);
-    expect(requisition.publishers[0].parent.name).toBe(requisition.name);
-    expect(requisition.subscriptions[0].parent.name).toBe(requisition.name);
+    expect(task.tasks[0].parent.name).toBe(task.name);
+    expect(task.actuators[0].parent.name).toBe(task.name);
+    expect(task.sensors[0].parent.name).toBe(task.name);
   });
 });

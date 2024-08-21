@@ -102,7 +102,7 @@ describe('Protocol', () => {
           },
           avoid: {
             defaultValue: false,
-            description: 'Defines if the subscription should be avoided',
+            description: 'Defines if the sensor should be avoided',
             required: false,
             type: 'boolean'
           },
@@ -119,7 +119,7 @@ describe('Protocol', () => {
           },
           timeout: {
             defaultValue: 3000,
-            description: 'Defines the subscription time out',
+            description: 'Defines the sensor time out',
             required: false,
             suffix: 'ms',
             type: 'int'
@@ -177,7 +177,7 @@ describe('Protocol', () => {
           },
           avoid: {
             defaultValue: false,
-            description: 'Defines if the subscription should be avoided',
+            description: 'Defines if the sensor should be avoided',
             required: false,
             type: 'boolean'
           },
@@ -194,7 +194,7 @@ describe('Protocol', () => {
           },
           timeout: {
             defaultValue: 3000,
-            description: 'Defines the subscription time out',
+            description: 'Defines the sensor time out',
             required: false,
             suffix: 'ms',
             type: 'int'

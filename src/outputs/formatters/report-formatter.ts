@@ -1,5 +1,5 @@
-import { RequisitionModel } from '../../models/outputs/requisition-model';
+import { TaskModel } from '../../models/outputs/task-model';
 
 export interface ReportFormatter {
-  format(report: RequisitionModel): string;
+  format(report: TaskModel): string;
 }

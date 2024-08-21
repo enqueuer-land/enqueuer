@@ -11,7 +11,7 @@
 - anyName: <<key>>
   onInit:
     assertions:
-      - expect: requisition.anyName
+      - expect: task.anyName
         toBeEqualTo: 10
       - expect: <<key>> + 1
         toBeEqualTo: 11
