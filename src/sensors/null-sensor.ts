@@ -6,7 +6,7 @@ export class NullSensor extends Sensor {
     super(sensorAttributes);
   }
 
-  public prepare(): Promise<void> {
+  public mount(): Promise<void> {
     return Promise.reject(`Undefined sensor: '${this.type}'`);
   }
 

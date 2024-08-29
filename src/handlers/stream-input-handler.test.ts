@@ -30,7 +30,7 @@ describe('StreamInputHandler', () => {
       };
     });
 
-    new StreamInputHandler(handlerName).prepare(() => {});
+    new StreamInputHandler(handlerName).mount(() => {});
 
     expect(listen).toHaveBeenCalledWith(handlerName);
   });
@@ -52,7 +52,7 @@ describe('StreamInputHandler', () => {
 
     const streamInputHandler = new StreamInputHandler('handlerName');
     streamInputHandler
-      .prepare(() => {})
+      .mount(() => {})
       .then(() => {
         expect(streamInputHandler.getHandler()).toBe(54321);
         done();

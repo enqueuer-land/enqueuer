@@ -4,58 +4,51 @@ import { ProtocolDocumentation } from './protocol-documentation';
 describe('Protocol', () => {
   it('getName', () => {
     const name = 'gui';
-    // @ts-expect-error
-    const match = new Protocol(name, undefined).getName();
+    const match = createProtocol(name, undefined).getName();
     expect(match).toBe(name);
   });
 
   it('namesMatchExactly name', () => {
-    // @ts-expect-error
-    const match = new Protocol('gui', undefined).matches('gui');
+    const match = createProtocol('gui', undefined).matches('gui');
     expect(match).toBeTruthy();
   });
 
   it('should ignore case going', () => {
-    // @ts-expect-error
-    const match = new Protocol('gui', undefined).matches('GUI');
+    const match = createProtocol('gui', undefined).matches('GUI');
     expect(match).toBeTruthy();
   });
 
   it('should ignore case coming', () => {
-    // @ts-expect-error
-    const match = new Protocol('GUI', undefined).matches('gui');
+    const match = createProtocol('GUI', undefined).matches('gui');
     expect(match).toBeTruthy();
   });
 
   it('namesMatch alternative', () => {
-    // @ts-expect-error
-    const match = new Protocol('', undefined).addAlternativeName('gui').matches('gui');
+    const match = createProtocol('', undefined).addAlternativeName('gui').matches('gui');
     expect(match).toBeTruthy();
   });
 
   it('names dont Match alternative', () => {
-    // @ts-expect-error
-    const match = new Protocol('', undefined).addAlternativeName('one', 'two').matches('gui', 0);
+    const match = createProtocol('', undefined).addAlternativeName('one', 'two').matches('gui');
     expect(match).toBeFalsy();
   });
 
   it('alternative names are unique', () => {
-    // @ts-expect-error
-    const match = new Protocol('one', undefined).addAlternativeName('one', 'two').addAlternativeName('two', 'three');
+    const match = createProtocol('one', undefined).addAlternativeName('one', 'two').addAlternativeName('two', 'three');
     // @ts-ignore
     expect(match.alternativeNames).toEqual(['one', 'two', 'three']);
   });
 
   it('isLibraryInstalled', () => {
     // @ts-ignore
-    const available = new Protocol('', undefined).setLibrary('express').library.installed;
+    const available = createProtocol('', undefined).setLibrary('express').library.installed;
     expect(available).toBeTruthy();
   });
 
   it('isLibraryInstalled false', () => {
-    // @ts-expect-error
-    const available = new Protocol('', undefined)
+    const available = createProtocol('', undefined)
       .setLibrary('zero-mq-not-defined-at-least-I-hope')
+      // @ts-expect-error
       .isLibraryInstalled();
     expect(available).toBeFalsy();
   });
@@ -79,8 +72,7 @@ describe('Protocol', () => {
         }
       }
     };
-    // @ts-ignore
-    const property = new Protocol('protocol', ProtocolType.SUBSCRIPTION, doc)
+    const property = createProtocol('protocol', ProtocolType.SENSOR, doc)
       .addAlternativeName('alternativeName')
       .setLibrary('express')
       .getDescription();
@@ -162,7 +154,7 @@ describe('Protocol', () => {
 
   it('get deep with nothing', () => {
     // @ts-ignore
-    const property = new Protocol('protocol', ProtocolType.SUBSCRIPTION, {})
+    const property = createProtocol('protocol', ProtocolType.SENSOR, {})
       .addAlternativeName('alternativeName')
       .setLibrary('express')
       .getDescription();
@@ -223,4 +215,13 @@ describe('Protocol', () => {
       }
     });
   });
+
+  const createProtocol = (
+    protocolName: string,
+    type?: ProtocolType,
+    protocolDocumentation?: ProtocolDocumentation
+  ): Protocol => {
+    //@ts-expect-error
+    return new Protocol(protocolName, type, protocolDocumentation);
+  };
 });

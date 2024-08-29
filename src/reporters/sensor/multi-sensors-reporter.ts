@@ -28,13 +28,13 @@ export class MultiSensorsReporter {
     });
   }
 
-  public async prepare(): Promise<any> {
+  public async mount(): Promise<any> {
     Logger.debug(`Sensors are getting ready`);
     return Promise.race([
       Promise.all(
         this.sensors.map(async sensor => {
           try {
-            await sensor.prepare();
+            await sensor.mount();
           } catch (err) {
             Logger.error(`Error getting ready: ${err}`);
           }
@@ -63,9 +63,9 @@ export class MultiSensorsReporter {
     Logger.debug(`Sensors are no longer waiting for messages`);
   }
 
-  public async unprepare(): Promise<void[]> {
+  public async unmount(): Promise<void[]> {
     Logger.debug(`Sensors are closing`);
-    return await Promise.all(this.sensors.map(sensor => sensor.unprepare()));
+    return await Promise.all(this.sensors.map(sensor => sensor.unmount()));
   }
 
   public getReport(): output.SensorModel[] {

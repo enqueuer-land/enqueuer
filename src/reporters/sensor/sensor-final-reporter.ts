@@ -2,33 +2,33 @@ import { TestModel } from '../../models/outputs/test-model';
 
 export type Time = { timeout?: number; totalTime: number };
 export type Summary = {
-  getReadyd: boolean;
+  mounted: boolean;
   avoidable: boolean;
   messageReceived?: any;
   time?: Time;
   ignore?: boolean;
-  getReadyError?: string;
+  mountError?: string;
 };
 
 export class SensorFinalReporter {
   private messageReceivedTestName: string = `Message received`;
   private sensorAvoidedTestName: string = `Sensor avoided`;
   private noTimeOutTestName: string = `No time out`;
-  private getReadydTestName: string = `Subscribed`;
+  private mountedTestName: string = `Prepared`;
 
-  private readonly getReadyd: boolean;
+  private readonly mounted: boolean;
   private readonly avoidable: boolean;
   private readonly messageReceived?: any = false;
   private readonly ignore: boolean;
   private readonly time?: Time;
-  private readonly getReadyError?: string;
+  private readonly mountError?: string;
 
   constructor(summary: Summary) {
-    this.getReadyd = summary.getReadyd;
+    this.mounted = summary.mounted;
     this.avoidable = summary.avoidable;
     this.messageReceived = summary.messageReceived;
     this.time = summary.time;
-    this.getReadyError = summary.getReadyError;
+    this.mountError = summary.mountError;
     this.ignore = !!summary.ignore;
   }
 
@@ -36,8 +36,8 @@ export class SensorFinalReporter {
     if (this.ignore) {
       return [];
     }
-    if (!this.getReadyd) {
-      return this.createNotSubscribedTests();
+    if (!this.mounted) {
+      return this.createNotPreparedTests();
     }
     let tests: TestModel[] = [];
     if (this.avoidable) {
@@ -57,13 +57,13 @@ export class SensorFinalReporter {
     return [];
   }
 
-  private createNotSubscribedTests(): TestModel[] {
+  private createNotPreparedTests(): TestModel[] {
     return [
       {
         implicit: true,
         valid: false,
-        name: this.getReadydTestName,
-        description: this.getReadyError || 'Sensor failed to getReady'
+        name: this.mountedTestName,
+        description: this.mountError || 'Sensor failed to mount'
       }
     ];
   }

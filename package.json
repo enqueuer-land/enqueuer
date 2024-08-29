@@ -20,7 +20,7 @@
     "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null && nqr -e > /dev/null",
     "format": "prettier . '!**/*.{html}' --write",
     "updateHtml": "misc/mdToHtml.js",
-    "all": "npm run clean && npm run format && npm run build && npm link && npm run test",
+    "all": "npm run format ; npm run build && npm link && npm run test",
     "build": "tsc",
     "commit": "git-cz",
     "semantic-release": "semantic-release"

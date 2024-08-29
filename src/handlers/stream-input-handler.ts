@@ -12,7 +12,7 @@ export class StreamInputHandler {
     this.handlerListener = new HandlerListener(this.server);
   }
 
-  public async prepare(onMessageReceived: (task: any) => void): Promise<void> {
+  public async mount(onMessageReceived: (task: any) => void): Promise<void> {
     return this.handlerListener.listen(this.handler).then(() => {
       this.handler = this.handlerListener.getHandler();
       this.server.on('connection', (stream: any) => {

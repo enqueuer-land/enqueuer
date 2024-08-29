@@ -5,7 +5,7 @@ class Sensor {
     this.sensor = sensor;
   }
 
-  prepare(context) {
+  mount(context) {
     return new Promise((resolve, reject) => {
       this.server = dgram.createSocket('udp4');
       try {

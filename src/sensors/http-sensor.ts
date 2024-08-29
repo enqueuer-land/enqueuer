@@ -25,7 +25,7 @@ class HttpSensor extends Sensor {
     this['method'] = this.method.toLowerCase();
   }
 
-  public async prepare(): Promise<void> {
+  public async mount(): Promise<void> {
     try {
       const app = await HttpContainerPool.getApp(this.port, this.credentials);
       this.expressApp = app;
@@ -38,7 +38,7 @@ class HttpSensor extends Sensor {
     }
   }
 
-  public unprepare(): Promise<void> {
+  public unmount(): Promise<void> {
     return HttpContainerPool.releaseApp(this.port);
   }
 

@@ -11,7 +11,7 @@ export class SensorProtocol extends Protocol {
     createFunction: (sensorModel: SensorModel) => Sensor,
     documentation?: ProtocolDocumentation
   ) {
-    super(name, ProtocolType.SUBSCRIPTION, documentation);
+    super(name, ProtocolType.SENSOR, documentation);
     this.createFunction = createFunction;
   }
 

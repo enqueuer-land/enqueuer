@@ -19,8 +19,8 @@ class CustomSensor extends Sensor {
     }
   }
 
-  public async prepare(): Promise<void> {
-    return this.custom.prepare({ store: Store.getData(), logger: Logger });
+  public async mount(): Promise<void> {
+    return this.custom.mount({ store: Store.getData(), logger: Logger });
   }
 
   public async receiveMessage(): Promise<void> {
@@ -30,7 +30,7 @@ class CustomSensor extends Sensor {
     });
   }
 
-  public async unprepare(): Promise<any> {
+  public async unmount(): Promise<any> {
     if (this.custom.close) {
       return this.custom.close({
         store: Store.getData(),

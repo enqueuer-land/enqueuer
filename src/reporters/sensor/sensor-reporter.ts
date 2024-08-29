@@ -24,9 +24,9 @@ export class SensorReporter {
   private readonly startTime: DateController;
   private readonly sensor: Sensor;
   private readonly executedHooks: { [propName: string]: string[] };
-  private getReadyError?: string;
+  private mountError?: string;
   private hasTimedOut: boolean = false;
-  private getReadyd: boolean = false;
+  private mounted: boolean = false;
   private totalTime?: DateController;
 
   constructor(sensorAttributes: input.SensorModel) {
@@ -77,19 +77,19 @@ export class SensorReporter {
     }
   }
 
-  public async prepare(): Promise<void> {
+  public async mount(): Promise<void> {
     if (this.sensor.ignore) {
       Logger.trace(`Sensor '${this.sensor.name}' is ignored`);
     } else {
       try {
         Logger.trace(`Starting '${this.sensor.name}' time out`);
         Logger.trace(`Sensor '${this.sensor.name}' is getting ready`);
-        await this.sensor.prepare();
+        await this.sensor.mount();
         await this.handleSensor();
       } catch (err) {
-        const message = `Sensor '${this.sensor.name}' is unable to getReady: ${err}`;
+        const message = `Sensor '${this.sensor.name}' is unable to mount: ${err}`;
         Logger.error(message);
-        this.getReadyError = `${err}`;
+        this.mountError = `${err}`;
         throw err;
       }
     }
@@ -105,7 +105,7 @@ export class SensorReporter {
         await this.sendSyncResponse();
         Logger.trace(`Sensor '${this.sensor.name}' has finished its job`);
       } catch (err) {
-        this.sensor.unprepare().catch(console.log.bind(console));
+        this.sensor.unmount().catch(console.log.bind(console));
         Logger.error(`Sensor '${this.sensor.name}' is unable to receive message: ${err}`);
         throw err;
       }
@@ -130,7 +130,7 @@ export class SensorReporter {
       return false;
     } else {
       this.report.sensorTime = new DateController().toString();
-      this.getReadyd = true;
+      this.mounted = true;
       return true;
     }
   }
@@ -160,11 +160,11 @@ export class SensorReporter {
     }
     time.totalTime = this.totalTime.getTime() - this.startTime.getTime();
     const finalReporter = new SensorFinalReporter({
-      getReadyd: this.getReadyd,
+      mounted: this.mounted,
       avoidable: this.sensor.avoid,
       messageReceived: this.sensor.messageReceived,
       time: time,
-      getReadyError: this.getReadyError,
+      mountError: this.mountError,
       ignore: this.sensor.ignore
     });
 
@@ -183,12 +183,12 @@ export class SensorReporter {
     return this.report;
   }
 
-  public async unprepare(): Promise<void> {
+  public async unmount(): Promise<void> {
     process.removeListener('SIGINT', this.killListener).removeListener('SIGTERM', this.killListener);
 
     Logger.debug(`Closing sensor ${this.sensor.type}`);
-    if (this.getReadyd) {
-      return this.sensor.unprepare();
+    if (this.mounted) {
+      return this.sensor.unmount();
     }
   }
 
@@ -256,7 +256,7 @@ export class SensorReporter {
 
   private async handleKillSignal(signal: Signals, type: string): Promise<void> {
     Logger.debug(`Sensor reporter '${type}' handling kill signal ${signal}`);
-    await this.unprepare();
+    await this.unmount();
     Logger.debug(`Sensor reporter '${type}' closed`);
   }
 }

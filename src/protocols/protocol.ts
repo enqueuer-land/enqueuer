@@ -9,8 +9,8 @@ type Library = {
 };
 
 export enum ProtocolType {
-  PUBLISHER,
-  SUBSCRIPTION
+  ACTUATOR,
+  SENSOR
 }
 
 export abstract class Protocol {
@@ -78,7 +78,7 @@ export abstract class Protocol {
       required: true,
       description: 'Protocol identifier'
     };
-    if (type == ProtocolType.SUBSCRIPTION) {
+    if (type == ProtocolType.SENSOR) {
       this.documentation.schema.attributes.timeout = {
         type: 'int',
         suffix: 'ms',
@@ -112,11 +112,11 @@ export abstract class Protocol {
   }
 
   public isSensor(): boolean {
-    return this.type === ProtocolType.SUBSCRIPTION;
+    return this.type === ProtocolType.SENSOR;
   }
 
   public isActuator(): boolean {
-    return this.type === ProtocolType.PUBLISHER;
+    return this.type === ProtocolType.ACTUATOR;
   }
 
   public getName(): string {

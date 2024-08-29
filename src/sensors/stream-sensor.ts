@@ -48,7 +48,7 @@ export class StreamSensor extends Sensor {
     await this.waitForData();
   }
 
-  public prepare(): Promise<void> {
+  public override async mount(): Promise<void> {
     if (this.loadStream) {
       return this.reuseServer();
     } else {
@@ -56,7 +56,7 @@ export class StreamSensor extends Sensor {
     }
   }
 
-  public async unprepare(): Promise<void> {
+  public override async unmount(): Promise<void> {
     this.persistStream();
     if ('uds' === (this.type || '').toLowerCase() && fs.existsSync(this.path)) {
       fs.unlinkSync(this.path);

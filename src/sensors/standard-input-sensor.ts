@@ -21,7 +21,7 @@ class StandardInputSensor extends Sensor {
     });
   }
 
-  public prepare(): Promise<void> {
+  public mount(): Promise<void> {
     process.stdin.setEncoding('utf8');
     process.stdin.resume();
     process.stdin.on('data', chunk => {
@@ -34,7 +34,7 @@ class StandardInputSensor extends Sensor {
     return Promise.resolve();
   }
 
-  public async unprepare(): Promise<void> {
+  public async unmount(): Promise<void> {
     process.stdin.pause();
   }
 }

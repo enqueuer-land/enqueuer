@@ -11,7 +11,7 @@ export class ActuatorProtocol extends Protocol {
     createFunction: (actuatorModel: ActuatorModel) => Actuator,
     documentation?: ProtocolDocumentation
   ) {
-    super(name, ProtocolType.PUBLISHER, documentation);
+    super(name, ProtocolType.ACTUATOR, documentation);
     this.createFunction = createFunction;
   }
 

@@ -116,7 +116,7 @@ Certainly one is what you need.
 #### if you need more
 
     $ nqr -h
-    
+
     Usage: index [options] [test-files...]
 
     Take a look at the full documentation: https://enqueuer.com
@@ -135,7 +135,7 @@ Certainly one is what you need.
     -s, --store [store]                       add variables values to this session (default: [])
     -l, --add-plugin [plugin]                 add plugin
     -e, --parsers-list [parser]               list available object parsers
-    -q, --parallel                            should run tests files parallely (default: false)    
+    -q, --parallel                            should run tests files parallely (default: false)
     -f, --formatters-description [formatter]  describe report formatters (default: false)
     -p, --protocols-description [protocol]    describe protocols (default: false)
     -t, --tests-list [expectedField]          list available tests assertions (default: false)
@@ -154,6 +154,7 @@ Certainly one is what you need.
 
     Contributing:
     https://github.com/enqueuer-land/enqueuer
+
 ---
 
 ### Components
@@ -241,7 +242,7 @@ List of [sensors](#sensor). They're executed simultaneously, therefore, the orde
 
 **tasks**  
 A list of child scenarios. List of [tasks](#task).
-By default, they're executed **sequentially**, therefore, the order is _relevant_.
+By default, they're executed **sequentially**, therefore, the order _is relevant_.
 Unless the _parallel_ attribute is set to true, what makes them get executed **simultaneously**,
 Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml) example, it may help.
 
@@ -253,8 +254,8 @@ Check [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/recu
 
 ##### events
 
-Tasks have "'onInit'" and "'onFinish'" events.
-Available events are described [here](#event). A "'this'" object is available to access and change task attributes.
+Tasks have `onInit` and `onFinish` events.
+Available events are described [here](#event). A `this` object is available to access and change task attributes.
 
     name: my name
     onInit:
@@ -267,16 +268,16 @@ Available events are described [here](#event). A "'this'" object is available to
 
 #### actuator
 
-A actuator action is triggered by enqueuer itself. It **acts** whereas a [sensor](#sensor) **reacts**.
-It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
+An actuator action is triggered by enqueuer itself. It **acts** whereas a [sensor](#sensor) **reacts**.
+It publishes something, it writes, it enqueues, hits an endpoint... These kinds of actions.
 It's worth noting that it always **creates** a message.
 That's the reason why there's an implicitly created test in **onFinish** hook verifying if the message got published.
 
 ##### actuator attributes
 
 Every actuator has its own properties, depending on its protocol and implementation.
-The built-in ['"http'" actuator](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a "'url'", a "'method'", and a "'payload'", if the method is not a "'GET'".
-On the other hand, the built-in ['"tcp'" actuator](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a "'serverAddress'" and a "'port'".
+The built-in [`http` actuator](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands a `url`, a `method`, and a `payload`, if the method is not a `GET`.
+On the other hand, the built-in [`tcp` actuator](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires a `serverAddress` and a `port`.
 These are the actuator attributes:
 
 **name**  
@@ -308,15 +309,15 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 
 ##### events
 
-Available events are described [here](#event). A "'this'" object is available to access and change actuator attributes.
-Depending on the protocol and its implementation, such as "'http'" and "'tcp'", there may exist special events, such as "'onMessageReceived'" event and a special object given "'message'".
-On the other hand, an asynchronous protocol, like: "'udp'" and "'amqp'", usually do not provide it.
+Available events are described [here](#event). A `this` object is available to access and change actuator attributes.
+Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist custom events, such as `onResponseReceived` event and an attribute `message` passed to it.
+On the other hand, an asynchronous protocol, like: `udp` and `amqp`, usually do not provide it.
 
     onInit:
       script: this.ignore = false
       assertions:
       - expectToBeDefined: this.type
-    onMessageReceived: #Provided in synchronous protocols
+    onResponseReceived: #Provided in synchronous protocols
       assertions:
       - expectToBeDefined: message
     onFinish:
@@ -335,8 +336,8 @@ That's the reason why there's an implicitly created test in **onFinish** hook ve
 ##### sensor attributes
 
 Every sensor has its own properties, depending on its protocol and implementation.
-The built-in ['"http'" sensor](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands an "'endpoint'", a "'method'", and a "'port'", if the method is not a GET.
-On the other hand, the built-in ['"tcp'" sensor](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires only a "'port'".
+The built-in [`http` sensor](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml) implementation, for instance, demands an `endpoint`, a `method`, and a `port`, if the method is not a GET.
+On the other hand, the built-in [`tcp` sensor](https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml) implementation requires only a `port`.
 
 These are the sensor attributes:
 
@@ -377,7 +378,7 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 
 ##### events
 
-Available events are described [here](#event). A "'this'" object is available to access and change sensor attributes.
+Available events are described [here](#event). A `this` object is available to access and change sensor attributes.
 
     onInit:
       script: this.avoid = false;
@@ -394,29 +395,35 @@ Available events are described [here](#event). A "'this'" object is available to
 
 ### Event
 
-Events are hook methods executed by enqueuer when an action occurs on actuators, sensors or tasks.
-This is where you'll write your tests. In its "'assertions'" field.
-There will be a variable called "'this'" and, depending on the event's owner, it has an alias "'actuator'", "'sensor'" or "'task'".
+Events are hook methods executed by enqueuer when something happen on actuators, sensors or tasks.
+This is where you'll write your tests. In its `assertions` field.
+There will be a variable called `this` and, depending on the event's owner, it has an alias `actuator`, `sensor` or `task`.
 You're free to explore them however you want, even doing things like this:
 
     actuator.parent.sensors[0].timeout = 1000;
 
 #### hooks
 
-By default, there are three hook events available:
+Every component has at least two hook events available:
 
 **onInit**  
 Available in tasks, actuators and sensors. It gets executed as soon as the component is initialized.
-As available parameter, an "'elapsedTime'" variable is given, counting every millisecond since the instantiation of this component.
+As available parameter, an `elapsedTime` variable is given, counting every millisecond since the instantiation of this component.
 
 **onFinish**  
 Available in tasks, actuators and sensors. It gets executed when the component is about to finish.
-As available parameter, an "'elapsedTime'" variable is given, counting every millisecond since the instantiation of this component.
+As available parameter, an `elapsedTime` variable is given, counting every millisecond since the instantiation of this component. The `onFinish` hook also provides the argument `executedHooks`. A list of strings enumerating which hooks were executed by the componen
+
+`Actuators` and `sensors` also provide custom hooks. Check their documentation to find which ones are available and what arguments they provide.
 
 **custom**
 Depending on the protocol implementation/library/author's mood, the actuator/sensor may have additional hooks.
-Such as "'onError'", "'onResponseReceived'", "'onFileNotFound'" and "'onRedirect'"...
+Such as `onError`, `onResponseReceived`, `onFileNotFound` and `onRedirect`...
 [Http-proxy sensor test file](https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml) is an excellent example, check it out.
+
+A good way to identify that is to run the following command line `nqr -p <type>`. Like:
+
+    $ nqr -p http
 
 **_available variables_**
 Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use "'argumentNames'" as a regular argument. So, let's say you have this task:
@@ -426,23 +433,26 @@ Given that the variables and theirs names may vary according to the scenario, it
 
 You'd get this printed out to the console:
 
-    [ 'task', 'elapsedTime' ]
+    [ 'task', 'elapsedTime', 'executedHooks' ]
 
 #### fields
 
-Every hook object has 3 properties:
+Every hook object has 4 properties:
 
 **script**  
 Javascript code snippet executed when the event is triggered.
 Yeah, I mean it. See it [it](https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml) by yourself.
 Be careful, with great power comes great responsibility.
 
+**debug**
+A boolean value that prints to the console the available arguments and their respective values.
+
 **store**  
 Data to be persisted across tasks.
 
 **assertions**  
 Array of assertions.
-Run "'$ nqr -t'" to see available ones.
+Run `$ nqr -t` to see available ones.
 Consider looking at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml) test example.
 Of course, just like almost everything else in enqueuer world, you can extend this available list using some plugin.
 You can [check them out](#plugins_list) or even [write your own](https://github.com/enqueuer-land/plugin-scaffold).
@@ -535,10 +545,10 @@ List of in [plugins](#plugins) used by the test scenarios. You can [check them o
 **outputs**  
 Once enqueuer runs every execution, it compiles a summary and sends it to every actuator listed in output.
 An important thing to note is that every available report actuator is available here.
-Yes, it means that you are able to send this report through "'http'", "'tcp'", etc. or through a [plugin one](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
-You can run "'$ nqr -p'" to check available report actuators installed.
-Another important thing to note is the "'format'" value. By default a "'json'" summary is generated, but you can change it to whatever format you would like, such as: [Xunit](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), [html](https://github.com/enqueuer-land/enqueuer-plugin-html-report)
-You can run "'$ nqr -f'" to check available installed formats or even [write your own](https://github.com/enqueuer-land/plugin-scaffold)
+Yes, it means that you are able to send this report through `http`, `tcp`, etc. or through a [plugin one](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
+You can run `$ nqr -p` to check available report actuators installed.
+Another important thing to note is the `format` value. By default a `json` summary is generated, but you can change it to whatever format you would like, such as: [Xunit](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), [html](https://github.com/enqueuer-land/enqueuer-plugin-html-report)
+You can run `$ nqr -f` to check available installed formats or even [write your own](https://github.com/enqueuer-land/plugin-scaffold)
 
     outputs:
     - type: file
@@ -572,7 +582,7 @@ Values defined here use the 'key: value' pattern and are available to every test
 ### Variables
 
 Providing power and flexibility, enqueuer allows you to use variables placeholder replacement.
-That's why there is a "'store'" field and you'll see a lot of "'<<'" and "'{{'" being used in the examples files.
+That's why there is a `store` field and you'll see a lot of `<<` and `{{` being used in the examples files.
 It works as simple as this:
 
     name: my name is <<variableKey>>
@@ -597,7 +607,7 @@ Configuration file store object. Set it as you wish, as you can see [here](https
 
 ##### command line
 
-A command line argument using the "'key=value'" format. This way:
+A command line argument using the `key=value` format. This way:
 
     $ nqr --store key=value -s anotherVariable=true
 
@@ -616,14 +626,14 @@ Both ways work:
 
 There are two ways two use a variable:
 
-##### non js code snippet
+##### non-js code snippet
 
-The easiest one is to type "'<<variableKey>>'" or "'{{variableKey}}'" where you want it to be replaced in a test file, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8)
+The easiest one is to type `<<variableKey>>` or `{{variableKey}}` where you want it to be replaced in a test file, as you can see [here](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8)
 
 ##### js code snippet
 
-Using the "'store'" object. It's attributes are the keys and their values are their respective values.
-Therefore, you're free to use "'store.variableKey'", "'console.log(store.variableKey);'" or "'console.log(2 * store['separated key']);'" and get them.
+Using the `store` object. It's attributes are the keys and their values are their respective values.
+Therefore, you're free to use `store.variableKey`, `console.log(store.variableKey);` or `console.log(2 \* store['separated key']);` and get them.
 Like [this](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) one.
 
 #### variables example
@@ -638,7 +648,7 @@ You are able to inject file content into a task/actuator/sensor field.
 
     file: <<file://path/to/file.txt>>
 
-Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: "'<<tag://path/to/file?query=value&other=true>>'".
+Other than that, enqueuer can read it and parse its content as an object using this familiar syntax: `<<tag://path/to/file?query=value&other=true>>`.
 
     task:
         json: <<json://path/to/file.json>>
@@ -655,10 +665,10 @@ Once the object is parsed, your free to use it as a regular object in any event
         -   expect: json.key
             toBeEqualTo: csv[0].key
 
-It get's even better.
-Due its fantastic plugin architecture design, you can extend its default modules and use any of [these](#plugins_list) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.
-The built-in modules for object parsers are: "'json'", "'yml'", "'csv'" and "'file'".
-Run "'$ nqr -e'" to see available ones.
+It gets even better.
+Due to its fantastic plugin architecture design, you can extend its default modules and use any of [these](#plugins_list) plugins or event [write your own](https://github.com/enqueuer-land/plugin-scaffold) to parse however you want.
+The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`.
+Run `$ nqr -e` to see available ones.
 
 #### example
 
@@ -679,7 +689,7 @@ So far, you're able to extend enqueuer default behavior in four ways. Using a pr
 ##### protocol
 
 A protocol plugin enables you to use a different actuator/sensor types.
-Run "'$ nqr -p [protocol-name]'" to get the full available list:
+Run `$ nqr -p [protocol-name]` to get the full available list:
 
     actuators:
     -   name:                  custom
@@ -721,7 +731,7 @@ Each one listed above has a respective example in [the examples folder](https://
 
 An object parser plugin enables you to read and parse files as you wish.
 [This test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) demonstrates how to use it,
-Run "'$ nqr -e [object-parser-name]'" to check available ones:
+Run `$ nqr -e [object-parser-name]` to check available ones:
 
     parsers:
     - yml, yaml
@@ -760,13 +770,13 @@ Looking at the asserter above, we can create assertions like these:
     -   expect: ['"a'", 1, true]
         toContain: 1
 
-Run "'$ nqr -t'" to get the full available list.
+Run `$ nqr -t` to get the full available list.
 Consider looking at [this](https://github.com/enqueuer-land/enqueuer/blob/master/examples/assertions.yml) test example.
 
 ##### report formatter
 
 A report formatter plugin gives you the ability to export enqueuer reports the way you want.
-Run "'$ nqr -f [formatter-name]'" to list available report formatters:
+Run `$ nqr -f [formatter-name]` to list available report formatters:
 
     formatters:
     - console, stdout
@@ -791,7 +801,7 @@ You can tell enqueuer to use a plugin in three different ways: using it as a com
 
 ##### command line
 
-Tell enqueuer to use your plugin through command line this way "'$ nqr -l <plugin-folder> -l <another-plugin-folder>'".
+Tell enqueuer to use your plugin through command line this way `$ nqr -l <plugin-folder> -l <another-plugin-folder>`.
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
 
 ##### configuration file
@@ -820,9 +830,9 @@ Or
     $ npm install --global enqueuer enqueuer-plugin-amqp
     $ nqr -p amqp
 
-You'll see that the "'enqueuer-plugin-amqp'" plugin will be loaded.
+You'll see that the `enqueuer-plugin-amqp` plugin will be loaded.
 Every enqueuer compatible module gets implicitly loaded.
-In order to be enqueuer compatible, a module has to have an "'entryPoint'" exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.
+In order to be enqueuer compatible, a module has to have an `entryPoint` exported function in its main file and, its `package.json` file has to have either `enqueuer` or `qr` as keywords.
 
 ### Stacker
 

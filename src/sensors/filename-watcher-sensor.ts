@@ -12,7 +12,7 @@ class FileSystemWatcherSensor extends Sensor {
     this.options = sensorAttributes.options || { nodir: true };
   }
 
-  public prepare(): Promise<void> {
+  public mount(): Promise<void> {
     return Promise.resolve();
   }
 

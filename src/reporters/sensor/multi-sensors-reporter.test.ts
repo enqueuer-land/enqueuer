@@ -5,7 +5,7 @@ let startTimeoutMock = jest.fn(() => {});
 let onFinishMock = jest.fn();
 let hasFinishedMock = jest.fn();
 // @ts-expect-error
-let getReadyMock = jest.fn(() => new Promise());
+let mountMock = jest.fn(() => new Promise());
 // @ts-expect-error
 let receiveMessageMock = jest.fn(() => new Promise());
 let getReportMock: any;
@@ -13,7 +13,7 @@ let SensorReporterMock = jest.fn(() => {
   return {
     startTimeout: startTimeoutMock,
     hasFinished: hasFinishedMock,
-    getReady: getReadyMock,
+    mount: mountMock,
     onFinish: onFinishMock,
     receiveMessage: receiveMessageMock,
     getReport: getReportMock
@@ -39,7 +39,7 @@ describe('MultiSensorsReporter', () => {
       }
     ];
     startTimeoutMock = jest.fn(() => {});
-    getReadyMock = jest.fn(() => new Promise(() => {}));
+    mountMock = jest.fn(() => new Promise(() => {}));
     receiveMessageMock = jest.fn(() => new Promise(() => {}));
   });
 
@@ -87,7 +87,7 @@ describe('MultiSensorsReporter', () => {
     expect(onFinishMock).toHaveBeenCalledTimes(2);
   });
 
-  it('Sub timeout before getReadyd', async () => {
+  it('Sub timeout before mounted', async () => {
     // @ts-expect-error
     startTimeoutMock = jest.fn((cb: any) => setTimeout(cb, 2000));
     hasFinishedMock = jest.fn(() => true);
@@ -95,7 +95,7 @@ describe('MultiSensorsReporter', () => {
     const multi = new MultiSensorsReporter(constructorArgument);
 
     multi.start();
-    const sensorResult = await multi.prepare();
+    const sensorResult = await multi.mount();
     console.log(sensorResult);
   });
 
@@ -108,14 +108,14 @@ describe('MultiSensorsReporter', () => {
     expect(receiveMessageMock).toHaveBeenCalledTimes(sensors.length);
   });
 
-  it('Sub getReadyd', done => {
-    getReadyMock = jest.fn(() => Promise.resolve());
+  it('Sub mounted', done => {
+    mountMock = jest.fn(() => Promise.resolve());
     let timeoutCb = jest.fn();
 
     const multi = new MultiSensorsReporter(constructorArgument);
 
     multi.start();
-    multi.prepare().then(() => {
+    multi.mount().then(() => {
       expect(startTimeoutMock).toHaveBeenCalled();
       expect(timeoutCb).not.toHaveBeenCalled();
       done();
@@ -151,13 +151,13 @@ describe('MultiSensorsReporter', () => {
 
   it('Handling happy path', done => {
     expect.assertions(0);
-    getReadyMock = jest.fn(() => Promise.resolve());
+    mountMock = jest.fn(() => Promise.resolve());
     receiveMessageMock.mockImplementationOnce(() => Promise.resolve());
     // @ts-expect-error
     const multi = new MultiSensorsReporter([{}]);
     multi
       // @ts-expect-error
-      .prepare(() => {})
+      .mount(() => {})
       .then(() => {
         multi.receiveMessage().then(() => {
           done();

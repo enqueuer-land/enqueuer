@@ -1,11 +1,11 @@
 import { SensorFinalReporter } from './sensor-final-reporter';
 
 describe('SensorFinalReporter', () => {
-  it('No getReadyd, no avoidable, no message, no timeout', () => {
-    const getReadyd = false;
+  it('No mounted, no avoidable, no message, no timeout', () => {
+    const mounted = false;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable
     });
 
@@ -14,33 +14,33 @@ describe('SensorFinalReporter', () => {
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
     expect(report[0].implicit).toBeTruthy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
   });
 
-  it('No getReadyd, no avoidable, no message, timeout', () => {
-    const getReadyd = false;
+  it('No mounted, no avoidable, no message, timeout', () => {
+    const mounted = false;
     const avoidable = false;
     const errorDescription = 'error';
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
-      getReadyError: errorDescription
+      mountError: errorDescription
     });
 
     const report = finalReporter.getReport();
 
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
     expect(report[0].description).toContain(errorDescription);
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('No getReadyd, no avoidable, message, no timeout', () => {
-    const getReadyd = false;
+  it('No mounted, no avoidable, message, no timeout', () => {
+    const mounted = false;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived'
     });
@@ -49,15 +49,15 @@ describe('SensorFinalReporter', () => {
 
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('No getReadyd, no avoidable, message, timeout', () => {
-    const getReadyd = false;
+  it('No mounted, no avoidable, message, timeout', () => {
+    const mounted = false;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived',
       time: { timeout: 1000, totalTime: 1001 }
@@ -67,15 +67,15 @@ describe('SensorFinalReporter', () => {
 
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('No getReadyd, avoidable, no message, no timeout', () => {
-    const getReadyd = false;
+  it('No mounted, avoidable, no message, no timeout', () => {
+    const mounted = false;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable
     });
 
@@ -83,15 +83,15 @@ describe('SensorFinalReporter', () => {
 
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('No getReadyd, avoidable, no message, timeout', () => {
-    const getReadyd = false;
+  it('No mounted, avoidable, no message, timeout', () => {
+    const mounted = false;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       time: { timeout: 1000, totalTime: 1001 }
     });
@@ -100,15 +100,15 @@ describe('SensorFinalReporter', () => {
 
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('No getReadyd, avoidable, message, no timeout', () => {
-    const getReadyd = false;
+  it('No mounted, avoidable, message, no timeout', () => {
+    const mounted = false;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived'
     });
@@ -117,15 +117,15 @@ describe('SensorFinalReporter', () => {
 
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('No getReadyd, avoidable, message, timeout', () => {
-    const getReadyd = false;
+  it('No mounted, avoidable, message, timeout', () => {
+    const mounted = false;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived',
       time: { timeout: 1000, totalTime: 1001 }
@@ -135,15 +135,15 @@ describe('SensorFinalReporter', () => {
 
     expect(report.length).toBe(1);
     expect(report[0].valid).toBeFalsy();
-    expect(report[0].name).toBe('Subscribed');
+    expect(report[0].name).toBe('Prepared');
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('Subscribed, no avoidable, no message, no timeout', () => {
-    const getReadyd = true;
+  it('Prepared, no avoidable, no message, no timeout', () => {
+    const mounted = true;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable
     });
 
@@ -155,11 +155,11 @@ describe('SensorFinalReporter', () => {
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('Subscribed, no avoidable, no message, timeout', () => {
-    const getReadyd = true;
+  it('Prepared, no avoidable, no message, timeout', () => {
+    const mounted = true;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       time: { timeout: 1000, totalTime: 1001 }
     });
@@ -175,11 +175,11 @@ describe('SensorFinalReporter', () => {
   });
 
   it('Ignored', () => {
-    const getReadyd = true;
+    const mounted = true;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
       ignore: true,
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       time: { timeout: 1000, totalTime: 1001 }
     });
@@ -189,11 +189,11 @@ describe('SensorFinalReporter', () => {
     expect(report.length).toBe(0);
   });
 
-  it('Subscribed, no avoidable, message, no timeout', () => {
-    const getReadyd = true;
+  it('Prepared, no avoidable, message, no timeout', () => {
+    const mounted = true;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived'
     });
@@ -207,11 +207,11 @@ describe('SensorFinalReporter', () => {
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('Subscribed, no avoidable, message, timeout', () => {
-    const getReadyd = true;
+  it('Prepared, no avoidable, message, timeout', () => {
+    const mounted = true;
     const avoidable = false;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived',
       time: { timeout: 1000, totalTime: 1001 }
@@ -229,11 +229,11 @@ describe('SensorFinalReporter', () => {
     expect(report[1].implicit).toBeTruthy();
   });
 
-  it('Subscribed, avoidable, no message, no timeout', () => {
-    const getReadyd = true;
+  it('Prepared, avoidable, no message, no timeout', () => {
+    const mounted = true;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable
     });
 
@@ -245,11 +245,11 @@ describe('SensorFinalReporter', () => {
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('Subscribed, avoidable, no message, timeout', () => {
-    const getReadyd = true;
+  it('Prepared, avoidable, no message, timeout', () => {
+    const mounted = true;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       time: { timeout: 1000, totalTime: 1001 }
     });
@@ -262,11 +262,11 @@ describe('SensorFinalReporter', () => {
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('Subscribed, avoidable, message, no timeout', () => {
-    const getReadyd = true;
+  it('Prepared, avoidable, message, no timeout', () => {
+    const mounted = true;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived'
     });
@@ -279,11 +279,11 @@ describe('SensorFinalReporter', () => {
     expect(report[0].implicit).toBeTruthy();
   });
 
-  it('Subscribed, avoidable, message, timeout', () => {
-    const getReadyd = true;
+  it('Prepared, avoidable, message, timeout', () => {
+    const mounted = true;
     const avoidable = true;
     const finalReporter: SensorFinalReporter = new SensorFinalReporter({
-      getReadyd: getReadyd,
+      mounted: mounted,
       avoidable: avoidable,
       messageReceived: 'messageReceived',
       time: { timeout: 1000, totalTime: 1001 }

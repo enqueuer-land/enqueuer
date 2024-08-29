@@ -23,11 +23,11 @@ export abstract class Sensor {
     this.name = sensorAttributes.name;
   }
 
-  public abstract prepare(): Promise<void>;
+  public abstract mount(): Promise<void>;
 
   public abstract receiveMessage(): Promise<any>;
 
-  public async unprepare(): Promise<void> {
+  public async unmount(): Promise<void> {
     //do nothing
   }
 
