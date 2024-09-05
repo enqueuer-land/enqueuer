@@ -1,252 +1,284 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130648239-3"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+      window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
-        gtag('js', new Date());
+      gtag('js', new Date());
 
-        gtag('config', 'UA-130648239-3');
+      gtag('config', 'UA-130648239-3');
     </script>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Learn everything about the almighty enqueuer documentation: not just an integration test tool, a polyglot flow testing tool">
-    <meta name="author" content="Virgs, Lopidio, Guilherme Moraes">
-    <meta name="keywords" content="stacker, nqr, testing, tool, microservice, multiprotocol, polyglot, reactive, message, tcp, mock, amqp, http, test event, event-driven, continuous integration, message testing, polyglot flow, stacker"/>
-    <meta name="robots" content="index, follow">
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="description"
+      content="Learn everything about the almighty enqueuer documentation: not just an integration test tool, a polyglot flow testing tool"
+    />
+    <meta name="author" content="Virgs, Lopidio, Guilherme Moraes" />
+    <meta
+      name="keywords"
+      content="stacker, nqr, testing, tool, microservice, multiprotocol, polyglot, reactive, message, tcp, mock, amqp, http, test event, event-driven, continuous integration, message testing, polyglot flow, stacker"
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/symbol1.png"
+    />
 
     <title>Enqueuer</title>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-</head>
-<style>
-
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
     :root {
-        --nqr-color: #9FB630;
-        --nqr-link: #309fb6;
-        --nqr-text-color: #eeeeee;
-        --nqr-text-smooth-color: #a4a4a4;
-        --nqr-header-background-color: #2b2a2e;
-        --nqr-background-color: #353535;
-        --nqr-background-alternative-color: #424242;
-        --nqr-code-color: #e83e8c;
+      --nqr-color: #9fb630;
+      --nqr-link: #309fb6;
+      --nqr-text-color: #eeeeee;
+      --nqr-text-smooth-color: #a4a4a4;
+      --nqr-header-background-color: #2b2a2e;
+      --nqr-background-color: #353535;
+      --nqr-background-alternative-color: #424242;
+      --nqr-code-color: #e83e8c;
     }
 
     html {
-        scroll-behavior: smooth;
+      scroll-behavior: smooth;
     }
 
     .hljs-comment {
-        color: var(--nqr-text-smooth-color);
+      color: var(--nqr-text-smooth-color);
     }
 
-    .enqueuer-name, .hljs-attr, .hljs-bullet {
-        color: var(--nqr-color);
+    .enqueuer-name,
+    .hljs-attr,
+    .hljs-bullet {
+      color: var(--nqr-color);
     }
 
     a {
-        color: var(--nqr-link);
+      color: var(--nqr-link);
     }
 
     a:hover {
-        text-decoration: none;
-        color: var(--nqr-color);
+      text-decoration: none;
+      color: var(--nqr-color);
     }
 
     .dollar-sign {
-        color: var(--nqr-code-color);
+      color: var(--nqr-code-color);
     }
 
     body {
-        background-color: var(--nqr-background-color);
-        text-align: justify;
+      background-color: var(--nqr-background-color);
+      text-align: justify;
     }
 
     p {
-        color: var(--nqr-text-smooth-color);
+      color: var(--nqr-text-smooth-color);
     }
 
-    h1, h2, h6, strong {
-        color: var(--nqr-text-color);
+    h1,
+    h2,
+    h6,
+    strong {
+      color: var(--nqr-text-color);
     }
 
-    h3, h4, h5 {
-        color: var(--nqr-color);
-        font-size: 2.5em;
-        text-transform: capitalize;
-        font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;;
-        letter-spacing: 2px;
+    h3,
+    h4,
+    h5 {
+      color: var(--nqr-color);
+      font-size: 2.5em;
+      text-transform: capitalize;
+      font-family: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      letter-spacing: 2px;
     }
 
     h4 {
-        font-size: 1.75em;
+      font-size: 1.75em;
     }
 
     h5 {
-        font-size: 1.2em;
+      font-size: 1.2em;
     }
 
     pre {
-        border: 1px solid var(--nqr-background-alternative-color);
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-family: "Source Code Pro", monospace;
-        font-size: .9em;
-        background-color: var(--nqr-header-background-color);
-        line-height: 1.45;
-        word-wrap: break-word;
-        color: var(--nqr-text-color);
+      border: 1px solid var(--nqr-background-alternative-color);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.9em;
+      background-color: var(--nqr-header-background-color);
+      line-height: 1.45;
+      word-wrap: break-word;
+      color: var(--nqr-text-color);
     }
 
     code {
-        padding: 3px;
-        background-color: var(--nqr-header-background-color);
+      padding: 3px;
+      background-color: var(--nqr-header-background-color);
     }
 
     hr {
-        background-color: var(--nqr-background-alternative-color);
-        margin-top: 2rem;
-        margin-bottom: 5rem;
-        border: 0;
-        border-top: 1px solid rgba(0, 0, 0, .1);
-        height: 2px;
+      background-color: var(--nqr-background-alternative-color);
+      margin-top: 2rem;
+      margin-bottom: 5rem;
+      border: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      height: 2px;
     }
 
     .navbar-logo {
-        position: absolute;
-        width: 80%;
-        height: auto;
-        top: 15px;
-        padding-bottom: 0.5rem;
-        margin-bottom: 5rem;
-        border-bottom: 1px solid var(--nqr-text-smooth-color);
+      position: absolute;
+      width: 80%;
+      height: auto;
+      top: 15px;
+      padding-bottom: 0.5rem;
+      margin-bottom: 5rem;
+      border-bottom: 1px solid var(--nqr-text-smooth-color);
     }
 
     .npm-badges-container {
-        display: none;
+      display: none;
     }
 
     .navbar {
-        display: none;
+      display: none;
     }
 
     .navbar-fixed-left {
-        width: 25vw;
-        position: fixed;
-        height: 100%;
-        background-color: var(--nqr-header-background-color);
-        border: 1px solid var(--nqr-background-alternative-color);
-        border-radius: 8px;
-        padding: 6.5rem .5rem .5rem .5rem;
-        box-shadow: 5px 0 20px var(--nqr-background-alternative-color)
+      width: 25vw;
+      position: fixed;
+      height: 100%;
+      background-color: var(--nqr-header-background-color);
+      border: 1px solid var(--nqr-background-alternative-color);
+      border-radius: 8px;
+      padding: 6.5rem 0.5rem 0.5rem 0.5rem;
+      box-shadow: 5px 0 20px var(--nqr-background-alternative-color);
     }
 
     .nav-link {
-        padding: 0 3rem 0.1rem 0.1rem;
-        color: var(--nqr-text-smooth-color);
+      padding: 0 3rem 0.1rem 0.1rem;
+      color: var(--nqr-text-smooth-color);
     }
 
     .nav-link.active {
-        background-color: var(--nqr-background-color) !important;
-        /*border-radius: 5px !important;*/
-        border-left: 2px solid var(--nqr-color) !important;
-        color: var(--nqr-text-color) !important;
+      background-color: var(--nqr-background-color) !important;
+      /*border-radius: 5px !important;*/
+      border-left: 2px solid var(--nqr-color) !important;
+      color: var(--nqr-text-color) !important;
     }
 
     .plugins-list-row:hover {
-        background-color: var(--nqr-background-alternative-color);
+      background-color: var(--nqr-background-alternative-color);
     }
 
-    .nav-link:hover, .nav-link.active:hover {
-        color: var(--nqr-color) !important;
+    .nav-link:hover,
+    .nav-link.active:hover {
+      color: var(--nqr-color) !important;
     }
 
     .nav-link-sub-item {
-        display: none;
+      display: none;
     }
 
     @media (min-width: 1000px) {
-        .npm-badges-container {
-            display: block;
-        }
+      .npm-badges-container {
+        display: block;
+      }
 
-        .navbar {
-            display: block;
-        }
+      .navbar {
+        display: block;
+      }
 
-        .navbar-fixed-left + .container {
-            padding-left: 25vw;
-        }
+      .navbar-fixed-left + .container {
+        padding-left: 25vw;
+      }
     }
 
     @media (min-width: 1400px) {
-
-        .nav-link-sub-item {
-            display: block;
-        }
+      .nav-link-sub-item {
+        display: block;
+      }
     }
 
     .github-corner:hover .octo-arm {
-        animation: octocat-wave 560ms ease-in-out;
+      animation: octocat-wave 560ms ease-in-out;
     }
 
-
     @keyframes octocat-wave {
-        0%, 100% {
-            transform: rotate(0)
-        }
-        20%, 60% {
-            transform: rotate(-25deg)
-        }
-        40%, 80% {
-            transform: rotate(10deg)
-        }
+      0%,
+      100% {
+        transform: rotate(0);
+      }
+      20%,
+      60% {
+        transform: rotate(-25deg);
+      }
+      40%,
+      80% {
+        transform: rotate(10deg);
+      }
     }
 
     @media (max-width: 500px) {
-        .github-corner:hover .octo-arm {
-            animation: none
-        }
+      .github-corner:hover .octo-arm {
+        animation: none;
+      }
 
-        .github-corner .octo-arm {
-            animation: octocat-wave 560ms ease-in-out
-        }
+      .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out;
+      }
     }
-
-</style>
-<body data-spy="scroll" data-target="#navbar-nqr" data-offset="0">
-<!--<main role="main">-->
-<a href="https://github.com/enqueuer-land/enqueuer" class="github-corner" aria-label="View source on GitHub">
-    <svg width="80" height="80" viewBox="0 0 250 250"
-         style="fill:var(--nqr-color); color: var(--nqr-background-color); position: fixed; top: 0; border: 0; right: 0;"
-         aria-hidden="true">
+  </style>
+  <body data-spy="scroll" data-target="#navbar-nqr" data-offset="0">
+    <!--<main role="main">-->
+    <a href="https://github.com/enqueuer-land/enqueuer" class="github-corner" aria-label="View source on GitHub">
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 250 250"
+        style="fill: var(--nqr-color); color: var(--nqr-background-color); position: fixed; top: 0; border: 0; right: 0"
+        aria-hidden="true"
+      >
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
-<nav id="navbar-nqr" class="navbar navbar-fixed-left">    
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor"
+          style="transform-origin: 130px 106px"
+          class="octo-arm"
+        ></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor"
+          class="octo-body"
+        ></path>
+      </svg>
+    </a>
+    <nav id="navbar-nqr" class="navbar navbar-fixed-left">    
     <a class="" href="#">
             <img class="ml-3 navbar-logo"
                  src="https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo3.png"
                  alt="enqueuer logo"
                  title="Enqueuer Logo">        
-    </a><nav class="nav nav-pills flex-column"><a class="nav-link " href="#welcome" style="">&nbsp;&nbsp;&nbsp;1. Welcome</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#install_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1. install it</a><a class="nav-link nav-link-sub-item" href="#if_you_need_more" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2. if you need more</a></nav><a class="nav-link " href="#components" style="">&nbsp;&nbsp;&nbsp;2. Components</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#task" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1. task</a><a class="nav-link nav-link-sub-item" href="#actuator" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2. actuator</a><a class="nav-link nav-link-sub-item" href="#sensor" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3. sensor</a></nav><a class="nav-link " href="#event" style="">&nbsp;&nbsp;&nbsp;3. Event</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#hooks" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1. hooks</a><a class="nav-link nav-link-sub-item" href="#fields" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2. fields</a><a class="nav-link nav-link-sub-item" href="#event_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3. event example</a></nav><a class="nav-link " href="#task_flow" style="">&nbsp;&nbsp;&nbsp;4. Task Flow</a><a class="nav-link " href="#configuration_file" style="">&nbsp;&nbsp;&nbsp;5. Configuration File</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#attributes" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.1. attributes</a><a class="nav-link nav-link-sub-item" href="#example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2. example</a></nav><a class="nav-link " href="#variables" style="">&nbsp;&nbsp;&nbsp;6. Variables</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#set_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1. set a variable</a><a class="nav-link nav-link-sub-item" href="#use_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2. use a variable</a><a class="nav-link nav-link-sub-item" href="#variables_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.3. variables example</a></nav><a class="nav-link " href="#content_file_injection" style="">&nbsp;&nbsp;&nbsp;7. Content File Injection</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1. example</a></nav><a class="nav-link " href="#plugins" style="">&nbsp;&nbsp;&nbsp;8. Plugins</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#plugin_types" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.1. plugin types</a><a class="nav-link nav-link-sub-item" href="#plugins_list" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.2. plugins list</a><a class="nav-link nav-link-sub-item" href="#plugins_installation" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.3. plugins installation</a></nav><a class="nav-link " href="#stacker" style="">&nbsp;&nbsp;&nbsp;9. Stacker</a><a class="nav-link " href="#open_source" style="">&nbsp;&nbsp;&nbsp;10. Open source</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#contributors" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1. contributors</a><a class="nav-link nav-link-sub-item" href="#code_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.2. code it</a><a class="nav-link nav-link-sub-item" href="#feedback" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.3. feedback</a></nav></nav></nav><div class="nqr-main-container container" style="max-width: 90%"><p><a href=""><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a>
+    </a><nav class="nav nav-pills flex-column"><a class="nav-link " href="#enqueuer" style="">&nbsp;&nbsp;&nbsp;1. Enqueuer</a><nav class="nav nav-pills flex-column"><a class="nav-link " href="#welcome" style="">&nbsp;&nbsp;&nbsp;1. Welcome</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#install_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1. install it</a><a class="nav-link nav-link-sub-item" href="#if_you_need_more" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2. if you need more</a></nav><a class="nav-link " href="#components" style="">&nbsp;&nbsp;&nbsp;2. Components</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#task" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1. task</a><a class="nav-link nav-link-sub-item" href="#actuator" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2. actuator</a><a class="nav-link nav-link-sub-item" href="#sensor" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3. sensor</a></nav><a class="nav-link " href="#event" style="">&nbsp;&nbsp;&nbsp;3. Event</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#hooks" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1. hooks</a><a class="nav-link nav-link-sub-item" href="#fields" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2. fields</a><a class="nav-link nav-link-sub-item" href="#event_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3. event example</a></nav><a class="nav-link " href="#task_flow" style="">&nbsp;&nbsp;&nbsp;4. Task Flow</a><a class="nav-link " href="#configuration_file" style="">&nbsp;&nbsp;&nbsp;5. Configuration File</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#attributes" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.1. attributes</a><a class="nav-link nav-link-sub-item" href="#example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2. example</a></nav><a class="nav-link " href="#variables" style="">&nbsp;&nbsp;&nbsp;6. Variables</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#set_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1. set a variable</a><a class="nav-link nav-link-sub-item" href="#use_a_variable" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2. use a variable</a><a class="nav-link nav-link-sub-item" href="#variables_example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.3. variables example</a></nav><a class="nav-link " href="#content_file_injection" style="">&nbsp;&nbsp;&nbsp;7. Content File Injection</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#example" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1. example</a></nav><a class="nav-link " href="#plugins" style="">&nbsp;&nbsp;&nbsp;8. Plugins</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#plugin_types" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.1. plugin types</a><a class="nav-link nav-link-sub-item" href="#plugins_list" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.2. plugins list</a><a class="nav-link nav-link-sub-item" href="#plugins_installation" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.3. plugins installation</a></nav><a class="nav-link " href="#stacker" style="">&nbsp;&nbsp;&nbsp;9. Stacker</a><a class="nav-link " href="#open_source" style="">&nbsp;&nbsp;&nbsp;10. Open source</a><nav class="nav nav-pills flex-column"><a class="nav-link nav-link-sub-item" href="#contributors" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1. contributors</a><a class="nav-link nav-link-sub-item" href="#code_it" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.2. code it</a><a class="nav-link nav-link-sub-item" href="#feedback" style="font-size: 0.95rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.3. feedback</a></nav></nav></nav><div class="nqr-main-container container" style="max-width: 90%"><h1 id="enqueuer" style="padding-left: -16px">1 Enqueuer</h1>
+
+<p><a href="https://www.npmjs.com/package/enqueuer"><img src="https://img.shields.io/npm/dt/enqueuer.svg" alt="npm" title="" /></a>
 <a href="https://travis-ci.org/enqueuer-land/enqueuer"><img src="https://travis-ci.org/enqueuer-land/enqueuer.svg?branch=master" alt="Build Status" title="" /></a>
 <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/enqueuer-land/enqueuer.svg" alt="Greenkeeper badge" title="" /></a>
 <a href="https://snyk.io/test/npm/enqueuer"><img src="https://snyk.io/test/npm/enqueuer/badge.svg" alt="Known Vulnerabilities" title="" /></a>
@@ -262,7 +294,7 @@
 
 <p>First things first, let's get the enqueuer installed on your machine.</p>
 
-<pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer
+<pre><code class="yaml">npm install --global enqueuer
 </code></pre>
 
 <p>Alright, it's time to create a task file.
@@ -284,7 +316,7 @@ Run it:</p>
 <pre><code class="yaml"><span class="dollar-sign">$</span> enqueuer enqueuer-repo-hit.yml
 </code></pre>
 
-<p>Now you know how to hit a http server. 
+<p>Now you know how to hit a http server.
 What if I want to mock a http server response, you may ask. Not a big deal for enqueuer lovers:</p>
 
 <pre><code class="yaml">timeout: -1
@@ -319,7 +351,7 @@ Yes, of course you can hit your own mocked http server:</p>
         -   expect: statusCode
             toBeGreaterThan: 400
         -   expect: body
-            toBeEqualTo:  "'blah'"
+            toBeEqualTo: "'blah'"
 sensors:
 -   type: http
     endpoint: /resource
@@ -331,7 +363,7 @@ sensors:
     onMessageReceived:
         assertions:
         -   expect: body
-            toContain:  "'queue'"
+            toContain: "'queue'"
 </code></pre>
 
 <p>Now, let's say you want to mix different protocols to test a bit more complex flow.
@@ -361,48 +393,51 @@ sensors:
 
 <p>Now go nuts!
 It's all yours. Have fun.
-If you want more examples about <code class="yaml">http</code>, consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml">this test</a>. 
-Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples. 
-Certainly one is what you need.    </p>
+If you want more examples about "'http'", consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-more-examples.yml">this test</a>.
+Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">this out</a>, you'll find countless examples.
+Certainly one is what you need.</p>
 
 <h4 id="if_you_need_more" style="padding-left: 8px">1.2 if you need more</h4>
 
 <pre><code class="yaml"><span class="dollar-sign">$</span> nqr -h
-Usage: nqr [options] &lt;test-file&gt; [other-test-files...]
+
+Usage: index [options] [test-files...]
 
 Take a look at the full documentation: https://enqueuer.com
 
+Arguments:
+test-files                                other files to be tested
+
 Options:
-  -v, --version                             output the version number
-  -b, --verbosity &lt;level&gt;                   set verbosity (default: "warn")
-  -c, --config-file &lt;path&gt;                  set configurationFile
-  -d, --show-explicit-tests-only            show explicit tests only
-  -e, --parsers-list [parser]               list available object parsers
-  -f, --formatters-description [formatter]  describe report formatters
-  -o, --stdout-task-output           add stdout as task output
-  -m, --max-report-level-print &lt;level&gt;      set max report level print
-  -p, --protocols-description [protocol]    describe protocols
-  -t, --tests-list [expectedField]          list available tests assertions
-  -u, --loaded-modules-list                 list loaded modules
-  -i, --show-passing-tests                  show passing tests
-  -s, --store [store]                       add variables values to this session (default: [])
-  -l, --add-plugin [plugin]                 add plugin (default: [])
-  -a, --add-file &lt;file&gt;                     add file to be tested (default: [])
-  -A, --add-file-and-ignore-others &lt;file&gt;   add file to be tested and ignore others (default: [])
-  -h, --help                                output usage information
+-v, --version                             output the current version
+-b, --verbosity &lt;level&gt;                   set verbosity (choices: "trace", "debug", "info", "warn", "error", "fatal", default: "warn")
+-c, --config-file &lt;path&gt;                  set configurationFile
+-d, --show-explicit-tests-only            show explicit tests only (default: false)
+-o, --stdout-task-output           add stdout as task output (default: false)
+-m, --max-report-level-print &lt;level&gt;      set max report level print
+-i, --show-passing-tests                  show passing tests
+-s, --store [store]                       add variables values to this session (default: [])
+-l, --add-plugin [plugin]                 add plugin
+-e, --parsers-list [parser]               list available object parsers
+-q, --parallel                            should run tests files parallely (default: false)
+-f, --formatters-description [formatter]  describe report formatters (default: false)
+-p, --protocols-description [protocol]    describe protocols (default: false)
+-t, --tests-list [expectedField]          list available tests assertions (default: false)
+-u, --loaded-modules-list                 list loaded modules (default: false)
+-h, --help                                display help for command
 
 Examples:
-  <span class="dollar-sign">$</span> nqr --config-file config-file.yml --verbosity error --store key=value
-  <span class="dollar-sign">$</span> enqueuer -c config-file.yml test-file.yml --add-file another-test-file.yml -b info
-  <span class="dollar-sign">$</span> enqueuer test-file.yml --store someKey=true --store someOtherKey=false
-  <span class="dollar-sign">$</span> nqr --protocols-description -s key=value
-  <span class="dollar-sign">$</span> nqr -t expect
-  <span class="dollar-sign">$</span> nqr -l my-enqueuer-plugin-name -p plugin-protocol
-  <span class="dollar-sign">$</span> nqr -p http
-  <span class="dollar-sign">$</span> nqr --formatters-description json
+<span class="dollar-sign">$</span> nqr --config-file config-file.yml --verbosity error --store key=value
+<span class="dollar-sign">$</span> enqueuer -c config-file.yml test-file.yml another-test-file.yml -b info
+<span class="dollar-sign">$</span> enqueuer test-file.yml --store someKey=true --store someOtherKey=false
+<span class="dollar-sign">$</span> nqr --protocols-description -s key=value
+<span class="dollar-sign">$</span> nqr -t expect
+<span class="dollar-sign">$</span> nqr -l my-enqueuer-plugin-name -p plugin-protocol
+<span class="dollar-sign">$</span> nqr -p http
+<span class="dollar-sign">$</span> nqr --formatters-description json
 
 Contributing:
-  https://github.com/enqueuer-land/enqueuer
+https://github.com/enqueuer-land/enqueuer
 </code></pre>
 
 <hr />
@@ -410,7 +445,7 @@ Contributing:
 <h3 id="components" style="padding-left: 0px">2 Components</h3>
 
 <p>In order to accomplish more than just hitting enqueuer's repo or doing a quick self http hit, there are a few things that you'll probably need to know.
-Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case. 
+Don't worry, it's not too much and, as mentioned earlier, there is a lot of examples <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/">here</a>, just in case.
 There are only three important component concepts: <a href="#task">tasks</a>, <a href="#actuator">actuators</a> and <a href="#sensor">sensors</a>.
 They work along with each other and are responsible for the full behavior of enqueuer.</p>
 
@@ -421,7 +456,7 @@ Picture it as if it was a collection of <a href="#actuator">actuators</a>, <a hr
 It helps because this is exactly what it is.
 As the others components, it has some attributes. All of them are optionals. And it supports multi-level test scenarios out of the box. Yeap, go as recursive as you want.
 Every test file is a task.
-You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later. 
+You don't know some of these attributes values yet? Don't worry, just put a variable there and let enqueuer replace it with the value you set later.
 <a href="#variables">Variable replacements</a> are available through the entire task.</p>
 
 <h5 id="task_attributes" style="padding-left: 16px">2.1.1 task attributes</h5>
@@ -456,7 +491,7 @@ Defaults to 1. Sets how many times this test will be executed. Check <a href="ht
 </code></pre>
 
 <p><strong>id</strong> <br>
-Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    </p>
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.</p>
 
 <pre><code class="yaml">id: ID-0123456789
 </code></pre>
@@ -501,9 +536,9 @@ List of <a href="#sensor">sensors</a>. They're executed simultaneously, therefor
 </code></pre>
 
 <p><strong>tasks</strong> <br>
-A list of child scenarios. List of <a href="#task">tasks</a>. 
-By default, they're executed <strong>sequentially</strong>, therefore, the order is <em>relevant</em>.
-Unless the <em>parallel</em> attribute is set to true, what makes them get executed <strong>simultaneously</strong>, 
+A list of child scenarios. List of <a href="#task">tasks</a>.
+By default, they're executed <strong>sequentially</strong>, therefore, the order <em>is relevant</em>.
+Unless the <em>parallel</em> attribute is set to true, what makes them get executed <strong>simultaneously</strong>,
 Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/recursion.yml">this</a> example, it may help.</p>
 
 <pre><code class="yaml">tasks:
@@ -523,23 +558,23 @@ onInit:
   script: this.delay = 3000;
   assertions:
   - expectToBeDefined: this.name
-onFinish:  
+onFinish:
   assertions:
   - expectToBeDefined: this.name
 </code></pre>
 
 <h4 id="actuator" style="padding-left: 8px">2.2 actuator</h4>
 
-<p>A actuator action is triggered by enqueuer itself. It <strong>acts</strong> whereas a <a href="#sensor">sensor</a> <strong>reacts</strong>.
-It publishes something, it writes, it enqueues, hits and endpoint... These kinds of actions.
-It's worth noting that it always <strong>creates</strong> a message. 
+<p>An actuator action is triggered by enqueuer itself. It <strong>acts</strong> whereas a <a href="#sensor">sensor</a> <strong>reacts</strong>.
+It publishes something, it writes, it enqueues, hits an endpoint... These kinds of actions.
+It's worth noting that it always <strong>creates</strong> a message.
 That's the reason why there's an implicitly created test in <strong>onFinish</strong> hook verifying if the message got published.</p>
 
 <h5 id="actuator_attributes" style="padding-left: 16px">2.2.1 actuator attributes</h5>
 
 <p>Every actuator has its own properties, depending on its protocol and implementation.
 The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> actuator</a> implementation, for instance, demands a <code class="yaml">url</code>, a <code class="yaml">method</code>, and a <code class="yaml">payload</code>, if the method is not a <code class="yaml">GET</code>.
-On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> actuator</a> implementation requires a <code class="yaml">serverAddress</code> and a <code class="yaml">port</code>. 
+On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> actuator</a> implementation requires a <code class="yaml">serverAddress</code> and a <code class="yaml">port</code>.
 These are the actuator attributes:</p>
 
 <p><strong>name</strong> <br>
@@ -569,7 +604,7 @@ Defaults to false. Tells to enqueuer that this actuator should be skipped. Check
 </code></pre>
 
 <p><strong>id</strong> <br>
-Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    </p>
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.</p>
 
 <pre><code class="yaml">id: ID-0123456789
 </code></pre>
@@ -577,17 +612,17 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 <h5 id="events" style="padding-left: 16px">2.2.2 events</h5>
 
 <p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change actuator attributes.
-Depending on the protocol and its implementation, such as <code class="yaml">http</code> and <code class="yaml">tcp</code>, there may exist special events, such as <code class="yaml">onMessageReceived</code> event and a special object given <code class="yaml">message</code>. 
-On the other hand, an asynchronous protocol, like: <code class="yaml">udp</code> and <code class="yaml">amqp</code>, usually do not provide it. </p>
+Depending on the protocol and its implementation, such as <code class="yaml">http</code> and <code class="yaml">tcp</code>, there may exist custom events, such as <code class="yaml">onResponseReceived</code> event and an attribute <code class="yaml">message</code> passed to it.
+On the other hand, an asynchronous protocol, like: <code class="yaml">udp</code> and <code class="yaml">amqp</code>, usually do not provide it.</p>
 
 <pre><code class="yaml">onInit:
   script: this.ignore = false
   assertions:
   - expectToBeDefined: this.type
-onMessageReceived: #Provided in synchronous protocols  
+onResponseReceived: #Provided in synchronous protocols
   assertions:
   - expectToBeDefined: message
-onFinish:  
+onFinish:
   assertions:
   - expectToBeDefined: this.type
 </code></pre>
@@ -596,16 +631,16 @@ onFinish:
 
 <p>A sensor is an "under demand" event. It <strong>reacts</strong> whereas a <a href="#actuator">actuator</a> <strong>acts</strong>.
 It consumes something, it reads, it dequeues, gets hit... These kinds of actions.
-This means that it is not triggered by enqueuer itself. 
+This means that it is not triggered by enqueuer itself.
 Rather than that, enqueuer waits on an external event to be triggered and then it asserts against the message that was passed to the sensor.
-It's worth noting that it always <strong>receives</strong> a message. 
+It's worth noting that it always <strong>receives</strong> a message.
 That's the reason why there's an implicitly created test in <strong>onFinish</strong> hook verifying if a message got received.</p>
 
 <h5 id="sensor_attributes" style="padding-left: 16px">2.3.1 sensor attributes</h5>
 
 <p>Every sensor has its own properties, depending on its protocol and implementation.
 The built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http.yml"><code class="yaml">http</code> sensor</a> implementation, for instance, demands an <code class="yaml">endpoint</code>, a <code class="yaml">method</code>, and a <code class="yaml">port</code>, if the method is not a GET.
-On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> sensor</a> implementation requires only a <code class="yaml">port</code>. </p>
+On the other hand, the built-in <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/tcp.yml"><code class="yaml">tcp</code> sensor</a> implementation requires only a <code class="yaml">port</code>.</p>
 
 <p>These are the sensor attributes:</p>
 
@@ -641,27 +676,27 @@ Set to zero or less than zero to run it endlessly.</p>
 <p><strong>ignore</strong> <br>
 Defaults to false. Tells to enqueuer that this sensor should be skipped. Check <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/ignore.yml">this</a> to see it working.</p>
 
-<pre><code class="yaml">ignore: true    
+<pre><code class="yaml">ignore: true
 </code></pre>
 
 <p><strong>id</strong> <br>
-Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.    </p>
+Defaults to an auto-generated one. Uniquely identify this component among the others. It gets implicitly set by enqueuer if it is not set initially.</p>
 
 <pre><code class="yaml">id: ID-0123456789
 </code></pre>
 
 <h5 id="events" style="padding-left: 16px">2.3.2 events</h5>
 
-<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change sensor attributes.  </p>
+<p>Available events are described <a href="#event">here</a>. A <code class="yaml">this</code> object is available to access and change sensor attributes.</p>
 
 <pre><code class="yaml">onInit:
   script: this.avoid = false;
   assertions:
   - expectToBeDefined: this.type
-onMessageReceived:  
+onMessageReceived:
   assertions:
   - expectToBeDefined: message
-onFinish:  
+onFinish:
   assertions:
   - expectToBeDefined: this.type
 </code></pre>
@@ -670,7 +705,7 @@ onFinish:
 
 <h3 id="event" style="padding-left: 0px">3 Event</h3>
 
-<p>Events are hook methods executed by enqueuer when an action occurs on actuators, sensors or tasks.
+<p>Events are hook methods executed by enqueuer when something happen on actuators, sensors or tasks.
 This is where you'll write your tests. In its <code class="yaml">assertions</code> field.
 There will be a variable called <code class="yaml">this</code> and, depending on the event's owner, it has an alias <code class="yaml">actuator</code>, <code class="yaml">sensor</code> or <code class="yaml">task</code>.
 You're free to explore them however you want, even doing things like this:</p>
@@ -680,7 +715,7 @@ You're free to explore them however you want, even doing things like this:</p>
 
 <h4 id="hooks" style="padding-left: 8px">3.1 hooks</h4>
 
-<p>By default, there are three hook events available:</p>
+<p>Every component has at least two hook events available:</p>
 
 <p><strong>onInit</strong> <br>
 Available in tasks, actuators and sensors. It gets executed as soon as the component is initialized.
@@ -688,15 +723,22 @@ As available parameter, an <code class="yaml">elapsedTime</code> variable is giv
 
 <p><strong>onFinish</strong> <br>
 Available in tasks, actuators and sensors. It gets executed when the component is about to finish.
-As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every millisecond since the instantiation of this component. </p>
+As available parameter, an <code class="yaml">elapsedTime</code> variable is given, counting every millisecond since the instantiation of this component. The <code class="yaml">onFinish</code> hook also provides the argument <code class="yaml">executedHooks</code>. A list of strings enumerating which hooks were executed by the componen</p>
+
+<p><code class="yaml">Actuators</code> and <code class="yaml">sensors</code> also provide custom hooks. Check their documentation to find which ones are available and what arguments they provide.</p>
 
 <p><strong>custom</strong>
 Depending on the protocol implementation/library/author's mood, the actuator/sensor may have additional hooks.
-Such as <code class="yaml">onError</code>, <code class="yaml">onResponseReceived</code>, <code class="yaml">onFileNotFound</code> and <code class="yaml">onRedirect</code>... 
+Such as <code class="yaml">onError</code>, <code class="yaml">onResponseReceived</code>, <code class="yaml">onFileNotFound</code> and <code class="yaml">onRedirect</code>...
 <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/http-proxy.yml">Http-proxy sensor test file</a> is an excellent example, check it out.</p>
 
-<p><em><strong>available variables</em></strong>
-Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use <code class="yaml">argumentNames</code> as a regular argument. So, let's say you have this task:</p>
+<p>A good way to identify that is to run the following command line <code class="yaml">nqr -p &lt;type&gt;</code>. Like:</p>
+
+<pre><code class="yaml"><span class="dollar-sign">$</span> nqr -p http
+</code></pre>
+
+<p><strong><em>available variables</em></strong>
+Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use "'argumentNames'" as a regular argument. So, let's say you have this task:</p>
 
 <pre><code class="yaml">onFinish:
   script: console.log(argumentNames)
@@ -704,20 +746,23 @@ Given that the variables and theirs names may vary according to the scenario, it
 
 <p>You'd get this printed out to the console:</p>
 
-<pre><code class="yaml">[ 'task', 'elapsedTime' ]
+<pre><code class="yaml">[ 'task', 'elapsedTime', 'executedHooks' ]
 </code></pre>
 
 <h4 id="fields" style="padding-left: 8px">3.2 fields</h4>
 
-<p>Every hook object has 3 properties:</p>
+<p>Every hook object has 4 properties:</p>
 
 <p><strong>script</strong> <br>
 Javascript code snippet executed when the event is triggered.
 Yeah, I mean it. See it <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/crypto-require.yml">it</a> by yourself.
 Be careful, with great power comes great responsibility.</p>
 
+<p><strong>debug</strong>
+A boolean value that prints to the console the available arguments and their respective values.</p>
+
 <p><strong>store</strong> <br>
-Data to be persisted across tasks.  </p>
+Data to be persisted across tasks.</p>
 
 <p><strong>assertions</strong> <br>
 Array of assertions.
@@ -810,11 +855,11 @@ Defaults to 1. The deepest level of report to be printed to the console.</p>
 </code></pre>
 
 <p><strong>plugins</strong> <br>
-List of in <a href="#plugins">plugins</a> used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>. </p>
+List of in <a href="#plugins">plugins</a> used by the test scenarios. You can <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">check them out</a> or <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a>.</p>
 
 <pre><code class="yaml">plugins:
-- enqueuer-plugin-amqp 
-- enqueuer-plugin-ws 
+- enqueuer-plugin-amqp
+- enqueuer-plugin-ws
 - enqueuer-plugin-mqtt
 - enqueuer-plugin-html-report
 </code></pre>
@@ -823,7 +868,7 @@ List of in <a href="#plugins">plugins</a> used by the test scenarios. You can <a
 Once enqueuer runs every execution, it compiles a summary and sends it to every actuator listed in output.
 An important thing to note is that every available report actuator is available here.
 Yes, it means that you are able to send this report through <code class="yaml">http</code>, <code class="yaml">tcp</code>, etc. or through a <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugin one</a> or a <a href="https://github.com/enqueuer-land/plugin-scaffold">custom one</a>.
-You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -p</code> to check available report actuators installed. 
+You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -p</code> to check available report actuators installed.
 Another important thing to note is the <code class="yaml">format</code> value. By default a <code class="yaml">json</code> summary is generated, but you can change it to whatever format you would like, such as: <a href="https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report">Xunit</a>, <a href="https://github.com/enqueuer-land/enqueuer-plugin-html-report">html</a>
 You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -f</code> to check available installed formats or even <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a></p>
 
@@ -842,7 +887,7 @@ You can run <code class="yaml"><span class="dollar-sign">$</span> nqr -f</code> 
 Values defined here use the 'key: value' pattern and are available to every test scenario throughout the entire execution</p>
 
 <pre><code class="yaml">store:
-  variableKey: "my value" # Defines 'variableKey' key and its value 'my value'. 
+  variableKey: "my value" # Defines 'variableKey' key and its value 'my value'.
 
   'separated key': 6
 
@@ -889,35 +934,35 @@ It works as simple as this:</p>
 
 <h5 id="command_line" style="padding-left: 16px">6.1.2 command line</h5>
 
-<p>A command line argument using the <code class="yaml">key=value</code> format. This way: </p>
+<p>A command line argument using the <code class="yaml">key=value</code> format. This way:</p>
 
 <pre><code class="yaml"><span class="dollar-sign">$</span> nqr --store key=value -s anotherVariable=true
 </code></pre>
 
 <h5 id="event" style="padding-left: 16px">6.1.3 event</h5>
 
-<p>Dynamically set it through any <a href="#event">event</a>. 
+<p>Dynamically set it through any <a href="#event">event</a>.
 Be it in its <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">script</a> field or straight through its store <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3">field</a>.
 Both ways work:</p>
 
 <pre><code class="yaml">onInit:
     script: store.key = 123;
     store:
-        anotherKey: "'another Value'" 
+        anotherKey: "'another Value'"
 </code></pre>
 
 <h4 id="use_a_variable" style="padding-left: 8px">6.2 use a variable</h4>
 
 <p>There are two ways two use a variable:</p>
 
-<h5 id="non_js_code_snippet" style="padding-left: 16px">6.2.1 non js code snippet</h5>
+<h5 id="non-js_code_snippet" style="padding-left: 16px">6.2.1 non-js code snippet</h5>
 
 <p>The easiest one is to type <code class="yaml">&lt;&lt;variableKey&gt;&gt;</code> or <code class="yaml">{{variableKey}}</code> where you want it to be replaced in a test file, as you can see <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L8">here</a></p>
 
 <h5 id="js_code_snippet" style="padding-left: 16px">6.2.2 js code snippet</h5>
 
-<p>Using the <code class="yaml">store</code> object. It's attributes are the keys and their values are their respective values. 
-Therefore, you're free to use <code class="yaml">store.variableKey</code>, <code class="yaml">console.log(store.variableKey);</code> or <code class="yaml">console.log(2 * store['separated key']);</code> and get them.
+<p>Using the <code class="yaml">store</code> object. It's attributes are the keys and their values are their respective values.
+Therefore, you're free to use <code class="yaml">store.variableKey</code>, <code class="yaml">console.log(store.variableKey);</code> or <code class="yaml">console.log(2 <br>* store['separated key']);</code> and get them.
 Like <a href="https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5">this</a> one.</p>
 
 <h4 id="variables_example" style="padding-left: 8px">6.3 variables example</h4>
@@ -952,9 +997,9 @@ onFinish:
         toBeEqualTo: csv[0].key
 </code></pre>
 
-<p>It get's even better. 
-Due its fantastic plugin architecture design, you can extend its default modules and use any of <a href="#plugins_list">these</a> plugins or event <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a> to parse however you want.
-The built-in modules for object parsers are: <code class="yaml">json</code>, <code class="yaml">yml</code>, <code class="yaml">csv</code> and <code class="yaml">file</code>. 
+<p>It gets even better.
+Due to its fantastic plugin architecture design, you can extend its default modules and use any of <a href="#plugins_list">these</a> plugins or event <a href="https://github.com/enqueuer-land/plugin-scaffold">write your own</a> to parse however you want.
+The built-in modules for object parsers are: <code class="yaml">json</code>, <code class="yaml">yml</code>, <code class="yaml">csv</code> and <code class="yaml">file</code>.
 Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e</code> to see available ones.</p>
 
 <h4 id="example" style="padding-left: 8px">7.1 example</h4>
@@ -967,7 +1012,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e</code> to see a
 
 <p>You're probably aware by now but it doesn't hurt do emphasize it: enqueuer provides an amazingly powerful plugin extensible architecture.
 It has <a href="#plugins_list">several plugins available</a>, but if none of them pleases you, you're free to <a href="https://github.com/enqueuer-land/plugin-scaffold">create your own</a>.
-Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugins repository</a>.  </p>
+Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our <a href="https://github.com/enqueuer-land/plugins-list#enqueuer-plugins">plugins repository</a>.</p>
 
 <h4 id="plugin_types" style="padding-left: 8px">8.1 plugin types</h4>
 
@@ -975,10 +1020,10 @@ Albeit you don't have to share the one you created, we encourage you to do so. T
 
 <h5 id="protocol" style="padding-left: 16px">8.1.1 protocol</h5>
 
-<p>A protocol plugin enables you to use a different actuator/sensor types. 
+<p>A protocol plugin enables you to use a different actuator/sensor types.
 Run <code class="yaml"><span class="dollar-sign">$</span> nqr -p [protocol-name]</code> to get the full available list:</p>
 
-<pre><code class="yaml">actuators: 
+<pre><code class="yaml">actuators:
 -   name:                  custom
 -   name:                  file
 -   name:                  http
@@ -986,7 +1031,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -p [protocol-name]
 -   name:                  stdout
 -   name:                  tcp
 -   ...
-sensors: 
+sensors:
 -   name:                  custom
 -   name:                  file
     messageReceivedParams: content, name, size, modified, created
@@ -1022,7 +1067,7 @@ sensors:
 <a href="https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml">This test example</a> demonstrates how to use it,
 Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e [object-parser-name]</code> to check available ones:</p>
 
-<pre><code class="yaml">parsers: 
+<pre><code class="yaml">parsers:
 - yml, yaml
 - json
 - file
@@ -1038,16 +1083,16 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -e [object-parser-
 
 <p>An asserter plugin provides you a nicely way to use different assertions than these built-in ones.</p>
 
-<pre><code class="yaml">asserters: 
--   expect: 
+<pre><code class="yaml">asserters:
+-   expect:
         required:    true
         type:        string, array
         description: actual value
-    not: 
+    not:
         required:    false
         type:        null
         description: negates
-    toContain: 
+    toContain:
         required:    true
         type:        string, any
         description: element
@@ -1071,7 +1116,7 @@ Consider looking at <a href="https://github.com/enqueuer-land/enqueuer/blob/mast
 <p>A report formatter plugin gives you the ability to export enqueuer reports the way you want.
 Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name]</code> to list available report formatters:</p>
 
-<pre><code class="yaml">formatters: 
+<pre><code class="yaml">formatters:
 - console, stdout
 - json
 - yml, yaml
@@ -1104,7 +1149,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name
                             <a href="https://github.com/thiagobustamante/enqueuer-cucumber" style="overflow: scroll; white-space: nowrap;" target="_blank">enqueuer-cucumber</a>
                           </div>
                           <div class="col-12 col-lg-6 pb-3 pl-5 pl-lg-0 pb-sm-1 pb-lg-0" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap;">
-                            Implement cucumber steps as enqueuer tasks
+                            Implement cucumber steps as enqueuer requisitions
                           </div>
                     </div>
                      <div class="row no-gutters py-1 plugins-list-row">
@@ -1160,7 +1205,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name
                             <a href="https://github.com/thiagobustamante/enqueuer-plugin-http" style="overflow: scroll; white-space: nowrap;" target="_blank">enqueuer-plugin-http-bind</a>
                           </div>
                           <div class="col-12 col-lg-6 pb-3 pl-5 pl-lg-0 pb-sm-1 pb-lg-0" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap;">
-                            Enqueuer plugin to support http and sensor bindings
+                            Enqueuer plugin to support http and subscription bindings
                           </div>
                     </div>
                      <div class="row no-gutters py-1 plugins-list-row">
@@ -1328,7 +1373,7 @@ Run <code class="yaml"><span class="dollar-sign">$</span> nqr -f [formatter-name
                             <a href="https://github.com/enqueuer-land/enqueuer-postman-converter" style="overflow: scroll; white-space: nowrap;" target="_blank">enqueuer-postman-converter</a>
                           </div>
                           <div class="col-12 col-lg-6 pb-3 pl-5 pl-lg-0 pb-sm-1 pb-lg-0" style="color: var(--nqr-text-smooth-color); overflow: scroll; white-space: nowrap;">
-                            Enqueuer plugin to convert and use postman collections as enqueuer tasks
+                            Enqueuer plugin to convert and use postman collections as enqueuer requisitions
                           </div>
                     </div>
                     
@@ -1350,7 +1395,7 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 
 <p>Tell enqueuer to use your plugin through configuration file this way:</p>
 
-<pre><code class="yaml">plugins: 
+<pre><code class="yaml">plugins:
 -   plugin-folder
 -   another-plugin-folder
 </code></pre>
@@ -1359,7 +1404,7 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 
 <h5 id="implicitly" style="padding-left: 16px">8.3.3 implicitly</h5>
 
-<p>When enqueuer runs, it looks for modules in its same installation directory or in <code class="yaml">.nqr</code> folder in the home directory, a.k.a. ~/ folder in linux distributions.
+<p>When enqueuer runs, it looks for modules in its same installation directory or in "'.nqr'" folder in the home directory, a.k.a. ~/ folder in linux distributions.
 Therefore, if you run:</p>
 
 <pre><code class="yaml"><span class="dollar-sign">$</span> npm install --global enqueuer
@@ -1377,7 +1422,7 @@ Therefore, if you run:</p>
 
 <p>You'll see that the <code class="yaml">enqueuer-plugin-amqp</code> plugin will be loaded.
 Every enqueuer compatible module gets implicitly loaded.
-In order to be enqueuer compatible, a module has to have an <code class="yaml">entryPoint</code> exported function in its main file and, in its package.json file, it has to have either 'enqueuer' or 'nqr' as keywords.</p>
+In order to be enqueuer compatible, a module has to have an <code class="yaml">entryPoint</code> exported function in its main file and, its <code class="yaml">package.json</code> file has to have either <code class="yaml">enqueuer</code> or <code class="yaml">qr</code> as keywords.</p>
 
 <h3 id="stacker" style="padding-left: 0px">9 Stacker</h3>
 
@@ -1385,7 +1430,7 @@ In order to be enqueuer compatible, a module has to have an <code class="yaml">e
 Consider taking a look at <a href="https://enqueuer-land.github.io/stacker/">stacker</a>: open source, cross-platform, multi protocol client testing tool.
 The official enqueuer's best friend forever. Do amazing things and change the world with enqueuer’s GUI!
 With them, you create, manage and run tasks and and see their results in a really nice way.
-See this amazing beauty with your own eyes to get an idea of how it works:  </p>
+See this amazing beauty with your own eyes to get an idea of how it works:</p>
 
 <p><img src="https://raw.githubusercontent.com/enqueuer-land/stacker/master/docs/screenshot-1.png" alt="screenshot-passing" style="width:100%" title="" /></p>
 
@@ -1399,7 +1444,7 @@ We mean it, do it. Even if it's a typo fix in this README file. Go ahead.
 If you like it but don't want to waste time creating a pull request, no problem either.
 Create an issue, or, even easier, give it a github star. It's cheap and it doesn't hurt anyone.
 You know what? Just head up to <a href="https://github.com/enqueuer-land/enqueuer">enqueuer's github repo</a> and keep staring at its repo.
-It may help somehow. </p>
+It may help somehow.</p>
 
 <h4 id="contributors" style="padding-left: 8px">10.1 contributors</h4>
 
@@ -1411,16 +1456,12 @@ It may help somehow. </p>
                                 <img src="http://github.com/virgs.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
                             </a>
                          </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
-                            <a href="http://github.com/rodrigohrech" target="_blank">
-                                <img src="http://github.com/rodrigohrech.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
+                            <a href="http://github.com/t-rech" target="_blank">
+                                <img src="http://github.com/t-rech.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
                             </a>
                          </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
                             <a href="http://github.com/hamidzr" target="_blank">
                                 <img src="http://github.com/hamidzr.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
-                            </a>
-                         </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
-                            <a href="http://github.com/hsangalli" target="_blank">
-                                <img src="http://github.com/hsangalli.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
                             </a>
                          </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
                             <a href="http://github.com/fernandotelles" target="_blank">
@@ -1435,12 +1476,12 @@ It may help somehow. </p>
                                 <img src="http://github.com/guilhermecorsino.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
                             </a>
                          </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
-                            <a href="http://github.com/marcioviegas" target="_blank">
-                                <img src="http://github.com/marcioviegas.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
-                            </a>
-                         </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
                             <a href="http://github.com/thiagobustamante" target="_blank">
                                 <img src="http://github.com/thiagobustamante.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
+                            </a>
+                         </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
+                            <a href="http://github.com/marcioviegas" target="_blank">
+                                <img src="http://github.com/marcioviegas.png" style="border: none; width: 50%; background-color: var(--nqr-header-background-color);" class="img-fluid rounded rounded-circle img-thumbnail">
                             </a>
                          </div> <div class="col-4 col-md-2 m-1 py-2" style="text-align: center">
                             <a href="http://github.com/enqueuer-land" target="_blank">
@@ -1465,7 +1506,7 @@ First of all, get the code:</p>
 <pre><code class="yaml"><span class="dollar-sign">$</span> npm install
 </code></pre>
 
-<p>Build it: </p>
+<p>Build it:</p>
 
 <pre><code class="yaml"><span class="dollar-sign">$</span> npm run build
 </code></pre>
@@ -1492,46 +1533,58 @@ After everything is done:</p>
 If you have any comments, suggestions, etc. you can reach us <a href="mailto:guilherme.moraes@outlook.com">here</a>.</p>
 
 <p><a href="https://nodei.co/npm/enqueuer/"><img src="https://nodei.co/npm/enqueuer.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM" title="" /></a></p></div></div>
-<!--</main>-->
+    <!--</main>-->
 
-
-<!-- Le javascript
+    <!-- Le javascript
 ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
-        integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
-        crossorigin="anonymous"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+      integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
+      crossorigin="anonymous"
+    ></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"
-        integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/yaml.min.js"
-        integrity="sha256-rnrMAiJbGf0etxUcBLxTBrBbte8zy7TrGOHMGFq97GA=" crossorigin="anonymous"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"
+      integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/yaml.min.js"
+      integrity="sha256-rnrMAiJbGf0etxUcBLxTBrBbte8zy7TrGOHMGFq97GA="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
 
-<script>
-    const enqueuerLogo = $("[title='Enqueuer Giant Logo']");
-    enqueuerLogo.css({'max-width': '100%', padding: '8vh 0'});
-    enqueuerLogo.parent().css({'text-align': 'center'});
+    <script>
+      const enqueuerLogo = $("[title='Enqueuer Giant Logo']");
+      enqueuerLogo.css({ 'max-width': '100%', padding: '8vh 0' });
+      enqueuerLogo.parent().css({ 'text-align': 'center' });
 
-    const enqueuerFlow = $("[title='Enqueuer Instance Flow']");
-    enqueuerFlow.css({'max-width': '90%'});
-    enqueuerFlow.parent().css({'text-align': 'center'});
+      const enqueuerFlow = $("[title='Enqueuer Instance Flow']");
+      enqueuerFlow.css({ 'max-width': '90%' });
+      enqueuerFlow.parent().css({ 'text-align': 'center' });
 
-    const npmBigBadge = $("[href='https://nodei.co/npm/enqueuer/']");
-    npmBigBadge.parent().css({'text-align': 'center'});
+      const npmBigBadge = $("[href='https://nodei.co/npm/enqueuer/']");
+      npmBigBadge.parent().css({ 'text-align': 'center' });
 
-    const npmBadges = $("[href='https://travis-ci.org/enqueuer-land/enqueuer']");
-    npmBadges.parent().css({'text-align': 'center'});
-    npmBadges.parent().addClass("npm-badges-container");
+      const npmBadges = $("[href='https://travis-ci.org/enqueuer-land/enqueuer']");
+      npmBadges.parent().css({ 'text-align': 'center' });
+      npmBadges.parent().addClass('npm-badges-container');
+    </script>
 
-</script>
-
-<!--<script async defer src="https://buttons.github.io/buttons.js"></script>-->
-</body>
+    <!--<script async defer src="https://buttons.github.io/buttons.js"></script>-->
+  </body>
 </html>
