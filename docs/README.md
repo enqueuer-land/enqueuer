@@ -8,6 +8,8 @@
 
 ![enqueuerlogo](https://raw.githubusercontent.com/enqueuer-land/enqueuer/master/docs/images/fullLogo1.png 'Enqueuer Giant Logo')
 
+## Docs
+
 ### Welcome
 
 Be our guest and have fun.
@@ -33,7 +35,7 @@ Something like:
 Pretty simple, hum? Small and concise, how it should be!
 Run it:
 
-    $ enqueuer enqueuer-repo-hit.yml
+    enqueuer enqueuer-repo-hit.yml
 
 Now you know how to hit a http server.
 What if I want to mock a http server response, you may ask. Not a big deal for enqueuer lovers:
@@ -87,7 +89,7 @@ Now, let's say you want to mix different protocols to test a bit more complex fl
 How about publishing an amqp message and making sure that, once a service consumes that message an endpoint of your is hit?
 In order to achieve that, we have to make use of a [plugin](#plugins), given that amqp support is provided by a plugin.
 In this scenario, we're talking about the [amqp plugin](https://github.com/enqueuer-land/enqueuer-plugin-amqp).
-Once we get this [plugin installed](#plugins_installation) we are able to create and run files like this:
+Once we get this [plugin installed](#plugins installation) we are able to create and run files like this:
 
     actuators:
     -   type: amqp
@@ -307,7 +309,7 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 
     id: ID-0123456789
 
-##### events
+##### actuator events
 
 Available events are described [here](#event). A `this` object is available to access and change actuator attributes.
 Depending on the protocol and its implementation, such as `http` and `tcp`, there may exist custom events, such as `onResponseReceived` event and an attribute `message` passed to it.
@@ -376,7 +378,7 @@ Defaults to an auto-generated one. Uniquely identify this component among the ot
 
     id: ID-0123456789
 
-##### events
+##### sensor events
 
 Available events are described [here](#event). A `this` object is available to access and change sensor attributes.
 
@@ -423,7 +425,7 @@ Such as `onError`, `onResponseReceived`, `onFileNotFound` and `onRedirect`...
 
 A good way to identify that is to run the following command line `nqr -p <type>`. Like:
 
-    $ nqr -p http
+    nqr -p http
 
 **_available variables_**
 Given that the variables and theirs names may vary according to the scenario, it's interesting to have a special one to retrieve every argument passed to the hook. To retrieve that information, you can use "'argumentNames'" as a regular argument. So, let's say you have this task:
@@ -467,7 +469,7 @@ You can [check them out](#plugins_list) or even [write your own](https://github.
     onMessageReceived:
       script: |-
         message += 3;
-        console.log('"Message received plus 3 is: ${message}'");
+        console.log("'Message received plus 3 is: ${message}'");
 
       store:
         key: message
@@ -500,11 +502,11 @@ Configuration files tell enqueuer which tests will be executed, log-level, and w
 This file tells how enqueuer should be executed.
 To run enqueuer with the configuration:
 
-    $ nqr -c path/to/configuration/file.yml
+    nqr -c path/to/configuration/file.yml
 
 or
 
-    $ nqr --config-file path/to/configuration/file.yml
+    nqr --config-file path/to/configuration/file.yml
 
 #### attributes
 
@@ -545,7 +547,7 @@ List of in [plugins](#plugins) used by the test scenarios. You can [check them o
 **outputs**  
 Once enqueuer runs every execution, it compiles a summary and sends it to every actuator listed in output.
 An important thing to note is that every available report actuator is available here.
-Yes, it means that you are able to send this report through `http`, `tcp`, etc. or through a [plugin one](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
+Yes, it means that you are able to send this report through `http`, `tcp`, etc. or through a [plugin](https://github.com/enqueuer-land/plugins-list#enqueuer-plugins) or a [custom one](https://github.com/enqueuer-land/plugin-scaffold).
 You can run `$ nqr -p` to check available report actuators installed.
 Another important thing to note is the `format` value. By default a `json` summary is generated, but you can change it to whatever format you would like, such as: [Xunit](https://github.com/williamsdevaccount/enqueuer-plugin-xunit-report), [html](https://github.com/enqueuer-land/enqueuer-plugin-html-report)
 You can run `$ nqr -f` to check available installed formats or even [write your own](https://github.com/enqueuer-land/plugin-scaffold)
@@ -609,9 +611,9 @@ Configuration file store object. Set it as you wish, as you can see [here](https
 
 A command line argument using the `key=value` format. This way:
 
-    $ nqr --store key=value -s anotherVariable=true
+    nqr --store key=value -s anotherVariable=true
 
-##### event
+##### event set variable
 
 Dynamically set it through any [event](#event).
 Be it in its [script](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L5) field or straight through its store [field](https://github.com/enqueuer-land/enqueuer/blob/64198b944849df2cb5bd23cbfb6d0a224d6b5167/examples/store.yml#L3).
@@ -670,7 +672,7 @@ Due to its fantastic plugin architecture design, you can extend its default modu
 The built-in modules for object parsers are: `json`, `yml`, `csv` and `file`.
 Run `$ nqr -e` to see available ones.
 
-#### example
+#### content file injection example
 
 Check out [this test example](https://github.com/enqueuer-land/enqueuer/blob/master/examples/file-placeholder.yml) test to get a full picture of it.
 
@@ -764,10 +766,10 @@ An asserter plugin provides you a nicely way to use different assertions than th
 Looking at the asserter above, we can create assertions like these:
 
     assertions:
-    -   expect: ['"a'", 1, true]
+    -   expect: ["'a'", 1, true]
         not:
         toContain: "'b'"
-    -   expect: ['"a'", 1, true]
+    -   expect: ["'a'", 1, true]
         toContain: 1
 
 Run `$ nqr -t` to get the full available list.
@@ -799,12 +801,12 @@ Want to see yours here too? [Write your own](https://github.com/enqueuer-land/pl
 In order to enqueuer get awareness that you want to use a plugin, you have to tell it, right?
 You can tell enqueuer to use a plugin in three different ways: using it as a command line argument, through the configuration file or letting enqueuer finding it in a default location.
 
-##### command line
+##### use plugins via command line
 
 Tell enqueuer to use your plugin through command line this way `$ nqr -l <plugin-folder> -l <another-plugin-folder>`.
 Where plugin-folder and another-plugin-folder are the directories where the plugins are installed in.
 
-##### configuration file
+##### use plugins via configuration file
 
 Tell enqueuer to use your plugin through configuration file this way:
 
@@ -819,16 +821,16 @@ Where plugin-folder and another-plugin-folder are the directories where the plug
 When enqueuer runs, it looks for modules in its same installation directory or in "'.nqr'" folder in the home directory, a.k.a. ~/ folder in linux distributions.
 Therefore, if you run:
 
-    $ npm install --global enqueuer
-    $ mkdir ~/.nqr
-    $ cd ~/.nqr
-    $ npm install enqueuer-plugin-amqp
-    $ nqr -p amqp
+    npm install --global enqueuer
+    mkdir ~/.nqr
+    cd ~/.nqr
+    npm install enqueuer-plugin-amqp
+    nqr -p amqp
 
 Or
 
-    $ npm install --global enqueuer enqueuer-plugin-amqp
-    $ nqr -p amqp
+    npm install --global enqueuer enqueuer-plugin-amqp
+    nqr -p amqp
 
 You'll see that the `enqueuer-plugin-amqp` plugin will be loaded.
 Every enqueuer compatible module gets implicitly loaded.
@@ -869,29 +871,29 @@ It sounds _cliché_, but this project wouldn't be the same without the massive c
 In order to contribute with some code, you have to follow a few steps.
 First of all, get the code:
 
-    $ git clone git@github.com:enqueuer-land/enqueuer.git
-    $ cd enqueuer
+    git clone git@github.com:enqueuer-land/enqueuer.git
+    cd enqueuer
 
 Get its dependencies installed:
 
-    $ npm install
+    npm install
 
 Build it:
 
-    $ npm run build
+    npm run build
 
 Go for it. Make the changes you want.
 After everything is done:
 
-    $ npm run all
+    npm run all
 
 Commit it:
 
-    $ npm run commit
+    npm run commit
 
 Push it:
 
-    $ git push
+    git push
 
 #### feedback
 

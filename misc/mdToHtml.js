@@ -178,7 +178,7 @@ async function createHtml(pluginsListTable) {
     .makeHtml(md)
     .replace('{{plugins list placeholder}}', pluginsListTable)
     .replace('{{contributors list placeholder}}', contributorsHtml);
-  spyHtml += `</nav></nav></nav>`;
+  spyHtml += `</nav></nav></nav></nav></nav>`;
   const content =
     spyHtml + `<div class="nqr-main-container container" style="max-width: 90%">` + readMeHtmlized + `</div></div>`;
 
@@ -237,6 +237,9 @@ async function getContributors() {
         }))
       )
       .then(resolve)
-      .catch(reject);
+      .catch(error => {
+        console.error(`Error creating contributors section. It's probably due to throttling. Open the link https://api.github.com/orgs/enqueuer-land/repos?per_page=200 in the browser and check if that works`)
+        reject(error);
+      });
   });
 }
