@@ -238,7 +238,9 @@ async function getContributors() {
       )
       .then(resolve)
       .catch(error => {
-        console.error(`Error creating contributors section. It's probably due to throttling. Open the link https://api.github.com/orgs/enqueuer-land/repos?per_page=200 in the browser and check if that works`)
+        console.error(
+          `Error creating contributors section. It's probably due to throttling. Open the link https://api.github.com/orgs/enqueuer-land/repos?per_page=200 in the browser and check if that works`
+        );
         reject(error);
       });
   });
