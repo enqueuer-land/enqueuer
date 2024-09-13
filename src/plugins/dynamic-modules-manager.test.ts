@@ -84,19 +84,19 @@ describe('DynamicModulesManager', () => {
     expect(
       // @ts-ignore
       DynamicModulesManager.versionMatches({
-        dependencies: { enqueuer: '^5.0.0' }
+        dependencies: { enqueuer: '^6.0.0' }
       })
     ).toBeTruthy();
     expect(
       // @ts-ignore
       DynamicModulesManager.versionMatches({
-        devDependencies: { enqueuer: '5.0.0' }
+        devDependencies: { enqueuer: '6.0.0' }
       })
     ).toBeTruthy();
     expect(
       // @ts-ignore
       DynamicModulesManager.versionMatches({
-        peerDependencies: { enqueuer: '5.0.0' }
+        peerDependencies: { enqueuer: '6.0.0' }
       })
     ).toBeTruthy();
     // @ts-ignore
