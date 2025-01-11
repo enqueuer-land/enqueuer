@@ -20,7 +20,7 @@
     "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null && nqr -e > /dev/null",
     "format": "prettier . '!**/*.{html}' --write",
     "updateHtml": "misc/mdToHtml.js",
-    "all": "npm run format ; npm run build && npm link && npm run test",
+    "all": "npm run format ; npm run build && npm unlink -g && npm link && npm run test",
     "build": "tsc",
     "commit": "git-cz",
     "semantic-release": "semantic-release"
@@ -67,7 +67,6 @@
   "devDependencies": {
     "@types/commander": "^2.12.0",
     "@types/express": "^4.17.21",
-    "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.3.0",
     "@types/object-hash": "^3.0.6",
