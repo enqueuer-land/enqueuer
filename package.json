@@ -1,26 +1,26 @@
 {
   "name": "enqueuer",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "Polyglot flow testing tool",
-  "main": "./js/enqueuer.js",
-  "typings": "./js/enqueuer.d.ts",
+  "main": "./dist/enqueuer.js",
+  "typings": "./dist/enqueuer.d.ts",
   "types": "enqueuer.d.ts",
   "directories": {
-    "lib": "js"
+    "lib": "dist"
   },
   "homepage": "https://enqueuer.com",
   "scripts": {
-    "start": "node js/index.js",
+    "start": "node dist/index.js",
     "prepublishOnly": "npm run all",
     "test": "npm run codeCoverage && npm run examplesTest && npm run listsDescriptions",
     "unitTest": "NODE_ENV=TEST node_modules/.bin/jest --silent",
-    "examplesTest": "mkdir output; NODE_TLS_REJECT_UNAUTHORIZED=0 node js/index.js -c conf/config-example.yml examples/task-navigation.yaml < misc/stdin && npm run validateOutput",
+    "examplesTest": "mkdir output; NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/index.js -c conf/config-example.yml examples/task-navigation.yaml < misc/stdin && npm run validateOutput",
     "validateOutput": "yamllint output/examples.yml",
     "codeCoverage": "NODE_ENV=TEST node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null && nqr -e > /dev/null",
     "format": "prettier . '!**/*.{html}' --write",
     "updateHtml": "misc/mdToHtml.js",
-    "all": "npm run format ; npm run build && npm unlink -g && npm link && npm run test",
+    "all": "rm -rf dist ; npm run format ; npm run build && npm unlink -g && npm link && npm run test",
     "build": "tsc",
     "commit": "git-cz",
     "semantic-release": "semantic-release"
@@ -50,8 +50,8 @@
   },
   "license": "MIT",
   "bin": {
-    "enqueuer": "js/index.js",
-    "nqr": "js/index.js"
+    "enqueuer": "dist/index.js",
+    "nqr": "dist/index.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",

@@ -28,4 +28,4 @@ COPY --from=builder /app/js ./js
 
 RUN npm ci --omit=dev
 
-CMD [ "node", "js/index.js" ]
+CMD [ "node", "dist/index.js" ]
