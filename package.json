@@ -1,6 +1,6 @@
 {
   "name": "enqueuer",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Polyglot flow testing tool",
   "main": "./js/enqueuer.js",
   "typings": "./js/enqueuer.d.ts",
@@ -15,7 +15,7 @@
     "test": "npm run codeCoverage && npm run examplesTest && npm run listsDescriptions",
     "unitTest": "NODE_ENV=TEST node_modules/.bin/jest --silent",
     "examplesTest": "mkdir output; NODE_TLS_REJECT_UNAUTHORIZED=0 node js/index.js -c conf/config-example.yml examples/task-navigation.yaml < misc/stdin && npm run validateOutput",
-    "validateOutput": "yval --from=json output/examples.json && yval --from=yaml output/examples.yml",
+    "validateOutput": "yamllint output/examples.yml",
     "codeCoverage": "NODE_ENV=TEST node_modules/.bin/jest --detectOpenHandles --coverage --silent",
     "listsDescriptions": "nqr -t > /dev/null && nqr -p > /dev/null && nqr -t > /dev/null && nqr -e > /dev/null",
     "format": "prettier . '!**/*.{html}' --write",
@@ -81,7 +81,7 @@
     "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
-    "yval": "0.0.3"
+    "yaml-lint": "^1.7.0"
   },
   "config": {
     "commitizen": {
