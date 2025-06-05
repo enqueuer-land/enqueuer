@@ -24,7 +24,7 @@ WORKDIR /app
 
 # Install app dependencies
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/js ./js
+COPY --from=builder /app/dist ./dist
 
 RUN npm ci --omit=dev
 
