@@ -95,7 +95,7 @@ describe('ActuatorReporter', () => {
       const report = actuatorReporter.getReport();
       expect(report.name).toBe(actuator.name);
       const actuatorTest = report.hooks![DefaultHookEvents.ON_FINISH].tests[0];
-      expect(actuatorTest.name).toBe('Published');
+      expect(actuatorTest.name).toBe('Acted');
       expect(actuatorTest.valid).toBeTruthy();
 
       done();
@@ -111,7 +111,7 @@ describe('ActuatorReporter', () => {
       const report = actuatorReporter.getReport();
       expect(report.name).toBe(actuator.name);
       const actuatorTest = report.hooks![DefaultHookEvents.ON_FINISH].tests[0];
-      expect(actuatorTest.name).toBe('Published');
+      expect(actuatorTest.name).toBe('Acted');
       expect(actuatorTest.valid).toBeFalsy();
 
       done();

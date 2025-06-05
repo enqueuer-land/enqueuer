@@ -54,16 +54,16 @@ export class ActuatorReporter {
         this.report.messageSentInstant = new DateController().toString();
         this.acted = true;
         this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
-          name: 'Published',
+          name: 'Acted',
           valid: this.acted,
           description: this.processMessage(response),
           implicit: true
         });
       }
     } catch (err) {
-      Logger.error(`'${this.report.name}' fail publishing: ${err}`);
+      Logger.error(`'${this.report.name}' fail acting: ${err}`);
       this.report.hooks![DefaultHookEvents.ON_FINISH].tests.push({
-        name: 'Published',
+        name: 'Acted',
         valid: false,
         description: '' + err,
         implicit: true
