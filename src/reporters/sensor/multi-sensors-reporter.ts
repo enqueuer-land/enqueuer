@@ -30,18 +30,19 @@ export class MultiSensorsReporter {
 
   public async mount(): Promise<any> {
     Logger.debug(`Sensors are getting ready`);
-    return Promise.race([
-      Promise.all(
-        this.sensors.map(async sensor => {
+    const mountSensorsPromise = async () => {
+      await Promise.all(
+        this.sensors.map(sensor => {
           try {
-            await sensor.mount();
+            return sensor.mount();
           } catch (err) {
-            Logger.error(`Error getting ready: ${err}`);
+            Logger.error(`Error mounting sensor: ${err}`);
           }
         })
-      ),
-      this.timeoutPromise
-    ]);
+      );
+      Logger.debug(`All sensors are mounted`);
+    };
+    return Promise.race([mountSensorsPromise(), this.timeoutPromise]);
   }
 
   public async receiveMessage(): Promise<void> {

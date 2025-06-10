@@ -38,7 +38,8 @@ EventExecutor.mockImplementation(() => ({
 
 const actuator = {
   name: 'pubName',
-  id: 'id'
+  id: 'id',
+  type: 'type'
 } as any;
 
 describe('ActuatorReporter', () => {

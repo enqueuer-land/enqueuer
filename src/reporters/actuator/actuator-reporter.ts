@@ -112,15 +112,17 @@ export class ActuatorReporter {
       let previousTests: TestModel[] = previousHook?.tests ?? [];
       const tests = previousTests.concat(eventExecutor.execute());
       const valid = tests.every((test: TestModel) => testModelIsPassing(test));
-      const decycledArgs = new ObjectDecycler().decycle(args);
+      const decycledArgs = new ObjectDecycler().decycle(args) as Record<string, unknown>;
       const hookModel: HookModel = {
         arguments: decycledArgs,
         tests: tests,
         valid: valid
       };
       if (eventExecutor.isDebugMode()) {
-        console.table(Object.keys(decycledArgs).join('; '));
-        // console.table(decycledArgs);
+        console.log(`--------`);
+        console.log(`Hook '(${actuator.type}) ${eventName}' debug:`);
+        console.table(Object.keys(decycledArgs).map(key => ({ parameter: key, value: decycledArgs[key] })));
+        console.log(`--------`);
       }
       //TODO investigate why this line wasn't added this file originally
       const hookResult = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);

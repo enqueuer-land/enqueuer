@@ -215,15 +215,17 @@ export class SensorReporter {
       }
       const tests = eventExecutor.execute();
       const valid = tests.every((test: TestModel) => testModelIsPassing(test));
-      const decycledArgs = new ObjectDecycler().decycle(additionalArgs);
+      const decycledArgs = new ObjectDecycler().decycle(additionalArgs) as Record<string, unknown>;
       const hookModel = {
         arguments: decycledArgs,
         tests: tests,
         valid: valid
       };
       if (eventExecutor.isDebugMode()) {
-        // console.table(decycledArgs);
-        console.table(Object.keys(decycledArgs).join('; '));
+        console.log(`--------`);
+        console.log(`Hook '(${sensor.type}) ${eventName}' debug:`);
+        console.table(Object.keys(decycledArgs).map(key => ({ parameter: key, value: decycledArgs[key] })));
+        console.log(`--------`);
       }
       const hookResult = new HookReporter(this.report.hooks![eventName]).addValues(hookModel);
       this.report.hooks![eventName] = hookResult;
